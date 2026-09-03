@@ -64,7 +64,7 @@ test.describe('validator Behavior', () => {
     const html = '<div>Test content</div>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container x-validator, #test-container x-validator').first();
+    const el = page.locator('#test-container [x-validator]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

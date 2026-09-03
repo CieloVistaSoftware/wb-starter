@@ -36,6 +36,19 @@ import { test, expect } from '@playwright/test';
  */
 test.describe('demos/site/cards.html: single-item [x-demo] code panels are never clipped', () => {
   test('cardexpandable and cardvideo code panels show all their code, no horizontal overflow', async ({ page }) => {
+    // This test's DECLARED work cannot fit Playwright's default 30s: a 20s
+    // budget waiting for __WB_DEMO_INITIALIZED__, scrolling five sections of
+    // the heaviest page in the repo (34 demos / 265 articles), then a 6s
+    // settle for demo.js's own poll-until-stable width measurement
+    // (POLL_MS=200, MAX_MS=5000 per demo). Under 8 workers it ran out of
+    // budget and reported a timeout, which read as a product failure.
+    //
+    // This is raising a budget to match work that is real and BOUNDED — not
+    // padding a race. The waits above are all capped; nothing here spins.
+    // Same precedent as cardvideo-aspect-ratio (60s), dropdown-examples
+    // (120s) and every-documented-example-works (300s).
+    test.setTimeout(90_000);
+
     const pageErrors: string[] = [];
     page.on('pageerror', (err) => pageErrors.push(String(err)));
 

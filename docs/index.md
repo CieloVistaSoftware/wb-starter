@@ -20,7 +20,6 @@
 - Architecture Overview
 - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md)
 - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md)
-- [WBViews](./architecture/WBVIEWS.md)
 - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md)
 - [Schema-First Architecture](./schema-first-architecture.md)
 - CSS Standards

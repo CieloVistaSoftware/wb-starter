@@ -12,7 +12,7 @@ test.describe('Card Overlay (integration)', () => {
       el.id = 'test-overlay';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'My Overlay Title');
-      el.setAttribute('data-image', 'https://picsum.photos/400/300');
+      el.setAttribute('data-image', '/images/placeholder.svg');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });
@@ -82,7 +82,7 @@ test.describe('Card Overlay (integration)', () => {
       el.id = 'test-overlay-image';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'Image Test');
-      el.setAttribute('data-image', 'https://picsum.photos/400/300');
+      el.setAttribute('data-image', '/images/placeholder.svg');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });

@@ -13,6 +13,9 @@ test('datepicker registers and marks element', async ({ page }) => {
   });
 
   const el = page.locator('#dp-1');
-  await page.waitForFunction(() => document.querySelector('#dp-1')?.dataset.wbDatepicker === '1', null, { timeout: 2000 });
-  expect(await el.getAttribute('data-x-datepicker')).toBe('1');
+  // The behavior writes a plain `x-datepicker-init` attribute (#928). This used to
+  // wait on `data-wb-datepicker` and assert `data-x-datepicker` -- two spellings
+  // nothing has ever set, so a working behavior timed out looking broken.
+  // toHaveAttribute retries, so no explicit wait is needed.
+  await expect(el).toHaveAttribute('x-datepicker-init', '1');
 });

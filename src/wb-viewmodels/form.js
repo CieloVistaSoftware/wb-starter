@@ -1,18 +1,13 @@
 import { readFlag } from '../core/read-attr.js';
 // Standalone form behavior extracted from enhancements.js
 export function form(element, options = {}) {
-  // <form> is a custom tag, not a real <form> — FormData/.action/.method/
-  // .reset()/.requestSubmit() all require a genuine HTMLFormElement. Replace
-  // it with a real <form> carrying the same attributes and children, same
-  // approach as details.js wrapping non-<details> elements.
-  let host = element;
-  if (element.tagName === 'WB-FORM') {
-    const formEl = document.createElement('form');
-    Array.from(element.attributes).forEach((attr) => formEl.setAttribute(attr.name, attr.value));
-    while (element.firstChild) formEl.appendChild(element.firstChild);
-    element.replaceWith(formEl);
-    host = formEl;
-  }
+  // The <wb-form> replacement branch is gone (#927). It rebuilt the host as a
+  // real <form> when `element.tagName === 'WB-FORM'` -- a tag that cannot
+  // exist since 4.0.0 removed custom elements (#919, #921 cleared the last of
+  // them), so the branch was unreachable and implied `wb-*` tags were still
+  // real. The behavior now enhances whatever host it is given, which for a
+  // <form> is already a genuine HTMLFormElement.
+  const host = element;
 
   const config = {
     ajax: options.ajax ?? (host.hasAttribute('ajax') || readFlag(host, 'ajax')),

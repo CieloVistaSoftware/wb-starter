@@ -269,7 +269,7 @@ export function drawer(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-drawer> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-drawer> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-drawer') element.classList.add('x-drawer');
+  element.classList.add('x-drawer');
 
   // ═══════════════════════════════════════════════════════
   // PATH A: Schema already built the panel/backdrop — enhance, don't rebuild

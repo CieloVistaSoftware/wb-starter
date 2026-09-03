@@ -52,7 +52,7 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
   });
 
   test('bare-text drawer (no title/content attribute) shows its own text, not "Drawer"/"Drawer content"', async ({ page }) => {
-    const trigger = page.locator('#drawer-position-variants x-drawer[position="left"]');
+    const trigger = page.locator('#drawer-position-variants [x-drawer][position="left"]');
     await trigger.scrollIntoViewIfNeeded();
     await trigger.click();
 
@@ -67,7 +67,7 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
   });
 
   test('drawer with a title attribute but no content attribute shows the title AND its own text as content (not the old generic placeholder)', async ({ page }) => {
-    const trigger = page.locator('x-drawer[title="Right Drawer"]');
+    const trigger = page.locator('[x-drawer][title="Right Drawer"]');
     await trigger.scrollIntoViewIfNeeded();
     await trigger.click();
 
@@ -86,7 +86,7 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
     const rects: Record<string, DOMRect> = {};
 
     for (const pos of positions) {
-      const trigger = section.locator(`x-drawer[position="${pos}"]`);
+      const trigger = section.locator(`[x-drawer][position="${pos}"]`);
       await trigger.scrollIntoViewIfNeeded();
       await trigger.click();
 
@@ -146,7 +146,7 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
     const section = page.locator('#drawer-variant-variants');
 
     // push: no backdrop, page content wrapper visibly translated.
-    const pushTrigger = section.locator('x-drawer[variant="push"]');
+    const pushTrigger = section.locator('[x-drawer][variant="push"]');
     await pushTrigger.scrollIntoViewIfNeeded();
     await pushTrigger.click();
     const pushPanel = page.locator('.x-drawer__panel--open');
@@ -162,7 +162,7 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
       .toBe('none');
 
     // overlay: dimming backdrop present, page content wrapper NOT translated.
-    const overlayTrigger = section.locator('x-drawer[variant="overlay"]');
+    const overlayTrigger = section.locator('[x-drawer][variant="overlay"]');
     await overlayTrigger.scrollIntoViewIfNeeded();
     await overlayTrigger.click();
     const overlayPanel = page.locator('.x-drawer__panel--open');
@@ -179,7 +179,7 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
 
     // default: also dims with a backdrop (alias of overlay), but carries
     // its own distinct class so it's distinguishable in the DOM.
-    const defaultTrigger = section.locator('x-drawer[variant="default"]');
+    const defaultTrigger = section.locator('[x-drawer][variant="default"]');
     await defaultTrigger.scrollIntoViewIfNeeded();
     await defaultTrigger.click();
     const defaultPanel = page.locator('.x-drawer__panel--open');

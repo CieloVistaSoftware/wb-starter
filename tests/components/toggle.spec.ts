@@ -68,7 +68,7 @@ test.describe('toggle Behavior', () => {
     const html = "<div x-toggle>Basic toggle content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-toggle], #test-container [x-toggle]').first();
+    const el = page.locator('#test-container [x-toggle]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

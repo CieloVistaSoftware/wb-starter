@@ -68,7 +68,7 @@ test.describe('mdhtml Behavior', () => {
     const html = "<div x-mdhtml>Basic mdhtml content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-mdhtml], #test-container [x-mdhtml]').first();
+    const el = page.locator('#test-container [x-mdhtml]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

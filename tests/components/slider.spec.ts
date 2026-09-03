@@ -68,7 +68,7 @@ test.describe('slider Behavior', () => {
     const html = "<div x-slider>Basic slider content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-slider], #test-container [x-slider]').first();
+    const el = page.locator('#test-container [x-slider]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

@@ -40,7 +40,7 @@ export function dropdown(element, options = {}) {
   // for every OTHER host (x-dropdown on a <button>, per demos/site/
   // interactive.html), since dropdown.css's `.x-dropdown`/`.x-dropdown.open`
   // rules still select those by class.
-  if (element.tagName.toLowerCase() !== 'x-dropdown') element.classList.add('x-dropdown');
+  element.classList.add('x-dropdown');
   element.classList.add('x-dropdown-trigger');
   element.style.position = 'relative';
   element.style.display = 'inline-block';

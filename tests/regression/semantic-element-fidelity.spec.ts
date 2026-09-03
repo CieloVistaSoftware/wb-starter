@@ -40,8 +40,23 @@ const STRICT_TAGS = new Set(['select', 'table', 'dialog', 'details', 'textarea']
 // schemaFor -> tracking issue. Remove an entry only once the component is
 // verified (via its own regression test) to actually deliver the tag.
 const KNOWN_VIOLATIONS: Record<string, string> = {
-  dialog: 'declares tagName:"dialog" but the live element stays a custom tag with no showModal() -- flagged in HOST-CHILD-DISPATCH-AUDIT.md, fix pending maintainer go-ahead',
-  table: 'declares tagName:"table" but $view never builds one -- #see HOST-CHILD-DISPATCH-AUDIT.md',
+  // Emptied in #920. `dialog` and `table` both lived here and both were
+  // stale: verified on the dev server, running each schema's own
+  // test.setup[0] through WB.scan() exactly as tests/base.ts does --
+  //   <table>...</table>   -> table.x-table.x-table--hover
+  //   <dialog>...</dialog> -> dialog.x-dialog.x-modal
+  //                           instanceof HTMLDialogElement === true
+  //                           typeof showModal === 'function'
+  // The recorded dialog claim ("stays a custom tag with no showModal()")
+  // describes the retired wb-dialog custom element, not this code.
+  //
+  // CAUTION when adding an entry here, and when reading a PASS from this
+  // spec: a schema whose test.setup[0] HAND-WRITES the asserted tag makes
+  // `isHostTheTag` true by construction. Both entries above were exactly
+  // that shape, so the check could never have failed for the reason it was
+  // written to catch. A green result here is evidence of delivery only when
+  // the setup markup does not already contain the tag. #920 tracks giving
+  // this spec a case the setup does not pre-satisfy.
 };
 
 const SCHEMA_DIR = path.join(process.cwd(), 'src/wb-models');

@@ -1,21 +1,22 @@
 /**
  * Pagination Behavior Styles
  * -----------------------------------------------------------------------------
- * Custom element: <nav x-pagination> or context with [role="navigation"]
+ * Host tag is the author's choice -- <nav>, <div>, <section> are all valid.
+ * Selectors key off [x-pagination] alone: the attribute IS the behavior (#909).
+ * Pinning the tag left <div role="navigation" x-pagination> with a styled
+ * container and unstyled buttons, which is harder to spot than no styling.
  * Children are <span role="button"> — not <button> (avoids auto-inject).
  * CSS targets the tag/attribute context, not JS-added classes.
  * -----------------------------------------------------------------------------
  */
 
-nav[x-pagination],
-[role="navigation"][x-pagination] {
+[x-pagination] {
   display: flex;
   gap: 0.25rem;
   align-items: center;
 }
 
-nav[x-pagination] > span[role="button"],
-[role="navigation"][x-pagination] > span[role="button"] {
+[x-pagination] > span[role="button"] {
   min-width: 2rem;
   height: 2rem;
   padding: 0;
@@ -31,21 +32,18 @@ nav[x-pagination] > span[role="button"],
   user-select: none;
 }
 
-nav[x-pagination] > span[role="button"]:hover,
-[role="navigation"][x-pagination] > span[role="button"]:hover {
+[x-pagination] > span[role="button"]:hover{
   background: var(--bg-secondary, #1f2937);
   border-color: var(--primary, #6366f1);
 }
 
-nav[x-pagination] > span[aria-current="page"],
-[role="navigation"][x-pagination] > span[aria-current="page"] {
+[x-pagination] > span[aria-current="page"] {
   background: var(--primary, #6366f1);
   color: white;
   border-color: var(--primary, #6366f1);
 }
 
-nav[x-pagination] > span[aria-disabled="true"],
-[role="navigation"][x-pagination] > span[aria-disabled="true"] {
+[x-pagination] > span[aria-disabled="true"] {
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;

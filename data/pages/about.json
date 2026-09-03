@@ -17,7 +17,7 @@
         {
           "b": "horizontal-card",
           "d": {
-            "image": "https://picsum.photos/200/200?r=about",
+            "image": "/images/placeholder.svg",
             "title": "Built for Speed",
             "subtitle": "No build step required",
             "content": "WB Starter is designed to get you up and running in seconds. No npm install, no webpack configuration, no waiting for builds. Just open index.html and start creating."

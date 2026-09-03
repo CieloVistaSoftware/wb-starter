@@ -96,7 +96,6 @@ const DEMO_CATEGORY = {
   'landing-page-showcase.html': 'architecture', // framework showcase, not a single-feature demo
   'multi-component-demo-generated.html': 'architecture', // showcases $extends/$generate/$ref/$include composition, not any one component
   'playground.html': 'architecture',
-  'registry-browser.html': 'architecture',
   'schema-first-architecture.html': 'architecture',
   'standalone.html': 'architecture', // #659 preview stage — a tool, not a component demo
   'wb-views-demo.html': 'architecture',

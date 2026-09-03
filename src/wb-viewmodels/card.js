@@ -224,7 +224,14 @@ export function composeCard(element, options = {}) {
   // (<div x-cardimage>, <article> auto-inject, ...) still needs the class since
   // its own tag name isn't "x-card" -- shared card.css rules have nothing
   // else to select there.
-  if (element.tagName.toLowerCase() !== 'x-card') // No base class: card.css matches `article` and `[x-card]` directly.
+  // No base class: card.css matches `article` and `[x-card]` directly.
+  //
+  // #925: an `if (element.tagName.toLowerCase() !== 'x-card')` used to sit on
+  // the line above with NO BRACES, so its body was the `if` below and the whole
+  // variant-class block hung off it. The condition could never be false (no
+  // element can have tag name x-card since 4.0.0), so it always ran -- but it
+  // read as a comment-only line, and the next statement anyone added after it
+  // would have been silently swallowed into the dangling branch.
   if (config.behavior !== 'card') {
     element.classList.add(`x-card--${config.behavior.replace('card', '')}`);
   }
@@ -1491,7 +1498,11 @@ export function cardstats(element, options = {}) {
 
     const iconEl = document.createElement('span');
     iconEl.className = 'x-card__icon';
-    iconEl.style.cssText = 'font-size:2rem;line-height:1;display:block;';
+    // #946: the inline copy of .x-card__icon is gone. It duplicated the rule
+    // exactly, which made the stylesheet unable to fix the centring bug.
+    // A per-instance SIZE still belongs on the element, so it travels as a
+    // custom property the rule consumes.
+    iconEl.style.setProperty('--x-card-icon-size', '2rem');
     iconEl.textContent = config.icon;
 
     header.appendChild(iconEl);
@@ -1563,9 +1574,19 @@ export function cardtestimonial(element, options = {}) {
   element.innerHTML = '';
   element.style.padding = CARD_PADDING;
 
-  // Quote icon
+  // Quote icon -- decorative only (#941).
+  //
+  // This wrote its styling INLINE while card.css already carried a
+  // `.x-card__quote-icon` rule that was never applied to anything: the Law 9
+  // migration (#370) moved the rule out but left the JS writing cssText, and
+  // an inline style beats any stylesheet, so the class was dead and the CSS
+  // could not be fixed without touching this line.
+  //
+  // aria-hidden because the glyph is ornament: the quote's meaning is in the
+  // <blockquote> below, and a screen reader announcing a bare `"` is noise.
   const quoteIcon = document.createElement('div');
-  quoteIcon.style.cssText = 'font-size:3rem;line-height:1;color:var(--primary,#6366f1);opacity:0.3;';
+  quoteIcon.className = 'x-card__quote-icon';
+  quoteIcon.setAttribute('aria-hidden', 'true');
   quoteIcon.textContent = '"';
   element.appendChild(quoteIcon);
 
@@ -2051,7 +2072,7 @@ export function cardlink(element, options = {}) {
   const base = composeCard(element, { ...config, behavior: 'cardlink' });
   // Redundant when the host tag IS <div> (#478) -- card.css matches
   // the tag directly there via :is(.x-card-link, x-card-link).
-  if (element.tagName.toLowerCase() !== 'x-card-link') element.classList.add('x-card-link');
+  element.classList.add('x-card-link');
   
   element.innerHTML = '';
   element.style.cursor = 'pointer';
@@ -2073,7 +2094,7 @@ export function cardlink(element, options = {}) {
     if (config.icon) {
       const iconEl = document.createElement('span');
       iconEl.className = 'x-card__icon';
-      iconEl.style.cssText = 'font-size:1.25rem;line-height:1;';
+      iconEl.style.setProperty('--x-card-icon-size', '1.25rem');
       iconEl.textContent = config.icon;
       titleRow.appendChild(iconEl);
     }
@@ -2434,13 +2455,23 @@ export function cardexpandable(element, options = {}) {
   // Content
   const contentWrap = document.createElement('main');
   contentWrap.className = 'x-card__expandable-content';
+  // #943: padding / overflow / transition are ALL already in card.css's
+  // `.x-card__expandable-content` -- the audit classified them COVERED
+  // (removing the inline declaration changed nothing on the live element).
+  // Only max-height varies per instance, so it travels as a custom property
+  // and a rule consumes it, which is the sanctioned shape for a dynamic value.
   if (config.lines) {
-    contentWrap.style.cssText = 'padding:1rem;';
     applyLineClamp(contentWrap, config.expanded ? null : config.lines);
   } else {
-    contentWrap.style.cssText = `padding:1rem;overflow:hidden;transition:max-height 0.3s ease;max-height:${config.expanded ? '1000px' : config.maxHeight};`;
+    contentWrap.style.setProperty(
+      '--x-card-expandable-max-height',
+      config.expanded ? '1000px' : config.maxHeight,
+    );
   }
-  contentWrap.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
+  contentWrap.innerHTML = base.config.content || rawContent
+    // card.css already defines .x-card__expandable-placeholder with exactly
+    // these two declarations (#943).
+    || '<div class="x-card__expandable-placeholder">Add content here...</div>';
   // Generate ID for aria-controls
   const contentId = 'expandable-content-' + Math.random().toString(36).substr(2, 9);
   contentWrap.id = contentId;
@@ -2449,11 +2480,11 @@ export function cardexpandable(element, options = {}) {
   // Expand button
   const btnWrap = document.createElement('footer');
   btnWrap.className = 'x-card__footer';
-  btnWrap.style.cssText = 'padding:0.75rem 1rem;border-top:1px solid var(--border-color,#374151);';
+  // (styling: .x-card__footer in card.css -- #943)
 
   const btn = document.createElement('button');
   btn.className = 'x-card__expand-btn';
-  btn.style.cssText = 'width:100%;padding:0.5rem;background:var(--bg-tertiary,#374151);border:none;border-radius:6px;color:var(--text-primary,#f9fafb);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;';
+  // (styling: .x-card-expandable .x-card__expand-btn in card.css -- #943)
   btn.setAttribute('aria-expanded', config.expanded);
   btn.setAttribute('aria-controls', contentId);
   
@@ -2461,9 +2492,9 @@ export function cardexpandable(element, options = {}) {
   icon.className = 'x-card__expand-icon';
   if (config.expanded) icon.classList.add('x-card__expand-icon--expanded');
   icon.textContent = '▼';
-  icon.style.display = 'inline-block';
-  icon.style.transition = 'transform 0.3s ease';
-  if (config.expanded) icon.style.transform = 'rotate(180deg)';
+  // display / transition live in .x-card__expand-icon. Rotation is STATE, so
+  // it is a modifier class rather than an inline transform (#943).
+  if (config.expanded) icon.classList.add('x-card__expand-icon--expanded');
   btn.appendChild(icon);
 
   const text = document.createElement('span');
@@ -2479,9 +2510,9 @@ export function cardexpandable(element, options = {}) {
     if (config.lines) {
       applyLineClamp(contentWrap, isExpanded ? null : config.lines);
     } else {
-      contentWrap.style.maxHeight = isExpanded ? '1000px' : config.maxHeight;
+      contentWrap.style.setProperty('--x-card-expandable-max-height', isExpanded ? '1000px' : config.maxHeight);
     }
-    icon.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+    icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
     icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
     text.textContent = isExpanded ? 'Show Less' : 'Show More';
     element.classList.toggle('x-card--expanded', isExpanded);

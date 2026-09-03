@@ -21,7 +21,7 @@ support a caption; there's no `<figcaption>` in the rendered output. Use
 <div x-demo>
 <article
   x-cardimage
-  src="https://picsum.photos/seed/sunset/400/225"
+  src="/images/placeholder.svg"
   alt="Sunset over the Pacific Ocean"
   title="Card Title">
 </article>
@@ -65,7 +65,7 @@ config, not a supported feature.
 <div x-demo>
 <article
   x-cardproduct
-  image="https://picsum.photos/seed/product/400/267"
+  image="/images/placeholder.svg"
   title="Product Name"
   price="$49.99">
 </article>
@@ -89,7 +89,7 @@ config, not a supported feature.
   aria-label="Photo Gallery">
   <figure class="x-card__figure">
     <img
-      src="https://picsum.photos/seed/alpine/300/200"
+      src="/images/placeholder.svg"
       alt="Mountain landscape at sunrise">
     <figcaption>
       <strong>Alpine Sunrise</strong>
@@ -98,7 +98,7 @@ config, not a supported feature.
   </figure>
   <figure class="x-card__figure">
     <img
-      src="https://picsum.photos/seed/coast/300/200"
+      src="/images/placeholder.svg"
       alt="Ocean waves crashing on rocks">
     <figcaption>
       <strong>Pacific Coast</strong>

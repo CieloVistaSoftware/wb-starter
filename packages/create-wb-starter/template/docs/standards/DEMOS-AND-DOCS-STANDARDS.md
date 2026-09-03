@@ -379,7 +379,7 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   the repo or a real remote URL — is not "illustrative," it's a broken control that ships (2026-08-15
   retrospective: this exact mistake caused 9+ separate issues in one week, #610/#605/#601/#551/#548/#529/
   #526/#519/#514).
-- Use real remote assets: `https://picsum.photos/{width}/{height}?random={n}` for images (distinct `n` per
+- Use real remote assets: `/images/placeholder.svg` for images (distinct `n` per
   example, ≥800px on the short edge so it doesn't look blurry when cropped into a card), a real hosted
   sample for audio/video (this codebase's established convention is soundhelix.com for audio).
 - Never invent a local path unless the file is actually committed to the repo at that exact path — verify

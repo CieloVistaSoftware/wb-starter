@@ -67,4 +67,4 @@ prominent).
 
 ## Source
 
-[src/wb-viewmodels/layouts.js](../../../src/wb-viewmodels/layouts.js)
+[src/wb-viewmodels/layouts.js](../../src/wb-viewmodels/layouts.js)

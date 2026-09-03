@@ -71,7 +71,7 @@ test.describe('tabs Behavior', () => {
     const html = "<div x-tabs>Basic tabs content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
+    const el = page.locator('#test-container [x-tabs]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -86,31 +86,31 @@ test.describe('tabs Behavior', () => {
 
   test('matrix combo 1: activeTab=0', async ({ page }) => {
     await injectAndScan(page, "<div x-tabs activeTab=\"0\">Test</div>");
-    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
+    const el = page.locator('#test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: activeTab=1', async ({ page }) => {
     await injectAndScan(page, "<div x-tabs activeTab=\"1\">Test</div>");
-    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
+    const el = page.locator('#test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: variant=pills', async ({ page }) => {
     await injectAndScan(page, "<div x-tabs variant=\"pills\">Test</div>");
-    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
+    const el = page.locator('#test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 4: variant=underline', async ({ page }) => {
     await injectAndScan(page, "<div x-tabs variant=\"underline\">Test</div>");
-    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
+    const el = page.locator('#test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 5: fullWidth=true', async ({ page }) => {
     await injectAndScan(page, "<div x-tabs fullWidth=\"true\">Test</div>");
-    const el = page.locator('#test-container [x-tabs], #test-container [x-tabs]').first();
+    const el = page.locator('#test-container [x-tabs]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

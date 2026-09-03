@@ -247,7 +247,7 @@
       "<div x-cardvideo autoplay>with autoplay</div>",
       "<div x-cardvideo title=\"Test Title\">With title attribute</div>",
       "<div src=\"https://www.w3schools.com/html/mov_bbb.mp4\"></div>",
-      "<div src=\"https://www.w3schools.com/html/mov_bbb.mp4\" title=\"My Video\" poster=\"https://picsum.photos/seed/screening/640/360\"></div>"
+      "<div src=\"https://www.w3schools.com/html/mov_bbb.mp4\" title=\"My Video\" poster=\"/images/placeholder.svg\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -260,7 +260,7 @@
         },
         {
           "src": "https://www.w3schools.com/html/mov_bbb.mp4",
-          "poster": "https://picsum.photos/seed/videoposter/800/450"
+          "poster": "/images/placeholder.svg"
         },
         {
           "src": "https://www.w3schools.com/html/mov_bbb.mp4",

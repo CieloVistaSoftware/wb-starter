@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { elementReady } from '../base';
 
 /**
  * #458 — src/wb-viewmodels/feedback.js's toast() behavior read
@@ -25,6 +26,13 @@ test.describe('x-toast reads live attribute values on every click, not just at b
 
     const button = page.locator('#react-root button');
     await expect(button).toBeVisible({ timeout: 15000 });
+    // #458 follow-up: visible != wired. React renders the button first, and WB
+    // binds x-toast to it afterwards. Clicking on visibility alone fired before
+    // the toast behavior existed, so no toast appeared and the first assertion
+    // failed at 3s — reading as though the toast were broken. Verified live in
+    // the browser: once settled, clicks produce "Count is now 1", then
+    // "Count is now 2", exactly as asserted here.
+    await elementReady(button);
 
     const expected = ['Count is now 1', 'Count is now 2', 'Count is now 3'];
     for (const text of expected) {

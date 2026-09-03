@@ -30,7 +30,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   <p>This is a long content that will be truncated when collapsed...</p>
   <p>More content here...</p>
   <figure>
-    <img src="https://picsum.photos/800/600?random=cardexpandable1" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
+    <img src="/images/placeholder.svg" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
     <figcaption>Figures work like any other collapsed content — hidden until expanded.</figcaption>
   </figure>
 </div>
@@ -48,7 +48,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   <p>More content here...</p>
   <figure>
     <img
-      src="https://picsum.photos/800/600?random=cardexpandable2"
+      src="/images/placeholder.svg"
       alt="Example expanded content image"
       style="width: 100%; border-radius: 4px;">
     <figcaption>Hidden until expanded.</figcaption>
@@ -71,7 +71,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   visibly changes when toggled, which defeats the point of the example.</p>
   <figure>
     <img
-      src="https://picsum.photos/800/600?random=cardexpandable3"
+      src="/images/placeholder.svg"
       alt="Example expanded content image"
       style="width: 100%; border-radius: 4px;">
     <figcaption> Also hidden when collapsed, even though the card starts
@@ -94,7 +94,7 @@ panel `<div x-demo>` generates automatically from the `events` attribute.
   <p>This is a long content that will be truncated when collapsed...</p>
   <p>More content here...</p>
   <figure>
-    <img src="https://picsum.photos/800/600?random=cardexpandable4" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
+    <img src="/images/placeholder.svg" alt="Example expanded content image" style="width: 100%; border-radius: 4px;">
     <figcaption>Hidden until expanded.</figcaption>
   </figure>
 </div>

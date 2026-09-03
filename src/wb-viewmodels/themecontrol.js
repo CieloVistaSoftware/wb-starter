@@ -104,7 +104,7 @@ export function themecontrol(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-themecontrol> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-themecontrol> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-themecontrol') element.classList.add('x-themecontrol');
+  element.classList.add('x-themecontrol');
 
   // Create the control UI
   const wrapper = document.createElement('div');

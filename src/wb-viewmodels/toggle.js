@@ -8,8 +8,16 @@
  */
 export function toggle(element, options = {}) {
   const config = {
-    // Support both data-class/data-toggle-class for flexibility
-    class: options.class || element.getAttribute('class') || element.getAttribute('toggle-class') || 'active',
+    // #955: `element.getAttribute('class')` used to sit in this chain -- that
+    // is the CSS class attribute, so whatever classes the host already carried
+    // became "the class to toggle". Since toggle() adds `x-toggle` itself, a
+    // toggle ended up toggling its OWN marker class off (and stamping it onto
+    // `target`), never `active` -- confirmed live, wb:toggle reported
+    // `class: "x-toggle"`. It also made both entries after it dead code:
+    // `toggle-class` (the documented spelling) and the 'active' default were
+    // unreachable for any element with a class. toggle.schema.json declares
+    // only `target`, so nothing justified reading the class attribute.
+    class: options.class || element.getAttribute('toggle-class') || 'active',
     // Support both data-target/data-toggle-target for flexibility
     target: options.target || element.getAttribute('target') || element.getAttribute('toggle-target'),
     self: options.self ?? (element.getAttribute('toggle-self') !== 'false'),
@@ -23,7 +31,7 @@ export function toggle(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-toggle> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-toggle> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-toggle') element.classList.add('x-toggle');
+  element.classList.add('x-toggle');
   element.style.cursor = 'pointer';
   element.style.userSelect = 'none';
   element.style.transition = 'all 0.1s ease';

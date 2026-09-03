@@ -70,7 +70,7 @@ test.describe('footer Behavior', () => {
     const html = "<footer>Basic footer content</footer>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
+    const el = page.locator('#test-container .x-footer').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -85,19 +85,19 @@ test.describe('footer Behavior', () => {
 
   test('matrix combo 1: copyright=© 2025', async ({ page }) => {
     await injectAndScan(page, "<footer copyright=\"© 2025\">Test</footer>");
-    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
+    const el = page.locator('#test-container .x-footer').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: brand=Acme, copyright=© 2025', async ({ page }) => {
     await injectAndScan(page, "<footer brand=\"Acme\" copyright=\"© 2025\">Test</footer>");
-    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
+    const el = page.locator('#test-container .x-footer').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: copyright=© 2025, sticky=true', async ({ page }) => {
     await injectAndScan(page, "<footer copyright=\"© 2025\" sticky=\"true\">Test</footer>");
-    const el = page.locator('#test-container .x-footer, #test-container .x-footer').first();
+    const el = page.locator('#test-container .x-footer').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

@@ -64,7 +64,7 @@ test.describe('timeline Behavior', () => {
     const html = '<div x-timeline>Test content</div>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-timeline], #test-container [x-timeline]').first();
+    const el = page.locator('#test-container [x-timeline]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

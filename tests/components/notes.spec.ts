@@ -1,4 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
+import { elementReady } from '../base';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -33,7 +34,13 @@ test.describe('Notes Behavior', () => {
       await (window as any).WB.scan(document.getElementById('test-container'), { eager: true });
     });
 
-    await page.waitForTimeout(50);
+    // #962: the 50ms guess here is why the API tests failed with
+    // "Cannot read properties of undefined (reading 'open')" — notes.js sets
+    // element.wbNotes at the END of its init, so a fixed sleep races it and
+    // tests called .open() on an element that had not been decorated yet.
+    // Settle the injected element instead of guessing.
+    const injected = page.locator('#test-container [x-notes]');
+    if (await injected.count()) await elementReady(injected.first());
   }
 
   // ==========================================

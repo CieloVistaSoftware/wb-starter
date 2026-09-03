@@ -6,7 +6,16 @@ test.describe('Auto-Inject Demo', () => {
     await page.goto('/demos/autoinject.html');
     // Wait for WB to initialize (autoInject happens during init/scan)
     await page.waitForFunction(() => typeof window['WB'] !== 'undefined');
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
+    // #956: NOT WBSite -- window.WBSite is set only by src/index.js and
+    // src/main.js, and demos/autoinject.html loads neither (it imports
+    // wb-lazy.js directly). Confirmed live: WB is present with 210 behaviors
+    // while typeof window.WBSite is "undefined". As this is the file's OUTER
+    // beforeEach it ran for every test, so all 4 burned the 20s wait and
+    // failed having asserted nothing. Same stale wait as #735 / #949.
+    await page.waitForFunction(
+      () => (window as any).WB?.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
+      { timeout: 20000 }
+    );
     await page.waitForTimeout(1000); 
   });
 

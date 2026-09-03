@@ -30,7 +30,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-demo>
 <div x-cardvideo
   src="/videos/demo.mp4"
-  poster="https://picsum.photos/seed/poster/800/450"
+  poster="/images/placeholder.svg"
   title="Demo Video"
   controls>
 </div>
@@ -43,7 +43,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <div x-cardvideo
   src="/videos/demo.mp4"
-  poster="https://picsum.photos/seed/poster/800/450"
+  poster="/images/placeholder.svg"
   title="Demo Video"
   controls>
 </div>

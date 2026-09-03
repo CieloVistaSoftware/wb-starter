@@ -156,7 +156,7 @@ export function checkbox(element, options = {}) {
     host.appendChild(labelEl);
     // Redundant when host IS <div x-checkbox> (#478) -- checkbox.css matches the
     // tag directly too now.
-    if (host.tagName.toLowerCase() !== 'x-checkbox') host.classList.add('x-checkbox');
+    host.classList.add('x-checkbox');
     return checkbox(input, options);
   }
 

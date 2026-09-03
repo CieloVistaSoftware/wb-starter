@@ -11,7 +11,7 @@ Card with embedded video player
 ```html
 <article x-cardvideo
   src="https://www.w3schools.com/html/mov_bbb.mp4"
-  poster="https://picsum.photos/seed/screening/480/270"
+  poster="/images/placeholder.svg"
   title="Behaviors in 90 seconds"
   description="What replaced the behavior base class, and why."></article>
 ```

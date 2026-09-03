@@ -42,6 +42,17 @@ const SKIP_DIRS = new Set([
   // makes the gate fail for reporting a problem accurately.
   'test-single',
 ]);
+
+// #960: the same rule, for FILES. data/test-results.json (7,080 wb- refs) and
+// data/test-status.json (1,108) are run artifacts sitting beside the already
+// skipped data/test-results/ DIRECTORY. Counting them made PACKAGE/MODULE/CLASS
+// track how much failure text the PREVIOUS run happened to capture -- the
+// ceilings passed after a small run and failed after a large one with no source
+// change between. A gate whose answer depends on its own exhaust is not a gate.
+const SKIP_FILES = new Set([
+  'test-results.json',
+  'test-status.json',
+]);
 const EXT = /\.(js|mjs|cjs|ts|tsx|css|html|json|md|yml|yaml)$/;
 
 function walk(dir, out = []) {
@@ -51,6 +62,7 @@ function walk(dir, out = []) {
     if (SKIP_DIRS.has(e.name)) continue;
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walk(p, out);
+    else if (SKIP_FILES.has(e.name)) continue;
     else if (EXT.test(e.name)) out.push(p);
   }
   return out;

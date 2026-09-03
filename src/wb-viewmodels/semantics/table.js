@@ -178,7 +178,7 @@ export function table(element, options = {}) {
   // the child <table> a <table> wraps), since data.css's `table.x-table`/
   // `.x-table > table` rules still need the class there (a native `table`
   // tag can never match a `.x-table` tag selector).
-  if (tableEl.tagName.toLowerCase() !== 'x-table') tableEl.classList.add('x-table');
+  tableEl.classList.add('x-table');
   if (config.striped) tableEl.classList.add('x-table--striped');
   if (config.hover) tableEl.classList.add('x-table--hover');
   if (config.bordered) tableEl.classList.add('x-table--bordered');

@@ -64,7 +64,7 @@ test.describe('progressbar Behavior', () => {
     const html = '<progress>Test content</progress>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container progress, #test-container x-progressbar').first();
+    const el = page.locator('#test-container progress, #test-container [x-progressbar]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

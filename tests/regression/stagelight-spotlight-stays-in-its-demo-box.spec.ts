@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { elementReady } from '../base';
 
 /**
  * #647: loading demos/playground.html darkened the ENTIRE page with a
@@ -36,8 +37,20 @@ for (const { url, label } of PAGES) {
 
       // The gallery demos upgrade lazily; scroll them into view and wait.
       await page.evaluate(() => {
-        document.querySelectorAll('[x-stagelight], [x-stagelight]').forEach((e) => e.scrollIntoView());
+        document.querySelectorAll('[x-stagelight]').forEach((e) => e.scrollIntoView());
       });
+      // #972: wait on what the assertions actually depend on. The spot
+      // (injected by x-stagelight) and the grid (injected by x-demo) are two
+      // separate injections with no ordering guarantee between them, so waiting
+      // for the spot said nothing about the grid: under load the spot could land
+      // first and `closest('.x-demo__grid')` returned null. Settling the x-demo
+      // hosts first removes the race. `x-ready` means SETTLED, not SUCCEEDED, so
+      // the assertions below still do the real verifying.
+      const demoHosts = page.locator('[x-demo]:has([x-stagelight])');
+      for (let i = 0, n = await demoHosts.count(); i < n; i++) {
+        await elementReady(demoHosts.nth(i));
+      }
+
       await page.waitForFunction(() => !!document.querySelector('.x-stagelight__spot'), null, {
         timeout: 30000,
       });
@@ -88,8 +101,20 @@ for (const { url, label } of PAGES) {
     test(`${url}: spotlight tracks the mouse relative to its own box`, async ({ page }) => {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
       await page.evaluate(() => {
-        document.querySelectorAll('[x-stagelight], [x-stagelight]').forEach((e) => e.scrollIntoView());
+        document.querySelectorAll('[x-stagelight]').forEach((e) => e.scrollIntoView());
       });
+      // #972: wait on what the assertions actually depend on. The spot
+      // (injected by x-stagelight) and the grid (injected by x-demo) are two
+      // separate injections with no ordering guarantee between them, so waiting
+      // for the spot said nothing about the grid: under load the spot could land
+      // first and `closest('.x-demo__grid')` returned null. Settling the x-demo
+      // hosts first removes the race. `x-ready` means SETTLED, not SUCCEEDED, so
+      // the assertions below still do the real verifying.
+      const demoHosts = page.locator('[x-demo]:has([x-stagelight])');
+      for (let i = 0, n = await demoHosts.count(); i < n; i++) {
+        await elementReady(demoHosts.nth(i));
+      }
+
       await page.waitForFunction(() => !!document.querySelector('.x-stagelight__spot'), null, {
         timeout: 30000,
       });

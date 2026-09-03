@@ -9,7 +9,7 @@ User avatar with image, initials fallback, and status indicator
 ### How to write it
 
 ```html
-<div x-avatar src="https://picsum.photos/seed/ada/64/64" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
+<div x-avatar src="/images/placeholder.svg" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
 ```
 
 ## Attributes

@@ -6,7 +6,7 @@
   "schemaFor": "search",
   "baseClass": "x-search",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "search",
     "implicitRole": "search"
   },
   "compliance": {

@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/components/feedback-visual.spec.ts",
+  "startedAt": "2026-08-31T19:18:01.466Z",
+  "updatedAt": "2026-08-31T19:18:18.754Z",
+  "command": "npx playwright test --workers=8 tests/components/feedback-visual.spec.ts",
+  "pid": 35620,
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "total": 8,
+  "currentFile": "tests\\components\\feedback-visual.spec.ts",
+  "output": "\nRunning 8 tests using 8 workers\n\n  ok 7 [behaviors] › tests\\components\\feedback-visual.spec.ts:242:3 › Card Structure › card with title and footer has proper structure (5.2s)\n  ok 6 [behaviors] › tests\\components\\feedback-visual.spec.ts:145:3 › Skeleton Loaders › should have shimmer animation (5.2s)\n  ok 2 [behaviors] › tests\\components\\feedback-visual.spec.ts:11:3 › Progress Bars › should have appropriate height (6.3s)\n  ok 5 [behaviors] › tests\\components\\feedback-visual.spec.ts:112:3 › Spinners › should have different colors based on color (6.1s)\n  ok 1 [behaviors] › tests\\components\\feedback-visual.spec.ts:81:3 › Spinners › should render with spinning animation (6.5s)\n  ok 4 [behaviors] › tests\\components\\feedback-visual.spec.ts:174:3 › Skeleton Loaders › text variant creates multiple lines (6.9s)\n  ok 8 [behaviors] › tests\\components\\feedback-visual.spec.ts:201:3 › Clickable Card › should toggle active state on click (6.7s)\n  ok 3 [behaviors] › tests\\components\\feedback-visual.spec.ts:53:3 › Progress Bars › should animate from 0 to target value (8.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 8 tests in 12.5s\n  ✓ Passed:  8\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 8/8 passed\n════════════════════════════════════════════════════════════\n\n\n  8 passed (13.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-31T19:18:18.754Z",
+  "duration": "17.29s",
+  "exitCode": 0,
+  "flaky": 0
+}

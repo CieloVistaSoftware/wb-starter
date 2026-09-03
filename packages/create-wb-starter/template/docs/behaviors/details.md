@@ -8,7 +8,7 @@ Applies to `<details>`, and to any element carrying `x-details`.
 
 ```html
 <details summary="Trail conditions" animated>
-  <img src="https://picsum.photos/seed/details/480/200" alt="Trail through autumn woodland" width="480" height="200">
+  <img src="/images/placeholder.svg" alt="Trail through autumn woodland" width="480" height="200">
   <p>Open to show the summary text is authored via the <code>summary</code>
      attribute — it reads "Details" only when none is set.</p>
 </details>

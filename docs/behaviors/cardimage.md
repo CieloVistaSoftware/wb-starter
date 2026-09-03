@@ -10,7 +10,7 @@ Card with featured image and optional title/subtitle
 
 ```html
 <article x-cardimage
-  src="https://picsum.photos/seed/harbour/480/300"
+  src="/images/placeholder.svg"
   alt="Fishing boats at the harbour wall"
   title="Harbour at first light"
   caption="Shot on the 6am walk-around."></article>
@@ -30,7 +30,7 @@ Use `x-cardimage` when the host is not a `<article>` and you want the same behav
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `https://picsum.photos/seed/cardimage/600/400` | Image source URL |
+| `src` | `string` | `/images/placeholder.svg` | Image source URL |
 | `alt` | `string` | — | Image alt text (accessibility) |
 | `title` | `string` | — | Card title |
 | `subtitle` | `string` | — | Card subtitle |

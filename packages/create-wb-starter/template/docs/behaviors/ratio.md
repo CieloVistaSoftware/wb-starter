@@ -8,7 +8,7 @@ Apply `x-ratio` to any element.
 
 ```html
 <div x-ratio ratio="16:9">
-  <img src="https://picsum.photos/seed/wide/640/360" alt="Coastline from the air">
+  <img src="/images/placeholder.svg" alt="Coastline from the air">
 </div>
 ```
 

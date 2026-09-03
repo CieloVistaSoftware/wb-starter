@@ -44,13 +44,23 @@ const ALLOWED = new Set<string>([
 
 const ROOT = process.cwd();
 
-// Live, user-facing surface. behaviors.html / newbehaviors.html are archived,
-// non-rendering legacy dumps and are excluded (delete them, don't migrate).
+// #910: `behaviors.html` and `newbehaviors.html` used to sit on this list as
+// "archived, non-rendering legacy dumps". Both claims have expired:
+//
+//   newbehaviors.html   does not exist anywhere in the repo.
+//   pages/behaviors.html is 2,330 lines, is the live behaviours browser served
+//                        at /?page=behaviors, and is wired into config/site.json
+//                        as a nav item. It is the most demo-dense page shipped.
+//
+// Worse, the match below is by BASENAME, so the entry excluded the live page
+// through a filename collision -- the one page a data-* gate most needs to
+// cover was the one it skipped. It is clean today (0 data-* attributes), so
+// removing the exemption costs nothing and starts protecting it.
+//
+// Fixtures below stay: their whole purpose is exercising legacy syntax, so they
+// must CONTAIN it. Same exclusion demos-no-legacy-data-attrs.spec.ts applies;
+// this list was missing them, so the two gates disagreed (#895).
 const ARCHIVED = new Set([
-  'behaviors.html', 'newbehaviors.html',
-  // Fixtures whose whole purpose is exercising legacy syntax, so they must
-  // CONTAIN it. Same exclusion demos-no-legacy-data-attrs.spec.ts already
-  // applies; this list was missing them, so the two gates disagreed (#895).
   'legacy-syntax-check.html', 'wizard.html', 'registry-browser.html', 'wb-views-demo.html',
 ]);
 const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);

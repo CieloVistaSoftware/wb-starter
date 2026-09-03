@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Image source URL",
       "required": true,
-      "default": "https://picsum.photos/seed/cardimage/600/400"
+      "default": "/images/placeholder.svg"
     },
     "alt": {
       "type": "string",
@@ -277,36 +277,36 @@
     "matrix": {
       "combinations": [
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400"
+          "src": "/images/placeholder.svg"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "alt": "Description"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "title": "Title"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "caption": "Photo by John"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "aspect": "1/1"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "position": "bottom",
           "title": "Title"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "variant": "elevated"
         }
       ]

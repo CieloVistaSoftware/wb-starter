@@ -121,19 +121,19 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // renders at least one <div x-demo> grid of x-card* examples.
         const OVERLAY_CLASS_RE = new RegExp(
           [
-            '[x-tooltip]', '[x-tooltip]__arrow', '[x-tooltip]__content', 'x-tooltip-glass',
+            'x-tooltip', 'x-tooltip__arrow', 'x-tooltip__content', 'x-tooltip-glass',
             'x-popover', 'x-popover-trigger',
             'x-dropdown-menu',
-            '[x-modal]', 'x-modal-content', 'x-modal-glass-overlay', 'x-modal-glass-content',
+            'x-modal', 'x-modal-content', 'x-modal-glass-overlay', 'x-modal-glass-content',
             '.x-dialog', 'x-dialog-trigger',
-            '[x-toast]', 'x-toast-container',
+            'x-toast', 'x-toast-container',
             'x-lightbox',
-            '[x-drawer]__panel', '[x-drawer]__backdrop',
+            'x-drawer__panel', 'x-drawer__backdrop',
             'x-offcanvas',
             'x-sheet',
-            '[x-notes]__backdrop', '[x-notes]__drawer',
+            'x-notes__backdrop', 'x-notes__drawer',
             'site__nav-backdrop',
-            '[x-demo]__card-doc-link',
+            'x-demo__card-doc-link',
             // #556: the native <input> that drives a <div x-switch>'s :checked
             // state (switch.css's own comment: "visually-hidden native
             // checkbox (state driver)") -- position:absolute, opacity:0,
@@ -149,7 +149,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             // its own thumb -- the same element pair, on the SAME component,
             // that opacity:0 already correctly excludes for every OTHER
             // (non-disabled) switch on the page.
-            '[x-switch]__input',
+            'x-switch__input',
             // #556: x-stagelight's "beam" variant (stagelight.js) is a
             // decorative lighting-effect demo -- position:absolute,
             // height:100vh (deliberately spans the full viewport height,
@@ -163,7 +163,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             // markup" sample -- by design, same category as this list's
             // tooltip/popover/modal/toast entries, just a lighting effect
             // instead of a UI overlay.
-            '[x-stagelight]__beam',
+            'x-stagelight__beam',
           ].map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')
           // x-card__overlay needs an exact-token match (word-boundary
           // anchored to whitespace/string edges), not a plain substring
@@ -402,6 +402,24 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             const A = candidates[i];
             const B = candidates[j];
             if (A.el.contains(B.el) || B.el.contains(A.el)) continue; // ancestor/descendant — content, not a collision
+
+            // Two inline runs sharing a parent are text flowing across lines,
+            // not a collision. Their border boxes legitimately overlap when
+            // line-height is tighter than the inline content, which is how
+            // <code.x-code> "x-ripple" was reported as overlapping
+            // <code.x-code> "x-fadein" by 48x5px — adjacent chips in one
+            // paragraph. Occlusion means a painted box covering something it
+            // does not belong to; siblings in the same text flow cannot.
+            const inlineish = (el: HTMLElement) => {
+              const d = getComputedStyle(el).display;
+              return d === 'inline' || d === 'inline-block' || d === 'inline-flex';
+            };
+            if (
+              A.el.parentElement &&
+              A.el.parentElement === B.el.parentElement &&
+              inlineish(A.el) &&
+              inlineish(B.el)
+            ) continue;
 
             const a = A.rect;
             const b = B.rect;

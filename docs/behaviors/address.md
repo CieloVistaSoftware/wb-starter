@@ -92,5 +92,5 @@ structured attributes (rather than hand-authored `<address>` markup, which
 they replace, not merge) document their own contact-info behavior on their
 own page, not here:
 
-- [cardportfolio](../cards/cardportfolio.md) -- builds `<address>` from `email`/`phone`/`website` attributes
-- [cardprofile](../cards/cardprofile.md) -- user profile card with contact/social links
+- [cardportfolio](../behaviors/cardportfolio.md) -- builds `<address>` from `email`/`phone`/`website` attributes
+- [cardprofile](../behaviors/cardprofile.md) -- user profile card with contact/social links

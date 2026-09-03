@@ -14,7 +14,7 @@ test.describe('External Markdown Code Block Injection', () => {
     // Wait for the x-mdhtml component to load. The page has two <div x-mdhtml>
     // elements (code + decoupled); target the code one explicitly to avoid a
     // strict-mode ambiguity. It adds the class 'x-mdhtml--loaded' when done.
-    const mdhtml = page.locator('x-mdhtml[src="resilience-through-separation-code.md"]');
+    const mdhtml = page.locator('[x-mdhtml][src="resilience-through-separation-code.md"]');
     await expect(mdhtml).toHaveClass(/x-mdhtml--loaded/, { timeout: 10000 });
 
     // Verify content text exists in the DOM

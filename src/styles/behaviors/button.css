@@ -136,6 +136,29 @@ button-tooltip[disabled] {
   border-color: var(--text-secondary);
 }
 
+/* #875: `outline` is in button.schema.json's variant enum and was the only one
+   of the eight with NO rule at all, so it silently fell back to the default
+   surface -- measured `background: rgb(41,48,61)`, i.e. a normal button wearing
+   a name that promises a border.
+
+   Distinct from `ghost`, which is the neutral transparent one: outline is the
+   ACCENTED transparent one, so it carries the primary colour on both the border
+   and the label. That is the difference the two names are for.
+
+   Compound `.x-button.x-button--outline` (0,2,0) to match every other variant
+   here -- themes.css's `[data-theme] button` reset (0,1,1) otherwise wins the
+   specificity tie-break against a single class. */
+.x-button.x-button--outline {
+  background-color: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.x-button.x-button--outline:hover {
+  background-color: var(--primary);
+  color: var(--text-on-accent, #fff);
+  border-color: var(--primary);
+}
+
 .x-button.x-button--link {
   background-color: transparent;
   color: var(--primary);

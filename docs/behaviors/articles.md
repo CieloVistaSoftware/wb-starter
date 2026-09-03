@@ -11,7 +11,7 @@ optional heading and static pagination controls. Implemented by `articles()` in
 | Attribute | `x-articles` |
 | Attribute form | `<div x-as-articles>` |
 | Behavior function | `articles()` — `src/wb-viewmodels/article.js` |
-| Pairs with | [`article`](../behaviors/semantic/article.md) / `x-article` for each child |
+| Pairs with | [`article`](../behaviors/article.md) / `x-article` for each child |
 | Semantic element | `<section role="feed">` (schema default; the behavior itself doesn't add a role) |
 | Root CSS Class | `<section x-articles>` |
 | Category | Layout |

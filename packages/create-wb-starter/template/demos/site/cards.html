@@ -28,7 +28,7 @@
     <article
       title="Welcome"
       subtitle="Standard card"
-      hoverable>This is a basic card with default styling.</article>
+     >This is an article.</article>
     </div>
     <div x-demo columns="1">
     <article
@@ -37,289 +37,289 @@
       badge="NEW"
       variant="glass"
       clickable
-      hoverable
+     
       elevated>All features enabled.</article>
     </div>
 
     <h2>Image Card</h2>
     <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/mountain-vista/600/400"
+    <article x-cardimage
+      src="/images/placeholder-mountain.svg"
       title="Mountain Vista"
-      subtitle="Nature photography"></div>
+      subtitle="Nature photography"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/ocean-breeze/600/400"
+    <article x-cardimage
+      src="/images/placeholder-waves.svg"
       title="Ocean Breeze"
-      subtitle="Coastal landscapes"></div>
+      subtitle="Coastal landscapes"></article>
     </div>
 
     <h2>Hero Card</h2>
     <div x-demo id="demo-hero" columns="1" full-width>
-      <div x-cardhero
+      <section x-cardhero
         title="Summer Collection 2026"
         subtitle="Fresh styles, bold colors"
         cta="Shop Now"
         cta-secondary="Learn More"
-        background="https://picsum.photos/seed/summer-collection/1200/600"
-        height="450px"></div>
+        background="/images/placeholder-sunrise.svg"
+        height="450px"></section>
     </div>
 
     <h2>Profile Card</h2>
     <div x-demo id="demo-profile" columns="1">
-      <div x-cardprofile
+      <article x-cardprofile
         avatar="https://ui-avatars.com/api/?name=Ronnie+R.&size=150&background=475569&color=fff"
-        cover="https://picsum.photos/seed/design/800/200"
+        cover="/images/placeholder-office.svg"
         name="Ronnie R."
         role="UI/UX Designer"
-        bio="Creating beautiful, accessible interfaces."></div>
+        bio="Creating beautiful, accessible interfaces."></article>
     </div>
 
     <h2>Button Card</h2>
     <div x-demo columns="1">
-    <div x-cardbutton
+    <article x-cardbutton
       title="Save Document"
       subtitle="Your changes are ready"
       primary="Save Now"
-      secondary="Discard"></div>
+      secondary="Discard"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardbutton
+    <article x-cardbutton
       title="Delete Account"
       subtitle="This action is permanent"
       primary="Confirm Delete"
-      secondary="Go Back"></div>
+      secondary="Go Back"></article>
     </div>
 
     <h2>Pricing Cards</h2>
     <div x-demo columns="1">
-    <div x-cardpricing
+    <article x-cardpricing
       plan="Starter"
       price="$0"
       period="/month"
       features="3 Projects,Community Support,1 GB Storage"
-      cta="Get Started"></div>
+      cta="Get Started"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardpricing
+    <article x-cardpricing
       plan="Pro"
       price="$19"
       period="/month"
       features="Unlimited Projects,Priority Support,50 GB Storage,API Access"
       cta="Upgrade"
-      featured></div>
+      featured></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardpricing
+    <article x-cardpricing
       plan="Enterprise"
       price="$99"
       period="/month"
       features="Everything in Pro,SSO & SAML,Dedicated Manager,SLA"
-      cta="Contact Sales"></div>
+      cta="Contact Sales"></article>
     </div>
 
     <h2>Stats Cards</h2>
     <div x-demo columns="1">
-    <div x-cardstats
+    <article x-cardstats
       value="42K"
       label="Users"
       icon="👥"
       trend="up"
-      trend-value="+12.5%"></div>
+      trend-value="+12.5%"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardstats
+    <article x-cardstats
       value="$1.2M"
       label="Revenue"
       icon="💰"
       trend="up"
-      trend-value="+8.3%"></div>
+      trend-value="+8.3%"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardstats
+    <article x-cardstats
       value="99.9%"
       label="Uptime"
       icon="⚡"
       trend="up"
-      trend-value="+0.1%"></div>
+      trend-value="+0.1%"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardstats
+    <article x-cardstats
       value="4.8"
       label="Rating"
       icon="⭐"
       trend="up"
-      trend-value="+0.3"></div>
+      trend-value="+0.3"></article>
     </div>
 
     <h2>Testimonial Card</h2>
     <div x-demo id="demo-testimonial" columns="2">
-      <div x-cardtestimonial
+      <article x-cardtestimonial
         quote="This framework completely transformed how we build web
                behaviors."
         author="Alex Rivera"
         role="Lead Developer, TechCorp"
         avatar="https://ui-avatars.com/api/?name=Alex+Rivera&size=150&background=0f766e&color=fff"
-        rating="5"></div>
-      <div x-cardtestimonial
+        rating="5"></article>
+      <article x-cardtestimonial
         quote="Clean API, great docs, incredibly comprehensive."
         author="Maria Chen"
         role="CTO, StartupLab"
         avatar="https://ui-avatars.com/api/?name=Maria+Chen&size=150&background=be185d&color=fff"
-        rating="5"></div>
+        rating="5"></article>
     </div>
 
     <h2>Product Card</h2>
     <div x-demo columns="1" events="wb:cardproduct:addtocart">
-    <div x-cardproduct
-      image="https://picsum.photos/seed/sneakers/400/300"
+    <article x-cardproduct
+      image="/images/placeholder-product.svg"
       title="Premium Sneakers"
       description="Lightweight with responsive cushioning"
       price="$129"
       rating="4.5"
-      reviews="238"></div>
+      reviews="238"></article>
     </div>
     <div x-demo columns="1" events="wb:cardproduct:addtocart">
-    <div x-cardproduct
-      image="https://picsum.photos/seed/smart-watch/400/300"
+    <article x-cardproduct
+      image="/images/placeholder-product.svg"
       title="Smart Watch"
       description="Health tracking and notifications"
       price="$299"
       rating="4.8"
-      reviews="1024"></div>
+      reviews="1024"></article>
     </div>
     <div x-demo columns="1" events="wb:cardproduct:addtocart">
-    <div x-cardproduct
-      image="https://picsum.photos/seed/headphones/400/300"
+    <article x-cardproduct
+      image="/images/placeholder-product.svg"
       title="Wireless Headphones"
       description="Active noise cancellation"
       price="$89"
       rating="4.3"
-      reviews="567"></div>
+      reviews="567"></article>
     </div>
 
     <h2>Notification Card</h2>
     <div x-demo columns="1">
-    <div x-cardnotification
+    <aside x-cardnotification
       variant="success"
       title="Changes Saved!"
-      message="Your profile has been updated successfully."></div>
+      message="Your profile has been updated successfully."></aside>
     </div>
     <div x-demo columns="1">
-    <div x-cardnotification
+    <aside x-cardnotification
       variant="error"
       title="Upload Failed"
-      message="File exceeds the 10MB size limit."></div>
+      message="File exceeds the 10MB size limit."></aside>
     </div>
 
     <h2>File Card</h2>
     <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       filename="quarterly-report.pdf"
       type="pdf"
       size="2.4 MB"
       date="2026-02-16"
-      href="https://github.com/CieloVistaSoftware/wb-starter/pulse"></div>
+      href="https://github.com/CieloVistaSoftware/wb-starter/pulse"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       filename="team-photo.jpg"
       type="image"
       size="4.1 MB"
       date="2026-02-15"
-      href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors"></div>
+      href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       filename="backup.zip"
       type="zip"
       size="128 MB"
       date="2026-02-14"
-      href="https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip"></div>
+      href="https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip"></article>
     </div>
 
     <h2>Link Card</h2>
     <div x-demo columns="1">
-    <div x-cardlink
+    <article x-cardlink
       href="https://github.com/CieloVistaSoftware/wb-starter#readme"
       icon="📚"
       title="Documentation"
       description="Browse the full API reference."
-      target="_blank"></div>
+      target="_blank"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardlink
+    <article x-cardlink
       href="https://github.com/CieloVistaSoftware/wb-starter/releases"
       icon="🚀"
       title="Release Notes"
       description="See what's new in the latest version."
-      target="_blank"></div>
+      target="_blank"></article>
     </div>
 
     <h2>Horizontal Card</h2>
     <div x-demo id="demo-horizontal" columns="1">
-      <div x-cardhorizontal
-        image="https://picsum.photos/seed/web-behaviors/400/300"
+      <article x-cardhorizontal
+        image="/images/placeholder-scene.svg"
         title="Featured Article"
         subtitle="The Future of Behaviors"
-        content="Web behaviors are evolving rapidly with native browser APIs."></div>
+        content="Web behaviors are evolving rapidly with native browser APIs."></article>
     </div>
 
     <h2>Expandable Card</h2>
     <div x-demo id="demo-expandable" columns="1">
-      <div x-cardexpandable
+      <article x-cardexpandable
         size="sm"
         title="FAQ: How does it work?"
         subtitle="Click to reveal the answer"
         content="The card system uses a behavior-based architecture. Each
                  variant is an independent behavior that composes the shared
                  card structure and CSS — there is no base class to inherit
-                 from."></div>
+                 from."></article>
     </div>
 
     <h2>Minimizable Card</h2>
     <div x-demo id="demo-minimizable" columns="1">
-      <div x-cardminimizable
+      <article x-cardminimizable
         title="Dashboard Widget"
         subtitle="Server Status"
-        content="Active connections: 1,234 | CPU: 45% | Memory: 67%"></div>
+        content="Active connections: 1,234 | CPU: 45% | Memory: 67%"></article>
     </div>
 
     <h2>Overlay Card</h2>
     <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/city-lights/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-city.svg"
       title="City Lights"
       subtitle="Urban photography"
-      height="300px"></div>
+      height="300px"></article>
     </div>
     <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/mountain-trail/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-mountain.svg"
       title="Mountain Trail"
       subtitle="Adventure awaits"
-      height="300px"></div>
+      height="300px"></article>
     </div>
 
     <h2>Video Card</h2>
     <div x-demo id="demo-video" columns="1">
-      <div x-cardvideo
+      <article x-cardvideo
         src="https://www.w3schools.com/html/mov_bbb.mp4"
         title="Big Buck Bunny"
         subtitle="Sample video"
-        controls></div>
+        controls></article>
     </div>
 
     <h2>Portfolio Card</h2>
     <div x-demo id="demo-portfolio" columns="1">
-      <div x-cardportfolio
+      <article x-cardportfolio
         name="Dana K."
         title="Senior UI Engineer"
         company="Cielo Vista Software"
         location="Rochester, MN"
         avatar="https://ui-avatars.com/api/?name=Dana+K.&size=150&background=334155&color=fff"
-        cover="https://picsum.photos/seed/cielo-vista-software/800/300"
+        cover="/images/placeholder-office.svg"
         bio="Full-stack developer with 10+ years experience."
         skills="JavaScript,TypeScript,Behaviors,CSS"
         email="dana.k@example.com"
@@ -327,7 +327,7 @@
         github="https://github.com/CieloVistaSoftware"
         cta="View Full Profile"
         availability="available"
-        tagline="Building the web, one behavior at a time"></div>
+        tagline="Building the web, one behavior at a time"></article>
     </div>
 
   </div>
@@ -338,27 +338,27 @@
   <h2>🃏 Card Behavior</h2>
   <div x-demo columns="1">
     <article title="Default Card" subtitle="A simple card" footer="Card footer">
-    This is example card behavior content.
+    This is an article.
   </article>
   </div>
   <div x-demo columns="1">
     <article title="Glass Card" variant="glass" subtitle="With glass effect">
-    This is example card behavior content.
+    This is an article with variant glass.
   </article>
   </div>
   <div x-demo columns="1">
     <article title="Bordered Card" variant="bordered" footer="Bordered style">
-    This is example card behavior content.
+    This is an article with variant bordered.
   </article>
   </div>
   <div x-demo columns="1">
     <article title="Flat Card" variant="flat" subtitle="Minimal look">
-    This is example card behavior content.
+    This is an article with variant flat.
   </article>
   </div>
   <div x-demo columns="1">
     <article title="Elevated Card" elevated subtitle="With shadow">
-    This is example card behavior content.
+    This is an elevated article.
   </article>
   </div>
   <div x-demo columns="1">
@@ -367,12 +367,12 @@
       clickable
       subtitle="Click me"
       footer="Interactive">
-    This is example card behavior content.
+    This is a clickable article.
   </article>
   </div>
   <div x-demo columns="1">
     <article title="Small Card" size="sm" subtitle="Compact size">
-    This is example card behavior content.
+    This is an article with size sm.
   </article>
   </div>
   <div x-demo columns="1">
@@ -381,7 +381,7 @@
       size="lg"
       subtitle="Spacious layout"
       footer="Extra room">
-    This is example card behavior content.
+    This is an article with size lg.
   </article>
   </div>
   </section>
@@ -390,23 +390,23 @@
   <section id="card-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <article variant="default">
-    This is example card behavior content.
+    <article>
+    This is an article.
   </article>
   </div>
   <div x-demo columns="1">
     <article variant="glass">
-    This is example card behavior content.
+    This is an article with variant glass.
   </article>
   </div>
   <div x-demo columns="1">
     <article variant="bordered">
-    This is example card behavior content.
+    This is an article with variant bordered.
   </article>
   </div>
   <div x-demo columns="1">
     <article variant="flat">
-    This is example card behavior content.
+    This is an article with variant flat.
   </article>
   </div>
   </section>
@@ -416,37 +416,37 @@
   <h2>size variants</h2>
   <div x-demo columns="1">
     <article size="xs">
-    This is example card behavior content.
+    This is an article with size xs.
   </article>
   </div>
   <div x-demo columns="1">
     <article size="sm">
-    This is example card behavior content.
+    This is an article with size sm.
   </article>
   </div>
   <div x-demo columns="1">
     <article size="md">
-    This is example card behavior content.
+    This is an article with size md.
   </article>
   </div>
   <div x-demo columns="1">
     <article size="lg">
-    This is example card behavior content.
+    This is an article with size lg.
   </article>
   </div>
   <div x-demo columns="1">
     <article size="xl">
-    This is example card behavior content.
+    This is an article with size xl.
   </article>
   </div>
   <div x-demo columns="1">
     <article size="full">
-    This is example card behavior content.
+    This is an article with size full.
   </article>
   </div>
   <div x-demo columns="1">
     <article size="auto">
-    This is example card behavior content.
+    This is an article with size auto.
   </article>
   </div>
   </section>
@@ -456,12 +456,12 @@
   <h2>Toggles</h2>
   <div x-demo columns="1">
     <article elevated>
-    This is example card behavior content.
+    This is an elevated article.
   </article>
   </div>
   <div x-demo columns="1">
     <article clickable>
-    This is example card behavior content.
+    This is a clickable article.
   </article>
   </div>
   </section>
@@ -470,19 +470,19 @@
   <section id="cardbutton-button-card">
   <h2>🔘 Button Card</h2>
   <div x-demo columns="1">
-    <div x-cardbutton title="Card" primary="OK">
-    This is example button card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardbutton title="Card" primary="Submit" content="Content">
-    This is example button card content.
-  </div>
+    <article x-cardbutton title="Card" primary="OK">
+    This is an article with x-cardbutton and primary OK.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardbutton title="Card" primary="Yes" secondary="No">
-    This is example button card content.
+    <article x-cardbutton title="Card" primary="Submit" content="Content">
+    This is an article with x-cardbutton and primary Submit.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardbutton title="Card" primary="Yes" secondary="No">
+    This is an article with x-cardbutton, primary Yes and secondary No.
+  </article>
   </div>
   </section>
 
@@ -490,19 +490,19 @@
   <section id="cardbutton-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardbutton variant="default" primary="Sample primary">
-    This is example button card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardbutton variant="elevated" primary="Sample primary">
-    This is example button card content.
-  </div>
+    <article x-cardbutton primary="Sample primary">
+    This is an article with x-cardbutton and primary Sample primary.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardbutton variant="bordered" primary="Sample primary">
-    This is example button card content.
+    <article x-cardbutton variant="elevated" primary="Sample primary">
+    This is an article with x-cardbutton, variant elevated and primary Sample primary.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardbutton variant="bordered" primary="Sample primary">
+    This is an article with x-cardbutton, variant bordered and primary Sample primary.
+  </article>
   </div>
   </section>
 
@@ -510,19 +510,19 @@
   <section id="carddraggable-draggable-card">
   <h2>🎯 Draggable Card</h2>
   <div x-demo columns="1">
-    <div x-carddraggable title="Basic" content="Content">
-    This is example draggable card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-carddraggable title="Constrained" content="Content" constrain="parent">
-    This is example draggable card content.
-  </div>
+    <article x-carddraggable title="Basic" content="Content">
+    This is an article with x-carddraggable.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-carddraggable title="X Only" content="Content" axis="x">
-    This is example draggable card content.
+    <article x-carddraggable title="Constrained" content="Content" constrain="parent">
+    This is an article with x-carddraggable and constrain parent.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-carddraggable title="X Only" content="Content" axis="x">
+    This is an article with x-carddraggable and axis x.
+  </article>
   </div>
   </section>
 
@@ -530,19 +530,19 @@
   <section id="carddraggable-constrain-variants">
   <h2>constrain variants</h2>
   <div x-demo columns="1">
-    <div x-carddraggable constrain="none">
-    This is example draggable card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-carddraggable constrain="parent">
-    This is example draggable card content.
-  </div>
+    <article x-carddraggable constrain="none">
+    This is an article with x-carddraggable and constrain none.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-carddraggable constrain="viewport">
-    This is example draggable card content.
+    <article x-carddraggable constrain="parent">
+    This is an article with x-carddraggable and constrain parent.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-carddraggable constrain="viewport">
+    This is an article with x-carddraggable and constrain viewport.
+  </article>
   </div>
   </section>
 
@@ -550,19 +550,19 @@
   <section id="carddraggable-axis-variants">
   <h2>axis variants</h2>
   <div x-demo columns="1">
-    <div x-carddraggable axis="both">
-    This is example draggable card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-carddraggable axis="x">
-    This is example draggable card content.
-  </div>
+    <article x-carddraggable axis="both">
+    This is an article with x-carddraggable and axis both.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-carddraggable axis="y">
-    This is example draggable card content.
+    <article x-carddraggable axis="x">
+    This is an article with x-carddraggable and axis x.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-carddraggable axis="y">
+    This is an article with x-carddraggable and axis y.
+  </article>
   </div>
   </section>
 
@@ -570,14 +570,14 @@
   <section id="carddraggable-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-carddraggable variant="default">
-    This is example draggable card content.
-  </div>
+    <article x-carddraggable>
+    This is an article with x-carddraggable.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-carddraggable variant="elevated">
-    This is example draggable card content.
-  </div>
+    <article x-carddraggable variant="elevated">
+    This is an article with x-carddraggable and variant elevated.
+  </article>
   </div>
   </section>
 
@@ -585,25 +585,25 @@
   <section id="cardexpandable-expandable-card">
   <h2>➕ Expandable Card</h2>
   <div x-demo columns="1">
-    <div x-cardexpandable size="sm" title="Basic">
+    <article x-cardexpandable size="sm" title="Basic">
     This card's body text is intentionally long enough that it wraps past the
     collapsed height, so clicking Show More/Show Less produces a real, visible
     change instead of nothing at all.
-  </div>
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardexpandable size="sm" title="Expanded" expanded>
+    <article x-cardexpandable size="sm" title="Expanded" expanded>
     This card's body text is intentionally long enough that it wraps past the
     collapsed height, so clicking Show More/Show Less produces a real, visible
     change instead of nothing at all.
-  </div>
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardexpandable size="sm" title="Custom" max-height="150px">
-    This card's body text is intentionally long enough that it wraps past the
+    <article x-cardexpandable size="sm" title="Custom" max-height="60px">
+    This card's body text is intentionally long enough that it wraps past the A custom max-height raises the cap, so this example needs a longer body than the others before anything is actually hidden: with max-height="150px" the text has to exceed 150px, not 100px, or the control renders and reveals nothing when clicked.
     collapsed height, so clicking Show More/Show Less produces a real, visible
     change instead of nothing at all.
-  </div>
+  </article>
   </div>
   </section>
 
@@ -611,25 +611,25 @@
   <section id="cardexpandable-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardexpandable size="sm" variant="default" title="Sample title">
+    <article x-cardexpandable size="sm" title="Sample title">
     This card's body text is intentionally long enough that it wraps past the
     collapsed height, so clicking Show More/Show Less produces a real, visible
     change instead of nothing at all.
-  </div>
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardexpandable size="sm" variant="elevated" title="Sample title">
+    <article x-cardexpandable size="sm" variant="elevated" title="Sample title">
     This card's body text is intentionally long enough that it wraps past the
     collapsed height, so clicking Show More/Show Less produces a real, visible
     change instead of nothing at all.
-  </div>
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardexpandable size="sm" variant="bordered" title="Sample title">
+    <article x-cardexpandable size="sm" variant="bordered" title="Sample title">
     This card's body text is intentionally long enough that it wraps past the
     collapsed height, so clicking Show More/Show Less produces a real, visible
     change instead of nothing at all.
-  </div>
+  </article>
   </div>
   </section>
 
@@ -637,11 +637,11 @@
   <section id="cardexpandable-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-cardexpandable size="sm" expanded title="Sample title">
+    <article x-cardexpandable size="sm" expanded title="Sample title">
       This card's body text is intentionally long enough that it wraps past the
       collapsed height, so clicking Show More/Show Less produces a real, visible
       change instead of nothing at all.
-    </div>
+    </article>
   </div>
   </section>
 
@@ -649,29 +649,29 @@
   <section id="cardfile-file-card">
   <h2>📄 File Card</h2>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       filename="document.pdf"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       filename="document.pdf"
       file-type="pdf"
       size="1.2 MB"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile, file-type pdf and size 1.2 MB.2 MB.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       filename="photo.jpg"
       file-type="image"
       size="2.4 MB"
       href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile, file-type image and size 2.4 MB.4 MB.
+  </article>
   </div>
   </section>
 
@@ -679,60 +679,60 @@
   <section id="cardfile-filetype-variants">
   <h2>fileType variants</h2>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       file-type="pdf"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and file-type pdf.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       file-type="doc"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and file-type doc.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       file-type="image"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/graphs/contributors">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and file-type image.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       file-type="video"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and file-type video.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       file-type="audio"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and file-type audio.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       file-type="zip"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/archive/refs/heads/main.zip">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and file-type zip.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       file-type="file"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and file-type file.
+  </article>
   </div>
   </section>
 
@@ -740,28 +740,28 @@
   <section id="cardfile-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardfile
-      variant="default"
+    <article x-cardfile
+     
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       variant="compact"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and variant compact.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardfile
+    <article x-cardfile
       variant="elevated"
       filename="Sample filename"
       href="https://github.com/CieloVistaSoftware/wb-starter/pulse">
-    This is example file card content.
-  </div>
+    This is an article with x-cardfile and variant elevated.
+  </article>
   </div>
   </section>
 
@@ -769,60 +769,60 @@
   <section id="cardhero-hero-card">
   <h2>🦸 Hero Card</h2>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      background="https://picsum.photos/seed/hero/1200/600"
+    <section x-cardhero
+      background="/images/placeholder-scene.svg"
       title="Welcome">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      background="https://picsum.photos/seed/hero-2/1200/600"
+    <section x-cardhero
+      background="/images/placeholder-scene.svg"
       title="Welcome"
       subtitle="Subtitle">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      background="https://picsum.photos/seed/hero-3/1200/600"
+    <section x-cardhero
+      background="/images/placeholder-scene.svg"
       title="Welcome"
       cta="Click Me">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      background="https://picsum.photos/seed/hero-4/1200/600"
+    <section x-cardhero
+      background="/images/placeholder-scene.svg"
       title="Welcome"
       subtitle="Sub"
       cta="Go"
       variant="cosmic">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and variant cosmic.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      background="https://picsum.photos/seed/hero-5/1200/600"
+    <section x-cardhero
+      background="/images/placeholder-scene.svg"
       title="Welcome"
       xalign="left">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and xalign left.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      background="https://picsum.photos/seed/hero-6/1200/600"
+    <section x-cardhero
+      background="/images/placeholder-scene.svg"
       title="Welcome">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      background="https://picsum.photos/seed/hero-7/1200/600"
+    <section x-cardhero
+      background="/images/placeholder-scene.svg"
       title="Welcome"
       full-height>
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and full-height.
+  </section>
   </div>
   </section>
 
@@ -830,44 +830,44 @@
   <section id="cardhero-variants">
   <h2>Variants</h2>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
-      variant="default"
-      background="https://picsum.photos/seed/sample/1200/600"
+    <section x-cardhero
+     
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       variant="cosmic"
-      background="https://picsum.photos/seed/sample-2/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and variant cosmic.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       variant="split"
-      background="https://picsum.photos/seed/sample-3/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and variant split.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       variant="minimal"
-      background="https://picsum.photos/seed/sample-4/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and variant minimal.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       variant="gradient"
-      background="https://picsum.photos/seed/sample-5/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and variant gradient.
+  </section>
   </div>
   </section>
 
@@ -875,28 +875,28 @@
   <section id="cardhero-xalign-variants">
   <h2>xalign variants</h2>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       xalign="left"
-      background="https://picsum.photos/seed/sample-6/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and xalign left.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       xalign="center"
-      background="https://picsum.photos/seed/sample-7/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and xalign center.
+  </section>
   </div>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       xalign="right"
-      background="https://picsum.photos/seed/sample-8/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-    This is example hero card content.
-  </div>
+    This is a section with x-cardhero and xalign right.
+  </section>
   </div>
   </section>
 
@@ -904,12 +904,12 @@
   <section id="cardhero-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1" full-width>
-    <div x-cardhero
+    <section x-cardhero
       full-height
-      background="https://picsum.photos/seed/sample-9/1200/600"
+      background="/images/placeholder-scene.svg"
       title="Sample title">
-      This is example hero card content.
-    </div>
+      This is a section with x-cardhero and full-height.
+    </section>
   </div>
   </section>
 
@@ -917,35 +917,35 @@
   <section id="cardhorizontal-horizontal-card">
   <h2>↔️ Horizontal Card</h2>
   <div x-demo columns="1">
-    <div x-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
+    <article x-cardhorizontal
+      image="/images/placeholder-scene.svg"
       title="Title">
-    This is example horizontal card content.
-  </div>
+    This is an article with x-cardhorizontal.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
+    <article x-cardhorizontal
+      image="/images/placeholder-scene.svg"
       title="Title"
       subtitle="Subtitle">
-    This is example horizontal card content.
-  </div>
+    This is an article with x-cardhorizontal.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
+    <article x-cardhorizontal
+      image="/images/placeholder-scene.svg"
       title="Title"
       image-position="right">
-    This is example horizontal card content.
-  </div>
+    This is an article with x-cardhorizontal and image-position right.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardhorizontal
-      image="https://picsum.photos/seed/cardhorizontal/600/400"
+    <article x-cardhorizontal
+      image="/images/placeholder-scene.svg"
       title="Title"
       variant="elevated">
-    This is example horizontal card content.
-  </div>
+    This is an article with x-cardhorizontal and variant elevated.
+  </article>
   </div>
   </section>
 
@@ -953,14 +953,14 @@
   <section id="cardhorizontal-imageposition-variants">
   <h2>imagePosition variants</h2>
   <div x-demo columns="1">
-    <div x-cardhorizontal image-position="left">
-    This is example horizontal card content.
-  </div>
+    <article x-cardhorizontal image-position="left">
+    This is an article with x-cardhorizontal and image-position left.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardhorizontal image-position="right">
-    This is example horizontal card content.
-  </div>
+    <article x-cardhorizontal image-position="right">
+    This is an article with x-cardhorizontal and image-position right.
+  </article>
   </div>
   </section>
 
@@ -968,24 +968,24 @@
   <section id="cardhorizontal-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardhorizontal variant="default">
-    This is example horizontal card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardhorizontal variant="elevated">
-    This is example horizontal card content.
-  </div>
+    <article x-cardhorizontal>
+    This is an article with x-cardhorizontal.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardhorizontal variant="bordered">
-    This is example horizontal card content.
-  </div>
+    <article x-cardhorizontal variant="elevated">
+    This is an article with x-cardhorizontal and variant elevated.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardhorizontal variant="minimal">
-    This is example horizontal card content.
+    <article x-cardhorizontal variant="bordered">
+    This is an article with x-cardhorizontal and variant bordered.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardhorizontal variant="minimal">
+    This is an article with x-cardhorizontal and variant minimal.
+  </article>
   </div>
   </section>
 
@@ -993,60 +993,60 @@
   <section id="cardimage-image-card">
   <h2>🖼️ Image Card</h2>
   <div x-demo columns="1">
-    <div x-cardimage src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+    <article x-cardimage src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
+    <article x-cardimage
+      src="/images/placeholder-scene.svg"
       alt="Description">
-    This is example image card content.
-  </div>
+    This is an article with x-cardimage.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
+    <article x-cardimage
+      src="/images/placeholder-scene.svg"
       title="Title">
-    This is example image card content.
-  </div>
+    This is an article with x-cardimage.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
+    <article x-cardimage
+      src="/images/placeholder-scene.svg"
       title="Title"
       subtitle="Subtitle">
-    This is example image card content.
-  </div>
+    This is an article with x-cardimage.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
+    <article x-cardimage
+      src="/images/placeholder-scene.svg"
       caption="Photo by John">
-    This is example image card content.
-  </div>
+    This is an article with x-cardimage and caption Photo by John.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
+    <article x-cardimage
+      src="/images/placeholder-scene.svg"
       aspect="1/1">
-    This is example image card content.
-  </div>
+    This is an article with x-cardimage and aspect 1/1.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
+    <article x-cardimage
+      src="/images/placeholder-scene.svg"
       position="bottom"
       title="Title">
-    This is example image card content.
-  </div>
+    This is an article with x-cardimage and position bottom.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
-      src="https://picsum.photos/seed/cardimage/600/400"
+    <article x-cardimage
+      src="/images/placeholder-scene.svg"
       variant="elevated">
-    This is example image card content.
-  </div>
+    This is an article with x-cardimage and variant elevated.
+  </article>
   </div>
   </section>
 
@@ -1054,46 +1054,46 @@
   <section id="cardimage-aspect-variants">
   <h2>aspect variants</h2>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       aspect="16/9"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and aspect 16/9.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       aspect="4/3"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and aspect 4/3.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       aspect="1/1"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and aspect 1/1.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       aspect="3/2"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and aspect 3/2.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       aspect="21/9"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and aspect 21/9.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       aspect="auto"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and aspect auto.
+  </article>
   </div>
   </section>
 
@@ -1101,32 +1101,32 @@
   <section id="cardimage-position-variants">
   <h2>position variants</h2>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       position="top"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and position top.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       position="bottom"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and position bottom.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       position="left"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and position left.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       position="right"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and position right.
+  </article>
   </div>
   </section>
 
@@ -1134,28 +1134,28 @@
   <section id="cardimage-fit-variants">
   <h2>fit variants</h2>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       fit="cover"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and fit cover.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       fit="contain"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardimage fit="fill" src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and fit contain.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage fit="none" src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
+    <article x-cardimage fit="fill" src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and fit fill.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardimage fit="none" src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and fit none.
+  </article>
   </div>
   </section>
 
@@ -1163,18 +1163,18 @@
   <section id="cardimage-loading-variants">
   <h2>loading variants</h2>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       loading="lazy"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and loading lazy.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       loading="eager"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and loading eager.
+  </article>
   </div>
   </section>
 
@@ -1182,32 +1182,32 @@
   <section id="cardimage-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardimage
-      variant="default"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+    <article x-cardimage
+     
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       variant="elevated"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and variant elevated.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       variant="bordered"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and variant bordered.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardimage
+    <article x-cardimage
       variant="minimal"
-      src="https://picsum.photos/seed/cardimage/600/400">
-    This is example image card content.
-  </div>
+      src="/images/placeholder-scene.svg">
+    This is an article with x-cardimage and variant minimal.
+  </article>
   </div>
   </section>
 
@@ -1215,37 +1215,37 @@
   <section id="cardlink-link-card">
   <h2>🔗 Link Card</h2>
   <div x-demo columns="1">
-    <div x-cardlink href="https://example.com">
-    This is example link card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardlink href="https://example.com" title="Link Title">
-    This is example link card content.
-  </div>
+    <article x-cardlink href="https://example.com">
+    This is an article with x-cardlink.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardlink
+    <article x-cardlink href="https://example.com" title="Link Title">
+    This is an article with x-cardlink.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink
       href="https://example.com"
       title="Title"
       description="Description">
-    This is example link card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardlink href="https://example.com" icon="🔗">
-    This is example link card content.
-  </div>
+    This is an article with x-cardlink and description Description.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardlink href="https://example.com" badge="NEW">
-    This is example link card content.
-  </div>
+    <article x-cardlink href="https://example.com" icon="🔗">
+    This is an article with x-cardlink and icon 🔗.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardlink href="https://example.com" target="_blank">
-    This is example link card content.
+    <article x-cardlink href="https://example.com" badge="NEW">
+    This is an article with x-cardlink and badge NEW.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardlink href="https://example.com" target="_blank">
+    This is an article with x-cardlink and target _blank.
+  </article>
   </div>
   </section>
 
@@ -1253,14 +1253,14 @@
   <section id="cardlink-target-variants">
   <h2>target variants</h2>
   <div x-demo columns="1">
-    <div x-cardlink target="_self" href="https://example.com">
-    This is example link card content.
-  </div>
+    <article x-cardlink target="_self" href="https://example.com">
+    This is an article with x-cardlink and target _self.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardlink target="_blank" href="https://example.com">
-    This is example link card content.
-  </div>
+    <article x-cardlink target="_blank" href="https://example.com">
+    This is an article with x-cardlink and target _blank.
+  </article>
   </div>
   </section>
 
@@ -1268,29 +1268,29 @@
   <section id="cardlink-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardlink variant="default" href="https://example.com">
-    This is example link card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardlink variant="elevated" href="https://example.com">
-    This is example link card content.
-  </div>
+    <article x-cardlink href="https://example.com">
+    This is an article with x-cardlink.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardlink variant="bordered" href="https://example.com">
-    This is example link card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardlink variant="minimal" href="https://example.com">
-    This is example link card content.
-  </div>
+    <article x-cardlink variant="elevated" href="https://example.com">
+    This is an article with x-cardlink and variant elevated.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardlink variant="glass" href="https://example.com">
-    This is example link card content.
+    <article x-cardlink variant="bordered" href="https://example.com">
+    This is an article with x-cardlink and variant bordered.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardlink variant="minimal" href="https://example.com">
+    This is an article with x-cardlink and variant minimal.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardlink variant="glass" href="https://example.com">
+    This is an article with x-cardlink and variant glass.
+  </article>
   </div>
   </section>
 
@@ -1298,14 +1298,14 @@
   <section id="cardminimizable-minimizable-card">
   <h2>➖ Minimizable Card</h2>
   <div x-demo columns="1">
-    <div x-cardminimizable title="Basic" content="Content">
-    This is example minimizable card content.
-  </div>
+    <article x-cardminimizable title="Basic" content="Content">
+    This is an article with x-cardminimizable.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardminimizable title="Minimized" content="Content" minimized>
-    This is example minimizable card content.
-  </div>
+    <article x-cardminimizable title="Minimized" content="Content" minimized>
+    This is an article with x-cardminimizable and minimized.
+  </article>
   </div>
   </section>
 
@@ -1313,19 +1313,19 @@
   <section id="cardminimizable-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardminimizable variant="default" title="Sample title">
-    This is example minimizable card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardminimizable variant="elevated" title="Sample title">
-    This is example minimizable card content.
-  </div>
+    <article x-cardminimizable title="Sample title">
+    This is an article with x-cardminimizable.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardminimizable variant="bordered" title="Sample title">
-    This is example minimizable card content.
+    <article x-cardminimizable variant="elevated" title="Sample title">
+    This is an article with x-cardminimizable and variant elevated.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardminimizable variant="bordered" title="Sample title">
+    This is an article with x-cardminimizable and variant bordered.
+  </article>
   </div>
   </section>
 
@@ -1333,9 +1333,9 @@
   <section id="cardminimizable-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-cardminimizable minimized title="Sample title">
-      This is example minimizable card content.
-    </div>
+    <article x-cardminimizable minimized title="Sample title">
+      This is an article with x-cardminimizable and minimized.
+    </article>
   </div>
   </section>
 
@@ -1343,29 +1343,29 @@
   <section id="cardnotification-notification-card">
   <h2>🔔 Notification Card</h2>
   <div x-demo columns="1">
-    <div x-cardnotification message="Info message">
-    This is example notification card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardnotification variant="success" title="Success" message="Done!">
-    This is example notification card content.
-  </div>
+    <aside x-cardnotification message="Info message">
+    This is an aside with x-cardnotification and message Info message.
+  </aside>
   </div>
   <div x-demo columns="1">
-    <div x-cardnotification variant="warning" message="Warning!">
-    This is example notification card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardnotification variant="error" message="Error!">
-    This is example notification card content.
-  </div>
+    <aside x-cardnotification variant="success" title="Success" message="Done!">
+    This is an aside with x-cardnotification, variant success and message Done!.
+  </aside>
   </div>
   <div x-demo columns="1">
-    <div x-cardnotification variant="info" title="Notice" message="Info" icon="🔔">
-    This is example notification card content.
+    <aside x-cardnotification variant="warning" message="Warning!">
+    This is an aside with x-cardnotification, variant warning and message Warning!.
+  </aside>
   </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="error" message="Error!">
+    This is an aside with x-cardnotification, variant error and message Error!.
+  </aside>
+  </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="info" title="Notice" message="Info" icon="🔔">
+    This is an aside with x-cardnotification, variant info, message Info and icon 🔔.
+  </aside>
   </div>
   </section>
 
@@ -1373,24 +1373,24 @@
   <section id="cardnotification-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardnotification variant="info" message="Sample message">
-    This is example notification card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardnotification variant="success" message="Sample message">
-    This is example notification card content.
-  </div>
+    <aside x-cardnotification variant="info" message="Sample message">
+    This is an aside with x-cardnotification, variant info and message Sample message.
+  </aside>
   </div>
   <div x-demo columns="1">
-    <div x-cardnotification variant="warning" message="Sample message">
-    This is example notification card content.
-  </div>
+    <aside x-cardnotification variant="success" message="Sample message">
+    This is an aside with x-cardnotification, variant success and message Sample message.
+  </aside>
   </div>
   <div x-demo columns="1">
-    <div x-cardnotification variant="error" message="Sample message">
-    This is example notification card content.
+    <aside x-cardnotification variant="warning" message="Sample message">
+    This is an aside with x-cardnotification, variant warning and message Sample message.
+  </aside>
   </div>
+  <div x-demo columns="1">
+    <aside x-cardnotification variant="error" message="Sample message">
+    This is an aside with x-cardnotification, variant error and message Sample message.
+  </aside>
   </div>
   </section>
 
@@ -1398,9 +1398,9 @@
   <section id="cardnotification-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-cardnotification elevated message="Sample message">
-      This is example notification card content.
-    </div>
+    <aside x-cardnotification elevated message="Sample message">
+      This is an aside with x-cardnotification, message Sample message and elevated.
+    </aside>
   </div>
   </section>
 
@@ -1408,50 +1408,50 @@
   <section id="cardoverlay-overlay-card">
   <h2>🖼️ Overlay Card</h2>
   <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/overlay-background/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-scene.svg"
       title="Title">
-    This is example overlay card content.
-  </div>
+    This is an article with x-cardoverlay.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-2/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-scene.svg"
       title="Title"
       subtitle="Subtitle">
-    This is example overlay card content.
-  </div>
+    This is an article with x-cardoverlay.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-3/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-scene.svg"
       title="Title"
       position="top">
-    This is example overlay card content.
-  </div>
+    This is an article with x-cardoverlay and position top.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-4/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-scene.svg"
       title="Title"
       position="center">
-    This is example overlay card content.
-  </div>
+    This is an article with x-cardoverlay and position center.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-5/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-scene.svg"
       title="Title">
-    This is example overlay card content.
-  </div>
+    This is an article with x-cardoverlay.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
-      image="https://picsum.photos/seed/overlay-background-6/800/500"
+    <article x-cardoverlay
+      image="/images/placeholder-scene.svg"
       title="Title"
       xalign="center">
-    This is example overlay card content.
-  </div>
+    This is an article with x-cardoverlay and xalign center.
+  </article>
   </div>
   </section>
 
@@ -1459,25 +1459,25 @@
   <section id="cardoverlay-position-variants">
   <h2>position variants</h2>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       position="top"
-      image="https://picsum.photos/seed/cardoverlay-cards1/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and position top.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       position="center"
-      image="https://picsum.photos/seed/cardoverlay-cards2/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and position center.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       position="bottom"
-      image="https://picsum.photos/seed/cardoverlay-cards3/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and position bottom.
+  </article>
   </div>
   </section>
 
@@ -1485,25 +1485,25 @@
   <section id="cardoverlay-xalign-variants">
   <h2>xalign variants</h2>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       xalign="left"
-      image="https://picsum.photos/seed/cardoverlay-cards4/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and xalign left.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       xalign="center"
-      image="https://picsum.photos/seed/cardoverlay-cards5/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and xalign center.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       xalign="right"
-      image="https://picsum.photos/seed/cardoverlay-cards6/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and xalign right.
+  </article>
   </div>
   </section>
 
@@ -1511,32 +1511,32 @@
   <section id="cardoverlay-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardoverlay
-      variant="default"
-      image="https://picsum.photos/seed/cardoverlay-cards7/800/600">
-    This is example overlay card content.
-  </div>
+    <article x-cardoverlay
+     
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       variant="dark"
-      image="https://picsum.photos/seed/cardoverlay-cards8/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and variant dark.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       variant="light"
-      image="https://picsum.photos/seed/cardoverlay-cards9/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and variant light.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardoverlay
+    <article x-cardoverlay
       variant="blur"
-      image="https://picsum.photos/seed/cardoverlay-cards10/800/600">
-    This is example overlay card content.
-  </div>
+      image="/images/placeholder-scene.svg">
+    This is an article with x-cardoverlay and variant blur.
+  </article>
   </div>
   </section>
 
@@ -1544,34 +1544,34 @@
   <section id="cardportfolio-portfolio-card">
   <h2>💼 Portfolio Card</h2>
   <div x-demo columns="2">
-    <div x-cardportfolio
+    <article x-cardportfolio
       name="Jane Smith"
       title="UX Designer"
       company="Anthropic"
       skills="Figma,CSS,React"
       bio="Creative designer with 8 years experience"
       availability="available">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio
+      This is an article with x-cardportfolio and availability available.
+    </article>
+    <article x-cardportfolio
       name="John Doe"
       title="Senior Engineer"
       company="Cielo Vista"
       skills="TypeScript,Node,SQL"
       variant="compact"
       availability="busy">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio
+      This is an article with x-cardportfolio, variant compact and availability busy.
+    </article>
+    <article x-cardportfolio
       name="Sarah Chen"
       title="Product Manager"
       company="TechCorp"
       variant="horizontal"
       bio="Building products users love"
       cta="Contact Me">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio
+      This is an article with x-cardportfolio and variant horizontal.
+    </article>
+    <article x-cardportfolio
       name="Alex Rivera"
       title="Full Stack Dev"
       skills="Python,Go,Rust"
@@ -1594,8 +1594,24 @@
              :&quot;
              10&quot;
              }]">
-      This is example portfolio card content.
-    </div>
+      This is an article with x-cardportfolio, variant full, availability open-to-opportunities and stats [{&quot;
+             label&quot;
+             :&quot;
+             Projects&quot;
+             ,&quot;
+             value&quot;
+             :&quot;
+             24&quot;
+             },{&quot;
+             label&quot;
+             :&quot;
+             Years&quot;
+             ,&quot;
+             value&quot;
+             :&quot;
+             10&quot;
+             }].
+    </article>
   </div>
   </section>
 
@@ -1603,18 +1619,18 @@
   <section id="cardportfolio-availability-variants">
   <h2>availability variants</h2>
   <div x-demo columns="2">
-    <div x-cardportfolio availability="available" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio availability="busy" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio availability="not-available" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio availability="open-to-opportunities" name="Sample name">
-      This is example portfolio card content.
-    </div>
+    <article x-cardportfolio availability="available" name="Sample name">
+      This is an article with x-cardportfolio and availability available.
+    </article>
+    <article x-cardportfolio availability="busy" name="Sample name">
+      This is an article with x-cardportfolio and availability busy.
+    </article>
+    <article x-cardportfolio availability="not-available" name="Sample name">
+      This is an article with x-cardportfolio and availability not-available.
+    </article>
+    <article x-cardportfolio availability="open-to-opportunities" name="Sample name">
+      This is an article with x-cardportfolio and availability open-to-opportunities.
+    </article>
   </div>
   </section>
 
@@ -1622,18 +1638,18 @@
   <section id="cardportfolio-variants">
   <h2>Variants</h2>
   <div x-demo columns="2">
-    <div x-cardportfolio variant="default" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio variant="compact" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio variant="horizontal" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio variant="full" name="Sample name">
-      This is example portfolio card content.
-    </div>
+    <article x-cardportfolio name="Sample name">
+      This is an article with x-cardportfolio.
+    </article>
+    <article x-cardportfolio variant="compact" name="Sample name">
+      This is an article with x-cardportfolio and variant compact.
+    </article>
+    <article x-cardportfolio variant="horizontal" name="Sample name">
+      This is an article with x-cardportfolio and variant horizontal.
+    </article>
+    <article x-cardportfolio variant="full" name="Sample name">
+      This is an article with x-cardportfolio and variant full.
+    </article>
   </div>
   </section>
 
@@ -1641,24 +1657,24 @@
   <section id="cardportfolio-size-variants">
   <h2>size variants</h2>
   <div x-demo columns="3">
-    <div x-cardportfolio size="sm" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio size="md" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio size="lg" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio size="xl" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio size="full" name="Sample name">
-      This is example portfolio card content.
-    </div>
-    <div x-cardportfolio size="auto" name="Sample name">
-      This is example portfolio card content.
-    </div>
+    <article x-cardportfolio size="sm" name="Sample name">
+      This is an article with x-cardportfolio and size sm.
+    </article>
+    <article x-cardportfolio size="md" name="Sample name">
+      This is an article with x-cardportfolio and size md.
+    </article>
+    <article x-cardportfolio size="lg" name="Sample name">
+      This is an article with x-cardportfolio and size lg.
+    </article>
+    <article x-cardportfolio size="xl" name="Sample name">
+      This is an article with x-cardportfolio and size xl.
+    </article>
+    <article x-cardportfolio size="full" name="Sample name">
+      This is an article with x-cardportfolio and size full.
+    </article>
+    <article x-cardportfolio size="auto" name="Sample name">
+      This is an article with x-cardportfolio and size auto.
+    </article>
   </div>
   </section>
 
@@ -1666,38 +1682,38 @@
   <section id="cardpricing-pricing-card">
   <h2>💰 Pricing Card</h2>
   <div x-demo columns="1">
-    <div x-cardpricing plan="Basic" price="$9">
-    This is example pricing card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardpricing plan="Pro" price="$29" featured>
-    This is example pricing card content.
-  </div>
+    <article x-cardpricing plan="Basic" price="$9">
+    This is an article with x-cardpricing.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardpricing plan="Basic" price="$9" period="/year">
-    This is example pricing card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardpricing plan="Pro" price="$29" features="Feature 1,Feature 2">
-    This is example pricing card content.
-  </div>
+    <article x-cardpricing plan="Pro" price="$29" featured>
+    This is an article with x-cardpricing and featured.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardpricing plan="Pro" price="$29" cta="Subscribe Now">
-    This is example pricing card content.
-  </div>
+    <article x-cardpricing plan="Basic" price="$9" period="/year">
+    This is an article with x-cardpricing.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardpricing
+    <article x-cardpricing plan="Pro" price="$29" features="Feature 1,Feature 2">
+    This is an article with x-cardpricing.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing plan="Pro" price="$29" cta="Subscribe Now">
+    This is an article with x-cardpricing.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardpricing
       plan="Enterprise"
       price="$99"
       description="For large teams"
       featured>
-    This is example pricing card content.
-  </div>
+    This is an article with x-cardpricing, description For large teams and featured.
+  </article>
   </div>
   </section>
 
@@ -1705,24 +1721,24 @@
   <section id="cardpricing-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardpricing variant="default" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardpricing variant="bordered" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
-  </div>
+    <article x-cardpricing plan="Sample plan" price="Sample price">
+    This is an article with x-cardpricing.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardpricing variant="elevated" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
-  </div>
+    <article x-cardpricing variant="bordered" plan="Sample plan" price="Sample price">
+    This is an article with x-cardpricing and variant bordered.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardpricing variant="minimal" plan="Sample plan" price="Sample price">
-    This is example pricing card content.
+    <article x-cardpricing variant="elevated" plan="Sample plan" price="Sample price">
+    This is an article with x-cardpricing and variant elevated.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardpricing variant="minimal" plan="Sample plan" price="Sample price">
+    This is an article with x-cardpricing and variant minimal.
+  </article>
   </div>
   </section>
 
@@ -1730,9 +1746,9 @@
   <section id="cardpricing-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-cardpricing featured plan="Sample plan" price="Sample price">
-      This is example pricing card content.
-    </div>
+    <article x-cardpricing featured plan="Sample plan" price="Sample price">
+      This is an article with x-cardpricing and featured.
+    </article>
   </div>
   </section>
 
@@ -1740,32 +1756,32 @@
   <section id="cardproduct-product-card">
   <h2>🛒 Product Card</h2>
   <div x-demo columns="1">
-    <div x-cardproduct title="Product" price="$29">
-    This is example product card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardproduct title="Product" price="$29" original-price="$49">
-    This is example product card content.
-  </div>
+    <article x-cardproduct title="Product" price="$29">
+    This is an article with x-cardproduct.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardproduct
-      image="https://picsum.photos/seed/product/400/300"
+    <article x-cardproduct title="Product" price="$29" original-price="$49">
+    This is an article with x-cardproduct and original-price $49.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct
+      image="/images/placeholder-product.svg"
       title="Product"
       price="$29">
-    This is example product card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardproduct title="Product" price="$29" rating="4.5" reviews="128">
-    This is example product card content.
-  </div>
+    This is an article with x-cardproduct.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardproduct title="Product" price="$29" badge="Sale" featured>
-    This is example product card content.
+    <article x-cardproduct title="Product" price="$29" rating="4.5" reviews="128">
+    This is an article with x-cardproduct and reviews 128.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardproduct title="Product" price="$29" badge="Sale" featured>
+    This is an article with x-cardproduct, badge Sale and featured.
+  </article>
   </div>
   </section>
 
@@ -1773,27 +1789,27 @@
   <section id="cardproduct-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardproduct variant="default" title="Sample title" price="Sample price">
-    This is example product card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardproduct variant="compact" title="Sample title" price="Sample price">
-    This is example product card content.
-  </div>
+    <article x-cardproduct title="Sample title" price="Sample price">
+    This is an article with x-cardproduct.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardproduct
+    <article x-cardproduct variant="compact" title="Sample title" price="Sample price">
+    This is an article with x-cardproduct and variant compact.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardproduct
       variant="horizontal"
       title="Sample title"
       price="Sample price">
-    This is example product card content.
-  </div>
+    This is an article with x-cardproduct and variant horizontal.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardproduct variant="minimal" title="Sample title" price="Sample price">
-    This is example product card content.
-  </div>
+    <article x-cardproduct variant="minimal" title="Sample title" price="Sample price">
+    This is an article with x-cardproduct and variant minimal.
+  </article>
   </div>
   </section>
 
@@ -1801,9 +1817,9 @@
   <section id="cardproduct-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-cardproduct featured title="Sample title" price="Sample price">
-      This is example product card content.
-    </div>
+    <article x-cardproduct featured title="Sample title" price="Sample price">
+      This is an article with x-cardproduct and featured.
+    </article>
   </div>
   </section>
 
@@ -1811,40 +1827,40 @@
   <section id="cardprofile-card-profile">
   <h2>📦 Card Profile</h2>
   <div x-demo columns="3">
-    <div x-cardprofile name="John Doe">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile name="John Doe" role="Developer">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile name="John Doe" avatar="https://i.pravatar.cc/80">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile name="John Doe" bio="Short bio.">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile name="John Doe" cover="https://picsum.photos/400/100">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile name="John Doe" size="sm">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile name="John Doe" size="lg">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile name="John Doe" align="left">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile
+    <article x-cardprofile name="John Doe">
+      This is an article with x-cardprofile.
+    </article>
+    <article x-cardprofile name="John Doe" role="Developer">
+      This is an article with x-cardprofile.
+    </article>
+    <article x-cardprofile name="John Doe" avatar="/images/avatar.svg">
+      This is an article with x-cardprofile.
+    </article>
+    <article x-cardprofile name="John Doe" bio="Short bio.">
+      This is an article with x-cardprofile.
+    </article>
+    <article x-cardprofile name="John Doe" cover="/images/placeholder-office.svg">
+      This is an article with x-cardprofile.
+    </article>
+    <article x-cardprofile name="John Doe" size="sm">
+      This is an article with x-cardprofile and size sm.
+    </article>
+    <article x-cardprofile name="John Doe" size="lg">
+      This is an article with x-cardprofile and size lg.
+    </article>
+    <article x-cardprofile name="John Doe" align="left">
+      This is an article with x-cardprofile and align left.
+    </article>
+    <article x-cardprofile
       name="Full"
       role="CEO"
-      avatar="https://i.pravatar.cc/80"
+      avatar="/images/avatar.svg"
       bio="Leader."
-      cover="https://picsum.photos/400/100"
+      cover="/images/placeholder-office.svg"
       size="lg"
       align="center">
-      This is example card profile content.
-    </div>
+      This is an article with x-cardprofile, size lg and align center.
+    </article>
   </div>
   </section>
 
@@ -1852,15 +1868,15 @@
   <section id="cardprofile-size-variants">
   <h2>size variants</h2>
   <div x-demo columns="2">
-    <div x-cardprofile size="sm" name="John Doe">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile size="md" name="John Doe">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile size="lg" name="John Doe">
-      This is example card profile content.
-    </div>
+    <article x-cardprofile size="sm" name="John Doe">
+      This is an article with x-cardprofile and size sm.
+    </article>
+    <article x-cardprofile size="md" name="John Doe">
+      This is an article with x-cardprofile and size md.
+    </article>
+    <article x-cardprofile size="lg" name="John Doe">
+      This is an article with x-cardprofile and size lg.
+    </article>
   </div>
   </section>
 
@@ -1868,12 +1884,12 @@
   <section id="cardprofile-align-variants">
   <h2>align variants</h2>
   <div x-demo columns="2">
-    <div x-cardprofile align="left" name="John Doe">
-      This is example card profile content.
-    </div>
-    <div x-cardprofile align="center" name="John Doe">
-      This is example card profile content.
-    </div>
+    <article x-cardprofile align="left" name="John Doe">
+      This is an article with x-cardprofile and align left.
+    </article>
+    <article x-cardprofile align="center" name="John Doe">
+      This is an article with x-cardprofile and align center.
+    </article>
   </div>
   </section>
 
@@ -1881,39 +1897,39 @@
   <section id="cardstats-stats-card">
   <h2>📊 Stats Card</h2>
   <div x-demo columns="1">
-    <div x-cardstats value="100">
-    This is example stats card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardstats value="1,234" label="Users">
-    This is example stats card content.
-  </div>
+    <article x-cardstats value="100">
+    This is an article with x-cardstats.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardstats value="100" icon="📊">
-    This is example stats card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardstats value="100" trend="up" trend-value="+10%">
-    This is example stats card content.
-  </div>
+    <article x-cardstats value="1,234" label="Users">
+    This is an article with x-cardstats.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardstats value="100" trend="down" trend-value="-5%">
-    This is example stats card content.
-  </div>
+    <article x-cardstats value="100" icon="📊">
+    This is an article with x-cardstats and icon 📊.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardstats
+    <article x-cardstats value="100" trend="up" trend-value="+10%">
+    This is an article with x-cardstats and trend up.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats value="100" trend="down" trend-value="-5%">
+    This is an article with x-cardstats and trend down.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardstats
       value="$50K"
       label="Revenue"
       icon="💰"
       trend="up"
       trend-value="+12%">
-    This is example stats card content.
-  </div>
+    This is an article with x-cardstats, icon 💰 and trend up.
+  </article>
   </div>
   </section>
 
@@ -1921,24 +1937,24 @@
   <section id="cardstats-trend-variants">
   <h2>trend variants</h2>
   <div x-demo columns="1">
-    <div x-cardstats trend="" value="Sample value">
-    This is example stats card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardstats trend="up" value="Sample value">
-    This is example stats card content.
-  </div>
+    <article x-cardstats trend="" value="Sample value">
+    This is an article with x-cardstats and trend.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardstats trend="down" value="Sample value">
-    This is example stats card content.
-  </div>
+    <article x-cardstats trend="up" value="Sample value">
+    This is an article with x-cardstats and trend up.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardstats trend="neutral" value="Sample value">
-    This is example stats card content.
+    <article x-cardstats trend="down" value="Sample value">
+    This is an article with x-cardstats and trend down.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardstats trend="neutral" value="Sample value">
+    This is an article with x-cardstats and trend neutral.
+  </article>
   </div>
   </section>
 
@@ -1946,24 +1962,24 @@
   <section id="cardstats-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardstats variant="default" value="Sample value">
-    This is example stats card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardstats variant="compact" value="Sample value">
-    This is example stats card content.
-  </div>
+    <article x-cardstats value="Sample value">
+    This is an article with x-cardstats.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardstats variant="large" value="Sample value">
-    This is example stats card content.
-  </div>
+    <article x-cardstats variant="compact" value="Sample value">
+    This is an article with x-cardstats and variant compact.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardstats variant="minimal" value="Sample value">
-    This is example stats card content.
+    <article x-cardstats variant="large" value="Sample value">
+    This is an article with x-cardstats and variant large.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardstats variant="minimal" value="Sample value">
+    This is an article with x-cardstats and variant minimal.
+  </article>
   </div>
   </section>
 
@@ -1971,52 +1987,52 @@
   <section id="cardtestimonial-testimonial-card">
   <h2>💬 Testimonial Card</h2>
   <div x-demo columns="1">
-    <div x-cardtestimonial quote="Great!" author="John">
-    This is example testimonial card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardtestimonial quote="Great!" author="John" role="CEO">
-    This is example testimonial card content.
-  </div>
+    <article x-cardtestimonial quote="Great!" author="John">
+    This is an article with x-cardtestimonial.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial
+    <article x-cardtestimonial quote="Great!" author="John" role="CEO">
+    This is an article with x-cardtestimonial.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial
       quote="Great!"
       author="John"
-      avatar="https://i.pravatar.cc/150?u=john">
-    This is example testimonial card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardtestimonial quote="Great!" author="John" rating="5">
-    This is example testimonial card content.
-  </div>
+      avatar="/images/avatar.svg">
+    This is an article with x-cardtestimonial.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial quote="Great!" author="John" rating="3">
-    This is example testimonial card content.
-  </div>
+    <article x-cardtestimonial quote="Great!" author="John" rating="5">
+    This is an article with x-cardtestimonial.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial
+    <article x-cardtestimonial quote="Great!" author="John" rating="3">
+    This is an article with x-cardtestimonial.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial
       quote="Excellent service!"
       author="Jane"
       role="CTO at Acme"
-      avatar="https://i.pravatar.cc/150?u=jane"
+      avatar="/images/avatar.svg"
       rating="5">
-    This is example testimonial card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardtestimonial quote="Great!" author="John" variant="elevated">
-    This is example testimonial card content.
-  </div>
+    This is an article with x-cardtestimonial.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial quote="Great!" author="John" variant="centered">
-    This is example testimonial card content.
+    <article x-cardtestimonial quote="Great!" author="John" variant="elevated">
+    This is an article with x-cardtestimonial and variant elevated.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial quote="Great!" author="John" variant="centered">
+    This is an article with x-cardtestimonial and variant centered.
+  </article>
   </div>
   </section>
 
@@ -2024,44 +2040,44 @@
   <section id="cardtestimonial-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardtestimonial
-      variant="default"
+    <article x-cardtestimonial
+     
       quote="Sample quote"
       author="Sample author">
-    This is example testimonial card content.
-  </div>
+    This is an article with x-cardtestimonial.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial
+    <article x-cardtestimonial
       variant="elevated"
       quote="Sample quote"
       author="Sample author">
-    This is example testimonial card content.
-  </div>
+    This is an article with x-cardtestimonial and variant elevated.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial
+    <article x-cardtestimonial
       variant="bordered"
       quote="Sample quote"
       author="Sample author">
-    This is example testimonial card content.
-  </div>
+    This is an article with x-cardtestimonial and variant bordered.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial
+    <article x-cardtestimonial
       variant="minimal"
       quote="Sample quote"
       author="Sample author">
-    This is example testimonial card content.
-  </div>
+    This is an article with x-cardtestimonial and variant minimal.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial
+    <article x-cardtestimonial
       variant="centered"
       quote="Sample quote"
       author="Sample author">
-    This is example testimonial card content.
-  </div>
+    This is an article with x-cardtestimonial and variant centered.
+  </article>
   </div>
   </section>
 
@@ -2069,19 +2085,19 @@
   <section id="cardtestimonial-size-variants">
   <h2>size variants</h2>
   <div x-demo columns="1">
-    <div x-cardtestimonial size="sm" quote="Sample quote" author="Sample author">
-    This is example testimonial card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardtestimonial size="md" quote="Sample quote" author="Sample author">
-    This is example testimonial card content.
-  </div>
+    <article x-cardtestimonial size="sm" quote="Sample quote" author="Sample author">
+    This is an article with x-cardtestimonial and size sm.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardtestimonial size="lg" quote="Sample quote" author="Sample author">
-    This is example testimonial card content.
+    <article x-cardtestimonial size="md" quote="Sample quote" author="Sample author">
+    This is an article with x-cardtestimonial and size md.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardtestimonial size="lg" quote="Sample quote" author="Sample author">
+    This is an article with x-cardtestimonial and size lg.
+  </article>
   </div>
   </section>
 
@@ -2089,46 +2105,46 @@
   <section id="cardvideo-video-card">
   <h2>🎬 Video Card</h2>
   <div x-demo columns="1">
-    <div x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
+    This is an article with x-cardvideo.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       src="https://www.w3schools.com/html/mov_bbb.mp4"
       title="Video Title">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       src="https://www.w3schools.com/html/mov_bbb.mp4"
-      poster="https://picsum.photos/seed/videoposter/800/450">
-    This is example video card content.
-  </div>
+      poster="/images/placeholder-mountain.svg">
+    This is an article with x-cardvideo and poster /images/placeholder-mountain.svg.svg.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       src="https://www.w3schools.com/html/mov_bbb.mp4"
       autoplay
       muted>
-    This is example video card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" loop>
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo, autoplay and muted.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" loop>
+    This is an article with x-cardvideo and loop.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" aspect="4/3">
-    This is example video card content.
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4">
+    This is an article with x-cardvideo.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardvideo src="https://www.w3schools.com/html/mov_bbb.mp4" aspect="4/3">
+    This is an article with x-cardvideo and aspect 4/3.
+  </article>
   </div>
   </section>
 
@@ -2136,35 +2152,35 @@
   <section id="cardvideo-aspect-variants">
   <h2>aspect variants</h2>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       aspect="16/9"
       src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardvideo aspect="4/3" src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo and aspect 16/9.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo aspect="1/1" src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    <article x-cardvideo aspect="4/3" src="https://www.w3schools.com/html/mov_bbb.mp4">
+    This is an article with x-cardvideo and aspect 4/3.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo aspect="1/1" src="https://www.w3schools.com/html/mov_bbb.mp4">
+    This is an article with x-cardvideo and aspect 1/1.
+  </article>
+  </div>
+  <div x-demo columns="1">
+    <article x-cardvideo
       aspect="21/9"
       src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo and aspect 21/9.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       aspect="9/16"
       src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo and aspect 9/16.
+  </article>
   </div>
   </section>
 
@@ -2172,32 +2188,32 @@
   <section id="cardvideo-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-cardvideo
-      variant="default"
+    <article x-cardvideo
+     
       src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       variant="minimal"
       src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo and variant minimal.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       variant="bordered"
       src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo and variant bordered.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo
+    <article x-cardvideo
       variant="elevated"
       src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    This is an article with x-cardvideo and variant elevated.
+  </article>
   </div>
   </section>
 
@@ -2205,19 +2221,19 @@
   <section id="cardvideo-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-cardvideo autoplay src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-cardvideo muted src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
-  </div>
+    <article x-cardvideo autoplay src="https://www.w3schools.com/html/mov_bbb.mp4">
+    This is an article with x-cardvideo and autoplay.
+  </article>
   </div>
   <div x-demo columns="1">
-    <div x-cardvideo loop src="https://www.w3schools.com/html/mov_bbb.mp4">
-    This is example video card content.
+    <article x-cardvideo muted src="https://www.w3schools.com/html/mov_bbb.mp4">
+    This is an article with x-cardvideo and muted.
+  </article>
   </div>
+  <div x-demo columns="1">
+    <article x-cardvideo loop src="https://www.w3schools.com/html/mov_bbb.mp4">
+    This is an article with x-cardvideo and loop.
+  </article>
   </div>
   </section>
 

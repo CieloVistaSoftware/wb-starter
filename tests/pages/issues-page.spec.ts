@@ -34,6 +34,19 @@ test.describe('Issues page', () => {
     await page.goto('/?page=issues');
     expect((await issuesResponse).status()).toBe(200);
 
+    // #978: assert the FIXTURE was actually served before asserting anything
+    // derived from it. This test passed alone and failed in the full suite with
+    // "Current Active: 4" — the live count of open priority:1 issues — because
+    // the interception did not take effect and real API data rendered instead.
+    // Checking a canned issue first turns that into a failure that names its own
+    // cause, rather than a number mismatch that looks like a broken page.
+    await expect(
+      page.locator('.issue-row[data-number="517"]'),
+      'the route fixture was not served — the page rendered live GitHub data'
+    ).toBeAttached({ timeout: 10000 });
+
+    // Derived from the fixture (one open issue labelled status:in-progress),
+    // not remembered. The page counts status:in-progress OR priority:1.
     await expect(page.locator('#issues-active')).toHaveText('Current Active: 1');
   });
 });

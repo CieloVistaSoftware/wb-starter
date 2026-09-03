@@ -50,14 +50,10 @@ export function navbar(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-navbar> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-navbar> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-navbar') element.classList.add('x-navbar');
-  element.style.display = 'flex';
-  element.style.alignItems = 'center';
-  element.style.justifyContent = 'space-between';
-  element.style.padding = '0.5rem 1rem';
-  element.style.background = 'var(--bg-secondary, #1f2937)';
-  element.style.borderRadius = '6px';
-  element.style.gap = '1rem';
+  element.classList.add('x-navbar');
+  // Appearance lives in src/styles/behaviors/navbar.css (#903). Writing it
+  // inline here beat every stylesheet rule, which is why the declared
+  // variant=dark|transparent rendered identically to default.
 
   if (config.sticky) {
     element.style.position = 'sticky';

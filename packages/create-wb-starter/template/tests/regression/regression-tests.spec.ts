@@ -252,7 +252,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
           n: 'Card Image',
           b: 'cardimage',
           d: {
-            src: 'https://picsum.photos/400/200',
+            src: '/images/placeholder.svg',
             title: 'Test Card'
           }
         });
@@ -268,7 +268,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
       const datasetSrc = await element.evaluate(el => (el as HTMLElement).dataset.src);
       const nativeSrc = await element.getAttribute('src');
       
-      expect(datasetSrc, 'CardImage src in dataset').toBe('https://picsum.photos/400/200');
+      expect(datasetSrc, 'CardImage src in dataset').toBe('/images/placeholder.svg');
       expect(nativeSrc, 'No native src on article').toBeNull();
     }
   });
@@ -311,7 +311,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
           n: 'Avatar',
           b: 'avatar',
           d: {
-            src: 'https://i.pravatar.cc/80',
+            src: '/images/avatar.svg',
             name: 'John Doe'
           }
         });
@@ -327,7 +327,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
       const datasetSrc = await element.evaluate(el => (el as HTMLElement).dataset.src);
       const nativeSrc = await element.getAttribute('src');
       
-      expect(datasetSrc, 'Avatar src in dataset').toBe('https://i.pravatar.cc/80');
+      expect(datasetSrc, 'Avatar src in dataset').toBe('/images/avatar.svg');
       expect(nativeSrc, 'No native src on div').toBeNull();
     }
   });
@@ -395,7 +395,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
           b: 'image',
           t: 'img',
           d: {
-            src: 'https://picsum.photos/200/200'
+            src: '/images/placeholder.svg'
           }
         });
       }
@@ -412,7 +412,7 @@ test.describe.skip('BUG-2024-12-19-001: src attribute routing (needs rewrite)', 
       // Only check native src if it's actually an IMG element
       if (tagName === 'IMG') {
         const nativeSrc = await element.getAttribute('src');
-        expect(nativeSrc, 'IMG should have native src').toBe('https://picsum.photos/200/200');
+        expect(nativeSrc, 'IMG should have native src').toBe('/images/placeholder.svg');
       }
     }
   });

@@ -3402,7 +3402,7 @@ Image card:
 
 <div x-demo>
 <div x-cardimage
-  src="https://picsum.photos/seed/photo/600/400"
+  src="/images/placeholder.svg"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </div>
@@ -3436,7 +3436,7 @@ Product card:
 
 <div x-demo>
 <div x-cardproduct
-  image="https://picsum.photos/seed/product/600/400"
+  image="/images/placeholder.svg"
   title="Widget Pro"
   price="$99.99"
   rating="4.5"
@@ -3462,7 +3462,7 @@ Testimonial card:
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
-  avatar="https://picsum.photos/seed/john/200/200">
+  avatar="/images/placeholder.svg">
 </div>
 </div>
 
@@ -3472,7 +3472,7 @@ Hero card:
 <div x-cardhero
   title="Welcome"
   subtitle="Get started today"
-  image="https://picsum.photos/seed/hero-bg/600/400"
+  image="/images/placeholder.svg"
   cta="Learn More"
   href="/start">
 </div>
@@ -3483,7 +3483,7 @@ Video card:
 <div x-demo>
 <div x-cardvideo
   src="demo.mp4"
-  poster="https://picsum.photos/seed/poster/800/450"
+  poster="/images/placeholder.svg"
   title="Product Demo">
 </div>
 </div>
@@ -3514,7 +3514,7 @@ Portfolio card:
 
 <div x-demo>
 <div x-cardportfolio
-  image="https://picsum.photos/seed/project/600/400"
+  image="/images/placeholder.svg"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
@@ -3536,7 +3536,7 @@ Horizontal card:
 
 <div x-demo>
 <div x-cardhorizontal
-  image="https://picsum.photos/seed/thumb/600/400"
+  image="/images/placeholder.svg"
   title="Article Title"
   description="Brief description of the article...">
 </div>
@@ -3546,7 +3546,7 @@ Overlay card:
 
 <div x-demo>
 <div x-cardoverlay
-  image="https://picsum.photos/seed/background/600/400"
+  image="/images/placeholder.svg"
   title="Overlay Title"
   subtitle="Text appears over the image">
 </div>

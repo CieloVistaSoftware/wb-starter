@@ -991,23 +991,18 @@ function detectXAttributeSchema(element) {
 }
 
 function detectSchema(element) {
-  const tagName = element.tagName.toLowerCase();
-
-  // 1. Web component tag: x-card>
-  if (tagName.startsWith('wb-')) {
-    if (SCHEMA_EXCLUDED_TAGS.has(tagName)) return null;
-    const mapped = tagToSchema.get(tagName);
-    if (mapped) return mapped;
-    // Only claim a derived name if a schema is actually registered for it.
-    // wb-* tags with no behavior AND no registered schema are owned by
-    // custom elements or CSS alone -- guessing a name and then warning
-    // "Schema not found" was pure console spam (#174). Return null so
-    // processElement skips silently and leaves the tag to its real owner.
-    const derived = tagName.replace('wb-', '').replace(/-/g, '');
-    return schemaRegistry.has(derived) ? derived : null;
-  }
-
-  // 2. x-{name} attribute on any other tag (see comment above).
+  // The `wb-*` TAG branch is gone (#850). It could never run: no element can
+  // have a tag name starting with `wb-` since 4.0.0 removed custom elements,
+  // and `no-unimplemented-elements.spec.ts` now enforces zero of them. Its own
+  // header comment had already decayed into "Web component tag: x-card>".
+  //
+  // It was also the last consumer of the wb-keyed lookup this issue is about.
+  // The live path, detectXAttributeSchema(), consults SCHEMA_EXCLUDED_TAGS with
+  // an `'x-' + name` key (line ~987), which is correct.
+  //
+  // Behaviour is unchanged for any reachable input: a stray `<wb-foo>` would
+  // have returned null from the dead branch (no schema registered under a
+  // derived name), and falls through to the attribute path returning null now.
   return detectXAttributeSchema(element);
 }
 

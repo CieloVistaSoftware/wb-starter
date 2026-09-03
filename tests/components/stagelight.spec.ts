@@ -5,6 +5,7 @@
  */
 import { test, expect, Page } from '@playwright/test';
 
+import { elementReady } from '../base';
 const BASE_URL = '/demos/test-harness.html';
 
 async function waitForWB(page: Page) {
@@ -24,10 +25,6 @@ async function injectAndScan(page: Page, html: string) {
     container.id = 'test-container';
     container.innerHTML = h;
     
-    // Force eager loading
-    const elements = container.querySelectorAll('.x-ready');
-    elements.forEach(el => el.setAttribute('', ''));
-    
     document.body.appendChild(container);
   }, html);
   
@@ -35,7 +32,13 @@ async function injectAndScan(page: Page, html: string) {
     await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
-  await page.waitForTimeout(500);
+  // #983: the 500ms here was a guess unrelated to what it waited for.
+  // Settle the injected element instead. x-ready means SETTLED, not
+  // succeeded, so the assertions still do the verifying.
+  const injected = page.locator('#test-container > *').first();
+  if (await injected.count()) {
+    await elementReady(injected).catch(() => {});
+  }
 }
 
 test.describe('stagelight Behavior', () => {
@@ -71,7 +74,7 @@ test.describe('stagelight Behavior', () => {
     const html = "<div x-stagelight>Basic stagelight content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-stagelight], #test-container [x-stagelight]').first();
+    const el = page.locator('#test-container [x-stagelight]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

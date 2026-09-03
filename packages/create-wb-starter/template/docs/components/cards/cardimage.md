@@ -30,7 +30,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 
 <div x-demo>
 <div x-cardimage
-  src="https://picsum.photos/seed/hero/400/225"
+  src="/images/placeholder.svg"
   alt="Hero image"
   title="Featured Image"
   content="Optional content below the image.">
@@ -41,7 +41,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 
 <div x-demo>
 <div x-cardimage
-  src="https://picsum.photos/seed/square/300/300"
+  src="/images/placeholder.svg"
   alt="Square image"
   aspect="1/1"
   title="Square Image Card">
@@ -52,7 +52,7 @@ Supports every [card property](./card.md) — that shared structure and CSS are 
 
 <div x-demo>
 <div x-cardimage
-  src="https://picsum.photos/seed/footer/400/225"
+  src="/images/placeholder.svg"
   position="bottom"
   title="Image Below Content"
   content="Content appears above the image.">

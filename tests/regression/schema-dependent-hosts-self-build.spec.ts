@@ -34,11 +34,11 @@ test.describe('[x-checkbox] self-builds on wb-lazy.js pages (no schema support)'
     }
 
     // The "Checked" example specifically must reflect checked=true onto the real input.
-    const checkedHost = page.locator('x-checkbox[label="Checked"]');
+    const checkedHost = page.locator('[x-checkbox][label="Checked"]');
     await expect(checkedHost.locator('input')).toBeChecked();
 
     // Clicking toggles state (proves the input is genuinely live, not decorative).
-    const defaultHost = page.locator('x-checkbox[label="Default checkbox"]');
+    const defaultHost = page.locator('[x-checkbox][label="Default checkbox"]');
     const defaultInput = defaultHost.locator('input');
     await expect(defaultInput).not.toBeChecked();
     await defaultInput.click();

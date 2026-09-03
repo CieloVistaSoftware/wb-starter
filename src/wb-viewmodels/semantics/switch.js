@@ -15,6 +15,46 @@ export function switchInput(element, options = {}) {
   const isBareCheckbox = host.tagName === 'INPUT' && host.type === 'checkbox';
   let input = isBareCheckbox ? host : host.querySelector('input');
 
+  // #931: a bare <input type="checkbox" x-switch> used to be RECOGNISED here
+  // and then excluded from the only branch that builds the switch UI, so the
+  // most semantic host available rendered as a plain checkbox while
+  // <div x-switch> worked. Law 0 inverted.
+  //
+  // It cannot be styled in place: switch.css hides the checkbox with
+  // `[x-switch] input`, a DESCENDANT selector that cannot match when the host
+  // IS the input, and `.x-switch`'s inline-flex lands on the <input> where it
+  // does nothing. So give it the same structure the schema builds and wrap it.
+  // Precedent: details.js wraps non-<details> hosts.
+  //
+  // `container` is the element that carries the switch's own classes and
+  // label. For every other host it IS the host, so nothing else changes.
+  let container = host;
+  const existingWrap = isBareCheckbox && host.parentElement?.classList.contains('x-switch')
+    ? host.parentElement
+    : null;
+  if (existingWrap) {
+    // Already wrapped by a previous scan. Adopt that wrapper as the container
+    // -- leaving `container` as the input made every later container lookup
+    // search the wrong element, so the label guard below never found the span
+    // it had already added and appended a second one on each re-scan.
+    container = existingWrap;
+  } else if (isBareCheckbox) {
+    container = document.createElement('span');
+    container.className = 'x-switch';
+    host.replaceWith(container);
+    container.appendChild(host);
+    host.classList.add('x-switch__input');
+
+    const track = document.createElement('span');
+    track.className = 'x-switch__track';
+    const thumb = document.createElement('span');
+    thumb.className = 'x-switch__thumb';
+    track.appendChild(thumb);
+    container.appendChild(track);
+    // `.x-switch__input:checked ~ .x-switch__track` is a general-sibling
+    // selector, so the existing stylesheet drives this shape unchanged.
+  }
+
   // Neither a bare checkbox nor a schema-built <div x-switch> host (which
   // pre-builds input/track/thumb via switch.schema.json's $view) — e.g.
   // x-switch on a plain <div>. Self-build the same input+track+thumb
@@ -46,7 +86,7 @@ export function switchInput(element, options = {}) {
   // `[x-switch]` TAG directly. Still added for the bare-<input>/self-built
   // x-switch-on-a-<div> cases above, which aren't the `[x-switch]` tag and
   // still need the class.
-  if (host.tagName.toLowerCase() !== 'x-switch') host.classList.add('x-switch');
+  container.classList.add('x-switch');
 
   // switch.schema.json declares size/variant with appliesClass:
   // "x-switch--{{value}}" -- but that's SCHEMA-BUILDER's mechanism, and
@@ -61,11 +101,13 @@ export function switchInput(element, options = {}) {
   // matches the pattern every other component in this file (card.js,
   // badge(), progress()) already uses, and is idempotent alongside
   // schema-builder's own class application on pages where it DOES run.
-  if (!isBareCheckbox) {
+  {
+    // #931: no longer skipped for a bare checkbox -- it now has a container to
+    // carry these, and size/variant are as meaningful there as anywhere.
     const size = host.getAttribute('size');
-    if (size) host.classList.add(`x-switch--${size}`);
+    if (size) container.classList.add(`x-switch--${size}`);
     const variant = host.getAttribute('variant');
-    if (variant) host.classList.add(`x-switch--${variant}`);
+    if (variant) container.classList.add(`x-switch--${variant}`);
   }
 
   // The schema builds a typeless <input> (renders as text) — make it a checkbox.
@@ -89,19 +131,32 @@ export function switchInput(element, options = {}) {
     const val = host.getAttribute('value');
     if (val) input.value = val;
 
-    // The schema only builds a label span for certain labelPosition values, so
-    // the label often never renders — ensure it is shown.
-    const label = host.getAttribute('label');
-    if (label && !host.querySelector('[class*="[x-switch]__label"]')) {
-      const span = document.createElement('span');
-      span.className = 'x-switch__label-end';
-      span.textContent = label;
-      host.appendChild(span);
-    }
-
     host.setAttribute('role', 'switch');
     host.setAttribute('aria-checked', String(input.checked));
     if (!input.disabled && !host.hasAttribute('tabindex')) host.setAttribute('tabindex', '0');
+  }
+
+  // The schema only builds a label span for certain labelPosition values, so
+  // the label often never renders — ensure it is shown.
+  //
+  // #931: moved OUT of the `if (!isBareCheckbox)` block. That block mixes three
+  // concerns, and only one of them is genuinely bare-specific: reflecting
+  // host attributes ONTO the inner input is meaningless when the host IS the
+  // input, but the label is not — it now has a container to live in.
+  {
+    const label = host.getAttribute('label');
+    // #930: this read `[class*="[x-switch]__label"]` -- searching for a class
+    // attribute CONTAINING the literal substring `[x-switch]__label`. No class
+    // name has square brackets in it, so the guard never matched and the label
+    // span was appended on every run (duplicate labels on any re-scan). It is
+    // the signature of a bulk x-switch -> [x-switch] rewrite that hit a string
+    // literal instead of a selector.
+    if (label && !container.querySelector('[class*="x-switch__label"]')) {
+      const span = document.createElement('span');
+      span.className = 'x-switch__label-end';
+      span.textContent = label;
+      container.appendChild(span);
+    }
   }
 
   const sync = () => {
@@ -126,7 +181,12 @@ export function switchInput(element, options = {}) {
     if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
   };
 
-  host.addEventListener('click', onClick);
+  // #931: on the container, not the host. For a bare checkbox the clickable
+  // affordance is the track, a SIBLING of the input, so a listener on the
+  // input never saw it. onClick already handles `e.target === input` (a native
+  // toggle) so this is safe for every host; for non-bare hosts container IS
+  // host and nothing changes.
+  container.addEventListener('click', onClick);
   if (!isBareCheckbox) host.addEventListener('keydown', onKey);
   input.addEventListener('change', sync);
 
@@ -157,7 +217,7 @@ export function switchInput(element, options = {}) {
   }
 
   return () => {
-    host.removeEventListener('click', onClick);
+    container.removeEventListener('click', onClick);
     host.removeEventListener('keydown', onKey);
     input.removeEventListener('change', sync);
     if (applyTheme) input.removeEventListener('change', applyTheme);

@@ -221,7 +221,7 @@ export default function stagelight(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-stagelight> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-stagelight> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-stagelight') element.classList.add('x-stagelight');
+  element.classList.add('x-stagelight');
 
   // === STEP 2: CREATE DOM STRUCTURE BASED ON VARIANT ===
   if (config.variant === 'beam') {

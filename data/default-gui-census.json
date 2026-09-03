@@ -1,34 +1,34 @@
 {
   "total": 149,
-  "builds": 50,
-  "paints": 20,
-  "invisible": 79,
+  "builds": 46,
+  "paints": 22,
+  "invisible": 81,
   "rows": [
     {
       "name": "x-accordion",
       "tag": "div",
-      "verdict": "BUILDS",
-      "children": 2,
+      "verdict": "INVISIBLE",
+      "children": 0,
       "w": 400,
-      "h": 18,
+      "h": 0,
       "note": ""
     },
     {
       "name": "x-alert",
       "tag": "div",
-      "verdict": "BUILDS",
-      "children": 2,
+      "verdict": "INVISIBLE",
+      "children": 0,
       "w": 400,
-      "h": 73,
+      "h": 32,
       "note": ""
     },
     {
       "name": "x-article",
       "tag": "article",
-      "verdict": "INVISIBLE",
+      "verdict": "PAINTS",
       "children": 0,
       "w": 400,
-      "h": 0,
+      "h": 4,
       "note": ""
     },
     {
@@ -42,11 +42,11 @@
     },
     {
       "name": "x-audio",
-      "tag": "div",
-      "verdict": "PAINTS",
+      "tag": "audio",
+      "verdict": "INVISIBLE",
       "children": 0,
-      "w": 400,
-      "h": 42,
+      "w": 0,
+      "h": 0,
       "note": ""
     },
     {
@@ -143,9 +143,9 @@
       "name": "x-carddraggable",
       "tag": "article",
       "verdict": "BUILDS",
-      "children": 1,
+      "children": 2,
       "w": 400,
-      "h": 87,
+      "h": 114,
       "note": ""
     },
     {
@@ -161,9 +161,9 @@
       "name": "x-cardfile",
       "tag": "article",
       "verdict": "BUILDS",
-      "children": 1,
+      "children": 3,
       "w": 400,
-      "h": 131,
+      "h": 80,
       "note": ""
     },
     {
@@ -181,7 +181,7 @@
       "verdict": "BUILDS",
       "children": 1,
       "w": 400,
-      "h": 98,
+      "h": 66,
       "note": ""
     },
     {
@@ -199,7 +199,7 @@
       "verdict": "BUILDS",
       "children": 1,
       "w": 400,
-      "h": 67,
+      "h": 35,
       "note": ""
     },
     {
@@ -235,7 +235,7 @@
       "verdict": "BUILDS",
       "children": 2,
       "w": 400,
-      "h": 223,
+      "h": 132,
       "note": ""
     },
     {
@@ -253,7 +253,7 @@
       "verdict": "BUILDS",
       "children": 1,
       "w": 400,
-      "h": 172,
+      "h": 140,
       "note": ""
     },
     {
@@ -278,9 +278,9 @@
       "name": "x-cardtestimonial",
       "tag": "article",
       "verdict": "BUILDS",
-      "children": 3,
+      "children": 2,
       "w": 400,
-      "h": 162,
+      "h": 82,
       "note": ""
     },
     {
@@ -304,10 +304,10 @@
     {
       "name": "x-chip",
       "tag": "span",
-      "verdict": "BUILDS",
-      "children": 1,
-      "w": 24,
-      "h": 24,
+      "verdict": "INVISIBLE",
+      "children": 0,
+      "w": 0,
+      "h": 0,
       "note": ""
     },
     {
@@ -439,10 +439,10 @@
     {
       "name": "x-demo",
       "tag": "div",
-      "verdict": "BUILDS",
-      "children": 2,
+      "verdict": "INVISIBLE",
+      "children": 0,
       "w": 400,
-      "h": 104,
+      "h": 32,
       "note": ""
     },
     {
@@ -825,8 +825,8 @@
     },
     {
       "name": "x-mdhtml",
-      "tag": "div",
-      "verdict": "INVISIBLE",
+      "tag": "article",
+      "verdict": "PAINTS",
       "children": 0,
       "w": 400,
       "h": 200,
@@ -847,7 +847,7 @@
       "verdict": "BUILDS",
       "children": 2,
       "w": 400,
-      "h": 50,
+      "h": 25,
       "note": ""
     },
     {
@@ -988,10 +988,10 @@
     {
       "name": "x-release",
       "tag": "div",
-      "verdict": "INVISIBLE",
+      "verdict": "PAINTS",
       "children": 0,
       "w": 400,
-      "h": 0,
+      "h": 18,
       "note": ""
     },
     {
@@ -1006,8 +1006,8 @@
     {
       "name": "x-resizable",
       "tag": "div",
-      "verdict": "INVISIBLE",
-      "children": 0,
+      "verdict": "BUILDS",
+      "children": 1,
       "w": 400,
       "h": 0,
       "note": ""
@@ -1032,7 +1032,7 @@
     },
     {
       "name": "x-search",
-      "tag": "div",
+      "tag": "search",
       "verdict": "INVISIBLE",
       "children": 0,
       "w": 344,
@@ -1042,10 +1042,10 @@
     {
       "name": "x-searchfield",
       "tag": "div",
-      "verdict": "BUILDS",
-      "children": 1,
+      "verdict": "INVISIBLE",
+      "children": 0,
       "w": 400,
-      "h": 40,
+      "h": 0,
       "note": ""
     },
     {
@@ -1134,8 +1134,8 @@
       "tag": "div",
       "verdict": "BUILDS",
       "children": 1,
-      "w": 22,
-      "h": 22,
+      "w": 24,
+      "h": 24,
       "note": ""
     },
     {
@@ -1176,9 +1176,9 @@
     },
     {
       "name": "x-sticky",
-      "tag": "div",
-      "verdict": "BUILDS",
-      "children": 1,
+      "tag": "nav",
+      "verdict": "INVISIBLE",
+      "children": 0,
       "w": 400,
       "h": 0,
       "note": ""
@@ -1225,16 +1225,16 @@
       "verdict": "PAINTS",
       "children": 0,
       "w": 15,
-      "h": 17,
+      "h": 15,
       "note": ""
     },
     {
       "name": "x-textarea",
       "tag": "div",
-      "verdict": "INVISIBLE",
-      "children": 0,
+      "verdict": "BUILDS",
+      "children": 1,
       "w": 400,
-      "h": 0,
+      "h": 102,
       "note": ""
     },
     {

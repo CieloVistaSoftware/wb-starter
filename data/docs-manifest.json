@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-30T19:47:30.727Z",
-  "totalFiles": 265,
+  "generated": "2026-09-03T19:02:23.061Z",
+  "totalFiles": 267,
   "categories": [
     "_today",
     "architecture",
@@ -314,6 +314,12 @@
         "path": "docs/architecture/proposals/v4-golden-ratio-layout-spec.md",
         "title": "Proposal: v4 Golden-Ratio Layout Specification",
         "name": "v4-golden-ratio-layout-spec",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/solidjscomparison.md",
+        "title": "wb-starter compared to Solid.js",
+        "name": "solidjscomparison",
         "category": "architecture"
       },
       {
@@ -1467,6 +1473,12 @@
         "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
         "name": "TIER3-REFERENCE",
         "category": "claude"
+      },
+      {
+        "path": "docs/claude/TOOLING-INVENTORY.md",
+        "title": "Tooling Inventory — What This Repo Already Has",
+        "name": "TOOLING-INVENTORY",
+        "category": "claude"
       }
     ],
     "compliance": [
@@ -1550,7 +1562,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-08-25",
+        "title": "CURRENT HANDOFF — 2026-09-02",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1667,7 +1679,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "CURRENT HANDOFF — 2026-08-25",
+      "title": "CURRENT HANDOFF — 2026-09-02",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -1771,6 +1783,12 @@
       "path": "docs/architecture/proposals/v4-golden-ratio-layout-spec.md",
       "title": "Proposal: v4 Golden-Ratio Layout Specification",
       "name": "v4-golden-ratio-layout-spec",
+      "category": "architecture"
+    },
+    {
+      "path": "docs/architecture/solidjscomparison.md",
+      "title": "wb-starter compared to Solid.js",
+      "name": "solidjscomparison",
       "category": "architecture"
     },
     {
@@ -2953,6 +2971,12 @@
       "path": "docs/claude/TIER3-REFERENCE.md",
       "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
       "name": "TIER3-REFERENCE",
+      "category": "claude"
+    },
+    {
+      "path": "docs/claude/TOOLING-INVENTORY.md",
+      "title": "Tooling Inventory — What This Repo Already Has",
+      "name": "TOOLING-INVENTORY",
       "category": "claude"
     },
     {

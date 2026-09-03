@@ -19,7 +19,7 @@ test.describe('Portfolio Card - Business Card (integration)', () => {
       el.setAttribute('data-website', 'https://johndoe.com');
       el.setAttribute('data-location', 'San Francisco, CA');
       el.setAttribute('data-bio', 'Passionate developer with 10+ years experience.');
-      el.setAttribute('data-avatar', 'https://i.pravatar.cc/150');
+      el.setAttribute('data-avatar', '/images/avatar.svg');
       el.setAttribute('data-linkedin', 'https://linkedin.com/in/johndoe');
       el.setAttribute('data-twitter', 'https://twitter.com/johndoe');
       el.setAttribute('data-github', 'https://github.com/johndoe');
@@ -104,7 +104,7 @@ test.describe('Portfolio Card - Business Card (integration)', () => {
       el.id = 'test-portfolio-cover';
       el.setAttribute('x-cardportfolio', '');
       el.setAttribute('data-name', 'Cover Test');
-      el.setAttribute('data-cover', 'https://picsum.photos/400/100');
+      el.setAttribute('data-cover', '/images/placeholder.svg');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });

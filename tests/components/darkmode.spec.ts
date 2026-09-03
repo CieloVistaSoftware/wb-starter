@@ -68,7 +68,7 @@ test.describe('darkmode Behavior', () => {
     const html = "<div x-darkmode>Basic darkmode content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-darkmode], #test-container [x-darkmode]').first();
+    const el = page.locator('#test-container [x-darkmode]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

@@ -1,5 +1,5 @@
 import { WB_DOC_MAP } from './demo-docmap.js';
-import { getPageSource, extractTagBlock } from './page-source-cache.js';
+import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------
@@ -140,6 +140,28 @@ function siteRoot() {
     // Pages sub-path case ('/wb-starter/index.html').
     return stripped.replace(/[^/]*$/, '');
 }
+
+/**
+ * Serialises every per-`<pre>` scan this module performs (#970, race #2).
+ *
+ * Each x-demo block independently rAF-polls for `window.WB` and then calls
+ * `WB.scan(pre, { eager: true })`. On a page with 293 demo blocks that is 293
+ * scans beginning at 293 unpredictable moments, interleaving with the main
+ * scan's ongoing injection differently on every load.
+ *
+ * Measured on demos/site/cards.html: two loads produced traces of 9,032 and
+ * 9,010 entry points that first diverged at line 2,203 — one run building a
+ * card's internals (`inject(<header>, header)`) exactly where the other had
+ * begun a code block (`scan(<pre>, eager=true)`). Same page, same code. Tests
+ * asserting layout see whichever intermediate state they land on, which is
+ * #961's run-to-run instability.
+ *
+ * A queue makes the ORDER deterministic without costing anything real: these
+ * scans were never parallel work, merely unsequenced work. Each block still
+ * awaits its own scan, so the width measurement that depends on a fully
+ * highlighted `<pre>` is unaffected.
+ */
+let _scanQueue = Promise.resolve();
 
 // docs/manifest.json, fetched once and shared by every x-demo on the page.
 let _docsManifestPromise = null;
@@ -411,7 +433,7 @@ export async function demo(element, options = {}) {
     // the tag form was ever covered: on <div x-demo> the tag is "div", so
     // compliance.baseClass matched nothing and the readiness wait never saw
     // this behavior attach. Guarded so a literal <x-demo> tag stays clean.
-    if (element.tagName.toLowerCase() !== 'x-demo') element.classList.add('x-demo');
+    element.classList.add('x-demo');
 
     // Opt out of Standard §7's single-item shrink-to-fit (demo.css) for demos
     // whose one child is deliberately full-bleed (e.g. a page hero) rather
@@ -432,9 +454,17 @@ export async function demo(element, options = {}) {
     } else {
         try {
             const pageSource = await getPageSource();
-            const allDemos = document.querySelectorAll('x-demo');
+            // #934: `[x-demo]`, not `x-demo`. This searched for a TAG that
+            // cannot exist since 4.0.0 removed custom elements, so BOTH the
+            // live count and the source count came out 0 -- #580's mismatch
+            // guard then compared 0 === 0, passed vacuously, and extraction
+            // returned ''. The panel fell through to element.innerHTML, i.e.
+            // the fully expanded runtime DOM, and taught readers they must
+            // hand-write the <figure>/<header>/inline styles a behavior builds
+            // for them.
+            const allDemos = document.querySelectorAll('[x-demo]');
             const idx = Array.from(allDemos).indexOf(element);
-            rawBlock = extractTagBlock(pageSource, 'x-demo', idx, allDemos.length);
+            rawBlock = extractAttrBlock(pageSource, 'x-demo', idx, allDemos.length);
         } catch (e) {
             // ignore fetch errors
         }
@@ -630,6 +660,19 @@ export async function demo(element, options = {}) {
     // Standard §5: source is pretty-printed VERTICAL (one attribute per line).
     code.textContent = formatHtml(rawBlock);
     pre.appendChild(code);
+    // #986: hide the panel until it has been scanned (which applies the `code`
+    // behavior, and with it hljs highlighting) so the FIRST painted frame is
+    // already coloured and already the right width.
+    //
+    // Measured before this: code painted as plain text at 234ms, .hljs-* spans
+    // arrived at 741ms — 507ms of unstyled monospace — and the first width step
+    // followed 27ms later at 768ms, because injecting the spans changed the
+    // content width the shrink-to-fit poll was measuring. 983 resize events, ~2px
+    // apiece, across 44 panels (#985). One ordering bug, both symptoms.
+    //
+    // visibility (not display) so the box still lays out and can be measured;
+    // revealed unconditionally below, including when WB never arrives.
+    pre.style.visibility = 'hidden';
     element.appendChild(pre);
 
     // Syntax highlight the "view source" panel just created above — scoped to
@@ -677,10 +720,22 @@ export async function demo(element, options = {}) {
     // already-highlighted `<pre>` (real monospace font, real padding, real
     // syntax-highlighting markup) instead of racing it. See that block's
     // own comment for why this matters.
+    // #970 race #2: the scan is QUEUED, not fired the moment this block's own
+    // rAF poll happens to succeed. Unsequenced, 293 of these interleave with
+    // the main scan's injection differently on every load. Chained, they run in
+    // a fixed order and the workflow becomes reproducible.
+    //
+    // The rAF retry stays: it answers "has WB loaded yet", which the queue does
+    // not. Only the scan itself is sequenced.
     const scanWhenReady = (attemptsLeft = 20) => new Promise((resolve) => {
         const attempt = (left) => {
             if (window.WB) {
-                Promise.resolve(window.WB.scan(pre, { eager: true })).then(resolve, resolve);
+                _scanQueue = _scanQueue
+                    .then(() => window.WB.scan(pre, { eager: true }))
+                    // One block's failure must not stall every later block's
+                    // scan -- a rejected link would poison the whole chain.
+                    .catch(() => {});
+                _scanQueue.then(resolve, resolve);
             } else if (left > 0) {
                 requestAnimationFrame(() => attempt(left - 1));
             } else {
@@ -689,7 +744,14 @@ export async function demo(element, options = {}) {
         };
         attempt(attemptsLeft);
     });
-    await scanWhenReady();
+    try {
+        await scanWhenReady();
+    } finally {
+        // #986: reveal exactly once, whatever happened above. scanWhenReady()
+        // resolves even when WB never loads (rAF retries exhausted), but a
+        // throw must never leave a permanently invisible code panel.
+        pre.style.visibility = '';
+    }
 
     // #486: measure the GRID's own rendered width and hand it to demo.css as
     // --x-demo-shrink-width, for single-item demos only (desktop rule in
@@ -843,6 +905,9 @@ export async function demo(element, options = {}) {
                 let lastControlWidth = null;
                 let lastCodeWidth = null;
                 let stableCount = 0;
+                // #985: the measurement is committed once, at the end, rather
+                // than on every poll -- see the two blocks below.
+                let pendingShrinkWidth = 0;
                 const POLL_MS = 200;
                 const MAX_MS = 5000;
                 const startedAt = Date.now();
@@ -890,9 +955,16 @@ export async function demo(element, options = {}) {
                         ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + CODE_WIDTH_SAFETY_PX
                         : 0;
                     const shrinkWidth = Math.max(controlWidth, codeWidth);
-                    if (shrinkWidth > 0) {
-                        element.style.setProperty('--x-demo-shrink-width', shrinkWidth + 'px');
-                    }
+                    // #985: do NOT commit every tick. This used to write the
+                    // custom property on each of up to 25 polls, so every
+                    // intermediate measurement was painted and the panel
+                    // visibly stepped wider as its own content settled.
+                    // Measured on demos/site/layout.html while scrolling:
+                    // 46 steps per demo, 426px -> 935px, finishing ~978ms.
+                    // Hold the value and commit ONCE, when it stops moving
+                    // (or when the MAX_MS budget expires) -- one paint at the
+                    // final width instead of 46 at wrong ones.
+                    if (shrinkWidth > 0) pendingShrinkWidth = shrinkWidth;
                     // Track controlWidth and codeWidth for stability
                     // SEPARATELY, not just the derived max(). pre.js's
                     // syntax highlighting / line-number gutter populates
@@ -943,7 +1015,15 @@ export async function demo(element, options = {}) {
                         return Array.from(nums).every((n) => n.style.top !== '');
                     });
                     if (!guttersReady) stableCount = 0;
-                    if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
+                    if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) {
+                        // #985: the single commit. Settled, or out of budget --
+                        // either way this is the best value available, and it is
+                        // the only one the reader ever sees.
+                        if (pendingShrinkWidth > 0) {
+                            element.style.setProperty('--x-demo-shrink-width', pendingShrinkWidth + 'px');
+                        }
+                        return;
+                    }
                     setTimeout(measure, POLL_MS);
                 };
                 requestAnimationFrame(measure);

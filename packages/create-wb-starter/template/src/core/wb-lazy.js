@@ -231,10 +231,12 @@ const customElementMappings = [
   // -- shared with wb.js via semantic-attributes.js so both engines support
   // the same vocabulary (#354).
   ...semanticPropertyMappings,
-  // button-tooltip gets BOTH behaviors -- intentional dual-behavior element,
-  // not a duplicate-entry bug.
-  { selector: 'button-tooltip', behavior: 'tooltip' },
-  { selector: 'button-tooltip', behavior: 'toast' },
+  // No custom-element selectors here. <button-tooltip> lived at this spot as a
+  // hardcoded dual-behavior binding -- a SEVENTH place a selector could be
+  // bound (#831) -- and was never used in a single .html in the repo or the
+  // scaffold. Removed in #921. The tooltip behavior is reached the documented
+  // way instead: <button x-tooltip tooltip="Save changes">, on a host the
+  // author already knows.
 ];
 
 const autoInjectMappings = [

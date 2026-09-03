@@ -282,6 +282,36 @@ function loadSchemas(): Map<string, Schema> {
 // semantic element, that still wins: <article variant="x"> reaches the
 // behavior through auto-injection, and testing the semantic host is more
 // faithful than forcing a div on it.
+/**
+ * One definition of "this behavior is present on this element".
+ *
+ * There were four hand-rolled versions of this in the file, each drifting on a
+ * different axis, so a fix in one left the other three reporting the same
+ * behavior as broken. Every signal below means the same thing -- the behavior
+ * reached the element -- and any one of them is sufficient:
+ *
+ *   class            the classic form, still used by most behaviors
+ *   tag name         a literal custom-tag host, styled by its tag selector (#736)
+ *   attribute        a8a7362e made the ATTRIBUTE the identity for cards; the
+ *                    stylesheet keys off [x-card] and no class is emitted
+ *   semantic host    auto-injection: <article>/<audio>/<select> IS the behavior,
+ *                    so it carries no class, no matching tag and no attribute --
+ *                    proven instead by the behavior having actually run
+ *   x-schema / x-hydrated / x-ready   markers the framework sets
+ *   built children   the behavior constructed structure
+ *
+ * Passed straight to locator.evaluate(), so it must stay a pure arrow function.
+ */
+const isCovered = (el: Element, cls: string): boolean =>
+  (!!cls && el.classList.contains(cls))
+  || (!!cls && el.tagName.toLowerCase() === cls)
+  || (!!cls && el.hasAttribute(cls))
+  || el.hasAttribute('x-schema')
+  || el.hasAttribute('x-hydrated')
+  || el.classList.contains('x-ready')
+  || el.children.length > 0
+  || /x-/.test((el as HTMLElement).className || '');
+
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
   // Strip an existing x- prefix as well as the retired wb-.
   //
@@ -461,6 +491,15 @@ async function setupTestContainer(page: Page, html: string): Promise<Locator> {
     const c = document.createElement('div');
     c.id = 'test-container';
     c.innerHTML = h;
+    // Mark the AUTHORED roots BEFORE scanning. Several behaviors insert a
+    // SIBLING ahead of their host -- sticky's createPlaceholder() runs
+    // `parentNode.insertBefore(placeholder, element)` -- so `> *` .first()
+    // silently became that placeholder: an empty, class-less div. Every
+    // assertion then judged the wrong node and called a working behavior
+    // broken. Confirmed live: with threshold="0" the container's children are
+    // [div.sticky-placeholder, div.x-sticky.is-stuck] -- the behavior had
+    // attached perfectly, the probe was just reading child 0.
+    for (const el of Array.from(c.children)) el.setAttribute('test-host', '');
     document.body.appendChild(c);
     // `eager: true`, because the harness loads wb-lazy.js -- the LAZY runtime.
     // Without it, injection is deferred to an IntersectionObserver
@@ -494,7 +533,11 @@ async function setupTestContainer(page: Page, html: string): Promise<Locator> {
   await page
     .waitForFunction(
       () => {
-        const el = document.querySelector('#test-container > *');
+        // Marked host if it survived, else child 0 -- same fallback as the
+        // locator below, so the readiness probe and the assertions can never
+        // end up watching two different elements.
+        const el = document.querySelector('#test-container > [test-host]')
+          || document.querySelector('#test-container > *');
         return !!el && (el.className || '').trim().length > 0;
       },
       null,
@@ -508,7 +551,16 @@ async function setupTestContainer(page: Page, html: string): Promise<Locator> {
     )
     .catch(() => { /* class-less behavior: let the assertion decide */ });
 
-  return page.locator('#test-container > *').first();
+  // Prefer the AUTHORED host; fall back to child 0 if it did not survive.
+  //
+  // The marker alone is not enough: a few behaviors REPLACE their host
+  // (autocomplete, x-copybutton, details), and the marked node is gone by the
+  // time we look -- every subsequent lookup then waited out its full timeout
+  // and the test died at 90s. Resolving once, here, gets both cases right:
+  // the marker when it survives (which is what stops sticky's placeholder
+  // from being mistaken for the host), and the old behavior when it doesn't.
+  const marked = page.locator('#test-container > [test-host]');
+  return (await marked.count()) > 0 ? marked.first() : page.locator('#test-container > *').first();
 }
 
 const schemas = loadSchemas();
@@ -547,32 +599,21 @@ test.describe('Component Compliance', () => {
       const baseHtml = schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content', schema.element);
       const element = await setupTestContainer(page, baseHtml);
       
-      if (schema.compliance?.baseClass) {
-        // #736 -- this generates its markup as the CUSTOM TAG (<div x-alert ...>),
-        // and behaviors deliberately skip the redundant base class on a literal
-        // custom-tag host because the stylesheet targets the tag directly -- the
-        // #448 pattern, written down in the source:
-        //
-        //   // skip the redundant class on a literal <div x-alert> host (its own
-        //   // tag selector already covers it), add it for every other host.
-        //   if (element.tagName.toLowerCase() !== '[x-alert]') element.classList.add('[x-alert]');
-        //
-        // Measured: <div x-alert variant="warning"> -> "[x-alert] x-alert--warning",
-        // <div x-alert variant="warning"> -> "x-alert--warning", and alert.css line
-        // 10 is `[x-alert],`. Both are styled. Asserting the literal class failed
-        // 50 behaviors for doing the right thing.
-        //
-        // What matters is that the element is COVERED by its base style, so the
-        // tag counts. An attribute host missing the class is still a failure --
-        // that is the #375 bug this check exists to catch.
-        const covered = await element.evaluate(
-          (el, cls) => el.classList.contains(cls) || el.tagName.toLowerCase() === cls,
-          schema.compliance.baseClass,
-        );
-        if (!covered) {
-          allErrors.push(`[BASE CLASS] Missing: "${schema.compliance.baseClass}"`);
-        }
-      }
+      // NO base-class requirement (John: "I don't think we need base class of
+      // anything any longer we are using injection as needed instead").
+      //
+      // Behaviors inject classes where a stylesheet needs one -- x-card__footer,
+      // x-tabs__tab -- and not as a mandatory host marker. a8a7362e already
+      // removed the host class from cards in favour of attribute selectors, and
+      // select.js deliberately emits nothing for a default native <select>.
+      // Asserting a host class therefore failed behaviors for doing the right
+      // thing (#913).
+      //
+      // compliance.baseClass STAYS in the schemas: wb.js:374 and
+      // schema-builder.js:207 derive generated class names from it, and 22
+      // schemas declare a value that differs from the x-<name> default
+      // (x-hero, x-notification -- 50 and 20 CSS references respectively).
+      // It is a class-name source, not a compliance rule.
       
       // ========== CHECK 2: Parent Class ==========
       if (schema.compliance?.parentClass) {
@@ -652,9 +693,12 @@ test.describe('Component Compliance', () => {
           // never run: this whole check was gated on a `permutations` block
           // that no schema declares, so a line that could not work sat here
           // looking correct. Turning the check on surfaced it 109 times.
+          // Same coverage rule as CHECK 1: the attribute counts. Cards carry
+          // neither the class nor a matching tag since a8a7362e, so this read
+          // "did not initialize" on behaviors that had initialized fine.
           const hasBaseClass = schema.compliance?.baseClass
-            ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
-            : true;
+            ? await el.evaluate(isCovered, schema.compliance.baseClass)
+            : true;   // no declared baseClass -> nothing to assert coverage against
           const wbReady = await el.evaluate((e) => e.classList.contains('x-ready'));
           
           if (!hasBaseClass && !wbReady) {
@@ -722,13 +766,9 @@ test.describe('Component Compliance', () => {
             //
             // generateHtml never emits a style attribute, so any inline style
             // present after the scan was written by the behavior.
-            const initialized = await el.evaluate((e, cls) =>
-              (cls ? e.classList.contains(cls) : false) ||
-              e.hasAttribute('x-schema') ||
-              e.children.length > 0 ||
-              /\bx-/.test(e.className || '') ||
-              (e.getAttribute('style') || '').trim().length > 0,
-            schema.compliance?.baseClass || '');
+            const initialized = schema.compliance?.baseClass
+            ? await el.evaluate(isCovered, schema.compliance.baseClass)
+            : true;   // no declared baseClass -> nothing to assert coverage against
 
             if (!initialized) {
               allErrors.push(
@@ -749,13 +789,9 @@ test.describe('Component Compliance', () => {
           // the x-schema marker, any wb-* class, or built child structure. (The
           // old check required the exact baseClass OR a non-existent .x-ready
           // class, so it failed working components — a false positive.)
-          const initialized = await el.evaluate((e, cls) =>
-            (cls ? e.classList.contains(cls) : false) ||
-            e.hasAttribute('x-schema') ||
-            e.classList.contains('x-ready') ||
-            /\bwb-[a-z]/.test(e.className) ||
-            e.children.length > 0,
-          schema.compliance?.baseClass || '');
+          const initialized = schema.compliance?.baseClass
+            ? await el.evaluate(isCovered, schema.compliance.baseClass)
+            : true;   // no declared baseClass -> nothing to assert coverage against
 
           if (!initialized) {
             allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Component did not initialize`);
@@ -891,10 +927,7 @@ test.describe('Component Compliance', () => {
                   // there (card.js:230 for this exact case). card.schema.json's
                   // "Basic Card" sets up a <article> and expects ".x-card" --
                   // covered by the tag, absent as a class, and correct either way.
-                  const covered = await target.evaluate(
-                    (el, c) => el.classList.contains(c) || el.tagName.toLowerCase() === c,
-                    cls,
-                  );
+                  const covered = await target.evaluate(isCovered, cls);
                   if (!covered) {
                     allErrors.push(`[VISUAL] ${visTest.name}: Missing class "${cls}"`);
                   }

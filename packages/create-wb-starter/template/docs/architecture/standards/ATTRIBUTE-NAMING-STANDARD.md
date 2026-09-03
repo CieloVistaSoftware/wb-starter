@@ -796,7 +796,7 @@ name         attribute with DIFFERENT meaning?
   trend-value="+12%">
 </div>
 <div x-cardimage
-  src="https://picsum.photos/seed/photo/600/400"
+  src="/images/placeholder.svg"
   alt="Description"
   heading="Photo Title"
   loading="lazy">
@@ -813,7 +813,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <span x-badge variant="success">Active</span>
 <span x-avatar
-  src="https://picsum.photos/seed/user/600/400"
+  src="/images/placeholder.svg"
   alt="John Doe"
   size="lg"
   status="online">
@@ -873,7 +873,7 @@ name         attribute with DIFFERENT meaning?
 ```html
 <video
   src="movie.mp4"
-  poster="https://picsum.photos/seed/preview/800/450"
+  poster="/images/placeholder.svg"
   controls
   autoplay
   muted>
@@ -923,7 +923,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <!-- Lazy loading -->
 <img
-  src="https://picsum.photos/seed/large/600/400"
+  src="/images/placeholder.svg"
   x-lazy
   x-placeholder="blur">
 <!-- Draggable + Resizable -->

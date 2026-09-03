@@ -1,4 +1,4 @@
-import { readAttr } from '../core/read-attr.js';
+import { readAttr, readNumber } from '../core/read-attr.js';
 /**
  * Sticky Behavior
  * -----------------------------------------------------------------------------
@@ -20,6 +20,13 @@ import { readAttr } from '../core/read-attr.js';
  *   animate   - Add smooth transition (default: true)
  */
 
+/** Coerce an explicit option to a number, falling back when absent/unparseable (#946). */
+function num(value, fallback) {
+  if (value === undefined || value === null || value === '') return fallback;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : fallback;
+}
+
 export function sticky(element, options = {}) {
   // #448: skip the class on a literal <div x-sticky> host -- effects.css
   // selects the `[x-sticky]` TAG directly for that case now. The class is
@@ -27,13 +34,18 @@ export function sticky(element, options = {}) {
   // <header x-sticky> examples), since those tags aren't `[x-sticky]` and
   // effects.css's `.x-sticky`/`.x-sticky.is-stuck` rules still select them
   // by class.
-  if (element.tagName.toLowerCase() !== 'x-sticky') element.classList.add('x-sticky');
+  element.classList.add('x-sticky');
 
   // Config: plain attributes are canonical (Law 11); data-* kept as a
   // back-compat fallback only.
   const config = {
-    offset: parseInt(options.offset ?? element.getAttribute('offset') ?? readAttr(element, 'offset') ?? '0', 10),
-    zIndex: parseInt(options.zIndex ?? element.getAttribute('z-index') ?? readAttr(element, 'zIndex') ?? '100', 10),
+    // #946: readAttr() returns '' (not null) when the attribute is absent, so a
+    // trailing `?? '0'` is dead code and parseInt('') yields NaN -- which made
+    // `scrollY >= triggerPoint - config.offset` always false and stopped a plain
+    // <nav x-sticky> from EVER sticking on scroll. readNumber() is the helper
+    // written for this: it returns the fallback instead of poisoning arithmetic.
+    offset: readNumber(element, 'offset', num(options.offset, 0)),
+    zIndex: readNumber(element, 'zIndex', num(options.zIndex, 100)),
     threshold: options.threshold ?? element.getAttribute('threshold') ?? readAttr(element, 'threshold') ?? null,
     // `stuck-class` first: sticky.schema.json declares stuckClass, which the
     // docs render as stuck-class -- the one spelling not read here (#861).

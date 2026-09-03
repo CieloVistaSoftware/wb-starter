@@ -30,7 +30,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="https://picsum.photos/seed/avatar/200/200">
+  avatar="/images/placeholder.svg">
 </div>
 </div>
 
@@ -42,7 +42,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="https://picsum.photos/seed/avatar/200/200">
+  avatar="/images/placeholder.svg">
 </div>
 ```
 
@@ -52,8 +52,8 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardprofile
   name="Jane Smith"
   role="Product Designer"
-  avatar="https://picsum.photos/seed/jane/200/200"
-  cover="https://picsum.photos/seed/cover/800/500"
+  avatar="/images/placeholder.svg"
+  cover="/images/placeholder.svg"
   bio="Passionate about creating beautiful, user-friendly interfaces.">
 </div>
 ```

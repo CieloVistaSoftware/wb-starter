@@ -64,7 +64,7 @@ test.describe('overlay Behavior', () => {
     const html = '<div>Test content</div>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container x-overlay, #test-container x-overlay').first();
+    const el = page.locator('#test-container [x-overlay]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

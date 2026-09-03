@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder avatar">
+  <!-- Local stand-in for i.pravatar.cc (#933). See images/placeholder.svg. -->
+  <rect width="64" height="64" fill="#374151"/>
+  <circle cx="32" cy="24" r="11" fill="#9ca3af"/>
+  <path d="M12 60c0-11 9-18 20-18s20 7 20 18z" fill="#9ca3af"/>
+</svg>

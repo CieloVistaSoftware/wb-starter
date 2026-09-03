@@ -35,7 +35,7 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     page,
   }) => {
     const demo = page.locator('[x-demo]').filter({
-      has: page.locator('x-card[title="Build resilient interfaces"]'),
+      has: page.locator('[x-card][title="Build resilient interfaces"]'),
     }).first();
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
     await expect(demo.locator('.x-demo__code, pre').first()).toBeVisible();
@@ -135,7 +135,7 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
 
   test('Quick Start card content has visible spacing (not cramped)', async ({ page }) => {
     const demo = page.locator('[x-demo]').filter({
-      has: page.locator('x-card[title="Build resilient interfaces"]'),
+      has: page.locator('[x-card][title="Build resilient interfaces"]'),
     }).first();
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
     const card = demo.locator('.x-demo__grid .x-card').first();
@@ -185,7 +185,7 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
 
   test('Quick Start card keeps one docs link when its Light DOM is built', async ({ page }) => {
     const demo = page.locator('[x-demo]').filter({
-      has: page.locator('x-card[title="Build resilient interfaces"]'),
+      has: page.locator('[x-card][title="Build resilient interfaces"]'),
     }).first();
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
 

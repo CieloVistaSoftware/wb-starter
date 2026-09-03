@@ -575,7 +575,7 @@
       ],
       "suggestedTests": [
         "<div x-cardimage>Basic content</div>",
-        "<div x-cardimage src=\"https://picsum.photos/seed/cardimage/600/400\">With src=https://picsum.photos/seed/cardimage/600/400</div>",
+        "<div x-cardimage src=\"/images/placeholder.svg\">With src=/images/placeholder.svg>",
         "<div x-cardimage alt=\"Test Value\">With alt=Test Value</div>",
         "<div x-cardimage title=\"Test Value\">With title=Test Value</div>",
         "<div x-cardimage subtitle=\"Test Value\">With subtitle=Test Value</div>",
@@ -803,13 +803,13 @@
         "<div x-cardprofile align=\"center\">align=center</div>",
         "<div x-cardprofile name=\"John Doe\">name=\"John Doe\"</div>",
         "<div x-cardprofile role=\"Designer\">role=\"Designer\"</div>",
-        "<div name=\"Jane\" role=\"Designer\" avatar=\"https://i.pravatar.cc/80\"></div>"
+        "<div name=\"Jane\" role=\"Designer\" avatar=\"/images/avatar.svg\"></div>"
       ],
       "suggestedTests": [
         "<div x-cardprofile>Basic content</div>",
         "<div x-cardprofile name=\"John Doe\">With name=John Doe</div>",
         "<div x-cardprofile role=\"Designer\">With role=Designer</div>",
-        "<div x-cardprofile avatar=\"https://i.pravatar.cc/80?img=1\">With avatar=https://i.pravatar.cc/80?img=1</div>",
+        "<div x-cardprofile avatar=\"/images/avatar.svg\">With avatar=/images/avatar.svg>",
         "<div x-cardprofile bio=\"Test Value\">With bio=Test Value</div>",
         "<div x-cardprofile cover=\"Test Value\">With cover=Test Value</div>",
         "<div x-cardprofile size=\"sm\">With size=sm</div>",

@@ -15,10 +15,14 @@ async function showDetailsDemo(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 20000 });
   await page.fill('#behaviors-search', 'x-');
-  await page.waitForFunction(
-    () => document.querySelectorAll('.behaviors-search-results__row').length > 0,
-    { timeout: 20000 },
-  );
+  // Waiting for ANY row said nothing about the one this helper then demands —
+  // same defect as #972 (wait for a proxy, assert on something else). Verified
+  // live: the row exists with exactly these attributes, so the selector is
+  // right; only the wait was. Wait for the specific row.
+  const detailsRow = page.locator(
+    '.behaviors-search-results__row[data-browse-token="x-details"][data-variant="true"]',
+  ).first();
+  await detailsRow.waitFor({ state: 'attached', timeout: 20000 });
   await page.evaluate(() => {
     const row = [...document.querySelectorAll('.behaviors-search-results__row')]
       .find((r) => r.getAttribute('data-browse-token') === 'x-details'

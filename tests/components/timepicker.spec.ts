@@ -12,7 +12,10 @@ test('timepicker registers and marks element', async ({ page }) => {
     if ((window as any).WB?.scan) await (window as any).WB.scan(el);
   });
 
-  await page.waitForFunction(() => document.querySelector('#tp-1')?.dataset.wbTimepicker === '1', null, { timeout: 2000 });
   const el = page.locator('#tp-1');
-  expect(await el.getAttribute('data-x-timepicker')).toBe('1');
+  // The behavior writes a plain `x-timepicker-init` attribute (#928). This used to
+  // wait on `data-wb-timepicker` and assert `data-x-timepicker` -- two spellings
+  // nothing has ever set, so a working behavior timed out looking broken.
+  // toHaveAttribute retries, so no explicit wait is needed.
+  await expect(el).toHaveAttribute('x-timepicker-init', '1');
 });

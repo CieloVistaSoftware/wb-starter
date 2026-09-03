@@ -30,7 +30,7 @@ export function scrollalong(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-scrollalong> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-scrollalong> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-scrollalong') element.classList.add('x-scrollalong');
+  element.classList.add('x-scrollalong');
 
   const offset = parseInt(
     options.offset ?? element.getAttribute('offset') ?? readAttr(element, 'offset') ?? '0',

@@ -8,10 +8,10 @@ Apply `x-masonry` to any element.
 
 ```html
 <div x-masonry columns="3" gap="0.75rem">
-  <img src="https://picsum.photos/seed/m1/300/220" alt="">
-  <img src="https://picsum.photos/seed/m2/300/320" alt="">
-  <img src="https://picsum.photos/seed/m3/300/180" alt="">
-  <img src="https://picsum.photos/seed/m4/300/260" alt="">
+  <img src="/images/placeholder.svg" alt="">
+  <img src="/images/placeholder.svg" alt="">
+  <img src="/images/placeholder.svg" alt="">
+  <img src="/images/placeholder.svg" alt="">
 </div>
 ```
 

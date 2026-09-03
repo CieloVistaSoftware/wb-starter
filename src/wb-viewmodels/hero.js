@@ -21,7 +21,7 @@ export function hero(element, options = {}) {
   // <div x-hero> the tag is "div", so compliance.baseClass covered nothing and
   // the probe's readiness wait never saw the behavior attach. Guarded so a
   // literal <x-hero> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-hero') element.classList.add('x-hero');
+  element.classList.add('x-hero');
 
   // Merge options and data attributes
   const config = {

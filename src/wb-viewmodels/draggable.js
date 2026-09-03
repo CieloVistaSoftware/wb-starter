@@ -25,7 +25,7 @@ export function draggable(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-draggable> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-draggable> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-draggable') element.classList.add('x-draggable');
+  element.classList.add('x-draggable');
 
   // Get handle element
   const handle = config.handle ? element.querySelector(config.handle) : element;

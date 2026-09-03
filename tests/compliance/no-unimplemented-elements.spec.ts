@@ -53,10 +53,18 @@ const SKIP = new Set(['node_modules', '.git', 'out', 'dist', 'lib', 'vendor', '_
 const ALLOWED = new Set<string>([
   // Standard HTML that happens to contain a hyphen in some specs/polyfills.
   'font-face',
-  // Real, but registered as a hardcoded entry in wb-lazy.js's
-  // customElementMappings rather than in any object literal -- a seventh
-  // place a selector can be bound, found because this gate flagged it.
-  'button-tooltip',
+  // ANGULAR's component selector, not ours (#922). demos/frameworks.html
+  // JIT-bootstraps a real Angular app whose component declares
+  // `selector: 'angular-demo'`, and Angular registers and replaces the element
+  // at runtime -- so this gate's premise (an unregistered hyphenated tag is an
+  // inert HTMLUnknownElement) does not hold for it. Covered by this set's own
+  // remit: tags "supplied by something other than this project's registries".
+  //
+  // This is the OPPOSITE case to <button-tooltip>, which sat here until #921:
+  // that was OUR element, dead and unused, allowlisted to quiet the gate.
+  // Allowlisting hid a real finding there. Here it states a true fact about
+  // scope -- we neither own nor can register another framework's components.
+  'angular-demo',
 ]);
 
 function walk(target: string, out: string[] = []): string[] {

@@ -13,7 +13,7 @@ export function timeline(element, options = {}) {
   // for every OTHER host (x-timeline on a <div>, e.g. demos/playground.html),
   // since timeline.css's `.x-timeline`/`.x-timeline::before` rules still
   // select those by class.
-  if (element.tagName.toLowerCase() !== 'x-timeline') element.classList.add('x-timeline');
+  element.classList.add('x-timeline');
 
   const authoredItems = (element._wbOriginalSlot || element.textContent || '').trim();
   const itemsAttr = element.getAttribute('items') || authoredItems;

@@ -102,7 +102,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
 ### Image Card
 <div x-demo>
 <div x-cardimage
-  src="https://picsum.photos/seed/cardsindex/400/225"
+  src="/images/placeholder.svg"
   alt="Hero image"
   title="Featured Image"
   subtitle="Image description">
@@ -114,7 +114,7 @@ All card variants compose the shared `card` behavior and Light-DOM markup:
 <div x-cardprofile
   name="John Doe"
   role="Software Engineer"
-  avatar="https://picsum.photos/seed/johndoe/100/100"
+  avatar="/images/placeholder.svg"
   bio="Building great software.">
 </div>
 </div>

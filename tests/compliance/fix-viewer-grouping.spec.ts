@@ -10,7 +10,7 @@ test.describe('Fix Viewer Grouping', () => {
         fixes: {
           "FIX_1": {
             errorId: "FIX_1",
-            component: "comp-a",
+            behavior: "comp-a",
             status: "APPLIED",
             testRun: true,
             date: "2025-01-01T12:00:00Z",
@@ -19,7 +19,7 @@ test.describe('Fix Viewer Grouping', () => {
           },
           "FIX_2": {
             errorId: "FIX_2",
-            component: "comp-a",
+            behavior: "comp-a",
             status: "INCOMPLETE",
             testRun: true,
             date: "2025-01-01T12:00:00Z",
@@ -28,7 +28,7 @@ test.describe('Fix Viewer Grouping', () => {
           },
           "FIX_3": {
             errorId: "FIX_3",
-            component: "comp-b",
+            behavior: "comp-b",
             status: "APPLIED",
             testRun: true,
             date: "2025-01-02T12:00:00Z",
@@ -60,7 +60,7 @@ test.describe('Fix Viewer Grouping', () => {
 
   test('should group by component', async ({ page }) => {
     // Select 'Component' from the group dropdown
-    await page.selectOption('#group-by', 'component');
+    await page.selectOption('#group-by', 'behavior');
 
     // Check for group headers
     const headers = page.locator('.group-header');

@@ -37,9 +37,16 @@ test.describe('demos/site/forms.html uses native elements, not deprecated wrappe
   test('checkboxes and textareas actually render (regression didn\'t just hide them)', async ({ page }) => {
     await page.goto('/demos/site/forms.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-    const checkboxCount = await page.locator('input[type="checkbox"]').count();
-    const textareaCount = await page.locator('textarea').count();
-    expect(checkboxCount).toBeGreaterThan(15); // 17 converted + pre-existing native ones
-    expect(textareaCount).toBeGreaterThan(10); // 14 converted + pre-existing native ones
+    // `WB.behaviors` existing only means the runtime loaded — it says nothing
+    // about injection having produced these controls. A plain .count() does not
+    // retry, so it sampled mid-construction and saw only the pre-existing
+    // native inputs, reporting "expected > 15, received 3" as though the page
+    // were broken. expect.poll retries until the counts settle, no fixed sleep.
+    await expect
+      .poll(() => page.locator('input[type="checkbox"]').count(), { timeout: 15000 })
+      .toBeGreaterThan(15); // 17 converted + pre-existing native ones
+    await expect
+      .poll(() => page.locator('textarea').count(), { timeout: 15000 })
+      .toBeGreaterThan(10); // 14 converted + pre-existing native ones
   });
 });

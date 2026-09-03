@@ -78,7 +78,7 @@ test.describe('image load failures raise runtime errors', () => {
     // image would be worse than the silence this replaced.
     const { caught } = await renderAndCollect(
       page,
-      '<img id="ok" src="https://picsum.photos/seed/x-load-ok/120/80" alt="ok">',
+      '<img id="ok" src="/images/placeholder.svg" alt="ok">',
       3000
     );
     expect(caught.filter((m) => /failed to load/i.test(m)), 'a working image must stay silent')

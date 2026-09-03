@@ -355,7 +355,7 @@
               "type": {
                 "text": "string"
               },
-              "default": "https://i.pravatar.cc/80?img=1"
+              "default": "/images/avatar.svg"
             },
             {
               "name": "data-bio",

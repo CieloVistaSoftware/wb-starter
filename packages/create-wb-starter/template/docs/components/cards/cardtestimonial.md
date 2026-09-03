@@ -53,7 +53,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   quote="Absolutely incredible experience. Would recommend to everyone."
   author="John Smith"
   role="Product Manager"
-  avatar="https://picsum.photos/seed/john/200/200"
+  avatar="/images/placeholder.svg"
   rating="5">
 </div>
 ```

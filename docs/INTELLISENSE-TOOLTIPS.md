@@ -7,28 +7,6 @@ This report records exactly what is displayed in the VS Code hover tooltip for e
 
 --- 
 
-## `<button-tooltip>`
-
-**Tooltip Output:**
-```text
-A button with a tooltip.
-
-Attributes:
-- content: string
-- position: string
-```
-
-<details><summary>View 2 Attribute Tooltips</summary>
-
-| Attribute | Tooltip |
-|-----------|---------|
-| `content` | Tooltip content. |
-| `position` | Tooltip position. |
-
-</details>
-
----
-
 ## `<div x-alert>`
 
 **Tooltip Output:**

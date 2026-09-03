@@ -68,7 +68,7 @@ test.describe('move Behavior', () => {
     const html = "<div x-move>Basic move content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-move], #test-container [x-move]').first();
+    const el = page.locator('#test-container [x-move]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

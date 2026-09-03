@@ -72,19 +72,34 @@ test.describe('Live examples render — every <div x-demo> shows real content, n
       // synchronously; the rest wait for an IntersectionObserver against the
       // real scroll container. Scroll each into view so lazily-built demos
       // further down the page are actually checked, not silently skipped.
+      // 5000ms per demo was the real cost here: on a page with many blocks the
+      // scroll loop alone could consume the whole 30s test budget before a
+      // single assertion ran, and the test died as a timeout rather than
+      // reporting what rendered. Scrolling is cheap when it works, so cap it
+      // low — a scroll that needs more than 1.5s is not going to succeed.
       for (let i = 0; i < demoCount; i++) {
         try {
-          await demos.nth(i).scrollIntoViewIfNeeded({ timeout: 5000 });
+          await demos.nth(i).scrollIntoViewIfNeeded({ timeout: 1500 });
         } catch {
           // best-effort -- audit whatever built/rendered regardless
         }
       }
 
-      // Deterministic wait: every demo's grid should have finished building
-      // (non-empty innerHTML in the grid container) before evaluating, but
-      // cap it -- a demo that legitimately never renders anything (the bug
-      // this test exists to catch) must not hang the test.
-      await page.waitForTimeout(500);
+      // Wait for the grids to actually fill rather than sleeping 500ms and
+      // hoping. Capped and swallowed: a demo that legitimately never renders is
+      // the bug this test exists to CATCH, so it must fall through and report,
+      // never hang.
+      await page
+        .waitForFunction(
+          () =>
+            Array.from(document.querySelectorAll('[x-demo]')).every((d) => {
+              const g = d.querySelector('.x-demo__grid');
+              return g && g.innerHTML.trim().length > 0;
+            }),
+          null,
+          { timeout: 5000 }
+        )
+        .catch(() => {});
 
       const emptyDemos = await page.evaluate(() => {
         const problems: string[] = [];

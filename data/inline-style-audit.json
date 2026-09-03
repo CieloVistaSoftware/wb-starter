@@ -3,42 +3,28 @@
   "issues": "#779 (inline styles), #790 (hardcoded colours inside them)",
   "standard": "No inline styles anywhere. Unqualified — overridability is a consequence, not a condition.",
   "behaviorsWithInlineStyles": 56,
-  "totalDeclarations": 992,
-  "colourLiteralDeclarations": 34,
+  "totalDeclarations": 789,
+  "colourLiteralDeclarations": 32,
   "classification": {
     "COVERED": {
-      "count": 608,
+      "count": 468,
       "meaning": "a stylesheet already supplies this exact value — delete the inline write, no CSS to author"
     },
     "UNCOVERED": {
-      "count": 384,
+      "count": 319,
       "meaning": "the inline is the only source — a rule must be written before it can be removed"
     },
     "DYNAMIC": {
-      "count": 0,
+      "count": 2,
       "meaning": "the value is computed at runtime — set a CSS custom property on the element and let a rule consume it"
     }
   },
   "byBehavior": [
     {
-      "behavior": "x-tabs",
-      "total": 80,
-      "covered": 48,
-      "uncovered": 32,
-      "dynamic": 0
-    },
-    {
       "behavior": "x-cardminimizable",
       "total": 69,
       "covered": 64,
       "uncovered": 5,
-      "dynamic": 0
-    },
-    {
-      "behavior": "x-cardexpandable",
-      "total": 67,
-      "covered": 66,
-      "uncovered": 1,
       "dynamic": 0
     },
     {
@@ -63,13 +49,6 @@
       "dynamic": 0
     },
     {
-      "behavior": "x-cardtestimonial",
-      "total": 50,
-      "covered": 46,
-      "uncovered": 4,
-      "dynamic": 0
-    },
-    {
       "behavior": "x-codecontrol",
       "total": 46,
       "covered": 25,
@@ -77,17 +56,17 @@
       "dynamic": 0
     },
     {
+      "behavior": "x-cardtestimonial",
+      "total": 46,
+      "covered": 46,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
       "behavior": "x-dropdown",
       "total": 44,
       "covered": 19,
       "uncovered": 25,
-      "dynamic": 0
-    },
-    {
-      "behavior": "x-demo",
-      "total": 43,
-      "covered": 25,
-      "uncovered": 18,
       "dynamic": 0
     },
     {
@@ -123,13 +102,6 @@
       "total": 24,
       "covered": 8,
       "uncovered": 16,
-      "dynamic": 0
-    },
-    {
-      "behavior": "x-navbar",
-      "total": 22,
-      "covered": 8,
-      "uncovered": 14,
       "dynamic": 0
     },
     {
@@ -194,6 +166,13 @@
       "covered": 0,
       "uncovered": 11,
       "dynamic": 0
+    },
+    {
+      "behavior": "x-sticky",
+      "total": 10,
+      "covered": 6,
+      "uncovered": 3,
+      "dynamic": 1
     },
     {
       "behavior": "x-notes",
@@ -357,6 +336,13 @@
       "dynamic": 0
     },
     {
+      "behavior": "x-demo",
+      "total": 1,
+      "covered": 0,
+      "uncovered": 0,
+      "dynamic": 1
+    },
+    {
       "behavior": "x-dialog",
       "total": 1,
       "covered": 1,
@@ -385,7 +371,21 @@
       "dynamic": 0
     },
     {
+      "behavior": "x-tabs",
+      "total": 1,
+      "covered": 1,
+      "uncovered": 0,
+      "dynamic": 0
+    },
+    {
       "behavior": "x-video",
+      "total": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-cardexpandable",
       "total": 1,
       "covered": 0,
       "uncovered": 1,
@@ -684,6 +684,68 @@
         }
       ],
       "total": 8
+    },
+    {
+      "behavior": "x-sticky",
+      "elements": [
+        {
+          "path": ":host",
+          "classes": "x-sticky is-stuck",
+          "declarations": [
+            {
+              "prop": "position",
+              "value": "fixed",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "top",
+              "value": "0px",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "left",
+              "value": "-10000px",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "width",
+              "value": "800px",
+              "classification": "DYNAMIC"
+            },
+            {
+              "prop": "z-index",
+              "value": "100",
+              "classification": "UNCOVERED"
+            },
+            {
+              "prop": "transition-behavior",
+              "value": "normal",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-duration",
+              "value": "0.2s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-timing-function",
+              "value": "ease",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-delay",
+              "value": "0s",
+              "classification": "COVERED"
+            },
+            {
+              "prop": "transition-property",
+              "value": "box-shadow",
+              "classification": "COVERED"
+            }
+          ]
+        }
+      ],
+      "total": 10
     },
     {
       "behavior": "x-scrollalong",
@@ -1674,259 +1736,13 @@
           "declarations": [
             {
               "prop": "--x-demo-shrink-width",
-              "value": "238px",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > div[0] > div[0]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "top",
-              "value": "26px",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > div[0] > div[1]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "top",
-              "value": "50px",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > div[0] > div[2]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "top",
-              "value": "74px",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > pre[1] > code[0]",
-          "classes": "language-html x-code hljs language-xml",
-          "declarations": [
-            {
-              "prop": "font-family",
-              "value": "inherit",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "font-size",
-              "value": "inherit",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-top",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-right",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-bottom",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-left",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-left-radius",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-right-radius",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-right-radius",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-left-radius",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "background-color",
-              "value": "transparent",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "color",
-              "value": "inherit",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-source",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-slice",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-outset",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-repeat",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "display",
-              "value": "inline",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "white-space-collapse",
-              "value": "inherit",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "text-wrap-mode",
-              "value": "inherit",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "word-break",
-              "value": "inherit",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "vertical-align",
-              "value": "baseline",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "box-shadow",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "visibility",
-              "value": "visible",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "opacity",
-              "value": "1",
-              "classification": "COVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > button[2]",
-          "classes": "x-pre__copy x-button",
-          "declarations": [
-            {
-              "prop": "right",
-              "value": "4px",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > span[3]",
-          "classes": "x-pre__language",
-          "declarations": [
-            {
-              "prop": "right",
-              "value": "40.9844px",
-              "classification": "UNCOVERED"
+              "value": "186px",
+              "classification": "DYNAMIC"
             }
           ]
         }
       ],
-      "total": 43
+      "total": 1
     },
     {
       "behavior": "x-dialog",
@@ -2137,128 +1953,6 @@
         }
       ],
       "total": 2
-    },
-    {
-      "behavior": "x-navbar",
-      "elements": [
-        {
-          "path": ":host",
-          "classes": "x-navbar",
-          "declarations": [
-            {
-              "prop": "display",
-              "value": "flex",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "align-items",
-              "value": "center",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "justify-content",
-              "value": "space-between",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-top",
-              "value": "0.5rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-right",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-bottom",
-              "value": "0.5rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-left",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "background-image",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-x",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-y",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-size",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-repeat",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-attachment",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-origin",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-clip",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-left-radius",
-              "value": "6px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-right-radius",
-              "value": "6px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-right-radius",
-              "value": "6px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-left-radius",
-              "value": "6px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "row-gap",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "column-gap",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            }
-          ]
-        }
-      ],
-      "total": 22
     },
     {
       "behavior": "x-notes",
@@ -2615,422 +2309,9 @@
       "behavior": "x-tabs",
       "elements": [
         {
-          "path": "nav[0]",
-          "classes": "x-tabs__nav",
-          "declarations": [
-            {
-              "prop": "display",
-              "value": "flex",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "row-gap",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "column-gap",
-              "value": "0px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-width",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-style",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "margin-bottom",
-              "value": "0.5rem",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "nav[0] > button[0]",
-          "classes": "x-tabs__tab x-tabs__tab--active x-button",
-          "declarations": [
-            {
-              "prop": "padding-top",
-              "value": "0.25rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-right",
-              "value": "0.75rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-bottom",
-              "value": "0.25rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-left",
-              "value": "0.75rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-image",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-x",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-y",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-size",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-repeat",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-attachment",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-origin",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-clip",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-width",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-style",
-              "value": "none",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-right-style",
-              "value": "none",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-style",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-style",
-              "value": "none",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-color",
-              "value": "initial",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-right-color",
-              "value": "initial",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-left-color",
-              "value": "initial",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-image-source",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-slice",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-outset",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-repeat",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "cursor",
-              "value": "pointer",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "color",
-              "value": "inherit",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "font-size",
-              "value": "0.8rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "margin-bottom",
-              "value": "-1px",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "font-weight",
-              "value": "600",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "opacity",
-              "value": "1",
-              "classification": "COVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1]",
-          "classes": "x-tabs__panels",
-          "declarations": [
-            {
-              "prop": "width",
-              "value": "100%",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "margin-top",
-              "value": "0.5rem",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
           "path": "div[1] > section[0]",
           "classes": "x-tabs__panel",
           "declarations": [
-            {
-              "prop": "padding-top",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-right",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-bottom",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "padding-left",
-              "value": "1rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-style",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-width",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-right-style",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-right-width",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-style",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-width",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-left-style",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-left-width",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-source",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-slice",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-width",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-outset",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-repeat",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-left-radius",
-              "value": "4px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-top-right-radius",
-              "value": "4px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-right-radius",
-              "value": "4px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "border-bottom-left-radius",
-              "value": "4px",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "background-image",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-x",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-y",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-size",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-repeat",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-attachment",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-origin",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-clip",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-color",
-              "value": "",
-              "classification": "UNCOVERED"
-            },
             {
               "prop": "display",
               "value": "block",
@@ -3039,7 +2320,7 @@
           ]
         }
       ],
-      "total": 80
+      "total": 1
     },
     {
       "behavior": "x-textarea",
@@ -3236,362 +2517,14 @@
           "classes": "x-card__expandable-content",
           "declarations": [
             {
-              "prop": "padding-top",
-              "value": "1rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-right",
-              "value": "1rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-bottom",
-              "value": "1rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-left",
-              "value": "1rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "overflow-x",
-              "value": "hidden",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "overflow-y",
-              "value": "hidden",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-behavior",
-              "value": "normal",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-duration",
-              "value": "0.3s",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-timing-function",
-              "value": "ease",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-delay",
-              "value": "0s",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-property",
-              "value": "max-height",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "max-height",
+              "prop": "--x-card-expandable-max-height",
               "value": "100px",
               "classification": "UNCOVERED"
             }
           ]
-        },
-        {
-          "path": "footer[1]",
-          "classes": "x-card__footer",
-          "declarations": [
-            {
-              "prop": "padding-top",
-              "value": "0.75rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-right",
-              "value": "1rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-bottom",
-              "value": "0.75rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-left",
-              "value": "1rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-width",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-style",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-color",
-              "value": "",
-              "classification": "COVERED"
-            }
-          ]
-        },
-        {
-          "path": "footer[1] > button[0]",
-          "classes": "x-card__expand-btn x-button",
-          "declarations": [
-            {
-              "prop": "width",
-              "value": "100%",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-top",
-              "value": "0.5rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-right",
-              "value": "0.5rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-bottom",
-              "value": "0.5rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "padding-left",
-              "value": "0.5rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-image",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-x",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-position-y",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-size",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-repeat",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-attachment",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-origin",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-clip",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "background-color",
-              "value": "",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-style",
-              "value": "none",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-right-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-left-color",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-source",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-slice",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-width",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-outset",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-image-repeat",
-              "value": "initial",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-left-radius",
-              "value": "6px",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-top-right-radius",
-              "value": "6px",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-right-radius",
-              "value": "6px",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "border-bottom-left-radius",
-              "value": "6px",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "color",
-              "value": "var(--text-primary,#f9fafb)",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "cursor",
-              "value": "pointer",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "display",
-              "value": "flex",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "align-items",
-              "value": "center",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "justify-content",
-              "value": "center",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "row-gap",
-              "value": "0.5rem",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "column-gap",
-              "value": "0.5rem",
-              "classification": "COVERED"
-            }
-          ]
-        },
-        {
-          "path": "footer[1] > button[0] > span[0]",
-          "classes": "x-card__expand-icon",
-          "declarations": [
-            {
-              "prop": "display",
-              "value": "inline-block",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-behavior",
-              "value": "normal",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-duration",
-              "value": "0.3s",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-timing-function",
-              "value": "ease",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-delay",
-              "value": "0s",
-              "classification": "COVERED"
-            },
-            {
-              "prop": "transition-property",
-              "value": "transform",
-              "classification": "COVERED"
-            }
-          ]
         }
       ],
-      "total": 67
+      "total": 1
     },
     {
       "behavior": "x-cardfile",
@@ -5045,32 +3978,6 @@
           ]
         },
         {
-          "path": "div[0]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "font-size",
-              "value": "3rem",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "line-height",
-              "value": "1",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "color",
-              "value": "var(--primary,#6366f1)",
-              "classification": "UNCOVERED"
-            },
-            {
-              "prop": "opacity",
-              "value": "0.3",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
           "path": "blockquote[1]",
           "classes": "x-card__quote",
           "declarations": [
@@ -5293,7 +4200,7 @@
           ]
         }
       ],
-      "total": 50
+      "total": 46
     },
     {
       "behavior": "x-container",

@@ -10,7 +10,7 @@ Card with horizontal layout - image on side, content on other
 
 ```html
 <article x-cardhorizontal
-  image="https://picsum.photos/seed/trail/320/240"
+  image="/images/placeholder.svg"
   image-alt="Pine trail at dawn"
   image-position="start"
   title="Ridge loop, 8km"

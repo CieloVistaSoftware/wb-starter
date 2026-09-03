@@ -74,9 +74,9 @@
       "alternates": []
     },
     "x-lightbox": {
-      "source": "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb1\">\n  x-lightbox · variant: primary · src: https://picsum.photos/1200/800?r=lb1\n</button>",
+      "source": "<button variant=\"primary\" x-lightbox src=\"/images/placeholder.svg\">\n  x-lightbox · variant: primary · src: /images/placeholder.svg\n</button>",
       "alternates": [
-        "<button variant=\"primary\" x-lightbox src=\"https://picsum.photos/1200/800?r=lb2\">\n  x-lightbox · variant: primary · src: https://picsum.photos/1200/800?r=lb2\n</button>"
+        "<button variant=\"primary\" x-lightbox src=\"/images/placeholder.svg\">\n  x-lightbox · variant: primary · src: /images/placeholder.svg\n</button>"
       ]
     },
     "x-breadcrumb": {
@@ -102,14 +102,14 @@
       ]
     },
     "x-image": {
-      "source": "<img src=\"https://picsum.photos/200/150?r=enh1\" alt=\"Lazy loaded\" lazy class=\"demo-image\">",
+      "source": "<img src=\"/images/placeholder.svg\" alt=\"Lazy loaded\" lazy class=\"demo-image\">",
       "alternates": [
-        "<img src=\"https://picsum.photos/200/150?r=enh2\" alt=\"Zoomable\" zoomable class=\"demo-image\">",
-        "<div x-image src=\"https://picsum.photos/200/150?r=enh1\" alt=\"Lazy loaded\" lazy class=\"demo-image\"></div>"
+        "<img src=\"/images/placeholder.svg\" alt=\"Zoomable\" zoomable class=\"demo-image\">",
+        "<div x-image src=\"/images/placeholder.svg\" alt=\"Lazy loaded\" lazy class=\"demo-image\"></div>"
       ]
     },
     "x-gallery": {
-      "source": "<div x-gallery columns=\"4\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal1\" alt=\"Gallery 1\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal2\" alt=\"Gallery 2\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal3\" alt=\"Gallery 3\">\r\n        <img src=\"https://picsum.photos/200/200?r=gal4\" alt=\"Gallery 4\">\r\n      </div>",
+      "source": "<div x-gallery columns=\"4\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 1\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 2\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 3\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 4\">\r\n      </div>",
       "alternates": []
     },
     "x-youtube": {
@@ -236,9 +236,9 @@
       ]
     },
     "x-details": {
-      "source": "<details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
+      "source": "<details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"/images/placeholder.svg\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</details>",
       "alternates": [
-        "<div x-details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"https://picsum.photos/seed/details/480/200\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</div>"
+        "<div x-details summary=\"Details sample of Trail conditions\" animated>\n  <img src=\"/images/placeholder.svg\" alt=\"Trail through autumn woodland\" width=\"480\" height=\"200\">\n  <p>Open to show the summary text is authored via the <code>summary</code>\n     attribute — it reads \"Details\" only when none is set.</p>\n</div>"
       ]
     },
     "x-code": {
@@ -248,10 +248,10 @@
       ]
     },
     "x-dropdown": {
-      "source": "<div x-dropdown label=\"Assign to\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Button example of x-dropdown</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/katherine/28/28\" alt=\"\" width=\"28\" height=\"28\"> Katherine Johnson</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>",
+      "source": "<div x-dropdown label=\"Assign to\">\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Button example of x-dropdown</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Katherine Johnson</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>",
       "alternates": [
         "<div x-dropdown items=\"Profile,Settings,Billing,Team,Sign out\" label=\"Account\"></div>",
-        "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/ada/28/28\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/grace/28/28\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"https://picsum.photos/seed/alan/28/28\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>"
+        "<div x-dropdown label=\"Opens upward\" position=\"top-start\">\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Ada Lovelace</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Grace Hopper</button>\n  <button type=\"button\"><img src=\"/images/placeholder.svg\" alt=\"\" width=\"28\" height=\"28\"> Alan Turing</button>\n  <button type=\"button\">\n  type: button\n</button>\n</div>"
       ]
     },
     "x-card": {
@@ -281,11 +281,11 @@
       "alternates": []
     },
     "x-cardhorizontal": {
-      "source": "<article x-cardhorizontal\n  image=\"https://picsum.photos/seed/trail/320/240\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
+      "source": "<article x-cardhorizontal\n  image=\"/images/placeholder.svg\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
       "alternates": []
     },
     "x-cardimage": {
-      "source": "<article x-cardimage\n  src=\"https://picsum.photos/seed/harbour/480/300\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+      "source": "<article x-cardimage\n  src=\"/images/placeholder.svg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
       "alternates": []
     },
     "x-cardlink": {
@@ -301,11 +301,11 @@
       "alternates": []
     },
     "x-cardoverlay": {
-      "source": "<article x-cardoverlay\n  image=\"https://picsum.photos/seed/city/480/320\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
+      "source": "<article x-cardoverlay\n  image=\"/images/placeholder.svg\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
       "alternates": []
     },
     "x-cardportfolio": {
-      "source": "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"https://picsum.photos/seed/ada-cover/480/200\"></article>",
+      "source": "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"/images/placeholder.svg\"></article>",
       "alternates": []
     },
     "x-cardpricing": {
@@ -313,11 +313,11 @@
       "alternates": []
     },
     "x-cardproduct": {
-      "source": "<article x-cardproduct\n  image=\"https://picsum.photos/seed/headphones/400/400\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32Ω, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
+      "source": "<article x-cardproduct\n  image=\"/images/placeholder.svg\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32Ω, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
       "alternates": []
     },
     "x-cardprofile": {
-      "source": "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://picsum.photos/seed/grace/96/96\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
+      "source": "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"/images/placeholder.svg\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
       "alternates": []
     },
     "x-cardstats": {
@@ -325,11 +325,11 @@
       "alternates": []
     },
     "x-cardtestimonial": {
-      "source": "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://picsum.photos/seed/katherine/96/96\"\n  rating=\"5\"></article>",
+      "source": "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"/images/placeholder.svg\"\n  rating=\"5\"></article>",
       "alternates": []
     },
     "x-cardvideo": {
-      "source": "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
+      "source": "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"/images/placeholder.svg\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the component base class, and why.\"></article>",
       "alternates": []
     },
     "x-fix-card": {
@@ -351,7 +351,7 @@
       "alternates": []
     },
     "x-avatar": {
-      "source": "<div x-avatar src=\"https://picsum.photos/seed/ada/64/64\" alt=\"Ada Lovelace\" name=\"Ada Lovelace\" size=\"lg\"></div>",
+      "source": "<div x-avatar src=\"/images/placeholder.svg\" alt=\"Ada Lovelace\" name=\"Ada Lovelace\" size=\"lg\"></div>",
       "alternates": []
     },
     "x-spinner": {
@@ -515,11 +515,11 @@
       "alternates": []
     },
     "x-masonry": {
-      "source": "<div x-masonry columns=\"3\" gap=\"0.75rem\">\n  <img src=\"https://picsum.photos/seed/m1/300/220\" alt=\"\">\n  <img src=\"https://picsum.photos/seed/m2/300/320\" alt=\"\">\n  <img src=\"https://picsum.photos/seed/m3/300/180\" alt=\"\">\n  <img src=\"https://picsum.photos/seed/m4/300/260\" alt=\"\">\n</div>",
+      "source": "<div x-masonry columns=\"3\" gap=\"0.75rem\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n  <img src=\"/images/placeholder.svg\" alt=\"\">\n</div>",
       "alternates": []
     },
     "x-ratio": {
-      "source": "<div x-ratio ratio=\"16:9\">\n  <img src=\"https://picsum.photos/seed/wide/640/360\" alt=\"Coastline from the air\">\n</div>",
+      "source": "<div x-ratio ratio=\"16:9\">\n  <img src=\"/images/placeholder.svg\" alt=\"Coastline from the air\">\n</div>",
       "alternates": []
     },
     "x-span": {
@@ -541,19 +541,19 @@
       ]
     },
     "x-video": {
-      "source": "<video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></video>",
+      "source": "<video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></video>",
       "alternates": [
-        "<div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"https://picsum.photos/seed/screening/640/360\" controls></div>"
+        "<div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></div>"
       ]
     },
     "x-img": {
-      "source": "<img src=\"https://picsum.photos/seed/lens/480/320\" alt=\"Prime lens on a wooden desk\">",
+      "source": "<img src=\"/images/placeholder.svg\" alt=\"Prime lens on a wooden desk\">",
       "alternates": []
     },
     "x-figure": {
-      "source": "<figure>\n  <img src=\"https://picsum.photos/seed/bridge/480/300\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
+      "source": "<figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
       "alternates": [
-        "<div x-figure>\n  <img src=\"https://picsum.photos/seed/bridge/480/300\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</div>"
+        "<div x-figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</div>"
       ]
     },
     "x-vimeo": {
@@ -688,10 +688,10 @@
       ]
     },
     "x-frame": {
-      "source": "<div x-frame ratio=\"16:9\">\n  <img src=\"https://picsum.photos/seed/frame/640/360\" alt=\"Landscape held at 16:9\">\n</div>",
+      "source": "<div x-frame ratio=\"16:9\">\n  <img src=\"/images/placeholder.svg\" alt=\"Landscape held at 16:9\">\n</div>",
       "alternates": [
-        "<div x-frame ratio=\"1:1\">\n  <img src=\"https://picsum.photos/seed/square/400/400\" alt=\"Cropped to a square\">\n</div>",
-        "<div x-frame ratio=\"4:3\">\n  <img src=\"https://picsum.photos/seed/classic/480/360\" alt=\"Held at 4:3\">\n</div>"
+        "<div x-frame ratio=\"1:1\">\n  <img src=\"/images/placeholder.svg\" alt=\"Cropped to a square\">\n</div>",
+        "<div x-frame ratio=\"4:3\">\n  <img src=\"/images/placeholder.svg\" alt=\"Held at 4:3\">\n</div>"
       ]
     },
     "x-grid": {

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="waves placeholder">
+  <!-- Local placeholder "waves" (#946). Replaces a remote picsum.photos fetch.
+       The art carries a SUBJECT: a card titled "Mountain Vista" should not show
+       water. Cards are matched to art by their own title, not by a hash.
+       Composed in the lower band so a short cover crop keeps the subject, and
+       kept muted so it sits behind the text rather than competing with it.
+       Colours are baked in because an img src renders in its own document and
+       cannot read the page theme tokens. -->
+  <defs>
+    <linearGradient id="w-waves" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#2f4d59"/><stop offset="100%" stop-color="#1b2f38"/>
+    </linearGradient>
+    <pattern id="h-waves" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#86aebd" stroke-width="1" opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#w-waves)"/>
+  <rect width="800" height="500" fill="url(#h-waves)"/>
+  <circle cx="620" cy="150" r="44" fill="#86aebd" opacity="0.35"/><path d="M0 360 q100 -46 200 0 t200 0 t200 0 t200 0 V500 H0 Z" fill="#86aebd" opacity="0.5"/><path d="M0 420 q100 -46 200 0 t200 0 t200 0 t200 0 V500 H0 Z" fill="#86aebd" opacity="0.7"/>
+</svg>

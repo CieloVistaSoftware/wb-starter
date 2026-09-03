@@ -40,7 +40,7 @@ export function grid(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-grid> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-grid> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-grid') element.classList.add('x-grid');
+  element.classList.add('x-grid');
   element.style.display = 'grid';
   element.style.gap = config.gap;
 
@@ -142,7 +142,7 @@ export function container(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-container> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-container> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-container') element.classList.add('x-container');
+  element.classList.add('x-container');
 
   // Map align/justify values to CSS
   const alignMap = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch' };
@@ -213,7 +213,7 @@ export function stack(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-stack> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-stack> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-stack') element.classList.add('x-stack');
+  element.classList.add('x-stack');
   element.style.display = 'flex';
   element.style.flexDirection = 'column';
   element.style.gap = config.gap;
@@ -246,7 +246,7 @@ export function cluster(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-cluster> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-cluster> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-cluster') element.classList.add('x-cluster');
+  element.classList.add('x-cluster');
   element.style.display = 'flex';
   element.style.flexWrap = 'wrap';
   element.style.gap = config.gap;
@@ -335,7 +335,7 @@ export function switcher(element, options = {}) {
   // so adding it unconditionally trips no-redundant-tag-name-class.spec.ts
   // (demos/layout-test.html). Same guard pattern as article()/articles()
   // (src/wb-viewmodels/article.js, #523/#528) and chip() (feedback.js, #521).
-  if (element.tagName.toLowerCase() !== 'x-switcher') element.classList.add('x-switcher');
+  element.classList.add('x-switcher');
   element.style.display = 'flex';
   element.style.flexWrap = 'wrap';
   element.style.gap = config.gap;
@@ -608,7 +608,7 @@ export function drawerLayout(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-drawer-layout> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-drawer-layout> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-drawer-layout') element.classList.add('x-drawer-layout');
+  element.classList.add('x-drawer-layout');
   element.classList.add('x-drawer');
   
   const isVertical = config.position === 'top' || config.position === 'bottom';

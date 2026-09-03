@@ -13,7 +13,7 @@ Customer testimonial/review card with quote, author, avatar, and rating
   quote="We deleted the build step and shipped faster the same week."
   author="Katherine Johnson"
   role="Platform lead"
-  avatar="https://picsum.photos/seed/katherine/96/96"
+  avatar="/images/placeholder.svg"
   rating="5"></article>
 ```
 

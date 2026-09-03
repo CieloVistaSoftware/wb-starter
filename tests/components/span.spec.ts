@@ -68,7 +68,7 @@ test.describe('span Behavior', () => {
     const html = "<div x-span>Basic span content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-span], #test-container [x-span]').first();
+    const el = page.locator('#test-container [x-span]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

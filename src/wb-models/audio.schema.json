@@ -6,7 +6,7 @@
   "schemaFor": "audio",
   "baseClass": "x-audio",
   "semanticElement": {
-    "tagName": "div"
+    "tagName": "audio"
   },
   "compliance": {
     "baseClass": "x-audio",

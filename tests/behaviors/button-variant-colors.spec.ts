@@ -23,7 +23,7 @@ test.describe('Button variant colors (#button-variant-colors)', () => {
     // viewport (IntersectionObserver) — scroll each variant into view before
     // reading its computed style, or it reads the pre-enhancement default.
     const bg = async (variant: string) => {
-      const el = page.locator(`x-button[variant="${variant}"]`).first();
+      const el = page.locator(`[x-button][variant="${variant}"]`).first();
       await el.scrollIntoViewIfNeeded();
       await page.waitForTimeout(300);
       return el.evaluate((node) => getComputedStyle(node as HTMLElement).backgroundColor);

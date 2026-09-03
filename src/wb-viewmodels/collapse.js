@@ -34,7 +34,7 @@ export function collapse(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-collapse> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-collapse> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-collapse') element.classList.add('x-collapse');
+  element.classList.add('x-collapse');
 
   // If target is specified, act as a remote trigger
   if (config.target) {

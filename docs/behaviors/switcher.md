@@ -58,4 +58,4 @@ screen-reader reading order are unaffected by the current layout state.
 
 ## Source
 
-[src/wb-viewmodels/layouts.js](../../../src/wb-viewmodels/layouts.js)
+[src/wb-viewmodels/layouts.js](../../src/wb-viewmodels/layouts.js)

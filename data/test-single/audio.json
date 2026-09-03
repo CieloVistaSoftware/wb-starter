@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/components/audio.spec.ts",
+  "startedAt": "2026-08-31T19:22:13.867Z",
+  "updatedAt": "2026-08-31T19:22:23.253Z",
+  "command": "npx playwright test --workers=8 tests/components/audio.spec.ts",
+  "pid": 35216,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\components\\audio.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [behaviors] › tests\\components\\audio.spec.ts:37:3 › .x-audio › src stays on the native <audio> host (not moved to a div) (2.0s)\n  ok 1 [behaviors] › tests\\components\\audio.spec.ts:58:3 › .x-audio › show-eq renders the equalizer band controls (2.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 4.9s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (6.1s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-08-31T19:22:23.253Z",
+  "duration": "9.39s",
+  "exitCode": 0,
+  "flaky": 0
+}

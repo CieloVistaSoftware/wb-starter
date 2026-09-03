@@ -38,7 +38,7 @@ export function darkmode(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-darkmode> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-darkmode> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-darkmode') element.classList.add('x-darkmode');
+  element.classList.add('x-darkmode');
 
   // If element is a button, make it toggle
   if (element.tagName === 'BUTTON') {

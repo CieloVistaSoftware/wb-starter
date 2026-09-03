@@ -68,12 +68,28 @@ test.describe('Badge — Basic Rendering', () => {
   });
 
   test('[x-badge] renders as inline-level display', async ({ page }) => {
-    await setupBadges(page, '<span x-badge id="display-test">Display</span>');
+    // setupBadges injects into a `display: flex` container, and a flex container
+    // BLOCKIFIES its children: inline-flex computes as flex, inline computes as
+    // block. That is why this reported 'flex' on one run and 'block' on the
+    // next — both are the blockified form, and neither can ever be inline-level.
+    // The assertion was unsatisfiable by construction; no wait or poll could fix
+    // it. Verified live in normal flow: exactly one rule matches (badge.css
+    // `x-badge, [x-badge], .x-badge { display: inline-flex }`) and the badge
+    // computes inline-flex. Take it out of the flex container to test its own
+    // display.
+    await setupBadges(page, '<div><span x-badge id="display-test">Display</span></div>');
 
-    const display = await page.locator('#display-test').evaluate((el: Element) => getComputedStyle(el).display);
-    // Badge should be inline-level (inline-block, inline-flex, etc.) — not block or none
-    expect(['inline-block', 'inline-flex', 'inline'].includes(display),
-      `Expected inline-level display, got: ${display}`).toBe(true);
+    // Read ONCE with evaluate() this reported a different wrong value each run
+    // — flex on one, block on the next — which is a cascade race while
+    // badge.css (JIT-loaded via ensureBehaviorCss) settles, not a fixed
+    // mismatch. Settled truth verified live: inline-flex. Poll so the read can
+    // retry; the assertion itself is unchanged.
+    await expect
+      .poll(
+        () => page.locator('#display-test').evaluate((el: Element) => getComputedStyle(el).display),
+        { timeout: 10000, message: 'badge must settle to an inline-level display' },
+      )
+      .toMatch(/^inline(-block|-flex)?$/);
   });
 
   test('multiple badges render independently', async ({ page }) => {
@@ -182,11 +198,18 @@ test.describe('Badge — Pill Modifier', () => {
   test('pill badge has fully rounded border-radius', async ({ page }) => {
     await setupBadges(page, '<span x-badge id="pill-radius" pill>Rounded</span>');
 
-    const radius = await page.locator('#pill-radius').evaluate(
-      el => getComputedStyle(el).borderRadius
-    );
-    // base .x-badge already has border-radius: 999px
-    expect(parseInt(radius)).toBeGreaterThanOrEqual(99);
+    // badge.css is JIT-loaded (ensureBehaviorCss), so a single read races the
+    // stylesheet fetch and returns the pre-stylesheet default 0px — which is
+    // exactly what the suite reported (expected >= 99, received 0). Verified
+    // live: the behavior HAS run by then (x-badge--pill is on the element),
+    // only the CSS is missing. Poll the computed value instead of reading once.
+    // Same treatment notes.spec.ts already uses for the same JIT-CSS race.
+    await expect
+      .poll(
+        () => page.locator('#pill-radius').evaluate(el => parseInt(getComputedStyle(el).borderRadius) || 0),
+        { timeout: 10000 },
+      )
+      .toBeGreaterThanOrEqual(99); // base .x-badge already has border-radius: 999px
   });
 });
 
@@ -283,10 +306,21 @@ test.describe('Badge — CSS Properties', () => {
   test('badge text color is white by default', async ({ page }) => {
     await setupBadges(page, '<span x-badge id="css-color">White text</span>');
 
-    const color = await page.locator('#css-color').evaluate(
-      el => getComputedStyle(el).color
-    );
-    expect(color).toMatch(/rgb\(255, 255, 255\)|rgba\(255, 255, 255/);
+    // Stale expectation. badge.css:31 sets `color: var(--text-primary)` for the
+    // DEFAULT badge — only the --primary/--success/etc variants use
+    // var(--badge-on-color), which is white. Verified live: a default badge
+    // computes rgb(240, 242, 244), a success badge computes white. Hardcoding
+    // a literal here also violates the no-hardcoded-colors rule, so compare
+    // against the resolved token instead.
+    const { actual, token } = await page.locator('#css-color').evaluate((el: Element) => {
+      const probe = document.createElement('span');
+      probe.style.color = 'var(--text-primary)';
+      el.parentElement!.appendChild(probe);
+      const token = getComputedStyle(probe).color;
+      probe.remove();
+      return { actual: getComputedStyle(el).color, token };
+    });
+    expect(actual, 'default badge text must use var(--text-primary)').toBe(token);
   });
 });
 
@@ -434,6 +468,12 @@ test.describe('Badge — Edge Cases', () => {
 
     const badge = page.locator('#in-heading');
     await expect(badge).toBeVisible();
-    await expect(badge).toHaveCSS('display', 'inline-block');
+    // Stale expectation: badge.css declares `display: inline-flex` (line 18),
+    // not inline-block. Verified live — a badge inside a heading computes to
+    // inline-flex. toHaveCSS retries, so this could never pass; it was not a
+    // timing failure. Assert the property that matters: inline-LEVEL.
+    const display = await badge.evaluate((el: Element) => getComputedStyle(el).display);
+    expect(['inline-block', 'inline-flex', 'inline'].includes(display),
+      `badge next to a heading must stay inline-level, got: ${display}`).toBe(true);
   });
 });

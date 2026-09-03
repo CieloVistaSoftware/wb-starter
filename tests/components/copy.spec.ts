@@ -68,7 +68,7 @@ test.describe('copy Behavior', () => {
     const html = "<div x-copy>Basic copy content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-copy], #test-container [x-copy]').first();
+    const el = page.locator('#test-container [x-copy]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

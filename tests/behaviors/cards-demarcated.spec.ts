@@ -33,7 +33,7 @@ test.describe('#180 — cards are demarcated', () => {
 
   test('float variant has real elevation (box-shadow)', async ({ page }) => {
     const shadow = await page.evaluate(() => {
-      const c = document.querySelector('x-card[variant="float"]') as HTMLElement;
+      const c = document.querySelector('[x-card][variant="float"]') as HTMLElement;
       return c ? getComputedStyle(c).boxShadow : 'NO_FLOAT_CARD';
     });
     expect(shadow, 'no variant="float" card found').not.toBe('NO_FLOAT_CARD');

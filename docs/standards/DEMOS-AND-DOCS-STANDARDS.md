@@ -13,14 +13,35 @@ and behaviors projects).
 
 ---
 
-## 1. Live examples use `<div x-demo>`
+## 1. Live examples carry `x-demo` on the closest semantic element
 
-Every behavior example is a `<div x-demo>` — it renders the **live control** AND shows its
-**source** underneath. One tag gives both.
+Every behavior example carries `x-demo` — it renders the **live control** AND shows its
+**source** underneath. One attribute gives both.
 
-- In `.md` docs: embed a **raw** `<div x-demo>…</div>` directly in the Markdown. Do NOT
-  use a ` ```demo ` fence (retired) — the doc-viewer renders embedded `x-*` markup.
-- In `.html` demos: use `<div x-demo>` the same way.
+**Attach it to the closest semantic element. A `<div>` is a last resort.**
+
+John: *"even examples should attach behaviors to the closest semantic tag, divs are not
+ideal."* A `<div>` says nothing about what it contains; `<figure>` says "self-contained
+illustration referenced from the text", which is exactly what a live example with its
+source is. The host tag is the author's choice everywhere else in this project — the
+attribute IS the behavior — and examples are not an exception.
+
+```html
+<figure x-demo>            <!-- preferred: an example IS a figure -->
+<section x-demo>           <!-- when the example is a titled subsection -->
+<div x-demo>               <!-- only when no semantic element fits -->
+```
+
+- In `.md` docs: embed the raw element directly in the Markdown. Do NOT use a
+  ` ```demo ` fence (retired) — the doc-viewer renders embedded `x-*` markup.
+- In `.html` demos: the same element, the same way.
+
+`figure` and `article` are themselves auto-injected behaviors (`tag-map.js` nativeMap),
+so `<figure x-demo>` runs both — and that is fine, not a conflict: the semantic
+auto-injection happens first, then `x-demo` runs on the already-injected element.
+
+> **Not yet migrated.** 1,374 `<div x-demo>` are still in the tree (#917). New examples
+> should follow the rule above.
 
 ## 2. One code sample per rendered element (strict 1:1)
 
@@ -403,7 +424,7 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   the repo or a real remote URL — is not "illustrative," it's a broken control that ships (2026-08-15
   retrospective: this exact mistake caused 9+ separate issues in one week, #610/#605/#601/#551/#548/#529/
   #526/#519/#514).
-- Use real remote assets: `https://picsum.photos/{width}/{height}?random={n}` for images (distinct `n` per
+- Use real remote assets: `/images/placeholder.svg` for images (distinct `n` per
   example, ≥800px on the short edge so it doesn't look blurry when cropped into a card), a real hosted
   sample for audio/video (this codebase's established convention is soundhelix.com for audio).
 - Never invent a local path unless the file is actually committed to the repo at that exact path — verify

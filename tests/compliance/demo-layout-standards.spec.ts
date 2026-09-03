@@ -266,7 +266,26 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
         const problems: string[] = [];
         const all = Array.from(document.querySelectorAll('body *')) as HTMLElement[];
 
+        // Exclude by ROLE first, before any size heuristic. §13 governs content
+        // panels — surfaces that hold block text. Some elements are atoms no
+        // matter how large they get: a wide <code> chip, a long <button>, a
+        // badge, an avatar. Judging those by size produced a steady drip of
+        // false positives (#561 patched exactly one, by shape, and more kept
+        // arriving), because "big" and "is a panel" are different properties.
+        const ATOM_TAGS = new Set(['BUTTON', 'CODE', 'KBD', 'SAMP', 'VAR', 'A', 'LABEL', 'SUMMARY', 'OPTION', 'SELECT', 'INPUT', 'TEXTAREA']);
+        const ATOM_CLASS = /(^|[\s_-])(badge|chip|pill|avatar|tag|icon|btn|button|code|label|counter|dot)([\s_-]|$)/i;
+        const isAtomByRole = (el: HTMLElement) => {
+          if (ATOM_TAGS.has(el.tagName)) return true;
+          if (ATOM_CLASS.test(el.className || '')) return true;
+          const role = el.getAttribute('role') || '';
+          if (/^(button|link|img|status|badge)$/i.test(role)) return true;
+          // An inline box is by definition not a panel.
+          const d = getComputedStyle(el).display;
+          return d === 'inline' || d === 'inline-block' || d === 'inline-flex';
+        };
+
         for (const el of all) {
+          if (isAtomByRole(el)) continue;
           const rect = el.getBoundingClientRect();
           if (rect.width < minW || rect.height < minH) continue; // a UI atom, not a content panel
           // #561: the SIZE-based atom exclusion above (width/height < 120px)

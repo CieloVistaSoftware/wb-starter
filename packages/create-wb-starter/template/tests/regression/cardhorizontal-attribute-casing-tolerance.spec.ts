@@ -24,7 +24,7 @@ test.describe('x-cardhorizontal tolerates both image-position and imageposition 
       await page.goto('/');
       await page.setContent(`<div x-cardhorizontal
         title="Test"
-        image="https://picsum.photos/400/300?random=casing-test"
+        image="/images/placeholder.svg"
         ${attr}>
         Content
       </div>`);
@@ -55,7 +55,7 @@ test.describe('x-cardhorizontal tolerates both image-position and imageposition 
     for (const attr of ['image-width="60%"', 'imagewidth="60%"']) {
       await page.setContent(`<div x-cardhorizontal
         title="Test"
-        image="https://picsum.photos/400/300?random=width-test"
+        image="/images/placeholder.svg"
         ${attr}>
         Content
       </div>`);

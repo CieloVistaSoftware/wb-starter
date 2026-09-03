@@ -62,4 +62,4 @@ its own (no accompanying text), give it an accessible name instead — e.g. a
 
 ## Source
 
-[src/wb-viewmodels/layouts.js](../../../src/wb-viewmodels/layouts.js)
+[src/wb-viewmodels/layouts.js](../../src/wb-viewmodels/layouts.js)

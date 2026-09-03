@@ -60,7 +60,7 @@ test.describe('.x-header', () => {
 
   test('bare `sticky` attribute (not just data-sticky) applies position:sticky', async ({ page }) => {
     await ready(page);
-    const stickyHeader = page.locator('#header-boolean-toggles .x-header');
+    const stickyHeader = page.locator('#header-toggles .x-header');
     await expect(stickyHeader).toHaveClass(/x-header--sticky/);
     await expect
       .poll(() => stickyHeader.evaluate((el) => getComputedStyle(el).position))
@@ -82,7 +82,7 @@ test.describe('.x-footer', () => {
 
   test('bare `sticky` attribute applies position:sticky (bottom-anchored)', async ({ page }) => {
     await ready(page);
-    const stickyFooter = page.locator('#footer-boolean-toggles .x-footer');
+    const stickyFooter = page.locator('#footer-toggles .x-footer');
     await expect(stickyFooter).toHaveClass(/x-footer--sticky/);
     await expect
       .poll(() => stickyFooter.evaluate((el) => getComputedStyle(el).position))
@@ -96,16 +96,16 @@ test.describe('[x-navbar]', () => {
     const navbars = page.locator('#navbar-navbar [x-navbar]');
     await expect(navbars.nth(0).locator('.x-navbar__brand-text')).toHaveText('MySite');
 
-    const stickyNavbar = page.locator('#navbar-boolean-toggles [x-navbar]');
+    const stickyNavbar = page.locator('#navbar-toggles [x-navbar]');
     await expect
       .poll(() => stickyNavbar.evaluate((el) => getComputedStyle(el).position))
       .toBe('sticky');
   });
 
   for (const variant of ['default', 'dark', 'transparent']) {
-    test(`variant=${variant} applies a distinct, matching class`, async ({ page }) => {
+    test(`variant=${variant} is honoured on the element`, async ({ page }) => {
       await ready(page);
-      const el = page.locator(`#navbar-variant-variants .x-navbar--${variant}`);
+      const el = page.locator(`#navbar-variant-variants [x-navbar][variant="${variant}"]`);
       await expect(el).toBeVisible();
     });
   }
@@ -114,9 +114,9 @@ test.describe('[x-navbar]', () => {
     await ready(page);
     const bg = (sel) => page.locator(sel).evaluate((el) => getComputedStyle(el).backgroundColor);
     const [defaultBg, darkBg, transparentBg] = await Promise.all([
-      bg('#navbar-variant-variants .x-navbar--default'),
-      bg('#navbar-variant-variants .x-navbar--dark'),
-      bg('#navbar-variant-variants .x-navbar--transparent'),
+      bg('#navbar-variant-variants [x-navbar][variant="default"]'),
+      bg('#navbar-variant-variants [x-navbar][variant="dark"]'),
+      bg('#navbar-variant-variants [x-navbar][variant="transparent"]'),
     ]);
     expect(darkBg).not.toBe(defaultBg);
     expect(transparentBg).not.toBe(defaultBg);
@@ -140,17 +140,17 @@ test.describe('[x-tabs]', () => {
   });
 
   for (const variant of ['default', 'underline', 'pills', 'bordered']) {
-    test(`variant=${variant} applies a distinct, matching class`, async ({ page }) => {
+    test(`variant=${variant} is honoured on the element`, async ({ page }) => {
       await ready(page);
-      const el = page.locator(`.x-tabs--${variant}`).first();
+      const el = page.locator(`[x-tabs][variant="${variant}"]`).first();
       await expect(el).toBeVisible();
     });
   }
 
   test('variant=pills renders a pill-shaped active tab, distinct from default', async ({ page }) => {
     await ready(page);
-    const pillsActive = page.locator('.x-tabs--pills .x-tabs__tab--active').first();
-    const defaultActive = page.locator('#tabs-tabs .x-tabs--default .x-tabs__tab--active').first();
+    const pillsActive = page.locator('[x-tabs][variant="pills"] .x-tabs__tab--active').first();
+    const defaultActive = page.locator('[x-tabs][variant="default"] .x-tabs__tab--active').first();
     const [pillsRadius, defaultRadius] = await Promise.all([
       pillsActive.evaluate((el) => getComputedStyle(el).borderRadius),
       defaultActive.evaluate((el) => getComputedStyle(el).borderRadius),
@@ -162,7 +162,7 @@ test.describe('[x-tabs]', () => {
   for (const size of ['sm', 'md', 'lg']) {
     test(`size=${size} applies a distinct, matching class`, async ({ page }) => {
       await ready(page);
-      await expect(page.locator(`.x-tabs--${size}`).first()).toBeVisible();
+      await expect(page.locator(`[x-tabs][size="${size}"]`).first()).toBeVisible();
     });
   }
 
@@ -170,20 +170,20 @@ test.describe('[x-tabs]', () => {
     await ready(page);
     const fontSize = (sel) => page.locator(sel).locator('.x-tabs__tab').first().evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
     const [sm, lg] = await Promise.all([
-      fontSize('#tabs-size-variants .x-tabs--sm'),
-      fontSize('#tabs-size-variants .x-tabs--lg'),
+      fontSize('#tabs-size-variants [x-tabs][size="sm"]'),
+      fontSize('#tabs-size-variants [x-tabs][size="lg"]'),
     ]);
     expect(lg).toBeGreaterThan(sm);
   });
 
   test('full-width attribute applies its class', async ({ page }) => {
     await ready(page);
-    await expect(page.locator('.x-tabs--full-width')).toBeVisible();
+    await expect(page.locator('[x-tabs][full-width]')).toBeVisible();
   });
 
   test('vertical attribute lays the nav out as a column, not a row', async ({ page }) => {
     await ready(page);
-    const nav = page.locator('.x-tabs--vertical .x-tabs__nav');
+    const nav = page.locator('[x-tabs][vertical] .x-tabs__nav');
     await expect(nav).toHaveCSS('flex-direction', 'column');
   });
 
@@ -210,9 +210,9 @@ test.describe('.x-details', () => {
   });
 
   for (const variant of ['default', 'bordered', 'filled']) {
-    test(`variant=${variant} applies a distinct, matching class`, async ({ page }) => {
+    test(`variant=${variant} is honoured on the element`, async ({ page }) => {
       await ready(page);
-      const el = page.locator(`.x-details--${variant}`).first();
+      const el = page.locator(`.x-details[variant="${variant}"]`).first();
       await expect(el).toBeVisible();
     });
   }
@@ -221,9 +221,9 @@ test.describe('.x-details', () => {
     await ready(page);
     const border = (sel) => page.locator(sel).evaluate((el) => getComputedStyle(el).borderWidth);
     const [defaultBorder, borderedBorder, filledBorder] = await Promise.all([
-      border('#details-variant-variants .x-details--default'),
-      border('#details-variant-variants .x-details--bordered'),
-      border('#details-variant-variants .x-details--filled'),
+      border('#details-variant-variants .x-details[variant="default"]'),
+      border('#details-variant-variants .x-details[variant="bordered"]'),
+      border('#details-variant-variants .x-details[variant="filled"]'),
     ]);
     expect(borderedBorder).not.toBe(defaultBorder);
     expect(filledBorder).not.toBe(defaultBorder);

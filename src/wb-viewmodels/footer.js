@@ -23,16 +23,39 @@ export function footer(element) {
   // selects the `x-footer` TAG directly for that case now. Still added
   // for a native <footer> host (autoInject), since footer.css's
   // `.x-footer` rules still select it by class.
-  if (element.tagName.toLowerCase() !== 'x-footer') element.classList.add('x-footer');
+  element.classList.add('x-footer');
   
   // Get attributes
-  const sticky = readFlag(element, 'sticky');
+  // Bare `sticky` is the canonical form (schema property, Law 11); readFlag
+  // alone only saw data-sticky, so the documented form did nothing (#903).
+  const sticky = element.hasAttribute('sticky') || readFlag(element, 'sticky');
   
   // Apply sticky if requested
   if (sticky) {
     element.classList.add('x-footer--sticky');
   }
   
+  // Render the declared attributes (#903). footer() read neither brand nor
+  // copyright, while footer.css already ships .x-footer__brand/__copyright
+  // rules and wbFooter.setBrand() queried elements nothing ever built.
+  const brand = element.getAttribute('brand');
+  const copyright = element.getAttribute('copyright');
+
+  if ((brand || copyright) && !element.querySelector('.x-footer__copyright')) {
+    if (brand) {
+      const b = document.createElement('span');
+      b.className = 'x-footer__brand';
+      b.textContent = brand;
+      element.prepend(b);
+    }
+    if (copyright) {
+      const c = document.createElement('span');
+      c.className = 'x-footer__copyright';
+      c.textContent = copyright;
+      element.appendChild(c);
+    }
+  }
+
   // API
   element.wbFooter = {
     setCopyright: (text) => {

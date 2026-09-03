@@ -9,8 +9,8 @@ Behavior applied with x-lightbox.
 ### How to write it
 
 ```html
-<button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">
-  x-lightbox · variant: primary · src: https://picsum.photos/1200/800?r=lb1
+<button variant="primary" x-lightbox src="/images/placeholder.svg">
+  x-lightbox · variant: primary · src: /images/placeholder.svg
 </button>
 ```
 

@@ -11,7 +11,7 @@ test.describe('Product Card (integration)', () => {
       const el = document.createElement('div');
       el.id = 'test-product';
       el.setAttribute('x-cardproduct', '');
-      el.setAttribute('data-image', 'https://picsum.photos/200/200');
+      el.setAttribute('data-image', '/images/placeholder.svg');
       el.setAttribute('data-title', 'Test Product');
       el.setAttribute('data-price', '$99.99');
       el.setAttribute('data-original-price', '$149.99');
@@ -65,7 +65,7 @@ test.describe('Product Card (integration)', () => {
       const el = document.createElement('div');
       el.id = 'test-product-img';
       el.setAttribute('x-cardproduct', '');
-      el.setAttribute('data-image', 'https://picsum.photos/200/200');
+      el.setAttribute('data-image', '/images/placeholder.svg');
       el.setAttribute('data-title', 'Product With Image');
       document.body.appendChild(el);
       (window as any).WB.scan();
@@ -73,6 +73,6 @@ test.describe('Product Card (integration)', () => {
     
     const img = page.locator('#test-product-img img');
     await expect(img).toBeVisible();
-    await expect(img).toHaveAttribute('src', 'https://picsum.photos/200/200');
+    await expect(img).toHaveAttribute('src', '/images/placeholder.svg');
   });
 });

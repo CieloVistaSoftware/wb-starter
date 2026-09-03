@@ -29,7 +29,7 @@ const ONE_PX_PNG = Buffer.from(
 
 test.describe('Lightbox reads data-src on non-<img> triggers (#374)', () => {
   test('clicking a <button x-lightbox data-src="..."> shows the image, not a blank lightbox', async ({ page }) => {
-    await page.route('https://picsum.photos/**', route =>
+    await page.route('/images/placeholder.svg', route =>
       route.fulfill({ status: 200, body: ONE_PX_PNG, contentType: 'image/png' })
     );
 
@@ -50,7 +50,7 @@ test.describe('Lightbox reads data-src on non-<img> triggers (#374)', () => {
   });
 
   test('<img x-lightbox src="..."> (existing convention) still works', async ({ page }) => {
-    await page.route('https://picsum.photos/**', route =>
+    await page.route('/images/placeholder.svg', route =>
       route.fulfill({ status: 200, body: ONE_PX_PNG, contentType: 'image/png' })
     );
 

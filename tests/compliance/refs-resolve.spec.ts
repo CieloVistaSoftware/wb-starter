@@ -52,6 +52,14 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const SKIP_DIRS = new Set([
   'node_modules', '.git', 'data', 'test-results', '.playwright-artifacts',
   'coverage', 'dist', 'out', '.claude',
+  // Generated audit reports are dated snapshots of a past scan: they quote the
+  // files and line numbers that existed when they ran, so a link inside one is
+  // a historical citation, not a live reference. docs/audits/X-USAGE-AUDIT.md
+  // ("Date: 1/5/2026", "Scan Target: docs/**/*.md") cites
+  // docs/architecture/WBVIEWS.md, which was correct then and was deleted with
+  // the wb-views subsystem (#876). Rewriting the citation would falsify the
+  // record; leaving it fails a link check that is meant to catch live rot.
+  'audits',
 ]);
 
 function collectFiles(dir: string, exts: string[], acc: string[] = []): string[] {

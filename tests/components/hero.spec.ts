@@ -68,7 +68,7 @@ test.describe('hero Behavior', () => {
     const html = "<div x-hero>Basic hero content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-hero], #test-container [x-hero]').first();
+    const el = page.locator('#test-container [x-hero]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

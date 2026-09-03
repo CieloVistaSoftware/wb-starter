@@ -60,7 +60,7 @@ test.describe('Card Hero (integration)', () => {
       el.id = 'test-hero-bg';
       el.setAttribute('x-cardhero', '');
       el.setAttribute('data-title', 'Background Hero');
-      el.setAttribute('data-background', 'https://picsum.photos/800/400');
+      el.setAttribute('data-background', '/images/placeholder.svg');
       document.body.appendChild(el);
       (window as any).WB.scan();
     });

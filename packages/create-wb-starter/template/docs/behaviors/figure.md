@@ -8,7 +8,7 @@ Apply `x-figure` to any element.
 
 ```html
 <figure>
-  <img src="https://picsum.photos/seed/bridge/480/300" alt="Suspension bridge in fog">
+  <img src="/images/placeholder.svg" alt="Suspension bridge in fog">
   <figcaption>The 6am crossing, before the fog lifted.</figcaption>
 </figure>
 ```

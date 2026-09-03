@@ -37,8 +37,14 @@
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
-    await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
+    // #970: init() already scans — a second walk races it. One scan, one path.
+    await WB.init({ autoInject: true, scan: false });
+    // #987: was { eager: true }, which overrode x-demo's IntersectionObserver
+    // path and built every demo on the page before it could be interacted with.
+    // Measured on the worst case (cards.html, 293 demos): 13,680ms of total
+    // main-thread blocking including one unbroken 9,110ms task — frozen, not
+    // just slow. Viewport-first lets EAGER_BUILD_COUNT + the observer work.
+    await WB.scan(document.body);
   </script>
 </body>
 

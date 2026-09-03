@@ -175,7 +175,7 @@ test.describe('Content Cards', () => {
         <div x-cardprofile 
           data-name="John Doe" 
           data-role="Developer" 
-          data-avatar="https://i.pravatar.cc/80?u=1"
+          data-avatar="/images/avatar.svg"
           data-bio="Building cool stuff">
         </div>
       `);
@@ -201,7 +201,7 @@ test.describe('Content Cards', () => {
       await createTestPage(page, `
         <div x-cardprofile 
           data-name="Jane Smith" 
-          data-cover="https://picsum.photos/400/100">
+          data-cover="/images/placeholder.svg">
         </div>
       `);
       
@@ -243,7 +243,7 @@ test.describe('Media Cards', () => {
     test('renders image with correct src and alt', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardimage 
-          data-src="https://picsum.photos/400/300" 
+          data-src="/images/placeholder.svg" 
           data-alt="Test image"
           data-title="Image Title">
         </div>
@@ -262,7 +262,7 @@ test.describe('Media Cards', () => {
     test('respects aspect ratio', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardimage 
-          data-src="https://picsum.photos/400/400" 
+          data-src="/images/placeholder.svg" 
           data-aspect="1/1">
         </div>
       `);
@@ -410,7 +410,7 @@ test.describe('Data Cards', () => {
       await createTestPage(page, `
         <div x-cardproduct 
           data-title="Product Name"
-          data-image="https://picsum.photos/200"
+          data-image="/images/placeholder.svg"
           data-price="$99"
           data-rating="4.5"
           data-cta="Add to Cart">
@@ -525,7 +525,7 @@ test.describe('Interactive Cards', () => {
         <div x-cardoverlay 
           data-title="Overlay Title"
           data-subtitle="Overlay subtitle"
-          data-image="https://picsum.photos/400/300"
+          data-image="/images/placeholder.svg"
           data-height="300px">
         </div>
       `);

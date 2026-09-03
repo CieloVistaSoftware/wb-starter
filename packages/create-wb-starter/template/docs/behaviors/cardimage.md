@@ -16,7 +16,7 @@ Applies to `<article>`, and to any element carrying `x-cardimage`.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `https://picsum.photos/seed/cardimage/600/400` | Image source URL |
+| `src` | `string` | `/images/placeholder.svg` | Image source URL |
 | `alt` | `string` | — | Image alt text (accessibility) |
 | `title` | `string` | — | Card title |
 | `subtitle` | `string` | — | Card subtitle |

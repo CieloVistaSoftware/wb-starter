@@ -7,7 +7,7 @@ Apply `x-img` to any element.
 ## Usage
 
 ```html
-<img x-img src="https://picsum.photos/seed/lens/480/320" alt="Prime lens on a wooden desk">
+<img x-img src="/images/placeholder.svg" alt="Prime lens on a wooden desk">
 ```
 
 ## Attributes

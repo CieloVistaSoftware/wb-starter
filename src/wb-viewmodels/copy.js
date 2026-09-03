@@ -94,7 +94,7 @@ export function copy(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-copy> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-copy> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-copy') element.classList.add('x-copy');
+  element.classList.add('x-copy');
 
   // Store original content
   const originalContent = element.innerHTML;

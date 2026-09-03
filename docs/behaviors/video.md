@@ -9,7 +9,7 @@ Behavior applied with x-video.
 ### How to write it
 
 ```html
-<video src="https://www.w3schools.com/html/mov_bbb.mp4" poster="https://picsum.photos/seed/screening/640/360" controls></video>
+<video src="https://www.w3schools.com/html/mov_bbb.mp4" poster="/images/placeholder.svg" controls></video>
 ```
 
 ## Attributes

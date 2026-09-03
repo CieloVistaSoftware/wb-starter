@@ -14,7 +14,7 @@ export function tabs(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-tabs> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-tabs> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-tabs') element.classList.add('x-tabs');
+  element.classList.add('x-tabs');
 
   // 1. Check if structure exists (Pre-rendered from Template)
   let nav = element.querySelector('.x-tabs__nav');
@@ -22,6 +22,10 @@ export function tabs(element, options = {}) {
 
   // 2. If not, build it from children (Behavior Mode)
   if (!nav) {
+    // Law 14: ids must be unique per instance. tab-${i}/panel-${i} collided
+    // across every tab group on a page, so aria-controls/aria-labelledby
+    // pointed screen readers at the first group's panels for all of them.
+    const uid = `x-tabs-${Math.random().toString(36).slice(2, 9)}`;
     const originalPanels = Array.from(element.children);
     if (originalPanels.length === 0) return () => {};
 
@@ -67,8 +71,8 @@ export function tabs(element, options = {}) {
       button.setAttribute('role', 'tab');
       button.setAttribute('index', i);
       button.setAttribute('aria-selected', isActive);
-      button.setAttribute('aria-controls', `panel-${i}`);
-      button.id = `tab-${i}`;
+      button.setAttribute('aria-controls', `${uid}-panel-${i}`);
+      button.id = `${uid}-tab-${i}`;
       button.textContent = title;
       
 
@@ -84,8 +88,8 @@ export function tabs(element, options = {}) {
       panelWrapper.className = 'x-tabs__panel';
       panelWrapper.setAttribute('role', 'tabpanel');
       panelWrapper.setAttribute('index', i);
-      panelWrapper.id = `panel-${i}`;
-      panelWrapper.setAttribute('aria-labelledby', `tab-${i}`);
+      panelWrapper.id = `${uid}-panel-${i}`;
+      panelWrapper.setAttribute('aria-labelledby', `${uid}-tab-${i}`);
       // Appearance is in tabs.css (#902). Only visibility stays here: which
       // panel is showing is state, not style.
       panelWrapper.style.display = isActive ? 'block' : 'none';

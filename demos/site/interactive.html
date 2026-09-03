@@ -23,17 +23,17 @@
   <h2>📦 Draggable</h2>
   <div x-demo columns="1">
     <div x-draggable axis="both">
-      This is example draggable content.
+      This is a div with x-draggable and axis both.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-draggable axis="x">
-      This is example draggable content.
+      This is a div with x-draggable and axis x.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-draggable axis="y">
-      This is example draggable content.
+      This is a div with x-draggable and axis y.
     </div>
   </div>
   </section>
@@ -43,7 +43,7 @@
   <h2>📦 Resizable</h2>
   <div x-demo columns="1">
     <div x-resizable handles="se">
-      This is example resizable content.
+      This is a div with x-resizable and handles se.
     </div>
   </div>
   </section>
@@ -53,12 +53,12 @@
   <h2>📦 Copy</h2>
   <div x-demo columns="1">
     <div x-copy text="Hello World">
-      This is example copy content.
+      This is a div with x-copy and text Hello World.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-copy text="npm install wb-starter">
-      This is example copy content.
+      This is a div with x-copy and text npm install wb-starter.
     </div>
   </div>
   </section>
@@ -68,7 +68,7 @@
   <h2>📦 Dark Mode Toggle</h2>
   <div x-demo columns="1">
     <div x-darkmode>
-      This is example dark mode toggle content.
+      This is a div with x-darkmode.
     </div>
   </div>
   </section>
@@ -78,7 +78,7 @@
   <h2>📦 Theme Control</h2>
   <div x-demo columns="1">
     <div x-themecontrol>
-      This is example theme control content.
+      This is a div with x-themecontrol.
     </div>
   </div>
   </section>
@@ -88,12 +88,12 @@
   <h2>📦 Collapse</h2>
   <div x-demo columns="1">
     <div x-collapse>
-      This is example collapse content.
+      This is a div with x-collapse.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-collapse expanded>
-      This is example collapse content.
+      This is a div with x-collapse and expanded.
     </div>
   </div>
   </section>
@@ -102,13 +102,13 @@
   <section id="hero-hero">
   <h2>📦 Hero</h2>
   <div x-demo columns="1">
-    <div x-hero variant="default">
-      This is example hero content.
+    <div x-hero>
+      This is a div with x-hero.
     </div>
   </div>
   <div x-demo columns="1">
     <div x-hero variant="cosmic">
-      This is example hero content.
+      This is a div with x-hero and variant cosmic.
     </div>
   </div>
   </section>
@@ -118,7 +118,7 @@
   <h2>Variants</h2>
   <div x-demo columns="2">
     <div x-hero variant="">
-      This is example hero content.
+      This is a div with x-hero and variant.
     </div>
   </div>
   </section>
@@ -128,7 +128,7 @@
   <h2>📦 WB Views Registry Schema</h2>
   <div x-demo columns="1">
     <div x-views>
-      This is example wb views registry schema content.
+      This is a div with x-views.
     </div>
   </div>
   </section>
@@ -227,8 +227,14 @@
   <script type="module">
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
-    await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
+    // #970: init() already scans — a second walk races it. One scan, one path.
+    await WB.init({ autoInject: true, scan: false });
+    // #987: was { eager: true }, which overrode x-demo's IntersectionObserver
+    // path and built every demo on the page before it could be interacted with.
+    // Measured on the worst case (cards.html, 293 demos): 13,680ms of total
+    // main-thread blocking including one unbroken 9,110ms task — frozen, not
+    // just slow. Viewport-first lets EAGER_BUILD_COUNT + the observer work.
+    await WB.scan(document.body);
     console.log('Interactive & Utility initialized');
     window.__WB_DEMO_INITIALIZED__ = true;
   </script>

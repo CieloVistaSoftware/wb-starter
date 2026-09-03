@@ -38,7 +38,16 @@ export function input(element, options = {}) {
   const FORM_CONTROLS = ['INPUT', 'SELECT', 'TEXTAREA'];
   const isContainerHost = !FORM_CONTROLS.includes(element.tagName);
   if (isContainerHost) {
-    if (element.querySelector('input')) return () => {}; // already built (eager runtime already ran)
+    // #954: must match only what THIS function builds. A bare
+    // `querySelector('input')` also matched the schema builder's own $view
+    // field (`input.schema.json` declares a wrapper + input, rendered as
+    // `.x-input__wrapper > input.x-input__input`), so on the schema-driven
+    // path input() concluded "already built" and returned before the branch
+    // below -- the one that puts x-input--{variant}/{size} on the host and
+    // required/disabled/readOnly on the real field. The result was a bare
+    // field that silently ignored all five attributes, while the native
+    // <input x-behavior="input"> host honoured them (#754).
+    if (element.querySelector('input.x-input__field')) return () => {}; // already built by us (eager runtime already ran)
 
     const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
     const label = element.getAttribute('label') || '';

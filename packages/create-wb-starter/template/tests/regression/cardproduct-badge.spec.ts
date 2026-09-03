@@ -20,8 +20,8 @@ test.describe('cardproduct renders its badge (#380)', () => {
       const container = document.createElement('div');
       container.id = 'cardproduct-badge-test';
       container.innerHTML = `
-        <div x-cardproduct title="Deluxe Widget" price="$79.99" image="https://picsum.photos/200/200" badge="Hot"></div>
-        <div x-cardproduct title="Plain Widget" price="$19.99" image="https://picsum.photos/200/200"></div>
+        <div x-cardproduct title="Deluxe Widget" price="$79.99" image="/images/placeholder.svg" badge="Hot"></div>
+        <div x-cardproduct title="Plain Widget" price="$19.99" image="/images/placeholder.svg"></div>
       `;
       document.body.appendChild(container);
     });

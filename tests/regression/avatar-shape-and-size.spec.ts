@@ -16,11 +16,11 @@ import { test, expect } from '@playwright/test';
 test.describe('[x-avatar] shape and size (feedback demo page)', () => {
   test('shape="circle"/"square"/"rounded" render visibly distinct border-radius', async ({ page }) => {
     await page.goto('/demos/site/feedback.html');
-    await page.waitForSelector('x-avatar[shape="circle"]');
+    await page.waitForSelector('[x-avatar][shape="circle"]');
 
-    const circle = page.locator('x-avatar[shape="circle"]').first();
-    const square = page.locator('x-avatar[shape="square"]').first();
-    const rounded = page.locator('x-avatar[shape="rounded"]').first();
+    const circle = page.locator('[x-avatar][shape="circle"]').first();
+    const square = page.locator('[x-avatar][shape="square"]').first();
+    const rounded = page.locator('[x-avatar][shape="rounded"]').first();
 
     const [circleRadius, squareRadius, roundedRadius] = await Promise.all([
       circle.evaluate((el) => getComputedStyle(el).borderRadius),
@@ -36,11 +36,11 @@ test.describe('[x-avatar] shape and size (feedback demo page)', () => {
 
   test('size="xs" and size="2xl" render visibly distinct dimensions from the default', async ({ page }) => {
     await page.goto('/demos/site/feedback.html');
-    await page.waitForSelector('x-avatar[size="xs"]');
+    await page.waitForSelector('[x-avatar][size="xs"]');
 
-    const xs = page.locator('x-avatar[size="xs"]').first();
-    const md = page.locator('x-avatar[size="md"]').first();
-    const xxl = page.locator('x-avatar[size="2xl"]').first();
+    const xs = page.locator('[x-avatar][size="xs"]').first();
+    const md = page.locator('[x-avatar][size="md"]').first();
+    const xxl = page.locator('[x-avatar][size="2xl"]').first();
 
     const [xsWidth, mdWidth, xxlWidth] = await Promise.all([
       xs.evaluate((el) => getComputedStyle(el).width),

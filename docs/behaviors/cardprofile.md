@@ -12,7 +12,7 @@ Simple profile card. Composes the shared card structure and adds profile element
 <article x-cardprofile
   name="Grace Hopper"
   role="Compiler pioneer"
-  avatar="https://picsum.photos/seed/grace/96/96"
+  avatar="/images/placeholder.svg"
   bio="Wrote the first compiler, then spent a career arguing that people should not have to write machine code."></article>
 ```
 
@@ -22,7 +22,7 @@ Simple profile card. Composes the shared card structure and adds profile element
 | --- | --- | --- | --- |
 | `name` | `string` | `John Doe` | Person's name |
 | `role` | `string` | `Designer` | Job title or role |
-| `avatar` | `string` | `https://i.pravatar.cc/80?img=1` | Avatar image URL |
+| `avatar` | `string` | `/images/avatar.svg` | Avatar image URL |
 | `bio` | `string` | — | Short biography |
 | `cover` | `string` | — | Cover/banner image URL |
 | `size` | `sm` · `md` · `lg` | `md` | Avatar size |

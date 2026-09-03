@@ -1,5 +1,6 @@
 import { test, expect, Page } from '@playwright/test';
 
+import { elementReady } from '../base';
 /**
  * x-grid new attributes have real effect (#281, §19): rows, align/justify/
  * center, background, alt-rows, headers. columns/gap/min-width were already
@@ -24,7 +25,13 @@ async function injectAndScan(page: Page, html: string) {
   // activate once the element is actually in view, not just appended.
   await page.locator('#grid-test-container').scrollIntoViewIfNeeded();
   await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('grid-test-container')));
-  await page.waitForTimeout(500);
+  // #983: the 500ms here was a guess unrelated to what it waited for.
+  // Settle the injected element instead. x-ready means SETTLED, not
+  // succeeded, so the assertions still do the verifying.
+  const injected = page.locator('#test-container > *').first();
+  if (await injected.count()) {
+    await elementReady(injected).catch(() => {});
+  }
 }
 
 test.describe('[x-grid] attribute effects (#281)', () => {

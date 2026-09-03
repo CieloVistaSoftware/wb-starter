@@ -38,11 +38,26 @@ async function inject(page: Page, html: string) {
     return Array.from(container.children).map(el => el.id).filter(Boolean);
   }, html);
 
-  // Poll for every injected element to have picked up its base x-card class
-  // before asserting on computed style -- the IntersectionObserver callback
-  // above fires asynchronously, so a fixed-instant check would be flaky.
+  // Poll for every injected element to have been UPGRADED before asserting on
+  // computed style -- the IntersectionObserver callback above fires
+  // asynchronously, so a fixed-instant check would be flaky.
+  //
+  // This used to wait for `.x-card`, which a8a7362e stopped injecting
+  // ("specificity replaces class injection"). Measured: a cardstats host
+  // carries `x-card--stats x-stats` and a plain `<div x-card>` carries NO class
+  // at all. So all seven tests spent 5s waiting for a class that never arrives
+  // and timed out in SETUP -- none of them ever reached the variant assertions
+  // they exist to make. A harness that cannot start reports the same red as a
+  // real defect, which is how this cluster stayed opaque.
+  //
+  // Wait for evidence of upgrade instead: a card behavior builds child
+  // structure (header/main/figure), and most also add their own x-* class.
   await page.waitForFunction(
-    (elementIds: string[]) => elementIds.every(id => document.getElementById(id)?.classList.contains('x-card')),
+    (elementIds: string[]) => elementIds.every((id) => {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      return el.children.length > 0 || /(^|\s)x-/.test(el.className || '');
+    }),
     ids,
     { timeout: 5000 }
   );

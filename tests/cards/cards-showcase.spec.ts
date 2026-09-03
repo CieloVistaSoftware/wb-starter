@@ -82,7 +82,10 @@ const CARDS_PAGE = '/demos/site/cards.html';
 async function waitForWbReady(page: Page): Promise<void> {
   await page.waitForFunction(() => {
     const w = window as unknown as { __wbCardCount?: number; __wbStableTicks?: number };
-    const n = document.querySelectorAll('.x-card').length;
+    // Counts <article>, not .x-card: a8a7362e stopped emitting the host class
+    // ('an <article> IS a card'), so this gate counted 0 forever and every
+    // test in the file failed at the fixture rather than at its assertion (#908).
+    const n = document.querySelectorAll('article').length;
     if (n === 0) {
       w.__wbCardCount = 0;
       w.__wbStableTicks = 0;
@@ -219,13 +222,17 @@ test.describe('Cards Showcase Page', () => {
   test.describe('Card (Base)', () => {
     test('basic card renders with title', async ({ page }) => {
       // 4.0.0: attributes are bare (title=), not data-prefixed.
-      const card = page.locator('article.x-card[title="Welcome"]');
+      const card = page.locator('article[title="Welcome"]');
       await expect(card).toBeVisible();
-      await expect(card.locator('.x-card__title')).toContainText('Welcome');
+      // a8a7362e names the parts by tag and position on the base card --
+      // `article > header > h3` -- instead of stamping .x-card__title on it.
+      // The div-hosted variants still carry the BEM class, which is why it
+      // exists elsewhere on this page but not here.
+      await expect(card.locator('header > h3')).toContainText('Welcome');
     });
 
     test('elevated card has shadow', async ({ page }) => {
-      const card = page.locator('.x-card[elevated]').first();
+      const card = page.locator('article[elevated]').first();
       await expect(card).toBeVisible();
       await expect.poll(() => card.evaluate(el =>
         window.getComputedStyle(el).boxShadow
@@ -233,7 +240,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('clickable card shows cursor pointer', async ({ page }) => {
-      const card = page.locator('.x-card[clickable]').first();
+      const card = page.locator('article[clickable]').first();
       await expect(card).toBeVisible();
       await expect.poll(() => card.evaluate(el =>
         window.getComputedStyle(el).cursor
@@ -241,7 +248,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('clickable card has role button', async ({ page }) => {
-      const card = page.locator('.x-card[clickable]').first();
+      const card = page.locator('article[clickable]').first();
       await expect(card).toBeVisible();
       await expect(card).toHaveAttribute('role', 'button');
     });
@@ -252,7 +259,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Stats', () => {
     test('stats card renders value', async ({ page }) => {
-      const statsCard = page.locator('.x-card[x-cardstats]').first();
+      const statsCard = page.locator('[x-cardstats]').first();
       await expect(statsCard).toBeVisible();
 
       const value = statsCard.locator('.x-card__stats-value');
@@ -260,28 +267,28 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('stats card shows label', async ({ page }) => {
-      const statsCard = page.locator('.x-card[x-cardstats][label]').first();
+      const statsCard = page.locator('[x-cardstats][label]').first();
       const label = statsCard.locator('.x-card__stats-label');
       await expect(label).toBeVisible();
     });
 
     test('stats card with trend up shows up arrow', async ({ page }) => {
       // 4.0.0: attribute form, not the x-cardstats[...] tag form.
-      const statsCard = page.locator('.x-card[x-cardstats][trend="up"]').first();
+      const statsCard = page.locator('[x-cardstats][trend="up"]').first();
       await expect(statsCard).toBeVisible();
       const trend = statsCard.locator('.x-card__stats-trend');
       await expect(trend).toContainText('↑');
     });
 
     test('stats card with trend down shows down arrow', async ({ page }) => {
-      const statsCard = page.locator('.x-card[x-cardstats][trend="down"]').first();
+      const statsCard = page.locator('[x-cardstats][trend="down"]').first();
       await expect(statsCard).toBeVisible();
       const trend = statsCard.locator('.x-card__stats-trend');
       await expect(trend).toContainText('↓');
     });
 
     test('stats card shows icon', async ({ page }) => {
-      const statsCard = page.locator('.x-card[x-cardstats][icon]').first();
+      const statsCard = page.locator('[x-cardstats][icon]').first();
       const icon = statsCard.locator('.x-card__icon');
       await expect(icon).toBeVisible();
     });
@@ -292,7 +299,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Profile', () => {
     test('profile card renders avatar', async ({ page }) => {
-      const profileCard = page.locator('.x-card[x-cardprofile][avatar]').first();
+      const profileCard = page.locator('[x-cardprofile][avatar]').first();
       await expect(profileCard).toBeVisible();
 
       const avatar = profileCard.locator('.x-card__avatar');
@@ -300,19 +307,19 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('profile card shows name', async ({ page }) => {
-      const profileCard = page.locator('.x-card[x-cardprofile][name]').first();
+      const profileCard = page.locator('[x-cardprofile][name]').first();
       const name = profileCard.locator('.x-card__name');
       await expect(name).toBeVisible();
     });
 
     test('profile card shows role', async ({ page }) => {
-      const profileCard = page.locator('.x-card[x-cardprofile][role]').first();
+      const profileCard = page.locator('[x-cardprofile][role]').first();
       const roleEl = profileCard.locator('.x-card__role');
       await expect(roleEl).toBeVisible();
     });
 
     test('profile card shows bio', async ({ page }) => {
-      const profileCard = page.locator('.x-card[x-cardprofile][bio]').first();
+      const profileCard = page.locator('[x-cardprofile][bio]').first();
       const bio = profileCard.locator('.x-card__bio');
       await expect(bio).toBeVisible();
     });
@@ -323,7 +330,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Pricing', () => {
     test('pricing card renders plan name', async ({ page }) => {
-      const pricingCard = page.locator('.x-card[x-cardpricing]').first();
+      const pricingCard = page.locator('[x-cardpricing]').first();
       await expect(pricingCard).toBeVisible();
 
       const plan = pricingCard.locator('.x-card__plan');
@@ -331,13 +338,13 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('pricing card shows price', async ({ page }) => {
-      const pricingCard = page.locator('.x-card[x-cardpricing]').first();
+      const pricingCard = page.locator('[x-cardpricing]').first();
       const price = pricingCard.locator('.x-card__amount');
       await expect(price).toBeVisible();
     });
 
     test('pricing card shows features list', async ({ page }) => {
-      const pricingCard = page.locator('.x-card[x-cardpricing][features]').first();
+      const pricingCard = page.locator('[x-cardpricing][features]').first();
       const features = pricingCard.locator('.x-card__features');
       await expect(features).toBeVisible();
 
@@ -345,14 +352,14 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('pricing card has CTA button', async ({ page }) => {
-      const pricingCard = page.locator('.x-card[x-cardpricing]').first();
+      const pricingCard = page.locator('[x-cardpricing]').first();
       const cta = pricingCard.locator('.x-card__cta');
       await expect(cta).toBeVisible();
     });
 
     test('featured pricing card is scaled up', async ({ page }) => {
       // 4.0.0: boolean attribute, not featured="true".
-      const featuredCard = page.locator('.x-card[x-cardpricing][featured]').first();
+      const featuredCard = page.locator('[x-cardpricing][featured]').first();
       await expect(featuredCard).toBeVisible();
       await expect.poll(() => featuredCard.evaluate(el =>
         window.getComputedStyle(el).transform
@@ -365,7 +372,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Image', () => {
     test('image card renders image', async ({ page }) => {
-      const imageCard = page.locator('.x-card[x-cardimage]').first();
+      const imageCard = page.locator('[x-cardimage]').first();
       await expect(imageCard).toBeVisible();
 
       const img = imageCard.locator('img').first();
@@ -373,7 +380,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('image card respects aspect ratio', async ({ page }) => {
-      const imageCard = page.locator('.x-card[x-cardimage][aspect]').first();
+      const imageCard = page.locator('[x-cardimage][aspect]').first();
       await expect(imageCard).toBeVisible();
       const figure = imageCard.locator('.x-card__figure').first();
       await expect(figure).toBeAttached();
@@ -388,7 +395,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Button', () => {
     test('button card renders action buttons', async ({ page }) => {
-      const buttonCard = page.locator('.x-card[x-cardbutton][primary]').first();
+      const buttonCard = page.locator('[x-cardbutton][primary]').first();
       await expect(buttonCard).toBeVisible();
 
       await expect(buttonCard.locator('.x-card__btn')).not.toHaveCount(0);
@@ -410,7 +417,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Testimonial', () => {
     test('testimonial card shows quote', async ({ page }) => {
-      const testimonialCard = page.locator('.x-card[x-cardtestimonial]').first();
+      const testimonialCard = page.locator('[x-cardtestimonial]').first();
       await expect(testimonialCard).toBeVisible();
 
       const quote = testimonialCard.locator('.x-card__quote');
@@ -418,13 +425,13 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('testimonial card shows author', async ({ page }) => {
-      const testimonialCard = page.locator('.x-card[x-cardtestimonial][author]').first();
+      const testimonialCard = page.locator('[x-cardtestimonial][author]').first();
       const author = testimonialCard.locator('.x-card__author');
       await expect(author).toBeVisible();
     });
 
     test('testimonial card shows rating stars', async ({ page }) => {
-      const testimonialCard = page.locator('.x-card[x-cardtestimonial][rating]').first();
+      const testimonialCard = page.locator('[x-cardtestimonial][rating]').first();
       await expect(testimonialCard).toBeVisible();
       const rating = testimonialCard.locator('.x-card__rating');
       await expect(rating).toBeVisible();
@@ -437,7 +444,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Product', () => {
     test('product card shows image', async ({ page }) => {
-      const productCard = page.locator('.x-card[x-cardproduct][image]').first();
+      const productCard = page.locator('[x-cardproduct][image]').first();
       await expect(productCard).toBeVisible();
 
       const img = productCard.locator('img').first();
@@ -445,20 +452,20 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('product card shows price', async ({ page }) => {
-      const productCard = page.locator('.x-card[x-cardproduct]').first();
+      const productCard = page.locator('[x-cardproduct]').first();
       const price = productCard.locator('.x-card__price-current');
       await expect(price).toBeVisible();
     });
 
     test('product card has add to cart button', async ({ page }) => {
-      const productCard = page.locator('.x-card[x-cardproduct]').first();
+      const productCard = page.locator('[x-cardproduct]').first();
       const cta = productCard.locator('.x-card__product-cta');
       await expect(cta).toBeVisible();
     });
 
     test('product card with original price shows strikethrough', async ({ page }) => {
       // 4.0.0: original-price, not data-original-price.
-      const productCard = page.locator('.x-card[x-cardproduct][original-price]').first();
+      const productCard = page.locator('[x-cardproduct][original-price]').first();
       await expect(productCard).toBeVisible();
       const original = productCard.locator('.x-card__price-original');
       await expect(original).toBeAttached();
@@ -521,7 +528,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card File', () => {
     test('file card shows filename', async ({ page }) => {
-      const fileCard = page.locator('.x-card[x-cardfile]').first();
+      const fileCard = page.locator('[x-cardfile]').first();
       await expect(fileCard).toBeVisible();
 
       const filename = fileCard.locator('.x-card__filename');
@@ -529,7 +536,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('file card shows file type icon', async ({ page }) => {
-      const fileCard = page.locator('.x-card[x-cardfile]').first();
+      const fileCard = page.locator('[x-cardfile]').first();
       await expect(fileCard).toBeVisible();
       // toContainText auto-retries; a one-shot textContent() read the card
       // before its icon had been rendered under --workers=8.
@@ -542,7 +549,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Hero', () => {
     test('hero card has minimum height', async ({ page }) => {
-      const heroCard = page.locator('.x-card[x-cardhero][height]').first();
+      const heroCard = page.locator('[x-cardhero][height]').first();
       await expect(heroCard).toBeVisible();
 
       await expect.poll(async () => (await heroCard.boundingBox())?.height ?? 0)
@@ -550,13 +557,13 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('hero card shows title', async ({ page }) => {
-      const heroCard = page.locator('.x-card[x-cardhero][title]').first();
+      const heroCard = page.locator('[x-cardhero][title]').first();
       const title = heroCard.locator('.x-card__hero-title');
       await expect(title).toBeVisible();
     });
 
     test('hero card has background image or gradient', async ({ page }) => {
-      const heroCard = page.locator('.x-card[x-cardhero][background]').first();
+      const heroCard = page.locator('[x-cardhero][background]').first();
       await expect(heroCard).toBeVisible();
       await expect.poll(() => heroCard.evaluate(el =>
         window.getComputedStyle(el).backgroundImage
@@ -566,7 +573,7 @@ test.describe('Cards Showcase Page', () => {
     test('hero card with overlay has overlay element', async ({ page }) => {
       // card.js:986 -- overlay is on unless explicitly overlay="false", so the
       // old x-cardhero[overlay="true"] selector never matched anything.
-      const heroCard = page.locator('.x-card[x-cardhero]:not([overlay="false"])').first();
+      const heroCard = page.locator('[x-cardhero]:not([overlay="false"])').first();
       await expect(heroCard).toBeVisible();
       const overlay = heroCard.locator('.x-card__overlay');
       await expect(overlay).toBeAttached();
@@ -578,7 +585,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Link', () => {
     test('link card is clickable', async ({ page }) => {
-      const linkCard = page.locator('.x-card[x-cardlink]').first();
+      const linkCard = page.locator('[x-cardlink]').first();
       await expect(linkCard).toBeVisible();
 
       await expect.poll(() => linkCard.evaluate(el =>
@@ -594,7 +601,7 @@ test.describe('Cards Showcase Page', () => {
       // current contract; assert that instead.
       // NOTE: src/wb-models/cardlink.schema.json:208 still declares
       // accessibility.role = "link". That schema drift is tracked in #863.
-      const linkCard = page.locator('.x-card[x-cardlink][href]').first();
+      const linkCard = page.locator('[x-cardlink][href]').first();
       await expect(linkCard).toBeVisible();
 
       const anchor = linkCard.locator('a[href]');
@@ -608,7 +615,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Horizontal', () => {
     test('horizontal card uses row layout', async ({ page }) => {
-      const horizCard = page.locator('.x-card[x-cardhorizontal]').first();
+      const horizCard = page.locator('[x-cardhorizontal]').first();
       await expect(horizCard).toBeVisible();
 
       await expect.poll(() => horizCard.evaluate(el =>
@@ -617,7 +624,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('horizontal card has image and content side by side', async ({ page }) => {
-      const horizCard = page.locator('.x-card[x-cardhorizontal][image]').first();
+      const horizCard = page.locator('[x-cardhorizontal][image]').first();
       await expect(horizCard).toBeVisible();
 
       await expect(horizCard.locator('.x-card__figure')).toHaveCount(1);
@@ -641,7 +648,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Overlay', () => {
     test('overlay card has background image', async ({ page }) => {
-      const overlayCard = page.locator('.x-card[x-cardoverlay][image]').first();
+      const overlayCard = page.locator('[x-cardoverlay][image]').first();
       await expect(overlayCard).toBeVisible();
 
       await expect.poll(() => overlayCard.evaluate(el =>
@@ -650,7 +657,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('overlay card has content overlay', async ({ page }) => {
-      const overlayCard = page.locator('.x-card[x-cardoverlay]').first();
+      const overlayCard = page.locator('[x-cardoverlay]').first();
       const content = overlayCard.locator('.x-card__overlay-content');
       await expect(content).toBeVisible();
     });
@@ -661,7 +668,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Expandable', () => {
     test('expandable card has expand button', async ({ page }) => {
-      const expandCard = page.locator('.x-card[x-cardexpandable]').first();
+      const expandCard = page.locator('[x-cardexpandable]').first();
       await expect(expandCard).toBeVisible();
 
       const btn = expandCard.locator('.x-card__expand-btn');
@@ -669,7 +676,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('clicking expand button toggles content', async ({ page }) => {
-      const expandCard = page.locator('.x-card[x-cardexpandable]').first();
+      const expandCard = page.locator('[x-cardexpandable]').first();
       await expect(expandCard).toBeVisible();
 
       const btn = expandCard.locator('.x-card__expand-btn');
@@ -687,7 +694,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('expand button has aria-expanded attribute', async ({ page }) => {
-      const expandCard = page.locator('.x-card[x-cardexpandable]').first();
+      const expandCard = page.locator('[x-cardexpandable]').first();
       const btn = expandCard.locator('.x-card__expand-btn');
       await expect(btn).toBeVisible();
       await expect(btn).toHaveAttribute('aria-expanded', /true|false/);
@@ -699,7 +706,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Minimizable', () => {
     test('minimizable card has minimize button', async ({ page }) => {
-      const minCard = page.locator('.x-card[x-cardminimizable]').first();
+      const minCard = page.locator('[x-cardminimizable]').first();
       await expect(minCard).toBeVisible();
 
       const btn = minCard.locator('.x-card__minimize-btn');
@@ -707,7 +714,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('clicking minimize button toggles content', async ({ page }) => {
-      const minCard = page.locator('.x-card[x-cardminimizable]').first();
+      const minCard = page.locator('[x-cardminimizable]').first();
       await expect(minCard).toBeVisible();
 
       const btn = minCard.locator('.x-card__minimize-btn');
@@ -732,7 +739,7 @@ test.describe('Cards Showcase Page', () => {
   // ═══════════════════════════════════════════════════════════════════════
   test.describe('Card Draggable', () => {
     test('draggable card has drag handle', async ({ page }) => {
-      const dragCard = page.locator('.x-card[x-carddraggable]').first();
+      const dragCard = page.locator('[x-carddraggable]').first();
       await expect(dragCard).toBeVisible();
 
       const handle = dragCard.locator('.x-card__drag-handle');
@@ -740,7 +747,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('drag handle has grab cursor', async ({ page }) => {
-      const dragCard = page.locator('.x-card[x-carddraggable]').first();
+      const dragCard = page.locator('[x-carddraggable]').first();
       const handle = dragCard.locator('.x-card__drag-handle');
       await expect(handle).toBeVisible();
 
@@ -831,7 +838,7 @@ test.describe('Cards Showcase Page', () => {
       // Measures every .x-card, so it needs the whole page hydrated.
       await waitForWbReady(page);
 
-      const cards = page.locator('.x-card');
+      const cards = page.locator('article');
       await expect.poll(() => cards.count()).toBeGreaterThan(0);
 
       const viewportWidth = await page.evaluate(() => window.innerWidth);
@@ -860,12 +867,12 @@ test.describe('Cards Showcase Page', () => {
       // page being fully laid out, so wait for real completion, then pin down
       // that the two overflowing variants specifically have rendered.
       await waitForWbReady(page);
-      await expect(page.locator('.x-card[x-cardhero]').first()).toBeVisible();
-      await expect(page.locator('.x-card[x-cardpricing]').first()).toBeVisible();
+      await expect(page.locator('[x-cardhero]').first()).toBeVisible();
+      await expect(page.locator('[x-cardpricing]').first()).toBeVisible();
 
       const overflows = await page.evaluate(() => {
         const issues: string[] = [];
-        document.querySelectorAll('.x-card').forEach(card => {
+        document.querySelectorAll('article').forEach(card => {
           const cardRect = card.getBoundingClientRect();
           card.querySelectorAll('h3, p, span, div').forEach(el => {
             const elRect = el.getBoundingClientRect();

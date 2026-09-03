@@ -68,7 +68,7 @@ test.describe('resizable Behavior', () => {
     const html = "<div x-resizable>Basic resizable content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-resizable], #test-container [x-resizable]').first();
+    const el = page.locator('#test-container [x-resizable]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

@@ -70,6 +70,21 @@ interface FailureEntry {
   file: string;
   line: number;
   error: string;
+  /**
+   * Stack frames — #963.
+   *
+   * `error` deliberately drops `at ...` lines for readability, which is fine
+   * for an assertion failure (Playwright's call log plus file/line already say
+   * where it happened) and useless for a RUNTIME error. `TypeError: Cannot read
+   * properties of undefined (reading 'contains')` was recorded with no frames
+   * at all, and the stored file/line pointed at the test rather than at the code
+   * that threw — so nothing in the output said where the bug was.
+   *
+   * Kept separate from `error` so the human-readable summary stays clean.
+   */
+  stack?: string;
+  /** The failing source line, when Playwright resolved one. */
+  snippet?: string;
   retry: number;
 }
 
@@ -98,6 +113,38 @@ function stripAnsi(str: string): string {
  */
 const MAX_ERROR_LINES = 15;
 const MAX_ERROR_CHARS = 2000;
+
+/**
+ * Pull the `at ...` frames out of an error — #963.
+ *
+ * cleanErrorMessage() strips these on purpose, which reads well for assertion
+ * failures and blinds you completely for runtime ones. Kept here as its own
+ * field so both needs are served.
+ *
+ * node_modules and node: internals are dropped: for locating a defect in THIS
+ * repo they are noise, and keeping them pushes the frame that matters past the
+ * truncation limit.
+ */
+const MAX_STACK_FRAMES = 12;
+
+function extractStack(error: any): string | undefined {
+  const raw = error?.stack;
+  if (!raw) return undefined;
+
+  const frames = stripAnsi(String(raw))
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l.startsWith('at '))
+    .filter((l) => !l.includes('node_modules') && !l.includes('(node:'));
+
+  if (!frames.length) return undefined;
+
+  const kept = frames.slice(0, MAX_STACK_FRAMES);
+  if (frames.length > MAX_STACK_FRAMES) {
+    kept.push(`… ${frames.length - MAX_STACK_FRAMES} more frame(s)`);
+  }
+  return kept.join('\n');
+}
 
 function cleanErrorMessage(error: any): string {
   if (!error) return 'Unknown error';
@@ -220,6 +267,9 @@ class WBTestReporter implements Reporter {
           file: entry.file,
           line: test.location.line,
           error: entry.error,
+          // #963: capture the frames the message intentionally strips.
+          stack: extractStack(result.error),
+          snippet: result.error?.snippet ? stripAnsi(result.error.snippet).slice(0, 600) : undefined,
           retry: result.retry
         };
         this.failures.push(failureEntry);
@@ -264,6 +314,10 @@ class WBTestReporter implements Reporter {
       `   Test: ${failure.title}`,
       `   File: ${failure.file}:${failure.line}`,
       `   Error: ${failure.error}`,
+      // #963: the frames go in the live log too. Chasing a failure from this
+      // file used to mean knowing only WHAT broke, never WHERE.
+      failure.snippet ? `   Source:\n${failure.snippet.split('\n').map((l) => '     ' + l).join('\n')}` : '',
+      failure.stack ? `   Stack:\n${failure.stack.split('\n').map((l) => '     ' + l).join('\n')}` : '',
       failure.retry > 0 ? `   Retry: ${failure.retry}` : '',
       '\n'
     ].filter(Boolean).join('\n');

@@ -484,11 +484,113 @@ export function setsStyle(funcBody: string, styleProp: string): boolean {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Wait for WB Behaviors to initialize
+ * Wait for WB to finish its boot scan.
+ *
+ * #962: this used to wait only for `WB.behaviors` — the registry object
+ * existing, which proves the module loaded and that NOTHING has run yet. Tests
+ * then bridged the real gap with `waitForTimeout`, and a sleep is a guess about
+ * DURATION: it fails whenever the machine is slower than the guess. On a
+ * 4-core box running 8 workers that is often, which is #961's instability
+ * (19 tests each failing exactly 1 of 3 identical runs, none 2 of 3, none 3).
+ *
+ * `WB.ready` is the boot scan's promise — which both runtimes previously
+ * created inside a DOMContentLoaded callback and discarded. Playwright awaits a
+ * promise returned from page.evaluate, so this is a genuine wait-all across the
+ * process boundary: on a loaded machine it takes longer instead of failing.
+ *
+ * SCOPE: resolves when the INITIAL pass is done, not when every element on the
+ * page is injected — wb-lazy.js defers below-the-fold elements to an
+ * IntersectionObserver deliberately. For those, scroll first and then assert
+ * with a retrying matcher (`expect(locator).toHaveClass(...)`), so the wait is
+ * for that element rather than for a global condition.
  */
 export async function waitForWB(page: Page): Promise<void> {
   await page.waitForFunction(() => (window as any).WB?.behaviors);
 }
+
+/**
+ * Wait for ONE element to finish being built (#970).
+ *
+ * Both runtimes stamp `x-ready` on an element the moment it has no injections
+ * left in flight, so this waits for the thing you are about to assert on rather
+ * than for a clock.
+ *
+ *     const card = page.locator('#card-gallery article').first();
+ *     await elementReady(card);
+ *     await expect(card.locator('header h3')).toHaveText('Welcome');
+ *
+ * WHY PER-ELEMENT, measured rather than assumed:
+ *
+ * Two loads of demos/site/cards.html build the DOM in a DIFFERENT ORDER but
+ * reach a byte-for-byte IDENTICAL end state — 1,435 elements, same signature.
+ * So the instability behind #961 was never wrong rendering. It was tests
+ * sampling mid-construction and landing at different points, because a
+ * `waitForTimeout(4000)` guesses when building is done and guesses wrong
+ * whenever the machine is busy.
+ *
+ * A page-wide wait cannot fix it here: that page takes longer to finish than
+ * the 30s test timeout, which is how awaiting `WB.ready` killed 31 tests in
+ * beforeEach. Waiting for one element is both correct and cheap.
+ *
+ * For a below-the-fold element on the lazy runtime, scroll first — nothing is
+ * injected until it intersects, so `x-ready` will never arrive on its own:
+ *
+ *     await safeScrollIntoView(card);
+ *     await elementReady(card);
+ *
+ * NOTE: `x-ready` means SETTLED, not SUCCEEDED. A behavior that threw stamps it
+ * too; failure is reported separately as `x-error`. Assert on the outcome you
+ * actually care about after this resolves.
+ */
+export async function elementReady(locator: Locator, timeoutMs = 15000): Promise<void> {
+  await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
+  await locator.first().evaluate(
+    (el, ms) => new Promise<void>((resolve, reject) => {
+      if (el.hasAttribute('x-ready')) return resolve();
+      const timer = setTimeout(() => {
+        obs.disconnect();
+        // Say which element and what it was still waiting for — "timed out" on
+        // its own has cost enough time in this suite already.
+        reject(new Error(
+          `elementReady: <${el.tagName.toLowerCase()}${el.id ? ` id="${el.id}"` : ''}> ` +
+          `never became x-ready within ${ms}ms. On the lazy runtime an element ` +
+          `below the fold is not injected until it intersects — scroll to it first.`
+        ));
+      }, ms);
+      const obs = new MutationObserver(() => {
+        if (el.hasAttribute('x-ready')) { clearTimeout(timer); obs.disconnect(); resolve(); }
+      });
+      obs.observe(el, { attributes: true, attributeFilter: ['x-ready'] });
+      // It may have been stamped between the check above and observe() starting.
+      if (el.hasAttribute('x-ready')) { clearTimeout(timer); obs.disconnect(); resolve(); }
+    }),
+    timeoutMs
+  );
+}
+
+// #962 NOTE — deliberately NOT adopted here yet.
+//
+// The runtime now exposes `WB.ready` (the boot scan's promise, which both
+// runtimes previously created inside a DOMContentLoaded callback and threw
+// away). Awaiting it is the correct replacement for the 492 `waitForTimeout`
+// calls in this suite, because a sleep guesses at DURATION and fails whenever
+// the machine is slower than the guess.
+//
+// But adopting it HERE, in the helper 38 spec files call, was measured and it
+// made things worse twice:
+//
+//   - unbounded: all 31 tests in card-examples-demo died in beforeEach.
+//     demos/site/cards.html has 34 demo blocks and 265 articles, so under 8
+//     workers its boot scan does not finish inside the 30s test timeout.
+//   - bounded to 15s: 38 of 50 failed. The budget stacks on top of
+//     goto(networkidle) + waitForFunction, so the setup became more expensive
+//     than the timeout containing it.
+//
+// The lesson is about where the wait belongs, not whether it is right: a
+// PAGE-WIDE readiness wait is the wrong tool for a page this large. The sound
+// adoption is per-element — scroll to the thing, then assert on it with a
+// retrying matcher — which needs doing spec by spec with measurement, not by
+// changing one shared helper and hoping. Tracked in #962.
 
 /**
  * Setup a test container with HTML and scan for behaviors
@@ -502,8 +604,25 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
     const c = document.createElement('div');
     c.id = 'test-container';
     c.innerHTML = h;
+
+    // Mark the AUTHORED roots before scanning.
+    //
+    // This used to return `#test-container > *` .first(), which silently
+    // aliases the moment a behavior inserts a SIBLING ahead of its host --
+    // and several do. sticky's createPlaceholder() runs
+    // `parentNode.insertBefore(placeholder, element)`, so as soon as sticky
+    // engages, .first() is the placeholder: an empty, class-less div. Every
+    // assertion then ran against the wrong node and reported a working
+    // behavior as "did not initialize" (permutation-compliance failed
+    // exactly the two threshold:0 sticky combos -- the only ones that stick
+    // on load -- and passed every combo that never sticks).
+    //
+    // Marking BEFORE the scan is the point: after the scan there is no way
+    // left to tell an authored element from one a behavior injected.
+    for (const el of Array.from(c.children)) el.setAttribute('test-host', '');
+
     document.body.appendChild(c);
-    
+
     if ((window as any).WB?.scan) {
       await (window as any).WB.scan(c);
     }
@@ -518,7 +637,16 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
     await page.waitForTimeout(300);
   }
   
-  return page.locator('#test-container > *').first();
+  // Prefer the AUTHORED host; fall back to child 0 if it did not survive.
+  //
+  // The marker alone is not enough: a few behaviors REPLACE their host
+  // (autocomplete, x-copybutton, details), and the marked node is gone by the
+  // time we look -- every subsequent lookup then waited out its full timeout
+  // and the test died at 90s. Resolving once, here, gets both cases right:
+  // the marker when it survives (which is what stops sticky's placeholder
+  // from being mistaken for the host), and the old behavior when it doesn't.
+  const marked = page.locator('#test-container > [test-host]');
+  return (await marked.count()) > 0 ? marked.first() : page.locator('#test-container > *').first();
 }
 
 /**

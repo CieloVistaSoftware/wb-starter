@@ -38,13 +38,13 @@ async function renderOverlay(page, markup: string) {
 
 test.describe('x-cardoverlay background-repeat stays no-repeat (#635)', () => {
   test('default-variant cardoverlay (the case composeCard\'s shorthand affects) computes background-repeat: no-repeat', async ({ page }) => {
-    await renderOverlay(page, `<div x-cardoverlay id="ov" image="https://picsum.photos/seed/regtest635/800/500" title="Test"></div>`);
+    await renderOverlay(page, `<div x-cardoverlay id="ov" image="/images/placeholder.svg" title="Test"></div>`);
     const repeat = await page.locator('#ov').evaluate((el) => getComputedStyle(el).backgroundRepeat);
     expect(repeat, 'background-repeat left at the browser default (repeat) by composeCard\'s shorthand `background` reset -- must be forced to no-repeat').toBe('no-repeat');
   });
 
   test('background-size stays cover and background-image is the real image (no other regression from the fix)', async ({ page }) => {
-    await renderOverlay(page, `<div x-cardoverlay id="ov" image="https://picsum.photos/seed/regtest635b/800/500" title="Test"></div>`);
+    await renderOverlay(page, `<div x-cardoverlay id="ov" image="/images/placeholder.svg" title="Test"></div>`);
     const info = await page.locator('#ov').evaluate((el) => {
       const cs = getComputedStyle(el);
       return { size: cs.backgroundSize, hasImage: cs.backgroundImage.includes('regtest635b') };
@@ -58,7 +58,7 @@ test.describe('x-cardoverlay background-repeat stays no-repeat (#635)', () => {
     // entirely (ownsOwnSurface) -- included to document that the fix's
     // explicit backgroundRepeat set is harmless/correct for them too, not
     // just the default-variant case that originally exposed the bug.
-    await renderOverlay(page, `<div x-cardoverlay id="ov" image="https://picsum.photos/seed/regtest635c/800/500" title="Test" variant="glass"></div>`);
+    await renderOverlay(page, `<div x-cardoverlay id="ov" image="/images/placeholder.svg" title="Test" variant="glass"></div>`);
     const repeat = await page.locator('#ov').evaluate((el) => getComputedStyle(el).backgroundRepeat);
     expect(repeat).toBe('no-repeat');
   });

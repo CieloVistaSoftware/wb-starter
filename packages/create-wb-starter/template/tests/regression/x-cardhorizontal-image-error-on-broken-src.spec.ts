@@ -55,7 +55,7 @@ test('x-cardhorizontal with a real, working image never throws', async ({ page }
 
   await page.evaluate(() => {
     const container = document.createElement('div');
-    container.innerHTML = '<div x-cardhorizontal title="Working" image="https://picsum.photos/seed/cardhorizontal-error-test-control/400/300">Body</div>';
+    container.innerHTML = '<div x-cardhorizontal title="Working" image="/images/placeholder.svg">Body</div>';
     document.body.appendChild(container);
     return (window as any).WB.scan(container);
   });

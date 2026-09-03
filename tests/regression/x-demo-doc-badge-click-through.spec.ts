@@ -1,4 +1,5 @@
 import { test, expect, Page } from '@playwright/test';
+import { safeScrollIntoView, elementReady } from '../base';
 
 /**
  * #593: John, live on pages/behaviors.html — the small 📖 doc-link badge in
@@ -92,11 +93,31 @@ test.describe('[x-demo] doc-badge click-through on x-* behaviors (#593)', () => 
     test(`${attr}: clicking the doc badge navigates instead of triggering the behavior's own overlay`, async ({ page, context }) => {
       await inject(page, `<div x-demo id="d">${markup}</div>`);
 
-      const badge = page.locator('#d .x-demo__card-doc-link');
-      await expect(badge, `${attr}'s x-demo has no doc-link badge`).toHaveCount(1, { timeout: 5000 });
+      // #977: this asserted toHaveCount(1), which encoded a single-badge world
+      // that no longer exists. `<button x-confirm>` is TWO behaviors — the
+      // auto-injected <button> (Law 4b) and x-confirm — resolving to two
+      // distinct docs, and demo.js deliberately renders one badge per distinct
+      // doc (demo.css even offsets the second so it doesn't stack).
+      //
+      // Relaxing to .first() would throw away what the count was really
+      // guarding: a genuine double-injection of the SAME badge. So assert the
+      // invariant that actually holds — at least one badge, all hrefs distinct.
+      const badges = page.locator('#d .x-demo__card-doc-link');
+      await expect(badges.first(), `${attr}'s x-demo has no doc-link badge`).toBeAttached({ timeout: 5000 });
 
-      const href = await badge.getAttribute('href');
-      expect(href, `${attr}'s doc-link badge has no href`).toBeTruthy();
+      const hrefs = await badges.evaluateAll((els) =>
+        els.map((e) => (e as HTMLAnchorElement).getAttribute('href'))
+      );
+      expect(hrefs.every(Boolean), `${attr}: a doc-link badge has no href`).toBe(true);
+      expect(
+        new Set(hrefs).size,
+        `${attr}: duplicate doc-link badges for the same href — the href dedup in attachInstanceDocLink is broken (${hrefs.join(', ')})`
+      ).toBe(hrefs.length);
+
+      // Click this behavior's own badge, not merely whichever came first.
+      const own = attr.replace(/^x-/, '');
+      const idx = Math.max(0, hrefs.findIndex((h) => (h || '').includes(own)));
+      const badge = badges.nth(idx);
 
       const [popup] = await Promise.all([
         context.waitForEvent('page', { timeout: 5000 }),
@@ -119,9 +140,15 @@ test.describe('[x-demo] doc-badge click-through on x-* behaviors (#593)', () => 
 
   test('x-confirm badge href resolves to a real, loadable doc (fallback to behaviors-reference.md, since no dedicated confirm.md exists)', async ({ page, request }) => {
     await inject(page, `<div x-demo id="d"><button x-confirm confirm-title="t" confirm-message="m">Confirm Dialog</button></div>`);
-    const badge = page.locator('#d .x-demo__card-doc-link');
-    await expect(badge).toHaveCount(1, { timeout: 5000 });
-    const href = await badge.getAttribute('href');
+    // #977: two distinct docs (auto-injected <button> + x-confirm) legitimately
+    // render two badges. Assert on x-confirm's own, not on there being only one.
+    const badges = page.locator('#d .x-demo__card-doc-link');
+    await expect(badges.first()).toBeAttached({ timeout: 5000 });
+    const hrefs = await badges.evaluateAll((els) =>
+      els.map((e) => (e as HTMLAnchorElement).getAttribute('href'))
+    );
+    expect(new Set(hrefs).size, `duplicate badges for one href (${hrefs.join(', ')})`).toBe(hrefs.length);
+    const href = hrefs.find((h) => (h || '').includes('behaviors-reference.md')) ?? hrefs[0];
 
     // No dedicated confirm.md/x-confirm.md/x-confirm.md exists under docs/
     // (checked live) -- the shared reference page is the correct, intended
@@ -137,17 +164,37 @@ test.describe('[x-demo] doc-badge click-through on x-* behaviors (#593)', () => 
 test.describe('pages/behaviors.html: the exact cards John reported (#593)', () => {
   test('Popover and Confirm Dialog demo badges are both clickable and open a real doc in a new tab', async ({ page, context }) => {
     await page.goto('/pages/behaviors.html');
-    await page.waitForSelector('[x-demo] .x-demo__grid', { timeout: 10000 });
+    // #962: behaviors.html runs the lazy runtime, so a demo below the fold is
+    // not injected until it intersects — waiting for '[x-demo] .x-demo__grid'
+    // to appear on its own timed out at 10s. Scroll one into view, then settle
+    // that element rather than the page.
+    const firstDemo = page.locator('[x-demo]').first();
+    await safeScrollIntoView(firstDemo);
+    await elementReady(firstDemo);
 
     for (const attr of ['x-popover', 'x-confirm']) {
       const demo = page.locator(`[x-demo]:has([${attr}])`).first();
-      await demo.scrollIntoViewIfNeeded();
-      // Settle time for the lazy demo() init + doc-manifest fetch (same
-      // wait used elsewhere in this suite for the same async path).
-      await page.waitForTimeout(1000);
+      await safeScrollIntoView(demo);
+      // #962: settle THIS demo rather than sleeping 1000ms and hoping the lazy
+      // demo() init and doc-manifest fetch finished.
+      await elementReady(demo);
 
-      const badge = demo.locator('.x-demo__card-doc-link');
-      await expect(badge, `${attr}'s x-demo has no doc-link badge on the real page`).toHaveCount(1, { timeout: 5000 });
+      // #977: a demo carrying two distinct docs renders one badge per doc, so
+      // pick this behavior's own instead of asserting there is exactly one.
+      const badges = demo.locator('.x-demo__card-doc-link');
+      await expect(
+        badges.first(),
+        `${attr}'s x-demo has no doc-link badge on the real page`
+      ).toBeAttached({ timeout: 5000 });
+      const allHrefs = await badges.evaluateAll((els) =>
+        els.map((e) => (e as HTMLAnchorElement).getAttribute('href'))
+      );
+      expect(
+        new Set(allHrefs).size,
+        `${attr}: duplicate doc-link badges for one href (${allHrefs.join(', ')})`
+      ).toBe(allHrefs.length);
+      const own = attr.replace(/^x-/, '');
+      const badge = badges.nth(Math.max(0, allHrefs.findIndex((h) => (h || '').includes(own))));
 
       const [popup] = await Promise.all([
         context.waitForEvent('page', { timeout: 5000 }),

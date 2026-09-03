@@ -201,21 +201,21 @@
     "matrix": {
       "combinations": [
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title"
         },
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title",
           "imagePosition": "right"
         },
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title",
           "variant": "elevated"
         }

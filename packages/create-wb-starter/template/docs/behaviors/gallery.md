@@ -8,10 +8,10 @@ Apply `x-gallery` to any element.
 
 ```html
 <div x-gallery columns="4">
-        <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">
-        <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">
-        <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">
-        <img src="https://picsum.photos/200/200?r=gal4" alt="Gallery 4">
+        <img src="/images/placeholder.svg" alt="Gallery 1">
+        <img src="/images/placeholder.svg" alt="Gallery 2">
+        <img src="/images/placeholder.svg" alt="Gallery 3">
+        <img src="/images/placeholder.svg" alt="Gallery 4">
       </div>
 ```
 

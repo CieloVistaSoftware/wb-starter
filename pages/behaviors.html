@@ -507,6 +507,18 @@
       const frag = document.createDocumentFragment();
       let rendered = 0;
       allEntries.forEach((entry) => {
+        // #995 — John: "put same named links into dropdown, the use must
+        // expand it first to view the items in the list." A behavior with
+        // several options repeated its own name on every row: x-avatar alone
+        // occupied twelve consecutive rows out of 603, so scrolling was
+        // dominated by repetition rather than by distinct behaviors.
+        //
+        // Build this entry's rows first, then decide the shape: one option
+        // stays a plain row (there is no repetition to collapse), several
+        // become a <details> whose <summary> is the name. <details> because it
+        // IS the disclosure element (Law 0) — keyboard, aria-expanded and
+        // screen-reader support come with the tag, not from us.
+        const built = [];
         variantsFor(entry.attr).forEach((opt) => {
           const variant = opt.value;
           const shownOption = optionLabel(opt);
@@ -516,7 +528,6 @@
           if (!offersForm(entry, form)) return;
           if (q && ![entry.label, entry.attr, shownOption].join(' ').toLowerCase().includes(q)) return;
           rendered++;
-          const li = document.createElement('li');
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'behaviors-search-results__row';
@@ -544,9 +555,43 @@
           v.className = 'behaviors-search-results__variant';
           v.textContent = shownOption;
           btn.append(t, v);
-          li.appendChild(btn);
-          frag.appendChild(li);
+          built.push(btn);
         });
+
+        if (!built.length) return;
+
+        if (built.length === 1) {
+          const li = document.createElement('li');
+          li.appendChild(built[0]);
+          frag.appendChild(li);
+          return;
+        }
+
+        const li = document.createElement('li');
+        li.className = 'behaviors-search-results__group';
+        const details = document.createElement('details');
+        // The label goes through the `summary` ATTRIBUTE, which is x-details's
+        // own API (the same form #behaviors-live-api uses). Authoring a
+        // <summary> child here does not survive: the behavior rewrites the
+        // summary's internals into a single .x-details__label plus its own
+        // icon, so two hand-built spans arrived concatenated -- "audio6" -- and
+        // the grid columns were overridden by its flex layout. Law 4b: the tag
+        // IS the behavior; work with it rather than around it.
+        details.setAttribute('summary', `${entry.label} (${built.length})`);
+        // Collapsed by default -- "the user must expand it first". While a
+        // query is active the matches must be visible, or search would report
+        // hits it then hides.
+        if (q) details.open = true;
+        const inner = document.createElement('ul');
+        inner.className = 'behaviors-search-results__options';
+        built.forEach((btn) => {
+          const row = document.createElement('li');
+          row.appendChild(btn);
+          inner.appendChild(row);
+        });
+        details.appendChild(inner);
+        li.appendChild(details);
+        frag.appendChild(li);
       });
       if (!q) totalRowCount = rendered;
       resultsEl.appendChild(frag);
@@ -795,28 +840,86 @@
     // So the panel is measured and the list is capped to it; the list keeps
     // scrolling inside itself. Stacked, the cap is dropped and behaviors.css's
     // fixed max-height applies again -- there is no second column to match.
+    // #992 — the SCROLLER, not the window. #app is viewport-sized and
+    // overflow:hidden; #siteBody inside it is the element that actually
+    // scrolls. Sizing against window.innerHeight and a viewport-relative top
+    // was wrong: that top moves as #siteBody scrolls, so the answer was only
+    // valid for the scroll offset it was computed at (measured: cap 650px
+    // written while the panel's top read -118). Distances measured BETWEEN two
+    // elements in the same scroller are scroll-invariant.
+    const scrollerEl = document.getElementById('siteBody');
+    const wsEl = document.getElementById('behaviors-workspace') || resultsEl;
     const TWO_COL = matchMedia('(min-width: 60.0625rem)');
     let syncQueued = false;
+    let pendingScrollReset = false;   // set by a selection, honoured once settled
+    // #992 — John: "just make a container that always contains the selected
+    // content, always rerender that container on all selections."
+    //
+    // That inverts the dependency, and the inversion is the fix. It used to run
+    // content -> panel height -> list height, which is circular: rendering an
+    // example changed the panel's height, which changed the cap, which was
+    // measured from the panel again. behaviors.css already documents the
+    // symptom ("ResizeObserver loop completed with undelivered notifications"
+    // x3), and it is why the panel sat a constant 61px past the scroller in
+    // roughly half of runs: the size was computed before the example finished
+    // rendering, then the content pushed past it.
+    //
+    // Now: scroller -> container size, full stop. The container is a FIXED
+    // height taken from the scroller, so no example can grow it; content
+    // scrolls inside it. Selections re-render into a box whose size was already
+    // settled, so there is nothing left to race.
+    const GUTTER = 12;   // breathing room below the columns
+    const MIN = 240;     // never collapse to a sliver on a short window
+
+    function sizeContainers() {
+      if (!TWO_COL.matches || !scrollerEl) {
+        liveEl.style.height = '';
+        liveEl.style.overflowY = '';
+        resultsEl.style.maxHeight = '';
+        return;
+      }
+      // Distance from the top of the scroller, not the viewport: both rects
+      // move together when it scrolls, so this does not change with scroll
+      // position. Measuring against window.innerHeight was the earlier bug.
+      const offset =
+        liveEl.getBoundingClientRect().top - scrollerEl.getBoundingClientRect().top;
+      const h = Math.max(MIN, Math.round(scrollerEl.clientHeight - offset - GUTTER));
+      const px = h + 'px';
+      // height, NOT max-height: max-height still lets short content shrink the
+      // box and tall content is what caused the overshoot. A fixed box is the
+      // whole point -- it is the same box before and after every selection.
+      if (liveEl.style.height !== px) {
+        liveEl.style.height = px;
+        liveEl.style.overflowY = 'auto';
+      }
+      if (resultsEl.style.maxHeight !== px) resultsEl.style.maxHeight = px;
+    }
+
+    /**
+     * Called after every selection. Sizing depends only on the scroller, so
+     * this is cheap and idempotent -- it is re-asserted rather than
+     * recalculated from whatever was just rendered.
+     */
     function syncListHeight() {
-      // Write on the next frame, never inside the observer callback: mutating
-      // layout during delivery is what produces "ResizeObserver loop completed
-      // with undelivered notifications".
-      if (syncQueued) return;
-      syncQueued = true;
-      requestAnimationFrame(() => {
-        syncQueued = false;
-        if (!TWO_COL.matches) {
-          if (resultsEl.style.maxHeight) resultsEl.style.maxHeight = '';
-          return;
-        }
-        const h = liveEl.getBoundingClientRect().height;
-        // Panel hidden (nothing picked yet) -> fall back to the stylesheet.
-        const next = h > 0 ? Math.round(h) + 'px' : '';
-        // Only write on a real change -- an unconditional write re-triggers the
-        // observer every frame for no reason.
-        if (resultsEl.style.maxHeight !== next) resultsEl.style.maxHeight = next;
-        keepSelectionVisible();
-      });
+      wsEl.removeAttribute('x-ready');   // Law 18: never let a stale signal be read
+      sizeContainers();
+      keepSelectionVisible();
+
+      // A new selection starts where content starts. AFTER
+      // keepSelectionVisible(), not before: that keeps the selected LIST row on
+      // screen and does so by scrolling, which put #siteBody back to 497 and
+      // undid the reset entirely -- measured, the reset ran and the scroller
+      // ended up scrolled anyway. Only on selection; a plain resize must not
+      // yank the reader back to the top.
+      if (pendingScrollReset) {
+        pendingScrollReset = false;
+        liveEl.scrollTop = 0;
+        if (scrollerEl) scrollerEl.scrollTop = 0;
+      }
+      // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
+      // so it says so. Waiters listen instead of sleeping.
+      wsEl.setAttribute('x-ready', '');
+      wsEl.dispatchEvent(new CustomEvent('wb:layout-settled', { bubbles: true }));
     }
     // #717 -- John: "When using the down or up button the current selection must
     // be the first one." selectRow() sets scrollTop = rowTop and the browser
@@ -850,10 +953,17 @@
       }
     }
 
-    // The panel's height drives the list's; the list never drives the panel's,
-    // so this cannot feed back on itself.
-    new ResizeObserver(syncListHeight).observe(liveEl);
+    // #992 — observe the SCROLLER, never the panel. Observing liveEl was the
+    // feedback loop: the sync sets the panel's height, which resizes the panel,
+    // which re-runs the sync. The comment here used to claim it "cannot feed
+    // back on itself" — it could, and behaviors.css records the browser saying
+    // so ("ResizeObserver loop completed with undelivered notifications" x3).
+    // The scroller's size is an input the page does not control, so watching it
+    // is safe by construction.
+    if (scrollerEl) new ResizeObserver(sizeContainers).observe(scrollerEl);
+    window.addEventListener('resize', sizeContainers);
     TWO_COL.addEventListener('change', syncListHeight);
+    sizeContainers();   // size the box before anything is selected
 
     // Cache: the same doc is re-requested every time a reader arrows back over
     // a behavior, and a 404 is worth remembering too (49 docs, 143 entries --
@@ -928,15 +1038,30 @@
 
     function showApi(behavior) {
       liveApi.hidden = false;
-      const summary = liveApi.querySelector('.behaviors-live__api-summary');
-      if (summary) {
-        summary.textContent =
-          'API';
-      }
 
       const sc = schemaByName.get(behavior);
       const props = (sc && sc.properties) || {};
       const names = Object.keys(props);
+
+      // #993 — John, on `article` showing a single row: "This isn't right only
+      // one Article example".
+      //
+      // The list is a list of OPTIONS: it emits a row per enum value and per
+      // boolean, so a behavior whose attributes are plain strings shows one
+      // bare row. `article` has nine attributes and eight of them are strings,
+      // so it looked like the framework's flagship element had a single knob.
+      // Systemic, not an article problem: 650 option rows across 156 schemas
+      // versus 1032 declared attributes.
+      //
+      // The full set was never missing -- this panel already listed all nine,
+      // via Object.keys(props) with no filtering. What was missing was any way
+      // to KNOW that. The chip said "API" whether it held nine attributes or
+      // none, so there was nothing to suggest looking. John chose this panel as
+      // the home for the full attribute set, so it now says how much it holds.
+      const summary = liveApi.querySelector('.behaviors-live__api-summary');
+      if (summary) {
+        summary.textContent = names.length ? 'API (' + names.length + ')' : 'API';
+      }
 
       if (!names.length) {
         // Same reasoning as the doc panel (#673): say the thing is absent
@@ -980,7 +1105,7 @@
       const usage = buildUsageSnippet(behavior, props);
 
       liveApiBody.innerHTML =
-        '<pre class="behaviors-live__api-usage"><code>' + esc(usage) + '</code></pre>' +
+        '<pre class="behaviors-live__api-usage"><code language="html">' + esc(usage) + '</code></pre>' +
         '<div class="behaviors-live__api-scroll">' +
         '<table id="behaviors-live-api-table" class="behaviors-live__api-table">' +
         '<thead><tr>' +
@@ -991,6 +1116,23 @@
         '<p class="behaviors-live__api-note">' + names.length +
         ' attribute' + (names.length === 1 ? '' : 's') +
         ' · from <code>src/wb-models/' + esc(behavior) + '.schema.json</code></p>';
+
+      // #993 follow-up — John: "on api, when clicked format the content in this
+      // case HTML". The usage snippet was plain unhighlighted text, while the
+      // demo panel's own view-source block a few pixels below it is syntax
+      // highlighted: the same content, two treatments, on one screen. It is
+      // marked language="html" above and scanned here so the `code` behavior
+      // treats it exactly as demo.js treats its panel. Eager, because a lazily
+      // deferred snippet sits unstyled for an indeterminate time inside a panel
+      // the reader has just opened on purpose.
+      const usageEl = liveApiBody.querySelector('.behaviors-live__api-usage');
+      if (usageEl && window.WB && typeof window.WB.scan === 'function') {
+        try {
+          window.WB.scan(usageEl, { eager: true });
+        } catch {
+          /* highlighting is a nicety; never let it break the panel */
+        }
+      }
     }
 
     async function showDoc(behavior) {
@@ -1374,7 +1516,7 @@
       tr: `
   <td>Cell</td>`,
       figure: `
-  <img src="https://picsum.photos/seed/x-figure/600/400" alt="Sample">
+  <img src="/images/placeholder-mountain.svg" alt="Sample">
   <figcaption>Example caption</figcaption>`,
       details: `
   <summary>Example summary</summary>
@@ -1800,20 +1942,49 @@
       return (def && def.description) ? def.description : '';
     }
 
+    // #994 — articleFor / shows / occludingChild / describeCover live in
+    // src/wb-viewmodels/live-note.js. They were inline, and the first
+    // regression test written for this fix PASSED with the bug reintroduced:
+    // the only way to reach them was through the page, and the page rebuilds
+    // its example on every selection, resetting any geometry a test set up. A
+    // guard that cannot fail is not a guard. In a module they are testable
+    // directly. Loaded alongside tag-map below and assigned here.
+    let articleFor = (w) => /^[aeiou]/i.test(String(w || '')) ? 'an' : 'a';
+    let shows = (n, t) => `shows ${articleFor(n)} ${n}${t ? ' ' + t : ''}`;
+    let occludingChild = () => null;
+    let describeCover = () => null;
+    import(siteRoot() + 'src/wb-viewmodels/live-note.js')
+      .then((m) => { articleFor = m.articleFor; shows = m.shows; occludingChild = m.occludingChild; describeCover = m.describeCover; })
+      .catch(() => { /* keep the safe fallbacks above */ });
+
+    /** Opaque enough that nothing behind it is visible. */
+    function isOpaqueColour(value) {
+      const c = parseRgb(value);
+      return !!(c && c.a > 0.85);
+    }
+
     function summarise(el) {
       if (!el) return '';
       const cs = getComputedStyle(el);
       const bg = parseRgb(cs.backgroundColor);
       if (cs.backgroundImage && cs.backgroundImage !== 'none') return 'shows a gradient background';
-      if (bg && bg.a > 0.85) return `shows a ${colourName(bg.r, bg.g, bg.b)} background`;
-      if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+
+      // Describe the background only when it is what is actually on screen.
+      const covered = occludingChild(el, isOpaqueColour);
+      const coverText = describeCover(covered);
+      if (coverText) return coverText;
+      if (!covered) {
+        if (bg && bg.a > 0.85) return shows(colourName(bg.r, bg.g, bg.b), 'background');
+        if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+      }
+
       const bw = parseFloat(cs.borderTopWidth) || 0;
       if (bw > 0) {
         const bc = parseRgb(cs.borderTopColor);
-        return bc ? `shows a ${colourName(bc.r, bc.g, bc.b)} border` : 'shows a border';
+        return bc ? shows(colourName(bc.r, bc.g, bc.b), 'border') : 'shows a border';
       }
       if (cs.boxShadow && cs.boxShadow !== 'none') return 'shows a raised shadow';
-      return 'no background or border — plain';
+      return covered ? 'shows its own content' : 'no background or border — plain';
     }
 
     const eventsLog = document.getElementById('behaviors-live-events-log');
@@ -2028,9 +2199,12 @@
       const behaviorName = extensionMap[token] || token.replace(/^x-/, '');
       showApi(behaviorName);
       showDoc(behaviorName);
-      const optionText = variant
-        ? (isBool ? prop : (prop && prop !== 'variant' ? `${prop}=${variant}` : variant))
-        : '';
+      // #951: this used to restate optionLabel()'s rule inline and dropped its
+      // boolean-OFF branch, so `isBool ? prop` collapsed true and false to the
+      // bare flag name -- the header read "table · hoverable" above a sample
+      // that emitted hoverable="false", stating the opposite of the demo.
+      // One rule, one place.
+      const optionText = optionLabel({ prop, value: variant, boolean: isBool });
       liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
 
       if (!src) {
@@ -2125,11 +2299,24 @@
     // navigates, and without it a screen-reader user has no way to tell which
     // of 228 rows the panel is showing.
     function rowsInOrder() {
-      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')];
+      // #995 — rows inside a collapsed <details> are still in the DOM but are
+      // not on screen. Arrowing must not step onto something invisible, so the
+      // navigable set is the VISIBLE rows. offsetParent is null for anything
+      // inside a closed <details>, which is exactly the test needed.
+      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')]
+        .filter((r) => r.offsetParent !== null);
+    }
+
+    /** Open the group containing this row, so a selection is never hidden. */
+    function revealRow(row) {
+      if (!row) return;
+      const d = row.closest('details');
+      if (d && !d.open) d.open = true;
     }
 
     function selectRow(row, { focus = true, reveal = false } = {}) {
       if (!row) return;
+      revealRow(row);   // #995: selecting a row inside a collapsed group opens it
       rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
       row.setAttribute('aria-current', 'true');
       // Scroll the LIST only, by hand. scrollIntoView({block:'nearest'}) still
@@ -2152,6 +2339,37 @@
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+      // #998 follow-up — John, having asked several times: "when clicking the
+      // left, (nav), the content must show in exact same position as shown
+      // here."
+      //
+      // #992 gave the panel a fixed height and its own scrollbar, which fixed
+      // the overflow but introduced this: the scroll position PERSISTED across
+      // selections. Measured — scroll the panel to 200, then pick three
+      // different behaviors: scrollTop stayed 207 every time and the header sat
+      // at -206, scrolled off the top. Every example after the first appeared
+      // somewhere different from the one before it.
+      //
+      // A new selection is new content, so it starts where content starts. Set
+      // BEFORE the settled signal below, so anything waiting on
+      // wb:layout-settled measures the position the reader actually sees.
+      // Resetting scroll HERE does not hold: showLive() above injects the
+      // example, its doc and its code panel asynchronously, and that later
+      // insertion scrolls the container after this line has run. Measured with
+      // a synchronous reset in place: #siteBody still ended at 497 and the
+      // header at y=88, versus y=506 for the first selection.
+      //
+      // So the reset is REQUESTED here and performed once the layout has
+      // settled, in syncListHeight() below -- the one place that knows the
+      // sizing is finished (Law 18).
+      pendingScrollReset = true;
+
+      // #992 / Law 18 -- every selection must produce a settled signal. Adding
+      // the notification exposed that this was NOT true: the sync only ran when
+      // the ResizeObserver happened to fire, and arrowing often changes nothing
+      // it watches, so waiters were left hanging ("wb:layout-settled never
+      // fired"). The flakiness blamed on the test was this missing signal.
+      syncListHeight();
       // #686 -- John, on a phone: "doesn't show the sample code and result".
       // Stacked, the panel starts ~300px past the bottom of #siteBody (measured
       // at 375x812: list ends at 841, panel stage at 920, scroller is 627 tall),

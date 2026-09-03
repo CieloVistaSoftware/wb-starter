@@ -66,4 +66,4 @@ keyboard and screen-reader users can still reach and scroll it.
 
 ## Source
 
-[src/wb-viewmodels/layouts.js](../../../src/wb-viewmodels/layouts.js)
+[src/wb-viewmodels/layouts.js](../../src/wb-viewmodels/layouts.js)

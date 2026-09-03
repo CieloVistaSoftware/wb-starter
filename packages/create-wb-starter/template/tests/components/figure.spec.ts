@@ -11,7 +11,7 @@ test.describe('Figure Behavior', () => {
       el.setAttribute('x-figure', '');
       el.setAttribute('caption', 'Test Caption');
       const img = document.createElement('img');
-      img.src = 'https://picsum.photos/200';
+      img.src = '/images/placeholder.svg';
       el.appendChild(img);
       document.body.appendChild(el);
       (window as any).WB.scan();

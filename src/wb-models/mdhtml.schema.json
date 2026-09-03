@@ -6,8 +6,8 @@
   "schemaFor": "mdhtml",
   "baseClass": "x-mdhtml",
   "semanticElement": {
-    "tagName": "div",
-    "implicitRole": "generic"
+    "tagName": "article",
+    "implicitRole": "article"
   },
   "compliance": {
     "baseClass": "x-mdhtml",

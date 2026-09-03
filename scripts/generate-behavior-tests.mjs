@@ -140,6 +140,7 @@ for (const { vm, testSetup, testMatrix, customTag, folder } of toGenerate) {
  * Source: src/wb-viewmodels/${vm}.js
  */
 import { test, expect, Page } from '@playwright/test';
+import { elementReady } from '../base';
 
 const BASE_URL = 'http://localhost:3000/index.html';
 
@@ -159,19 +160,24 @@ async function injectAndScan(page: Page, html: string) {
     const container = document.createElement('div');
     container.id = 'test-container';
     container.innerHTML = h;
-    
-    // Force eager loading
-    const elements = container.querySelectorAll('[data-wb]');
-    elements.forEach(el => el.setAttribute('data-x-eager', ''));
-    
+        
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
-  await page.waitForTimeout(500);
+  // #983: this used to be `await page.waitForTimeout(500)` — a guess about
+  // when injection finished, unrelated to the thing it waited for. Measured:
+  // `await WB.scan()` resolving does NOT mean injection is complete. Settle
+  // the injected element instead. x-ready means SETTLED, not succeeded, so
+  // the assertions still do the verifying — and a settle failure must never
+  // mask a real assertion failure, hence the catch.
+  const injected = page.locator('#test-container > *').first();
+  if (await injected.count()) {
+    await elementReady(injected).catch(() => {});
+  }
 }
 
 test.describe('${vm} Behavior', () => {

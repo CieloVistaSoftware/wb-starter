@@ -38,7 +38,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <img
-  src="https://picsum.photos/seed/photo/600/400"
+  src="/images/placeholder.svg"
   alt="Photo description">
 </img>
 ```
@@ -47,7 +47,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <img
-  src="https://picsum.photos/seed/photo/600/400"
+  src="/images/placeholder.svg"
   alt="Photo">
 ```
 
@@ -55,7 +55,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <img
-  src="https://picsum.photos/seed/large-image/600/400"
+  src="/images/placeholder.svg"
   lazy
   alt="Large photo">
 </img>
@@ -65,7 +65,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <img
-  src="https://picsum.photos/seed/banner/600/400"
+  src="/images/placeholder.svg"
   aspectRatio="16/9"
   alt="Banner">
 </img>
@@ -75,7 +75,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <img
-  src="https://picsum.photos/seed/artwork/600/400"
+  src="/images/placeholder.svg"
   zoomable
   alt="Click to zoom">
 </img>
@@ -85,8 +85,8 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <img
-  src="https://picsum.photos/seed/user-avatar/600/400"
-  fallback="https://picsum.photos/seed/default-avatar/200/200"
+  src="/images/placeholder.svg"
+  fallback="/images/placeholder.svg"
   alt="User avatar">
 </img>
 ```
@@ -95,12 +95,12 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <img
-  src="https://picsum.photos/seed/photo/600/400"
+  src="/images/placeholder.svg"
   fit="contain"
   alt="Photo">
 </img>
 <img
-  src="https://picsum.photos/seed/photo/600/400"
+  src="/images/placeholder.svg"
   fit="cover"
   alt="Photo">
 </img>
@@ -114,7 +114,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   style="aspect-ratio: 16/9">
   <img
     class="x-img__image"
-    src="https://picsum.photos/seed/photo/600/400"
+    src="/images/placeholder.svg"
     alt="Description"
     loading="lazy">
 </div>

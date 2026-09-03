@@ -68,7 +68,7 @@ test.describe('draggable Behavior', () => {
     const html = "<div x-draggable>Basic draggable content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-draggable], #test-container [x-draggable]').first();
+    const el = page.locator('#test-container [x-draggable]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

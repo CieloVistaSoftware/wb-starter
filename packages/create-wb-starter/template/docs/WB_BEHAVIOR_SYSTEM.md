@@ -112,7 +112,7 @@ Use standard semantic HTML elements (Auto-Inject):
 <img
   lazy
   zoomable
-  src="https://picsum.photos/seed/photo/600/400"
+  src="/images/placeholder.svg"
   alt="Photo">
 <form
   ajax

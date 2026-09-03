@@ -136,6 +136,7 @@ function traceMediaLoads() {
  */
 
 import { behaviors } from '../wb-viewmodels/index.js';
+import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { styleSheetDefinesClass } from './style-registry.js';
 import { Events } from './events.js';
 import { matchingElements } from './dom-query.js';
@@ -260,7 +261,6 @@ function getAutoInjectBehavior(element) {
   // `applied`/`pending` maps, which is what the original comment here relied
   // on. A DIFFERENT x-{behavior} still disqualifies — that check is the loop
   // below, which correctly tests `other !== candidate`.
-  const prefix = getConfig('prefix') || 'x';
   if (element.hasAttribute(candidate) && !RESERVED_ATTRIBUTES.has(candidate)) return null;
   if (element.hasAttribute(`x-${candidate}-init`)) return null;
 
@@ -284,32 +284,7 @@ function getAutoInjectBehavior(element) {
   // framework's own directives names a behavior whether it has loaded yet or
   // not. Deciding on the attribute rather than the registry makes this
   // independent of load order, which is the only way the race actually closes.
-  const DIRECTIVES = new Set(['behavior', 'eager', 'hydrated', 'ignore', 'cloak']);
-  const prefixAttr = `${prefix}-`;
-  for (const attr of element.attributes) {
-    if (!attr.name.startsWith(prefixAttr)) continue;
-    const other = attr.name.slice(prefixAttr.length);
-    if (other === candidate) continue;                 // its own attribute (#746)
-    if (DIRECTIVES.has(other) || other.endsWith('-init')) continue;
-
-    // #765 -- John: "when autoinject is true, <article x-ripple> gets two
-    // behaviors."
-    //
-    // Two different things wear the same syntax:
-    //
-    //   REPLACEMENT  <article x-cardportfolio>  cardportfolio IS a card. Both
-    //                build a whole card into the element, so running both
-    //                renders it twice -- 67 examples did exactly that.
-    //   ADDITIVE     <article x-ripple>         ripple is not an alternative
-    //                to card, it decorates one. Blocking autoInject here means
-    //                asking for a card with a ripple and getting only a ripple.
-    //
-    // A replacement is a member of the tag behavior's own family, which the
-    // naming already encodes: card -> cardportfolio, cardimage, cardhero.
-    // Anything else is a modifier and stacks. Checked against every example in
-    // the catalogue: 17 family pairs, 49 modifier pairs, no ambiguous ones.
-    if (other.startsWith(candidate)) return null;
-  }
+  if (isReplacedByExplicitBehavior(element, candidate)) return null;
 
   return candidate;
 }
@@ -550,6 +525,16 @@ const WB = {
       elementPending.delete(behaviorName);
       if (elementPending.size === 0) {
         pending.delete(element);
+
+        // #970: per-element completion signal, identical to wb-lazy.js's.
+        //
+        // Both runtimes must stamp it or a test cannot be written once and run
+        // against either — one contract implemented in one place and not the
+        // other is exactly the drift that produced #923 and #951.
+        //
+        // Settled, not successful: a behavior that threw stamps x-ready too,
+        // because the element is finished either way. x-error carries failure.
+        if (element.isConnected) element.setAttribute('x-ready', '');
       }
     }
   },
@@ -866,7 +851,9 @@ const WB = {
       // leak `true` everywhere (#328) regardless of a page's real config —
       // so the auto-inject path independently caught every <pre>/<code> tag
       // and papered over this gap. Fixing #328 exposed it: every x-demo
-      // code panel on the main SPA (autoInject correctly off there) lost its
+      // code panel on the main SPA (autoInject was off there AT THE TIME -- it is ON by default
+      // now, see config.js; this sentence is kept only because it explains the
+      // bug being described, not because it still holds) lost its
       // syntax highlighting entirely, since nothing else was left to invoke
       // pre()/code() for elements tagged only via x-behavior.
       //
@@ -968,8 +955,12 @@ const WB = {
                 htmlEl.parentElement && htmlEl.parentElement.closest('article, .x-card')) {
               return;
             }
-            // We don't check for other attributes here anymore.
-            // Auto-inject is additive.
+            // Additive, but NOT when an explicit x-* attribute REPLACES this
+            // behavior (#923). This loop used to say "we don't check for other
+            // attributes here anymore" and inject unconditionally, which is why
+            // <article x-card> built the card twice: the guard lived in
+            // getAutoInjectBehavior(), a function this path never calls.
+            if (isReplacedByExplicitBehavior(htmlEl, behavior)) return;
             WB.inject(htmlEl, behavior);
           }
         });
@@ -1134,8 +1125,11 @@ const WB = {
                 if (!getConfig('autoInject') && !descEl.hasAttribute('variant')) return;
                 // Only skip if explicitly ignored
                 if (!descEl.hasAttribute('x-ignore')) {
-                  // We don't check for other attributes here anymore.
-                  // Auto-inject is additive.
+                  // Same replacement guard as scan()'s loop (#923) -- a node
+                  // added later must resolve identically to the same markup
+                  // present at load, or the double-render comes back for
+                  // anything rendered dynamically.
+                  if (isReplacedByExplicitBehavior(descEl, behavior)) return;
                   WB.inject(descEl, behavior);
                 }
               });
@@ -1338,13 +1332,24 @@ const WB = {
     }
 
     // Scan existing elements
+    //
+    // #962: same fix as wb-lazy.js — the DOMContentLoaded branch discarded the
+    // boot scan's promise, so readiness was unobservable from outside and tests
+    // had nothing to await but a `waitForTimeout` guess. Both runtimes must
+    // expose the same handle; one contract implemented twice and drifting is
+    // how #923 and #951 happened.
+    //
+    // The `loading` branch deliberately does not await: init() must return
+    // without waiting for DOM ready, as before.
     if (shouldScan && typeof document !== 'undefined') {
-      // Wait for DOM ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => WB.scan());
-      } else {
-        await WB.scan();
-      }
+      WB.ready = document.readyState === 'loading'
+        ? new Promise((resolve) => {
+            document.addEventListener('DOMContentLoaded', () => resolve(WB.scan()));
+          })
+        : WB.scan();
+      if (document.readyState !== 'loading') await WB.ready;
+    } else {
+      WB.ready = Promise.resolve();
     }
 
     // Start observing

@@ -207,9 +207,16 @@ export class WBFixCard extends WBCard {
       const sig = fix.errorSignature || 'No signature provided';
       if (sig.includes('Enhancement')) {
         // Try to find a component doc link - use direct path for simplicity
-        const compName = (fix.component || '').split('/').pop().replace('.js', '');
+        // `behavior` is canonical since the components removal -- fix-viewer.html
+        // already groups on fix.behavior (line 431). This read still said
+        // fix.component, so the two halves of the same page disagreed about
+        // what the field is called (#911).
+        const compName = (fix.behavior || fix.component || '').split('/').pop().replace('.js', '');
         if (compName) {
-          return `<a href="/docs/components/semantics/${this.escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${this.escapeHtml(compName)}.md</a>`;
+          // docs/components/semantics/ does not exist -- the docs live in
+          // docs/behaviors/ since the components removal, so every
+          // enhancement link in the viewer 404'd (#911).
+          return `<a href="/docs/behaviors/${this.escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${this.escapeHtml(compName)}.md</a>`;
         }
         return this.escapeHtml(sig);
       }
@@ -351,4 +358,21 @@ export class WBFixCard extends WBCard {
 export default function fixCard(element) {
   element.classList.add('x-fix-card');
   return () => {};
+}
+
+// Registration shim (#911).
+//
+// f624fcc9 (4.0.0 — components removed) deleted
+//   customElements.define('wb-fix-card', WBFixCard);
+// but public/fix-viewer.html still does createElement('x-fix-card') and assigns
+// card.data, so without this the page rendered 13 inert <x-fix-card></x-fix-card>
+// elements: connectedCallback never fired, .fix-card was never applied, and the
+// page's own .fix-card stylesheet had nothing to style.
+//
+// TIER1-LAWS §2 permits this shape: a registration shim the Custom Elements API
+// requires, holding no shared behavior logic. Converting fix-card to a behavior
+// is the right end state and is tracked in #660 / #789 — it needs fix-viewer.html
+// to stop passing data through a class setter first.
+if (typeof customElements !== 'undefined' && !customElements.get('x-fix-card')) {
+  customElements.define('x-fix-card', WBFixCard);
 }

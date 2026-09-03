@@ -32,7 +32,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-demo>
 <div x-cardproduct
   title="Wireless Headphones"
-  image="https://picsum.photos/seed/headphones/600/400"
+  image="/images/placeholder.svg"
   price="$99.99">
 </div>
 </div>
@@ -44,7 +44,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <div x-cardproduct
   title="Wireless Headphones"
-  image="https://picsum.photos/seed/headphones/600/400"
+  image="/images/placeholder.svg"
   price="$99.99">
 </div>
 ```
@@ -54,7 +54,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <div x-cardproduct
   title="Premium Headphones"
-  image="https://picsum.photos/seed/headphones/600/400"
+  image="/images/placeholder.svg"
   price="$79.99"
   originalPrice="$99.99"
   badge="Sale">
@@ -66,7 +66,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <div x-cardproduct
   title="Bluetooth Speaker"
-  image="https://picsum.photos/seed/speaker/600/400"
+  image="/images/placeholder.svg"
   price="$49.99"
   rating="4.5"
   reviews="128"

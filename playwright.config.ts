@@ -157,6 +157,16 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${TEST_PORT}`,
     trace: 'off',
+    // #961 experiment: src/main.js:133 registers sw.js, which is network-first
+    // with a CACHE FALLBACK — when a fetch fails it silently serves a cached
+    // copy rather than failing. A service worker also does not control the
+    // FIRST page load, only later ones, which matches the measured signature:
+    // 18 of 19 failures occurred on a later repeat, never the first.
+    //
+    // WB_BLOCK_SW=1 takes the worker out of the picture so we can see whether
+    // the flapping stops. The default stays 'allow' — this measures rather than
+    // quietly changing what every run exercises.
+    serviceWorkers: process.env.WB_BLOCK_SW ? 'block' : 'allow',
   },
 
   // Web server - automatically starts before tests.

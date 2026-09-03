@@ -68,7 +68,7 @@ test.describe('themecontrol Behavior', () => {
     const html = "<div x-themecontrol>Basic themecontrol content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-themecontrol], #test-container [x-themecontrol]').first();
+    const el = page.locator('#test-container [x-themecontrol]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

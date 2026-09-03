@@ -59,7 +59,16 @@ node .husky/lint-ratchet.mjs --staged || exit 1
 #
 # The counter lives in .git/ deliberately — a tracked file would change on
 # every commit, churn every diff, and conflict on every merge.
-COUNT_FILE="$(git rev-parse --git-dir)/wb-fix-count"
+#
+# #974: --git-common-dir, NOT --git-dir. In a worktree --git-dir resolves to
+# .git/worktrees/<name>, so every worktree got its OWN counter starting at zero
+# and the 10th-commit gate effectively never fired for agents — who work almost
+# exclusively in worktrees. Observed: main sat at 9 while a fresh worktree sat
+# at 1 and five agent worktrees had no counter at all, so the main checkout was
+# absorbing the entire cadence alone. --git-common-dir returns .git from every
+# worktree AND from the main checkout, making the count global, which is the
+# only way "every 10th commit" means anything.
+COUNT_FILE="$(git rev-parse --git-common-dir)/wb-fix-count"
 COUNT=$(cat "$COUNT_FILE" 2>/dev/null || echo 0)
 COUNT=$((COUNT + 1))
 
@@ -68,62 +77,23 @@ if [ "$COUNT" -ge 10 ]; then
   echo "🔁 $COUNT commits since the last full run — running the WHOLE suite"
   echo "   (compliance + regression + behaviors)"
   echo ""
-  # A stale server on the test port makes every project exit non-zero having
-  # run ZERO tests, and that used to be reported as "FULL SUITE RED" -- a
-  # 50-minute gate that failed in one second and looked like a code failure.
+  # #959: this used to exit 1 if ANY project was red. The suite has been red for
+  # months (499 failures over 227 files), so that gate blocked every commit
+  # permanently AND detected nothing -- a regression introduced today arrived as
+  # one more line among 499, indistinguishable from January's debt. Blocked and
+  # blind is worse than unblocked with real detection.
   #
-  # The first fix here killed whatever held the port. That is wrong: the
-  # holder is just as likely to be the developer's own dev server, and a
-  # commit hook has no business killing it. Take a free port instead. Nothing
-  # to collide with, nothing to kill.
-  FREE_PORT=$(node -e "
-    const net=require('net');
-    const s=net.createServer();
-    s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>console.log(p));});
-  " 2>/dev/null)
-  if [ -n "$FREE_PORT" ]; then
-    export WB_TEST_PORT="$FREE_PORT"
-    echo "   (running on port $FREE_PORT so it cannot collide with a dev server)"
-  fi
-
-  FULL_FAILED=0
-  SUITE_LOG="$(git rev-parse --git-dir)/wb-suite.log"
-  : > "$SUITE_LOG"
-
-  for PROJECT in compliance regression behaviors; do
-    npx playwright test --project="$PROJECT" --reporter=line 2>&1 | tee -a "$SUITE_LOG"
-    # ${PIPESTATUS[0]} is bash-only; this hook runs under sh. Detect the
-    # failure from the log instead, which also gives us the reason.
-    if ! grep -qE "^ +[0-9]+ (passed|failed)" "$SUITE_LOG"; then
-      FULL_FAILED=2   # never started
-    elif grep -qE "^ +[0-9]+ failed" "$SUITE_LOG"; then
-      FULL_FAILED=1   # genuinely red
-    fi
-  done
-
-  if [ "$FULL_FAILED" -eq 2 ]; then
-    echo ""
-    echo "🛑 THE SUITE NEVER RAN — this is not a code failure."
-    echo "   Playwright could not start. Common causes:"
-    echo "     • the dev server port is still held by an orphaned run"
-    echo "     • node_modules is missing or incomplete (run: npm install)"
-    echo "   Nothing was verified, so nothing is known. Commit blocked."
-    echo ""
-    tail -20 "$SUITE_LOG"
-    exit 1
-  fi
-
-  if [ "$FULL_FAILED" -ne 0 ]; then
-    echo ""
-    echo "❌ FULL SUITE RED — commit blocked."
-    echo "   The counter is NOT reset, so the next commit runs it again."
-    echo "   Fixing it is the only way forward that does not hide it."
-    echo ""
-    exit 1
-  fi
+  # It is a RATCHET now, on exactly the argument .husky/lint-ratchet.mjs (#840)
+  # already makes for lint: fail only on failures NOT in the recorded baseline,
+  # and drop repaired tests from that baseline so they can never rot again.
+  # The register is data/test-baseline-failures.json; it only ever shrinks.
+  node .husky/test-ratchet.mjs || exit 1
 
   echo ""
-  echo "✅ Full suite green — counter reset."
+  # #959: NOT "green" -- the ratchet asserts "no NEW failures", which is a
+  # weaker and more honest claim. Saying green here while 499 tests are red is
+  # how a gate stops meaning anything.
+  echo "✅ No new failures vs the baseline — counter reset."
   echo 0 > "$COUNT_FILE"
 else
   echo "   ($COUNT/10 commits since the last full run)"

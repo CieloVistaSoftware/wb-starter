@@ -215,7 +215,7 @@ export function confetti(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-confetti> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-confetti> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-confetti') element.classList.add('x-confetti');
+  element.classList.add('x-confetti');
 
   // MAKE IT VISIBLE! Render as a button if empty
   if (!element.textContent.trim()) {
@@ -689,7 +689,7 @@ export function fireworks(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-fireworks> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-fireworks> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-fireworks') element.classList.add('x-fireworks');
+  element.classList.add('x-fireworks');
 
   // Make visible
   if (!element.textContent.trim()) {
@@ -764,7 +764,7 @@ export function snow(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-snow> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-snow> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-snow') element.classList.add('x-snow');
+  element.classList.add('x-snow');
 
   // Make visible
   if (!element.textContent.trim()) {

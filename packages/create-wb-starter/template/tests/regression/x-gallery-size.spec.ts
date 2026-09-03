@@ -20,7 +20,7 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(300);
 }
 
-const IMGS = '<img src="https://picsum.photos/200/200?r=1" alt="1"><img src="https://picsum.photos/200/200?r=2" alt="2"><img src="https://picsum.photos/200/200?r=3" alt="3"><img src="https://picsum.photos/200/200?r=4" alt="4">';
+const IMGS = '<img src="/images/placeholder.svg" alt="1"><img src="/images/placeholder.svg" alt="2"><img src="/images/placeholder.svg" alt="3"><img src="/images/placeholder.svg" alt="4">';
 
 test.describe('x-gallery size attribute', () => {
   test('without size, falls back to columns-based fluid grid (unaffected)', async ({ page }) => {

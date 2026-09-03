@@ -39,7 +39,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   name="John Doe"
   title="Senior Developer"
   company="TechCorp"
-  avatar="https://picsum.photos/seed/john/200/200">
+  avatar="/images/placeholder.svg">
 </div>
 </div>
 
@@ -52,7 +52,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   name="John Doe"
   title="Senior Developer"
   company="TechCorp"
-  avatar="https://picsum.photos/seed/john/200/200">
+  avatar="/images/placeholder.svg">
 </div>
 ```
 
@@ -63,8 +63,8 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   name="Jane Smith"
   title="Product Designer"
   company="DesignCo"
-  avatar="https://picsum.photos/seed/jane/200/200"
-  cover="https://picsum.photos/seed/cover/800/500"
+  avatar="/images/placeholder.svg"
+  cover="/images/placeholder.svg"
   bio="Passionate about creating beautiful, user-friendly experiences."
   location="San Francisco, CA"
   email="jane@example.com"

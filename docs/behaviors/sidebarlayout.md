@@ -76,4 +76,4 @@ than plain `<div>`s, so assistive tech can jump between them directly.
 
 ## Source
 
-[src/wb-viewmodels/layouts.js](../../../src/wb-viewmodels/layouts.js)
+[src/wb-viewmodels/layouts.js](../../src/wb-viewmodels/layouts.js)

@@ -15,8 +15,14 @@
     const versionBadge = document.getElementById('lp-version-badge');
     if (versionBadge) versionBadge.setAttribute('label', `v${VERSION.version} — zero build step`);
     window.WB = WB;
-    await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
+    // #970: init() already scans — a second walk races it. One scan, one path.
+    await WB.init({ autoInject: true, scan: false });
+    // #987: was { eager: true }, which overrode x-demo's IntersectionObserver
+    // path and built every demo on the page before it could be interacted with.
+    // Measured on the worst case (cards.html, 293 demos): 13,680ms of total
+    // main-thread blocking including one unbroken 9,110ms task — frozen, not
+    // just slow. Viewport-first lets EAGER_BUILD_COUNT + the observer work.
+    await WB.scan(document.body);
 
     // Neither CTA had a destination at all (live report: clicking either
     // did nothing) -- x-button renders a real <button> internally
@@ -127,7 +133,7 @@
       <span x-badge label="Warning" variant="warning" pill></span>
       <span x-badge label="Error" variant="error" outline></span>
       <span x-badge variant="info" dot></span>
-      <span x-avatar src="https://i.pravatar.cc/80?img=12" alt="User avatar"></span>
+      <span x-avatar src="/images/avatar.svg" alt="User avatar"></span>
       <button class="x-btn" x-tooltip="Tooltips, for free" x-ripple>Hover + click me</button>
     </div>
     <div style="max-width:640px;margin:0 auto;">

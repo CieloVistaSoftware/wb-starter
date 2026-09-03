@@ -929,7 +929,7 @@
     <div id="autoinject-div-243" class="demo-grid">
       <div id="autoinject-div-244">
         <h3 id="autoinject-h3-245">Image</h3>
-        <img id="autoinject-img-246" src="https://picsum.photos/400/300" alt="Random Image" style="max-width: 100%;">
+        <img id="autoinject-img-246" src="/images/placeholder-sunrise.svg" alt="Random Image" style="max-width: 100%;">
       </div>
       <div id="autoinject-div-247">
         <h3 id="autoinject-h3-248">Video</h3>
@@ -985,7 +985,7 @@
 ```html
 &lt;!-- Image (Lazy loaded by default) --&gt;
 &lt;img
-  src="https://picsum.photos/seed/image/600/400"
+  src="/images/placeholder-sunrise.svg"
   alt="Description"&gt;
 
 &lt;!-- Video --&gt;
@@ -1236,7 +1236,7 @@ function hello() {
         <article id="autoinject-article-350" 
           title="Click Me" 
           clickable="true" 
-          hoverable="true" 
+          
           variant="primary"
           tooltip="Card tooltip info">
           <p id="autoinject-p-351">This card has hover effects and is clickable.</p>
@@ -1260,7 +1260,6 @@ function hello() {
   id="interactive-card"
   title="Click Me" 
   clickable="true" 
-  hoverable="true" 
   variant="primary"
   tooltip="Card tooltip info"&gt;
   &lt;p&gt;Content...&lt;/p&gt;
@@ -1306,8 +1305,8 @@ document.getElementById('interactive-card').addEventListener('click', () =&gt; {
             </tr>
             <tr id="autoinject-tr-dec4" style="border-bottom: 1px solid var(--border-color);">
               <td id="autoinject-td-dec4a" style="padding: 0.75rem;"><code id="autoinject-code-dec4">hoverable</code></td>
-              <td id="autoinject-td-dec4b" style="padding: 0.75rem;">Enables hover elevation effects</td>
-              <td id="autoinject-td-dec4c" style="padding: 0.75rem;"><code id="autoinject-code-dec4ex">hoverable="true"</code></td>
+              <td id="autoinject-td-dec4b" style="padding: 0.75rem;">Hover elevation is ON by default (#937) &mdash; this attribute only turns it OFF</td>
+              <td id="autoinject-td-dec4c" style="padding: 0.75rem;"><code id="autoinject-code-dec4ex">hoverable="false"</code></td>
             </tr>
             <tr id="autoinject-tr-dec5" style="border-bottom: 1px solid var(--border-color);">
               <td id="autoinject-td-dec5a" style="padding: 0.75rem;"><code id="autoinject-code-dec5">variant</code></td>

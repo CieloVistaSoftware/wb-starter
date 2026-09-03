@@ -29,7 +29,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardoverlay
   title="Featured Story"
   subtitle="Read more about this"
-  image="https://picsum.photos/seed/cardoverlay-basic/1000/800">
+  image="/images/placeholder.svg">
 </div>
 </div>
 
@@ -41,7 +41,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardoverlay
   title="Featured Story"
   subtitle="Read more about this"
-  image="https://picsum.photos/seed/cardoverlay-usage/1000/800">
+  image="/images/placeholder.svg">
 </div>
 ```
 
@@ -50,7 +50,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <div x-cardoverlay
   title="Top Overlay"
-  image="https://picsum.photos/seed/cardoverlay-top/1000/800"
+  image="/images/placeholder.svg"
   position="top">
 </div>
 ```
@@ -61,7 +61,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardoverlay
   title="Centered"
   subtitle="Text in the middle"
-  image="https://picsum.photos/seed/cardoverlay-center/1000/800"
+  image="/images/placeholder.svg"
   position="center">
 </div>
 ```
@@ -71,7 +71,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <div x-cardoverlay
   title="No Gradient"
-  image="https://picsum.photos/seed/cardoverlay-nogradient/1000/800"
+  image="/images/placeholder.svg"
   gradient="false">
 </div>
 ```
@@ -81,7 +81,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <div x-cardoverlay
   title="Tall Card"
-  image="https://picsum.photos/seed/cardoverlay-tall/1000/800"
+  image="/images/placeholder.svg"
   height="500px">
 </div>
 ```

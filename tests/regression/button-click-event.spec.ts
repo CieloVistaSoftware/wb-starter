@@ -24,6 +24,12 @@ test.describe('wb:button:click event dispatch (#344)', () => {
       </script>
     `);
     await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 30000 });
+    // #979: __wbDone only means init()+scan() RESOLVED, not that injection
+    // finished. Measured live: right after `await WB.scan()` the button still
+    // had class="" and no x-ready — the decoration landed on a later pass. So
+    // dispatching here raced the listener button.js attaches. Wait for the
+    // element to actually be decorated before clicking it.
+    await expect(page.locator('button').first()).toHaveClass(/x-button/, { timeout: 15000 });
 
     const fired = await page.evaluate(() => {
       return new Promise((resolve) => {
@@ -53,6 +59,12 @@ test.describe('wb:button:click event dispatch (#344)', () => {
       </script>
     `);
     await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 30000 });
+    // #979: __wbDone only means init()+scan() RESOLVED, not that injection
+    // finished. Measured live: right after `await WB.scan()` the button still
+    // had class="" and no x-ready — the decoration landed on a later pass. So
+    // dispatching here raced the listener button.js attaches. Wait for the
+    // element to actually be decorated before clicking it.
+    await expect(page.locator('button').first()).toHaveClass(/x-button/, { timeout: 15000 });
 
     const fired = await page.evaluate(() => {
       return new Promise((resolve) => {

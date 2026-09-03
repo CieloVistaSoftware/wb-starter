@@ -412,8 +412,8 @@ function generateOverlayDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'x-lightbox')) {
     html += '\n    <h3>Lightbox</h3>\n';
-    html += '    <div x-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</button></div>\n';
-    html += '    <div x-demo><button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb2">View Image 2</button></div>\n';
+    html += '    <div x-demo><button variant="primary" x-lightbox src="/images/placeholder.svg">View Image 1</button></div>\n';
+    html += '    <div x-demo><button variant="primary" x-lightbox src="/images/placeholder.svg">View Image 2</button></div>\n';
   }
 
   return html;
@@ -477,17 +477,17 @@ function generateMediaDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'x-image')) {
     html += '    <h3>Enhanced Images</h3>\n';
-    html += '    <div x-demo><img x-image src="https://picsum.photos/200/150?r=enh1" alt="Lazy loaded" lazy class="demo-image"></div>\n';
-    html += '    <div x-demo><img x-image src="https://picsum.photos/200/150?r=enh2" alt="Zoomable" zoomable class="demo-image"></div>\n';
+    html += '    <div x-demo><img x-image src="/images/placeholder.svg" alt="Lazy loaded" lazy class="demo-image"></div>\n';
+    html += '    <div x-demo><img x-image src="/images/placeholder.svg" alt="Zoomable" zoomable class="demo-image"></div>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-gallery')) {
     html += '\n    <h3>Gallery</h3>\n    <div x-demo>\n';
     html += '      <div x-gallery columns="4">\n';
-    html += '        <img src="https://picsum.photos/200/200?r=gal1" alt="Gallery 1">\n';
-    html += '        <img src="https://picsum.photos/200/200?r=gal2" alt="Gallery 2">\n';
-    html += '        <img src="https://picsum.photos/200/200?r=gal3" alt="Gallery 3">\n';
-    html += '        <img src="https://picsum.photos/200/200?r=gal4" alt="Gallery 4">\n';
+    html += '        <img src="/images/placeholder.svg" alt="Gallery 1">\n';
+    html += '        <img src="/images/placeholder.svg" alt="Gallery 2">\n';
+    html += '        <img src="/images/placeholder.svg" alt="Gallery 3">\n';
+    html += '        <img src="/images/placeholder.svg" alt="Gallery 4">\n';
     html += '      </div>\n';
     html += '    </div>\n';
   }

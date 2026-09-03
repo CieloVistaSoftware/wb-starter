@@ -68,7 +68,7 @@ test.describe('globe Behavior', () => {
     const html = "<div x-globe>Basic globe content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-globe], #test-container [x-globe]').first();
+    const el = page.locator('#test-container [x-globe]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

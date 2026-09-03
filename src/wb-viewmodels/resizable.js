@@ -30,7 +30,7 @@ export function resizable(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-resizable> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-resizable> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-resizable') element.classList.add('x-resizable');
+  element.classList.add('x-resizable');
 
   // Ensure element is positioned
   const computedStyle = window.getComputedStyle(element);

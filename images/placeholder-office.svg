@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="High-tech office building placeholder">
+  <!-- Local placeholder "office" (#946). A modern glass tower, for cards about a
+       person and the company they work at (cardportfolio, cardprofile).
+       The facade is a repeating window grid rather than a few drawn shapes, so a
+       short cover crop through the middle of the tower still reads as a
+       building instead of an abstract band.
+       Colours are baked in because an img src renders in its own document and
+       cannot read the page theme tokens. -->
+  <defs>
+    <linearGradient id="sky-office" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#39445a"/><stop offset="100%" stop-color="#1f2531"/>
+    </linearGradient>
+    <pattern id="win-office" width="26" height="34" patternUnits="userSpaceOnUse">
+      <rect x="5" y="6" width="14" height="20" rx="1.5" fill="#aebbd8" opacity="0.30"/>
+    </pattern>
+    <linearGradient id="face-office" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#94a2c2" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#94a2c2" stop-opacity="0.30"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#sky-office)"/>
+  <circle cx="655" cy="105" r="38" fill="#aebbd8" opacity="0.22"/>
+
+  <!-- flanking towers, set back -->
+  <rect x="90"  y="250" width="120" height="250" fill="#94a2c2" opacity="0.28"/>
+  <rect x="90"  y="250" width="120" height="250" fill="url(#win-office)" opacity="0.6"/>
+  <rect x="600" y="220" width="130" height="280" fill="#94a2c2" opacity="0.26"/>
+  <rect x="600" y="220" width="130" height="280" fill="url(#win-office)" opacity="0.55"/>
+
+  <!-- the main tower -->
+  <rect x="270" y="120" width="240" height="380" fill="url(#face-office)"/>
+  <rect x="270" y="120" width="240" height="380" fill="url(#win-office)"/>
+  <rect x="270" y="120" width="240" height="380" fill="none" stroke="#aebbd8" stroke-width="2" opacity="0.35"/>
+  <path d="M270 120 h240" stroke="#aebbd8" stroke-width="4" opacity="0.5"/>
+  <path d="M390 120 v380" stroke="#aebbd8" stroke-width="2" opacity="0.25"/>
+
+  <rect x="0" y="486" width="800" height="14" fill="#1f2531" opacity="0.85"/>
+</svg>

@@ -64,7 +64,7 @@ test.describe('navigation Behavior', () => {
     const html = '<div>Test content</div>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container x-navigation, #test-container x-navigation').first();
+    const el = page.locator('#test-container [x-navigation]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

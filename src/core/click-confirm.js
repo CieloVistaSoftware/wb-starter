@@ -20,7 +20,29 @@
 import { createToast } from '../wb-viewmodels/feedback.js';
 import { getConfig } from './config.js';
 
-const CLICKABLE_SELECTOR = 'button, x-button, x-switch, .x-card--clickable, [clickable]';
+const CLICKABLE_SELECTOR = [
+  'button',
+  '.x-card--clickable',
+  '[clickable]',
+  // #939 -- John: "user needs feedback on all button clicks on this page."
+  //
+  // Card CTAs are rendered as <a>, not <button>: cardhero builds
+  // `<a class="x-hero-cta" href="#">Shop Now</a>` and cardpricing builds
+  // `<a class="x-card__cta" href="#">Get Started</a>`. The selector only
+  // matched `button`, so those clicked and did nothing observable -- the
+  // demo CTA points at "#", so there is not even a navigation to see.
+  //
+  // Scoped to CTAs and to anchors that go nowhere. A real link
+  // (cardlink -> https://…, cardportfolio -> mailto:) navigates, and the
+  // navigation IS the feedback -- toasting it would be noise.
+  'a.x-hero-cta',
+  'a.x-card__cta',
+  'a[href="#"]',
+  'a:not([href])',
+].join(', ');
+// `x-button, x-switch` were dropped: TAG selectors for custom elements that
+// cannot exist since 4.0.0 (#919, #921, #925). They matched nothing, so the
+// two behaviors they were meant to cover were relying on `button` anyway.
 
 // John: "make the toast message same as variant" -- every click-confirm
 // toast used a flat, always-blue 'info' style regardless of what was

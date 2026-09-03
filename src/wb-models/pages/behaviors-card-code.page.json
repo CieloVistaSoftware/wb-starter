@@ -47,9 +47,9 @@
       "tag": "x-cardprofile",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardprofile", "attrs": { "name": "Alice Chen", "role": "UX Designer", "avatar": "https://i.pravatar.cc/80?img=1" } },
-        { "tag": "x-cardprofile", "attrs": { "name": "Bob Martinez", "role": "Lead Engineer", "avatar": "https://i.pravatar.cc/80?img=3", "bio": "Building scalable systems." } },
-        { "tag": "x-cardprofile", "attrs": { "name": "Clara Novak", "role": "Product Manager", "avatar": "https://i.pravatar.cc/80?img=5", "align": "left" } }
+        { "tag": "x-cardprofile", "attrs": { "name": "Alice Chen", "role": "UX Designer", "avatar": "/images/avatar.svg" } },
+        { "tag": "x-cardprofile", "attrs": { "name": "Bob Martinez", "role": "Lead Engineer", "avatar": "/images/avatar.svg", "bio": "Building scalable systems." } },
+        { "tag": "x-cardprofile", "attrs": { "name": "Clara Novak", "role": "Product Manager", "avatar": "/images/avatar.svg", "align": "left" } }
       ]
     },
     {
@@ -77,9 +77,9 @@
       "tag": "x-cardimage",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardimage", "attrs": { "src": "https://picsum.photos/400/250?random=1", "alt": "Mountain landscape", "title": "Mountain View" } },
-        { "tag": "x-cardimage", "attrs": { "src": "https://picsum.photos/400/250?random=2", "alt": "City skyline", "title": "Urban Life", "subtitle": "Downtown at dusk" } },
-        { "tag": "x-cardimage", "attrs": { "src": "https://picsum.photos/400/250?random=3", "alt": "Ocean waves", "title": "Coastal Drive", "caption": "Photo by Jane Doe" } }
+        { "tag": "x-cardimage", "attrs": { "src": "/images/placeholder.svg", "alt": "Mountain landscape", "title": "Mountain View" } },
+        { "tag": "x-cardimage", "attrs": { "src": "/images/placeholder.svg", "alt": "City skyline", "title": "Urban Life", "subtitle": "Downtown at dusk" } },
+        { "tag": "x-cardimage", "attrs": { "src": "/images/placeholder.svg", "alt": "Ocean waves", "title": "Coastal Drive", "caption": "Photo by Jane Doe" } }
       ]
     },
     {
@@ -127,7 +127,7 @@
       "tag": "x-cardhero",
       "columns": 1,
       "demos": [
-        { "tag": "x-cardhero", "attrs": { "background": "https://picsum.photos/1200/400?random=10", "title": "Welcome to WB-Starter", "subtitle": "Build stunning UIs with just HTML", "cta": "Get Started" } }
+        { "tag": "x-cardhero", "attrs": { "background": "/images/placeholder.svg", "title": "Welcome to WB-Starter", "subtitle": "Build stunning UIs with just HTML", "cta": "Get Started" } }
       ]
     },
     {
@@ -135,8 +135,8 @@
       "tag": "x-cardhorizontal",
       "columns": 2,
       "demos": [
-        { "tag": "x-cardhorizontal", "attrs": { "image": "https://picsum.photos/300/200?random=4", "title": "Horizontal Layout", "subtitle": "Image on the left, content on the right." } },
-        { "tag": "x-cardhorizontal", "attrs": { "image": "https://picsum.photos/300/200?random=5", "title": "Right Image", "subtitle": "Image position flipped.", "image-position": "right" } }
+        { "tag": "x-cardhorizontal", "attrs": { "image": "/images/placeholder.svg", "title": "Horizontal Layout", "subtitle": "Image on the left, content on the right." } },
+        { "tag": "x-cardhorizontal", "attrs": { "image": "/images/placeholder.svg", "title": "Right Image", "subtitle": "Image position flipped.", "image-position": "right" } }
       ]
     },
     {
@@ -175,9 +175,9 @@
       "tag": "x-cardoverlay",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardoverlay", "attrs": { "image": "https://picsum.photos/400/300?random=6", "title": "Bottom Text", "subtitle": "Default position" } },
-        { "tag": "x-cardoverlay", "attrs": { "image": "https://picsum.photos/400/300?random=7", "title": "Centered", "subtitle": "Position center", "position": "center" } },
-        { "tag": "x-cardoverlay", "attrs": { "image": "https://picsum.photos/400/300?random=8", "title": "Top Aligned", "subtitle": "Position top", "position": "top" } }
+        { "tag": "x-cardoverlay", "attrs": { "image": "/images/placeholder.svg", "title": "Bottom Text", "subtitle": "Default position" } },
+        { "tag": "x-cardoverlay", "attrs": { "image": "/images/placeholder.svg", "title": "Centered", "subtitle": "Position center", "position": "center" } },
+        { "tag": "x-cardoverlay", "attrs": { "image": "/images/placeholder.svg", "title": "Top Aligned", "subtitle": "Position top", "position": "top" } }
       ]
     },
     {
@@ -185,9 +185,9 @@
       "tag": "x-cardportfolio",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardportfolio", "attrs": { "name": "John Peters", "title": "Lead Software Engineer", "company": "Cielo Vista Software", "location": "Rochester, MN", "avatar": "https://i.pravatar.cc/120?img=12", "bio": "30+ years building enterprise solutions.", "skills": "JavaScript,TypeScript,.NET,PowerShell", "email": "john@example.com", "website": "https://example.com", "cta": "View Full Profile" } },
-        { "tag": "x-cardportfolio", "attrs": { "name": "Maya Rodriguez", "title": "AI Research Engineer", "company": "Anthropic Labs", "location": "San Francisco, CA", "avatar": "https://i.pravatar.cc/120?img=32", "bio": "Building safe AI systems with Claude and Python.", "skills": "Python,Claude API,PyTorch,LangChain,FastAPI", "github": "https://github.com/mayarodriguez", "stats": "[{\"label\":\"Papers\",\"value\":\"12\"},{\"label\":\"Repos\",\"value\":\"34\"},{\"label\":\"Models\",\"value\":\"200+\"}]", "cta": "View Research" } },
-        { "tag": "x-cardportfolio", "attrs": { "name": "David Kowalski", "title": "Senior .NET Architect", "company": "Contoso Solutions", "location": "Chicago, IL", "avatar": "https://i.pravatar.cc/120?img=57", "bio": "Cloud-native apps with C# and Azure.", "skills": "C#,ASP.NET Core,Azure,Blazor,SQL Server", "github": "https://github.com/dkowalski", "stats": "[{\"label\":\"Packages\",\"value\":\"18\"},{\"label\":\"Deploys\",\"value\":\"500+\"},{\"label\":\"Team\",\"value\":\"35\"}]", "cta": "Connect" } }
+        { "tag": "x-cardportfolio", "attrs": { "name": "John Peters", "title": "Lead Software Engineer", "company": "Cielo Vista Software", "location": "Rochester, MN", "avatar": "/images/avatar.svg", "bio": "30+ years building enterprise solutions.", "skills": "JavaScript,TypeScript,.NET,PowerShell", "email": "john@example.com", "website": "https://example.com", "cta": "View Full Profile" } },
+        { "tag": "x-cardportfolio", "attrs": { "name": "Maya Rodriguez", "title": "AI Research Engineer", "company": "Anthropic Labs", "location": "San Francisco, CA", "avatar": "/images/avatar.svg", "bio": "Building safe AI systems with Claude and Python.", "skills": "Python,Claude API,PyTorch,LangChain,FastAPI", "github": "https://github.com/mayarodriguez", "stats": "[{\"label\":\"Papers\",\"value\":\"12\"},{\"label\":\"Repos\",\"value\":\"34\"},{\"label\":\"Models\",\"value\":\"200+\"}]", "cta": "View Research" } },
+        { "tag": "x-cardportfolio", "attrs": { "name": "David Kowalski", "title": "Senior .NET Architect", "company": "Contoso Solutions", "location": "Chicago, IL", "avatar": "/images/avatar.svg", "bio": "Cloud-native apps with C# and Azure.", "skills": "C#,ASP.NET Core,Azure,Blazor,SQL Server", "github": "https://github.com/dkowalski", "stats": "[{\"label\":\"Packages\",\"value\":\"18\"},{\"label\":\"Deploys\",\"value\":\"500+\"},{\"label\":\"Team\",\"value\":\"35\"}]", "cta": "Connect" } }
       ]
     },
     {
@@ -195,9 +195,9 @@
       "tag": "x-cardproduct",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardproduct", "attrs": { "image": "https://picsum.photos/400/300?random=20", "title": "Wireless Headphones", "price": "$79", "original-price": "$129", "badge": "Sale", "rating": "4.5", "reviews": "234" } },
-        { "tag": "x-cardproduct", "attrs": { "image": "https://picsum.photos/400/300?random=21", "title": "Mechanical Keyboard", "price": "$149", "rating": "4.8", "reviews": "89", "cta": "Buy Now" } },
-        { "tag": "x-cardproduct", "attrs": { "image": "https://picsum.photos/400/300?random=22", "title": "USB-C Hub", "price": "$39", "description": "7-in-1 adapter", "featured": true } }
+        { "tag": "x-cardproduct", "attrs": { "image": "/images/placeholder.svg", "title": "Wireless Headphones", "price": "$79", "original-price": "$129", "badge": "Sale", "rating": "4.5", "reviews": "234" } },
+        { "tag": "x-cardproduct", "attrs": { "image": "/images/placeholder.svg", "title": "Mechanical Keyboard", "price": "$149", "rating": "4.8", "reviews": "89", "cta": "Buy Now" } },
+        { "tag": "x-cardproduct", "attrs": { "image": "/images/placeholder.svg", "title": "USB-C Hub", "price": "$39", "description": "7-in-1 adapter", "featured": true } }
       ]
     },
     {
@@ -205,9 +205,9 @@
       "tag": "x-cardtestimonial",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardtestimonial", "attrs": { "quote": "This framework changed how we build UIs.", "author": "Sarah Kim", "role": "CTO, TechCorp", "avatar": "https://i.pravatar.cc/48?img=10", "rating": "5" } },
-        { "tag": "x-cardtestimonial", "attrs": { "quote": "Clean, fast, and easy to use. Highly recommend.", "author": "Marcus Lee", "role": "Frontend Lead", "avatar": "https://i.pravatar.cc/48?img=11", "rating": "4" } },
-        { "tag": "x-cardtestimonial", "attrs": { "quote": "The best component library I've worked with.", "author": "Priya Patel", "role": "Developer", "avatar": "https://i.pravatar.cc/48?img=16", "rating": "5" } }
+        { "tag": "x-cardtestimonial", "attrs": { "quote": "This framework changed how we build UIs.", "author": "Sarah Kim", "role": "CTO, TechCorp", "avatar": "/images/avatar.svg", "rating": "5" } },
+        { "tag": "x-cardtestimonial", "attrs": { "quote": "Clean, fast, and easy to use. Highly recommend.", "author": "Marcus Lee", "role": "Frontend Lead", "avatar": "/images/avatar.svg", "rating": "4" } },
+        { "tag": "x-cardtestimonial", "attrs": { "quote": "The best component library I've worked with.", "author": "Priya Patel", "role": "Developer", "avatar": "/images/avatar.svg", "rating": "5" } }
       ]
     },
     {
@@ -215,7 +215,7 @@
       "tag": "x-cardvideo",
       "columns": 2,
       "demos": [
-        { "tag": "x-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Sample Video", "description": "Big Buck Bunny clip", "poster": "https://picsum.photos/640/360?random=30" } },
+        { "tag": "x-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Sample Video", "description": "Big Buck Bunny clip", "poster": "/images/placeholder.svg" } },
         { "tag": "x-cardvideo", "attrs": { "src": "https://www.w3schools.com/html/mov_bbb.mp4", "title": "Looping Muted", "muted": true, "loop": true, "aspect": "4/3" } }
       ]
     }

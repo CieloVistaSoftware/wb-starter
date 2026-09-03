@@ -93,7 +93,7 @@ Self-contained media with optional caption using `<figure>` and `<figcaption>` e
 <!-- Image with caption -->
 <figure>
   <img
-    src="https://picsum.photos/seed/diagram/600/400"
+    src="/images/placeholder.svg"
     alt="Process flow diagram">
   <figcaption>Figure 1: Overview of the process flow</figcaption>
 </figure>

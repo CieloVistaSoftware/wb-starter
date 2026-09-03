@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Generic scene placeholder">
+  <!-- Local placeholder "scene" (#946). The generic stand-in for a card with no
+       subject in its title ("Featured Article", "Image On The Right").
+       It is a PICTURE, deliberately. The previous generic ("abstract") was a
+       wash plus a hatch with no subject at all, and John was right that this
+       reads as a background pattern rather than an image: an image slot that
+       shows texture looks like the image failed to load.
+       Composed in the lower band so a short cover crop keeps the subject.
+       Colours are baked in because an img src renders in its own document and
+       cannot read the page theme tokens. -->
+  <defs>
+    <linearGradient id="w-scene" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#3c4658"/><stop offset="100%" stop-color="#232b38"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#w-scene)"/>
+  <circle cx="600" cy="150" r="52" fill="#93a3bc" opacity="0.38"/>
+  <path d="M0 500 V360 q120 -70 250 -10 t250 -20 t300 -40 V500 Z" fill="#93a3bc" opacity="0.38"/>
+  <path d="M0 500 V420 q150 -60 300 -10 t260 -30 t240 -20 V500 Z" fill="#93a3bc" opacity="0.55"/>
+  <path d="M0 470 h800" stroke="#93a3bc" stroke-width="2" opacity="0.25"/>
+</svg>

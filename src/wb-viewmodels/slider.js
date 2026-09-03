@@ -14,7 +14,7 @@ export function slider(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-slider> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-slider> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-slider') element.classList.add('x-slider');
+  element.classList.add('x-slider');
   return () => {};
 }
 export default slider;

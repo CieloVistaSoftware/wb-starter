@@ -11,7 +11,7 @@ test.describe('Fix Viewer Compliance', () => {
           fixes: {
             "TEST_FIX_001": {
               errorId: "TEST_FIX_001",
-              component: "test-component",
+              behavior: "test-component",
               errorSignature: "Test error signature",
               issue: "Test issue description",
               cause: "Test cause",
@@ -26,7 +26,7 @@ test.describe('Fix Viewer Compliance', () => {
             },
             "TEST_FIX_MISSING_TEST": {
               errorId: "TEST_FIX_MISSING_TEST",
-              component: "test-component",
+              behavior: "test-component",
               errorSignature: "Error without test",
               issue: "Issue without test verification",
               cause: "Cause unknown",
@@ -35,7 +35,7 @@ test.describe('Fix Viewer Compliance', () => {
             },
             "TEST_FIX_ENHANCEMENT": {
               errorId: "TEST_FIX_ENHANCEMENT",
-              component: "semantics/list.js",
+              behavior: "semantics/list.js",
               errorSignature: "Enhancement: Add feature",
               issue: "Enhancement request",
               cause: "Feature missing",
@@ -132,7 +132,7 @@ test.describe('Fix Viewer Compliance', () => {
           fixes: {
             "MASSIVE_FIX": {
               errorId: "MASSIVE_FIX",
-              component: "test",
+              behavior: "test",
               errorSignature: "Error",
               issue: "Massive stack trace",
               stackTrace: "Line\n".repeat(2000), // 2000 lines would be huge without max-height

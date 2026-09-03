@@ -6,7 +6,7 @@
   "schemaFor": "sticky",
   "baseClass": "x-sticky",
   "semanticElement": {
-    "tagName": "div"
+    "tagName": "nav"
   },
   "compliance": {
     "baseClass": "x-sticky",
@@ -40,14 +40,6 @@
       "default": true
     }
   },
-  "$view": [
-    {
-      "name": "placeholder",
-      "tag": "div",
-      "public": false,
-      "description": "Placeholder to prevent layout shift"
-    }
-  ],
   "$methods": {
     "stick": {
       "description": "Forces sticky state",

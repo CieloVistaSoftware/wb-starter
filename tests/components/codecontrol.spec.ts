@@ -68,7 +68,7 @@ test.describe('codecontrol Behavior', () => {
     const html = "<div x-codecontrol>Basic codecontrol content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-codecontrol], #test-container [x-codecontrol]').first();
+    const el = page.locator('#test-container [x-codecontrol]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

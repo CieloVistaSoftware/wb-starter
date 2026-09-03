@@ -201,6 +201,28 @@ x-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
   max-width: 100%;
 }
 
+/* ...unless that only child declares its own full width.
+ *
+ * `fit-content` sizes the track from the child, and a child asking for
+ * `width: 100%` resolves that against the very track it is sizing -- both
+ * collapse to 0. Measured on demos/site/feedback.html: #progress-progress's
+ * grid computed `grid-template-columns: 0px` and the demo rendered 0px wide
+ * and therefore invisible, while every neighbouring demo (alert 102px, badge
+ * 214px, chip 46px) was fine because each has intrinsic content width.
+ *
+ * `.x-progress` is `width: 100%` (progress.css:240). Hugging the content is
+ * meaningless for an element that has explicitly asked to fill its container,
+ * so those opt back into a real track. Scoped to the demo grid: no effect on
+ * how these behaviors lay out anywhere else.
+ */
+.x-demo__grid--cols-1:has(> :only-child):has(> .x-progress),
+.x-demo__grid--cols-1:has(> :only-child):has(> [x-progress]),
+.x-demo__grid--cols-1:has(> :only-child):has(> .x-skeleton),
+.x-demo__grid--cols-1:has(> :only-child):has(> [x-skeleton]) {
+  width: 100%;
+  grid-template-columns: 1fr;
+}
+
 /* Standard §7 (default / desktop): a single-item demo hugs its content as
    ONE unit -- rendered control AND its code panel below -- instead of
    stretching to fill the page. #563 follow-up, John's live correction ("do

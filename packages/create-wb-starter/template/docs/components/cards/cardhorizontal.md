@@ -36,7 +36,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="https://picsum.photos/seed/cardhorizontal-feature/1000/800">
+  image="/images/placeholder.svg">
   Detailed content here.
 </div>
 </div>
@@ -49,7 +49,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 <div x-cardhorizontal
   title="Feature Title"
   subtitle="Feature description"
-  image="https://picsum.photos/seed/cardhorizontal-basic/1000/800">
+  image="/images/placeholder.svg">
   Detailed content here.
 </div>
 ```
@@ -63,7 +63,7 @@ so rather than rely on the default.
 ```html
 <div x-cardhorizontal
   title="Left Image"
-  image="https://picsum.photos/seed/cardhorizontal-left/1000/800"
+  image="/images/placeholder.svg"
   image-position="left">
   Content appears on the right.
 </div>
@@ -74,7 +74,7 @@ so rather than rely on the default.
 ```html
 <div x-cardhorizontal
   title="Right Image"
-  image="https://picsum.photos/seed/cardhorizontal-right/1000/800"
+  image="/images/placeholder.svg"
   image-position="right">
   Content appears on the left.
 </div>
@@ -85,7 +85,7 @@ so rather than rely on the default.
 ```html
 <div x-cardhorizontal
   title="Large Image"
-  image="https://picsum.photos/seed/cardhorizontal-wide/1000/800"
+  image="/images/placeholder.svg"
   image-width="60%">
   Narrower content area.
 </div>

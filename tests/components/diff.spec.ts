@@ -16,7 +16,9 @@ test('diff behavior attaches and does not error', async ({ page }) => {
 
   const el = page.locator('#test-diff');
   await expect(el).toHaveAttribute('x-diff', '');
-  // wait for marker set by the shim
-  await page.waitForFunction(() => document.querySelector('#test-diff')?.dataset.wbDiff === '1', null, { timeout: 2000 });
-  expect(await el.getAttribute('data-x-diff')).toBe('1');
+  // The behavior writes a plain `x-diff-init` attribute (#928). This used to
+  // wait on `data-wb-diff` and assert `data-x-diff` -- two spellings
+  // nothing has ever set, so a working behavior timed out looking broken.
+  // toHaveAttribute retries, so no explicit wait is needed.
+  await expect(el).toHaveAttribute('x-diff-init', '1');
 });

@@ -462,7 +462,7 @@
           "initials": "JD"
         },
         {
-          "src": "https://i.pravatar.cc/150?u=avatar1"
+          "src": "/images/avatar.svg"
         },
         {
           "initials": "JD",
@@ -1331,7 +1331,7 @@
         "avatar": {
           "type": "string",
           "description": "Avatar image URL",
-          "default": "https://i.pravatar.cc/80?img=1"
+          "default": "/images/avatar.svg"
         },
         "bio": {
           "type": "string",
@@ -1382,7 +1382,7 @@
         },
         {
           "name": "John Doe",
-          "avatar": "https://i.pravatar.cc/80"
+          "avatar": "/images/avatar.svg"
         },
         {
           "name": "John Doe",
@@ -1390,7 +1390,7 @@
         },
         {
           "name": "John Doe",
-          "cover": "https://picsum.photos/400/100"
+          "cover": "/images/placeholder.svg"
         },
         {
           "name": "John Doe",
@@ -1407,9 +1407,9 @@
         {
           "name": "Full",
           "role": "CEO",
-          "avatar": "https://i.pravatar.cc/80",
+          "avatar": "/images/avatar.svg",
           "bio": "Leader.",
-          "cover": "https://picsum.photos/400/100",
+          "cover": "/images/placeholder.svg",
           "size": "lg",
           "align": "center"
         }
@@ -3726,21 +3726,21 @@
       },
       "matrix": [
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title"
         },
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title",
           "imagePosition": "right"
         },
         {
-          "image": "https://picsum.photos/seed/cardhorizontal/600/400",
+          "image": "/images/placeholder.svg",
           "title": "Title",
           "variant": "elevated"
         }
@@ -3805,7 +3805,7 @@
           "type": "string",
           "description": "Image source URL",
           "required": true,
-          "default": "https://picsum.photos/seed/cardimage/600/400"
+          "default": "/images/placeholder.svg"
         },
         "alt": {
           "type": "string",
@@ -3892,36 +3892,36 @@
       },
       "matrix": [
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400"
+          "src": "/images/placeholder.svg"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "alt": "Description"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "title": "Title"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "caption": "Photo by John"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "aspect": "1/1"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "position": "bottom",
           "title": "Title"
         },
         {
-          "src": "https://picsum.photos/seed/cardimage/600/400",
+          "src": "/images/placeholder.svg",
           "variant": "elevated"
         }
       ],
@@ -7247,7 +7247,7 @@
         {
           "quote": "Great!",
           "author": "John",
-          "avatar": "https://i.pravatar.cc/150?u=john"
+          "avatar": "/images/avatar.svg"
         },
         {
           "quote": "Great!",
@@ -7263,7 +7263,7 @@
           "quote": "Excellent service!",
           "author": "Jane",
           "role": "CTO at Acme",
-          "avatar": "https://i.pravatar.cc/150?u=jane",
+          "avatar": "/images/avatar.svg",
           "rating": 5
         },
         {
@@ -7882,7 +7882,7 @@
         },
         {
           "src": "https://www.w3schools.com/html/mov_bbb.mp4",
-          "poster": "https://picsum.photos/seed/videoposter/800/450"
+          "poster": "/images/placeholder.svg"
         },
         {
           "src": "https://www.w3schools.com/html/mov_bbb.mp4",

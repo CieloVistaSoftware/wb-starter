@@ -18,7 +18,7 @@ The `figure` behavior is automatically injected into `<figure>` elements.
 ```html
 <figure>
   <img
-    src="https://picsum.photos/seed/image/600/400"
+    src="/images/placeholder.svg"
     alt="View">
   <figcaption>A beautiful view</figcaption>
 </figure>
@@ -42,7 +42,7 @@ An image that zooms on hover and opens in a lightbox.
   lightbox="true"
   zoom="true">
   <img
-    src="https://picsum.photos/seed/photo/600/400"
+    src="/images/placeholder.svg"
     alt="Photo">
   <figcaption>Click to expand</figcaption>
 </figure>
@@ -54,7 +54,7 @@ A card-like figure with text overlay.
 ```html
 <figure caption-position="overlay">
   <img
-    src="https://picsum.photos/seed/card-bg/600/400"
+    src="/images/placeholder.svg"
     alt="Background">
   <figcaption>Title Text</figcaption>
 </figure>

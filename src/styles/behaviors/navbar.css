@@ -263,3 +263,38 @@ x-navbar [data-brand]::after, [x-navbar] [data-brand]::after{
 /* The sidebar (.site__nav / .nav__*) styles that used to be duplicated here
    were removed — they are a copy of site.css and were clobbering its mobile
    off-canvas drawer (#165). site.css is the single source for .site__nav. */
+
+/* ── variant (schema: default | dark | transparent) ──────────────────────────
+ * Declared in navbar.schema.json and offered by IntelliSense, but nothing
+ * implemented it — a navbar rendered identically whatever variant was asked
+ * for (#903).
+ *
+ * Keyed off the attribute, not an injected class: the attribute is already on
+ * the element and states the intent, so a class would only restate it.
+ * Host tag is the author's choice, so no tag qualifier either.
+ */
+[x-navbar][variant="default"] {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+[x-navbar][variant="dark"] {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[x-navbar][variant="transparent"] {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+/* Base appearance, moved out of navigation.js's inline writes (#903). */
+[x-navbar], x-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md, 6px);
+  gap: 1rem;
+}

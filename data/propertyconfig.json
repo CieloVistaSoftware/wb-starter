@@ -116,21 +116,21 @@
         "audio": { "ui": "audio", "default": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" },
         "video": { "ui": "video", "default": "" },
         "cardvideo": { "ui": "video", "default": "https://www.w3schools.com/html/mov_bbb.mp4" },
-        "image": { "ui": "image", "default": "https://picsum.photos/400/300" },
-        "avatar": { "ui": "image", "default": "https://i.pravatar.cc/80?img=1" }
+        "image": { "ui": "image", "default": "/images/placeholder.svg" },
+        "avatar": { "ui": "image", "default": "/images/avatar.svg" }
       }
     },
     "image": {
       "label": "Image",
       "ui": "image",
-      "default": "https://picsum.photos/400/300",
+      "default": "/images/placeholder.svg",
       "description": "Image file or URL",
       "category": "media"
     },
     "avatar": {
       "label": "Avatar",
       "ui": "image",
-      "default": "https://i.pravatar.cc/80?img=1",
+      "default": "/images/avatar.svg",
       "description": "Avatar/profile image",
       "category": "media"
     },
@@ -1203,7 +1203,7 @@
       "controls": true
     },
     "avatar": {
-      "src": "https://i.pravatar.cc/80?img=1",
+      "src": "/images/avatar.svg",
       "name": "",
       "size": "md",
       "status": ""
@@ -1280,7 +1280,7 @@
     "cardoverlay": {
       "title": "Overlay Card",
       "subtitle": "Beautiful overlay effect",
-      "image": "https://picsum.photos/400/300",
+      "image": "/images/placeholder.svg",
       "position": "bottom",
       "gradient": true,
       "height": "300px"
@@ -1291,7 +1291,7 @@
       "bio": "Passionate about creating great software.",
       "company": "Acme Inc",
       "location": "San Francisco, CA",
-      "avatar": "https://i.pravatar.cc/150",
+      "avatar": "/images/avatar.svg",
       "email": "john@example.com",
       "phone": "+1 555-1234",
       "website": ""
@@ -1308,7 +1308,7 @@
     "cardproduct": {
       "title": "Product Name",
       "description": "Product description here.",
-      "image": "https://picsum.photos/300/300",
+      "image": "/images/placeholder.svg",
       "price": "$99.99",
       "originalPrice": "",
       "badge": "",
@@ -1320,7 +1320,7 @@
       "name": "John Doe",
       "role": "Designer",
       "bio": "Creating beautiful experiences.",
-      "avatar": "https://i.pravatar.cc/80?img=1",
+      "avatar": "/images/avatar.svg",
       "cover": "",
       "size": "md",
       "align": "center"
@@ -1337,7 +1337,7 @@
       "quote": "This product changed my life. Highly recommended!",
       "author": "Jane Smith",
       "role": "CEO, TechCorp",
-      "avatar": "https://i.pravatar.cc/80?img=5",
+      "avatar": "/images/avatar.svg",
       "rating": "5"
     },
     "cardvideo": {
@@ -1403,7 +1403,7 @@
       "columns": "3"
     },
     "image": {
-      "src": "https://picsum.photos/400/300",
+      "src": "/images/placeholder.svg",
       "alt": "Image"
     },
     "input": {

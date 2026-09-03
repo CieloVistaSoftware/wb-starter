@@ -19,7 +19,7 @@ import { readAttr } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  */
 import { logError } from '../core/error-logger.js';
-import { getPageSource, extractTagBlock } from './page-source-cache.js';
+import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 
 // Check if marked is available, if not load it
 let markedLoaded = false;
@@ -159,7 +159,7 @@ export async function mdhtml(element, options = {}) {
   // calls mdhtml() directly on a plain <div id="content">, not a
   // <div x-mdhtml> tag, and mdhtml.css's `.x-mdhtml` class rules still need to
   // select that div.
-  if (element.tagName.toLowerCase() !== 'x-mdhtml') element.classList.add('x-mdhtml');
+  element.classList.add('x-mdhtml');
   element.classList.add('x-mdhtml--loading');
 
   try {
@@ -276,10 +276,14 @@ export async function mdhtml(element, options = {}) {
       // as-authored text, unaffected by any DOM mutation since parse time).
       let raw = null;
       try {
-        const allMdHtml = document.querySelectorAll('x-mdhtml');
+        // #934: same defect as demo.js -- this looked for an <x-mdhtml> TAG
+        // while the docstring below correctly describes the markup as
+        // `<div x-mdhtml>`. Both counts were 0, so the guard passed vacuously
+        // and the as-authored text was never recovered.
+        const allMdHtml = document.querySelectorAll('[x-mdhtml]');
         const idx = Array.from(allMdHtml).indexOf(element);
         const pageSource = await getPageSource();
-        const block = extractTagBlock(pageSource, 'x-mdhtml', idx, allMdHtml.length);
+        const block = extractAttrBlock(pageSource, 'x-mdhtml', idx, allMdHtml.length);
         if (block && block.trim()) raw = block;
       } catch (e) {
         // ignore — fall through to the live-DOM read below

@@ -354,10 +354,10 @@ root.render(e(ReactApp));</code></pre>
       const ANGULAR_VERSION = '17.3.12';
       await import('https://esm.sh/zone.js@0.14.10');
       await import(`https://esm.sh/@angular/compiler@${ANGULAR_VERSION}`);
-      const { Behavior } = await import(`https://esm.sh/@angular/core@${ANGULAR_VERSION}`);
+      const { Component } = await import(`https://esm.sh/@angular/core@${ANGULAR_VERSION}`);
       const { bootstrapApplication } = await import(`https://esm.sh/@angular/platform-browser@${ANGULAR_VERSION}`);
 
-      const AngularDemo = Behavior({
+      const AngularDemo = Component({
         selector: 'angular-demo',
         standalone: true,
         template: `
@@ -389,10 +389,10 @@ root.render(e(ReactApp));</code></pre>
       await WB.scan(document.getElementById('angular-root'), { eager: true });
     </script>
 
-    <pre x-behavior="pre" x-eager language="typescript" show-copy><code x-behavior="code" x-eager class="language-typescript">import { Behavior, OnInit } from '@angular/core';
+    <pre x-behavior="pre" x-eager language="typescript" show-copy><code x-behavior="code" x-eager class="language-typescript">import { Component, OnInit } from '@angular/core';
 import WB from 'x-behaviors';
 
-@Behavior({
+@Component({
   selector: 'app-demo',
   template: `
     &lt;button 

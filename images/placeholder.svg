@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder image">
+  <!--
+    Local stand-in for the remote placeholder services the demos used to fetch
+    (picsum.photos). #933: those were 249 network round-trips that failed
+    offline, rate-limited or blocked, surfacing as uncaught errors and making
+    every "page loads without errors" test depend on a third party.
+
+    Colours are baked in deliberately: this is an IMAGE asset loaded through
+    <img src>/background-image, so it renders in its own document and cannot
+    read the page's theme tokens. The no-hardcoded-colours rule governs
+    stylesheets, not the contents of an image file. Tones are neutral so it
+    sits acceptably on both light and dark surfaces.
+  -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4b5563"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#g)"/>
+  <g fill="none" stroke="#9ca3af" stroke-width="3" opacity="0.5">
+    <circle cx="290" cy="200" r="46"/>
+    <path d="M120 400 L300 250 L420 350 L540 240 L690 400 Z"/>
+  </g>
+  <rect x="1.5" y="1.5" width="797" height="497" fill="none" stroke="#9ca3af" stroke-width="3" opacity="0.35"/>
+</svg>

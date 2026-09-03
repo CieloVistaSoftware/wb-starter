@@ -471,7 +471,7 @@
     // rather than the viewport (the preview is the "page" here).
     function fullWidthHero() {
       return [
-        '<div x-cardhero',
+        '<section x-cardhero',
         '  pretitle="Open Source #4"',
         '  title="WB-Starter, the last wave needed!"',
         '  subtitle="Light DOM, no shadow boundaries. No class heirarchy. Bullet-proof."',
@@ -485,7 +485,7 @@
         '  background="linear-gradient(135deg, var(--danger-color), var(--warning-color))"',
         '  style="display:block; width:100%;"',
         '  x-fadein>',
-        '</div>',
+        '</section>',
       ].join('\n');
     }
 
@@ -611,11 +611,11 @@
         (i, v, s) => `<article title="#${i} ${v} · ${s}" variant="${v}" size="${s}" footer="Footer ${i}">Body ${i}</article>`,
         (i, v, s) => `<article title="#${i} ${v}" variant="${v}" subtitle="With subtitle + badge" badge="New">${LOREM}</article>`,
         (i, v, s) => `<article title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</article>`,
-        (i, v, s) => `<article title="#${i} hoverable" variant="${v}" hoverable tooltip="Hover text for #${i}">Hover me — ${LOREM}</article>`,
+        (i, v, s) => `<article title="#${i} hoverable" variant="${v}" tooltip="Hover text for #${i}">Hover me — ${LOREM}</article>`,
         (i, v, s) => `<article title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</article>`,
-        (i, v, s) => `<div x-cardimage title="#${i} image card" subtitle="cardimage" src="https://picsum.photos/seed/${i}/320/120">Image card body ${i}</div>`,
-        (i, v, s) => `<div x-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</div>`,
-        (i, v, s) => `<div x-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</div>`,
+        (i, v, s) => `<article x-cardimage title="#${i} image card" subtitle="cardimage" src="/images/placeholder-scene.svg">Image card body ${i}</article>`,
+        (i, v, s) => `<article x-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</article>`,
+        (i, v, s) => `<article x-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</article>`,
       ];
       const out = [];
       for (let i = 0; i < 50; i++) out.push(T[i % T.length](i + 1, V[i % V.length], S[i % S.length]));
@@ -656,7 +656,7 @@
         'linear-gradient(135deg, var(--danger-color), var(--warning-color))',
         'linear-gradient(135deg, var(--primary), var(--secondary))',
         'linear-gradient(135deg, var(--primary), var(--info-color))',
-        'https://picsum.photos/seed/hero/1200/500',
+        '/images/placeholder-waves.svg',
       ];
       // Each CTA links to the doc it's talking about (opens in the doc-viewer).
       const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
@@ -694,7 +694,7 @@
           bg ? `background="${bg}"` : '',
           signatureStyle ? 'x-fadein' : '',
         ].filter(Boolean);
-        const hero = `<div x-cardhero\n  ${attrs.join('\n  ')}>\n</div>`;
+        const hero = `<section x-cardhero\n  ${attrs.join('\n  ')}>\n</section>`;
         out.push(
           signatureStyle
             ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <dialog\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </dialog>\n</div>`
@@ -725,7 +725,7 @@
           `height="320px"`,
           `variant="${variant}"`,
         ];
-        return `<div x-cardhero\n  ${attrs.join('\n  ')}>\n</div>`;
+        return `<section x-cardhero\n  ${attrs.join('\n  ')}>\n</section>`;
       });
       return out.join('\n');
     }
@@ -745,25 +745,25 @@
         // entirely absent. Taken from data/behavior-examples.json rather than
         // hand-written here, so they are the same markup the showcase renders
         // and cannot drift from it.
-        "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends \u2014 the overflow lot adds\n  about ten minutes on foot.\n</div>",
+        "<article title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends \u2014 the overflow lot adds\n  about ten minutes on foot.\n</article>",
         "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
         "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it \u2014 the position sticks.\" constrain axis=\"both\"></article>",
         "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
         "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
         "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real behaviors.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
-        "<article x-cardhorizontal\n  image=\"https://picsum.photos/seed/trail/320/240\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",
-        "<article x-cardimage\n  src=\"https://picsum.photos/seed/harbour/480/300\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+        "<article x-cardhorizontal\n  image=\"/images/placeholder-city.svg\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",
+        "<article x-cardimage\n  src=\"/images/placeholder-forest.svg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
         "<article x-cardlink\n  href=\"#\"\n  title=\"Attribute naming standard\"\n  description=\"Why every attribute is kebab-case, and what breaks when it is not.\"\n  badge=\"Standard\"></article>",
         "<article x-cardminimizable\n  title=\"Build log\"\n  content=\"tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.\"></article>",
         "<aside x-cardnotification\n  variant=\"warning\"\n  title=\"Certificate expires in 6 days\"\n  message=\"Renew before 26 Aug or the staging domain will start failing TLS.\"\n  dismissible></aside>",
-        "<article x-cardoverlay\n  image=\"https://picsum.photos/seed/city/480/320\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
-        "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"https://picsum.photos/seed/ada-cover/480/200\"></article>",
+        "<article x-cardoverlay\n  image=\"/images/placeholder-sunrise.svg\"\n  title=\"Night shift\"\n  subtitle=\"City desk, 02:00\"\n  position=\"bottom\"></article>",
+        "<article x-cardportfolio\n  name=\"Ada Lovelace\"\n  title=\"Principal engineer\"\n  company=\"Analytical Engines\"\n  location=\"London\"\n  cover=\"/images/placeholder-scene.svg\"></article>",
         "<article x-cardpricing\n  plan=\"Team\"\n  price=\"$18\"\n  period=\"per user / month\"\n  description=\"For teams that need shared history and SSO.\"\n  features=\"Unlimited projects,Audit log,SSO,Priority support\"></article>",
-        "<article x-cardproduct\n  image=\"https://picsum.photos/seed/headphones/400/400\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32\u03a9, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
-        "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"https://picsum.photos/seed/grace/96/96\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
+        "<article x-cardproduct\n  image=\"/images/placeholder-mountain.svg\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32\u03a9, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
+        "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"/images/placeholder-waves.svg\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
         "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
-        "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"https://picsum.photos/seed/katherine/96/96\"\n  rating=\"5\"></article>",
-        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://picsum.photos/seed/screening/480/270\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the behavior base class, and why.\"></article>",
+        "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"/images/placeholder-city.svg\"\n  rating=\"5\"></article>",
+        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"/images/placeholder-forest.svg\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the behavior base class, and why.\"></article>",
 
         // Attention/animation effects (button — most of these are click-triggered)
         '<button x-ripple>Ripple</button>',
@@ -792,7 +792,7 @@
         '<button x-prompt prompt-title="Your name" prompt-message="What should we call you?">Ask</button>',
         '<button x-popover popover-title="Info" popover-content="Extra detail shown on click." position="top">Popover</button>',
         '<button x-drawer drawer-title="Settings" drawer-content="Drawer content goes here." position="right">Open Drawer</button>',
-        '<img x-lightbox width="200" src="https://picsum.photos/seed/xb/800/500" alt="Click to enlarge">',
+        '<img x-lightbox width="200" src="/images/placeholder-sunrise.svg" alt="Click to enlarge">',
         '<button x-tooltip="Shown on hover, not on click" position="top">Hover me</button>',
 
         // Feedback

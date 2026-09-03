@@ -24,7 +24,7 @@ export function header(element) {
   // for a native <header> host (autoInject; header.css's own comment
   // documents this exact collision), since header.css's `.x-header` rules
   // still select it by class.
-  if (element.tagName.toLowerCase() !== 'x-header') element.classList.add('x-header');
+  element.classList.add('x-header');
   
   // Get attributes. Plain `sticky` is canonical (schema property, Law 11);
   // `data-sticky` accepted for back-compat only.
@@ -35,6 +35,55 @@ export function header(element) {
     element.classList.add('x-header--sticky');
   }
   
+  // Render the declared attributes (#903).
+  //
+  // header() used to read none of them: icon/title/subtitle/badge were
+  // declared in the schema, documented, and offered by IntelliSense while
+  // this function only added a class. header.css already ships
+  // .x-header__icon/__title/__subtitle rules, so the CSS was waiting for
+  // structure that nothing built -- and wbHeader.setTitle() queried
+  // .x-header__title, an element that never existed.
+  const icon = element.getAttribute('icon');
+  const title = element.getAttribute('title');
+  const subtitle = element.getAttribute('subtitle');
+  const badge = element.getAttribute('badge');
+
+  if ((icon || title || subtitle || badge) && !element.querySelector('.x-header__left')) {
+    const left = document.createElement('div');
+    left.className = 'x-header__left';
+
+    if (icon) {
+      const i = document.createElement('span');
+      i.className = 'x-header__icon';
+      i.textContent = icon;
+      left.appendChild(i);
+    }
+    if (title) {
+      const t = document.createElement('span');
+      t.className = 'x-header__title';
+      t.textContent = title;
+      left.appendChild(t);
+    }
+    if (subtitle) {
+      const st = document.createElement('span');
+      st.className = 'x-header__subtitle';
+      st.textContent = subtitle;
+      left.appendChild(st);
+    }
+    element.prepend(left);
+
+    if (badge) {
+      const right = document.createElement('div');
+      right.className = 'x-header__right';
+      const b = document.createElement('span');
+      // .x-tag-glass is the badge vocabulary setBadge() already looks for.
+      b.className = 'x-tag-glass x-header__badge';
+      b.textContent = badge;
+      right.appendChild(b);
+      element.appendChild(right);
+    }
+  }
+
   // API
   element.wbHeader = {
     setTitle: (text) => {

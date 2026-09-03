@@ -145,8 +145,8 @@ The WB Behaviors Property System provides a unified configuration for all behavi
 | Property | UI | Default | Description |
 |----------|-----|---------|-------------|
 | `src` | URL/File | "" | Media source URL or file |
-| `image` | Image Picker | "https://picsum.photos/400/300" | Image file or URL |
-| `avatar` | Image Picker | "https://i.pravatar.cc/80?img=1" | Profile image |
+| `image` | Image Picker | "/images/placeholder.svg" | Image file or URL |
+| `avatar` | Image Picker | "/images/avatar.svg" | Profile image |
 | `cover` | Image Picker | "" | Cover/banner image |
 | `poster` | Image Picker | "" | Video thumbnail |
 | `background` | Image Picker | "" | Background image |

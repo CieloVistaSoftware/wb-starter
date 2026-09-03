@@ -14,7 +14,7 @@ Full-featured professional portfolio card with skills, experience, projects, and
   title="Principal engineer"
   company="Analytical Engines"
   location="London"
-  cover="https://picsum.photos/seed/ada-cover/480/200"></article>
+  cover="/images/placeholder.svg"></article>
 ```
 
 ### On a different element

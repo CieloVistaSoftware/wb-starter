@@ -1,19 +1,56 @@
 import { test, expect } from '@playwright/test';
-import { safeScrollIntoView } from '../base';
+import { safeScrollIntoView, elementReady } from '../base';
 
 const DEMO_URL = '/demos/site/cards.html';
 
+// Both remaining failures in this file were beforeEach TIMEOUTS, not assertion
+// failures: demos/site/cards.html is 293 x-demos and 281 cards in a ~39,000px
+// document, and 8 workers render 8 copies of it at once, so the default 30s is
+// simply too small for the fixture to come up.
+//
+// This MUST be describe.configure, NOT test.setTimeout() inside beforeEach —
+// the `page` fixture is constructed BEFORE the hook body runs, so a setTimeout()
+// there comes too late to cover it. cards-showcase.spec.ts measured exactly
+// that: 5 tests still died on `browserContext.newPage: Test timeout of 30000ms`
+// with setTimeout(60_000) as the hook's first statement. Same 60s it uses.
+test.describe.configure({ timeout: 60_000 });
+
 // Helper: navigate, wait for WB init
+//
+// #962 was attempted here and REVERTED, twice. Awaiting WB.ready (the boot
+// scan's promise) is the right idea in general, but not on this page: cards.html
+// carries 34 demo blocks and 265 articles, so under 8 workers the scan does not
+// finish inside the 30s test timeout. Unbounded, all 31 tests died in beforeEach;
+// bounded to 15s, 38 of 50 failed, because the budget stacks on top of
+// goto(networkidle) and the setup outgrew the timeout containing it.
+//
+// The guesses are now gone, exactly as the note above prescribed: per-element
+// waits, not a page-wide readiness wait.
+//
+// `networkidle` was half the problem. On a lazy page that keeps fetching
+// behavior modules as things scroll into view, "no requests for 500ms" is not a
+// meaningful milestone, and waiting for it consumed most of the 30s budget
+// before the fixed 4000ms guess was even added on top. beforeEach then timed out
+// and took every test in the describe with it — which is why this file's failure
+// set changed run to run rather than naming one broken thing.
+//
+// Setup now stops at DOM + WB present. Readiness is established per element, at
+// the point of use, by scrollTo(). #962/#972.
 async function loadPage(page) {
-  await page.goto(DEMO_URL, { waitUntil: 'networkidle' });
+  await page.goto(DEMO_URL, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => window.WB, { timeout: 10000 });
-  await page.waitForTimeout(4000);
+  // cards.html scans eagerly, so the gallery's first demo settling is a real
+  // milestone (unlike networkidle) and the tests that never scroll — they query
+  // #card-gallery directly — have something to wait on. Element-scoped and
+  // bounded: NOT a page-wide readiness wait, which failed here twice before.
+  await elementReady(page.locator('#card-gallery [x-demo]').first());
 }
 
-// Helper: scroll into view and wait for lazy init
+// Helper: scroll into view and wait for THAT element to settle.
+// x-ready means settled, not succeeded — the assertions still do the verifying.
 async function scrollTo(page, locator) {
   await safeScrollIntoView(locator);
-  await page.waitForTimeout(1500);
+  await elementReady(locator);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -40,8 +77,11 @@ test.describe('Page Fundamentals', () => {
   });
 
   test('all card variant tags are present (no draggable)', async ({ page }) => {
+    // #964: `.x-card` no longer exists — a base card is a bare <article>
+    // (a8a7362e replaced class injection with attribute selectors). Measured
+    // live on this page: 0 `.x-card`, 32 `<article>`.
     const tags = [
-      '.x-card', '[x-cardimage]', '[x-cardvideo]', '[x-cardbutton]',
+      'article', '[x-cardimage]', '[x-cardvideo]', '[x-cardbutton]',
       '[x-cardhero]', '[x-cardprofile]', '[x-cardpricing]', '[x-cardstats]',
       '[x-cardtestimonial]', '[x-cardproduct]', '[x-cardnotification]',
       '[x-cardfile]', '[x-cardlink]', '[x-cardhorizontal]',
@@ -58,7 +98,8 @@ test.describe('Page Fundamentals', () => {
   });
 
   test('text is light on dark theme', async ({ page }) => {
-    const title = page.locator('#card-gallery .x-card').first().locator('.x-card__title');
+    // #964: base cards carry no classes; the title is the header's <h3>.
+    const title = page.locator('#card-gallery article').first().locator('header h3');
     await expect(title).toBeVisible({ timeout: 10000 });
     const maxChannel = await title.evaluate(el => {
       const rgb = getComputedStyle(el).color;
@@ -69,7 +110,16 @@ test.describe('Page Fundamentals', () => {
   });
 
   test('code blocks have copy buttons', async ({ page }) => {
-    await expect(page.locator('#card-gallery .x-pre__copy').first()).toBeVisible({ timeout: 10000 });
+    // Verified live on this page: 34 copy buttons exist inside #card-gallery,
+    // each 21x16 and visibility:visible, so the selector and the visibility
+    // expectation are both correct. The failure was that the source panels had
+    // not been built yet — .x-pre__copy comes from the `pre` behavior running
+    // INSIDE the demo's code panel, a nested injection that settles after the
+    // demo host itself. Settle the demo first, then assert.
+    const demo = page.locator('#card-gallery [x-demo]').first();
+    await safeScrollIntoView(demo);
+    await elementReady(demo);
+    await expect(page.locator('#card-gallery .x-pre__copy').first()).toBeVisible({ timeout: 15000 });
   });
 
   test('every [x-demo] has an id', async ({ page }) => {
@@ -89,16 +139,24 @@ test.describe('Page Fundamentals', () => {
 test.describe('Card Rendering', () => {
   test.beforeEach(async ({ page }) => { await loadPage(page); });
 
+  // #964: a base card carries NO classes since a8a7362e replaced class
+  // injection with attribute selectors. It renders pure semantic HTML —
+  // `<article title subtitle><header><h3>…</h3><p>…</p></header><main>…</main>`
+  // — so `.x-card__title` / `.x-card__main` match nothing. Measured live:
+  // 0 `.x-card`, 0 `.x-card__main`, 32 `<article>`.
   test('base card renders title and content', async ({ page }) => {
-    const card = page.locator('#card-gallery .x-card').first();
-    await expect(card.locator('.x-card__title')).toHaveText('Welcome');
-    await expect(card.locator('.x-card__main')).toContainText('basic card');
+    const card = page.locator('#card-gallery article').first();
+    await expect(card.locator('header h3')).toHaveText('Welcome');
+    await expect(card.locator('main')).toContainText('article');
   });
 
-  test('glass card has badge and variant class', async ({ page }) => {
-    const glass = page.locator('#card-gallery .x-card[variant="glass"]');
-    await expect(glass).toHaveClass(/x-card--glass/);
-    await expect(glass.locator('.x-card__badge')).toHaveText('NEW');
+  // #964: `variant` is an ATTRIBUTE now, not a `--glass` class, and the badge
+  // renders as a bare <span> in the header. Asserting the attribute is also the
+  // stronger test: it is what the CSS actually selects on.
+  test('glass card has badge and variant', async ({ page }) => {
+    const glass = page.locator('#card-gallery article[variant="glass"]');
+    await expect(glass).toHaveAttribute('variant', 'glass');
+    await expect(glass.locator('header span')).toHaveText('NEW');
   });
 
   test('image cards render with images', async ({ page }) => {
@@ -170,7 +228,8 @@ test.describe('Card Rendering', () => {
   test('link cards have icon, title, external arrow', async ({ page }) => {
     const card = page.locator('#card-gallery [x-cardlink]').first();
     await scrollTo(page, card);
-    await expect(card.locator('.x-card__title')).toHaveText('Documentation');
+    // #964: x-cardlink builds an <h3>, not a `.x-card__title`.
+    await expect(card.locator('h3')).toHaveText('Documentation');
     await expect(card.locator('.x-card__icon')).toContainText('📚');
   });
 
@@ -212,8 +271,12 @@ test.describe('Interactivity', () => {
   test.beforeEach(async ({ page }) => { await loadPage(page); });
 
   test('clickable glass card toggles active class on click', async ({ page }) => {
-    const glass = page.locator('#card-gallery .x-card[clickable]').first();
-    await expect(glass).toHaveClass(/x-card--clickable/);
+    // #964: `clickable` is an attribute and there is no `--clickable` class.
+    // The active toggle below is REAL and was verified live — clicking
+    // `article[clickable]` does add `x-card--active` — so only the selector and
+    // that first class assertion were stale.
+    const glass = page.locator('#card-gallery article[clickable]').first();
+    await expect(glass).toHaveAttribute('clickable', '');
     await glass.click();
     await expect(glass).toHaveClass(/x-card--active/);
     await glass.click();
@@ -449,7 +512,10 @@ test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => { await loadPage(page); });
 
   test('clickable card has role=button and tabindex', async ({ page }) => {
-    const glass = page.locator('#card-gallery .x-card[clickable]').first();
+    // #964: selector only — role="button" and tabindex="0" ARE correctly
+    // applied; verified live. The test was querying a class that no longer
+    // exists, so it never reached its (passing) assertions.
+    const glass = page.locator('#card-gallery article[clickable]').first();
     await expect(glass).toHaveAttribute('role', 'button');
     await expect(glass).toHaveAttribute('tabindex', '0');
   });

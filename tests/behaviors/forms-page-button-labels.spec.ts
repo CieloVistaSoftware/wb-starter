@@ -13,11 +13,20 @@ test('all .x-button elements in the Button gallery render visible content', asyn
   // <div x-demo> lazily builds blocks via IntersectionObserver past the first
   // few — scroll everything into view before checking.
   const buttons = page.locator('.x-button');
+  // .count() does NOT retry. Called straight after goto(domcontentloaded) it
+  // returned 0 before injection had added any .x-button class, so the scroll
+  // loop never ran, nothing lazily built, and the evaluate below also saw 0 —
+  // the failure was self-fulfilling. Verified live: this page has 73 buttons
+  // ~1.5s in, 77 after scrolling, and zero blank ones, so the assertion intent
+  // holds. Wait for the first one to exist before counting.
+  await expect(buttons.first()).toBeAttached({ timeout: 15000 });
   const count = await buttons.count();
   for (let i = 0; i < count; i++) {
     await buttons.nth(i).scrollIntoViewIfNeeded();
   }
-  await page.waitForTimeout(500);
+  // Scrolling builds more lazily; wait for the count to stop growing rather
+  // than sleeping for a guessed 500ms.
+  await expect.poll(() => buttons.count(), { timeout: 15000 }).toBeGreaterThanOrEqual(count);
 
   const results = await page.evaluate(() =>
     Array.from(document.querySelectorAll('.x-button')).map((b) => ({

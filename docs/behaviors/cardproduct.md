@@ -10,7 +10,7 @@ E-commerce product card with image, price, rating, and CTA
 
 ```html
 <article x-cardproduct
-  image="https://picsum.photos/seed/headphones/400/400"
+  image="/images/placeholder.svg"
   title="Field headphones"
   description="Closed-back, 32Ω, folds flat."
   price="$149"

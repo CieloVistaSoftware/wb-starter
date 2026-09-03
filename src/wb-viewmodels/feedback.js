@@ -133,7 +133,7 @@ export function badge(element, options = {}) {
   // Still added for every OTHER host (the `badge="..."` semantic attribute
   // on a plain element, per semantic-attributes.js), since badge.css's
   // `.x-badge` class rule still selects those.
-  if (element.tagName.toLowerCase() !== 'x-badge') element.classList.add('x-badge');
+  element.classList.add('x-badge');
   element.classList.add(`x-badge--${variant}`);
   if (size && ['xs', 'sm', 'md', 'lg'].includes(size)) element.classList.add(`x-badge--${size}`);
   if (pill) element.classList.add('x-badge--pill');
@@ -304,7 +304,7 @@ export function spinner(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-spinner> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-spinner> tag does not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-spinner') element.classList.add('x-spinner');
+  element.classList.add('x-spinner');
   if (size) element.classList.add(`x-spinner--${size}`);
   if (variant) element.classList.add(`x-spinner--${variant}`);
   if (speed) element.classList.add(`x-spinner--${speed}`);
@@ -332,7 +332,7 @@ export function avatar(element, options = {}) {
   // behavior attach, which is why every avatar matrix combo also reported
   // "Component did not initialize". Guarded so a literal <x-avatar> tag does
   // not get a redundant class.
-  if (element.tagName.toLowerCase() !== 'x-avatar') element.classList.add('x-avatar');
+  element.classList.add('x-avatar');
 
   const src = options.src || element.getAttribute('src') || '';
   const initials = options.initials || element.getAttribute('initials') || '';
@@ -394,7 +394,7 @@ export function chip(element, options = {}) {
   // (schema-builder.js) for the identical reason: skip only when the tag
   // itself already IS the base class, to avoid #478's redundant-class
   // violation on real <span x-chip> elements.
-  if (element.tagName.toLowerCase() !== 'x-chip') element.classList.add('x-chip');
+  element.classList.add('x-chip');
   element.classList.toggle(`x-chip--${variant}`, variant !== 'default');
   element.classList.toggle(`x-chip--${size}`, size !== 'md');
   element.classList.toggle('x-chip--outlined', outlined);
@@ -473,7 +473,7 @@ export function alert(element, options = {}) {
   // every side. Same pattern badge() already handles correctly (#448) --
   // skip the redundant class on a literal <div x-alert> host (its own tag
   // selector already covers it), add it for every other host.
-  if (element.tagName.toLowerCase() !== 'x-alert') element.classList.add('x-alert');
+  element.classList.add('x-alert');
   element.classList.add(`x-alert--${variant}`);
 
   const content = message || element.innerHTML || 'Alert message';

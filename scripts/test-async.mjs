@@ -306,6 +306,44 @@ async function runMonitor(args) {
   const testResults = [];  // accumulated individual test results
   let lineBuffer = "";    // buffer for incomplete lines from stdout
 
+/**
+ * Pull each failure's error text out of the reporter output (#898).
+ *
+ * The failures list used to carry only `file` and `name`. That is enough to
+ * know a test failed and nothing about why, so every investigation had to
+ * re-run the spec by hand -- and TIER1-LAWS §4 rightly forbids running the
+ * suite synchronously to go and look. Two clusters (#898, #910) stalled on
+ * exactly this.
+ *
+ * Playwright's list reporter prints a numbered block per failure:
+ *
+ *   1) [regression] › tests/regression/foo.spec.ts:45:3 › Suite › the name ──
+ *
+ *      Error: expect(received).toBe(expected)
+ *      ...
+ *
+ * Blocks are keyed by "project › name" so a test that fails in two projects
+ * keeps both errors instead of one overwriting the other.
+ */
+function extractErrors(text) {
+  const errors = new Map();
+  const BLOCK = /^\s+\d+\)\s+\[([\w-]+)\]\s+›\s+(.+?\.spec\.ts):\d+:\d+\s+›\s+(.+?)\s*[─\s]*$/gm;
+  const starts = [];
+  let m;
+  while ((m = BLOCK.exec(text)) !== null) {
+    starts.push({ project: m[1], file: m[2], name: m[3].trim(), at: m.index, end: BLOCK.lastIndex });
+  }
+  for (let i = 0; i < starts.length; i++) {
+    const body = text.slice(starts[i].end, i + 1 < starts.length ? starts[i + 1].at : undefined);
+    // Stripping ANSI colour codes REQUIRES the literal ESC this rule flags;
+    // that is the whole point of the pattern.
+    // eslint-disable-next-line no-control-regex
+    const trimmed = body.replace(/\[[0-9;]*m/g, '').trim().slice(0, 2000);
+    errors.set(`${starts[i].project} › ${starts[i].name}`, trimmed);
+  }
+  return errors;
+}
+
   // Parse individual test result lines as they stream in
   //   ok 4 [compliance] › tests\compliance\foo.spec.ts:131:3 › Suite › test name (16ms)
   //   x  3 [compliance] › tests\compliance\foo.spec.ts:113:3 › Suite › test name (5.1s)
@@ -350,9 +388,12 @@ async function runMonitor(args) {
     status.output = stdout.length > 50000 ? stdout.slice(-50000) : stdout;
     status.errors = stderr.length > 10000 ? stderr.slice(-10000) : stderr;
     // Include the failures list for quick reference
+    const errorText = extractErrors(stdout);
     status.failures = testResults.filter(t => t.status === "failed").map(t => ({
       file: t.file,
+      project: t.project,
       name: t.name,
+      error: errorText.get(`${t.project} › ${t.name}`) || null,
     }));
 
     try {
@@ -414,9 +455,12 @@ async function runMonitor(args) {
     if (summary.skipped !== null) status.skipped = summary.skipped;
     status.flaky = summary.flaky || 0;
     status.total = status.passed + status.failed + status.skipped + status.flaky;
+    const errorText = extractErrors(stdout);
     status.failures = testResults.filter(t => t.status === "failed").map(t => ({
       file: t.file,
+      project: t.project,
       name: t.name,
+      error: errorText.get(`${t.project} › ${t.name}`) || null,
     }));
 
     try {

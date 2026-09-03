@@ -3,16 +3,27 @@ import { test, expect } from '@playwright/test';
 /**
  * src/wb-viewmodels/sticky.js (<div x-sticky>, distinct from the `sticky`
  * boolean attribute on x-header/x-footer/x-navbar) uses position:fixed
- * driven by a scroll listener, not CSS position:sticky. Investigated after
- * a report that it looked broken on demos/site/layout.html -- the actual
- * cause was cross-contamination from a shared, multi-agent browser session
- * (a backgrounded/non-fronted tab pauses CSS animations, which had left
- * demos/site/layout.html's page-load `fadeIn` transform stuck mid-animation
- * on `.page`, which in turn breaks position:fixed for any descendant --
- * any transform on an ancestor creates a new containing block). Re-tested
- * in a clean, dedicated, fronted tab and every x-sticky permutation
- * worked correctly. This suite pins that down so a real regression here
- * (as opposed to shared-browser test contamination) gets caught.
+ * driven by a scroll listener, not CSS position:sticky.
+ *
+ * #948: these tests measure the stuck element relative to its CONTAINING
+ * BLOCK, not the viewport. demo.css gives `.x-demo__grid` `contain: layout`
+ * deliberately (#647), which makes each demo box the containing block for any
+ * `position: fixed` example content -- that is what keeps a full-viewport demo
+ * (x-stagelight's spotlight, a modal, a toast) painting inside its own box
+ * instead of over the whole page. So on demos/site/layout.html a stuck
+ * [x-sticky] correctly resolves against its grid, and its viewport-absolute
+ * rect.top is offset by however far the page happens to be scrolled.
+ *
+ * Verified live before rewriting: with `contain: layout` in force the three
+ * demos measure rect.top - grid.top of exactly 0, 60 and 0 (matching no-offset,
+ * offset="60" and animated); setting `contain: none` on the grid moves the
+ * first from -400.03 to exactly 0. No ancestor has a transform, filter,
+ * perspective, will-change or container-type -- the grid is the only
+ * containing-block creator.
+ *
+ * (An earlier version of this docstring blamed a `fadeIn` transform left
+ * mid-animation on `.page` by a shared multi-agent browser session. That was a
+ * misdiagnosis: `contain: layout` is present on every load, in any tab.)
  */
 
 async function ready(page) {
@@ -33,6 +44,18 @@ async function scrollPastAndSettle(page, locator, extra = 400) {
   await page.waitForTimeout(250);
 }
 
+/**
+ * Top of the element measured from its containing block (#948). `offset`
+ * promises "N pixels reserved from the top of the sticky containing block";
+ * on a demo page that block is the `.x-demo__grid`, not the viewport.
+ */
+async function topWithinContainingBlock(locator) {
+  return locator.evaluate((el) => {
+    const cb = el.closest('.x-demo__grid') || document.documentElement;
+    return el.getBoundingClientRect().top - cb.getBoundingClientRect().top;
+  });
+}
+
 async function scrollToTopAndSettle(page) {
   await page.evaluate(() => { window.scrollTo(0, 0); window.dispatchEvent(new Event('scroll')); });
   await page.waitForTimeout(250);
@@ -45,7 +68,7 @@ test.describe('[x-sticky]', () => {
     await scrollPastAndSettle(page, el);
     await expect(el).toHaveClass(/is-stuck/);
     await expect(el).toHaveCSS('position', 'fixed');
-    const top = await el.evaluate((e) => e.getBoundingClientRect().top);
+    const top = await topWithinContainingBlock(el);
     expect(Math.abs(top)).toBeLessThanOrEqual(1);
   });
 
@@ -54,7 +77,8 @@ test.describe('[x-sticky]', () => {
     const el = page.locator('#sticky-sticky [x-sticky]').nth(1); // offset="60"
     await scrollPastAndSettle(page, el);
     await expect(el).toHaveClass(/is-stuck/);
-    const top = await el.evaluate((e) => e.getBoundingClientRect().top);
+    const top = await topWithinContainingBlock(el);
+    // Still a real assertion: the no-offset demo measures 0 here, this one 60.
     expect(Math.abs(top - 60)).toBeLessThanOrEqual(1);
   });
 

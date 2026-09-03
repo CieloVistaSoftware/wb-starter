@@ -9,7 +9,7 @@
         "line": 10,
         "column": 8,
         "behavior": "cardhorizontal",
-        "originalSnippet": "<div data-wb=\"cardhorizontal\" id=\"about-div-5\" data-image=\"https://picsum.photos/200/200?r=about\" da",
+        "originalSnippet": "<div data-wb=\"cardhorizontal\" id=\"about-div-5\" data-image=\"/images/placeholder.svg\" da",
         "migrateTo": "x-cardhorizontal",
         "type": "component",
         "priority": 3
@@ -341,7 +341,7 @@
         "line": 270,
         "column": 33,
         "behavior": "avatar",
-        "originalSnippet": "<div id=\"components-div-99\" data-wb=\"avatar\" data-src=\"https://i.pravatar.cc/150?img=1\"></div>",
+        "originalSnippet": "<div id=\"components-div-99\" data-wb=\"avatar\" data-src=\"/images/avatar.svg\"></div>",
         "migrateTo": "x-avatar",
         "type": "component",
         "priority": 3
@@ -351,7 +351,7 @@
         "line": 271,
         "column": 34,
         "behavior": "avatar",
-        "originalSnippet": "<div id=\"components-div-100\" data-wb=\"avatar\" data-src=\"https://i.pravatar.cc/150?img=2\" data-size=\"",
+        "originalSnippet": "<div id=\"components-div-100\" data-wb=\"avatar\" data-src=\"/images/avatar.svg\" data-size=\"",
         "migrateTo": "x-avatar",
         "type": "component",
         "priority": 3
@@ -371,7 +371,7 @@
         "line": 273,
         "column": 34,
         "behavior": "avatar",
-        "originalSnippet": "<div id=\"components-div-102\" data-wb=\"avatar\" data-src=\"https://i.pravatar.cc/150?img=3\" data-status",
+        "originalSnippet": "<div id=\"components-div-102\" data-wb=\"avatar\" data-src=\"/images/avatar.svg\" data-status",
         "migrateTo": "x-avatar",
         "type": "component",
         "priority": 3
@@ -1471,7 +1471,7 @@
         "line": 645,
         "column": 34,
         "behavior": "image",
-        "originalSnippet": "<img id=\"components-img-340\" data-wb=\"image\" data-lazy src=\"https://picsum.photos/200/150?r=10\" alt=",
+        "originalSnippet": "<img id=\"components-img-340\" data-wb=\"image\" data-lazy src=\"/images/placeholder.svg\" alt=",
         "migrateTo": "x-image",
         "type": "component",
         "priority": 3
@@ -10686,7 +10686,7 @@
       "line": 10,
       "column": 8,
       "behavior": "cardhorizontal",
-      "originalSnippet": "<div data-wb=\"cardhorizontal\" id=\"about-div-5\" data-image=\"https://picsum.photos/200/200?r=about\" da",
+      "originalSnippet": "<div data-wb=\"cardhorizontal\" id=\"about-div-5\" data-image=\"/images/placeholder.svg\" da",
       "migrateTo": "x-cardhorizontal",
       "type": "component",
       "priority": 3
@@ -10866,7 +10866,7 @@
       "line": 270,
       "column": 33,
       "behavior": "avatar",
-      "originalSnippet": "<div id=\"components-div-99\" data-wb=\"avatar\" data-src=\"https://i.pravatar.cc/150?img=1\"></div>",
+      "originalSnippet": "<div id=\"components-div-99\" data-wb=\"avatar\" data-src=\"/images/avatar.svg\"></div>",
       "migrateTo": "x-avatar",
       "type": "component",
       "priority": 3
@@ -10876,7 +10876,7 @@
       "line": 271,
       "column": 34,
       "behavior": "avatar",
-      "originalSnippet": "<div id=\"components-div-100\" data-wb=\"avatar\" data-src=\"https://i.pravatar.cc/150?img=2\" data-size=\"",
+      "originalSnippet": "<div id=\"components-div-100\" data-wb=\"avatar\" data-src=\"/images/avatar.svg\" data-size=\"",
       "migrateTo": "x-avatar",
       "type": "component",
       "priority": 3
@@ -10896,7 +10896,7 @@
       "line": 273,
       "column": 34,
       "behavior": "avatar",
-      "originalSnippet": "<div id=\"components-div-102\" data-wb=\"avatar\" data-src=\"https://i.pravatar.cc/150?img=3\" data-status",
+      "originalSnippet": "<div id=\"components-div-102\" data-wb=\"avatar\" data-src=\"/images/avatar.svg\" data-status",
       "migrateTo": "x-avatar",
       "type": "component",
       "priority": 3
@@ -11946,7 +11946,7 @@
       "line": 645,
       "column": 34,
       "behavior": "image",
-      "originalSnippet": "<img id=\"components-img-340\" data-wb=\"image\" data-lazy src=\"https://picsum.photos/200/150?r=10\" alt=",
+      "originalSnippet": "<img id=\"components-img-340\" data-wb=\"image\" data-lazy src=\"/images/placeholder.svg\" alt=",
       "migrateTo": "x-image",
       "type": "component",
       "priority": 3

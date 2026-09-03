@@ -322,7 +322,7 @@ test.describe('Behaviors Showcase Page', () => {
   // this page no longer has.
   test.describe.skip('Toggle Behavior', () => {
     test('toggle toggles class on target', async ({ page }) => {
-      const toggleButton = page.locator('x-toggle[target="#toggle-box"]');
+      const toggleButton = page.locator('[x-toggle][target="#toggle-box"]');
       const target = page.locator('#toggle-box');
       
       // Initial state

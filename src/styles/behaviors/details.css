@@ -120,3 +120,23 @@
   transform: rotate(-90deg);
 }
 
+
+/* ── variant (schema: default | bordered | filled) ───────────────────────────
+ * Declared in details.schema.json, never implemented — every variant rendered
+ * the same (#903). Attribute-keyed for the same reason as navbar above.
+ */
+.x-details[variant="default"] {
+  background: transparent;
+  border-width: 0;          /* bordered must differ in WIDTH, not just colour */
+}
+
+.x-details[variant="bordered"] {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 4px);
+}
+
+.x-details[variant="filled"] {
+  background: var(--bg-secondary);
+  border: 1px solid transparent;   /* differs from default's 0 width */
+  border-radius: var(--radius-md, 4px);
+}

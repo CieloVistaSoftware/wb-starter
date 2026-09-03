@@ -55,7 +55,7 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
       // manualSections content is exempt (it's real, deliberately-authored
       // markup, not a bare {tag, attrs} instance).
       const offenders: string[] = [];
-      document.querySelectorAll('x-demo [class*="wb-"]').forEach((el) => {
+      document.querySelectorAll('[x-demo] [class*="wb-"]').forEach((el) => {
         const rect = el.getBoundingClientRect();
         if (rect.width === 0 && rect.height === 0 && (el.textContent ?? '').trim() === '') {
           offenders.push(el.tagName.toLowerCase() + '#' + (el.id || '(no id)'));
@@ -110,7 +110,7 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
     // same-named `.x-dialog` class -- the tag selector alone is enough.
     await page.waitForSelector('.x-dialog', { timeout: 10_000 });
 
-    const trigger = page.locator('x-dialog[variant="fullscreen"]').first();
+    const trigger = page.locator('[x-dialog][variant="fullscreen"]').first();
     await trigger.click();
 
     const box = page.locator('.x-dialog:not(.x-dialog-trigger)');

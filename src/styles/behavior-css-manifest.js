@@ -85,6 +85,7 @@ export const BEHAVIOR_CSS_MAP = {
   table: ['data.css'],
   demo: ['demo.css'],
   details: ['details.css'],
+  navbar: ['navbar.css'],
   tabs: ['tabs.css'],
   dialog: ['dialog.css'], // also covers x-modal (tag-map.js maps it to 'dialog')
   drawer: ['drawer.css'],

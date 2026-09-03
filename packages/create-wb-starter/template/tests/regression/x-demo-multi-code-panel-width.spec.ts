@@ -22,7 +22,7 @@ test.describe('x-demo with multiple code panels (events attribute) sizes to the 
   test('both code panels render without horizontal overflow', async ({ page }) => {
     await setupTestContainer(
       page,
-      '<div x-demo columns="1" events="wb:cardproduct:addtocart"><div x-cardproduct image="https://picsum.photos/seed/regtest/400/300" title="Test Product" description="A reasonably long description to widen the HTML sample line" price="$99" rating="4.5" reviews="100"></div></div>'
+      '<div x-demo columns="1" events="wb:cardproduct:addtocart"><div x-cardproduct image="/images/placeholder.svg" title="Test Product" description="A reasonably long description to widen the HTML sample line" price="$99" rating="4.5" reviews="100"></div></div>'
     );
 
     const codePanels = page.locator('.x-demo__code');

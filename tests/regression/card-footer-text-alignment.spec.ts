@@ -54,9 +54,14 @@ import { waitForWB } from '../base';
  * that computed style alone can be misleading here.
  */
 const VARIANTS = [
-  // The exact real card from the report -- already on the page, no
-  // synthetic injection needed.
-  { selector: 'x-card[title="This is the title"][footer="This is the footer"]', inject: null },
+  // #953: was `x-card[title=...][footer=...]`, a TAG selector for a card that
+  // used to sit on pages/behaviors.html. There are no custom element tags
+  // (Law 0) -- querySelectorAll('x-card') returns 0 -- and that page no longer
+  // carries the card at all, so it is authored here on its semantic host.
+  {
+    selector: '#footer-repro-card',
+    inject: `<article x-card id="footer-repro-card" title="This is the title" footer="This is the footer"></article>`,
+  },
   {
     selector: '#footer-repro-cardprofile',
     inject: `<div x-cardprofile id="footer-repro-cardprofile" title="This is the title" name="Jane Doe" footer="This is the footer"></div>`,
@@ -76,7 +81,11 @@ for (const { width, height, label } of VIEWPORTS) {
   test.describe(`card footer text stays left-aligned at ${label} (#350)`, () => {
     test.beforeEach(async ({ page }) => {
       await page.setViewportSize({ width, height });
-      await page.goto('/pages/behaviors.html');
+      // #953: behaviors.html was rebuilt into a searchable browser and no
+      // longer hosts these cards. cards.html is a real served page with
+      // autoInject on, which the header above rightly insists is required --
+      // the isolated harness never reproduces the collision.
+      await page.goto('/demos/site/cards.html');
       await waitForWB(page);
     });
 
@@ -87,9 +96,15 @@ for (const { width, height, label } of VIEWPORTS) {
             const holder = document.createElement('div');
             holder.innerHTML = html;
             const el = holder.firstElementChild as HTMLElement;
-            document.querySelector('#autogen-components-html-0')!.appendChild(el);
+            // #953: was '#autogen-components-html-0', which no longer exists
+            // -- every injected variant died on null.appendChild.
+            document.body.appendChild(el);
             if ((window as any).WB?.scan) {
-              await (window as any).WB.scan(el);
+              // #953: eager. cards.html boots wb-lazy.js, whose plain scan()
+              // only registers an IntersectionObserver -- an element appended
+              // below the fold of a long page never upgrades, so the card
+              // existed but never built its .x-card__footer.
+              await (window as any).WB.scan(el, { eager: true });
             }
           }, inject);
         }
@@ -99,13 +114,32 @@ for (const { width, height, label } of VIEWPORTS) {
         const footer = card.locator('.x-card__footer').first();
         await expect(footer).toHaveCount(1);
 
-        // Confirm this test actually exercises the #350 collision -- the
-        // generic native-tag scanner should still be adding .x-footer
-        // alongside .x-card__footer. If this ever stops being true (e.g.
-        // tag-map.js changes to skip nested/already-classed footers), that's
-        // fine and this assertion should be relaxed -- but it should not
-        // silently start passing for a different reason than the fix below.
-        await expect(footer).toHaveClass(/\bwb-footer\b/);
+        // #953: this used to assert the collision STILL fires -- that a card's
+        // <footer> also picks up the site-chrome `.x-footer`. It no longer
+        // does: the generic footer behavior now skips footers a card built, so
+        // #350's cause is fixed structurally rather than out-specified by
+        // `.x-card__footer.x-footer` in card.css. The header above authorised
+        // relaxing this ("that's fine and this assertion should be relaxed"),
+        // with the caveat that it must not start passing for the wrong reason.
+        //
+        // So it is INVERTED rather than deleted, and paired with a control: a
+        // card footer must not carry .x-footer, AND a bare <footer> on this
+        // same page must -- otherwise this would pass simply because
+        // auto-injection had stopped running at all.
+        await expect(footer).not.toHaveClass(/\bx-footer\b/);
+        const chrome = await page.evaluate(async () => {
+          const bare = document.createElement('footer');
+          bare.id = 'footer-repro-chrome-control';
+          bare.textContent = 'site chrome footer';
+          document.body.appendChild(bare);
+          if ((window as any).WB?.scan) await (window as any).WB.scan(bare, { eager: true });
+          await new Promise((r) => setTimeout(r, 300));
+          const cls = bare.className;
+          bare.remove();
+          return cls;
+        });
+        expect(chrome, 'the generic footer behavior must still be live on this page')
+          .toMatch(/\bx-footer\b/);
 
         const { leftGap, rightGap, textAlign } = await footer.evaluate((node) => {
           const rect = node.getBoundingClientRect();

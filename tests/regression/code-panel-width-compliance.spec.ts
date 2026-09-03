@@ -69,7 +69,7 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   test('code panel max-width CSS variable is applied correctly', async ({ page }) => {
     await page.goto('/demos/site/content.html');
 
-    const demoNarrow = page.locator('x-demo[data-code-width="narrow"]').first();
+    const demoNarrow = page.locator('[x-demo][data-code-width="narrow"]').first();
     if (await demoNarrow.isVisible()) {
       const codePanel = demoNarrow.locator('.x-demo__code');
       const maxWidth = await codePanel.evaluate((el) => {
@@ -80,7 +80,7 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
       expect(maxWidth).toContain('400px');
     }
 
-    const demoNormal = page.locator('x-demo[data-code-width="normal"]').first();
+    const demoNormal = page.locator('[x-demo][data-code-width="normal"]').first();
     if (await demoNormal.isVisible()) {
       const codePanel = demoNormal.locator('.x-demo__code');
       const maxWidth = await codePanel.evaluate((el) => {
@@ -91,7 +91,7 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
       expect(maxWidth).toContain('600px');
     }
 
-    const demoWide = page.locator('x-demo[data-code-width="wide"]').first();
+    const demoWide = page.locator('[x-demo][data-code-width="wide"]').first();
     if (await demoWide.isVisible()) {
       const codePanel = demoWide.locator('.x-demo__code');
       const maxWidth = await codePanel.evaluate((el) => {

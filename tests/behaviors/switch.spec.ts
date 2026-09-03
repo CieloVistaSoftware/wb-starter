@@ -3,14 +3,34 @@
  * the `checked` attribute, toggling on click, showing its label. (#197)
  */
 import { test, expect, Page } from '@playwright/test';
+import { elementReady } from '../base';
 
 const BASE = process.env.WB_BASE || '';
-const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
+// Was `/?page=behaviors`. That page is a searchable BROWSER now -- nothing is in
+// the DOM until a behavior is searched for and selected -- so all five tests sat
+// waiting 25s for `[x-switch]` to appear and timed out in setup, never reaching
+// what they assert. Same stale-fixture cause as #910.
+//
+// demos/site/forms.html carries 32 real `<div x-switch>` examples, including the
+// `checked` and `disabled` cases these tests need.
+const URL = `${BASE.replace(/\/$/, '')}/demos/site/forms.html`;
 
 async function load(page: Page) {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
+  // This page loads wb-lazy.js, so injection is deferred to an
+  // IntersectionObserver. The switches sit ~800 lines down, below the fold, and
+  // would never upgrade on their own -- scroll the first one into view first.
+  await page.waitForSelector('[x-switch]', { state: 'attached', timeout: 25000 });
+  const firstSwitch = page.locator('[x-switch]').first();
+  await firstSwitch.scrollIntoViewIfNeeded();
   await page.waitForSelector('[x-switch]', { timeout: 25000 });
-  await page.waitForTimeout(2000);
+  // The 2000ms here was a guess. Verified live: all 17 switches on this page are
+  // <div x-switch> with a descendant input[type=checkbox], all x-ready — the
+  // selector and the product are both correct. The failure was reading the inner
+  // input BEFORE injection created it, so .type came back undefined. Settle the
+  // element instead; left unguarded deliberately, because these assertions are
+  // meaningless until it is ready and elementReady names the element it waited on.
+  await elementReady(firstSwitch);
 }
 
 test.describe('Switch — real toggle', () => {

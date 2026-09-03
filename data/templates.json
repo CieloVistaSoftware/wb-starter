@@ -92,7 +92,7 @@
           { "b": "card", "d": { "title": "Feature 3", "content": "Description of how this solves their problems.", "icon": "🛠️" }}
         ]},
         { "b": "container", "d": { "columns": 2, "gap": "3rem", "padding": "4rem 2rem", "id": "about" }, "children": [
-          { "b": "cardimage", "d": { "src": "https://picsum.photos/600/400", "alt": "About Us" }},
+          { "b": "cardimage", "d": { "src": "/images/placeholder.svg", "alt": "About Us" }},
           { "b": "card", "d": { "title": "About Us", "content": "We are a dedicated team building simple, effective solutions. This template is designed to get you up and running in minutes, not days." }}
         ]},
         { "b": "form", "d": { "id": "contact", "padding": "4rem 2rem" }, "children": [
@@ -144,10 +144,10 @@
       "components": [
         { "b": "cardhero", "d": { "title": "We Create Digital Experiences", "subtitle": "Award-winning design studio crafting brands that matter", "cta": "View Our Work", "variant": "minimal" }},
         { "b": "container", "d": { "columns": 2, "gap": "2rem", "padding": "4rem 2rem" }, "children": [
-          { "b": "cardimage", "d": { "title": "Brand Identity", "subtitle": "TechCorp Rebrand", "src": "https://picsum.photos/600/400?1" }},
-          { "b": "cardimage", "d": { "title": "Web Design", "subtitle": "E-Commerce Platform", "src": "https://picsum.photos/600/400?2" }},
-          { "b": "cardimage", "d": { "title": "Mobile App", "subtitle": "Fitness Tracker", "src": "https://picsum.photos/600/400?3" }},
-          { "b": "cardimage", "d": { "title": "Marketing", "subtitle": "Campaign Launch", "src": "https://picsum.photos/600/400?4" }}
+          { "b": "cardimage", "d": { "title": "Brand Identity", "subtitle": "TechCorp Rebrand", "src": "/images/placeholder.svg" }},
+          { "b": "cardimage", "d": { "title": "Web Design", "subtitle": "E-Commerce Platform", "src": "/images/placeholder.svg" }},
+          { "b": "cardimage", "d": { "title": "Mobile App", "subtitle": "Fitness Tracker", "src": "/images/placeholder.svg" }},
+          { "b": "cardimage", "d": { "title": "Marketing", "subtitle": "Campaign Launch", "src": "/images/placeholder.svg" }}
         ]}
       ]
     },
@@ -158,7 +158,7 @@
       "description": "Single product launch page",
       "tags": ["product", "launch", "ecommerce"],
       "components": [
-        { "b": "cardhero", "d": { "title": "Introducing ProductX", "subtitle": "The future of productivity is here", "cta": "Pre-order Now", "variant": "split", "image": "https://picsum.photos/800/600" }},
+        { "b": "cardhero", "d": { "title": "Introducing ProductX", "subtitle": "The future of productivity is here", "cta": "Pre-order Now", "variant": "split", "image": "/images/placeholder.svg" }},
         { "b": "container", "d": { "columns": 4, "gap": "1.5rem", "padding": "3rem 2rem" }, "children": [
           { "b": "cardstats", "d": { "value": "10x", "label": "Faster", "icon": "🚀" }},
           { "b": "cardstats", "d": { "value": "50%", "label": "Cheaper", "icon": "💰" }},
@@ -185,7 +185,7 @@
       "description": "Hero with image on one side",
       "tags": ["hero", "split", "image"],
       "components": [
-        { "b": "cardhero", "d": { "title": "Design Meets Function", "subtitle": "Beautiful interfaces that work as good as they look", "cta": "See Examples", "variant": "split", "image": "https://picsum.photos/800/600" }}
+        { "b": "cardhero", "d": { "title": "Design Meets Function", "subtitle": "Beautiful interfaces that work as good as they look", "cta": "See Examples", "variant": "split", "image": "/images/placeholder.svg" }}
       ]
     },
     {
@@ -303,10 +303,10 @@
       "tags": ["products", "ecommerce", "shop"],
       "components": [
         { "b": "container", "d": { "columns": 4, "gap": "1.5rem", "padding": "2rem" }, "children": [
-          { "b": "cardproduct", "d": { "title": "Premium Headphones", "price": "$299", "originalPrice": "$399", "image": "https://picsum.photos/400/400?10", "badge": "Sale" }},
-          { "b": "cardproduct", "d": { "title": "Wireless Speaker", "price": "$149", "image": "https://picsum.photos/400/400?11" }},
-          { "b": "cardproduct", "d": { "title": "Smart Watch", "price": "$199", "image": "https://picsum.photos/400/400?12", "badge": "New" }},
-          { "b": "cardproduct", "d": { "title": "Tablet Stand", "price": "$49", "image": "https://picsum.photos/400/400?13" }}
+          { "b": "cardproduct", "d": { "title": "Premium Headphones", "price": "$299", "originalPrice": "$399", "image": "/images/placeholder.svg", "badge": "Sale" }},
+          { "b": "cardproduct", "d": { "title": "Wireless Speaker", "price": "$149", "image": "/images/placeholder.svg" }},
+          { "b": "cardproduct", "d": { "title": "Smart Watch", "price": "$199", "image": "/images/placeholder.svg", "badge": "New" }},
+          { "b": "cardproduct", "d": { "title": "Tablet Stand", "price": "$49", "image": "/images/placeholder.svg" }}
         ]}
       ]
     },
@@ -318,10 +318,10 @@
       "tags": ["team", "profiles", "about"],
       "components": [
         { "b": "container", "d": { "columns": 4, "gap": "2rem", "padding": "2rem" }, "children": [
-          { "b": "cardprofile", "d": { "name": "Jane Smith", "role": "CEO & Founder", "avatar": "https://i.pravatar.cc/200?1", "bio": "Visionary leader with 15+ years experience" }},
-          { "b": "cardprofile", "d": { "name": "John Doe", "role": "CTO", "avatar": "https://i.pravatar.cc/200?2", "bio": "Tech wizard and architecture expert" }},
-          { "b": "cardprofile", "d": { "name": "Sarah Johnson", "role": "Head of Design", "avatar": "https://i.pravatar.cc/200?3", "bio": "Award-winning designer and UX specialist" }},
-          { "b": "cardprofile", "d": { "name": "Mike Chen", "role": "Lead Developer", "avatar": "https://i.pravatar.cc/200?4", "bio": "Full-stack guru and open source contributor" }}
+          { "b": "cardprofile", "d": { "name": "Jane Smith", "role": "CEO & Founder", "avatar": "/images/avatar.svg", "bio": "Visionary leader with 15+ years experience" }},
+          { "b": "cardprofile", "d": { "name": "John Doe", "role": "CTO", "avatar": "/images/avatar.svg", "bio": "Tech wizard and architecture expert" }},
+          { "b": "cardprofile", "d": { "name": "Sarah Johnson", "role": "Head of Design", "avatar": "/images/avatar.svg", "bio": "Award-winning designer and UX specialist" }},
+          { "b": "cardprofile", "d": { "name": "Mike Chen", "role": "Lead Developer", "avatar": "/images/avatar.svg", "bio": "Full-stack guru and open source contributor" }}
         ]}
       ]
     },
@@ -333,9 +333,9 @@
       "tags": ["blog", "posts", "articles"],
       "components": [
         { "b": "container", "d": { "columns": 3, "gap": "2rem", "padding": "2rem" }, "children": [
-          { "b": "cardimage", "d": { "title": "Getting Started Guide", "subtitle": "Learn the basics in 5 minutes", "src": "https://picsum.photos/600/400?20", "footer": "5 min read" }},
-          { "b": "cardimage", "d": { "title": "Advanced Techniques", "subtitle": "Take your skills to the next level", "src": "https://picsum.photos/600/400?21", "footer": "12 min read" }},
-          { "b": "cardimage", "d": { "title": "Best Practices", "subtitle": "Industry standards and patterns", "src": "https://picsum.photos/600/400?22", "footer": "8 min read" }}
+          { "b": "cardimage", "d": { "title": "Getting Started Guide", "subtitle": "Learn the basics in 5 minutes", "src": "/images/placeholder.svg", "footer": "5 min read" }},
+          { "b": "cardimage", "d": { "title": "Advanced Techniques", "subtitle": "Take your skills to the next level", "src": "/images/placeholder.svg", "footer": "12 min read" }},
+          { "b": "cardimage", "d": { "title": "Best Practices", "subtitle": "Industry standards and patterns", "src": "/images/placeholder.svg", "footer": "8 min read" }}
         ]}
       ]
     },
@@ -446,7 +446,7 @@
       "tags": ["about", "content", "text"],
       "components": [
         { "b": "container", "d": { "columns": 2, "gap": "3rem", "padding": "3rem 2rem" }, "children": [
-          { "b": "cardimage", "d": { "src": "https://picsum.photos/600/400?30", "alt": "Our team" }},
+          { "b": "cardimage", "d": { "src": "/images/placeholder.svg", "alt": "Our team" }},
           { "b": "card", "d": { "title": "About Our Company", "content": "We're a team of passionate builders dedicated to making the web a better place. Since 2020, we've helped over 10,000 companies ship faster and build better products.\n\nOur mission is simple: empower developers and designers to create amazing experiences without the complexity." }}
         ]}
       ]

@@ -23,7 +23,7 @@
 import { test, expect } from '@playwright/test';
 
 const OVERLAY = `<article x-cardoverlay
-  image="https://picsum.photos/seed/city/480/320"
+  image="/images/placeholder.svg"
   title="Night shift"
   subtitle="City desk, 02:00"
   position="bottom"></article>`;

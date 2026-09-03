@@ -47,7 +47,7 @@ export function article(element, options = {}) {
   // host whose tag ISN'T already x-article needs the class -- adding it
   // unconditionally would trip no-redundant-tag-name-class.spec.ts on real
   // <article> tags (demos/site/content.html).
-  if (element.tagName.toLowerCase() !== 'x-article') element.classList.add('x-article');
+  element.classList.add('x-article');
   element.classList.toggle('x-article--featured', featured);
 
   const hasHeaderContent = image || category || date || readingTime || title || subtitle || author;
@@ -160,7 +160,7 @@ export function articles(element, options = {}) {
   // (demos/site/content.html) -- same shape chip()'s #521 guard exists
   // to prevent (feedback.js). Applying that same tag-name guard here:
   // only a host whose tag ISN'T already x-articles needs the class.
-  if (element.tagName.toLowerCase() !== 'x-articles') element.classList.add('x-articles');
+  element.classList.add('x-articles');
 
   if (title) {
     // Same native-<header>/header() autoInject collision as article()

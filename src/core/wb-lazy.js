@@ -16,6 +16,7 @@ import { getConfig, setConfig } from './config.js';
 import { matchingElements } from './dom-query.js';
 import { setupGlobalErrorHandler } from './error-logger.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
+import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
@@ -29,6 +30,99 @@ import SchemaBuilder from './mvvm/schema-builder.js';
 // dlog(category, ...) call sites of its own today, but shares the same
 // mechanism so one added here later doesn't need its own bespoke parsing.
 const dlog = makeDlog();
+
+// ── Workflow tracing (#970) ─────────────────────────────────────────────────
+//
+// John: "put in trace points on entry to functions, print the entry point to
+// console along with parameter values ... save the trace of each run, and when
+// there is a subsequent failure compare a good run's workflow with the failure."
+//
+// This runtime had ZERO dlog() call sites while wb.js had 22 — and wb-lazy is
+// the one driving the demo pages and the behaviors page, where every unstable
+// test lives. The runtime we most needed to see inside was the only one with no
+// tracing, which is why the instability stayed opaque through an entire day of
+// investigation.
+//
+// Every line is prefixed `[flow]` and carries the entry point plus the values
+// that decide what happens next, so two runs can be diffed line by line. Enable
+// with localStorage.setItem('x-debug', 'flow') — or 'flow,processSchema' etc.
+//
+// A stable element label matters more than it looks: without one, two runs of
+// the same page produce different text for the same element and every line
+// reads as a difference. Ids are used when present; otherwise a per-run
+// sequence number, assigned in first-seen order, which is itself informative —
+// if the order changes between runs, that IS the divergence.
+const _traceIds = new WeakMap();
+let _traceIdSeq = 0;
+function elLabel(el) {
+  if (!el || !el.tagName) return String(el);
+  const tag = el.tagName.toLowerCase();
+  if (el.id) {
+    // Generated ids carry a random suffix (Law 14: behaviors must generate
+    // unique ids rather than hardcode them), so they differ on every load.
+    // Left raw, two traces of the SAME workflow diff as different at the first
+    // generated id — `expandable-content-osrnspdwh` vs
+    // `expandable-content-r0c285wud` — and the instrument reports a divergence
+    // that is only randomness. Normalise the suffix so a diff shows real
+    // differences in what ran, not in what things were named.
+    return `<${tag} id="${el.id.replace(/-[a-z0-9]{6,}$/i, '-*')}">`;
+  }
+  if (!_traceIds.has(el)) _traceIds.set(el, ++_traceIdSeq);
+  return `<${tag} #${_traceIds.get(el)}>`;
+}
+/**
+ * Entry trace: the function name and the parameters that steer it.
+ *
+ * Recorded into an in-page buffer as well as logged. The buffer is the point:
+ * "save the trace of each run and compare" needs the workflow RETRIEVABLE, and
+ * scraping console output is the wrong mechanism — it is lossy (the console
+ * keeps a bounded history, and this page alone floods it with card-media
+ * warnings), level-filtered by whatever is reading it, and unordered across
+ * frames. `WB.flowTrace()` hands back the exact sequence instead.
+ *
+ * Always recorded, even when the `flow` category is off: the cost is one
+ * string per injection, and a trace you have to reproduce a failure to enable
+ * is useless for the failure that already happened. Logging still respects the
+ * category, so consoles stay quiet by default.
+ */
+const FLOW_LIMIT = 20000;
+const flowBuffer = [];
+
+/**
+ * The frame that called us — the entry point alone says WHAT ran, the caller
+ * says WHY. `scan()` firing 295 times on one page load is meaningless until
+ * you can see who is calling it; with the caller attached it is either one
+ * re-entrant path or 295 unrelated ones, and those are different bugs.
+ *
+ * Frames inside this module are skipped so the answer is the outside caller,
+ * not `flow` itself. Cheap enough at this volume: constructing an Error and
+ * slicing its stack costs microseconds, and it is only done for traced entry
+ * points, not per element.
+ */
+function callerFrame(tracedFn) {
+  const raw = new Error().stack;
+  if (!raw) return '?';
+  // Skip our own plumbing AND the traced function itself — the first version
+  // reported `Object.scan@wb-lazy.js:706`, which is scan's own frame, so all
+  // 295 calls looked like they came from one place. The frame that matters is
+  // the one OUTSIDE the function being traced.
+  const skip = new Set(['callerFrame', 'flow', tracedFn, `Object.${tracedFn}`]);
+  for (const l of raw.split('\n').slice(1)) {
+    const m = l.match(/at\s+(?:async\s+)?([^\s(]+)\s*\(?([^)]*)\)?/);
+    if (!m) continue;
+    const fn = m[1];
+    if (skip.has(fn) || skip.has(fn.replace(/^Object\./, ''))) continue;
+    const loc = (m[2] || '').split('/').pop().replace(/\?.*$/, '');
+    return `${fn}@${loc}`;
+  }
+  return '(top-level)';
+}
+
+function flow(fn, ...parts) {
+  const line = `${fn}(${parts.filter((p) => p !== undefined).join(', ')}) <- ${callerFrame(fn)}`;
+  if (flowBuffer.length < FLOW_LIMIT) flowBuffer.push(line);
+  dlog('flow', `[flow] ${line}`);
+}
 // Always announce the tracing state — first thing in the console, every
 // load, regardless of whether it's on or off.
 console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setItem('x-debug', '1') for everything, or a comma-separated category list, then reload)`);
@@ -182,10 +276,12 @@ const customElementMappings = [
   // -- shared with wb.js via semantic-attributes.js so both engines support
   // the same vocabulary (#354).
   ...semanticPropertyMappings,
-  // button-tooltip gets BOTH behaviors -- intentional dual-behavior element,
-  // not a duplicate-entry bug.
-  { selector: 'button-tooltip', behavior: 'tooltip' },
-  { selector: 'button-tooltip', behavior: 'toast' },
+  // No custom-element selectors here. <button-tooltip> lived at this spot as a
+  // hardcoded dual-behavior binding -- a SEVENTH place a selector could be
+  // bound (#831) -- and was never used in a single .html in the repo or the
+  // scaffold. Removed in #921. The tooltip behavior is reached the documented
+  // way instead: <button x-tooltip tooltip="Save changes">, on a host the
+  // author already knows.
 ];
 
 const autoInjectMappings = [
@@ -200,6 +296,7 @@ const autoInjectMappings = [
  * @returns {string[]} Array of behavior names
  */
 function getAutoInjectBehaviors(element) {
+  flow('getAutoInjectBehaviors', `el=${elLabel(element)}`);
   const behaviors = [];
 
   // Always check custom elements (regardless of autoInject setting)
@@ -228,7 +325,6 @@ function getAutoInjectBehaviors(element) {
   if (element.hasAttribute('x-ignore')) return behaviors;
 
   const prefix = getConfig('prefix') || 'x';
-  const prefixAttr = `${prefix}-`;
   for (const { selector, behavior } of autoInjectMappings) {
     if (!element.matches(selector)) continue;
     // A DIFFERENT explicit x-{behavior} attribute already opts this
@@ -237,13 +333,16 @@ function getAutoInjectBehaviors(element) {
     // never ALSO the generic native-auto-inject input() wrapper racing to
     // wrap the same element a second time (see wb.js's
     // getAutoInjectBehavior() for the full rationale/incident).
-    let overridden = false;
-    for (const attr of element.attributes) {
-      if (!attr.name.startsWith(prefixAttr)) continue;
-      const other = attr.name.slice(prefixAttr.length);
-      if (other !== behavior && hasBehavior(other)) { overridden = true; break; }
-    }
-    if (!overridden) behaviors.push(behavior);
+    // #923: was a local copy of this rule gated on `hasBehavior(other)` --
+    // i.e. the other module being REGISTERED at this instant. Under THIS
+    // runtime it usually is not (that is #763's incident verbatim), so the
+    // guard missed and both behaviors ran: <article x-cardimage> rendered two
+    // cards, and a profile card stacked two covers, two avatars and two role
+    // badges on top of each other.
+    //
+    // The shared guard decides on the ATTRIBUTE, not the registry, which is
+    // what makes it independent of load order.
+    if (!isReplacedByExplicitBehavior(element, behavior, prefix)) behaviors.push(behavior);
   }
   return behaviors;
 }
@@ -349,6 +448,7 @@ function schemaNameFor(element) {
 }
 
 async function buildSchemaIfNeeded(element) {
+  flow('buildSchemaIfNeeded', `el=${elLabel(element)}`, `schema=${schemaNameFor(element) || 'none'}`);
   const tag = element.tagName.toLowerCase();
   if (tag.startsWith('x-') && (tag.startsWith('x-card') || SCHEMA_SKIP_TAGS.has(tag))) return;
   // x-modal only self-builds a trigger when used with modal-title/
@@ -452,6 +552,7 @@ const WB = {
   * 4. The behavior will be loaded and applied to the element asynchronously.
    */
   async inject(element, behaviorName, options = {}) {
+    flow('inject', `el=${typeof element === 'string' ? element : elLabel(element)}`, `behavior=${behaviorName}`);
     // Resolve element if string selector
     if (typeof element === 'string') {
       element = document.querySelector(element);
@@ -545,6 +646,31 @@ const WB = {
         p.delete(behaviorName);
         if (p.size === 0) {
           pendingInjections.delete(element);
+
+          // #970: PER-ELEMENT COMPLETION SIGNAL.
+          //
+          // This element has no injections left in flight, so whatever it was
+          // going to become, it now is. Stamped as an attribute because that is
+          // the one thing a test can wait on natively:
+          //
+          //     await expect(locator).toHaveAttribute('x-ready', '');
+          //
+          // Playwright retries that assertion, so the wait ends the moment THIS
+          // element is done rather than after a fixed sleep.
+          //
+          // Why per-element and not page-wide: measured on demos/site/cards.html,
+          // two loads build the DOM in a DIFFERENT ORDER but reach a byte-for-byte
+          // IDENTICAL end state (1,435 elements, same signature). The instability
+          // was never wrong rendering — it was tests sampling mid-construction and
+          // landing at different points. A page-wide signal cannot fix that here:
+          // this page takes longer to finish than the 30s test timeout, which is
+          // exactly how awaiting WB.ready killed 31 tests in beforeEach.
+          //
+          // Settled, not successful: a behavior that threw also stamps x-ready,
+          // because the element is equally finished either way. Failure is
+          // reported separately via x-error, and conflating "done" with "worked"
+          // would make this signal lie in the one case that matters most.
+          if (element.isConnected) element.setAttribute('x-ready', '');
         }
       }
     }
@@ -556,6 +682,7 @@ const WB = {
    * @param {string} behaviorName 
    */
   lazyInject(element, behaviorName) {
+    flow('lazyInject', `el=${elLabel(element)}`, `behavior=${behaviorName}`);
     // Check if already applied or pending
     const elementBehaviors = applied.get(element) || [];
     if (elementBehaviors.some(b => b.name === behaviorName)) return;
@@ -613,6 +740,7 @@ const WB = {
   // a control before it's ever scrolled close enough to enhance, and see
   // nothing happen, which reads as broken rather than "not lazy-loaded yet".
   async scan(root = document.body, { eager = false } = {}) {
+    flow('scan', `root=${elLabel(root)}`, `eager=${eager}`);
     // querySelectorAll() only matches DESCENDANTS of root, never root itself
     // — invisible until demo.js's `WB.scan(pre, { eager: true })` call, where
     // `pre` (the exact <pre x-behavior="pre"> just created) IS root. See
@@ -664,6 +792,12 @@ const WB = {
           // inline copy lacked it, so a plain <header>/<footer>/etc. used for
           // page content had no working escape hatch on the initial scan.
           if (element.hasAttribute('x-ignore')) return;
+          // #923: and skip when an explicit x-* attribute REPLACES this
+          // behavior. This inline copy never had the check, which is why
+          // <article x-cardimage> still rendered twice after the guard was
+          // fixed in getAutoInjectBehaviors() above -- the rule has to hold on
+          // every injection path, not just the tidiest one.
+          if (isReplacedByExplicitBehavior(element, behavior)) return;
           // Skip if x-behavior is present (already handled)
           if (!element.hasAttribute('x-behavior')) {
             if (eager) {
@@ -690,6 +824,7 @@ const WB = {
    * @returns {MutationObserver} The observer instance
    */
   observe(root = document.body) {
+    flow('observe', `root=${elLabel(root)}`);
     // Disconnect existing observer if present to prevent duplicates
     if (WB._observer) {
       WB._observer.disconnect();
@@ -742,6 +877,10 @@ const WB = {
               autoInjectMappings.forEach(({ selector, behavior }) => {
                 node.querySelectorAll?.(selector).forEach(el => {
                   if (!getConfig('autoInject') && !el.hasAttribute('variant')) return;
+                  // #923: same replacement guard as the scan path -- a node
+                  // added later must resolve identically to the same markup
+                  // present at load.
+                  if (isReplacedByExplicitBehavior(el, behavior)) return;
                   if (!el.hasAttribute('x-behavior')) {
                     WB.lazyInject(el, behavior);
                   }
@@ -833,6 +972,20 @@ const WB = {
   },
 
   /**
+   * The injection workflow for this page load, in order (#970).
+   *
+   * One line per traced entry point, with the parameter values that decided
+   * what happened next. Two runs of the same page should produce the same
+   * sequence; where they diverge is where the state differs, and that first
+   * divergence is the lead worth following.
+   *
+   * @returns {string[]} entry-point lines, oldest first
+   */
+  flowTrace() {
+    return flowBuffer.slice();
+  },
+
+  /**
    * Initialize WB
    * @param {Object} options - Configuration options
    */
@@ -899,12 +1052,39 @@ const WB = {
     }
 
     // Scan existing elements
+    //
+    // #962: the DOMContentLoaded branch used to be `() => WB.scan()` — the boot
+    // scan's promise was created inside a callback and thrown away. On a real
+    // page load the document IS still loading, so that was the normal path:
+    // init() resolved before the scan had even started, and NOTHING anywhere
+    // held a handle to it.
+    //
+    // That made readiness unobservable from outside, which is why 492 tests
+    // fall back to `waitForTimeout` and guess how long injection takes. A guess
+    // about duration fails whenever the machine is slower than the guess — on a
+    // 4-core box running 8 workers, often — which is the suite's instability
+    // (#961: 19 tests each failing exactly 1 of 3 identical runs).
+    //
+    // scan() already awaits every injection (Promise.all, line ~691). The only
+    // thing missing was keeping its promise. WB.ready is that promise, so a
+    // caller can `await WB.ready` instead of sleeping. It resolves when the
+    // initial pass is done — NOT when every element on the page is injected,
+    // since below-the-fold elements are deferred to the IntersectionObserver
+    // by design.
+    // NOTE: the `loading` branch deliberately does NOT await. init() must keep
+    // returning without waiting for DOMContentLoaded, exactly as before —
+    // awaiting here would defer the rest of init (observe registration, the
+    // ready log) until DOM ready and change boot timing for every page. The
+    // promise is only retained, not waited on.
     if (shouldScan && typeof document !== 'undefined') {
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => WB.scan());
-      } else {
-        await WB.scan();
-      }
+      WB.ready = document.readyState === 'loading'
+        ? new Promise((resolve) => {
+            document.addEventListener('DOMContentLoaded', () => resolve(WB.scan()));
+          })
+        : WB.scan();
+      if (document.readyState !== 'loading') await WB.ready;
+    } else {
+      WB.ready = Promise.resolve();
     }
 
     // Start observing

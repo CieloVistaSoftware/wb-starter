@@ -52,7 +52,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 ```html
 <video
   src="movie.mp4"
-  poster="https://picsum.photos/seed/thumbnail/800/450">
+  poster="/images/placeholder.svg">
 </video>
 ```
 
@@ -75,7 +75,7 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
   <video
     class="x-video__player"
     src="movie.mp4"
-    poster="https://picsum.photos/seed/thumb/800/450"
+    poster="/images/placeholder.svg"
     controls
     playsinline>
   </video>

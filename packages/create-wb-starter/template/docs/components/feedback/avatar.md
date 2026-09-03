@@ -31,7 +31,7 @@ User avatar with image, initials fallback, and status indicator.
 ### Image Avatar
 
 <div x-demo>
-  <span x-avatar src="https://i.pravatar.cc/150?u=avatar1" alt="Jane Doe"></span>
+  <span x-avatar src="/images/avatar.svg" alt="Jane Doe"></span>
 </div>
 
 ### Initials Fallback

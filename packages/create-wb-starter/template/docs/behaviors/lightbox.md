@@ -7,7 +7,7 @@ Apply `x-lightbox` to any element.
 ## Usage
 
 ```html
-<button variant="primary" x-lightbox src="https://picsum.photos/1200/800?r=lb1">View Image 1</button>
+<button variant="primary" x-lightbox src="/images/placeholder.svg">View Image 1</button>
 ```
 
 ## Live example

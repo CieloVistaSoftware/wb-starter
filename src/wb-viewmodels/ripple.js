@@ -22,7 +22,7 @@ export function ripple(element, options = {}) {
   // every OTHER host (x-ripple on <button>/<button>/<input>/<div>, the
   // overwhelmingly common usage across every demo page), since effects.css's
   // `.x-ripple` rule still selects those by class.
-  if (element.tagName.toLowerCase() !== 'x-ripple') element.classList.add('x-ripple');
+  element.classList.add('x-ripple');
 
   const createRipple = (e) => {
     const rect = element.getBoundingClientRect();
