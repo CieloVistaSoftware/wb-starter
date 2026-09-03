@@ -51,7 +51,13 @@ export function footer(element) {
     if (copyright) {
       const c = document.createElement('span');
       c.className = 'x-footer__copyright';
-      c.textContent = copyright;
+      // John, on <footer copyright="2026"> rendering a bare "2026":
+      // "Add copy right symbol". A copyright notice without the symbol is not
+      // a copyright notice. Authors who already write it -- the documented
+      // examples use copyright="© 2025 Acme Inc" -- must not get "© © 2025",
+      // so it is added only when absent.
+      const hasSymbol = /©|\(c\)|&copy;/i.test(copyright);
+      c.textContent = hasSymbol ? copyright : '© ' + copyright;
       element.appendChild(c);
     }
   }

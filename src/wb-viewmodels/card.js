@@ -869,12 +869,21 @@ export function cardimage(element, options = {}) {
   // Image at top
   if (config.src && config.position === 'top') {
     const figure = base.createFigure();
-    figure.style.aspectRatio = config.aspect;
+    figure.style.setProperty('--card-image-aspect', config.aspect);   // #1003: the property card.css already reads
     const img = document.createElement('img');
     img.src = config.src;
     img.alt = config.alt;
     img.loading = 'lazy';
-    img.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
+        if (config.fit) img.style.setProperty('--card-image-fit', config.fit);
+    // #1003 -- this used to write
+    //   style.cssText = "width:100%;height:100%;object-fit:<fit>;display:block;"
+    // which was a verbatim duplicate of CSS that ALREADY existed:
+    //   .x-card__figure img { display:block; width:100%; height:100%;
+    //                         object-fit: var(--card-image-fit, cover); }
+    // An inline style beats every stylesheet, so the duplicate silently made
+    // the image unthemeable -- a theme could not change it without !important,
+    // which the laws also forbid. Only `fit` varies, and card.css already reads
+    // it from --card-image-fit, so that is all that is set here.
     retryCleanups.push(attachImageLoadRetry(img));
     traceCardMedia('cardimage', element, img, config.src);
     figure.appendChild(img);
@@ -884,12 +893,21 @@ export function cardimage(element, options = {}) {
   // Image at bottom
   if (config.src && config.position === 'bottom') {
     const figureBottom = base.createFigure();
-    figureBottom.style.aspectRatio = config.aspect;
+    figureBottom.style.setProperty('--card-image-aspect', config.aspect);   // #1003: the property card.css already reads
     const imgBottom = document.createElement('img');
     imgBottom.src = config.src;
     imgBottom.alt = config.alt;
     imgBottom.loading = 'lazy';
-    imgBottom.style.cssText = `width:100%;height:100%;object-fit:${config.fit};display:block;`;
+        if (config.fit) imgBottom.style.setProperty('--card-image-fit', config.fit);
+    // #1003 -- this used to write
+    //   style.cssText = "width:100%;height:100%;object-fit:<fit>;display:block;"
+    // which was a verbatim duplicate of CSS that ALREADY existed:
+    //   .x-card__figure img { display:block; width:100%; height:100%;
+    //                         object-fit: var(--card-image-fit, cover); }
+    // An inline style beats every stylesheet, so the duplicate silently made
+    // the image unthemeable -- a theme could not change it without !important,
+    // which the laws also forbid. Only `fit` varies, and card.css already reads
+    // it from --card-image-fit, so that is all that is set here.
     retryCleanups.push(attachImageLoadRetry(imgBottom));
     traceCardMedia('cardimage', element, imgBottom, config.src);
     figureBottom.appendChild(imgBottom);
@@ -934,7 +952,7 @@ export function cardvideo(element, options = {}) {
   let retryCleanup = null;
   if (config.src) {
     const coverFigure = base.createFigure();
-    coverFigure.style.aspectRatio = config.aspect;
+    coverFigure.style.setProperty('--card-image-aspect', config.aspect);   // #1003: the property card.css already reads
     const video = document.createElement('video');
     video.src = config.src;
     video.style.cssText = 'width:100%;height:100%;display:block;';

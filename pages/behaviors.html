@@ -906,18 +906,17 @@
       // undid the reset entirely -- measured, the reset ran and the scroller
       // ended up scrolled anyway. Only on selection; a plain resize must not
       // yank the reader back to the top.
+      // A new selection starts where content starts. AFTER
+      // keepSelectionVisible(), not before: that keeps the selected LIST row on
+      // screen and does so by scrolling, which would undo the reset.
+      //
+      // Requested by selectRow rather than done there, because showLive()
+      // injects the example, its doc and its code panel asynchronously and that
+      // later insertion scrolls the container after a synchronous reset has run.
+      // Only on selection; a plain resize must not yank the reader to the top.
       if (pendingScrollReset) {
         pendingScrollReset = false;
-        // Resetting scroll HERE does not hold: showLive() above injects the
-      // example, its doc and its code panel asynchronously, and that later
-      // insertion scrolls the container after this line has run. Measured with
-      // a synchronous reset in place: #siteBody still ended at 497 and the
-      // header at y=88, versus y=506 for the first selection.
-      //
-      // So the reset is REQUESTED here and performed once the layout has
-      // settled, in syncListHeight() below -- the one place that knows the
-      // sizing is finished (Law 18).
-      pendingScrollReset = true;
+        liveEl.scrollTop = 0;
         if (scrollerEl) scrollerEl.scrollTop = 0;
       }
       // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
@@ -2340,6 +2339,15 @@
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+      // #1003 follow-up -- John: "click this first, page down in this element,
+      // click the link again: page does not reset to top."
+      //
+      // It did not, because a merge folded two versions of this fix together and
+      // left `pendingScrollReset = true` INSIDE its own guard. The flag starts
+      // false, so nothing ever set it and the guard never ran -- shipped that
+      // way. Setting it here, which is the one place that knows a selection
+      // happened.
+      pendingScrollReset = true;   // requested here, honoured once layout settles
       // John, several times: "when clicking the left, (nav), the content must
       // show in exact same position as shown here."
       //
@@ -2381,6 +2389,183 @@
       if (i < 0) i = 0;
       if (i > rows.length - 1) i = rows.length - 1;
       selectRow(rows[i]);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // #1004 — AUTOSCROLL
+    // John: "every element in the navigator is systematically displayed",
+    // "expand all groups", a right-click delay of 0-2000 ms, and then
+    // "move autoscroll here", pointing at the SITE HEADER.
+    //
+    // The header is shared shell, not this page, so the control is created
+    // here and torn down when this page is left. A Behaviors-only button left
+    // sitting in the header of every other page would be the same class of
+    // surprise as a menu item appearing from nowhere (#1002).
+    //
+    // Law 18: each step waits for the page's own `wb:layout-settled` signal,
+    // never a timer. A timer cannot know when an example has finished
+    // rendering, and at 0 ms it would race the renderer instead of exercising
+    // it.
+    // ═══════════════════════════════════════════════════════════════════
+    // John: "move all these button to header only when on this page" --
+    // API, Docs, Fullscreen and AutoScroll.
+    //
+    // They are MOVED, not rebuilt: #behaviors-live-api and -doc are <details>
+    // whose bodies the panel code writes into by id, and x-fullscreen is bound
+    // to its element. Cloning them would leave the originals wired up and the
+    // copies inert -- the same trap as the duplicated fieldset toggle (#999).
+    //
+    // One container, so "only when on this page" is a single removal: when the
+    // workspace leaves the DOM the whole strip goes with it, and no other
+    // page inherits Behaviors-only controls (#1002's no-surprises rule).
+    const headerRight = document.getElementById('headerRight');
+    let tools = document.getElementById('behaviors-header-tools');
+    let autoBtn = document.getElementById('behaviors-autoscroll');
+    if (!tools && headerRight) {
+      tools = document.createElement('div');
+      tools.id = 'behaviors-header-tools';
+      tools.className = 'behaviors-header-tools';
+      headerRight.insertBefore(tools, headerRight.firstChild);
+
+      for (const id of ['behaviors-live-api', 'behaviors-live-doc', 'behaviors-live-fullscreen']) {
+        const el = document.getElementById(id);
+        if (el) tools.appendChild(el);
+      }
+
+      autoBtn = document.createElement('button');
+      autoBtn.id = 'behaviors-autoscroll';
+      autoBtn.className = 'behaviors-live__autoscroll';
+      autoBtn.type = 'button';
+      autoBtn.setAttribute('aria-pressed', 'false');
+      autoBtn.title = 'AutoScroll — walk every entry. Right-click to set the delay.';
+      tools.appendChild(autoBtn);
+
+      const ws = document.getElementById('behaviors-workspace');
+      if (ws) {
+        const gone = new MutationObserver(() => {
+          if (!ws.isConnected) { tools.remove(); gone.disconnect(); }
+        });
+        gone.observe(document.body, { childList: true, subtree: true });
+      }
+    }
+
+    if (autoBtn) {
+      const DELAY_KEY = 'wb:autoscroll-delay';
+      const readDelay = () => {
+        try {
+          const v = parseInt(localStorage.getItem(DELAY_KEY) ?? '', 10);
+          return Number.isFinite(v) ? Math.min(2000, Math.max(0, v)) : 400;
+        } catch { return 400; }
+      };
+      let delayMs = readDelay();
+      let running = false;
+
+      const setLabel = () => {
+        autoBtn.innerHTML = running ? '&#9632; Stop (' + delayMs + 'ms)' : '&#9654; AutoScroll';
+        autoBtn.setAttribute('aria-pressed', running ? 'true' : 'false');
+        autoBtn.classList.toggle('is-running', running);
+      };
+
+      // Advance on the page's own signal, with a ceiling so one behavior that
+      // never settles cannot hang the tour. The timeout is a backstop, not the
+      // clock.
+      const settled = () => new Promise((resolve) => {
+        const done = () => { clearTimeout(t); resolve(); };
+        const t = setTimeout(done, 4000);
+        document.addEventListener('wb:layout-settled', done, { once: true });
+      });
+
+      const stop = (why) => {
+        if (!running) return;
+        running = false;
+        setLabel();
+        if (why) autoBtn.title = 'AutoScroll stopped: ' + why;
+      };
+
+      // John: "allow the action to be stopped". Stopping is DELIBERATE — the
+      // button, Escape, or picking a row yourself. An earlier version stopped
+      // on any wheel or keypress, which meant scrolling to WATCH the tour
+      // cancelled it: the one thing a viewer would naturally do.
+      document.addEventListener('keydown', (e) => {
+        if (running && e.key === 'Escape') stop('Escape');
+      }, { capture: true });
+      resultsEl.addEventListener('pointerdown', (e) => {
+        if (running && e.target.closest('.behaviors-search-results__row')) stop('you picked a row');
+      }, { capture: true });
+
+      async function runAutoScroll() {
+        running = true;
+        setLabel();
+
+        // "expand all groups" — the tour must cover the 767 options, not the
+        // ~156 group headers #995 collapsed them into. Opening them all first
+        // also keeps row order stable for the whole run.
+        for (const d of resultsEl.querySelectorAll('details')) { if (!d.open) d.open = true; }
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        const rows = rowsInOrder();
+        const current = resultsEl.querySelector('[aria-current="true"]');
+        let i = current ? Math.max(0, rows.indexOf(current)) : 0;
+
+        for (; running && i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || !row.isConnected) continue;
+          const wait = settled();
+          selectRow(row, { focus: false });
+          await wait;
+          if (!running) break;
+          if (delayMs) await new Promise((r) => setTimeout(r, delayMs));
+        }
+        if (running) stop('reached the end (' + rows.length + ' entries)');
+      }
+
+      autoBtn.addEventListener('click', () => {
+        if (running) stop('stopped'); else runAutoScroll();
+      });
+
+      // Right-click sets the delay. NOT window.prompt(): it throws
+      // "prompt() is not supported" in some embedders (seen live here), cannot
+      // enforce 0-2000, and blocks the page.
+      let popover = null;
+      const closePopover = () => { if (popover) { popover.remove(); popover = null; } };
+
+      autoBtn.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        if (popover) { closePopover(); return; }
+        popover = document.createElement('div');
+        popover.className = 'behaviors-live__autoscroll-config';
+        popover.innerHTML =
+          '<label for="autoscroll-delay">Delay between examples</label>' +
+          '<div class="behaviors-live__autoscroll-row">' +
+            '<input id="autoscroll-delay" type="range" min="0" max="2000" step="50" value="' + delayMs + '">' +
+            '<output id="autoscroll-delay-out">' + delayMs + ' ms</output>' +
+          '</div>' +
+          '<p class="behaviors-live__autoscroll-hint">0 advances as soon as each example reports it has rendered.</p>';
+        autoBtn.parentElement.appendChild(popover);
+
+        const range = popover.querySelector('#autoscroll-delay');
+        const out = popover.querySelector('#autoscroll-delay-out');
+        range.addEventListener('input', () => {
+          delayMs = Math.min(2000, Math.max(0, parseInt(range.value, 10) || 0));
+          out.textContent = delayMs + ' ms';
+          try { localStorage.setItem(DELAY_KEY, String(delayMs)); } catch { /* not fatal */ }
+          setLabel();
+        });
+        range.focus();
+
+        setTimeout(() => {
+          const away = (ev) => {
+            if (popover && !popover.contains(ev.target) && ev.target !== autoBtn) {
+              closePopover();
+              document.removeEventListener('pointerdown', away, true);
+            }
+          };
+          document.addEventListener('pointerdown', away, true);
+          popover.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closePopover(); });
+        }, 0);
+      });
+
+      setLabel();
     }
 
     resultsEl.addEventListener('keydown', (e) => {

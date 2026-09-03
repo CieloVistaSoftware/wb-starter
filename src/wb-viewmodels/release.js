@@ -82,14 +82,24 @@ export function release(element, options = {}) {
   // number is worth reading.
   const behind = Number(VERSION.behind || 0);
   const ahead = Number(VERSION.ahead || 0);
+
+  // John: "wouldn't +4 = 4.0.1.5". Right — `+4` was an annotation bolted onto a
+  // version; a fourth segment IS a version. `4.0.1.4` reads as "four commits
+  // past 4.0.1" and sorts and compares like the number it is, which is the
+  // whole point of #1002: one string, one code set.
+  //
+  // BEHIND is not expressed this way on purpose. Being behind does not make a
+  // newer build; it makes a STALE one, and rolling it into the number would
+  // read as progress. It stays a warning.
+  const versionText = ahead ? `${VERSION.version}.${ahead}` : VERSION.version;
+
   const marks = [];
   if (behind) marks.push(`⚠ ${behind} behind ${VERSION.upstream || 'remote'}`);
-  if (ahead) marks.push(`+${ahead}`);
   if (VERSION.dirty) marks.push('dirty');
   const drift = marks.length ? ` ${marks.join(' · ')}` : '';
 
   element.textContent = config.format
-    .replace('{version}', VERSION.version)
+    .replace('{version}', versionText)
     .replace('{commit}', VERSION.commit)
     .replace('{built}', formatBuiltAtCentral(VERSION.builtAt)) + drift;
 
@@ -103,17 +113,34 @@ export function release(element, options = {}) {
     + (config.reload ? ' — tap to clear cache and reload' : '');
 
   let onClick = null;
+  let onContext = null;
+  // John: "When clicking here show the What's new element", pointing at the
+  // version badge.
+  //
+  // The badge names a code set; What's New says what is IN that code set. That
+  // is the question a version number provokes, so a click answers it. The
+  // previous action -- clear cache and reload -- was a developer convenience
+  // nobody would guess from a version number; it moves to right-click so it is
+  // still there without occupying the obvious gesture.
+  element.classList.add('x-release--clickable');
+  onClick = (e) => {
+    e.preventDefault();
+    const root = location.pathname.replace(/[^/]*$/, '');
+    location.href = root + '?page=whats-new';
+  };
+  element.addEventListener('click', onClick);
+
   if (config.reload) {
-    element.classList.add('x-release--clickable');
-    onClick = async (e) => {
+    onContext = async (e) => {
       e.preventDefault();
       element.textContent = '⏳';
       await clearCacheAndReload();
     };
-    element.addEventListener('click', onClick);
+    element.addEventListener('contextmenu', onContext);
   }
 
   return () => {
     if (onClick) element.removeEventListener('click', onClick);
+    if (onContext) element.removeEventListener('contextmenu', onContext);
   };
 }

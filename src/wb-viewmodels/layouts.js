@@ -486,15 +486,14 @@ export function frame(element, options = {}) {
   };
 
   element.classList.add('x-frame');
-  element.style.aspectRatio = config.ratio;
-  element.style.overflow = 'hidden';
+  // #1003 -- only the ratio varies, so it travels as a custom property; the
+  // rest is constant and lives in the stylesheet. Inline styles beat every
+  // stylesheet, so setting them here made a framed image unthemeable except
+  // via !important, which the laws also forbid.
+  element.style.setProperty('--x-frame-ratio', config.ratio);
 
   const child = element.firstElementChild;
-  if (child) {
-    child.style.width = '100%';
-    child.style.height = '100%';
-    child.style.objectFit = 'cover';
-  }
+  if (child) child.classList.add('x-frame__content');
 
   return () => element.classList.remove('x-frame');
 }

@@ -46,12 +46,6 @@
       "pageToLoad": "docs"
     },
     {
-      "menuItemId": "ai-docs",
-      "menuItemText": "A.I. Docs",
-      "menuItemEmoji": "🤖",
-      "pageToLoad": "ai-docs"
-    },
-    {
       "menuItemId": "about",
       "menuItemText": "About",
       "menuItemEmoji": "ℹ️",

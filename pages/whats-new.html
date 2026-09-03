@@ -17,6 +17,94 @@
   <p>What's actually live on this site right now — every push to <code>main</code> deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>, so this list is the real changelog, not a promise of a future release.</p>
 </div>
 
+<!-- #1005 — John: "change this layout to be a table using columns that each is
+     sortable and the table is searchable".
+
+     The 51 sections below stay as the AUTHORED source: they carry the prose,
+     the measurements and the issue links, and a new release is still written
+     the same way. This script reads them and builds one table from all 102
+     entries, then hides the sections.
+
+     Sorting and searching come from the framework's own <table x-table
+     sortable searchable> (Law 0 — the tag IS the behavior), not a second
+     implementation living on this page.
+
+     If anything here throws, the sections are still in the DOM and visible:
+     the reader gets the old layout rather than an empty page. -->
+<div id="whats-new-table-host"></div>
+
+<script>
+(function () {
+  const host = document.getElementById('whats-new-table-host');
+  if (!host) return;
+
+  const sections = Array.from(document.querySelectorAll('section[id^="whats-new-"]'));
+  if (!sections.length) return;
+
+  const text = (el) => (el ? el.textContent.replace(/\s+/g, ' ').trim() : '');
+
+  const rows = [];
+  for (const section of sections) {
+    const heading = text(section.querySelector('h2'));
+    // "4.0.1 — 2026-09-03" / "3.0.91 — 2026-08-21"
+    const version = (heading.match(/^([\d.]+)/) || [, heading])[1];
+    const date = (heading.match(/(\d{4}-\d{2}-\d{2})/) || [, ''])[1];
+
+    for (const item of section.querySelectorAll('.wn-item')) {
+      const tag = text(item.querySelector('.wn-tag')) || 'Change';
+      const lead = text(item.querySelector('strong')) || text(item).slice(0, 80);
+      // Everything after the tag and the bold lead is the explanation.
+      let detail = text(item);
+      if (detail.startsWith(tag)) detail = detail.slice(tag.length).trim();
+      if (detail.startsWith(lead)) detail = detail.slice(lead.length).trim();
+      const link = item.querySelector('a[href*="/issues/"]');
+      rows.push({
+        version, date, tag, lead, detail,
+        issue: link ? text(link) : '',
+        issueHref: link ? link.getAttribute('href') : '',
+      });
+    }
+  }
+  if (!rows.length) return;
+
+  const esc = (v) => String(v).replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+
+  const body = rows.map((r) => (
+    '<tr>' +
+      '<td>' + esc(r.version) + '</td>' +
+      '<td>' + esc(r.date) + '</td>' +
+      '<td>' + esc(r.tag) + '</td>' +
+      '<td>' + esc(r.lead) + '</td>' +
+      // Full text in title: the cell stays scannable, the detail stays reachable.
+      '<td title="' + esc(r.detail) + '">' + esc(r.detail) + '</td>' +
+      '<td>' + (r.issueHref
+        ? '<a href="' + esc(r.issueHref) + '" target="_blank" rel="noopener">' + esc(r.issue) + '</a>'
+        : '') + '</td>' +
+    '</tr>'
+  )).join('');
+
+  host.innerHTML =
+    '<table id="whats-new-table" class="whats-new-table" x-table sortable searchable striped hoverable>' +
+      '<thead><tr>' +
+        '<th scope="col">Version</th><th scope="col">Date</th><th scope="col">Type</th>' +
+        '<th scope="col">Change</th><th scope="col">Details</th><th scope="col">Issue</th>' +
+      '</tr></thead>' +
+      '<tbody>' + body + '</tbody>' +
+    '</table>';
+
+  // Only hide the authored sections once the table is actually in the DOM.
+  if (host.querySelector('tbody tr')) {
+    for (const section of sections) section.hidden = true;
+  }
+
+  if (window.WB && typeof window.WB.scan === 'function') {
+    try { window.WB.scan(host, { eager: true }); } catch { /* table still readable unsorted */ }
+  }
+})();
+</script>
+
 <section id="whats-new-4-0-1">
   <h2>4.0.1 — 2026-09-03</h2>
   <p><strong>The first patch on 4.0.0.</strong> Nine changes: three that stop the demo pages freezing, two that
