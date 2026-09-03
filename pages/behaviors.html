@@ -846,6 +846,7 @@
     const wsEl = document.getElementById('behaviors-workspace') || resultsEl;
     const TWO_COL = matchMedia('(min-width: 60.0625rem)');
     let syncQueued = false;
+    let pendingScrollReset = false;   // set by a selection, honoured once settled
     // #992 — John: "just make a container that always contains the selected
     // content, always rerender that container on all selections."
     //
@@ -898,6 +899,27 @@
       wsEl.removeAttribute('x-ready');   // Law 18: never let a stale signal be read
       sizeContainers();
       keepSelectionVisible();
+
+      // A new selection starts where content starts. AFTER
+      // keepSelectionVisible(), not before: that keeps the selected LIST row on
+      // screen and does so by scrolling, which put #siteBody back to 497 and
+      // undid the reset entirely -- measured, the reset ran and the scroller
+      // ended up scrolled anyway. Only on selection; a plain resize must not
+      // yank the reader back to the top.
+      if (pendingScrollReset) {
+        pendingScrollReset = false;
+        // Resetting scroll HERE does not hold: showLive() above injects the
+      // example, its doc and its code panel asynchronously, and that later
+      // insertion scrolls the container after this line has run. Measured with
+      // a synchronous reset in place: #siteBody still ended at 497 and the
+      // header at y=88, versus y=506 for the first selection.
+      //
+      // So the reset is REQUESTED here and performed once the layout has
+      // settled, in syncListHeight() below -- the one place that knows the
+      // sizing is finished (Law 18).
+      pendingScrollReset = true;
+        if (scrollerEl) scrollerEl.scrollTop = 0;
+      }
       // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
       // so it says so. Waiters listen instead of sleeping.
       wsEl.setAttribute('x-ready', '');
