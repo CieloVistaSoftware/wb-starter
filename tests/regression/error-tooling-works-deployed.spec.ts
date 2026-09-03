@@ -49,6 +49,12 @@ test.describe('error tooling on the deployed site (#1000)', () => {
       const m = await import('/wb-starter/src/core/error-logger.js').catch(() => null as any);
       if (!m) return { imported: false };
 
+      // The listeners live inside setupGlobalErrorHandler() and must be CALLED.
+      // The first version of this test imported the module and dispatched an
+      // error with nothing listening, so it asserted nothing at all and failed
+      // for a reason that had nothing to do with the fix.
+      if (typeof m.setupGlobalErrorHandler === 'function') m.setupGlobalErrorHandler();
+
       // The append path is what returned 405 on this host. It must still leave a
       // record somewhere the viewer can read.
       const before = JSON.parse(localStorage.getItem('wb:error-log') || '{"errors":[]}').errors.length;
@@ -92,6 +98,7 @@ test.describe('error tooling on the deployed site (#1000)', () => {
         };
         const m = await import('/wb-starter/src/core/error-logger.js').catch(() => null as any);
         if (!m) return { imported: false, fellBack: false };
+        if (typeof m.setupGlobalErrorHandler === 'function') m.setupGlobalErrorHandler();
         window.dispatchEvent(
           new ErrorEvent('error', { message: 'wb-copy-probe-1000', filename: 'probe.js', lineno: 1 })
         );

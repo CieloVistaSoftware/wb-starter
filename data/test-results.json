@@ -1,49 +1,36 @@
 {
-  "timestamp": "2026-09-03T18:46:16.100Z",
-  "duration": "13.75s",
-  "exitCode": 0,
-  "passed": 5,
-  "failed": 0,
+  "timestamp": "2026-09-03T19:24:56.080Z",
+  "duration": "13.19s",
+  "exitCode": 1,
+  "passed": 1,
+  "failed": 1,
   "skipped": 0,
-  "total": 5,
+  "total": 2,
   "results": [
     {
       "status": "passed",
       "project": "regression",
-      "file": "tests\\regression\\behaviors-selection-visible.spec.ts",
-      "name": "browse surface fits its scroller (#992) › neither column extends past the scroller",
-      "duration": "2.9s"
+      "file": "tests\\regression\\demo-never-shows-expansion.spec.ts",
+      "name": "the demo source panel never shows the expansion (#1003) › a normal demo still shows its authored one-liner",
+      "duration": "3.0s"
     },
     {
-      "status": "passed",
+      "status": "failed",
       "project": "regression",
-      "file": "tests\\regression\\behaviors-selection-visible.spec.ts",
-      "name": "browse surface fits its scroller (#992) › a short window keeps a usable list, and what overflows stays reachable",
-      "duration": "2.9s"
-    },
-    {
-      "status": "passed",
-      "project": "regression",
-      "file": "tests\\regression\\behaviors-selection-visible.spec.ts",
-      "name": "browse surface fits its scroller (#992) › arrowing never leaves the selected row clipped or outside the scroller",
-      "duration": "3.2s"
-    },
-    {
-      "status": "passed",
-      "project": "regression",
-      "file": "tests\\regression\\behaviors-selection-visible.spec.ts",
-      "name": "browse surface fits its scroller (#992) › every selection announces that layout has settled",
-      "duration": "3.3s"
-    },
-    {
-      "status": "passed",
-      "project": "regression",
-      "file": "tests\\regression\\behaviors-selection-visible.spec.ts",
-      "name": "browse surface fits its scroller (#992) › every selection lands the content in the same position",
-      "duration": "6.7s"
+      "file": "tests\\regression\\demo-never-shows-expansion.spec.ts",
+      "name": "the demo source panel never shows the expansion (#1003) › a demo whose source cannot be found says so instead of dumping the DOM",
+      "duration": "5.6s"
     }
   ],
-  "failures": [],
-  "stdout": "\nRunning 5 tests using 5 workers\n\n  ok 3 [regression] › tests\\regression\\behaviors-selection-visible.spec.ts:54:3 › browse surface fits its scroller (#992) › neither column extends past the scroller (2.9s)\n  ok 5 [regression] › tests\\regression\\behaviors-selection-visible.spec.ts:166:3 › browse surface fits its scroller (#992) › a short window keeps a usable list, and what overflows stays reachable (2.9s)\n  ok 1 [regression] › tests\\regression\\behaviors-selection-visible.spec.ts:93:3 › browse surface fits its scroller (#992) › arrowing never leaves the selected row clipped or outside the scroller (3.2s)\n  ok 2 [regression] › tests\\regression\\behaviors-selection-visible.spec.ts:146:3 › browse surface fits its scroller (#992) › every selection announces that layout has settled (3.3s)\n  ok 4 [regression] › tests\\regression\\behaviors-selection-visible.spec.ts:190:3 › browse surface fits its scroller (#992) › every selection lands the content in the same position (6.7s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 10.5s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 5/5 passed\n════════════════════════════════════════════════════════════\n\n\n  5 passed (11.6s)\n",
-  "stderr": ""
+  "failures": [
+    {
+      "status": "failed",
+      "project": "regression",
+      "file": "tests\\regression\\demo-never-shows-expansion.spec.ts",
+      "name": "the demo source panel never shows the expansion (#1003) › a demo whose source cannot be found says so instead of dumping the DOM",
+      "duration": "5.6s"
+    }
+  ],
+  "stdout": "\nRunning 2 tests using 2 workers\n\n  ok 2 [regression] › tests\\regression\\demo-never-shows-expansion.spec.ts:82:3 › the demo source panel never shows the expansion (#1003) › a normal demo still shows its authored one-liner (3.0s)\n  x  1 [regression] › tests\\regression\\demo-never-shows-expansion.spec.ts:29:3 › the demo source panel never shows the expansion (#1003) › a demo whose source cannot be found says so instead of dumping the DOM (5.6s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 8.8s\n  ✓ Passed:  1\n  ✗ Failed:  1\n\n  By Project:\n    ✗ regression: 1/2 passed\n\n  See failures: data/test-results/failures.json\n  Live log:    data/test-results/failures-live.log\n════════════════════════════════════════════════════════════\n\n\n\n  1) [regression] › tests\\regression\\demo-never-shows-expansion.spec.ts:29:3 › the demo source panel never shows the expansion (#1003) › a demo whose source cannot be found says so instead of dumping the DOM \n\n    Error: the panel is showing generated DOM as if it were the API: x-card__figure, object-fit: cover, loading=\"lazy\"\n    A reader copying this would hand-write internals the behavior builds for them.\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n    \u001b[32m- Expected  - 1\u001b[39m\n    \u001b[31m+ Received  + 5\u001b[39m\n\n    \u001b[32m- Array []\u001b[39m\n    \u001b[31m+ Array [\u001b[39m\n    \u001b[31m+   \"x-card__figure\",\u001b[39m\n    \u001b[31m+   \"object-fit: cover\",\u001b[39m\n    \u001b[31m+   \"loading=\\\"lazy\\\"\",\u001b[39m\n    \u001b[31m+ ]\u001b[39m\n\n      71 |             `A reader copying this would hand-write internals the behavior builds for them.`\n      72 |         : ''\n    > 73 |     ).toEqual([]);\n         |       ^\n      74 |\n      75 |     // And it must not simply go blank — absence has to be stated.\n      76 |     expect(\n        at C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\tests\\regression\\demo-never-shows-expansion.spec.ts:73:7\n\n    Error Context: data\\test-results\\demo-never-shows-expansion-33e17--instead-of-dumping-the-DOM-regression\\error-context.md\n\n  1 failed\n    [regression] › tests\\regression\\demo-never-shows-expansion.spec.ts:29:3 › the demo source panel never shows the expansion (#1003) › a demo whose source cannot be found says so instead of dumping the DOM \n  1 passed (11.0s)\n",
+  "stderr": "\n❌ FAILED: a demo whose source cannot be found says so instead of dumping the DOM\n   Error: the panel is showing generated DOM as if it were the API: x-card__figure, object-fit: cover, loading=\"lazy\"\nA reader copying this would hand-write internals the behavior builds for them.\nexpect(received).toEqual(expected) // deep equality\n- Expected  - 1\n+ Received  + 5\n- Array []\n+ Array [\n+   \"x-card__figure\",\n+   \"object-fit: cover\",\n+   \"loading=\\\"lazy\\\"\",\n+ ]\n"
 }

@@ -48,7 +48,7 @@
   "scripts": {
     "release": "node scripts/release.mjs",
     "release:check": "node scripts/release.mjs --check",
-    "start": "node scripts/update-docs-manifest.js && node server.js",
+    "start": "node scripts/stamp-version.js && node scripts/update-docs-manifest.js && node server.js",
     "start:mcp": "node scripts/start-mcp.js",
     "mcp:healthcheck": "node scripts/mcp-healthcheck.js",
     "dev": "npx serve . -p 3000",

@@ -443,6 +443,7 @@ export async function demo(element, options = {}) {
     }
 
     let rawBlock = '';
+    let sourceUnavailable = false;   // #1003: never present the expansion as the API
     // Source priority: _rawSource FIRST. It's captured at connectedCallback,
     // before children upgrade — the pristine authored markup, correct on every
     // surface. Page-source extraction is only a fallback: its regex also matches
@@ -469,7 +470,24 @@ export async function demo(element, options = {}) {
             // ignore fetch errors
         }
         if (!rawBlock || !rawBlock.trim()) {
-            rawBlock = (element.innerHTML && element.innerHTML.trim()) ? element.innerHTML : '';
+            // #1003 -- John, shown the expanded x-cardimage output: "this
+            // requires way too much internals knowledge which the user won't
+            // have".
+            //
+            // This used to fall back to element.innerHTML: the fully expanded
+            // runtime DOM, generated classes, generated <figure>/<img> and all
+            // the inline styles a behavior builds for you. Presented in the
+            // source panel it reads as the API, so a reader copies twenty lines
+            // of internals and concludes the framework demands them. The one
+            // line they actually write is
+            //
+            //     <div x-cardimage src="..." title="..."></div>
+            //
+            // A panel that is silently wrong is worse than one that is honestly
+            // empty, so when the authored markup cannot be found we say so
+            // rather than showing the expansion.
+            sourceUnavailable = true;
+            rawBlock = '';
         }
     }
 
@@ -658,7 +676,20 @@ export async function demo(element, options = {}) {
     code.setAttribute('x-behavior', 'code');
     code.dataset.language = 'html';
     // Standard §5: source is pretty-printed VERTICAL (one attribute per line).
-    code.textContent = formatHtml(rawBlock);
+    if (sourceUnavailable) {
+        // #1003: name the gap. The live example above still renders; only its
+        // markup could not be recovered, and that is worth saying out loud
+        // rather than filling the panel with generated DOM.
+        code.textContent = [
+            '<!-- source unavailable.',
+            '     The authored markup for this example could not be found in the',
+            '     page source. The rendered DOM is deliberately NOT shown here:',
+            '     it is generated, and it is not what you would write. -->',
+        ].join(String.fromCharCode(10));
+        code.classList.add('x-demo__source--unavailable');
+    } else {
+        code.textContent = formatHtml(rawBlock);
+    }
     pre.appendChild(code);
     // #986: hide the panel until it has been scanned (which applies the `code`
     // behavior, and with it hljs highlighting) so the FIRST painted frame is

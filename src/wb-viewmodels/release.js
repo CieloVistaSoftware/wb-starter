@@ -67,11 +67,39 @@ export function release(element, options = {}) {
   };
 
   element.classList.add('x-release');
+
+  // #1002 -- John: "the version number is supposed to represent a specific code
+  // set", and "everything running on 3000 is the latest code".
+  //
+  // A bare number cannot promise that. `v4.0.1` was shown while serving a tree
+  // 24 commits behind main with 377 uncommitted files: the same string named
+  // the release AND something that was not the release, and nothing
+  // distinguished them. That cost a whole session of mysteries -- a stale
+  // badge, a missing Error Log menu item, "fixed" things that were not.
+  //
+  // So when the served tree is not its remote, the badge says so. Silence now
+  // means "this IS the code set the number names", which is the only way the
+  // number is worth reading.
+  const behind = Number(VERSION.behind || 0);
+  const ahead = Number(VERSION.ahead || 0);
+  const marks = [];
+  if (behind) marks.push(`⚠ ${behind} behind ${VERSION.upstream || 'remote'}`);
+  if (ahead) marks.push(`+${ahead}`);
+  if (VERSION.dirty) marks.push('dirty');
+  const drift = marks.length ? ` ${marks.join(' · ')}` : '';
+
   element.textContent = config.format
     .replace('{version}', VERSION.version)
     .replace('{commit}', VERSION.commit)
-    .replace('{built}', formatBuiltAtCentral(VERSION.builtAt));
+    .replace('{built}', formatBuiltAtCentral(VERSION.builtAt)) + drift;
+
+  // Behind is the one that misleads, so make it impossible to read past.
+  element.classList.toggle('x-release--stale', behind > 0);
+
   element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
+    + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
+    + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
+    + (VERSION.dirty ? ' · uncommitted changes' : '')
     + (config.reload ? ' — tap to clear cache and reload' : '');
 
   let onClick = null;
