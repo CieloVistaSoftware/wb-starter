@@ -49,6 +49,30 @@
   <p><em>Known:</em> a page grows in height as demos build below you, so the scrollbar shrinks while you scroll —
   the trade for not building 293 demos up front.</p>
 
+  <h3>An outage during this release — and what now prevents it</h3>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Fix</span> <strong>The site went down, and came back.</strong>
+    The first performance push carried one renamed identifier whose other half stayed behind: a module asked for
+    an export that no longer existed under that name. An unresolved import is not a small error — the module
+    never runs, nothing that depends on it runs, and the whole page stops at <code>Loading&hellip;</code>. Every
+    route, everyone, until it was fixed. The HTML, the CSS and every asset were served perfectly the entire time,
+    which is exactly why nothing noticed.</li>
+
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>Two tests now stand where nothing stood.</strong>
+    One reads every module and checks that each thing imported is genuinely exported by the file it names — it
+    fails on the exact change that caused the outage. The other opens five real pages and fails if any of them
+    logs an error or is still showing <code>Loading&hellip;</code>. Both were verified by deliberately
+    reintroducing the fault and confirming they go red, not merely by watching them pass.</li>
+
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>Deploying now has a rule.</strong> A push
+    is not finished when the files land; it is finished when the published site has been opened and proven to
+    boot. Checking that the right content was uploaded is not a substitute — during the outage that check passed.</li>
+  </ul>
+
+  <p><em>Worth knowing:</em> a fix can take up to ten minutes to reach you. Scripts are cached for that long, so
+  a browser that already loaded a broken version keeps it until the cache expires. A hard refresh gets it
+  immediately. Making deploys visible at once is still open.</p>
+
   <h3>Testing — the compliance gate was not running</h3>
   <ul>
     <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>Compliance collected zero tests for

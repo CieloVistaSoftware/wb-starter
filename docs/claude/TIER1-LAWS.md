@@ -220,6 +220,59 @@ wrong for every instance after the first.
 
 ---
 
+## 17. A Push To `.io` Is Not Done Until The Deployed Site Boots
+
+Pushing to `main` publishes live to
+https://cielovistasoftware.github.io/wb-starter/. **The push is not the
+deliverable. A booting site is.**
+
+After every push to `main`, run the smoke test against the DEPLOYED origin:
+
+```bash
+SMOKE_BASE_URL=https://cielovistasoftware.github.io/wb-starter/   npx playwright test site-smoke --project=compliance
+```
+
+Wait for the Pages build to finish first (`gh api
+repos/CieloVistaSoftware/wb-starter/pages/builds/latest --jq .status` must read
+`built`, not `building`). Green = done. Anything else = the site is broken and
+you fix it before you say a word about anything else.
+
+### What does NOT count as verification
+
+- **Grepping the served HTML.** This is what was actually done, and it passed
+  while the site was dead.
+- **A 200 on every asset.** Every file was served correctly during the outage.
+- **The local suite.** It runs against localhost and cannot see a bad deploy.
+- **CI being green.** CI does not load the deployed origin either.
+- **"The file I pushed has the right content."** It did. The site was still
+  down.
+
+### Why this is a law
+
+`4278fcf7` shipped one unresolved named import. That is a **module-level
+`SyntaxError`**, so nothing evaluated, and every route on the live site showed
+the literal text `Loading...` — for every visitor, indefinitely. The HTML was
+correct. The CSS was correct. Every asset returned 200. The deploy was declared
+good on that basis.
+
+**John found it, on his phone.** Three layers of gate — pre-commit, CI, and my
+own check — all passed a total outage, because not one of them ran the page.
+
+The smoke test (`tests/compliance/site-smoke.spec.ts`, #990) exists precisely
+for this. It listens on `pageerror` as well as `console`, because a
+module-level `SyntaxError` never reaches `console`. It fails if the body is
+still `Loading...`. It was proven by fault injection, not by passing.
+
+### One more trap
+
+A deployed fix can be **invisible for ten minutes**. JS is served
+`Cache-Control: max-age=600` at URLs with no content hash (#989), so a browser
+that loaded the broken build will keep it. If the smoke test fails right after
+a push, re-fetch with `{cache:'reload'}` before concluding the fix did not
+land — and never tell John it is live when you have only checked the origin.
+
+---
+
 ## Known Broken Areas (Don't Touch Without John's Direction)
 
 - **Schema viewer** — Schema dropdown doesn't populate. Known issue, not a priority.
