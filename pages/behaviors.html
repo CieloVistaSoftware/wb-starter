@@ -1020,15 +1020,30 @@
 
     function showApi(behavior) {
       liveApi.hidden = false;
-      const summary = liveApi.querySelector('.behaviors-live__api-summary');
-      if (summary) {
-        summary.textContent =
-          'API';
-      }
 
       const sc = schemaByName.get(behavior);
       const props = (sc && sc.properties) || {};
       const names = Object.keys(props);
+
+      // #993 — John, on `article` showing a single row: "This isn't right only
+      // one Article example".
+      //
+      // The list is a list of OPTIONS: it emits a row per enum value and per
+      // boolean, so a behavior whose attributes are plain strings shows one
+      // bare row. `article` has nine attributes and eight of them are strings,
+      // so it looked like the framework's flagship element had a single knob.
+      // Systemic, not an article problem: 650 option rows across 156 schemas
+      // versus 1032 declared attributes.
+      //
+      // The full set was never missing -- this panel already listed all nine,
+      // via Object.keys(props) with no filtering. What was missing was any way
+      // to KNOW that. The chip said "API" whether it held nine attributes or
+      // none, so there was nothing to suggest looking. John chose this panel as
+      // the home for the full attribute set, so it now says how much it holds.
+      const summary = liveApi.querySelector('.behaviors-live__api-summary');
+      if (summary) {
+        summary.textContent = names.length ? 'API (' + names.length + ')' : 'API';
+      }
 
       if (!names.length) {
         // Same reasoning as the doc panel (#673): say the thing is absent
