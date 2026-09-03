@@ -1599,3 +1599,71 @@ main.site__main:has(#mainPage-behaviors) {
   max-height: var(--x-live-body-h, 24rem);
   overflow-y: auto;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   #995 — GROUPED BEHAVIOR LIST
+   John: "put same named links into dropdown, the use must expand it first to
+   view the items in the list."
+
+   A behavior with several options used to repeat its own name on every row —
+   x-avatar alone filled twelve of 603 rows. Grouped, the list is ~156 rows:
+   the whole framework fits in a few screens and a reader can see what exists
+   before choosing.
+
+   Built on <details>/<summary>, so the disclosure state, keyboard handling and
+   aria-expanded come from the element itself (Law 0).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.behaviors-search-results__summary {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border-color, #374151);
+  color: var(--text-primary, #e5e7eb);
+  cursor: pointer;
+  text-align: left;
+}
+
+/* x-details builds the label and the arrow itself. Style what it made rather
+   than authoring competing markup — a hand-built <summary> is rewritten. */
+.behaviors-search-results__summary .x-details__label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.9rem;
+  white-space: pre;          /* keeps the gap before the (count) */
+}
+
+.behaviors-search-results__summary:hover,
+.behaviors-search-results__summary:focus-visible {
+  background: var(--bg-tertiary, #111827);
+}
+
+/* How many options are hidden behind this name. */
+.behaviors-search-results__count {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.behaviors-search-results__options {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Indent the options so they read as belonging to the name above them. The
+   name column is narrowed by the same amount so the variant column stays in
+   line with every other row in the list. */
+.behaviors-search-results__options .behaviors-search-results__row {
+  padding-left: 2rem;
+  grid-template-columns: minmax(0, 1fr) 7rem;
+}
+
+/* Native <details> collapse does not take effect on this page — a bare
+   <details> measured 371px of "hidden" content with open=false, and no author
+   `display` rule matches it (filed separately). Until that is fixed
+   framework-wide, this group hides its own options explicitly. The element
+   stays <details>/<summary>, so keyboard, aria-expanded and the disclosure
+   semantics still come from the tag. */
+.behaviors-search-results__group details:not([open]) .behaviors-search-results__options,
+.behaviors-search-results__group details:not([open]) > .x-details__content {
+  display: none;
+}

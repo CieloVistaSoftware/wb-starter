@@ -507,6 +507,15 @@
       const frag = document.createDocumentFragment();
       let rendered = 0;
       allEntries.forEach((entry) => {
+        // #995 — John: "put same named links into dropdown, the use must
+        // expand it first to view the items in the list." A behavior with
+        // several options repeated its own name on every row: x-avatar alone
+        // filled twelve of 603 rows, so scrolling was dominated by repetition
+        // rather than by distinct behaviors.
+        //
+        // Build this entry's rows first, then choose the shape: one option
+        // stays a plain row (nothing to collapse), several become a <details>.
+        const built = [];
         variantsFor(entry.attr).forEach((opt) => {
           const variant = opt.value;
           const shownOption = optionLabel(opt);
@@ -516,7 +525,6 @@
           if (!offersForm(entry, form)) return;
           if (q && ![entry.label, entry.attr, shownOption].join(' ').toLowerCase().includes(q)) return;
           rendered++;
-          const li = document.createElement('li');
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'behaviors-search-results__row';
@@ -544,9 +552,41 @@
           v.className = 'behaviors-search-results__variant';
           v.textContent = shownOption;
           btn.append(t, v);
-          li.appendChild(btn);
-          frag.appendChild(li);
+          built.push(btn);
         });
+
+        if (!built.length) return;
+
+        if (built.length === 1) {
+          const li = document.createElement('li');
+          li.appendChild(built[0]);
+          frag.appendChild(li);
+          return;
+        }
+
+        const li = document.createElement('li');
+        li.className = 'behaviors-search-results__group';
+        const details = document.createElement('details');
+        // The label goes through the `summary` ATTRIBUTE, which is x-details's
+        // own API (the form #behaviors-live-api already uses). A hand-built
+        // <summary> does not survive: the behavior rewrites its internals into
+        // one .x-details__label plus its own icon, so two spans arrived
+        // concatenated — "audio6" — and its flex layout overrode the grid.
+        // Law 4b: the tag IS the behavior; work with it, not around it.
+        details.setAttribute('summary', `${entry.label}  (${built.length})`);
+        // Collapsed by default — "the user must expand it first". A query must
+        // still show its matches, or search reports hits it then hides.
+        if (q) details.open = true;
+        const inner = document.createElement('ul');
+        inner.className = 'behaviors-search-results__options';
+        built.forEach((b) => {
+          const row = document.createElement('li');
+          row.appendChild(b);
+          inner.appendChild(row);
+        });
+        details.appendChild(inner);
+        li.appendChild(details);
+        frag.appendChild(li);
       });
       if (!q) totalRowCount = rendered;
       resultsEl.appendChild(frag);
@@ -2154,11 +2194,24 @@
     // navigates, and without it a screen-reader user has no way to tell which
     // of 228 rows the panel is showing.
     function rowsInOrder() {
-      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')];
+      // #995 — rows inside a collapsed <details> are still in the DOM but not
+      // on screen. Arrowing must not step onto something invisible, so the
+      // navigable set is the VISIBLE rows. offsetParent is null for anything
+      // inside a closed <details>, which is exactly the test needed.
+      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')]
+        .filter((r) => r.offsetParent !== null);
+    }
+
+    /** Open the group holding this row, so a selection is never hidden. */
+    function revealRow(row) {
+      if (!row) return;
+      const d = row.closest('details');
+      if (d && !d.open) d.open = true;
     }
 
     function selectRow(row, { focus = true, reveal = false } = {}) {
       if (!row) return;
+      revealRow(row);   // #995: selecting inside a collapsed group opens it
       rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
       row.setAttribute('aria-current', 'true');
       // Scroll the LIST only, by hand. scrollIntoView({block:'nearest'}) still
