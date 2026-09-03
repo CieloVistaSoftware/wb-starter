@@ -906,18 +906,17 @@
       // undid the reset entirely -- measured, the reset ran and the scroller
       // ended up scrolled anyway. Only on selection; a plain resize must not
       // yank the reader back to the top.
+      // A new selection starts where content starts. AFTER
+      // keepSelectionVisible(), not before: that keeps the selected LIST row on
+      // screen and does so by scrolling, which would undo the reset.
+      //
+      // Requested by selectRow rather than done there, because showLive()
+      // injects the example, its doc and its code panel asynchronously and that
+      // later insertion scrolls the container after a synchronous reset has run.
+      // Only on selection; a plain resize must not yank the reader to the top.
       if (pendingScrollReset) {
         pendingScrollReset = false;
-        // Resetting scroll HERE does not hold: showLive() above injects the
-      // example, its doc and its code panel asynchronously, and that later
-      // insertion scrolls the container after this line has run. Measured with
-      // a synchronous reset in place: #siteBody still ended at 497 and the
-      // header at y=88, versus y=506 for the first selection.
-      //
-      // So the reset is REQUESTED here and performed once the layout has
-      // settled, in syncListHeight() below -- the one place that knows the
-      // sizing is finished (Law 18).
-      pendingScrollReset = true;
+        liveEl.scrollTop = 0;
         if (scrollerEl) scrollerEl.scrollTop = 0;
       }
       // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
@@ -2340,6 +2339,15 @@
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+      // #1003 follow-up -- John: "click this first, page down in this element,
+      // click the link again: page does not reset to top."
+      //
+      // It did not, because a merge folded two versions of this fix together and
+      // left `pendingScrollReset = true` INSIDE its own guard. The flag starts
+      // false, so nothing ever set it and the guard never ran -- shipped that
+      // way. Setting it here, which is the one place that knows a selection
+      // happened.
+      pendingScrollReset = true;   // requested here, honoured once layout settles
       // John, several times: "when clicking the left, (nav), the content must
       // show in exact same position as shown here."
       //
