@@ -835,28 +835,73 @@
     // So the panel is measured and the list is capped to it; the list keeps
     // scrolling inside itself. Stacked, the cap is dropped and behaviors.css's
     // fixed max-height applies again -- there is no second column to match.
+    // #992 — the SCROLLER, not the window. #app is viewport-sized and
+    // overflow:hidden; #siteBody inside it is the element that actually
+    // scrolls. Sizing against window.innerHeight and a viewport-relative top
+    // was wrong: that top moves as #siteBody scrolls, so the answer was only
+    // valid for the scroll offset it was computed at (measured: cap 650px
+    // written while the panel's top read -118). Distances measured BETWEEN two
+    // elements in the same scroller are scroll-invariant.
+    const scrollerEl = document.getElementById('siteBody');
+    const wsEl = document.getElementById('behaviors-workspace') || resultsEl;
     const TWO_COL = matchMedia('(min-width: 60.0625rem)');
     let syncQueued = false;
+    // #992 — John: "just make a container that always contains the selected
+    // content, always rerender that container on all selections."
+    //
+    // That inverts the dependency, and the inversion is the fix. It used to run
+    // content -> panel height -> list height, which is circular: rendering an
+    // example changed the panel's height, which changed the cap, which was
+    // measured from the panel again. behaviors.css already documents the
+    // symptom ("ResizeObserver loop completed with undelivered notifications"
+    // x3), and it is why the panel sat a constant 61px past the scroller in
+    // roughly half of runs: the size was computed before the example finished
+    // rendering, then the content pushed past it.
+    //
+    // Now: scroller -> container size, full stop. The container is a FIXED
+    // height taken from the scroller, so no example can grow it; content
+    // scrolls inside it. Selections re-render into a box whose size was already
+    // settled, so there is nothing left to race.
+    const GUTTER = 12;   // breathing room below the columns
+    const MIN = 240;     // never collapse to a sliver on a short window
+
+    function sizeContainers() {
+      if (!TWO_COL.matches || !scrollerEl) {
+        liveEl.style.height = '';
+        liveEl.style.overflowY = '';
+        resultsEl.style.maxHeight = '';
+        return;
+      }
+      // Distance from the top of the scroller, not the viewport: both rects
+      // move together when it scrolls, so this does not change with scroll
+      // position. Measuring against window.innerHeight was the earlier bug.
+      const offset =
+        liveEl.getBoundingClientRect().top - scrollerEl.getBoundingClientRect().top;
+      const h = Math.max(MIN, Math.round(scrollerEl.clientHeight - offset - GUTTER));
+      const px = h + 'px';
+      // height, NOT max-height: max-height still lets short content shrink the
+      // box and tall content is what caused the overshoot. A fixed box is the
+      // whole point -- it is the same box before and after every selection.
+      if (liveEl.style.height !== px) {
+        liveEl.style.height = px;
+        liveEl.style.overflowY = 'auto';
+      }
+      if (resultsEl.style.maxHeight !== px) resultsEl.style.maxHeight = px;
+    }
+
+    /**
+     * Called after every selection. Sizing depends only on the scroller, so
+     * this is cheap and idempotent -- it is re-asserted rather than
+     * recalculated from whatever was just rendered.
+     */
     function syncListHeight() {
-      // Write on the next frame, never inside the observer callback: mutating
-      // layout during delivery is what produces "ResizeObserver loop completed
-      // with undelivered notifications".
-      if (syncQueued) return;
-      syncQueued = true;
-      requestAnimationFrame(() => {
-        syncQueued = false;
-        if (!TWO_COL.matches) {
-          if (resultsEl.style.maxHeight) resultsEl.style.maxHeight = '';
-          return;
-        }
-        const h = liveEl.getBoundingClientRect().height;
-        // Panel hidden (nothing picked yet) -> fall back to the stylesheet.
-        const next = h > 0 ? Math.round(h) + 'px' : '';
-        // Only write on a real change -- an unconditional write re-triggers the
-        // observer every frame for no reason.
-        if (resultsEl.style.maxHeight !== next) resultsEl.style.maxHeight = next;
-        keepSelectionVisible();
-      });
+      wsEl.removeAttribute('x-ready');   // Law 18: never let a stale signal be read
+      sizeContainers();
+      keepSelectionVisible();
+      // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
+      // so it says so. Waiters listen instead of sleeping.
+      wsEl.setAttribute('x-ready', '');
+      wsEl.dispatchEvent(new CustomEvent('wb:layout-settled', { bubbles: true }));
     }
     // #717 -- John: "When using the down or up button the current selection must
     // be the first one." selectRow() sets scrollTop = rowTop and the browser
@@ -890,10 +935,17 @@
       }
     }
 
-    // The panel's height drives the list's; the list never drives the panel's,
-    // so this cannot feed back on itself.
-    new ResizeObserver(syncListHeight).observe(liveEl);
+    // #992 — observe the SCROLLER, never the panel. Observing liveEl was the
+    // feedback loop: the sync sets the panel's height, which resizes the panel,
+    // which re-runs the sync. The comment here used to claim it "cannot feed
+    // back on itself" — it could, and behaviors.css records the browser saying
+    // so ("ResizeObserver loop completed with undelivered notifications" x3).
+    // The scroller's size is an input the page does not control, so watching it
+    // is safe by construction.
+    if (scrollerEl) new ResizeObserver(sizeContainers).observe(scrollerEl);
+    window.addEventListener('resize', sizeContainers);
     TWO_COL.addEventListener('change', syncListHeight);
+    sizeContainers();   // size the box before anything is selected
 
     // Cache: the same doc is re-requested every time a reader arrows back over
     // a behavior, and a 404 is worth remembering too (49 docs, 143 entries --
@@ -2234,6 +2286,8 @@
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+      // #992 / Law 18 -- every selection must produce a settled signal.
+      syncListHeight();
       // #686 -- John, on a phone: "doesn't show the sample code and result".
       // Stacked, the panel starts ~300px past the bottom of #siteBody (measured
       // at 375x812: list ends at 841, panel stage at 920, scroller is 627 tall),
