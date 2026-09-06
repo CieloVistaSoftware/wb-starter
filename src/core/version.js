@@ -5,11 +5,11 @@
  */
 export const VERSION = {
   "version": "4.0.1",
-  "commit": "ea71302e",
-  "builtAt": "2026-09-06T20:47:08.553Z",
+  "commit": "7aff921f",
+  "builtAt": "2026-09-06T20:56:39.331Z",
   "branch": "fix/cards-specificity-and-tooling-corruption",
   "dirty": true,
-  "ahead": 14,
+  "ahead": 15,
   "behind": 0,
   "upstream": "origin/main"
 };
