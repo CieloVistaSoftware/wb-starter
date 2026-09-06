@@ -86,6 +86,19 @@ const SIZES = {
 const SYNC_EVENT = 'x:codetheme:sync';
 
 export function codecontrol(element, options = {}) {
+  // #1022 -- confirmed live on the behaviors code bar: two full dropdowns, each
+  // with its own 46 options, inside the SAME <div x-codecontrol>. The function
+  // ends in an unconditional element.appendChild(wrapper) and had no re-init
+  // guard, so a second WB pass over an already-initialised element appended a
+  // second control instead of skipping. A second pass is routine, not
+  // exceptional: wb.js injects from the route render, from wb.js:1111 and 1133,
+  // and from its MutationObserver, and the live panel re-renders on every
+  // selection.
+  // The identical bug was already found and fixed in themecontrol.js -- see the
+  // comment there and element._wbThemeControlInit. This is the same guard; the
+  // two files were simply fixed at different times.
+  if (element._wbCodeControlInit) return () => {};
+  element._wbCodeControlInit = true;
   const config = {
     default: options.default || element.getAttribute('default') || element.dataset.default || 'atom-one-dark',
     showLabel: options.showLabel ?? (

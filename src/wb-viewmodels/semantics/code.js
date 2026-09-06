@@ -31,12 +31,11 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   link.setAttribute('data-highlight-theme', 'true');
   document.head.appendChild(link);
   
-  // Override background to transparent to let pre/code container handle it
-  const style = document.createElement('style');
-  style.textContent = `
-    .hljs { background: transparent !important; }
-  `;
-  document.head.appendChild(style);
+    // #1013: a `.hljs { background: transparent !important }` rule used to be
+    // injected here. It also made every one of the 49 code themes unable to
+    // paint its own background -- selecting a theme recoloured tokens only,
+    // because those live on child spans this rule never touched. The
+    // distinction now lives in code.css.
 }
 
 /** Derive a highlight.js language from a `language-xxx` class (markdown/hljs convention). */
@@ -86,9 +85,33 @@ export function code(element, options = {}) {
     };
   }
 
+  // #1016: the behavior is registered as an ATTRIBUTE (tag-map.js maps
+  // 'x-code' -> 'code'), and the shipped example in behavior-examples.json is
+  // `<div id="code" x-code language="javascript">`. That host is not a <code>,
+  // so this used to warn and return, leaving the element with no class at all,
+  // white-space: normal, and its newlines collapsed on screen -- while WB still
+  // marked it x-ready, so it looked processed.
+  //
+  // John: "code and x-code should render the same thing, formatted code -- they
+  // both do not do the same thing now."
+  //
+  // highlight.js needs a real <code>, so give it one: move the content into an
+  // inner <code> and decorate that. Same shape the <pre> branch above already
+  // uses when its inner <code> is missing.
   if (element.tagName !== 'CODE') {
-    console.warn('[code] Element must be a <code>');
-    return () => {};
+    let inner = element.querySelector(':scope > code');
+    if (!inner) {
+      inner = document.createElement('code');
+      while (element.firstChild) inner.appendChild(element.firstChild);
+      element.appendChild(inner);
+    }
+    // The language lives on the host, not on the <code> we just created.
+    const hostLang = options.language
+      || element.getAttribute('language')
+      || readAttr(element, 'language')
+      || langFromClass(element)
+      || langFromClass(inner);
+    return code(inner, { ...options, language: hostLang });
   }
 
   const config = {
@@ -114,9 +137,15 @@ export function code(element, options = {}) {
     xl: '0.85em',
     normal: '1em'
   };
-  const fontSize = sizeMap[config.size] || sizeMap.normal;
+  // #1013: this used to feed an inline font-size in the Object.assign blocks
+  // below. Those are classes now, so `size` becomes one too -- dropping the
+  // variable instead would have silently disabled the size attribute, which
+  // eslint would have accepted and nobody would have noticed until a page
+  // using size="sm" rendered at full size.
+  const sizeKey = sizeMap[config.size] ? config.size : 'normal';
 
   element.classList.add('x-code');
+  element.classList.add('x-code--size-' + sizeKey);
 
   const isInsidePre = element.parentElement && element.parentElement.tagName === 'PRE';
 
@@ -138,22 +167,12 @@ export function code(element, options = {}) {
 
   // Base styling
   if (isInsidePre) {
-    Object.assign(element.style, {
-      fontFamily: 'inherit',
-      fontSize: 'inherit',
-      padding: '0',
-      borderRadius: '0',
-      backgroundColor: 'transparent',
-      color: 'inherit',
-      border: 'none',
-      display: 'inline', // Let pre handle block layout
-      whiteSpace: 'inherit',
-      wordBreak: 'inherit',
-      verticalAlign: 'baseline',
-      boxShadow: 'none',
-      visibility: 'visible',
-      opacity: '1'
-    });
+    element.classList.add('x-code--in-pre');
+    // #1013: was a 14-property Object.assign onto element.style -- a full
+    // reset so the <pre> owns the chrome. Inline declarations outrank every
+    // stylesheet, so `background-color: transparent` here beat whichever
+    // code theme was selected and no theme could paint its own panel.
+    // The reset now lives in .x-code--in-pre in code.css.
   } else {
     // Standalone code block (not inline, not in pre)
     // John: "not formatted right" -- a 27-line JavaScript listing rendered as
@@ -179,49 +198,14 @@ export function code(element, options = {}) {
     // token. See the whiteSpace line below for why that distinction was
     // wrong.
 
-    Object.assign(element.style, {
-      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-      fontSize: fontSize,
-      // John: "the code demos cannot take up more space than the line
-      // allows" -- 1rem on all 4 sides of an inline chip inside a heading
-      // (this branch's original fix for #545's too-small em-padding
-      // problem) overcorrected into the opposite problem: a wide enough
-      // box to overflow the heading's own line. 0.25rem/0.5rem reads fine
-      // at heading scale without doing that.
-      padding: !isBlock ? (inHeading ? '0.25rem 0.5rem' : '0.15em 0.3em') : '1rem',
-      borderRadius: 'var(--radius-sm, 4px)',
-      backgroundColor: 'var(--bg-tertiary, rgba(255,255,255,0.1))',
-      color: 'var(--text-primary, inherit)',
-      border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
-      display: !isBlock ? 'inline' : 'block',
-      // A single-token inline code chip (e.g. `<article>`) must stay on one
-      // line -- `white-space: normal` lets the browser wrap at the hyphen
-      // inside ".x-card" like a hyphenated English word, splitting "<wb-"
-      // onto one line and "card>" onto the next (confirmed live on
-      // pages/components.html). `overflow:hidden` is a no-op on a plain
-      // `display:inline` box, so `nowrap` here can't cause clipping -- it
-      // just lets the token run as one atomic unit on its line, same as
-      // block/pre code already does via `pre`/`pre-wrap`.
-      // Inline code never wraps, whether or not it contains a space.
-      // This read `isSingleToken ? 'nowrap' : 'normal'`, so a chip like
-      // `<article>` stayed whole but `<label for="...">` -- one idea that
-      // happens to contain a space -- was allowed to break, rendering as
-      // `<label` on one line and `for="...">` on the next, which reads as
-      // two different things. John: "don't break text up like this".
-      //
-      // A space inside a code span is not a sentence break; it is part of
-      // the token. §6 of the standard already says code never wraps and
-      // takes horizontal overflow instead, and this is the inline case of
-      // that same rule. `overflow: hidden` is a no-op on a display:inline
-      // box, so nowrap cannot clip -- the line simply breaks before or
-      // after the span, which is where a reader expects it.
-      whiteSpace: !isBlock ? 'nowrap' : (config.scrollable ? 'pre' : 'pre-wrap'),
-      wordBreak: 'break-word', // Always break to prevent overflow
-      overflowWrap: 'break-word',
-      overflow: (isBlock && config.scrollable) ? 'auto' : 'hidden',
-      verticalAlign: 'baseline',
-      maxWidth: '100%'
-    });
+    // #1013: was a 17-property Object.assign onto element.style. Every one of
+    // those conditionals is now a class, so the same decisions are made here
+    // in JS but the values live in code.css and the cascade can be reasoned
+    // about -- and overridden -- normally.
+    element.classList.toggle('x-code--block', isBlock);
+    element.classList.toggle('x-code--inline', !isBlock);
+    if (!isBlock && inHeading) element.classList.add('x-code--inline-heading');
+    if (isBlock && config.scrollable) element.classList.add('x-code--scrollable');
   }
 
   // Syntax Highlighting with highlight.js
@@ -237,19 +221,19 @@ export function code(element, options = {}) {
         }
         
         // Fix for inline code: hljs adds 'hljs' class which might set display: block and padding
-        if (!isInsidePre && config.variant === 'inline') {
-            element.style.display = 'inline';
-            // #545/#612: same heading-scale padding fix as the base styling
-            // above -- hljs re-sets padding after highlighting, so it must
-            // repeat the inHeading check or a highlighted <code> in a
-            // heading would lose it.
-            element.style.padding = inHeading ? '0.25rem 0.5rem' : '0.2em 0.4em';
-            element.style.backgroundColor = 'var(--bg-tertiary, rgba(255,255,255,0.1))'; // Keep our background for inline
-        } else if (isInsidePre) {
-             // Ensure background is transparent so pre's background shows
-             element.style.backgroundColor = 'transparent';
-             element.style.padding = '0';
-        }
+          // #1013 follow-up: this branch used to re-apply display/padding/
+          // background as INLINE styles, because hljs rewrites them after
+          // highlighting. Now that the same decisions are classes, hljs cannot
+          // clobber them and nothing needs re-applying -- the base branch above
+          // has already chosen x-code--block / --inline / --in-pre correctly.
+          //
+          // Re-adding x-code--inline here was a regression: it keyed off
+          // config.variant, but variant defaults to "inline" while MULTILINE
+          // content is a block listing whatever the variant says. A 27-line
+          // JavaScript example got both classes, --inline won white-space
+          // (nowrap), and every newline collapsed -- "code and x-code should
+          // render the same thing, formatted code". That is the exact bug the
+          // isMultiline check above exists to prevent.
     } catch (e) {
         console.warn('[code] Highlight failed:', e);
     }
@@ -280,7 +264,7 @@ export function code(element, options = {}) {
   if (config.showCopy) {
     // Inline variant: Click to copy
     if (config.variant === 'inline' && !isInsidePre) {
-      element.style.cursor = 'pointer';
+      element.classList.add('x-code--copyable');
       element.title = 'Click to copy';
       
       element.addEventListener('click', async () => {
@@ -288,14 +272,12 @@ export function code(element, options = {}) {
           await navigator.clipboard.writeText(element.textContent);
           
           // Visual feedback
-          const originalBg = element.style.backgroundColor;
-          element.style.backgroundColor = 'var(--success-color, #22c55e)';
-          element.style.color = 'white';
-          
-          setTimeout(() => {
-            element.style.backgroundColor = originalBg;
-            element.style.color = 'var(--text-primary, inherit)';
-          }, 500);
+          // A class, not save-and-restore: the old code captured
+            // element.style.backgroundColor, which is '' once the colour comes
+            // from a stylesheet, so restoring wrote an empty string and left
+            // the snippet unstyled after every copy.
+            element.classList.add('x-code--copied');
+            setTimeout(() => element.classList.remove('x-code--copied'), 500);
         } catch (err) {
           console.error('[code] Failed to copy:', err);
         }
@@ -305,7 +287,6 @@ export function code(element, options = {}) {
     else if (!isInsidePre) {
       wrapper = document.createElement('div');
       wrapper.className = 'x-code-wrapper';
-      wrapper.style.cssText = 'position:relative;display:inline-block;';
 
       element.parentNode.insertBefore(wrapper, element);
       wrapper.appendChild(element);
@@ -314,28 +295,6 @@ export function code(element, options = {}) {
       copyButton.className = 'x-code__copy';
       copyButton.textContent = '📋';
       copyButton.title = 'Copy code';
-      copyButton.style.cssText = `
-        position: absolute;
-        top: 0.25rem;
-        right: 0.25rem;
-        background: var(--bg-secondary, #1f2937);
-        border: 1px solid var(--border-color, #374151);
-        color: var(--text-secondary, #9ca3af);
-        padding: 0.1rem 0.3rem;
-        border-radius: var(--radius-sm, 3px);
-        cursor: pointer;
-        font-size: 0.6rem;
-        line-height: 1;
-        transition: all 0.2s ease;
-      `;
-
-      copyButton.addEventListener('mouseenter', () => {
-        copyButton.style.backgroundColor = 'var(--bg-tertiary, #374151)';
-      });
-
-      copyButton.addEventListener('mouseleave', () => {
-        copyButton.style.backgroundColor = 'var(--bg-secondary, #1f2937)';
-      });
 
       copyButton.addEventListener('click', async () => {
         try {
@@ -358,7 +317,6 @@ export function code(element, options = {}) {
     if (!wrapper) {
       wrapper = document.createElement('div');
       wrapper.className = 'x-code-wrapper';
-      wrapper.style.cssText = 'position:relative;display:inline-block;';
       element.parentNode.insertBefore(wrapper, element);
       wrapper.appendChild(element);
     }
@@ -366,18 +324,6 @@ export function code(element, options = {}) {
     languageBadge = document.createElement('span');
     languageBadge.className = 'x-code__language';
     languageBadge.textContent = config.language;
-    languageBadge.style.cssText = `
-      position: absolute;
-      top: 0.5rem;
-      left: 0.5rem;
-      background: var(--primary, #6366f1);
-      color: white;
-      padding: 0.125rem 0.5rem;
-      border-radius: var(--radius-sm, 4px);
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    `;
 
     wrapper.appendChild(languageBadge);
 
@@ -387,15 +333,8 @@ export function code(element, options = {}) {
     // vertical padding, so the reserved space was painted but never laid
     // out and the badge sat directly on top of the code text. Promote to
     // inline-block so paddingTop actually reserves the space.
-    if (element.style.display === 'inline') {
-      element.style.display = 'inline-block';
-    }
-
-    if (copyButton) {
-      element.style.paddingTop = '2.5rem';
-    } else {
-      element.style.paddingTop = '2rem';
-    }
+    element.classList.add('x-code--has-badge');
+      if (copyButton) element.classList.add('x-code--has-copy');
   }
 
   return () => {
