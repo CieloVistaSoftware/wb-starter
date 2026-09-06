@@ -99,6 +99,58 @@ function testBodies(raw: string): { title: string; body: string }[] {
   return out;
 }
 
+/** Body of the block starting at the `{` at `open`, by brace matching. */
+function blockAt(src: string, open: number): string {
+  let depth = 0;
+  for (let i = open; i < src.length; i++) {
+    const c = src[i];
+    if (c === '{') depth++;
+    else if (c === '}') { if (--depth === 0) return src.slice(open, i); }
+    else if (c === "'" || c === '"' || c === '`') {
+      const q = c;
+      i++;
+      while (i < src.length && src[i] !== q) { if (src[i] === '\\') i++; i++; }
+    }
+  }
+  return '';
+}
+
+/**
+ * Names of functions defined in `src` whose OWN body asserts.
+ *
+ * A test that delegates its assertion to a helper still asserts. Scanning only
+ * the test body reported these as checking nothing:
+ *
+ *     test(`${label} — tag does not use the retired wb- prefix`, () => {
+ *       assertNotRetiredPrefix(demo.tag, 'demo tag');   // expect() lives in here
+ *     });
+ *
+ * Two such tests in page-schema-validation.spec.ts were the entire remaining
+ * failure of this gate, and they are correct tests — the "gate parser artifacts"
+ * #870 anticipated. Flagging a real assertion is worse than missing a fake one:
+ * a gate that cries wolf gets bypassed, and #743 already cost this repo 16
+ * commits of --no-verify.
+ *
+ * This mirrors what the navigation check below ALREADY does for `goto` — follow
+ * the delegation one level and err toward NOT flagging.
+ */
+function assertingHelpers(src: string): Set<string> {
+  const names = new Set<string>();
+  const add = (re: RegExp) => {
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(src))) {
+      const open = src.indexOf('{', re.lastIndex - 1);
+      if (open < 0) continue;
+      if (/expect\s*[.(]/.test(blockAt(src, open))) names.add(m[1]);
+    }
+  };
+  // function foo(...) {  /  async function foo(...) {
+  add(/(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\([^)]*\)\s*(?::[^{;]+)?\{/g);
+  // const foo = (...) => {  /  const foo = async (...) => {
+  add(/(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*(?:async\s*)?\([^)]*\)\s*(?::[^=>]+)?=>\s*\{/g);
+  return names;
+}
+
 const rel = (f: string) => path.relative(ROOT, f).split(path.sep).join('/');
 
 const noAssertion: string[] = [];
@@ -110,6 +162,7 @@ for (const file of walk(TESTS)) {
   try { src = fs.readFileSync(file, 'utf8'); } catch { continue; }
 
   const bodies = testBodies(src);
+  const helpers = assertingHelpers(stripJsComments(src));
 
   for (const { title, body } of bodies) {
     // test.skip()/fixme bodies are deliberately inert.
@@ -118,9 +171,11 @@ for (const file of walk(TESTS)) {
     // every poll-based assertion as missing -- and poll is the CORRECT form
     // for anything that hydrates asynchronously, so the naive pattern
     // penalises exactly the best-written tests.
-    if (!/expect\s*[.(]/.test(body)) {
-      noAssertion.push(`${rel(file)}  ›  ${title}`);
-    }
+    if (/expect\s*[.(]/.test(body)) continue;
+    // Delegated to a helper in this file whose own body asserts — see
+    // assertingHelpers(). Same one-level follow the navigation check does.
+    if ([...helpers].some((n) => new RegExp(`\\b${n}\\s*\\(`).test(body))) continue;
+    noAssertion.push(`${rel(file)}  ›  ${title}`);
   }
 
   // A spec that drives `page` must navigate somewhere. goto may live in a

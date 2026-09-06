@@ -5,8 +5,8 @@
  */
 export const VERSION = {
   "version": "4.0.1",
-  "commit": "fc494742",
-  "builtAt": "2026-09-06T20:31:42.193Z",
+  "commit": "24635d6a",
+  "builtAt": "2026-09-06T20:45:37.885Z",
   "branch": "fix/cards-specificity-and-tooling-corruption",
   "dirty": true,
   "ahead": 13,
