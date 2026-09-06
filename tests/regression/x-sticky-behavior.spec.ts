@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { elementReady, safeScrollIntoView } from '../base';
 
 /**
  * src/wb-viewmodels/sticky.js (<div x-sticky>, distinct from the `sticky`
@@ -26,22 +27,85 @@ import { test, expect } from '@playwright/test';
  * misdiagnosis: `contain: layout` is present on every load, in any tab.)
  */
 
+/**
+ * #1031/#962: this used to sleep 800ms and call the page "settled".
+ *
+ * A sleep is a guess about DURATION, and it fails whenever the machine is
+ * slower than the guess. Under the 4-worker gate this one lost: the page was
+ * still laying out when scrollPastAndSettle() read the element's absolute top,
+ * so it scrolled to a STALE coordinate, landed short of the element, and
+ * `is-stuck` never arrived. All four failures reported
+ * `Expected /is-stuck/ / Received "x-sticky"` — the behaviour was fine, the
+ * page had simply never been scrolled past it.
+ *
+ * Waits for the thing being measured instead: `x-ready` is stamped on an
+ * element once it has no injections left in flight (#970).
+ */
 async function ready(page) {
   await page.goto('/demos/site/layout.html', { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('[x-sticky]');
-  // Let the whole page's layout fully settle (all eager x-demo blocks
-  // built, all real header/footer/navbar/tabs/details structure rendered)
-  // before any test measures an element's absolute position -- measuring
-  // too early against a still-shifting page produced a stale Y coordinate
-  // for the first x-sticky instance specifically (it sits early in the
-  // page, above heavier sections still finishing their own layout).
-  await page.waitForTimeout(800);
+  // Deliberately NOT elementReady() here: #sticky-sticky sits below the fold,
+  // and on the lazy runtime an element is not injected until it intersects — so
+  // x-ready never arrives for an element nobody has scrolled to, and waiting for
+  // it here fails every test in this file with a 15s timeout. Readiness is
+  // established per element in scrollPastAndSettle(), at the point of use.
 }
 
+/**
+ * Arm a one-shot listener for `event` on the located element BEFORE the action
+ * that triggers it, and hand back an awaitable that settles when it fires.
+ *
+ * Law 18 — NO POLLING. `sticky.js` already announces itself:
+ *
+ *     element.dispatchEvent(new CustomEvent('wb:sticky:stuck', ...))
+ *     element.dispatchEvent(new CustomEvent('wb:sticky:unstuck', ...))
+ *
+ * so the test awaits the announcement. An earlier version of this file replaced
+ * its sleeps with `waitForFunction` on `window.scrollY`, which is not a fix: a
+ * poll asks the same question on a timer until the answer changes, and it can
+ * lag or miss the transition entirely. The sleep and the poll are the same
+ * mistake at different resolutions.
+ *
+ * The listener is installed in its own awaited step, so it is provably in place
+ * before the scroll happens — arming and triggering in one round trip races.
+ *
+ * The deadline is a DEADLINE, not a poll: nothing is re-checked, it just refuses
+ * to hang silently if the announcement never comes.
+ */
+async function armEvent(page, locator, event, key, timeoutMs = 10000) {
+  await locator.evaluate(
+    (el, [name, slot, ms]) => {
+      window[slot] = new Promise((resolve, reject) => {
+        const timer = setTimeout(
+          () => reject(new Error(`${name} never fired within ${ms}ms`)),
+          ms,
+        );
+        el.addEventListener(name, () => { clearTimeout(timer); resolve(true); }, { once: true });
+      });
+    },
+    [event, key, timeoutMs],
+  );
+  return () => page.evaluate((slot) => window[slot], key);
+}
+
+/**
+ * Scroll past `locator` and wait for the behaviour to SAY it stuck.
+ *
+ * The element is settled first (`x-ready`, #970 — a MutationObserver, also a
+ * notification), so the coordinate read here is the real one and not one taken
+ * mid-layout. That stale read is what made all four of these tests fail under
+ * load: the page scrolled to a coordinate the element no longer occupied,
+ * never went past it, and `is-stuck` never arrived.
+ */
 async function scrollPastAndSettle(page, locator, extra = 400) {
+  // Bring it into view FIRST — the lazy runtime injects on intersection, so
+  // x-ready cannot arrive for an element that has never been scrolled to.
+  await safeScrollIntoView(locator);
+  await elementReady(locator);
+  const stuck = await armEvent(page, locator, 'wb:sticky:stuck', '__wbStuck');
   const absTop = await locator.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
-  await page.evaluate((y) => { window.scrollTo(0, y); window.dispatchEvent(new Event('scroll')); }, absTop + extra);
-  await page.waitForTimeout(250);
+  await page.evaluate((y) => window.scrollTo(0, y), absTop + extra);
+  await stuck();
 }
 
 /**
@@ -56,9 +120,16 @@ async function topWithinContainingBlock(locator) {
   });
 }
 
-async function scrollToTopAndSettle(page) {
-  await page.evaluate(() => { window.scrollTo(0, 0); window.dispatchEvent(new Event('scroll')); });
-  await page.waitForTimeout(250);
+/**
+ * Scroll back to the top and wait for the behaviour to SAY it unstuck —
+ * `wb:sticky:unstuck`, the counterpart announcement. Not a poll on scrollY:
+ * reaching y=0 is not the same event as the behaviour releasing the element,
+ * and asserting on the wrong one is how a test passes before the work is done.
+ */
+async function scrollToTopAndSettle(page, locator) {
+  const unstuck = await armEvent(page, locator, 'wb:sticky:unstuck', '__wbUnstuck');
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await unstuck();
 }
 
 test.describe('[x-sticky]', () => {
@@ -97,7 +168,7 @@ test.describe('[x-sticky]', () => {
     await scrollPastAndSettle(page, el);
     await expect(el).toHaveClass(/is-stuck/);
 
-    await scrollToTopAndSettle(page);
+    await scrollToTopAndSettle(page, el);
     await expect(el).not.toHaveClass(/is-stuck/);
     await expect(el).toHaveCSS('position', 'static');
     await expect(page.locator('.sticky-placeholder')).toHaveCount(0);
@@ -120,10 +191,25 @@ test.describe('[x-sticky]', () => {
     // Detach it, then scroll — the order the crash needs: the listener is still
     // installed, the element is gone, the next wheel/scroll re-enters the path.
     await page.evaluate((el) => el.remove(), handle);
-    await page.evaluate(() => window.scrollBy(0, 600));
-    await page.waitForTimeout(300);
-    await page.evaluate(() => window.scrollBy(0, 600));
-    await page.waitForTimeout(300);
+
+    // Twice, because the original crash repeated on EVERY subsequent scroll
+    // rather than only the first — one pass would not have caught it.
+    //
+    // The notification here is the browser's own `scroll` event. sticky.js
+    // registered its handler at init, this one is registered now, and listeners
+    // fire in registration order — so by the time this resolves, the behaviour's
+    // handler has already run and any throw has already reached `pageerror`.
+    // Nothing is polled and nothing is guessed.
+    for (let i = 0; i < 2; i++) {
+      await page.evaluate(() => {
+        window.__wbScrolled = new Promise((resolve, reject) => {
+          const timer = setTimeout(() => reject(new Error('scroll event never fired')), 10000);
+          window.addEventListener('scroll', () => { clearTimeout(timer); resolve(true); }, { once: true });
+        });
+      });
+      await page.evaluate(() => window.scrollBy(0, 600));
+      await page.evaluate(() => window.__wbScrolled);
+    }
 
     expect(
       errors.filter((m) => /insertBefore|Cannot read properties of null/.test(m)),

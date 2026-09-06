@@ -1,6 +1,440 @@
-# CURRENT HANDOFF — 2026-09-02
+# CURRENT HANDOFF — 2026-09-06
 
-## 🅿️ PARKING LOT
+## PARKING LOT
+
+**The queue could not report progress. Three compounding bugs, all fixed today.**
+
+John, looking at #1005/#1020/#1023 in the viewer: *"These show as ready, why are
+they committed and pushed?"* and *"I must always have accurate state on all of
+our issues."* He was reading it right; the data was wrong.
+
+### What was actually broken
+
+| issue | defect | effect |
+|---|---|---|
+| #1042 | commit log split on `` — a boundary the format only emits for an EMPTY body | **937 of 1056 commits silently dropped.** A well-described commit was the MOST likely to vanish |
+| #1042 | `if (!st) return 'unproven'` sat ABOVE the pushed/committed checks | travel unreachable unless that spec ran in the last (usually filtered) run |
+| #1041 | any `#NNNN` in an uncommitted file counted as pending work | `issue-state.mjs` mis-stated #1003/#1020/#1023 because of its OWN comments about them |
+| #1038 | Playwright `outputDir` WAS the reporter's evidence dir | every run erased the evidence states derive from |
+
+All four fixed. #1005 #1020 #1023 #1031 #1036 now read `pushed 9c9e973c`;
+#1002 #1003 read `pushed ecfcda27`.
+
+### State is now maintained, not remembered
+
+`.husky/post-commit` (NEW) refreshes every issue a commit cites, the moment it
+lands. Before this, `issue-state.mjs --apply` only ever ran when someone
+remembered — which is the whole reason the viewer was stale. Fail-open: it runs
+after the commit is written, so it can never block or complain about work that
+already succeeded. Verified against `9c9e973c` (picks up all 11 cited issues)
+and a merge commit (correctly no-ops).
+
+### Landed
+
+- `9c9e973c` seven fixes + specs (#999 #1005 #1018 #1020 #1023 #1031 #1036)
+- `c5d0ef67` #1038, proven by fault injection (2 of 3 fail on the old config)
+- `9e7bbe29` merge of origin/main — clean, the "it WILL conflict" warning was stale
+- PR #1039 opened (448 files). CI: 6 checks pass, Playwright Tests fails — but
+  `main` has failed CI on EVERY push since 2026-09-03, so the PR regresses nothing
+  and CI currently proves nothing either way.
+
+### Staged, not yet committed
+
+18 files: the issue tooling itself (`issue-state.mjs`, `commit-batch.mjs`,
+`priority-gate.mjs`, `commit-readiness.mjs`, `mark-issue-verification.mjs`,
+`signature-field.mjs`, and the two issue CI workflows) — **all of it was still
+untracked**, one `git clean` from gone — plus the #1042 regression spec and the
+post-commit hook. Lint-ratchet clean (5 unused-var warnings fixed).
+
+Blocked only by the priority-1 gate flaking under the load of the concurrent
+full suite: `demo-never-shows-expansion.spec.ts:82` wanted > 10 authored lines,
+got 8. The same five specs passed in `c5d0ef67` an hour earlier. That is
+#961/#1024 blocking a provable commit in real time.
+
+### Next, in order
+
+1. Suite finishes -> re-run the priority gate clean -> commit the 18 staged files.
+2. `node scripts/issue-state.mjs --apply` across ALL issues, with real evidence
+   restored, so every state is right — not just the eight touched by hand today.
+3. Commit the remaining ~45 uncommitted paths in coherent batches.
+4. #1031 x-sticky is committed UNPROVEN — 4 of its 6 assertions are in the debt
+   register. Its spec sleeps (`waitForTimeout(800)` for "page settled",
+   `waitForTimeout(250)` after scroll) and reads a stale `absTop`, so the scroll
+   lands short and `is-stuck` never arrives. Run it in isolation to separate a
+   real defect from #1024; the fix is per-element waits (`elementReady`, #970).
+
+### Open questions
+
+- **`jq` is not installed on this machine.** Any monitor script using it emits
+  nothing and looks like silence rather than failure. Cost 40 minutes of a CI
+  watch today. Use `gh --json` + node instead.
+- **#1040**: a recycled PID can wedge `~/.wb-starter/test.lock`; every other
+  wedge path already self-clears.
+- CI red on `main` for days means neither CI nor the local suite is currently a
+  usable signal. That is the same argument #959 made about the local matrix.
+
+---
+
+## PREVIOUS PARKING LOT (2026-09-05)
+
+**Parked 2026-09-05, ~00:10.** A commit is IN FLIGHT (5th attempt). 87 paths
+uncommitted, branch 7 ahead / 1 behind `origin/main`.
+
+### The one thing that matters
+
+The queue now rates and states itself. Three commands answer everything:
+
+```
+node scripts/issue-state.mjs                 what state every issue is really in
+node scripts/issue-state.mjs --state ready   what is committable right now
+node scripts/commit-batch.mjs                stage + commit that batch in one go
+```
+
+`issue-state.mjs` WRITES the state onto the issue (a `state:` label plus a
+`verified:` line in the Signature block). Everything else READS it — the viewer,
+the batch tool, the gates. Nothing re-derives it, so nothing can disagree.
+
+### Built today (all uncommitted)
+
+| what | where |
+|---|---|
+| priority 1-5 on every issue, by negative impact | applied to all 297 open |
+| 13 derived states, written onto each issue | `scripts/issue-state.mjs` |
+| batch commit of everything `ready` | `scripts/commit-batch.mjs` |
+| priority-1 tests run every commit | `scripts/priority-gate.mjs` + `.husky/pre-commit` |
+| manifest the gate reads (offline) | `scripts/build-priority-gate.mjs` -> `data/priority-gate.json` |
+| CI: rated, provable, closes-with-evidence | `.github/workflows/issue-priority-check.yml` |
+| CI: signature block required per issue | `.github/workflows/issue-signature-check.yml` |
+| one field reader both use | `scripts/signature-field.mjs` |
+| error log: 30-day retention, archive before clear | `server.js`, `scripts/tools/test-reporter.ts`, `scripts/prune-error-archives.mjs` |
+| error log -> issue -> analysis/test/fix chain | `server.js` enrichment + `public/errors-viewer.html` |
+| auto-fix unblocked (parser, not regex) | `scripts/find-redundant-behavior-attrs.mjs`, `data/fix-registry.json` |
+| issues viewer: sortable table, ready first, inline expander, offline cache | `pages/issues.html` |
+
+### State of the queue
+
+```
+ready 3 · stale 1 · committed 1 · failing 7 · needs-test 7 · test-missing 2
+unproven 5 · triaged 137 · no-signature 89 · closed-unverified 141 · closed-verified 7
+priority: 1:13  2:69  3:127  4:59  5:29
+```
+
+### THE GATE — the thing that cost the day
+
+Five commit attempts. Four completed, each blocked by a DIFFERENT disjoint set of
+"new" failures (3, 7, 3, 3), none repeating, every one passing in isolation. That
+is #961/#962: a large family of specs asserts on state it has not waited for
+(flat `sleep(400)` after a click; a locator read before the behavior upgrades the
+element), and 8 workers widen the race until a different handful loses each time.
+
+Done about it:
+- the register is now the UNION of what was observed, not one sample (530 entries)
+- the gate runs at **4 workers** (`WB_GATE_WORKERS`, `.husky/test-ratchet.mjs`) —
+  drop to 2 if a rotating set survives
+- the fast priority-1 gate runs every commit so the matrix is no longer the only
+  line of defence
+
+NOT done: the actual synchronisation. **#962 is the root cause and is priority 1
+with no test.** Until those specs wait for signals instead of sleeping, the
+matrix will keep sampling.
+
+### Next, in order
+
+1. **Read the in-flight commit's result.** If it landed, the counter reset and the
+   next commits are cheap — commit the rest in batches.
+2. **Merge `origin/main`** (1 behind, `6b1f4f66`, touches `pages/behaviors.html`
+   which today rewrote — it WILL conflict; resolve by hand and reload the page,
+   a clean auto-merge on that file has taken the site down twice).
+3. **Push**, then watch the Actions run.
+4. Work the queue by state: `failing` (7) then `needs-test` (7).
+
+### Open questions
+
+- **10 of 13 priority-1 issues name no test** — #997 #998 #991 #962 #961 #889
+  #883 #820 #678 #341. CI's `provable` check fails on every one. That is the
+  highest-value backlog the system surfaced.
+- **#1027's test is a command**, not a spec, so the suite never runs it and it can
+  only ever read `unproven`. Either make it a spec or give the gate a way to run
+  commands.
+- **The issues viewer is rate-limited** (403) from today's label writes; the cache
+  path works but has nothing cached yet. First successful load after the window
+  seeds it.
+
+---
+
+## 🅿️ PREVIOUS PARKING LOT (2026-09-04)
+
+
+**Parked 2026-09-04 (late).** Nothing is committed. 59 paths are uncommitted and
+the branch is still 7 ahead / 1 behind `origin/main`. Read the first two
+sections before touching anything.
+
+### Task
+
+Two things ran together: John's screenshot fixes on the behaviors and themes
+pages, and then "commit it all and close the issues" — which turned into
+measuring the gate honestly rather than committing blind.
+
+### State of the tree
+
+```
+branch  fix/cards-specificity-and-tooling-corruption   7 ahead, 1 BEHIND origin/main
+HEAD    ecfcda27
+uncommitted  59 paths (25 of them the previous session's blocked commit)
+.git/wb-fix-count  9   <-- the NEXT commit triggers the full-matrix ratchet
+```
+
+### Files touched this session
+
+```
+src/styles/pages/behaviors.css          #1020 flex chain, breakpoint-scoped, spacing tokens
+pages/behaviors.html                    #1020 + removed <details x-details> x2
+src/styles/behaviors/code.css           #1023 .hljs pairing, badge rules moved below block
+src/wb-viewmodels/codecontrol.js        #1022 re-init guard
+pages/whats-new.html                    removed <table x-table>
+pages/demos.html, pages/offshoring.html removed the code pickers added earlier
+demos/site/forms.html                   removed <form x-form> x2
+docs/standards/DEMOS-AND-DOCS-STANDARDS.md   §10 gains the breakpoint rule + enforcement row
+tests/regression/behaviors-workspace-single-scroll.spec.ts      NEW, 3 passing
+tests/regression/code-language-badge-clears-first-line.spec.ts  NEW, 1 passing
+tests/regression/code-theme-control-and-host.spec.ts            NEW, not yet run
+```
+
+### Last action — THE GATE RAN, AND IT SAYS NO
+
+`node .husky/test-ratchet.mjs`, the exact check the pre-commit hook performs on
+this (10th) commit, finished in 36.2 minutes:
+
+```
+6721 passed · 145 skipped
+known-failing (debt)   : 430
+new failures           : 95      <- commit BLOCKED
+repaired since baseline: 61
+```
+
+Two of the 95 are attributed, one each way:
+
+  ATTRIBUTED TO THIS SESSION — compliance/footer-viewport-anchor.spec.ts, both
+  cases. The spec waits for `.site__footer` to be VISIBLE on `?page=behaviors`;
+  #1020 hid it there because John pointed at it and said "remove this". The
+  failure log is unambiguous: "locator resolved to hidden <footer id=siteFooter>",
+  32 and 33 times. His instruction and his test now contradict each other. THIS
+  IS A DECISION, NOT A BUG — see Open questions.
+
+  NOT THIS SESSION — cards/cards-showcase.spec.ts and friends. Suspected #1017
+  (21 `<article x-card>` -> `<article>`), so it was measured directly: HEAD with
+  the attributes and the working tree without it BOTH render 221 <article>
+  elements of which 3 are enhanced. Identical. The card demos' state is
+  unchanged by that edit.
+
+The remaining ~93 are unattributed and the baseline is dated 2026-09-01 with
+three commits landed since, so some of them belong to those commits, not to the
+working tree.
+
+### Next step, in order
+
+1. **Settle the footer question** (top of Open questions) — it is the only new
+   failure proven to belong to this tree, and it is one line either way.
+2. **Attribute the rest.** The decisive test is a clean worktree at HEAD running
+   the gate projects only; whatever fails there is not this tree's. That is the
+   same technique that cleared #1023 and #1017. Then either fix what remains or
+   record a deliberate `data/test-baseline-failures.json --update` whose note
+   says exactly what it absorbed. Do NOT `--no-verify`.
+   For reference, the earlier full matrix (11,485 tests, all projects) showed
+   102 gate-relevant non-baseline failures; six were real and are FIXED
+   (redundant `x-*` attributes on behaviors.html, whats-new.html, forms.html),
+   and three `codecontrol-theme-cdn-url` timeouts were proven live to be load
+   artifacts — that page's control initialises correctly and resolves a real
+   cdnjs URL.
+2. **Decide the baseline question before committing.** Either attribute the
+   remaining non-baseline failures (a clean worktree at HEAD, gate projects
+   only, is the decisive test — same technique that cleared #1023), or record a
+   deliberate `--update` with a note saying what it absorbed. Do NOT
+   `--no-verify`.
+3. **Commit.** Five messages are written and parked in
+   `docs/_today/pending-commits/msg1.txt` … `msg5.txt`, one per group: the
+   previous session's five fixes; the code display/theme work; the behaviors
+   workspace; cards.html; generated data.
+4. **Merge `origin/main`** — still 1 behind, and it touches `pages/behaviors.html`,
+   which this session rewrote. It WILL conflict. Resolve hunk by hunk and reload
+   the page; a clean auto-merge on that file has taken the site down twice.
+5. **Close the issues** listed below, each with the plain-English fix and its
+   validating test.
+
+### #1025 — themes page: DRAFTED, NOT APPLIED
+
+`themes.css` declares **50** themes; the page shows **23** and says "23" in
+three places. The change is written and waiting in `docs/_today/pending-1025/`:
+
+```
+apply_1025.py                       does all four edits; run it from that directory
+themes-grid-block.html              the generated grid + its module script
+themes-page-lists-every-theme.spec.ts   copy to tests/compliance/
+```
+
+It lifts `THEMES` out of `themecontrol.js` into `src/core/themes-registry.js` so
+the dropdown and the page read one list, then renders a card per theme. Each
+card carries `data-theme`, so it previews itself with its own variables — no
+colour literals, which is also what fixes the §11 violation the old hand-written
+cards carried. Not applied because the gate was mid-run and editing files under a
+running suite corrupts its result.
+
+### Issues to close when the commits land
+
+| issue | what fixed it | test |
+|---|---|---|
+| #1012 | code-theme control now sits with the code, in the behaviors code bar | code-theme-control-and-host.spec.ts |
+| #1013 | 17 inline styles moved from code.js into code.css | code-theme-control-and-host.spec.ts |
+| #1015 | formatHtml() preserves newlines inside code/pre | doc-viewer-code-panel-audit.spec.ts |
+| #1016 | x-code wraps a non-code host's content in a real <code> | code-theme-control-and-host.spec.ts |
+| #1017 | 21 redundant `<article x-card>` -> `<article>` | no-redundant-x-attribute-on-native-tag.spec.ts |
+| #1018 | workspace fills the window; x-clock example loses its class | behaviors-workspace-single-scroll.spec.ts |
+| #1020 | one scrollbar, 1rem side gap, shell footer hidden on this page | behaviors-workspace-single-scroll.spec.ts |
+| #1022 | codecontrol re-init guard | code-theme-control-and-host.spec.ts |
+| #1023 | badge rules paired with .hljs and moved below .x-code--block | code-language-badge-clears-first-line.spec.ts |
+
+Also filed and NOT started: **#1021** (x-codecontrol writes inline styles),
+**#1024** (doc-viewer-code-panel-audit collects a different number of tests each
+run — 64 vs 69 on the same tree), **#1025** (above).
+
+### Open questions
+
+- **Fullscreen on the behaviors page.** John: "full screen isn't working now. It
+  just creates a third vertical scroll." NOT reproducible here —
+  `requestFullscreen()` is rejected in the embedded browser with
+  `TypeError: Permissions check failed`, and x-fullscreen logs that correctly.
+  The `calc(100vh - 10rem)` that was wrong everywhere else is gone, but a
+  simulation of the fullscreen box did not reproduce the third bar with the OLD
+  rule either, so the cause is unproven. Needs one click in a real window.
+- **THE FOOTER, and it needs John.** `#1020` hid the shell footer on
+  `?page=behaviors` because he pointed at it and said "remove this".
+  `tests/compliance/footer-viewport-anchor.spec.ts` asserts that footer is
+  visible on that exact page, so the gate now blocks on his own instruction.
+  Two ways, pick one and say why on #1020: amend the spec to exempt the
+  workspace page (assert the footer is deliberately absent there), or restore
+  the footer and give the workspace the missing 85px some other way. Amending a
+  test so one's own change passes is the kind of move that should be visible,
+  which is why it is parked here rather than done quietly.
+- **The remaining ~93 new failures** in steps 1-2 — unattributed, and they are
+  what stands between this tree and a commit.
+- `docs/behaviors/articles.md` still trips the redundant-attribute sweep, but its
+  `<article x-article>` is deliberate: the note around it documents that exact
+  combination as the thing NOT to write. Left alone.
+
+### Elsewhere
+
+`cielovista-tools` worktree has two uncommitted paths — `.claude/settings.local.json`
+(permission additions) and `docs/_today/test-coverage-audit-2026-09-02.md`
+(generated). Its own rule requires `node scripts/run-regression-tests.js` before
+a commit, and two suites were not run at once. `docs/_today/marketplace.html`
+showed as modified with zero content change (line endings) and was restored.
+
+---
+
+## 🅿️ PREVIOUS PARKING LOT (2026-09-03)
+
+
+**Parked 2026-09-03 (late).** One commit is IN FLIGHT and had not landed when we
+stopped. Read the first section before touching anything.
+
+### The one thing that matters right now
+
+A commit of **25 files** is staged and running through the pre-commit gate's full
+suite. It had reached ~test 6,640 of ~7,400 when the session ended.
+
+```
+HEAD    ecfcda27   (the commit had NOT landed)
+staged  25 files
+branch  fix/cards-specificity-and-tooling-corruption -- 7 ahead, 1 BEHIND origin/main
+```
+
+**Check first:** `git log --oneline -1`. If HEAD moved past `ecfcda27`, it landed.
+If the staging area is still full, the gate rejected it -- read
+`/tmp/commit4.log` for which test, then fix the test or the code. Do NOT
+`--no-verify`.
+
+The commit message is preserved at
+`scratchpad/commit-final.txt` (session temp dir); re-use it verbatim if the
+commit has to be re-made.
+
+### Then, in order
+
+1. **Merge `origin/main`.** You are 1 behind: `6b1f4f66 fix: the panel scroll
+   reset has been dead since the merge`. It touches **`pages/behaviors.html`** --
+   the same file this session edited all day. **It will conflict.** Resolve hunk
+   by hunk and RELOAD THE PAGE to verify; a clean auto-merge on this file has
+   already taken the site down twice (`4278fcf7`, `ce6d6139`).
+2. **Push**, then `npm run test:smoke:deployed` (Law 17). It waits for THIS
+   commit's build -- it used to wait only for Pages status `built` and so smoked
+   the previous deploy, reporting green over a dead page.
+
+### What this session actually fixed (all verified live, none pushed)
+
+| issue | state |
+|---|---|
+| #1004 header strip | all four chips top 16 / h 32, spread zero; panels un-clipped and on screen; AutoScroll honours expanded groups |
+| #1005 dialogs | every native sample has a visible close button, header 16px 24px, body 24px |
+| #1010 error log | stack parsed at log time (mdhtml.js line 244); repeats counted not re-listed; signature + analysis + solution + fixable |
+| #1011 table sort | dates sort chronologically, 4.0.1 above 3.0.91, measured over 102 rows |
+| #1003 inline styles | five trigger-button helpers moved to trigger-buttons.css |
+
+### Filed this session
+
+`#1005` dialogs · `#1006` featured badge · `#1007` fix registry schema ·
+`#1008` release.css never loads · `#1009` 21 dead schema declarations ·
+`#1010` error log provenance + fixable · `#1011` table sort
+
+### Signature blocks -- DONE for this week, 147 issues remain
+
+All 42 open issues created since 2026-09-01 carry a `## Signature` block, plus
+the closed ones from the same week. Enforcement is in place:
+
+```
+docs/standards/ISSUE-SIGNATURE-BLOCK.md      the format
+.github/ISSUE_TEMPLATE/bug.md                required at filing
+scripts/check-issue-signatures.mjs           validator, exits 1 so it can gate
+scripts/apply-issue-signatures.mjs           backfill (idempotent, --dry first)
+scripts/issue-evidence-digest.mjs            reads bodies in batches to write them
+```
+
+**To continue the backfill:** `node scripts/check-issue-signatures.mjs --json`
+gives the remaining numbers; `issue-evidence-digest.mjs --from-file nums.json
+--skip N --take 12` prints the evidence; write a batch JSON; apply. ~12 per
+batch is the working rate.
+
+### THE TRAP THAT COST THE MOST TODAY
+
+**An auto-fixer damaged 13 files.**
+`scripts/find-redundant-behavior-attrs.mjs --fix` regexes text instead of
+parsing markup. It stripped `x-button` from inside
+`class="x-button x-button--primary"`, turned `copy-text="Copied from a
+x-button!"` into `"Copied from a!"`, and edited three code comments that MENTION
+`<button x-button>` while explaining why not to write it. Six of its 28 reported
+instances were class values, not attributes. **All reverted.**
+
+Its registry entry is `fixable: false` ON PURPOSE. Do not flip it back until the
+detector parses attribute nodes. `verify` is what caught it -- it reported 6
+remaining instead of 0, which is why the diff got read instead of the result
+believed.
+
+### Open questions
+
+- **`showClose`:** #798 already settled this and I contradicted it twice.
+  John: *"perhaps the user wants to only allow esc press?"* with the rule
+  `showClose = false => closeOnEscape MUST be true`. So `dialog.showClose`,
+  `closeOnEscape`, `closeOnBackdrop` (and drawer's three) are WANTED and
+  unimplemented -- not deletable. Corrected on #1009.
+- **#912 duplicates #1007** (fix registry schema mismatch). One should close.
+- **A `question` kind** may be needed in the signature standard: several
+  backlog issues are recorded questions, not defects, and `process` is a
+  stretch for them.
+- The pre-commit gate runs the WHOLE suite every 10 commits (#959, #974) and is
+  pass/fail against a suite red for months. It cost three dead commit attempts
+  today.
+
+---
+
+## 🅿️ PREVIOUS PARKING LOT
 
 **Parked 2026-09-03.** Everything below is committed. Nothing is half-done.
 

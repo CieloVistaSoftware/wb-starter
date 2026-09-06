@@ -86,7 +86,7 @@
   )).join('');
 
   host.innerHTML =
-    '<table id="whats-new-table" class="whats-new-table" x-table sortable searchable striped hoverable>' +
+    '<table id="whats-new-table" class="whats-new-table" sortable searchable striped hoverable>' +
       '<thead><tr>' +
         '<th scope="col">Version</th><th scope="col">Date</th><th scope="col">Type</th>' +
         '<th scope="col">Change</th><th scope="col">Details</th><th scope="col">Issue</th>' +
@@ -104,6 +104,72 @@
   }
 })();
 </script>
+
+<section id="whats-new-4-0-2">
+  <h2>4.0.2 — 2026-09-06</h2>
+  <p><strong>The queue could not report progress, so it looked like there was none.</strong> Four defects had
+  compounded into one symptom: work that was finished, committed and pushed still showed as un-started. Three of
+  them were in the tool that decides an issue&rsquo;s state; the fourth was quietly deleting the evidence that tool
+  reads. Also here: five interface fixes that had been waiting to land.</p>
+
+  <h3>The state of every issue was wrong</h3>
+  <p>Looking at three issues that had just been committed and pushed, John asked why they still displayed as
+  ready. They should have read <em>pushed</em>. Every layer that could answer that question was broken.</p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Nine out of ten commits were invisible to
+    the issue tracker.</strong> The tool that works out how far a fix has travelled reads the git log, and it split
+    that log on a separator the format only produces when a commit message has <em>no body</em>. Any commit with a
+    description got glued to its neighbours and silently thrown away &mdash; 937 of 1,056. A well-written commit was
+    the most likely to vanish, so a fix that had shipped left no trace and its issue reported as never started. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1042" target="_blank" rel="noopener">#1042</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>An issue could not be marked pushed unless
+    its test happened to run.</strong> Where a fix <em>is</em> &mdash; committed, pushed &mdash; is a fact about git,
+    not about testing. But the check for &ldquo;did its test run recently&rdquo; sat above the check for &ldquo;has
+    this shipped&rdquo;, and most runs are filtered to a handful of specs, so almost every issue fell back to
+    <em>unproven</em> the moment it was committed. A failing test still outranks travel: shipping something does not
+    make it work. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1042" target="_blank" rel="noopener">#1042</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Merely mentioning an issue counted as
+    unfinished work on it.</strong> Any file containing <code>#1234</code> was treated as a pending fix for that
+    issue, which suppressed its real state. Release notes, handoff docs and standards all name issues in passing.
+    The sharpest case: the state tool reported the wrong state for three issues <em>because of its own comments
+    explaining those three issues</em>. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1041" target="_blank" rel="noopener">#1041</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Running the tests erased the record of the
+    tests.</strong> Playwright empties its output directory at the start of every run, and that directory had been
+    pointed at the same place the test reporter keeps its results &mdash; the results every gate and every status
+    query reads. A filtered run wiped all five projects and wrote back almost nothing. Measured across two runs:
+    issues ready 3&nbsp;&rarr;&nbsp;0, failing 7&nbsp;&rarr;&nbsp;0, unproven 5&nbsp;&rarr;&nbsp;18, with no work
+    done to any of them. Playwright now has its own scratch directory. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1038" target="_blank" rel="noopener">#1038</a></li>
+
+    <li class="wn-item wn-fix"><span class="wn-tag">Fix</span> <strong>Issue state now keeps itself current.</strong>
+    It was only ever recalculated when someone remembered to ask for it, which is why the board could sit stale for
+    a day. A commit is the event that changes an issue&rsquo;s state, so every commit now refreshes the issues it
+    names. It runs after the commit is written and never blocks it.</li>
+  </ul>
+
+  <h3>Interface fixes</h3>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Dialog samples had no way to close
+    them.</strong> The native <code>&lt;dialog&gt;</code> examples rendered without a close control and with no
+    padding, because the dialog behaviour never ran on them. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1005" target="_blank" rel="noopener">#1005</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The behaviours workspace had two vertical
+    scrollbars.</strong> One container too many was scrolling, there was no gap at the side, and the footer stayed
+    stuck in the document instead of anchored to the viewport. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1020" target="_blank" rel="noopener">#1020</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The language badge sat on top of the first
+    line of every code sample.</strong> On the themes page it overlapped the code it was labelling. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1023" target="_blank" rel="noopener">#1023</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Sorting a table sorted the text you could
+    see, not the value underneath.</strong> A column declaring a sort key was ignored, so dates and versions ordered
+    alphabetically. Rows now move as whole rows. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1036" target="_blank" rel="noopener">#1036</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The demos index linked to a page that no
+    longer exists.</strong> The Views Registry Browser was removed because it imports a module deleted with the
+    component tags &mdash; the page could not run at all &mdash; but the link to it stayed behind. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/980" target="_blank" rel="noopener">#980</a></li>
+  </ul>
+</section>
 
 <section id="whats-new-4-0-1">
   <h2>4.0.1 — 2026-09-03</h2>
