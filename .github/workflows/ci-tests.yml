@@ -82,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-traces-${{ github.run_number }}
-          path: data/test-results/**/*.zip
+          path: data/playwright-output/**/*.zip
           retention-days: 7
 
       - name: Stop server

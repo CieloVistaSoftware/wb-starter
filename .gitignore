@@ -56,3 +56,12 @@ src/wb-overlay-ext/
 # silently blocking every .io deployment. Ignoring the whole directory so
 # this can't happen again.
 .claude/worktrees/
+
+# Archived runtime error logs (#1027). Local forensic copies of data/errors.json
+# taken before a test run clears it — machine-specific, never worth committing.
+data/error-log-archive/
+
+# Playwright scratch output (#1038). Kept OUT of data/test-results/, which is
+# the reporter evidence dir the issue-state engine reads — Playwright clears
+# its outputDir on every run and was erasing that record.
+data/playwright-output/

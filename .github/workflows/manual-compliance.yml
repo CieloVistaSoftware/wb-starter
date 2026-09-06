@@ -77,9 +77,9 @@ jobs:
         run: |
           mkdir -p artifacts || true
           # copy common Playwright outputs
-          cp -v data/test-results/**/*.zip artifacts/ 2>/dev/null || true
+          cp -v data/playwright-output/**/*.zip artifacts/ 2>/dev/null || true
           cp -v data/test-results/**/*.log artifacts/ 2>/dev/null || true
-          cp -v data/test-results/.last-run.json artifacts/ 2>/dev/null || true
+          cp -v data/playwright-output/.last-run.json artifacts/ 2>/dev/null || true
           ls -la artifacts || true
 
       - name: Upload Playwright traces & logs

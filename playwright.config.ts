@@ -122,7 +122,17 @@ const TEST_PORT = Number(process.env.WB_TEST_PORT)
 
 export default defineConfig({
   testDir: './tests',
-  outputDir: './data/test-results',
+  // #1038: NOT './data/test-results'. Playwright CLEARS outputDir at the start
+  // of every run, and data/test-results/ is the reporter's evidence dir —
+  // scripts/issue-state.mjs, commit-readiness.mjs and mark-issue-verification.mjs
+  // all read <project>.json out of it. Sharing one directory meant running the
+  // tests DESTROYED the record of the tests: a filtered run (the pre-commit gate
+  // runs only the priority-1 specs and project-integrity) wiped all five
+  // projects' JSON and wrote back almost nothing, so every issue silently fell
+  // back to `unproven` and `ready` emptied out. Measured 2026-09-06: two gate
+  // runs took ready 3 -> 0, failing 7 -> 0, unproven 5 -> 18, with no work done
+  // to any of those issues. Playwright's scratch gets its own directory.
+  outputDir: './data/playwright-output',
   reporter: [
     ['./scripts/tools/test-reporter.ts'],
     ['list']
