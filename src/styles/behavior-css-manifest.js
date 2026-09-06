@@ -84,6 +84,7 @@ export const BEHAVIOR_CSS_MAP = {
   counter: ['counter.css'],
   table: ['data.css'],
   demo: ['demo.css'],
+  'fix-card': ['fix-card.css'],
   details: ['details.css'],
   navbar: ['navbar.css'],
   tabs: ['tabs.css'],
@@ -125,6 +126,16 @@ export const BEHAVIOR_CSS_MAP = {
   timeline: ['timeline.css'],
   toast: ['toast.css'],
   notify: ['toast.css'],
+
+  // The five decorated trigger buttons, whose shared chrome stopped being an
+  // inline style in helpers.js with #1003. A behavior stylesheet that is not
+  // listed here never loads at all -- that is how fieldset.css shipped dead
+  // (#999), so these entries are as much the fix as the file is.
+  print: ['trigger-buttons.css'],
+  share: ['trigger-buttons.css'],
+  fullscreen: ['trigger-buttons.css'],
+  clipboard: ['trigger-buttons.css'],
+  scroll: ['trigger-buttons.css'],
 
   // Effects/utilities — all genuine WB.inject()-dispatched behaviors.
   ripple: ['effects.css'],

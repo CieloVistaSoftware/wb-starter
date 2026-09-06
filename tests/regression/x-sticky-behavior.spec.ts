@@ -102,4 +102,37 @@ test.describe('[x-sticky]', () => {
     await expect(el).toHaveCSS('position', 'static');
     await expect(page.locator('.sticky-placeholder')).toHaveCount(0);
   });
+
+  // #1031 — the crash the error log caught, twice per suite run:
+  //   Uncaught TypeError: Cannot read properties of null (reading 'insertBefore')
+  //
+  // createPlaceholder() runs from the SCROLL handler and assumed the host still
+  // had a parent. Remove the element between the scroll event and the handler —
+  // which a re-rendering page does routinely — and the whole handler throws, so
+  // everything after it in that pass never runs.
+  test('a host removed mid-scroll does not throw, and stops being tracked', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (e) => errors.push(String(e.message)));
+
+    await ready(page);
+    const handle = await page.locator('#sticky-sticky [x-sticky]').nth(0).elementHandle();
+
+    // Detach it, then scroll — the order the crash needs: the listener is still
+    // installed, the element is gone, the next wheel/scroll re-enters the path.
+    await page.evaluate((el) => el.remove(), handle);
+    await page.evaluate(() => window.scrollBy(0, 600));
+    await page.waitForTimeout(300);
+    await page.evaluate(() => window.scrollBy(0, 600));
+    await page.waitForTimeout(300);
+
+    expect(
+      errors.filter((m) => /insertBefore|Cannot read properties of null/.test(m)),
+      'removing a sticky host mid-scroll threw — the guard in createPlaceholder() is gone'
+    ).toEqual([]);
+
+    // And it must stop tracking: a listener still firing for a detached element
+    // is why this repeated on every subsequent scroll rather than once.
+    const orphans = await page.locator('.sticky-placeholder').count();
+    expect(orphans, 'a placeholder was left behind for an element that no longer exists').toBe(0);
+  });
 });

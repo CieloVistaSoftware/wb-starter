@@ -36,13 +36,43 @@
 
 <h2 class="sr-only">Issues</h2>
 <p id="issues-status" class="issues-status">Loading issues…</p>
-<ul id="issues-list" class="issues-list"></ul>
+
+<!-- John: "list the items by priority, make it a table, add columns for fields
+     in the issue, all sortable... when issue viewer fills in data it should all
+     be listed in severity order."
+
+     A plain <table sortable>: <table> auto-injects the table behavior
+     (tag-map.js nativeMap), and `sortable` is its own attribute, so the column
+     sorting is the framework's — the same code #1011 taught to sort dates and
+     versions properly. Writing a private sort here would mean this page could
+     disagree with every other table on the site.
+
+     Rows are rebuilt by render(); the behavior sorts whatever rows it finds, so
+     filtering and sorting do not fight. The default order is set in the DATA,
+     not by the behavior: severity first, newest first within a severity. -->
+<table id="issues-table" class="issues-table" sortable striped hoverable>
+  <thead>
+    <tr>
+      <th scope="col">Priority</th>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Kind</th>
+      <th scope="col">State</th>
+      <th scope="col">Labels</th>
+      <th scope="col">Updated</th>
+    </tr>
+  </thead>
+  <tbody id="issues-tbody"></tbody>
+</table>
+
+
 
 
 <script>
 (function () {
   const REPO = 'CieloVistaSoftware/wb-starter';
-  const listEl = document.getElementById('issues-list');
+  const tbodyEl = document.getElementById('issues-tbody');
+  const tableEl = document.getElementById('issues-table');
   const statusEl = document.getElementById('issues-status');
   const summaryEl = document.getElementById('issues-summary');
   const activeEl = document.getElementById('issues-active');
@@ -92,6 +122,80 @@
     activeEl.textContent = `Current Active: ${activeCount}`;
   }
 
+  // ── fields read off the issue ─────────────────────────────────────────────
+  const PRIORITY = /^priority:([1-5])$/;
+
+  /** 1-5 from the label; 9 for unrated, so "no rating" sorts last, visibly. */
+  function priorityOf(issue) {
+    for (const l of issue.labels || []) {
+      const m = PRIORITY.exec(l.name || '');
+      if (m) return Number(m[1]);
+    }
+    return 9;
+  }
+
+  /**
+   * One field out of the issue's Signature block.
+   *
+   * [^\S\n], not \s: \s matches the newline, so an EMPTY `test:` swallows the
+   * `fix:` line under it and reports THAT as the value. Same trap that made 11
+   * of 13 priority-1 issues look covered when 3 were.
+   */
+  function signatureField(body, field) {
+    const m = (body || '').match(new RegExp('^' + field + ':[^\\S\\n]*(\\S.*?)[^\\S\\n]*$', 'm'));
+    if (!m) return '';
+    const v = m[1].replace(/^["']|["']$/g, '').trim();
+    return v === 'null' ? '' : v;
+  }
+
+  // The verification state lives ON the issue now — a state:* label written by
+  // scripts/mark-issue-verification.mjs, alongside a `verified:` line in the
+  // Signature block. The label is what this reads (it is already in the payload);
+  // the line supplies the detail for the tooltip.
+  //
+  //   ready / stale / committed / pushed      the fix exists and is travelling
+  //   failing / regressed                      its test says otherwise
+  //   needs-test / test-missing / unproven     nothing can prove it
+  //   triaged / no-signature                   not started
+  //   closed-verified / closed-unverified      how it ended
+  // Written onto each issue by scripts/issue-state.mjs, all thirteen derived
+  // from evidence: the Signature block, the last test run, git history and this
+  // working tree.
+  // Lifecycle order, most actionable first. The rank is what the column sorts
+  // by, so ordering follows the lifecycle rather than the alphabet.
+  const STATE_RANK = {
+    ready: 1, stale: 2, committed: 3, pushed: 4,
+    failing: 5, regressed: 6, 'needs-test': 7, 'test-missing': 8, unproven: 9,
+    triaged: 10, 'no-signature': 11,
+    'closed-verified': 12, 'closed-unverified': 13,
+  };
+  const STATE_GLYPH = {
+    ready: '✓ ready', stale: '~ stale', committed: '⬆ committed', pushed: '⇧ pushed',
+    failing: '✗ failing', regressed: '✗ regressed', 'needs-test': '! needs test',
+    'test-missing': '! test missing', unproven: '? unproven',
+    triaged: '· triaged', 'no-signature': '· no signature',
+    'closed-verified': '✓ closed', 'closed-unverified': '· closed',
+  };
+
+  function verifyStateOf(issue) {
+    // The `verified:` line in the Signature block first: the marker writes the
+    // body and the label in the same pass, but the body arrives with the issue
+    // payload while a label can lag, so this shows the true state soonest.
+    const fromBody = /^([a-z-]+)/.exec(signatureField(issue.body, 'verified') || '');
+    if (fromBody && STATE_RANK[fromBody[1]]) return fromBody[1];
+
+    for (const l of issue.labels || []) {
+      const m = /^state:(.+)$/.exec(l.name || '');
+      if (m && STATE_RANK[m[1]]) return m[1];
+    }
+    // No state label yet (the marker has not reached it): say so rather than
+    // guessing a lifecycle position from the body alone.
+    return issue.state === 'closed' ? 'closed-unverified' : 'triaged';
+  }
+
+  const stateOf = (issue) =>
+    issue.state === 'open' && isInProgress(issue) ? 'in-progress' : issue.state;
+
   function render() {
     const q = searchEl.value.trim().toLowerCase();
     const filtered = allIssues.filter((issue) => {
@@ -107,76 +211,128 @@
       return issue.title.toLowerCase().includes(q) || String(issue.number).includes(q);
     });
 
+    // READY FIRST, then severity, then newest. John: "all issues that are ready
+    // should show at the top" — what is finished and provable is what a reader
+    // acts on now; severity orders everything behind it. The sortable columns
+    // let them re-order at will; this is only what they see on arrival.
+    filtered.sort((a, b) =>
+      (STATE_RANK[verifyStateOf(a)] === 1 ? 0 : 1) - (STATE_RANK[verifyStateOf(b)] === 1 ? 0 : 1)
+      || priorityOf(a) - priorityOf(b)
+      || b.number - a.number);
+
     updateSummary(filtered);
     updateActiveCount();
 
     if (!filtered.length) {
-      listEl.innerHTML = '';
+      tbodyEl.innerHTML = '';
+      tableEl.hidden = true;
       statusEl.textContent = allIssues.length ? 'No issues match this filter.' : 'No issues found.';
       statusEl.style.display = '';
       return;
     }
     statusEl.style.display = 'none';
+    tableEl.hidden = false;
 
-    listEl.innerHTML = filtered.map((issue) => {
-      const labels = (issue.labels || []).map((l) =>
-        `<span class="issue-row__label" style="background:#${l.color || '333'}22;color:#${l.color || '999'}">${escapeHtml(l.name)}</span>`
-      ).join('');
-      const rowState = issue.state === 'open' && isInProgress(issue) ? 'in-progress' : issue.state;
-      const rowStateText = rowState === 'in-progress' ? 'in-progress' : issue.state;
+    tbodyEl.innerHTML = filtered.map((issue) => {
+      const p = priorityOf(issue);
+      const rowState = stateOf(issue);
+      const kind = signatureField(issue.body, 'kind');
+      // One state column, not two. The open/closed column said nothing the
+      // derived state does not: closed-verified and closed-unverified already
+      // carry "closed", and everything else is open by definition. The tabs
+      // still filter on the GitHub state; it just no longer needs a column.
+      const vstate = verifyStateOf(issue);
+      const vdetail = signatureField(issue.body, 'verified') || signatureField(issue.body, 'test') || 'no test named';
+      const labels = (issue.labels || [])
+        .map((l) => l.name)
+        .filter((n) => !PRIORITY.test(n) && !n.startsWith('state:'))
+        .map((n) => `<span class="issue-label">${escapeHtml(n)}</span>`)
+        .join(' ');
       return `
-        <li class="issue-row" data-number="${issue.number}">
-          <div class="issue-row__summary">
-            <span class="issue-row__state issue-row__state--${rowState}">${rowStateText}</span>
-            <span class="issue-row__number">#${issue.number}</span>
-            <span class="issue-row__title">${escapeHtml(issue.title)}</span>
-            <span class="issue-row__labels">${labels}</span>
-          </div>
-          <div class="issue-row__body"><div class="issue-row__mdhtml"></div></div>
-        </li>`;
+        <tr class="issues-row issues-row--p${p}" data-number="${issue.number}" tabindex="0">
+          <td class="issues-cell--priority" sort-value="${p}"><span class="issue-priority issue-priority--${p}">${p === 9 ? '—' : p}</span></td>
+          <td>#${issue.number}</td>
+          <td class="issues-cell--title">${escapeHtml(issue.title)}</td>
+          <td>${escapeHtml(kind) || '—'}</td>
+          <td class="issues-cell--state" sort-value="${STATE_RANK[vstate]}" title="${escapeHtml(vdetail)}"><span class="issue-verify issue-verify--${vstate}">${STATE_GLYPH[vstate]}</span></td>
+          <td class="issues-cell--labels">${labels}</td>
+          <td>${fmtDate(issue.updated_at || issue.created_at)}</td>
+        </tr>`;
     }).join('');
 
-    // A plain div, not a real <div x-mdhtml> tag -- tag-map.js registers
-    // x-mdhtml for WB's own generic auto-scan/lazy-load, which would call
-    // mdhtml() on it with DEFAULT options (autoLiveRender left at its true
-    // default) the moment it lands in the DOM, racing ahead of the explicit
-    // { autoLiveRender: false } call below and re-introducing the exact bug
-    // that option exists to prevent (confirmed live: it did, even before any
-    // row was ever clicked open). mdhtml() itself supports this -- it only
-    // needs the x-mdhtml TAG for CSS tag-selectors, and adds the .x-mdhtml
-    // CLASS itself on any other host (same pattern public/doc-viewer.html's
-    // own plain <div id="content"> already relies on).
-    //
-    // Set via .textContent, not innerHTML, so the browser HTML-escapes the
-    // raw body text into it; mdhtml.js's own decode-then-parse step (its
-    // "code samples are frequently written HTML-escaped" handling) expects
-    // exactly that and un-escapes it before handing the real markdown to
-    // `marked`. Assigning raw markdown directly via innerHTML here would get
-    // double-escaped instead.
-    const rows = listEl.querySelectorAll('.issue-row');
-    rows.forEach((row, i) => {
-      const md = row.querySelector('.issue-row__mdhtml');
-      if (md) md.textContent = filtered[i].body || '_No description provided._';
-    });
+    const byNumber = new Map(filtered.map((i) => [String(i.number), i]));
 
-    listEl.querySelectorAll('.issue-row__summary').forEach((summary) => {
-      summary.addEventListener('click', async () => {
-        const row = summary.closest('.issue-row');
-        row.classList.toggle('issue-row--expanded');
-        // Lazy: only pay for markdown parsing once a row is actually opened,
-        // and only once per row (not on every re-toggle).
-        const md = row.querySelector('.issue-row__mdhtml');
-        if (md && !md.dataset.rendered && window.WB) {
-          md.dataset.rendered = '1';
-          // autoLiveRender: false -- issue bodies are arbitrary/untrusted
-          // author text, not curated docs. Without this, a body that merely
-          // ILLUSTRATES a <wb-*>/x-* example (like #527, describing this
-          // exact bug) gets that example auto-promoted into a real, live,
-          // fetching/executing element on this page.
-          await window.WB.inject(md, 'mdhtml', { autoLiveRender: false });
-        }
+    const COLUMNS = tableEl.querySelectorAll('thead th').length;
+
+    /** Close every open expander. Returns how many were open. */
+    function collapseAll() {
+      const open = tbodyEl.querySelectorAll('.issues-expander');
+      for (const el of open) el.remove();
+      for (const r of tbodyEl.querySelectorAll('.issues-row--open')) r.classList.remove('issues-row--open');
+      return open.length;
+    }
+
+    /**
+     * John: "when clicking on an issue use an expander open to show it right there."
+     *
+     * The body opens in a row directly beneath the one clicked rather than in a
+     * panel elsewhere, so the reader's eye does not travel and the issue stays
+     * next to its own priority and state.
+     */
+    async function toggle(row) {
+      const issue = byNumber.get(row.dataset.number);
+      if (!issue) return;
+
+      const wasOpen = row.classList.contains('issues-row--open');
+      collapseAll();
+      if (wasOpen) return;                    // clicking the open row closes it
+
+      row.classList.add('issues-row--open');
+
+      const tr = document.createElement('tr');
+      tr.className = 'issues-expander';
+      const td = document.createElement('td');
+      td.colSpan = COLUMNS;
+      const body = document.createElement('div');
+      body.className = 'issues-expander__body';
+      td.appendChild(body);
+      tr.appendChild(td);
+      row.after(tr);
+
+      // .textContent, not innerHTML: mdhtml.js decodes-then-parses (its "code
+      // samples are frequently written HTML-escaped" handling), so raw markdown
+      // assigned as HTML would come out double-escaped.
+      body.textContent = issue.body || '_No description provided._';
+
+      if (window.WB) {
+        // autoLiveRender: false -- issue bodies are arbitrary author text, not
+        // curated docs. Without it, a body that merely ILLUSTRATES an x-*
+        // example (like #527, describing this exact bug) gets promoted into a
+        // real, live, fetching element on this page.
+        await window.WB.inject(body, 'mdhtml', { autoLiveRender: false });
+      }
+    }
+
+    tbodyEl.querySelectorAll('.issues-row').forEach((row) => {
+      row.addEventListener('click', () => toggle(row));
+      row.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(row); }
       });
     });
+
+    // Sorting walks every <tr> in the tbody, so an open expander would be sorted
+    // as though it were an issue and torn away from the row it belongs to.
+    // Capture phase, so it collapses BEFORE the table behavior's own handler.
+    tableEl.querySelectorAll('thead th').forEach((th) => {
+      th.addEventListener('click', collapseAll, true);
+    });
+
+    // Re-apply the table behavior to the rebuilt rows. Guarded on the class the
+    // behavior itself adds, so a rebuild does not stack a second sort handler
+    // on the same table -- the defect #1022 documents for codecontrol.
+    if (window.WB && !tableEl.classList.contains('x-table')) {
+      window.WB.inject(tableEl, 'table', {});
+    }
   }
 
   tabs.forEach((tab) => {
@@ -189,7 +345,83 @@
   });
   searchEl.addEventListener('input', render);
 
+  // ── cache ─────────────────────────────────────────────────────────────────
+  //
+  // John: "always keep the last issues list in cache to avoid this: Could not
+  // load issues: GitHub API responded 403... if that message is seen then just
+  // show the cache for the next hour."
+  //
+  // Unauthenticated GitHub allows 60 requests an hour per IP, and this page
+  // spends 3-4 of them per load (100 issues a page). A few reloads, or any other
+  // tool on the same IP, and the page went blank with an error — throwing away a
+  // list it had successfully fetched minutes earlier.
+  //
+  // So: every successful load is cached, a 403 shows the cache instead of an
+  // error, and the API is not touched again until the limit resets. Never
+  // silently: the banner says the list is cached and how old it is, because a
+  // stale list presented as live is worse than an error.
+  const CACHE_KEY = 'wb-issues-cache-v1';
+  const LIMIT_KEY = 'wb-issues-ratelimited-until';
+
+  function saveCache(issues) {
+    const payload = { fetchedAt: Date.now(), issues };
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+    } catch (err) {
+      // Bodies are most of the weight and the table does not need them; a
+      // truncated cache still beats an error page. The expander says so when it
+      // has nothing to show.
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          fetchedAt: Date.now(),
+          bodiesDropped: true,
+          issues: issues.map(({ body, ...rest }) => rest),
+        }));
+      } catch (err2) {
+        console.warn('[issues] could not cache the list:', err2.message);
+      }
+    }
+  }
+
+  function loadCache() {
+    try { return JSON.parse(localStorage.getItem(CACHE_KEY) || 'null'); }
+    catch { return null; }
+  }
+
+  const rateLimitedUntil = () => Number(localStorage.getItem(LIMIT_KEY) || 0);
+
+  function noteRateLimit(res) {
+    // GitHub says exactly when the window resets; use that rather than guessing
+    // an hour, and fall back to an hour when the header is absent.
+    const reset = Number(res && res.headers && res.headers.get('x-ratelimit-reset'));
+    const until = Number.isFinite(reset) && reset > 0 ? reset * 1000 : Date.now() + 60 * 60 * 1000;
+    try { localStorage.setItem(LIMIT_KEY, String(until)); } catch { /* private mode */ }
+    return until;
+  }
+
+  const fmtTime = (ms) => new Date(ms).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+
+  function showCached(cache, until) {
+    allIssues = cache.issues || [];
+    const age = Math.round((Date.now() - cache.fetchedAt) / 60000);
+    render();
+    statusEl.textContent =
+      `Showing the cached list — fetched ${age} minute${age === 1 ? '' : 's'} ago`
+      + (until ? `. GitHub's rate limit resets at ${fmtTime(until)}; live data resumes then.` : '.')
+      + (cache.bodiesDropped ? ' Issue bodies were too large to cache, so expanders are empty until the next live load.' : '');
+    statusEl.style.display = '';
+  }
+
   async function load() {
+    // Inside a known rate-limit window there is no point spending a request to
+    // be told so again.
+    const until = rateLimitedUntil();
+    const cache = loadCache();
+    if (until > Date.now() && cache) {
+      showCached(cache, until);
+      return;
+    }
+
     try {
       // Public, unauthenticated GitHub REST API -- works identically on the
       // deployed GitHub Pages site (static hosting, no server-side proxy
@@ -206,6 +438,11 @@
         statusEl.textContent = `Loading issues… (${all.length} so far)`;
         statusEl.style.display = '';
         const res = await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=${perPage}&page=${page}&sort=created&direction=desc`);
+        if (res.status === 403 || res.status === 429) {
+          const resetAt = noteRateLimit(res);
+          if (cache) { showCached(cache, resetAt); return; }
+          throw new Error(`GitHub API responded ${res.status} and nothing is cached yet`);
+        }
         if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
         const batch = await res.json();
         all = all.concat(batch);
@@ -214,9 +451,16 @@
       }
       // The /issues endpoint also returns pull requests -- exclude them.
       allIssues = all.filter((i) => !i.pull_request);
+      try { localStorage.removeItem(LIMIT_KEY); } catch { /* private mode */ }
+      saveCache(allIssues);
       render();
     } catch (err) {
-      statusEl.textContent = 'Could not load issues: ' + err.message + ' (GitHub API rate limits unauthenticated requests to 60/hour per IP).';
+      // Any other failure (offline, DNS, a 5xx) falls back to the cache too —
+      // the reason for showing it is that the live list is unavailable, not
+      // which particular way it was unavailable.
+      if (cache) { showCached(cache, rateLimitedUntil() || 0); return; }
+      statusEl.textContent = 'Could not load issues: ' + err.message
+        + ' (GitHub API rate limits unauthenticated requests to 60/hour per IP), and nothing is cached yet.';
       statusEl.style.display = '';
     }
   }

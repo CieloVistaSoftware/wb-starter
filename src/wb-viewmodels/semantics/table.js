@@ -6,6 +6,56 @@ import { createToast } from '../feedback.js';
  * Adds sorting, striping, hover effects, and more
  * Helper Attribute: [x-behavior="table"]
  */
+/**
+ * Compare two cell values by what they ARE, not by what parseFloat makes of them.
+ *
+ * #1011. The previous comparator was one line:
+ *
+ *   const aNum = parseFloat(aVal.replace(/[^0-9.-]/g, ''));
+ *
+ * `parseFloat("2026-09-03")` is 2026, so every date in a year compared EQUAL and
+ * a date column never moved -- while the header arrow still updated, so the
+ * control looked like it worked. `parseFloat("4.0.1")` is 4, so every 4.x
+ * version tied with every other and the order collapsed to whatever the stable
+ * sort happened to leave.
+ *
+ * Stripping characters before deciding the type is the root mistake: it turns
+ * "9/3/2026" into the number 932026 and "3 items" into 3. The type has to be
+ * decided from the WHOLE value.
+ */
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}(?:[T\s].*)?$/;
+const DOTTED_VERSION = /^\d+(?:\.\d+){1,3}$/;
+const PURE_NUMBER = /^-?\d+(?:\.\d+)?$/;
+
+function compareCells(a, b) {
+  // Empty values sort last in both directions -- a blank is not "smallest",
+  // it is missing, and burying it under real data is what a reader expects.
+  if (!a && !b) return 0;
+  if (!a) return 1;
+  if (!b) return -1;
+
+  if (ISO_DATE.test(a) && ISO_DATE.test(b)) {
+    return new Date(a).getTime() - new Date(b).getTime();
+  }
+
+  if (DOTTED_VERSION.test(a) && DOTTED_VERSION.test(b)) {
+    const as = a.split('.').map(Number);
+    const bs = b.split('.').map(Number);
+    for (let i = 0; i < Math.max(as.length, bs.length); i++) {
+      const d = (as[i] ?? 0) - (bs[i] ?? 0);
+      if (d) return d;
+    }
+    return 0;
+  }
+
+  if (PURE_NUMBER.test(a) && PURE_NUMBER.test(b)) {
+    return Number(a) - Number(b);
+  }
+
+  // numeric: true so "item 2" precedes "item 10" instead of following it.
+  return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+}
+
 export function table(element, options = {}) {
   const config = {
     striped: options.striped ?? (element.hasAttribute('striped') || readFlag(element, 'striped')),
@@ -217,17 +267,30 @@ export function table(element, options = {}) {
         
         // Sort Rows
         const dataRows = Array.from(tbody.querySelectorAll('tr'));
+
+        // #1036: a cell may declare its own sort key. What a column DISPLAYS and
+        // what it should be ORDERED by are not always the same value -- a
+        // priority column showing '—' for unrated, a date shown as "Sep 5, 2026",
+        // a size shown as "1.2 MB". Without this the display text is the only
+        // key available, and the Priority column sorted every unrated row above
+        // priority 1: the least urgent first, in the column that exists to
+        // express urgency.
+        // Falls back to textContent, so every existing table sorts exactly as
+        // it did.
+        //
+        // Law 11: a PLAIN attribute, read with getAttribute -- not `data-` and
+        // not `.dataset`. The first version of this used `data-sort-value` and
+        // `cell.dataset.sortValue`, which is the exact pattern the law forbids
+        // on behavior elements.
+        const keyOf = (row) => {
+          const cell = row.children[colIndex];
+          if (!cell) return '';
+          return (cell.getAttribute('sort-value') ?? cell.textContent ?? '').trim();
+        };
+
         dataRows.sort((a, b) => {
-          const aVal = a.children[colIndex].textContent.trim();
-          const bVal = b.children[colIndex].textContent.trim();
-          
-          const aNum = parseFloat(aVal.replace(/[^0-9.-]/g, ''));
-          const bNum = parseFloat(bVal.replace(/[^0-9.-]/g, ''));
-          
-          if (!isNaN(aNum) && !isNaN(bNum)) {
-            return sortDir === 'asc' ? aNum - bNum : bNum - aNum;
-          }
-          return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+          const cmp = compareCells(keyOf(a), keyOf(b));
+          return sortDir === 'asc' ? cmp : -cmp;
         });
         
         dataRows.forEach(row => tbody.appendChild(row));

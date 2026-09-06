@@ -18,9 +18,16 @@ import { test, expect } from '@playwright/test';
  * room for the other.
  */
 test.describe('footer anchors to viewport bottom (site.css)', () => {
+  // #1020: the second case used to be `/?page=behaviors`, picked for being long
+  // and full of code blocks. That page no longer has a footer at all — John,
+  // arrow drawn on it: "remove this" — so the case moved to What's New, which is
+  // longer (11091px of content) and carries more code (481 elements) than the
+  // behaviors page ever did, and therefore tests the same two original bugs
+  // better. The exemption is asserted below rather than merely tolerated, so a
+  // footer going missing from any OTHER page still fails.
   const PAGES = [
     { url: '/', label: 'home (short content)' },
-    { url: '/?page=behaviors', label: 'components (long content, code blocks)' },
+    { url: '/?page=whats-new', label: "what's new (long content, code blocks)" },
   ];
 
   for (const { url, label } of PAGES) {
@@ -58,7 +65,8 @@ test.describe('footer anchors to viewport bottom (site.css)', () => {
 
   test('mobile width (375px): footer still anchors, no page-level horizontal scroll', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
+    // #1020: was `/?page=behaviors` — see the note on PAGES above.
+    await page.goto('/?page=whats-new', { waitUntil: 'networkidle' });
     await page.waitForSelector('.site__footer', { timeout: 15000 });
 
     const result = await page.evaluate(() => {
@@ -71,5 +79,51 @@ test.describe('footer anchors to viewport bottom (site.css)', () => {
     });
     expect(result.footerBottom).toBe(result.innerHeight);
     expect(result.docHasHScroll).toBe(false);
+  });
+
+  /**
+   * #1020 — the one page that deliberately has no footer.
+   *
+   * The behaviors page is a workspace, not a document: two panels that fill the
+   * window and scroll internally. John, arrow on the footer: "remove this". Its
+   * 85px of copyright and social links were competing with the tool for the
+   * bottom of the screen, and were the last thing forcing .site__body to scroll
+   * on that page, which is what produced the second scrollbar he also drew an
+   * arrow at.
+   *
+   * Asserted, not just skipped: if the exemption is ever removed the rule above
+   * applies again, and if the footer vanishes from some OTHER page the rest of
+   * this file still catches it. A page dropping out of a compliance sweep with
+   * no assertion left behind is how a rule quietly stops being enforced.
+   */
+  test('the behaviors workspace has no footer, by design', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
+    await page.waitForSelector('#behaviors-workspace', { timeout: 15000 });
+
+    const state = await page.evaluate(() => {
+      const footer = document.querySelector('.site__footer');
+      const body = document.querySelector('.site__body') as HTMLElement;
+      return {
+        footerExists: !!footer,
+        footerHidden: footer ? getComputedStyle(footer).display === 'none' : false,
+        // The point of hiding it: the workspace fills the window and only the
+        // panels scroll.
+        outerScrolls: body.scrollHeight > body.clientHeight + 1,
+      };
+    });
+
+    expect(state.footerExists, 'the shell footer element should still be in the DOM').toBe(true);
+    expect(
+      state.footerHidden,
+      'the behaviors page footer is visible again — either the #1020 rule was '
+      + 'dropped from behaviors.css, or this exemption is no longer wanted, in '
+      + 'which case put /?page=behaviors back in PAGES above.',
+    ).toBe(true);
+    expect(
+      state.outerScrolls,
+      'the outer container is scrolling again, which is the two-scrollbars state '
+      + 'from #1020.',
+    ).toBe(false);
   });
 });

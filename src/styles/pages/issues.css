@@ -36,3 +36,148 @@
      otherwise inherit literal whitespace preservation meant for plain text. */
   .issue-row__body .issue-row__mdhtml { display: block; }
   .issue-row--expanded .issue-row__body { display: block; padding-top: 1rem; }
+
+/* =============================================================================
+   #1036 — the issues table
+   John: "list the items by priority, make it a table, add columns for fields in
+   the issue, all sortable... when issue viewer fills in data it should all be
+   listed in severity order."
+   Colours come from the theme; the priority chips are the one place a severity
+   scale needs its own ramp, and they take it from the semantic tokens rather
+   than literals.
+   ============================================================================= */
+.issues-table {
+  width: 100%;
+  margin-top: var(--space-md, 1rem);
+}
+
+.issues-row {
+  cursor: pointer;
+}
+
+.issues-row:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.issues-row--open {
+  background: var(--bg-tertiary);
+}
+
+.issues-cell--title {
+  /* The column that earns the width: everything else is short and fixed. */
+  width: 45%;
+}
+
+.issues-cell--priority,
+.issues-cell--state {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.issue-priority {
+  display: inline-block;
+  min-width: 1.75rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm, 4px);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--bg-primary);
+  background: var(--text-muted);
+}
+
+/* 1 is the one that should be visible from across the room. */
+.issue-priority--1 { background: var(--danger-color, var(--error-color)); }
+.issue-priority--2 { background: var(--warning-color); }
+.issue-priority--3 { background: var(--info-color, var(--primary)); }
+.issue-priority--4 { background: var(--success-color); }
+.issue-priority--5 { background: var(--text-muted); }
+.issue-priority--9 { background: transparent; color: var(--text-muted); }
+
+.issue-state {
+  font-size: 0.75rem;
+  text-transform: lowercase;
+  color: var(--text-secondary);
+}
+
+.issue-state--open { color: var(--success-color); }
+.issue-state--closed { color: var(--text-muted); }
+.issue-state--in-progress { color: var(--warning-color); }
+
+.issue-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  padding: 0.05rem 0.35rem;
+  margin: 0 0.15rem 0.15rem 0;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.issue-detail {
+  margin-top: var(--space-md, 1rem);
+  padding: var(--space-md, 1rem);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-secondary);
+}
+
+.issue-detail__title {
+  margin: 0 0 var(--space-sm, 0.5rem);
+  color: var(--text-primary);
+}
+
+/* The verification state, written onto the issue by
+   scripts/mark-issue-verification.mjs and shown here so "is this committable?"
+   is answerable at a glance rather than by opening each issue. */
+.issue-verify {
+  font-size: 0.72rem;
+  white-space: nowrap;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.issue-verify--preliminary-pass { color: var(--success-color); }
+.issue-verify--failing          { color: var(--danger-color, var(--error-color)); }
+.issue-verify--unproven         { color: var(--warning-color); }
+.issue-verify--no-test          { color: var(--text-muted); }
+
+/* The inline expander: the issue body opens in a row directly under the one
+   clicked, so it reads in the context of its own priority and state. */
+.issues-expander > td {
+  padding: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--primary);
+}
+
+.issues-expander__body {
+  padding: var(--space-md, 1rem);
+  max-height: 32rem;
+  overflow-y: auto;
+}
+
+.issues-row--open {
+  background: var(--bg-tertiary);
+}
+
+.issues-row--open td {
+  border-bottom: 0;
+}
+
+/* Thirteen states, grouped by what a reader does about them: green = the fix
+   exists and is moving, red = the tests disagree, amber = nothing can prove it,
+   muted = not started or already closed. */
+.issue-verify--ready,
+.issue-verify--closed-verified   { color: var(--success-color); }
+.issue-verify--committed,
+.issue-verify--pushed            { color: var(--info-color, var(--primary)); }
+.issue-verify--stale             { color: var(--warning-color); }
+.issue-verify--failing,
+.issue-verify--regressed,
+.issue-verify--needs-test        { color: var(--danger-color, var(--error-color)); }
+.issue-verify--test-missing,
+.issue-verify--unproven          { color: var(--warning-color); }
+.issue-verify--triaged,
+.issue-verify--no-signature,
+.issue-verify--closed-unverified { color: var(--text-muted); }

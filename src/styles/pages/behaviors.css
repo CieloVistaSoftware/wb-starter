@@ -781,10 +781,11 @@ footer a:hover {
      renders as a large floating block over the code. */
   all: unset;
   box-sizing: border-box;
-  position: absolute;
-  top: 0.4rem;
-  right: 2.75rem;   /* clear of the HTML language badge x-pre renders */
-  z-index: 1;
+  /* #1020: was position:absolute, top 0.4rem, right 2.75rem -- pinned over the
+     panel's top-right corner and, once the panel filled the window, sitting on
+     the first line of the listing (measured 70x13px of overlap). It is a flex
+     item in the code bar now, so it cannot cover the code at all and needs no
+     offset tuned against x-pre's language badge. */
   padding: 0.2rem 0.55rem;
   font: inherit;
   font-size: 0.7rem;
@@ -1804,4 +1805,337 @@ main.site__main:has(#mainPage-behaviors) {
   background: var(--bg-secondary);
   box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 0.45);
   text-align: left;
+}
+
+/* John: "none of these buttons are aligned why did you do that?"
+   Measured before this: API summary top 18 / h 44, Docs top 10 / h 44,
+   Fullscreen and AutoScroll top 7 / h 49 — three baselines, two heights.
+
+   Cause: two of the four are <details> and two are <button>. The container
+   centred the DETAILS wrappers, not the <summary> chips inside them, and the
+   buttons carried their own padding and line-height from the panel they came
+   from. Moving elements into a new context does not re-style them, which is
+   the cost of moving rather than rebuilding — the right trade for keeping them
+   wired (#999), but it has to be paid here.
+
+   One height, one padding, one line-height, applied to the things that
+   actually render: the summaries and the buttons. */
+#behaviors-header-tools {
+  /* The strip must never wrap. Wrapping pushed API onto a second line that
+     overlapped the sidebar and the search row -- four controls sharing a header
+     with a theme picker have to stay compact and on one line. */
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+/* WHY AN ID, AND WHY EVERY DECLARATION IS RE-STATED HERE
+   =====================================================
+   These four controls were MOVED from the live panel, not rebuilt, so they
+   arrive still carrying that panel's styling -- and the class-based version of
+   this rule silently lost. `details.css` sets
+
+       .x-details > .x-details__summary { padding: 1rem }   (0,2,0)
+
+   which outranks `.behaviors-header-tools > details > summary` (0,1,2). The
+   font-size applied and the padding did not, which is why the chips measured
+   34, 35 and 36px tall with tops 8px apart while the rule "looked" correct in
+   the file. Reading the source is not verification: what settles a conflict is
+   the parsed cascade (#965).
+
+   The ID wins outright without !important, which Law 16 forbids and which
+   would only move the same fight one level up. behaviors.css:768 already uses
+   this pattern for the same reason. */
+#behaviors-header-tools > * {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  /* .behaviors-live__api brings margin-top:1rem and .behaviors-live__fullscreen
+     brings margin-left:auto -- the 16px drop and the stray gap. */
+  margin: 0;
+}
+
+#behaviors-header-tools > details > summary,
+#behaviors-header-tools > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  box-sizing: border-box;
+  height: 2rem;
+  padding: 0 0.6rem;
+  margin: 0;
+  border: 1px solid var(--border-color, #374151);
+  border-radius: 0.375rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* THE PANELS MUST BE ABLE TO ESCAPE THE CHIP (#1004)
+   ==================================================
+   Moving API and Docs into the header broke them: clicking did nothing
+   visible. The <details> was opening and its panel WAS rendering -- measured
+   736x517 -- but `details.css` sets
+
+       .x-details { overflow: hidden }
+
+   so a 517px panel was clipped to a 32px chip. Nothing was broken about the
+   click; the result was painted inside a box the height of the button.
+
+   The second half: the panel is `position: absolute; right: 0`, and its
+   containing block was the chip itself (the earlier rule gives
+   .behaviors-live__api `position: relative`). Right-aligning a 736px panel to
+   a 90px chip put its left edge at x = -149, off the screen. Anchoring to the
+   STRIP instead right-aligns it near the theme control and lets it open
+   leftwards across the page, where there is room for it. */
+#behaviors-header-tools {
+  position: relative;
+}
+
+#behaviors-header-tools > details {
+  position: static;
+  overflow: visible;
+}
+
+#behaviors-header-tools > details > .behaviors-live__api-body,
+#behaviors-header-tools > details > .behaviors-live__doc-body {
+  z-index: 60;
+}
+
+#behaviors-header-tools > details > summary::marker,
+#behaviors-header-tools > details > summary::-webkit-details-marker {
+  content: none;
+  display: none;
+}
+
+#behaviors-header-tools > details > summary:hover,
+#behaviors-header-tools > button:hover {
+  background: var(--bg-tertiary);
+}
+
+
+/* #1018 — John: "make this full height", pointing at the live preview sitting
+   in a short box with empty space below it.
+   The workspace row was content-sized: 569px inside an 861px viewport, so the
+   preview ended where its content ended and the rest of the screen went unused.
+   Given a definite height it fills instead, and each side scrolls internally.
+
+   #710's warning still holds and is why this is written as a definite height
+   rather than `align-items: stretch` alone: stretch with a CONTENT-sized row
+   makes the panel's height depend on the row's, which depends on the panel's,
+   and the list's 585 rows then feed that loop and both sides grow unbounded.
+   A definite height breaks the circularity — the row is sized by the viewport,
+   never by its children. */
+.behaviors-workspace {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* =============================================================================
+   #1018/#1020 -- the workspace fills the window, and only the panels scroll.
+
+   DEMOS-AND-DOCS-STANDARDS.md 10 (mobile-first): every rule in this block sits
+   inside the page's own two-column breakpoint and none of it applies below it.
+   That is not caution, it is a measured regression -- applied at every width, a
+   375x812 viewport rendered the behaviour navigator 2px tall, and since
+   .site__body had been told not to scroll there was no way to reach it or
+   anything else: the phone layout was frozen.
+   Two panels sharing one fixed-height row is a wide-screen idea. Stacked on a
+   phone the same rules crush the first panel to nothing. Below 60rem
+   .behaviors-browse collapses to a single column (rule at the top of this file)
+   and the page keeps the site's ordinary flow: natural heights, .site__body
+   scrolling, both panels reachable.
+   ============================================================================= */
+/* #992 puts a FLOOR under this treatment. Below roughly 600px of window the
+   two requirements genuinely conflict: a list tall enough to browse cannot
+   also fit under the panel's offset, so something must overflow -- and when it
+   does, the outer scroller has to be able to reach it. This block deliberately
+   STOPS the outer scroller, so above the floor it has to guarantee nothing
+   overflows, and below the floor it has to get out of the way. Measured at
+   1280x420 without the floor: #siteBody could no longer reach the overflow at
+   all, which is the #992 defect itself, reintroduced.
+   min-height for the same reason min-width is here -- see the block above. */
+@media (min-width: 60.0625rem) and (min-height: 37.5rem) {
+  .behaviors-browse {
+    /* #1020 -- was height: calc(100vh - 10rem). That guessed at the chrome
+       above it (site header + search row + filter strip) and guessed high, so
+       the workspace ran past the bottom of .site__body and made .site__body
+       scroll too -- the second scrollbar John pointed at, a few pixels from the
+       live panel's own. In fullscreen the chrome above is a different height
+       again, which is where the third one came from.
+       flex:1 takes the height from the container instead of the viewport, so it
+       is correct in both places without either one being measured.
+       min-height: 0 with it, always: flex-basis 0 sizes the box from the
+       container, but min-height defaults to auto, which floors it at content
+       height -- with 184 rows in the list that floor measured 10343px, so the
+       row was sized by its content again and .site__body went straight back to
+       scrolling. flex:1 alone does nothing here without this line. */
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+    /* BOTH are needed. `align-items: stretch` makes an item fill its ROW; it
+       does not make the row fill the CONTAINER. Without this the grid kept one
+       auto (content-sized) row, so the container grew to 701px while the row --
+       and so both panels -- stayed at their 569px content height and 132px sat
+       empty. minmax(0, 1fr) also lets the row shrink BELOW its content, which
+       is what lets each panel's own overflow-y scroll instead of the row
+       growing to fit (#710's unbounded-growth trap). */
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  /* Both sides own their own scrolling now that the row height is fixed.
+     #1018 -- John: "both of these elements must be 100vh", arrows on the
+     results list and the live panel. The previous version left both at their
+     569px content height inside a 701px row, which is the empty strip he was
+     pointing at. */
+  .behaviors-browse > .behaviors-search-results,
+  .behaviors-browse > .behaviors-live {
+    max-height: none;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+/* #1018 — the code-theme picker, now sitting directly above the code panel it
+   recolours. Right-aligned so it reads as a control ON the panel rather than a
+   heading above it, and it shares the panel's top border so the two are visibly
+   one unit. */
+.behaviors-live__codebar {
+  display: flex;
+  /* Copy on the left, code theme on the right: both act on the panel below. */
+  justify-content: space-between;
+  align-items: center;
+  /* DEMOS-AND-DOCS-STANDARDS.md 13: spacing comes from the theme's spacing
+     scale, not ad-hoc values. This was `0.35rem 0.5rem 0` -- numbers picked by
+     eye, which is exactly what that rule exists to stop. */
+  padding: var(--space-xs, 0.25rem) var(--space-sm, 0.5rem) 0;
+  border-top: 1px solid var(--border-color, #374151);
+}
+
+/* The panel already draws its own top border; with the bar above it that would
+   be two lines a few pixels apart. */
+.behaviors-live__codebar + .behaviors-live__code {
+  border-top: 0;
+}
+
+/* #1018 — John: "it must take up full height and width, as is true for the nav".
+   The workspace was capped at the site's 1200px reading width and centred, so
+   on a 1427px window ~227px sat unused either side while the list and preview
+   fought over what was left.
+   That cap is right for prose — a 1400px line of text is unreadable — and wrong
+   for a workspace, which is a tool: two scrolling panels that want every pixel,
+   the same way the nav rail spans the full height rather than stopping at a
+   reading width. Scoped to this page's own id so no other page loses it. */
+#mainPage-behaviors {
+  max-width: none;
+  margin-inline: 0;
+  width: 100%;
+}
+
+/* main's 32px inset does the same thing one level up. :has() keeps it to the
+   page that carries the workspace instead of every page main renders.
+
+   #1020 -- John: "1rem gap on side". This was padding-inline: 0. Removing
+   main's 2rem inset is how the workspace got the full width, but zero left the
+   results list flush against the nav rail with no breathing room. The ask was
+   never zero -- it was "not 227px of dead margin either side". */
+.site__main:has(#behaviors-workspace) {
+  /* Standards 13: from the spacing scale, not a hand-picked 1rem. */
+  padding-inline: var(--space-md, 1rem);
+}
+
+/* #1020 -- John: "we don't need 2 vertical scroll bars".
+   .site__body is the site's SINGLE scroll container by design (site.css: .site
+   is 100dvh with overflow:hidden, .site__body is flex:1 overflow-y:auto). A
+   viewport-sized workspace inside it overflows it, so both scrolled: the live
+   panel's bar and .site__body's, side by side at the right edge.
+   Making the workspace exactly fill the space it is given takes an unbroken
+   flex chain from .site__main down to .behaviors-browse. Every link needs
+   min-height: 0 -- a flex child defaults to min-height: auto and refuses to
+   shrink below its content, which would push the overflow straight back out to
+   .site__body.
+   Standards 10 again: wide screens only. Below the breakpoint the panels stack,
+   and a container that refuses to scroll would simply hide the second one. */
+/* #992 puts a FLOOR under this treatment. Below roughly 600px of window the
+   two requirements genuinely conflict: a list tall enough to browse cannot
+   also fit under the panel's offset, so something must overflow -- and when it
+   does, the outer scroller has to be able to reach it. This block deliberately
+   STOPS the outer scroller, so above the floor it has to guarantee nothing
+   overflows, and below the floor it has to get out of the way. Measured at
+   1280x420 without the floor: #siteBody could no longer reach the overflow at
+   all, which is the #992 defect itself, reintroduced.
+   min-height for the same reason min-width is here -- see the block above. */
+@media (min-width: 60.0625rem) and (min-height: 37.5rem) {
+  .site__main:has(#behaviors-workspace) {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* Nothing inside is taller than the container any more, and the panels do
+     their own scrolling, so the outer scroller has nothing left to do. Scoped
+     by :has() so every other page keeps the site's normal single-scroll
+     behaviour. */
+  .site__body:has(#behaviors-workspace) {
+    overflow: hidden;
+  }
+
+  /* The two links between main and the workspace. Neither carries any visual
+     role here -- they exist for routing (.page) and for the fullscreen target's
+     positioning (.page__hero) -- so they only pass the height through. */
+  #mainPage-behaviors,
+  #behaviors-hero.page__hero {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* ...and the workspace itself takes the rest. */
+  .behaviors-workspace {
+    flex: 1;
+    /* min-height:0 and overflow:hidden together are what make "the panels never
+       extend past the scroller" (#992) true by construction rather than by
+       arithmetic. Removing main's bottom padding left the layout with zero
+       slack: the panels finish at 899 of 900 here, so a few pixels of extra
+       chrome anywhere above them spills the bottom of the panel past
+       .site__body. Measured exactly that way -- this browser fits at 1440x900
+       with 1px to spare, while the same page under Playwright, whose header and
+       search row come out ~10px taller on different font metrics, overflowed by
+       9px and failed behaviors-selection-visible.
+       Clipping here costs nothing: both panels scroll internally, so no content
+       becomes unreachable -- only the box stops growing past the space it was
+       given. Tuning a padding value instead would fix this font stack and break
+       the next one. */
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* John, arrows on both panels: "Why are these two elements not full height?"
+     Measured at 1172x849: the panels ended at 816 with 33px of window left
+     under them -- main's own 32px bottom padding, which is right for a document
+     and wrong for a workspace. The side padding stays (that is his "1rem gap on
+     side"); only the strip along the bottom goes, so the panels finish flush
+     against the window edge the way the nav rail does. */
+  .site__main:has(#behaviors-workspace) {
+    padding-bottom: 0;
+  }
+}
+
+/* #1020 -- John: "remove this", arrow on the site footer.
+   The footer is the shell's (#siteFooter in index.html), not this page's, which
+   is why removing markup from behaviors.html never made it go away. On a
+   workspace that is meant to fill the window it is 85px of copyright and social
+   links competing with the tool for the bottom of the screen -- and it was the
+   last thing forcing .site__body to scroll. Hidden for this page only. */
+.site:has(#behaviors-workspace) > .site__footer {
+  display: none;
 }

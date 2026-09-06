@@ -162,6 +162,18 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
 
 - Menus and navs **stack** on mobile; no horizontal overflow at any width. Design for the
   narrowest screen first, then enhance up.
+- **A viewport-filling layout is a wide-screen layout — scope it to a breakpoint.** Fixed
+  container height, panels that scroll internally, and an outer container told not to
+  scroll are all wide-screen ideas. Stacked on a phone the same rules collapse the first
+  panel and, with the outer scroller disabled, make everything below the fold unreachable.
+  Measured on `?page=behaviors` at 375x812 (#1020): the 837-row behaviour navigator
+  rendered **2px tall** with `#siteBody { overflow: hidden }` — a frozen page. Put the
+  whole treatment inside the page's own breakpoint (behaviors uses
+  `@media (min-width: 60.0625rem)`, mirroring where its grid collapses to one column) and
+  let the narrow layout keep the site's ordinary flow.
+- **Measure both widths before calling a layout fix done.** A fix verified only at desktop
+  is half-verified. Test: `tests/regression/behaviors-workspace-single-scroll.spec.ts`
+  asserts the desktop and the 375x812 case in the same file.
 
 ## 11. Zero hardcoded colors
 
@@ -498,6 +510,7 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
 | 5, 8 (no double-parse) | `tests/integration/doc-viewer-code-multiline.spec.ts`; `docs/_today/ROOT-CAUSE-md-double-parse.md` |
 | 9 (composition) | `tests/compliance/no-legacy-component-inheritance-docs.spec.ts` |
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
+| 10 (mobile-first layout scoping) | `tests/regression/behaviors-workspace-single-scroll.spec.ts` (#1020) |
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
 | 1, 16, 25 (x-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |

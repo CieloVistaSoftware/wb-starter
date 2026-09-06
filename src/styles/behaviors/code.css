@@ -6,8 +6,17 @@
  * -----------------------------------------------------------------------------
  */
 
-.x-code {
+.x-code:not(.hljs) {
   background: var(--bg-tertiary);
+}
+
+.x-code {
+  /* #1013: NOT set once highlight.js has claimed the element. A code theme
+     styles `.hljs` with its own background; if .x-code also set one at equal
+     specificity the winner would depend on stylesheet order -- and the theme
+     <link> is appended at runtime, so that order is not something this file
+     can rely on. Scoping to :not(.hljs) makes it deterministic: unhighlighted
+     code keeps the site surface, highlighted code belongs to its theme. */
   /* Sized for the common case: a short inline snippet sitting amid normal
      body text (a table cell, a list item, prose). A prior fix here used
      padding: 1rem !important on all four sides to stop adjacent <code>
@@ -38,3 +47,198 @@
 pre > .x-code {
   padding: 0.75rem;
 }
+
+/* =============================================================================
+   #1013 — presentation moved out of code.js
+   Every rule below replaced an inline style. Inline declarations beat every
+   stylesheet, which is why selecting a code theme could only ever recolour
+   tokens: code.js had already written background-color and color onto the
+   element itself.
+   ============================================================================= */
+
+/* An inline snippet sits in running prose and should look like the site, not
+   like a code panel. 0-2-0 here deliberately outranks a theme's `.hljs`
+   (0-1-0) without needing !important. */
+.x-code--inline.hljs,
+.x-code--inline {
+  display: inline;
+  padding: 0.2em 0.4em;
+  background-color: var(--bg-tertiary, rgba(255, 255, 255, 0.1));
+}
+
+/* #545/#612: a <code> in a heading needs the heading's scale, and hljs re-sets
+   padding after highlighting, so this has to outrank the rule above. */
+.x-code--inline-heading.hljs,
+.x-code--inline-heading {
+  padding: 0.25rem 0.5rem;
+}
+
+/* Inside <pre> the pre owns all the chrome, so the code element contributes
+   none. Replaces a 14-property inline reset. Background is deliberately absent
+   rather than transparent: leaving it unset lets the selected highlight.js
+   theme paint the panel, which is the whole point of #1013. */
+/* TWO classes, deliberately (0-2-0). mdhtml.css styles every <code> under
+   `.x-mdhtml code` (0-1-1) for inline prose spans -- including `white-space:
+   nowrap`, which is right for a token in a sentence and fatal inside a <pre>:
+   nowrap does not preserve newlines, so a whole listing collapses onto one
+   line. The doc-viewer renders through mdhtml, so its panels are exactly where
+   this bites.
+   code.js used to win that fight with an inline `white-space: inherit`. #1013
+   removed the inline styles, and a single class (0-1-0) lost -- 136 failures in
+   doc-viewer-code-panel-audit, all reading "gap between rendered line 1 and 2
+   is 0.0px". Specificity, not !important: the element carries both classes, so
+   0-2-0 wins on merit and a page can still override it without escalating. */
+.x-code.x-code--in-pre {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  border: none;
+  display: inline;
+  white-space: inherit;
+  word-break: inherit;
+  vertical-align: baseline;
+  box-shadow: none;
+  visibility: visible;
+  opacity: 1;
+}
+
+.x-code--copyable {
+  cursor: pointer;
+}
+
+/* Half-second confirmation after a click-to-copy. */
+.x-code--copied.hljs,
+.x-code--copied {
+  background-color: var(--success-color, #22c55e);
+  color: #fff;
+}
+
+.x-code-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.x-code__copy {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  background: var(--bg-secondary, #1f2937);
+  border: 1px solid var(--border-color, #374151);
+  color: var(--text-secondary, #9ca3af);
+  padding: 0.1rem 0.3rem;
+  border-radius: var(--radius-sm, 3px);
+  cursor: pointer;
+  font-size: 0.6rem;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+}
+
+.x-code__copy:hover {
+  background: var(--bg-tertiary, #374151);
+}
+
+.x-code__language {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--primary, #6366f1);
+  color: #fff;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Standalone listing: a block of code with nothing beside it.
+   #1023: paired with .hljs (0-2-0) for the same reason .x-code--inline is above.
+   The highlight.js theme <link> is appended to <head> at RUNTIME, so its
+   `.hljs { padding: 3px }` is later in the cascade than this file at equal
+   specificity and simply won -- measured 3px of padding where 1rem was written. */
+.x-code--block.hljs,
+.x-code--block {
+  display: block;
+  padding: 1rem;
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  /* No background or color here: a highlighted block belongs to its theme.
+     `.x-code:not(.hljs)` above covers the unhighlighted case. */
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  vertical-align: baseline;
+  max-width: 100%;
+}
+
+/* The badge is absolutely positioned over the box, so the box reserves room
+   for it. A plain `display: inline` element never grows its line box for
+   vertical padding, so it must become inline-block or the badge lands on top
+   of the first line of code.
+
+   #1023 -- John: "The code type is overwritting the code samples", arrows on all
+   three cards of the themes page. Measured: badge bottom 5971, first line of
+   code at 5949 -- 22px of overlap, with the element's padding-top computing to
+   3px instead of 2rem. TWO cascade defeats, and fixing either alone leaves it
+   broken:
+     1. the runtime-appended theme's `.hljs { padding: 3px }` outranked a bare
+        `.x-code--has-badge` on source order (equal specificity, later sheet);
+     2. these rules used to sit ABOVE `.x-code--block`, so once they did win the
+        theme, `.x-code--block { padding: 1rem }` overwrote padding-top anyway.
+   Hence both the .hljs pairing and the move below the block rule. Specificity
+   and source order, not !important. */
+.x-code--has-badge.hljs,
+.x-code--has-badge {
+  display: inline-block;
+  padding-top: 2rem;
+}
+
+.x-code--has-badge.x-code--has-copy.hljs,
+.x-code--has-badge.x-code--has-copy {
+  padding-top: 2.5rem;
+}
+
+/* §6: code never wraps and takes horizontal overflow instead. A space inside a
+   code span is part of the token, not a sentence break -- `<label for="...">`
+   split across two lines reads as two different things ("don't break text up
+   like this"). */
+.x-code--inline {
+  white-space: nowrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  vertical-align: baseline;
+  max-width: 100%;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border-radius: var(--radius-sm, 4px);
+  padding: 0.15em 0.3em;
+}
+
+/* #545: inline code inherits the surrounding font-size, so em-based padding
+   that reads correctly at 16px body text renders as ~4px at an h2's scale.
+   Absolute padding for headings only -- applying it everywhere recreates the
+   "58x60px box for a 2-character snippet" regression this file's own history
+   documents. */
+.x-code--inline-heading.hljs,
+.x-code--inline-heading {
+  padding: 0.25rem 0.5rem;
+}
+
+/* A scrollable listing keeps its newlines and scrolls sideways rather than
+   reflowing. */
+.x-code--scrollable {
+  white-space: pre;
+  overflow: auto;
+}
+
+/* #1013: the `size` attribute. Was an inline font-size fed from sizeMap in
+   code.js; the values are unchanged, they are just declared here now.
+   `normal` is 1em deliberately -- see the note on .x-code's font-size above. */
+.x-code--size-xs { font-size: 0.55em; }
+.x-code--size-sm { font-size: 0.6em; }
+.x-code--size-md { font-size: 0.65em; }
+.x-code--size-lg { font-size: 0.75em; }
+.x-code--size-xl { font-size: 0.85em; }
+.x-code--size-normal { font-size: 1em; }

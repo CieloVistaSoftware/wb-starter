@@ -73,6 +73,8 @@
     <div id="behaviors-live" class="behaviors-live" hidden aria-live="polite">
       <header class="behaviors-live__head">
         <span id="behaviors-live-token" class="behaviors-live__token"></span>
+        <!-- The code-theme picker used to sit here (#1012). Moved down to sit
+             directly above the code it recolours -- #1018. -->
         <span id="behaviors-live-note" class="behaviors-live__note"></span>
         <!-- #774 -- John: "not here, up here...", pointing at the header row.
              First pass put these under the header; they belong IN it, beside
@@ -84,12 +86,12 @@
              chips -- the header grows rather than the example being pushed
              off screen. -->
         <div class="behaviors-live__panels">
-          <details id="behaviors-live-api" class="behaviors-live__api" x-details summary="API">
+          <details id="behaviors-live-api" class="behaviors-live__api" summary="API">
             <summary class="behaviors-live__api-summary">API</summary>
             <div id="behaviors-live-api-body" class="behaviors-live__api-body"></div>
           </details>
   
-          <details id="behaviors-live-doc" class="behaviors-live__doc" x-details summary="Documentation">
+          <details id="behaviors-live-doc" class="behaviors-live__doc" summary="Documentation">
             <summary class="behaviors-live__doc-summary">Documentation</summary>
             <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
           </details>
@@ -107,6 +109,11 @@
              This is the framework's own themecontrol behavior, in attribute
              form -- not a hand-rolled <select>, which would drift from the
              real theme list the moment a theme was added. -->
+        <!-- Hidden by default; .behaviors-live__theme is `display: none` and only
+             shown under :fullscreen, where the site header (and its Theme
+             dropdown) is off screen and this is the ONLY way to change theme.
+             It is not a duplicate in normal view -- checked when #1018 asked for
+             no two theme controls side by side, and very nearly removed. -->
         <div
           id="behaviors-live-theme"
           class="behaviors-live__theme"
@@ -148,6 +155,18 @@
              3. the events it fires, as you interact
              4. the handler you would write, last -- it is reference material,
                 not something to watch. -->
+      <!-- #1018 -- John: "move the code style selector to just above the code".
+           It began in the site header strip, then the preview header. Both put
+           it far from the thing it changes: a reader looking at the listing had
+           to find a control in a different region and connect the two. Directly
+           above the panel, the relationship needs no explaining. -->
+      <div class="behaviors-live__codebar">
+        <div x-codecontrol
+             size="xs"
+             show-label="false"
+             class="behaviors-live__codetheme"
+             title="Code theme — syntax colours for the examples on this page"></div>
+      </div>
       <div id="behaviors-live-code" class="behaviors-live__code"></div>
 
       <div id="behaviors-live-events" class="behaviors-live__events">
@@ -178,18 +197,14 @@
      past to reach one. The jump-nav went with them: there is nothing below to
      jump to, and the selector reaches every behavior directly. -->
 
-  <!-- FOOTER -->
-  <footer id="footer">
-    <!-- x-release, not {{WB_VERSION}}: that token is substituted only by
-         site-engine.js for SPA page fragments, so a direct visit to
-         /pages/behaviors.html rendered the literal "v{{WB_VERSION}}".
-         release.js exists to replace exactly that -- it "works identically
-         everywhere -- SPA fragment or standalone page". The behavior count is
-         filled in from the same registry the selector uses, so it cannot drift
-         the way the hardcoded 71 did. -->
-    <p>wb-starter <span x-release></span> • <span id="footer-behavior-count">…</span> behaviors • 50 themes</p>
-    <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
-  </footer>
+  <!-- #1018 -- John: "remove this", pointing at the page footer.
+       This page is a workspace, not a document. The list and the live preview
+       are what the reader came for and both want vertical room; a footer
+       repeating the version and a behavior count the header already shows was
+       taking a strip of every screen to say nothing new. Documentation/Themes/
+       Home remain in the site chrome.
+       The fill for #footer-behavior-count further down is guarded by
+       `if (footerCount)`, so it simply no-ops now rather than throwing. -->
 
   <script>
   // #635: John, screenshot on this page: "Add a search here that allows
@@ -863,31 +878,35 @@
     // height taken from the scroller, so no example can grow it; content
     // scrolls inside it. Selections re-render into a box whose size was already
     // settled, so there is nothing left to race.
-    const GUTTER = 12;   // breathing room below the columns
-    const MIN = 240;     // never collapse to a sliver on a short window
+    // GUTTER/MIN removed with the pixel maths above (#1018): the gutter is now
+    // the 10rem in .behaviors-browse's calc(), and the floor is unnecessary --
+    // a viewport-relative height cannot collapse to a sliver the way a
+    // measured one could on a short window.
 
+    // #1018 -- John: "both of these elements must be 100vh", twice, pointing at
+    // the results list and the live panel sitting short with dead space below.
+    //
+    // This used to compute a pixel height (scroller height minus the panel's
+    // offset) and write it INLINE on both elements. Inline styles beat every
+    // stylesheet, so behaviors.css could not size these panels at all -- the
+    // CSS said 100vh and the panels stayed at the 569px this function wrote.
+    // Same shape as code.js vs mdhtml.css and fix-card.js's 49 !important:
+    // something imperative quietly winning an argument the cascade should own.
+    //
+    // #710's requirement is unchanged and still met: the box must be FIXED, so
+    // that rendering an example cannot grow it and feed a resize loop
+    // ("ResizeObserver loop completed with undelivered notifications"). A CSS
+    // height sized from the viewport is exactly as fixed as one written here --
+    // no example can change the viewport -- so the guarantee survives while the
+    // sizing moves to where sizing belongs. See .behaviors-browse in
+    // src/styles/pages/behaviors.css.
+    //
+    // All this does now is clear anything a previous build left behind, so a
+    // cached page cannot keep an inline height that outranks the stylesheet.
     function sizeContainers() {
-      if (!TWO_COL.matches || !scrollerEl) {
-        liveEl.style.height = '';
-        liveEl.style.overflowY = '';
-        resultsEl.style.maxHeight = '';
-        return;
-      }
-      // Distance from the top of the scroller, not the viewport: both rects
-      // move together when it scrolls, so this does not change with scroll
-      // position. Measuring against window.innerHeight was the earlier bug.
-      const offset =
-        liveEl.getBoundingClientRect().top - scrollerEl.getBoundingClientRect().top;
-      const h = Math.max(MIN, Math.round(scrollerEl.clientHeight - offset - GUTTER));
-      const px = h + 'px';
-      // height, NOT max-height: max-height still lets short content shrink the
-      // box and tall content is what caused the overshoot. A fixed box is the
-      // whole point -- it is the same box before and after every selection.
-      if (liveEl.style.height !== px) {
-        liveEl.style.height = px;
-        liveEl.style.overflowY = 'auto';
-      }
-      if (resultsEl.style.maxHeight !== px) resultsEl.style.maxHeight = px;
+      if (liveEl.style.height) liveEl.style.height = '';
+      if (liveEl.style.overflowY) liveEl.style.overflowY = '';
+      if (resultsEl.style.maxHeight) resultsEl.style.maxHeight = '';
     }
 
     /**
@@ -1860,7 +1879,19 @@
         copy.textContent = ok ? 'Copied' : 'Copy failed';
         setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
       });
-      liveCode.appendChild(copy);
+      // #1020: the button used to be appended to the code panel and pinned
+      // over its top-right corner with position:absolute. Overlap detection
+      // caught what that means once the panel filled the window -- "Copy"
+      // covering the first line of the listing by 70x13px, measured on
+      // pages/behaviors.html. It now sits in the code bar beside the theme
+      // picker: the two controls that act on this panel, in one strip above it,
+      // where neither can cover the code they act on.
+      // The bar outlives the panel (the panel is rebuilt on every selection),
+      // so a stale button has to go before a new one is added.
+      const codebar = document.querySelector('.behaviors-live__codebar');
+      const staleCopy = codebar && codebar.querySelector('.behaviors-live__copy');
+      if (staleCopy) staleCopy.remove();
+      (codebar || liveCode).appendChild(copy);
 
       const pre = document.createElement('pre');
       pre.setAttribute('x-behavior', 'pre');
@@ -2432,6 +2463,7 @@
         if (el) tools.appendChild(el);
       }
 
+
       autoBtn = document.createElement('button');
       autoBtn.id = 'behaviors-autoscroll';
       autoBtn.className = 'behaviors-live__autoscroll';
@@ -2497,10 +2529,22 @@
         running = true;
         setLabel();
 
-        // "expand all groups" — the tour must cover the 767 options, not the
-        // ~156 group headers #995 collapsed them into. Opening them all first
-        // also keeps row order stable for the whole run.
-        for (const d of resultsEl.querySelectorAll('details')) { if (!d.open) d.open = true; }
+        // John: "if autoscroll is pressed after a details control is expanded
+        // only show those items expanded."
+        //
+        // An expanded group is a statement of intent -- you opened `dialog` and
+        // `button` because those are what you want to look at. Forcing all 70
+        // open would throw that away and start a 767-entry tour instead of the
+        // handful asked for.
+        //
+        // Expanding all is still right when NOTHING is open: without it the
+        // tour would visit ~156 collapsed group headers and show none of the
+        // options underneath them (#995), which is what "expand all groups"
+        // originally asked for. So the rule is: honour a selection if one
+        // exists, otherwise fall back to everything.
+        const groups = [...resultsEl.querySelectorAll('details')];
+        const chosen = groups.filter((d) => d.open);
+        if (!chosen.length) { for (const d of groups) d.open = true; }
         await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
         const rows = rowsInOrder();

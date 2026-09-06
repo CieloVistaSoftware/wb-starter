@@ -175,16 +175,93 @@ export function dialog(element, options = {}) {
     return;
   }
 
-  // If element is already a <dialog>, just enhance it with classes
+  // An authored <dialog>, enhanced IN PLACE (#1005).
+  //
+  // This branch used to add two classes and stop -- "we just want to style the
+  // existing one". Two things were wrong with that, both visible the moment a
+  // sample was opened:
+  //
+  //   1. NO WAY OUT YOU CAN SEE. John: "all dialog samples must have a close
+  //      button showing." Escape and the backdrop are not visible affordances.
+  //      The other dialog path (createAndShowDialog, for `x-dialog` on a
+  //      trigger) has always built a .x-dialog__close; an authored <dialog>
+  //      got nothing, so half the samples on the Behaviors page opened as
+  //      traps.
+  //   2. TEXT FLUSH AGAINST THE EDGE. `.x-dialog` is `padding: 0` on purpose --
+  //      the padding lives on `.x-dialog__body` -- so raw children sat at 0px
+  //      from the frame, breaking DEMOS-AND-DOCS-STANDARDS.md 13 (>=1rem of
+  //      breathing room). Adding the class without adding the structure the
+  //      class assumes is what produced that.
+  //
+  // The authored markup is the source of truth, so nothing here is rebuilt from
+  // attributes: the heading is MOVED into the header (keeping its id, its text
+  // and any listeners on it) and the remaining children are MOVED into the
+  // body. Moving, not cloning -- cloning would leave every id duplicated and
+  // every handler bound to a node no longer in the document, the same trap that
+  // made the fieldset toggle dead in #999.
   if (element.tagName === 'DIALOG') {
     element.classList.add('x-dialog');
     element.classList.add('x-modal');
-    
-    // Optional: Add size class if needed, or handle via CSS
-    // The existing logic creates a new dialog, but for auto-injection on <dialog>,
-    // we just want to style the existing one.
-    
+
+    // Idempotent: behaviors can be re-run over the same DOM, and a second pass
+    // must not nest a header inside a header.
+    if (element.querySelector(':scope > .x-dialog__header')) {
+      return () => { element.classList.remove('x-dialog', 'x-modal'); };
+    }
+
+    const authored = Array.from(element.childNodes);
+    const heading = authored.find(
+      (n) => n.nodeType === 1 && /^H[1-6]$/.test(n.tagName)
+    );
+
+    const header = document.createElement('header');
+    header.className = 'x-dialog__header';
+
+    if (heading) {
+      heading.classList.add('x-dialog__title');
+      if (!heading.id) {
+        heading.id = `x-dialog-title-${Math.random().toString(36).slice(2, 9)}`;
+      }
+      element.setAttribute('aria-labelledby', heading.id);
+      header.appendChild(heading);
+    }
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'x-dialog__close';
+    closeBtn.type = 'button';
+    closeBtn.setAttribute('aria-label', 'Close dialog');
+    closeBtn.innerHTML = '&times;';
+    header.appendChild(closeBtn);
+
+    const body = document.createElement('main');
+    body.className = 'x-dialog__body';
+    for (const node of authored) {
+      if (node === heading) continue;
+      body.appendChild(node);
+    }
+
+    element.prepend(body);
+    element.prepend(header);
+
+    const closeDialog = () => element.close();
+    closeBtn.addEventListener('click', closeDialog);
+
+    // Deliberately NOT wiring backdrop-click here. It would be one line, but
+    // `closeOnBackdrop=false` is one of the sample rows, and giving that sample
+    // backdrop-close is worse than leaving it inert. That attribute, along with
+    // closeOnEscape, showClose and size, is declared in dialog.schema.json and
+    // read by no code at all -- tracked in #1005 rather than quietly decided
+    // here. Escape still works: <dialog> gives that natively.
+
     return () => {
+      closeBtn.removeEventListener('click', closeDialog);
+      if (heading) {
+        heading.classList.remove('x-dialog__title');
+        element.prepend(heading);
+      }
+      while (body.firstChild) element.appendChild(body.firstChild);
+      header.remove();
+      body.remove();
       element.classList.remove('x-dialog', 'x-modal');
     };
   }

@@ -1,0 +1,43 @@
+/* THE DECORATED TRIGGER BUTTONS — x-print, x-share, x-fullscreen,
+   x-clipboard, x-scroll
+   ==================================================================
+   #1003. Each of these five helpers in wb-viewmodels/helpers.js assigned the
+   same declarations as `element.style.cssText = …`, with the reason written
+   down beside them:
+
+       "Inline style (not a stylesheet rule) because it always wins
+        regardless of specificity, matching this function's existing approach."
+
+   Always winning regardless of specificity is the defect, not the feature. It
+   also wins against the page hosting the button: when #1004 moved the
+   x-fullscreen trigger into the site header, the header could not size it, so
+   it measured 34px tall between 32px chips and NO stylesheet could correct it
+   — only !important, which Law 16 forbids. Five identical copies of a
+   declaration block is also five places to change (Law: no duplicate code).
+
+   Same declarations, same look, now overridable.
+
+   padding stays 1rem: Standard §13 requires >=1rem on every side of a button's
+   text, and #486 landed on this value after 0.5rem failed
+   demo-layout-standards.spec.ts. A host that genuinely cannot afford a
+   16px-padded chip overrides it deliberately and visibly — which is the point
+   of it being CSS. */
+.x-print,
+.x-share,
+.x-fullscreen,
+.x-clipboard,
+.x-scroll {
+  cursor: pointer;
+  padding: 1rem;
+  background: var(--bg-tertiary, #374151);
+  border: 1px solid var(--border-color, #4b5563);
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* x-scroll carried a transition the others did not. Kept exactly. */
+.x-scroll {
+  transition: all 0.2s;
+}

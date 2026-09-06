@@ -85,6 +85,21 @@ export function sticky(element, options = {}) {
   // Create placeholder to prevent layout shift
   function createPlaceholder() {
     if (placeholder) return;
+
+    // #1031: `element.parentNode.insertBefore(...)` two lines down assumed the
+    // host still had a parent. It is reached from the SCROLL handler, and a host
+    // can be removed between the event firing and the handler running — routine
+    // on a page that re-renders demos, and routine in a test that navigates
+    // while scrolled. Measured: "Uncaught TypeError: Cannot read properties of
+    // null (reading 'insertBefore')" twice per suite run on /demos/autoinject.html.
+    //
+    // The throw mattered beyond the log line: it aborted the scroll handler, so
+    // everything after it in that pass never ran and the behavior stayed
+    // half-applied on every subsequent scroll.
+    if (!element.parentNode) {
+      detach();               // nothing to stick to; stop tracking it
+      return;
+    }
     
     placeholder = document.createElement('div');
     placeholder.className = 'sticky-placeholder';
@@ -95,6 +110,21 @@ export function sticky(element, options = {}) {
       pointer-events: none;
     `;
     element.parentNode.insertBefore(placeholder, element);
+  }
+
+  /**
+   * #1031: stop tracking a host that has left the document.
+   *
+   * A listener still firing for a detached element is why the TypeError repeated
+   * rather than happening once — every subsequent scroll re-entered the same
+   * dead path. Removing the listeners here makes the failure terminal instead of
+   * recurring, and the teardown below stays the normal exit.
+   */
+  function detach() {
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', handleResize);
+    removePlaceholder();
+    isStuck = false;
   }
 
   // Remove placeholder

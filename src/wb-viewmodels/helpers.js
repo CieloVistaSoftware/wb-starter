@@ -112,12 +112,12 @@ export function print(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   element.onclick = () => {
     if (config.target) {
@@ -156,12 +156,12 @@ export function share(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   element.onclick = async () => {
     if (navigator.share) {
@@ -196,12 +196,12 @@ export function fullscreen(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   let targetEl = config.target ? document.querySelector(config.target) : document.documentElement;
   
@@ -387,9 +387,12 @@ export function clipboard(element, options = {}) {
   if (!element.textContent.trim()) {
     element.innerHTML = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13, same as the other
-  // decorated trigger buttons above.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);transition:all 0.2s;';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   const original = element.innerHTML;
 
@@ -435,12 +438,12 @@ export function scroll(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
 
   element.onclick = (e) => {
     e.preventDefault();
