@@ -286,7 +286,9 @@
           <div class="error-header" onclick="toggleDetails(${index})">
             <div class="error-title">
               <span class="badge badge-${error.level || 'error'}">${error.level || 'ERROR'}</span>
-              <span class="source-badge">${error.source || 'Unknown'}</span>
+              <span class="source-badge">${escapeHtml(error.source || error.to || error.module || 'unattributed')}</span>
+              ${error.testOrigin ? '<span class="source-badge" title="raised by a test fixture, not by the app">test</span>' : ''}
+              ${error.fixable ? '<span class="source-badge" style="background:var(--success-color,#16a34a);color:#fff;" title="a known mechanical remedy exists">fixable</span>' : ''}
               <span>${escapeHtml(error.message)}</span>
             </div>
             <div class="error-meta">
@@ -309,16 +311,95 @@
                 <div style="color: var(--text-secondary);">→</div>
                 <div>
                   <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">TO</span>
-                  <strong>${escapeHtml(error.interaction?.to || 'Unknown')}</strong>
+                  <strong>${escapeHtml(error.interaction?.to || error.to || 'unattributed')}</strong>
                 </div>
               </div>
             </div>
 
             <div class="detail-row">
               <div class="detail-label">Location</div>
-              <code>${error.module || 'unknown'}:${error.line || '?'}:${error.column || '?'}</code>
-              ${error.function ? ` in <code>${error.function}()</code>` : ''}
+              <code>${escapeHtml(error.module || 'unknown')}:${error.line || '?'}:${error.column || '?'}</code>
+              ${error.function ? ` in <code>${escapeHtml(error.function)}()</code>` : ''}
             </div>
+
+            <!-- #1010: these were all being stored and none of them rendered.
+                 John: "who had this error? From what module? From what line
+                 number? Pointing to what?" -- every one of those was already in
+                 the record. -->
+            ${error.details && error.details.src ? `
+              <div class="detail-row">
+                <div class="detail-label">Pointing at</div>
+                <code>${escapeHtml(error.details.src)}</code>
+              </div>` : ''}
+
+            ${error.details && (error.details.reason || error.details.response) ? `
+              <div class="detail-row">
+                <div class="detail-label">Reason</div>
+                <code>${escapeHtml(error.details.reason || error.details.response)}</code>
+              </div>` : ''}
+
+            ${error.signature ? `
+              <div class="detail-row">
+                <div class="detail-label">Signature</div>
+                <code>${escapeHtml(error.signature)}</code>
+              </div>` : ''}
+
+            ${error.analysis ? `
+              <div class="detail-row">
+                <div class="detail-label">Analysis</div>
+                <div>${escapeHtml(error.analysis)}</div>
+              </div>` : ''}
+
+            ${error.solution ? `
+              <div class="detail-row">
+                <div class="detail-label">Solution</div>
+                <div>${escapeHtml(error.solution)}</div>
+              </div>` : ''}
+
+            ${error.verify ? `
+              <div class="detail-row">
+                <div class="detail-label">Test</div>
+                <div>
+                  <code>${escapeHtml(error.verify)}</code>
+                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                    What proves it fixed. A remedy without one is a change, not a fix.
+                  </p>
+                </div>
+              </div>` : ''}
+
+            ${error.fixable && error.remedy ? `
+              <div class="detail-row">
+                <div class="detail-label">How to fix next time</div>
+                <div>
+                  <code>${escapeHtml(error.remedy)}</code>
+                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                    Mechanical and verifiable${error.verify ? `, proven by <code>${escapeHtml(error.verify)}</code>` : ''}.
+                    Run it from the repository root.
+                  </p>
+                </div>
+              </div>` : ''}
+
+            ${error.issue ? `
+              <div class="detail-row">
+                <div class="detail-label">Issue</div>
+                <div>
+                  <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/${encodeURIComponent(String(error.issue))}"
+                     target="_blank" rel="noopener">#${escapeHtml(String(error.issue))}</a>
+                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                    Where this fault was diagnosed, and what closed it last time.
+                  </p>
+                </div>
+              </div>` : ''}
+
+            ${!error.analysis ? `
+              <div class="detail-row">
+                <div class="detail-label">Analysis</div>
+                <div style="color:var(--text-secondary);">
+                  This signature has not been analysed yet, so it is not fixable.
+                  Add an entry to <code>data/fix-registry.json</code> keyed by the
+                  signature above.
+                </div>
+              </div>` : ''}
             
             <div class="detail-row">
               <div class="detail-label">URL</div>

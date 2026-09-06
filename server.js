@@ -492,6 +492,31 @@ app.post('/api/upload', express.raw({ type: '*/*', limit: '25mb' }), (req, res) 
   });
 });
 
+// #1030: the error log is READ as a static file (errors-viewer.html and
+// error-logger.js both fetch /data/errors.json), so it is joined to the fix
+// registry here, ahead of express.static. Enriching only on append would leave
+// every row written before its signature was analysed permanently blank — the
+// redundant-attribute rows in today's log still said `fixable: false` minutes
+// after the registry said true.
+//
+// Declared before the static handler on purpose: Express matches in order, and
+// after it the file would win and this would never run.
+app.get('/data/errors.json', (req, res) => {
+  try {
+    const full = path.join(rootDir, ERROR_LOG_REL_PATH);
+    const raw = fs.existsSync(full)
+      ? JSON.parse(fs.readFileSync(full, 'utf8'))
+      : { lastUpdated: null, count: 0, errors: [] };
+    const registry = readFixRegistry();
+    const errors = (raw.errors || []).map((e) => enrichFromRegistry(e, registry));
+    res.set('Cache-Control', 'no-store');
+    res.json({ ...raw, count: errors.length, errors });
+  } catch (e) {
+    console.error('[Error Log Read]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
@@ -635,12 +660,95 @@ function writeErrorLog(errors) {
   }, null, 2), 'utf8');
 }
 
+// #1027 — John: "all of our error logs must stay on the system for 30 days."
+//
+// Every path that removes an entry from data/errors.json archives it first and
+// says so. Nothing here deletes: archives accumulate, and only
+// scripts/prune-error-archives.mjs removes any — opt-in, older than 30 days,
+// naming each file as it goes.
+const ERROR_ARCHIVE_DIR = 'data/error-log-archive';
+
+function archiveErrors(errors, reason) {
+  if (!Array.isArray(errors) || errors.length === 0) return null;
+  const dir = path.join(rootDir, ERROR_ARCHIVE_DIR);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const file = path.join(dir, `errors-${stamp}-${reason}.json`);
+  fs.writeFileSync(file, JSON.stringify({
+    archivedAt: new Date().toISOString(),
+    reason,
+    count: errors.length,
+    errors
+  }, null, 2), 'utf8');
+  console.log(
+    `[Error Log] ${errors.length} entr${errors.length === 1 ? 'y' : 'ies'} archived to `
+    + `${path.relative(rootDir, file)} (${reason}).`
+  );
+  return file;
+}
+
+const ERROR_LOG_CAP = 100;
+
+// #1030 — John: "error log view ---> issue --> Analysis/Test and how to fix next time."
+//
+// The registry lookup in error-logger.js is fire-and-forget, so the first errors
+// on a page — which is most of them, since pages log during startup — were
+// written with analysis/solution/verify/issue all null while a matching entry
+// sat in data/fix-registry.json the whole time. There is no race here: the file
+// is on disk, the request is synchronous, and every appended error can be joined
+// to what is already known about its signature before it is ever stored.
+const FIX_REGISTRY_REL_PATH = 'data/fix-registry.json';
+const REGISTRY_FIELDS = ['analysis', 'solution', 'fixable', 'remedy', 'verify', 'issue'];
+
+function readFixRegistry() {
+  try {
+    const full = path.join(rootDir, FIX_REGISTRY_REL_PATH);
+    if (!fs.existsSync(full)) return {};
+    return JSON.parse(fs.readFileSync(full, 'utf8')).entries || {};
+  } catch (e) {
+    // A malformed registry must not swallow the error being reported — but it
+    // must not pass silently either.
+    console.warn('[Error Log] fix registry unreadable, entries will not be enriched:', e.message);
+    return {};
+  }
+}
+
+/**
+ * Join one logged error to its known diagnosis.
+ *
+ * Only fills fields the entry does not already carry: whatever the page managed
+ * to attach client-side wins, because it was closer to the event.
+ */
+function enrichFromRegistry(entry, registry) {
+  if (!entry || !entry.signature) return entry;
+  const known = registry[entry.signature];
+  if (!known) return entry;
+  const out = { ...entry };
+  for (const field of REGISTRY_FIELDS) {
+    const missing = out[field] === undefined || out[field] === null
+      || (field === 'fixable' && known.fixable === true && out.fixable !== true);
+    if (missing && known[field] !== undefined) out[field] = known[field];
+  }
+  return out;
+}
+
 app.post("/api/error-log/append", (req, res) => {
   try {
     const { error } = req.body;
     if (!error) return res.status(400).json({ error: 'Missing error' });
     const current = readErrorLog();
-    const errors = [...current.errors, error].slice(-100);
+    const all = [...current.errors, enrichFromRegistry(error, readFixRegistry())];
+
+    // The cap used to be a bare `.slice(-100)`: entry 101 pushed entry 1 out of
+    // existence with nothing recorded anywhere. Under a 30-day retention rule
+    // that is data loss on a timer, so whatever falls off the end is archived.
+    let errors = all;
+    if (all.length > ERROR_LOG_CAP) {
+      const dropped = all.slice(0, all.length - ERROR_LOG_CAP);
+      archiveErrors(dropped, 'overflow');
+      errors = all.slice(-ERROR_LOG_CAP);
+    }
+
     writeErrorLog(errors);
     res.json({ success: true, count: errors.length });
   } catch (e) {
@@ -651,8 +759,17 @@ app.post("/api/error-log/append", (req, res) => {
 
 app.post("/api/error-log/clear", (req, res) => {
   try {
+    // "Clear Log" in the viewer means "stop showing me these", not "destroy
+    // them". The entries are archived first; the button reads the same from the
+    // viewer's side, and the response now names where they went.
+    const current = readErrorLog();
+    const archived = archiveErrors(current.errors, 'cleared-from-viewer');
     writeErrorLog([]);
-    res.json({ success: true });
+    res.json({
+      success: true,
+      archived: archived ? path.relative(rootDir, archived) : null,
+      archivedCount: current.errors.length
+    });
   } catch (e) {
     console.error('[Error Log Clear]', e);
     res.status(500).json({ error: e.message });

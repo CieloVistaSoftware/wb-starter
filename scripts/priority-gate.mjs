@@ -21,7 +21,7 @@
  *     seen without blocking work: .github/workflows/issue-priority-check.yml.
  *   - run priority 2-5 tests. Those live in the 10th-commit ratchet.
  */
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
 

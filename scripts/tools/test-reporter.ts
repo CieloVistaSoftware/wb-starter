@@ -290,10 +290,57 @@ class WBTestReporter implements Reporter {
     project.tests.push(entry);
   }
 
+  /**
+   * Clear the shared runtime error log for this run — but ARCHIVE it first.
+   *
+   * John: "there were 26 or more errors in the error log where did they go?"
+   * They were here, and this function destroyed them. #562 gave every run a
+   * clean slate, which is right for the gate, and it did so by overwriting the
+   * ONLY copy of a log a person reads — silently, with no console line and no
+   * backup. Running the suite therefore erased real findings that had nothing
+   * to do with the suite, and nothing said so afterwards. Two full gate runs
+   * and roughly fifteen single-spec runs in one session is fifteen chances to
+   * lose someone's morning.
+   *
+   * Nothing dies in silence: the previous contents are copied to
+   * data/error-log-archive/errors-<timestamp>.json and that path is printed, so
+   * a wiped log is recoverable and the wipe is announced. An already-empty log
+   * is not archived — nothing to lose, and no point in the noise.
+   */
   private resetErrorLog() {
+    const target = join('data', 'errors.json');
+    const archiveDir = join('data', 'error-log-archive');
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+
+    try {
+      if (existsSync(target)) {
+        const previous = readFileSync(target, 'utf8');
+        let count = 0;
+        try {
+          count = (JSON.parse(previous).errors || []).length;
+        } catch {
+          count = -1;   // unparseable is exactly the state worth keeping a copy of
+        }
+        if (count !== 0) {
+          mkdirSync(archiveDir, { recursive: true });
+          const archived = join(archiveDir, `errors-${stamp}.json`);
+          writeFileSync(archived, previous, 'utf8');
+          console.log(
+            `[WBTestReporter] data/errors.json held `
+            + `${count === -1 ? 'unparseable content' : `${count} error(s)`}; archived to `
+            + `${archived} before clearing it for this run.`
+          );
+        }
+      }
+    } catch (e) {
+      // An archive that cannot be written must SAY so — losing the log quietly
+      // is the whole defect this block exists to prevent.
+      console.warn('[WBTestReporter] Could not archive data/errors.json before clearing it:', e);
+    }
+
     try {
       writeFileSync(
-        join('data', 'errors.json'),
+        target,
         JSON.stringify({ lastUpdated: new Date().toISOString(), count: 0, errors: [] }, null, 2),
         'utf8'
       );

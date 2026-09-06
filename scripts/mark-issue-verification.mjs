@@ -31,7 +31,7 @@
  *   node scripts/mark-issue-verification.mjs --apply --only 1020
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync, existsSync, writeFileSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, writeFileSync } from 'node:fs';
 
 const APPLY = process.argv.includes('--apply');
 const onlyIdx = process.argv.indexOf('--only');

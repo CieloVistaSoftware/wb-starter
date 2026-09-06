@@ -30,7 +30,6 @@ import { readFileSync, existsSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
 const MANIFEST = 'data/priority-gate.json';
-const FAILURES = 'data/test-results/failures.json';
 const readyOnly = process.argv.includes('--ready');
 const includeUntouched = process.argv.includes('--all');
 

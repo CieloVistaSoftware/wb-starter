@@ -3,6 +3,8 @@
  * Logs errors to data/errors.json and displays them on screen
  */
 
+import { computeSignature, firstMeaningfulFrame, isTestOrigin } from './error-signature.js';
+
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
 let errors = [];
@@ -52,7 +54,24 @@ function initErrorDisplay() {
     const copyBtn = document.getElementById('x-error-copy');
     const errorText = errors.map((e, i) => {
       let text = `[${i + 1}] ${e.message}`;
-      if (e.details?.file) text += `\n    File: ${e.details.file}:${e.details.line || '?'}`;
+      // Read the RESOLVED location, not the raw details. `details.line` is only
+      // set by callers routed through events.js; every direct caller left it
+      // undefined, so a pasted report said "mdhtml.js:?" while the record held
+      // line 244, parsed from the stack. The paste is what a person files a bug
+      // with -- the last place that should be missing the line number.
+      const where = e.module || e.details?.file;
+      if (where) text += `
+    File: ${where}:${e.line || '?'}${e.column ? ':' + e.column : ''}`;
+      if (e.function) text += `
+    In: ${e.function}()`;
+      if (e.count > 1) text += `
+    Seen: ${e.count}x (first ${e.firstSeen}, last ${e.lastSeen})`;
+      if (e.signature) text += `
+    Signature: ${e.signature}`;
+      if (e.testOrigin) text += `
+    Origin: test fixture, not the app`;
+      if (e.solution) text += `
+    Solution: ${e.solution}`;
       if (e.to) text += `\n    To: ${e.to}`;
       if (e.details?.reason) text += `\n    Reason: ${e.details.reason}`;
       if (e.details?.response) text += `\n    Response: ${e.details.response}`;
@@ -150,12 +169,114 @@ function initErrorDisplay() {
 /**
  * Show an error in the UI and log it
  */
+/**
+ * The analysis/solution/remedy recorded for a signature, or null if this fault
+ * has never been analysed.
+ *
+ * Loaded once, lazily, and cached. A miss is not an error: an unknown signature
+ * is exactly the thing that needs a person, and returning null is what marks it
+ * `fixable: false` so it surfaces rather than being quietly retried.
+ */
+let fixRegistry = null;
+let fixRegistryLoading = null;
+
+function lookupFix(signature) {
+  if (!fixRegistry) {
+    if (!fixRegistryLoading) {
+      // Fire and forget: the first few errors on a page may miss the registry,
+      // and that is the right trade -- blocking error logging on a fetch would
+      // mean an error during startup never gets recorded at all.
+      fixRegistryLoading = fetch(new URL('../../data/fix-registry.json', import.meta.url))
+        .then((r) => (r.ok ? r.json() : null))
+        .then((j) => { fixRegistry = (j && j.entries) || {}; })
+        .catch(() => { fixRegistry = {}; });
+    }
+    return null;
+  }
+  return fixRegistry[signature] || null;
+}
+
+/**
+ * Two entries are the SAME OCCURRENCE, not just the same fault.
+ *
+ * John: "I don't think the error log should log duplicates, rather just add a
+ * counter to show how many times. But this is only true if everything is the
+ * same."
+ *
+ * That last clause is the whole rule, and it is why this is deliberately NOT
+ * keyed on the signature. The signature is intentionally loose -- it masks paths
+ * and numbers so one fault has one identity -- so two documents failing to load
+ * share a signature while being two different problems. Collapsing those would
+ * hide the second document entirely.
+ *
+ * This compares everything a reader would use to tell two rows apart: the exact
+ * message, where it came from, and what it was pointing at. Anything different,
+ * anywhere, and it is a separate row.
+ */
+function isSameOccurrence(a, b) {
+  if (!a || !b) return false;
+  return (
+    a.message === b.message &&
+    a.level === b.level &&
+    a.source === b.source &&
+    a.module === b.module &&
+    a.line === b.line &&
+    a.column === b.column &&
+    a.function === b.function &&
+    a.to === b.to &&
+    a.url === b.url &&
+    (a.details && a.details.src) === (b.details && b.details.src) &&
+    (a.details && a.details.reason) === (b.details && b.details.reason) &&
+    a.stack === b.stack
+  );
+}
+
 export async function logError(message, details = {}) {
   initErrorDisplay();
+
+  // #1010 -- provenance, signature, and the fixable verdict.
+  //
+  // John: "our error log for each error 1) requires analysis 2) must get a
+  // solution on what to do 3) set the fixable flag and then 4) fix the error."
+  //
+  // Steps 1 and 2 belong to the SIGNATURE, not to the occurrence: five identical
+  // "Unable to Load Documentation" rows are one analysis and one solution. So the
+  // signature is computed here, and the analysis/solution/fixable come from
+  // data/fix-registry.json keyed by it.
+  //
+  // The frame is parsed from the stack because `source`/`line` were only ever set
+  // by callers routed through events.js -- direct callers (mdhtml.js, wb.js's
+  // schema catch) left them undefined and the viewer printed "Unknown" and "?:?"
+  // over a record that already held the module, the target and the stack.
+  const frame = firstMeaningfulFrame(details.stack);
+  const signature = computeSignature({
+    message,
+    // `source` counts as the owner: emitters like replacement-guard identify
+    // themselves that way and carry no file, and without this they all collapse
+    // to the single owner "unknown" -- which would put unrelated faults from
+    // different subsystems under one key, the exact over-collapsing the
+    // normaliser is supposed to avoid.
+    module: details.module || details.file || details.source,
+    level: details.level,
+    stack: details.stack,
+    code: details.code,
+  });
+  const known = lookupFix(signature);
 
   const error = {
     id: Date.now(),
     timestamp: new Date().toISOString(),
+    signature,
+    analysis: known ? known.analysis : null,
+    solution: known ? known.solution : null,
+    // Derived, never hand-set: an error is fixable when its signature has a
+    // remedy that is mechanical AND verifiable. Unknown signatures are not
+    // fixable -- that is the honest default, and it is what puts them in front
+    // of a person to be analysed.
+    fixable: !!(known && known.fixable && known.remedy),
+    remedy: known ? known.remedy || null : null,
+    verify: known ? known.verify || null : null,
+    testOrigin: isTestOrigin({ message, url: window.location.href, details }),
     // #442: optional fields below are only ever populated by callers routed
     // through events.js's Events.error()/log() (source/level/module/line/
     // etc., extracted from a parsed stack trace) -- direct logError() callers
@@ -166,14 +287,15 @@ export async function logError(message, details = {}) {
     // line/stack/interaction), so this one persisted shape now serves both
     // previously-separate systems instead of each needing its own schema.
     level: details.level || 'error',
-    source: details.source,
+    // "Unknown" was this field being undefined, not the information being absent.
+    source: details.source || details.to || (frame && frame.file) || undefined,
     message: String(message),
     details: details,
     to: details.to || '',
-    module: details.module || details.file,
-    line: details.line,
-    column: details.column,
-    function: details.function,
+    module: details.module || details.file || (frame && frame.file) || undefined,
+    line: details.line ?? (frame && frame.line),
+    column: details.column ?? (frame && frame.column),
+    function: details.function || (frame && frame.function),
     stack: details.stack,
     frames: details.frames,
     interaction: details.interaction,
@@ -181,6 +303,28 @@ export async function logError(message, details = {}) {
     userAgent: navigator.userAgent
   };
   
+  // Repeats are counted, not re-listed (#1010). `count`, `firstSeen` and
+  // `lastSeen` say more than N identical rows ever did: five copies of one line
+  // tell you nothing about whether it happened five times in a burst or once an
+  // hour all day.
+  const existing = errors.find((e) => isSameOccurrence(e, error));
+  if (existing) {
+    existing.count = (existing.count || 1) + 1;
+    existing.lastSeen = error.timestamp;
+    updateErrorCount();
+    // Persisted through the same path a new error takes, so the stored copy
+    // carries the updated count rather than the count living only in memory and
+    // resetting on reload.
+    if (!document.documentElement.hasAttribute('data-x-expected-errors')) {
+      await appendErrorToLog(existing);
+    }
+    console.error('[ErrorLogger]', message, '(x' + existing.count + ')');
+    return existing;
+  }
+
+  error.count = 1;
+  error.firstSeen = error.timestamp;
+  error.lastSeen = error.timestamp;
   errors.push(error);
   updateErrorCount();
   
@@ -198,7 +342,7 @@ export async function logError(message, details = {}) {
   
   const time = new Date(error.timestamp).toLocaleTimeString();
   let detailsHtml = '';
-  if (details.file) detailsHtml += `<div style="color:#888;font-size:0.6875rem;">📁 ${details.file}:${details.line || '?'}</div>`;
+  if (error.module || details.file) detailsHtml += `<div style="color:#888;font-size:0.6875rem;">📁 ${error.module || details.file}:${error.line || '?'}</div>`;
   if (error.to) detailsHtml += `<div style="color:#3b82f6;font-size:0.6875rem;">➡️ To: ${escapeHtml(error.to)}</div>`;
   if (details.response) detailsHtml += `<div style="color:#f59e0b;font-size:0.6875rem;">📡 Response: ${escapeHtml(details.response)}</div>`;
   if (details.src) detailsHtml += `<div style="color:#a78bfa;font-size:0.6875rem;">📄 Src: ${escapeHtml(details.src)}</div>`;
@@ -261,6 +405,16 @@ function localLog() {
 function appendLocally(error) {
   try {
     const log = localLog();
+    // A counted repeat updates its stored row rather than adding another one --
+    // otherwise the count would be correct in memory and the storage would still
+    // grow by one entry per occurrence, which is the duplication this was meant
+    // to remove.
+    const at = log.errors.findIndex((e) => e.id === error.id);
+    if (at !== -1) {
+      log.errors[at] = error;
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(log));
+      return true;
+    }
     log.errors.push(error);
     // A page throwing in a loop must not fill the quota.
     if (log.errors.length > 200) log.errors = log.errors.slice(-200);
@@ -307,7 +461,7 @@ async function clearErrorLogFile() {
   try {
     const response = await fetch('/api/error-log/clear', { method: 'POST' });
     if (!response.ok) serverLogging = false;
-  } catch (e) {
+  } catch {
     serverLogging = false;
   }
   // Clear the local copy too, or "Clear" leaves entries the viewer still shows
@@ -330,7 +484,7 @@ export async function loadErrorLog() {
         return data;
       }
     }
-  } catch (e) {
+  } catch {
     /* fall through to the local log */
   }
   // #1000: on a static host the file is absent or empty and the real log lives
