@@ -1,0 +1,111 @@
+name: Issue priority
+
+# John, 2026-09-05: "each issue will have a priority 1 through 5 assessed based on
+# negative impact to the project… now change our gates based on priorities."
+#
+# Severity decides how hard a check bites:
+#   1  destroys work, blinds the gates, or blocks everyone
+#   2  a behavior people use is broken, or tooling costs hours repeatedly
+#   3  real defect, secondary surface, or test debt that hides regressions
+#   4  cosmetic, local, or cleanup
+#   5  question, idea, tracker — no defect
+#
+# This workflow enforces the BOOKKEEPING (every issue rated; a 1 must be
+# provable; a 1 or 2 closes only with evidence). The code gate that runs the
+# priority-1 tests on every commit is scripts/priority-gate.mjs, called from
+# .husky/pre-commit.
+on:
+  issues:
+    types: [opened, edited, reopened, labeled, unlabeled, closed]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  rated:
+    name: exactly one priority
+    if: github.event.action != 'closed' && github.event.issue.user.type != 'Bot'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Count priority labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          COUNT=$(gh issue view "$NUMBER" --repo "$REPO" --json labels \
+            --jq '[.labels[].name | select(test("^priority:[1-5]$"))] | length')
+          echo "priority labels: $COUNT"
+          if [ "$COUNT" = "1" ]; then exit 0; fi
+
+          MARKER='<!-- priority-check -->'
+          if ! gh issue view "$NUMBER" --repo "$REPO" --json comments --jq '.comments[].body' | grep -qF "$MARKER"; then
+            cat > /tmp/c.md <<EOF
+          $MARKER
+          **This issue needs exactly one priority label** (it has $COUNT). Priority is assessed on *negative impact to the project*:
+
+          | | |
+          |---|---|
+          | \`priority:1\` | destroys work, blinds the gates, or blocks everyone |
+          | \`priority:2\` | a behavior people use is broken, or tooling costs hours repeatedly |
+          | \`priority:3\` | real defect, secondary surface, or test debt that hides regressions |
+          | \`priority:4\` | cosmetic, local, or cleanup |
+          | \`priority:5\` | question, idea or tracker — no defect |
+
+          A \`priority:1\` must also name a runnable \`test:\` in its Signature block — see the check below.
+          EOF
+            gh issue comment "$NUMBER" --repo "$REPO" --body-file /tmp/c.md
+          fi
+          echo "::error::Issue #$NUMBER has $COUNT priority labels; exactly one is required."
+          exit 1
+
+  provable:
+    name: a priority-1 names a test
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4        # for scripts/signature-field.mjs
+      - name: Signature must name a runnable test
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          IS_P1=$(gh issue view "$NUMBER" --repo "$REPO" --json labels \
+            --jq '[.labels[].name | select(. == "priority:1")] | length')
+          if [ "$IS_P1" != "1" ]; then echo "not priority:1 — nothing to check"; exit 0; fi
+
+          gh issue view "$NUMBER" --repo "$REPO" --json body --jq .body > body.md
+          TEST=$(node scripts/signature-field.mjs body.md test --runnable)
+          echo "runnable test: ${TEST:-<none>}"
+          if [ -n "$TEST" ]; then exit 0; fi
+          echo "::error::priority:1 #$NUMBER names no runnable test. A defect rated 'destroys work or blocks everyone' that nothing can prove fixed is not actionable — add test: to its Signature block, or lower the priority."
+          exit 1
+
+  closing:
+    name: priority 1-2 close with evidence
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4        # for scripts/signature-field.mjs
+      - name: test and fix must be filled in
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          P=$(gh issue view "$NUMBER" --repo "$REPO" --json labels \
+            --jq '[.labels[].name | select(test("^priority:[12]$"))] | length')
+          if [ "$P" = "0" ]; then echo "not priority 1 or 2 — closing rules do not apply"; exit 0; fi
+
+          gh issue view "$NUMBER" --repo "$REPO" --json body --jq .body > body.md
+          MISSING=""
+          [ -z "$(node scripts/signature-field.mjs body.md test)" ] && MISSING="test"
+          [ -z "$(node scripts/signature-field.mjs body.md fix)" ]  && MISSING="$MISSING fix"
+          MISSING=$(echo "$MISSING" | xargs)
+          if [ -z "$MISSING" ]; then echo "closed with evidence"; exit 0; fi
+
+          gh issue comment "$NUMBER" --repo "$REPO" --body "Closed without **$MISSING** in the Signature block. A priority 1-2 issue closes with the validating test named and the fix stated in one line — otherwise the next occurrence starts from nothing. (Reopen, fill it in, close again.)"
+          echo "::error::priority 1-2 issue #$NUMBER closed without: $MISSING"
+          exit 1

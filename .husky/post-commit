@@ -1,0 +1,39 @@
+#!/bin/sh
+# WB Starter — post-commit: keep issue state honest, automatically.
+#
+# John, 2026-09-06: "I must always have accurate state on all of our issues."
+#
+# Before this hook, `scripts/issue-state.mjs --apply` only ever ran when someone
+# remembered to run it. So the moment a fix was committed, the queue still showed
+# its OLD state -- and John, reading the viewer, saw three issues that were
+# committed AND pushed still displaying as `ready`. The data was not wrong
+# because the engine was wrong (that was #1042); it was wrong because nothing
+# told the engine that anything had happened.
+#
+# A commit is exactly the event that changes an issue's state, so a commit is
+# where the refresh belongs.
+#
+# SCOPE: only the issues THIS commit cites. A full sweep over ~300 issues costs a
+# GitHub API call each and would rate-limit the account (already observed: 403s
+# after a bulk label pass). The cited handful is the set whose state actually
+# just changed. The scheduled workflow handles drift for everything else.
+#
+# FAIL-OPEN, ALWAYS. This runs AFTER the commit is written, so a failure here
+# cannot un-commit anything -- and a hook that reports an error for work that
+# already succeeded is a hook people delete. No network, no gh, no auth: it
+# prints nothing and exits 0.
+
+ISSUES=$(git log -1 --format='%s%n%b' | grep -oE '#[0-9]{3,4}' | tr -d '#' | sort -u)
+
+[ -z "$ISSUES" ] && exit 0
+command -v gh >/dev/null 2>&1 || exit 0
+gh auth status >/dev/null 2>&1 || exit 0
+
+echo "🔄 Refreshing issue state for:$(echo "$ISSUES" | tr '\n' ' ')"
+
+for n in $ISSUES; do
+  node scripts/issue-state.mjs --only "$n" --apply >/dev/null 2>&1 \
+    || echo "   (#$n state refresh failed — run: node scripts/issue-state.mjs --only $n --apply)"
+done
+
+exit 0

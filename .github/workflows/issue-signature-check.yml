@@ -1,0 +1,98 @@
+name: Issue signature block
+
+# Every issue carries a Signature block — the machine-readable half of what the
+# prose already says (docs/standards/ISSUE-SIGNATURE-BLOCK.md). The validator has
+# existed since 2026-09-03 and exits non-zero so it can gate; nothing called it,
+# so 14 issues were filed on 2026-09-05 without a block and nothing objected.
+#
+# SCOPED TO THE ISSUE THAT JUST CHANGED, deliberately. A repo-wide run would fail
+# every new issue over the 135 already in the backlog, and a gate that cannot be
+# satisfied is one people route around. The backlog shrinks separately, in
+# batches, via scripts/apply-issue-signatures.mjs.
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write        # to leave the one explanatory comment
+  contents: read
+
+jobs:
+  signature:
+    runs-on: ubuntu-latest
+    # Bot-authored issues have no author to teach, and the loop would be ours.
+    if: github.event.issue.user.type != 'Bot'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate the signature block
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          OUT=$(node scripts/check-issue-signatures.mjs --number ${{ github.event.issue.number }} 2>&1)
+          CODE=$?
+          echo "$OUT"
+          {
+            echo 'report<<REPORT_EOF'
+            echo "$OUT"
+            echo 'REPORT_EOF'
+          } >> "$GITHUB_OUTPUT"
+          echo "code=$CODE" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      # An `issues` event produces no check run on the issue itself — the result
+      # lives in the Actions tab, where nobody filing an issue will look. The
+      # comment IS the signal; without it this would fail in silence.
+      - name: Say what is missing, once
+        if: steps.check.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          REPORT: ${{ steps.check.outputs.report }}
+        run: |
+          MARKER='<!-- signature-check -->'
+          # `edited` fires on every keystroke-save. Say it once and stay quiet
+          # after that: a bot repeating itself is how people learn to filter it.
+          if gh issue view "$NUMBER" --json comments --jq '.comments[].body' | grep -qF "$MARKER"; then
+            echo "Already asked on this issue — not commenting again."
+            exit 0
+          fi
+          cat > /tmp/comment.md <<EOF
+          $MARKER
+          **This issue has no Signature block yet** — the machine-readable half of what the prose above already says. It is what lets a future error match this issue instead of being diagnosed from scratch, and what \`data/fix-registry.json\` keys on.
+
+          \`\`\`
+          $REPORT
+          \`\`\`
+
+          Add a section like this at the end:
+
+          \`\`\`\`markdown
+          ## Signature
+
+          \`\`\`yaml
+          kind: runtime            # runtime | test-failure | measured | structural | dead-declaration | process
+          subject: src/wb-viewmodels/sticky.js:97
+          observed: "Uncaught TypeError: Cannot read properties of null (reading 'insertBefore')"
+          expected: "no throw when the host is removed between the scroll event and the handler"
+          detect: grep -n 'parentNode.insertBefore' src/wb-viewmodels/sticky.js
+          \`\`\`
+          \`\`\`\`
+
+          \`kind\`, \`subject\`, \`observed\` and \`expected\` are required now. \`test\` and \`fix\` are required when the issue is closed — an open issue has not been fixed yet, and demanding them up front just gets them filled with a guess.
+
+          Format: [docs/standards/ISSUE-SIGNATURE-BLOCK.md](../blob/main/docs/standards/ISSUE-SIGNATURE-BLOCK.md)
+          EOF
+          gh issue comment "$NUMBER" --body-file /tmp/comment.md
+
+      - name: Fail if the block is missing
+        if: steps.check.outputs.code != '0'
+        run: |
+          echo "::error::Issue #${{ github.event.issue.number }} has no complete Signature block — see the comment on the issue."
+          exit 1

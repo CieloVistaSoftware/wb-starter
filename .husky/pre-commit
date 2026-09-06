@@ -49,6 +49,22 @@ echo "🔍 Running pre-commit checks..."
 # bump and skipped all of these checks in the process.
 node .husky/lint-ratchet.mjs --staged || exit 1
 
+# ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
+# John: "each issue will have a priority 1 through 5 assessed based on negative
+# impact to the project... now change our gates based on priorities."
+#
+# Severity decides how hard the check bites. Priority 1 means "destroys work,
+# blinds the gates, or blocks everyone", so the tests those issues name run on
+# EVERY commit -- a handful of specs, about a minute -- rather than waiting for
+# the 10th-commit matrix. That matrix stays where it is below; it just is not
+# the only line of defence any more, which matters on a suite where it samples
+# a nondeterministic pool (#961) and takes 40 minutes to say so.
+#
+# Reads data/priority-gate.json, so no network. A stale or missing manifest
+# warns and passes: blocking a commit on a cold cache is how a hook becomes
+# something people bypass, and a bypassed hook takes every other check with it.
+node scripts/priority-gate.mjs || exit 1
+
 # ── Full validation every 10th commit ────────────────────────────────────────
 # John: "after 10 fixes run the whole set of tests."
 #

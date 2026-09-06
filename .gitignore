@@ -65,3 +65,6 @@ data/error-log-archive/
 # the reporter evidence dir the issue-state engine reads — Playwright clears
 # its outputDir on every run and was erasing that record.
 data/playwright-output/
+
+# Scratch file left by the issue tooling when composing an issue body.
+.issue-body.tmp
