@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-03T19:24:45.789Z",
-  "totalFiles": 267,
+  "generated": "2026-09-07T00:51:59.387Z",
+  "totalFiles": 269,
   "categories": [
     "_today",
     "architecture",
@@ -1505,6 +1505,18 @@
         "category": "standards"
       },
       {
+        "path": "docs/standards/ERROR-LOG-RETENTION.md",
+        "title": "Error Log Retention — 30 Days",
+        "name": "ERROR-LOG-RETENTION",
+        "category": "standards"
+      },
+      {
+        "path": "docs/standards/ISSUE-SIGNATURE-BLOCK.md",
+        "title": "The Signature Block",
+        "name": "ISSUE-SIGNATURE-BLOCK",
+        "category": "standards"
+      },
+      {
         "path": "docs/standards/RELEASE-PROCESS.md",
         "title": "Release Process Standards",
         "name": "RELEASE-PROCESS",
@@ -1562,7 +1574,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-09-02",
+        "title": "CURRENT HANDOFF — 2026-09-06",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1679,7 +1691,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "CURRENT HANDOFF — 2026-09-02",
+      "title": "CURRENT HANDOFF — 2026-09-06",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -3169,6 +3181,18 @@
       "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
       "title": "Demos & Documentation Standards",
       "name": "DEMOS-AND-DOCS-STANDARDS",
+      "category": "standards"
+    },
+    {
+      "path": "docs/standards/ERROR-LOG-RETENTION.md",
+      "title": "Error Log Retention — 30 Days",
+      "name": "ERROR-LOG-RETENTION",
+      "category": "standards"
+    },
+    {
+      "path": "docs/standards/ISSUE-SIGNATURE-BLOCK.md",
+      "title": "The Signature Block",
+      "name": "ISSUE-SIGNATURE-BLOCK",
       "category": "standards"
     },
     {

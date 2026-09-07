@@ -6,7 +6,7 @@
 export const VERSION = {
   "version": "4.0.2",
   "commit": "bfd7f635",
-  "builtAt": "2026-09-07T00:51:36.325Z",
+  "builtAt": "2026-09-07T00:51:59.029Z",
   "branch": "spec/needs-test-coverage",
   "dirty": true,
   "ahead": 16,

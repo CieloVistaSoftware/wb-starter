@@ -1,5 +1,5 @@
 {
-  "total": 124,
+  "total": 123,
   "dead": 0,
   "threw": 0,
   "results": [
@@ -18,7 +18,7 @@
       "verdict": "ATTACHED",
       "kids": 2,
       "w": 900,
-      "h": 125,
+      "h": 144,
       "threw": ""
     },
     {
@@ -256,15 +256,6 @@
       "threw": ""
     },
     {
-      "name": "clock",
-      "tag": "div",
-      "verdict": "ATTACHED",
-      "kids": 0,
-      "w": 120,
-      "h": 55,
-      "threw": ""
-    },
-    {
       "name": "cluster",
       "tag": "div",
       "verdict": "ATTACHED",
@@ -278,8 +269,8 @@
       "tag": "code",
       "verdict": "ATTACHED",
       "kids": 49,
-      "w": 516,
-      "h": 534,
+      "w": 441,
+      "h": 453,
       "threw": ""
     },
     {
@@ -367,9 +358,9 @@
       "name": "demo",
       "tag": "div",
       "verdict": "ATTACHED",
-      "kids": 3,
+      "kids": 2,
       "w": 900,
-      "h": 450,
+      "h": 242,
       "threw": ""
     },
     {
@@ -450,7 +441,7 @@
       "verdict": "ATTACHED",
       "kids": 2,
       "w": 820,
-      "h": 18,
+      "h": 531,
       "threw": ""
     },
     {
@@ -602,8 +593,8 @@
       "tag": "img",
       "verdict": "ATTACHED",
       "kids": 0,
-      "w": 0,
-      "h": 0,
+      "w": 900,
+      "h": 563,
       "threw": ""
     },
     {
@@ -666,7 +657,7 @@
       "verdict": "ATTACHED",
       "kids": 4,
       "w": 900,
-      "h": 16,
+      "h": 377,
       "threw": ""
     },
     {
@@ -693,7 +684,7 @@
       "verdict": "ATTACHED",
       "kids": 4,
       "w": 900,
-      "h": 55,
+      "h": 39,
       "threw": ""
     },
     {
@@ -935,8 +926,8 @@
       "tag": "div",
       "verdict": "ATTACHED",
       "kids": 1,
-      "w": 27,
-      "h": 27,
+      "w": 24,
+      "h": 24,
       "threw": ""
     },
     {
@@ -1079,8 +1070,8 @@
       "tag": "video",
       "verdict": "ATTACHED",
       "kids": 0,
-      "w": 0,
-      "h": 0,
+      "w": 900,
+      "h": 563,
       "threw": ""
     },
     {
