@@ -871,7 +871,7 @@ name         attribute with DIFFERENT meaning?
 ### Media
 ```html
 <video
-  src="movie.mp4"
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="/images/placeholder.svg"
   controls
   autoplay

@@ -9,7 +9,7 @@ Behavior applied with x-clock.
 ### How to write it
 
 ```html
-<div x-clock class="time-display"></div>
+<div x-clock></div>
 ```
 
 ## Attributes

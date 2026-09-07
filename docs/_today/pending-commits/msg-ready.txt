@@ -1,0 +1,85 @@
+fix(#1003,#1005,#1020,#1023,#1031,#1036): the fixes whose tests prove them
+
+Every issue in this commit is in state `ready` — its own test ran and passed in
+the last recorded run, and the fix is in this tree. Nothing here is claimed; each
+line below names what proves it.
+
+  #1005  A native <dialog> sample opened with no way to close it. The dialog
+         behavior only built a close button for dialogs it created itself, so
+         every authored one left Escape as the only exit — undiscoverable, and
+         absent entirely on a sample that disables it.
+         tests/regression/dialog-samples-have-close-and-padding.spec.ts, 3/3
+
+  #1003  The panel showed rendered internals as though they were the API, and
+         five trigger-button helpers wrote their styling through
+         element.style.cssText, which beats every stylesheet and left the page
+         unable to size its own buttons. Those declarations now live in
+         src/styles/behaviors/trigger-buttons.css.
+         tests/regression/demo-never-shows-expansion.spec.ts, 2/2
+
+  #1020  The behaviors workspace had two scrollbars a few pixels apart, no gap
+         at the side, and a footer John asked to remove. The workspace was sized
+         off the VIEWPORT while living inside a container that is not the
+         viewport, so it overflowed .site__body and both scrolled. It takes its
+         height from the container now, through a flex chain where every link
+         carries min-height: 0 — without that a flex child floors at its content
+         height, measured at 10343px for the 184-row list.
+         tests/regression/behaviors-workspace-single-scroll.spec.ts, 3/3
+
+  #1023  The language badge (HTML / JAVASCRIPT / CSS) sat on top of line 1 of
+         every code sample. The 2rem of room .x-code--has-badge reserves was
+         overwritten twice: the highlight.js theme <link> is appended at RUNTIME
+         so its `.hljs { padding: 3px }` is later in the cascade at equal
+         specificity, and the badge rules were declared above .x-code--block,
+         whose `padding: 1rem` then took padding-top back. Fixed by pairing the
+         selectors with .hljs (0-2-0) and moving them below the block rule —
+         specificity and source order, no !important.
+         tests/regression/code-language-badge-clears-first-line.spec.ts, 1/1
+
+TWO REGRESSIONS THIS SESSION INTRODUCED, AND FIXED
+
+#1020's first version applied at every width. Measured at 375x812: the 837-row
+behaviour navigator rendered 2px tall and, since .site__body had been told not to
+scroll, nothing was reachable — a frozen phone layout. The treatment now sits
+inside the page's own two-column breakpoint, with a min-height floor as well:
+below ~600px of window the list's own minimum and the panel's offset genuinely
+conflict, and #992 requires the outer scroller to be able to reach the overflow.
+
+Removing main's bottom padding then left zero slack, so the panel spilled 9px
+past its scroller under Playwright's font metrics while fitting here with 1px to
+spare. min-height:0 + overflow:hidden on the workspace makes that invariant
+structural rather than arithmetic.
+
+  #1031  sticky.js crashed on an element removed mid-scroll:
+         createPlaceholder() runs from the scroll handler and assumed the host
+         still had a parent, so a re-rendering page threw
+         "Cannot read properties of null (reading 'insertBefore')" and aborted
+         the rest of that pass. It guards now, and STOPS TRACKING a detached
+         host — a listener still firing for a dead element is why the error
+         repeated on every subsequent scroll rather than happening once.
+         tests/regression/x-sticky-behavior.spec.ts — scroll-then-detach case added
+
+  #1036  x-table sorted on displayed text only, so a column could not sort by
+         anything but what it shows. The issues table renders "—" for an unrated
+         priority, and ascending order put every unrated row above priority 1 —
+         least urgent first, in the column that exists to express urgency.
+         Reads td.dataset.sortValue ?? td.textContent now, so display and sort
+         order stop being the same decision; a cell with no declared key sorts
+         exactly as before.
+         tests/regression/x-table-sort-value.spec.ts — new
+
+ALSO IN THESE FILES
+
+pages/behaviors.html: the Copy button moved into the code bar beside the theme
+picker. Pinned over the panel's top-right corner it covered the first line of the
+listing by 70x13px once the panel filled the window.
+
+src/styles/behaviors/code.css: #1013's inline styles, moved out of code.js so a
+code theme can be seen past them at all.
+
+tests/compliance/footer-viewport-anchor.spec.ts: its long-content case moved from
+?page=behaviors (which now has no footer, by request) to What's New, which is
+longer and carries more code. The exemption is asserted rather than skipped, so a
+footer vanishing from any other page still fails.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

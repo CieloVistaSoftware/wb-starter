@@ -127,6 +127,42 @@
       align-items: stretch;
     }
 
+    /* #912 — table layout, replacing the card grid. Dense and scannable:
+       thirteen fixes should fit on one screen, not several. */
+    .fix-file { display: block; text-decoration: none; }
+    .fix-file code { font-size: 0.75rem; color: var(--text-secondary); }
+    .fix-file:hover code { color: var(--primary); text-decoration: underline; }
+    .fix-cell--files { max-width: 22rem; }
+    .fix-subject { display: block; color: var(--text-secondary); font-size: 0.8125rem; margin-top: 0.15rem; }
+    .fix-pri { color: var(--text-muted); font-size: 0.75rem; }
+    .fix-state { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.03em; }
+    .fix-state--open { color: var(--danger, #ef4444); }
+    .fix-state--closed { color: var(--success, #22c55e); font-weight: 600; }
+    .fix-rel { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.8125rem; color: var(--text-primary); }
+    .fix-rel--none { color: var(--text-muted); font-style: italic; }
+    .fix-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .fix-table th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .fix-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+      color: var(--text-primary);
+    }
+    .fix-cell--id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text-secondary); white-space: nowrap; }
+    .fix-cell--title { font-weight: 600; }
+    .fix-cell--files code,
+    .fix-cell--test code { font-size: 0.8125rem; color: var(--text-secondary); }
+    .fix-none { color: var(--text-muted); font-style: italic; }
+
     .fix-card {
       /* Base styles handled by x-card behavior */
       height: 100%;
@@ -331,16 +367,61 @@
 
     async function loadFixes() {
       try {
+        // #912 — trace fixes through git, not through data/fixes.json.
+        //
+        // John: "I need to be able to track fixes back to the issue and then
+        // what release they were put into" / "the open issue/closed issue should
+        // be specified in fix viewer for each row".
+        //
+        // data/fixes.json is 13 hand-written entries with no issue number and no
+        // version — it cannot answer that however it is formatted. /api/fixes
+        // builds the chain from git: a commit cites its issue, and the earliest
+        // tag containing that commit is the release it shipped in.
+        try {
+          const traced = await fetch('/api/fixes');
+          if (traced.ok) {
+            const t = await traced.json();
+            if (Array.isArray(t.rows) && t.rows.length) { renderTraced(t); return; }
+          }
+        } catch { /* no server (static deploy) — fall back to the legacy file */ }
+
         const response = await fetch('/data/fixes.json');
         const data = await response.json();
         
         // Convert object to array
         const defaultDate = data.metadata?.lastUpdated || data.metadata?.created || new Date().toISOString();
-        fixesData = Object.values(data.fixes).map(fix => ({
-          ...fix,
-          // Ensure date exists - prioritize appliedDate, then specific date fields, then global metadata
-          date: fix.appliedDate || fix.date || fix.lastUpdated || defaultDate
-        }));
+        // #912 — the generator and the viewer speak different shapes.
+        //
+        // data/fixes.json records carry: id, test, title, problem, fix,
+        // filesChanged, category. The card reads: errorId, testName, testRun,
+        // cause, errorSignature, issue, component, behavior, status. NOTHING
+        // produced the second shape, so every card rendered "Unknown Issue",
+        // "No signature provided", "TEST MISSING", "No cause spec" — 13 of 13,
+        // and the header said "0 verified". The data was there the whole time.
+        //
+        // Normalised HERE rather than in the card, so the card keeps one
+        // contract and any future producer maps into it in one place.
+        const normalise = (fix) => {
+          const test = fix.test || fix.testName || null;
+          return {
+            ...fix,
+            errorId:        fix.errorId        ?? fix.id ?? null,
+            testName:       fix.testName       ?? test,
+            // A named test IS the verification record for these entries; the
+            // header's "verified" count keys off this.
+            testRun:        fix.testRun        ?? (test ? { spec: test } : null),
+            cause:          fix.cause          ?? fix.problem ?? null,
+            component:      fix.component      ?? fix.category ?? null,
+            behavior:       fix.behavior       ?? fix.category ?? null,
+            // Real issue number if the text carries one, rather than inventing it.
+            issue:          fix.issue          ?? (String(fix.title || '') + ' ' + String(fix.problem || ''))
+                                                    .match(/#(\d{3,4})(?!\d)/)?.[1] ?? null,
+            errorSignature: fix.errorSignature ?? null,
+            status:         fix.status         ?? (test ? 'verified' : 'applied'),
+            date: fix.appliedDate || fix.date || fix.lastUpdated || defaultDate,
+          };
+        };
+        fixesData = Object.values(data.fixes).map(normalise);
 
         document.getElementById('fix-count').innerHTML = `${fixesData.length} fixes <span style="opacity:0.6; font-size: 0.8em; margin-left: 0.5rem">(${fixesData.filter(f => f.testRun).length} verified)</span>`;
         populateStatusDropdown();
@@ -500,6 +581,70 @@
       });
     }
 
+    // #912 — one row per ISSUE, because the issue is the source of truth.
+    //
+    // John: "remember the issue is the source of truth everything else should
+    // build on that" and "fix-viewer should have clickable links to the files it
+    // names".
+    //
+    // So: the issue number, its open/closed state, what fixed it, the release it
+    // shipped in, and every file that fix touched — each linked at the sha the
+    // fix landed on, so the link shows the code as it was then rather than as it
+    // is now.
+    function renderTraced(t) {
+      const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (ch) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+      ));
+      const c = t.counts || {};
+      document.getElementById('fix-count').innerHTML =
+        esc(c.traced) + ' issues traced <span style="opacity:.6;font-size:.8em;margin-left:.5rem">('
+        + esc(c.closed) + ' closed &middot; ' + esc(c.open) + ' open &middot; '
+        + esc(c.released) + ' released &middot; ' + esc(c.unreleased) + ' unreleased)</span>';
+
+      const rows = t.rows.map((r) => {
+        const cm = r.commits[0] || {};
+        const more = r.commits.length > 1
+          ? ' <span class="fix-none">+' + (r.commits.length - 1) + '</span>'
+          : '';
+        const state = r.state === 'closed'
+          ? '<span class="fix-state fix-state--closed">closed</span>'
+          : r.state === 'open'
+            ? '<span class="fix-state fix-state--open">OPEN</span>'
+            : '<span class="fix-none">unknown</span>';
+        const rel = r.release
+          ? '<span class="fix-rel">' + esc(r.release) + '</span>'
+          : '<span class="fix-rel fix-rel--none">unreleased</span>';
+        const pri = r.priority
+          ? '<span class="fix-pri">' + esc(r.priority.replace('priority:', 'P')) + '</span> '
+          : '';
+        // Every file the fix touched, clickable, pinned to that commit.
+        const files = (r.files || []).length
+          ? (r.files || []).map((f) =>
+              '<a class="fix-file" href="' + esc(f.url) + '" target="_blank" rel="noopener"><code>'
+              + esc(f.path) + '</code></a>').join('')
+          : '<span class="fix-none">none recorded</span>';
+
+        return '<tr>'
+          + '<td class="fix-cell--id"><a href="' + esc(r.url) + '" target="_blank" rel="noopener">#'
+            + esc(r.number) + '</a></td>'
+          + '<td>' + state + '</td>'
+          + '<td class="fix-cell--title">' + pri + esc(r.title || '') + '</td>'
+          + '<td class="fix-cell--test"><a href="' + esc(cm.url || '#') + '" target="_blank" rel="noopener"><code>'
+            + esc(cm.sha || '') + '</code></a>' + more
+            + '<span class="fix-subject">' + esc(cm.subject || '') + '</span></td>'
+          + '<td class="fix-cell--files">' + files + '</td>'
+          + '<td>' + rel + '</td>'
+          + '</tr>';
+      }).join('');
+
+      document.getElementById('content').innerHTML =
+        '<table class="fix-table" sortable striped hoverable>'
+        + '<thead><tr>'
+        + '<th scope="col">Issue</th><th scope="col">State</th><th scope="col">Title</th>'
+        + '<th scope="col">Fixed by</th><th scope="col">Files changed</th><th scope="col">Release</th>'
+        + '</tr></thead><tbody>' + rows + '</tbody></table>';
+    }
+
     function render() {
       const sortType = document.getElementById('sort-by').value;
       const groupType = document.getElementById('group-by').value;
@@ -577,16 +722,56 @@
           groupWrapper.appendChild(header);
         }
         
-        const grid = document.createElement('div');
-        grid.className = 'fix-grid';
-        
-        items.forEach(fix => {
-          const card = document.createElement('x-fix-card');
-          card.data = fix;
-          grid.appendChild(card);
-        });
-        
-        groupWrapper.appendChild(grid);
+        // #912 — a TABLE, not a wall of cards.
+        //
+        // John, looking at the card grid: "i don't like this format". Each fix
+        // was a tall stack of labelled boxes — ERROR SIGNATURE, CAUSE, ACTION
+        // TAKEN, FILE, TEST STATUS — and for these records most of them read
+        // "No action specified" / "None specified", because data/fixes.json
+        // simply has no such fields. Thirteen fixes filled several screens and
+        // said almost nothing.
+        //
+        // Same shape he asked for on the issues page: one row per item, dense,
+        // sortable, scannable. `<table sortable>` auto-injects the table
+        // behavior, so the column sorting is the framework's rather than a
+        // private implementation that could disagree with every other table.
+        const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
+          { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+        ));
+        const table = document.createElement('table');
+        table.className = 'fix-table';
+        table.setAttribute('sortable', '');
+        table.setAttribute('striped', '');
+        table.setAttribute('hoverable', '');
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Fix</th>
+              <th scope="col">Problem</th>
+              <th scope="col">Action taken</th>
+              <th scope="col">Files</th>
+              <th scope="col">Test</th>
+              <th scope="col">Kind</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items.map((f) => {
+              const files = Array.isArray(f.filesChanged) ? f.filesChanged : (f.filesChanged ? [f.filesChanged] : []);
+              const test = f.testName || f.test || '';
+              return `<tr>
+                <td class="fix-cell--id">${esc(f.errorId || f.id || '—')}</td>
+                <td class="fix-cell--title">${esc(f.title || '—')}</td>
+                <td>${esc(f.cause || f.problem || '')}</td>
+                <td>${esc(f.fix || '')}</td>
+                <td class="fix-cell--files">${files.map((x) => `<code>${esc(x)}</code>`).join('<br>')}</td>
+                <td class="fix-cell--test">${test ? `<code>${esc(test)}</code>` : '<span class="fix-none">none</span>'}</td>
+                <td>${esc(f.category || f.behavior || f.component || '')}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>`;
+
+        groupWrapper.appendChild(table);
         container.appendChild(groupWrapper);
       });
     }

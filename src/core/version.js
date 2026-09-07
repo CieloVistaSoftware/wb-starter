@@ -4,12 +4,12 @@
  * so what the badge says is always what is being served (#1002).
  */
 export const VERSION = {
-  "version": "4.0.1",
-  "commit": "7aff921f",
-  "builtAt": "2026-09-06T20:56:39.331Z",
-  "branch": "fix/cards-specificity-and-tooling-corruption",
+  "version": "4.0.2",
+  "commit": "bfd7f635",
+  "builtAt": "2026-09-07T00:51:36.325Z",
+  "branch": "spec/needs-test-coverage",
   "dirty": true,
-  "ahead": 15,
+  "ahead": 16,
   "behind": 0,
   "upstream": "origin/main"
 };

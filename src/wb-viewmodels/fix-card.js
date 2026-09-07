@@ -1,5 +1,6 @@
 import { WBCard } from './x-card.js';
 import { mdhtml } from './mdhtml.js';
+import { ensureBehaviorCss } from '../core/style-loader.js';
 
 /**
  * Fix Card Component
@@ -24,136 +25,13 @@ export class WBFixCard extends WBCard {
     super.connectedCallback();
     this.classList.add('fix-card');
     
-    // Inject styles for hiding scrollbars if not present
-    if (!document.getElementById('x-fix-card-styles')) {
-      const style = document.createElement('style');
-      style.id = 'x-fix-card-styles';
-      style.textContent = `
-        .x-fix-card-scroll-container::-webkit-scrollbar {
-          display: none;
-        }
-        .x-fix-card-scroll-container {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-        }
-        /* Ensure text wraps nicely */
-        .fix-card .detail-content, 
-        .fix-card .fix-title,
-        .fix-card .fix-id,
-        .fix-card .detail-label {
-          white-space: pre-wrap !important;
-          word-break: break-word !important;
-          overflow-wrap: anywhere !important;
-        }
-        
-        /* MDHTML / Code Block Overrides - NO SCROLLBARS, NO GAPS, FIT PARENT */
-        .fix-card .fix-code-block,
-        .fix-card .fix-code-block * {
-            scrollbar-width: none !important;
-            -ms-overflow-style: none !important;
-        }
-        .fix-card .fix-code-block *::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
-        }
-
-        .fix-card .fix-code-block pre {
-          margin: 0 !important;
-          padding: 0.5rem !important;
-          background: rgba(0,0,0,0.2) !important;
-          border-radius: 4px !important;
-          white-space: pre-wrap !important;
-          word-break: break-word !important;
-          overflow-wrap: anywhere !important;
-          overflow-x: hidden !important;
-          overflow-y: hidden !important;
-          max-height: none !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          box-sizing: border-box !important;
-        }
-        
-        .fix-card .fix-code-block code {
-          padding: 0 !important;
-          margin: 0 !important;
-          background: transparent !important;
-          white-space: pre-wrap !important;
-          overflow: visible !important;
-          max-height: none !important;
-          border: none !important;
-          width: 100% !important;
-          box-sizing: border-box !important;
-          display: block !important;
-        }
-
-        .fix-card .x-code {
-            white-space: pre-wrap !important;
-            word-break: break-word !important;
-            overflow-wrap: anywhere !important;
-            display: block !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            overflow: visible !important;
-        }
-
-        /* Hide the WB Code Behavior chrome (language badge, copy button) */
-        .fix-card .x-code__header,
-        .fix-card .x-code__language,
-        .fix-card .x-code__copy,
-        .fix-card .x-pre__copy,
-        .fix-card .x-pre__language,
-        .fix-card .x-pre__line-numbers {
-          display: none !important;
-        }
-        
-        /* Reset the wrapper injected by code/pre behavior */
-        .fix-card .x-code-wrapper,
-        .fix-card .x-pre-wrapper {
-          margin: 0 !important;
-          padding: 0 !important;
-          background: transparent !important;
-          border: none !important;
-          box-shadow: none !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          overflow: visible !important;
-          max-height: none !important;
-        }
-        
-        .fix-card .signature-block,
-        .fix-card .stack-trace {
-          font-family: monospace;
-          background: rgba(0,0,0,0.2);
-          padding: 0.5rem;
-          border-radius: 4px;
-          overflow-x: auto;
-          overflow-y: auto;
-          max-height: 150px;
-          white-space: pre-wrap;
-          word-break: break-word;
-        }
-        
-        /* Constrain overall card height to prevent massive cards */
-        .fix-card {
-          max-height: 750px;
-          overflow-y: auto;
-        }
-        
-        .glow-red {
-          color: #ff4444 !important;
-          text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
-          font-weight: 600;
-          animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-          0% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
-          50% { text-shadow: 0 0 12px rgba(255, 0, 0, 0.7); }
-          100% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
+    // #1014: a 125-line <style> block carrying 49 `!important` declarations
+    // used to be injected here. It now lives in src/styles/behaviors/fix-card.css,
+    // loaded through the behavior CSS manifest like every other behavior's
+    // styles. The !important was compensating for a specificity tie with
+    // card.css (both 0-2-0); the stylesheet uses .x-card.fix-card (0-3-0) and
+    // wins on merit instead.
+    ensureBehaviorCss('fix-card');
 
     // If data was set before connection, render now
     if (this.fixData) {
@@ -204,7 +82,8 @@ export class WBFixCard extends WBCard {
       : `<div class="detail-content violation" style="color: var(--danger); border: 1px dashed var(--danger); background: rgba(239, 68, 68, 0.1);">VIOLATION: No cause specified. Fix requirements mandate a known cause.</div>`;
 
     const errorSignature = (() => {
-      const sig = fix.errorSignature || 'No signature provided';
+      const sig = fix.errorSignature;
+      if (!sig) return '';   // no signature recorded for this shape of fix — say nothing rather than something wrong
       if (sig.includes('Enhancement')) {
         // Try to find a component doc link - use direct path for simplicity
         // `behavior` is canonical since the components removal -- fix-viewer.html
@@ -235,7 +114,7 @@ export class WBFixCard extends WBCard {
           <div class="fix-id" style="font-family:monospace;color:var(--text-secondary);background:rgba(0,0,0,0.3);padding:0.2rem 0.4rem;border-radius:4px;">${errorIdSafe || '—'}</div>
           <span ${errorIdSafe ? `id="status-${errorIdSafe}"` : ''} class="fix-status ${statusClass}" style="padding:0.25rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:bold;text-transform:uppercase;">${this.escapeHtml(statusDisplay)}</span>
         </div>
-        <h3 class="fix-title" style="margin:0;font-size:1.1rem;color:var(--text-primary);">${this.escapeHtml(fix.issue || 'Unknown Issue')}</h3>
+        <h3 class="fix-title" style="margin:0;font-size:1.1rem;color:var(--text-primary);">${this.escapeHtml(fix.title || (fix.issue ? `#${fix.issue}` : 'Untitled fix'))}</h3>
       </div>
     `;
 

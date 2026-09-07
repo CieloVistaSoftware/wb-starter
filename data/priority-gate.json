@@ -1,0 +1,1512 @@
+{
+  "generated": "2026-09-06T04:08:54.286Z",
+  "issues": {
+    "1": [
+      {
+        "number": 1027,
+        "title": "Running the test suite silently destroys data/errors.json — 26+ real errors lost",
+        "test": "node scripts/prune-error-archives.mjs   # reports what exists and what is in-window"
+      },
+      {
+        "number": 1005,
+        "title": "Native <dialog> samples render with no close button — the dialog behavior never runs on them",
+        "test": "tests/regression/dialog-samples-have-close-and-padding.spec.ts"
+      },
+      {
+        "number": 1003,
+        "title": "Rendered internals are shown as if they were the API, and behaviors write 802 inline styles (Law 16)",
+        "test": "tests/regression/demo-never-shows-expansion.spec.ts"
+      },
+      {
+        "number": 998,
+        "title": "article: featured should take a string (what/why), and its badge colour should be settable",
+        "test": null
+      },
+      {
+        "number": 997,
+        "title": "Every behavior in the list must offer at least 5 varied examples — many show 1",
+        "test": null
+      },
+      {
+        "number": 991,
+        "title": "release.mjs corrupts package-lock.json — unanchored replace bumps dependency versions too",
+        "test": null
+      },
+      {
+        "number": 962,
+        "title": "Runtime exposes no injection-idle signal, so 492 tests sleep instead — this is the root cause of the",
+        "test": null
+      },
+      {
+        "number": 961,
+        "title": "~20 tests change state between identical gate runs — failure counts are samples, not facts",
+        "test": null
+      },
+      {
+        "number": 889,
+        "title": "Three separate causes made a whole Playwright project collect 0 tests — and the gates reported clean",
+        "test": null
+      },
+      {
+        "number": 883,
+        "title": "P1: 85 duplicate code clusters inside wb-starter (24 exact, 61 near) — card.js in 72 of them",
+        "test": null
+      },
+      {
+        "number": 820,
+        "title": "main is red: 5 page-fragment-compliance failures block every commit",
+        "test": null
+      },
+      {
+        "number": 678,
+        "title": "21 x-behaviors destroy the author's content — the whole card family included",
+        "test": null
+      },
+      {
+        "number": 341,
+        "title": "CI — Tests workflow has been red on every run for at least the last 10 commits",
+        "test": null
+      }
+    ],
+    "2": [
+      {
+        "number": 1034,
+        "title": "API and Docs panels open as a floating box over the page, not inside the live panel",
+        "test": null
+      },
+      {
+        "number": 1033,
+        "title": "#behaviors-live-stage renders twice under some condition — duplicate-id probe fires once per suite r",
+        "test": null
+      },
+      {
+        "number": 1032,
+        "title": "Every error logged during a test run is tagged testOrigin, including real crashes",
+        "test": null
+      },
+      {
+        "number": 1031,
+        "title": "sticky.js crashes on an element detached mid-scroll: element.parentNode.insertBefore of null",
+        "test": "tests/regression/x-sticky-behavior.spec.ts — add a scroll-then-detach case"
+      },
+      {
+        "number": 1030,
+        "title": "Error log never reaches its fix registry: analysis/solution/verify arrive null, and no issue link",
+        "test": null
+      },
+      {
+        "number": 1028,
+        "title": "docs/behavior-cross-reference.md ships a video card pointing at a file that does not exist (demo.mp4",
+        "test": "tests/compliance/docs-live-media-assets-exist.spec.ts"
+      },
+      {
+        "number": 1025,
+        "title": "Themes page shows 23 of 50 themes, and every card is hand-written with hardcoded colors",
+        "test": "tests/compliance/themes-page-lists-every-theme.spec.ts (drafted, docs/_today/pending-1025/)"
+      },
+      {
+        "number": 1024,
+        "title": "doc-viewer-code-panel-audit is flaky: collects a different number of tests each run, failure set dri",
+        "test": null
+      },
+      {
+        "number": 1023,
+        "title": "Language badge overlaps the first line of every code sample (themes page)",
+        "test": "tests/regression/code-language-badge-clears-first-line.spec.ts"
+      },
+      {
+        "number": 1022,
+        "title": "x-codecontrol renders two dropdowns side by side (no re-init guard)",
+        "test": "tests/regression/code-theme-control-and-host.spec.ts"
+      },
+      {
+        "number": 1020,
+        "title": "Behaviors workspace: two vertical scrollbars, no side gap, footer still present",
+        "test": "tests/regression/behaviors-workspace-single-scroll.spec.ts"
+      },
+      {
+        "number": 1016,
+        "title": "x-code on any element other than <code>/<pre> is refused, so the documented attribute form never ren",
+        "test": null
+      },
+      {
+        "number": 1015,
+        "title": "formatHtml() collapses newlines inside <code>/<pre>, so code examples show as one run-on line",
+        "test": null
+      },
+      {
+        "number": 1013,
+        "title": "code.js writes 17 inline styles, so code themes can only ever recolour tokens",
+        "test": null
+      },
+      {
+        "number": 1011,
+        "title": "x-table sort is broken for dates and versions — parseFloat('2026-09-03') is 2026, so every date ties",
+        "test": null
+      },
+      {
+        "number": 1008,
+        "title": "release.css never loads — the version badge's three x-release classes have zero styling",
+        "test": null
+      },
+      {
+        "number": 1002,
+        "title": "Port 3000 must always be the latest code, and drift must be visible — version.js goes stale and a cl",
+        "test": "tests/regression/nav-parity-with-main.spec.ts"
+      },
+      {
+        "number": 1000,
+        "title": "Error tooling fails silently on the static deploy: viewer 404s, log never records, Copy does nothing",
+        "test": "tests/regression/error-tooling-works-deployed.spec.ts"
+      },
+      {
+        "number": 996,
+        "title": "Native <details> does not collapse on the behaviors page — a bare one measures 371px of hidden conte",
+        "test": null
+      },
+      {
+        "number": 989,
+        "title": "Deploys are invisible for 10 minutes — JS modules cached with max-age=600 at unversioned URLs",
+        "test": null
+      },
+      {
+        "number": 987,
+        "title": "cards.html blocks the main thread for 13.7s (one unbroken 9.1s task) building all 293 demos eagerly",
+        "test": null
+      },
+      {
+        "number": 980,
+        "title": "wb-views was removed but registry-browser.html still hard-imports it — the page cannot run, and 4 te",
+        "test": "tests/compliance/module-imports-resolve.spec.ts"
+      },
+      {
+        "number": 974,
+        "title": "The 10-commit test gate never fires in a worktree — wb-fix-count is per-worktree, so every worktree ",
+        "test": null
+      },
+      {
+        "number": 965,
+        "title": "67% of card.css is discarded by the browser — 13 selectors have a stray ) from the :is() migration, ",
+        "test": null
+      },
+      {
+        "number": 958,
+        "title": "<nav> should auto-inject navbar — nav is the one semantic tag missing from nativeMap, so layout.html",
+        "test": null
+      },
+      {
+        "number": 957,
+        "title": "Extensionless paths silently render HOME with a 200 (/behaviors) — the masking #125/#527 removed, st",
+        "test": null
+      },
+      {
+        "number": 952,
+        "title": "Behaviors page generates squashed-lowercase attributes (fullwidth, showplaybutton) instead of the do",
+        "test": null
+      },
+      {
+        "number": 916,
+        "title": "<div x-demo> never initialises on standalone demo pages — no class, no demo.css, even after an expli",
+        "test": null
+      },
+      {
+        "number": 906,
+        "title": "x-glow writes its animation and box-shadow inline, and teardown leaves the element glowing forever",
+        "test": null
+      },
+      {
+        "number": 891,
+        "title": "sw.js reports a DEAD dev server as a storm of fake 503s, and the app still prints '✅ wb-starter read",
+        "test": null
+      },
+      {
+        "number": 887,
+        "title": "site.css h3 leaks into every card header: titles render primary-blue with a 1.5rem top margin",
+        "test": null
+      },
+      {
+        "number": 886,
+        "title": "featured on an article/card renders nothing — declared, documented, inert",
+        "test": null
+      },
+      {
+        "number": 885,
+        "title": "Generic modifier layer mints class names from attribute VALUES (x-button--star, x-button--_self)",
+        "test": null
+      },
+      {
+        "number": 884,
+        "title": "cardproduct renders badge= twice: once over the figure, once in the header",
+        "test": null
+      },
+      {
+        "number": 874,
+        "title": "Dialog chrome inherits the page-navbar behavior: .x-header strips the dialog header's vertical paddi",
+        "test": "tests/regression/modal-spacing-compliance.spec.ts"
+      },
+      {
+        "number": 868,
+        "title": "Elevated cards render with no background — the documented !important fix is absent from the rule it ",
+        "test": null
+      },
+      {
+        "number": 867,
+        "title": "x-progressbar renders through the @deprecated progressbar.js, not the progress behavior tag-map rout",
+        "test": null
+      },
+      {
+        "number": 866,
+        "title": "x-slideout animates nothing: no x-slide-out-* keyframe exists in src/styles (same silent failure as ",
+        "test": null
+      },
+      {
+        "number": 865,
+        "title": "x-checkbox renders nothing at all - both the div-host and the native input[type=checkbox] mapping ar",
+        "test": null
+      },
+      {
+        "number": 864,
+        "title": "x-cardhero / x-cardpricing content overflows its own card and is silently clipped (46 elements, up t",
+        "test": null
+      },
+      {
+        "number": 859,
+        "title": "tabs.js writes the class name [x-tabs]__tab--active (bracketed) - same rename defect as #858",
+        "test": null
+      },
+      {
+        "number": 857,
+        "title": "The rename turned element-tag selectors into x-tag selectors that match nothing",
+        "test": null
+      },
+      {
+        "number": 854,
+        "title": "4.0.0 fallout: home page prints its hero's raw HTML in an x-demo code panel, Angular demo mount tag ",
+        "test": null
+      },
+      {
+        "number": 851,
+        "title": "The tag migration turned <wb-select> into native <select>, silently dropping the options JSON on 7 l",
+        "test": null
+      },
+      {
+        "number": 848,
+        "title": "progress: 4.0.0 tag removal left every <progress> unstyled - renderer gated off for native <progress",
+        "test": null
+      },
+      {
+        "number": 839,
+        "title": "6 tests are flaky under full-suite load — passing on retry, so the gate stays green",
+        "test": null
+      },
+      {
+        "number": 836,
+        "title": "npm publish would ship 3,539 files / 121MB for a 79KB library",
+        "test": null
+      },
+      {
+        "number": 825,
+        "title": "wb-header drops slotted content — $view's right/center sections never render their slot data",
+        "test": null
+      },
+      {
+        "number": 821,
+        "title": "Header version badge is <a href=\"#\"> but acts as a button — fails the dead-link gate",
+        "test": null
+      },
+      {
+        "number": 819,
+        "title": "writeToClipboard's fallback steals focus and never gives it back",
+        "test": null
+      },
+      {
+        "number": 816,
+        "title": "x-glow, x-sparkle and x-rainbow route to nothing — and glow haloes the box, not the text",
+        "test": null
+      },
+      {
+        "number": 795,
+        "title": "Header logo is a 1.5 MB 1024x1024 PNG rendered at 32px — and its inline style sits where no gate can",
+        "test": null
+      },
+      {
+        "number": 794,
+        "title": "Dialogs must follow the layout rules and always have an exit — showClose=false is an option that sho",
+        "test": null
+      },
+      {
+        "number": 793,
+        "title": "iconPosition renders no icon: companion cannot be seeded, attribute name never matches, and the fail",
+        "test": null
+      },
+      {
+        "number": 792,
+        "title": "footer ignores 4 of its 5 declared attributes — brand, copyright, links, social render nothing",
+        "test": null
+      },
+      {
+        "number": 790,
+        "title": "360 hardcoded colors in JS inline styles — the colour guard only scans .css",
+        "test": null
+      },
+      {
+        "number": 787,
+        "title": "x-checkbox is inert: does nothing on any host, and its documented <div> form cannot work",
+        "test": null
+      },
+      {
+        "number": 775,
+        "title": "details: the disclosure arrow never indicates collapsed state",
+        "test": null
+      },
+      {
+        "number": 770,
+        "title": "x-demo is registered but inert: the demo behavior only works as the wb-demo tag",
+        "test": null
+      },
+      {
+        "number": 765,
+        "title": "floatinglabel gives the browser nothing to identify the field: no label association, no autocomplete",
+        "test": null
+      },
+      {
+        "number": 763,
+        "title": "A failed media load leaves no runtime error: the throw depends on WB.init() having run",
+        "test": null
+      },
+      {
+        "number": 761,
+        "title": "Overlay cards still have gaps on both sides - width:100% fills the content box, not the container",
+        "test": null
+      },
+      {
+        "number": 754,
+        "title": "Input variants and sizes are dead, and <div x-input> renders nothing",
+        "test": null
+      },
+      {
+        "number": 751,
+        "title": "form/ajax example can never succeed: no action, so submitting does nothing visible",
+        "test": null
+      },
+      {
+        "number": 747,
+        "title": "x-dialog: showclose=\"false\" is ignored, and closeonbackdrop is an unreadable name",
+        "test": null
+      },
+      {
+        "number": 746,
+        "title": "Button variants, icons and size are dead when x-button is written — the attribute disables the behav",
+        "test": null
+      },
+      {
+        "number": 745,
+        "title": "x-button does nothing: no class, no icon, no href navigation — and WB.scan() applies no behavior at ",
+        "test": null
+      },
+      {
+        "number": 742,
+        "title": "Behaviors page: clicking the x-button variant=link example ejects the reader to docs.html",
+        "test": null
+      },
+      {
+        "number": 726,
+        "title": "wb-drawer opens the wrong panel: position=left yields wb-drawer--right, and the panel is empty",
+        "test": null
+      }
+    ],
+    "3": [
+      {
+        "number": 1036,
+        "title": "x-table sorts on displayed text only — a column cannot declare its sort key",
+        "test": "tests/regression/x-table-sort-value.spec.ts"
+      },
+      {
+        "number": 1035,
+        "title": "Three behaviors have no doc: x-image, x-progressbar, x-drawer-layout — and two have a doc under a na",
+        "test": "tests/compliance/behavior-doc-coverage.spec.ts"
+      },
+      {
+        "number": 1029,
+        "title": "#1010's repeat-counting does not collapse identical errors — the same fault lists twice",
+        "test": null
+      },
+      {
+        "number": 1026,
+        "title": "v3-guide-code-panel-min-width looks for an <x-demo> tag that v4 removed",
+        "test": null
+      },
+      {
+        "number": 1017,
+        "title": "demos/site/cards.html: 21 redundant <article x-card>, flagged by the replacement guard on every load",
+        "test": null
+      },
+      {
+        "number": 1014,
+        "title": "181 !important declarations in src/ — the rule says none, ever",
+        "test": null
+      },
+      {
+        "number": 1010,
+        "title": "Error log: no provenance, no fixable flag, and no way to act on an error it already knows how to fix",
+        "test": null
+      },
+      {
+        "number": 1009,
+        "title": "21 schema attributes are declared and read by no code — drawer repeats dialog's dead trio exactly",
+        "test": null
+      },
+      {
+        "number": 1007,
+        "title": "Fix Registry Viewer reads a schema the fix log doesn't have — all 13 entries render 'Unknown Issue /",
+        "test": null
+      },
+      {
+        "number": 1004,
+        "title": "AutoScroll mode: walk every navigator entry unattended, with a right-click delay setting (0–2000 ms)",
+        "test": "tests/regression/behaviors-header-controls-aligned.spec.ts"
+      },
+      {
+        "number": 1001,
+        "title": "Use real paths for navigation (/behaviors), not ?page= query routing",
+        "test": null
+      },
+      {
+        "number": 986,
+        "title": "Code renders as plain text for ~507ms before highlighting is applied — it should paint already colou",
+        "test": null
+      },
+      {
+        "number": 985,
+        "title": "Code panels render too narrow and visibly snap to full width ~1.3s later — the width poll is user-vi",
+        "test": null
+      },
+      {
+        "number": 984,
+        "title": "demo.js polls until width is stable instead of emitting a signal — the poll propagates outward as sl",
+        "test": null
+      },
+      {
+        "number": 983,
+        "title": "generate-behavior-tests.mjs emits a 500ms sleep + a dead data-* eager block into ~40 specs — one tem",
+        "test": null
+      },
+      {
+        "number": 981,
+        "title": "cardvideo-aspect-ratio asserts absolute px equality across an 8s wait — it measures ambient page ref",
+        "test": null
+      },
+      {
+        "number": 979,
+        "title": "button-click-event spec fails in its own page.setContent harness — wb:button:click fires correctly o",
+        "test": null
+      },
+      {
+        "number": 978,
+        "title": "issues-page spec asserts a hardcoded 'Current Active: 1' against the live GitHub API — breaks whenev",
+        "test": null
+      },
+      {
+        "number": 977,
+        "title": "x-demo-doc-badge-click-through asserts toHaveCount(1) but two distinct docs legitimately render two ",
+        "test": null
+      },
+      {
+        "number": 972,
+        "title": "stagelight spotlight spec waits for the spot but asserts on the grid — races on effects.html now the",
+        "test": null
+      },
+      {
+        "number": 970,
+        "title": "wb-lazy.js has zero trace points while wb.js has 22 — the runtime behind every unstable test is the ",
+        "test": null
+      },
+      {
+        "number": 969,
+        "title": "Typed cards still inject variant classes a8a7362e removed from base cards — only 19 rules depend on ",
+        "test": null
+      },
+      {
+        "number": 967,
+        "title": "#935's redundancy guard never fires for x-behavior=\"…\" — 60 usages say the same thing twice unguarde",
+        "test": null
+      },
+      {
+        "number": 966,
+        "title": "card.css serves 19 behaviors in 114KB (30% selector boilerplate) — one marker, then one stylesheet p",
+        "test": null
+      },
+      {
+        "number": 964,
+        "title": "card-examples-demo: 7 tests assert the class vocabulary a8a7362e removed; 4 others correctly report ",
+        "test": null
+      },
+      {
+        "number": 963,
+        "title": "Test reporter strips all stack frames — a runtime TypeError is stored with no location at all",
+        "test": null
+      },
+      {
+        "number": 960,
+        "title": "audit-wb-prefix.mjs counts its own test output — data/test-results.json alone holds 7,080 wb- refs, ",
+        "test": null
+      },
+      {
+        "number": 959,
+        "title": "Make the 10th-commit test gate a ratchet (like lint #840) — it currently blocks every commit and det",
+        "test": null
+      },
+      {
+        "number": 956,
+        "title": "autoinject.spec.ts waits on a WBSite that demos/autoinject.html never creates — all 4 tests time out",
+        "test": null
+      },
+      {
+        "number": 945,
+        "title": "<main> inside <article> is invalid HTML — 273 on one page, all hierarchically incorrect",
+        "test": null
+      },
+      {
+        "number": 940,
+        "title": "Card-family rendered output carries no ids, so double-renders stay silent (#923 was found by eye)",
+        "test": null
+      },
+      {
+        "number": 917,
+        "title": "1,374 <div x-demo> should move to semantic hosts — blocked on how stacked behaviors interact",
+        "test": null
+      },
+      {
+        "number": 915,
+        "title": "behaviors-page-wb-demo-coverage asserts 16 section headings the page no longer has — its actual migr",
+        "test": null
+      },
+      {
+        "number": 914,
+        "title": "17 appliesClass declarations name a class no stylesheet defines — schemas promise styling that canno",
+        "test": null
+      },
+      {
+        "number": 912,
+        "title": "Fix Registry Viewer cannot read data/fixes.json — every card renders 'Unknown Issue / No signature p",
+        "test": null
+      },
+      {
+        "number": 901,
+        "title": "Ten behavior docs referenced by tests do not exist (x-demo, x-stack, x-row, x-cluster, x-column, x-a",
+        "test": null
+      },
+      {
+        "number": 888,
+        "title": "Literal backspace bytes replaced \\b in 5 regexes — checks silently matched nothing",
+        "test": null
+      },
+      {
+        "number": 879,
+        "title": "Attribute naming: 15 behaviors declare one concept under two names; 11 declared attributes consumed ",
+        "test": null
+      },
+      {
+        "number": 876,
+        "title": "4 specs cover the deleted wb-views subsystem (22 red + 3 vacuous green, 19.8 min to test nothing); x",
+        "test": null
+      },
+      {
+        "number": 873,
+        "title": "Nine tests assert nothing: four 'Interaction:' tests check that a click did not throw, never that th",
+        "test": "tests/compliance/tests-must-assert.spec.ts"
+      },
+      {
+        "number": 872,
+        "title": "9 tests with no expect() across 6 specs: 2 rule enforcers invisible to the gate, 1 unread product de",
+        "test": "tests/compliance/tests-must-assert.spec.ts"
+      },
+      {
+        "number": 871,
+        "title": "9 tests across 3 specs run against about:blank — plus modal-spacing-compliance has been RED since it",
+        "test": null
+      },
+      {
+        "number": 870,
+        "title": "9 compliance specs contain 11 tests with no expect(): 5 rules never enforced (42 phantom schema even",
+        "test": "tests/compliance/tests-must-assert.spec.ts"
+      },
+      {
+        "number": 869,
+        "title": "regression-tests.spec.ts: 23 tests run against about:blank, 6 assert nothing — builder.html goto str",
+        "test": null
+      },
+      {
+        "number": 863,
+        "title": "cards-showcase.spec.ts and all-components.spec.ts run against deleted pages: 39 fail, 48 pass VACUOU",
+        "test": null
+      },
+      {
+        "number": 862,
+        "title": "behaviors-page.spec.ts + behaviors-page-full.spec.ts: 30 failures - 15 are one dead selector timing ",
+        "test": null
+      },
+      {
+        "number": 861,
+        "title": "every-declared-attribute.spec.ts: the 104-test cluster is ~60% probe defect, hiding a real 154-attri",
+        "test": null
+      },
+      {
+        "number": 858,
+        "title": "remaining-coverage.spec.ts: 24 failures - 23 assert markup #666 deleted, 1 is a real tooltip class-n",
+        "test": null
+      },
+      {
+        "number": 853,
+        "title": "tests/regression/behaviors-page-doc-links.spec.ts targets a page that no longer has any x-demo block",
+        "test": null
+      },
+      {
+        "number": 852,
+        "title": "Tag migration to native REPLACED elements can silently disable a behavior — audit input/textarea/img",
+        "test": null
+      },
+      {
+        "number": 847,
+        "title": "4.0.0 migration rewrote <wb-select> to the native <select> tag, bypassing buildWbSelect(); effects.j",
+        "test": null
+      },
+      {
+        "number": 846,
+        "title": "4.0.0 rename left 5 dead <x-card>/<x-cardnotification> tag selectors in card-examples-demo.spec.ts, ",
+        "test": null
+      },
+      {
+        "number": 845,
+        "title": "WB.scan(root) can never apply an x-* shorthand behavior to root itself — awaiting it is a guaranteed",
+        "test": null
+      },
+      {
+        "number": 844,
+        "title": "generate-site.mjs drops the behavior attribute: ~30 card demo sections render as bare <article src> ",
+        "test": null
+      },
+      {
+        "number": 843,
+        "title": "x-cardimage/x-cardvideo render tests target deleted page /demos/cards-showcase.html (404) — 4 fail, ",
+        "test": null
+      },
+      {
+        "number": 842,
+        "title": "Every demo's docs link points at behaviors-reference.md, the most broken doc in the tree",
+        "test": null
+      },
+      {
+        "number": 841,
+        "title": "The suite was already 464-red at HEAD, and nothing tracked it",
+        "test": null
+      },
+      {
+        "number": 840,
+        "title": "The .ts test suite is never type-checked, and the gate never lints",
+        "test": null
+      },
+      {
+        "number": 837,
+        "title": "57 site-generation tests were silently dormant — data/site-generator-result.json was committed all-z",
+        "test": null
+      },
+      {
+        "number": 835,
+        "title": "Behaviors have two kinds — element vs decorator — and nothing declares which",
+        "test": null
+      },
+      {
+        "number": 834,
+        "title": "<article> and x-article do different things — the naming collision behind the 'card' doc heading",
+        "test": null
+      },
+      {
+        "number": 831,
+        "title": "One behavior registry, not six — plus an audit that finds the disagreements",
+        "test": null
+      },
+      {
+        "number": 829,
+        "title": "Nav is the least converted area: <nav> not auto-injected, 5 of 6 nav behaviors unreachable, site sid",
+        "test": null
+      },
+      {
+        "number": 827,
+        "title": "Eight semantic behavior modules ship but are registered nowhere and imported by nothing",
+        "test": null
+      },
+      {
+        "number": 826,
+        "title": "semantics-code-scroll.spec.ts asserts the pre-#199 wrap contract on a harness that never loads",
+        "test": null
+      },
+      {
+        "number": 824,
+        "title": "wb-header setBadge() queries .wb-tag-glass, which its $view never creates — appends a duplicate badg",
+        "test": null
+      },
+      {
+        "number": 823,
+        "title": "wb-header's logoHref property does nothing — $view builds the logo <a> with no href",
+        "test": null
+      },
+      {
+        "number": 822,
+        "title": "Stale data/site-generator-result.json made site-generation.spec assert zeros against a real page",
+        "test": null
+      },
+      {
+        "number": 818,
+        "title": "The class is the only marker that covers all three authoring forms — the 271 [x-*] selectors I added",
+        "test": null
+      },
+      {
+        "number": 817,
+        "title": "effects.css is a 10-behavior bundle that omits 4 of them — and glow should be a theme token, not onl",
+        "test": null
+      },
+      {
+        "number": 791,
+        "title": "The scaffolding template duplicates all 110 behaviors and 12 have drifted — no gate walks it",
+        "test": null
+      },
+      {
+        "number": 789,
+        "title": "Component inheritance still in source: WBFixCard extends WBCard, and the guard only reads .md",
+        "test": null
+      },
+      {
+        "number": 784,
+        "title": "article and card collide: <article> injects card, but a separate article behavior exists",
+        "test": null
+      },
+      {
+        "number": 781,
+        "title": "Sweep: registered-but-inert behaviors and attributes",
+        "test": null
+      },
+      {
+        "number": 780,
+        "title": "Sweep: base element margins surface as unexplained layout gaps",
+        "test": null
+      },
+      {
+        "number": 779,
+        "title": "Sweep: behaviors write inline styles that no stylesheet can override",
+        "test": null
+      },
+      {
+        "number": 774,
+        "title": "Behaviors showcase: API and doc panels sit below the fold at the bottom of the column",
+        "test": null
+      },
+      {
+        "number": 773,
+        "title": "Behaviors showcase: every variant must render differently, and some do not",
+        "test": null
+      },
+      {
+        "number": 771,
+        "title": "create-wb-starter ships the framework's maintenance surface to every new project",
+        "test": null
+      },
+      {
+        "number": 766,
+        "title": "pages/docs.html breaks when opened directly: every relative path assumes the site root",
+        "test": null
+      },
+      {
+        "number": 762,
+        "title": "Audio and video sources must be remote, not files committed to the repo",
+        "test": null
+      },
+      {
+        "number": 760,
+        "title": "Continuous effects give no press feedback: a glowing button does not move when clicked",
+        "test": null
+      },
+      {
+        "number": 752,
+        "title": "Behaviors read only data-* while every doc and example teaches the plain attribute — 69 reads across",
+        "test": null
+      },
+      {
+        "number": 750,
+        "title": "A demo must prove its behavior — sticky, lazy, collapsible and friends currently demonstrate nothing",
+        "test": null
+      },
+      {
+        "number": 744,
+        "title": "Fullscreen shows only the rendered example — it must show the navigator and the search too",
+        "test": null
+      },
+      {
+        "number": 743,
+        "title": "Auto-bump outran What's New: 16 versions on 8/20, last What's New entry is 8/19",
+        "test": null
+      },
+      {
+        "number": 741,
+        "title": "x-button vetoes itself: <button x-button icon=\"download\"> gets no icon, no variant, no size — nothin",
+        "test": null
+      },
+      {
+        "number": 740,
+        "title": "Six drawer specs assert a DOM lifecycle their page does not have; the drawers themselves are correct",
+        "test": null
+      },
+      {
+        "number": 738,
+        "title": "The fullscreen button can still say \"Exit Fullscreen\" while nothing is fullscreen",
+        "test": null
+      },
+      {
+        "number": 727,
+        "title": "Variant specs still scrape the removed showcase demos — and now silently assert on browse-list rows",
+        "test": null
+      },
+      {
+        "number": 702,
+        "title": "x-dropdown position start/end render 2px apart — the host is padded like a trigger it already built",
+        "test": null
+      },
+      {
+        "number": 693,
+        "title": "Behaviors page: the 585 live-panel examples are outside every §13 layout check",
+        "test": null
+      },
+      {
+        "number": 684,
+        "title": "Playground rendered unstyled — reformatting corrupted its JavaScript (fixed in 28fee16)",
+        "test": null
+      },
+      {
+        "number": 683,
+        "title": "Card content: attribute-vs-children precedence is undefined, and an empty card still emits a blank <",
+        "test": null
+      },
+      {
+        "number": 681,
+        "title": "<select variant=\"error\"> is inert, and the showcase sample renders an empty control",
+        "test": null
+      },
+      {
+        "number": 679,
+        "title": "Behaviors showcase: the reader cannot read a behavior's API",
+        "test": null
+      },
+      {
+        "number": 676,
+        "title": "Behaviors showcase: the \"Upload a file\" example picks a file but never uploads it",
+        "test": null
+      },
+      {
+        "number": 674,
+        "title": "Behaviors showcase: <button variant=\"link\"> sample uses a root-absolute href that breaks off-root",
+        "test": null
+      },
+      {
+        "number": 673,
+        "title": "Behaviors showcase: doc panel vanishes for the 116 behaviors that have no .md",
+        "test": null
+      },
+      {
+        "number": 670,
+        "title": "Deprecate wb-cardfile in favour of upload/download button controls",
+        "test": null
+      },
+      {
+        "number": 669,
+        "title": "Schemas declare 45+ properties the behaviors never read — audio showDisplay/showPlayButton and dialo",
+        "test": null
+      },
+      {
+        "number": 668,
+        "title": "Rename x-codecontrol to x-codetheme — it is a highlight.js theme picker, and its own event is alread",
+        "test": null
+      },
+      {
+        "number": 667,
+        "title": "x-* behaviors registered in two divergent maps — 34 attributes exist only in wb-lazy.js, invisible t",
+        "test": null
+      },
+      {
+        "number": 665,
+        "title": "Behaviors page lists the COMPONENT map as behaviors (x-card, x-button) and omits all 105 real x-* be",
+        "test": null
+      },
+      {
+        "number": 664,
+        "title": "Behaviors page: clicking a behavior should run it live next to the list, like the Playground",
+        "test": null
+      },
+      {
+        "number": 660,
+        "title": "WBFixCard extends WBCard — the last component-to-component inheritance, contradicts composition-only",
+        "test": null
+      },
+      {
+        "number": 659,
+        "title": "Playground: open the current markup standalone at real browser width, with live resize",
+        "test": null
+      },
+      {
+        "number": 658,
+        "title": "wb-stagelight spotlight should be toggleable on/off (fixture variant already toggles; spotlight cann",
+        "test": null
+      },
+      {
+        "number": 656,
+        "title": "<wb-stagelight> discards authored content, and schema races the behavior to build .wb-stagelight__sp",
+        "test": null
+      },
+      {
+        "number": 655,
+        "title": "<wb-confetti repeat> does nothing: repeat/showButton/delay/duration are declared in the schema but n",
+        "test": null
+      },
+      {
+        "number": 654,
+        "title": "<wb-ripple> renders nothing: schema $view wipes authored content and replaces it with a zero-size pl",
+        "test": null
+      },
+      {
+        "number": 648,
+        "title": "no-element-overlap.spec.ts: demos/playground.html wb-alert__message overlaps its own close button",
+        "test": null
+      },
+      {
+        "number": 646,
+        "title": "Playwright webServer.timeout (10s) too short under concurrent-agent load — whole run fails before an",
+        "test": null
+      },
+      {
+        "number": 643,
+        "title": "npm_test_async / test:async defaults to port 3000, silently reusing a foreign worktree's server",
+        "test": null
+      },
+      {
+        "number": 639,
+        "title": "autoInject double-applies 'card' to <article x-article> (native auto-inject ignores conflicting expl",
+        "test": null
+      },
+      {
+        "number": 636,
+        "title": "Mouse wheel/trackpad scroll does nothing on #siteBody (SPA-routed pages) -- site-wide, not page-spec",
+        "test": null
+      },
+      {
+        "number": 628,
+        "title": "demos-site-page-padding.spec.ts: .page selector stale (body uses .demo-page) + .site-index lost its ",
+        "test": null
+      },
+      {
+        "number": 587,
+        "title": "pages/behaviors.html (?page=behaviors): wb-demo code panels visibly grow/increment width instead of ",
+        "test": null
+      },
+      {
+        "number": 574,
+        "title": "Compliance: 'content-panel edge' padding sweep + pages/behaviors.html wb-demo 0px padding-top (pre-e",
+        "test": null
+      },
+      {
+        "number": 556,
+        "title": "no-element-overlap.spec.ts residual: 11 files still failing after #540's allowlist fix",
+        "test": null
+      },
+      {
+        "number": 475,
+        "title": "Register x-stack/x-cluster attribute-decoration form + add x-* doc links to wb-demo",
+        "test": null
+      },
+      {
+        "number": 460,
+        "title": "demos/frameworks.html: make Svelte/Angular/SolidJS show real live demos, not just code samples (owne",
+        "test": null
+      },
+      {
+        "number": 450,
+        "title": "Flat, non-responsive page padding eats ~38% of small mobile screens (demos/site/*.html + doc-viewer.",
+        "test": null
+      },
+      {
+        "number": 354,
+        "title": "npm test: 240 failures in the behaviors Playwright project, unrelated to today's fixes, and not cove",
+        "test": null
+      },
+      {
+        "number": 344,
+        "title": "Schema/behavior completeness debt: 10 missing functions, 22 dup vars, 25 setup mismatches, 27/94 cov",
+        "test": null
+      },
+      {
+        "number": 321,
+        "title": "4 pre-existing compliance failures surfaced while working #306 (unrelated to that fix)",
+        "test": null
+      },
+      {
+        "number": 294,
+        "title": "Use rem not px project-wide — px ignores user font-size (accessibility); audit + convert + gate",
+        "test": null
+      },
+      {
+        "number": 274,
+        "title": "Overlap test: no elements may overlap — project-wide detection, fix all, gate (§22)",
+        "test": null
+      }
+    ],
+    "4": [
+      {
+        "number": 1021,
+        "title": "x-codecontrol writes inline styles onto its own wrapper and select",
+        "test": null
+      },
+      {
+        "number": 1019,
+        "title": "\"Showing 1 of 767\" counts rows against behaviors — two different units either side of \"of\"",
+        "test": null
+      },
+      {
+        "number": 1018,
+        "title": "x-clock's example carries class=\"time-display\", so the behavior looks like it needs a hand-written c",
+        "test": null
+      },
+      {
+        "number": 1006,
+        "title": "Card featured badge: cramped against §13, and no way to pick its colour",
+        "test": null
+      },
+      {
+        "number": 968,
+        "title": "Vocabulary has no fixed placement: 'description' renders as subtitle on one card and description on ",
+        "test": null
+      },
+      {
+        "number": 943,
+        "title": "Inline-style audit: 887 declarations across 55 behaviours, 555 deletable today",
+        "test": null
+      },
+      {
+        "number": 918,
+        "title": "IntelliSense teaches <div> for 41 of 73 behaviors — contradicts Law 0",
+        "test": null
+      },
+      {
+        "number": 907,
+        "title": "Authoring rule: an attribute takes intent (color=\"success\"), never CSS internals (color=\"var(--succe",
+        "test": null
+      },
+      {
+        "number": 905,
+        "title": "Twelve files still carry behavior-config data-* attributes needing a per-behavior rename",
+        "test": null
+      },
+      {
+        "number": 878,
+        "title": "Selecting a sample does not bring its preview into view in the side-by-side layout",
+        "test": null
+      },
+      {
+        "number": 877,
+        "title": "Six pre-existing failures found under #873: behaviors-showcase asserts deleted demo markup, cardimag",
+        "test": null
+      },
+      {
+        "number": 855,
+        "title": "Auto-injected demos (plain <article>, no x-* attribute) get no 📖 doc badge",
+        "test": null
+      },
+      {
+        "number": 832,
+        "title": "Glass variant reads as flat on Android: the blur has nothing to blur, and the shimmer is what sells ",
+        "test": null
+      },
+      {
+        "number": 785,
+        "title": "Docs still call behaviors 'components' — vocabulary is from the old model",
+        "test": null
+      },
+      {
+        "number": 777,
+        "title": "Behaviors showcase: example labels contradict the example's own attributes",
+        "test": null
+      },
+      {
+        "number": 776,
+        "title": "Behaviors showcase: no theme control beside the example being judged",
+        "test": null
+      },
+      {
+        "number": 769,
+        "title": "Rewrite behaviors-reference.md with real depth, and drop x-as-card",
+        "test": null
+      },
+      {
+        "number": 768,
+        "title": "Docs: hide all card component references",
+        "test": null
+      },
+      {
+        "number": 767,
+        "title": "Docs: retire every wb-* tag reference in favour of semantic + x-attribute authoring",
+        "test": null
+      },
+      {
+        "number": 759,
+        "title": "Example media had no size rule: images render larger than themselves",
+        "test": null
+      },
+      {
+        "number": 755,
+        "title": "Events panel names the stage, not the element, and buries the id",
+        "test": null
+      },
+      {
+        "number": 749,
+        "title": "Generated behavior docs say nothing: \"Read by figure()\" is not a description, and the usage teaches ",
+        "test": null
+      },
+      {
+        "number": 748,
+        "title": "Every element in a showcase example needs an id",
+        "test": null
+      },
+      {
+        "number": 685,
+        "title": "§13 content-panel edge rule: 54 violations, but the rule conflicts with prior decisions on chips and",
+        "test": null
+      },
+      {
+        "number": 682,
+        "title": "No written rule for choosing between <select>, <wb-select> and x-dropdown",
+        "test": null
+      },
+      {
+        "number": 680,
+        "title": "No documented contrast rule for striped table rows",
+        "test": null
+      },
+      {
+        "number": 677,
+        "title": "Behaviors showcase: event log entries are ambiguous — no source element identity",
+        "test": null
+      },
+      {
+        "number": 675,
+        "title": "Behaviors showcase: every rendered example element must have an id",
+        "test": null
+      },
+      {
+        "number": 672,
+        "title": "<wb-table striped>: not enough contrast between striped rows",
+        "test": null
+      },
+      {
+        "number": 666,
+        "title": "button variants 'ghost' and 'outline' are visually indistinguishable — identical border and text, ba",
+        "test": null
+      },
+      {
+        "number": 657,
+        "title": "demos/site/effects.html renders the identical <wb-snow> demo twice",
+        "test": null
+      },
+      {
+        "number": 650,
+        "title": "no-element-overlap.spec.ts: demos/site/cards.html expandable-content overlaps footer under load",
+        "test": null
+      },
+      {
+        "number": 649,
+        "title": "no-element-overlap.spec.ts: demos/site/content.html hljs-string overlaps hljs-attr token",
+        "test": null
+      },
+      {
+        "number": 641,
+        "title": "Doc-link icons must sit 5rem clear of the demoed element",
+        "test": null
+      },
+      {
+        "number": 624,
+        "title": "docs/behaviors/*.md: stale per-tag source/schema filenames and dead demo-page links",
+        "test": null
+      },
+      {
+        "number": 623,
+        "title": "docs/components/*/*.readme.md + tabs.md: broken links from wrong relative-path depth and stale src/s",
+        "test": null
+      },
+      {
+        "number": 525,
+        "title": "8 card-family doc examples reference placeholder image paths that now 404",
+        "test": null
+      },
+      {
+        "number": 517,
+        "title": "Issues page: show a Current Active count of running async jobs",
+        "test": null
+      },
+      {
+        "number": 471,
+        "title": "mdhtml: prose text hard-wraps at source line breaks instead of flowing to container width",
+        "test": null
+      },
+      {
+        "number": 469,
+        "title": "docs/components/cards/card.md: cards must follow layout standards — test-first",
+        "test": null
+      },
+      {
+        "number": 468,
+        "title": "V3-GUIDE.md wb-card example reads 'too stubby' — audit against layout standards, test-first",
+        "test": null
+      },
+      {
+        "number": 462,
+        "title": "Remove 'base'/'Base' naming project-wide — no longer OOP, conflicts with composition-over-inheritanc",
+        "test": null
+      },
+      {
+        "number": 438,
+        "title": "Multiple docs/behaviors/*.md files duplicate wb-demo's auto-shown source in a separate 'Usage:' bloc",
+        "test": null
+      },
+      {
+        "number": 426,
+        "title": "wb-article featured / wb-articles layout demos have no real content to show their effect",
+        "test": null
+      },
+      {
+        "number": 423,
+        "title": "Policy: all .md docs must use wb-demo for code examples (repo-wide, 41 files with zero wb-demo usage",
+        "test": null
+      },
+      {
+        "number": 419,
+        "title": "card.md doc-viewer: convert plain code fences to live wb-demo blocks",
+        "test": null
+      },
+      {
+        "number": 418,
+        "title": "Remove all 'inheritance is our architecture' framing (docs, diagrams) -- composition only, no except",
+        "test": null
+      },
+      {
+        "number": 410,
+        "title": "feedback.html: make ALL examples use three columns on large screens",
+        "test": null
+      },
+      {
+        "number": 391,
+        "title": "Standard §7 single-item shrink-to-fit still wrong for some real cards (pricing, stats)",
+        "test": null
+      },
+      {
+        "number": 388,
+        "title": "Move component-doc links onto each card (top-right), not a shared line below the demo grid",
+        "test": null
+      },
+      {
+        "number": 387,
+        "title": "Audit remaining schema-driven wb-* components for native-element wrapping (the wb-checkbox/wb-textar",
+        "test": null
+      },
+      {
+        "number": 370,
+        "title": "Tier-1 Law 9 violation: 250+ inline styles across 33 wb-viewmodels files (card.js alone: 155)",
+        "test": null
+      },
+      {
+        "number": 340,
+        "title": "docs: rewrite V3-STANDARDS.md — accurately define component vs. behavior, honor semantic HTML + wb-*",
+        "test": null
+      },
+      {
+        "number": 324,
+        "title": "demos/frameworks.html: React/Vue/Angular/Svelte integration demos don't use wb-demo (§1)",
+        "test": null
+      },
+      {
+        "number": 323,
+        "title": "docs/behaviors-reference.md: no live <wb-demo> examples, doesn't follow demo standards (§1)",
+        "test": null
+      },
+      {
+        "number": 307,
+        "title": "Add Rule 4 (wb-demo required) to code-examples-standard.md + project-wide compliance gate",
+        "test": null
+      },
+      {
+        "number": 295,
+        "title": "md docs: text must wrap fluently at narrow widths (no h-scroll); no hyphen mid-word breaks; indent w",
+        "test": null
+      },
+      {
+        "number": 287,
+        "title": "Convert radio/checkbox label patterns to x-label (confirm explicit-markup vs styled-control intent)",
+        "test": null
+      },
+      {
+        "number": 286,
+        "title": "Behaviors page: lead with a generated table of all x-* behaviors (name, what it does, example, docs)",
+        "test": null
+      }
+    ],
+    "5": [
+      {
+        "number": 1012,
+        "title": "Code themes reachable from the code example itself, not only from /themes",
+        "test": null
+      },
+      {
+        "number": 982,
+        "title": "Future: a CLI that migrates an existing site to wb-starter (assisted, not autonomous)",
+        "test": null
+      },
+      {
+        "number": 833,
+        "title": "Tracker: fix-it-all pass across wb-starter and Ultrasonic",
+        "test": null
+      },
+      {
+        "number": 830,
+        "title": "Build a real nav unit: auto-inject <nav>, plus x-nav for anywhere",
+        "test": null
+      },
+      {
+        "number": 828,
+        "title": "Expose an inset-pill nav item style as a config option (navigationItemStyle)",
+        "test": null
+      },
+      {
+        "number": 815,
+        "title": "Q: recommendation for starting the new site?",
+        "test": null
+      },
+      {
+        "number": 813,
+        "title": "Q: doesn't wb-starter have a CLI for a new project?",
+        "test": null
+      },
+      {
+        "number": 811,
+        "title": "Q: what do you recommend for standardizing the verbs?",
+        "test": null
+      },
+      {
+        "number": 810,
+        "title": "Q: isn't <article> the article behavior? / does auto-inject on article produce a card?",
+        "test": null
+      },
+      {
+        "number": 807,
+        "title": "Index: every question asked 2026-08-23, with answers",
+        "test": null
+      },
+      {
+        "number": 806,
+        "title": "Q: when are you going to solve those problems?",
+        "test": null
+      },
+      {
+        "number": 804,
+        "title": "Q: I thought we purged inheritance / had no inline styles as a rule?",
+        "test": null
+      },
+      {
+        "number": 802,
+        "title": "Q: did you update What's New?",
+        "test": null
+      },
+      {
+        "number": 801,
+        "title": "Q: what release number for today's batch?",
+        "test": null
+      },
+      {
+        "number": 799,
+        "title": "Q: didn't I tell you to write tests that test all params?",
+        "test": null
+      },
+      {
+        "number": 798,
+        "title": "Q: should showClose=false be allowed if Escape still exits?",
+        "test": null
+      },
+      {
+        "number": 782,
+        "title": "Standardize the verb vocabulary behaviors expose, and gate it",
+        "test": null
+      },
+      {
+        "number": 764,
+        "title": "Feature: a behavior that makes an element as wide as its container allows",
+        "test": null
+      },
+      {
+        "number": 606,
+        "title": "Test audit (4 dimensions): refs, examples, code panels, events -- tracking issue",
+        "test": null
+      },
+      {
+        "number": 477,
+        "title": "Adopt golden-ratio type scale (--text-lg/xl/2xl/3xl) + --aspect-golden token",
+        "test": null
+      },
+      {
+        "number": 472,
+        "title": "Adopt golden-ratio spacing scale (--space-lg/xl/2xl)",
+        "test": null
+      },
+      {
+        "number": 465,
+        "title": "Schema layer uses real IS-A/HAS-A inheritance metadata ($extends, $inheritance, card.base.schema.jso",
+        "test": null
+      },
+      {
+        "number": 463,
+        "title": "Support real add-to-cart clicks (wb-cardproduct)",
+        "test": null
+      },
+      {
+        "number": 456,
+        "title": "Every clickable button/card site-wide should show a confirmation toast",
+        "test": null
+      },
+      {
+        "number": 417,
+        "title": "Decision: every wb-* component must support both attribute AND text-content as ways to set its prima",
+        "test": null
+      },
+      {
+        "number": 273,
+        "title": "Every wb-* element: optional doc attribute (defaults to its own .md) + x-doc behavior, in IntelliSen",
+        "test": null
+      },
+      {
+        "number": 272,
+        "title": "Shell wb-tags: wb-app/wb-body/wb-nav/wb-main/wb-page — terse markup that auto-pulls its CSS",
+        "test": null
+      },
+      {
+        "number": 268,
+        "title": "Redo demos/: one canonical generated demo per tag/behavior, retire overlap, coverage gate",
+        "test": null
+      },
+      {
+        "number": 265,
+        "title": "Playground: act like an HTML editor — Enter=newline, Format, IntelliSense for wb-* tags/attributes",
+        "test": null
+      }
+    ]
+  },
+  "summary": {
+    "p1": 13,
+    "p1WithTest": 3,
+    "p1WithoutTest": 10,
+    "p2": 69,
+    "p2WithTest": 10
+  }
+}

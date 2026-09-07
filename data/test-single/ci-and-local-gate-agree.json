@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/ci-and-local-gate-agree.spec.ts",
+  "startedAt": "2026-09-06T21:57:13.258Z",
+  "updatedAt": "2026-09-06T21:57:46.423Z",
+  "command": "npx playwright test tests/compliance/ci-and-local-gate-agree.spec.ts --project=compliance --workers=1",
+  "pid": 13168,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\compliance\\ci-and-local-gate-agree.spec.ts",
+  "output": "[WBTestReporter] data/errors.json held 34 error(s); archived to data\\error-log-archive\\errors-2026-09-06T21-57-37-885Z.json before clearing it for this run.\n\nRunning 5 tests using 1 worker\n\n  ok 1 [compliance] › tests\\compliance\\ci-and-local-gate-agree.spec.ts:41:3 › #1044: CI and the local gate apply the same standard › both gates invoke the ratchet (39ms)\n  ok 2 [compliance] › tests\\compliance\\ci-and-local-gate-agree.spec.ts:56:3 › #1044: CI and the local gate apply the same standard › CI does not enforce a raw, unbaselined project run (5ms)\n  ok 3 [compliance] › tests\\compliance\\ci-and-local-gate-agree.spec.ts:80:3 › #1044: CI and the local gate apply the same standard › the register exists and is non-empty, so the ratchet has something to compare against (6ms)\n  ok 4 [compliance] › tests\\compliance\\ci-and-local-gate-agree.spec.ts:90:3 › #1044: CI and the local gate apply the same standard › the ratchet reuses CI's server instead of booting a second one (4ms)\n  ok 5 [compliance] › tests\\compliance\\ci-and-local-gate-agree.spec.ts:100:3 › #1044: CI and the local gate apply the same standard › CI steps cannot silently skip whole projects (3ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 7.2s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 5/5 passed\n\n  ✅ FIXED (1):\n     - __faultprobe.css — every rule survives the browser...\n════════════════════════════════════════════════════════════\n\n\n  5 passed (17.0s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-06T21:57:46.423Z",
+  "duration": "33.16s",
+  "exitCode": 0,
+  "flaky": 0
+}

@@ -41,6 +41,41 @@ export function formatHtml(raw) {
         const pad = INDENT.repeat(depth);
         parent.childNodes.forEach((node) => {
             if (node.nodeType === 3) { // text
+                // #1015: collapsing ALL whitespace is right for prose and wrong
+                // for a code example. The body of
+                // <code language="javascript">...</code> is ONE text node
+                // holding ~20 lines, and collapsing it produced a single
+                // run-on line -- John, pointing at the source panel: "this
+                // didn't parse correct".
+                //
+                // Inside code/pre/textarea whitespace IS content. Keep the line
+                // structure, strip the shared leading indentation (an artefact
+                // of where the example sits in the HTML file), re-indent to
+                // this node's depth.
+                //
+                // Newline and tab come from String.fromCharCode rather than
+                // escape sequences: three earlier attempts at this edit had
+                // their escapes rewritten in transit and shipped a literal
+                // line break inside a regex, which broke the whole page.
+                const parentTag = parent.nodeName ? parent.nodeName.toLowerCase() : '';
+                if (parentTag === 'code' || parentTag === 'pre' || parentTag === 'textarea') {
+                    const NL = String.fromCharCode(10);
+                    const TAB = String.fromCharCode(9);
+                    let body = node.textContent;
+                    while (body.charAt(0) === NL) body = body.slice(1);
+                    body = body.trimEnd();
+                    if (!body) return;
+                    const leadWidth = (line) => {
+                        let n = 0;
+                        while (line.charAt(n) === ' ' || line.charAt(n) === TAB) n += 1;
+                        return n;
+                    };
+                    const lines = body.split(NL);
+                    const widths = lines.filter((l) => l.trim()).map(leadWidth);
+                    const common = widths.length ? Math.min.apply(null, widths) : 0;
+                    lines.forEach((l) => out.push(l.trim() ? pad + l.slice(common) : ''));
+                    return;
+                }
                 const t = node.textContent.replace(/\s+/g, ' ').trim();
                 if (t) out.push(pad + t);
                 return;

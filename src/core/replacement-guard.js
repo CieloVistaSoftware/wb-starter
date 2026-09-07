@@ -133,6 +133,18 @@ function reportRedundant(element, attrBehavior, authored = `x-${attrBehavior}`) 
     `<${tag} ${authored}> says the same thing twice: <${tag}> already IS ` +
     `the ${attrBehavior} behavior, so ${authored} adds nothing. ` +
     `Drop it and keep <${tag}> -- the behavior still runs.`,
-    { source: 'replacement-guard', element: tag, behavior: attrBehavior, authored, redundant: true }
+    {
+      source: 'replacement-guard',
+      element: tag,
+      behavior: attrBehavior,
+      authored,
+      redundant: true,
+      // #1010: a stable identity for this fault, independent of the message.
+      // The message names the element and the behavior on purpose -- it has to,
+      // to be useful -- so every tag would otherwise mint its own signature and
+      // the fix registry would need one entry per behavior forever. The code
+      // says "these are all the same defect" once.
+      code: 'redundant-behavior-attribute',
+    }
   );
 }

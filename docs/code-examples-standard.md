@@ -253,7 +253,7 @@ multi-attribute tag onto one line.
 <video
   controls
   width="300"
-  src="video.mp4"
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="/images/placeholder.svg">
 </video>
 ```

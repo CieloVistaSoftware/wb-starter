@@ -1,0 +1,12 @@
+chore: refresh generated data and the session handoff
+
+Machine-written artifacts, no hand edits: mobile screenshots, the px and
+inline-style audits, the docs manifest, the GUI census, the documented-example
+sweep, performance results, and the last test run's status/results.
+
+docs/_today/CURRENT-STATUS.md carries the parking lot for the 2026-09-03/04
+sessions, including the branch state (7 ahead, 1 behind origin/main) and the
+warning that the pending merge touches pages/behaviors.html, where a clean
+auto-merge has taken the site down twice before.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

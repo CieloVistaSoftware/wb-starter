@@ -252,7 +252,8 @@
         "variant",
         "xalign",
         "overlay",
-        "fullHeight"
+        "fullHeight",
+        "headingLevel"
       ],
       "aliases": [],
       "violations": [],
@@ -754,17 +755,6 @@
         "closeOnSelect",
         "closeOnOutside",
         "offset"
-      ],
-      "aliases": [],
-      "violations": [],
-      "compliant": true
-    },
-    {
-      "name": "fieldset",
-      "file": "fieldset.schema.json",
-      "declared": [
-        "collapsible",
-        "collapsed"
       ],
       "aliases": [],
       "violations": [],
@@ -2187,6 +2177,12 @@
       ]
     },
     {
+      "attr": "sort-value",
+      "readBy": [
+        "table.js"
+      ]
+    },
+    {
       "attr": "space",
       "readBy": [
         "layouts.js"
@@ -2315,18 +2311,18 @@
     }
   ],
   "totals": {
-    "behaviors": 117,
-    "declared": 639,
-    "compliant": 117,
+    "behaviors": 116,
+    "declared": 638,
+    "compliant": 116,
     "violations": 0,
     "byRule": {
       "R1": 0,
       "R2": 0,
       "R3": 0,
       "R5": 0,
-      "R4": 101,
+      "R4": 102,
       "R6": 0
     },
-    "undeclared": 101
+    "undeclared": 102
   }
 }

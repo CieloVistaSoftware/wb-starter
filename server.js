@@ -757,6 +757,355 @@ app.post("/api/error-log/append", (req, res) => {
   }
 });
 
+// ── #1045: the issues viewer must not depend on the unauthenticated API ──────
+//
+// John: "Could not load issues: GitHub API responded 403 and nothing is cached
+// yet (GitHub API rate limits unauthenticated requests to 60/hour per IP)."
+//
+// pages/issues.html called api.github.com DIRECTLY from the browser. That is
+// the 60-per-hour-per-IP bucket, and it is shared with every other
+// unauthenticated thing on this machine — so a session that files and closes
+// issues (or a few page reloads) exhausts it and the page has nothing to show.
+// The localStorage cache only helps AFTER one successful load, which is exactly
+// what a rate-limited visitor cannot get.
+//
+// The dev server has `gh` and `gh` is authenticated: 5,000/hour instead of 60,
+// and a disk cache that survives a cleared browser, a private window, and a
+// first-ever visit. The browser keeps its direct call as the FALLBACK, because
+// the deployed GitHub Pages site is static and has no server to proxy through.
+const ISSUES_REPO = 'CieloVistaSoftware/wb-starter';
+const ISSUES_CACHE_REL_PATH = 'data/issues-cache.json';
+const ISSUES_TTL_MS = 5 * 60 * 1000;
+
+function readIssuesCache() {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(rootDir, ISSUES_CACHE_REL_PATH), 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+// ── #912: trace a fix back to its issue, and forward to its release ─────────
+//
+// John: "I need to be able to track fixes back to the issue and then what
+// release they were put into", "the open issue/closed issue should be specified
+// in fix viewer for each row", and — the rule the whole shape follows —
+// "the issue is the source of truth, everything else should build on that".
+//
+// So the ISSUE LIST is fetched first and is authoritative: a `#NNNN` in a commit
+// message counts only when an issue with that number actually exists. That is
+// not a nicety — it is what removed `#6366` (a four-digit number in a commit
+// body that was never an issue) from the table without special-casing it.
+//
+// data/fixes.json cannot answer any of this at any formatting: 13 hand-written
+// entries with no issue number and no version. The answer lives in git — a
+// commit cites its issue, and the EARLIEST tag containing that commit is the
+// release it shipped in. Releases had to exist first: 4.0.0 and 4.0.1 shipped
+// untagged, so nothing recent could be traced until they were tagged
+// retroactively.
+app.get('/api/fixes', (req, res) => {
+  const US = String.fromCharCode(31);
+  const RS = String.fromCharCode(30);
+  const NL = String.fromCharCode(10);
+  const git = (args) => {
+    try {
+      return execFileSync('git', args, {
+        cwd: rootDir, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000,
+      });
+    } catch { return ''; }
+  };
+
+  // 1. THE ISSUES — the source of truth. Everything below is filtered by this.
+  const meta = new Map();
+  try {
+    const out = execFileSync(
+      'gh',
+      ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
+       '--json', 'number,title,state,url,closedAt,labels'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000 },
+    );
+    for (const i of JSON.parse(out)) meta.set(i.number, i);
+  } catch (e) {
+    console.warn('[Fixes] gh issue list failed:', e.message);
+  }
+
+  // 2. Releases, oldest first, so the first tag containing a commit is the
+  //    release it shipped in.
+  const tags = git(['tag', '--list', 'v*', '--sort=v:refname'])
+    .split(NL).map((t) => t.trim()).filter(Boolean);
+  const tagSets = tags.map((t) => [t, new Set(git(['rev-list', t]).split(NL).filter(Boolean))]);
+  const releaseOf = (sha) => (tagSets.find(([, set]) => set.has(sha)) || [null])[0];
+
+  // 3. Commits, credited only to issues that exist.
+  //
+  // ONE log pass with --name-only carries the changed files inline. With
+  // --name-only git prints the file list AFTER the formatted record, so once
+  // split on RS the files for record N arrive at the head of chunk N+1 — which
+  // is why the leading lines of each chunk are attributed to the previous sha.
+  const byIssue = new Map();
+  const filesBySha = new Map();
+  const rawLog = git(['log', '--all', '--max-count=4000', '--name-only', `--format=%H${US}%s${US}%b${RS}`]);
+  const chunks = rawLog.split(RS);
+  const shaOrder = [];
+  const parsed = chunks.map((chunk) => {
+    const lines = chunk.split(NL);
+    const leading = [];
+    let i = 0;
+    for (; i < lines.length; i++) {
+      const candidate = lines[i].split(US)[0].trim();
+      if (/^[0-9a-f]{40}$/.test(candidate)) break;
+      if (lines[i].trim()) leading.push(lines[i].trim());
+    }
+    const rec = lines.slice(i).join(NL);
+    return { leading, rec };
+  });
+  parsed.forEach((p, idx) => {
+    // `leading` belongs to the PREVIOUS record's commit.
+    if (idx > 0 && shaOrder[idx - 1]) filesBySha.set(shaOrder[idx - 1], p.leading);
+    const [sha] = p.rec.replace(/^\s+/, '').split(US);
+    shaOrder[idx] = /^[0-9a-f]{40}$/.test(sha) ? sha : null;
+  });
+
+  for (const { rec: entry } of parsed) {
+    if (!entry.trim()) continue;
+    const [sha, subject = '', body = ''] = entry.replace(/^\s+/, '').split(US);
+    if (!/^[0-9a-f]{40}$/.test(sha)) continue;
+
+    const cited = new Set(
+      [...`${subject} ${body}`.matchAll(/#(\d{3,4})(?!\d)/g)]
+        .map((m) => Number(m[1]))
+        .filter((n) => meta.has(n)),   // the issue list decides, not the text
+    );
+    if (!cited.size) continue;
+
+    // Files this commit touched, linked at THIS sha so the link shows the code
+    // as it was when the fix landed, not as it is now.
+    //
+    // Read from the ONE log pass below, not `git show` per commit: that spawned
+    // a subprocess for every commit citing an issue — hundreds of them — and the
+    // page simply never finished loading.
+    const files = (filesBySha.get(sha) || []).slice(0, 40);
+
+    for (const n of cited) {
+      if (!byIssue.has(n)) byIssue.set(n, []);
+      byIssue.get(n).push({
+        sha: sha.slice(0, 8),
+        url: `https://github.com/${ISSUES_REPO}/commit/${sha}`,
+        subject,
+        release: releaseOf(sha),
+        files: files.map((f) => ({
+          path: f,
+          url: `https://github.com/${ISSUES_REPO}/blob/${sha}/${f}`,
+        })),
+      });
+    }
+  }
+
+  const rows = [...byIssue.entries()].map(([number, commits]) => {
+    const i = meta.get(number) || {};
+    const files = [];
+    const seen = new Set();
+    for (const c of commits) {
+      for (const f of c.files) {
+        if (seen.has(f.path)) continue;
+        seen.add(f.path);
+        files.push(f);
+      }
+    }
+    return {
+      number,
+      title: i.title || null,
+      state: (i.state || 'unknown').toLowerCase(),
+      url: i.url || `https://github.com/${ISSUES_REPO}/issues/${number}`,
+      closedAt: i.closedAt || null,
+      priority: (i.labels || []).map((l) => l.name).find((n) => /^priority:[1-5]$/.test(n)) || null,
+      commits,
+      files: files.slice(0, 25),
+      release: commits.map((c) => c.release).filter(Boolean).sort()[0] || null,
+    };
+  }).sort((a, b) => b.number - a.number);
+
+  res.set('Cache-Control', 'no-store');
+  res.json({
+    generatedAt: new Date().toISOString(),
+    counts: {
+      traced: rows.length,
+      released: rows.filter((r) => r.release).length,
+      unreleased: rows.filter((r) => !r.release).length,
+      open: rows.filter((r) => r.state === 'open').length,
+      closed: rows.filter((r) => r.state === 'closed').length,
+    },
+    releases: tags,
+    rows,
+  });
+});
+
+// ── #1046: an account of work done, not just current state ──────────────────
+//
+// John: "I don't like what I'm seeing therefore on the issues page I want an
+// account of all work done within last 24hrs with links."
+//
+// The viewer renders derived STATE. A day with 15 issues closed, 7 filed and 16
+// commits renders identically to a day with none, because closing an issue moves
+// it OUT of the open list rather than into a record of what was done. This
+// answers "what happened", which is the question actually being asked when
+// progress is in doubt.
+//
+// Authenticated via gh, like /api/issues (#1045), so it costs nothing against the
+// 60/hour unauthenticated browser budget.
+app.get('/api/activity', (req, res) => {
+  const hours = Math.min(Math.max(Number(req.query.hours) || 24, 1), 24 * 30);
+  const sinceMs = Date.now() - hours * 3600 * 1000;
+  const sinceIso = new Date(sinceMs).toISOString();
+
+  const cites = (text) => [...new Set(
+    [...String(text || '').matchAll(/#(\d{3,4})(?!\d)/g)].map((m) => Number(m[1])),
+  )];
+
+  // ── commits ──────────────────────────────────────────────────────────────
+  let commits = [];
+  try {
+    const RS = String.fromCharCode(30);
+    const US = String.fromCharCode(31);
+    const raw = execFileSync(
+      'git',
+      ['log', `--since=${sinceIso}`, '--all', `--format=%H${US}%aI${US}%s${US}%b${RS}`],
+      { cwd: rootDir, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 20000 },
+    );
+    commits = raw.split(RS)
+      .map((e) => e.replace(/^\s+/, ''))
+      .filter((e) => e.trim())
+      .map((entry) => {
+        const [sha, when, subject = '', body = ''] = entry.split(US);
+        if (!/^[0-9a-f]{40}$/.test(sha)) return null;
+        return {
+          sha: sha.slice(0, 8),
+          url: `https://github.com/${ISSUES_REPO}/commit/${sha}`,
+          when,
+          subject,
+          issues: cites(`${subject} ${body}`),
+        };
+      })
+      .filter(Boolean);
+  } catch (e) {
+    console.warn('[Activity] git log failed:', e.message);
+  }
+
+  // ── issues, from the same authenticated source as /api/issues ────────────
+  let closed = [];
+  let opened = [];
+  try {
+    const out = execFileSync(
+      'gh',
+      ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
+       '--json', 'number,title,state,createdAt,closedAt,url,labels'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000 },
+    );
+    const all = JSON.parse(out);
+    const inWindow = (iso) => iso && new Date(iso).getTime() >= sinceMs;
+    const shape = (i, at) => ({
+      number: i.number,
+      title: i.title,
+      url: i.url,
+      at,
+      priority: (i.labels || []).map((l) => l.name)
+        .find((n) => /^priority:[1-5]$/.test(n)) || null,
+      // The commits in this window that name it — the evidence, inline.
+      commits: commits.filter((c) => c.issues.includes(i.number)).map((c) => c.sha),
+    });
+    closed = all.filter((i) => inWindow(i.closedAt)).map((i) => shape(i, i.closedAt))
+      .sort((a, b) => new Date(b.at) - new Date(a.at));
+    opened = all.filter((i) => inWindow(i.createdAt)).map((i) => shape(i, i.createdAt))
+      .sort((a, b) => new Date(b.at) - new Date(a.at));
+  } catch (e) {
+    console.warn('[Activity] gh issue list failed:', e.message);
+  }
+
+  // John: "Does this mean we effectively have closed +2".
+  //
+  // Yes, but the raw columns invite arithmetic that is only coincidentally
+  // right: an issue OPENED and CLOSED inside the window appears in BOTH, so it
+  // is counted twice while never having existed in the backlog at all. Those
+  // cancel, so closed - opened does give the correct net — but only by accident
+  // of the algebra, and nobody should have to notice that. The net is stated
+  // here, computed from the two populations that actually move the backlog:
+  //   reduction = issues closed that were opened BEFORE the window
+  //   addition  = issues opened in the window that are STILL open
+  const closedNums = new Set(closed.map((c) => c.number));
+  const openedNums = new Set(opened.map((o) => o.number));
+  const reduction = closed.filter((c) => !openedNums.has(c.number)).length;
+  const addition = opened.filter((o) => !closedNums.has(o.number)).length;
+  const sameWindow = [...openedNums].filter((n) => closedNums.has(n));
+
+  res.set('Cache-Control', 'no-store');
+  res.json({
+    hours,
+    since: sinceIso,
+    generatedAt: new Date().toISOString(),
+    counts: {
+      closed: closed.length,
+      opened: opened.length,
+      commits: commits.length,
+      // Negative means the backlog SHRANK.
+      netOpen: addition - reduction,
+      backlogReduction: reduction,
+      backlogAddition: addition,
+      openedAndClosedSameWindow: sameWindow,
+    },
+    closed,
+    opened,
+    commits,
+  });
+});
+
+app.get('/api/issues', (req, res) => {
+  const cached = readIssuesCache();
+  const ageMs = cached ? Date.now() - new Date(cached.fetchedAt).getTime() : Infinity;
+
+  // A fresh cache answers without spending a request at all.
+  if (cached && ageMs < ISSUES_TTL_MS && req.query.refresh !== '1') {
+    res.set('Cache-Control', 'no-store');
+    return res.json({ ...cached, source: 'cache', ageMs });
+  }
+
+  try {
+    const out = execFileSync(
+      'gh',
+      ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
+       '--json', 'number,title,labels,body,state,createdAt,updatedAt'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000 },
+    );
+    // `gh` and the REST API disagree on shape, and the viewer was written
+    // against REST. Normalising here rather than in the page keeps ONE contract
+    // for both routes — otherwise the proxy would silently serve a list that
+    // renders with every row filtered out (state "OPEN" never equals "open")
+    // and an empty Updated column.
+    const issues = JSON.parse(out).map((i) => ({
+      ...i,
+      state: String(i.state || '').toLowerCase(),
+      updated_at: i.updatedAt || i.updated_at || null,
+      created_at: i.createdAt || i.created_at || null,
+    }));
+    const payload = { fetchedAt: new Date().toISOString(), count: issues.length, issues };
+    try {
+      fs.writeFileSync(path.join(rootDir, ISSUES_CACHE_REL_PATH), JSON.stringify(payload));
+    } catch (e) {
+      console.warn('[Issues] could not write the cache:', e.message);
+    }
+    res.set('Cache-Control', 'no-store');
+    res.json({ ...payload, source: 'gh', ageMs: 0 });
+  } catch (e) {
+    // Serving a STALE cache beats an error page — the reader wants the list,
+    // and the age is reported so nothing is claimed silently.
+    if (cached) {
+      res.set('Cache-Control', 'no-store');
+      return res.json({ ...cached, source: 'stale-cache', ageMs, warning: String(e.message).slice(0, 300) });
+    }
+    console.error('[Issues]', e.message);
+    res.status(503).json({ error: 'gh is unavailable and nothing is cached', detail: String(e.message).slice(0, 300) });
+  }
+});
+
 app.post("/api/error-log/clear", (req, res) => {
   try {
     // "Clear Log" in the viewer means "stop showing me these", not "destroy

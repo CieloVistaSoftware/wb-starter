@@ -128,11 +128,33 @@ function runGate(port) {
     return { failures: null, why: `Playwright CLI not found at ${cli} — run: npm install` };
   }
 
+  // WORKERS: the gate runs at reduced concurrency, deliberately.
+  //
+  // Measured 2026-09-05: four consecutive gate runs on an UNCHANGED tree gave
+  // four DISJOINT sets of "new" failures — 3, then 7, then 3, then 3 — with no
+  // test repeating and every one of them passing when run alone. The suite is
+  // not randomly broken: a large family of specs asserts on state it has not
+  // waited for (a flat `sleep(400)` after a click; a locator read before the
+  // behavior has upgraded the element), and 8 workers against one dev server
+  // widen the window they are already racing in until a different handful loses
+  // each time.
+  //
+  // Chasing the sample is a treadmill — it cost about five hours and one commit
+  // on the day this was written. Lower concurrency does NOT fix the
+  // under-synchronisation (#962 is the root cause, and those specs still want
+  // signals instead of sleeps); it stops the gate accusing a fresh set of
+  // innocent tests on every attempt, which is what made the gate unusable.
+  //
+  // The trade is wall clock: ~40min at 8, longer at 4. A slower gate that means
+  // something beats a fast one that has to be ignored. WB_GATE_WORKERS overrides
+  // this; drop to 2 if a rotating set survives at 4.
+  const workers = process.env.WB_GATE_WORKERS || '4';
   const res = spawnSync(
     process.execPath,
     [
       cli, 'test',
       ...PROJECTS.map((p) => `--project=${p}`),
+      `--workers=${workers}`,
     ],
     {
       cwd: REPO,
@@ -181,8 +203,16 @@ function freePort() {
 }
 
 // ── run ──────────────────────────────────────────────────────────────────────
-const port = freePort();
+//
+// #1044: in CI, do NOT pick a private port. ci-tests.yml starts the server on
+// 3000 itself and waits for /health, and playwright.config.ts only allows
+// `reuseExistingServer` on that default port — so forcing a random one here
+// would boot a SECOND server for no reason, on a runner that already has one
+// healthy. Locally the private port stays, because there the point is not
+// colliding with John's dev server.
+const port = process.env.CI ? null : freePort();
 if (port) console.log(`   (running on port ${port} so it cannot collide with a dev server)`);
+else if (process.env.CI) console.log('   (CI: reusing the server ci-tests.yml already started on 3000)');
 
 const gate = runGate(port);
 if (!gate.failures) {

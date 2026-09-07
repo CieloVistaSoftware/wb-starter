@@ -93,10 +93,15 @@ export function release(element, options = {}) {
   // read as progress. It stays a warning.
   const versionText = ahead ? `${VERSION.version}.${ahead}` : VERSION.version;
 
+  // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
+  // origin/main · dirty" -- made the badge wide enough to wrap the whole site
+  // header onto a second line, pushing the control strip over the sidebar. A
+  // badge is a glance, not a sentence: the marks are symbols, the sentence
+  // lives in the tooltip below.
   const marks = [];
-  if (behind) marks.push(`⚠ ${behind} behind ${VERSION.upstream || 'remote'}`);
-  if (VERSION.dirty) marks.push('dirty');
-  const drift = marks.length ? ` ${marks.join(' · ')}` : '';
+  if (behind) marks.push('⚠');
+  if (VERSION.dirty) marks.push('*');
+  const drift = marks.length ? ' ' + marks.join('') : '';
 
   element.textContent = config.format
     .replace('{version}', versionText)

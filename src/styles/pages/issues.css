@@ -181,3 +181,161 @@
 .issue-verify--triaged,
 .issue-verify--no-signature,
 .issue-verify--closed-unverified { color: var(--text-muted); }
+
+/* =============================================================================
+   #1046 — "Work done" panel
+   John: "I want an account of all work done within last 24hrs with links."
+   Every colour is a theme token; no literals, no inline styles.
+   ============================================================================= */
+.activity {
+  margin-block-end: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--bg-secondary);
+}
+
+.activity__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.activity__title { font-weight: 600; }
+
+.activity__counts {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.activity__body { padding: 0 1rem 1rem; }
+
+.activity__empty {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Three columns on a wide screen, one on a narrow one — mobile-first, so the
+   single-column stack is the default and the grid is the enhancement. */
+.activity__cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 60rem) {
+  .activity__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.activity__heading {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.activity__n { color: var(--text-muted); }
+
+.activity__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.activity__item {
+  padding: 0.375rem 0;
+  border-block-end: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.activity__item:last-child { border-block-end: 0; }
+
+.activity__num,
+.activity__sha {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.activity__num:hover,
+.activity__sha:hover { text-decoration: underline; }
+
+.activity__sha { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.activity__pri {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.activity__text { color: var(--text-primary); }
+
+.activity__meta {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* The "Work completed" trigger (#1046). Styled as a peer of the filter tabs so
+   it reads as part of the same control strip, but distinguished by the accent
+   border — it opens a different KIND of thing (an account of work) rather than
+   filtering the list. Theme tokens only. */
+.issues-workdone {
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--primary);
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.issues-workdone:hover {
+  background: var(--primary);
+  color: var(--text-on-accent);
+}
+
+.issues-workdone[aria-expanded="true"] {
+  background: var(--primary);
+  color: var(--text-on-accent);
+}
+
+/* The summary stays operable on its own, but the button is the advertised
+   control, so the summary marker is enough — no second prominent affordance. */
+.activity__summary { list-style-position: inside; }
+
+/* Per-severity counts in the toolbar (#1046 follow-up).
+   John: "add a count in header of the numbers of each severity."
+   Colour comes from the same tokens the priority pills use, so a P1 reads as a
+   P1 wherever it appears on the page. */
+.issues-severity {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.issues-severity .sev {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.issues-severity .sev b {
+  font-weight: 700;
+  margin-inline-end: 0.15rem;
+}
+
+.issues-severity .sev--1 b { color: var(--error-color); }
+.issues-severity .sev--2 b { color: var(--warning-color); }
+.issues-severity .sev--3 b { color: var(--info-color); }
+.issues-severity .sev--4 b,
+.issues-severity .sev--5 b { color: var(--text-muted); }
+.issues-severity .sev--none b { color: var(--text-muted); font-style: italic; }

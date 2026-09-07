@@ -29,10 +29,51 @@
     <button type="button" class="issues-tab" data-state="all" x-ripple>All</button>
     <button type="button" class="issues-tab" data-state="in-progress" x-ripple>In Progress</button>
   </div>
+  <!-- #1046 — John: "add a button work completed when pressed i can see what
+       your done". The panel below is collapsed until this is pressed, so the
+       page opens on the issues themselves and the account of work is one
+       click away rather than always taking up the top of the screen. -->
+  <button type="button" id="activity-toggle" class="issues-workdone"
+          aria-expanded="false" aria-controls="activity" x-ripple>Work completed</button>
   <span id="issues-summary" class="issues-summary"></span>
   <span id="issues-active" class="issues-summary" aria-live="polite">Current Active: 0</span>
+  <!-- John: "add a count in header of the numbers of each severity". Counts
+       follow the CURRENT filter, so switching to Closed answers "how many P1s
+       have we actually finished" rather than restating the same totals. -->
+  <span id="issues-severity" class="issues-severity" aria-live="polite"></span>
   <input type="search" id="issues-search" class="issues-search" placeholder="Filter by title or number…">
 </div>
+
+<!-- #1046 — John: "I want an account of all work done within last 24hrs with links."
+     The table below answers "what state is everything in". It cannot answer
+     "what happened today": closing an issue moves it OUT of the open list
+     rather than into a record of the work, so a day with 15 closures renders
+     the same as a day with none. This is that record. -->
+<details id="activity" class="activity">
+  <!-- The x-details behavior REBUILDS this summary, replacing its children with
+       its own label/icon spans — so an id placed in here is destroyed and any
+       later update silently no-ops. Counts therefore live in the BODY, whose
+       ids it leaves alone, and the headline lives on the button. -->
+  <summary class="activity__summary">Work done</summary>
+  <div class="activity__body">
+    <p id="activity-counts" class="activity__counts">loading…</p>
+    <p id="activity-empty" class="activity__empty" hidden>Nothing recorded in this window.</p>
+    <div class="activity__cols">
+      <section class="activity__col">
+        <h3 class="activity__heading">Closed <span id="activity-closed-n" class="activity__n"></span></h3>
+        <ul id="activity-closed" class="activity__list"></ul>
+      </section>
+      <section class="activity__col">
+        <h3 class="activity__heading">Opened <span id="activity-opened-n" class="activity__n"></span></h3>
+        <ul id="activity-opened" class="activity__list"></ul>
+      </section>
+      <section class="activity__col">
+        <h3 class="activity__heading">Commits <span id="activity-commits-n" class="activity__n"></span></h3>
+        <ul id="activity-commits" class="activity__list"></ul>
+      </section>
+    </div>
+  </div>
+</details>
 
 <h2 class="sr-only">Issues</h2>
 <p id="issues-status" class="issues-status">Loading issues…</p>
@@ -92,6 +133,34 @@
   // opened) and closedAt for closed ones (when they were resolved) -- for
   // "all", spans the full createdAt range since that's the one date every
   // issue has.
+  const severityEl = document.getElementById('issues-severity');
+
+  /**
+   * Per-severity counts for whatever is currently on screen (#1046 follow-up).
+   *
+   * priorityOf() returns 9 for an unlabelled issue, which is deliberate — it
+   * sorts them last — so they are reported as "unrated" rather than silently
+   * folded into P5 or dropped, since an unrated issue is a real gap.
+   */
+  function updateSeverity(filtered) {
+    if (!severityEl) return;
+    if (!filtered.length) { severityEl.textContent = ''; return; }
+    const counts = new Map();
+    for (const issue of filtered) {
+      const p = priorityOf(issue);
+      counts.set(p, (counts.get(p) || 0) + 1);
+    }
+    const parts = [];
+    for (let p = 1; p <= 5; p++) {
+      const n = counts.get(p) || 0;
+      if (!n) continue;
+      parts.push(`<span class="sev sev--${p}"><b>P${p}</b> ${n}</span>`);
+    }
+    const unrated = counts.get(9) || 0;
+    if (unrated) parts.push(`<span class="sev sev--none"><b>unrated</b> ${unrated}</span>`);
+    severityEl.innerHTML = parts.join('');
+  }
+
   function updateSummary(filtered) {
     if (!filtered.length) {
       summaryEl.textContent = '';
@@ -221,6 +290,7 @@
       || b.number - a.number);
 
     updateSummary(filtered);
+    updateSeverity(filtered);
     updateActiveCount();
 
     if (!filtered.length) {
@@ -423,6 +493,36 @@
     }
 
     try {
+      // #1045: try the SERVER first. The dev server proxies through an
+      // authenticated `gh` (5,000/hour, not 60) and keeps a disk cache, so a
+      // first-ever visit works even when this IP has already spent its
+      // unauthenticated budget -- which is precisely when localStorage is empty
+      // and the old code had nothing to fall back to.
+      //
+      // Silent, deliberate fallback: the deployed GitHub Pages site is STATIC
+      // and has no server, so /api/issues 404s there and the direct call below
+      // is the only route. A missing proxy is not an error condition.
+      try {
+        statusEl.textContent = 'Loading issues…';
+        statusEl.style.display = '';
+        const proxied = await fetch('/api/issues');
+        if (proxied.ok) {
+          const payload = await proxied.json();
+          if (Array.isArray(payload.issues) && payload.issues.length) {
+            allIssues = payload.issues.filter((i) => !i.pull_request);
+            try { localStorage.removeItem(LIMIT_KEY); } catch { /* private mode */ }
+            saveCache(allIssues);
+            render();
+            if (payload.source === 'stale-cache') {
+              const mins = Math.round((payload.ageMs || 0) / 60000);
+              statusEl.textContent = `Showing a cached list from the server — ${mins} minute${mins === 1 ? '' : 's'} old (live fetch failed).`;
+              statusEl.style.display = '';
+            }
+            return;
+          }
+        }
+      } catch { /* no server here — fall through to the public API */ }
+
       // Public, unauthenticated GitHub REST API -- works identically on the
       // deployed GitHub Pages site (static hosting, no server-side proxy
       // possible) and in local dev. A single per_page=100 request silently
@@ -465,6 +565,125 @@
     }
   }
 
+  // ── #1046: the account of work done ────────────────────────────────────────
+  //
+  // Served by /api/activity, which reads git log and an AUTHENTICATED gh — so it
+  // costs nothing against the 60/hour unauthenticated budget the list itself
+  // used to burn (#1045). On the static Pages deploy there is no server, so the
+  // panel simply stays hidden rather than erroring: an absent proxy is not a
+  // failure, it is a different deployment.
+  async function loadActivity(hours = 24) {
+    const panel = document.getElementById('activity');
+    const countsEl = document.getElementById('activity-counts');
+    if (!panel || !countsEl) return;
+
+    let data;
+    try {
+      const res = await fetch(`/api/activity?hours=${hours}`);
+      if (!res.ok) throw new Error(String(res.status));
+      data = await res.json();
+    } catch {
+      panel.hidden = true;
+      return;
+    }
+
+    const c = data.counts || { closed: 0, opened: 0, commits: 0 };
+
+    // The net, stated rather than left to arithmetic. An issue opened AND closed
+    // inside the window shows in both columns without ever having sat in the
+    // backlog, so `closed - opened` is right only by coincidence — say what
+    // actually moved instead.
+    const net = c.netOpen;
+    let netText = '';
+    if (typeof net === 'number') {
+      const same = (c.openedAndClosedSameWindow || []).length;
+      netText = net < 0
+        ? ` · net ${Math.abs(net)} fewer open`
+        : net > 0 ? ` · net ${net} more open` : ' · net unchanged';
+      if (same) netText += ` (${same} opened and closed within the window)`;
+    }
+
+    countsEl.textContent =
+      `${c.closed} closed · ${c.opened} opened · ${c.commits} commits · last ${data.hours}h${netText}`;
+
+    // Headline on the button itself, so the number is readable while collapsed —
+    // the summary cannot hold it (see the markup note above).
+    const toggle = document.getElementById('activity-toggle');
+    if (toggle) {
+      const net = typeof c.netOpen === 'number'
+        ? (c.netOpen < 0 ? `, net ${Math.abs(c.netOpen)} fewer open` : c.netOpen > 0 ? `, net ${c.netOpen} more open` : '')
+        : '';
+      toggle.dataset.headline = `${c.closed} closed${net}`;
+      if (!document.getElementById('activity').open) {
+        toggle.textContent = `Work completed · ${c.closed} closed${net}`;
+      }
+    }
+
+    const when = (iso) => {
+      const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+      if (mins < 60) return `${mins}m ago`;
+      const h = Math.round(mins / 60);
+      return h < 24 ? `${h}h ago` : `${Math.round(h / 24)}d ago`;
+    };
+
+    const issueItems = (rows) => rows.map((r) => {
+      // The evidence, inline: which commits in this window name this issue.
+      const shas = (r.commits || []).map((sha) =>
+        `<a class="activity__sha" href="https://github.com/${REPO}/commit/${escapeHtml(sha)}"`
+        + ` target="_blank" rel="noopener">${escapeHtml(sha)}</a>`).join(' ');
+      const pri = r.priority ? `<span class="activity__pri">${escapeHtml(r.priority.replace('priority:', 'P'))}</span>` : '';
+      return `<li class="activity__item">`
+        + `<a class="activity__num" href="${escapeHtml(r.url)}" target="_blank" rel="noopener">#${escapeHtml(r.number)}</a>`
+        + `${pri} <span class="activity__text">${escapeHtml(r.title)}</span>`
+        + `<span class="activity__meta">${escapeHtml(when(r.at))}${shas ? ' · ' + shas : ''}</span>`
+        + `</li>`;
+    }).join('');
+
+    const commitItems = (rows) => rows.map((r) => {
+      const cited = (r.issues || []).map((n) =>
+        `<a href="https://github.com/${REPO}/issues/${n}" target="_blank" rel="noopener">#${n}</a>`).join(' ');
+      return `<li class="activity__item">`
+        + `<a class="activity__sha" href="${escapeHtml(r.url)}" target="_blank" rel="noopener">${escapeHtml(r.sha)}</a> `
+        + `<span class="activity__text">${escapeHtml(r.subject)}</span>`
+        + `<span class="activity__meta">${escapeHtml(when(r.when))}${cited ? ' · ' + cited : ''}</span>`
+        + `</li>`;
+    }).join('');
+
+    document.getElementById('activity-closed').innerHTML = issueItems(data.closed || []);
+    document.getElementById('activity-opened').innerHTML = issueItems(data.opened || []);
+    document.getElementById('activity-commits').innerHTML = commitItems(data.commits || []);
+    document.getElementById('activity-closed-n').textContent = c.closed;
+    document.getElementById('activity-opened-n').textContent = c.opened;
+    document.getElementById('activity-commits-n').textContent = c.commits;
+
+    const empty = document.getElementById('activity-empty');
+    if (empty) empty.hidden = (c.closed + c.opened + c.commits) > 0;
+  }
+
+  // The button owns the panel's open state, and the panel reports back when it
+  // is toggled by its own <summary> — otherwise aria-expanded would drift out of
+  // step with what the reader can actually see.
+  {
+    const btn = document.getElementById('activity-toggle');
+    const panel = document.getElementById('activity');
+    if (btn && panel) {
+      const sync = () => {
+        btn.setAttribute('aria-expanded', String(panel.open));
+        btn.textContent = panel.open
+          ? 'Hide work completed'
+          : `Work completed${btn.dataset.headline ? ' · ' + btn.dataset.headline : ''}`;
+      };
+      btn.addEventListener('click', () => {
+        panel.open = !panel.open;
+        sync();
+        if (panel.open) panel.scrollIntoView({ block: 'nearest' });
+      });
+      panel.addEventListener('toggle', sync);
+      sync();
+    }
+  }
+
+  loadActivity();
   load();
 })();
 </script>

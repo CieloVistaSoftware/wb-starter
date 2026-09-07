@@ -1,0 +1,16 @@
+fix(#1017): cards.html showed the behavior wiring instead of the markup people write
+
+John, on demos/site/cards.html: "this page is not showing the proper code. it is
+showing the implementation of the behaviors."
+
+Every sample was authored as <article x-card>. Since autoInject defaults to true
+(standard S32), <article> IS a card -- the attribute adds nothing and the page's
+own replacement guard was logging it 21 times as redundant. Worse, it taught the
+opposite of the selling point: the code panel showed readers an attribute they
+never need to type.
+
+21 x <article x-card> -> <article>. Exactly 147 bytes; nothing else changed.
+
+Test: tests/compliance/no-redundant-x-attribute-on-native-tag.spec.ts
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

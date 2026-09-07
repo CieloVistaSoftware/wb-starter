@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/error-log-reaches-its-fix-registry.spec.ts",
+  "startedAt": "2026-09-06T20:56:03.425Z",
+  "updatedAt": "2026-09-06T20:56:10.453Z",
+  "command": "npx playwright test tests/regression/error-log-reaches-its-fix-registry.spec.ts --project=regression --workers=1",
+  "pid": 27772,
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "total": 5,
+  "currentFile": "tests\\regression\\error-log-reaches-its-fix-registry.spec.ts",
+  "output": "\nRunning 5 tests using 1 worker\n\n  ok 1 [regression] › tests\\regression\\error-log-reaches-its-fix-registry.spec.ts:33:3 › #1030: a logged error reaches its recorded fix › the registry entry this suite relies on is present and complete (7ms)\n  ok 2 [regression] › tests\\regression\\error-log-reaches-its-fix-registry.spec.ts:42:3 › #1030: a logged error reaches its recorded fix › an appended error comes back carrying its analysis, solution, verify and issue (60ms)\n  ok 3 [regression] › tests\\regression\\error-log-reaches-its-fix-registry.spec.ts:74:3 › #1030: a logged error reaches its recorded fix › a row stored with nulls is enriched on READ, not only on write (19ms)\n  ok 4 [regression] › tests\\regression\\error-log-reaches-its-fix-registry.spec.ts:106:3 › #1030: a logged error reaches its recorded fix › an unknown signature is left alone rather than invented (10ms)\n  ok 5 [regression] › tests\\regression\\error-log-reaches-its-fix-registry.spec.ts:131:3 › #1030: the viewer renders the issue as a link › errors-viewer links the issue number to GitHub (1ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 5 tests in 1.6s\n  ✓ Passed:  5\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 5/5 passed\n════════════════════════════════════════════════════════════\n\n\n  5 passed (3.7s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-06T20:56:10.453Z",
+  "duration": "7.03s",
+  "exitCode": 0,
+  "flaky": 0
+}

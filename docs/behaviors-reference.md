@@ -59,7 +59,7 @@ internals is applied exactly like any other: the attribute name **is** the
 behavior name, and on a semantic element it is injected for you.
 
 <div x-demo>
-<article x-card>
+<article>
   <header>
     <h3>Title</h3>
   </header>

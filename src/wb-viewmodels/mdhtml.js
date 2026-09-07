@@ -242,6 +242,9 @@ export async function mdhtml(element, options = {}) {
         
         console.warn('[mdhtml] Failed to load file: ' + config.src);
         logError('Unable to Load Documentation', {
+          // #1010: stable identity -- the message quotes the failing path, which
+          // differs every time; the fault does not.
+          code: 'doc-load-failed',
           file: 'src/wb-viewmodels/mdhtml.js',
           to: 'x-mdhtml',
           reason: err.message,

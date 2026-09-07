@@ -1,0 +1,42 @@
+fix(#1012,#1013,#1015,#1016,#1022,#1023): a code theme can actually be seen, and the badge stops sitting on the code
+
+In plain English: picking a code theme only ever changed the colour of the
+words, never the panel, and the panel's language badge covered the first line of
+every sample. Both had the same shape of cause -- something written directly onto
+the element, where a stylesheet cannot reach past it.
+
+  - code.js wrote 17 inline styles onto every code element, including its
+    background and text colour. Inline styles beat every stylesheet, so a code
+    theme could only ever recolour tokens. All of them are now real rules in
+    src/styles/behaviors/code.css, keyed on the classes the behavior already
+    adds. (#1013)
+  - The language badge (HTML / JAVASCRIPT / CSS) sat on top of line 1 of every
+    sample on the themes page. The 2rem of room .x-code--has-badge reserves was
+    being overwritten twice: the highlight.js theme <link> is appended at
+    RUNTIME, so its `.hljs { padding: 3px }` is later in the cascade at equal
+    specificity, and the badge rules were declared above .x-code--block, whose
+    `padding: 1rem` then took padding-top back. Fixed by pairing the selectors
+    with .hljs (0-2-0) and moving them below the block rule -- specificity and
+    source order, no !important. Measured: 32px of padding, 6px of clearance,
+    zero overlap. (#1023)
+  - A second, identical code-theme dropdown appeared beside the first. The
+    codecontrol behavior ends in an unconditional appendChild and had no re-init
+    guard, so a second WB pass over the same element built a second control.
+    themecontrol.js was given exactly this guard once already; codecontrol never
+    got it. (#1022)
+  - The code-theme control now sits with the code it recolours -- in the
+    behaviors page's code bar -- instead of only on /themes. (#1012)
+  - x-code on a host that is not <code>/<pre> was refused, so the documented
+    attribute form rendered nothing. It wraps the host's content in a real
+    <code> now. (#1016)
+  - formatHtml() collapsed the newlines inside <code>/<pre>, so multi-line
+    samples rendered as one long line. (#1015)
+
+Also moves fix-card's 49 !important declarations out of a 125-line injected
+<style> block into src/styles/behaviors/fix-card.css, where the selectors are
+escalated by class instead (part of #1014).
+
+Tests: tests/regression/code-language-badge-clears-first-line.spec.ts,
+tests/regression/code-theme-control-and-host.spec.ts
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

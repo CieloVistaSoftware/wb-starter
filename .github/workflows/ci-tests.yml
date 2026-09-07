@@ -53,21 +53,44 @@ jobs:
             sleep 1
           done
 
-      - name: Run compliance tests
-        run: npx playwright test --project=compliance --reporter=github,html
+      # #1044 — CI asks the SAME question the local gate asks.
+      #
+      # John: "if I can compile/run a site it means it's working at a particular
+      # release level ... i don't expect any failures when it does push. after
+      # all it's live on my local."
+      #
+      # That could not hold. The pre-commit hook runs .husky/test-ratchet.mjs,
+      # which fails only on failures NOT in data/test-baseline-failures.json
+      # (530 entries). CI ran raw `npx playwright test` with no baseline at all,
+      # so it re-failed on all 530 every run — main has failed CI on every push
+      # since 2026-09-03. Identical code, opposite verdicts, and the author of a
+      # locally-verified change learns that CI red means nothing.
+      #
+      # Worse, these were four SEQUENTIAL steps with continue-on-error: false.
+      # Compliance failed first, so integration/base/behaviors were reported as
+      # `skipped` and never measured at all. The verdict was "compliance had at
+      # least one of its 530 known failures", nothing more.
+      #
+      # This is #959's argument, already accepted for the local gate and never
+      # applied here: "blocked and blind is worse than unblocked with real
+      # detection." A regression pushed today arrives as failure 531 of 531 and
+      # is invisible. The register only ever shrinks, so this does not entrench
+      # the debt — it makes NEW debt visible, which is currently impossible.
+      - name: Gate — no NEW failures vs the register (compliance, regression, behaviors)
+        run: node .husky/test-ratchet.mjs
         continue-on-error: false
 
-      - name: Run integration tests
-        run: npx playwright test --project=integration --reporter=github,html
-        continue-on-error: false
-
-      - name: Run base tests
-        run: npx playwright test --project=base --reporter=github,html
-        continue-on-error: false
-
-      - name: Run behavior tests
-        run: npx playwright test --project=behaviors --reporter=github,html
-        continue-on-error: false
+      # integration and base are NOT in the ratchet's project list, so no
+      # baseline exists for them and neither gate has ever measured them — the
+      # steps above were skipped on every run. Reported, not enforced, until
+      # they have a register of their own: enforcing an unmeasured project would
+      # just recreate the permanent red this change is removing.
+      - name: Report — integration and base (not yet ratcheted, see #1044)
+        if: always()
+        continue-on-error: true
+        run: |
+          npx playwright test --project=integration --reporter=github || true
+          npx playwright test --project=base --reporter=github || true
 
       - name: Upload test report
         if: always()

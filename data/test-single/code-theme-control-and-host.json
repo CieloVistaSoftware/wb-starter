@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/code-theme-control-and-host.spec.ts",
+  "startedAt": "2026-09-06T20:46:22.069Z",
+  "updatedAt": "2026-09-06T20:46:33.755Z",
+  "command": "npx playwright test tests/regression/code-theme-control-and-host.spec.ts --project=regression --workers=1",
+  "pid": 29872,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\regression\\code-theme-control-and-host.spec.ts",
+  "output": "\nRunning 3 tests using 1 worker\n\n  ok 1 [regression] › tests\\regression\\code-theme-control-and-host.spec.ts:25:3 › code theme control + x-code host (#1012, #1016, #1022) › the behaviors page carries exactly ONE code-theme control, beside the code (1.9s)\n  ok 2 [regression] › tests\\regression\\code-theme-control-and-host.spec.ts:63:3 › code theme control + x-code host (#1012, #1016, #1022) › picking a theme swaps the highlight stylesheet the page is using (856ms)\n  ok 3 [regression] › tests\\regression\\code-theme-control-and-host.spec.ts:95:3 › code theme control + x-code host (#1012, #1016, #1022) › x-code on a non-code host renders the code instead of refusing it (1.2s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 6.6s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 3/3 passed\n\n  ✅ FIXED (1):\n     - every test contains at least one expect()\n════════════════════════════════════════════════════════════\n\n\n  3 passed (8.6s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-06T20:46:33.755Z",
+  "duration": "11.69s",
+  "exitCode": 0,
+  "flaky": 0
+}

@@ -3482,8 +3482,8 @@ Video card:
 
 <div x-demo>
 <div x-cardvideo
-  src="demo.mp4"
-  poster="/images/placeholder.svg"
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
+  poster="images/placeholder.svg"
   title="Product Demo">
 </div>
 </div>

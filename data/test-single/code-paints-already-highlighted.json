@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/code-paints-already-highlighted.spec.ts",
+  "startedAt": "2026-09-06T22:52:57.501Z",
+  "updatedAt": "2026-09-06T22:53:07.349Z",
+  "command": "npx playwright test tests/regression/code-paints-already-highlighted.spec.ts --project=regression --workers=1",
+  "pid": 32140,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\code-paints-already-highlighted.spec.ts",
+  "output": "\nRunning 2 tests using 1 worker\n\n  ok 1 [regression] › tests\\regression\\code-paints-already-highlighted.spec.ts:61:3 › #986: code is coloured on its first painted frame › every rendered code panel ends up highlighted (1.7s)\n  ok 2 [regression] › tests\\regression\\code-paints-already-highlighted.spec.ts:109:3 › #986: the ordering that makes it possible is still in place › the panel is hidden until it has been scanned, then revealed (8ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 4.5s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n\n  ✅ FIXED (1):\n     - the panel is hidden until it has been scanned, the...\n════════════════════════════════════════════════════════════\n\n\n  2 passed (6.5s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-06T22:53:07.349Z",
+  "duration": "9.85s",
+  "exitCode": 0,
+  "flaky": 0
+}

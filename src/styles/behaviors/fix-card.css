@@ -1,0 +1,143 @@
+/**
+ * Fix Card Behavior Styles
+ * -----------------------------------------------------------------------------
+ * #1014. These 125 lines used to be a template literal inside fix-card.js,
+ * injected into <head> at runtime with 49 `!important` declarations.
+ *
+ * WHY THEY WERE THERE, AND WHY THEY ARE NOT NEEDED
+ * ------------------------------------------------
+ * A runtime-injected <style> lands at the END of <head>, but so does every
+ * other late stylesheet, so its position guaranteed nothing. Every rule was
+ * `.fix-card X` (0-2-0), competing with card.css's `.x-card X` (also 0-2-0) --
+ * a tie decided by load order, which is why each declaration was escalated to
+ * `!important` to make it stop mattering.
+ *
+ * The element carries BOTH classes, so `.x-card.fix-card X` is 0-3-0 and wins
+ * on specificity. Nothing here needs to override anything by force, and a page
+ * can now override any of it without escalating in turn -- which is the actual
+ * cost of `!important`: it does not just win, it removes the next author's
+ * ability to disagree.
+ * -----------------------------------------------------------------------------
+ */
+.x-fix-card-scroll-container::-webkit-scrollbar {
+          display: none;
+        }
+        .x-fix-card-scroll-container {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+        }
+        /* Ensure text wraps nicely */
+        .x-card.fix-card .detail-content, 
+        .x-card.fix-card .fix-title,
+        .x-card.fix-card .fix-id,
+        .x-card.fix-card .detail-label {
+          white-space: pre-wrap;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        
+        /* MDHTML / Code Block Overrides - NO SCROLLBARS, NO GAPS, FIT PARENT */
+        .x-card.fix-card .fix-code-block,
+        .x-card.fix-card .fix-code-block * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .x-card.fix-card .fix-code-block *::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .x-card.fix-card .fix-code-block pre {
+          margin: 0;
+          padding: 0.5rem;
+          background: rgba(0,0,0,0.2);
+          border-radius: 4px;
+          white-space: pre-wrap;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+          overflow-x: hidden;
+          overflow-y: hidden;
+          max-height: none;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
+        
+        .x-card.fix-card .fix-code-block code {
+          padding: 0;
+          margin: 0;
+          background: transparent;
+          white-space: pre-wrap;
+          overflow: visible;
+          max-height: none;
+          border: none;
+          width: 100%;
+          box-sizing: border-box;
+          display: block;
+        }
+
+        .x-card.fix-card .x-code {
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: visible;
+        }
+
+        /* Hide the WB Code Behavior chrome (language badge, copy button) */
+        .x-card.fix-card .x-code__header,
+        .x-card.fix-card .x-code__language,
+        .x-card.fix-card .x-code__copy,
+        .x-card.fix-card .x-pre__copy,
+        .x-card.fix-card .x-pre__language,
+        .x-card.fix-card .x-pre__line-numbers {
+          display: none;
+        }
+        
+        /* Reset the wrapper injected by code/pre behavior */
+        .x-card.fix-card .x-code-wrapper,
+        .x-card.fix-card .x-pre-wrapper {
+          margin: 0;
+          padding: 0;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          width: 100%;
+          max-width: 100%;
+          overflow: visible;
+          max-height: none;
+        }
+        
+        .x-card.fix-card .signature-block,
+        .x-card.fix-card .stack-trace {
+          font-family: monospace;
+          background: rgba(0,0,0,0.2);
+          padding: 0.5rem;
+          border-radius: 4px;
+          overflow-x: auto;
+          overflow-y: auto;
+          max-height: 150px;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+        
+        /* Constrain overall card height to prevent massive cards */
+        .x-card.fix-card {
+          max-height: 750px;
+          overflow-y: auto;
+        }
+        
+        .glow-red {
+          color: #ff4444;
+          text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+          font-weight: 600;
+          animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+          0% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
+          50% { text-shadow: 0 0 12px rgba(255, 0, 0, 0.7); }
+          100% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
+        }

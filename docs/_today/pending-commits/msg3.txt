@@ -1,0 +1,39 @@
+fix(#1018,#1020): the behaviors workspace fills the window, and only the panels scroll
+
+In plain English: the behaviours page wasted most of the screen -- the preview
+sat in a short box with empty space below it and dead margin either side -- and
+once it did fill the window there were two scrollbars a few pixels apart at the
+right edge.
+
+  - The workspace row was content-sized, so the preview ended where its content
+    ended. Both panels now fill the row and scroll internally. (#1018)
+  - The page was capped at the site's 1200px reading width, leaving ~227px unused
+    either side of a tool that wants every pixel. That cap is right for prose and
+    wrong here. (#1018)
+  - Two scrollbars: .site__body is the site's single scroll container by design,
+    and a workspace sized off the VIEWPORT (height: calc(100vh - 10rem)) guessed
+    at the chrome above it and guessed high, so it overflowed .site__body and
+    both scrolled. The height comes from the container now, through a flex chain
+    where every link carries min-height: 0 -- without that a flex child floors at
+    its content height, measured at 10343px for the 184-row list. (#1020)
+  - The footer on this page is the shell's (#siteFooter), which is why editing
+    behaviors.html never removed it. Hidden for this page only. (#1020)
+  - The code-theme picker moved to a bar directly above the code panel, and the
+    x-clock example lost the class="time-display" that made the behavior look
+    like it needed one. (#1018)
+
+MOBILE-FIRST, THE HARD WAY. The first version of the #1020 fix applied at every
+width. Measured at 375x812: the 837-row behaviour navigator rendered 2px tall,
+and since .site__body had been told not to scroll, nothing was reachable -- a
+frozen page. Two panels sharing one fixed-height row is a wide-screen idea. The
+whole treatment now sits inside the page's own two-column breakpoint
+(min-width: 60.0625rem), matching where the grid already collapses to one column.
+
+DEMOS-AND-DOCS-STANDARDS.md gains that rule under S10, plus S13 compliance here:
+the spacing values in these rules come from the theme scale (--space-md,
+--space-xs/sm) rather than numbers picked by eye.
+
+Test: tests/regression/behaviors-workspace-single-scroll.spec.ts -- asserts the
+desktop case and the 375x812 case in the same file, on measured geometry.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

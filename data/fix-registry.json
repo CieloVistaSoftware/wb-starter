@@ -1,0 +1,53 @@
+{
+  "$comment": "Signature-keyed cache of solved problems. See docs/standards/ISSUE-SIGNATURE-BLOCK.md. Keys are computeSignature() from src/core/error-signature.js: '<module>|<level>|<code or normalised message>'. Prefer emitting an explicit `code` from the call site -- normalising prose can only approximate an identity, and messages that name the element and behavior (correctly, because that is what makes them useful) would otherwise mint one signature per tag. Each entry is written ONCE per signature, not once per error.",
+  "$schema_note": {
+    "analysis": "why it happens, in plain English",
+    "solution": "what to do about it",
+    "fixable": "true only when the remedy is mechanical AND verifiable — not when a human has to choose",
+    "remedy": "a runnable command that applies the solution, or null",
+    "verify": "the test that proves the fix; a remedy without one is a change, not a fix",
+    "issue": "where the analysis is recorded"
+  },
+  "entries": {
+    "replacement-guard|error|redundant-behavior-attribute": {
+      "analysis": "A semantic tag already IS its behavior (nativeMap: article -> card), so an x-<same behavior> attribute on that tag states it twice and would render the behavior twice. The runtime guard suppresses the duplicate correctly — the error is a report, not a failure.",
+      "solution": "Delete the redundant attribute from the source. The behavior still runs, because the tag is what runs it.",
+      "fixable": true,
+      "remedy": "node scripts/find-redundant-behavior-attrs.mjs --fix",
+      "verify": "node scripts/find-redundant-behavior-attrs.mjs",
+      "issue": 1017,
+      "notes": "AUTO-FIXABLE as of 2026-09-05, after the detector was rewritten to parse markup instead of matching text. It now (a) tokenises attributes so a value can never be read as a name, (b) skips regions where markup is content -- comments, script/style/pre/code/textarea, and fenced or inline code in Markdown, (c) edits by byte span back to front rather than re-matching, and (d) scans .md as well as .html, which is how the docs/behaviors-reference.md instance was found. It also compares the attribute against the behavior's FAMILY ROOT read from wb-viewmodels/index.js (article -> card), not the nativeMap value -- the first parsing rewrite compared names and reported 0 hits on the very case the runtime had just logged, repeating #765/#880 exactly as replacement-guard.js's familyRoot() comment warns. PROVEN on a fixture carrying all three cases that damaged 13 files -- x-button inside class=\"x-button x-button--primary\", x-button inside copy-text=\"Copied from a x-button!\", and a comment explaining not to write <article x-card> -- plus <article x-cardimage>, a fenced example and a <pre><code> sample. 2 real hits found, 2 removed, everything else byte-identical. Pointed at the pre-fix demos/site/cards.html it reports exactly the 21 instances the runtime guard logged. The old damage came from --fix being trusted without a verify; run the verify command, which exits non-zero while any remain.",
+      "history": {
+        "damaged_13_files": "the pre-2026-09-05 regex version; see notes",
+        "reason_it_was_unblocked": "detector parses attribute nodes and skips content regions; proven on a poison fixture"
+      }
+    },
+    "mdhtml.js|error|doc-load-failed": {
+      "analysis": "x-mdhtml fetched a markdown file and the request did not return ok. The record already carries the module, the target path (details.src) and the HTTP status (details.reason); the viewer was reading different field names and showing 'Unknown'.",
+      "solution": "Read the failing path out of details.src and check it exists and is served. A 404 means the doc is missing or the path is wrong; #901 lists ten docs referenced by tests that do not exist on disk.",
+      "fixable": false,
+      "remedy": null,
+      "verify": null,
+      "issue": 1010,
+      "notes": "Not mechanically fixable: whether the answer is to write the missing document, correct the link, or remove the reference is a judgement, and guessing wrong writes a file nobody wanted."
+    },
+    "media-load-retry|error|image failed to load after <n> attempt(s): <url> - the file is missing or unreachable.": {
+      "analysis": "The image genuinely did not load after the retry budget. When the URL is a test fixture on an ephemeral port this is a passing test proving the retry logic reports failure — not a fault.",
+      "solution": "Check isTestOrigin first. If test-origin, it is expected and must not be counted as a defect. Otherwise the asset is missing: fix the path or add the file.",
+      "fixable": false,
+      "remedy": null,
+      "verify": "tests/regression/image-failures-raise-runtime-errors.spec.ts",
+      "issue": 1010,
+      "notes": "definitely-missing-image.png on port 3310 comes from image-failures-raise-runtime-errors.spec.ts:53. Marked as test-origin rather than hidden — hiding it would be its own way of lying about what happened."
+    },
+    "media-load-retry|error|video failed to load after <n> attempt(s): <el> -- the file is missing or unreachable.": {
+      "analysis": "A <video> did not load after its retry budget. When the URL is a test fixture on an ephemeral port this is the retry logic correctly reporting failure, not a defect -- check details.testOrigin first, exactly as the image variant of this signature does. Otherwise the file is genuinely missing: on 2026-09-05 it was public/demo.mp4, a placeholder path referenced by docs/behavior-cross-reference.md and never present in the repo, which logged two entries on every visit to that page.",
+      "solution": "Resolve the src against the repo. If it is a bare invented filename (demo.mp4, video.mp4, movie.mp4), point it at the sample the rest of the docs already use: https://www.w3schools.com/html/mov_bbb.mp4. If it names a file that should exist, add the file or correct the path.",
+      "fixable": false,
+      "remedy": null,
+      "verify": "tests/compliance/docs-live-media-assets-exist.spec.ts",
+      "issue": 1028,
+      "notes": "NOT mechanical: choosing between \"add the missing file\", \"correct the path\" and \"point at the shared sample\" is a judgement, and guessing wrong publishes the wrong asset. Standard 29 forbids placeholder asset paths, so the detector half is worth automating even though the fix is not."
+    }
+  }
+}

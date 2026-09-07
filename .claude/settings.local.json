@@ -10,7 +10,8 @@
       "Bash(npm run fix:list:*)",
       "Bash(npm run test:results:*)",
       "Bash(npm run test:failures:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(git commit *)"
     ],
     "deny": [],
     "ask": []

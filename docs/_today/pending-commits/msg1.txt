@@ -1,0 +1,46 @@
+fix(#1003,#1004,#1005,#1010,#1011): dialogs close, tables sort, the error log says where it came from
+
+Five fixes that were verified live on 2026-09-03 and then sat uncommitted for
+two days because the 10th-commit gate rejected the batch three times.
+
+In plain English:
+
+  - A native <dialog> sample opened with no way to close it. The dialog behavior
+    never rendered a close button on samples it did not itself create, so the
+    only exit was Escape -- undiscoverable, and gone entirely on a sample that
+    disabled it. Every native sample now carries a visible close button, with
+    the header and body spaced to the standard (16px/24px, 24px).
+  - Sorting a table by date or version put the rows in the wrong order:
+    parseFloat('2026-09-03') is 2026, and parseFloat('4.0.1') is 4, so
+    "4.0.1" sorted below "3.0.91" and every date in a month collapsed to the
+    same number. Dates now sort chronologically and versions segment by segment,
+    measured over 102 rows.
+  - The error log listed the same error over and over with no idea where it came
+    from. Each entry now parses its stack at log time, carries a signature, an
+    analysis, a suggested solution and whether it is machine-fixable, and repeats
+    are counted rather than re-listed.
+  - The header control strip was ragged -- four chips at four different tops and
+    heights. All four now sit at top 16 with height 32, and their panels are on
+    screen instead of clipped. AutoScroll walks the navigator unattended and
+    honours groups the reader has expanded.
+  - Five trigger-button helpers wrote their styling through element.style.cssText,
+    which beats every stylesheet, so the page could not size its own buttons.
+    Those declarations live in src/styles/behaviors/trigger-buttons.css now.
+
+Also lands the issue-signature tooling from the same session: the format
+(docs/standards/ISSUE-SIGNATURE-BLOCK.md), the filing template, a validator that
+exits non-zero so it can gate, and a backfill script. All 42 issues opened since
+2026-09-01 carry a signature block.
+
+find-redundant-behavior-attrs.mjs is registered as fixable: false ON PURPOSE.
+Its --fix pass regexes text instead of parsing markup: it stripped x-button from
+inside class="x-button x-button--primary", turned copy-text="Copied from a
+x-button!" into "Copied from a!", and edited three comments that mention
+<button x-button> while explaining why not to write it. 13 files damaged, all
+reverted. Do not flip the flag until the detector reads attribute nodes.
+
+Tests: tests/regression/dialog-samples-have-close-and-padding.spec.ts,
+tests/regression/behaviors-header-controls-aligned.spec.ts,
+tests/regression/autoscroll-honours-expanded-groups.spec.ts
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

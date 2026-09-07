@@ -1,0 +1,115 @@
+<!-- THEME GRID — #1025
+     Generated from src/core/themes-registry.js, the one list themecontrol.js
+     also reads. It used to be 23 hand-written cards while themes.css defined
+     50, because nothing connected a card to the registry: adding a theme never
+     added a card, and the three "23"s on this page went quietly stale.
+     Each card carries data-theme, so it renders in ITS OWN theme using that
+     theme's variables — a live preview instead of copied hex values, and no
+     colour literal anywhere in this page. -->
+<div class="page__section" id="autogen-themes-html-1">
+  <h2 class="section-title" id="themes-grid-title">All Themes</h2>
+  <p class="section-subtitle">Click any theme card to switch to that theme</p>
+
+  <div class="themes-grid" id="themes-grid"></div>
+</div>
+
+<script type="module">
+  import { THEMES } from './src/core/themes-registry.js';
+
+  /* Dark or light is READ, not tagged. Every theme declares --bg-primary; its
+     lightness is the answer, and one that cannot drift from the stylesheet the
+     way a hand-kept list of "12 dark, 11 light" did. */
+  function isDark(card) {
+    const bg = getComputedStyle(card).getPropertyValue('--bg-primary').trim();
+    const hsl = bg.match(/hsl\(\s*[\d.]+\s*,\s*[\d.]+%\s*,\s*([\d.]+)%/i);
+    if (hsl) return parseFloat(hsl[1]) < 50;
+    const rgb = bg.match(/rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/i);
+    if (rgb) {
+      const [r, g, b] = [rgb[1], rgb[2], rgb[3]].map(Number);
+      return (0.2126 * r + 0.7152 * g + 0.0722 * b) < 128;
+    }
+    return true;
+  }
+
+  const grid = document.getElementById('themes-grid');
+  if (grid) {
+    const active = document.documentElement.getAttribute('data-theme') || 'dark';
+
+    for (const theme of THEMES) {
+      // A button, not a div with onclick: it is a control, so it should be
+      // reachable by keyboard and announce itself as one.
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'theme-card';
+      card.dataset.theme = theme.id;
+      card.dataset.themeId = theme.id;
+      card.setAttribute('aria-pressed', String(theme.id === active));
+      card.title = theme.description;
+
+      card.innerHTML =
+        '<span class="theme-card__preview">'
+        + '<span class="theme-card__colors">'
+        + '<span class="theme-card__dot theme-card__dot--primary"></span>'
+        + '<span class="theme-card__dot theme-card__dot--secondary"></span>'
+        + '<span class="theme-card__dot theme-card__dot--accent"></span>'
+        + '</span>'
+        + '<span class="theme-card__sample"><span class="sample-text">Aa</span></span>'
+        + '</span>'
+        + '<span class="theme-card__info">'
+        + '<span class="theme-card__name"></span>'
+        + '<span class="theme-card__desc"></span>'
+        + '<span class="theme-card__tag"></span>'
+        + '</span>';
+
+      card.querySelector('.theme-card__name').textContent = theme.name;
+      card.querySelector('.theme-card__desc').textContent = theme.description;
+      grid.appendChild(card);
+      card.querySelector('.theme-card__tag').textContent = isDark(card) ? '🌙 Dark' : '☀️ Light';
+    }
+
+    grid.addEventListener('click', (e) => {
+      const card = e.target.closest('.theme-card');
+      if (!card) return;
+      const id = card.dataset.themeId;
+      document.documentElement.setAttribute('data-theme', id);
+      try { localStorage.setItem('x-theme', id); } catch { /* private mode */ }
+      // Keep the header's theme dropdown in step — it and this grid are two
+      // views of one setting, and they used to disagree after a card click.
+      const select = document.querySelector('.x-themecontrol__select');
+      if (select && select.value !== id) {
+        select.value = id;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      for (const other of grid.querySelectorAll('.theme-card')) {
+        other.setAttribute('aria-pressed', String(other === card));
+      }
+    });
+
+    /* The counts come from the registry, so the page cannot claim a number it
+       does not show. Both the attribute and the rendered <data> are set: the
+       stat behavior has already run by the time this script does. */
+    const cards = [...grid.querySelectorAll('.theme-card')];
+    const darkCount = cards.filter(isDark).length;
+    const counts = {
+      'themes-stats-total': cards.length,
+      'themes-stats-dark': darkCount,
+      'themes-stats-light': cards.length - darkCount,
+    };
+    for (const [id, value] of Object.entries(counts)) {
+      const host = document.getElementById(id);
+      if (!host) continue;
+      host.setAttribute('value', String(value));
+      const out = host.querySelector('.x-card__stats-value, data');
+      if (out) {
+        out.textContent = String(value);
+        out.setAttribute('value', String(value));
+      }
+    }
+
+    const title = document.getElementById('themes-grid-title');
+    if (title) title.textContent = `All ${cards.length} Themes`;
+
+    const strap = document.querySelector('#themes-hero p');
+    if (strap) strap.textContent = `${cards.length} themes powered by the Harmonic Color System (HCS)`;
+  }
+</script>

@@ -138,8 +138,20 @@ test.describe('No redundant x-{behavior} attribute', () => {
     // The file-reading test above is structurally blind to this: the showcase
     // builds these in the browser at render time. That is exactly how
     // <figure x-figure> survived 3.0.70 and reached John (#753).
-    await page.goto('/pages/behaviors.html');
-    await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 15000 });
+    // The ROUTED url, not /pages/behaviors.html. That fragment's first script is
+    // `location.replace('?page=behaviors')` — opened directly it redirects
+    // immediately, so waiting for WB.behaviors can succeed on the document that
+    // is about to be replaced, and the evaluate then runs on a fresh page where
+    // the generator is not defined yet. The sweep found 0 behaviors and this
+    // test failed on its own vacuity guard, which is the guard working.
+    await page.goto('/?page=behaviors');
+    // Wait for the generator ITSELF, not for a sibling global: it is what the
+    // sweep calls, and it is the last of the two to appear.
+    await page.waitForFunction(
+      () => typeof (window as any).__wbGeneratedExample === 'function'
+        && Object.keys((window as any).WB?.behaviors ?? {}).length > 0,
+      { timeout: 30000 },
+    );
 
     const rendered: string[] = await page.evaluate(() => {
       // Call the generator directly rather than clicking every row: rows
