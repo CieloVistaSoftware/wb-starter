@@ -241,6 +241,48 @@
       const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
       return stripped.replace(/[^/]*$/, '');
     }
+    /**
+     * Re-root asset paths that were authored root-absolute.
+     *
+     * John, from the deployed error log: "Image failed to load after 5
+     * attempt(s): https://cielovistasoftware.github.io/images/placeholder.svg".
+     *
+     * The site lives under /wb-starter/, so a `src="/images/…"` in an example
+     * resolves to the ORG root and 404s. siteRoot() already solves this for
+     * everything this page fetches — but the markup INSIDE the examples carries
+     * its own absolute paths and bypassed it. 29 of them in
+     * data/behavior-examples.json alone.
+     *
+     * Rewritten here rather than in the 39 source files: the same markup is
+     * authored for local dev (where '/' is correct) and for the sub-path deploy,
+     * so the path has to be resolved where the base is known, not where it is
+     * written. Only asset-ish attributes are touched — not hrefs, which have
+     * their own handling.
+     */
+    function rootRelativeAssets(value) {
+      const base = siteRoot();
+      if (base === '/' ) return value;
+      // The regex consumes the leading '/', so `base` supplies its own — it is
+      // already '/wb-starter/'. Stripping it here produced a RELATIVE
+      // 'wb-starter/images/…', which under /wb-starter/ resolves to
+      // /wb-starter/wb-starter/images/… — broken in a new way.
+      const fix = (s) => s.replace(
+        /(\b(?:src|poster|image|avatar|thumbnail|icon)\s*=\s*")\/(?!\/)/g,
+        (_m, attr) => attr + base,
+      );
+      const walk = (v) => {
+        if (typeof v === 'string') return fix(v);
+        if (Array.isArray(v)) return v.map(walk);
+        if (v && typeof v === 'object') {
+          const out = {};
+          for (const [k, val] of Object.entries(v)) out[k] = walk(val);
+          return out;
+        }
+        return v;
+      };
+      return walk(value);
+    }
+
     let allEntries = [];
     let extensionMap = {};
     let nativeMap = {};
@@ -425,7 +467,7 @@
         // sections no longer have to stay on the page purely as a data source.
         fetch(siteRoot() + 'data/behavior-examples.json')
           .then((r) => (r.ok ? r.json() : null))
-          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = cat.examples; try { relabelByExample(); } catch { /* list still renders */ } } })
+          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = rootRelativeAssets(cat.examples); try { relabelByExample(); } catch { /* list still renders */ } } })
           .catch(() => {});
 
         return fetch(siteRoot() + 'data/schema-index.json')
