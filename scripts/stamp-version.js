@@ -47,7 +47,25 @@ function drift() {
     }
   };
 
-  const branch = git('git rev-parse --abbrev-ref HEAD', 'unknown');
+  // WHERE THE CODE LIVES, not where it happened to be authored.
+  //
+  // This used to be a bare `rev-parse --abbrev-ref HEAD`, so a release commit
+  // made on a feature branch kept that name after merging. 4.0.2 shipped to
+  // production stamped `branch: "spec/needs-test-coverage"` — a branch no
+  // visitor to the deployed site has any way to interpret, on an artifact that
+  // was very much on main.
+  //
+  // If the commit is reachable from the remote default branch, that is its home
+  // and that is what gets stamped. Otherwise the working branch is still the
+  // honest answer, because the code genuinely is only there.
+  const localBranch = git('git rev-parse --abbrev-ref HEAD', 'unknown');
+  const containing = git('git branch -r --contains HEAD --format=%(refname:short)')
+    .split('\n')
+    .map((b) => b.trim())
+    .filter(Boolean);
+  const home = containing.find((b) => b === 'origin/main' || b === 'origin/master');
+  const branch = home ? home.replace(/^origin\//, '') : localBranch;
+
   const dirty = git('git status --porcelain').length > 0;
 
   // Compare against the remote this branch tracks; fall back to origin/main,

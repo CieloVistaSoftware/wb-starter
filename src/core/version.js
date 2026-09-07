@@ -5,11 +5,11 @@
  */
 export const VERSION = {
   "version": "4.0.2",
-  "commit": "bfd7f635",
-  "builtAt": "2026-09-07T00:51:59.029Z",
-  "branch": "spec/needs-test-coverage",
+  "commit": "b87cd166",
+  "builtAt": "2026-09-07T01:44:56.732Z",
+  "branch": "main",
   "dirty": true,
-  "ahead": 16,
+  "ahead": 0,
   "behind": 0,
   "upstream": "origin/main"
 };
