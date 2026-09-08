@@ -112,3 +112,84 @@ test.describe('#1044: CI and the local gate apply the same standard', () => {
     ).toBe(0);
   });
 });
+
+/**
+ * #341 — a gate CI cannot finish is a gate CI has not run.
+ *
+ * #1044 (above) pointed CI at the ratchet but left `timeout-minutes: 30`
+ * untouched, and the ratchet is a ~7,500-test run at 4 workers. It does not
+ * fit. The two runs that were allowed to end on their own terms rather than
+ * being cancelled by the next push both died the same way:
+ *
+ *   34071440575  "The job has exceeded the maximum execution time of 30m0s"
+ *   34074191440  same — gate step 01:51:06 → killed 02:20:40 = 29m34s,
+ *                at test 7020 of 7504. 93.5% through, verdict never printed.
+ *
+ * So every CI failure since #1044 has been the clock, not a test, and "CI is
+ * red" said nothing about the code. That is the same defect #1044 fixed one
+ * layer up — a gate that reports without measuring — so it is guarded in the
+ * same file, structurally, for the same reason.
+ */
+test.describe('#341: CI budgets enough time to reach a verdict', () => {
+  /** `timeout-minutes: N` under the given step name, or the job when name is null. */
+  const stepOf = (name: string) => {
+    const steps = ci.split(/^ {6}- (?=name:|uses:)/m).slice(1);
+    return steps.find((s) => s.startsWith(`name: ${name}`)) ?? '';
+  };
+
+  test('the job budget clears the measured cost of the ratchet run', () => {
+    const m = /^\s{4}timeout-minutes:\s*(\d+)/m.exec(ci);
+    expect(m, `${CI} sets no job-level timeout-minutes.`).not.toBeNull();
+    const budget = Number(m![1]);
+    expect(
+      budget,
+      `${CI} allows the job ${budget} minutes. The ratchet alone was measured at 29m34s for\n` +
+      '93.5% of its tests (run 34074191440), so the full gate is ~32min before install and\n' +
+      'the integration/base report are counted. A budget under 45 kills the run before it\n' +
+      'can print a verdict, and CI goes red on the clock rather than on the code.',
+    ).toBeGreaterThanOrEqual(45);
+  });
+
+  test('the gate step has its own budget, so an overrun names itself', () => {
+    const gate = stepOf('Gate —');
+    expect(gate, `${CI} has no step whose name starts "Gate —".`).not.toBe('');
+    const m = /timeout-minutes:\s*(\d+)/.exec(gate);
+    expect(
+      m,
+      'The gate step has no timeout-minutes of its own. When the JOB timed out, the log said\n' +
+      'only "The operation was canceled." — indistinguishable from a cancel by the next push,\n' +
+      'which is why this went unnoticed for days. A step budget says which step ran out.',
+    ).not.toBeNull();
+
+    const job = Number(/^\s{4}timeout-minutes:\s*(\d+)/m.exec(ci)![1]);
+    expect(
+      Number(m![1]),
+      'The gate step budget must be strictly under the job budget, or the job dies first and\n' +
+      'the step timeout never fires — leaving the upload steps no room to save the evidence.',
+    ).toBeLessThan(job);
+  });
+
+  test('the non-enforcing report step cannot extend an already-cancelled job', () => {
+    const report = stepOf('Report —');
+    expect(report, `${CI} has no step whose name starts "Report —".`).not.toBe('');
+    expect(
+      /if:\s*always\(\)/.test(report),
+      'The integration/base report step runs `if: always()`, which fires on CANCELLED too.\n' +
+      'On run 34074191440 it therefore started after the job had already timed out and ran a\n' +
+      'further 4m45s (02:20:40 → 02:25:25) before the runner force-killed it. A step that\n' +
+      'enforces nothing must not extend a job that is already over: use success() || failure().',
+    ).toBe(false);
+  });
+
+  test('the uploaded evidence is a path this repo actually writes', () => {
+    const upload = stepOf('Upload test report');
+    expect(upload, `${CI} has no "Upload test report" step.`).not.toBe('');
+    expect(
+      /path:\s*playwright-report\//.test(upload),
+      `${CI} uploads playwright-report/, which nothing writes — playwright.config.ts registers\n` +
+      "scripts/tools/test-reporter.ts and `list`, no `html` reporter. upload-artifact only WARNS\n" +
+      'on an empty path, so a red run has been leaving no evidence behind at all. Upload the\n' +
+      "reporter's own data/test-results/ instead.",
+    ).toBe(false);
+  });
+});

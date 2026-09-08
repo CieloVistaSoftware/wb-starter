@@ -17,7 +17,26 @@ jobs:
   test:
     name: Playwright Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # #341 — the budget has to be bigger than the thing it is timing.
+    #
+    # #1044 made CI run the same ratchet the pre-commit hook runs. It did not
+    # change this number, and the ratchet is a 7,500-test run at 4 workers. It
+    # does not fit in 30 minutes, so CI has not failed on a test since — it has
+    # failed on the clock, and the clock kills it BEFORE the ratchet prints a
+    # verdict. Two runs prove it, the only two allowed to end naturally rather
+    # than being cancelled by the next push:
+    #
+    #   34071440575  "The job has exceeded the maximum execution time of 30m0s"
+    #   34074191440  same, and the log shows exactly where it died:
+    #                gate step 01:51:06 → killed 02:20:40 = 29m34s,
+    #                at test 7020 of 7504 — 93.5% done, no verdict printed.
+    #
+    # So "CI is red" currently carries no information at all. Nobody has ever
+    # seen this gate's answer. Budget: install ~1min + gate ~32min (extrapolated
+    # from 7020 tests in 29m34s) + the integration/base report ~5min ≈ 38min.
+    # 60 leaves headroom for a slow runner without letting a genuine hang run
+    # all afternoon.
+    timeout-minutes: 60
     env:
       CI: 'true'
       DISABLE_WATCH: 'true'
@@ -76,7 +95,15 @@ jobs:
       # detection." A regression pushed today arrives as failure 531 of 531 and
       # is invisible. The register only ever shrinks, so this does not entrench
       # the debt — it makes NEW debt visible, which is currently impossible.
+      #
+      # #341: a per-step budget, so an overrun names itself. When the JOB timed
+      # out, the log said only "The operation was canceled." on a step that was
+      # 93.5% through a passing run — indistinguishable from a cancel by the
+      # next push, which is why this went unnoticed for days. A step timeout
+      # says which step ran out of time, and leaves the report + artifact steps
+      # enough of the job budget to still upload the evidence.
       - name: Gate — no NEW failures vs the register (compliance, regression, behaviors)
+        timeout-minutes: 45
         run: node .husky/test-ratchet.mjs
         continue-on-error: false
 
@@ -85,19 +112,36 @@ jobs:
       # steps above were skipped on every run. Reported, not enforced, until
       # they have a register of their own: enforcing an unmeasured project would
       # just recreate the permanent red this change is removing.
+      #
+      # #341: `if: always()` also fires on CANCELLED, so when the job timed out
+      # this reporting step started anyway and ran a further 4m45s past the
+      # deadline (34074191440: 02:20:40 → 02:25:25) before the runner force-
+      # killed it. A step that enforces nothing must never extend a job that is
+      # already over. success() || failure() runs it on a normal red or green
+      # and skips it on a cancel or timeout.
       - name: Report — integration and base (not yet ratcheted, see #1044)
-        if: always()
+        if: success() || failure()
+        timeout-minutes: 12
         continue-on-error: true
         run: |
           npx playwright test --project=integration --reporter=github || true
           npx playwright test --project=base --reporter=github || true
 
+      # #341: this used to upload `playwright-report/`, which this repo does not
+      # produce — playwright.config.ts's reporters are the project's own
+      # test-reporter.ts plus `list`, no `html`. So the one step whose job was
+      # to preserve the evidence from a red run has been uploading an empty
+      # artifact (upload-artifact only WARNS on no files, it does not fail), and
+      # a failed run left nothing behind to read. The reporter writes
+      # data/test-results/ — failures.json and the per-project JSON that
+      # issue-state.mjs already treats as the record. Upload what actually
+      # exists.
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ github.run_number }}
-          path: playwright-report/
+          name: test-results-${{ github.run_number }}
+          path: data/test-results/
           retention-days: 14
 
       - name: Upload trace on failure
