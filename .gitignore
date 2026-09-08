@@ -78,3 +78,13 @@ data/fixes-cache.json
 
 # Per-run output of .husky/gate-staged-tree.mjs (#1065) - diagnostics, not source
 data/gate-evidence/
+
+# #1071: per-run machine output. These were TRACKED and rewritten by every test
+# run and every commit, so the working tree could never be clean -- which made
+# the version badge's "*" (uncommitted changes) permanent and meaningless, and
+# buried real work among regenerated noise. Note data/test-results/ (the
+# directory) was already ignored while data/test-results.json (the file) was
+# not; that inconsistency was the bug in miniature.
+data/test-results.json
+data/test-status.json
+data/bg-health.json
