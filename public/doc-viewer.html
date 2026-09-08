@@ -215,17 +215,49 @@
     // (.md links are left for the click interceptor's ?file= handling.)
     function rebaseDocResources() {
       const docBaseDir = new URL('.', new URL(file, SITE_ROOT));
+
+      // #1053/#1047: a ROOT-ABSOLUTE path resolves against the ORIGIN, not the
+      // deploy base -- `/images/x.svg` becomes github.io/images/x.svg and 404s,
+      // because this site is served under /wb-starter/. Resolving it against
+      // docBaseDir does not help: `new URL('/a', base)` discards the base's path
+      // entirely, by spec. So a leading slash has to be resolved against
+      // SITE_ROOT explicitly, with the slash stripped first for the same reason.
+      //
+      // Protocol-relative (`//host/x`) is a real URL to another host and is left
+      // alone -- it is caught by the scheme test above for a[href] and by the
+      // check here for media.
+      // Already rooted: applying the base twice yields /wb-starter/wb-starter/…,
+      // which is broken in a way that looks exactly like the fix having run.
+      // The pre-render text pass above roots these before mdhtml ever sees
+      // them, so by the time this runs most of them ARE already correct — this
+      // stays as the safety net for markup that arrived by another route.
+      // (behaviors.html's rootRelativeAssets carries the identical guard, for
+      // the identical reason; it did not get carried here first time.)
+      const rooted = SITE_ROOT.pathname;
+      const base = (value) => {
+        if (rooted !== '/' && value.startsWith(rooted)) return new URL(value, window.location.origin);
+        return value.startsWith('/') && !value.startsWith('//')
+          ? new URL(value.slice(1), SITE_ROOT)
+          : new URL(value, docBaseDir);
+      };
+
       const content = document.getElementById('content');
       content.querySelectorAll('a[href]').forEach((a) => {
         const href = a.getAttribute('href');
         if (!href || href.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(href)) return; // anchors / scheme (http:, mailto:)
         if (/\.md(#.*)?$/i.test(href)) return; // .md → handled by the click interceptor
-        a.href = new URL(href, docBaseDir).href;
+        a.href = base(href).href;
       });
-      content.querySelectorAll('img[src], source[src], video[src], audio[src]').forEach((el) => {
-        const src = el.getAttribute('src');
-        if (!src || src.startsWith('data:') || /^[a-z][a-z0-9+.-]*:/i.test(src)) return;
-        el.src = new URL(src, docBaseDir).href;
+      // `poster` is here because a <video poster="…"> is a request like any
+      // other; it was absent, so a doc's video thumbnail 404'd while its src
+      // resolved. Attribute lists go stale -- see #1047, where `cover` was the
+      // name nobody remembered.
+      content.querySelectorAll('img[src], source[src], video[src], audio[src], video[poster]').forEach((el) => {
+        for (const attr of ['src', 'poster']) {
+          const value = el.getAttribute(attr);
+          if (!value || value.startsWith('data:') || value.startsWith('//') || /^[a-z][a-z0-9+.-]*:/i.test(value)) continue;
+          el.setAttribute(attr, base(value).href);
+        }
       });
     }
 
@@ -514,7 +546,44 @@
       content.dataset.src = fileUrl;
       // Disable sanitization to allow embedded HTML/Scripts in documentation
       content.dataset.sanitize = "false";
-      
+
+      // #1053: rebaseDocResources() runs AFTER mdhtml has put the markup in the
+      // DOM, and an <img src="/images/x.svg"> is requested the instant it is
+      // inserted. Rewriting the attribute afterwards fixes what the element
+      // says, not what the browser already asked for -- the origin-root 404
+      // fires every time, before any correction can land.
+      //
+      // So the text is corrected BEFORE it is rendered, and mdhtml reads it
+      // from textContent rather than fetching the URL itself. Fenced code is
+      // left exactly as authored: it is displayed for a reader to copy into
+      // their own project, where "/images/..." is the correct thing to copy.
+      try {
+        const resp = await fetch(fileUrl);
+        // A 404 body is an ERROR PAGE, not a document. Taking `.text()` without
+        // checking `ok` fed that HTML to mdhtml as though it were the doc, and
+        // because dataset.src had already been removed, mdhtml never made its
+        // own request and never produced "Failed to load <file>". The viewer
+        // rendered a 404 page as content instead of reporting a missing file —
+        // caught by behaviors/doc-viewer.spec.ts, which exists for exactly that.
+        if (!resp.ok) throw new Error(`${resp.status} for ${fileUrl}`);
+        const raw = await resp.text();
+        let inFence = false;
+        const rebased = raw.split('\n').map((line) => {
+          if (/^[ \t]*```/.test(line)) { inFence = !inFence; return line; }
+          if (inFence) return line;
+          return line.replace(
+            /(\s(?:src|poster|href|image|avatar|cover|background|thumbnail|logo)\s*=\s*")\/(?!\/)/gi,
+            (_m, attr) => attr + SITE_ROOT.pathname,
+          );
+        }).join('\n');
+        delete content.dataset.src;
+        content.textContent = rebased;
+      } catch {
+        // Leave dataset.src in place: mdhtml fetching it itself is the previous
+        // behaviour, and a viewer that renders with one stale request beats a
+        // viewer that renders nothing.
+      }
+
       // Initialize mdhtml
       mdhtml(content, { size: 'md' })
         .then(async () => {

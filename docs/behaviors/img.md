@@ -9,7 +9,7 @@ Behavior applied with x-img.
 ### How to write it
 
 ```html
-<img src="/images/placeholder.svg" alt="Prime lens on a wooden desk">
+<img src="images/placeholder.svg" alt="Prime lens on a wooden desk">
 ```
 
 ## Attributes

@@ -228,8 +228,19 @@
 
   <script>
     async function loadErrors() {
+      // #1000: this was fetch('/data/errors.json'), a ROOT-absolute path. This
+      // page is served under /wb-starter/ on GitHub Pages, so that resolved to
+      // the ORG root and 404'd — measured live:
+      //
+      //   404  https://cielovistasoftware.github.io/data/errors.json
+      //   (wanted https://cielovistasoftware.github.io/wb-starter/data/errors.json)
+      //
+      // Resolve against THIS page instead. The viewer lives at public/, and
+      // data/ is its sibling, so one level up is the site root wherever the
+      // site happens to be mounted.
+      const logUrl = new URL('../data/errors.json?t=' + Date.now(), location.href);
       try {
-        const response = await fetch('/data/errors.json?t=' + Date.now());
+        const response = await fetch(logUrl);
 
         // data/errors.json is gitignored -- it only exists once something has
         // actually been logged. A missing file therefore means "nothing has
@@ -237,8 +248,27 @@
         // as an error made this page throw and console.error on every clean
         // checkout, so the error viewer became a source of errors and failed
         // the JS-errors compliance check in CI, where the file never exists.
+        //
+        // But a 404 cannot tell "nothing has been logged" apart from "we asked
+        // the wrong place" — and while the URL above was wrong, this page
+        // cheerfully reported "No errors found. Great job! 🎉" on a deployed
+        // site that had errors. A false all-clear is worse than an error
+        // message. So the empty state now says where it looked.
         if (response.status === 404) {
+          // #1000: where there is no server route, error-logger.js keeps the log
+          // in localStorage under the SAME shape. Nothing here ever read it, so
+          // on the deployed site — the only place that fallback is ever used —
+          // errors were being recorded faithfully into a store the viewer did
+          // not open, and the page reported "No errors found. Great job!".
+          // The two halves were built to meet and never did.
+          const local = readLocalLog();
+          if (local.errors.length) {
+            renderErrors(local);
+            noteLocalSource(local.errors.length);
+            return;
+          }
           renderErrors({ errors: [] });
+          noteWhereItLooked(logUrl);
           return;
         }
         if (!response.ok) throw new Error(`Failed to load errors (HTTP ${response.status})`);
@@ -254,6 +284,44 @@
           </div>
         `;
       }
+    }
+
+    /** The browser-side log error-logger.js keeps when there is no API. */
+    function readLocalLog() {
+      try {
+        const raw = JSON.parse(localStorage.getItem('wb:error-log') || '{"errors":[]}');
+        return { errors: Array.isArray(raw.errors) ? raw.errors : [] };
+      } catch {
+        return { errors: [] };   // private mode, quota, storage disabled
+      }
+    }
+
+    /** Say so when what is on screen came from this browser, not the server. */
+    function noteLocalSource(n) {
+      const container = document.getElementById('error-container');
+      if (!container) return;
+      const note = document.createElement('p');
+      note.id = 'error-log-local-source';
+      note.className = 'empty-state';
+      note.textContent =
+        `${n} error(s) from this browser's local log — there is no server log at this address, ` +
+        'so these were recorded here and are visible only in this browser.';
+      container.insertBefore(note, container.firstChild);
+    }
+
+    /**
+     * Say which URL produced the empty state. An empty log and a wrong path
+     * look identical otherwise, and this page spent the whole of #1000
+     * reporting the second as the first.
+     */
+    function noteWhereItLooked(url) {
+      const empty = document.querySelector('#error-container .empty-state');
+      if (!empty) return;
+      const note = document.createElement('small');
+      note.id = 'error-log-source';
+      note.textContent = `No log file at ${url.pathname} — nothing has been logged, or it is not published here.`;
+      empty.appendChild(document.createElement('br'));
+      empty.appendChild(note);
     }
 
     function renderErrors(data) {

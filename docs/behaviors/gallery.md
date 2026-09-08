@@ -10,10 +10,10 @@ Behavior applied with x-gallery.
 
 ```html
 <div x-gallery columns="4">
-        <img src="/images/placeholder.svg" alt="Gallery 1">
-        <img src="/images/placeholder.svg" alt="Gallery 2">
-        <img src="/images/placeholder.svg" alt="Gallery 3">
-        <img src="/images/placeholder.svg" alt="Gallery 4">
+        <img src="images/placeholder.svg" alt="Gallery 1">
+        <img src="images/placeholder.svg" alt="Gallery 2">
+        <img src="images/placeholder.svg" alt="Gallery 3">
+        <img src="images/placeholder.svg" alt="Gallery 4">
       </div>
 ```
 

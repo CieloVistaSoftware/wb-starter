@@ -148,9 +148,41 @@ export function registerSchema(schema, filename) {
 // concurrent caller awaits the SAME fetch instead of starting their own.
 const inFlightSchemaFetches = new Map();
 
+// #1048: the in-flight map only dedupes CONCURRENT callers — it is cleared in
+// `finally`, so a later scan re-fetches a name that already 404'd, and 13
+// CSS-only/JS-only behaviours (center, container, cover, frame, grid, icon,
+// modal, radio, range, reel, sidebarlayout, stat, switcher) produced 13 failed
+// requests and 13 console warnings on every page load, again on every rescan.
+//
+// WHY HERE AND NOT IN THE CALLER. wb-lazy.js already keeps its own
+// `schemaLoadFailed` set (search ensureSchemaRegistered), so pages driven by
+// that engine never repeat — which is why the repeat is invisible on, say,
+// demos/layout-test.html. wb.js's caller (processSchema, ~line 740) has no
+// equivalent: it checks getSchema() and calls straight through. So the guarantee
+// depended on which engine loaded the page, and public/doc-viewer.html is on the
+// unguarded one.
+//
+// One guard at the resolver covers both callers. Two caches for one fact is the
+// shape that produced #1056, where a behaviour registry lived in two places and
+// the two disagreed.
+//
+// A behaviour having no schema is a NORMAL state, not a failure: those files do
+// not exist and are not meant to. So the absence is remembered for the page's
+// lifetime and reported once, at debug level. Whether a behaviour that SHOULD
+// have a schema is missing one is a different question, and the place to answer
+// it is a gate over the source tree, not 13 warnings per load in every user's
+// console — noise there is what makes a real error invisible.
+//
+// Only a 404 is cached. A thrown fetch is a transient network condition, and
+// caching that would turn one dropped request into a permanently missing schema
+// for the rest of the session.
+const knownAbsentSchemas = new Set();
+
 export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
   // Accept both bare filenames (cardhero.schema.json) and schema names (cardhero)
   const filename = filePath.endsWith('.schema.json') ? filePath : `${filePath}.schema.json`;
+
+  if (knownAbsentSchemas.has(filename)) return false;
 
   const existing = inFlightSchemaFetches.get(filename);
   if (existing) return existing;
@@ -159,7 +191,14 @@ export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
     try {
       const resp = await fetch(`${basePath}/${filename}`);
       if (!resp.ok) {
-        console.warn(`[Schema Builder] loadSchemaFile: ${filename} not found (status ${resp.status})`);
+        if (resp.status === 404) {
+          knownAbsentSchemas.add(filename);
+          dlog(`[Schema Builder] ${filename} does not exist — this behavior has no schema. Not asking again.`);
+          return false;
+        }
+        // 500, 403 and friends are a server saying something is wrong, which is
+        // worth hearing about and is not evidence the file is absent.
+        console.warn(`[Schema Builder] loadSchemaFile: ${filename} returned status ${resp.status}`);
         return false;
       }
       const schema = await resp.json();

@@ -12,7 +12,7 @@ Native HTML5 details disclosure widget with optional animation
 <!-- Plain semantic HTML. The behavior is injected automatically -->
 <!-- because the element itself implies it. No attribute needed. -->
 <details summary="Details sample of Trail conditions" animated>
-  <img src="/images/placeholder.svg" alt="Trail through autumn woodland" width="480" height="200">
+  <img src="images/placeholder.svg" alt="Trail through autumn woodland" width="480" height="200">
   <p>Open to show the summary text is authored via the <code>summary</code>
      attribute — it reads "Details" only when none is set.</p>
 </details>

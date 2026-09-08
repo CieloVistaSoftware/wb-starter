@@ -1,118 +1,100 @@
-import { test, expect } from '@playwright/test';
+/**
+ * FIX VIEWER GROUPING — against the table, on a pinned data path
+ * ==============================================================
+ * #1061. These four tests waited on `.fix-card`, which the page no longer
+ * renders; both render paths build `<table class="fix-table">`. Grouping itself
+ * is intact — `groupFixes()` still wraps each group in `.fix-group` with a
+ * `.group-header` — so the assertions survive; only what is counted inside a
+ * group changed from a card to a row.
+ *
+ * Grouping is a feature of the FALLBACK path (it reads `data/fixes.json`'s
+ * shape: behavior, status, date). The page prefers `/api/fixes` and falls back
+ * only when that returns no rows, so `/api/fixes` is pinned EMPTY here. Without
+ * that pin these tests took whichever path the repository's commit history
+ * happened to produce — the reason the same code gave 14/28 one morning and
+ * 0/28 hours later, which was misread as parallel-worker contention and
+ * "fixed" twice by raising timeouts.
+ */
+
+import { test, expect, type Locator } from '@playwright/test';
+
+const FIXES = {
+  metadata: { version: '1.0.0' },
+  fixes: {
+    FIX_1: {
+      errorId: 'FIX_1', behavior: 'comp-a', status: 'APPLIED', testRun: true,
+      date: '2025-01-01T12:00:00Z', issue: 'Issue 1', fix: { file: 'f1.js', action: 'a1' },
+    },
+    FIX_2: {
+      errorId: 'FIX_2', behavior: 'comp-a', status: 'INCOMPLETE', testRun: true,
+      date: '2025-01-01T12:00:00Z', issue: 'Issue 2', fix: { file: 'f2.js', action: 'a2' },
+    },
+    FIX_3: {
+      errorId: 'FIX_3', behavior: 'comp-b', status: 'APPLIED', testRun: true,
+      date: '2025-01-02T12:00:00Z', issue: 'Issue 3', fix: { file: 'f3.js', action: 'a3' },
+    },
+  },
+};
+
+/** Rows inside one group — a group's members, whatever the row markup is. */
+const rowsIn = (group: Locator): Locator => group.locator('table.fix-table tbody tr');
 
 test.describe('Fix Viewer Grouping', () => {
   test.beforeEach(async ({ page }) => {
-    // Mock the fixes data to have predictable data for grouping
-    // NOTE: testRun must be set to preserve status (otherwise all become "TEST MISSING")
-    await page.route('/data/fixes.json', async route => {
-      const json = {
-        metadata: { version: "1.0.0" },
-        fixes: {
-          "FIX_1": {
-            errorId: "FIX_1",
-            behavior: "comp-a",
-            status: "APPLIED",
-            testRun: true,
-            date: "2025-01-01T12:00:00Z",
-            issue: "Issue 1",
-            fix: { file: "f1.js", action: "a1" }
-          },
-          "FIX_2": {
-            errorId: "FIX_2",
-            behavior: "comp-a",
-            status: "INCOMPLETE",
-            testRun: true,
-            date: "2025-01-01T12:00:00Z",
-            issue: "Issue 2",
-            fix: { file: "f2.js", action: "a2" }
-          },
-          "FIX_3": {
-            errorId: "FIX_3",
-            behavior: "comp-b",
-            status: "APPLIED",
-            testRun: true,
-            date: "2025-01-02T12:00:00Z",
-            issue: "Issue 3",
-            fix: { file: "f3.js", action: "a3" }
-          }
-        }
-      };
-      await route.fulfill({ json });
-    });
+    // Empty traced result -> the fallback path, deterministically.
+    await page.route('**/api/fixes', (route) => route.fulfill({ json: { counts: {}, rows: [] } }));
+    await page.route('**/data/fixes.json*', (route) => route.fulfill({ json: FIXES }));
 
     await page.goto('/public/fix-viewer.html');
-    // #541: explicit 30000ms to match fix-viewer.spec.ts's beforeEach — this
-    // page's client-side render work (WB.init autoInject scan, x-fix-card
-    // custom-element upgrade, mdhtml processing) measured 4-13s even under
-    // light contention locally, and the full 79-file compliance project's 8
-    // parallel workers pushed that past the previous (implicit, un-timed)
-    // wait on CI. See fix-viewer.spec.ts's beforeEach comment for the full
-    // rationale.
-    await page.waitForSelector('.fix-card', { timeout: 30000 });
+    await page.waitForSelector('table.fix-table tbody tr', { timeout: 30_000 });
   });
 
-  test('should default to no grouping', async ({ page }) => {
-    // Check that there are no group headers
+  test('defaults to no grouping', async ({ page }) => {
     await expect(page.locator('.group-header')).toHaveCount(0);
-    // Check that all cards are present in the main grid
-    await expect(page.locator('.fix-card')).toHaveCount(3);
+    await expect(page.locator('table.fix-table tbody tr')).toHaveCount(3);
   });
 
-  test('should group by component', async ({ page }) => {
-    // Select 'Component' from the group dropdown
+  test('groups by behavior', async ({ page }) => {
     await page.selectOption('#group-by', 'behavior');
+    await page.waitForSelector('.group-header', { timeout: 10_000 });
 
-    // Check for group headers
     const headers = page.locator('.group-header');
     await expect(headers).toHaveCount(2);
     await expect(headers.nth(0)).toContainText('comp-a');
     await expect(headers.nth(1)).toContainText('comp-b');
 
-    // Check cards in first group (comp-a)
     const groupA = page.locator('.fix-group').filter({ hasText: 'comp-a' });
-    await expect(groupA.locator('.fix-card')).toHaveCount(2);
-    await expect(groupA.locator('.fix-card', { hasText: 'FIX_1' })).toBeVisible();
-    await expect(groupA.locator('.fix-card', { hasText: 'FIX_2' })).toBeVisible();
+    await expect(rowsIn(groupA)).toHaveCount(2);
+    await expect(groupA.locator('tbody tr', { hasText: 'FIX_1' })).toHaveCount(1);
+    await expect(groupA.locator('tbody tr', { hasText: 'FIX_2' })).toHaveCount(1);
 
-    // Check cards in second group (comp-b)
     const groupB = page.locator('.fix-group').filter({ hasText: 'comp-b' });
-    await expect(groupB.locator('.fix-card')).toHaveCount(1);
-    await expect(groupB.locator('.fix-card', { hasText: 'FIX_3' })).toBeVisible();
+    await expect(rowsIn(groupB)).toHaveCount(1);
+    await expect(groupB.locator('tbody tr', { hasText: 'FIX_3' })).toHaveCount(1);
   });
 
-  test('should group by status', async ({ page }) => {
-    // Select 'Status' from the group dropdown
+  test('groups by status', async ({ page }) => {
     await page.selectOption('#group-by', 'status');
+    await page.waitForSelector('.group-header', { timeout: 10_000 });
 
-    // Check for group headers
-    const headers = page.locator('.group-header');
-    await expect(headers).toHaveCount(2);
-    
-    // Note: Order depends on implementation, but we expect APPLIED and INCOMPLETE
-    const groupApplied = page.locator('.fix-group').filter({ hasText: 'APPLIED' });
-    await expect(groupApplied.locator('.fix-card')).toHaveCount(2); // FIX_1 and FIX_3
-    
-    const groupIncomplete = page.locator('.fix-group').filter({ hasText: 'INCOMPLETE' });
-    await expect(groupIncomplete.locator('.fix-card')).toHaveCount(1); // FIX_2
+    await expect(page.locator('.group-header')).toHaveCount(2);
+    await expect(rowsIn(page.locator('.fix-group').filter({ hasText: 'APPLIED' }))).toHaveCount(2);
+    await expect(rowsIn(page.locator('.fix-group').filter({ hasText: 'INCOMPLETE' }))).toHaveCount(1);
   });
 
-  test('should group by date', async ({ page }) => {
-    // Select 'Date' from the group dropdown
+  test('groups by date', async ({ page }) => {
     await page.selectOption('#group-by', 'date');
+    await page.waitForSelector('.group-header', { timeout: 10_000 });
 
-    // Check for group headers
-    const headers = page.locator('.group-header');
-    await expect(headers).toHaveCount(2);
+    await expect(page.locator('.group-header')).toHaveCount(2);
 
-    // Dates are localized in the viewer, so we match loosely or by the expected string
-    // 2025-01-01
-    const date1 = new Date("2025-01-01T12:00:00Z").toLocaleDateString();
-    const group1 = page.locator('.fix-group').filter({ hasText: date1 });
-    await expect(group1.locator('.fix-card')).toHaveCount(2); // FIX_1 and FIX_2
+    // The viewer localises the date, so the expected string is derived the same
+    // way rather than hard-coded — a hard-coded "1/1/2025" is a test that fails
+    // in another locale for no reason.
+    const day1 = new Date('2025-01-01T12:00:00Z').toLocaleDateString();
+    const day2 = new Date('2025-01-02T12:00:00Z').toLocaleDateString();
 
-    // 2025-01-02
-    const date2 = new Date("2025-01-02T12:00:00Z").toLocaleDateString();
-    const group2 = page.locator('.fix-group').filter({ hasText: date2 });
-    await expect(group2.locator('.fix-card')).toHaveCount(1); // FIX_3
+    await expect(rowsIn(page.locator('.fix-group').filter({ hasText: day1 }))).toHaveCount(2);
+    await expect(rowsIn(page.locator('.fix-group').filter({ hasText: day2 }))).toHaveCount(1);
   });
 });

@@ -307,13 +307,21 @@ let schemaIndexPending = null;
 function loadSchemaIndex() {
   if (schemaIndex || schemaIndexPending) return schemaIndexPending;
   if (typeof fetch !== 'function') return null;
-  // schemaPath points at src/wb-models; the index sits at the site root in
-  // data/. Resolving relative to the DOCUMENT is what works under both the
-  // site root and /wb-starter/ on Pages, and cannot throw the way an
-  // unvalidated base can.
+  // schemaPath points at src/wb-models; the index sits at the SITE ROOT in
+  // data/. Resolving against document.baseURI is only correct for a document
+  // that IS at the site root: from public/doc-viewer.html it produced
+  // /wb-starter/public/data/schema-index.json — a 404 — and the same for every
+  // page under pages/, demos/ and articles/. The fetch fails silently by
+  // design ("a missing modifier class is a cosmetic delay"), so declared
+  // attributes have quietly never applied on any subdirectory page (#1053).
+  //
+  // So walk up out of the known content directories first, which is the same
+  // rule pages/behaviors.html's siteRoot() already uses. Still relative to the
+  // document, so it stays correct at "/" and under "/wb-starter/" alike.
   let url;
   try {
-    url = new URL('data/schema-index.json', document.baseURI).href;
+    const root = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
+    url = new URL('data/schema-index.json', new URL(root, location.href)).href;
   } catch {
     schemaIndex = {};
     return null;

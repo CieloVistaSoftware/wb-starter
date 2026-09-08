@@ -105,6 +105,70 @@
 })();
 </script>
 
+<section id="whats-new-unreleased">
+  <h2>Unreleased — on <code>main</code>, not yet in a tagged release</h2>
+  <p><strong>Things that were broken only where anyone could see them.</strong> John opened the deployed
+  behaviours page and its error log showed images failing to load. Everything about them was correct on
+  localhost. Chasing that turned up a second family of defects: checks that had been quietly matching nothing
+  for months.</p>
+  <ul>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Every example image 404&rsquo;d on the
+    published site.</strong> GitHub Pages serves this project under <code>/wb-starter/</code>; <code>npm start</code>
+    serves it at <code>/</code>. Examples written as <code>src=&quot;/images/&hellip;&quot;</code> are therefore right locally
+    and wrong in the only place visitors look. Example assets are now re-rooted through the site root before they
+    render. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1047" target="_blank" rel="noopener">#1047</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The first version of that fix missed every
+    portfolio card.</strong> It re-rooted a fixed list of attribute names &mdash; <code>src</code>,
+    <code>image</code>, <code>avatar</code> &mdash; and <code>cover</code> was not on it, so
+    <code>x-cardportfolio</code> kept 404ing while the fix looked complete. A list of names is only as good as
+    whoever last remembered to extend it, so the value now gets a vote: an attribute whose value ends in a media
+    extension is an asset, whatever it is called.</li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Four checks were matching nothing at
+    all.</strong> A <code>\b</code> word boundary written through a tool that eats escapes becomes a literal
+    backspace character, which no real source contains &mdash; so the check silently passes forever. The guard
+    that exists to catch exactly this scanned <code>src</code>, <code>scripts</code> and <code>tests</code> for
+    code extensions only, and so could not see <code>pages/behaviors.html</code>: 2,500 lines of inline
+    JavaScript, the largest body of source in the project. One of the dead checks was the warning that tells
+    readers of the static site which examples need the local dev server &mdash; present, styled, and unable to
+    fire. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1049" target="_blank" rel="noopener">#1049</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The version badge had no styling at
+    all.</strong> <code>release.css</code> existed, was correct, and was loaded by nothing. When site.css stopped
+    importing every behaviour stylesheet and switched to loading them on demand, each one had to be named in a
+    manifest &mdash; and this one never was, so its three classes had no rules behind them on every page. A
+    stylesheet that never loads raises no error and the element still renders its text, which is why nobody
+    caught it. A new check fails if any behaviour stylesheet is reachable from nothing.
+    <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1008" target="_blank" rel="noopener">#1008</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Unshipped work was reported as
+    delivered.</strong> The tool that says how far a fix has travelled counted a commit on <em>any</em> remote
+    branch as &ldquo;pushed&rdquo;, so work sitting on a feature branch &mdash; where most work starts &mdash;
+    read as shipped. Travel is now measured by reachability from the branch the site actually ships from; a
+    commit that is only on a working branch stays &ldquo;committed&rdquo;, which is what it is.
+    <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1043" target="_blank" rel="noopener">#1043</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The deployed error viewer reported
+    &ldquo;No errors found. Great job!&rdquo; while it was reading the wrong address.</strong> It fetched the log
+    from the organisation root rather than from this site, got a 404, and treated that as &ldquo;nothing has gone
+    wrong&rdquo; &mdash; a false all-clear on a site that had errors, which is worse than an error message. It
+    now reads the log relative to itself, and when there genuinely is no log it says which address it checked,
+    so a wrong path can never again look like good news.
+    <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1000" target="_blank" rel="noopener">#1000</a></li>
+
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Sorting a date column sorted it by month
+    name.</strong> Table sorting understood dates written the way data stores them
+    (<code>2026-09-03</code>) but not the way pages print them (<code>Sep 5, 2026</code>), so a rendered date fell
+    through to plain text sorting: April before March, January after February. On the issues list that put
+    &ldquo;Apr 1, 2025&rdquo; ahead of &ldquo;Mar 1, 2020&rdquo; &mdash; five years out. Enough pairs came out
+    right by accident that the column looked fine at a glance. Rendered dates are now compared as dates, and a
+    column of ordinary text is still sorted as text.
+    <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1011" target="_blank" rel="noopener">#1011</a></li>
+
+  </ul>
+</section>
+
 <section id="whats-new-4-0-2">
   <h2>4.0.2 — 2026-09-06</h2>
   <p><strong>The queue could not report progress, so it looked like there was none.</strong> Four defects had
@@ -380,7 +444,7 @@
   <h2><a href="https://github.com/CieloVistaSoftware/wb-starter/releases/tag/v3.0.84" target="_blank" rel="noopener" title="release v3.0.84">3.0.84</a> — 2026-08-21</h2>
   <p><strong>This is what is live at 3.0.84.</strong></p>
   <ul>
-    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Semantic listed <code>x-</code> tokens instead of element names.</strong> The check for "does this example use its semantic tag" built a word boundary as <code>''</code> inside a string — which is the backspace character, not a boundary — so it matched nothing and every row was relabelled to its <code>x-</code> token. Semantic now lists <code>article</code>, <code>button</code>, <code>dialog</code>, <code>progress</code>.</li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Semantic listed <code>x-</code> tokens instead of element names.</strong> The check for "does this example use its semantic tag" built a word boundary as <code>'\b'</code> inside a string — which is the backspace character, not a boundary — so it matched nothing and every row was relabelled to its <code>x-</code> token. Semantic now lists <code>article</code>, <code>button</code>, <code>dialog</code>, <code>progress</code>.</li>
   </ul>
 </section>
 

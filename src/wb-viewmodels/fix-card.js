@@ -243,15 +243,34 @@ export default function fixCard(element) {
 //
 // f624fcc9 (4.0.0 — components removed) deleted
 //   customElements.define('wb-fix-card', WBFixCard);
-// but public/fix-viewer.html still does createElement('x-fix-card') and assigns
-// card.data, so without this the page rendered 13 inert <x-fix-card></x-fix-card>
-// elements: connectedCallback never fired, .fix-card was never applied, and the
-// page's own .fix-card stylesheet had nothing to style.
+// and without this the Custom Elements API leaves every <x-fix-card> inert:
+// connectedCallback never fires, .fix-card is never applied, and the matching
+// stylesheet has nothing to style.
+//
+// #1061 — WHAT CHANGED, AND WHAT DID NOT.
+//
+// This comment used to justify itself with "public/fix-viewer.html still does
+// createElement('x-fix-card') and assigns card.data". It does not any more:
+// that page now renders a table on both of its render paths, because John
+// asked to track a fix back to its issue and forward to its release, which a
+// card grid could not show. `grep -c "x-fix-card" public/fix-viewer.html` is 0.
+//
+// That makes the page a former CONSUMER, not the reason this exists. The
+// behavior itself is fully registered and reachable by anyone writing
+// <div x-fix-card>: tag-map.js:212, wb-viewmodels/index.js:95,
+// behavior-css-manifest.js:87, wb-lazy.js:378's eager selector list,
+// schema-builder.js:973, and its own src/wb-models/fix-card.schema.json with
+// documented examples. Removing it would delete a working behavior from the
+// framework, which is a different and much larger decision than dropping the
+// dead code it superficially resembles.
+//
+// So the shim stays and the claim about fix-viewer.html is corrected. Whether
+// the framework should keep a fix-card behavior at all is a product question,
+// left on #1061 rather than answered by whoever happened to change the page.
 //
 // TIER1-LAWS §2 permits this shape: a registration shim the Custom Elements API
 // requires, holding no shared behavior logic. Converting fix-card to a behavior
-// is the right end state and is tracked in #660 / #789 — it needs fix-viewer.html
-// to stop passing data through a class setter first.
+// is the right end state and is tracked in #660 / #789.
 if (typeof customElements !== 'undefined' && !customElements.get('x-fix-card')) {
   customElements.define('x-fix-card', WBFixCard);
 }

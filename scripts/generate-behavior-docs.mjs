@@ -193,9 +193,27 @@ function autoInjects(tag, token) {
   return nativeMap[tag] === token.replace(/^x-/, '');
 }
 
+/**
+ * The catalogue writes asset paths ROOT-ABSOLUTE, which is right for it: the
+ * showcase page re-roots them at render, where the base is known (#1047).
+ * A doc has no such moment. Whatever is written here is what a reader copies,
+ * and `/images/...` resolves to the DOMAIN root — github.io/images/... — which
+ * 404s under the /wb-starter/ base and is a habit worth not teaching either.
+ *
+ * So the catalogue keeps one canonical value and each consumer emits the form
+ * that works for it, rather than every doc having to remember a rule.
+ * tests/compliance/no-absolute-paths-in-md.spec.ts is the gate.
+ */
+function docSafeAssets(sample) {
+  return sample.replace(
+    /(=["'])\/((?:images|assets|media|audio|video|styles|public|demos|pages|src)\/)/g,
+    (_m, attr, dir) => attr + dir,
+  );
+}
+
 function usage(token, schema) {
   const fromCatalogue = examples[token]?.source;
-  if (fromCatalogue) return fromCatalogue;
+  if (fromCatalogue) return docSafeAssets(fromCatalogue);
   const el = semanticTag(schema);
   if (el) {
     return autoInjects(el, token)

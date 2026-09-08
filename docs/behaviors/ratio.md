@@ -10,7 +10,7 @@ Behavior applied with x-ratio.
 
 ```html
 <div x-ratio ratio="16:9">
-  <img src="/images/placeholder.svg" alt="Coastline from the air">
+  <img src="images/placeholder.svg" alt="Coastline from the air">
 </div>
 ```
 

@@ -24,6 +24,8 @@ import { createToast } from '../feedback.js';
  * decided from the WHOLE value.
  */
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}(?:[T\s].*)?$/;
+/** A date as a PAGE renders it: "Sep 5, 2026", "5 Sep 2026", "9/5/2026". */
+const LOCALE_DATE = /^(?:[A-Za-z]{3,9}\.? \d{1,2}, ?\d{4}|\d{1,2} [A-Za-z]{3,9}\.? \d{4}|\d{1,2}\/\d{1,2}\/\d{4})$/;
 const DOTTED_VERSION = /^\d+(?:\.\d+){1,3}$/;
 const PURE_NUMBER = /^-?\d+(?:\.\d+)?$/;
 
@@ -36,6 +38,33 @@ function compareCells(a, b) {
 
   if (ISO_DATE.test(a) && ISO_DATE.test(b)) {
     return new Date(a).getTime() - new Date(b).getTime();
+  }
+
+  // #1011, second pass. Handling ISO dates fixed the format the DATA is in and
+  // missed the format the PAGE renders. `pages/issues.html:329` prints
+  // `toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'})`
+  // — "Sep 5, 2026" — straight into a <table sortable>, and a rendered date
+  // matches none of the rules above, so it fell through to localeCompare and
+  // sorted ALPHABETICALLY BY MONTH NAME. Measured against the real comparator:
+  //
+  //   compare("Apr 1, 2025", "Mar 1, 2020") = -1   (chronologically +1: wrong by 5 years)
+  //   compare("Jan 2, 2026", "Feb 1, 2026") = +1   (chronologically -1)
+  //
+  // Some pairs come out right by luck — "Sep 5, 2026" vs "Dec 1, 2025" happens
+  // to agree — which is why a spot check of the Updated column looks fine.
+  //
+  // The shape is matched strictly before Date.parse is trusted, because
+  // Date.parse is famously willing: it accepts "March 2020" and other prose, and
+  // a Title column must never be reordered as though it held dates.
+  //
+  // Slash form is ambiguous across locales ("9/5/2026"); V8 reads it US-style.
+  // That is a consistent ordering rather than a correct one, and still strictly
+  // better than sorting by first digit. Anything genuinely order-critical should
+  // be rendered ISO, which the branch above handles exactly.
+  if (LOCALE_DATE.test(a) && LOCALE_DATE.test(b)) {
+    const ta = Date.parse(a);
+    const tb = Date.parse(b);
+    if (!Number.isNaN(ta) && !Number.isNaN(tb)) return ta - tb;
   }
 
   if (DOTTED_VERSION.test(a) && DOTTED_VERSION.test(b)) {

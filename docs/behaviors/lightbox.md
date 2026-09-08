@@ -9,7 +9,7 @@ Behavior applied with x-lightbox.
 ### How to write it
 
 ```html
-<button variant="primary" x-lightbox src="/images/placeholder.svg">
+<button variant="primary" x-lightbox src="images/placeholder.svg">
   x-lightbox · variant: primary · src: /images/placeholder.svg
 </button>
 ```

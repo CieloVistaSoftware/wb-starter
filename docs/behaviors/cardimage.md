@@ -10,7 +10,7 @@ Card with featured image and optional title/subtitle
 
 ```html
 <article x-cardimage
-  src="/images/placeholder.svg"
+  src="images/placeholder.svg"
   alt="Fishing boats at the harbour wall"
   title="Harbour at first light"
   caption="Shot on the 6am walk-around."></article>

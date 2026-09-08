@@ -795,7 +795,7 @@ name         attribute with DIFFERENT meaning?
   trend-value="+12%">
 </div>
 <div x-cardimage
-  src="/images/placeholder.svg"
+  src="images/placeholder.svg"
   alt="Description"
   heading="Photo Title"
   loading="lazy">
@@ -812,7 +812,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <span x-badge variant="success">Active</div>
 <span x-avatar
-  src="/images/placeholder.svg"
+  src="images/placeholder.svg"
   alt="John Doe"
   size="lg"
   status="online">
@@ -872,7 +872,7 @@ name         attribute with DIFFERENT meaning?
 ```html
 <video
   src="https://www.w3schools.com/html/mov_bbb.mp4"
-  poster="/images/placeholder.svg"
+  poster="images/placeholder.svg"
   controls
   autoplay
   muted>
@@ -922,7 +922,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <!-- Lazy loading -->
 <img
-  src="/images/placeholder.svg"
+  src="images/placeholder.svg"
   x-lazy
   x-placeholder="blur">
 <!-- Draggable + Resizable -->

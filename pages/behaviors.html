@@ -259,16 +259,47 @@
      * written. Only asset-ish attributes are touched — not hrefs, which have
      * their own handling.
      */
+    // Attributes that name an asset by convention. Kept because some assets
+    // have no file extension to recognise them by (a route, an endpoint).
+    const ASSET_ATTRS = new Set([
+      'src', 'poster', 'image', 'avatar', 'thumbnail', 'icon', 'cover',
+      'background', 'logo', 'data', 'srcset',
+    ]);
+    // ...and anything that simply LOOKS like a file, whatever it is called.
+    const ASSET_FILE = /\.(?:svg|png|jpe?g|gif|webp|avif|ico|mp4|webm|ogv|ogg|mp3|wav|m4a|pdf|woff2?)$/i;
+
     function rootRelativeAssets(value) {
       const base = siteRoot();
-      if (base === '/' ) return value;
-      // The regex consumes the leading '/', so `base` supplies its own — it is
+      if (base === '/') return value;
+      // The regex consumes the leading '/', so `base` supplies its own -- it is
       // already '/wb-starter/'. Stripping it here produced a RELATIVE
-      // 'wb-starter/images/…', which under /wb-starter/ resolves to
-      // /wb-starter/wb-starter/images/… — broken in a new way.
+      // 'wb-starter/images/...', which under /wb-starter/ resolves to
+      // /wb-starter/wb-starter/images/... -- broken in a new way.
+      //
+      // #1047, second pass. This started as a fixed list of attribute NAMES,
+      // and `cover` was not on it -- so every x-cardportfolio row on the
+      // deployed site still requested /images/placeholder.svg and 404'd, while
+      // the fix looked complete because avatar and image were covered. A list
+      // of names can only ever be as complete as whoever last remembered to
+      // extend it, and behaviours invent attribute names freely.
+      //
+      // So the value gets a vote: an attribute whose value ends in a media
+      // extension is an asset reference no matter what it is called. One pass,
+      // deciding per match, so an already-rewritten path is never rewritten
+      // twice.
       const fix = (s) => s.replace(
-        /(\b(?:src|poster|image|avatar|thumbnail|icon)\s*=\s*")\/(?!\/)/g,
-        (_m, attr) => attr + base,
+        /(\s)([a-zA-Z][\w-]*)(\s*=\s*")\/(?!\/)([^"]*)(")/g,
+        (whole, ws, name, eq, path, close) => {
+          const isAsset = ASSET_ATTRS.has(name.toLowerCase()) || ASSET_FILE.test(path.split(/[?#]/)[0]);
+          if (!isAsset) return whole;
+          // Already rooted: applying twice would yield /wb-starter/wb-starter/…,
+          // which is broken in a way that looks like the fix ran. Only the
+          // catalogue fetch calls this today, but "called exactly once" is an
+          // assumption about the callers, and it is cheaper to make the
+          // function safe than to keep that assumption true forever.
+          if (('/' + path).startsWith(base)) return whole;
+          return `${ws}${name}${eq}${base}${path}${close}`;
+        },
       );
       const walk = (v) => {
         if (typeof v === 'string') return fix(v);
@@ -281,6 +312,35 @@
         return v;
       };
       return walk(value);
+    }
+
+    /**
+     * The same re-rooting for a DOC, where half the file must not be touched.
+     *
+     * #1047, third pass. The catalogue was re-rooted and the deployed page still
+     * 404'd, because the doc panel renders docs/behaviors/<name>.md straight into
+     * the DOM -- and blockquote.md carries a live `<div x-demo>` whose
+     * avatar="/images/placeholder.svg" is markup, not prose. It renders, it
+     * requests, it 404s, and no amount of fixing the catalogue reaches it.
+     *
+     * Fenced code is the part that must NOT be rewritten: it is displayed as
+     * text for a reader to copy into their own project, where '/images/...' is
+     * the correct thing to copy. So the split is by fence, not by file: live
+     * markup gets re-rooted, sample code is left exactly as authored.
+     */
+    function rootRelativeAssetsInMarkdown(md) {
+      if (siteRoot() === '/') return md;
+      // The fence lines are captured so they survive the join and can flip the
+      // state as they pass -- a split that dropped them would silently delete
+      // every code block from the rendered doc.
+      let inFence = false;
+      return String(md)
+        .split(/(^[ \t]*```[^\n]*$)/m)
+        .map((part) => {
+          if (/^[ \t]*```/.test(part)) { inFence = !inFence; return part; }
+          return inFence ? part : rootRelativeAssets(part);
+        })
+        .join('');
     }
 
     let allEntries = [];
@@ -341,8 +401,31 @@
       if (opt.boolean) return opt.value === 'false' ? `${opt.prop}=false` : opt.prop;
       return opt.prop === 'variant' ? opt.value : `${opt.prop}=${opt.value}`;
     }
-    import(siteRoot() + 'src/core/tag-map.js')
-      .then(async (mod) => {
+    // #1056: the behaviour registry lives in TWO places, and this page read one.
+    // wb-lazy.js's WB_LAZY_ONLY_ATTRIBUTES holds behaviours that resolve at
+    // runtime but appear nowhere in tag-map, so 39 working behaviours --
+    // lightbox, masonry, popover, pagination, breadcrumb, share, print,
+    // countdown, and every animation effect -- had no row on the page whose
+    // whole job is to list behaviours.
+    //
+    // wb-lazy.js's own comment predicted this by name: "34 x-* attributes used
+    // by real demos on pages/behaviors.html live only here, so anything reading
+    // tag-map alone reports an incomplete behavior list." It was exported "so
+    // tooling can enumerate the FULL x-* surface"; this is the page that most
+    // needed to, and did not.
+    //
+    // The second import is allowed to fail on its own: an incomplete list is
+    // bad, but an EMPTY one -- which is what an unhandled rejection here would
+    // leave -- is worse.
+    Promise.all([
+      import(siteRoot() + 'src/core/tag-map.js'),
+      import(siteRoot() + 'src/core/wb-lazy.js').catch(() => ({})),
+    ])
+      .then(async ([tagMod, lazyMod]) => {
+        const mod = {
+          ...tagMod,
+          extensionMap: { ...(lazyMod.WB_LAZY_ONLY_ATTRIBUTES || {}), ...tagMod.extensionMap },
+        };
         // #665: extensionMap, NOT elementMap. elementMap maps wb-* BEHAVIOR
         // TAGS to behavior names (x-card, x-button, x-badge, ...), so
         // prefixing its values with "x-" produced a list of behaviors wearing
@@ -1259,7 +1342,7 @@
       // the browser to have HTML-escaped the raw markdown first. Assigning raw
       // markdown via innerHTML double-escapes it (the pattern pages/issues.html
       // documents for the same reason).
-      liveDocBody.textContent = md;
+      liveDocBody.textContent = rootRelativeAssetsInMarkdown(md);
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
@@ -1614,7 +1697,13 @@
         // A schema default may be written relative to a demo page rather than
         // to this one -- prefer the known-good absolute source when we have it.
         if (fallback) src = fallback;
-        if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^\.{1,2}\//, '');
+        // The leading slash has to come off before the join, not after:
+        // siteRoot() already ends in one, so a ROOT-absolute default such as
+        // cardimage's `/images/placeholder.svg` produced `//images/...`, which a
+        // browser reads as PROTOCOL-relative and fetches from a host called
+        // "images" -- broken locally as well as deployed, and in a way that
+        // looks like a network fault rather than a path bug.
+        if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^(?:\.{1,2}\/|\/)/, '');
         if (src) out.push(` src="${src}"`);
       }
       return out.join('');
@@ -2318,7 +2407,7 @@
       function maybeWarnServerRequired(source) {
         const prev = liveExample.parentNode.querySelector('.behaviors-live__server-note');
         if (prev) prev.remove();
-        if (!/action=("|')\/api\//.test(source)) return;
+        if (!/\baction=("|')\/api\//.test(source)) return;
         // A static host serves files, not routes. Probing would cost a request
         // per example and still race the render, so key off the one thing that
         // is knowable synchronously: server.js is what serves this page during

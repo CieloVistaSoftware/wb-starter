@@ -137,6 +137,16 @@ export const BEHAVIOR_CSS_MAP = {
   clipboard: ['trigger-buttons.css'],
   scroll: ['trigger-buttons.css'],
 
+  // #1008: release.css existed on disk and was reachable from nothing. When
+  // site.css stopped @import-ing every behaviour stylesheet, each one had to be
+  // named here instead, and this one was not — so the three classes it defines
+  // (.x-release, .x-release--clickable, .x-release--stale) had no rules at all,
+  // and the version badge in the navbar rendered unstyled on every page.
+  //
+  // Silent by construction: a stylesheet that never loads produces no error, and
+  // an unstyled badge still shows its text.
+  release: ['release.css'],
+
   // Effects/utilities — all genuine WB.inject()-dispatched behaviors.
   ripple: ['effects.css'],
   sticky: ['effects.css'],

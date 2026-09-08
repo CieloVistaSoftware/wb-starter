@@ -394,6 +394,28 @@ export async function logError(message, details = {}) {
 const LOCAL_KEY = 'wb:error-log';
 let serverLogging = true;   // flipped off the first time the API refuses
 
+/**
+ * #1000, second pass. John: "run autoscroll to see all the errors but they are
+ * not being logged to error log?"
+ *
+ * The endpoint was addressed as '/api/error-log/append' — ROOT-absolute. The
+ * deployed site lives under /wb-starter/, so that posts to the ORGANISATION
+ * root, which has no such route. Measured:
+ *
+ *   POST https://cielovistasoftware.github.io/api/error-log/append -> 405
+ *
+ * Exactly the defect the images had (#1047) and the viewer's own read had, one
+ * layer further in.
+ *
+ * Resolved against THIS MODULE's url, not against the page. The page is the
+ * wrong base: errors-viewer.html sits in public/, so document.baseURI there
+ * would ask for /wb-starter/public/api/... instead. This file is always at
+ * src/core/error-logger.js, so two levels up is the site root wherever the
+ * site is mounted — the same trick DEFAULT_SCHEMA_BASE uses in
+ * mvvm/schema-builder.js:76.
+ */
+const apiUrl = (route) => new URL(`../../${route}`, import.meta.url).href;
+
 function localLog() {
   try {
     return JSON.parse(localStorage.getItem(LOCAL_KEY) || '{"errors":[]}');
@@ -433,17 +455,30 @@ export function isLocalOnly() {
 async function appendErrorToLog(error) {
   if (serverLogging) {
     try {
-      const response = await fetch('/api/error-log/append', {
+      const response = await fetch(apiUrl('api/error-log/append'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ error })
       });
       if (response.ok) return;
-      // 405 on a static host, 404 behind a different mount. Either way there is
-      // no endpoint here: stop asking, keep the log locally.
-      serverLogging = false;
+
+      // #1000: only a verdict about the ENDPOINT may disable server logging.
+      //
+      // This used to switch off on ANY non-ok response, permanently, for the
+      // rest of the page's life. One 500 from a busy server, or one dropped
+      // request, and every error after it was invisible to the log — the
+      // failure could not be diagnosed precisely when the server was having
+      // trouble, which is when errors matter most.
+      //
+      // 404/405 mean there is genuinely no route here (a static host); that is
+      // a fact about the deployment and worth remembering. Anything else is a
+      // transient the next error should retry, so it keeps a local copy and
+      // leaves server logging armed.
+      if (response.status === 404 || response.status === 405) serverLogging = false;
     } catch {
-      serverLogging = false;
+      // A network error is not proof the endpoint is absent — offline, a
+      // reloading dev server, a blocked request. Fall through to local, stay
+      // armed, try again on the next error.
     }
   }
 
@@ -459,10 +494,11 @@ async function appendErrorToLog(error) {
  */
 async function clearErrorLogFile() {
   try {
-    const response = await fetch('/api/error-log/clear', { method: 'POST' });
-    if (!response.ok) serverLogging = false;
+    const response = await fetch(apiUrl('api/error-log/clear'), { method: 'POST' });
+    if (response.status === 404 || response.status === 405) serverLogging = false;
   } catch {
-    serverLogging = false;
+    // Same reasoning as the append path: a transient failure is not evidence
+    // that the endpoint does not exist.
   }
   // Clear the local copy too, or "Clear" leaves entries the viewer still shows
   // -- the same silent mismatch #1000 is about.
@@ -545,15 +581,80 @@ export function setupGlobalErrorHandler() {
   if (globalHandlerInstalled) return;
   globalHandlerInstalled = true;
 
-  // Catch uncaught errors
+  // Catch uncaught errors.
+  //
+  // #1000: `capture: true` is not decoration. A failed <img>/<script>/<link>
+  // fires an `error` event on the ELEMENT, and that event does not bubble — so
+  // a listener on window without capture never sees it. Every broken asset on
+  // the page was therefore invisible here, and the only ones that reached the
+  // log did so because media-load-retry.js happens to call logError() itself.
+  // Anything without its own reporting simply failed in silence.
   window.addEventListener('error', (event) => {
+    const el = event.target;
+    if (el && el !== window && el.tagName) {
+      // A resource failure: the event carries no message, only the element.
+      const raw = el.currentSrc || el.src || el.href || '';
+
+      // The QUERY STRING is stripped before this becomes an identity.
+      // media-load-retry.js retries with a fresh `?_retry=<timestamp>`, so the
+      // same missing file arrives with a different URL every attempt — five
+      // retries would be five separate rows the dedupe could never collapse,
+      // and one broken image on a page of many would bury everything else.
+      // The file is the fault; the attempt number is the occasion.
+      const src = raw.split('?')[0];
+
+      // No URL at all: nothing failed to LOAD, so there is nothing to report.
+      // An empty src resolves against location.href, which passes the
+      // same-origin test below and produced rows reading
+      // "script failed to load: (no src)" — three of them in one suite run,
+      // which is how this handler turned the error log from empty into noisy
+      // and failed compliance/error-log-empty.spec.ts. A resource error
+      // without a resource is not a resource error.
+      if (!src) return;
+
+      // A missing favicon is a browser default request, not a fault in the
+      // page, and it is already excluded from every other check for that
+      // reason.
+      if (/favicon/i.test(src)) return;
+
+      // SAME-ORIGIN ONLY, and the reason matters.
+      //
+      // The first version of this reported every resource failure, which
+      // immediately failed six demo pages. The culprits were not broken site
+      // assets at all — they were w3schools videos the demos embed, failing
+      // because a third-party host was unreachable from the test environment.
+      // Two things were wrong with that:
+      //
+      //   1. It blamed the site for someone else's outage. A page cannot fix
+      //      an external host, and a gate that fails for that reason teaches
+      //      people to ignore it.
+      //   2. It was a DUPLICATE. media-load-retry.js already reports failed
+      //      media through logError(), with retry counts and its own registry
+      //      entries — a better-informed reporter than this one.
+      //
+      // What this handler uniquely catches is the site's OWN assets failing:
+      // /images/placeholder.svg resolving to the wrong root (#1047), a path
+      // that moved, a file that never shipped. That is the gap it exists for.
+      try {
+        if (new URL(src, location.href).origin !== location.origin) return;
+      } catch {
+        return;   // not a resolvable URL; nothing useful to record
+      }
+
+      logError(`${el.tagName.toLowerCase()} failed to load: ${src || '(no src)'}`, {
+        module: 'resource-load',
+        source: src,
+        details: { src },
+      });
+      return;
+    }
     logError(event.message, {
       file: event.filename,
       line: event.lineno,
       column: event.colno,
       stack: event.error?.stack
     });
-  });
+  }, true);
   
   // Catch unhandled promise rejections
   window.addEventListener('unhandledrejection', (event) => {

@@ -103,7 +103,24 @@ if [ "$COUNT" -ge 10 ]; then
   # already makes for lint: fail only on failures NOT in the recorded baseline,
   # and drop repaired tests from that baseline so they can never rot again.
   # The register is data/test-baseline-failures.json; it only ever shrinks.
-  node .husky/test-ratchet.mjs || exit 1
+  # #1065: gate the COMMIT, not the working directory.
+  #
+  # This used to call test-ratchet.mjs directly, which boots a server on THIS
+  # directory and tests whatever is on disk for the ~50 minutes the suite takes.
+  # So the verdict described a tree that no longer existed by the time it
+  # arrived, and any edit landing in that window silently changed what was under
+  # test. Measured in one session: three runs invalidated, one of them by a
+  # different session changing a spec the commit did not even contain (the
+  # commit named 18 files by pathspec and was blocked by a file outside it).
+  #
+  # John: "this is only about the 10th time changes (late) have aborted the
+  # commit/next release. This points to our process being unable to finish doing
+  # the right thing."
+  #
+  # gate-staged-tree.mjs materialises the INDEX into a throwaway worktree and
+  # runs the same unchanged ratchet in there. Late edits cannot affect it,
+  # because the run is not looking at the place edits happen.
+  node .husky/gate-staged-tree.mjs || exit 1
 
   echo ""
   # #959: NOT "green" -- the ratchet asserts "no NEW failures", which is a

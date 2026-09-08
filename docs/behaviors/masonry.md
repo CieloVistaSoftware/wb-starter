@@ -10,10 +10,10 @@ Behavior applied with x-masonry.
 
 ```html
 <div x-masonry columns="3" gap="0.75rem">
-  <img src="/images/placeholder.svg" alt="">
-  <img src="/images/placeholder.svg" alt="">
-  <img src="/images/placeholder.svg" alt="">
-  <img src="/images/placeholder.svg" alt="">
+  <img src="images/placeholder.svg" alt="">
+  <img src="images/placeholder.svg" alt="">
+  <img src="images/placeholder.svg" alt="">
+  <img src="images/placeholder.svg" alt="">
 </div>
 ```
 

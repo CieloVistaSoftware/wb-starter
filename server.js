@@ -803,7 +803,46 @@ function readIssuesCache() {
 // release it shipped in. Releases had to exist first: 4.0.0 and 4.0.1 shipped
 // untagged, so nothing recent could be traced until they were tagged
 // retroactively.
+// #1054: this route was measured at 8.2s and 10.6s returning 3.86MB, recomputed
+// from scratch on every load, and the Fix Viewer paints nothing until it
+// resolves — John read that as "it's just hanging". It was not hanging; it was
+// working for longer than anyone waits.
+//
+// Cached on disk the same way /api/issues already is. Keyed on HEAD **and** a
+// TTL, not on HEAD alone: the issue text says "the answer cannot change while
+// HEAD does not", and that is not quite true — every row carries the issue's
+// STATE, and an issue opens or closes without any commit landing. HEAD alone
+// would serve a table insisting a closed issue is still open until someone
+// happened to commit. So HEAD changing invalidates immediately, and the TTL
+// bounds how stale the issue metadata can be.
+const FIXES_CACHE_REL_PATH = 'data/fixes-cache.json';
+const FIXES_TTL_MS = 5 * 60 * 1000;
+
+function headSha(rootDir) {
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: rootDir, encoding: 'utf8', timeout: 10000 }).trim();
+  } catch {
+    return null;
+  }
+}
+
 app.get('/api/fixes', (req, res) => {
+  const head = headSha(rootDir);
+  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+
+  if (head && !('refresh' in req.query)) {
+    try {
+      const cached = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+      const fresh = cached.head === head && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS;
+      if (fresh && cached.payload) {
+        res.set('Cache-Control', 'no-store');
+        res.set('X-Fixes-Cache', 'hit');
+        res.json(cached.payload);
+        return;
+      }
+    } catch { /* no cache, unreadable, or a shape from an older build — recompute */ }
+  }
+
   const US = String.fromCharCode(31);
   const RS = String.fromCharCode(30);
   const NL = String.fromCharCode(10);
@@ -925,8 +964,7 @@ app.get('/api/fixes', (req, res) => {
     };
   }).sort((a, b) => b.number - a.number);
 
-  res.set('Cache-Control', 'no-store');
-  res.json({
+  const payload = {
     generatedAt: new Date().toISOString(),
     counts: {
       traced: rows.length,
@@ -937,7 +975,24 @@ app.get('/api/fixes', (req, res) => {
     },
     releases: tags,
     rows,
-  });
+  };
+
+  // Written only when there is something to write. Caching an empty result
+  // would pin a failed `gh` call (rate limit, network, not logged in) into the
+  // viewer for the life of the TTL, and an empty table is exactly what this
+  // issue is about being unable to distinguish from a broken one.
+  if (head && rows.length) {
+    try {
+      fs.writeFileSync(path.join(rootDir, FIXES_CACHE_REL_PATH),
+        JSON.stringify({ head, cachedAt: new Date().toISOString(), payload }));
+    } catch (err) {
+      console.warn('[Fixes] could not write cache:', err.message);
+    }
+  }
+
+  res.set('Cache-Control', 'no-store');
+  res.set('X-Fixes-Cache', 'miss');
+  res.json(payload);
 });
 
 // ── #1046: an account of work done, not just current state ──────────────────

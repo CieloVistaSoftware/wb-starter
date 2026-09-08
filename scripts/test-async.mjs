@@ -338,7 +338,7 @@ function extractErrors(text) {
     // Stripping ANSI colour codes REQUIRES the literal ESC this rule flags;
     // that is the whole point of the pattern.
     // eslint-disable-next-line no-control-regex
-    const trimmed = body.replace(/\[[0-9;]*m/g, '').trim().slice(0, 2000);
+    const trimmed = body.replace(/\u001b\[[0-9;]*m/g, '').trim().slice(0, 2000);
     errors.set(`${starts[i].project} › ${starts[i].name}`, trimmed);
   }
   return errors;

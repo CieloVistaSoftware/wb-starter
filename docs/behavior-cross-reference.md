@@ -3402,7 +3402,7 @@ Image card:
 
 <div x-demo>
 <div x-cardimage
-  src="/images/placeholder.svg"
+  src="../images/placeholder.svg"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </div>
@@ -3436,7 +3436,7 @@ Product card:
 
 <div x-demo>
 <div x-cardproduct
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="Widget Pro"
   price="$99.99"
   rating="4.5"
@@ -3462,7 +3462,7 @@ Testimonial card:
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
-  avatar="/images/placeholder.svg">
+  avatar="../images/placeholder.svg">
 </div>
 </div>
 
@@ -3472,7 +3472,7 @@ Hero card:
 <div x-cardhero
   title="Welcome"
   subtitle="Get started today"
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   cta="Learn More"
   href="/start">
 </div>
@@ -3514,7 +3514,7 @@ Portfolio card:
 
 <div x-demo>
 <div x-cardportfolio
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
@@ -3536,7 +3536,7 @@ Horizontal card:
 
 <div x-demo>
 <div x-cardhorizontal
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="Article Title"
   description="Brief description of the article...">
 </div>
@@ -3546,7 +3546,7 @@ Overlay card:
 
 <div x-demo>
 <div x-cardoverlay
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="Overlay Title"
   subtitle="Text appears over the image">
 </div>

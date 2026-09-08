@@ -25,10 +25,45 @@
 
 import { test, expect } from '@playwright/test';
 
+/**
+ * Wait for the demo SOURCE PANELS, not for a duration.
+ *
+ * Both tests below counted demos after a fixed sleep, and the counters skip a
+ * demo whose panel does not exist yet (`if (!code) continue`). So a page that
+ * was merely slow read as "demos are showing the wrong thing": `authored` never
+ * reached its threshold and the assertion blamed the content.
+ *
+ * That tipped over the moment src/core/wb.js started resolving
+ * data/schema-index.json correctly on demos/ pages (#1059) — those pages now do
+ * real work they previously skipped via a 404, and under eight parallel workers
+ * 2500ms stopped being enough. The page was fine: measured alone, all 40 panels
+ * showed authored markup. The sleep was the defect, and it was latent long
+ * before anything made it visible.
+ */
+async function demoPanelsReady(page: import('@playwright/test').Page) {
+  // Every panel the counters below will look at, not "enough of them". Waiting
+  // for a threshold (11) returned EARLIER than the old sleep did and made the
+  // assertion fail for the same reason the sleep did: the counters read a page
+  // that was still building. The counters take the first 40 demos, so this
+  // waits for exactly those.
+  //
+  // Measured: all 40 on cards.html do build a panel (noPanel: 0), so requiring
+  // all of them cannot hang on a demo that legitimately never renders one.
+  await page.waitForFunction(
+    () => {
+      const demos = Array.from(document.querySelectorAll('[x-demo]')).slice(0, 40);
+      if (!demos.length) return false;
+      return demos.every((d) => d.querySelector('pre code'));
+    },
+    undefined,
+    { timeout: 45_000 },
+  );
+}
+
 test.describe('the demo source panel never shows the expansion (#1003)', () => {
   test('a demo whose source cannot be found says so instead of dumping the DOM', async ({ page }) => {
     await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(2000);
+    await demoPanelsReady(page);
 
     const result = await page.evaluate(async () => {
       // Built at runtime: absent from the page source, and with no _rawSource,
@@ -82,7 +117,7 @@ test.describe('the demo source panel never shows the expansion (#1003)', () => {
   test('a normal demo still shows its authored one-liner', async ({ page }) => {
     // The guard above must not have been bought by breaking the good path.
     await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(2500);
+    await demoPanelsReady(page);
 
     const stats = await page.evaluate(() => {
       const demos = Array.from(document.querySelectorAll('[x-demo]')).slice(0, 40);

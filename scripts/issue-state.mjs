@@ -142,7 +142,34 @@ const treeCites = new Map();            // issue -> Set(file)
 // ── evidence 3: commits citing the issue, and whether they are pushed ────────
 const commitCites = new Map();          // issue -> [{sha, pushed, subject}]
 {
-  const pushed = new Set(git(['rev-list', '--max-count=4000', '--remotes']).split('\n').filter(Boolean));
+  // #1043: this was `--remotes`, which is EVERY remote branch. A commit pushed
+  // to a working branch — where most work starts — therefore reported as
+  // `pushed`, i.e. delivered, while it was on nothing anyone ships from. The
+  // state engine exists to say how far a fix has travelled, and "on some branch
+  // on the server" is not the end of that journey; it is the middle of it.
+  //
+  // Reachability from the remote DEFAULT branch is the honest test. A commit
+  // that is only on a feature branch now stays `committed`, which is exactly
+  // what it is: written down, not shipped.
+  //
+  // Falls back to all remotes if the default branch cannot be resolved (a fresh
+  // clone with no origin, a detached CI checkout) — over-reporting travel is
+  // better than reporting none at all, and the fallback is the old behaviour.
+  // WB_DEFAULT_REF exists so this rule can be TESTED without mutating the repo.
+  // The contract — "a commit not on the shipping branch is not pushed" — cannot
+  // be exercised against origin/main itself, because everything in this history
+  // is already on it; a test would have to create a branch and a commit to see
+  // the difference. Pointing the ref at an older commit produces the same shape
+  // (commits that exist but are not reachable from the ref) with no side effects.
+  const defaultRef = [process.env.WB_DEFAULT_REF, 'origin/main', 'origin/master']
+    .filter(Boolean)
+    .find((ref) => git(['rev-parse', '--verify', '--quiet', ref]).trim());
+  const pushed = new Set(
+    git(defaultRef
+      ? ['rev-list', '--max-count=4000', defaultRef]
+      : ['rev-list', '--max-count=4000', '--remotes'],
+    ).split('\n').filter(Boolean),
+  );
   // #1042: fields are \x1f-separated, records are \x1e-terminated.
   //
   // This used to be `%H%x1f%s%x1e%b%x1e` split on '\x1e\x1e' — a doubled

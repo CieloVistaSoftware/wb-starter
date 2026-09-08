@@ -310,7 +310,7 @@ const isCovered = (el: Element, cls: string): boolean =>
   || el.hasAttribute('x-hydrated')
   || el.classList.contains('x-ready')
   || el.children.length > 0
-  || /x-/.test((el as HTMLElement).className || '');
+  || /\bx-/.test((el as HTMLElement).className || '');
 
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
   // Strip an existing x- prefix as well as the retired wb-.

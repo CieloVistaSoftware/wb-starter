@@ -75,6 +75,17 @@ test.describe('#965: no behavior CSS rule is silently discarded by the browser',
 
   for (const file of files) {
     test(`${file} — every rule survives the browser's parser`, async ({ page }) => {
+      // This spec needs a CSS PARSER, not a page: it feeds rule text to
+      // CSSStyleSheet.insertRule() and asks which ones the browser rejects.
+      // It ran against about:blank, which works — and which
+      // tests-must-assert.spec.ts:218 correctly refuses to distinguish from a
+      // spec that forgot to navigate and is therefore asserting against an
+      // empty document (#863's failure mode: 13 tests green, testing nothing).
+      //
+      // A real document costs nothing and removes the ambiguity for both the
+      // gate and the next reader.
+      await page.setContent('<!doctype html><meta charset="utf-8"><title>css parser harness</title>');
+
       const css = readFileSync(join(CSS_DIR, file), 'utf8');
       const rules = topLevelRules(css).filter((r) => !FOREIGN_VENDOR.test(r.text));
       expect(rules.length, `${file} parsed to zero top-level rules — the splitter is broken`).toBeGreaterThan(0);

@@ -27,8 +27,18 @@ import path from 'node:path';
  * TAB, LF and CR are legitimate. Everything else below 0x20, plus DEL, is not.
  */
 
-const ROOTS = ['src', 'scripts', 'tests'];
-const EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.ts', '.tsx', '.css', '.json']);
+// #1049: this was ['src', 'scripts', 'tests'] with code extensions only, so
+// pages/behaviors.html -- 2,500 lines of inline JavaScript, the largest single
+// body of executable source in the project -- was never scanned. It carried a
+// 0x08 exactly like #888's, in `/\baction=("|')\/api\//`, which meant the
+// static-site warning from #752 could never fire. The guard was written from
+// the four files that happened to be hit in #888 rather than from where code
+// actually lives, and stayed green for months while the same bug sat two
+// directories away.
+//
+// Scan where executable source IS, not where it was last found.
+const ROOTS = ['src', 'scripts', 'tests', 'pages', 'demos'];
+const EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.ts', '.tsx', '.css', '.json', '.html']);
 const SKIP_DIRS = new Set(['node_modules', '.git', 'out', 'dist', 'test-results', 'playwright-report', '.claude']);
 
 const TAB = 0x09;
@@ -61,7 +71,9 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
 }
 
 test.describe('source contains no stray control characters', () => {
-  const files = sourceFiles(ROOTS[0]).concat(...ROOTS.slice(1).map((r) => sourceFiles(r)));
+  // Plus the repo-root HTML entry points, which no ROOT directory covers.
+  const rootEntries = ['index.html', 'project-index.html'].filter((f) => fs.existsSync(f));
+  const files = ROOTS.flatMap((r) => sourceFiles(r)).concat(rootEntries);
 
   test('the sweep actually ran', () => {
     // A glob that matched nothing would report perfect compliance forever.
