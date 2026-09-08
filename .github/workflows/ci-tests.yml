@@ -9,9 +9,33 @@ on:
 permissions:
   contents: read
 
+# #341, second cause — a run cancelled by the next push is a run with no verdict.
+#
+# Raising the timeout (below) was necessary and not sufficient. The gate takes
+# ~38 minutes; pushes to main during a working session arrive every 6-15:
+#
+#   17:22:01  b7aa38d3      17:13:30  6df88b04      16:58:48  cc5593e1
+#   16:46:57  8c161965      16:41:31  fcda73ee      15:30:41  855afef1
+#
+# With cancel-in-progress on a push, each run is killed by the next one long
+# before it finishes. Run 34284925939 — the FIRST run carrying the 60-minute
+# budget, the one that was finally going to answer #341 — died at 3m12s that
+# way. Of the twelve most recent main runs, nine were cancelled and the only
+# two that reached a conclusion both predate #1044. So the workflow has still
+# never produced a verdict, for a completely different reason than the clock.
+#
+# Cancelling is right for a pull request: an outdated head commit's result is
+# worthless and the next push will re-answer it. It is wrong for main, where
+# every commit is permanent and the whole point is knowing whether THAT commit
+# was green. #341 asks for "a real, reproducible green baseline" — unreachable
+# while every run is killed at 8% for the crime of not being the newest.
+#
+# This does not queue runs without bound. GitHub keeps at most one PENDING run
+# per concurrency group and cancels the previously pending one, so a burst of
+# six pushes costs one in-flight run plus one waiting — never six.
 concurrency:
   group: ci-tests-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:

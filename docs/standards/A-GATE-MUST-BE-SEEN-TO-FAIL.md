@@ -81,6 +81,20 @@ wrong — a box-model comparison, an `/api/fixes` mismatch, and a
 was registered. Each was plausible, each was written down as if established, and
 each cost a round trip that one command would have saved.
 
+2026-09-08 added a fourth, and it is the sharpest of them because it was a
+measurement that expired. A suite run was launched after verifying the machine
+was quiet — no listener on the port, no Playwright processes, no lock — and its
+result was then reported as "a clean run with nothing else touching the machine."
+Two hundred and twenty-eight failures, 120 of them "could not connect to server."
+An issue was filed on the strength of that (#1074) claiming the server dies on
+its own. It does not: a second session was running its own suites in the same
+tree the whole time, and both runs had landed on the same fixed fallback port
+(#1072). The check was real. The claim outlived it by half an hour.
+
+**A precondition verified once is not a precondition that held.** If a run's
+validity depends on the machine being quiet, check at the end too, or record
+something during the run that would show if it stopped being true.
+
 The `evidence:` field in [ISSUE-SIGNATURE-BLOCK.md](./ISSUE-SIGNATURE-BLOCK.md)
 exists for the same reason: a `detect:` nobody ran is a guess with syntax
 highlighting. #1055 was filed claiming one orphan document on a derivation that

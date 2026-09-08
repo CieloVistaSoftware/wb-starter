@@ -46,6 +46,7 @@
     "!data/tmp_errors_dump.txt"
   ],
   "scripts": {
+    "ship": "node scripts/ship.mjs",
     "release": "node scripts/release.mjs",
     "release:check": "node scripts/release.mjs --check",
     "start": "node scripts/stamp-version.js && node scripts/update-docs-manifest.js && node server.js",

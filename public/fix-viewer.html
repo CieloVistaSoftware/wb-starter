@@ -783,6 +783,7 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
+              <th scope="col">Issue</th>
               <th scope="col">Fix</th>
               <th scope="col">Problem</th>
               <th scope="col">Action taken</th>
@@ -795,8 +796,30 @@
             ${items.map((f) => {
               const files = Array.isArray(f.filesChanged) ? f.filesChanged : (f.filesChanged ? [f.filesChanged] : []);
               const test = f.testName || f.test || '';
+              // #1077 — John: "add a link to the issue number in fix viewer".
+              //
+              // renderTraced() has linked the issue since #912. This path never
+              // showed it at all, and this is the ONLY path the deployed site
+              // takes -- /api/fixes builds its rows from git and a static host
+              // cannot run it. So on localhost a fix led to its issue and on the
+              // published site it led nowhere, which is backwards.
+              //
+              // normalise() was already recovering the number from the prose and
+              // spending it entirely on search relevance ranking.
+              //
+              // Numeric ONLY. `issue` is whatever normalise() left there, and the
+              // records carry prose in that field ("Issue without test
+              // verification"); rendering `#${issue}` unguarded would print that
+              // sentence and link to /issues/Issue%20without%20test%20verification,
+              // which resolves to nothing. A link that does not go anywhere is
+              // worse than the dash, because it looks answered.
+              const issueNo = /^[0-9]+$/.test(String(f.issue ?? '')) ? String(f.issue) : '';
+              const issueCell = issueNo
+                ? `<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/${issueNo}" target="_blank" rel="noopener">#${issueNo}</a>`
+                : '<span class="fix-none">—</span>';
               return `<tr>
                 <td class="fix-cell--id">${esc(f.errorId || f.id || '—')}</td>
+                <td class="fix-cell--issue">${issueCell}</td>
                 <td class="fix-cell--title">${esc(f.title || '—')}</td>
                 <td>${esc(f.cause || f.problem || '')}</td>
                 <td>${esc(f.fix || '')}</td>

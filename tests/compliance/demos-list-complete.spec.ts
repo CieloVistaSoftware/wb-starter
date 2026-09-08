@@ -59,21 +59,27 @@ test.describe('Demos page lists every demo (#229)', () => {
   });
 });
 
-test.describe('Demos menu is reachable from the shell nav (#229)', () => {
-  const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
-  const nav: Array<{ menuItemText?: string; pageToLoad?: string; menuItemId?: string }> =
-    site.navigationMenu ?? [];
+// Renamed from 'Demos menu is reachable from the shell nav (#229)': the menu no
+// longer carries it (#1083), so the describe would have been claiming something
+// untrue. The `site`/`nav` reads that fed the retired assertion are gone with
+// it rather than left dangling.
+test.describe('The demos page survives having no menu entry (#229, #1083)', () => {
+  // #1083 — John: "remove the demos navigator item as well as the A.I. Docs".
+  //
+  // This required a navigationMenu entry with pageToLoad "demos", labelled
+  // "Demos". Retired, not inverted, for the same reason as the A.I. Docs one:
+  // this file's job is that the demos LIST is complete, and asserting the menu
+  // must never carry the item would fight a future decision to restore it.
+  //
+  // The original note — "site-engine redirects unknown pages to home" — is why
+  // the page-exists test further down matters MORE now, not less: a page that
+  // stops existing does not 404, it silently renders HOME. Nothing links to
+  // ?page=demos from the menu any more, so that test is the only thing left
+  // standing between the page and a silent disappearance.
 
-  test('navigationMenu contains a Demos item that loads the demos page', () => {
-    const demosItem = nav.find((n) => n.pageToLoad === 'demos');
-    expect(
-      demosItem,
-      'config/site.json navigationMenu has no item with pageToLoad "demos" — the Demos page is unreachable from the nav (site-engine redirects unknown pages to home).'
-    ).toBeTruthy();
-    expect(demosItem?.menuItemText, 'Demos nav item should be labelled "Demos"').toBe('Demos');
-  });
-
-  test('the demos page the nav links to exists', () => {
+  test('the demos page still exists for anyone who visits it directly', () => {
+    // Renamed from "the demos page the nav links to exists" — the nav no longer
+    // links to it (#1083), but ?page=demos must still resolve.
     expect(fs.existsSync(PAGE), 'pages/demos.html (loaded by ?page=demos) must exist').toBe(true);
   });
 });

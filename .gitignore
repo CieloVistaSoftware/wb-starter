@@ -88,3 +88,14 @@ data/gate-evidence/
 data/test-results.json
 data/test-status.json
 data/bg-health.json
+# #1081: the same defect, in the directory #1071 missed. scripts/test-async.mjs
+# writes data/test-single/<spec>.json on every single-spec run, and 250 of them
+# were TRACKED -- so the clean tree #1071 delivered lasted until the first time
+# anyone verified anything.
+#
+# It stopped being cosmetic when #1076 made a push to main a release:
+# scripts/ship.mjs refuses to release from a dirty tree, and release.mjs gate 1
+# runs the suite, so the gate dirtied the tree the ship flow had just required
+# be clean. Shipping was impossible until this line existed.
+data/test-single/
+

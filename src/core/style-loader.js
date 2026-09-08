@@ -27,33 +27,87 @@ import { behaviors } from '../wb-viewmodels/index.js';
 
 const BEHAVIORS_BASE = new URL('../styles/behaviors', import.meta.url).href;
 
-/** @type {Map<string, Promise<void>>} fileName -> in-flight/settled load promise */
+/**
+ * fileName -> the load, plus enough state to tell a FINISHED load from one
+ * whose <link> was destroyed before it could finish (#961/#1075).
+ *
+ * Caching the bare promise was not safe. A <link> removed from the document
+ * while still loading never fires `load` OR `error` — the browser simply
+ * cancels it — so the cached promise stayed pending forever, and because it was
+ * cached, every later injection of that behavior awaited the same dead promise
+ * and hung with it. WB.inject() awaits ensureBehaviorCss() before running the
+ * behavior, so those elements were never built and never stamped x-ready.
+ *
+ * Measured 2026-09-08, 1 run in 6 at 6 workers: after a page.setContent() (which
+ * wipes <head> mid-load, and 29 spec files do it right after a goto), 23
+ * injections were stuck permanently — `ripple x14, release, themecontrol, notes,
+ * button x4, header, footer` — with NO behavior <link> left in the document,
+ * proving the pending promises were cached ones rather than live loads.
+ *
+ * @type {Map<string, {promise: Promise<void>, settled: boolean, link: HTMLLinkElement|null}>}
+ */
 const loaded = new Map();
 
 function loadCssFile(fileName) {
-  let promise = loaded.get(fileName);
-  if (promise) return promise;
+  const cached = loaded.get(fileName);
+  // Reuse a load that FINISHED, or one whose <link> is still in the document
+  // and can therefore still fire. Anything else is a corpse — start over.
+  if (cached && (cached.settled || (cached.link && cached.link.isConnected))) {
+    return cached.promise;
+  }
 
-  promise = new Promise((resolve) => {
+  /** @type {{promise: Promise<void>, settled: boolean, link: HTMLLinkElement|null, settle: () => void}} */
+  const entry = { promise: Promise.resolve(), settled: false, link: null, settle: () => {} };
+
+  entry.promise = new Promise((resolve) => {
+    const done = () => { entry.settled = true; resolve(); };
+    entry.settle = done;
     if (typeof document === 'undefined') {
-      resolve();
+      done();
       return;
     }
+    // The dataset wrote `data-wb-behavior-css` while this query looked for
+    // `data-x-behavior-css` — a half-applied 4.0.0 rename, so the de-dupe
+    // never once matched and only the Map above was preventing duplicate
+    // <link>s. With the Map now able to discard a dead entry, this check is
+    // what stops a re-load from stacking a second <link>, so it has to work.
     const existing = document.querySelector(`link[data-x-behavior-css="${fileName}"]`);
     if (existing) {
-      resolve();
+      done();
       return;
     }
     const link = document.createElement('link');
+    entry.link = link;
     link.rel = 'stylesheet';
     link.href = `${BEHAVIORS_BASE}/${fileName}`;
-    link.dataset.wbBehaviorCss = fileName;
+    link.dataset.xBehaviorCss = fileName;
     // A CSS load failure shouldn't block the behavior itself from running —
     // an unstyled element is recoverable, a behavior that silently never
     // applies is a worse regression (this is exactly the schema-race bug's
     // failure mode, just for CSS instead of DOM).
-    link.addEventListener('load', () => resolve(), { once: true });
-    link.addEventListener('error', () => resolve(), { once: true });
+    link.addEventListener('load', done, { once: true });
+    link.addEventListener('error', done, { once: true });
+
+    // Third terminal state: the <link> is REMOVED before it loads. The browser
+    // cancels the request and fires neither event, so without this the promise
+    // is simply abandoned — and every injection awaiting it is abandoned too
+    // (#961/#1075). Nothing dies silently: removal settles the load exactly
+    // like a failure does, since an unstyled element is recoverable and a
+    // behavior that never runs is not.
+    //
+    // Notification, not a poll (Law 18), and scoped to the one parent rather
+    // than the document subtree so it costs nothing on a large page.
+    let removalObserver = null;
+    const watchForRemoval = () => {
+      if (typeof MutationObserver === 'undefined' || !link.parentNode) return;
+      removalObserver = new MutationObserver(() => {
+        if (!link.isConnected) { removalObserver.disconnect(); done(); }
+      });
+      removalObserver.observe(link.parentNode, { childList: true });
+    };
+    const stopWatching = () => { if (removalObserver) removalObserver.disconnect(); };
+    link.addEventListener('load', stopWatching, { once: true });
+    link.addEventListener('error', stopWatching, { once: true });
 
     // Cascade order matters: these files used to load via @import at the
     // very top of site.css, which resolves before ANY of site.css's own
@@ -72,10 +126,36 @@ function loadCssFile(fileName) {
     } else {
       document.head.appendChild(link);
     }
+    watchForRemoval();
   });
 
-  loaded.set(fileName, promise);
-  return promise;
+  loaded.set(fileName, entry);
+  return entry.promise;
+}
+
+// A document REOPEN (document.open/write/close — which is what
+// page.setContent() does, and 29 spec files call it right after a goto)
+// removes every <link> in one shot. It fires neither `load` nor `error`, and
+// measured on Chromium it delivers NO MutationObserver records for those
+// removals either, so the per-link watch above cannot see it: 22 injections
+// stayed in flight permanently after one such wipe (#1078).
+//
+// The document does announce it, though — readyState drops back to 'loading'
+// when it is reopened, then climbs again, firing readystatechange. That is the
+// event to sweep on: settle every load whose <link> is no longer in the
+// document, because a detached <link> can never fire anything.
+//
+// Deliberately NOT time-based, and safe on a normal first load: this fires
+// there too, but a link still loading is CONNECTED and is skipped. Only a
+// genuine corpse is settled.
+if (typeof document !== 'undefined') {
+  document.addEventListener('readystatechange', () => {
+    for (const entry of loaded.values()) {
+      if (entry.settled) continue;
+      if (entry.link && entry.link.isConnected) continue;
+      entry.settle();
+    }
+  });
 }
 
 /**

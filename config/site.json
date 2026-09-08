@@ -28,12 +28,6 @@
       "pageToLoad": "behaviors"
     },
     {
-      "menuItemId": "demos",
-      "menuItemText": "Demos",
-      "menuItemEmoji": "🎮",
-      "pageToLoad": "demos"
-    },
-    {
       "menuItemId": "themes",
       "menuItemText": "Themes",
       "menuItemEmoji": "🎨",
@@ -44,12 +38,6 @@
       "menuItemText": "Docs",
       "menuItemEmoji": "📖",
       "pageToLoad": "docs"
-    },
-    {
-      "menuItemId": "ai-docs",
-      "menuItemText": "A.I. Docs",
-      "menuItemEmoji": "🤖",
-      "pageToLoad": "ai-docs"
     },
     {
       "menuItemId": "about",

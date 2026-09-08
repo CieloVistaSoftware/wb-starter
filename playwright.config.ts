@@ -1,5 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 import { readFileSync } from 'fs';
+// #961: MUST be an import. This file is loaded as an ES module (package.json
+// says "type": "module"), where `require` is not defined — so findFreePort()'s
+// `require('child_process')` threw a ReferenceError on every single run, was
+// swallowed by its own `catch`, and the function returned its fallback. See
+// its comment below.
+import { execFileSync } from 'child_process';
 
 // tests/compliance/ has grown to 79 files (~2 min for a full run) — running
 // the whole thing on every iteration wastes time when only one area is
@@ -105,9 +111,21 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
 //
 // If that ever fails, fall back to a fixed port rather than crashing the run —
 // a suite on a possibly-busy port is still better than no suite.
+//
+// MEASURED 2026-09-08 (#961): none of that was happening. `require` is not
+// defined in an ES module, so the call below threw ReferenceError on every run,
+// the `catch` swallowed it, and EVERY local run got the fixed fallback 3310 —
+// the exact "a fixed port is still a port someone else can be using" hazard the
+// paragraph above says it is avoiding. Six consecutive runs this session all
+// served from :3310, and the seventh died with "http://localhost:3310 is
+// already used" against a leftover server from the sixth. A gate that has never
+// been seen to work is not evidence of anything
+// (docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md).
+//
+// The fallback stays, but it is now genuinely a fallback.
 function findFreePort(): number {
   try {
-    const out = require('child_process').execFileSync(process.execPath, ['-e',
+    const out = execFileSync(process.execPath, ['-e',
       "const s=require('net').createServer();s.listen(0,'127.0.0.1',()=>{" +
       "process.stdout.write(String(s.address().port));s.close()});"
     ], { encoding: 'utf8', timeout: 5000 });
@@ -119,6 +137,24 @@ function findFreePort(): number {
 
 const TEST_PORT = Number(process.env.WB_TEST_PORT)
   || (process.env.CI ? 3000 : findFreePort());
+
+// PIN IT. This config is evaluated MORE THAN ONCE per run — the main process
+// loads it, and so does every worker process — so a function that returns a
+// fresh random port each time hands each worker a DIFFERENT baseURL while
+// `webServer` started exactly one server, on the main process's port.
+//
+// Measured 2026-09-08, the first time findFreePort() actually ran (#1079):
+//   net::ERR_CONNECTION_REFUSED at http://localhost:64148/pages/home.html
+//   net::ERR_CONNECTION_REFUSED at http://localhost:64149/pages/home.html
+//   net::ERR_CONNECTION_REFUSED at http://localhost:64150/public/fix-viewer.html
+// — a different port per test, none of them the one being served.
+//
+// Writing the choice back into the environment makes the FIRST evaluation the
+// only one that decides: every later evaluation, in this process or in a worker
+// forked from it, takes the `Number(process.env.WB_TEST_PORT)` branch above.
+// A fixed fallback port was consistent by accident; this is consistent on
+// purpose, and still free.
+process.env.WB_TEST_PORT = String(TEST_PORT);
 
 export default defineConfig({
   testDir: './tests',

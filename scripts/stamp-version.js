@@ -10,6 +10,7 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { isDirty } from './lib/git-status.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -39,9 +40,13 @@ const builtAt = new Date().toISOString();
  * Measured cheaply: two git calls, only at stamp time.
  */
 function drift() {
-  const git = (cmd, fallback = '') => {
+  // `raw: true` returns the output UNTRIMMED. Every other caller here reads a
+  // single value where trailing newlines are noise, but porcelain status is
+  // column-oriented and its leading space is data (#1082).
+  const git = (cmd, fallback = '', { raw = false } = {}) => {
     try {
-      return execSync(cmd, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+      const out = execSync(cmd, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      return raw ? out : out.trim();
     } catch {
       return fallback;
     }
@@ -81,12 +86,18 @@ function drift() {
   // it -- so it is excluded here instead.
   //
   // The flag now means what #1002 asked it to mean: real, uncommitted work.
+  // #1082: this split `git()`'s TRIMMED output and sliced(3) each line. The
+  // trim removes the leading status space from the FIRST LINE ONLY, so the
+  // alphabetically-first path lost a character. When the only change IS
+  // src/core/version.js it is that first line -- mangled to
+  // "rc/core/version.js", which GENERATED then failed to match. So the
+  // exclusion was bypassed in exactly the case it was written for, and the
+  // badge kept saying "uncommitted changes" after #1071 shipped.
   const GENERATED = ['src/core/version.js'];
-  const dirty = git('git status --porcelain')
-    .split('\n')
-    .map((l) => l.slice(3).trim())
-    .filter(Boolean)
-    .some((f) => !GENERATED.includes(f.split('\\').join('/')));
+  const dirty = isDirty(
+    git('git status --porcelain', '', { raw: true }),
+    GENERATED,
+  );
 
   // Compare against the remote this branch tracks; fall back to origin/main,
   // which is what "latest code" means for this project.

@@ -90,6 +90,19 @@ const FALLBACK = {
       errorSignature: 'Error without test', issue: 'Issue without test verification',
       cause: 'Cause unknown', status: 'APPLIED', date: '2025-12-28T12:00:00Z',
     },
+    // #1077 — an entry carrying its issue the only way data/fixes.json can:
+    // written into the prose. `normalise()` recovers it with /#(\d{3,4})/, and
+    // that recovered number is what has to become a link. The two entries above
+    // are the negative case and are deliberately unlike each other: one has no
+    // `issue` at all, the other has a non-numeric `issue` string. Rendering
+    // `#${issue}` blindly would print "#Issue without test verification" and
+    // point at /issues/Issue%20without... — a link that resolves to nothing.
+    TEST_FIX_WITH_ISSUE: {
+      errorId: 'TEST_FIX_WITH_ISSUE', behavior: 'semantics/table.js',
+      title: 'Sorting ignored the rendered date (#1011)',
+      problem: 'Text sort applied to a date column',
+      testRun: true, status: 'APPLIED', date: '2025-12-29T12:00:00Z',
+    },
   },
 };
 
@@ -185,5 +198,41 @@ test.describe('Fix Viewer — fallback path (data/fixes.json)', () => {
     const row = page.locator('tbody tr', { hasText: 'TEST_FIX_MISSING_TEST' });
     await expect(row).toHaveCount(1);
     await expect(row).not.toContainText('VERIFIED');
+  });
+
+  /**
+   * #1077 — John: "add a link to the issue number in fix viewer".
+   *
+   * The traced path has linked the issue since #912. This path — the ONLY one
+   * the deployed site takes, because /api/fixes needs the dev server — had no
+   * Issue column at all, so on the published site a fix could not be traced to
+   * its issue. `normalise()` was already computing the number and spending it
+   * entirely on search relevance.
+   */
+  test('a recovered issue number is a link to that issue', async ({ page }) => {
+    const link = page.locator('td.fix-cell--issue a');
+    await expect(link).toHaveCount(1);
+    await expect(link).toHaveText('#1011');
+    await expect(link).toHaveAttribute(
+      'href',
+      'https://github.com/CieloVistaSoftware/wb-starter/issues/1011',
+    );
+  });
+
+  test('an entry with no issue number renders a dash, never a link to nowhere', async ({ page }) => {
+    // Both negative entries must produce a cell that exists and holds no anchor.
+    // Asserting only "no bad link" would also pass if the column were missing.
+    const cells = page.locator('td.fix-cell--issue');
+    await expect(cells).toHaveCount(Object.keys(FALLBACK.fixes).length);
+
+    for (const id of ['TEST_FIX_001', 'TEST_FIX_MISSING_TEST']) {
+      const cell = page.locator('tbody tr', { hasText: id }).locator('td.fix-cell--issue');
+      await expect(cell).toHaveText('—');
+      await expect(cell.locator('a')).toHaveCount(0);
+    }
+  });
+
+  test('the Issue column is headed, so the number is readable as an issue', async ({ page }) => {
+    await expect(page.locator('table.fix-table thead th', { hasText: 'Issue' })).toHaveCount(1);
   });
 });

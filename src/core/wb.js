@@ -158,6 +158,7 @@ import { setupGlobalErrorHandler } from './error-logger.js';
 import { pubsub } from './pubsub.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
+import { createInjectionTracker } from './injection-tracker.js';
 
 // Global dev/test diagnostics: surface uncaught errors/rejections to console so Playwright traces capture them.
 try {
@@ -384,6 +385,10 @@ function applyDeclaredModifiers(element, behaviorName) {
 const applied = new WeakMap();
 // Track pending injections to prevent re-entry
 const pending = new WeakMap();
+// #961/#962: a COUNTABLE view of the same thing `pending` tracks. A WeakMap
+// cannot be counted, so "is WB still building?" was unanswerable from outside
+// and tests slept instead. Shared with wb-lazy.js — one contract, one file.
+const injectionTracker = createInjectionTracker();
 // Track schema-processed elements
 const schemaProcessed = new WeakSet();
 // Track elements currently mid-processSchema() (#312 follow-up): scan()'s
@@ -469,6 +474,10 @@ const WB = {
       return null; // Already pending
     }
     elementPending.add(behaviorName);
+    // Counted here, AFTER every early return above, so start/end always pair:
+    // x-ignore, an unknown behavior, an already-applied or already-pending
+    // behavior all bail before this line and never enter the finally below.
+    const injectionRecord = injectionTracker.start(behaviorName, element);
 
     try {
       // Just-in-time CSS: load this behavior's stylesheet(s) before it
@@ -543,7 +552,54 @@ const WB = {
         // because the element is finished either way. x-error carries failure.
         if (element.isConnected) element.setAttribute('x-ready', '');
       }
+      // Last, so a whenIdle() waiter woken by this always observes the
+      // x-ready stamp above rather than racing it.
+      injectionTracker.end(injectionRecord);
     }
+  },
+
+  /**
+   * How many behavior injections are in flight right now (#961/#962).
+   *
+   * Zero does NOT mean "the page is finished" — it means nothing is running at
+   * this instant, and observe()'s MutationObserver may start the next round on
+   * a later task. Use whenIdle(), which requires the zero to hold.
+   *
+   * @type {number}
+   */
+  get pendingCount() {
+    return injectionTracker.count();
+  },
+
+  /**
+   * Which behaviors are in flight right now, e.g. "card x3, table" (#961/#962).
+   * "Timed out" on its own has cost this project enough time; a stuck
+   * readiness signal has to say what it is stuck on.
+   * @type {string}
+   */
+  get pendingBehaviors() {
+    return injectionTracker.describe();
+  },
+
+  /**
+   * Resolve once no injection has been in flight for `quiet` ms (#961/#962).
+   *
+   *     await WB.whenIdle();              // default: 10s budget, 50ms quiet
+   *     await WB.whenIdle({ timeout: 30000 });
+   *
+   * Replaces `await page.waitForTimeout(4000)` — a guess at how long building
+   * takes — with a wait for building actually being over. Rejects rather than
+   * resolving on timeout: a readiness signal that gives up quietly turns a hung
+   * build into a green test.
+   *
+   * On the lazy runtime, below-the-fold elements are deferred deliberately, so
+   * idle means "no work in flight", not "everything is injected". Scroll first.
+   *
+   * @param {{ timeout?: number, quiet?: number }} [options]
+   * @returns {Promise<void>}
+   */
+  whenIdle(options) {
+    return injectionTracker.whenIdle(options);
   },
 
   /**
@@ -974,7 +1030,26 @@ const WB = {
             // <article x-card> built the card twice: the guard lived in
             // getAutoInjectBehavior(), a function this path never calls.
             if (isReplacedByExplicitBehavior(htmlEl, behavior)) return;
-            WB.inject(htmlEl, behavior);
+            // #961/#962: PUSH the promise. This loop alone dropped it, while
+            // every other injection loop in scan() collects into `promises` and
+            // is awaited by the Promise.all below.
+            //
+            // Auto-inject is the DEFAULT path for a semantic-first page —
+            // <button>, <nav>, <article>, <table> and the rest of nativeMap all
+            // arrive here — so on a typical page the injections scan() did NOT
+            // await were the MAJORITY of them. `await WB.scan()` therefore
+            // resolved on a half-built page, and `WB.ready` (#962), which is
+            // just the boot scan's promise, inherited that lie.
+            //
+            // Measured 2026-09-08, snapshot taken inside the page in scan()'s
+            // own .then(): a plain <button> had className "" and no x-ready at
+            // the instant scan() resolved
+            // (tests/regression/scan-awaits-auto-injected-behaviors.spec.ts).
+            // That is why button-click-event.spec.ts carries a #979 comment
+            // recording the same symptom without the cause, and why 496
+            // waitForTimeout calls in tests/ guess at a duration instead of
+            // awaiting a signal — the guess is what flaps under load (#961).
+            promises.push(WB.inject(htmlEl, behavior));
           }
         });
       });

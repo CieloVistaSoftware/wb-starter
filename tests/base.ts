@@ -568,13 +568,69 @@ export async function elementReady(locator: Locator, timeoutMs = 15000): Promise
   );
 }
 
-// #962 NOTE — deliberately NOT adopted here yet.
+/**
+ * Wait until the runtime has no injection in flight (#961/#962).
+ *
+ *     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
+ *     await wbIdle(page);
+ *     await expect(page.locator('#counter')).toHaveText('0');
+ *
+ * This is the replacement for `await page.waitForTimeout(500)` at the point
+ * where the sleep is standing in for "injection finished". A sleep guesses at a
+ * DURATION and is wrong whenever the machine is slower than the guess — which
+ * is #961, ~20 tests changing state between identical runs.
+ *
+ * WAITS FOR `WB.whenIdle` TO EXIST FIRST, on purpose. Several specs wait for
+ * `window.WB` instead, which proves only that the module object was created —
+ * not that init() ran, not that anything was injected. `whenIdle` is defined on
+ * the runtime object itself, so its presence is the same weak signal; the real
+ * wait is the call, which resolves only once the counter has held at zero.
+ *
+ * IDLE IS NOT "FINISHED". The lazy runtime defers below-the-fold elements to an
+ * IntersectionObserver deliberately, so scroll to the thing first
+ * (`safeScrollIntoView`) and then await idle — or use `elementReady`, which is
+ * cheaper and scoped to the one element you are about to assert on.
+ *
+ * NOT SUITABLE FOR EVERY PAGE. demos/site/cards.html builds for longer than the
+ * 30s test timeout; a page-wide wait there fails no matter how it is spelled.
+ * That page uses per-element waits, and this helper is for pages that settle.
+ *
+ * It REJECTS on timeout rather than resolving. A readiness signal that gives up
+ * quietly turns a hung build into a green test.
+ */
+export async function wbIdle(
+  page: Page,
+  opts: { timeout?: number; quiet?: number } = {}
+): Promise<void> {
+  const timeout = opts.timeout ?? 15000;
+  const quiet = opts.quiet ?? 50;
+  await page.waitForFunction(
+    () => typeof (window as any).WB?.whenIdle === 'function',
+    undefined,
+    { timeout }
+  );
+  await page.evaluate(
+    ([t, q]) => (window as any).WB.whenIdle({ timeout: t, quiet: q }),
+    [timeout, quiet]
+  );
+}
+
+// #962 NOTE — `WB.ready` is still NOT adopted in this file's shared helpers.
 //
-// The runtime now exposes `WB.ready` (the boot scan's promise, which both
+// The runtime exposes `WB.ready` (the boot scan's promise, which both
 // runtimes previously created inside a DOMContentLoaded callback and threw
 // away). Awaiting it is the correct replacement for the 492 `waitForTimeout`
 // calls in this suite, because a sleep guesses at DURATION and fails whenever
 // the machine is slower than the guess.
+//
+// 2026-09-08 — and until today it was ALSO not true. wb.js's scan() collected
+// every injection it started into `promises` and awaited them, except the
+// auto-inject loop, which dropped its promise on the floor. Auto-inject is the
+// default path for a semantic-first page, so most of a page's injections were
+// not awaited and `await WB.scan()` — hence `WB.ready` — resolved on a
+// half-built page. Measured inside the page in scan()'s own .then(): a plain
+// <button> had className "" and no x-ready at that instant. Fixed, with
+// tests/regression/scan-awaits-auto-injected-behaviors.spec.ts pinning it.
 //
 // But adopting it HERE, in the helper 38 spec files call, was measured and it
 // made things worse twice:
@@ -628,13 +684,29 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
     }
   }, html);
   
-  // Wait for lazy-loaded behavior modules to initialize
-  // Behaviors add .x-ready class after init completes
+  // Wait for the injected host to actually be finished.
+  //
+  // #961: this used to wait for `#test-container > .x-ready` — a CLASS that has
+  // never existed. Both runtimes stamp x-ready as an ATTRIBUTE (#970), and
+  // tests/compliance/no-wb-ready.spec.ts explicitly FORBIDS behaviors adding it
+  // as a class ("x-ready is DOM pollution"). So the selector matched nothing on
+  // every call, every call fell into the catch, and the readiness this helper
+  // gave its 38 caller files was a 300ms sleep — a guess at a duration, which
+  // is wrong exactly when the machine is busy. Silence is not success
+  // (docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md): a wait that never matches
+  // and a wait that is instantly satisfied look identical from outside.
+  //
+  // The `await WB.scan(c)` above is now the primary signal — it became truthful
+  // once scan() stopped dropping its auto-inject promises (#1075). This is the
+  // backstop for work observe() starts afterwards.
   try {
-    await page.waitForSelector('#test-container > .x-ready', { timeout: 3000 });
+    await page.waitForSelector('#test-container > [x-ready]', { timeout: 3000 });
   } catch {
-    // Some elements (native inputs) may not get .x-ready — fall through
-    await page.waitForTimeout(300);
+    // Legitimately unstamped hosts exist: an element whose behavior REPLACES it
+    // (autocomplete, x-copybutton, details) is gone before it can be stamped,
+    // and a native input with no behavior is never injected at all. Falling
+    // through is right for those — but it is now a real fallback instead of the
+    // only path this helper ever took.
   }
   
   // Prefer the AUTHORED host; fall back to child 0 if it did not survive.

@@ -20,6 +20,7 @@ import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
+import { createInjectionTracker } from './injection-tracker.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 
 // Debug logging — silent unless localStorage['x-debug'] names a category
@@ -477,6 +478,10 @@ const applied = new WeakMap();
 // Map<HTMLElement, Set<string>>
 const pendingInjections = new Map();
 let injectionTimeout = null;
+// #961/#962: the countable, awaitable view of the same in-flight work.
+// Same module wb.js uses — one contract, implemented once (#923/#951 are what
+// happens when the two runtimes each grow their own copy).
+const injectionTracker = createInjectionTracker();
 
 // Shared observer for lazy loading
 const lazyPending = new WeakMap();
@@ -589,6 +594,11 @@ const WB = {
       pendingInjections.set(element, pending);
     }
     pending.add(behaviorName);
+    // Counted here, AFTER every early return above, so start/end always pair:
+    // an invalid element, an unknown behavior, an already-applied or
+    // already-pending behavior all bail before this line and never reach the
+    // finally below.
+    const injectionRecord = injectionTracker.start(behaviorName, element);
 
     try {
       // Load behavior JS and its CSS in parallel — same JIT loading wb.js
@@ -675,7 +685,50 @@ const WB = {
           if (element.isConnected) element.setAttribute('x-ready', '');
         }
       }
+      // Last, so a whenIdle() waiter woken by this always observes the
+      // x-ready stamp above rather than racing it.
+      injectionTracker.end(injectionRecord);
     }
+  },
+
+  /**
+   * How many behavior injections are in flight right now (#961/#962).
+   *
+   * Zero does NOT mean "the page is finished": this runtime defers
+   * below-the-fold elements to an IntersectionObserver on purpose, so idle
+   * means "no work in flight", not "everything is injected". Scroll first.
+   *
+   * @type {number}
+   */
+  get pendingCount() {
+    return injectionTracker.count();
+  },
+
+  /**
+   * Which behaviors are in flight right now, e.g. "card x3, table" (#961/#962).
+   * "Timed out" on its own has cost this project enough time; a stuck
+   * readiness signal has to say what it is stuck on.
+   * @type {string}
+   */
+  get pendingBehaviors() {
+    return injectionTracker.describe();
+  },
+
+  /**
+   * Resolve once no injection has been in flight for `quiet` ms (#961/#962).
+   *
+   *     await WB.whenIdle();              // default: 10s budget, 50ms quiet
+   *
+   * Replaces `await page.waitForTimeout(...)` — a guess at how long building
+   * takes — with a wait for building actually being over. Rejects rather than
+   * resolving on timeout: a readiness signal that gives up quietly turns a hung
+   * build into a green test.
+   *
+   * @param {{ timeout?: number, quiet?: number }} [options]
+   * @returns {Promise<void>}
+   */
+  whenIdle(options) {
+    return injectionTracker.whenIdle(options);
   },
 
   /**
@@ -1197,7 +1250,11 @@ const WB = {
 // Global export
 if (typeof window !== 'undefined') {
   if (window.WB) {
-    Object.assign(window.WB, WB);
+    // NOT Object.assign: it READS a getter and copies the value, so
+    // `pendingCount` would land on the global as a frozen number captured at
+    // load time — a readiness signal permanently stuck at 0, which is worse
+    // than not having one (#961/#962). Copying descriptors keeps it live.
+    Object.defineProperties(window.WB, Object.getOwnPropertyDescriptors(WB));
   } else {
     window.WB = WB;
   }

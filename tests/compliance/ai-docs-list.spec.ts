@@ -56,9 +56,22 @@ test.describe('A.I. Docs page lists all AI docs, in order, in the menu (#230)', 
     expect(positions, 'tier docs are out of reading order (README → TIER1 → TIER2 → TIER3)').toEqual(sorted);
   });
 
-  test('a nav menu item links to the A.I. Docs page', () => {
-    const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'site.json'), 'utf8'));
-    const item = (site.navigationMenu || []).find((m: any) => m.pageToLoad === 'ai-docs');
-    expect(item, 'config/site.json navigationMenu has no A.I. Docs entry (pageToLoad: "ai-docs")').toBeTruthy();
+  // #1083 — John: "remove the demos navigator item as well as the A.I. Docs".
+  //
+  // The assertion that used to live here required a navigationMenu entry with
+  // pageToLoad "ai-docs". That is now the opposite of the requirement, so it is
+  // retired rather than inverted: "the nav must NOT offer this" would fail the
+  // day someone legitimately puts it back, and this gate is about the PAGE, not
+  // about the menu.
+  //
+  // What replaces it is narrower and still true: the page has to keep working
+  // for anyone who reaches it directly at ?page=ai-docs, which is the whole
+  // reason the page was kept when the menu item went.
+  test('the A.I. Docs page still exists for anyone who visits it directly', () => {
+    expect(
+      fs.existsSync(path.join(ROOT, 'pages', 'ai-docs.html')),
+      'pages/ai-docs.html was removed from the nav (#1083), not from the site — '
+        + '?page=ai-docs must still resolve',
+    ).toBe(true);
   });
 });

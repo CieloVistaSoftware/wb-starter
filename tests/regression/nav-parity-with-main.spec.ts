@@ -82,6 +82,24 @@ test.describe('navigation parity (#1002)', () => {
     ).toEqual([]);
   });
 
+  /**
+   * Items removed ON PURPOSE, each with the issue that asked for it.
+   *
+   * This list is the difference between "deliberate" and "vanished", which is
+   * the ONLY thing this gate exists to tell apart. Without it a requested
+   * removal is indistinguishable from the silent merge deletion that happened
+   * twice to the Error Log item — and the only way to ship one would be to
+   * weaken or baseline the check, which would retire the guard entirely.
+   *
+   * An entry here is a claim someone can audit: the id, and who asked. Delete
+   * an entry once main no longer carries that item, so the list cannot grow
+   * into a permanent exemption.
+   */
+  const REMOVED_ON_PURPOSE: Record<string, string> = {
+    demos: '#1083 — John: "remove the demos navigator item as well as the A.I. Docs"',
+    'ai-docs': '#1083 — same request; the page stays reachable at ?page=ai-docs',
+  };
+
   test('no menu item present on main has gone missing here', () => {
     const onMain = mainNav();
     test.skip(onMain === null, 'origin/main not available in this checkout');
@@ -90,6 +108,7 @@ test.describe('navigation parity (#1002)', () => {
     const lost = onMain!
       .filter((i) => i.menuItemId || i.menuItemText)
       .filter((i) => !here.has(i.menuItemId || i.menuItemText))
+      .filter((i) => !(i.menuItemId && i.menuItemId in REMOVED_ON_PURPOSE))
       .map((i) => `${i.menuItemText} (${i.menuItemId})`);
 
     expect(
@@ -102,7 +121,11 @@ test.describe('navigation parity (#1002)', () => {
     ).toEqual([]);
   });
 
-  test('every menu item points somewhere that resolves', async ({ page, request }) => {
+  // `page` was in this signature and never used — the check is made with
+  // `request`, which asks the server directly rather than rendering. Taking a
+  // browser page it does not need made the test slower and implied it was
+  // testing something in the DOM.
+  test('every menu item points somewhere that resolves', async ({ request }) => {
     const items = localNav().filter((i) => i.href || i.menuItemId);
     const broken: string[] = [];
 

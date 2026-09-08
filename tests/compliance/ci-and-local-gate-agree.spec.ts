@@ -181,6 +181,25 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
     ).toBe(false);
   });
 
+  test('a push to main is not cancelled by the next push before it can answer', () => {
+    // Line-based, not one regex: this file is CRLF, and `concurrency:` sits
+    // under a comment block, both of which quietly defeat a multiline match.
+    const lines = ci.split(/\r?\n/);
+    const start = lines.findIndex((l) => /^concurrency:/.test(l));
+    expect(start, `${CI} has no top-level concurrency block.`).toBeGreaterThan(-1);
+    const block = lines.slice(start + 1).slice(0, lines.slice(start + 1).findIndex((l) => /^\S/.test(l)));
+    const cancel = block.find((l) => /^\s+cancel-in-progress:/.test(l));
+    expect(cancel, `${CI} has no concurrency.cancel-in-progress setting.`).toBeDefined();
+    expect(
+      cancel!.split(':').slice(1).join(':').trim(),
+      'cancel-in-progress is unconditionally true. The gate takes ~38 minutes and pushes to\n' +
+      'main arrive every 6-15, so every run is killed by the next one long before it finishes —\n' +
+      'run 34284925939, the first to carry the 60-minute budget, died at 3m12s exactly this way.\n' +
+      'Cancelling is right for a pull request and wrong for main, where every commit is permanent\n' +
+      'and the question is whether THAT commit was green.',
+    ).not.toBe('true');
+  });
+
   test('the uploaded evidence is a path this repo actually writes', () => {
     const upload = stepOf('Upload test report');
     expect(upload, `${CI} has no "Upload test report" step.`).not.toBe('');
