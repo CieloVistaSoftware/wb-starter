@@ -106,17 +106,22 @@
 </script>
 
 <section id="whats-new-unreleased">
-  <h2>Unreleased — on <code>main</code>, not yet in a tagged release</h2>
+  <h2>Live on the site, but not in any numbered release</h2>
+  <p>These fixes are on <code>main</code> and deployed. The last version number, 4.0.2, was
+  cut before them, so nothing you can name contains them yet.</p>
   <p><strong>Things that were broken only where anyone could see them.</strong> John opened the deployed
   behaviours page and its error log showed images failing to load. Everything about them was correct on
   localhost. Chasing that turned up a second family of defects: checks that had been quietly matching nothing
   for months.</p>
   <ul>
-    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Every example image 404&rsquo;d on the
-    published site.</strong> GitHub Pages serves this project under <code>/wb-starter/</code>; <code>npm start</code>
-    serves it at <code>/</code>. Examples written as <code>src=&quot;/images/&hellip;&quot;</code> are therefore right locally
-    and wrong in the only place visitors look. Example assets are now re-rooted through the site root before they
-    render. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1047" target="_blank" rel="noopener">#1047</a></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Every example image was broken
+    on the published site.</strong> The site lives at two addresses. On your own machine it sits at the
+    top level (<code>localhost:3000/</code>); published, it sits inside a folder
+    (<code>&hellip;github.io/wb-starter/</code>). The examples asked for images starting from the top,
+    <code>/images/placeholder.svg</code>, which finds the file on your machine but on the published site
+    points outside the project entirely, to an address that does not exist. So every example image
+    failed to load, and only ever for visitors. The page now adds the folder to those addresses before
+    the examples render.
 
     <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The first version of that fix missed every
     portfolio card.</strong> It re-rooted a fixed list of attribute names &mdash; <code>src</code>,

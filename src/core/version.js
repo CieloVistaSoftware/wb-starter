@@ -5,8 +5,8 @@
  */
 export const VERSION = {
   "version": "4.0.2",
-  "commit": "b4a948fb",
-  "builtAt": "2026-09-08T20:30:41.428Z",
+  "commit": "855afef1",
+  "builtAt": "2026-09-08T21:41:32.159Z",
   "branch": "main",
   "dirty": true,
   "ahead": 0,

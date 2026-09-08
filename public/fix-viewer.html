@@ -353,7 +353,18 @@
   </header>
 
   <main id="content">
-    <div id="fixviewer-div-26" class="empty-state">Loading fixes...</div>
+    <!-- #1054: "Loading fixes..." was already here, so the page was never
+         literally blank — but it says nothing about how long, and the answer was
+         8-10 seconds while /api/fixes walked the whole git history. Silence for
+         that long reads as a hang: "we are now at 110 changes and it's just
+         hanging". It was working. Say what it is doing and that the wait is
+         once, so a slow first load is legible instead of alarming. -->
+    <div id="fixviewer-div-26" class="empty-state">
+      Tracing every fix back through git history…
+      <small style="display:block; margin-top:.5rem; opacity:.75">
+        The first load after a new commit takes a few seconds; it is cached after that.
+      </small>
+    </div>
   </main>
 
   <script type="module">
@@ -377,15 +388,40 @@
         // version — it cannot answer that however it is formatted. /api/fixes
         // builds the chain from git: a commit cites its issue, and the earliest
         // tag containing that commit is the release it shipped in.
+        // #1067: both of these used to be ROOT-absolute ('/api/fixes',
+        // '/data/fixes.json'). This page is served under /wb-starter/public/ on
+        // GitHub Pages, so a leading slash addresses the ORGANISATION root:
+        //
+        //   404  https://cielovistasoftware.github.io/api/fixes
+        //   404  https://cielovistasoftware.github.io/data/fixes.json
+        //   200  https://cielovistasoftware.github.io/wb-starter/data/fixes.json
+        //
+        // GitHub answers a 404 with an HTML page, and `response.json()` on HTML
+        // throws "Unexpected token '<'" — which is exactly what the page showed:
+        // "Error loading fixes data. Unexpected token '<'". The fallback could
+        // not rescue it because the fallback had the same defect.
+        //
+        // Resolved against THIS page instead. The viewer lives in public/, so
+        // one level up is the site root wherever the site is mounted. Same fix
+        // as errors-viewer.html and error-logger.js (#1000, #1047).
+        const url = (route) => new URL('../' + route, location.href).href;
+
         try {
-          const traced = await fetch('/api/fixes');
-          if (traced.ok) {
+          const traced = await fetch(url('api/fixes'));
+          // Guard the CONTENT TYPE, not just response.ok. A static host can
+          // answer 200 with an HTML index for an unknown path, and parsing that
+          // as JSON is the same crash by a quieter route.
+          const type = traced.headers.get('content-type') || '';
+          if (traced.ok && type.includes('json')) {
             const t = await traced.json();
             if (Array.isArray(t.rows) && t.rows.length) { renderTraced(t); return; }
           }
         } catch { /* no server (static deploy) — fall back to the legacy file */ }
 
-        const response = await fetch('/data/fixes.json');
+        const response = await fetch(url('data/fixes.json'));
+        if (!response.ok) {
+          throw new Error('fixes data is not published here (' + response.status + ' for ' + url('data/fixes.json') + ')');
+        }
         const data = await response.json();
         
         // Convert object to array
