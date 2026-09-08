@@ -103,13 +103,29 @@ if (CHECK_ONLY) {
 
 // ── 3. Bump, stamp, and verify every surface agrees ──────────────────────────
 // LAST, so an abort above never leaves a half-bumped tree.
+//
+// #991: this was a whole-file string replace of `"version": "x.y.z"`. A
+// lockfile carries that key once per INSTALLED PACKAGE, so every dependency
+// sitting on the project's own version got bumped with it — while its
+// `integrity` hash still described the old tarball, which makes `npm ci`
+// reject the tree. Set the two fields structurally instead. Re-serialising is
+// otherwise a no-op: npm writes 2-space JSON with a trailing newline, exactly
+// what JSON.stringify(json, null, 2) produces.
+function withVersion(text, version) {
+  const json = JSON.parse(text);
+  json.version = version;
+  if (json.packages && json.packages['']) json.packages[''].version = version;
+  const body = JSON.stringify(json, null, 2) + (text.endsWith('\n') ? '\n' : '');
+  return text.includes('\r\n') ? body.split('\n').join('\r\n') : body;
+}
+
 console.log('\n📝 Bumping and stamping\n');
 for (const file of ['package.json', 'package-lock.json']) {
   const p = path.join(ROOT, file);
   // Read fully, THEN write. Opening for write first truncates the file — that
   // mistake left package.json empty on main for four releases.
   const before = fs.readFileSync(p, 'utf8');
-  fs.writeFileSync(p, before.split(`"version": "${pkg.version}"`).join(`"version": "${next}"`));
+  fs.writeFileSync(p, withVersion(before, next));
 }
 execSync('node scripts/stamp-version.js', { cwd: ROOT, stdio: 'inherit' });
 

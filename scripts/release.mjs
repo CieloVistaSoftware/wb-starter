@@ -108,14 +108,94 @@ if (CHECK_ONLY) {
 
 // ── 3. Bump, stamp, and verify every surface agrees ──────────────────────────
 // LAST, so an abort above never leaves a half-bumped tree.
+//
+// #991: this was a whole-file string replace —
+//
+//   before.split(`"version": "${pkg.version}"`).join(`"version": "${next}"`)
+//
+// A lockfile carries one `"version": "x.y.z"` per INSTALLED PACKAGE, so every
+// dependency sitting on the project's own number got bumped with it. Measured
+// going 4.0.0 -> 4.0.1: seven fields moved where two should have. resolve-from,
+// has-flag, path-exists, escape-string-regexp and is-promise are all genuinely
+// published at 4.0.0, and their `integrity` hashes still describe the 4.0.0
+// tarball — so the lockfile claimed a version whose hash cannot match and
+// `npm ci` rejected the tree. Every release that landed ON a version some
+// dependency also held did this silently.
+//
+// The irony is that the comment one line down already warned about a
+// near-identical class of mistake in this same loop.
+//
+// So the fields are now set structurally, by name. The bytes around them are
+// unchanged: npm writes both files as 2-space JSON with a trailing newline,
+// which is byte-for-byte what JSON.stringify(json, null, 2) produces, so
+// re-serialising is a no-op everywhere except the fields named here.
+const OWN_VERSION_FIELDS = {
+  'package.json': ['/version'],
+  'package-lock.json': ['/version', '/packages//version'],
+};
+
+/** Every `version` field in a parsed JSON tree, keyed by its path. */
+function versionFields(node, prefix = '', out = {}) {
+  if (!node || typeof node !== 'object') return out;
+  for (const [key, value] of Object.entries(node)) {
+    const at = `${prefix}/${key}`;
+    if (key === 'version' && typeof value === 'string') out[at] = value;
+    else if (value && typeof value === 'object') versionFields(value, at, out);
+  }
+  return out;
+}
+
+/** Paths whose version differs between two of those maps. */
+function movedVersions(before, after) {
+  const paths = new Set([...Object.keys(before), ...Object.keys(after)]);
+  return [...paths].filter((p) => before[p] !== after[p]).sort();
+}
+
+/** Set the project's own version fields, preserving the file's own formatting. */
+function withVersion(text, version) {
+  const json = JSON.parse(text);
+  json.version = version;
+  if (json.packages && json.packages['']) json.packages[''].version = version;
+  const body = JSON.stringify(json, null, 2) + (text.endsWith('\n') ? '\n' : '');
+  return text.includes('\r\n') ? body.split('\n').join('\r\n') : body;
+}
+
 console.log('\n📝 Bumping and stamping\n');
+const originals = {};
 for (const file of ['package.json', 'package-lock.json']) {
   const p = path.join(ROOT, file);
   // Read fully, THEN write. Opening for write first truncates the file — that
   // mistake left package.json empty on main for four releases.
   const before = fs.readFileSync(p, 'utf8');
-  fs.writeFileSync(p, before.split(`"version": "${pkg.version}"`).join(`"version": "${next}"`));
+  originals[file] = before;
+  fs.writeFileSync(p, withVersion(before, next));
 }
+
+// Verify what actually landed on disk, not what we intended to write, and do it
+// BEFORE stamping so a wrong bump never becomes a half-released tree. This is
+// the check #991 asked for: a structural diff of every version field in both
+// files, which goes red the moment anything rewrites a dependency's version.
+const strays = [];
+for (const file of ['package.json', 'package-lock.json']) {
+  const before = versionFields(JSON.parse(originals[file]));
+  const after = versionFields(JSON.parse(read(file)));
+  for (const at of movedVersions(before, after)) {
+    if (!OWN_VERSION_FIELDS[file].includes(at)) {
+      strays.push(`   ${file}${at}: ${before[at]} → ${after[at]}`);
+    }
+  }
+}
+if (strays.length) {
+  for (const [file, text] of Object.entries(originals)) fs.writeFileSync(path.join(ROOT, file), text);
+  die(
+    'the bump changed version fields that are not this project\'s',
+    `\n${strays.join('\n')}\n\n` +
+      '   Those belong to installed packages. Their integrity hashes still\n' +
+      '   describe the old tarball, so `npm ci` would reject the tree (#991).\n' +
+      '   Both files have been restored.'
+  );
+}
+
 execSync('node scripts/stamp-version.js', { cwd: ROOT, stdio: 'inherit' });
 
 const surfaces = {

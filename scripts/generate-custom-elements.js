@@ -209,8 +209,16 @@ async function main() {
   
   const manifest = await generateManifest();
   
-  // Write to data folder
-  const outputPath = path.join(rootDir, 'data/custom-elements.json');
+  // Write to data folder.
+  //
+  // #1057: WB_CEM_OUT redirects the write. The whole defect here was a
+  // generator that destroyed a 55KB committed artifact, so the gate that
+  // guards it must be able to RUN it without risking the same destruction —
+  // tests/compliance/custom-elements-manifest.spec.ts generates to a temp
+  // path and compares. Unset (every real invocation), behaviour is unchanged.
+  const outputPath = process.env.WB_CEM_OUT
+    ? path.resolve(process.env.WB_CEM_OUT)
+    : path.join(rootDir, 'data/custom-elements.json');
 
   // #1057: an empty result is a FAILURE, not a file to write. This generator
   // spent a major version resolving nothing and reporting it as success, and
