@@ -52,7 +52,7 @@ Supported attributes:
 - Source: [src/wb-viewmodels/card.js](../src/wb-viewmodels/card.js)
 - Playwright tests: [tests/behaviors/ui/card.spec.ts](../tests/cards/card-examples-demo.spec.ts)
 - The card behavior is automatically applied to `<article>` elements or `<article>` elements (if auto-inject is enabled).
-- Always adds the `x-card` class.
+- Always adds the `<article>` class.
 - Always adds the `x-card--default` class if no variant is specified.
 - Supports additional classes for hoverable, clickable, elevated, and custom variants.
 
@@ -98,7 +98,7 @@ When using `<article>` or `<section>`, the behavior will automatically enhance e
 ---
 
 ## Styles
-- Root class: `x-card` (applied by the card behavior, not inherited)
+- Root class: `<article>` (applied by the card behavior, not inherited)
 - Default variant: `x-card--default`
 - Other variants: `x-card--[variant]`
 - Additional: `x-card--hoverable`, `x-card--clickable`, `x-card--elevated`

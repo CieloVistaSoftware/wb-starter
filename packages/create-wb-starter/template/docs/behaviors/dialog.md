@@ -2,15 +2,35 @@
 
 Modal dialog using native HTML5 dialog element
 
-Applies to `<dialog>`, and to any element carrying `x-dialog`.
+## Type — decorates a semantic element
 
-## Usage
+`x-dialog` is the **dialog behavior**. It attaches to `<dialog>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<dialog>
-  …
+<!-- Plain semantic HTML. The behavior is injected automatically -->
+<!-- because the element itself implies it. No attribute needed. -->
+<button onclick="document.getElementById('delete-branch').showModal()">
+  Open the dialog
+</button>
+<dialog id="delete-branch" size="md">
+  <h2>Delete branch?</h2>
+  <p>fix/706-dropdown will be removed. This cannot be undone.</p>
 </dialog>
 ```
+
+### On a different element
+
+Use `x-dialog` when the host is not a `<dialog>` and you want the same behavior:
+
+```html
+<div x-dialog>
+  …
+</div>
+```
+
+> Do not write `<dialog x-dialog>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
 ## Attributes
 

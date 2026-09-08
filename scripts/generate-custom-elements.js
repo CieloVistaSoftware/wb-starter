@@ -89,8 +89,14 @@ function schemaToAttributes(schema) {
       // Skip internal properties
       if (name.startsWith('_')) continue;
       
+      // #224: v3 attributes are PLAIN -- title, variant, size -- not data-*.
+      // This line hardcoded a `data-` prefix onto every schema property, so the
+      // manifest manufactured ~180 legacy attribute names that exist nowhere in
+      // the framework, and IntelliSense then SUGGESTED them to anyone typing in
+      // a wb-starter page. The deprecated syntax was being taught by the tooling
+      // built to teach the current one.
       const attr = {
-        name: `data-${name.replace(/([A-Z])/g, '-$1').toLowerCase()}`,
+        name: name.replace(/([A-Z])/g, '-$1').toLowerCase(),
         description: prop.description || `${name} property`,
         type: { text: prop.type || 'string' }
       };
@@ -136,8 +142,13 @@ async function generateManifest() {
   
   // Generate declarations for each custom element
   for (const { selector, behavior } of customElementMappings) {
-    // Only process wb-* elements
-    if (!selector.startsWith('wb-')) continue;
+    // #1057: this read `if (!selector.startsWith('wb-')) continue;`. Correct
+    // when selectors were wb-*; every one of the 54 became x-* in 4.0.0, so the
+    // loop skipped all of them and the generator wrote an EMPTY manifest over a
+    // 55KB one -- while printing "✅ Generated 0 component definitions" and
+    // exiting 0. Silent success is why nothing reported it for a whole major
+    // version.
+    if (!selector.startsWith('x-')) continue;
     
     const schema = schemaMap.get(behavior);
     const attributes = schema ? schemaToAttributes(schema) : [];
@@ -200,8 +211,19 @@ async function main() {
   
   // Write to data folder
   const outputPath = path.join(rootDir, 'data/custom-elements.json');
+
+  // #1057: an empty result is a FAILURE, not a file to write. This generator
+  // spent a major version resolving nothing and reporting it as success, and
+  // the only reason the manifest still had content is that nobody happened to
+  // run it. Refuse to overwrite a real manifest with nothing.
+  if (!manifest.modules.length) {
+    console.error('✖ Resolved 0 definitions — refusing to overwrite ' + outputPath + '.');
+    console.error('  Nothing in customElementMappings matched the expected selector form.');
+    process.exit(1);
+  }
+
   fs.writeFileSync(outputPath, JSON.stringify(manifest, null, 2));
-  
+
   console.log(`✅ Generated ${manifest.modules.length} component definitions`);
   console.log(`📄 Output: ${outputPath}`);
   console.log(`\n💡 Restart VS Code to enable "Go to Definition" for WB components`);

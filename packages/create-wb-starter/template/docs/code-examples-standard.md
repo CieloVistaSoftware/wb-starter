@@ -211,8 +211,8 @@ multi-attribute tag onto one line.
 
 ```html
 <!-- Short tags: one element per line -->
-<span x-badge label="New"></span>
-<span x-badge label="Done" variant="success"></span>
+<span x-badge label="New"></div>
+<span x-badge label="Done" variant="success"></div>
 
 <!-- Long tags: one attribute per line -->
 <button
@@ -253,7 +253,7 @@ multi-attribute tag onto one line.
 <video
   controls
   width="300"
-  src="video.mp4"
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="/images/placeholder.svg">
 </video>
 ```

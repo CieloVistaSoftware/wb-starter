@@ -9,7 +9,7 @@ x-reel, [x-reel], x-frame, [x-frame], x-sticky, [x-sticky], x-drawer, [x-drawer]
 /* x-grid gets its own grid-shaped default here (not lumped in with the
    block-display group above) matching layouts.js's grid() 3-column
    default (defaultMins['3'] = '250px'). grid() itself only runs once
-   x-grid.js's module has loaded/executed and the custom element upgrades, [x-grid].js's module has loaded/executed and the custom element upgrades
+   WB has dispatched the 'grid' behavior for this element
    -- setting display:grid/grid-template-columns purely via JS inline
    styles left a real gap: this tag painted as block (single column) on
    first paint, then reflowed into a multi-column grid once JS caught up.

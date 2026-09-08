@@ -11,7 +11,7 @@ renders the version. Reads a single source of truth
 |----------|-------|
 | Behavior | `release` |
 | Attribute | `x-release` |
-| Custom Tag | `<div x-release>` |
+| Attribute form | `<div x-release>` |
 | Applies to | any element (typically a `<span>` or `<a>`) |
 | Category | Content |
 | Source | `src/wb-viewmodels/release.js` |
@@ -50,7 +50,7 @@ without any manual `WB.scan()` call.
 <span x-release reload="false"></span>
 </div>
 
-### Custom Tag
+### Attribute form
 
 <div x-demo>
 <div x-release></div>

@@ -2,12 +2,14 @@
 
 Behavior applied with x-kbd.
 
-Apply `x-kbd` to any element.
+## Type — new capability
 
-## Usage
+`x-kbd` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>
+<p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p>
 ```
 
 ## Live example

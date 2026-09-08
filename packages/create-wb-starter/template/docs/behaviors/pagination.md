@@ -2,9 +2,11 @@
 
 Behavior applied with x-pagination.
 
-Apply `x-pagination` to any element.
+## Type — new capability
 
-## Usage
+`x-pagination` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <nav x-pagination total="100" per-page="10" current="5"></nav>

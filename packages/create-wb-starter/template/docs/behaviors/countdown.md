@@ -2,9 +2,11 @@
 
 Behavior applied with x-countdown.
 
-Apply `x-countdown` to any element.
+## Type — new capability
 
-## Usage
+`x-countdown` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <div x-countdown to="2027-12-31" class="time-display"></div>

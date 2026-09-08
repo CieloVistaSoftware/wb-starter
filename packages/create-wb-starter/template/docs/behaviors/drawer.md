@@ -2,14 +2,26 @@
 
 Slide-out panel overlay from screen edge
 
-Applies to `<aside>`, and to any element carrying `x-drawer`.
+## Type — decorates a semantic element
 
-## Usage
+`x-drawer` is the **aside behavior**. It attaches to `<aside>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<aside x-drawer>
+<button x-drawer title="Filters" content="Status, owner, label and date range live here." position="end" width="320px">
+  x-drawer · title: Filters · content: Status, owner, label and date range live here. · position: end · width: 320px
+</button>
+```
+
+### On a different element
+
+Use `x-drawer` when the host is not a `<aside>` and you want the same behavior:
+
+```html
+<div x-drawer>
   …
-</aside>
+</div>
 ```
 
 ## Attributes

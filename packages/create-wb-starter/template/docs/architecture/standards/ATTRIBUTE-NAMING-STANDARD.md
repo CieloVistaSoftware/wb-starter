@@ -96,7 +96,6 @@ WB uses three patterns for applying behaviors:
 |---------|---------|----------|---------|
 | `<wb-{name}>` | **Standalone** | Behavior gets its own tag | `<div x-cardpricing>` |
 | `x-behavior` | **Modifier** | Behavior decorates an existing tag | `x-ripple` |
-| `x-as-behavior` | **BECOMES** | Morphing (transforms element) | `x-as-card` |
 
 > **Both are composition.** The split is only about where the behavior is named —
 > whether it gets its own tag or decorates a tag that already exists. Nothing
@@ -110,7 +109,7 @@ WB uses three patterns for applying behaviors:
 
 ```html
 <!-- Standalone: gets its own tag (noun) -->
-<div x-cardstats
+<articlestats
   value="1,234"
   label="Users"
   trend="up">
@@ -134,9 +133,9 @@ These native HTML attributes should be used **with the same meaning** on custom 
 ### Resource Attributes
 | Attribute | Native Element | Meaning | Use On |
 |-----------|---------------|---------|--------|
-| `src` | `<img>`, `<video>`, `<audio>` | Resource URL | `<div x-cardimage>`, `<span x-avatar>`, `<video>` |
+| `src` | `<img>`, `<video>`, `<audio>` | Resource URL | `<article x-cardimage>`, `<div x-avatar>`, `<video>` |
 | `href` | `<a>`, `<link>` | Link destination | `<div x-cardlink>`, `<a>` |
-| `alt` | `<img>` | Alternative text | `<div x-cardimage>`, `<span x-avatar>` |
+| `alt` | `<img>` | Alternative text | `<article x-cardimage>`, `<div x-avatar>` |
 | `poster` | `<video>` | Preview image | `<video>` |
 
 ### Form Attributes
@@ -147,7 +146,7 @@ These native HTML attributes should be used **with the same meaning** on custom 
 | `readonly` | `<input>`, `<textarea>` | Read-only state | `<input>` |
 | `required` | Form elements | Required field | Form behaviors |
 | `name` | Form elements | Form field name | Form behaviors |
-| `value` | Form elements | Current value | `<span x-rating>`, `<div x-slider>` |
+| `value` | Form elements | Current value | `<div x-rating>`, `<div x-slider>` |
 | `checked` | `<input type="checkbox/radio">` | Checked state | `<input type="checkbox">`, `<div x-switch>` |
 | `min` | `<input type="number/range">` | Minimum value | `<input x-stepper>`, `<div x-slider>` |
 | `max` | `<input type="number/range">` | Maximum value | `<input x-stepper>`, `<div x-slider>` |
@@ -171,7 +170,7 @@ These native HTML attributes should be used **with the same meaning** on custom 
 |-----------|---------------|---------|--------|
 | `width` | Various | Element width | Media behaviors |
 | `height` | Various | Element height | Media behaviors |
-| `loading` | `<img>`, `<iframe>` | Loading strategy | `<div x-cardimage>` |
+| `loading` | `<img>`, `<iframe>` | Loading strategy | `<article x-cardimage>` |
 
 ---
 
@@ -405,11 +404,11 @@ Extensions use `x-` prefix with optional value:
 
 ```html
 <!-- ✅ CORRECT -->
-<div x-cardstats
+<articlestats
   trend-value="+5%"
   per-page="10">
   <!-- ❌ WRONG -->
-  <div x-cardstats
+  <articlestats
     trendValue="+5%"
     perPage="10">
 ```
@@ -501,7 +500,7 @@ ARIA attributes should pass through unchanged:
   role="dialog">
 </dialog>
 <div x-tabs aria-label="Main navigation">
-</div>
+</nav>
 ```
 
 ### Behavior-Managed ARIA
@@ -512,7 +511,7 @@ Some ARIA attributes are set automatically by behaviors:
 |-----------|---------------|
 | `<div x-alert>` | `role="alert"` |
 | `<dialog>` | `role="dialog"`, `aria-modal="true"` |
-| `<div x-tabs>` | `role="tablist"`, `role="tab"`, `role="tabpanel"` |
+| `<nav x-tabs>` | `role="tablist"`, `role="tab"`, `role="tabpanel"` |
 | `<progress>` | `role="progressbar"`, `aria-valuenow` |
 | `<div x-switch>` | `role="switch"`, `aria-checked` |
 
@@ -575,10 +574,10 @@ Display values can include formatting - they're strings, not numbers:
 
 ```html
 <!-- Display value (string) - can have formatting -->
-<div x-cardstats
+<articlestats
   value="$1,234.56"
   label="Revenue">
-  <div x-cardstats
+  <articlestats
     value="99.9%"
     label="Uptime">
     <!-- Numeric value (number) - no formatting -->
@@ -788,7 +787,7 @@ name         attribute with DIFFERENT meaning?
   featured
   cta="Get Started">
 </div>
-<div x-cardstats
+<articlestats
   value="1,234"
   label="Users"
   icon="👥"
@@ -796,11 +795,11 @@ name         attribute with DIFFERENT meaning?
   trend-value="+12%">
 </div>
 <div x-cardimage
-  src="/images/placeholder.svg"
+  src="images/placeholder.svg"
   alt="Description"
   heading="Photo Title"
   loading="lazy">
-</div>
+</article>
 ```
 
 ### Feedback
@@ -811,13 +810,13 @@ name         attribute with DIFFERENT meaning?
   message="Check your input"
   dismissible>
 </div>
-<span x-badge variant="success">Active</span>
+<span x-badge variant="success">Active</div>
 <span x-avatar
-  src="/images/placeholder.svg"
+  src="images/placeholder.svg"
   alt="John Doe"
   size="lg"
   status="online">
-</span>
+</div>
 <div x-toast
   variant="success"
   message="Saved successfully!"
@@ -831,7 +830,7 @@ name         attribute with DIFFERENT meaning?
 <div x-tabs
   items="Overview,Features,Pricing"
   active="0">
-</div>
+</nav>
 <nav
   x-pagination
   total="100"
@@ -856,7 +855,7 @@ name         attribute with DIFFERENT meaning?
   value="4"
   max="5"
   icon="⭐">
-</span>
+</div>
 <div x-switch
   label="Enable notifications"
   checked>
@@ -872,8 +871,8 @@ name         attribute with DIFFERENT meaning?
 ### Media
 ```html
 <video
-  src="movie.mp4"
-  poster="/images/placeholder.svg"
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
+  poster="images/placeholder.svg"
   controls
   autoplay
   muted>
@@ -923,7 +922,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <!-- Lazy loading -->
 <img
-  src="/images/placeholder.svg"
+  src="images/placeholder.svg"
   x-lazy
   x-placeholder="blur">
 <!-- Draggable + Resizable -->

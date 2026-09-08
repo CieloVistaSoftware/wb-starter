@@ -2,12 +2,16 @@
 
 Behavior applied with x-share.
 
-Apply `x-share` to any element.
+## Type — new capability
 
-## Usage
+`x-share` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button>
+<button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">
+  x-share · variant: secondary · share-title: wb-starter · share-url: https://example.com
+</button>
 ```
 
 ## Attributes

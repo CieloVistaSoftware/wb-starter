@@ -1,6 +1,6 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+// ES modules only. `fs` and `path` were imported and never used -- the only
+// thing this file actually needs is http.
+import http from 'node:http';
 
 const PORT = 3000;
 const BASE_URL = `http://localhost:${PORT}`;

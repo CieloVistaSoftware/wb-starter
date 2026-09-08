@@ -5,11 +5,11 @@
     "Pre-commit fails only if a STAGED file exceeds its number here.",
     "Numbers fall automatically when you fix things; they never rise on their own.",
     "To raise a number you must run `npm run lint:baseline` deliberately and say why.",
-    "Auto-lowered by 1 on 2026-09-04."
+    "Auto-lowered by 10 on 2026-09-08."
   ],
-  "generated": "2026-09-04",
-  "totalProblems": 432,
-  "filesWithProblems": 170,
+  "generated": "2026-09-08",
+  "totalProblems": 421,
+  "filesWithProblems": 168,
   "files": {
     "scripts/add-matrices.mjs": 3,
     "scripts/add-site-tests.mjs": 1,
@@ -84,7 +84,7 @@
     "src/core/resize.js": 1,
     "src/core/site-engine.js": 2,
     "src/core/style-loader.js": 1,
-    "src/core/wb-lazy.js": 2,
+    "src/core/wb-lazy.js": 1,
     "src/core/wb.js": 16,
     "src/core/x-devconsole.js": 11,
     "src/index.js": 9,
@@ -138,7 +138,7 @@
     "tests/behaviors/button-sizes.spec.ts": 1,
     "tests/behaviors/fixes-verification.spec.ts": 1,
     "tests/behaviors/functional-runner.spec.ts": 4,
-    "tests/behaviors/permutation-compliance.spec.ts": 4,
+    "tests/behaviors/permutation-compliance.spec.ts": 3,
     "tests/behaviors/section-nav.spec.ts": 1,
     "tests/behaviors/ui/home-page-permutation.spec.ts": 1,
     "tests/cards/card-examples-demo.spec.ts": 1,
@@ -178,8 +178,6 @@
     "tests/regression/template-literal-escaping.spec.ts": 1,
     "tests/regression/x-audio-cors-playback-fallback.spec.ts": 1,
     "tests/regression/x-select-renders.spec.ts": 1,
-    "tests/schema-viewer.spec.ts": 1,
-    "tests/validate-vscode-data.js": 4,
-    "tests/verify-docs-links.js": 5
+    "tests/schema-viewer.spec.ts": 1
   }
 }

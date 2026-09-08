@@ -13,13 +13,13 @@
  * content into document.body at runtime, so their CSS can only be found
  * this way — a static-markup scan would miss them entirely).
  *
- * <div x-grid> and <div x-demo> are real custom elements (never migrated to the
- * WB.inject() behavior-dispatch path — see wb.js's own comment on why) so
- * they never pass through the hook this feeds. x-demo.js calls
- * ensureBehaviorCss('demo') directly from its own connectedCallback for
- * that reason. x-grid's own CSS (layout.css) stays an unconditional
- * import in site.css instead — it's under 1.5KB, cheaper than special-
- * casing a hook for one file.
+ * <div x-grid> and <div x-demo> were once described here as real custom
+ * elements that bypassed this hook, with x-demo.js calling
+ * ensureBehaviorCss('demo') itself to compensate. Neither class was ever
+ * registered (#1063): both are ordinary behaviors — tag-map.js maps
+ * 'x-demo' -> 'demo' and index.js maps 'grid'/'demo' to their modules — so
+ * both pass through WB.inject() and get their CSS here like everything else.
+ * The compensating call and the classes are gone.
  */
 import { BEHAVIOR_CSS_MAP } from '../styles/behavior-css-manifest.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';

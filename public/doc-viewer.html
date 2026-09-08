@@ -373,11 +373,14 @@
     // #466: End scrolled short of the real page bottom. Root cause (confirmed
     // via Playwright: real `page.keyboard.press('End')`, real scrollHeight/
     // scrollTop measurements over time — not a synthetic dispatchEvent):
-    // <div x-demo> is a real custom element (src/wb-viewmodels/x-demo.js) whose
-    // connectedCallback only builds the first EAGER_BUILD_COUNT (5) blocks
-    // synchronously — every block after that is deferred behind its own
-    // IntersectionObserver (rootMargin: '1200px', rooted at the viewport here
-    // since this page has no #siteBody) and, once it intersects, an ASYNC
+    // <div x-demo> is an ordinary WB behavior (tag-map.js maps 'x-demo' ->
+    // 'demo'). It was described here as a real custom element backed by
+    // x-demo.js, whose connectedCallback built the first EAGER_BUILD_COUNT (5)
+    // blocks synchronously; that class was never registered, so none of it ran,
+    // and the file is deleted (#1063). What is true either way: blocks below
+    // the fold are deferred behind an IntersectionObserver
+    // (rootMargin: '1200px', rooted at the viewport here
+    // since this page has no #siteBody) and, once one intersects, an ASYNC
     // demo() build (src/wb-viewmodels/demo.js — awaits getPageSource() +
     // docs/manifest.json fetches before appending .x-demo__grid + doc-link
     // badges). Until a lazy block both intersects AND finishes that async
@@ -397,15 +400,14 @@
     // safe, both confirmed live by pressing End as early as possible (right
     // after 'load', matching a fast reader):
     //
-    // 1. Calling demo() directly on a <div x-demo> BEFORE it has ever been
-    //    upgraded as the real WBDemo custom element skips
-    //    WBDemo.connectedCallback, so `_rawSource` was never captured —
+    // 1. Calling demo() directly on a <div x-demo> BEFORE WB has dispatched
+    //    the 'demo' behavior for it means `_rawSource` was never captured —
     //    demo.js's fallback (getPageSource(), which fetches location.href)
     //    then fetches THIS STATIC PAGE'S OWN SOURCE, which contains zero
     //    literal <div x-demo> tags (they only exist in the markdown rendered
     //    into #content at runtime), silently producing an empty demo body
     //    that never grows again.
-    // 2. <div x-demo> only upgrades to the real custom element once wb.js is
+    // 2. <div x-demo> only gets its behavior once wb.js is
     //    dynamically imported inside the 'wb:mdhtml:loaded' handler below —
     //    which itself only fires once mdhtml() has finished fetching and
     //    rendering the doc. Pressing End before that means there's nothing
@@ -414,7 +416,8 @@
     // `contentReady` (resolved at the end of the 'wb:mdhtml:loaded' handler,
     // unconditionally — see below) gates the fix on both: nothing here runs
     // until the doc has actually rendered and, for docs with live WB content,
-    // wb.js has upgraded every <div x-demo> and captured its `_rawSource`.
+    // wb.js has run the demo behavior over every <div x-demo> and captured its
+    // `_rawSource`.
     // Bounded (4s) so a genuinely broken/hung render can't wait forever.
     let resolveContentReady;
     const contentReadyPromise = new Promise((resolve) => { resolveContentReady = resolve; });
@@ -432,9 +435,16 @@
         await contentReady();
 
         // Force every not-yet-built <div x-demo> to build NOW — demo() itself
-        // is what x-demo.js's own IntersectionObserver callback would
-        // eventually call (reusing it here, not inventing a parallel
-        // mechanism); its `_demoInitialized` guard makes this a safe no-op
+        // is what the lazy IntersectionObserver would eventually call (reusing
+        // it here, not inventing a parallel mechanism); its `_demoInitialized`
+        // guard makes this a safe no-op
+        //
+        // BROKEN, tracked as #1070: the selector below asks for the TAG
+        // `x-demo`, and every demo in docs/ is the ATTRIBUTE form
+        // (<div x-demo>, 415 of them, zero <x-demo>). `pending` is therefore
+        // always empty and this force-build does nothing. Left as-is here so
+        // the selector change lands with a regression test that has been seen
+        // to fail on it, rather than riding along unverified in #1063.
         // for blocks already built, and safe against the real observer
         // firing again later on the same element.
         const pending = Array.from(document.querySelectorAll('x-demo')).map((el) =>

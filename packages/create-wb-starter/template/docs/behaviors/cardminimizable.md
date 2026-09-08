@@ -2,14 +2,26 @@
 
 Card with minimize/expand toggle button in header
 
-Applies to `<article>`, and to any element carrying `x-cardminimizable`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardminimizable` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardminimizable>
+<article x-cardminimizable
+  title="Build log"
+  content="tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s."></article>
+```
+
+### On a different element
+
+Use `x-cardminimizable` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardminimizable>
   …
-</article>
+</div>
 ```
 
 ## Attributes

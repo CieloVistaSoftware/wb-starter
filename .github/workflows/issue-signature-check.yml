@@ -11,7 +11,18 @@ name: Issue signature block
 # batches, via scripts/apply-issue-signatures.mjs.
 on:
   issues:
-    types: [opened, edited, reopened]
+    # `closed` is the one that matters and was the one missing. The validator
+    # already required `test` and `fix` on a closed issue and already ran on
+    # every other issue event -- it simply never ran at the moment a claim of
+    # "fixed" is actually made. Measured 2026-09-07: 400 of 400 closed issues
+    # fail the standard, 44 of them closed without naming any test at all, i.e.
+    # closed as CLAIMED rather than VERIFIED. Nothing was left behind for the
+    # next occurrence of those defects to stand on, which is why the same
+    # signature gets diagnosed from scratch every time it recurs.
+    #
+    # issue-priority-check.yml, in this same directory, already listens for
+    # `closed`. This was an omission, not a difficulty.
+    types: [opened, edited, reopened, closed]
 
 permissions:
   issues: write        # to leave the one explanatory comment
@@ -55,17 +66,29 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           NUMBER: ${{ github.event.issue.number }}
           REPORT: ${{ steps.check.outputs.report }}
+          ACTION: ${{ github.event.action }}
         run: |
-          MARKER='<!-- signature-check -->'
-          # `edited` fires on every keystroke-save. Say it once and stay quiet
-          # after that: a bot repeating itself is how people learn to filter it.
+          # Two DIFFERENT markers, because they are two different conversations.
+          # A single marker meant an issue told about its missing block at filing
+          # time would be silently skipped when it later closed unverified --
+          # suppressing the check at the only moment a "fixed" claim is made.
+          if [ "$ACTION" = "closed" ]; then
+            MARKER='<!-- signature-check-close -->'
+            LEAD='**Closed without the evidence that it was fixed.** `test` names the thing that makes this *verified* rather than *claimed*, and `fix` says in one line what actually did it. Without them nothing is left behind: the next time this defect appears it gets diagnosed from scratch, at full cost.'
+          else
+            MARKER='<!-- signature-check -->'
+            LEAD='**This issue has no Signature block yet** — the machine-readable half of what the prose above already says. It is what lets a future error match this issue instead of being diagnosed from scratch, and what `data/fix-registry.json` keys on.'
+          fi
+          # `edited` fires on every keystroke-save. Say it once per conversation
+          # and stay quiet after: a bot repeating itself is how people learn to
+          # filter it.
           if gh issue view "$NUMBER" --json comments --jq '.comments[].body' | grep -qF "$MARKER"; then
-            echo "Already asked on this issue — not commenting again."
+            echo "Already said this on this issue — not commenting again."
             exit 0
           fi
           cat > /tmp/comment.md <<EOF
           $MARKER
-          **This issue has no Signature block yet** — the machine-readable half of what the prose above already says. It is what lets a future error match this issue instead of being diagnosed from scratch, and what \`data/fix-registry.json\` keys on.
+          $LEAD
 
           \`\`\`
           $REPORT

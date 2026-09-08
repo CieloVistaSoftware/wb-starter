@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/components/x-grid.spec.ts",
+  "startedAt": "2026-09-08T21:37:46.324Z",
+  "updatedAt": "2026-09-08T21:37:57.622Z",
+  "command": "npx playwright test --workers=8 tests/components/x-grid.spec.ts",
+  "pid": 23424,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\components\\x-grid.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [behaviors] › tests\\components\\x-grid.spec.ts:63:3 › [x-grid] Behavior › element is visible after scan (1.8s)\n  ok 1 [behaviors] › tests\\components\\x-grid.spec.ts:43:3 › [x-grid] Behavior › renders without errors (1.8s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 5.3s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 2/2 passed\n════════════════════════════════════════════════════════════\n\n\n  2 passed (6.8s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-08T21:37:57.622Z",
+  "duration": "11.30s",
+  "exitCode": 0,
+  "flaky": 0
+}

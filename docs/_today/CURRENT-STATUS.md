@@ -1,6 +1,104 @@
-# CURRENT HANDOFF — 2026-09-06
+# CURRENT HANDOFF — 2026-09-07
 
 ## PARKING LOT
+
+**The commit gate was testing the working directory instead of the commit. That is
+fixed, and it is the most important thing on this page.**
+
+John: *"this is only about the 10th time changes (late) have aborted the commit/next
+release. This points to our process being unable to finish doing the right thing."*
+
+He was right, and it was structural. `test-ratchet.mjs` boots a server on the repo
+directory and runs ~7,500 tests against whatever is on disk for the ~50 minutes that
+takes — so the verdict described a tree that no longer existed by the time it arrived.
+Three runs died that way in this session alone: two to my own edits made mid-run, and
+one to a **different session's** change to a spec my commit did not contain (it named
+18 files by pathspec and was blocked by a file outside it). No care by the committer
+prevents that. It was a race, not a gate.
+
+**Fix:** `.husky/gate-staged-tree.mjs` materialises the INDEX into a throwaway worktree
+(`git worktree add --detach` + `git checkout-index --prefix`) and runs the unchanged
+ratchet there. Proven twice — synthetically (edited a file mid-run, gate untouched) and
+on the live run, which correctly reported *"testing the STAGED tree (22 file(s))"* while
+52 files sat in the index. Tracked as #1065.
+
+### In flight when I parked
+
+| | |
+|---|---|
+| Commit 1 | 21 files + version stamp, **in the full-suite gate** (counter hit 10). Message written; not yet landed |
+| Commit 2 | `pages/behaviors.html` + `server.js` — planned, **not started** |
+| Pushed | **nothing.** `origin/main` is still `b4a948fb` |
+| Deployed | unchanged, so **the x-cardportfolio 404 John reported is still live** |
+
+### The bug John actually reported
+
+*"run autoscroll to see all the errors but they are not being logged to error log?"*
+
+Five separate breaks between an error happening and anyone seeing it. All fixed, each
+verified by measurement, in `src/core/error-logger.js` + `public/errors-viewer.html`:
+
+1. the log POST was root-absolute → on the deployed host it hit the ORG root, `405`
+2. `serverLogging = false` was a one-way latch: one bad response killed logging for the
+   whole page session
+3. `window.addEventListener('error')` had no `capture: true`, so resource failures —
+   which do not bubble — never reached it
+4. the fallback wrote to `localStorage`, which **the viewer never read**; it fetched the
+   file, got a 404, and rendered *"No errors found. Great job!"* on a site that had
+   errors. That is what John was looking at
+5. (#1029) the server re-listed repeats instead of counting them: one broken image wrote
+   3 rows with counts 1, 2, 3 — now 1 row, count 3
+
+His 12 pasted entries were one bug repeated, all timestamped **before** the first asset
+fix deployed, stranded in that localStorage store.
+
+### Also fixed, gated, and in commit 1
+
+| issue | what it was |
+|---|---|
+| #1008 | `release.css` was loaded by nothing — the version badge had ZERO rules on every page. Fault-injected: 0 rules without the manifest entry, 4 with |
+| #1011 | rendered dates sorted by month name: `Apr 1, 2025` before `Mar 1, 2020` |
+| #1043 | `git rev-list --remotes` called feature-branch work "pushed" |
+| #1049 | four checks matching nothing — `\b` eaten into a literal 0x08 |
+| #1061 | 28 Fix Viewer tests waited 30s each on a UI I had deleted. 0/28 → 15/15 |
+| #1051 | `scripts/apply-error-remedies.mjs` — John's *"why isn't Fixable automatically fixed?"* |
+
+### Two things I got wrong today, both reverted or corrected
+
+- **#1050 was wrong.** I removed 4 x-sticky entries from the register on 5/5-in-isolation
+  runs. Under full-suite load one fails. The register is a **union** — *"a lucky pass is
+  not a fix"* — and isolated runs sample the wrong population. Entries restored.
+- **#1048 was wrong.** I claimed missing schemas are re-fetched every scan, reasoning from
+  the code. Measured: 13 one-time 404s, **zero repeats**, and disabling my cache changed
+  nothing because `wb-lazy.js` already caches misses. Reverted; the issue carries the
+  measurements.
+
+### Next step
+
+1. Read the gate verdict in `commit3.log`; if green the commit lands on its own
+2. Commit 2 (`behaviors.html` + `server.js`) — carries the **cardportfolio `cover=` fix**
+3. Push, force the Pages build, re-run the live sweep
+4. Confirm `x-cardportfolio` renders `/wb-starter/images/placeholder.svg`, zero 404s
+
+### Open questions
+
+- **A second session was editing this tree all day** — 33 files staged, 96 deletions
+  (the `packages/` template tree), issues #1055–#1063. Its work is good; #1061's analysis
+  was better than my first read and it caught a real hole in my code. Nothing of its work
+  is committed or lost. It is inert: no process, no test lock, last agent run finished.
+  `archive_session` refuses while the app still holds a background-task registration, so
+  the tidy-up is cosmetic — the only way it could act again was its next scheduled fire,
+  and both `~/.claude/scheduled-tasks/*/SKILL.md` briefs now carry a hard scope guard
+  naming this incident. Risk closed; no action needed from anyone.
+- **50 layout violations (#1064)** are now recorded in the register. NOT a regression: the
+  check slept 800ms and measured before layout settled, so it only caught the pages slow
+  enough to be caught — 3 were recorded, the debt was always ~50. Do not "fix" by
+  restoring the sleeps.
+- **`eslint` was missing from `node_modules`** and blocked every commit until `npm install`.
+  Worth knowing why a declared dep went absent.
+
+
+## PREVIOUS PARKING LOT (2026-09-06)
 
 **The queue could not report progress. Three compounding bugs, all fixed today.**
 

@@ -11,7 +11,7 @@ of a custom `wb-*` host tag.
 
 A schema-driven host tag (`<select>`, `<div x-switch>`, `<textarea>`, ...) has its
 `$view` build a real native element inside it. `tag-map.js` dispatches behaviors two
-ways: `elementMap` maps the **host tag** (`x-select` → `select`), and `nativeMap`
+ways: `elementMap` maps the **host tag** (`<select>` → `select`), and `nativeMap`
 maps the **native tag itself** (`select` → `select`, `input` → `input`,
 `input[type="checkbox"]` → `checkbox`, ...). `wb.js`'s `scan()`/`observe()` apply
 *every* matching entry additively — there is no "most specific wins" — so a
@@ -32,7 +32,7 @@ That collision breaks in three distinct ways, all seen live this session:
    matches the schema-built child too, and that unrelated behavior's CSS/JS wins the
    cascade or overwrites structure. *(x-switch's input also matching `checkbox.js`)*
 
-`x-select`'s original bug (#360) was a fourth, more severe variant: the schema
+`<select>`'s original bug (#360) was a fourth, more severe variant: the schema
 never built a real `<select>` at all (a fake `<button>`/`<div>`/`<ul>` widget), so
 native semantics were gone entirely. Fixed by making it build a real `<select>` and
 re-invoke the native-`<select>` enhancement path on it.
@@ -41,11 +41,11 @@ re-invoke the native-`<select>` enhancement path on it.
 
 | Behavior | Variant | Status |
 |---|---|---|
-| `x-select` | fake widget, no real `<select>` | ✅ Fixed — [#360](https://github.com/CieloVistaSoftware/wb-starter/issues/360), closed |
-| `x-switch` | missing `type` on `$view` input + cross-collision with `checkbox.js`'s global style injector | ✅ Fixed — [#361](https://github.com/CieloVistaSoftware/wb-starter/issues/361), closed |
-| `x-textarea` | same-name self-collision: host never reflected `placeholder`/`rows`/`variant` onto its built `<textarea>` | ✅ Fixed — [#362](https://github.com/CieloVistaSoftware/wb-starter/issues/362), closed |
-| `x-checkbox` | missing `type="checkbox"` on `$view` input node (identical root cause to #361), plus a self-collision with checkbox.js's own visual styling, plus zero pre-existing CSS for its box/check visual | ✅ Fixed — [#366](https://github.com/CieloVistaSoftware/wb-starter/issues/366), closed |
-| `x-input` | same-name self-collision, no host guard at all — dispatching `input()` on the `<div x-input>` host wrapped/styled the whole already-built behavior as if it were a bare input; separately, `placeholder`/`value`/`name`/`type` never reached the real built `<input>` at all; a duplicate clear button was a third symptom of the same root cause | ✅ Fixed — [#367](https://github.com/CieloVistaSoftware/wb-starter/issues/367), closed |
+| `<select>` | fake widget, no real `<select>` | ✅ Fixed — [#360](https://github.com/CieloVistaSoftware/wb-starter/issues/360), closed |
+| `<div x-switch>` | missing `type` on `$view` input + cross-collision with `checkbox.js`'s global style injector | ✅ Fixed — [#361](https://github.com/CieloVistaSoftware/wb-starter/issues/361), closed |
+| `<textarea>` | same-name self-collision: host never reflected `placeholder`/`rows`/`variant` onto its built `<textarea>` | ✅ Fixed — [#362](https://github.com/CieloVistaSoftware/wb-starter/issues/362), closed |
+| `<input type="checkbox">` | missing `type="checkbox"` on `$view` input node (identical root cause to #361), plus a self-collision with checkbox.js's own visual styling, plus zero pre-existing CSS for its box/check visual | ✅ Fixed — [#366](https://github.com/CieloVistaSoftware/wb-starter/issues/366), closed |
+| `<input>` | same-name self-collision, no host guard at all — dispatching `input()` on the `<input>` host wrapped/styled the whole already-built behavior as if it were a bare input; separately, `placeholder`/`value`/`name`/`type` never reached the real built `<input>` at all; a duplicate clear button was a third symptom of the same root cause | ✅ Fixed — [#367](https://github.com/CieloVistaSoftware/wb-starter/issues/367), closed |
 
 ## Suspected, needs live verification (not yet filed)
 
@@ -64,40 +64,40 @@ skip live verification.
   and dispatches `select()` on it a second time, `clearable: true` would build a
   second nested `.x-select-clearable` wrapper around the first. Needs a test with
   `<select clearable options='...'>` checking for exactly one `.x-select-clearable`.
-- **`x-notes`**: `notes.schema.json` declares a `$view` with a `textarea` node, but
+- **`<div x-notes>`**: `notes.schema.json` declares a `$view` with a `textarea` node, but
   `notes.js` (`src/wb-viewmodels/notes.js`) builds its entire DOM itself from
   `element.dataset.*`, the same self-sufficient pattern as the card family
-  (`SCHEMA_EXCLUDED_TAGS` in `schema-builder.js`). `x-notes` is **not** currently in
+  (`SCHEMA_EXCLUDED_TAGS` in `schema-builder.js`). `<div x-notes>` is **not** currently in
   that exclusion list. If schema-builder processes it before `notes()` runs, this may
   be the exact race `schema-builder.js`'s own comments describe for x-card/x-skeleton
   (schema builds first, then the behavior's own unconditional rebuild either races it
   or silently discards it) — or `notes.js` may already tolerate it. Unverified.
-- **`x-table`**: separate from this pattern, but same root cause category —
+- **`<table>`**: separate from this pattern, but same root cause category —
   `table.schema.json` declares `"semanticElement": {"tagName": "table"}` but its
   `$view` never actually builds a `<table>` element; `thead`/`tbody`/`nav` children
   live directly inside the `<table>` host tag with no real `<table>` wrapper. This
   is the same "declares native intent, never delivers it" bug already flagged (but
-  not yet fixed, pending go-ahead) for `x-dialog`. Doesn't cause a dispatch
+  not yet fixed, pending go-ahead) for `<dialog>`. Doesn't cause a dispatch
   collision (there's no literal `<table>` tag to collide on), but it does mean
   `<table>` has none of the accessibility/semantics a real `<table>` gives for
   free (`role=table` implicit structure, table navigation in screen readers, etc.).
 
 ## Checked and ruled out
 
-- **`x-search`** — `search.js` already explicitly builds/wraps its own child
+- **`<div x-searchfield>`** — `search.js` already explicitly builds/wraps its own child
   `<input>` and delegates to `search()`; `input.js` has a dedicated guard
   (`element.closest('.x-search__wrapper, .x-password')`) specifically to skip that
   input. Already correctly architected (confirmed via #279 per existing code
   comments).
-- **`x-audio`** — `audio.js` already branches on `element.tagName !== 'AUDIO'` the
+- **`<audio>`** — `audio.js` already branches on `element.tagName !== 'AUDIO'` the
   same way `switch.js`/`select.js` do. Already correctly architected.
-- **`x-dropdown`** — self-built menu widget; its trigger `<button>` is created
+- **`<div x-dropdown>`** — self-built menu widget; its trigger `<button>` is created
   entirely by `dropdown.js` itself, not schema-driven, and a dropdown menu has no
   native semantic element to be a superset of. Not in scope for this pattern.
-- **Card family, `x-cardbutton`, `x-cardexpandable`, `x-cardminimizable`,
-  `x-cardnotification`, `x-cardproduct`, `x-chip`, `x-confetti`, `x-dialog`
-  (close button), `x-drawer`, `x-drawerLayout`, `x-navbar`, `x-snow`,
-  `x-fireworks`, `x-toast`** — all build a `<button>` child via schema, but their
+- **Card family, `<div x-cardbutton>`, `<div x-cardexpandable>`, `<div x-cardminimizable>`,
+  `<div x-cardnotification>`, `<div x-cardproduct>`, `<div x-chip>`, `<div x-confetti>`, `<dialog>`
+  (close button), `<div x-drawer>`, `x-drawerLayout`, `<nav x-navbar>`, `<div x-snow>`,
+  `<div x-fireworks>`, `<div x-toast>`** — all build a `<button>` child via schema, but their
   own `schemaFor` is a *different* name than `button` (e.g. `cardbutton`, not
   `button`), so there's no same-name self-collision. The generic `button` behavior
   (`nativeMap['button'] = 'button'`) does still get dispatched additively on these
@@ -139,13 +139,13 @@ Added `tests/regression/semantic-element-fidelity.spec.ts`, a live browser test 
 renders every schema's own `test.setup[0]` markup and checks whether its declared
 `semanticElement.tagName` (when it's a tag with no adequate ARIA-only substitute --
 `select`/`table`/`dialog`/`details`/`textarea`) actually appears in the rendered
-output. `x-table` and `x-dialog` are asserted to **stay** broken (so the test fails
+output. `<table>` and `<dialog>` are asserted to **stay** broken (so the test fails
 loudly, forcing an update, the moment someone fixes either without updating the
 test's `KNOWN_VIOLATIONS` map) rather than being silently skipped.
 
 `button` and `progress` were deliberately left out of that check after investigation
 showed both are false positives — see the test file's own header comment for the
-full reasoning. Chasing why `x-button` looked incomplete surfaced two more real,
+full reasoning. Chasing why `<button>` looked incomplete surfaced two more real,
 separate bugs:
 
 - **[#368](https://github.com/CieloVistaSoftware/wb-starter/issues/368) — x-button
@@ -153,8 +153,8 @@ separate bugs:
   ARIA-widget pattern, but the WAI-ARIA button contract also requires wiring
   keyboard activation, which `button.js` never did. **Fixed** — closed, validated by
   `tests/regression/x-button-keyboard-activation.spec.ts`.
-- **[#369](https://github.com/CieloVistaSoftware/wb-starter/issues/369) — `x-badge`,
-  `x-button`, `x-card` tag names are claimed by the unrelated WB Views registry.**
+- **[#369](https://github.com/CieloVistaSoftware/wb-starter/issues/369) — `<div x-badge>`,
+  `<button>`, `<article>` tag names are claimed by the unrelated WB Views registry.**
   `src/wb-views/views-registry.json` (a separate generic templating feature) had its
   own views literally named `badge`/`button`/`card`, and `wb-views.js` auto-registers
   `customElements.define('wb-' + name, ...)` for any non-hyphenated view name —
@@ -174,10 +174,10 @@ Remaining, in priority order:
 
 1. Write a regression test for the `select.js` clearable double-wrap suspicion, and
    file only if it reproduces.
-2. Decide on `x-notes` and `x-table` — these need a maintainer call (add to
+2. Decide on `<div x-notes>` and `<table>` — these need a maintainer call (add to
    `SCHEMA_EXCLUDED_TAGS`, or rebuild to deliver on the declared semantic element)
-   more than a mechanical fix, similar to the still-pending `x-dialog` decision.
-3. Follow-up on `x-input`: `disabled`/`readonly`/`required` and `clearable`/
+   more than a mechanical fix, similar to the still-pending `<dialog>` decision.
+3. Follow-up on `<input>`: `disabled`/`readonly`/`required` and `clearable`/
    `variant`/`size` are still not read on the real input's own dispatch path
    (deliberately left out of #367's scope — file only if reported live).
 

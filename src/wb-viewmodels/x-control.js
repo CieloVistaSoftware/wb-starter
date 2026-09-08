@@ -1,79 +1,26 @@
-import move from './move.js';
-
 /**
  * <div x-control>
  * -----------------------------------------------------------------------------
- * Wraps move behaviors in a consistent component.
- * 
- * Custom Tag: <div x-control>
+ * Applies the schema's declared baseClass. That is all it does.
+ *
+ * This file used to open with `export class WBControl extends HTMLElement`,
+ * whose connectedCallback added an 'x-control-btn' class, read an `action`
+ * attribute ("move-up", "move-down", ...), wired the matching move.js function,
+ * and set role/tabindex plus an Enter/Space handler. Nothing ever called
+ * customElements.define() for it — grep the tree, the only match was the word
+ * inside that file's own comment — so none of it has ever run and none of it is
+ * documented behaviour anyone can be relying on (#1063).
+ *
+ * So `action="move-up"` is NOT supported here. The move behaviors are reachable
+ * on their own: move/moveup/movedown/moveleft/moveright/moveall are all mapped
+ * in wb-viewmodels/index.js and dispatch through WB.inject() like everything
+ * else. If <div x-control> should ever grow the button treatment again, it goes
+ * below, deliberately, with a test.
  * -----------------------------------------------------------------------------
- * 
- * Usage: <div x-control action="move-up">↑</div>
+ *
+ * Usage: <div x-control>...</div>
  */
-export class WBControl extends HTMLElement {
-  constructor() {
-    super();
-    this._cleanup = null;
-  }
-
-  connectedCallback() {
-    const action = this.getAttribute('action'); // e.g., 'move-up'
-    
-    // Add default styling class if not present
-    this.classList.add('x-control-btn');
-    
-    // Default content if empty
-    if (!this.innerHTML.trim()) {
-      this.textContent = this.getIcon(action);
-    }
-
-    // Map attribute 'move-up' to function name 'moveup'
-    const funcName = action ? action.replace(/-/g, '') : null;
-    
-    if (funcName && move[funcName]) {
-      this._cleanup = move[funcName](this);
-    }
-    
-    // Accessibility
-    this.setAttribute('role', 'button');
-    this.setAttribute('tabindex', '0');
-    
-    // Add keydown handler for Enter/Space
-    this.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
-  }
-
-  disconnectedCallback() {
-    if (this._cleanup) {
-      this._cleanup();
-    }
-  }
-
-  getIcon(action) {
-    switch(action) {
-        case 'move-up': return '↑';
-        case 'move-down': return '↓';
-        case 'move-left': return '←';
-        case 'move-right': return '→';
-        default: return '?';
-    }
-  }
-}
-
-// Component tags are gone, so this element is no longer defined.
-// The class stays: other exports in this file are still imported.
-
 export default function control(element) {
-    // WBControl's own connectedCallback (registered separately via
-    // customElements.define(), not through this elementMap-dispatched
-    // function) already adds 'x-control-btn' for its own styling. This
-    // function is what schema-driven compliance checks look up by
-    // behavior name, so add the schema's declared baseClass here too --
-    // additive, harmless alongside 'x-control-btn'.
     element.classList.add('x-control');
     return () => {};
 }

@@ -10,10 +10,10 @@ notification in the corner of the screen. Implemented by `toast()` (and the
 | Property | Value |
 |----------|-------|
 | Attribute | `x-toast` |
-| Custom Tag | `<div x-toast>` |
+| Attribute form | `<div x-toast>` |
 | Behavior function | `toast()` — `src/wb-viewmodels/feedback.js` |
 | Semantic element | `<div role="alert">` (the toast itself, built by `createToast()`) |
-| Root CSS Class | `x-toast` (on the popped notification, not the trigger) |
+| Root CSS Class | `<div x-toast>` (on the popped notification, not the trigger) |
 | Category | Feedback |
 | Schema | [toast.schema.json](../../src/wb-models/toast.schema.json) — declares `title`/`icon`/`action`/`actionHref`/`position`/`dismissible` properties the real click-trigger implementation never reads or renders; only `message`/`variant`/`duration` below actually do anything |
 

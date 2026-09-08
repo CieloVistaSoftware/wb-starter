@@ -2,16 +2,32 @@
 
 Data table with sorting, filtering, and pagination
 
-Applies to `<table>`, and to any element carrying `x-table`.
+## Type — decorates a semantic element
 
-## Usage
+`x-table` is the **table behavior**. It attaches to `<table>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
+<!-- Plain semantic HTML. The behavior is injected automatically -->
+<!-- because the element itself implies it. No attribute needed. -->
 <table
   headers="Behavior,Behavior,Variants"
-  rows='[["x-alert","alert","4"],["x-badge","badge","9"],["x-button","button","8"],["x-card","card","4"],["x-code","code","12"],["x-dialog","dialog","3"],["x-details","details","2"],["x-audio","audio","6"],["x-table","table","5"],["x-tabs","tabs","3"],["x-toast","toast","4"],["x-tooltip","tooltip","4"]]'>
+  rows='[["alert","alert","4"],["badge","badge","9"],["button","button","8"],["card","card","4"],["code","code","12"],["dialog","dialog","3"],["details","details","2"],["audio","audio","6"],["table","table","5"],["tabs","tabs","3"],["toast","toast","4"],["tooltip","tooltip","4"]]'>
 </table>
 ```
+
+### On a different element
+
+Use `x-table` when the host is not a `<table>` and you want the same behavior:
+
+```html
+<div x-table>
+  …
+</div>
+```
+
+> Do not write `<table x-table>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
 ## Attributes
 

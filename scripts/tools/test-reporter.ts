@@ -25,7 +25,7 @@ import type {
   TestResult, 
   FullResult 
 } from '@playwright/test/reporter';
-import { writeFileSync, appendFileSync, mkdirSync, existsSync, unlinkSync, readFileSync, copyFileSync } from 'fs';
+import { writeFileSync, appendFileSync, mkdirSync, existsSync, unlinkSync, readFileSync, copyFileSync, renameSync } from 'fs';
 import { join } from 'path';
 
 interface TestEntry {
@@ -486,8 +486,40 @@ class WBTestReporter implements Reporter {
     return Array.from(byKey.values());
   }
 
+  /**
+   * Archive the previous file before overwriting it.
+   *
+   * These files are rewritten by EVERY run, including a single-spec one. So a
+   * full-suite result — the only thing that can answer "what is actually
+   * failing right now" — is destroyed by the next `npm run test:async` on one
+   * file, and there is no way back to it. Measured cost, twice in one session:
+   * an attempt to reconcile the debt register read failures.json and found 0
+   * entries, because three single-spec runs had happened since the full run
+   * that produced it; and a stale test-status.json was misread as current
+   * because nothing said when it was written.
+   *
+   * Same pattern as data/error-log-archive/, which this repo already keeps for
+   * exactly this reason. Never destroy a diagnostic; move it aside.
+   */
+  private archivePrevious(filepath: string, filename: string) {
+    if (!existsSync(filepath)) return;
+    try {
+      const archiveDir = join(this.outDir, 'archive');
+      if (!existsSync(archiveDir)) mkdirSync(archiveDir, { recursive: true });
+      const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const dot = filename.lastIndexOf('.');
+      const base = dot > 0 ? filename.slice(0, dot) : filename;
+      const ext = dot > 0 ? filename.slice(dot) : '';
+      renameSync(filepath, join(archiveDir, `${base}-${stamp}${ext}`));
+    } catch {
+      // An archive that cannot be written must not stop the run from recording
+      // its own results — that would trade a lost history for a lost result.
+    }
+  }
+
   private writeJson(filename: string, data: any) {
     const filepath = join(this.outDir, filename);
+    this.archivePrevious(filepath, filename);
     writeFileSync(filepath, JSON.stringify(data, null, 2));
   }
 

@@ -108,14 +108,29 @@ The `index.html` head must only load **TWO** CSS files for the foundation:
 *   **Don't:** `color: #333;` (Breaks themes)
 *   **Don't:** `:root { --my-text: var(--text-primary); }` (Creates useless aliases)
 
-### 4. Specificity over `!important`
-*   **Rule:** Never use `!important` to override styles. Use proper CSS specificity (classes, nesting) instead.
-*   **Exception:** Utility classes (e.g., `.d-none !important`) or debug tools.
+### 4. No `!important`. No inline styles. No exceptions.
+*   **Rule:** Never use `!important`. If a rule is losing, fix its specificity, or fix the rule beating it.
+*   **Rule:** Never write styles inline — not from JS, not in a `<style>` block, not "just this once".
+*   **John: "those are both signs of weakness."** They are the two ways of overruling the cascade instead of repairing it, and each one makes the next necessary.
+*   The former exception for utility classes and debug tools is **withdrawn**. Debt as of 2026-09-01: 831 inline declarations across 56 behaviors, 140 `!important` in CSS, 60 written from JS (#943). See TIER1 Law 16.
 
 ### 5. File Responsibility
+
+> **John: "each stylesheet should have only one reason to exist."**
+
+The test: say the file's reason in one sentence. If the sentence needs an "and", it is two files.
+
 *   **`themes.css`**: Variables ONLY. No layout.
 *   **`site.css`**: Global shell layout ONLY. No behavior styles.
-*   **`src/behaviors/css/*.css`**: Behavior styles ONLY. Grouped by function (e.g., `card.css`, `inputs.css`).
+*   **`src/styles/behaviors/*.css`**: **One behavior per stylesheet.**
+
+That last line used to read *"grouped by function (e.g. `card.css`)"*, and the grouping is what produced the state measured on 2026-09-01: `card.css` at **114KB serving 19 card behaviors**, five times the next largest stylesheet.
+
+Grouping saves nothing and costs plenty. Because one file had to serve every variant, **49 rules each repeat a 326-character `:is([x-card], …19 attributes…)` host list** — leaving the file **30% selector text and 18% actual declarations**. All 127 variant-specific rules together are ~8.5KB of real CSS.
+
+It also put the file beyond hand-editing — one line held 160 rules across 44,000 characters — so the only way to change it was a bulk script, and a bulk script silently corrupted 178 of its 264 rules (#965).
+
+Splitting is free: `ensureBehaviorCss()` already loads per behavior, and `behavior-css-manifest.js` already maps a behavior to an **array**, so `cardimage: ['card.css', 'cardimage.css']` needs no runtime change. A page using one card variant then stops loading the other eighteen.
 
 ---
 
@@ -125,9 +140,10 @@ The `index.html` head must only load **TWO** CSS files for the foundation:
 |-----------------------|---------------|
 | A new color or font size | `src/styles/themes.css` (as a variable) |
 | The main header or sidebar layout | `styles/site.css` |
-| A specific behavior (e.g., Card, Button) | `src/behaviors/css/[group].css` |
+| A specific behavior (e.g., Card, Button) | `src/styles/behaviors/[behavior].css` — one behavior per file |
+| A card VARIANT (e.g., cardprofile) | its own `cardprofile.css`, listed in `behavior-css-manifest.js` alongside `card.css` |
 | A standalone page (e.g., Builder) | `pages/[page].css` (loaded manually) |
-| A one-off tweak for a specific demo | Inline `<style>` (only if absolutely necessary) |
+| A one-off tweak for a specific demo | **A stylesheet.** Not inline — see §4. "Just this once" is how 831 inline declarations happened. |
 
 **Font Size & Spacing:** Always use the golden-ratio scale tokens:
 - Text: `var(--text-xs)`, `var(--text-sm)`, `var(--text-base)`, `var(--text-lg)`, `var(--text-xl)`, `var(--text-2xl)`, `var(--text-3xl)`

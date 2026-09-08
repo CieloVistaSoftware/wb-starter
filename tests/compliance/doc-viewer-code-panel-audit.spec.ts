@@ -49,6 +49,15 @@ import { globSync } from 'glob';
  *       violation of this check by itself unless it means the panel is
  *       narrower than it was actually laid out to be.
  *
+ *       #1060: that NOTE was written and then not implemented. The check was a
+ *       flat `scrollWidth > clientWidth`, so it failed 8 files for producing
+ *       exactly the horizontal scrollbar §28 requires — and it could never be
+ *       satisfied alongside check (c), since a line longer than its panel must
+ *       either overflow (banned by (a)) or wrap (banned by (c)). It now
+ *       compares the panel against its x-demo CONTAINER, which is what
+ *       "narrower than it was actually laid out to be" means and what the
+ *       #560/#563 bugs actually looked like.
+ *
  *   (b) No blank lines that don't exist in the actual rendered text.
  *       <div x-demo>'s own pretty-printer (`formatHtml` in demo.js) never
  *       emits an empty line for a `.x-demo__code` (non-events) panel — see
@@ -114,6 +123,8 @@ interface PanelReport {
   label: string; // first non-empty line of the panel, for identifying the example
   scrollWidth: number;
   clientWidth: number;
+  containerWidth: number;
+  offsetWidth: number;
   whiteSpace: string;
   lineCount: number;
   gutterCount: number;
@@ -220,6 +231,26 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
           label: firstNonEmpty.trim().slice(0, 60),
           scrollWidth: panel.scrollWidth,
           clientWidth: panel.clientWidth,
+          // #1060: check (a) is about a panel being narrower than the room it
+          // HAS, not about its content being long. Without the container width
+          // there is nothing to compare against, so the check degenerated into
+          // "any horizontal overflow is a defect" — which §28 requires.
+          //
+          // The room a panel has is the container's CONTENT box, not its
+          // clientWidth: clientWidth still includes the container's padding.
+          // Comparing against it flagged every panel in the suite by a constant
+          // 34px (344 vs 378, 422 vs 456) — the padding, mistaken for cramping.
+          containerWidth: (() => {
+            const host = demo as HTMLElement;
+            const cs = getComputedStyle(host);
+            return host.clientWidth
+              - (parseFloat(cs.paddingLeft) || 0)
+              - (parseFloat(cs.paddingRight) || 0);
+          })(),
+          // The panel's own BORDER box, which is what has to fill that room.
+          // panel.clientWidth excludes the panel's own padding and border, so
+          // comparing it against available space double-counts the panel's box.
+          offsetWidth: (panel as HTMLElement).offsetWidth,
           whiteSpace: cs.whiteSpace,
           lineCount: rawLines.length,
           gutterCount: gutterEls.length,
@@ -242,10 +273,26 @@ function auditReports(reports: PanelReport[]): { a: string[]; b: string[]; c: st
   const c: string[] = [];
 
   for (const r of reports) {
-    if (r.scrollWidth > r.clientWidth + NARROW_TOLERANCE_PX) {
+    // #1060: the violation is a panel CRAMPED below the width available to it
+    // (#560/#563), not a long line. §28 is explicit that a line longer than the
+    // container gets "a horizontal scrollbar — never forces a word-wrap", so
+    // overflow on its own is required behaviour, not a defect. Flagging it also
+    // made this check unsatisfiable alongside check (c) below, which forbids the
+    // only alternative: a long line must overflow or wrap, and (a) banned the
+    // first while (c) banned the second.
+    //
+    // A panel narrower than its own x-demo container still fails, which is the
+    // bug the check was written for and the one it can actually see.
+    // Border box vs the container's CONTENT box. The first attempt compared
+    // panel.clientWidth (padding and border excluded) against
+    // container.clientWidth (padding INCLUDED), which double-counted both boxes
+    // and reported every panel in the suite as cramped by a constant ~34px —
+    // 8 failures became 54. The offset was the padding, not a defect.
+    if (r.containerWidth > 0 && r.offsetWidth < r.containerWidth - NARROW_TOLERANCE_PX) {
       a.push(
-        `demo[${r.demoIndex}] panel[${r.panelIndex}] "${r.label}": scrollWidth=${r.scrollWidth}px > ` +
-          `clientWidth=${r.clientWidth}px — content is cut off / needs a scrollbar to see all the code`
+        `demo[${r.demoIndex}] panel[${r.panelIndex}] "${r.label}": the panel is ${r.offsetWidth}px ` +
+          `wide inside ${r.containerWidth}px of available space — it is cramped, not merely ` +
+          `scrolling a long line (§28 permits the scrollbar; it does not permit a narrow panel)`
       );
     }
 

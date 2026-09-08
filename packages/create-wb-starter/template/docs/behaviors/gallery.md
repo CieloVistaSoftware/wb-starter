@@ -2,16 +2,18 @@
 
 Behavior applied with x-gallery.
 
-Apply `x-gallery` to any element.
+## Type — new capability
 
-## Usage
+`x-gallery` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <div x-gallery columns="4">
-        <img src="/images/placeholder.svg" alt="Gallery 1">
-        <img src="/images/placeholder.svg" alt="Gallery 2">
-        <img src="/images/placeholder.svg" alt="Gallery 3">
-        <img src="/images/placeholder.svg" alt="Gallery 4">
+        <img src="images/placeholder.svg" alt="Gallery 1">
+        <img src="images/placeholder.svg" alt="Gallery 2">
+        <img src="images/placeholder.svg" alt="Gallery 3">
+        <img src="images/placeholder.svg" alt="Gallery 4">
       </div>
 ```
 

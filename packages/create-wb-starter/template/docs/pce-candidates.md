@@ -12,8 +12,8 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 ### 1. WB Namespace (Recommended)
 ```html
 <div x-cardprofile name="Sarah"></div>
-<div x-cardhero title="Welcome"></div>
-<div x-cardstats value="1,234"></div>
+<div x-cardhero title="Welcome"></article>
+<articlestats value="1,234"></div>
 ```
 
 ### 2. Noun-First Aliases (Also Supported)
@@ -55,13 +55,13 @@ All three are equivalent and produce the same result.
 |------------|------------------|----------|-------------|
 | `<article>` | `<article>` | `card` | Basic card container |
 | `<div x-cardprofile>` | `<div x-cardprofile>` | `cardprofile` | User profiles with avatar, bio |
-| `<div x-cardhero>` | `<div x-cardhero>` | `cardhero` | Large banner/hero sections |
-| `<div x-cardstats>` | `<div x-cardstats>` | `cardstats` | Dashboard statistics |
+| `<article x-cardhero>` | `<div x-cardhero>` | `cardhero` | Large banner/hero sections |
+| `<articlestats>` | `<div x-cardstats>` | `cardstats` | Dashboard statistics |
 | `<div x-cardtestimonial>` | `<div x-cardtestimonial>` | `cardtestimonial` | User quotes with ratings |
-| `<div x-cardvideo>` | `<div x-cardvideo>` | `cardvideo` | Video content with controls |
+| `<article x-cardvideo>` | `<div x-cardvideo>` | `cardvideo` | Video content with controls |
 | `<div x-cardfile>` | `<div x-cardfile>` | `cardfile` | File download/preview |
 | `<div x-cardnotification>` | `<div x-cardnotification>` | `cardnotification` | Alert/Notice blocks |
-| `<div x-cardimage>` | `<div x-cardimage>` | `cardimage` | Image with title/caption |
+| `<article x-cardimage>` | `<div x-cardimage>` | `cardimage` | Image with title/caption |
 | `<div x-cardoverlay>` | `<div x-cardoverlay>` | `cardoverlay` | Image with text overlay |
 | `<div x-cardportfolio>` | `<div x-cardportfolio>` | `cardportfolio` | Portfolio/contact card |
 | `<div x-cardlink>` | `<div x-cardlink>` | `cardlink` | Clickable link card |
@@ -94,13 +94,13 @@ All three are equivalent and produce the same result.
 
 | Tag | Behavior | Description |
 |-----|----------|-------------|
-| `<span x-spinner>` | `spinner` | Loading spinner |
-| `<span x-avatar>` | `avatar` | User avatar |
-| `<span x-badge>` | `badge` | Status badge |
+| `<div x-spinner>` | `spinner` | Loading spinner |
+| `<div x-avatar>` | `avatar` | User avatar |
+| `<div x-badge>` | `badge` | Status badge |
 | `<div x-alert>` | `alert` | Alert/feedback message |
 | `<progress>` | `progress` | Progress bar |
-| `<span x-rating>` | `rating` | Star rating |
-| `<div x-tabs>` | `tabs` | Tabbed interface |
+| `<div x-rating>` | `rating` | Star rating |
+| `<nav x-tabs>` | `tabs` | Tabbed interface |
 | `<div x-switch>` | `switch` | Toggle switch |
 
 ### Other Behaviors

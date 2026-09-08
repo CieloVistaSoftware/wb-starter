@@ -35,7 +35,7 @@
       "description": "Read by pre(). Bare attribute.",
       "default": false
     },
-    "data-copy": {
+    "copy": {
       "type": "boolean",
       "description": "Read by pre(). Bare attribute.",
       "default": false

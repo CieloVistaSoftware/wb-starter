@@ -27,6 +27,8 @@
  */
 
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { SCHEMA, parseSignature } from './lib/signature-schema.mjs';
 
 const args = process.argv.slice(2);
 const wantClosed = args.includes('--closed');
@@ -36,19 +38,13 @@ const since = sinceIdx >= 0 ? args[sinceIdx + 1] : null;
 const numberIdx = args.indexOf('--number');
 const only = numberIdx >= 0 ? args[numberIdx + 1] : null;
 
-const KINDS = new Set([
-  'runtime',
-  'test-failure',
-  'measured',
-  'structural',
-  'dead-declaration',
-  'process',
-]);
-
-// Required at filing time. `test` and `fix` are required only on close, so they
-// are checked separately -- an open issue has not been fixed yet, and demanding
-// the fix up front would just get it filled with a guess.
-const REQUIRED_AT_FILING = ['kind', 'subject', 'observed', 'expected'];
+// The field list, the kinds and the never-a-field list all come from the tables
+// in docs/standards/ISSUE-SIGNATURE-BLOCK.md. They used to be hardcoded here as
+// well, which made this file a second definition of a standard it is supposed to
+// merely enforce -- and the doc, the copy people read, had no authority over it.
+const { requiredAtFiling: REQUIRED_AT_FILING, requiredOnClose: REQUIRED_ON_CLOSE,
+        requiredWith: REQUIRED_WITH, kinds: KINDS, banned: BANNED,
+        reasonFor: BANNED_BECAUSE } = SCHEMA;
 
 function gh(jsonArgs) {
   const out = execFileSync('gh', jsonArgs, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
@@ -81,48 +77,46 @@ function fetchIssues() {
 }
 
 /**
- * Pull the yaml block out of a `## Signature` section.
+ * The template's own headings, read from the template.
  *
- * Deliberately tolerant about the heading (Signature / signature / ### ) and
- * about the fence language, because rejecting a real signature over a heading
- * level would teach people the validator is noise.
+ * Measured 2026-09-07 across 190 open issues: ZERO followed
+ * .github/ISSUE_TEMPLATE/bug.md completely, including the 20 filed after it
+ * landed. Section uptake was "Signature" 63%, "Fix" 17%, "Guard" 3%,
+ * "In plain English" 2%, "What is actually happening" 0% — and the one section
+ * with real uptake is the one this checker already gated. The parts with a gate
+ * get filled in; the parts without do not.
+ *
+ * Parsed, not restated, so the template stays the single definition — the same
+ * rule the signature schema follows.
  */
-export function parseSignature(body) {
-  if (!body) return null;
-  // `$(?![\s\S])` is end-of-input. `\Z` is not a JavaScript anchor -- it matches a
-  // literal "Z", so a Signature block in the final section would never terminate.
-  const section = body.match(/^#{1,4}[ \t]*signature[ \t]*$([\s\S]*?)(?=^#{1,4}[ \t]|$(?![\s\S]))/im);
-  if (!section) return null;
-  const fence = section[1].match(/```(?:ya?ml)?\s*\n([\s\S]*?)```/i);
-  if (!fence) return null;
-
-  const fields = {};
-  let currentKey = null;
-  for (const raw of fence[1].split('\n')) {
-    // Block scalar continuation (`detect: |`) -- indented lines belong to it.
-    if (currentKey && /^\s+\S/.test(raw)) {
-      fields[currentKey] = (fields[currentKey] ? fields[currentKey] + '\n' : '') + raw.trim();
-      continue;
-    }
-    const m = raw.match(/^([a-z][\w-]*)\s*:\s*(.*)$/i);
-    if (!m) continue;
-    const [, key, rest] = m;
-    if (rest.trim() === '|' || rest.trim() === '>') {
-      currentKey = key;
-      fields[key] = '';
-    } else {
-      currentKey = null;
-      fields[key] = rest.trim().replace(/^["']|["']$/g, '');
-    }
+function templateSections() {
+  try {
+    const tpl = readFileSync(new URL('../.github/ISSUE_TEMPLATE/bug.md', import.meta.url), 'utf8');
+    return [...tpl.matchAll(/^##\s+(.+)$/gm)].map((m) => m[1].trim());
+  } catch {
+    return [];
   }
-  return fields;
 }
 
-function problemsFor(issue) {
-  const sig = parseSignature(issue.body);
-  if (!sig) return ['no Signature block'];
+const SECTIONS = templateSections();
 
+function problemsFor(issue) {
   const problems = [];
+
+  // Structure first: a missing section is a different complaint from a missing
+  // signature field, and an issue can have a perfect Signature block inside an
+  // otherwise shapeless body.
+  for (const heading of SECTIONS) {
+    const re = new RegExp(`^##\\s+${heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'im');
+    if (!re.test(issue.body || '')) problems.push(`missing section: ## ${heading}`);
+  }
+
+  // parseSignature returns { fields, block, full } so callers that REWRITE a
+  // block can find it; this one only reads, so it takes the fields.
+  const parsed = parseSignature(issue.body);
+  if (!parsed) return [...problems, 'no Signature block'];
+  const sig = parsed.fields;
+
   for (const key of REQUIRED_AT_FILING) {
     if (!sig[key] || !String(sig[key]).trim()) problems.push(`${key} is empty`);
   }
@@ -134,9 +128,30 @@ function problemsFor(issue) {
   if (String(sig.kind).trim() === 'dead-declaration' && !String(sig.detect || '').trim()) {
     problems.push('kind is dead-declaration but detect is empty (this class is always computable)');
   }
+  // Conditional requirements, e.g. evidence <- detect: a detect nobody ran is a
+  // guess with syntax highlighting (#1055 was filed on one that reported 1
+  // instance where there were 48).
+  for (const [field, trigger] of Object.entries(REQUIRED_WITH)) {
+    if (String(sig[trigger] || '').trim() && !String(sig[field] || '').trim()) {
+      problems.push(`${trigger} is present but ${field} is empty — paste what it printed, and date it`);
+    }
+  }
   if (issue.state === 'CLOSED') {
-    if (!String(sig.test || '').trim()) problems.push('CLOSED without test — closed as claimed, not verified');
-    if (!String(sig.fix || '').trim()) problems.push('CLOSED without fix');
+    for (const key of REQUIRED_ON_CLOSE) {
+      if (!String(sig[key] || '').trim()) {
+        problems.push(key === 'test'
+          ? 'CLOSED without test — closed as claimed, not verified'
+          : `CLOSED without ${key}`);
+      }
+    }
+  }
+  // Ship state is derived, never declared. A block that writes it down has
+  // created a second copy of something git already knows, which is how
+  // pages/whats-new.html came to claim uncommitted work was on main.
+  for (const banned of BANNED) {
+    if (String(sig[banned] || '').trim()) {
+      problems.push(`${banned} is written down — ${BANNED_BECAUSE[banned]}`);
+    }
   }
   return problems;
 }

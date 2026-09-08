@@ -2,14 +2,18 @@
 
 Enhanced select dropdown with search, clear, and multi-select
 
-Applies to `<div>`, and to any element carrying `x-select`.
+## Type — new capability
 
-## Usage
+`x-select` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-select>
-  …
-</div>
+<select name="branch">
+  <option value="main">main</option>
+  <option value="develop">develop</option>
+  <option value="fix/706-dropdown">fix/706-dropdown</option>
+</select>
 ```
 
 ## Attributes

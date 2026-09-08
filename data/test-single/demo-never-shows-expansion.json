@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/regression/demo-never-shows-expansion.spec.ts",
+  "startedAt": "2026-09-08T01:29:01.767Z",
+  "updatedAt": "2026-09-08T01:29:16.435Z",
+  "command": "npx playwright test --workers=8 tests/regression/demo-never-shows-expansion.spec.ts",
+  "pid": 28640,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\regression\\demo-never-shows-expansion.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 1 [regression] › tests\\regression\\demo-never-shows-expansion.spec.ts:117:3 › the demo source panel never shows the expansion (#1003) › a normal demo still shows its authored one-liner (2.5s)\n  ok 2 [regression] › tests\\regression\\demo-never-shows-expansion.spec.ts:64:3 › the demo source panel never shows the expansion (#1003) › a demo whose source cannot be found says so instead of dumping the DOM (5.3s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 8.7s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ regression: 2/2 passed\n\n  ✅ FIXED (1):\n     - a normal demo still shows its authored one-liner\n════════════════════════════════════════════════════════════\n\n\n  2 passed (11.1s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-08T01:29:16.435Z",
+  "duration": "14.67s",
+  "exitCode": 0,
+  "flaky": 0
+}

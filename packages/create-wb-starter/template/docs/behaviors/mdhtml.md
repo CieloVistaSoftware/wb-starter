@@ -2,14 +2,14 @@
 
 Renders Markdown content as HTML, either from inline content or external source
 
-Applies to `<div>`, and to any element carrying `x-mdhtml`.
+## Type — new capability
 
-## Usage
+`x-mdhtml` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-mdhtml>
-  …
-</div>
+<div x-mdhtml src="/docs/behaviors/dropdown.md"></div>
 ```
 
 ## Attributes

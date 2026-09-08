@@ -2,12 +2,16 @@
 
 On click, plays the slide-in-<dir> animation for 0.5s.
 
-Apply `x-slidein` to any element.
+## Type — new capability
 
-## Usage
+`x-slidein` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button class="effect-demo" x-slidein direction="left">Slidein Left</button>
+<button class="effect-demo" x-slidein direction="left">
+  x-slidein · direction: left
+</button>
 ```
 
 ## Attributes

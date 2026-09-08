@@ -265,9 +265,12 @@ export async function mdhtml(element, options = {}) {
         return () => {};
       }
     } else {
-      // Use inline content. `<div x-mdhtml>` isn't a real custom element (no
-      // connectedCallback to capture pristine markup before upgrade, unlike
-      // <div x-demo> — see x-demo.js), so its raw content sits in the DOM as
+      // Use inline content. `<div x-mdhtml>` isn't a real custom element, so
+      // there's no connectedCallback to capture pristine markup before an
+      // upgrade. (This used to say "unlike <div x-demo>". <div x-demo> is not
+      // one either -- its class was never registered and is now deleted,
+      // #1063 -- so the contrast was never real; the rest of this note is,
+      // and is what matters here.) Its raw content sits in the DOM as
       // real, live, browser-parsed elements from initial page load until
       // THIS async behavior runs. When that content includes an example like
       // `<div x-gallery columns="4">`, WB's own async scan can independently

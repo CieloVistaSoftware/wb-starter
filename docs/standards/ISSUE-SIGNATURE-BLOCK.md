@@ -47,8 +47,67 @@ fix: "enhance authored <dialog> in place — move heading/children into header+b
 | `observed` | yes | the wrong thing, verbatim where it can be quoted |
 | `expected` | yes | what it should be instead |
 | `detect` | when computable | a runnable command or predicate that finds instances |
+| `evidence` | whenever `detect` is present | what `detect` actually printed, and the date it printed it |
+| `related` | when a family exists | sibling issue numbers with the same root cause |
 | `test` | on close | the validating test — the thing that makes it *verified* not *claimed* |
 | `fix` | on close | what actually fixed it, in one line |
+
+### Never a field
+
+| field | why not |
+|---|---|
+| `status` | derived by `scripts/issue-state.mjs`, never asserted |
+| `state` | same — the engine writes it, the block does not |
+| `shipped` | same |
+| `released` | same |
+| `commit` | git already knows which commits cite an issue |
+
+**This table and the two above are the definition, not a description of one.**
+`scripts/lib/signature-schema.mjs` parses them out of this file at runtime, so
+the validator, the backfiller and anything else read the same rows you are
+reading. Adding a field here adds it everywhere; there is no second list in a
+`.mjs` to keep in step, because a second list is a second thing that can be
+wrong — the same reason `status` is not a field.
+
+### The two fields added 2026-09-07, and the failure each one answers
+
+The issue is the only place truth lives. Both fields below exist because
+something outside the issue tried to hold that truth and got it wrong.
+
+A third was drafted and **deliberately rejected**, which is worth recording
+because it is the trap this whole standard exists to avoid. `pages/whats-new.html`
+had claimed, in a hand-written heading, that three changes were *"on `main`"* when
+two of them were uncommitted in a working tree — so the obvious repair looked like
+adding a `commit:` field naming the SHAs. It is the wrong repair. Git already
+knows which commits cite an issue, and `scripts/issue-state.mjs` already derives
+`committed` / `pushed` from reachability off the remote default branch (#1043). A
+hand-written `commit:` would be a second copy of something already computable, and
+a second copy is a second thing that can be wrong — which is precisely how the page
+got it wrong in the first place. **Ship state is never a field. It is derived, and
+the engine is where it is derived.** The page's bug is that it does not read the
+engine, and no amount of new signature fields fixes that.
+
+So the rule the failure actually produced is a prohibition, not a field: nothing
+outside the issue may assert where a fix lives.
+
+**`evidence` — because a `detect` can be confidently wrong.**
+#1055 was filed claiming one orphan doc, with a `detect` block that looked
+reasonable and was junk: it compared docs against `src/wb-viewmodels/` filenames,
+which is not how behaviours are registered. The real number was 48, and 35 of
+those were not orphans at all. Nothing forced the filer to paste what the
+command actually *printed*, so a broken derivation read as a finding.
+
+Recording the output turns `detect` from an intention into a measurement, and a
+dated one — a detector that found 5 instances in March and 0 today is telling you
+something either way.
+
+**`related` — because the same defect keeps arriving under new numbers.**
+"An asset path resolves against the wrong base" has now been filed four times
+wearing four different faces: #1047 (the showcase catalogue), #1053 (the doc
+viewer's `/public/` base), #1055 (misdiagnosed), #1056 (a page reading one of two
+registries). Each was investigated from scratch. In prose the links are invisible
+to tooling; as a field, the family is queryable, and the fourth instance can be
+recognised as the fourth rather than the first.
 
 ### `kind`
 
@@ -100,6 +159,14 @@ One issue was filed by hand for each of those signatures. The detectors found
   `observed` and `expected` are required then.
 - `detect` is required whenever the condition is computable. Most `structural`
   and every `dead-declaration` signature is.
+- `evidence` is required whenever `detect` is present: paste what it printed and
+  date it. A `detect` nobody ran is a guess with syntax highlighting.
+- Ship state is **never written down**, in the block or anywhere else. Cite the
+  issue number in the commit message and let `scripts/issue-state.mjs` derive
+  `committed` / `pushed` from git. No page, doc, changelog, release note or
+  comment may assert where a fix lives; they read the engine or say nothing.
+- `related` names sibling issues sharing a root cause, so the fourth instance of
+  a defect can be seen as the fourth.
 - `test` and `fix` are filled when the issue is closed. An issue closed without
   `test` is closed as *claimed*, not *verified*.
 - The block is the source the fix registry reads. Keep it accurate over

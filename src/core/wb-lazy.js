@@ -156,10 +156,12 @@ console.log(`[WB-lazy] debug tracing: ${traceStatusLabel()} (localStorage.setIte
 // override so x-drawer agrees with tag-map.js's 'drawer' on both runtimes.
 const ELEMENT_MAP_OVERRIDES = new Set(['[x-modal]']);
 
-// x-grid is still a REAL custom element (x-grid.js, eagerly imported by
-// wb.js) whose own connectedCallback calls the layout function directly.
-// wb-lazy.js has no such registration (only x-card.js, separately, for
-// <article>), so it needs dispatching as an ordinary injected behavior here.
+// x-grid was described here as a REAL custom element (x-grid.js, eagerly
+// imported by wb.js) whose own connectedCallback called the layout function
+// directly. It never was one -- nothing called customElements.define() for
+// WBGrid, so that connectedCallback never ran, and the file is now deleted
+// (#1063). x-grid dispatches as an ordinary injected behavior on BOTH
+// runtimes, which is what this entry already did.
 // x-cluster/x-stack/x-row/x-accordion USED to be real custom elements
 // too, but those `extends HTMLElement` wrappers were removed (#279) in favor
 // of tag-map.js's elementMap (cluster/stack/flex/accordion) -- now picked up

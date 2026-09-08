@@ -152,5 +152,8 @@ cause, not the player.
 - Schema — `src/wb-models/audio.schema.json`
 - Styles — `src/styles/behaviors/audio.css`
 
-`src/wb-viewmodels/x-audio.js` is a thin wrapper kept from the behavior era;
-the registry maps `audio` to `semantics/audio`, which is what actually runs.
+There used to be a `src/wb-viewmodels/x-audio.js` here, described as a thin
+wrapper kept from the behavior era. It held a `WBAudio extends HTMLElement`
+class that nothing ever registered, so it never ran and nothing imported it;
+it was deleted in #1063. The registry maps `audio` to `semantics/audio`, which
+is what actually runs — and always was.

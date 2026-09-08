@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/behaviors/doc-viewer.spec.ts",
+  "startedAt": "2026-09-07T22:34:07.349Z",
+  "updatedAt": "2026-09-07T22:34:17.977Z",
+  "command": "npx playwright test --workers=8 tests/behaviors/doc-viewer.spec.ts tests/regression/doc-viewer-rebases-root-absolute-assets.spec.ts",
+  "pid": 34404,
+  "passed": 3,
+  "failed": 0,
+  "skipped": 0,
+  "total": 3,
+  "currentFile": "tests\\regression\\doc-viewer-rebases-root-absolute-assets.spec.ts",
+  "output": "\nRunning 3 tests using 3 workers\n\n  ok 2 [behaviors] › tests\\behaviors\\doc-viewer.spec.ts:30:1 › doc-viewer shows an error (not infinite loading) for a missing file (839ms)\n  ok 1 [behaviors] › tests\\behaviors\\doc-viewer.spec.ts:8:1 › doc-viewer renders the requested markdown, not the loading placeholder (1.2s)\n  ok 3 [regression] › tests\\regression\\doc-viewer-rebases-root-absolute-assets.spec.ts:67:1 › the doc viewer resolves root-absolute doc assets under the deploy base (2.0s)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 3 tests in 5.2s\n  ✓ Passed:  3\n  ✗ Failed:  0\n\n  By Project:\n    ✓ behaviors: 2/2 passed\n    ✓ regression: 1/1 passed\n\n  ✅ FIXED (5):\n     - every spec that drives a page navigates somewhere\n     - CLASS does not grow past its ceiling\n     - zero component tags survive\n     - MODULE does not grow past its ceiling\n     - PACKAGE does not grow past its ceiling\n════════════════════════════════════════════════════════════\n\n\n  3 passed (7.4s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-07T22:34:17.977Z",
+  "duration": "10.63s",
+  "exitCode": 0,
+  "flaky": 0
+}

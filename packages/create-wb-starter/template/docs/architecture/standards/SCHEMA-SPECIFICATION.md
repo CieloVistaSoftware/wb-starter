@@ -418,9 +418,9 @@ The `$view` section defines **DOM structure** - what gets rendered.
 
 | `name` | `baseClass` | Generated Class |
 |--------|-------------|-----------------|
-| `header` | `x-card` | `x-card__header` |
-| `title` | `x-card` | `x-card__title` |
-| `wrapper` (private) | `x-card` | `x-card__-wrapper` |
+| `header` | `<article>` | `x-card__header` |
+| `title` | `<article>` | `x-card__title` |
+| `wrapper` (private) | `<article>` | `x-card__-wrapper` |
 
 ---
 

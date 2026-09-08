@@ -2,15 +2,31 @@
 
 Interactive button with variants, sizes, and optional icon
 
-Applies to `<button>`, and to any element carrying `x-button`.
+## Type — decorates a semantic element
 
-## Usage
+`x-button` is the **button behavior**. It attaches to `<button>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<button>
-  …
+<!-- Plain semantic HTML. The behavior is injected automatically -->
+<!-- because the element itself implies it. No attribute needed. -->
+<button variant="primary" icon="download" size="md">
+  variant: primary · icon: download · size: md
 </button>
 ```
+
+### On a different element
+
+Use `x-button` when the host is not a `<button>` and you want the same behavior:
+
+```html
+<div x-button>
+  …
+</div>
+```
+
+> Do not write `<button x-button>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
 ## Attributes
 

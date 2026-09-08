@@ -2,14 +2,24 @@
 
 Progress bar with determinate and indeterminate states
 
-Applies to `<progress>`, and to any element carrying `x-progressbar`.
+## Type — decorates a semantic element
 
-## Usage
+`x-progressbar` is the **progress behavior**. It attaches to `<progress>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<progress x-progressbar>
+<progress x-progressbar value="72" max="100" label="Uploading footage" show-value></progress>
+```
+
+### On a different element
+
+Use `x-progressbar` when the host is not a `<progress>` and you want the same behavior:
+
+```html
+<div x-progressbar>
   …
-</progress>
+</div>
 ```
 
 ## Attributes

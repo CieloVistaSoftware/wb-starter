@@ -142,13 +142,13 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
 </article>
 </div>
 
-**Spinner** — `<span x-spinner>`:
+**Spinner** — `<div x-spinner>`:
 
 <div x-demo>
 <span x-spinner
   size="lg"
   color="success">
-</span>
+</div>
 </div>
 
 **Progress bar** — `<progress>`:
@@ -160,27 +160,27 @@ Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slo
 </progress>
 </div>
 
-**Badge** — `<span x-badge>`:
+**Badge** — `<div x-badge>`:
 
 <div x-demo>
 <span x-badge
   variant="success"
   pill>
   New
-</span>
+</div>
 </div>
 
-**Tabs** — `<div x-tabs>`:
+**Tabs** — `<nav x-tabs>`:
 
 <div x-demo>
-<div x-tabs>
+<nav x-tabs>
   <div tab-title="Overview">
     <p>…</p>
   </div>
   <div tab-title="Install">
     <p>…</p>
   </div>
-</div>
+</nav>
 </div>
 
 **Accordion** — `<div x-accordion>`:
@@ -283,7 +283,7 @@ WB.render(json, container)    // build DOM from a JSON behavior definition
 ### The lifecycle of one element
 
 1. **Map.** `scan()` matches each element against `customElementMappings`
-   (`x-card` → `card`, `[x-toast]` → `toast`, …) and, if `autoInject`, against
+   (`<article>` → `card`, `[x-toast]` → `toast`, …) and, if `autoInject`, against
    the native map.
 2. **Schedule.** Matches are handed to `lazyInject()`, which observes the element
    with an `IntersectionObserver` (200px root margin) — behaviors load only when

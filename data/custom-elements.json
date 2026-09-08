@@ -11,10 +11,10 @@
           "name": "x-card",
           "tagName": "x-card",
           "customElement": true,
-          "description": "Base card component. IS-A article, HAS-A header, main, footer.",
+          "description": "Card. Composes an article with a header, main and footer.",
           "attributes": [
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title displayed in header",
               "type": {
                 "text": "string"
@@ -22,7 +22,7 @@
               "default": ""
             },
             {
-              "name": "data-subtitle",
+              "name": "subtitle",
               "description": "Card subtitle displayed below title",
               "type": {
                 "text": "string"
@@ -30,7 +30,7 @@
               "default": ""
             },
             {
-              "name": "data-footer",
+              "name": "footer",
               "description": "Card footer text",
               "type": {
                 "text": "string"
@@ -38,7 +38,7 @@
               "default": ""
             },
             {
-              "name": "data-elevated",
+              "name": "elevated",
               "description": "Add drop shadow",
               "type": {
                 "text": "boolean"
@@ -46,7 +46,7 @@
               "default": "false"
             },
             {
-              "name": "data-clickable",
+              "name": "clickable",
               "description": "Make card clickable",
               "type": {
                 "text": "boolean"
@@ -54,7 +54,7 @@
               "default": "false"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | glass | bordered | flat"
@@ -62,12 +62,28 @@
               "default": "default"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "Card size variant controlling max/min width",
               "type": {
                 "text": "xs | sm | md | lg | xl | full | auto"
               },
               "default": "auto"
+            },
+            {
+              "name": "tooltip",
+              "description": "Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283).",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "hover-text",
+              "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
             }
           ],
           "slots": [
@@ -105,14 +121,15 @@
           "description": "Card with featured image and optional title/subtitle",
           "attributes": [
             {
-              "name": "data-src",
+              "name": "src",
               "description": "Image source URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": "/images/placeholder.svg"
             },
             {
-              "name": "data-alt",
+              "name": "alt",
               "description": "Image alt text (accessibility)",
               "type": {
                 "text": "string"
@@ -120,35 +137,39 @@
               "default": ""
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-subtitle",
+              "name": "subtitle",
               "description": "Card subtitle",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-caption",
+              "name": "caption",
               "description": "Image caption (displayed below image)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-href",
+              "name": "href",
               "description": "Link URL (makes card clickable)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-aspect",
+              "name": "aspect",
               "description": "Image aspect ratio",
               "type": {
                 "text": "16/9 | 4/3 | 1/1 | 3/2 | 21/9 | auto"
@@ -156,7 +177,7 @@
               "default": "16/9"
             },
             {
-              "name": "data-position",
+              "name": "position",
               "description": "Image position relative to content",
               "type": {
                 "text": "top | bottom | left | right"
@@ -164,7 +185,7 @@
               "default": "top"
             },
             {
-              "name": "data-fit",
+              "name": "fit",
               "description": "Image object-fit mode",
               "type": {
                 "text": "cover | contain | fill | none"
@@ -172,7 +193,7 @@
               "default": "cover"
             },
             {
-              "name": "data-loading",
+              "name": "loading",
               "description": "Image loading strategy",
               "type": {
                 "text": "lazy | eager"
@@ -180,7 +201,7 @@
               "default": "lazy"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | elevated | bordered | minimal"
@@ -223,35 +244,39 @@
           "description": "Card with embedded video player",
           "attributes": [
             {
-              "name": "data-src",
+              "name": "src",
               "description": "Video source URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": "https://www.w3schools.com/html/mov_bbb.mp4"
             },
             {
-              "name": "data-poster",
+              "name": "poster",
               "description": "Poster image URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Video title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-description",
+              "name": "description",
               "description": "Video description",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-autoplay",
+              "name": "autoplay",
               "description": "Auto-play video (requires muted)",
               "type": {
                 "text": "boolean"
@@ -259,7 +284,7 @@
               "default": "false"
             },
             {
-              "name": "data-muted",
+              "name": "muted",
               "description": "Mute video",
               "type": {
                 "text": "boolean"
@@ -267,7 +292,7 @@
               "default": "false"
             },
             {
-              "name": "data-loop",
+              "name": "loop",
               "description": "Loop video playback",
               "type": {
                 "text": "boolean"
@@ -275,7 +300,7 @@
               "default": "false"
             },
             {
-              "name": "data-controls",
+              "name": "controls",
               "description": "Show video controls",
               "type": {
                 "text": "boolean"
@@ -283,7 +308,7 @@
               "default": "true"
             },
             {
-              "name": "data-aspect",
+              "name": "aspect",
               "description": "Video aspect ratio",
               "type": {
                 "text": "16/9 | 4/3 | 1/1 | 21/9 | 9/16"
@@ -291,7 +316,7 @@
               "default": "16/9"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | minimal | bordered | elevated"
@@ -331,10 +356,10 @@
           "name": "x-cardprofile",
           "tagName": "x-cardprofile",
           "customElement": true,
-          "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
+          "description": "Simple profile card. Composes the shared card structure and adds profile elements (avatar, name, role, bio, cover).",
           "attributes": [
             {
-              "name": "data-name",
+              "name": "name",
               "description": "Person's name",
               "type": {
                 "text": "string"
@@ -342,7 +367,7 @@
               "default": "John Doe"
             },
             {
-              "name": "data-role",
+              "name": "role",
               "description": "Job title or role",
               "type": {
                 "text": "string"
@@ -350,7 +375,7 @@
               "default": "Designer"
             },
             {
-              "name": "data-avatar",
+              "name": "avatar",
               "description": "Avatar image URL",
               "type": {
                 "text": "string"
@@ -358,21 +383,23 @@
               "default": "/images/avatar.svg"
             },
             {
-              "name": "data-bio",
+              "name": "bio",
               "description": "Short biography",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-cover",
+              "name": "cover",
               "description": "Cover/banner image URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "Avatar size",
               "type": {
                 "text": "sm | md | lg"
@@ -380,7 +407,7 @@
               "default": "md"
             },
             {
-              "name": "data-align",
+              "name": "align",
               "description": "Content alignment",
               "type": {
                 "text": "left | center"
@@ -388,8 +415,8 @@
               "default": "center"
             },
             {
-              "name": "data-hover-text",
-              "description": "Tooltip text shown on hover",
+              "name": "hover-text",
+              "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
               "type": {
                 "text": "string"
               },
@@ -431,21 +458,23 @@
           "description": "Pricing tier card with plan name, price, features list, and CTA",
           "attributes": [
             {
-              "name": "data-plan",
+              "name": "plan",
               "description": "Plan name (e.g., Basic, Pro, Enterprise)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-price",
+              "name": "price",
               "description": "Price amount (e.g., $29)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-period",
+              "name": "period",
               "description": "Billing period (e.g., /month, /year)",
               "type": {
                 "text": "string"
@@ -453,21 +482,23 @@
               "default": "/month"
             },
             {
-              "name": "data-description",
+              "name": "description",
               "description": "Short plan description",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-features",
+              "name": "features",
               "description": "Comma-separated list of features",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-cta",
+              "name": "cta",
               "description": "Call-to-action button text",
               "type": {
                 "text": "string"
@@ -475,7 +506,7 @@
               "default": "Get Started"
             },
             {
-              "name": "data-cta-href",
+              "name": "cta-href",
               "description": "Call-to-action link URL",
               "type": {
                 "text": "string"
@@ -483,7 +514,7 @@
               "default": "#"
             },
             {
-              "name": "data-featured",
+              "name": "featured",
               "description": "Highlight as featured/recommended plan",
               "type": {
                 "text": "boolean"
@@ -491,7 +522,7 @@
               "default": "false"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | bordered | elevated | minimal"
@@ -534,63 +565,71 @@
           "description": "E-commerce product card with image, price, rating, and CTA",
           "attributes": [
             {
-              "name": "data-image",
+              "name": "image",
               "description": "Product image URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Product name",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-description",
+              "name": "description",
               "description": "Product description",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-price",
+              "name": "price",
               "description": "Current price",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-original-price",
+              "name": "original-price",
               "description": "Original price (shows discount)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-badge",
+              "name": "badge",
               "description": "Badge text (Sale, New, etc.)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-rating",
+              "name": "rating",
               "description": "Product rating (0-5)",
               "type": {
                 "text": "number"
-              }
+              },
+              "default": "0"
             },
             {
-              "name": "data-reviews",
+              "name": "reviews",
               "description": "Number of reviews",
               "type": {
                 "text": "number"
-              }
+              },
+              "default": "0"
             },
             {
-              "name": "data-cta",
+              "name": "cta",
               "description": "CTA button text",
               "type": {
                 "text": "string"
@@ -598,7 +637,7 @@
               "default": "Add to Cart"
             },
             {
-              "name": "data-featured",
+              "name": "featured",
               "description": "Highlight as featured",
               "type": {
                 "text": "boolean"
@@ -606,7 +645,7 @@
               "default": "false"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | compact | horizontal | minimal"
@@ -649,42 +688,47 @@
           "description": "Statistics display card with value, label, icon, and trend indicator",
           "attributes": [
             {
-              "name": "data-value",
+              "name": "value",
               "description": "The main statistic value (e.g., 1,234 or $50K)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-label",
+              "name": "label",
               "description": "Label describing what the value represents",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-icon",
+              "name": "icon",
               "description": "Icon (emoji or icon name)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-trend",
+              "name": "trend",
               "description": "Trend direction",
               "type": {
-                "text": "up | down | neutral"
-              }
+                "text": " | up | down | neutral"
+              },
+              "default": ""
             },
             {
-              "name": "data-trend-value",
+              "name": "trend-value",
               "description": "Trend amount (e.g., +12%, -5%)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | compact | large | minimal"
@@ -692,11 +736,12 @@
               "default": "default"
             },
             {
-              "name": "data-color",
+              "name": "color",
               "description": "Accent color (CSS color value)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             }
           ],
           "slots": [
@@ -734,42 +779,47 @@
           "description": "Customer testimonial/review card with quote, author, avatar, and rating",
           "attributes": [
             {
-              "name": "data-quote",
+              "name": "quote",
               "description": "Testimonial quote text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-author",
+              "name": "author",
               "description": "Author name",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-role",
+              "name": "role",
               "description": "Author role/title/company",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-avatar",
+              "name": "avatar",
               "description": "Author avatar image URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-rating",
+              "name": "rating",
               "description": "Star rating (0-5)",
               "type": {
                 "text": "number"
-              }
+              },
+              "default": "0"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | elevated | bordered | minimal | centered"
@@ -777,7 +827,7 @@
               "default": "default"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "Card size",
               "type": {
                 "text": "sm | md | lg"
@@ -820,29 +870,31 @@
           "description": "Hero banner with background image, title, subtitle, and optional CTA",
           "attributes": [
             {
-              "name": "data-background",
+              "name": "background",
               "description": "Background image URL",
-              "type": {
-                "text": "string"
-              }
-            },
-            {
-              "name": "data-title",
-              "description": "Hero headline",
-              "type": {
-                "text": "string"
-              }
-            },
-            {
-              "name": "data-pretitle",
-              "description": "Small label or count shown above the title (e.g. '100 Components')",
               "type": {
                 "text": "string"
               },
               "default": ""
             },
             {
-              "name": "data-subtitle",
+              "name": "title",
+              "description": "Hero headline",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "pretitle",
+              "description": "Small label or count shown above the title (e.g. '100 Behaviors')",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "subtitle",
               "description": "Hero tagline/subheadline",
               "type": {
                 "text": "string"
@@ -850,7 +902,7 @@
               "default": ""
             },
             {
-              "name": "data-content",
+              "name": "content",
               "description": "HTML content rendered in the hero content area (allows attribute-only usage instead of slots)",
               "type": {
                 "text": "string"
@@ -858,14 +910,15 @@
               "default": ""
             },
             {
-              "name": "data-cta",
+              "name": "cta",
               "description": "Call-to-action button text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-cta-href",
+              "name": "cta-href",
               "description": "Call-to-action link URL",
               "type": {
                 "text": "string"
@@ -873,7 +926,7 @@
               "default": "#"
             },
             {
-              "name": "data-cta-secondary",
+              "name": "cta-secondary",
               "description": "Secondary CTA text",
               "type": {
                 "text": "string"
@@ -881,7 +934,7 @@
               "default": ""
             },
             {
-              "name": "data-cta-secondary-href",
+              "name": "cta-secondary-href",
               "description": "Secondary CTA URL",
               "type": {
                 "text": "string"
@@ -889,7 +942,7 @@
               "default": "#"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | cosmic | split | minimal | gradient"
@@ -897,7 +950,7 @@
               "default": "default"
             },
             {
-              "name": "data-xalign",
+              "name": "xalign",
               "description": "Horizontal content alignment (x-axis)",
               "type": {
                 "text": "left | center | right"
@@ -905,7 +958,7 @@
               "default": "center"
             },
             {
-              "name": "data-overlay",
+              "name": "overlay",
               "description": "Show gradient overlay for text readability",
               "type": {
                 "text": "boolean"
@@ -913,12 +966,20 @@
               "default": "true"
             },
             {
-              "name": "data-full-height",
+              "name": "full-height",
               "description": "Make hero full viewport height",
               "type": {
                 "text": "boolean"
               },
               "default": "false"
+            },
+            {
+              "name": "heading-level",
+              "description": "Heading level for the hero title (1-6). A page hero is usually the page's h1; a hero inside a section is not. Default 3.",
+              "type": {
+                "text": "1 | 2 | 3 | 4 | 5 | 6"
+              },
+              "default": "3"
             }
           ],
           "slots": [
@@ -956,14 +1017,15 @@
           "description": "File display card with icon, name, size, and download",
           "attributes": [
             {
-              "name": "data-filename",
+              "name": "filename",
               "description": "File name",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-file-type",
+              "name": "file-type",
               "description": "File type for icon",
               "type": {
                 "text": "pdf | doc | image | video | audio | zip | file"
@@ -971,28 +1033,31 @@
               "default": "file"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "File size (e.g., 2.4 MB)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-date",
+              "name": "date",
               "description": "File date",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-href",
+              "name": "href",
               "description": "Download URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-downloadable",
+              "name": "downloadable",
               "description": "Show download link",
               "type": {
                 "text": "boolean"
@@ -1000,12 +1065,20 @@
               "default": "true"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | compact | elevated"
               },
               "default": "default"
+            },
+            {
+              "name": "hover-text",
+              "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
             }
           ],
           "slots": [
@@ -1040,10 +1113,10 @@
           "name": "x-cardnotification",
           "tagName": "x-cardnotification",
           "customElement": true,
-          "description": "Dismissible notification card with type-based styling",
+          "description": "Dismissible notification card with variant-based styling",
           "attributes": [
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Notification type/severity",
               "type": {
                 "text": "info | success | warning | error"
@@ -1051,28 +1124,31 @@
               "default": "info"
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Notification title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-message",
+              "name": "message",
               "description": "Notification message",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-icon",
-              "description": "Custom icon (overrides type-based icon)",
+              "name": "icon",
+              "description": "Custom icon (overrides variant-based icon)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-dismissible",
+              "name": "dismissible",
               "description": "Show dismiss button",
               "type": {
                 "text": "boolean"
@@ -1080,7 +1156,7 @@
               "default": "true"
             },
             {
-              "name": "data-elevated",
+              "name": "elevated",
               "description": "Add shadow elevation",
               "type": {
                 "text": "boolean"
@@ -1123,63 +1199,71 @@
           "description": "Full-featured professional portfolio card with skills, experience, projects, and more",
           "attributes": [
             {
-              "name": "data-name",
+              "name": "name",
               "description": "Full name",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Job title / role",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-company",
+              "name": "company",
               "description": "Current company name",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-location",
+              "name": "location",
               "description": "Location (city, country)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-cover",
+              "name": "cover",
               "description": "Cover/banner image URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-avatar",
+              "name": "avatar",
               "description": "Profile photo URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-bio",
+              "name": "bio",
               "description": "Short biography / summary",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-tagline",
+              "name": "tagline",
               "description": "Professional tagline or motto",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-availability",
+              "name": "availability",
               "description": "Current availability status",
               "type": {
                 "text": "available | busy | not-available | open-to-opportunities"
@@ -1187,126 +1271,143 @@
               "default": "available"
             },
             {
-              "name": "data-email",
+              "name": "email",
               "description": "Email address",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-phone",
+              "name": "phone",
               "description": "Phone number",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-website",
+              "name": "website",
               "description": "Personal website URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-linkedin",
+              "name": "linkedin",
               "description": "LinkedIn profile URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-twitter",
+              "name": "twitter",
               "description": "Twitter/X profile URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-github",
+              "name": "github",
               "description": "GitHub profile URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-dribbble",
+              "name": "dribbble",
               "description": "Dribbble profile URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-skills",
+              "name": "skills",
               "description": "Comma-separated list of skills",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-skill-levels",
+              "name": "skill-levels",
               "description": "JSON array of {name, level (0-100)} for skill bars",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-experience",
+              "name": "experience",
               "description": "JSON array of {company, role, period, description}",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-education",
+              "name": "education",
               "description": "JSON array of {school, degree, year}",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-projects",
+              "name": "projects",
               "description": "JSON array of {name, description, url, image}",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-certifications",
+              "name": "certifications",
               "description": "Comma-separated list of certifications",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-languages",
+              "name": "languages",
               "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-stats",
+              "name": "stats",
               "description": "JSON array of {label, value} for stats display",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-cta",
+              "name": "cta",
               "description": "Call-to-action button text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-cta-href",
+              "name": "cta-href",
               "description": "Call-to-action button link",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | compact | horizontal | full"
@@ -1314,7 +1415,7 @@
               "default": "default"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "size property",
               "type": {
                 "text": "sm | md | lg | xl | full | auto"
@@ -1357,42 +1458,47 @@
           "description": "Clickable card that navigates to a URL",
           "attributes": [
             {
-              "name": "data-href",
+              "name": "href",
               "description": "Link destination URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": "https://example.com"
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-description",
+              "name": "description",
               "description": "Card description text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-icon",
+              "name": "icon",
               "description": "Icon (emoji or icon name)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-badge",
+              "name": "badge",
               "description": "Badge text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-target",
+              "name": "target",
               "description": "Link target",
               "type": {
                 "text": "_self | _blank"
@@ -1400,7 +1506,7 @@
               "default": "_self"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | elevated | bordered | minimal | glass"
@@ -1443,14 +1549,15 @@
           "description": "Card with horizontal layout - image on side, content on other",
           "attributes": [
             {
-              "name": "data-image",
+              "name": "image",
               "description": "Image URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-image-alt",
+              "name": "image-alt",
               "description": "Image alt text",
               "type": {
                 "text": "string"
@@ -1458,7 +1565,7 @@
               "default": ""
             },
             {
-              "name": "data-image-position",
+              "name": "image-position",
               "description": "Image position",
               "type": {
                 "text": "left | right"
@@ -1466,7 +1573,7 @@
               "default": "left"
             },
             {
-              "name": "data-image-width",
+              "name": "image-width",
               "description": "Image width (CSS value)",
               "type": {
                 "text": "string"
@@ -1474,21 +1581,23 @@
               "default": "40%"
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-subtitle",
+              "name": "subtitle",
               "description": "Card subtitle",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | elevated | bordered | minimal"
@@ -1531,28 +1640,31 @@
           "description": "Card with text overlaid on background image",
           "attributes": [
             {
-              "name": "data-image",
+              "name": "image",
               "description": "Background image URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Overlay title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-subtitle",
+              "name": "subtitle",
               "description": "Overlay subtitle",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-position",
+              "name": "position",
               "description": "Content position",
               "type": {
                 "text": "top | center | bottom"
@@ -1560,7 +1672,7 @@
               "default": "bottom"
             },
             {
-              "name": "data-xalign",
+              "name": "xalign",
               "description": "Horizontal text alignment (x-axis)",
               "type": {
                 "text": "left | center | right"
@@ -1568,7 +1680,7 @@
               "default": "left"
             },
             {
-              "name": "data-gradient",
+              "name": "gradient",
               "description": "Show gradient overlay for text readability",
               "type": {
                 "text": "boolean"
@@ -1576,7 +1688,7 @@
               "default": "true"
             },
             {
-              "name": "data-height",
+              "name": "height",
               "description": "Card height (CSS value)",
               "type": {
                 "text": "string"
@@ -1584,7 +1696,7 @@
               "default": "300px"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
                 "text": "default | dark | light | blur"
@@ -1627,49 +1739,55 @@
           "description": "Card with action buttons in footer",
           "attributes": [
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-content",
+              "name": "content",
               "description": "Card content/description",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-primary",
+              "name": "primary",
               "description": "Primary button text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-primary-href",
+              "name": "primary-href",
               "description": "Primary button link URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-secondary",
+              "name": "secondary",
               "description": "Secondary button text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-secondary-href",
+              "name": "secondary-href",
               "description": "Secondary button link URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | elevated | bordered"
@@ -1712,21 +1830,23 @@
           "description": "Card with collapsible/expandable content section",
           "attributes": [
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-content",
+              "name": "content",
               "description": "Expandable content",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-expanded",
+              "name": "expanded",
               "description": "Initial expanded state",
               "type": {
                 "text": "boolean"
@@ -1734,15 +1854,23 @@
               "default": "false"
             },
             {
-              "name": "data-max-height",
-              "description": "Max height when collapsed",
+              "name": "max-height",
+              "description": "Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply.",
               "type": {
                 "text": "string"
               },
               "default": "100px"
             },
             {
-              "name": "data-variant",
+              "name": "lines",
+              "description": "Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set.",
+              "type": {
+                "text": "number"
+              },
+              "default": "null"
+            },
+            {
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | elevated | bordered"
@@ -1785,21 +1913,23 @@
           "description": "Card with minimize/expand toggle button in header",
           "attributes": [
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title (always visible)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-content",
+              "name": "content",
               "description": "Minimizable content",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-minimized",
+              "name": "minimized",
               "description": "Initial minimized state",
               "type": {
                 "text": "boolean"
@@ -1807,7 +1937,7 @@
               "default": "false"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | elevated | bordered"
@@ -1850,21 +1980,23 @@
           "description": "Card that can be dragged around the page",
           "attributes": [
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Card title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-content",
+              "name": "content",
               "description": "Card content",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-constrain",
+              "name": "constrain",
               "description": "Constrain to area",
               "type": {
                 "text": "none | parent | viewport"
@@ -1872,7 +2004,7 @@
               "default": "none"
             },
             {
-              "name": "data-axis",
+              "name": "axis",
               "description": "Drag axis",
               "type": {
                 "text": "both | x | y"
@@ -1880,7 +2012,7 @@
               "default": "both"
             },
             {
-              "name": "data-snap-to-grid",
+              "name": "snap-to-grid",
               "description": "Snap grid size (0=disabled)",
               "type": {
                 "text": "number"
@@ -1888,7 +2020,7 @@
               "default": "0"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | elevated"
@@ -1931,7 +2063,7 @@
           "description": "Loading spinner indicator",
           "attributes": [
             {
-              "name": "data-size",
+              "name": "size",
               "description": "size property",
               "type": {
                 "text": "xs | sm | md | lg | xl"
@@ -1939,7 +2071,7 @@
               "default": "md"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | primary | success | warning | error"
@@ -1947,7 +2079,7 @@
               "default": "primary"
             },
             {
-              "name": "data-speed",
+              "name": "speed",
               "description": "speed property",
               "type": {
                 "text": "slow | medium | fast"
@@ -1955,7 +2087,7 @@
               "default": "medium"
             },
             {
-              "name": "data-label",
+              "name": "label",
               "description": "Accessible label",
               "type": {
                 "text": "string"
@@ -1998,35 +2130,39 @@
           "description": "User avatar with image, initials fallback, and status indicator",
           "attributes": [
             {
-              "name": "data-src",
+              "name": "src",
               "description": "Image source URL",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-alt",
+              "name": "alt",
               "description": "Alt text for image",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-initials",
+              "name": "initials",
               "description": "Fallback initials (2 chars)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-name",
+              "name": "name",
               "description": "Full name (generates initials if not provided)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "size property",
               "type": {
                 "text": "xs | sm | md | lg | xl | 2xl"
@@ -2034,7 +2170,7 @@
               "default": "md"
             },
             {
-              "name": "data-shape",
+              "name": "shape",
               "description": "shape property",
               "type": {
                 "text": "circle | square | rounded"
@@ -2042,14 +2178,15 @@
               "default": "circle"
             },
             {
-              "name": "data-status",
-              "description": "Status indicator",
+              "name": "status",
+              "description": "Status indicator (empty = no indicator)",
               "type": {
-                "text": "online | offline | busy | away"
-              }
+                "text": " | online | offline | busy | away"
+              },
+              "default": ""
             },
             {
-              "name": "data-bordered",
+              "name": "bordered",
               "description": "Show border",
               "type": {
                 "text": "boolean"
@@ -2092,22 +2229,23 @@
           "description": "Small label/tag for status indicators, counts, or categories",
           "attributes": [
             {
-              "name": "data-label",
+              "name": "label",
               "description": "Badge text content",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Color variant",
               "type": {
-                "text": "default | primary | secondary | success | warning | error | info"
+                "text": "default | primary | secondary | success | warning | error | info | glass | gradient"
               },
               "default": "default"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "Badge size",
               "type": {
                 "text": "xs | sm | md | lg"
@@ -2115,7 +2253,7 @@
               "default": "md"
             },
             {
-              "name": "data-pill",
+              "name": "pill",
               "description": "Pill shape with full border radius",
               "type": {
                 "text": "boolean"
@@ -2123,7 +2261,7 @@
               "default": "false"
             },
             {
-              "name": "data-dot",
+              "name": "dot",
               "description": "Dot indicator (no text)",
               "type": {
                 "text": "boolean"
@@ -2131,7 +2269,7 @@
               "default": "false"
             },
             {
-              "name": "data-outline",
+              "name": "outline",
               "description": "Outline style (transparent background)",
               "type": {
                 "text": "boolean"
@@ -2139,12 +2277,28 @@
               "default": "false"
             },
             {
-              "name": "data-removable",
+              "name": "removable",
               "description": "Show remove/close button",
               "type": {
                 "text": "boolean"
               },
               "default": "false"
+            },
+            {
+              "name": "glow",
+              "description": "Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges)",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            },
+            {
+              "name": "icon",
+              "description": "Leading icon/emoji shown before the label",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
             }
           ],
           "slots": [
@@ -2179,10 +2333,10 @@
           "name": "x-alert",
           "tagName": "x-alert",
           "customElement": true,
-          "description": "Alert component for displaying messages with severity levels",
+          "description": "Alert behavior for displaying messages with severity levels",
           "attributes": [
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Alert severity/style variant",
               "type": {
                 "text": "info | success | warning | error"
@@ -2190,21 +2344,23 @@
               "default": "info"
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Alert title (optional heading)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-message",
+              "name": "message",
               "description": "Alert message content",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-icon",
+              "name": "icon",
               "description": "Icon (emoji or icon name)",
               "type": {
                 "text": "string"
@@ -2212,7 +2368,7 @@
               "default": ""
             },
             {
-              "name": "data-dismissible",
+              "name": "dismissible",
               "description": "Show close button to dismiss alert",
               "type": {
                 "text": "boolean"
@@ -2255,7 +2411,7 @@
           "description": "Progress bar with determinate and indeterminate states",
           "attributes": [
             {
-              "name": "data-value",
+              "name": "value",
               "description": "Current progress value (0-100)",
               "type": {
                 "text": "number"
@@ -2263,7 +2419,7 @@
               "default": "0"
             },
             {
-              "name": "data-max",
+              "name": "max",
               "description": "Maximum value",
               "type": {
                 "text": "number"
@@ -2271,14 +2427,15 @@
               "default": "100"
             },
             {
-              "name": "data-label",
+              "name": "label",
               "description": "Progress label text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-show-value",
+              "name": "show-value",
               "description": "Show percentage value",
               "type": {
                 "text": "boolean"
@@ -2286,7 +2443,7 @@
               "default": "false"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Color variant",
               "type": {
                 "text": "default | primary | success | warning | error | info"
@@ -2294,7 +2451,7 @@
               "default": "primary"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "Bar height size",
               "type": {
                 "text": "xs | sm | md | lg | xl"
@@ -2302,7 +2459,7 @@
               "default": "md"
             },
             {
-              "name": "data-animated",
+              "name": "animated",
               "description": "Animate on load",
               "type": {
                 "text": "boolean"
@@ -2310,7 +2467,7 @@
               "default": "true"
             },
             {
-              "name": "data-striped",
+              "name": "striped",
               "description": "Show striped pattern",
               "type": {
                 "text": "boolean"
@@ -2318,7 +2475,7 @@
               "default": "false"
             },
             {
-              "name": "data-indeterminate",
+              "name": "indeterminate",
               "description": "Indeterminate loading state",
               "type": {
                 "text": "boolean"
@@ -2358,10 +2515,10 @@
           "name": "x-rating",
           "tagName": "x-rating",
           "customElement": true,
-          "description": "Star rating component for displaying or collecting ratings",
+          "description": "Star rating behavior for displaying or collecting ratings",
           "attributes": [
             {
-              "name": "data-value",
+              "name": "value",
               "description": "Current rating value",
               "type": {
                 "text": "number"
@@ -2369,7 +2526,7 @@
               "default": "0"
             },
             {
-              "name": "data-max",
+              "name": "max",
               "description": "Maximum rating",
               "type": {
                 "text": "number"
@@ -2377,7 +2534,7 @@
               "default": "5"
             },
             {
-              "name": "data-readonly",
+              "name": "readonly",
               "description": "Display only, not interactive",
               "type": {
                 "text": "boolean"
@@ -2385,7 +2542,7 @@
               "default": "false"
             },
             {
-              "name": "data-disabled",
+              "name": "disabled",
               "description": "Disabled state",
               "type": {
                 "text": "boolean"
@@ -2393,7 +2550,7 @@
               "default": "false"
             },
             {
-              "name": "data-half",
+              "name": "half",
               "description": "Allow half-star ratings",
               "type": {
                 "text": "boolean"
@@ -2401,7 +2558,7 @@
               "default": "false"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "size property",
               "type": {
                 "text": "sm | md | lg"
@@ -2409,7 +2566,7 @@
               "default": "md"
             },
             {
-              "name": "data-icon",
+              "name": "icon",
               "description": "Custom icon (emoji or symbol)",
               "type": {
                 "text": "string"
@@ -2452,7 +2609,7 @@
           "description": "Tab navigation for switching between content panels",
           "attributes": [
             {
-              "name": "data-active-tab",
+              "name": "active-tab",
               "description": "Initially active tab index",
               "type": {
                 "text": "number"
@@ -2460,7 +2617,7 @@
               "default": "0"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | pills | underline | bordered"
@@ -2468,7 +2625,7 @@
               "default": "default"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "size property",
               "type": {
                 "text": "sm | md | lg"
@@ -2476,7 +2633,7 @@
               "default": "md"
             },
             {
-              "name": "data-full-width",
+              "name": "full-width",
               "description": "Tabs fill container width",
               "type": {
                 "text": "boolean"
@@ -2484,7 +2641,7 @@
               "default": "false"
             },
             {
-              "name": "data-vertical",
+              "name": "vertical",
               "description": "Vertical tab layout",
               "type": {
                 "text": "boolean"
@@ -2527,14 +2684,15 @@
           "description": "Toggle switch for boolean settings",
           "attributes": [
             {
-              "name": "data-label",
+              "name": "label",
               "description": "Switch label",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-checked",
+              "name": "checked",
               "description": "On/off state",
               "type": {
                 "text": "boolean"
@@ -2542,7 +2700,7 @@
               "default": "false"
             },
             {
-              "name": "data-disabled",
+              "name": "disabled",
               "description": "Disabled state",
               "type": {
                 "text": "boolean"
@@ -2550,21 +2708,23 @@
               "default": "false"
             },
             {
-              "name": "data-name",
+              "name": "name",
               "description": "Form field name",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-value",
+              "name": "value",
               "description": "Form field value when checked",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-label-position",
+              "name": "label-position",
               "description": "labelPosition property",
               "type": {
                 "text": "start | end"
@@ -2572,7 +2732,7 @@
               "default": "end"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "size property",
               "type": {
                 "text": "sm | md | lg"
@@ -2580,7 +2740,7 @@
               "default": "md"
             },
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "variant property",
               "type": {
                 "text": "default | primary | success"
@@ -2654,8 +2814,49 @@
           "name": "x-flex",
           "tagName": "x-flex",
           "customElement": true,
-          "description": "wb-starter flex component",
-          "attributes": [],
+          "description": "Behavior applied with x-flex.",
+          "attributes": [
+            {
+              "name": "direction",
+              "description": "Read by flex().",
+              "type": {
+                "text": "string"
+              },
+              "default": "row"
+            },
+            {
+              "name": "wrap",
+              "description": "Read by flex().",
+              "type": {
+                "text": "string"
+              },
+              "default": "wrap"
+            },
+            {
+              "name": "justify",
+              "description": "Read by flex().",
+              "type": {
+                "text": "string"
+              },
+              "default": "flex-start"
+            },
+            {
+              "name": "align",
+              "description": "Read by flex().",
+              "type": {
+                "text": "string"
+              },
+              "default": "stretch"
+            },
+            {
+              "name": "gap",
+              "description": "Read by flex().",
+              "type": {
+                "text": "string"
+              },
+              "default": "1rem"
+            }
+          ],
           "slots": [
             {
               "name": "",
@@ -2688,8 +2889,41 @@
           "name": "x-stack",
           "tagName": "x-stack",
           "customElement": true,
-          "description": "wb-starter stack component",
-          "attributes": [],
+          "description": "Vertical stack layout behavior. Renders children in a column with configurable gap, background color, padding, and border radius.",
+          "attributes": [
+            {
+              "name": "gap",
+              "description": "CSS gap between stacked children. Accepts any valid CSS length value.",
+              "type": {
+                "text": "string"
+              },
+              "default": "1rem"
+            },
+            {
+              "name": "bg",
+              "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "pad",
+              "description": "CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges).",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            },
+            {
+              "name": "radius",
+              "description": "CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value.",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
+            }
+          ],
           "slots": [
             {
               "name": "",
@@ -2722,8 +2956,33 @@
           "name": "x-cluster",
           "tagName": "x-cluster",
           "customElement": true,
-          "description": "wb-starter cluster component",
-          "attributes": [],
+          "description": "Behavior applied with x-cluster.",
+          "attributes": [
+            {
+              "name": "gap",
+              "description": "Read by cluster().",
+              "type": {
+                "text": "string"
+              },
+              "default": "1rem"
+            },
+            {
+              "name": "justify",
+              "description": "Read by cluster().",
+              "type": {
+                "text": "string"
+              },
+              "default": "flex-start"
+            },
+            {
+              "name": "align",
+              "description": "Read by cluster().",
+              "type": {
+                "text": "string"
+              },
+              "default": "center"
+            }
+          ],
           "slots": [
             {
               "name": "",
@@ -2892,8 +3151,25 @@
           "name": "x-masonry",
           "tagName": "x-masonry",
           "customElement": true,
-          "description": "wb-starter masonry component",
-          "attributes": [],
+          "description": "Behavior applied with x-masonry.",
+          "attributes": [
+            {
+              "name": "columns",
+              "description": "Read by masonry().",
+              "type": {
+                "text": "string"
+              },
+              "default": "3"
+            },
+            {
+              "name": "gap",
+              "description": "Read by masonry().",
+              "type": {
+                "text": "string"
+              },
+              "default": "1rem"
+            }
+          ],
           "slots": [
             {
               "name": "",
@@ -3031,7 +3307,7 @@
           "description": "Makes element stick to viewport on scroll",
           "attributes": [
             {
-              "name": "data-offset",
+              "name": "offset",
               "description": "Offset from top when stuck",
               "type": {
                 "text": "string"
@@ -3039,7 +3315,7 @@
               "default": "0"
             },
             {
-              "name": "data-z-index",
+              "name": "z-index",
               "description": "Z-index when stuck",
               "type": {
                 "text": "number"
@@ -3047,14 +3323,15 @@
               "default": "100"
             },
             {
-              "name": "data-threshold",
+              "name": "threshold",
               "description": "Scroll position to trigger sticky",
               "type": {
                 "text": "number"
-              }
+              },
+              "default": "0"
             },
             {
-              "name": "data-stuck-class",
+              "name": "stuck-class",
               "description": "Class added when stuck",
               "type": {
                 "text": "string"
@@ -3062,7 +3339,7 @@
               "default": "is-stuck"
             },
             {
-              "name": "data-animated",
+              "name": "animated",
               "description": "Animate stick/unstick",
               "type": {
                 "text": "boolean"
@@ -3105,7 +3382,7 @@
           "description": "Collapsible sidebar layout with toggle",
           "attributes": [
             {
-              "name": "data-position",
+              "name": "position",
               "description": "position property",
               "type": {
                 "text": "left | right"
@@ -3113,7 +3390,7 @@
               "default": "left"
             },
             {
-              "name": "data-width",
+              "name": "width",
               "description": "Expanded width",
               "type": {
                 "text": "string"
@@ -3121,7 +3398,7 @@
               "default": "250px"
             },
             {
-              "name": "data-min-width",
+              "name": "min-width",
               "description": "Collapsed width",
               "type": {
                 "text": "string"
@@ -3129,7 +3406,7 @@
               "default": "48px"
             },
             {
-              "name": "data-collapsed",
+              "name": "collapsed",
               "description": "Initial collapsed state",
               "type": {
                 "text": "boolean"
@@ -3206,10 +3483,10 @@
           "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
           "attributes": [
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Visual style variant",
               "type": {
-                "text": "red | yellow | green | dot | primary | secondary | success | error | warning | info"
+                "text": "default | red | yellow | green | dot | primary | secondary | success | error | warning | info"
               },
               "default": "default"
             }
@@ -3246,7 +3523,7 @@
           "name": "x-control",
           "tagName": "x-control",
           "customElement": true,
-          "description": "wb-starter control component",
+          "description": "Behavior applied with x-control.",
           "attributes": [],
           "slots": [
             {
@@ -3280,8 +3557,17 @@
           "name": "x-repeater",
           "tagName": "x-repeater",
           "customElement": true,
-          "description": "wb-starter repeater component",
-          "attributes": [],
+          "description": "Behavior applied with x-repeater.",
+          "attributes": [
+            {
+              "name": "count",
+              "description": "Read by repeater().",
+              "type": {
+                "text": "string"
+              },
+              "default": "0"
+            }
+          ],
           "slots": [
             {
               "name": "",
@@ -3317,14 +3603,15 @@
           "description": "Renders Markdown content as HTML, either from inline content or external source",
           "attributes": [
             {
-              "name": "data-src",
+              "name": "src",
               "description": "Path to external markdown file",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-sanitize",
+              "name": "sanitize",
               "description": "sanitize property",
               "type": {
                 "text": "boolean"
@@ -3332,7 +3619,7 @@
               "default": "true"
             },
             {
-              "name": "data-gfm",
+              "name": "gfm",
               "description": "gfm property",
               "type": {
                 "text": "boolean"
@@ -3409,12 +3696,28 @@
           "description": "Collapsible content area.",
           "attributes": [
             {
-              "name": "data-expanded",
-              "description": "Ideally open",
+              "name": "heading",
+              "description": "Text displayed on the clickable trigger button",
+              "type": {
+                "text": "string"
+              },
+              "default": "Toggle"
+            },
+            {
+              "name": "expanded",
+              "description": "Whether the content is initially visible",
               "type": {
                 "text": "boolean"
               },
               "default": "false"
+            },
+            {
+              "name": "target",
+              "description": "CSS selector of a remote element to toggle instead of wrapping content",
+              "type": {
+                "text": "string"
+              },
+              "default": ""
             }
           ],
           "slots": [
@@ -3486,7 +3789,7 @@
           "description": "Toggleable dropdown menu",
           "attributes": [
             {
-              "name": "data-position",
+              "name": "position",
               "description": "position property",
               "type": {
                 "text": "bottom-start | bottom-end | top-start | top-end"
@@ -3494,7 +3797,7 @@
               "default": "bottom-start"
             },
             {
-              "name": "data-trigger",
+              "name": "trigger",
               "description": "trigger property",
               "type": {
                 "text": "click | hover"
@@ -3502,7 +3805,7 @@
               "default": "click"
             },
             {
-              "name": "data-close-on-select",
+              "name": "close-on-select",
               "description": "Close on item select",
               "type": {
                 "text": "boolean"
@@ -3510,7 +3813,7 @@
               "default": "true"
             },
             {
-              "name": "data-close-on-outside",
+              "name": "close-on-outside",
               "description": "Close on outside click",
               "type": {
                 "text": "boolean"
@@ -3518,7 +3821,7 @@
               "default": "true"
             },
             {
-              "name": "data-offset",
+              "name": "offset",
               "description": "Offset from trigger (px)",
               "type": {
                 "text": "number"
@@ -3561,35 +3864,39 @@
           "description": "Page footer with copyright, links, and social icons",
           "attributes": [
             {
-              "name": "data-copyright",
+              "name": "copyright",
               "description": "Copyright text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-brand",
+              "name": "brand",
               "description": "Brand name",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-links",
+              "name": "links",
               "description": "Navigation links as JSON [{label, href}]",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-social",
+              "name": "social",
               "description": "Social links as JSON [{platform, href}]",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-sticky",
+              "name": "sticky",
               "description": "Sticky at bottom",
               "type": {
                 "text": "boolean"
@@ -3632,35 +3939,39 @@
           "description": "Page header with logo, title, and optional navigation",
           "attributes": [
             {
-              "name": "data-icon",
+              "name": "icon",
               "description": "Logo icon (emoji or text)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-title",
+              "name": "title",
               "description": "Header title",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-subtitle",
+              "name": "subtitle",
               "description": "Subtitle text",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-badge",
+              "name": "badge",
               "description": "Badge text (e.g., version)",
               "type": {
                 "text": "string"
-              }
+              },
+              "default": ""
             },
             {
-              "name": "data-logo-href",
+              "name": "logo-href",
               "description": "Logo link URL",
               "type": {
                 "text": "string"
@@ -3668,7 +3979,7 @@
               "default": "/"
             },
             {
-              "name": "data-sticky",
+              "name": "sticky",
               "description": "Sticky at top",
               "type": {
                 "text": "boolean"
@@ -3745,7 +4056,7 @@
           "description": "Versatile stage lighting effects including spotlights, beams, and fixtures.",
           "attributes": [
             {
-              "name": "data-variant",
+              "name": "variant",
               "description": "Type of light effect",
               "type": {
                 "text": "beam | spotlight | fixture"
@@ -3753,7 +4064,7 @@
               "default": "beam"
             },
             {
-              "name": "data-color",
+              "name": "color",
               "description": "Color of the light (hex, rgb, or named)",
               "type": {
                 "text": "string"
@@ -3761,7 +4072,7 @@
               "default": "#ffffff"
             },
             {
-              "name": "data-intensity",
+              "name": "intensity",
               "description": "Brightness/Opacity (0-1)",
               "type": {
                 "text": "number"
@@ -3769,7 +4080,7 @@
               "default": "0.5"
             },
             {
-              "name": "data-size",
+              "name": "size",
               "description": "Size of the light/beam",
               "type": {
                 "text": "string"
@@ -3777,7 +4088,7 @@
               "default": "300px"
             },
             {
-              "name": "data-speed",
+              "name": "speed",
               "description": "Animation speed (e.g., 3s)",
               "type": {
                 "text": "string"
@@ -3785,7 +4096,7 @@
               "default": "3s"
             },
             {
-              "name": "data-target",
+              "name": "target",
               "description": "Selector for element to track (for spotlight/fixture)",
               "type": {
                 "text": "string"
@@ -3793,7 +4104,7 @@
               "default": "mouse"
             },
             {
-              "name": "data-label",
+              "name": "label",
               "description": "Label for the fixture variant",
               "type": {
                 "text": "string"

@@ -349,7 +349,7 @@ All custom events the behavior dispatches:
       {
         "name": "expand() method",
         "setup": "<div x-behavior=\"cardexpandable\" title=\"Test\">Long content here</div>",
-        "call": "element.wbCardExpandable.expand()",
+        "call": "element.wbCardExpandable.show()",
         "expect": {
           "class": "x-card--expanded",
           "property": { "expanded": true }
@@ -358,7 +358,7 @@ All custom events the behavior dispatches:
       {
         "name": "collapse() method",
         "setup": "<div x-behavior=\"cardexpandable\" expanded>Content</div>",
-        "call": "element.wbCardExpandable.collapse()",
+        "call": "element.wbCardExpandable.hide()",
         "expect": {
           "notClass": "x-card--expanded",
           "property": { "expanded": false }

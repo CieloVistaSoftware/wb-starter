@@ -2,14 +2,14 @@
 
 Loading spinner indicator
 
-Applies to `<div>`, and to any element carrying `x-spinner`.
+## Type — new capability
 
-## Usage
+`x-spinner` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-spinner>
-  …
-</div>
+<div x-spinner size="md" variant="primary" label="Loading results…"></div>
 ```
 
 ## Attributes

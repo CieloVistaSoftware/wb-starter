@@ -2,13 +2,16 @@
 
 Hero section behavior.
 
-Apply `x-hero` to any element.
+## Type — new capability
 
-## Usage
+`x-hero` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-hero>
-  …
+<div x-hero variant="centered">
+  <h1>Ship the markup, not the toolchain</h1>
+  <p>Behaviors decorate real elements in light DOM — no build, no shadow roots.</p>
 </div>
 ```
 

@@ -510,7 +510,7 @@
   },
   "behaviorProperties": {
     "description": "Common properties shared across behaviors",
-    "commonDataAttributes": {
+    "commonAttributes": {
       "data-wb": {
         "type": "string",
         "required": true,
@@ -524,7 +524,7 @@
         "type": "string",
         "description": "Visual variant (e.g., primary, secondary, success, warning, error, info)"
       },
-      "data-size": {
+      "size": {
         "type": "string",
         "enum": [
           "xs",
@@ -535,11 +535,11 @@
         ],
         "description": "Size variant"
       },
-      "data-disabled": {
+      "disabled": {
         "type": "boolean",
         "description": "Disabled state"
       },
-      "data-loading": {
+      "loading": {
         "type": "boolean",
         "description": "Loading state"
       }

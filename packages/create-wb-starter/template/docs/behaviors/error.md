@@ -2,14 +2,14 @@
 
 Schema for x-error behavior (error message)
 
-Apply `x-error` to any element.
+## Type — new capability
 
-## Usage
+`x-error` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-error>
-  …
-</div>
+<div x-error>Build failed: 2 of 13 catalog-integrity checks.</div>
 ```
 
 ## Live example

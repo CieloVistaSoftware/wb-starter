@@ -4,10 +4,10 @@ Styles a `<fieldset>` and, optionally, makes it collapsible by clicking its
 `<legend>`. See [src/wb-viewmodels/fieldset.js](../../src/wb-viewmodels/fieldset.js).
 
 - **Type:** Modifier
-- **Root CSS class:** `x-fieldset`
+- **Root CSS class:** `<fieldset>`
 - **Schema:** [fieldset.schema.json](../../src/wb-models/fieldset.schema.json)
 - **Auto-inject:** `<fieldset>` is in `nativeMap` (`src/core/config.js` has
-  `autoInject: true` site-wide), so a bare `<fieldset>` gets the `x-fieldset`
+  `autoInject: true` site-wide), so a bare `<fieldset>` gets the `<fieldset>`
   class automatically — `x-fieldset` is only required to opt into the
   `collapsible` behavior.
 
@@ -50,7 +50,7 @@ Add `data-collapsed` to start collapsed:
 
 | Class | Applies to | When |
 |---|---|---|
-| `x-fieldset` | the `<fieldset>` | always |
+| `<fieldset>` | the `<fieldset>` | always |
 | `x-fieldset__legend` | the `<legend>` | `data-collapsible` present |
 | `x-fieldset__legend--collapsible` | the `<legend>` | `data-collapsible` present |
 | `x-fieldset--collapsed` | the `<fieldset>` | collapsed (toggled by clicking the legend) |

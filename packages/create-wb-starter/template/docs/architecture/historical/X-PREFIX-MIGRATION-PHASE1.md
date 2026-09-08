@@ -526,7 +526,7 @@ Phase 1 is complete when:
 
 1. **Compound naming:** Should `cardhero.schema.json` map to:
    - `x-card-hero` (kebab-case, matches HTML convention)?
-   - `x-cardhero` (single tag)?
+   - `<article x-cardhero>` (single tag)?
 
 2. **Extension validation:** Should invalid `x-*` attributes:
    - Fail silently (current behavior)?

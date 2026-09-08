@@ -10,7 +10,7 @@ or `<nav>`) stick to the top of the viewport as the page scrolls past it, via CS
 |----------|-------|
 | Behavior | `scrollalong` |
 | Attribute | `x-scrollalong` |
-| Custom Tag | `<div x-scrollalong>` |
+| Attribute form | `<div x-scrollalong>` |
 | Applies to | any element, typically inside a flex/grid layout |
 | Category | Layout |
 | Schema | `src/wb-models/scrollalong.schema.json` |
@@ -51,7 +51,7 @@ by its container, it does not add any wrapper or placeholder.
 </aside>
 </div>
 
-### Custom Tag
+### Attribute form
 
 <div x-demo>
 <div x-scrollalong style="padding: 1rem; border: 1px solid var(--border-color); display: block;">

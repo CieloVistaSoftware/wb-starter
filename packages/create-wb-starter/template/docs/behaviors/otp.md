@@ -2,14 +2,14 @@
 
 Schema for x-otp behavior (one-time password input)
 
-Apply `x-otp` to any element.
+## Type — new capability
 
-## Usage
+`x-otp` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-otp>
-  …
-</div>
+<div x-otp length="6"></div>
 ```
 
 ## Attributes

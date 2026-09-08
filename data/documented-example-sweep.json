@@ -1,5 +1,5 @@
 {
-  "total": 123,
+  "total": 113,
   "dead": 0,
   "threw": 0,
   "results": [
@@ -18,7 +18,7 @@
       "verdict": "ATTACHED",
       "kids": 2,
       "w": 900,
-      "h": 144,
+      "h": 133,
       "threw": ""
     },
     {
@@ -76,15 +76,6 @@
       "threw": ""
     },
     {
-      "name": "card",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 2,
-      "w": 900,
-      "h": 135,
-      "threw": ""
-    },
-    {
       "name": "cardbutton",
       "tag": "article",
       "verdict": "ATTACHED",
@@ -103,15 +94,6 @@
       "threw": ""
     },
     {
-      "name": "cardexpandable",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 3,
-      "w": 900,
-      "h": 220,
-      "threw": ""
-    },
-    {
       "name": "cardfile",
       "tag": "article",
       "verdict": "ATTACHED",
@@ -127,15 +109,6 @@
       "kids": 2,
       "w": 900,
       "h": 447,
-      "threw": ""
-    },
-    {
-      "name": "cardhorizontal",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 2,
-      "w": 900,
-      "h": 250,
       "threw": ""
     },
     {
@@ -175,24 +148,6 @@
       "threw": ""
     },
     {
-      "name": "cardoverlay",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 1,
-      "w": 900,
-      "h": 300,
-      "threw": ""
-    },
-    {
-      "name": "cardportfolio",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 3,
-      "w": 400,
-      "h": 297,
-      "threw": ""
-    },
-    {
       "name": "cardpricing",
       "tag": "article",
       "verdict": "ATTACHED",
@@ -202,48 +157,12 @@
       "threw": ""
     },
     {
-      "name": "cardproduct",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 2,
-      "w": 900,
-      "h": 779,
-      "threw": ""
-    },
-    {
-      "name": "cardprofile",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 1,
-      "w": 400,
-      "h": 260,
-      "threw": ""
-    },
-    {
       "name": "cardstats",
       "tag": "article",
       "verdict": "ATTACHED",
       "kids": 1,
       "w": 900,
       "h": 138,
-      "threw": ""
-    },
-    {
-      "name": "cardtestimonial",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 4,
-      "w": 900,
-      "h": 214,
-      "threw": ""
-    },
-    {
-      "name": "cardvideo",
-      "tag": "article",
-      "verdict": "ATTACHED",
-      "kids": 2,
-      "w": 900,
-      "h": 581,
       "threw": ""
     },
     {
@@ -441,7 +360,7 @@
       "verdict": "ATTACHED",
       "kids": 2,
       "w": 820,
-      "h": 531,
+      "h": 37,
       "threw": ""
     },
     {
@@ -594,7 +513,7 @@
       "verdict": "ATTACHED",
       "kids": 0,
       "w": 900,
-      "h": 563,
+      "h": 18,
       "threw": ""
     },
     {
@@ -657,7 +576,7 @@
       "verdict": "ATTACHED",
       "kids": 4,
       "w": 900,
-      "h": 377,
+      "h": 16,
       "threw": ""
     },
     {
@@ -666,7 +585,7 @@
       "verdict": "ATTACHED",
       "kids": 22,
       "w": 900,
-      "h": 3189,
+      "h": 3212,
       "threw": ""
     },
     {
@@ -684,7 +603,7 @@
       "verdict": "ATTACHED",
       "kids": 4,
       "w": 900,
-      "h": 39,
+      "h": 40,
       "threw": ""
     },
     {
@@ -1063,15 +982,6 @@
       "kids": 0,
       "w": 900,
       "h": 27,
-      "threw": ""
-    },
-    {
-      "name": "video",
-      "tag": "video",
-      "verdict": "ATTACHED",
-      "kids": 0,
-      "w": 900,
-      "h": 563,
       "threw": ""
     },
     {

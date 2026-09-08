@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-07T00:51:59.387Z",
-  "totalFiles": 269,
+  "generated": "2026-09-08T21:42:18.121Z",
+  "totalFiles": 270,
   "categories": [
     "_today",
     "architecture",
@@ -1499,6 +1499,12 @@
     ],
     "standards": [
       {
+        "path": "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md",
+        "title": "A gate must be seen to fail",
+        "name": "A-GATE-MUST-BE-SEEN-TO-FAIL",
+        "category": "standards"
+      },
+      {
         "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
         "title": "Demos & Documentation Standards",
         "name": "DEMOS-AND-DOCS-STANDARDS",
@@ -1574,7 +1580,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-09-06",
+        "title": "CURRENT HANDOFF — 2026-09-07",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1691,7 +1697,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "CURRENT HANDOFF — 2026-09-06",
+      "title": "CURRENT HANDOFF — 2026-09-07",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -3176,6 +3182,12 @@
       "title": "HTML5 Semantic Standard (Mandatory)",
       "name": "semantic-standard",
       "category": "root"
+    },
+    {
+      "path": "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md",
+      "title": "A gate must be seen to fail",
+      "name": "A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "category": "standards"
     },
     {
       "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",

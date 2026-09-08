@@ -146,13 +146,12 @@ import { getNativeBehavior, nativeMap } from './tag-map.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 
-// Register Layout Custom Elements
-import '../wb-viewmodels/x-grid.js';
-// x-column/x-cluster/x-stack/x-row/x-search/x-accordion are BEHAVIORS
-// (cluster/stack/flex/searchfield/accordion), not classes that
-// `extends HTMLElement` (v3) — the extends-HTMLElement wrappers were removed
-// (#279). Mapped to their behaviors in tag-map.js / wb-lazy.js.
-import '../wb-viewmodels/x-demo.js';
+// x-grid/x-demo/x-column/x-cluster/x-stack/x-row/x-search/x-accordion are all
+// BEHAVIORS (grid/demo/cluster/stack/flex/searchfield/accordion), not classes
+// that `extends HTMLElement` — the extends-HTMLElement wrappers were removed
+// (#279, and the last four in #1063). Mapped to their behaviors in tag-map.js /
+// wb-lazy.js, so they dispatch through WB.inject() and pick up their CSS at
+// that one choke point like every other behavior.
 
 import { getConfig, setConfig } from './config.js';
 import { setupGlobalErrorHandler } from './error-logger.js';
@@ -613,10 +612,16 @@ const WB = {
     }
 
     // x-demo (#312 -- pre.js's "view source" toggle silently stopped
-    // responding whenever WB.scan()'s schema loop raced WBDemo.
-    // connectedCallback(), because buildStructure()'s empty-$view fallback
-    // re-parses element.innerHTML as a string, producing a listener-less
-    // look-alike).
+    // responding when WB.scan()'s schema loop reached a demo before it was
+    // built, because buildStructure()'s empty-$view fallback re-parses
+    // element.innerHTML as a string, producing a listener-less look-alike).
+    //
+    // The original note said the loop "raced WBDemo.connectedCallback()".
+    // There was no such race: nothing ever registered WBDemo, so that
+    // callback never ran (#1063), and the class is now deleted. This guard
+    // also matches on tagName WB-DEMO, and <wb-demo> appears in zero files --
+    // the authoring form is <div x-demo>. Left in place rather than removed
+    // in the same change that deleted the classes; it needs its own issue.
     if (element.tagName === 'WB-DEMO') {
       return;
     }

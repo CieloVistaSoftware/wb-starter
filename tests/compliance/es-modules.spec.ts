@@ -14,9 +14,17 @@ import { getFiles, readFile, relativePath, ROOT, PATHS } from '../base';
 test.describe('ES Modules Compliance', () => {
 
   test('no CommonJS require() in JavaScript files', () => {
+    // tests/ was missing from this list, and the rule is "no CommonJS anywhere,
+    // anytime" -- so the two files that broke it, tests/validate-vscode-data.js
+    // and tests/verify-docs-links.js, sat outside the only gate that would have
+    // said so. The first threw ReferenceError on line 1 in a "type": "module"
+    // package, meaning it validated nothing for however long it has been there.
+    // A gate whose scope excludes a directory is not enforcing a rule that says
+    // "anywhere".
     const jsFiles = [
       ...getFiles(PATHS.src, ['.js']),
       ...getFiles(path.join(ROOT, 'scripts'), ['.js', '.mjs']),
+      ...getFiles(path.join(ROOT, 'tests'), ['.js', '.mjs']),
       path.join(ROOT, 'server.js')
     ].filter(f => fs.existsSync(f));
 

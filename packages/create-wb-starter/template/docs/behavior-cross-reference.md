@@ -41,7 +41,7 @@ These behaviors enhance the element while preserving its identity.
 **Element:** `<button>`
 
 **What it adds:**
-- Class: `x-button`, `x-button--{variant}`, `x-button--{size}`
+- Class: `<button>`, `x-button--{variant}`, `x-button--{size}`
 - Styles: padding, border-radius, cursor, font-weight, transitions
 - Variants: primary, secondary, success, danger, warning, ghost, link, outline
 - Sizes: xs, sm, md, lg, xl
@@ -167,7 +167,7 @@ Combined (variant + size + icon together):
 **Element:** `<input>`
 
 **What it adds:**
-- Wrapper div: `x-input`
+- Wrapper div: `<input>`
 - Class on input: `x-input__field`
 - Styles: border, border-radius, background, color, padding
 - Sizes: xs, sm, md, lg, xl
@@ -379,7 +379,7 @@ Search with icon:
 **Element:** `<details>`
 
 **What it adds:**
-- Class: `x-details`
+- Class: `<details>`
 - Styles: border, border-radius, overflow, background
 - Summary styling: flex layout, padding, background, cursor
 - Custom toggle icon (▼) with rotation animation
@@ -514,7 +514,7 @@ Settings panel:
 **Element:** `<dialog>`
 
 **What it adds:**
-- Class: `x-dialog`
+- Class: `<dialog>`
 - Backdrop styling
 - Close button styling
 - Open/close animations
@@ -601,7 +601,7 @@ Settings dialog:
 **Element:** `<table>`
 
 **What it adds:**
-- Class: `x-table`
+- Class: `<table>`
 - Sortable column headers (click to sort)
 - Striped rows
 - Hover states
@@ -824,7 +824,7 @@ Status table with badges:
 **Element:** `<form>`
 
 **What it adds:**
-- Class: `x-form`
+- Class: `<form>`
 - Validation UI
 - Loading states
 - Error display styling
@@ -1119,7 +1119,7 @@ Filter form:
 **Element:** `<select>`
 
 **What it adds:**
-- Class: `x-select`
+- Class: `<select>`
 - Custom dropdown styling
 - Focus states
 
@@ -1232,7 +1232,7 @@ Date selectors:
 **Element:** `<textarea>`
 
 **What it adds:**
-- Class: `x-textarea`
+- Class: `<textarea>`
 - Auto-resize on input
 - Character counter (optional)
 - Focus styling
@@ -1329,7 +1329,7 @@ Various use cases:
 **Element:** `<input type="checkbox">`
 
 **What it adds:**
-- Class: `x-checkbox`
+- Class: `<input type="checkbox">`
 - Custom visual styling
 - Animated checkmark
 
@@ -1904,7 +1904,7 @@ Color hue picker:
 **Element:** `<progress>`
 
 **What it adds:**
-- Class: `x-progress`
+- Class: `<progress>`
 - Custom bar styling
 - Animated fill
 - Percentage label (optional)
@@ -2234,7 +2234,7 @@ These behaviors transform the element into a behavior.
 **Element:** `<article>` morphs into card behavior
 
 **What it adds:**
-- Class: `x-card`
+- Class: `<article>`
 - Styles: flex column, border, border-radius (8px), background, box-shadow, overflow hidden
 - Hover effects: translateY(-2px), increased box-shadow, border color change
 - Styles existing `<header>`, `<main>`, `<footer>` children with card structure
@@ -2619,7 +2619,7 @@ Resource links:
 **Element:** `<nav>` morphs into navigation bar
 
 **What it adds:**
-- Class: `x-navbar`
+- Class: `<nav x-navbar>`
 - Styles: flex layout, space-between, padding, background, border-radius, gap
 - Brand area styling (font-weight, no-shrink)
 - Menu area styling (flex, gap, flex-wrap)
@@ -3402,7 +3402,7 @@ Image card:
 
 <div x-demo>
 <div x-cardimage
-  src="/images/placeholder.svg"
+  src="../images/placeholder.svg"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </div>
@@ -3436,7 +3436,7 @@ Product card:
 
 <div x-demo>
 <div x-cardproduct
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="Widget Pro"
   price="$99.99"
   rating="4.5"
@@ -3462,7 +3462,7 @@ Testimonial card:
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
-  avatar="/images/placeholder.svg">
+  avatar="../images/placeholder.svg">
 </div>
 </div>
 
@@ -3472,7 +3472,7 @@ Hero card:
 <div x-cardhero
   title="Welcome"
   subtitle="Get started today"
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   cta="Learn More"
   href="/start">
 </div>
@@ -3482,8 +3482,8 @@ Video card:
 
 <div x-demo>
 <div x-cardvideo
-  src="demo.mp4"
-  poster="/images/placeholder.svg"
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
+  poster="images/placeholder.svg"
   title="Product Demo">
 </div>
 </div>
@@ -3514,7 +3514,7 @@ Portfolio card:
 
 <div x-demo>
 <div x-cardportfolio
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
@@ -3536,7 +3536,7 @@ Horizontal card:
 
 <div x-demo>
 <div x-cardhorizontal
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="Article Title"
   description="Brief description of the article...">
 </div>
@@ -3546,7 +3546,7 @@ Overlay card:
 
 <div x-demo>
 <div x-cardoverlay
-  image="/images/placeholder.svg"
+  image="../images/placeholder.svg"
   title="Overlay Title"
   subtitle="Text appears over the image">
 </div>

@@ -737,7 +737,28 @@ app.post("/api/error-log/append", (req, res) => {
     const { error } = req.body;
     if (!error) return res.status(400).json({ error: 'Missing error' });
     const current = readErrorLog();
-    const all = [...current.errors, enrichFromRegistry(error, readFixRegistry())];
+    const incoming = enrichFromRegistry(error, readFixRegistry());
+
+    // #1029: repeats are COUNTED, not re-listed — and that was only ever true
+    // in the browser's memory. error-logger.js increments `count` on the
+    // existing error and re-POSTs the SAME object so the stored copy carries
+    // the updated count; this route pushed it as a new row every time. One
+    // broken image retried five times therefore wrote five rows holding counts
+    // 1, 2, 3, 4, 5 — the same fault listed five times, each with a different
+    // and immediately stale number. Measured with a single missing image: 3
+    // rows for 1 fault.
+    //
+    // The client's `id` is assigned once per occurrence and resent unchanged,
+    // so it identifies the row to UPDATE. Message and source are checked too,
+    // because `id` is Date.now() and two pages can start an error in the same
+    // millisecond.
+    const sameRow = (e) =>
+      e && e.id === incoming.id && e.message === incoming.message && e.source === incoming.source;
+
+    const at = current.errors.findIndex(sameRow);
+    const all = at === -1
+      ? [...current.errors, incoming]
+      : current.errors.map((e, i) => (i === at ? incoming : e));
 
     // The cap used to be a bare `.slice(-100)`: entry 101 pushed entry 1 out of
     // existence with nothing recorded anywhere. Under a 30-day retention rule

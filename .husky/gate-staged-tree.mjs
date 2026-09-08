@@ -61,10 +61,40 @@ function cleanup() {
   // Always, on every path — a failed gate must not leave a checkout behind, or
   // `git worktree list` fills with corpses and the disk fills with node_modules
   // junctions pointing at a repo nobody remembers.
+  //
+  // THE JUNCTION COMES OFF FIRST, AND THIS IS NOT A DETAIL.
+  //
+  // node_modules here is a JUNCTION to the real repo's node_modules. A recursive
+  // delete that follows it does not remove a link — it walks into the live
+  // checkout and empties it. That is not hypothetical: cleaning a leftover gate
+  // worktree by hand with `rm -rf` took wb-starter's entire node_modules with it
+  // (0 entries left, playwright and eslint gone, a full reinstall to recover).
+  // Nothing tracked was lost, but the tooling was, and the same shape of mistake
+  // inside this script would do it on every failed commit.
+  //
+  // unlinkSync/rmSync on the junction itself removes the LINK. Node does not
+  // follow it; some shells do. So the link is severed explicitly before anything
+  // recursive runs, and the recursive delete is skipped entirely if that fails.
+  const link = join(TMP, 'node_modules');
+  let linkGone = true;
+  try {
+    if (existsSync(link)) {
+      linkGone = false;
+      rmSync(link, { recursive: false, force: true });   // removes the junction, not its target
+      linkGone = true;
+    }
+  } catch (err) {
+    console.error(`[gate] could not detach the node_modules link: ${err.message}`);
+    console.error('[gate] leaving the temp tree in place ON PURPOSE — deleting it now could');
+    console.error(`[gate] follow that link into the real checkout. Remove by hand: ${TMP}`);
+  }
+
   try {
     if (worktreeAdded) execFileSync('git', ['worktree', 'remove', '--force', TMP], { cwd: REPO, stdio: 'ignore' });
   } catch { /* fall through to the rm below */ }
-  try { rmSync(TMP, { recursive: true, force: true, maxRetries: 3 }); } catch { /* best effort */ }
+  if (linkGone) {
+    try { rmSync(TMP, { recursive: true, force: true, maxRetries: 3 }); } catch { /* best effort */ }
+  }
   try { execFileSync('git', ['worktree', 'prune'], { cwd: REPO, stdio: 'ignore' }); } catch { /* best effort */ }
 }
 

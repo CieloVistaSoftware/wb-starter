@@ -10,7 +10,7 @@ code block on the page — applies immediately on selection, and keeps every
 |----------|-------|
 | Behavior | `codecontrol` |
 | Attribute | `x-codecontrol` |
-| Custom Tag | `<div x-codecontrol>` |
+| Attribute form | `<div x-codecontrol>` |
 | Applies to | any container element |
 | Category | Content |
 | Schema | `src/wb-models/codecontrol.schema.json` |
@@ -53,7 +53,7 @@ without any manual `WB.scan()` call.
 <div x-codecontrol show-category="false" persist="false"></div>
 </div>
 
-### Custom Tag
+### Attribute form
 
 <div x-demo>
 <div x-codecontrol size="lg"></div>

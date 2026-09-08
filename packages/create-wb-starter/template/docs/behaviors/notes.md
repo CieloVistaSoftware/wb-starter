@@ -2,14 +2,26 @@
 
 Slide-out notes drawer with multiple display modes
 
-Applies to `<aside>`, and to any element carrying `x-notes`.
+## Type — decorates a semantic element
 
-## Usage
+`x-notes` is the **aside behavior**. It attaches to `<aside>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<aside x-notes>
-  …
+<aside x-notes position="end" default-width="280px">
+  <p>Notes stay pinned beside the content while you scroll.</p>
 </aside>
+```
+
+### On a different element
+
+Use `x-notes` when the host is not a `<aside>` and you want the same behavior:
+
+```html
+<div x-notes>
+  …
+</div>
 ```
 
 ## Attributes

@@ -9,10 +9,10 @@ button. Implemented by `chip()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-chip` |
-| Custom Tag | `<span x-chip>` |
+| Attribute form | `<div x-chip>` |
 | Behavior function | `chip()` — `src/wb-viewmodels/feedback.js` |
 | Semantic element | `<span role="status">` |
-| Root CSS Class | `x-chip` |
+| Root CSS Class | `<div x-chip>` |
 | Category | Feedback |
 | Schema | [chip.schema.json](../../src/wb-models/chip.schema.json) |
 
@@ -61,7 +61,7 @@ attributes, so any hand-written inner content is discarded in favor of `label`.
 
 | Class | Applied when | Description |
 |-------|--------------|-------------|
-| `x-chip` | host isn't already a `<span x-chip>` tag | Base pill shape, padding, background |
+| `<div x-chip>` | host isn't already a `<div x-chip>` tag | Base pill shape, padding, background |
 | `.x-chip--{variant}` | `variant` is not `default` | `primary`/`success`/`warning`/`error`/`info` background+text color |
 | `.x-chip--{sm,lg}` | `size` is not `md` | Padding/font-size/min-height scale |
 | `.x-chip--outlined` | `outlined` | Transparent background, colored border |

@@ -22,7 +22,7 @@
 
 ### 4. **Enhanced State Management**
 - Two separate storage keys:
-  - `x-notes`: Full notes state (content + position + size)
+  - `<div x-notes>`: Full notes state (content + position + size)
   - `x-todo`: TODO items array
 - Proper load order on initialization
 - All data survives page reload

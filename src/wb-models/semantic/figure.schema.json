@@ -23,7 +23,7 @@
     "imgSrc": {
       "type": "string",
       "description": "Image source URL - auto-generates <img> child if provided",
-      "htmlAttribute": "data-img-src",
+      "htmlAttribute": "img-src",
       "canvasEditable": false,
       "default": ""
     },
@@ -36,7 +36,7 @@
     "alt": {
       "type": "string",
       "description": "Alternative text for images - defaults to imgSrc if omitted",
-      "htmlAttribute": "data-alt",
+      "htmlAttribute": "alt",
       "canvasEditable": true,
       "default": "(uses imgSrc value)"
     },
@@ -81,7 +81,7 @@
     ]
   },
   "structure": {
-    "preferredTemplate": "<figure data-img-src=\"{{imgSrc}}\" data-alt=\"{{alt}}\" data-caption=\"{{caption}}\"></figure>",
+    "preferredTemplate": "<figure img-src=\"{{imgSrc}}\" alt=\"{{alt}}\" data-caption=\"{{caption}}\"></figure>",
     "legacyTemplate": "<figure data-caption=\"{{caption}}\">\n  <img src=\"{{src}}\" alt=\"{{alt}}\" />\n</figure>",
     "conditionalRendering": {
       "caption": "Render figcaption only if caption is not empty",

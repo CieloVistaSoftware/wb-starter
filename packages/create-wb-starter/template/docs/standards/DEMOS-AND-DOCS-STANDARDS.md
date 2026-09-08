@@ -3,18 +3,45 @@
 **These rules apply to EVERY demo (`demos/**/*.html`, `pages/**/*.html`) and EVERY
 Markdown document (`docs/**/*.md`, `*.md`) in wb-starter.** They are the single source
 of truth for how we show behaviors and code. When something here can be enforced by a
-test, it is — run `npm test` (which now includes the `integration` project).
+test, it is — run `npm test` (which runs the compliance, regression, integration, base
+and behaviors projects).
+
+> **Numbering is historical, not sequential.** Sections are numbered in the order they
+> were written, so §15a sits before §15 and §21 before §20. A rule keeps its number for
+> life — they are cited from commits, issues and test names, and renumbering would break
+> every one of those references. Read the headings, not the order.
 
 ---
 
-## 1. Live examples use `<div x-demo>`
+## 1. Live examples carry `x-demo` on the closest semantic element
 
-Every behavior example is a `<div x-demo>` — it renders the **live control** AND shows its
-**source** underneath. One tag gives both.
+Every behavior example carries `x-demo` — it renders the **live control** AND shows its
+**source** underneath. One attribute gives both.
 
-- In `.md` docs: embed a **raw** `<div x-demo>…</div>` directly in the Markdown. Do NOT
-  use a ` ```demo ` fence (retired) — the doc-viewer renders embedded `<wb-*>` / `x-*`.
-- In `.html` demos: use `<div x-demo>` the same way.
+**Attach it to the closest semantic element. A `<div>` is a last resort.**
+
+John: *"even examples should attach behaviors to the closest semantic tag, divs are not
+ideal."* A `<div>` says nothing about what it contains; `<figure>` says "self-contained
+illustration referenced from the text", which is exactly what a live example with its
+source is. The host tag is the author's choice everywhere else in this project — the
+attribute IS the behavior — and examples are not an exception.
+
+```html
+<figure x-demo>            <!-- preferred: an example IS a figure -->
+<section x-demo>           <!-- when the example is a titled subsection -->
+<div x-demo>               <!-- only when no semantic element fits -->
+```
+
+- In `.md` docs: embed the raw element directly in the Markdown. Do NOT use a
+  ` ```demo ` fence (retired) — the doc-viewer renders embedded `x-*` markup.
+- In `.html` demos: the same element, the same way.
+
+`figure` and `article` are themselves auto-injected behaviors (`tag-map.js` nativeMap),
+so `<figure x-demo>` runs both — and that is fine, not a conflict: the semantic
+auto-injection happens first, then `x-demo` runs on the already-injected element.
+
+> **Not yet migrated.** 1,374 `<div x-demo>` are still in the tree (#917). New examples
+> should follow the rule above.
 
 ## 2. One code sample per rendered element (strict 1:1)
 
@@ -70,9 +97,25 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   `demos/frameworks.html`'s 5 framework samples under the old carve-out regime — still
   valid, just no longer the only place this applies).
 
-## 7. A demo is only as wide as what it renders
+## 7. A demo is only as wide as what it renders — but a layout container has a floor
 
 - Card/behavior demos are sized to the element, **not** stretched to full screen.
+- **This applies to CONTROLS, not to layout containers.** A button should hug its label.
+  A card's intrinsic width is whatever its shortest line of text happens to be, which is
+  not a width anyone asked for. Stated without that limit, this rule produced pricing
+  cards measuring **0px** and heroes measuring **34px** inside a single-item `x-demo`
+  (2026-08-26; ~50 cards across 14 behaviors at once). Every fix before that one had
+  patched a single variant, so the next variant reproduced it — John: "this is the 3rd or
+  4th time I've seen this."
+- A card therefore carries a minimum width (`card.css`, on the default `auto` size) and
+  never declares `min-width: 0`. `auto` means "size to your content", not "collapse to
+  nothing".
+- A blanket `min-width: 0` reset in a container's own stylesheet defeats this: it ties on
+  specificity with the card's floor and wins on source order. Write such a reset as
+  `:where(...)` so it carries zero specificity and loses to any element that has an
+  opinion about its own width.
+- Test: `tests/regression/cards-are-never-too-narrow.spec.ts` (sweeps every card on
+  `demos/site/cards.html`; exempts a card the author explicitly sized down with `size=`).
 
 ## 8. Never render a `.md` without the theme
 
@@ -84,7 +127,7 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
 
 ## 9. Composition over inheritance
 
-- Behaviors compose via `<wb-*>` tags + `x-*` behaviors. There is **no** behavior
+- Behaviors compose via semantic HTML + `x-*` attributes. There is **no** behavior
   base-class hierarchy. Do not write "is-a relationship", "variants inherit from
   "card base class", or "Why Inheritance Matters" — reframe as composition.
 - Say what actually happens: capability is **applied to** an element by a behavior
@@ -119,6 +162,18 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
 
 - Menus and navs **stack** on mobile; no horizontal overflow at any width. Design for the
   narrowest screen first, then enhance up.
+- **A viewport-filling layout is a wide-screen layout — scope it to a breakpoint.** Fixed
+  container height, panels that scroll internally, and an outer container told not to
+  scroll are all wide-screen ideas. Stacked on a phone the same rules collapse the first
+  panel and, with the outer scroller disabled, make everything below the fold unreachable.
+  Measured on `?page=behaviors` at 375x812 (#1020): the 837-row behaviour navigator
+  rendered **2px tall** with `#siteBody { overflow: hidden }` — a frozen page. Put the
+  whole treatment inside the page's own breakpoint (behaviors uses
+  `@media (min-width: 60.0625rem)`, mirroring where its grid collapses to one column) and
+  let the narrow layout keep the site's ordinary flow.
+- **Measure both widths before calling a layout fix done.** A fix verified only at desktop
+  is half-verified. Test: `tests/regression/behaviors-workspace-single-scroll.spec.ts`
+  asserts the desktop and the 375x812 case in the same file.
 
 ## 11. Zero hardcoded colors
 
@@ -168,10 +223,9 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   code** that produced it — never one without the other. `<div x-demo>` is the ideal tool
   (it renders the live control and shows its source in one tag). A demo page with a live
   example but no code — or code with no live example — is a defect.
-- **Every canonical demo includes a MIXED-BEHAVIORS example**: `x-*` attributes composed
-  onto the element — including onto `<wb-*>` tags (x-tags take x-attributes too). This
-  shows developers how to add function to markup already in place. All of it inside
-  `<div x-demo>`.
+- **Every canonical demo includes a MIXED-BEHAVIORS example**: several `x-*` attributes
+  composed onto one semantic element. This shows developers how to add function to
+  markup already in place. All of it inside `<div x-demo>`.
 
 ## 17. Grouped controls are ONE demo (exception to §2)
 
@@ -196,8 +250,11 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
 - Tests are **effect-based**, not presence-based: e.g. `<button size="xs">` and
   `<button size="xl">` must have **different computed sizes**; `variant="primary"` vs
   `variant="danger"` must differ visibly. A demo that shows `size="xs"` while the button
-  renders at default size is a defect the test must catch. Cover BOTH the custom element
-  (`<button>`) and the native element (`<button>`) paths.
+  renders at default size is a defect the test must catch. Cover BOTH authoring forms —
+  the attribute host (`<div x-button size="xs">`) and the native element
+  (`<button size="xs">`) — because they take different code paths and have already drifted
+  apart twice: #746 (classes differed between the two) and the button `icon=` regression,
+  where the native form rendered its icon and the attribute form silently rendered none.
 
 ## 21. Watch CI after every push — local-green is not done
 
@@ -343,7 +400,7 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   2. A **live** log that shows the event actually firing in real time as the reader
      interacts with the rendered control above it — proof, not just claims.
 - Not every demo needs this — a control with no interesting event (e.g. a static
-  `<span x-badge>`) doesn't gain anything from an empty events section, so the attribute is
+  `<div x-badge>`) doesn't gain anything from an empty events section, so the attribute is
   opt-in, not mandatory on every `<div x-demo>`. Add it where a reader would plausibly want
   to hook into the control's behavior in their own code (form controls, toggles, tabs,
   search, anything with a meaningful `detail` payload). Tracked: #385.
@@ -430,29 +487,30 @@ Every behavior example is a `<div x-demo>` — it renders the **live control** A
   (off) is why so many docs/demos accumulated explicit `x-*` attributes that are now redundant.
 - **When writing a new example**: write plain semantic HTML first (`<table>`, `<article>`, `<button>`,
   `<audio>`, ...) with no `x-*` attribute at all, and confirm live that it gets enhanced automatically. Only
-  reach for an explicit `<wb-*>` tag or `x-*` attribute when the semantic element genuinely doesn't exist
-  for what you're building (there's no native `<div x-cardexpandable>` equivalent) or the page has deliberately
-  opted out of autoInject.
+  reach for an explicit `x-*` attribute when no semantic element exists for what you're building
+  (there is no native equivalent of `x-cardexpandable`) or the page has deliberately opted out of
+  autoInject.
 - **When reviewing an existing example**: if it uses an explicit `x-*` attribute on a tag that has a native
   semantic equivalent (`x-table` on `<table>`, `x-card`/`x-cardXxx` on `<article>`, `x-audio` on `<audio>`),
   verify live whether it's now redundant post-flip, and remove it if so — matches the existing §
   "no-redundant-x-attribute" compliance pattern, just with a much larger surface now that the default
   changed.
-- This does **not** mean deleting the `<wb-*>` custom-tag form from docs entirely — both forms are
-  documented (see e.g. `table.md`'s "Custom Element" vs "Native Table" sections) since some authors prefer
-  the explicit tag. It means the semantic-HTML form should be presented as the *primary*, not an
-  afterthought, and should never need an `x-*` attribute to work.
+- The explicit `x-*` attribute form stays documented — it is the only way to reach a behavior with no
+  semantic equivalent, and it is how a behavior is placed on a host that is not its native tag (see
+  `docs/behaviors/table.md`'s "On a different element"). It means the semantic-HTML form is the
+  *primary* presentation, not an afterthought, and should never need an `x-*` attribute to work.
 
 ## Enforcement & references
 
 | Rule | Test / reference |
 |------|------------------|
 | 1, 2 (x-demo, 1:1) | `tests/integration/doc-viewer-wb-demo.spec.ts` |
-| 4 (highlighted + copy) | `tests/integration/frameworks-demo.spec.ts`, `demo-compare-code-blocks.spec.ts` (#241) |
-| 3, 5 (vertical) | `tests/integration/demo-compare-code-blocks.spec.ts` |
+| 4 (highlighted + copy) | `tests/integration/frameworks-demo.spec.ts` (#241) |
+| 3, 5 (vertical) | `tests/integration/x-demo-source-vertical.spec.ts` |
 | 5, 8 (no double-parse) | `tests/integration/doc-viewer-code-multiline.spec.ts`; `docs/_today/ROOT-CAUSE-md-double-parse.md` |
-| 9 (composition) | `tests/compliance/no-legacy-behavior-inheritance-docs.spec.ts` |
+| 9 (composition) | `tests/compliance/no-legacy-component-inheritance-docs.spec.ts` |
 | 11 (colors) | `tests/compliance/css-oop-compliance.spec.ts` |
+| 10 (mobile-first layout scoping) | `tests/regression/behaviors-workspace-single-scroll.spec.ts` (#1020) |
 | 22 (switch invokes effect) | `tests/behaviors/notify-control-switch.spec.ts` |
 | 24 (no unintended overlap) | `tests/integration/overlap.spec.ts` (#274) |
 | 1, 16, 25 (x-demo / build-step exception) | `tests/integration/frameworks-demo.spec.ts` (#324) |

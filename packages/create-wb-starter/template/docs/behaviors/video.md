@@ -2,12 +2,14 @@
 
 Behavior applied with x-video.
 
-Apply `x-video` to any element.
+## Type — new capability
 
-## Usage
+`x-video` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<video src="/demos/sample.mp4" poster="/images/placeholder.svg" controls></video>
+<video src="https://www.w3schools.com/html/mov_bbb.mp4" poster="/images/placeholder.svg" controls></video>
 ```
 
 ## Attributes

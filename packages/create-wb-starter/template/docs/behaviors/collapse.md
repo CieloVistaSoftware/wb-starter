@@ -2,13 +2,15 @@
 
 Collapsible content area.
 
-Apply `x-collapse` to any element.
+## Type — new capability
 
-## Usage
+`x-collapse` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-collapse>
-  …
+<div x-collapse heading="Environment" expanded>
+  <p>Node 24.13, Chrome 139, Windows 11.</p>
 </div>
 ```
 

@@ -29,7 +29,7 @@
     "gfm": {
       "type": "boolean",
       "default": true,
-      "attribute": "data-gfm"
+      "attribute": "gfm"
     }
   },
   "_metadata": {

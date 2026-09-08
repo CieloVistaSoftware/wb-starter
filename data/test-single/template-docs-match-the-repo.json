@@ -1,0 +1,21 @@
+{
+  "state": "passed",
+  "mode": "single",
+  "specFile": "tests/compliance/template-docs-match-the-repo.spec.ts",
+  "startedAt": "2026-09-07T21:18:01.579Z",
+  "updatedAt": "2026-09-07T21:18:09.888Z",
+  "command": "npx playwright test --workers=8 tests/compliance/template-docs-match-the-repo.spec.ts",
+  "pid": 35216,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "total": 2,
+  "currentFile": "tests\\compliance\\template-docs-match-the-repo.spec.ts",
+  "output": "\nRunning 2 tests using 2 workers\n\n  ok 2 [compliance] › tests\\compliance\\template-docs-match-the-repo.spec.ts:85:1 › the template ships no documentation for architecture the framework removed (9ms)\n  ok 1 [compliance] › tests\\compliance\\template-docs-match-the-repo.spec.ts:56:1 › every doc the template shares with the repo is identical (71ms)\n\n════════════════════════════════════════════════════════════\n  WB TEST RESULTS\n════════════════════════════════════════════════════════════\n  Total: 2 tests in 1.9s\n  ✓ Passed:  2\n  ✗ Failed:  0\n\n  By Project:\n    ✓ compliance: 2/2 passed\n\n  ✅ FIXED (1):\n     - every doc the template shares with the repo is ide...\n════════════════════════════════════════════════════════════\n\n\n  2 passed (4.3s)\n",
+  "errors": "",
+  "failures": [],
+  "completedAt": "2026-09-07T21:18:09.888Z",
+  "duration": "8.31s",
+  "exitCode": 0,
+  "flaky": 0
+}

@@ -2,14 +2,14 @@
 
 Small label/tag for status indicators, counts, or categories
 
-Applies to `<span>`, and to any element carrying `x-badge`.
+## Type — new capability
 
-## Usage
+`x-badge` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<span x-badge>
-  …
-</span>
+<span x-badge label="Beta" variant="warning" pill></span>
 ```
 
 ## Attributes

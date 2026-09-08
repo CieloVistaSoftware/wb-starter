@@ -2,14 +2,14 @@
 
 Theme switcher control.
 
-Apply `x-themecontrol` to any element.
+## Type — new capability
 
-## Usage
+`x-themecontrol` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-themecontrol>
-  …
-</div>
+<div x-themecontrol></div>
 ```
 
 ## Live example

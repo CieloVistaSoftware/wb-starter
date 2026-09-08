@@ -7,10 +7,10 @@
     {
       "name": "x-accordion",
       "tag": "div",
-      "verdict": "BUILDS",
-      "children": 2,
+      "verdict": "INVISIBLE",
+      "children": 0,
       "w": 400,
-      "h": 18,
+      "h": 0,
       "note": ""
     },
     {
@@ -145,7 +145,7 @@
       "verdict": "BUILDS",
       "children": 2,
       "w": 400,
-      "h": 114,
+      "h": 119,
       "note": ""
     },
     {
@@ -439,10 +439,10 @@
     {
       "name": "x-demo",
       "tag": "div",
-      "verdict": "INVISIBLE",
-      "children": 0,
+      "verdict": "BUILDS",
+      "children": 2,
       "w": 400,
-      "h": 32,
+      "h": 230,
       "note": ""
     },
     {
@@ -991,7 +991,7 @@
       "verdict": "PAINTS",
       "children": 0,
       "w": 400,
-      "h": 18,
+      "h": 13,
       "note": ""
     },
     {

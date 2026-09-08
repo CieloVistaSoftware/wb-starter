@@ -9,10 +9,10 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-skeleton` |
-| Custom Tag | `<div x-skeleton>` |
+| Attribute form | `<div x-skeleton>` |
 | Behavior function | `skeleton()` — `src/wb-viewmodels/feedback.js` |
 | Semantic element | `<div role="status">` |
-| Root CSS Class | none added by JS — `skeleton.css` styles the `x-skeleton` **tag** directly, so `x-skeleton` on any other element gets no shimmer styling from the base rule (only the `.x-skeleton--{variant}` modifier class is added) |
+| Root CSS Class | none added by JS — `skeleton.css` styles the `<div x-skeleton>` **tag** directly, so `x-skeleton` on any other element gets no shimmer styling from the base rule (only the `.x-skeleton--{variant}` modifier class is added) |
 | Category | Feedback |
 | Schema | [skeleton.schema.json](../../src/wb-models/skeleton.schema.json) — declares an `animated` property the JS never reads; the shimmer animation always runs, it isn't toggleable |
 
@@ -61,7 +61,7 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 
 | Class | Applied when | Description |
 |-------|--------------|-------------|
-| `x-skeleton` (tag selector, not a class) | the host is a literal `<div x-skeleton>` | Base shimmering block: gradient background, `1rem` height, animated |
+| `<div x-skeleton>` (tag selector, not a class) | the host is a literal `<div x-skeleton>` | Base shimmering block: gradient background, `1rem` height, animated |
 | `.x-skeleton--{variant}` | Always | `text`/`circle`/`rect` modifier |
 | `x-skeleton[variant="circle"]` | `variant="circle"` | 1:1 aspect ratio, fully rounded |
 | `x-skeleton[variant="rect"]` | `variant="rect"` | Sharp-ish corners (`4px` radius), height comes from the `height` attribute |

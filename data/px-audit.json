@@ -1,7 +1,7 @@
 {
   "totals": {
     "LIKELY_CONVERT": 795,
-    "LIKELY_OK": 609,
+    "LIKELY_OK": 612,
     "UNCLASSIFIED": 181,
     "mediaBreakpoints": 40
   },
@@ -173,7 +173,7 @@
       "src/styles/pages/docs.css": 1,
       "src/styles/pages/frameworks.css": 3,
       "src/styles/pages/hero-variants.css": 3,
-      "src/styles/pages/issues.css": 9,
+      "src/styles/pages/issues.css": 12,
       "src/styles/pages/services.css": 8,
       "src/styles/pages/themes-showcase.css": 22,
       "src/styles/site.css": 72,

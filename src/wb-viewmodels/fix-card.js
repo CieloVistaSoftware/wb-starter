@@ -230,10 +230,15 @@ export class WBFixCard extends WBCard {
 // module.default when no named export matches). The real work happens in
 // WBFixCard's own connectedCallback/`data` setter above via the native
 // custom-element upgrade that importing this module triggers -- this
-// function is only the compliance-signaling touch other self-registering
-// custom elements use (see x-control.js's `control()`), so schema/tag-map
-// dispatch has something to call without fighting the class for DOM
-// ownership.
+// function is only the compliance-signaling touch, so schema/tag-map dispatch
+// has something to call without fighting the class for DOM ownership.
+//
+// This used to cite x-control.js's `control()` as another instance of the same
+// "self-registering custom element" pattern. It never was one: nothing
+// registered WBControl, so its connectedCallback never ran, and the class is
+// deleted (#1063). x-fix-card is now the ONLY registered custom element in
+// src/ -- WBCard (x-card.js) is live solely as the base class WBFixCard
+// extends. Converting fix-card to a plain behavior is tracked in #660 / #789.
 export default function fixCard(element) {
   element.classList.add('x-fix-card');
   return () => {};

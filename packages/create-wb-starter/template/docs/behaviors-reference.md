@@ -1,5 +1,17 @@
 # WB-Starter Reference
 
+> **This is the cross-behavior INDEX, not the per-behavior documentation.**
+> Every behavior now has its own page, generated from its schema, at
+> `docs/behaviors/<name>.md` — e.g. [button](behaviors/button.md),
+> [ripple](behaviors/ripple.md), [tooltip](behaviors/tooltip.md). Each of those
+> pages opens by stating which of the two behavior types it is (decorates a
+> semantic element vs. adds a new capability) and how to write it. Go there for
+> attributes, events and examples; this page is for *browsing what exists* and
+> for the shared syntax/auto-injection/event rules below.
+>
+> Reach this page from an `x-demo` 📖 badge? That means the behavior has no
+> page of its own yet — find its row in the tables below (#842).
+
 This document lists all available behaviors in the WB Starter kit, categorized by function.
 
 ---
@@ -40,11 +52,14 @@ Enhances an element without changing its fundamental structure.
 | `<dialog>` | `dialog` | Dialog with backdrop, animations |
 | `<img>` | `image` | Lazy loading, fade-in, lightbox |
 
-### 2. Morphing (`x-as-{behavior}`)
-Transforms an element into a complex behavior. The `-as-` infix is required for morphing behaviors to make the transformation explicit.
+### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783)
+
+There is no `-as-` infix any more. A behavior that builds out a behavior's
+internals is applied exactly like any other: the attribute name **is** the
+behavior name, and on a semantic element it is injected for you.
 
 <div x-demo>
-<article x-as-card>
+<article>
   <header>
     <h3>Title</h3>
   </header>
@@ -52,11 +67,11 @@ Transforms an element into a complex behavior. The `-as-` infix is required for 
 </article>
 </div>
 
-| Element | Behavior | Result |
-|---------|----------|--------|
-| `<article>` | `card` | Morphs into card behavior |
-| `<nav>` | `navbar` | Morphs into navigation bar |
-| `<aside>` | `sidebar` | Morphs into sidebar behavior |
+| Element | Behavior | Written as |
+|---------|----------|------------|
+| `<article>` | `card` | `<article>` (auto-injected) or `<div x-card>` |
+| `<nav>` | `navbar` | `<nav>` (auto-injected) or `<div x-navbar>` |
+| `<aside>` | `sidebar` | `<aside>` (auto-injected) or `<div x-sidebar>` |
 
 ### 3. Configuration (Optional)
 If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally.
@@ -64,7 +79,7 @@ If the `x-` prefix conflicts with other libraries (like Alpine.js), you can chan
 ```javascript
 // In your main entry point
 WB.init({
-  prefix: 'b' // Changes syntax to b-ripple, b-as-card, etc.
+  prefix: 'b' // Changes syntax to b-ripple, b-card, etc.
 });
 ```
 
@@ -97,25 +112,25 @@ Enhances standard HTML elements with better styling and functionality.
 
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
-| [`audio`](behaviors/semantics/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
-| [`video`](behaviors/semantics/video.md) | `<video>` | Decorate | Enhanced video player styling |
-| [`img`](behaviors/semantics/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
-| [`figure`](behaviors/semantics/figure.md) | `<figure>` | Decorate | Figure with caption styling |
-| [`table`](behaviors/semantics/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
-| [`code`](behaviors/semantics/code.md) | `<code>` | Decorate | Inline code styling |
-| [`pre`](behaviors/semantics/pre.md) | `<pre>` | Decorate | Code block with copy button |
-| [`input`](behaviors/semantics/input.md) | `<input>` | Decorate | Styled input with variants |
-| [`textarea`](behaviors/semantics/textarea.md) | `<textarea>` | Decorate | Auto-resize, counter |
-| [`select`](behaviors/semantics/select.md) | `<select>` | Decorate | Custom dropdown styling |
-| [`checkbox`](behaviors/semantics/checkbox.md) | `<input type="checkbox">` | Decorate | Custom checkbox styling |
-| [`radio`](behaviors/semantics/radio.md) | `<input type="radio">` | Decorate | Custom radio styling |
-| [`button`](behaviors/semantics/button.md) | `<button>` | Decorate | Variants, sizes, loading state |
-| [`switch`](behaviors/semantics/switch.md) | `<input type="checkbox">` | Decorate | Toggle switch UI |
-| [`range`](behaviors/semantics/range.md) | `<input type="range">` | Decorate | Custom track/thumb styling |
-| [`rating`](behaviors/semantics/rating.md) | `<div>` | - | Star rating input |
-| [`form`](behaviors/semantics/form.md) | `<form>` | Decorate | Validation UI, loading states |
-| [`details`](behaviors/semantics/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
-| [`dialog`](behaviors/semantics/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
+| [`audio`](behaviors/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
+| [`video`](behaviors/video.md) | `<video>` | Decorate | Enhanced video player styling |
+| [`img`](behaviors/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
+| [`figure`](behaviors/figure.md) | `<figure>` | Decorate | Figure with caption styling |
+| [`table`](behaviors/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
+| [`code`](behaviors/code.md) | `<code>` | Decorate | Inline code styling |
+| [`pre`](behaviors/pre.md) | `<pre>` | Decorate | Code block with copy button |
+| [`input`](behaviors/input.md) | `<input>` | Decorate | Styled input with variants |
+| [`textarea`](behaviors/textarea.md) | `<textarea>` | Decorate | Auto-resize, counter |
+| [`select`](behaviors/select.md) | `<select>` | Decorate | Custom dropdown styling |
+| [`checkbox`](behaviors/checkbox.md) | `<input type="checkbox">` | Decorate | Custom checkbox styling |
+| [`radio`](behaviors/radio.md) | `<input type="radio">` | Decorate | Custom radio styling |
+| [`button`](behaviors/button.md) | `<button>` | Decorate | Variants, sizes, loading state |
+| [`switch`](behaviors/switch.md) | `<input type="checkbox">` | Decorate | Toggle switch UI |
+| [`range`](behaviors/range.md) | `<input type="range">` | Decorate | Custom track/thumb styling |
+| [`rating`](behaviors/rating.md) | `<div>` | - | Star rating input |
+| [`form`](behaviors/form.md) | `<form>` | Decorate | Validation UI, loading states |
+| [`details`](behaviors/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
+| [`dialog`](behaviors/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
 
 #### Live Examples
 
@@ -191,7 +206,7 @@ Enhances standard HTML elements with better styling and functionality.
 **`rating`**
 
 <div x-demo>
-<span x-rating value="3"></span>
+<span x-rating value="3"></div>
 </div>
 
 **`form`**
@@ -223,7 +238,7 @@ Enhances standard HTML elements with better styling and functionality.
   id="behaviors-ref-dialog">
   <p>Dialog content goes here.</p>
 </dialog>
-<button onclick="document.getElementById('behaviors-ref-dialog').open()">Open Dialog</button>
+<button onclick="document.getElementById('behaviors-ref-dialog').showModal()">Open Dialog</button>
 </div>
 
 **`button`**
@@ -241,10 +256,10 @@ Rich interactive behaviors.
 | Behavior | Element | Type | Description |
 |----------|---------|------|-------------|
 | `hero` | `<section>` | - | Hero section behavior |
-| [`card`](behaviors/cards/card.md) | `<article>` | - | Card behavior |
+| [`card`](card.md) | `<article>` | - | Card behavior |
 | `cardlink` | `<article href>` | - | Clickable card |
-| [`card*`](behaviors/cards/cards.index.md) | `<article>` | - | Card variants (image, video, etc.) |
-| [`progressbar`](behaviors/semantics/progress.md) | `<progress>` | Decorate | Progress bar styling |
+| `card*` | `<article>` | - | Card variants — [cardimage](behaviors/cardimage.md), [cardvideo](behaviors/cardvideo.md), [cardpricing](behaviors/cardpricing.md), [cardprofile](behaviors/cardprofile.md), … one page each under `docs/behaviors/` |
+| [`progressbar`](behaviors/progress.md) | `<progress>` | Decorate | Progress bar styling |
 | `spinner` | `<div>` | - | Loading spinner |
 | [`toast`](behaviors/toast.md) | `<div>` | - | Toast notification |
 | `notify` | `<div>` | - | Cycling notification |
@@ -300,11 +315,11 @@ Rich interactive behaviors.
 **`tabs`**
 
 <div x-demo events="wb:tabs:change">
-<div x-tabs>
+<nav x-tabs>
   <div tab="Tab 1">Content 1</div>
   <div tab="Tab 2">Content 2</div>
   <div tab="Tab 3">Content 3</div>
-</div>
+</nav>
 </div>
 
 **`toast`**
@@ -354,8 +369,8 @@ Tools for arranging content.
 | `flex` | `<div x-flex>`, `<div x-flex>` | - | Flexbox layout |
 | `container` | `<div x-container>` | - | Responsive container |
 | [`articles`](behaviors/articles.md) | `<div x-articles>`, `[x-articles]` | - | Grid/list/masonry wrapper for article-like children |
-| [`stack`](behaviors/x-stack.md) | `<div x-stack>`, `<div x-stack>`, `[x-stack]` | - | Vertical stack |
-| [`cluster`](behaviors/x-cluster.md) | `<div x-cluster>`, `[x-cluster]` | - | Horizontal cluster |
+| [`stack`](behaviors/stack.md) | `<div x-stack>`, `<div x-stack>`, `[x-stack]` | - | Vertical stack |
+| [`cluster`](behaviors/cluster.md) | `<div x-cluster>`, `[x-cluster]` | - | Horizontal cluster |
 | `center` | `<div x-center>` | - | Centered content |
 | `masonry` | `<div x-masonry>` | - | Masonry grid layout |
 | `sticky` | `<div x-sticky>` | - | Sticky positioning |
@@ -368,7 +383,7 @@ Tools for arranging content.
 | `frame` | `<div x-frame>` | - | Aspect ratio frame |
 | `reel` | `<div x-reel>` | - | Horizontal reel |
 | `icon` | `<span x-icon>` | - | Icon wrapper |
-| [`draggable`](behaviors/cards/carddraggable.md) | any | - | Draggable element |
+| [`draggable`](behaviors/carddraggable.md) | any | - | Draggable element |
 | `resizable` | any | - | Resizable element |
 
 #### Live Examples
@@ -468,7 +483,7 @@ Functional utilities.
 | `toggle` | any | - | Toggle visibility/state |
 | `ripple` | any | - | Material ripple effect |
 | `darkmode` | `<button>` | - | Dark mode toggle |
-| [`themecontrol`](behaviors/x-themecontrol.md) | `<div>` | - | Theme switcher |
+| [`themecontrol`](behaviors/themecontrol.md) | `<div>` | - | Theme switcher |
 | `lazy` | any | - | Lazy loading content |
 | `print` | `<button>` | - | Print button |
 | `share` | `<button>` | - | Share button |
@@ -517,7 +532,7 @@ Apply animations to elements.
 | `shake` | any | - | Shake effect |
 | `pulse` | any | - | Pulse effect |
 | `flip` | any | - | Flip effect |
-| [`confetti`](behaviors/effects/confetti.md) | any | - | Confetti explosion |
+| [`confetti`](behaviors/confetti.md) | any | - | Confetti explosion |
 | `sparkle` | any | - | Sparkle effect |
 | `glow` | any | - | Glow effect |
 | `rainbow` | any | - | Rainbow text/bg |
@@ -543,7 +558,7 @@ not guessed here.
 
 ## Events
 
-Wiring up a control (`x-toast`, `x-search`, `<div x-tabs>`, …) is only half the story — most
+Wiring up a control (`x-toast`, `x-search`, `<nav x-tabs>`, …) is only half the story — most
 behaviors also **fire a real, bubbling `CustomEvent`** the moment something happens
 (a click, a debounced keystroke, a drag ending). Every event below was verified against
 the current source in `src/wb-viewmodels/` — the name, what triggers it, and its
@@ -579,7 +594,7 @@ schema, styling) — this table is the cross-behavior index.
 |-------|-----------|------------|----------|
 | `wb:toggle` | `toggle.js` (`x-toggle`) | mousedown/touch/Enter/Space on the toggle | `{ active, targets, class }` |
 | `wb:switch:change` | `semantics/switch.js` (`<div x-switch>`) | the switch is flipped | `{ checked }` |
-| `wb:rating:change` | `semantics/rating.js` (`<span x-rating>`) | a star/icon is clicked | `{ value }` |
+| `wb:rating:change` | `semantics/rating.js` (`<div x-rating>`) | a star/icon is clicked | `{ value }` |
 | `wb:stepper:change` | `stepper.js` (`x-stepper`) | the `+`/`-` buttons change the value | `{ value }` |
 | `wb:colorpicker:change` | `colorpicker.js` (`x-colorpicker`) | a color is picked | `{ value }` |
 | `wb:autocomplete:select` | `autocomplete.js` (`x-autocomplete`) | a suggestion is chosen | `{ value }` |
@@ -615,7 +630,7 @@ schema, styling) — this table is the cross-behavior index.
 
 | Event | Fires from | Fires when | `detail` |
 |-------|-----------|------------|----------|
-| `wb:tabs:change` | `tabs.js` (`<div x-tabs>`) | a tab is clicked | `{ index, title }` |
+| `wb:tabs:change` | `tabs.js` (`<nav x-tabs>`) | a tab is clicked | `{ index, title }` |
 | `wb:menu:select` | `navigation.js` (`x-menu`) | a menu item is clicked | `{ index, label, value }` |
 | `wb:pagination:change` | `navigation.js` (`x-pagination`) | a page control is clicked | `{ page }` |
 | `wb:dropdown:select` | `dropdown.js` (`x-dropdown`) | a dropdown item is chosen | `{ value, href }` |
@@ -640,7 +655,7 @@ independent implementations, so the exact `detail` shape depends on which one en
 your form: the `<form ajax>` behavior (`form.js`: `{ formData }` / `{ data }` /
 `{ error }`) and native `<form>` auto-enhancement (`semantics/form.js` /
 `enhancements.js`: `{ response }` / `{ error }`). See
-[behaviors/semantics/form.md](behaviors/semantics/form.md) for the authoritative,
+[behaviors/semantics/form.md](behaviors/form.md) for the authoritative,
 per-implementation breakdown.
 
 **Cards**
@@ -649,12 +664,12 @@ per-implementation breakdown.
 |-------|-----------|------------|----------|
 | `wb:cardbutton:primary` | `card.js` | a card's primary footer button is clicked | `{ label }` |
 | `wb:cardbutton:secondary` | `card.js` | a card's secondary footer button is clicked | `{ label }` |
-| `wb:cardproduct:addtocart` | `card.js` (`x-cardproduct`) | "Add to Cart" is clicked | `{ title, ... }` |
-| `wb:cardnotification:dismiss` | `card.js` (`x-cardnotification`) | a notification card is dismissed | `{ variant, title }` |
-| `wb:cardexpandable:toggle` | `card.js` (`x-cardexpandable`) | the card expands/collapses | `{ expanded }` |
-| `wb:cardminimizable:toggle` | `card.js` (`x-cardminimizable`) | the card minimizes/restores | `{ minimized }` |
-| `wb:carddraggable:dragstart/drag/dragend` | `card.js` (`x-carddraggable`) | a draggable card starts/moves/finishes dragging | `{ x, y }` |
-| `wb:cardstats:hydrated` | `card.js` (`x-cardstats`) | stats card finishes initializing (test hook) | `—` |
+| `wb:cardproduct:addtocart` | `card.js` (`<div x-cardproduct>`) | "Add to Cart" is clicked | `{ title, ... }` |
+| `wb:cardnotification:dismiss` | `card.js` (`<div x-cardnotification>`) | a notification card is dismissed | `{ variant, title }` |
+| `wb:cardexpandable:toggle` | `card.js` (`<div x-cardexpandable>`) | the card expands/collapses | `{ expanded }` |
+| `wb:cardminimizable:toggle` | `card.js` (`<div x-cardminimizable>`) | the card minimizes/restores | `{ minimized }` |
+| `wb:carddraggable:dragstart/drag/dragend` | `card.js` (`<div x-carddraggable>`) | a draggable card starts/moves/finishes dragging | `{ x, y }` |
+| `wb:cardstats:hydrated` | `card.js` (`<div x-cardstats>`) | stats card finishes initializing (test hook) | `—` |
 
 **Media, layout & effects**
 
@@ -705,7 +720,7 @@ document.querySelectorAll('[x-copy]').forEach((button) => {
 });
 ```
 
-**Tabs** — `<div x-tabs>` fires on every tab change, including the initial selection:
+**Tabs** — `<nav x-tabs>` fires on every tab change, including the initial selection:
 
 ```javascript
 document.querySelector('x-tabs').addEventListener('wb:tabs:change', (e) => {
@@ -756,8 +771,8 @@ document.querySelectorAll('x-card, x-cardproduct, x-cardnotification').forEach((
 
 Every behavior's own doc under `behaviors/` also documents its events in an "Events"
 section with the full attribute/schema context — e.g.
-[behaviors/semantics/details.md](behaviors/semantics/details.md),
-[behaviors/cards/cardproduct.md](behaviors/cards/cardproduct.md),
+[behaviors/semantics/details.md](behaviors/details.md),
+[behaviors/cards/cardproduct.md](behaviors/cardproduct.md),
 [behaviors/tabs.md](behaviors/tabs.md), and [search.md](search.md). This section exists
 so you don't have to open a dozen files to see what's available across the whole library.
 
@@ -767,20 +782,20 @@ so you don't have to open a dozen files to see what's available across the whole
 
 | Element | Behavior | Type |
 |---------|----------|------|
-| `<img>` | [`image`](behaviors/semantics/img.md) | Decorate |
-| `<audio>` | [`audio`](behaviors/semantics/audio.md) | Decorate |
-| `<video>` | [`video`](behaviors/semantics/video.md) | Decorate |
-| `<figure>` | [`figure`](behaviors/semantics/figure.md) | Decorate |
-| `<table>` | [`table`](behaviors/semantics/table.md) | Decorate |
-| `<code>` | [`code`](behaviors/semantics/code.md) | Decorate |
-| `<pre>` | [`pre`](behaviors/semantics/pre.md) | Decorate |
-| `<input>` | [`input`](behaviors/semantics/input.md) | Decorate |
-| `<textarea>` | [`textarea`](behaviors/semantics/textarea.md) | Decorate |
-| `<select>` | [`select`](behaviors/semantics/select.md) | Decorate |
-| `<button>` | [`button`](behaviors/semantics/button.md) | Decorate |
-| `<form>` | [`form`](behaviors/semantics/form.md) | Decorate |
-| `<details>` | [`details`](behaviors/semantics/details.md) | Decorate |
-| `<dialog>` | [`dialog`](behaviors/semantics/dialog.md) | Decorate |
+| `<img>` | [`image`](behaviors/img.md) | Decorate |
+| `<audio>` | [`audio`](behaviors/audio.md) | Decorate |
+| `<video>` | [`video`](behaviors/video.md) | Decorate |
+| `<figure>` | [`figure`](behaviors/figure.md) | Decorate |
+| `<table>` | [`table`](behaviors/table.md) | Decorate |
+| `<code>` | [`code`](behaviors/code.md) | Decorate |
+| `<pre>` | [`pre`](behaviors/pre.md) | Decorate |
+| `<input>` | [`input`](behaviors/input.md) | Decorate |
+| `<textarea>` | [`textarea`](behaviors/textarea.md) | Decorate |
+| `<select>` | [`select`](behaviors/select.md) | Decorate |
+| `<button>` | [`button`](behaviors/button.md) | Decorate |
+| `<form>` | [`form`](behaviors/form.md) | Decorate |
+| `<details>` | [`details`](behaviors/details.md) | Decorate |
+| `<dialog>` | [`dialog`](behaviors/dialog.md) | Decorate |
 
 ---
 

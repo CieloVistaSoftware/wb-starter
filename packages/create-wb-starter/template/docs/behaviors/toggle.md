@@ -2,14 +2,17 @@
 
 Toggle visibility or state of another element.
 
-Apply `x-toggle` to any element.
+## Type — new capability
 
-## Usage
+`x-toggle` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-toggle>
-  …
-</div>
+<button x-toggle target="#x-ex-toggle-panel">
+  x-toggle · target: #x-ex-toggle-panel
+</button>
+<div id="x-ex-toggle-panel">The panel this button toggles.</div>
 ```
 
 ## Attributes

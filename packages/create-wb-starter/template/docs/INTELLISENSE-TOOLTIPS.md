@@ -65,7 +65,7 @@ Audio player with optional 15-band graphic equalizer
 
 ---
 
-## `<span x-avatar>`
+## `<div x-avatar>`
 
 **Tooltip Output:**
 ```text
@@ -91,7 +91,7 @@ User avatar with image, initials fallback, and status indicator
 
 ---
 
-## `<span x-badge>`
+## `<div x-badge>`
 
 **Tooltip Output:**
 ```text
@@ -653,7 +653,7 @@ CSS Rules:
 
 ---
 
-## `<div x-cardhero>`
+## `<article x-cardhero>`
 
 **Tooltip Output:**
 ```text
@@ -724,7 +724,7 @@ CSS Rules:
 
 ---
 
-## `<div x-cardimage>`
+## `<article x-cardimage>`
 
 **Tooltip Output:**
 ```text
@@ -1033,7 +1033,7 @@ Profile card. Composes the shared card structure with profile elements (avatar, 
 
 ---
 
-## `<div x-cardstats>`
+## `<articlestats>`
 
 **Tooltip Output:**
 ```text
@@ -1102,7 +1102,7 @@ CSS Rules:
 
 ---
 
-## `<div x-cardvideo>`
+## `<article x-cardvideo>`
 
 **Tooltip Output:**
 ```text
@@ -1163,7 +1163,7 @@ Attributes:
 
 ---
 
-## `<div x-checkbox>`
+## `<input type="checkbox">`
 
 **Tooltip Output:**
 ```text
@@ -1198,7 +1198,7 @@ CSS Rules:
 
 ---
 
-## `<span x-chip>`
+## `<div x-chip>`
 
 **Tooltip Output:**
 ```text
@@ -1698,7 +1698,7 @@ Attributes:
 
 ---
 
-## `<div x-input>`
+## `<input>`
 
 **Tooltip Output:**
 ```text
@@ -1761,7 +1761,7 @@ Attributes:
 
 ---
 
-## `<div x-navbar>`
+## `<nav x-navbar>`
 
 **Tooltip Output:**
 ```text
@@ -1911,7 +1911,7 @@ CSS Rules:
 
 ---
 
-## `<span x-rating>`
+## `<div x-rating>`
 
 **Tooltip Output:**
 ```text
@@ -2175,7 +2175,7 @@ Falling snowflake animation effect
 
 ---
 
-## `<span x-spinner>`
+## `<div x-spinner>`
 
 **Tooltip Output:**
 ```text
@@ -2341,7 +2341,7 @@ Data table with sorting, filtering, and pagination
 
 ---
 
-## `<div x-tabs>`
+## `<nav x-tabs>`
 
 **Tooltip Output:**
 ```text
@@ -2448,7 +2448,7 @@ CSS Rules:
 
 ---
 
-## `<span x-tooltip>`
+## `<div x-tooltip>`
 
 **Tooltip Output:**
 ```text

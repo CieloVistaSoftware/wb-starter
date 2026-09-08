@@ -3,7 +3,7 @@
   "issues": "#779 (inline styles), #790 (hardcoded colours inside them)",
   "standard": "No inline styles anywhere. Unqualified — overridability is a consequence, not a condition.",
   "behaviorsWithInlineStyles": 56,
-  "totalDeclarations": 789,
+  "totalDeclarations": 785,
   "colourLiteralDeclarations": 32,
   "classification": {
     "COVERED": {
@@ -11,11 +11,11 @@
       "meaning": "a stylesheet already supplies this exact value — delete the inline write, no CSS to author"
     },
     "UNCOVERED": {
-      "count": 317,
+      "count": 316,
       "meaning": "the inline is the only source — a rule must be written before it can be removed"
     },
     "DYNAMIC": {
-      "count": 4,
+      "count": 1,
       "meaning": "the value is computed at runtime — set a CSS custom property on the element and let a rule consume it"
     }
   },
@@ -224,13 +224,6 @@
       "dynamic": 0
     },
     {
-      "behavior": "x-demo",
-      "total": 6,
-      "covered": 0,
-      "uncovered": 3,
-      "dynamic": 3
-    },
-    {
       "behavior": "x-textarea",
       "total": 6,
       "covered": 4,
@@ -316,6 +309,13 @@
     },
     {
       "behavior": "x-draggable",
+      "total": 2,
+      "covered": 0,
+      "uncovered": 2,
+      "dynamic": 0
+    },
+    {
+      "behavior": "x-demo",
       "total": 2,
       "covered": 0,
       "uncovered": 2,
@@ -1731,50 +1731,6 @@
       "behavior": "x-demo",
       "elements": [
         {
-          "path": "div[1] > div[0] > div[0]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "top",
-              "value": "26px",
-              "classification": "UNCOVERED"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > div[0] > div[1]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "top",
-              "value": "50px",
-              "classification": "DYNAMIC"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > div[0] > div[2]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "top",
-              "value": "74px",
-              "classification": "DYNAMIC"
-            }
-          ]
-        },
-        {
-          "path": "div[1] > div[0] > div[3]",
-          "classes": "",
-          "declarations": [
-            {
-              "prop": "top",
-              "value": "98px",
-              "classification": "DYNAMIC"
-            }
-          ]
-        },
-        {
           "path": "div[1] > button[2]",
           "classes": "x-pre__copy x-button",
           "declarations": [
@@ -1797,7 +1753,7 @@
           ]
         }
       ],
-      "total": 6
+      "total": 2
     },
     {
       "behavior": "x-dialog",

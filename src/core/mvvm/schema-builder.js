@@ -901,7 +901,9 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // SCHEMA_EXCLUDED_TAGS lists tags CONFIRMED (by reading the actual behavior
 // source, not assumed) to build their own complete DOM unconditionally:
 // x-demo (#312 -- pre.js's "view source" toggle silently stopped
-// responding whenever WB.scan()'s schema loop raced WBDemo.
+// responding when WB.scan()'s schema loop reached a demo before it was
+// built. (Not a race with WBDemo.connectedCallback: that class was never
+// registered and is now deleted -- #1063.)
 // connectedCallback(), because buildStructure()'s empty-$view fallback
 // re-parses element.innerHTML as a string, producing a listener-less
 // look-alike); x-details (#305/#336 -- schema's "content" node type

@@ -2,14 +2,18 @@
 
 Simple profile card. Composes the shared card structure and adds profile elements (avatar, name, role, bio, cover).
 
-Apply `x-cardprofile` to any element.
+## Type — new capability
 
-## Usage
+`x-cardprofile` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-cardprofile>
-  …
-</div>
+<article x-cardprofile
+  name="Grace Hopper"
+  role="Compiler pioneer"
+  avatar="/images/placeholder.svg"
+  bio="Wrote the first compiler, then spent a career arguing that people should not have to write machine code."></article>
 ```
 
 ## Attributes

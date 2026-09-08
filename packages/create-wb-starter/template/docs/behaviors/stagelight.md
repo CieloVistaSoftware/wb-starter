@@ -10,7 +10,7 @@ on the host element.
 |----------|-------|
 | Behavior | `stagelight` |
 | Attribute | `x-stagelight` |
-| Custom Tag | `<div x-stagelight>` |
+| Attribute form | `<div x-stagelight>` |
 | Applies to | any element |
 | Category | Effects |
 | Support level | Experimental |

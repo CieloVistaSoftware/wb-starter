@@ -34,7 +34,7 @@ detail, not a design requirement.
 ## Relationship to `proposed-custom-elements.md`
 
 **This proposal is a reversal of [`proposed-custom-elements.md`](proposed-custom-elements.md)**,
-which asks for *more* `wb-*` tags (`x-grid`, `x-flex`, `x-stack`, …) under the "Pseudo-Custom
+which asks for *more* `wb-*` tags (`x-grid`, `x-flex`, `<div x-stack>`, …) under the "Pseudo-Custom
 Elements (PCE)" architecture. Both documents can't be the target state. If this proposal moves
 forward, `proposed-custom-elements.md` should be either withdrawn or reframed as "attribute
 names to add to the schema registry" (`x-grid`, `x-flex`, `x-stack`, …) rather than new tags —
@@ -52,18 +52,18 @@ wb-starter runs **two parallel detection systems** today:
 | Gate | Requires `getConfig('autoInject')` **or** a `variant` attribute (`src/core/wb.js:223`) | Unconditional — no gate at all |
 | Opt-out | `x-ignore` attribute (`src/core/wb.js:204`, mirrored in `wb-lazy.js:285,700`) | **None.** `x-ignore` is never checked in `schema-builder.js` — confirmed by reading `detectSchema()`, `scan()`, `processElement()`, and `WB.inject()`. `<article x-ignore>` is fully built and injected today; the attribute is silently ignored. |
 | Registration | `nativeMap` (`tag-map.js`) | `registerSchema()`, `src/core/mvvm/schema-builder.js:118-130` — derives `` `wb-${name}` `` as the tag key (line 126) |
-| Count | 32 of 84 catalogued behaviors | 52 of 84 (81 distinct tags total; `x-card` appears twice in the catalog under two categories) |
+| Count | 32 of 84 catalogued behaviors | 52 of 84 (81 distinct tags total; `<article>` appears twice in the catalog under two categories) |
 
-Of the 52 `wb-*` tags, **only 3 are real registered Custom Elements**: `x-card`
+Of the 52 `wb-*` tags, **only 3 are real registered Custom Elements**: `<article>`
 (`src/wb-viewmodels/x-card.js:51`), `x-demo` (`x-demo.js:137`), `x-grid` (`x-grid.js:36`).
 The other ~48 are plain elements the schema builder detects and constructs purely by string
 prefix — nothing in the platform's Custom Elements registry knows they exist. Three more real
-Custom Elements (`x-audio`, `x-control`, `x-fix-card`) exist in the codebase but sit outside
-the 52-tag catalog scope (`x-audio` is the enhanced-EQ wrapper around the native
+Custom Elements (`<audio>`, `<div x-control>`, `<div x-fix-card>`) exist in the codebase but sit outside
+the 52-tag catalog scope (`<audio>` is the enhanced-EQ wrapper around the native
 `<audio x-behavior="audio">` behavior, not a catalog entry itself).
 
 `SCHEMA_EXCLUDED_TAGS` (`schema-builder.js:872-880`, 22 entries, all of `x-card*`'s 13-tag
-family plus `x-demo`, `x-dialog`, `x-search`, others) is hand-maintained tribal knowledge —
+family plus `x-demo`, `<dialog>`, `<div x-searchfield>`, others) is hand-maintained tribal knowledge —
 its own comment (lines 801-871) warns *"do not widen this to 'every tag with a behavior'
 again."* This set exists to stop the schema builder racing a behavior's own DOM-building code;
 its job survives this proposal unchanged, it just gets rekeyed by behavior name instead of tag
@@ -126,14 +126,14 @@ in the repo (or, more importantly, nothing in a consumer's project) still depend
 dual-selects both). ~69 bare-tag selector lines across ~29 files in
 `src/styles/behaviors/` need the same treatment: `x-foo {` → `x-foo, .x-foo {`. Since
 `schema-builder.js`'s `getBaseClass()`/`getPartClass()` already generate `wb-`-prefixed BEM
-classes (`x-card`, `x-card__header`, …) regardless of tag identity, **every schema-built
+classes (`<article>`, `x-card__header`, …) regardless of tag identity, **every schema-built
 element already gets its `.wb-*` class today** — the CSS augmentation is pure addition (a
 class selector that will already match), never a removal, so this step is low-risk and can
 happen incrementally, file by file, without waiting on the detection change.
 
 ### 5. The 6 real Custom Elements — separate track, not phase 1
 
-`x-card`, `x-demo`, `x-grid`, `x-audio`, `x-control`, `x-fix-card` have actual
+`<article>`, `x-demo`, `x-grid`, `<audio>`, `<div x-control>`, `<div x-fix-card>` have actual
 `customElements.define()`-registered classes with their own lifecycle. You can't rename their
 tag without either (a) keeping the class registered under its current tag name and having a
 plain-tag wrapper delegate to it, or (b) reworking each one to attach its behavior to

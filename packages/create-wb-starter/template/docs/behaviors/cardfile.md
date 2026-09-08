@@ -2,14 +2,24 @@
 
 File display card with icon, name, size, and download
 
-Applies to `<article>`, and to any element carrying `x-cardfile`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardfile` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardfile>
+<article x-cardfile filename="quarterly-report.pdf" file-type="pdf" size="2.4 MB" date="2026-08-14" href="#"></article>
+```
+
+### On a different element
+
+Use `x-cardfile` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardfile>
   …
-</article>
+</div>
 ```
 
 ## Attributes

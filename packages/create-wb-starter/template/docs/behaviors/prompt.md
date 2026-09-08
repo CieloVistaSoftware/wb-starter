@@ -2,12 +2,16 @@
 
 Behavior applied with x-prompt.
 
-Apply `x-prompt` to any element.
+## Type — new capability
 
-## Usage
+`x-prompt` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button variant="primary" x-prompt prompt-title="Enter Value" prompt-message="Please enter your name:">Prompt Dialog</button>
+<button variant="primary" x-prompt prompt-title="Enter Value" prompt-message="Please enter your name:">
+  x-prompt · variant: primary · prompt-title: Enter Value · prompt-message: Please enter your name:
+</button>
 ```
 
 ## Attributes

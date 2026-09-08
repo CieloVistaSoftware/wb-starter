@@ -102,12 +102,12 @@ Every session, before doing anything:
 
 ## 9. No One-Off Styles — Use Existing CSS or Extend It
 
-**Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `x-btn` ended up duplicating `x-button` across two files, and dark mode broke because styles didn't match.
+**Never create inline styles, new CSS classes, or duplicate existing styles.** This is how `x-btn` ended up duplicating `<button>` across two files, and dark mode broke because styles didn't match.
 
 Before writing ANY CSS or class name:
 1. Search `src/styles/behaviors/` — does a style file already exist for this behavior?
 2. Search `site.css` imports — is it already loaded?
-3. If the class exists, USE IT. Don't invent a new name (`x-btn` vs `x-button`).
+3. If the class exists, USE IT. Don't invent a new name (`x-btn` vs `<button>`).
 4. If new styles are genuinely needed, add them to the existing behavior CSS file.
 5. Page-specific layout goes in `src/styles/pages/{pagename}.css` — but ONLY layout, never behavior styles.
 6. Never put `<link rel="stylesheet">` in page fragments — the server injects `site.css`.
@@ -217,6 +217,68 @@ wrong for every instance after the first.
   behavior using it appears many times. The test: could this element
   legitimately exist more than once in the DOM at the same time? If yes,
   the id must be generated, not hardcoded.
+
+---
+
+## 17. A Push To `.io` Is Not Done Until The Deployed Site Boots
+
+Pushing to `main` publishes live to
+https://cielovistasoftware.github.io/wb-starter/. **The push is not the
+deliverable. A booting site is.**
+
+After every push to `main`:
+
+```bash
+npm run test:smoke:deployed
+```
+
+It waits for the Pages build to report `built` (running against a `building`
+origin smokes the PREVIOUS deploy and returns a confident, meaningless pass),
+then runs `site-smoke` against the live site. Green = done. Anything else = the
+site is broken and you fix it before you say a word about anything else.
+
+**The published URL lives in the repo**, in `scripts/smoke-deployed.mjs`,
+under version control — it is public, identical for every clone, and works on a
+fresh checkout with no setup. `--url <address>` overrides for a one-off run
+against a staging copy or a fork.
+
+It is deliberately NOT a system environment variable. **System environment
+variables hold secrets** (John's rule); a public URL is not one, and putting it
+there breaks the gate on every machine that has not had it set by hand.
+
+### What does NOT count as verification
+
+- **Grepping the served HTML.** This is what was actually done, and it passed
+  while the site was dead.
+- **A 200 on every asset.** Every file was served correctly during the outage.
+- **The local suite.** It runs against localhost and cannot see a bad deploy.
+- **CI being green.** CI does not load the deployed origin either.
+- **"The file I pushed has the right content."** It did. The site was still
+  down.
+
+### Why this is a law
+
+`4278fcf7` shipped one unresolved named import. That is a **module-level
+`SyntaxError`**, so nothing evaluated, and every route on the live site showed
+the literal text `Loading...` — for every visitor, indefinitely. The HTML was
+correct. The CSS was correct. Every asset returned 200. The deploy was declared
+good on that basis.
+
+**John found it, on his phone.** Three layers of gate — pre-commit, CI, and my
+own check — all passed a total outage, because not one of them ran the page.
+
+The smoke test (`tests/compliance/site-smoke.spec.ts`, #990) exists precisely
+for this. It listens on `pageerror` as well as `console`, because a
+module-level `SyntaxError` never reaches `console`. It fails if the body is
+still `Loading...`. It was proven by fault injection, not by passing.
+
+### One more trap
+
+A deployed fix can be **invisible for ten minutes**. JS is served
+`Cache-Control: max-age=600` at URLs with no content hash (#989), so a browser
+that loaded the broken build will keep it. If the smoke test fails right after
+a push, re-fetch with `{cache:'reload'}` before concluding the fix did not
+land — and never tell John it is live when you have only checked the origin.
 
 ---
 

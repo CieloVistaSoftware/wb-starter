@@ -2,14 +2,14 @@
 
 Checkbox input with label and custom styling
 
-Applies to `<div>`, and to any element carrying `x-checkbox`.
+## Type — new capability
 
-## Usage
+`x-checkbox` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-checkbox>
-  …
-</div>
+<div x-checkbox label="Run the full suite before pushing" name="full-suite" checked></div>
 ```
 
 ## Attributes

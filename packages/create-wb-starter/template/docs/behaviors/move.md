@@ -11,7 +11,7 @@ an `x-move` container swap their item with the adjacent one when clicked.
 | Behavior | `move` |
 | Container attribute | `x-move` |
 | Direction attributes | `x-moveup`, `x-movedown`, `x-moveleft`, `x-moveright` |
-| Custom Tag | `<div x-move>` |
+| Attribute form | `<div x-move>` |
 | Applies to | a grid/flex container (`x-move`) with descendant buttons (`x-move{direction}`) |
 | Category | Interactive |
 | Schema | `src/wb-models/move.schema.json` |
@@ -24,7 +24,7 @@ the tag form is registered in the tag map
 ([`src/core/config.js`](../../src/core/config.js)), so `x-move` activates without
 any manual `WB.scan()` call.
 
-`move()` is the **container** entry point: it adds the `x-move` marker class and
+`move()` is the **container** entry point: it adds the `<div x-move>` marker class and
 wires up any descendant element carrying one of the four direction attributes below.
 Each direction attribute works stand-alone too (a button anywhere with `x-moveup`
 etc. wires itself), but needs an ancestor whose own parent is `display: grid` or
@@ -66,7 +66,7 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
 </div>
 </div>
 
-### Custom Tag
+### Attribute form
 
 <div x-demo>
 <div x-move style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">

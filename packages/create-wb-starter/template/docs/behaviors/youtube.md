@@ -2,9 +2,11 @@
 
 Behavior applied with x-youtube.
 
-Apply `x-youtube` to any element.
+## Type — new capability
 
-## Usage
+`x-youtube` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>

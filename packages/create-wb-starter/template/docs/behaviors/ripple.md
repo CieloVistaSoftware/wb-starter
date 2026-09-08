@@ -9,7 +9,7 @@ element's center) on `mousedown`, then fades out.
 |----------|-------|
 | Behavior | `ripple` |
 | Attribute | `x-ripple` |
-| Custom Tag | `<div x-ripple>` |
+| Attribute form | `<div x-ripple>` |
 | Applies to | any element (buttons, cards, list items, ...) |
 | Category | Effects |
 | Schema | `src/wb-models/ripple.schema.json` |
@@ -53,7 +53,7 @@ there's no `="true"`/`="false"` value to set.
 <button x-ripple ripple-color="rgba(99, 102, 241, 0.5)" ripple-duration="900">Slow indigo ripple</button>
 </div>
 
-### Custom Tag
+### Attribute form
 
 <div x-demo>
 <div x-ripple>Same behavior via the &lt;x-ripple&gt; custom tag</div>

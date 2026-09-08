@@ -2,13 +2,15 @@
 
 Behavior applied with x-figure.
 
-Apply `x-figure` to any element.
+## Type — new capability
 
-## Usage
+`x-figure` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <figure>
-  <img src="/images/placeholder.svg" alt="Suspension bridge in fog">
+  <img src="images/placeholder.svg" alt="Suspension bridge in fog">
   <figcaption>The 6am crossing, before the fog lifted.</figcaption>
 </figure>
 ```

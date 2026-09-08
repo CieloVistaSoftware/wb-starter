@@ -120,7 +120,7 @@ combination is intentional and supported. More-specific mappings, such as
 - Behavior attributes may be boolean or carry the behavior's configuration value.
 
 <div x-demo>
-<span x-badge variant="success">Ready</span>
+<span x-badge variant="success">Ready</div>
 </div>
 
 <div x-demo>
@@ -192,7 +192,7 @@ the function is being used as a behavior or as an enhancement.
 ### Behavior with semantic children
 
 <div x-demo>
-<div x-article>
+<div x-as-article>
   <header>
     <h2>Article title</h2>
     <p>Short summary.</p>
@@ -204,7 +204,7 @@ the function is being used as a behavior or as an enhancement.
 </div>
 </div>
 
-The `<div x-article>` boundary identifies the behavior, while its internal
+The `<div x-as-article>` boundary identifies the behavior, while its internal
 `<header>`, heading, paragraph, footer, and `<time>` elements retain their native
 meaning.
 

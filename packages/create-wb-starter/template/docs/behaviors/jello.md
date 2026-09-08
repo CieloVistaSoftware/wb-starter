@@ -2,12 +2,16 @@
 
 On click, plays the jello animation for 1s.
 
-Apply `x-jello` to any element.
+## Type — new capability
 
-## Usage
+`x-jello` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<button class="effect-demo" x-jello>Jello</button>
+<button class="effect-demo" x-jello>
+  x-jello
+</button>
 ```
 
 ## Live example

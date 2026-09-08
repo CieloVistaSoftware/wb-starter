@@ -7,7 +7,7 @@ container-aware wrapper around the lower-level `search()`/`x-search`
 behavior in the same file.
 
 - **Type:** Modifier
-- **Root CSS class:** `x-search`
+- **Root CSS class:** `<div x-searchfield>`
 - **Schema:** none dedicated (the plain `x-search` behavior it wraps has
   [search.schema.json](../../src/wb-models/search.schema.json); `searchfield`
   itself has no separate schema file)
@@ -62,7 +62,7 @@ Applied directly to a real `<input>`, it delegates straight to the plain
 
 | Class | Applies to | When |
 |---|---|---|
-| `x-search` | host element (and the inner `<input>`) | always |
+| `<div x-searchfield>` | host element (and the inner `<input>`) | always |
 | `x-search--{size}` | host element | `size` ≠ `md` |
 | `x-search--{variant}` | host element | `variant` ≠ `default` |
 | `x-search--disabled` | host element | `disabled` present |

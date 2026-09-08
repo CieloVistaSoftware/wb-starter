@@ -2,9 +2,11 @@
 
 Behavior applied with x-truncate.
 
-Apply `x-truncate` to any element.
+## Type — new capability
 
-## Usage
+`x-truncate` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
 <p x-truncate lines="2" class="truncate-box">

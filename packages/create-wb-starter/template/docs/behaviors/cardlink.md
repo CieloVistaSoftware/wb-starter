@@ -2,14 +2,28 @@
 
 Clickable card that navigates to a URL
 
-Applies to `<article>`, and to any element carrying `x-cardlink`.
+## Type — decorates a semantic element
 
-## Usage
+`x-cardlink` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+
+### How to write it
 
 ```html
-<article x-cardlink>
+<article x-cardlink
+  href="#"
+  title="Attribute naming standard"
+  description="Why every attribute is kebab-case, and what breaks when it is not."
+  badge="Standard"></article>
+```
+
+### On a different element
+
+Use `x-cardlink` when the host is not a `<article>` and you want the same behavior:
+
+```html
+<div x-cardlink>
   …
-</article>
+</div>
 ```
 
 ## Attributes

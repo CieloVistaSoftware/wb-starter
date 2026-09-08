@@ -2,13 +2,20 @@
 
 A container that renders children normally in a CSS grid and shows the raw HTML as a syntax-highlighted, auto-formatted code sample below. Uses fetch for raw page source, formatHtml for consistent 2-space indentation, and textContent to prevent browser inflation.
 
-Applies to `<div>`, and to any element carrying `x-demo`.
+## Type — new capability
 
-## Usage
+`x-demo` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+
+### How to write it
 
 ```html
-<div x-demo>
-  …
+<div x-demo columns="2">
+  <button>
+  no attributes
+</button>
+  <button>
+  no attributes
+</button>
 </div>
 ```
 
