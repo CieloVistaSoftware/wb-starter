@@ -516,6 +516,23 @@ export async function mdhtml(element, options = {}) {
         pre.replaceWith(wbDemo);
     });
 
+    // NOT DONE HERE: hand-written <div x-demo> blocks inside markdown.
+    //
+    // They have the same underlying problem — demo.js recovers source from the
+    // PAGE source, which never contains markup that only ever existed in a
+    // fetched .md file, so they render "source unavailable" (docs/standards/
+    // DEMOS-AND-DOCS-STANDARDS.md is full of them). It is tempting to hand them
+    // _rawSource the same way, and an attempt to do so is why this note exists.
+    //
+    // It is not the same case. Those docs NEST demos — <div x-demo> wrapping
+    // <figure x-demo> — so a flat querySelectorAll('[x-demo]') captures an outer
+    // wrapper whose innerHTML is not the example any given panel is showing, and
+    // the result was empty panels: worse than a message that at least explains
+    // itself. Fixing it properly means resolving per-panel, which belongs with
+    // demo.js's own nesting logic rather than being guessed at from here.
+    //
+    // Left as-is deliberately. The pre-existing behaviour is unchanged.
+
     // 1. Pre-process Pre blocks (configure them before scanning)
     element.querySelectorAll('pre').forEach(el => {
         // Check if it has a code block with language class
