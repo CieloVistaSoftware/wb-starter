@@ -131,6 +131,52 @@ function registeredElements(): Set<string> {
   return out;
 }
 
+/**
+ * #1085 — an element NAME in prose is not an element.
+ *
+ * This check reported `<x-demo>` as an unregistered element used in markup, and
+ * blocked a release with it. There is no such tag anywhere in the repo. The one
+ * match was a JavaScript comment in public/doc-viewer.html:
+ *
+ *   // (<div x-demo>, 415 of them, zero <x-demo>). `pending` is therefore
+ *
+ * A comment stating that there are ZERO of something was counted as one of it.
+ *
+ * That is the third time this repo has read prose as source truth: #1041 (any
+ * file containing "#1234" counted as pending work on that issue — the state tool
+ * misreported three issues because of its own comments about those three issues)
+ * and #1049 (a literal 0x08 in a comment killing four checks).
+ *
+ * DELIBERATELY CONSERVATIVE
+ *
+ * Only full-line `//` comments are stripped, never a trailing one. `//` also
+ * appears inside every absolute URL, and cutting from `https://` to end of line
+ * would delete real markup sitting after it on that line — trading a false
+ * positive for a false NEGATIVE, which in a gate is the worse direction.
+ *
+ * Fenced code blocks in .md are NOT stripped, on purpose. A document teaching a
+ * tag that does not exist is exactly the defect this check is for (#753): 29 doc
+ * files were once teaching `<figure x-figure>` and friends.
+ */
+export function stripCommentary(src: string, ext: string): string {
+  // Blank out rather than delete, so any offset or line number stays truthful.
+  const blank = (s: string) => s.replace(/[^\n]/g, ' ');
+
+  let out = src.replace(/<!--[\s\S]*?-->/g, blank);
+
+  if (ext === '.html') {
+    // Only inside <script>: elsewhere `/* */` is CSS and `//` is a URL.
+    out = out.replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script>)/gi, (_m, open, body, close) =>
+      open
+      + body
+        .replace(/\/\*[\s\S]*?\*\//g, blank)
+        .replace(/^[ \t]*\/\/[^\n]*/gm, blank)
+      + close);
+  }
+
+  return out;
+}
+
 test.describe('No unimplemented custom elements', () => {
   test('every hyphenated tag in the markup resolves to something real', () => {
     const registered = registeredElements();
@@ -138,7 +184,8 @@ test.describe('No unimplemented custom elements', () => {
 
     for (const target of SCAN) {
       for (const file of walk(path.join(ROOT, target))) {
-        const src = fs.readFileSync(file, 'utf8');
+        // #1085: comments blanked first — a tag NAME in prose is not a tag.
+        const src = stripCommentary(fs.readFileSync(file, 'utf8'), path.extname(file));
         for (const m of src.matchAll(/<([a-z][a-z0-9]*-[a-z0-9-]*)(?=[\s/>])/gi)) {
           const tag = m[1].toLowerCase();
           if (ALLOWED.has(tag) || registered.has(tag)) continue;
@@ -171,5 +218,48 @@ test.describe('No unimplemented custom elements', () => {
     const files = SCAN.flatMap((t) => walk(path.join(ROOT, t)));
     expect(files.length, 'scanned no files').toBeGreaterThan(50);
     expect(registeredElements().size, 'read no registries').toBeGreaterThan(10);
+  });
+
+  /**
+   * #1085 — both directions, because a fix that only silences findings is worse
+   * than the bug it silences. The tag regex is applied to the stripped text
+   * exactly as the check above applies it.
+   */
+  const TAGS = (s: string) => [...s.matchAll(/<([a-z][a-z0-9]*-[a-z0-9-]*)(?=[\s/>])/gi)].map((m) => m[1].toLowerCase());
+
+  test('#1085: a tag named only in a comment is not reported', () => {
+    // The exact line that blocked the 4.0.3 release.
+    const html = [
+      '<script type="module">',
+      '  // (<div x-demo>, 415 of them, zero <x-demo>). `pending` is therefore',
+      '  /* also <x-block-commented> here */',
+      '</script>',
+      '<!-- <x-html-commented> -->',
+    ].join('\n');
+    expect(TAGS(stripCommentary(html, '.html'))).toEqual([]);
+  });
+
+  test('#1085: a REAL unregistered tag is still reported', () => {
+    // The finding this check exists for must survive the fix.
+    const html = '<script>\n  // <x-commented>\n</script>\n<x-really-here>text</x-really-here>';
+    expect(TAGS(stripCommentary(html, '.html'))).toEqual(['x-really-here']);
+  });
+
+  test('#1085: a URL is not mistaken for a comment', () => {
+    // Stripping a trailing `//` would cut from https:// to end of line and take
+    // the real tag with it — a false NEGATIVE, the worse direction for a gate.
+    const html = '<script>\n  const u = "https://example.invalid"; // <x-after-url>\n</script>\n<x-live>x</x-live>';
+    expect(TAGS(stripCommentary(html, '.html'))).toContain('x-live');
+  });
+
+  test('#1085: markdown fenced code is NOT stripped', () => {
+    // A doc teaching a tag that does not exist is the defect, not noise (#753).
+    const md = '```html\n<x-taught-but-unreal></x-taught-but-unreal>\n```';
+    expect(TAGS(stripCommentary(md, '.md'))).toContain('x-taught-but-unreal');
+  });
+
+  test('#1085: line numbers are preserved, so a report still points somewhere', () => {
+    const html = '<script>\n// <x-gone>\n</script>\n<x-kept>k</x-kept>';
+    expect(stripCommentary(html, '.html').split('\n').length).toBe(html.split('\n').length);
   });
 });

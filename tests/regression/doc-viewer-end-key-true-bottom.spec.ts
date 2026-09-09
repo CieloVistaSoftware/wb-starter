@@ -41,8 +41,27 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
     // page BEFORE all lazy <div x-demo> blocks have settled — matching how a
     // real, fast reader hits End almost as soon as the page appears, which
     // is exactly the timing the original bug report reproduced under.
-    await page.goto('/public/doc-viewer.html?file=docs/behaviors/card.md', { waitUntil: 'load' });
+    // #1070: this loaded docs/behaviors/card.md, described above as embedding
+    // 10 <div x-demo> blocks. It embeds ZERO — 4.0.0 rewrote that doc when the
+    // component tags went. So this test has been dying on its own precondition
+    // ("fixture doc must actually embed <div x-demo> blocks", received 0) and
+    // asserting nothing whatever about the End key, while sitting in
+    // data/test-baseline-failures.json looking like a known End-key defect.
+    //
+    // behavior-cross-reference.md carries 159 of them — the most in docs/ — so
+    // the fixture is now the hardest case rather than a doc that happened to
+    // have some when this was written. Counted, not assumed: the assertion below
+    // fails loudly if that ever stops being true.
+    await page.goto('/public/doc-viewer.html?file=docs/behavior-cross-reference.md', { waitUntil: 'load' });
     await page.waitForTimeout(50);
+
+    // #1070: the 50ms above was tuned for a small doc and is not enough for the
+    // markdown fetch + render of a large one, so the count ran against an empty
+    // page and read 0. Wait for the FIRST block to exist — that proves the doc
+    // rendered — and press End immediately after, which still reproduces the
+    // "reader hits End as soon as the page appears" timing the bug needs while
+    // no longer depending on a fixed delay being long enough.
+    await page.waitForSelector('[x-demo]', { timeout: 20000 });
 
     const demoCount = await page.locator('[x-demo]').count();
     expect(demoCount, 'fixture doc must actually embed <div x-demo> blocks for this test to be meaningful').toBeGreaterThan(5);

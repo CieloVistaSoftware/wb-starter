@@ -439,15 +439,20 @@
         // it here, not inventing a parallel mechanism); its `_demoInitialized`
         // guard makes this a safe no-op
         //
-        // BROKEN, tracked as #1070: the selector below asks for the TAG
-        // `x-demo`, and every demo in docs/ is the ATTRIBUTE form
-        // (<div x-demo>, 415 of them, zero <x-demo>). `pending` is therefore
-        // always empty and this force-build does nothing. Left as-is here so
-        // the selector change lands with a regression test that has been seen
-        // to fail on it, rather than riding along unverified in #1063.
-        // for blocks already built, and safe against the real observer
-        // firing again later on the same element.
-        const pending = Array.from(document.querySelectorAll('x-demo')).map((el) =>
+        // #1070: this asked for the TAG `x-demo`. There is no such tag — every
+        // demo in docs/ is the ATTRIBUTE form, 419 `<div x-demo>` and zero
+        // `<x-demo>` — so `pending` was always empty, `Promise.all([])` resolved
+        // instantly, and this force-build had never built anything.
+        //
+        // The symptom is the #466 failure recorded in the register: End lands
+        // short of the true bottom, because the page is still growing as lazy
+        // blocks build during the scroll. The safety-net loop below absorbed
+        // enough of it that nothing else complained.
+        //
+        // The guard in demo() (`_demoInitialized`) makes this idempotent — safe
+        // for blocks already built, and safe against the real observer firing
+        // again later on the same element.
+        const pending = Array.from(document.querySelectorAll('[x-demo]')).map((el) =>
           demo(el, {
             title: el.getAttribute('title'),
             tag: el.getAttribute('tag'),

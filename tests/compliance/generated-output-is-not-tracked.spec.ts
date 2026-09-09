@@ -47,6 +47,24 @@ const GENERATED_DIRS = [
   'data/gate-evidence',     // .husky/test-ratchet.mjs
 ];
 
+/**
+ * Individual files a TEST writes. Same defect as the directories above, found
+ * the same way: `npm run ship` refused a dirty tree and these were in it.
+ *
+ * Each is named with the spec that writes it, so the claim is checkable rather
+ * than a list someone has to trust.
+ *
+ * data/notes.json is deliberately NOT here. It is written by
+ * src/wb-viewmodels/notes.js and server.js — the notes drawer — so it is a
+ * user's saved work, not a build output. Untracking it would quietly stop
+ * persisting something a person typed.
+ */
+const GENERATED_FILES = [
+  'data/default-gui-census.json',      // tests/behaviors/default-gui-census.spec.ts
+  'data/documented-example-sweep.json', // tests/behaviors/every-documented-example-works.spec.ts
+  'data/px-audit.json',                 // tests/compliance/px-no-new-creep.spec.ts
+];
+
 function trackedUnder(dir: string): string[] {
   const out = execFileSync('git', ['ls-files', '--', dir], {
     cwd: REPO,
@@ -71,6 +89,16 @@ test.describe('#1081 — generated output must not be tracked', () => {
       ).toEqual([]);
     });
   }
+
+  test('no test-written FILE is tracked', () => {
+    const tracked = GENERATED_FILES.filter((f) => trackedUnder(f).length > 0);
+    expect(
+      tracked,
+      `${tracked.length} tracked file(s) rewritten by a test run: ${tracked.join(', ')}. `
+        + 'Every verification dirties the tree, which blocks `npm run ship` (#1076). '
+        + 'Untrack with `git rm --cached` (the file stays on disk) and add it to .gitignore.',
+    ).toEqual([]);
+  });
 
   test('each generated directory is ignored, so it cannot creep back', () => {
     // Untracking alone is not enough: the next run recreates the files as

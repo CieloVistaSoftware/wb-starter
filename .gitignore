@@ -99,3 +99,13 @@ data/bg-health.json
 # be clean. Shipping was impossible until this line existed.
 data/test-single/
 
+
+# #1081 (second pass): individual files a TEST writes, found the same way as
+# data/test-single/ -- 
+> wb-starter@4.0.2 ship
+> node scripts/ship.mjs refused a dirty tree and these were in it.
+# data/notes.json is deliberately NOT ignored: the notes drawer writes it, so it
+# is a person's saved work rather than a build output.
+data/default-gui-census.json
+data/documented-example-sweep.json
+data/px-audit.json

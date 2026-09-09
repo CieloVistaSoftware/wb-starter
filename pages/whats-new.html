@@ -105,6 +105,24 @@
 })();
 </script>
 
+<section id="whats-new-4-0-3">
+  <h2>4.0.3 — 2026-09-08</h2>
+  <p><strong>10 changes, shipped as one batch.</strong> Everything listed here is on <code>main</code> and therefore live at
+  <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>.
+  A push to <code>main</code> IS the deploy, so this version names exactly one published state (#1076).</p>
+  <ul>
+    <li class="wn-item wn-new"><span class="wn-tag">New</span> <strong>A push to main is a release, so no code reaches the site unnamed</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1076" target="_blank" rel="noopener">#1076</a></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Release.mjs no longer corrupts the lockfile, and the IntelliSense manifest has a gate</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/991" target="_blank" rel="noopener">#991</a> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1057" target="_blank" rel="noopener">#1057</a></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>CI never reached a verdict - it was killed by the clock at 93.5%</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/341" target="_blank" rel="noopener">#341</a></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The working tree can now actually be clean</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1071" target="_blank" rel="noopener">#1071</a></li>
+    <li class="wn-item wn-fix"><span class="wn-tag">Change</span> <strong>Commit everything, so local and the deployed site actually match</strong></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The Fix Viewer could not load its own data on the deployed site</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1067" target="_blank" rel="noopener">#1067</a></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Errors recorded where nobody could read them, assets that 404&#39;d on the deployed site, and a commit gate that tested the wrong tree</strong></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Example assets 404 on the deployed sub-path</strong></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The version stamp names where the code lives, not where it was authored</strong></li>
+    <li class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The deploy gate compared the deployed site to itself</strong></li>
+  </ul>
+</section>
 <section id="whats-new-unreleased">
   <h2>Live on the site, but not in any numbered release</h2>
   <p>These fixes are on <code>main</code> and deployed. The last version number, 4.0.2, was
