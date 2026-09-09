@@ -7,32 +7,32 @@
   "properties": {
     "x-copybutton": {
       "type": "string",
-      "description": "Read by copybutton().",
+      "description": "The attribute value doubles as the CSS selector for what to copy — `x-copybutton=\"#snippet\"`. Leave it empty to copy the host element's own text.",
       "default": ""
     },
     "label": {
       "type": "string",
-      "description": "Read by copybutton().",
+      "description": "Accessible name for the button (`aria-label`/`title`). Defaults to `Copy`.",
       "default": "Copy"
     },
     "position": {
       "type": "string",
-      "description": "Read by copybutton().",
+      "description": "Corner the button is placed in, e.g. `top-right` (default).",
       "default": "top-right"
     },
     "copy-feedback": {
       "type": "string",
-      "description": "Read by copybutton().",
+      "description": "Message shown after a successful copy. Defaults to `Copied!`.",
       "default": "Copied ✓"
     },
     "copy-duration": {
       "type": "string",
-      "description": "Read by copybutton().",
+      "description": "How long the feedback stays visible, in milliseconds. Defaults to `2000`.",
       "default": "2000"
     },
     "copy-target": {
       "type": "string",
-      "description": "Read by copybutton()."
+      "description": "CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first."
     }
   },
   "events": {

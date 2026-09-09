@@ -18,7 +18,7 @@ Behavior applied with x-glow.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `color` | `string` | `var(--primary, #6366f1)` | Read by glow(). |
+| `color` | `string` | `var(--primary, #6366f1)` | Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it. |
 
 ## Live example
 

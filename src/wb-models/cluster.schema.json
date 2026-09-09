@@ -7,17 +7,17 @@
   "properties": {
     "gap": {
       "type": "string",
-      "description": "Read by cluster().",
+      "description": "Space between clustered items, as a CSS length. Defaults to `1rem`.",
       "default": "1rem"
     },
     "justify": {
       "type": "string",
-      "description": "Read by cluster().",
+      "description": "How items are distributed along the row — CSS `justify-content`. Defaults to `flex-start`.",
       "default": "flex-start"
     },
     "align": {
       "type": "string",
-      "description": "Read by cluster().",
+      "description": "How items line up across the row — CSS `align-items`. Defaults to `center`, which is what keeps mixed-height chips and buttons on a shared centre line.",
       "default": "center"
     }
   },

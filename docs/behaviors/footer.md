@@ -26,6 +26,19 @@ Use `x-footer` when the host is not a `<footer>` and you want the same behavior:
 
 > Do not write `<footer x-footer>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
+### Declining it
+
+A `<footer>` **is** the footer behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<footer x-ignore>
+  <!-- a plain footer: no behavior is injected -->
+</footer>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+
+
 ## Attributes
 
 | Attribute | Values | Default | Description |

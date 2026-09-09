@@ -7,21 +7,21 @@
   "properties": {
     "caption-position": {
       "type": "string",
-      "description": "Read by figure().",
+      "description": "Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar.",
       "default": "bottom"
     },
     "zoom": {
       "type": "boolean",
-      "description": "Read by figure(). Bare attribute.",
+      "description": "Clicking the image opens it at full size. Bare attribute.",
       "default": false
     },
     "lightbox": {
       "type": "string",
-      "description": "Read by figure()."
+      "description": "Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox=\"false\"` to disable it."
     },
     "caption": {
       "type": "string",
-      "description": "Read by figure()."
+      "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none."
     }
   },
   "_metadata": {

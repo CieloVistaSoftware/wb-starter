@@ -7,31 +7,31 @@
   "properties": {
     "description": {
       "type": "string",
-      "description": "Read by popover().",
+      "description": "Popover body text. Only used when `popover-content` is absent.",
       "default": ""
     },
     "heading": {
       "type": "string",
-      "description": "Read by popover().",
+      "description": "Popover heading. Only used when `popover-title` is absent.",
       "default": ""
     },
     "trigger": {
       "type": "string",
-      "description": "Read by popover().",
+      "description": "What opens it: `click` (default) or `hover`.",
       "default": "click"
     },
     "position": {
       "type": "string",
-      "description": "Read by popover().",
+      "description": "Side the popover opens on: `top` (default), `bottom`, `left` or `right`.",
       "default": "top"
     },
     "popover-content": {
       "type": "string",
-      "description": "Read by popover()."
+      "description": "Popover body text. Read BEFORE `description`."
     },
     "popover-title": {
       "type": "string",
-      "description": "Read by popover()."
+      "description": "Popover heading. Read BEFORE `heading`."
     }
   },
   "_metadata": {

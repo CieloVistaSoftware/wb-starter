@@ -7,27 +7,27 @@
   "properties": {
     "direction": {
       "type": "string",
-      "description": "Read by flex().",
+      "description": "Flex direction: `row` (default) or `column`, plus the `-reverse` forms. Maps to CSS `flex-direction`.",
       "default": "row"
     },
     "wrap": {
       "type": "string",
-      "description": "Read by flex().",
+      "description": "Whether items wrap onto more lines: `wrap` (default) or `nowrap`. Maps to CSS `flex-wrap`.",
       "default": "wrap"
     },
     "justify": {
       "type": "string",
-      "description": "Read by flex().",
+      "description": "Distribution along the main axis — `flex-start` (default), `center`, `space-between`, and the rest of CSS `justify-content`.",
       "default": "flex-start"
     },
     "align": {
       "type": "string",
-      "description": "Read by flex().",
+      "description": "Alignment across the cross axis — `stretch` (default), `center`, `flex-start`, and the rest of CSS `align-items`.",
       "default": "stretch"
     },
     "gap": {
       "type": "string",
-      "description": "Read by flex().",
+      "description": "Space between items, as a CSS length. Defaults to `1rem`.",
       "default": "1rem"
     }
   },

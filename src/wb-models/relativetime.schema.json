@@ -7,17 +7,17 @@
   "properties": {
     "datetime": {
       "type": "string",
-      "description": "Read by relativetime().",
+      "description": "Alias of `date`, read only when `date` is absent.",
       "default": ""
     },
     "refresh": {
       "type": "string",
-      "description": "Read by relativetime().",
+      "description": "How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute.",
       "default": "60000"
     },
     "date": {
       "type": "string",
-      "description": "Read by relativetime()."
+      "description": "The timestamp to describe. `datetime` is accepted as an alias; `date` is read first."
     }
   },
   "_metadata": {

@@ -18,8 +18,8 @@ Behavior applied with x-fullscreen.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | Read by fullscreen(). |
-| `label` | `string` | `⛶ Fullscreen` | Read by fullscreen(). |
+| `target` | `string` | — | CSS selector for the element to expand. Empty means the document element. |
+| `label` | `string` | `⛶ Fullscreen` | Button label when not fullscreen. Defaults to `⛶ Fullscreen`. |
 
 ## Live example
 

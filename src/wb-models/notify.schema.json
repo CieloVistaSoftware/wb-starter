@@ -7,12 +7,12 @@
   "properties": {
     "message": {
       "type": "string",
-      "description": "Read by notify().",
+      "description": "Text of the notification. Defaults to `Notification`.",
       "default": "Notification"
     },
     "duration": {
       "type": "string",
-      "description": "Read by notify().",
+      "description": "How long the notification stays up, in milliseconds. Defaults to `3000`.",
       "default": "3000"
     }
   },

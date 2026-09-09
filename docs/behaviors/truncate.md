@@ -19,9 +19,9 @@ Behavior applied with x-truncate.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `lines` | `string` | `1` | Read by truncate(). |
-| `data-expandable` | `boolean` | `false` | Read by truncate(). Bare attribute. |
-| `expandable` | `boolean` | `false` | Read by truncate(). Bare attribute. |
+| `lines` | `string` | `1` | Number of lines to clamp to before truncating. Defaults to `1`. |
+| `data-expandable` | `boolean` | `false` | The `data-` spelling of `expandable`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `expandable`. |
+| `expandable` | `boolean` | `false` | Add a control that reveals the full text. Bare attribute — the plain spelling only began working in #752; before that `data-expandable` was the only form read. |
 
 ## Live example
 

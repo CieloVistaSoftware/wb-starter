@@ -7,22 +7,22 @@
   "properties": {
     "columns": {
       "type": "string",
-      "description": "Read by gallery().",
+      "description": "Number of columns in the grid. Defaults to `3`.",
       "default": "3"
     },
     "size": {
       "type": "string",
-      "description": "Read by gallery().",
+      "description": "Fixed thumbnail size (e.g. `150px`), independent of the column count — use it when you want uniform tiles rather than columns dividing the width.",
       "default": ""
     },
     "gap": {
       "type": "string",
-      "description": "Read by gallery().",
+      "description": "Space between items, as a CSS length. Defaults to `1rem`.",
       "default": "1rem"
     },
     "lightbox": {
       "type": "string",
-      "description": "Read by gallery()."
+      "description": "Clicking any item opens it full-size in a lightbox."
     }
   },
   "_metadata": {

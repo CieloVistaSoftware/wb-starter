@@ -12,7 +12,7 @@
   "properties": {
     "count": {
       "type": "string",
-      "description": "Read by repeater().",
+      "description": "How many copies of the template content to render.",
       "default": "0"
     }
   },

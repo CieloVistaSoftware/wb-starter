@@ -7,12 +7,12 @@
   "properties": {
     "items": {
       "type": "string",
-      "description": "Read by breadcrumb().",
+      "description": "Comma-separated trail labels, e.g. `Home,Docs,Behaviors`. Split on commas — a label containing a comma cannot be expressed.",
       "default": ""
     },
     "separator": {
       "type": "string",
-      "description": "Read by breadcrumb().",
+      "description": "Character drawn between items. Defaults to `/`.",
       "default": "/"
     }
   },

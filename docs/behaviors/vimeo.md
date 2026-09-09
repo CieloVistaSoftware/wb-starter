@@ -16,13 +16,13 @@ Behavior applied with x-vimeo.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `video-id` | `string` | — | Read by vimeo(). |
-| `autoplay` | `boolean` | `false` | Read by vimeo(). Bare attribute. |
-| `data-autoplay` | `boolean` | `false` | Read by vimeo(). Bare attribute. |
-| `muted` | `boolean` | `false` | Read by vimeo(). Bare attribute. |
-| `data-muted` | `boolean` | `false` | Read by vimeo(). Bare attribute. |
-| `loop` | `boolean` | `false` | Read by vimeo(). Bare attribute. |
-| `data-loop` | `boolean` | `false` | Read by vimeo(). Bare attribute. |
+| `video-id` | `string` | — | The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed. |
+| `autoplay` | `boolean` | `false` | Begin playing on load. Browsers block autoplay with sound, so it needs `muted` to work unattended. |
+| `data-autoplay` | `boolean` | `false` | The `data-` spelling of `autoplay`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `autoplay`. |
+| `muted` | `boolean` | `false` | Start with audio silenced. Required for `autoplay` to be permitted. |
+| `data-muted` | `boolean` | `false` | The `data-` spelling of `muted`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `muted`. |
+| `loop` | `boolean` | `false` | Restart from the beginning when playback ends. |
+| `data-loop` | `boolean` | `false` | The `data-` spelling of `loop`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `loop`. |
 
 ## Live example
 

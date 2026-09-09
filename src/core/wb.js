@@ -136,6 +136,7 @@ function traceMediaLoads() {
  */
 
 import { behaviors } from '../wb-viewmodels/index.js';
+import { markReady, isReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { styleSheetDefinesClass } from './style-registry.js';
 import { Events } from './events.js';
@@ -550,7 +551,12 @@ const WB = {
         //
         // Settled, not successful: a behavior that threw stamps x-ready too,
         // because the element is finished either way. x-error carries failure.
-        if (element.isConnected) element.setAttribute('x-ready', '');
+        // #1094: this used to write the attribute unconditionally. Nothing in
+        // the product read it -- 0 CSS rules, 0 runtime readers -- so every
+        // visitor downloaded a Playwright hook on every element. The knowledge
+        // is kept (markReady records it, WB.isReady queries it); the DOM stamp
+        // now happens only when something asks for it, which is the harness.
+        markReady(element);
       }
       // Last, so a whenIdle() waiter woken by this always observes the
       // x-ready stamp above rather than racing it.
@@ -600,6 +606,22 @@ const WB = {
    */
   whenIdle(options) {
     return injectionTracker.whenIdle(options);
+  },
+
+  /**
+   * Has this element finished building? SETTLED, not necessarily successful —
+   * a behavior that threw is still finished, and `x-error` carries the failure.
+   *
+   * #1094 — John: "x-ready should only be an internal signal." The attribute was
+   * stamped on every element for every visitor while 0 CSS rules and 0 runtime
+   * code paths read it; only the test suite did. Readiness is tracked internally
+   * now and asked for through here, so the shipped DOM stays clean.
+   *
+   * @param {Element} element
+   * @returns {boolean}
+   */
+  isReady(element) {
+    return isReady(element);
   },
 
   /**

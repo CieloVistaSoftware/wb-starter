@@ -16,9 +16,9 @@ Behavior applied with x-clock.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `string` | `digital` | Read by clock(). |
-| `format` | `string` | `24` | Read by clock(). |
-| `show-seconds` | `string` | — | Read by clock(). |
+| `variant` | `string` | `digital` | Clock face: `digital` (default) or the analogue rendering. |
+| `format` | `string` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. |
+| `show-seconds` | `string` | — | Show the seconds field. On unless set to `"false"`. |
 
 ## Live example
 

@@ -7,12 +7,12 @@
   "properties": {
     "items": {
       "type": "string",
-      "description": "Read by steps().",
+      "description": "Comma-separated step labels, e.g. `Details,Payment,Confirm`. Whitespace around each is trimmed.",
       "default": ""
     },
     "current": {
       "type": "string",
-      "description": "Read by steps().",
+      "description": "Which step is active, counting from **1**, not 0. Defaults to `1`.",
       "default": "1"
     }
   },

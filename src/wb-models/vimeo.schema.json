@@ -7,21 +7,21 @@
   "properties": {
     "video-id": {
       "type": "string",
-      "description": "Read by vimeo()."
+      "description": "The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed."
     },
     "autoplay": {
       "type": "boolean",
-      "description": "Read by vimeo(). Bare attribute.",
+      "description": "Begin playing on load. Browsers block autoplay with sound, so it needs `muted` to work unattended.",
       "default": false
     },
     "muted": {
       "type": "boolean",
-      "description": "Read by vimeo(). Bare attribute.",
+      "description": "Start with audio silenced. Required for `autoplay` to be permitted.",
       "default": false
     },
     "loop": {
       "type": "boolean",
-      "description": "Read by vimeo(). Bare attribute.",
+      "description": "Restart from the beginning when playback ends.",
       "default": false
     }
   },

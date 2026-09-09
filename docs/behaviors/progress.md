@@ -4,7 +4,7 @@ Progress bar with determinate and indeterminate states
 
 ## Type — decorates a semantic element
 
-`x-progressbar` is the **progress behavior**. It attaches to `<progress>`, the element you would have reached for anyway — there is no new tag to learn.
+`x-progress` is the **progress behavior**, and `x-progressbar` is a registered alias for it (`'x-progressbar': 'progress'` in tag-map.js) — both reach the same code. It attaches to `<progress>`, the element you would have reached for anyway — there is no new tag to learn.
 
 ### How to write it
 
@@ -22,6 +22,19 @@ Use `x-progressbar` when the host is not a `<progress>` and you want the same be
 </div>
 ```
 
+
+
+### Declining it
+
+A `<progress>` **is** the progress behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<progress x-ignore>
+  <!-- a plain progress: no behavior is injected -->
+</progress>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |

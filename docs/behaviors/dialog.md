@@ -32,6 +32,19 @@ Use `x-dialog` when the host is not a `<dialog>` and you want the same behavior:
 
 > Do not write `<dialog x-dialog>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
+### Declining it
+
+A `<dialog>` **is** the dialog behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<dialog x-ignore>
+  <!-- a plain dialog: no behavior is injected -->
+</dialog>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+
+
 ## Attributes
 
 | Attribute | Values | Default | Description |

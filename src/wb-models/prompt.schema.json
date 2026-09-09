@@ -7,31 +7,31 @@
   "properties": {
     "heading": {
       "type": "string",
-      "description": "Read by prompt().",
+      "description": "Dialog heading. Only used when `prompt-title` is absent.",
       "default": "Input"
     },
     "message": {
       "type": "string",
-      "description": "Read by prompt().",
+      "description": "Body text. Only used when `prompt-message` is absent.",
       "default": ""
     },
     "placeholder": {
       "type": "string",
-      "description": "Read by prompt().",
+      "description": "Placeholder shown in the empty input.",
       "default": ""
     },
     "default-value": {
       "type": "string",
-      "description": "Read by prompt().",
+      "description": "Value the input starts with, already selected so typing replaces it.",
       "default": ""
     },
     "prompt-title": {
       "type": "string",
-      "description": "Read by prompt()."
+      "description": "Dialog heading. Read BEFORE `heading`; defaults to `Input`."
     },
     "prompt-message": {
       "type": "string",
-      "description": "Read by prompt()."
+      "description": "Body text above the field. Read BEFORE `message`."
     }
   },
   "events": {

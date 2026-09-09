@@ -1,5 +1,5 @@
 {
-  "totalFiles": 270,
+  "totalFiles": 271,
   "categories": [
     "_today",
     "architecture",
@@ -1504,6 +1504,12 @@
         "category": "standards"
       },
       {
+        "path": "docs/standards/CSS-CLASS-CONVENTION.md",
+        "title": "CSS class convention — you can name the class without reading the code",
+        "name": "CSS-CLASS-CONVENTION",
+        "category": "standards"
+      },
+      {
         "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
         "title": "Demos & Documentation Standards",
         "name": "DEMOS-AND-DOCS-STANDARDS",
@@ -1579,7 +1585,7 @@
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-09-07",
+        "title": "CURRENT HANDOFF — 2026-09-08 (night)",
         "name": "CURRENT-STATUS",
         "category": "_today"
       },
@@ -1696,7 +1702,7 @@
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
-      "title": "CURRENT HANDOFF — 2026-09-07",
+      "title": "CURRENT HANDOFF — 2026-09-08 (night)",
       "name": "CURRENT-STATUS",
       "category": "_today"
     },
@@ -3186,6 +3192,12 @@
       "path": "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md",
       "title": "A gate must be seen to fail",
       "name": "A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "category": "standards"
+    },
+    {
+      "path": "docs/standards/CSS-CLASS-CONVENTION.md",
+      "title": "CSS class convention — you can name the class without reading the code",
+      "name": "CSS-CLASS-CONVENTION",
       "category": "standards"
     },
     {

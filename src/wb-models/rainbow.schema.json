@@ -7,7 +7,7 @@
   "properties": {
     "duration": {
       "type": "string",
-      "description": "Read by rainbow().",
+      "description": "How long one full colour cycle takes, as a CSS duration (e.g. `3s`). Longer is slower.",
       "default": "3s"
     }
   },

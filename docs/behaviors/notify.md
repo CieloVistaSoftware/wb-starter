@@ -18,8 +18,8 @@ Behavior applied with x-notify.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `message` | `string` | `Notification` | Read by notify(). |
-| `duration` | `string` | `3000` | Read by notify(). |
+| `message` | `string` | `Notification` | Text of the notification. Defaults to `Notification`. |
+| `duration` | `string` | `3000` | How long the notification stays up, in milliseconds. Defaults to `3000`. |
 
 ## Events
 

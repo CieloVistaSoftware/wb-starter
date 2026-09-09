@@ -7,12 +7,12 @@
   "properties": {
     "columns": {
       "type": "string",
-      "description": "Read by masonry().",
+      "description": "Number of masonry columns. Defaults to `3`.",
       "default": "3"
     },
     "gap": {
       "type": "string",
-      "description": "Read by masonry().",
+      "description": "Space between items, as a CSS length. Defaults to `1rem`.",
       "default": "1rem"
     }
   },

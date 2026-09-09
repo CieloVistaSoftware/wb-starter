@@ -18,12 +18,12 @@ Behavior applied with x-confirm.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `heading` | `string` | `Confirm` | Read by confirm(). |
-| `message` | `string` | `Are you sure?` | Read by confirm(). |
-| `confirm-text` | `string` | `OK` | Read by confirm(). |
-| `cancel-text` | `string` | `Cancel` | Read by confirm(). |
-| `confirm-title` | `string` | — | Read by confirm(). |
-| `confirm-message` | `string` | — | Read by confirm(). |
+| `heading` | `string` | `Confirm` | Dialog heading. Only used when `confirm-title` is absent. |
+| `message` | `string` | `Are you sure?` | Body text. Only used when `confirm-message` is absent. |
+| `confirm-text` | `string` | `OK` | Label on the confirming button. Defaults to `OK`. |
+| `cancel-text` | `string` | `Cancel` | Label on the dismissing button. Defaults to `Cancel`. |
+| `confirm-title` | `string` | — | Dialog heading. Read BEFORE `heading`; defaults to `Confirm`. |
+| `confirm-message` | `string` | — | Body text. Read BEFORE `message`; defaults to `Are you sure?`. |
 
 ## Events
 

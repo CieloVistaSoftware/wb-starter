@@ -15,14 +15,27 @@ Behavior applied with x-figure.
 </figure>
 ```
 
+
+
+### Declining it
+
+A `<figure>` **is** the figure behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<figure x-ignore>
+  <!-- a plain figure: no behavior is injected -->
+</figure>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `caption-position` | `string` | `bottom` | Read by figure(). |
-| `zoom` | `boolean` | `false` | Read by figure(). Bare attribute. |
-| `lightbox` | `string` | — | Read by figure(). |
-| `caption` | `string` | — | Read by figure(). |
+| `caption-position` | `string` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
+| `zoom` | `boolean` | `false` | Clicking the image opens it at full size. Bare attribute. |
+| `lightbox` | `string` | — | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
+| `caption` | `string` | — | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |
 
 ## Live example
 

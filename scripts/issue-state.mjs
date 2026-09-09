@@ -41,7 +41,8 @@
  *   node scripts/issue-state.mjs --state ready   # list one state
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync, existsSync, writeFileSync, statSync } from 'node:fs';
+import { issuesNamedInTestTitles } from './lib/test-citations.mjs';
+import { readFileSync, existsSync, writeFileSync, statSync, readdirSync } from 'node:fs';
 
 const APPLY = process.argv.includes('--apply');
 const arg = (name) => {
@@ -214,6 +215,61 @@ function newestTouch(files) {
   return newest;
 }
 
+/**
+ * #1090 — a spec can name an issue the issue does not name back.
+ *
+ * The signature block's `test:` field is the source of truth, and stays so. But
+ * when it is EMPTY the engine used to say "work exists, no test names it" — and
+ * for #1078 that was false. Its spec cites the issue twice, once in the test
+ * title itself:
+ *
+ *   test('a mid-boot setContent does not leave injections stuck forever (#1078)', ...)
+ *
+ * So a fixed, tested, committed issue read as untested and stayed in the backlog
+ * looking like open work.
+ *
+ * `treeCites` cannot cover this: it scans the DIFF and untracked files, so a spec
+ * stops being visible to it the moment it is committed — exactly when the issue
+ * is most likely to be reviewed.
+ *
+ * This does NOT substitute the found spec for a recorded one silently. The state
+ * says the test exists; the detail says the issue has not recorded it, because
+ * "log the validating test on the issue" is the rule and a lookup that quietly
+ * papers over a missing field would stop anyone ever writing it down.
+ */
+const specCites = new Map();            // issue -> [spec path]
+{
+  const walk = (dir) => {
+    let entries = [];
+    try { entries = readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.spec.ts')) {
+        let text = '';
+        try { text = readFileSync(p, 'utf8'); } catch { continue; }
+        // ONLY a test or describe TITLE counts — the assertion surface.
+        //
+        // Matching #NNNN anywhere in the file reintroduces the exact defect
+        // #1085 was just filed for: a NAME in prose is not the thing. Measured
+        // on the first draft of this scan:
+        //
+        //   #1078  test('...stuck forever (#1078)', ...)      <- proves it
+        //   #1080  // awaiting ... Filed as #1080 so           <- merely mentions it
+        //
+        // and #1080 was promptly credited with a spec whose author explicitly
+        // could not diagnose it. A comment saying an issue was FILED is the
+        // opposite of a test proving it fixed.
+        for (const n of issuesNamedInTestTitles(text)) {
+          if (!specCites.has(n)) specCites.set(n, []);
+          if (!specCites.get(n).includes(p)) specCites.get(n).push(p);
+        }
+      }
+    }
+  };
+  walk('tests');
+}
+
 export function assess(issue) {
   const body = issue.body || '';
   const closed = issue.state === 'CLOSED' || issue.state === 'closed';
@@ -244,7 +300,17 @@ export function assess(issue) {
 
   const hasWork = Boolean(files) || commits.length > 0;
 
-  if (!test) return hasWork ? say('needs-test', 'work exists, no test names it') : say('triaged', 'diagnosed, not started');
+  // #1090: before claiming no test names it, look. A spec citing #NNNN is a test
+  // that names it, whether or not the issue records the fact.
+  if (!test) {
+    const found = (specCites.get(issue.number) || []).filter((p) => existsSync(p));
+    if (found.length) {
+      const st2 = statusOf(found[0]);
+      if (st2 && st2.failed) return say('failing', `its test failed — ${found[0]} (not recorded on the issue)`);
+      return say('unrecorded-test', `${found[0]} names this issue, but the issue's test: field is empty`);
+    }
+    return hasWork ? say('needs-test', 'work exists, no test names it') : say('triaged', 'diagnosed, not started');
+  }
   if (!spec && !command) {
     return hasWork ? say('needs-test', `test: is prose ("${test.slice(0, 30)}")`) : say('triaged', 'test: is prose');
   }

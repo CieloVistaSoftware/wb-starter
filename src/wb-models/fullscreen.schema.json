@@ -7,12 +7,12 @@
   "properties": {
     "target": {
       "type": "string",
-      "description": "Read by fullscreen().",
+      "description": "CSS selector for the element to expand. Empty means the document element.",
       "default": ""
     },
     "label": {
       "type": "string",
-      "description": "Read by fullscreen().",
+      "description": "Button label when not fullscreen. Defaults to `⛶ Fullscreen`.",
       "default": "⛶ Fullscreen"
     }
   },

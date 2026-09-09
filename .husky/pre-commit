@@ -49,6 +49,19 @@ echo "🔍 Running pre-commit checks..."
 # bump and skipped all of these checks in the process.
 node .husky/lint-ratchet.mjs --staged || exit 1
 
+# #1091: a spec that collects ZERO tests exits 0 and reports success.
+#
+# Seven confirmed incidents ran through that hole -- #975 (twelve days of
+# "Total: 0 tests" reported as a passing gate), #1049, #1085, a dead fixture
+# sitting in the register looking like a defect, and two specs written THIS
+# SESSION that collected nothing and reported green, one of them the spec
+# written to fix another instance of it.
+#
+# Listing is cheap: no browser, no server, a few seconds. It runs before the
+# expensive gates precisely because a suite that cannot be trusted to have run
+# makes everything after it meaningless.
+node scripts/check-spec-collection.mjs || exit 1
+
 # ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
 # John: "each issue will have a priority 1 through 5 assessed based on negative
 # impact to the project... now change our gates based on priorities."

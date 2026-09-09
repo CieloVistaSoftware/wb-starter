@@ -7,12 +7,12 @@
   "properties": {
     "format": {
       "type": "string",
-      "description": "Read by release().",
+      "description": "Template for the badge text, with `{version}` replaced. Defaults to `v{version}`.",
       "default": "v{version}"
     },
     "reload": {
       "type": "string",
-      "description": "Read by release()."
+      "description": "Clear caches and reload when the badge is activated. On unless set to `\"false\"`."
     }
   },
   "_metadata": {

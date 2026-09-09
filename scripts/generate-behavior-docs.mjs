@@ -282,6 +282,37 @@ function buildDoc({ token, docName }) {
         + `redundant attribute can suppress the behavior (#746).`,
         '',
       );
+
+      // #1094 — John: "if you don't want our additional behavior put in the opt
+      // out."
+      //
+      // This is the half of auto-injection nobody documented. The behavior
+      // arrives WITH the element whether it was wanted or not, so the escape
+      // hatch is not a footnote — it is the other half of the contract. It
+      // existed in exactly one line of docs/escape-hatches.md, on a <button>,
+      // and in none of the 178 behavior docs.
+      //
+      // The wrong answer is named explicitly because it is the one a reader
+      // reaches for first — and the one I gave John before he corrected me:
+      // "then don't use <header>". That trades correct HTML for a workaround,
+      // in a framework whose whole premise is that you write the semantic
+      // element BECAUSE it is the thing.
+      out.push(
+        '### Declining it',
+        '',
+        `A \`<${tag}>\` **is** the ${tag} behavior, so it arrives with the element. To `
+        + `keep the semantic element and decline the behavior, add \`x-ignore\`:`,
+        '',
+        '```html',
+        `<${tag} x-ignore>`,
+        `  <!-- a plain ${tag}: no behavior is injected -->`,
+        `</${tag}>`,
+        '```',
+        '',
+        'Reaching for a different element instead is the wrong fix — it trades correct '
+        + 'HTML for a workaround. See [escape hatches](../escape-hatches.md).',
+        '',
+      );
     }
   } else {
     out.push(

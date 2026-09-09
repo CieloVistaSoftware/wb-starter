@@ -45,6 +45,8 @@
 </div>
 
 <!-- #1046 — John: "I want an account of all work done within last 24hrs with links."
+     #1089 — widened to 4 weeks: "Make this summary cover the past 4 weeks."
+     24 hours makes a quiet day and a day with no work render identically.
      The table below answers "what state is everything in". It cannot answer
      "what happened today": closing an issue moves it OUT of the open list
      rather than into a record of the work, so a day with 15 closures renders
@@ -572,7 +574,32 @@
   // used to burn (#1045). On the static Pages deploy there is no server, so the
   // panel simply stays hidden rather than erroring: an absent proxy is not a
   // failure, it is a different deployment.
-  async function loadActivity(hours = 24) {
+  /**
+   * #1089 — John: "Make this summary cover the past 4 weeks."
+   *
+   * Was 24 hours, which answers "what happened today" and makes a quiet day
+   * look identical to one with no work at all. 4 weeks = 672 hours, inside
+   * server.js's existing clamp of 24 * 30.
+   */
+  const ACTIVITY_HOURS = 24 * 28;
+
+  /**
+   * "last 672h" is not a thing anyone reads. Say it the way it was asked for,
+   * and keep hours only for windows that are genuinely hours.
+   */
+  function windowLabel(hours) {
+    if (hours % 168 === 0) {
+      const w = hours / 168;
+      return `last ${w} week${w === 1 ? '' : 's'}`;
+    }
+    if (hours % 24 === 0) {
+      const d = hours / 24;
+      return `last ${d} day${d === 1 ? '' : 's'}`;
+    }
+    return `last ${hours}h`;
+  }
+
+  async function loadActivity(hours = ACTIVITY_HOURS) {
     const panel = document.getElementById('activity');
     const countsEl = document.getElementById('activity-counts');
     if (!panel || !countsEl) return;
@@ -604,7 +631,7 @@
     }
 
     countsEl.textContent =
-      `${c.closed} closed · ${c.opened} opened · ${c.commits} commits · last ${data.hours}h${netText}`;
+      `${c.closed} closed · ${c.opened} opened · ${c.commits} commits · ${windowLabel(data.hours)}${netText}`;
 
     // Headline on the button itself, so the number is readable while collapsed —
     // the summary cannot hold it (see the markup note above).

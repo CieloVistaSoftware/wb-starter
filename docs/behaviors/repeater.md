@@ -18,7 +18,7 @@ Behavior applied with x-repeater.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `count` | `string` | `0` | Read by repeater(). |
+| `count` | `string` | `0` | How many copies of the template content to render. |
 
 ## Live example
 

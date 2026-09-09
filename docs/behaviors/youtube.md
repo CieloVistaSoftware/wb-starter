@@ -16,12 +16,12 @@ Behavior applied with x-youtube.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `url` | `string` | — | Read by youtube(). |
-| `video-id` | `string` | — | Read by youtube(). |
-| `controls` | `string` | — | Read by youtube(). |
-| `autoplay` | `boolean` | `false` | Read by youtube(). Bare attribute. |
-| `muted` | `boolean` | `false` | Read by youtube(). Bare attribute. |
-| `loop` | `boolean` | `false` | Read by youtube(). Bare attribute. |
+| `url` | `string` | — | A full YouTube watch or share URL. The id is extracted from it, so use this OR `video-id`, not both. |
+| `video-id` | `string` | — | The 11-character YouTube id — the `v=` value in a watch URL. Use this OR `url`. |
+| `controls` | `string` | — | Show YouTube's own player controls. Without them the video can only be driven by script. |
+| `autoplay` | `boolean` | `false` | Begin playing on load. Needs `muted`, since browsers block autoplay with sound. |
+| `muted` | `boolean` | `false` | Start with audio silenced. Required for `autoplay` to be permitted. |
+| `loop` | `boolean` | `false` | Restart from the beginning when playback ends. |
 
 ## Live example
 

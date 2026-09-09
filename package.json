@@ -96,6 +96,7 @@
     "generate:custom-elements": "node scripts/generate-custom-elements.js",
     "lint:md-powershell": "node scripts/lint-md-powershell.js",
     "lint:md-powershell:staged": "node scripts/lint-md-powershell-staged.js",
+    "check:spec-collection": "node scripts/check-spec-collection.mjs",
     "check:staged-integrity": "node scripts/check-staged-integrity.js",
     "check:critical-scripts": "node scripts/ensure-critical-scripts.js",
     "check:today-updated": "node scripts/verify-today-mentions.js",

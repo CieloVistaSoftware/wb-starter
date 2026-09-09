@@ -7,16 +7,16 @@
   "properties": {
     "speed": {
       "type": "string",
-      "description": "Read by typewriter().",
+      "description": "Milliseconds between characters. Defaults to `50` — lower is faster.",
       "default": "50"
     },
     "text": {
       "type": "string",
-      "description": "Read by typewriter()."
+      "description": "Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup."
     },
     "cursor": {
       "type": "string",
-      "description": "Read by typewriter()."
+      "description": "Show the blinking cursor. On unless set to `\"false\"`."
     }
   },
   "_metadata": {

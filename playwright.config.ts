@@ -312,6 +312,20 @@ export default defineConfig({
         'semantics/**/*.spec.ts',
         'demos/**/*.spec.ts',
         'darkmode-standard.spec.ts',
+        // #1091: these matched NO project, so they had never run — not once.
+        // Found by scripts/check-spec-collection.mjs on its first execution:
+        // 3 files, 6 test() calls, 7 expect() assertions, all invisible.
+        //
+        // They are not stale scratch. debug-css.spec.ts loads
+        // src/styles/behaviors/stock.css, which exists; docs-page-links.spec.ts
+        // asserts every link on the docs page resolves; the issue-note spec
+        // reproduces a filed bug about category buttons not scrolling.
+        //
+        // A .spec.ts that no testMatch covers is the quietest failure mode there
+        // is: it looks like coverage in the tree, in review, and in a file count,
+        // and it has never executed.
+        'issues/**/*.spec.ts',
+        'debug-css.spec.ts',
       ],
     },
     // ═══════════════════════════════════════════════════════════════

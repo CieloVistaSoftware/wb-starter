@@ -19,12 +19,12 @@ Behavior applied with x-copybutton.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `x-copybutton` | `string` | — | Read by copybutton(). |
-| `label` | `string` | `Copy` | Read by copybutton(). |
-| `position` | `string` | `top-right` | Read by copybutton(). |
-| `copy-feedback` | `string` | `Copied ✓` | Read by copybutton(). |
-| `copy-duration` | `string` | `2000` | Read by copybutton(). |
-| `copy-target` | `string` | — | Read by copybutton(). |
+| `x-copybutton` | `string` | — | The attribute value doubles as the CSS selector for what to copy — `x-copybutton="#snippet"`. Leave it empty to copy the host element's own text. |
+| `label` | `string` | `Copy` | Accessible name for the button (`aria-label`/`title`). Defaults to `Copy`. |
+| `position` | `string` | `top-right` | Corner the button is placed in, e.g. `top-right` (default). |
+| `copy-feedback` | `string` | `Copied ✓` | Message shown after a successful copy. Defaults to `Copied!`. |
+| `copy-duration` | `string` | `2000` | How long the feedback stays visible, in milliseconds. Defaults to `2000`. |
+| `copy-target` | `string` | — | CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first. |
 
 ## Events
 

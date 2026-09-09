@@ -7,11 +7,11 @@
   "properties": {
     "variant": {
       "type": "string",
-      "description": "Read by mark()."
+      "description": "Semantic highlight colour: `success`, `warning`, `danger` or `info`. **Ignored when `color` is set** — an explicit colour wins."
     },
     "color": {
       "type": "string",
-      "description": "Read by mark()."
+      "description": "Any CSS colour, used as the highlight background. The text colour is computed from its luminance so the mark stays readable, and setting this overrides `variant`."
     }
   },
   "_metadata": {

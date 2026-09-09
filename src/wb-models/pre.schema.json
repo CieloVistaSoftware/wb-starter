@@ -7,37 +7,37 @@
   "properties": {
     "language": {
       "type": "string",
-      "description": "Read by pre()."
+      "description": "Language for syntax highlighting (e.g. `html`, `js`, `css`). Falls back to a `language` on the inner `<code>`, then to none — an unset language renders plain, uncoloured text."
     },
     "scrollable": {
       "type": "string",
-      "description": "Read by pre()."
+      "description": "When `\"true\"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing."
     },
     "show-line-numbers": {
       "type": "string",
-      "description": "Read by pre()."
+      "description": "Line numbers in a gutter beside the code. On unless set to `\"false\"`."
     },
     "max-height": {
       "type": "string",
-      "description": "Read by pre()."
+      "description": "A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page."
     },
     "wrap": {
       "type": "boolean",
-      "description": "Read by pre(). Bare attribute.",
+      "description": "Wrap long lines instead of overflowing. Off unless set; `wrap=\"false\"` is honoured as off.",
       "default": false
     },
     "size": {
       "type": "string",
-      "description": "Read by pre()."
+      "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`."
     },
     "show-copy": {
       "type": "boolean",
-      "description": "Read by pre(). Bare attribute.",
+      "description": "Show a copy-to-clipboard button in the corner of the block.",
       "default": false
     },
     "copy": {
       "type": "boolean",
-      "description": "Read by pre(). Bare attribute.",
+      "description": "Alias of `show-copy`.",
       "default": false
     }
   },

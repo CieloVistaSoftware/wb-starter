@@ -16,6 +16,19 @@ Enhanced select dropdown with search, clear, and multi-select
 </select>
 ```
 
+
+
+### Declining it
+
+A `<select>` **is** the select behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<select x-ignore>
+  <!-- a plain select: no behavior is injected -->
+</select>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |

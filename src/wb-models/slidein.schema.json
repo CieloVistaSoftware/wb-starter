@@ -7,7 +7,7 @@
   "properties": {
     "direction": {
       "type": "string",
-      "description": "Read by slidein().",
+      "description": "Edge the element slides in from: `left` (default), `right`, `top` or `bottom`.",
       "default": "left"
     }
   },

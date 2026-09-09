@@ -28,6 +28,19 @@ Use `x-button` when the host is not a `<button>` and you want the same behavior:
 
 > Do not write `<button x-button>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
+### Declining it
+
+A `<button>` **is** the button behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<button x-ignore>
+  <!-- a plain button: no behavior is injected -->
+</button>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+
+
 ## Attributes
 
 | Attribute | Values | Default | Description |

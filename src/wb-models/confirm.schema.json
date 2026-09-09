@@ -7,31 +7,31 @@
   "properties": {
     "heading": {
       "type": "string",
-      "description": "Read by confirm().",
+      "description": "Dialog heading. Only used when `confirm-title` is absent.",
       "default": "Confirm"
     },
     "message": {
       "type": "string",
-      "description": "Read by confirm().",
+      "description": "Body text. Only used when `confirm-message` is absent.",
       "default": "Are you sure?"
     },
     "confirm-text": {
       "type": "string",
-      "description": "Read by confirm().",
+      "description": "Label on the confirming button. Defaults to `OK`.",
       "default": "OK"
     },
     "cancel-text": {
       "type": "string",
-      "description": "Read by confirm().",
+      "description": "Label on the dismissing button. Defaults to `Cancel`.",
       "default": "Cancel"
     },
     "confirm-title": {
       "type": "string",
-      "description": "Read by confirm()."
+      "description": "Dialog heading. Read BEFORE `heading`; defaults to `Confirm`."
     },
     "confirm-message": {
       "type": "string",
-      "description": "Read by confirm()."
+      "description": "Body text. Read BEFORE `message`; defaults to `Are you sure?`."
     }
   },
   "events": {

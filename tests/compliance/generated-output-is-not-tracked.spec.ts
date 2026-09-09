@@ -63,6 +63,7 @@ const GENERATED_FILES = [
   'data/default-gui-census.json',      // tests/behaviors/default-gui-census.spec.ts
   'data/documented-example-sweep.json', // tests/behaviors/every-documented-example-works.spec.ts
   'data/px-audit.json',                 // tests/compliance/px-no-new-creep.spec.ts
+  'data/inline-style-audit.json',       // tests/regression/inline-style-audit.spec.ts
 ];
 
 function trackedUnder(dir: string): string[] {

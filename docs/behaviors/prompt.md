@@ -18,12 +18,12 @@ Behavior applied with x-prompt.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `heading` | `string` | `Input` | Read by prompt(). |
-| `message` | `string` | — | Read by prompt(). |
-| `placeholder` | `string` | — | Read by prompt(). |
-| `default-value` | `string` | — | Read by prompt(). |
-| `prompt-title` | `string` | — | Read by prompt(). |
-| `prompt-message` | `string` | — | Read by prompt(). |
+| `heading` | `string` | `Input` | Dialog heading. Only used when `prompt-title` is absent. |
+| `message` | `string` | — | Body text. Only used when `prompt-message` is absent. |
+| `placeholder` | `string` | — | Placeholder shown in the empty input. |
+| `default-value` | `string` | — | Value the input starts with, already selected so typing replaces it. |
+| `prompt-title` | `string` | — | Dialog heading. Read BEFORE `heading`; defaults to `Input`. |
+| `prompt-message` | `string` | — | Body text above the field. Read BEFORE `message`. |
 
 ## Events
 

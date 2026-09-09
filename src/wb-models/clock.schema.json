@@ -7,17 +7,17 @@
   "properties": {
     "variant": {
       "type": "string",
-      "description": "Read by clock().",
+      "description": "Clock face: `digital` (default) or the analogue rendering.",
       "default": "digital"
     },
     "format": {
       "type": "string",
-      "description": "Read by clock().",
+      "description": "`24` (default) or `12` for a 12-hour clock with AM/PM.",
       "default": "24"
     },
     "show-seconds": {
       "type": "string",
-      "description": "Read by clock()."
+      "description": "Show the seconds field. On unless set to `\"false\"`."
     }
   },
   "_metadata": {

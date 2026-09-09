@@ -26,6 +26,19 @@ Use `x-header` when the host is not a `<header>` and you want the same behavior:
 
 > Do not write `<header x-header>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
+### Declining it
+
+A `<header>` **is** the header behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<header x-ignore>
+  <!-- a plain header: no behavior is injected -->
+</header>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+
+
 ## Attributes
 
 | Attribute | Values | Default | Description |

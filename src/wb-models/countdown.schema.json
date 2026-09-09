@@ -7,21 +7,21 @@
   "properties": {
     "seconds": {
       "type": "string",
-      "description": "Read by countdown().",
+      "description": "A fixed duration in seconds, used instead of an absolute `date`.",
       "default": "0"
     },
     "format": {
       "type": "string",
-      "description": "Read by countdown().",
+      "description": "How the remaining time is rendered. `auto` (default) drops units that are zero.",
       "default": "auto"
     },
     "date": {
       "type": "string",
-      "description": "Read by countdown()."
+      "description": "Target date/time to count down to. `to` is accepted as an alias; `date` is read first."
     },
     "to": {
       "type": "string",
-      "description": "Read by countdown()."
+      "description": "Alias of `date`, read only when `date` is absent."
     }
   },
   "events": {

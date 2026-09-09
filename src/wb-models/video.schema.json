@@ -7,30 +7,30 @@
   "properties": {
     "poster": {
       "type": "string",
-      "description": "Read by video().",
+      "description": "Image shown before playback starts, and after the video ends. Without one the first frame is used, which is often black.",
       "default": ""
     },
     "controls": {
       "type": "string",
-      "description": "Read by video()."
+      "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script."
     },
     "playsinline": {
       "type": "string",
-      "description": "Read by video()."
+      "description": "Play inline on mobile rather than taking over the screen. iOS goes fullscreen by default without it."
     },
     "autoplay": {
       "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
+      "description": "Begin playing on load. Browsers block autoplay with sound, so this needs `muted` to work unattended.",
       "default": false
     },
     "muted": {
       "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
+      "description": "Start with the audio track silenced. Required for `autoplay` to be allowed.",
       "default": false
     },
     "loop": {
       "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
+      "description": "Restart from the beginning when playback reaches the end.",
       "default": false
     }
   },

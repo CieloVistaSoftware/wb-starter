@@ -7,7 +7,7 @@
   "properties": {
     "color": {
       "type": "string",
-      "description": "Read by glow().",
+      "description": "Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it.",
       "default": "var(--primary, #6366f1)"
     }
   },

@@ -16,6 +16,19 @@ Text input field with label, helper text, and validation states
   type="text">
 ```
 
+
+
+### Declining it
+
+A `<input>` **is** the input behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<input x-ignore>
+  <!-- a plain input: no behavior is injected -->
+</input>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |

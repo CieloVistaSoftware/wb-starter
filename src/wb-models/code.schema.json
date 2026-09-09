@@ -7,28 +7,28 @@
   "properties": {
     "language": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text."
     },
     "variant": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "Visual treatment of the code span or block — controls the surface it is drawn on."
     },
     "scrollable": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "When `\"true\"`, scroll horizontally rather than wrapping long lines."
     },
     "size": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`."
     },
     "show-copy": {
       "type": "boolean",
-      "description": "Read by code(). Bare attribute.",
+      "description": "Show a copy-to-clipboard button.",
       "default": false
     },
     "copy": {
       "type": "boolean",
-      "description": "Read by code(). Bare attribute.",
+      "description": "Alias of `show-copy`.",
       "default": false
     }
   },

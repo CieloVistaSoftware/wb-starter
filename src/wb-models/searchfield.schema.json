@@ -7,46 +7,46 @@
   "properties": {
     "size": {
       "type": "string",
-      "description": "Read by searchfield().",
+      "description": "Control size: `xs`, `sm`, `md` (default), `lg`.",
       "default": "md"
     },
     "variant": {
       "type": "string",
-      "description": "Read by searchfield().",
+      "description": "Visual treatment — `default`, plus the state variants the input styles define.",
       "default": "default"
     },
     "placeholder": {
       "type": "string",
-      "description": "Read by searchfield().",
+      "description": "Placeholder text in the empty field. Defaults to `Search...`.",
       "default": "Search..."
     },
     "debounce": {
       "type": "string",
-      "description": "Read by searchfield().",
+      "description": "Milliseconds to wait after typing stops before searching. Defaults to `300` — lower feels faster and searches more often.",
       "default": "300"
     },
     "icon": {
       "type": "string",
-      "description": "Read by searchfield().",
+      "description": "Icon shown inside the field. Defaults to `🔍`.",
       "default": "🔍"
     },
     "clearable": {
       "type": "string",
-      "description": "Read by searchfield()."
+      "description": "Show a clear (×) control once there is text. On unless set to `\"false\"`."
     },
     "disabled": {
       "type": "boolean",
-      "description": "Read by searchfield(). Bare attribute.",
+      "description": "Disable the field. Bare attribute.",
       "default": false
     },
     "loading": {
       "type": "boolean",
-      "description": "Read by searchfield(). Bare attribute.",
+      "description": "Show the busy indicator, for while results are being fetched. Bare attribute.",
       "default": false
     },
     "instant": {
       "type": "boolean",
-      "description": "Read by searchfield(). Bare attribute.",
+      "description": "Search on every keystroke, bypassing `debounce`. Bare attribute.",
       "default": false
     }
   },

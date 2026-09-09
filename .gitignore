@@ -109,3 +109,5 @@ data/test-single/
 data/default-gui-census.json
 data/documented-example-sweep.json
 data/px-audit.json
+# #1081 (third pass): written by tests/regression/inline-style-audit.spec.ts
+data/inline-style-audit.json

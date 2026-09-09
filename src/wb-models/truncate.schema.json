@@ -7,12 +7,12 @@
   "properties": {
     "lines": {
       "type": "string",
-      "description": "Read by truncate().",
+      "description": "Number of lines to clamp to before truncating. Defaults to `1`.",
       "default": "1"
     },
     "expandable": {
       "type": "boolean",
-      "description": "Read by truncate(). Bare attribute.",
+      "description": "Add a control that reveals the full text. Bare attribute — the plain spelling only began working in #752; before that `data-expandable` was the only form read.",
       "default": false
     }
   },

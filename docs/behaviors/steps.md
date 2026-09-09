@@ -16,8 +16,8 @@ Behavior applied with x-steps.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `string` | — | Read by steps(). |
-| `current` | `string` | `1` | Read by steps(). |
+| `items` | `string` | — | Comma-separated step labels, e.g. `Details,Payment,Confirm`. Whitespace around each is trimmed. |
+| `current` | `string` | `1` | Which step is active, counting from **1**, not 0. Defaults to `1`. |
 
 ## Live example
 

@@ -7,7 +7,7 @@
   "properties": {
     "count": {
       "type": "string",
-      "description": "Read by sparkle().",
+      "description": "How many sparkle particles to emit. The behavior's default is `15`.",
       "default": "15"
     }
   },

@@ -25,7 +25,7 @@ import { join } from 'node:path';
 
 const MODELS = 'src/wb-models';
 
-type Row = { name: string; tag: string; verdict: string; children: number; w: number; h: number; note: string };
+type Row = { name: string; tag: string; classes: string[]; built: string[]; verdict: string; children: number; w: number; h: number; note: string };
 
 function behaviors(): { name: string; tag: string }[] {
   const out: { name: string; tag: string }[] = [];
@@ -85,9 +85,30 @@ test('census: which behaviors render a default GUI with no attributes', async ({
           parseFloat(cs.borderTopWidth) > 0 ||
           text.length > 0);
 
+      // #1096 — John: "the user must easily be able to find the class for
+      // current element." Nothing published that: 8 of 156 schemas declare their
+      // classes, 2 of 178 docs list any, and the only truth was the JavaScript.
+      //
+      // Static extraction cannot answer it. Scanning a whole module gives
+      // `cardimage` the classes of all 19 card behaviors; scanning only the
+      // exported function misses everything added by shared helpers such as
+      // composeCard(). Both were tried; neither is the truth.
+      //
+      // The RENDERED element is the truth, and this census already builds every
+      // behavior in isolation to decide BUILDS/PAINTS/INVISIBLE. So it records
+      // the classes too — observed rather than inferred, and correctly per
+      // behavior because each one is built on its own host.
+      const classes = el ? [...el.classList].filter((c) => c.startsWith('x-')).sort() : [];
+      const built = el
+        ? [...new Set([...el.querySelectorAll('[class]')].flatMap((n) =>
+            [...n.classList].filter((c) => c.startsWith('x-'))))].sort()
+        : [];
+
       results.push({
         name: b.name,
         tag: b.tag,
+        classes,
+        built,
         verdict: children > 0 ? 'BUILDS' : painted ? 'PAINTS' : 'INVISIBLE',
         children,
         w: Math.round(r.width),

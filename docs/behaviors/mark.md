@@ -12,12 +12,25 @@ Behavior applied with x-mark.
 <p>Search matched <mark>light DOM</mark> in 12 documents.</p>
 ```
 
+
+
+### Declining it
+
+A `<mark>` **is** the mark behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<mark x-ignore>
+  <!-- a plain mark: no behavior is injected -->
+</mark>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `string` | — | Read by mark(). |
-| `color` | `string` | — | Read by mark(). |
+| `variant` | `string` | — | Semantic highlight colour: `success`, `warning`, `danger` or `info`. **Ignored when `color` is set** — an explicit colour wins. |
+| `color` | `string` | — | Any CSS colour, used as the highlight background. The text colour is computed from its luminance so the mark stays readable, and setting this overrides `variant`. |
 
 ## Live example
 

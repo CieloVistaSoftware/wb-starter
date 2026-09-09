@@ -18,8 +18,8 @@ Behavior applied with x-print.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | Read by print(). |
-| `label` | `string` | `🖨️ Print` | Read by print(). |
+| `target` | `string` | — | CSS selector for the region to print. Empty prints the whole page. |
+| `label` | `string` | `🖨️ Print` | Button label. Defaults to `🖨️ Print`. |
 
 ## Live example
 

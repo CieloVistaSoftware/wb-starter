@@ -7,7 +7,7 @@
   "properties": {
     "ratio": {
       "type": "string",
-      "description": "Read by ratio().",
+      "description": "The aspect ratio the frame holds its child to, applied as the `--x-frame-ratio` custom property. The behavior's own default is `16/9`. NOTE: this schema declares a default of `16x9`, which the code never produces — the two disagree and the code is authoritative.",
       "default": "16x9"
     }
   },
