@@ -2,15 +2,35 @@
 
 Checkbox input with label and custom styling
 
-## Type — new capability
+## Type — semantic, and available as an attribute
 
-`x-checkbox` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+`tag-map.js` maps `input[type="checkbox"]` to this behavior, so a plain checkbox
+gets it with nothing added — the element already says what it is.
 
 ### How to write it
 
 ```html
+<input type="checkbox" name="full-suite" checked>
+<label for="full-suite">Run the full suite before pushing</label>
+```
+
+That is the form to reach for. The behavior styles the control, keeps the native
+checked/indeterminate state, and leaves the element a real form control, so it
+posts and validates like any other.
+
+### On a different element
+
+Use `x-checkbox` when the host is not an `<input type="checkbox">` and you want
+the same behavior — it builds its own control and label from the attributes:
+
+```html
 <div x-checkbox label="Run the full suite before pushing" name="full-suite" checked></div>
 ```
+
+Prefer the native form. Reaching for a `<div>` when `<input type="checkbox">`
+says it better trades correct HTML for a workaround: the div version has to
+re-create focus, keyboard toggling and form participation that the real control
+already has.
 
 ## Attributes
 

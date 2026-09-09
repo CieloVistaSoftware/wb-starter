@@ -9,6 +9,7 @@
  */
 
 import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules } from '../wb-viewmodels/index.js';
+import { markReady } from './ready-signal.js';
 import { Events } from './events.js';
 import './click-confirm.js';
 import { Theme } from './theme.js';
@@ -682,7 +683,11 @@ const WB = {
           // because the element is equally finished either way. Failure is
           // reported separately via x-error, and conflating "done" with "worked"
           // would make this signal lie in the one case that matters most.
-          if (element.isConnected) element.setAttribute('x-ready', '');
+          // #1094: was an unconditional attribute write. Nothing in the product
+          // read it — 0 CSS rules, 0 runtime readers — so every visitor carried
+          // a Playwright hook on every element. markReady keeps the knowledge;
+          // the DOM stamp is opt-in, which in practice means the test harness.
+          markReady(element);
         }
       }
       // Last, so a whenIdle() waiter woken by this always observes the
@@ -867,7 +872,9 @@ const WB = {
 
     // Wait for all injections (eager mode + any x-eager elements)
     await Promise.all(injections);
-    
+
+    reportUnknownBehaviorAttributes(root);
+
     if (getConfig('debug')) {
       Events.log('info', 'WB', `Scanned: ${elements.length} elements`);
     }
@@ -1246,6 +1253,100 @@ const WB = {
   Theme,
   config: { get: getConfig, set: setConfig }
 };
+
+
+/**
+ * An x-* attribute that names nothing is the one failure this system had no
+ * voice for.
+ *
+ * scan() resolves behaviours by SELECTOR: [x-behavior], the custom-element
+ * mappings, then the auto-inject mappings. An attribute in none of them matches
+ * no selector, so no code path is entered for it -- no injection, no throw, no
+ * x-error, nothing in the console. Typo `x-carfile` for `x-cardfile`, or keep
+ * using a behaviour 4.0.0 removed, and the element stays blank for ever while
+ * the page reports success.
+ *
+ * Verified before writing this: in ONE eager scan, `x-cardfile` decorated
+ * correctly (📄) while `x-totallyfakebehavior` produced no decoration, no
+ * x-error attribute, and no console output at all.
+ *
+ * John: "No failure should fail silently."
+ *
+ * Reported through Events.error so it lands in the Error Log page with every
+ * other failure, and marked on the element so it is visible in the DOM too.
+ * Reported once per attribute per element -- a MutationObserver re-scan must
+ * not turn one typo into a stream.
+ */
+
+/**
+ * x- attributes that are control flags, not behaviours. Flagging these would
+ * make the check fire on correct markup, and a check that cries wolf is one
+ * people learn to ignore.
+ */
+const NON_BEHAVIOR_X_ATTRIBUTES = new Set([
+  'x-behavior',   // names behaviours explicitly; resolved above
+  'x-eager',      // scheduling hint
+  'x-ignore',     // opt out of auto-injection
+  'x-error',      // set BY the injector when a behaviour throws
+  'x-ready',      // completion signal
+  'x-schema',     // marks schema-built elements
+  'x-unknown-behavior', // set by this reporter
+]);
+
+/**
+ * Every attribute that DOES name a behaviour.
+ *
+ * Both maps, never one: WB_LAZY_ONLY_ATTRIBUTES holds 39 behaviours that appear
+ * nowhere in tag-map, so checking extensionMap alone would report x-breadcrumb,
+ * x-notify, x-copybutton and every animation effect as unknown -- the exact
+ * incomplete-registry mistake #1056 fixed on the behaviours page.
+ */
+function knownBehaviorAttributes() {
+  return new Set([
+    ...Object.keys(extensionMap || {}),
+    ...Object.keys(WB_LAZY_ONLY_ATTRIBUTES || {}),
+  ]);
+}
+
+const reportedUnknown = new WeakMap();
+
+function reportUnknownBehaviorAttributes(root) {
+  let scope;
+  try {
+    scope = matchingElements(root, '*');
+  } catch {
+    return;   // never let the reporter break the scan it reports on
+  }
+
+  const known = knownBehaviorAttributes();
+
+  for (const element of scope) {
+    if (!element.attributes) { continue; }
+
+    for (const attr of Array.from(element.attributes)) {
+      const name = attr.name;
+      if (!name.startsWith('x-')) { continue; }
+      if (NON_BEHAVIOR_X_ATTRIBUTES.has(name)) { continue; }
+      if (known.has(name)) { continue; }
+
+      let seen = reportedUnknown.get(element);
+      if (!seen) { seen = new Set(); reportedUnknown.set(element, seen); }
+      if (seen.has(name)) { continue; }
+      seen.add(name);
+
+      element.setAttribute('x-unknown-behavior', name);
+
+      Events.error(
+        `WB: unknown behavior "${name}"`,
+        new Error(
+          `<${element.tagName.toLowerCase()}> carries ${name}, which matches no behavior — ` +
+          `nothing will be applied. Check the spelling, or whether the behavior was removed.`
+        ),
+        { element: element.tagName, id: element.id, attribute: name },
+      );
+    }
+  }
+}
 
 // Global export
 if (typeof window !== 'undefined') {
