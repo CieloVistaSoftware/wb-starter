@@ -126,11 +126,17 @@
   <!-- 9. 📦 WB Views Registry Schema -->
   <section id="views-wb-views-registry-schema">
   <h2>📦 WB Views Registry Schema</h2>
-  <div x-demo columns="1">
-    <div x-views>
-      This is example wb views registry schema content.
-    </div>
-  </div>
+  <!-- #1101 found this: x-views matches no behavior and never did. The section
+       generator turned the doc heading "WB Views Registry Schema" into an
+       attribute as though every heading named a behavior, so this demoed a
+       registry SCHEMA as if it were something you add to an element. Nothing was
+       applied, and nothing said so. The schema is not a behavior, so there is no
+       attribute to show. -->
+  <p>
+    The views registry is a schema, not a behavior — there is no attribute to add
+    to an element. See the registry documentation for its shape and how views are
+    registered.
+  </p>
   </section>
 
   <!-- 10. 🧩 x-toggle — toggle a class on a target element -->

@@ -51,7 +51,11 @@
   <a href="?page=behaviors" class="feature-card-link" aria-label="Explore the Behaviors System">
     <article variant="float">
       <h3>⚡ Behaviors System</h3>
-      <p>Compose interactions like Lego bricks. Add x-fade-in, x-sticky, or x-validate to any element.</p>
+      <!-- Named behaviors must be REAL ones. This read "x-fade-in, x-sticky, or
+           x-validate": x-fade-in is spelled x-fadein, and x-validate does not
+           exist at all — so the front page told a first-time reader to type two
+           attributes that do nothing, and (before #1101) did nothing silently. -->
+      <p>Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element.</p>
     </article>
   </a>
   <a href="?page=themes" class="feature-card-link" aria-label="Explore the Theme Engine">
