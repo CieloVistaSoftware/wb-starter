@@ -86,22 +86,46 @@ test('[docs] a behavior with no doc is shown and marked, never omitted (#1098)',
 
   // Absence used to be invisible: a behaviour whose doc was missing simply did
   // not appear, so a documentation gap was indistinguishable from a behaviour
-  // that does not exist. It must render, visibly incomplete.
+  // that does not exist.
+  //
+  // This first asserted `undocumented > 0`, which then FAILED once docs were
+  // resolved by behaviour name — every one of the 185 has a doc, so nothing is
+  // marked. Requiring a gap to exist makes closing the last gap break the test.
+  //
+  // The invariant that actually matters is that NOTHING IS DROPPED: every
+  // behaviour renders a chip whether or not it has a doc. The marking is
+  // asserted conditionally, so it is still guarded the moment a gap reappears.
+  const registries = await readRegistries(page);
+  const total = registries.semantic.length + registries.extension.length;
+
+  const chips = page.locator('#behaviors-sections .behavior-chip');
+  await expect(chips, 'a behaviour is missing a chip — something is being dropped again')
+    .toHaveCount(total);
+
   const undocumented = page.locator('.behavior-chip--undocumented');
   const count = await undocumented.count();
 
-  expect(
-    count,
-    'no behaviour is marked undocumented — either every one now has a doc (verify, then '
-    + 'this expectation can go) or undocumented behaviours are being dropped again',
-  ).toBeGreaterThan(0);
+  if (count > 0) {
+    await expect(undocumented.first()).toBeVisible();
+    await expect(undocumented.first()).toContainText('no doc yet');
 
-  await expect(undocumented.first()).toBeVisible();
-  await expect(undocumented.first()).toContainText('no doc yet');
+    // A marked chip must NOT be a link: there is nothing to open.
+    const tag = await undocumented.first().evaluate(el => el.tagName.toLowerCase());
+    expect(tag).not.toBe('a');
+  }
 
-  // A marked chip must NOT be a link: there is nothing to open.
-  const tag = await undocumented.first().evaluate(el => el.tagName.toLowerCase());
-  expect(tag).not.toBe('a');
+  // The mechanism must survive even while unused, or the next undocumented
+  // behaviour goes back to being invisible.
+  const marksUndocumented = await page.evaluate(() =>
+    [...document.styleSheets].some((sheet) => {
+      try {
+        return [...sheet.cssRules].some(r =>
+          r.selectorText && r.selectorText.includes('behavior-chip--undocumented'));
+      } catch { return false; }
+    }));
+  expect(marksUndocumented,
+    'the undocumented-chip styling is gone — a behaviour with no doc would render '
+    + 'indistinguishable from one that has one').toBe(true);
 });
 
 test('[docs] search filters both sections and reveals lazy-only behaviors (#1098)', async ({ page }) => {
