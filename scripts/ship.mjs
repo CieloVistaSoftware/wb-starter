@@ -80,7 +80,23 @@ if (branch !== 'main') {
 // are why #1071's `src/core/version.js` exclusion never matched: in the case
 // #1071 cares about, version.js IS the first line.
 const rawStatus = execSync('git status --porcelain', { cwd: ROOT, encoding: 'utf8' });
-const dirty = changedPaths(rawStatus);
+
+// src/core/version.js is EXCLUDED, the same exclusion stamp-version.js makes for
+// its own output (#1071).
+//
+// It is generated, and what it records is the git state itself — branch, commit,
+// dirty, ahead. So every commit changes it, which dirties the tree, which makes
+// ship refuse, which is fixed by committing it, which changes it again. A batch
+// could never reach a clean tree: this loop was hit assembling a real release and
+// only stopped because the stamp happened to settle.
+//
+// Excluding it costs nothing the check was buying. ship REWRITES this file during
+// the release anyway, so its pre-release contents can never be what .io serves —
+// it is the one path where "local and .io must match" is meaningless.
+const GENERATED_DURING_RELEASE = ['src/core/version.js'];
+const dirty = changedPaths(rawStatus)
+  .filter((f) => !GENERATED_DURING_RELEASE.includes(f.split('\\').join('/')));
+
 if (dirty.length) {
   // Capped: untracking data/test-single/ (#1081) staged 250 deletions at once,
   // and a refusal that scrolls off the screen is one nobody reads.
