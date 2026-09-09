@@ -455,7 +455,7 @@ export async function mdhtml(element, options = {}) {
     // panel still shows the exact source correctly without any extra work.
     if (config.autoLiveRender) element.querySelectorAll('pre > code').forEach(code => {
         const pre = code.parentElement;
-        if (pre.closest('x-demo')) return; // already inside a real x-demo block
+        if (pre.closest('x-demo, [x-demo]')) return; // already inside a real x-demo block
         const isHtmlLang = /\blanguage-html\b/.test(code.className) || (!code.className && /^\s*</.test(code.textContent || ''));
         if (!isHtmlLang) return;
 
@@ -487,7 +487,31 @@ export async function mdhtml(element, options = {}) {
         );
         if (!isRenderable) return;
 
-        const wbDemo = document.createElement('x-demo');
+        // A DIV CARRYING THE ATTRIBUTE, not an <x-demo> TAG.
+        //
+        // This created document.createElement('x-demo'). WB dispatches x-demo on
+        // the ATTRIBUTE, so the tag matched nothing, the demo behavior never ran,
+        // and no code panel was ever generated. The fence was replaced by a bare
+        // live element and the markup the reader came for VANISHED -- 127 of 178
+        // behavior docs showed a rendering with no source. The 42 that were right
+        // are the ones that hand-write `<div x-demo>` (accordion.md and friends).
+        //
+        // #1063 removed the x-demo class registration, so nothing has upgraded the
+        // tag since; this was silent because a rendered example still looks like a
+        // working doc until you notice the code is gone.
+        //
+        // John: "all of our .md doc must have a markup example and rendering."
+        // The attribute form gives both -- x-demo renders the example AND emits a
+        // numbered, copyable source panel beneath it.
+        const wbDemo = document.createElement('div');
+        wbDemo.setAttribute('x-demo', '');
+        // Hand demo.js the authored fence text directly (the `_rawSource` hook it
+        // already reads, demo.js:489). Its normal path recovers source by finding
+        // the block in the PAGE source -- but this markup only ever existed in the
+        // fetched markdown, never in doc-viewer.html, so that lookup always misses
+        // and the panel printed "source unavailable" instead of the example. `raw`
+        // is the exact fence text, before any behavior has touched the DOM.
+        wbDemo._rawSource = raw;
         wbDemo.innerHTML = raw;
         pre.replaceWith(wbDemo);
     });
