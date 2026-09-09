@@ -133,3 +133,52 @@ test('[docs] search filters both sections and reveals lazy-only behaviors (#1098
   await expect(page.locator('#behaviors-extension .behaviors-grid__item:visible'))
     .toHaveCount(registries.extension.length);
 });
+
+test('[docs] every behavior link actually opens its doc (#1098)', async ({ page }) => {
+  await page.goto('/?page=docs');
+  await expect(page.locator('#behaviors-sections')).toBeVisible();
+
+  // A file existing is NOT the same as the link working. The first version of
+  // this page built hrefs from the ATTRIBUTE name -- docs/behaviors/x-cardbutton.md
+  // -- while every file is named after the BEHAVIOUR (cardbutton.md). Every
+  // single x- link 404'd. The count and name assertions above all passed, because
+  // none of them followed a link.
+  const links = await page.evaluate(() =>
+    [...document.querySelectorAll('#behaviors-sections .behavior-chip')]
+      .filter(c => c.tagName === 'A')
+      .map(c => ({ name: c.textContent!.trim(), file: new URLSearchParams(c.getAttribute('href')!.split('?')[1]).get('file')! })));
+
+  expect(links.length).toBeGreaterThan(150);
+
+  const broken = await page.evaluate(async (items) => {
+    const bad: string[] = [];
+    for (const it of items) {
+      try {
+        const res = await fetch('/' + it.file);
+        const body = res.ok ? await res.text() : '';
+        if (!res.ok || body.trim().length === 0) { bad.push(`${it.name} -> ${it.file} (${res.status})`); }
+      } catch { bad.push(`${it.name} -> ${it.file} (fetch failed)`); }
+    }
+    return bad;
+  }, links);
+
+  expect(broken, 'behavior doc links that do not load: ' + broken.join(' | ')).toEqual([]);
+});
+
+test('[docs] clicking a behavior opens the doc, not an error page (#1098)', async ({ page }) => {
+  await page.goto('/?page=docs');
+  await expect(page.locator('#behaviors-sections')).toBeVisible();
+
+  // x-cardbutton is one John reported as 404. Fetching a URL is a different
+  // test from clicking the link, and only the click exercises the viewer.
+  await page.evaluate(() => {
+    const el = [...document.querySelectorAll('.behavior-chip')]
+      .find(c => c.textContent!.trim() === 'x-cardbutton') as HTMLAnchorElement;
+    el.removeAttribute('target');
+    el.click();
+  });
+
+  await page.waitForURL(/doc-viewer\.html/);
+  await expect(page.locator('body')).not.toContainText('Unable to Load');
+  await expect(page.locator('body')).toContainText('Button Card');
+});

@@ -252,12 +252,23 @@
     const lazyMod = mods[1] || {};
     if (!tagMod) return;
 
-    const extension = Object.keys(Object.assign(
+    // Keep the attribute -> BEHAVIOUR mapping, not just the attribute names.
+    // A doc is named after the behaviour, and several attributes are aliases of
+    // one: x-progressbar and x-progress both map to `progress`, x-drawer-layout
+    // maps to `drawerLayout`. Looking a doc up by ATTRIBUTE name reported both
+    // as undocumented when progress.md and drawerLayout.md were right there.
+    const extMap = Object.assign(
       {},
       lazyMod.WB_LAZY_ONLY_ATTRIBUTES || {},
       tagMod.extensionMap || {}
-    )).sort();
-    const semantic = Object.keys(tagMod.nativeMap || {}).sort();
+    );
+    const natMap = tagMod.nativeMap || {};
+    const extension = Object.keys(extMap).sort();
+    const semantic = Object.keys(natMap).sort();
+    const behaviourOf = function (name) {
+      const v = Object.prototype.hasOwnProperty.call(extMap, name) ? extMap[name] : natMap[name];
+      return typeof v === 'string' ? v : null;
+    };
 
     // Which behaviours have a doc. A miss is MARKED, never hidden -- absence
     // used to be invisible, so a missing doc read as a missing behaviour.
@@ -268,17 +279,23 @@
         const man = await res.json();
         for (const f of man.files || []) {
           const m = String(f.path || f.file || '').match(/behaviors\/([^/]+)\.md$/);
-          if (m) { documented.add(m[1]); documented.add('x-' + m[1]); }
+          if (m) { documented.add(m[1]); }
         }
       }
     } catch (e) { /* no manifest -- chips simply render without a doc link */ }
 
     function docHref(name) {
-      const bare = name.replace(/^x-/, '');
-      const base = documented.has(name) ? name : (documented.has(bare) ? bare : null);
-      if (!base) return null;
-      return siteRootFor() + 'public/doc-viewer.html?file='
-        + encodeURIComponent('docs/behaviors/' + base + '.md');
+      // Behaviour name first, then the attribute, then the attribute without its
+      // x- prefix. With behaviour-name resolution all 185 behaviours have a doc;
+      // attribute-name-only resolution wrongly reported 2 as missing.
+      const candidates = [behaviourOf(name), name, name.replace(/^x-/, '')];
+      for (const base of candidates) {
+        if (base && documented.has(base)) {
+          return siteRootFor() + 'public/doc-viewer.html?file='
+            + encodeURIComponent('docs/behaviors/' + base + '.md');
+        }
+      }
+      return null;
     }
 
     function chip(name) {
