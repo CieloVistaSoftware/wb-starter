@@ -12,6 +12,16 @@
   </div>
 </div>
 
+<!-- #1098: every behavior, in two sections. Rendered from tag-map union
+     wb-lazy -- the same union pages/behaviors.html reads since #1056, because
+     tag-map ALONE omits 39 working behaviours (breadcrumb, notify, copybutton,
+     every animation effect). Neither the cross-reference (50 of 185) nor
+     docs/behaviors/*.md (6 missing, 14 phantoms) can be the source. -->
+<section id="behaviors-sections" class="page__section" hidden>
+  <div id="behaviors-semantic" class="behaviors-section"></div>
+  <div id="behaviors-extension" class="behaviors-section"></div>
+</section>
+
 <div id="docs-container" class="page__section">
   <div id="docs-loading" class="docs-loading">
     <span x-spinner></div>
@@ -198,6 +208,163 @@
         '<p>⚠️ Could not load documentation index.</p>' +
         '<p style="font-size: 0.875rem;">Error: ' + err.message + '</p>' +
         '</div>';
+    }
+  })();
+</script>
+
+<script>
+  /**
+   * #1098 -- the behaviour sections.
+   *
+   * John: "I want to see every x-behavior -- we have many [that] don't have a
+   * x-prefix", and "move the semantic and x-behaviors into 2 sections".
+   *
+   * SOURCE. tag-map.js merged with wb-lazy.js, exactly as pages/behaviors.html
+   * does since #1056. tag-map ALONE reports 120 x- behaviours; the union
+   * reports 159, because WB_LAZY_ONLY_ATTRIBUTES holds 39 that resolve at
+   * runtime and appear nowhere in tag-map -- breadcrumb, notify, copybutton,
+   * typewriter, and every animation effect. wb-lazy.js says so itself:
+   * "anything reading tag-map alone reports an incomplete behavior list."
+   *
+   * NOT from docs/behavior-cross-reference.md (covers 50 of 185, #1099) and
+   * NOT from docs/behaviors/*.md (6 behaviours have no file, and 14 files --
+   * aside, blockquote, ol, ul, time ... -- describe nothing that is a
+   * behaviour, so a list built from the folder renders phantom rows).
+   *
+   * The lazy import may fail on its own: an incomplete list is bad, an empty
+   * one is worse.
+   */
+  (async function () {
+    const wrap = document.getElementById('behaviors-sections');
+    if (!wrap) return;
+
+    function siteRootFor() {
+      const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
+      return stripped.replace(/[^/]*$/, '');
+    }
+
+    const mods = await Promise.all([
+      import(siteRootFor() + 'src/core/tag-map.js'),
+      import(siteRootFor() + 'src/core/wb-lazy.js').catch(function () { return {}; }),
+    ]).catch(function () { return [null, null]; });
+
+    const tagMod = mods[0];
+    const lazyMod = mods[1] || {};
+    if (!tagMod) return;
+
+    const extension = Object.keys(Object.assign(
+      {},
+      lazyMod.WB_LAZY_ONLY_ATTRIBUTES || {},
+      tagMod.extensionMap || {}
+    )).sort();
+    const semantic = Object.keys(tagMod.nativeMap || {}).sort();
+
+    // Which behaviours have a doc. A miss is MARKED, never hidden -- absence
+    // used to be invisible, so a missing doc read as a missing behaviour.
+    const documented = new Set();
+    try {
+      const res = await fetch(siteRootFor() + 'data/docs-manifest.json');
+      if (res.ok) {
+        const man = await res.json();
+        for (const f of man.files || []) {
+          const m = String(f.path || f.file || '').match(/behaviors\/([^/]+)\.md$/);
+          if (m) { documented.add(m[1]); documented.add('x-' + m[1]); }
+        }
+      }
+    } catch (e) { /* no manifest -- chips simply render without a doc link */ }
+
+    function docHref(name) {
+      const bare = name.replace(/^x-/, '');
+      const base = documented.has(name) ? name : (documented.has(bare) ? bare : null);
+      if (!base) return null;
+      return siteRootFor() + 'public/doc-viewer.html?file='
+        + encodeURIComponent('docs/behaviors/' + base + '.md');
+    }
+
+    function chip(name) {
+      const href = docHref(name);
+      const li = document.createElement('li');
+      li.className = 'behaviors-grid__item';
+
+      const el = document.createElement(href ? 'a' : 'span');
+      el.className = 'behavior-chip' + (href ? '' : ' behavior-chip--undocumented');
+      if (href) { el.href = href; el.target = '_blank'; el.rel = 'noopener'; }
+
+      const n = document.createElement('span');
+      n.className = 'behavior-chip__name';
+      n.textContent = name;
+      el.appendChild(n);
+
+      if (!href) {
+        const note = document.createElement('span');
+        note.className = 'behavior-chip__note';
+        note.textContent = 'no doc yet';
+        el.appendChild(note);
+      }
+
+      li.appendChild(el);
+      li.dataset.search = name.toLowerCase();
+      return li;
+    }
+
+    function section(host, title, lede, names) {
+      host.textContent = '';
+
+      const head = document.createElement('div');
+      head.className = 'behaviors-section__head';
+      const h2 = document.createElement('h2');
+      h2.textContent = title;
+      const count = document.createElement('span');
+      count.className = 'behaviors-section__count';
+      count.textContent = names.length + ' behaviors';
+      head.appendChild(h2);
+      head.appendChild(count);
+
+      const p = document.createElement('p');
+      p.className = 'behaviors-section__lede';
+      p.textContent = lede;
+
+      const ul = document.createElement('ul');
+      ul.className = 'behaviors-grid';
+      for (const n of names) { ul.appendChild(chip(n)); }
+
+      host.appendChild(head);
+      host.appendChild(p);
+      host.appendChild(ul);
+      return ul;
+    }
+
+    const semanticList = section(
+      document.getElementById('behaviors-semantic'),
+      'Semantic behaviors',
+      'No prefix - the tag is the behavior. An <article> IS a card; you add nothing.',
+      semantic
+    );
+
+    const extensionList = section(
+      document.getElementById('behaviors-extension'),
+      'x- behaviors',
+      'Added as an attribute on any element.',
+      extension
+    );
+
+    wrap.hidden = false;
+
+    // Share the page's existing search box rather than adding a second one.
+    const search = document.getElementById('docs-search');
+    if (search) {
+      search.addEventListener('input', function () {
+        const term = search.value.trim().toLowerCase();
+        for (const list of [semanticList, extensionList]) {
+          let shown = 0;
+          for (const li of list.children) {
+            const hit = !term || li.dataset.search.indexOf(term) !== -1;
+            li.hidden = !hit;
+            if (hit) { shown++; }
+          }
+          list.closest('.behaviors-section').hidden = shown === 0;
+        }
+      });
     }
   })();
 </script>

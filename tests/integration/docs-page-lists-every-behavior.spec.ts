@@ -1,0 +1,135 @@
+import { test, expect } from '@playwright/test';
+
+/**
+ * #1098: the docs page must list EVERY behavior, in two sections.
+ *
+ * John: "I want to see every x-behavior -- we have many [that] don't have a
+ * x-prefix", and "move the semantic and x-behaviors into 2 sections".
+ *
+ * Before this, /?page=docs listed 86 of 271 documents and 25 of 185 behaviors,
+ * because the page read a hand-maintained `docs/manifest.json` that nothing
+ * regenerated. Nothing noticed for months. This test is what notices.
+ *
+ * THE SOURCE MATTERS. The count is compared against `tag-map.js` UNION
+ * `wb-lazy.js`, never tag-map alone: WB_LAZY_ONLY_ATTRIBUTES holds 39
+ * behaviours that resolve at runtime and appear nowhere in tag-map
+ * (x-breadcrumb, x-notify, x-copybutton, every animation effect). Reading
+ * tag-map alone is a known bug -- #1056 fixed exactly that on
+ * pages/behaviors.html, and wb-lazy.js's own comment predicts it:
+ * "anything reading tag-map alone reports an incomplete behavior list."
+ *
+ * It is also NOT compared against docs/behaviors/*.md, which is wrong in both
+ * directions: 6 behaviours have no file, and 14 files (aside, blockquote, ol,
+ * ul, time, ...) describe nothing that is a behaviour.
+ */
+
+/** The authoritative behaviour surface, read in page context. */
+async function readRegistries(page: import('@playwright/test').Page) {
+  return page.evaluate(async () => {
+    const [tag, lazy] = await Promise.all([
+      import('/src/core/tag-map.js'),
+      import('/src/core/wb-lazy.js').catch(() => ({} as Record<string, unknown>)),
+    ]);
+    const lazyOnly = (lazy as { WB_LAZY_ONLY_ATTRIBUTES?: Record<string, unknown> })
+      .WB_LAZY_ONLY_ATTRIBUTES || {};
+    const t = tag as { extensionMap: Record<string, unknown>; nativeMap: Record<string, unknown> };
+    return {
+      extension: Object.keys({ ...lazyOnly, ...t.extensionMap }).sort(),
+      semantic: Object.keys(t.nativeMap || {}).sort(),
+      lazyOnlyCount: Object.keys(lazyOnly).filter(k => !(k in t.extensionMap)).length,
+    };
+  });
+}
+
+test('[docs] lists every behavior, split into semantic and x- sections (#1098)', async ({ page }) => {
+  await page.goto('/?page=docs');
+
+  const sections = page.locator('#behaviors-sections');
+  await expect(sections).toBeVisible();
+
+  const registries = await readRegistries(page);
+
+  // Guard the guard: if wb-lazy stopped contributing, this test would silently
+  // start asserting the SHORT list and pass while the page was wrong again.
+  expect(
+    registries.lazyOnlyCount,
+    'wb-lazy contributes no behaviours beyond tag-map — either the registries merged '
+    + '(good, simplify this test) or the lazy import broke (bad, the list is now short)',
+  ).toBeGreaterThan(0);
+
+  const semanticItems = page.locator('#behaviors-semantic .behaviors-grid__item');
+  const extensionItems = page.locator('#behaviors-extension .behaviors-grid__item');
+
+  await expect(semanticItems).toHaveCount(registries.semantic.length);
+  await expect(extensionItems).toHaveCount(registries.extension.length);
+
+  // Two sections, not one merged list — a semantic behaviour and an x- behaviour
+  // are different things, and flattening them hides the authoring surface.
+  await expect(page.locator('#behaviors-semantic h2')).toHaveText('Semantic behaviors');
+  await expect(page.locator('#behaviors-extension h2')).toHaveText('x- behaviors');
+
+  // Every single name present — a count match alone could hide a swap.
+  const rendered = await page.evaluate(() => ({
+    semantic: [...document.querySelectorAll('#behaviors-semantic .behavior-chip__name')]
+      .map(n => n.textContent!.trim()).sort(),
+    extension: [...document.querySelectorAll('#behaviors-extension .behavior-chip__name')]
+      .map(n => n.textContent!.trim()).sort(),
+  }));
+
+  expect(rendered.semantic).toEqual(registries.semantic);
+  expect(rendered.extension).toEqual(registries.extension);
+});
+
+test('[docs] a behavior with no doc is shown and marked, never omitted (#1098)', async ({ page }) => {
+  await page.goto('/?page=docs');
+  await expect(page.locator('#behaviors-sections')).toBeVisible();
+
+  // Absence used to be invisible: a behaviour whose doc was missing simply did
+  // not appear, so a documentation gap was indistinguishable from a behaviour
+  // that does not exist. It must render, visibly incomplete.
+  const undocumented = page.locator('.behavior-chip--undocumented');
+  const count = await undocumented.count();
+
+  expect(
+    count,
+    'no behaviour is marked undocumented — either every one now has a doc (verify, then '
+    + 'this expectation can go) or undocumented behaviours are being dropped again',
+  ).toBeGreaterThan(0);
+
+  await expect(undocumented.first()).toBeVisible();
+  await expect(undocumented.first()).toContainText('no doc yet');
+
+  // A marked chip must NOT be a link: there is nothing to open.
+  const tag = await undocumented.first().evaluate(el => el.tagName.toLowerCase());
+  expect(tag).not.toBe('a');
+});
+
+test('[docs] search filters both sections and reveals lazy-only behaviors (#1098)', async ({ page }) => {
+  await page.goto('/?page=docs');
+  await expect(page.locator('#behaviors-sections')).toBeVisible();
+
+  const search = page.locator('#docs-search');
+
+  // x-breadcrumb lives ONLY in wb-lazy. If the page ever reverts to reading
+  // tag-map alone, this is the assertion that fails.
+  await search.fill('breadcrumb');
+  const breadcrumbHits = page.locator('#behaviors-extension .behaviors-grid__item:visible');
+  await expect(breadcrumbHits).toHaveCount(1);
+  // Scope the name read to the VISIBLE item. Filtering hides the <li>, not the
+  // <span> inside it, so a bare .first() returns whatever is first in DOM order
+  // (x-accordion) and says nothing about what the search matched.
+  await expect(breadcrumbHits.locator('.behavior-chip__name')).toHaveText('x-breadcrumb');
+
+  // "article" spans both sections — the semantic tag AND the x- attributes.
+  // This is the case that shows why the split exists.
+  await search.fill('article');
+  await expect(page.locator('#behaviors-semantic')).toBeVisible();
+  await expect(page.locator('#behaviors-extension')).toBeVisible();
+  await expect(page.locator('#behaviors-semantic .behaviors-grid__item:visible')).toHaveCount(1);
+
+  // Clearing restores the full list.
+  await search.fill('');
+  const registries = await readRegistries(page);
+  await expect(page.locator('#behaviors-extension .behaviors-grid__item:visible'))
+    .toHaveCount(registries.extension.length);
+});

@@ -56,3 +56,89 @@
       border-radius: 1rem !important;
     }
   }
+
+/* ── Behavior sections (#1098) ─────────────────────────────────────────────
+   Two sections, because a semantic behavior and an x- behavior are not the
+   same thing: on a semantic element the TAG is the behavior (<article> IS a
+   card), while an x- behavior is an attribute you add. Merging them into one
+   alphabetical list hides that distinction, which is the core idea of the
+   authoring surface.
+
+   Rendered from tag-map ∪ wb-lazy, never from a hand-written list. */
+
+.behaviors-section {
+  margin-bottom: var(--space-xl, 2.5rem);
+}
+
+.behaviors-section__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm, 0.5rem);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xs, 0.35rem);
+}
+
+.behaviors-section__count {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.behaviors-section__lede {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin: 0 0 var(--space-md, 1rem);
+}
+
+.behaviors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: var(--space-sm, 0.6rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.behaviors-grid__item {
+  min-width: 0;
+}
+
+.behavior-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.behavior-chip:hover,
+.behavior-chip:focus-visible {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.behavior-chip__name {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9375rem;
+  color: var(--primary);
+  overflow-wrap: anywhere;
+}
+
+.behavior-chip__note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* A behavior with no doc is SHOWN and marked, never omitted -- absence used to
+   be invisible, so a missing doc looked like a missing behavior (#1098). */
+.behavior-chip--undocumented {
+  border-style: dashed;
+}
+
+.behavior-chip--undocumented .behavior-chip__name {
+  color: var(--text-muted);
+}
