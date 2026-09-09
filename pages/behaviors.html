@@ -86,14 +86,24 @@
              chips -- the header grows rather than the example being pushed
              off screen. -->
         <div class="behaviors-live__panels">
+          <!-- John: "clicking on api or docs should open in this element. It
+               must cover this element", pointing at the preview pane.
+
+               The bodies deliberately do NOT live inside their <details>. Inside,
+               they render in the header's flow, so opening one GREW the header and
+               pushed the example down -- a taller box, never a cover. An earlier
+               pass tried to satisfy the same ask with max-height: calc(100vh -
+               14rem), which made the box tall but left it in the header.
+
+               The <details> stay as the toggle and keep their open/closed state;
+               the panels are positioned over .behaviors-live__body below, matched
+               with :has(). -->
           <details id="behaviors-live-api" class="behaviors-live__api" summary="API">
             <summary class="behaviors-live__api-summary">API</summary>
-            <div id="behaviors-live-api-body" class="behaviors-live__api-body"></div>
           </details>
-  
+
           <details id="behaviors-live-doc" class="behaviors-live__doc" summary="Documentation">
             <summary class="behaviors-live__doc-summary">Documentation</summary>
-            <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
           </details>
         </div>
         <!-- #776 -- John: "Add theme control here." A behavior is being judged
@@ -143,6 +153,11 @@
            centred in (#710/#711), so expanding it expanded the empty space too.
            This wrapper is the parent container the original ask asked for: it
            hugs the rendered example, and it is what goes fullscreen. -->
+      <!-- The region API/Docs must cover: the rendered example, its HTML and its
+           events. Positioned, so the panels can sit over exactly this and
+           nothing else -- the header strip stays usable, which is what closes
+           them again. -->
+      <div class="behaviors-live__body">
       <div id="behaviors-live-stage" class="behaviors-live__stage">
         <div id="behaviors-live-example" class="behaviors-live__example"></div>
       </div>
@@ -184,6 +199,13 @@
         <div class="behaviors-live__events-head"><span>Event handler</span></div>
         <div id="behaviors-live-events-snippet" class="behaviors-live__events-code"></div>
       </div>
+
+      <!-- Overlays, last so they paint above the preview. Shown only while their
+           <details> in the header is open (CSS :has()). Same ids and classes as
+           before, so every renderer that fills them is untouched. -->
+      <div id="behaviors-live-api-body" class="behaviors-live__api-body behaviors-live__overlay"></div>
+      <div id="behaviors-live-doc-body" class="behaviors-live__doc-body behaviors-live__overlay"></div>
+      </div><!-- /.behaviors-live__body -->
 
     </div>
   </div>

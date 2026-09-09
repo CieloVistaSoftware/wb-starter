@@ -2139,3 +2139,58 @@ main.site__main:has(#mainPage-behaviors) {
 .site:has(#behaviors-workspace) > .site__footer {
   display: none;
 }
+
+/* ── API / Docs cover the preview ─────────────────────────────────────────────
+   John: "clicking on api or docs should open in this element. It must cover
+   this element", pointing at the preview pane.
+
+   Previously both panels rendered inside their <details> in the header strip,
+   so opening one GREW the header and pushed the example down. An earlier pass
+   read the same ask as "make it taller" and added
+   max-height: calc(100vh - 14rem) -- a tall box in the header is still not a
+   cover.
+
+   The bodies now live at the end of .behaviors-live__body and are positioned
+   over it, so they hide the example, its HTML and its events, while the header
+   strip stays visible and clickable -- which is what closes them again. */
+
+.behaviors-live__body {
+  position: relative;
+}
+
+/* Hidden by ID, not by the .behaviors-live__overlay class. The renderer at
+   pages/behaviors.html:1239/1244 assigns className WHOLESALE
+   -- liveApiBody.className = 'behaviors-live__api-body' -- so any extra class
+   is wiped the first time a behaviour is selected. The class stays on the
+   element to document intent; the ID is what the rules key off. */
+#behaviors-live-api-body,
+#behaviors-live-doc-body {
+  display: none;
+}
+
+/* Scoped to `body`, NOT to .behaviors-live: the script relocates both <details>
+   into the page header toolbar (#behaviors-header-tools) so they sit beside
+   Fullscreen, which puts the toggle OUTSIDE the pane its panel covers. An
+   ancestor-scoped :has() silently never matched. */
+body:has(#behaviors-live-api[open]) #behaviors-live-api-body,
+body:has(#behaviors-live-doc[open]) #behaviors-live-doc-body {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow-y: auto;
+  /* Opaque on purpose: a translucent panel over a rendered example makes both
+     unreadable. */
+  background: var(--bg-primary, #12161c);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  /* The cap that used to fight the header is gone -- the panel is exactly as
+     tall as the region it covers, and scrolls inside it. */
+  max-height: none;
+}
+
+/* Opening one closes the other: two overlays on one region would stack, and the
+   lower one would be unreachable. */
+body:has(#behaviors-live-api[open]) #behaviors-live-doc-body {
+  display: none;
+}
