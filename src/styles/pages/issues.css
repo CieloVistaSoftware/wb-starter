@@ -155,6 +155,9 @@
   padding: var(--space-md, 1rem);
   max-height: 32rem;
   overflow-y: auto;
+  /* Same rule as .activity__list: an expanded row is a scroll box the reader is
+     inside, and reaching its end should not throw the page. */
+  overscroll-behavior: contain;
 }
 
 .issues-row--open {
@@ -246,6 +249,15 @@
   padding: 0;
   max-height: 22rem;
   overflow-y: auto;
+  /* John: "if [the] use[r] clicks inside, and then scrolls down, the whole page
+     should remain statically placed until they get to the bottom of that"
+     column.
+
+     Without this the browser CHAINS the scroll: the column reaches its end and
+     the same gesture keeps going into the page, so reading one column drags the
+     other two out of view. `contain` stops the scroll at this box's boundary —
+     the page only moves once the pointer is somewhere that is not a column. */
+  overscroll-behavior: contain;
 }
 
 .activity__item {
