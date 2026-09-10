@@ -213,9 +213,25 @@ x-mdhtml td, [x-mdhtml] td,
      exactly what broke "Part"/"Type"/"Category" headers into one letter
      per line on narrow columns (#278, recurring). word-break:normal alone
      was never enough -- overflow-wrap takes precedence over it. */
-  white-space: nowrap;
   overflow-wrap: normal;
   word-break: normal;
+  /* John: "No field in a table can override the width of the table to fit in
+     its parent element."
+
+     This was white-space:nowrap, so a cell dictated the table's width and the
+     table outgrew its container -- measured on cardhero.md: parent 836px, table
+     980px, with the Values column alone taking 473px because
+     `default · cosmic · split · minimal · gradient` could not break anywhere.
+     #278 accepted the table's own overflow-x:auto as the escape hatch; a
+     horizontal scrollbar is not the table fitting.
+
+     Wrapping BETWEEN tokens costs nothing #278 was protecting: that value is
+     five separate identifiers joined by " · ", and each stays whole because
+     `td code` keeps its own nowrap below. Only the separators become break
+     opportunities. The same fix behaviors.css:1179 already made for its table
+     ("Was nowrap -- one of the two things pushing the table past its
+     container") -- the doc-viewer tables never got it. */
+  white-space: normal;
 }
 
 x-mdhtml th, [x-mdhtml] th,
