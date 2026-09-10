@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Clickable summary text",
       "required": true,
-      "default": ""
+      "default": "this is the summary"
     },
     "open": {
       "type": "boolean",
@@ -29,7 +29,7 @@
     "name": {
       "type": "string",
       "description": "Accordion group name (native exclusive behavior)",
-      "default": ""
+      "default": "this is the name"
     },
     "animated": {
       "type": "boolean",

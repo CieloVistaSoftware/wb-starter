@@ -24,22 +24,22 @@
     "title": {
       "type": "string",
       "description": "Card title",
-      "default": ""
+      "default": "this is the title"
     },
     "description": {
       "type": "string",
       "description": "Card description text",
-      "default": ""
+      "default": "this is the description"
     },
     "icon": {
       "type": "string",
       "description": "Icon (emoji or icon name)",
-      "default": ""
+      "default": "this is the icon"
     },
     "badge": {
       "type": "string",
       "description": "Badge text",
-      "default": ""
+      "default": "this is the badge"
     },
     "target": {
       "type": "string",

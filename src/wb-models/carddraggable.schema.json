@@ -18,12 +18,12 @@
     "title": {
       "type": "string",
       "description": "Card title",
-      "default": ""
+      "default": "this is the title"
     },
     "content": {
       "type": "string",
       "description": "Card content",
-      "default": ""
+      "default": "this is the content"
     },
     "constrain": {
       "type": "string",

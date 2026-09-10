@@ -8,7 +8,7 @@
     "text": {
       "type": "string",
       "description": "Body text. Only used when `share-text` is absent.",
-      "default": ""
+      "default": "this is the text"
     },
     "label": {
       "type": "string",
@@ -17,19 +17,23 @@
     },
     "share-title": {
       "type": "string",
-      "description": "Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`."
+      "description": "Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`.",
+      "default": "this is the share title"
     },
     "share-text": {
       "type": "string",
-      "description": "Body text passed to the share sheet. Read BEFORE `text`."
+      "description": "Body text passed to the share sheet. Read BEFORE `text`.",
+      "default": "this is the share text"
     },
     "share-url": {
       "type": "string",
-      "description": "URL to share. Read BEFORE `url`; falls back to the current page address."
+      "description": "URL to share. Read BEFORE `url`; falls back to the current page address.",
+      "default": "#"
     },
     "url": {
       "type": "string",
-      "description": "URL to share. Only used when `share-url` is absent."
+      "description": "URL to share. Only used when `share-url` is absent.",
+      "default": "#"
     }
   },
   "_metadata": {

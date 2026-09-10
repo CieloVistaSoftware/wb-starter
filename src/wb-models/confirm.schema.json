@@ -27,11 +27,13 @@
     },
     "confirm-title": {
       "type": "string",
-      "description": "Dialog heading. Read BEFORE `heading`; defaults to `Confirm`."
+      "description": "Dialog heading. Read BEFORE `heading`; defaults to `Confirm`.",
+      "default": "this is the confirm title"
     },
     "confirm-message": {
       "type": "string",
-      "description": "Body text. Read BEFORE `message`; defaults to `Are you sure?`."
+      "description": "Body text. Read BEFORE `message`; defaults to `Are you sure?`.",
+      "default": "this is the confirm message"
     }
   },
   "events": {

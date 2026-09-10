@@ -18,22 +18,22 @@
     "label": {
       "type": "string",
       "description": "Input label text",
-      "default": ""
+      "default": "this is the label"
     },
     "placeholder": {
       "type": "string",
       "description": "Placeholder text",
-      "default": ""
+      "default": "this is the placeholder"
     },
     "value": {
       "type": "string",
       "description": "Input value",
-      "default": ""
+      "default": "this is the value"
     },
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "inputType": {
       "type": "string",
@@ -55,12 +55,12 @@
     "helper": {
       "type": "string",
       "description": "Helper text below input",
-      "default": ""
+      "default": "this is the helper"
     },
     "error": {
       "type": "string",
       "description": "Error message (shows error state)",
-      "default": ""
+      "default": "this is the error"
     },
     "variant": {
       "type": "string",
@@ -102,7 +102,7 @@
     "icon": {
       "type": "string",
       "description": "Icon (emoji or icon name)",
-      "default": ""
+      "default": "this is the icon"
     },
     "iconPosition": {
       "type": "string",

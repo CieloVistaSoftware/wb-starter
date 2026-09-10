@@ -8,12 +8,12 @@
     "description": {
       "type": "string",
       "description": "Popover body text. Only used when `popover-content` is absent.",
-      "default": ""
+      "default": "this is the description"
     },
     "heading": {
       "type": "string",
       "description": "Popover heading. Only used when `popover-title` is absent.",
-      "default": ""
+      "default": "this is the heading"
     },
     "trigger": {
       "type": "string",
@@ -27,11 +27,13 @@
     },
     "popover-content": {
       "type": "string",
-      "description": "Popover body text. Read BEFORE `description`."
+      "description": "Popover body text. Read BEFORE `description`.",
+      "default": "this is the popover content"
     },
     "popover-title": {
       "type": "string",
-      "description": "Popover heading. Read BEFORE `heading`."
+      "description": "Popover heading. Read BEFORE `heading`.",
+      "default": "this is the popover title"
     }
   },
   "_metadata": {

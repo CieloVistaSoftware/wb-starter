@@ -8,7 +8,7 @@
     "items": {
       "type": "string",
       "description": "Comma-separated trail labels, e.g. `Home,Docs,Behaviors`. Split on commas — a label containing a comma cannot be expressed.",
-      "default": ""
+      "default": "this is the items"
     },
     "separator": {
       "type": "string",

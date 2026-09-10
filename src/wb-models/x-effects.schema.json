@@ -5,19 +5,61 @@
   "type": "object",
   "description": "Schema for x-effects attributes (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter).",
   "properties": {
-    "x-animate": { "type": "boolean" },
-    "x-fadein": { "type": "boolean" },
-    "x-fadeout": { "type": "boolean" },
-    "x-slidein": { "type": "boolean" },
-    "x-confetti": { "type": "boolean" },
-    "x-typewriter": { "type": "boolean" }
+    "x-animate": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-fadein": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-fadeout": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-slidein": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-confetti": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-typewriter": {
+      "type": "boolean",
+      "default": false
+    }
   },
   "anyOf": [
-    { "required": ["x-animate"] },
-    { "required": ["x-fadein"] },
-    { "required": ["x-fadeout"] },
-    { "required": ["x-slidein"] },
-    { "required": ["x-confetti"] },
-    { "required": ["x-typewriter"] }
+    {
+      "required": [
+        "x-animate"
+      ]
+    },
+    {
+      "required": [
+        "x-fadein"
+      ]
+    },
+    {
+      "required": [
+        "x-fadeout"
+      ]
+    },
+    {
+      "required": [
+        "x-slidein"
+      ]
+    },
+    {
+      "required": [
+        "x-confetti"
+      ]
+    },
+    {
+      "required": [
+        "x-typewriter"
+      ]
+    }
   ]
 }

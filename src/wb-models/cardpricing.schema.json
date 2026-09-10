@@ -19,13 +19,13 @@
       "type": "string",
       "description": "Plan name (e.g., Basic, Pro, Enterprise)",
       "required": true,
-      "default": ""
+      "default": "this is the plan"
     },
     "price": {
       "type": "string",
       "description": "Price amount (e.g., $29)",
       "required": true,
-      "default": ""
+      "default": "this is the price"
     },
     "period": {
       "type": "string",
@@ -35,12 +35,12 @@
     "description": {
       "type": "string",
       "description": "Short plan description",
-      "default": ""
+      "default": "this is the description"
     },
     "features": {
       "type": "string",
       "description": "Comma-separated list of features",
-      "default": ""
+      "default": "this is the features"
     },
     "cta": {
       "type": "string",

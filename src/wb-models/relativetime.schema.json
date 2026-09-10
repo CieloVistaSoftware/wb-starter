@@ -8,7 +8,7 @@
     "datetime": {
       "type": "string",
       "description": "Alias of `date`, read only when `date` is absent.",
-      "default": ""
+      "default": "this is the datetime"
     },
     "refresh": {
       "type": "string",
@@ -17,7 +17,8 @@
     },
     "date": {
       "type": "string",
-      "description": "The timestamp to describe. `datetime` is accepted as an alias; `date` is read first."
+      "description": "The timestamp to describe. `datetime` is accepted as an alias; `date` is read first.",
+      "default": "this is the date"
     }
   },
   "_metadata": {

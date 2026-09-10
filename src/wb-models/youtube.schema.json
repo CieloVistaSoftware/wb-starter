@@ -7,15 +7,18 @@
   "properties": {
     "url": {
       "type": "string",
-      "description": "A full YouTube watch or share URL. The id is extracted from it, so use this OR `video-id`, not both."
+      "description": "A full YouTube watch or share URL. The id is extracted from it, so use this OR `video-id`, not both.",
+      "default": "#"
     },
     "video-id": {
       "type": "string",
-      "description": "The 11-character YouTube id — the `v=` value in a watch URL. Use this OR `url`."
+      "description": "The 11-character YouTube id — the `v=` value in a watch URL. Use this OR `url`.",
+      "default": "this is the video id"
     },
     "controls": {
       "type": "string",
-      "description": "Show YouTube's own player controls. Without them the video can only be driven by script."
+      "description": "Show YouTube's own player controls. Without them the video can only be driven by script.",
+      "default": "this is the controls"
     },
     "autoplay": {
       "type": "boolean",

@@ -18,22 +18,22 @@
     "src": {
       "type": "string",
       "description": "Image source URL",
-      "default": ""
+      "default": "#"
     },
     "alt": {
       "type": "string",
       "description": "Alt text for image",
-      "default": ""
+      "default": "this is the alt"
     },
     "initials": {
       "type": "string",
       "description": "Fallback initials (2 chars)",
-      "default": ""
+      "default": "this is the initials"
     },
     "name": {
       "type": "string",
       "description": "Full name (generates initials if not provided)",
-      "default": ""
+      "default": "this is the name"
     },
     "size": {
       "type": "string",

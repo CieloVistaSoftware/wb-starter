@@ -30,7 +30,7 @@
     "label": {
       "type": "string",
       "description": "Progress label text",
-      "default": ""
+      "default": "this is the label"
     },
     "showValue": {
       "type": "boolean",

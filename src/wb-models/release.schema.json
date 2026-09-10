@@ -12,7 +12,8 @@
     },
     "reload": {
       "type": "string",
-      "description": "Clear caches and reload when the badge is activated. On unless set to `\"false\"`."
+      "description": "Clear caches and reload when the badge is activated. On unless set to `\"false\"`.",
+      "default": "this is the reload"
     }
   },
   "_metadata": {

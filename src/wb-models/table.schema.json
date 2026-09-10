@@ -18,12 +18,12 @@
     "data": {
       "type": "string",
       "description": "Table data as JSON array",
-      "default": ""
+      "default": "this is the data"
     },
     "columns": {
       "type": "string",
       "description": "Column config as JSON [{key, label, sortable}]",
-      "default": ""
+      "default": "this is the columns"
     },
     "sortable": {
       "type": "boolean",
@@ -71,12 +71,12 @@
     },
     "headers": {
       "type": "string",
-      "default": "",
+      "default": "this is the headers",
       "description": "Comma-separated column headings."
     },
     "rows": {
       "type": "string",
-      "default": "",
+      "default": "this is the rows",
       "description": "JSON array-of-arrays of row data."
     },
     "searchable": {
@@ -259,7 +259,7 @@
   },
   "_metadata": {
     "category": "data",
-    "icon": "\ud83d\udcca",
+    "icon": "📊",
     "since": "1.0.0",
     "status": "stable"
   },

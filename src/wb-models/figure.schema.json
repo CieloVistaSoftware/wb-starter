@@ -17,11 +17,13 @@
     },
     "lightbox": {
       "type": "string",
-      "description": "Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox=\"false\"` to disable it."
+      "description": "Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox=\"false\"` to disable it.",
+      "default": "this is the lightbox"
     },
     "caption": {
       "type": "string",
-      "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none."
+      "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none.",
+      "default": "this is the caption"
     }
   },
   "_metadata": {

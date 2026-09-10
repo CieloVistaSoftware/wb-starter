@@ -38,7 +38,7 @@
     "source": {
       "type": "string",
       "description": "Data source URL for fetching articles dynamically",
-      "default": ""
+      "default": "this is the source"
     },
     "pagination": {
       "type": "boolean",

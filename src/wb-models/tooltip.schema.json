@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Tooltip text content",
       "required": true,
-      "default": ""
+      "default": "this is the content"
     },
     "position": {
       "type": "string",

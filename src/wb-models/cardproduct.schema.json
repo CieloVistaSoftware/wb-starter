@@ -18,34 +18,34 @@
     "image": {
       "type": "string",
       "description": "Product image URL",
-      "default": ""
+      "default": "this is the image"
     },
     "title": {
       "type": "string",
       "description": "Product name",
       "required": true,
-      "default": ""
+      "default": "this is the title"
     },
     "description": {
       "type": "string",
       "description": "Product description",
-      "default": ""
+      "default": "this is the description"
     },
     "price": {
       "type": "string",
       "description": "Current price",
       "required": true,
-      "default": ""
+      "default": "this is the price"
     },
     "originalPrice": {
       "type": "string",
       "description": "Original price (shows discount)",
-      "default": ""
+      "default": "this is the original price"
     },
     "badge": {
       "type": "string",
       "description": "Badge text (Sale, New, etc.)",
-      "default": ""
+      "default": "this is the badge"
     },
     "rating": {
       "type": "number",

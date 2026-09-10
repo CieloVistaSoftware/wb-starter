@@ -18,12 +18,12 @@
     "label": {
       "type": "string",
       "description": "Chip text content",
-      "default": ""
+      "default": "this is the label"
     },
     "icon": {
       "type": "string",
       "description": "Leading icon",
-      "default": ""
+      "default": "this is the icon"
     },
     "dismissible": {
       "type": "boolean",

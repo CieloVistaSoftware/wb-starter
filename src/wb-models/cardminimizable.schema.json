@@ -19,12 +19,12 @@
       "type": "string",
       "description": "Card title (always visible)",
       "required": true,
-      "default": ""
+      "default": "this is the title"
     },
     "content": {
       "type": "string",
       "description": "Minimizable content",
-      "default": ""
+      "default": "this is the content"
     },
     "minimized": {
       "type": "boolean",

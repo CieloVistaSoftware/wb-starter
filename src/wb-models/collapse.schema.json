@@ -22,7 +22,7 @@
     },
     "target": {
       "type": "string",
-      "default": "",
+      "default": "this is the target",
       "description": "CSS selector of a remote element to toggle instead of wrapping content"
     }
   },

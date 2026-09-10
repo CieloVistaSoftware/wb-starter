@@ -24,17 +24,17 @@
     "poster": {
       "type": "string",
       "description": "Poster image URL",
-      "default": ""
+      "default": "#"
     },
     "title": {
       "type": "string",
       "description": "Video title",
-      "default": ""
+      "default": "this is the title"
     },
     "description": {
       "type": "string",
       "description": "Video description",
-      "default": ""
+      "default": "this is the description"
     },
     "autoplay": {
       "type": "boolean",

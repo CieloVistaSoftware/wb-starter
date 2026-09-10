@@ -17,7 +17,8 @@
     },
     "show-seconds": {
       "type": "string",
-      "description": "Show the seconds field. On unless set to `\"false\"`."
+      "description": "Show the seconds field. On unless set to `\"false\"`.",
+      "default": "this is the show seconds"
     }
   },
   "_metadata": {

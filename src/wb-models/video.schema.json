@@ -8,15 +8,17 @@
     "poster": {
       "type": "string",
       "description": "Image shown before playback starts, and after the video ends. Without one the first frame is used, which is often black.",
-      "default": ""
+      "default": "#"
     },
     "controls": {
       "type": "string",
-      "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script."
+      "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script.",
+      "default": "this is the controls"
     },
     "playsinline": {
       "type": "string",
-      "description": "Play inline on mobile rather than taking over the screen. iOS goes fullscreen by default without it."
+      "description": "Play inline on mobile rather than taking over the screen. iOS goes fullscreen by default without it.",
+      "default": "this is the playsinline"
     },
     "autoplay": {
       "type": "boolean",

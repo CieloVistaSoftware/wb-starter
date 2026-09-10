@@ -8,7 +8,7 @@
     "target": {
       "type": "string",
       "description": "CSS selector for the element to expand. Empty means the document element.",
-      "default": ""
+      "default": "this is the target"
     },
     "label": {
       "type": "string",

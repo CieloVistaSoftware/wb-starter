@@ -18,12 +18,12 @@
     "title": {
       "type": "string",
       "description": "Dialog title",
-      "default": ""
+      "default": "this is the title"
     },
     "content": {
       "type": "string",
       "description": "Dialog body content",
-      "default": ""
+      "default": "this is the content"
     },
     "size": {
       "type": "string",

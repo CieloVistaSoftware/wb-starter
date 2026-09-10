@@ -22,7 +22,7 @@
     "handle": {
       "type": "string",
       "description": "Selector for drag handle",
-      "default": ""
+      "default": "this is the handle"
     }
   },
   "$view": [],

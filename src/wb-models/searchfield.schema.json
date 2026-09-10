@@ -32,7 +32,8 @@
     },
     "clearable": {
       "type": "string",
-      "description": "Show a clear (×) control once there is text. On unless set to `\"false\"`."
+      "description": "Show a clear (×) control once there is text. On unless set to `\"false\"`.",
+      "default": "this is the clearable"
     },
     "disabled": {
       "type": "boolean",

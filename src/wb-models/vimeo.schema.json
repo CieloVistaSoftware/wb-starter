@@ -7,7 +7,8 @@
   "properties": {
     "video-id": {
       "type": "string",
-      "description": "The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed."
+      "description": "The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed.",
+      "default": "this is the video id"
     },
     "autoplay": {
       "type": "boolean",

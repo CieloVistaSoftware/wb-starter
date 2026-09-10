@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Path to external markdown file",
       "attribute": "src",
-      "default": ""
+      "default": "#"
     },
     "sanitize": {
       "type": "boolean",

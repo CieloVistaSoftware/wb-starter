@@ -13,25 +13,27 @@
     "message": {
       "type": "string",
       "description": "Body text. Only used when `prompt-message` is absent.",
-      "default": ""
+      "default": "this is the message"
     },
     "placeholder": {
       "type": "string",
       "description": "Placeholder shown in the empty input.",
-      "default": ""
+      "default": "this is the placeholder"
     },
     "default-value": {
       "type": "string",
       "description": "Value the input starts with, already selected so typing replaces it.",
-      "default": ""
+      "default": "this is the default value"
     },
     "prompt-title": {
       "type": "string",
-      "description": "Dialog heading. Read BEFORE `heading`; defaults to `Input`."
+      "description": "Dialog heading. Read BEFORE `heading`; defaults to `Input`.",
+      "default": "this is the prompt title"
     },
     "prompt-message": {
       "type": "string",
-      "description": "Body text above the field. Read BEFORE `message`."
+      "description": "Body text above the field. Read BEFORE `message`.",
+      "default": "this is the prompt message"
     }
   },
   "events": {

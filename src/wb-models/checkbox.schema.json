@@ -19,7 +19,7 @@
     "label": {
       "type": "string",
       "description": "Label text",
-      "default": ""
+      "default": "this is the label"
     },
     "checked": {
       "type": "boolean",
@@ -39,12 +39,12 @@
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "value": {
       "type": "string",
       "description": "Form field value",
-      "default": ""
+      "default": "this is the value"
     },
     "required": {
       "type": "boolean",
@@ -78,7 +78,9 @@
       "tag": "input",
       "public": false,
       "required": true,
-      "attributes": { "type": "checkbox" },
+      "attributes": {
+        "type": "checkbox"
+      },
       "description": "Hidden native checkbox"
     },
     {

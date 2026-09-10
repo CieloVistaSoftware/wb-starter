@@ -19,12 +19,12 @@
       "type": "string",
       "description": "Toast notification message",
       "required": true,
-      "default": ""
+      "default": "this is the message"
     },
     "title": {
       "type": "string",
       "description": "Toast title (optional)",
-      "default": ""
+      "default": "this is the title"
     },
     "variant": {
       "type": "string",
@@ -41,7 +41,7 @@
     "icon": {
       "type": "string",
       "description": "Icon (emoji or icon name)",
-      "default": ""
+      "default": "this is the icon"
     },
     "duration": {
       "type": "number",
@@ -71,12 +71,12 @@
     "action": {
       "type": "string",
       "description": "Action button text",
-      "default": ""
+      "default": "this is the action"
     },
     "actionHref": {
       "type": "string",
       "description": "Action button link URL",
-      "default": ""
+      "default": "#"
     }
   },
   "$view": [

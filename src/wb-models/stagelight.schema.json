@@ -54,7 +54,7 @@
     "label": {
       "type": "string",
       "description": "Label for the fixture variant",
-      "default": ""
+      "default": "this is the label"
     }
   },
   "$view": [

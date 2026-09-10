@@ -75,32 +75,32 @@
     "name": {
       "type": "string",
       "description": "Unique identifier for the behavior",
-      "default": ""
+      "default": "this is the name"
     },
     "src": {
       "type": "string",
-      "default": "",
+      "default": "#",
       "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
     },
     "type": {
       "$ref": "#/definitions/behaviorType",
       "type": "string",
-      "default": ""
+      "default": "this is the type"
     },
     "category": {
       "$ref": "#/definitions/behaviorCategory",
       "type": "string",
-      "default": ""
+      "default": "this is the category"
     },
     "description": {
       "type": "string",
       "description": "Human-readable description of what the behavior does",
-      "default": ""
+      "default": "this is the description"
     },
     "selector": {
       "type": "string",
       "description": "CSS selector that identifies elements this behavior applies to",
-      "default": ""
+      "default": "this is the selector"
     },
     "attributes": {
       "type": "object",

@@ -8,7 +8,7 @@
     "items": {
       "type": "string",
       "description": "Comma-separated step labels, e.g. `Details,Payment,Confirm`. Whitespace around each is trimmed.",
-      "default": ""
+      "default": "this is the items"
     },
     "current": {
       "type": "string",

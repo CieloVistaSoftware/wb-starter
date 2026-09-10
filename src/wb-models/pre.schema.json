@@ -7,19 +7,23 @@
   "properties": {
     "language": {
       "type": "string",
-      "description": "Language for syntax highlighting (e.g. `html`, `js`, `css`). Falls back to a `language` on the inner `<code>`, then to none — an unset language renders plain, uncoloured text."
+      "description": "Language for syntax highlighting (e.g. `html`, `js`, `css`). Falls back to a `language` on the inner `<code>`, then to none — an unset language renders plain, uncoloured text.",
+      "default": "this is the language"
     },
     "scrollable": {
       "type": "string",
-      "description": "When `\"true\"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing."
+      "description": "When `\"true\"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing.",
+      "default": "this is the scrollable"
     },
     "show-line-numbers": {
       "type": "string",
-      "description": "Line numbers in a gutter beside the code. On unless set to `\"false\"`."
+      "description": "Line numbers in a gutter beside the code. On unless set to `\"false\"`.",
+      "default": "this is the show line numbers"
     },
     "max-height": {
       "type": "string",
-      "description": "A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page."
+      "description": "A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page.",
+      "default": "this is the max height"
     },
     "wrap": {
       "type": "boolean",
@@ -28,7 +32,8 @@
     },
     "size": {
       "type": "string",
-      "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`."
+      "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
+      "default": "this is the size"
     },
     "show-copy": {
       "type": "boolean",

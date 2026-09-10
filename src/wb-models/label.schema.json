@@ -4,10 +4,30 @@
   "type": "object",
   "description": "Schema for x-label behavior. Goes directly on a form control (input, select, textarea); its value is the label text. Creates a real <label>, associates it via for/id, and inserts it right before the control (to its left) by default.",
   "properties": {
-    "x-label": { "type": "string", "description": "The label text", "default": "" },
-    "label-position": { "type": "string", "enum": ["left", "right"], "description": "Which side of the control the label renders on. \"right\" is for RTL layouts (Hebrew, Arabic).", "default": "left" },
-    "required": { "type": "boolean", "description": "Mark label as required", "default": false },
-    "optional": { "type": "boolean", "description": "Mark label as optional", "default": false }
+    "x-label": {
+      "type": "string",
+      "description": "The label text",
+      "default": "this is the x label"
+    },
+    "label-position": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "description": "Which side of the control the label renders on. \"right\" is for RTL layouts (Hebrew, Arabic).",
+      "default": "left"
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Mark label as required",
+      "default": false
+    },
+    "optional": {
+      "type": "boolean",
+      "description": "Mark label as optional",
+      "default": false
+    }
   },
   "required": [],
   "schemaFor": "label",
@@ -26,27 +46,47 @@
       "<input x-label='Label text' id='test-label' type='text'>"
     ],
     "permutations": [
-      { "required": true, "optional": false },
-      { "required": false, "optional": true },
-      { "required": false, "optional": false }
+      {
+        "required": true,
+        "optional": false
+      },
+      {
+        "required": false,
+        "optional": true
+      },
+      {
+        "required": false,
+        "optional": false
+      }
     ],
     "assertions": [
       {
         "description": "Generates a <label for> pointing at the control, with the attribute's value as its text",
         "selector": "label",
-        "checks": { "hasClass": "x-label", "textContains": "Label text" }
+        "checks": {
+          "hasClass": "x-label",
+          "textContains": "Label text"
+        }
       },
       {
         "description": "Required state applies x-label--required class",
         "selector": "label",
-        "checks": { "hasClass": "x-label--required" },
-        "when": { "required": true }
+        "checks": {
+          "hasClass": "x-label--required"
+        },
+        "when": {
+          "required": true
+        }
       },
       {
         "description": "Optional state applies x-label--optional class",
         "selector": "label",
-        "checks": { "hasClass": "x-label--optional" },
-        "when": { "optional": true }
+        "checks": {
+          "hasClass": "x-label--optional"
+        },
+        "when": {
+          "optional": true
+        }
       }
     ]
   }

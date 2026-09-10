@@ -24,27 +24,27 @@
     "alt": {
       "type": "string",
       "description": "Image alt text (accessibility)",
-      "default": ""
+      "default": "this is the alt"
     },
     "title": {
       "type": "string",
       "description": "Card title",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Card subtitle",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "caption": {
       "type": "string",
       "description": "Image caption (displayed below image)",
-      "default": ""
+      "default": "this is the caption"
     },
     "href": {
       "type": "string",
       "description": "Link URL (makes card clickable)",
-      "default": ""
+      "default": "#"
     },
     "aspect": {
       "type": "string",

@@ -17,11 +17,13 @@
     },
     "date": {
       "type": "string",
-      "description": "Target date/time to count down to. `to` is accepted as an alias; `date` is read first."
+      "description": "Target date/time to count down to. `to` is accepted as an alias; `date` is read first.",
+      "default": "this is the date"
     },
     "to": {
       "type": "string",
-      "description": "Alias of `date`, read only when `date` is absent."
+      "description": "Alias of `date`, read only when `date` is absent.",
+      "default": "this is the to"
     }
   },
   "events": {

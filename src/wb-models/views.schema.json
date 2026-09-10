@@ -18,18 +18,18 @@
     "$schema": {
       "type": "string",
       "description": "Reference to this schema file",
-      "default": ""
+      "default": "this is the $schema"
     },
     "version": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version of the views registry",
-      "default": ""
+      "default": "this is the version"
     },
     "description": {
       "type": "string",
       "description": "Description of this views registry",
-      "default": ""
+      "default": "this is the description"
     },
     "views": {
       "type": "object",

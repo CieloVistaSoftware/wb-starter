@@ -8,7 +8,7 @@
     "x-copybutton": {
       "type": "string",
       "description": "The attribute value doubles as the CSS selector for what to copy — `x-copybutton=\"#snippet\"`. Leave it empty to copy the host element's own text.",
-      "default": ""
+      "default": "this is the x copybutton"
     },
     "label": {
       "type": "string",
@@ -32,7 +32,8 @@
     },
     "copy-target": {
       "type": "string",
-      "description": "CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first."
+      "description": "CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first.",
+      "default": "this is the copy target"
     }
   },
   "events": {

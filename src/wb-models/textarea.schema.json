@@ -19,22 +19,22 @@
     "label": {
       "type": "string",
       "description": "Field label",
-      "default": ""
+      "default": "this is the label"
     },
     "placeholder": {
       "type": "string",
       "description": "Placeholder text",
-      "default": ""
+      "default": "this is the placeholder"
     },
     "value": {
       "type": "string",
       "description": "Text value",
-      "default": ""
+      "default": "this is the value"
     },
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "rows": {
       "type": "number",

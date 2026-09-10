@@ -13,7 +13,7 @@
     "size": {
       "type": "string",
       "description": "Fixed thumbnail size (e.g. `150px`), independent of the column count — use it when you want uniform tiles rather than columns dividing the width.",
-      "default": ""
+      "default": "this is the size"
     },
     "gap": {
       "type": "string",
@@ -22,7 +22,8 @@
     },
     "lightbox": {
       "type": "string",
-      "description": "Clicking any item opens it full-size in a lightbox."
+      "description": "Clicking any item opens it full-size in a lightbox.",
+      "default": "this is the lightbox"
     }
   },
   "_metadata": {

@@ -27,15 +27,18 @@
     },
     "aria-disabled": {
       "type": "string",
-      "description": "Set to `\"true\"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author."
+      "description": "Set to `\"true\"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author.",
+      "default": "this is the aria disabled"
     },
     "action": {
       "type": "string",
-      "description": "Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand."
+      "description": "Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand.",
+      "default": "this is the action"
     },
     "page": {
       "type": "string",
-      "description": "Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current=\"page\"`."
+      "description": "Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current=\"page\"`.",
+      "default": "this is the page"
     }
   },
   "events": {

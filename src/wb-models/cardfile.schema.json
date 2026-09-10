@@ -19,7 +19,7 @@
       "type": "string",
       "description": "File name",
       "required": true,
-      "default": ""
+      "default": "this is the filename"
     },
     "fileType": {
       "type": "string",
@@ -38,17 +38,17 @@
     "size": {
       "type": "string",
       "description": "File size (e.g., 2.4 MB)",
-      "default": ""
+      "default": "this is the size"
     },
     "date": {
       "type": "string",
       "description": "File date",
-      "default": ""
+      "default": "this is the date"
     },
     "href": {
       "type": "string",
       "description": "Download URL",
-      "default": ""
+      "default": "#"
     },
     "downloadable": {
       "type": "boolean",
@@ -68,7 +68,7 @@
     "hoverText": {
       "type": "string",
       "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
-      "default": "",
+      "default": "this is the hover text",
       "appliesAttribute": "x-tooltip"
     }
   },

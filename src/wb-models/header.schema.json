@@ -18,22 +18,22 @@
     "icon": {
       "type": "string",
       "description": "Logo icon (emoji or text)",
-      "default": ""
+      "default": "this is the icon"
     },
     "title": {
       "type": "string",
       "description": "Header title",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Subtitle text",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "badge": {
       "type": "string",
       "description": "Badge text (e.g., version)",
-      "default": ""
+      "default": "this is the badge"
     },
     "logoHref": {
       "type": "string",

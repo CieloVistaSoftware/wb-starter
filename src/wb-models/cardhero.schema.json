@@ -19,33 +19,33 @@
       "type": "string",
       "description": "Background image URL",
       "required": true,
-      "default": ""
+      "default": "this is the background"
     },
     "title": {
       "type": "string",
       "description": "Hero headline",
       "required": true,
-      "default": ""
+      "default": "this is the title"
     },
     "pretitle": {
       "type": "string",
       "description": "Small label or count shown above the title (e.g. '100 Behaviors')",
-      "default": ""
+      "default": "this is the pretitle"
     },
     "subtitle": {
       "type": "string",
       "description": "Hero tagline/subheadline",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "content": {
       "type": "string",
       "description": "HTML content rendered in the hero content area (allows attribute-only usage instead of slots)",
-      "default": ""
+      "default": "this is the content"
     },
     "cta": {
       "type": "string",
       "description": "Call-to-action button text",
-      "default": ""
+      "default": "this is the cta"
     },
     "ctaHref": {
       "type": "string",
@@ -55,7 +55,7 @@
     "ctaSecondary": {
       "type": "string",
       "description": "Secondary CTA text",
-      "default": ""
+      "default": "this is the cta secondary"
     },
     "ctaSecondaryHref": {
       "type": "string",

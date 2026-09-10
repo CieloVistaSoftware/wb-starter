@@ -18,12 +18,12 @@
     "title": {
       "type": "string",
       "description": "Drawer title",
-      "default": ""
+      "default": "this is the title"
     },
     "content": {
       "type": "string",
       "description": "Drawer body content",
-      "default": ""
+      "default": "this is the content"
     },
     "position": {
       "type": "string",

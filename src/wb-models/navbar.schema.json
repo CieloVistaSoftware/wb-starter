@@ -18,7 +18,7 @@
     "brand": {
       "type": "string",
       "description": "Brand text",
-      "default": ""
+      "default": "this is the brand"
     },
     "brandHref": {
       "type": "string",
@@ -28,7 +28,7 @@
     "logo": {
       "type": "string",
       "description": "Logo image URL",
-      "default": ""
+      "default": "this is the logo"
     },
     "logoSize": {
       "type": "string",
@@ -38,12 +38,12 @@
     "tagline": {
       "type": "string",
       "description": "Brand tagline or subtitle",
-      "default": ""
+      "default": "this is the tagline"
     },
     "items": {
       "type": "string",
       "description": "Navigation items as JSON [{label, href}]",
-      "default": ""
+      "default": "this is the items"
     },
     "sticky": {
       "type": "boolean",

@@ -16,12 +16,12 @@
       "type": "string",
       "format": "date-time",
       "description": "ISO timestamp when index was generated",
-      "default": ""
+      "default": "this is the $generated"
     },
     "$version": {
       "type": "string",
       "description": "Schema version for cache busting",
-      "default": ""
+      "default": "this is the $version"
     },
     "$stats": {
       "type": "object",

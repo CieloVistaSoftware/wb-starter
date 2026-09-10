@@ -23,12 +23,12 @@
     "value": {
       "type": "string",
       "description": "Search value",
-      "default": ""
+      "default": "this is the value"
     },
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "debounce": {
       "type": "number",

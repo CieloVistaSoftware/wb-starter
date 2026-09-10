@@ -5,9 +5,21 @@
   "type": "object",
   "description": "Schema for x-stepper behavior (numeric stepper)",
   "properties": {
-    "min": { "type": "number", "description": "Minimum value" },
-    "max": { "type": "number", "description": "Maximum value" },
-    "step": { "type": "number", "description": "Step increment" }
+    "min": {
+      "type": "number",
+      "description": "Minimum value",
+      "default": 0
+    },
+    "max": {
+      "type": "number",
+      "description": "Maximum value",
+      "default": 0
+    },
+    "step": {
+      "type": "number",
+      "description": "Step increment",
+      "default": 0
+    }
   },
   "required": [],
   "wbBehavior": {

@@ -19,17 +19,17 @@
       "type": "string",
       "description": "Background image URL",
       "required": true,
-      "default": ""
+      "default": "this is the image"
     },
     "title": {
       "type": "string",
       "description": "Overlay title",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Overlay subtitle",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "position": {
       "type": "string",

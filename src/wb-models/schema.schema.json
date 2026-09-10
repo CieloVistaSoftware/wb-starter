@@ -56,15 +56,18 @@
   "properties": {
     "src": {
       "type": "string",
-      "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
+      "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')",
+      "default": "#"
     },
     "category": {
       "type": "string",
-      "description": "Behavior category (e.g. 'inputs', 'buttons', etc.)"
+      "description": "Behavior category (e.g. 'inputs', 'buttons', etc.)",
+      "default": "this is the category"
     },
     "name": {
       "type": "string",
-      "description": "Unique identifier for the behavior"
+      "description": "Unique identifier for the behavior",
+      "default": "this is the name"
     },
     "schemaType": {
       "type": "string",
@@ -79,37 +82,44 @@
     },
     "$schema": {
       "type": "string",
-      "description": "JSON Schema draft reference"
+      "description": "JSON Schema draft reference",
+      "default": "this is the $schema"
     },
     "$id": {
       "type": "string",
       "description": "Schema identifier (filename)",
-      "pattern": "^[a-z][a-z0-9-]*\\.schema\\.json$"
+      "pattern": "^[a-z][a-z0-9-]*\\.schema\\.json$",
+      "default": "this is the $id"
     },
     "title": {
       "type": "string",
       "minLength": 1,
-      "description": "Human-readable behavior name"
+      "description": "Human-readable behavior name",
+      "default": "this is the title"
     },
     "description": {
       "type": "string",
       "minLength": 1,
-      "description": "What this behavior does"
+      "description": "What this behavior does",
+      "default": "this is the description"
     },
     "behavior": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$",
-      "description": "Behavior name in kebab-case"
+      "description": "Behavior name in kebab-case",
+      "default": "this is the behavior"
     },
     "schemaFor": {
       "type": "string",
       "pattern": "^[a-z][a-z0-9-]*$",
-      "description": "Legacy behavior identifier (prefer 'behavior')"
+      "description": "Legacy behavior identifier (prefer 'behavior')",
+      "default": "this is the schema for"
     },
     "baseClass": {
       "type": "string",
       "pattern": "^wb-[a-z][a-z0-9-]*$",
-      "description": "Base CSS class (BEM block). Must start with wb-"
+      "description": "Base CSS class (BEM block). Must start with wb-",
+      "default": "this is the base class"
     },
     "semanticElement": {
       "type": "object",

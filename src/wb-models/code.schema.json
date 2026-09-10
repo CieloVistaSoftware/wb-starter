@@ -7,19 +7,23 @@
   "properties": {
     "language": {
       "type": "string",
-      "description": "Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text."
+      "description": "Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text.",
+      "default": "this is the language"
     },
     "variant": {
       "type": "string",
-      "description": "Visual treatment of the code span or block — controls the surface it is drawn on."
+      "description": "Visual treatment of the code span or block — controls the surface it is drawn on.",
+      "default": "this is the variant"
     },
     "scrollable": {
       "type": "string",
-      "description": "When `\"true\"`, scroll horizontally rather than wrapping long lines."
+      "description": "When `\"true\"`, scroll horizontally rather than wrapping long lines.",
+      "default": "this is the scrollable"
     },
     "size": {
       "type": "string",
-      "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`."
+      "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
+      "default": "this is the size"
     },
     "show-copy": {
       "type": "boolean",

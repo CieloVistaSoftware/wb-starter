@@ -18,12 +18,12 @@
     "image": {
       "type": "string",
       "description": "Image URL",
-      "default": ""
+      "default": "this is the image"
     },
     "imageAlt": {
       "type": "string",
       "description": "Image alt text",
-      "default": ""
+      "default": "this is the image alt"
     },
     "imagePosition": {
       "type": "string",
@@ -43,12 +43,12 @@
     "title": {
       "type": "string",
       "description": "Card title",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Card subtitle",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "variant": {
       "type": "string",

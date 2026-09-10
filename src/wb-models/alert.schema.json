@@ -30,13 +30,13 @@
     "title": {
       "type": "string",
       "description": "Alert title (optional heading)",
-      "default": ""
+      "default": "this is the title"
     },
     "message": {
       "type": "string",
       "description": "Alert message content",
       "required": true,
-      "default": ""
+      "default": "this is the message"
     },
     "icon": {
       "type": "string",

@@ -8,17 +8,17 @@
     "placeholder": {
       "type": "string",
       "description": "Image shown while the real `src` loads. Replaced the moment the real image decodes.",
-      "default": ""
+      "default": "this is the placeholder"
     },
     "fallback": {
       "type": "string",
       "description": "Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty.",
-      "default": ""
+      "default": "this is the fallback"
     },
     "aspect-ratio": {
       "type": "string",
       "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
-      "default": ""
+      "default": "this is the aspect ratio"
     },
     "lazy": {
       "type": "boolean",

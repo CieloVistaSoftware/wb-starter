@@ -18,7 +18,7 @@
     "label": {
       "type": "string",
       "description": "Select label",
-      "default": ""
+      "default": "this is the label"
     },
     "placeholder": {
       "type": "string",
@@ -28,17 +28,17 @@
     "options": {
       "type": "string",
       "description": "Options as JSON [{value, label}]",
-      "default": ""
+      "default": "this is the options"
     },
     "value": {
       "type": "string",
       "description": "Selected value",
-      "default": ""
+      "default": "this is the value"
     },
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "searchable": {
       "type": "boolean",

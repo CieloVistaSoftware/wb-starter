@@ -4,8 +4,16 @@
   "type": "object",
   "description": "Schema for x-masked behavior (input masking)",
   "properties": {
-    "mask": { "type": "string", "description": "Input mask pattern (e.g. '999-99-9999')", "default": "" },
-    "placeholder": { "type": "string", "description": "Mask placeholder character", "default": "" }
+    "mask": {
+      "type": "string",
+      "description": "Input mask pattern (e.g. '999-99-9999')",
+      "default": "this is the mask"
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Mask placeholder character",
+      "default": "this is the placeholder"
+    }
   },
   "required": [],
   "schemaFor": "masked",
