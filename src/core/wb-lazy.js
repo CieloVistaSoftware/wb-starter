@@ -1291,7 +1291,23 @@ const NON_BEHAVIOR_X_ATTRIBUTES = new Set([
   'x-ready',      // completion signal
   'x-schema',     // marks schema-built elements
   'x-unknown-behavior', // set by this reporter
+  // STATE MARKERS written by behaviours onto their own host once applied. They
+  // are output, not input, so an element carrying one is working correctly.
+  //
+  // These were missed because the first list was built by grepping src/core/
+  // ONLY -- and markers are set by the BEHAVIOURS, in src/wb-viewmodels/. The
+  // check then reported x-hydrated on the behaviors page: a false positive on
+  // correct markup, which is the one thing that makes a check worth ignoring.
+  // The full list comes from grepping setAttribute('x-*') across all of src/.
+  'x-hydrated',
 ]);
+
+/**
+ * `<behaviour>-init` markers — x-autosize-init, x-datepicker-init, x-diff-init.
+ * Three exist and the naming is a convention, so match the shape rather than
+ * chase each new one into the list above.
+ */
+const STATE_MARKER_SUFFIX = /-init$/;
 
 /**
  * Every attribute that DOES name a behaviour.
@@ -1327,6 +1343,7 @@ function reportUnknownBehaviorAttributes(root) {
       const name = attr.name;
       if (!name.startsWith('x-')) { continue; }
       if (NON_BEHAVIOR_X_ATTRIBUTES.has(name)) { continue; }
+      if (STATE_MARKER_SUFFIX.test(name)) { continue; }
       if (known.has(name)) { continue; }
 
       let seen = reportedUnknown.get(element);

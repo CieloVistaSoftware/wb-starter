@@ -487,6 +487,28 @@ export async function mdhtml(element, options = {}) {
         );
         if (!isRenderable) return;
 
+        // A PLACEHOLDER IS NOT A DEMO.
+        //
+        // The generated docs carry an "On a different element" example whose
+        // whole body is an ellipsis:
+        //
+        //     <div x-cardhero>
+        //       …
+        //     </div>
+        //
+        // It exists to show WHERE the attribute goes, not what the behavior
+        // produces. Rendering it live gives an empty component containing "…"
+        // — John: "doesn't show card hero at all just three dots". 32 behavior
+        // docs carry one.
+        //
+        // Left as a code sample, which is what it always was. Only examples with
+        // real content become live demos.
+        const meaningful = (tpl.content.textContent || '')
+            .replace(/[….\s]/g, '');
+        const hasContentAttributes = Array.from(tpl.content.querySelectorAll('*')).some((el) =>
+            Array.from(el.attributes).some((a) => !a.name.startsWith('x-') && a.value.trim() !== ''));
+        if (!meaningful && !hasContentAttributes) return;
+
         // A DIV CARRYING THE ATTRIBUTE, not an <x-demo> TAG.
         //
         // This created document.createElement('x-demo'). WB dispatches x-demo on
