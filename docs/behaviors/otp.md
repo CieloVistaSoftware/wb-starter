@@ -16,7 +16,7 @@ Schema for x-otp behavior (one-time password input)
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `length` | `integer` | — | Number of OTP digits |
+| `length` | `integer` | `0` | Number of OTP digits |
 
 ## Live example
 

@@ -31,9 +31,9 @@ Use `x-cardvideo` when the host is not a `<article>` and you want the same behav
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `src` | `string` | `https://www.w3schools.com/html/mov_bbb.mp4` | Video source URL |
-| `poster` | `string` | — | Poster image URL |
-| `title` | `string` | — | Video title |
-| `description` | `string` | — | Video description |
+| `poster` | `string` | `#` | Poster image URL |
+| `title` | `string` | `this is the title` | Video title |
+| `description` | `string` | `this is the description` | Video description |
 | `autoplay` | `boolean` | `false` | Auto-play video (requires muted) |
 | `muted` | `boolean` | `false` | Mute video |
 | `loop` | `boolean` | `false` | Loop video playback |

@@ -18,7 +18,7 @@ Behavior applied with x-clock.
 | --- | --- | --- | --- |
 | `variant` | `string` | `digital` | Clock face: `digital` (default) or the analogue rendering. |
 | `format` | `string` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. |
-| `show-seconds` | `string` | — | Show the seconds field. On unless set to `"false"`. |
+| `show-seconds` | `string` | `this is the show seconds` | Show the seconds field. On unless set to `"false"`. |
 
 ## Live example
 

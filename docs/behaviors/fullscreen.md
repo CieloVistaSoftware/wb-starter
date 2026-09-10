@@ -18,7 +18,7 @@ Behavior applied with x-fullscreen.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | CSS selector for the element to expand. Empty means the document element. |
+| `target` | `string` | `this is the target` | CSS selector for the element to expand. Empty means the document element. |
 | `label` | `string` | `⛶ Fullscreen` | Button label when not fullscreen. Defaults to `⛶ Fullscreen`. |
 
 ## Live example

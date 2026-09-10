@@ -41,7 +41,7 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 | --- | --- | --- | --- |
 | `value` | `number` | `0` | Current progress value (0-100) |
 | `max` | `number` | `100` | Maximum value |
-| `label` | `string` | — | Progress label text |
+| `label` | `string` | `this is the label` | Progress label text |
 | `show-value` | `boolean` | `false` | Show percentage value |
 | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `primary` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | Bar height size |

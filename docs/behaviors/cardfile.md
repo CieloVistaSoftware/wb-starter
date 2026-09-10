@@ -26,14 +26,14 @@ Use `x-cardfile` when the host is not a `<article>` and you want the same behavi
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `filename` | `string` | — | File name |
+| `filename` | `string` | `this is the filename` | File name |
 | `file-type` | `pdf` · `doc` · `image` · `video` · `audio` · `zip` · `file` | `file` | File type for icon |
-| `size` | `string` | — | File size (e.g., 2.4 MB) |
-| `date` | `string` | — | File date |
-| `href` | `string` | — | Download URL |
+| `size` | `string` | `this is the size` | File size (e.g., 2.4 MB) |
+| `date` | `string` | `this is the date` | File date |
+| `href` | `string` | `#` | Download URL |
 | `downloadable` | `boolean` | `true` | Show download link |
 | `variant` | `default` · `compact` · `elevated` | `default` |  |
-| `hover-text` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hover-text` | `string` | `this is the hover text` | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 

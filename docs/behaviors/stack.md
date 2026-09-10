@@ -19,9 +19,9 @@ Vertical stack layout behavior. Renders children in a column with configurable g
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `gap` | `string` | `1rem` | CSS gap between stacked children. Accepts any valid CSS length value. |
-| `bg` | `string` | — | Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables. |
-| `pad` | `string` | — | CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges). |
-| `radius` | `string` | — | CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value. |
+| `bg` | `string` | `this is the bg` | Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables. |
+| `pad` | `string` | `this is the pad` | CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges). |
+| `radius` | `string` | `this is the radius` | CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value. |
 
 ## Live example
 

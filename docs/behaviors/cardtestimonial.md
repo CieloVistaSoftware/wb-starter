@@ -31,10 +31,10 @@ Use `x-cardtestimonial` when the host is not a `<article>` and you want the same
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `quote` | `string` | — | Testimonial quote text |
-| `author` | `string` | — | Author name |
-| `role` | `string` | — | Author role/title/company |
-| `avatar` | `string` | — | Author avatar image URL |
+| `quote` | `string` | `this is the quote` | Testimonial quote text |
+| `author` | `string` | `this is the author` | Author name |
+| `role` | `string` | `this is the role` | Author role/title/company |
+| `avatar` | `string` | `this is the avatar` | Author avatar image URL |
 | `rating` | `number` | `0` | Star rating (0-5) |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` · `centered` | `default` | Visual style variant |
 | `size` | `sm` · `md` · `lg` | `md` | Card size |

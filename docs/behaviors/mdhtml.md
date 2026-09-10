@@ -16,7 +16,7 @@ Renders Markdown content as HTML, either from inline content or external source
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | — | Path to external markdown file |
+| `src` | `string` | `#` | Path to external markdown file |
 | `sanitize` | `boolean` | `true` |  |
 | `gfm` | `boolean` | `true` |  |
 

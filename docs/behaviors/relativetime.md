@@ -16,9 +16,9 @@ Behavior applied with x-relativetime.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `datetime` | `string` | — | Alias of `date`, read only when `date` is absent. |
+| `datetime` | `string` | `this is the datetime` | Alias of `date`, read only when `date` is absent. |
 | `refresh` | `string` | `60000` | How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute. |
-| `date` | `string` | — | The timestamp to describe. `datetime` is accepted as an alias; `date` is read first. |
+| `date` | `string` | `this is the date` | The timestamp to describe. `datetime` is accepted as an alias; `date` is read first. |
 
 ## Live example
 

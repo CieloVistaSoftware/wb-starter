@@ -22,9 +22,9 @@ Behavior applied with x-gallery.
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `columns` | `string` | `3` | Number of columns in the grid. Defaults to `3`. |
-| `size` | `string` | — | Fixed thumbnail size (e.g. `150px`), independent of the column count — use it when you want uniform tiles rather than columns dividing the width. |
+| `size` | `string` | `this is the size` | Fixed thumbnail size (e.g. `150px`), independent of the column count — use it when you want uniform tiles rather than columns dividing the width. |
 | `gap` | `string` | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
-| `lightbox` | `string` | — | Clicking any item opens it full-size in a lightbox. |
+| `lightbox` | `string` | `this is the lightbox` | Clicking any item opens it full-size in a lightbox. |
 
 ## Live example
 

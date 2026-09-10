@@ -20,9 +20,9 @@ Behavior applied with x-pagination.
 | `per-page` | `string` | `10` | Items per page. Defaults to `10`. |
 | `pages` | `string` | `0` | Explicit page count. Overrides the count derived from `total`/`per-page`. |
 | `current` | `string` | `1` | Active page, counting from **1**. Defaults to `1`. |
-| `aria-disabled` | `string` | — | Set to `"true"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author. |
-| `action` | `string` | — | Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand. |
-| `page` | `string` | — | Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current="page"`. |
+| `aria-disabled` | `string` | `this is the aria disabled` | Set to `"true"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author. |
+| `action` | `string` | `this is the action` | Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand. |
+| `page` | `string` | `this is the page` | Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current="page"`. |
 
 ## Events
 

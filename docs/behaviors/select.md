@@ -33,11 +33,11 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Select label |
+| `label` | `string` | `this is the label` | Select label |
 | `placeholder` | `string` | `Select...` | Placeholder text |
-| `options` | `string` | — | Options as JSON [{value, label}] |
-| `value` | `string` | — | Selected value |
-| `name` | `string` | — | Form field name |
+| `options` | `string` | `this is the options` | Options as JSON [{value, label}] |
+| `value` | `string` | `this is the value` | Selected value |
+| `name` | `string` | `this is the name` | Form field name |
 | `searchable` | `boolean` | `false` | Enable search |
 | `clearable` | `boolean` | `false` | Enable clear button |
 | `multiple` | `boolean` | `false` | Allow multiple selection |

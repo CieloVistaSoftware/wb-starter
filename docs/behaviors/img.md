@@ -29,9 +29,9 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `placeholder` | `string` | — | Image shown while the real `src` loads. Replaced the moment the real image decodes. |
-| `fallback` | `string` | — | Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty. |
-| `aspect-ratio` | `string` | — | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
+| `placeholder` | `string` | `this is the placeholder` | Image shown while the real `src` loads. Replaced the moment the real image decodes. |
+| `fallback` | `string` | `this is the fallback` | Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty. |
+| `aspect-ratio` | `string` | `this is the aspect ratio` | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
 | `lazy` | `boolean` | `false` | Sets `loading="lazy"`, so the browser defers fetching until the image nears the viewport. Bare attribute. |
 | `data-lazy` | `boolean` | `false` | The `data-` spelling of `lazy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `lazy`. |
 | `zoomable` | `boolean` | `false` | Clicking the image opens it full-size in a lightbox. Bare attribute. |

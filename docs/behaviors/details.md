@@ -47,9 +47,9 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `summary` | `string` | — | Clickable summary text |
+| `summary` | `string` | `this is the summary` | Clickable summary text |
 | `open` | `boolean` | `false` | Initially expanded |
-| `name` | `string` | — | Accordion group name (native exclusive behavior) |
+| `name` | `string` | `this is the name` | Accordion group name (native exclusive behavior) |
 | `animated` | `boolean` | `true` | Animate open/close |
 | `variant` | `default` · `bordered` · `filled` | `default` |  |
 

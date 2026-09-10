@@ -43,10 +43,10 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `copyright` | `string` | — | Copyright text |
-| `brand` | `string` | — | Brand name |
-| `links` | `string` | — | Navigation links as JSON [{label, href}] |
-| `social` | `string` | — | Social links as JSON [{platform, href}] |
+| `copyright` | `string` | `this is the copyright` | Copyright text |
+| `brand` | `string` | `this is the brand` | Brand name |
+| `links` | `string` | `this is the links` | Navigation links as JSON [{label, href}] |
+| `social` | `string` | `this is the social` | Social links as JSON [{platform, href}] |
 | `sticky` | `boolean` | `false` | Sticky at bottom |
 
 ## Methods

@@ -16,7 +16,7 @@ Behavior applied with x-vimeo.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `video-id` | `string` | — | The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed. |
+| `video-id` | `string` | `this is the video id` | The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed. |
 | `autoplay` | `boolean` | `false` | Begin playing on load. Browsers block autoplay with sound, so it needs `muted` to work unattended. |
 | `data-autoplay` | `boolean` | `false` | The `data-` spelling of `autoplay`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `autoplay`. |
 | `muted` | `boolean` | `false` | Start with audio silenced. Required for `autoplay` to be permitted. |

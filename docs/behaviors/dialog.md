@@ -49,8 +49,8 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Dialog title |
-| `content` | `string` | — | Dialog body content |
+| `title` | `string` | `this is the title` | Dialog title |
+| `content` | `string` | `this is the content` | Dialog body content |
 | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` |  |
 | `close-on-backdrop` | `boolean` | `true` | Close on backdrop click |
 | `close-on-escape` | `boolean` | `true` | Close on Escape key |

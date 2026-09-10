@@ -22,8 +22,8 @@ Behavior applied with x-confirm.
 | `message` | `string` | `Are you sure?` | Body text. Only used when `confirm-message` is absent. |
 | `confirm-text` | `string` | `OK` | Label on the confirming button. Defaults to `OK`. |
 | `cancel-text` | `string` | `Cancel` | Label on the dismissing button. Defaults to `Cancel`. |
-| `confirm-title` | `string` | — | Dialog heading. Read BEFORE `heading`; defaults to `Confirm`. |
-| `confirm-message` | `string` | — | Body text. Read BEFORE `message`; defaults to `Are you sure?`. |
+| `confirm-title` | `string` | `this is the confirm title` | Dialog heading. Read BEFORE `heading`; defaults to `Confirm`. |
+| `confirm-message` | `string` | `this is the confirm message` | Body text. Read BEFORE `message`; defaults to `Are you sure?`. |
 
 ## Events
 

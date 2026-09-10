@@ -34,8 +34,8 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 | --- | --- | --- | --- |
 | `caption-position` | `string` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
 | `zoom` | `boolean` | `false` | Clicking the image opens it at full size. Bare attribute. |
-| `lightbox` | `string` | — | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
-| `caption` | `string` | — | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |
+| `lightbox` | `string` | `this is the lightbox` | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
+| `caption` | `string` | `this is the caption` | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |
 
 ## Live example
 

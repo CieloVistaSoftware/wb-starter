@@ -31,10 +31,10 @@ Use `x-cardlink` when the host is not a `<article>` and you want the same behavi
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `href` | `string` | `https://example.com` | Link destination URL |
-| `title` | `string` | — | Card title |
-| `description` | `string` | — | Card description text |
-| `icon` | `string` | — | Icon (emoji or icon name) |
-| `badge` | `string` | — | Badge text |
+| `title` | `string` | `this is the title` | Card title |
+| `description` | `string` | `this is the description` | Card description text |
+| `icon` | `string` | `this is the icon` | Icon (emoji or icon name) |
+| `badge` | `string` | `this is the badge` | Badge text |
 | `target` | `_self` · `_blank` | `_self` | Link target |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` · `glass` | `default` | Visual style variant |
 

@@ -16,9 +16,9 @@ Schema for x-stepper behavior (numeric stepper)
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `min` | `number` | — | Minimum value |
-| `max` | `number` | — | Maximum value |
-| `step` | `number` | — | Step increment |
+| `min` | `number` | `0` | Minimum value |
+| `max` | `number` | `0` | Maximum value |
+| `step` | `number` | `0` | Step increment |
 
 ## Live example
 

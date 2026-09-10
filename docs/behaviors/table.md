@@ -46,8 +46,8 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `data` | `string` | — | Table data as JSON array |
-| `columns` | `string` | — | Column config as JSON [{key, label, sortable}] |
+| `data` | `string` | `this is the data` | Table data as JSON array |
+| `columns` | `string` | `this is the columns` | Column config as JSON [{key, label, sortable}] |
 | `sortable` | `boolean` | `true` | Enable column sorting |
 | `filterable` | `boolean` | `false` | Enable filtering |
 | `paginated` | `boolean` | `false` | Enable pagination |
@@ -56,8 +56,8 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 | `hoverable` | `boolean` | `true` | Hover effect on rows |
 | `compact` | `boolean` | `false` | Compact row spacing |
 | `bordered` | `boolean` | `false` | Cell borders |
-| `headers` | `string` | — | Comma-separated column headings. |
-| `rows` | `string` | — | JSON array-of-arrays of row data. |
+| `headers` | `string` | `this is the headers` | Comma-separated column headings. |
+| `rows` | `string` | `this is the rows` | JSON array-of-arrays of row data. |
 | `searchable` | `boolean` | `false` | Show a filter input above the table. Alias of filterable. |
 | `copyable` | `boolean` | `false` | Add a control that copies the table as text. |
 | `selectable` | `boolean` | `false` | Let a row be clicked to become the active row. |

@@ -18,7 +18,7 @@ Behavior applied with x-print.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | CSS selector for the region to print. Empty prints the whole page. |
+| `target` | `string` | `this is the target` | CSS selector for the region to print. Empty prints the whole page. |
 | `label` | `string` | `🖨️ Print` | Button label. Defaults to `🖨️ Print`. |
 
 ## Live example

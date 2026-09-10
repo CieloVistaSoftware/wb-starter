@@ -16,7 +16,7 @@ Behavior applied with x-breadcrumb.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `string` | — | Comma-separated trail labels, e.g. `Home,Docs,Behaviors`. Split on commas — a label containing a comma cannot be expressed. |
+| `items` | `string` | `this is the items` | Comma-separated trail labels, e.g. `Home,Docs,Behaviors`. Split on commas — a label containing a comma cannot be expressed. |
 | `separator` | `string` | `/` | Character drawn between items. Defaults to `/`. |
 
 ## Live example

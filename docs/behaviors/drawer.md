@@ -28,8 +28,8 @@ Use `x-drawer` when the host is not a `<aside>` and you want the same behavior:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Drawer title |
-| `content` | `string` | — | Drawer body content |
+| `title` | `string` | `this is the title` | Drawer title |
+| `content` | `string` | `this is the content` | Drawer body content |
 | `position` | `left` · `right` · `top` · `bottom` | `right` |  |
 | `width` | `string` | `320px` | Drawer width (left/right) |
 | `height` | `string` | `auto` | Drawer height (top/bottom) |

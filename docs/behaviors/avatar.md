@@ -16,10 +16,10 @@ User avatar with image, initials fallback, and status indicator
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | — | Image source URL |
-| `alt` | `string` | — | Alt text for image |
-| `initials` | `string` | — | Fallback initials (2 chars) |
-| `name` | `string` | — | Full name (generates initials if not provided) |
+| `src` | `string` | `#` | Image source URL |
+| `alt` | `string` | `this is the alt` | Alt text for image |
+| `initials` | `string` | `this is the initials` | Fallback initials (2 chars) |
+| `name` | `string` | `this is the name` | Full name (generates initials if not provided) |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `2xl` | `md` |  |
 | `shape` | `circle` · `square` · `rounded` | `circle` |  |
 | `status` | `` · `online` · `offline` · `busy` · `away` | — | Status indicator (empty = no indicator) |

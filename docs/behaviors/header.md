@@ -43,10 +43,10 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `icon` | `string` | — | Logo icon (emoji or text) |
-| `title` | `string` | — | Header title |
-| `subtitle` | `string` | — | Subtitle text |
-| `badge` | `string` | — | Badge text (e.g., version) |
+| `icon` | `string` | `this is the icon` | Logo icon (emoji or text) |
+| `title` | `string` | `this is the title` | Header title |
+| `subtitle` | `string` | `this is the subtitle` | Subtitle text |
+| `badge` | `string` | `this is the badge` | Badge text (e.g., version) |
 | `logo-href` | `string` | `/` | Logo link URL |
 | `sticky` | `boolean` | `false` | Sticky at top |
 

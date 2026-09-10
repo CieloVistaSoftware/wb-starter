@@ -31,12 +31,12 @@ Use `x-cardproduct` when the host is not a `<article>` and you want the same beh
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | — | Product image URL |
-| `title` | `string` | — | Product name |
-| `description` | `string` | — | Product description |
-| `price` | `string` | — | Current price |
-| `original-price` | `string` | — | Original price (shows discount) |
-| `badge` | `string` | — | Badge text (Sale, New, etc.) |
+| `image` | `string` | `this is the image` | Product image URL |
+| `title` | `string` | `this is the title` | Product name |
+| `description` | `string` | `this is the description` | Product description |
+| `price` | `string` | `this is the price` | Current price |
+| `original-price` | `string` | `this is the original price` | Original price (shows discount) |
+| `badge` | `string` | `this is the badge` | Badge text (Sale, New, etc.) |
 | `rating` | `number` | `0` | Product rating (0-5) |
 | `reviews` | `number` | `0` | Number of reviews |
 | `cta` | `string` | `Add to Cart` | CTA button text |

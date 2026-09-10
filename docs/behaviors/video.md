@@ -29,9 +29,9 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `poster` | `string` | — | Image shown before playback starts, and after the video ends. Without one the first frame is used, which is often black. |
-| `controls` | `string` | — | Show the browser's native play/pause/seek controls. Without them the video can only be driven by script. |
-| `playsinline` | `string` | — | Play inline on mobile rather than taking over the screen. iOS goes fullscreen by default without it. |
+| `poster` | `string` | `#` | Image shown before playback starts, and after the video ends. Without one the first frame is used, which is often black. |
+| `controls` | `string` | `this is the controls` | Show the browser's native play/pause/seek controls. Without them the video can only be driven by script. |
+| `playsinline` | `string` | `this is the playsinline` | Play inline on mobile rather than taking over the screen. iOS goes fullscreen by default without it. |
 | `autoplay` | `boolean` | `false` | Begin playing on load. Browsers block autoplay with sound, so this needs `muted` to work unattended. |
 | `data-autoplay` | `boolean` | `false` | The `data-` spelling of `autoplay`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `autoplay`. |
 | `muted` | `boolean` | `false` | Start with the audio track silenced. Required for `autoplay` to be allowed. |

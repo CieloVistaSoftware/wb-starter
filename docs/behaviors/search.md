@@ -17,8 +17,8 @@ Search input behavior with icon and debounced search events
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `placeholder` | `string` | `Search...` | Placeholder text |
-| `value` | `string` | — | Search value |
-| `name` | `string` | — | Form field name |
+| `value` | `string` | `this is the value` | Search value |
+| `name` | `string` | `this is the name` | Form field name |
 | `debounce` | `number` | `300` | Debounce delay in milliseconds |
 | `instant` | `boolean` | `false` | Search on every keystroke (no debounce) |
 | `disabled` | `boolean` | `false` | Disabled state |

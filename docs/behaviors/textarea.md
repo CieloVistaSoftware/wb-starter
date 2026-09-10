@@ -32,10 +32,10 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Field label |
-| `placeholder` | `string` | — | Placeholder text |
-| `value` | `string` | — | Text value |
-| `name` | `string` | — | Form field name |
+| `label` | `string` | `this is the label` | Field label |
+| `placeholder` | `string` | `this is the placeholder` | Placeholder text |
+| `value` | `string` | `this is the value` | Text value |
+| `name` | `string` | `this is the name` | Form field name |
 | `rows` | `number` | `3` | Visible rows |
 | `max-length` | `number` | `0` | Max character limit |
 | `show-count` | `boolean` | `false` | Show character count |

@@ -18,8 +18,8 @@ Behavior applied with x-countdown.
 | --- | --- | --- | --- |
 | `seconds` | `string` | `0` | A fixed duration in seconds, used instead of an absolute `date`. |
 | `format` | `string` | `auto` | How the remaining time is rendered. `auto` (default) drops units that are zero. |
-| `date` | `string` | — | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. |
-| `to` | `string` | — | Alias of `date`, read only when `date` is absent. |
+| `date` | `string` | `this is the date` | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. |
+| `to` | `string` | `this is the to` | Alias of `date`, read only when `date` is absent. |
 
 ## Events
 

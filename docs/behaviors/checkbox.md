@@ -36,12 +36,12 @@ already has.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Label text |
+| `label` | `string` | `this is the label` | Label text |
 | `checked` | `boolean` | `false` | Checked state |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `indeterminate` | `boolean` | `false` | Indeterminate state |
-| `name` | `string` | — | Form field name |
-| `value` | `string` | — | Form field value |
+| `name` | `string` | `this is the name` | Form field name |
+| `value` | `string` | `this is the value` | Form field value |
 | `required` | `boolean` | `false` | Required field |
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `primary` · `success` | `default` |  |

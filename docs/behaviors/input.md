@@ -33,19 +33,19 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Input label text |
-| `placeholder` | `string` | — | Placeholder text |
-| `value` | `string` | — | Input value |
-| `name` | `string` | — | Form field name |
+| `label` | `string` | `this is the label` | Input label text |
+| `placeholder` | `string` | `this is the placeholder` | Placeholder text |
+| `value` | `string` | `this is the value` | Input value |
+| `name` | `string` | `this is the name` | Form field name |
 | `input-type` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type |
-| `helper` | `string` | — | Helper text below input |
-| `error` | `string` | — | Error message (shows error state) |
+| `helper` | `string` | `this is the helper` | Helper text below input |
+| `error` | `string` | `this is the error` | Error message (shows error state) |
 | `variant` | `default` · `success` · `error` | `default` | Visual validation state |
 | `size` | `sm` · `md` · `lg` | `md` | Input size |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `readonly` | `boolean` | `false` | Read-only state |
 | `required` | `boolean` | `false` | Required field |
-| `icon` | `string` | — | Icon (emoji or icon name) |
+| `icon` | `string` | `this is the icon` | Icon (emoji or icon name) |
 | `icon-position` | `start` · `end` | `start` | Icon position |
 | `clearable` | `boolean` | `false` | Show clear button when has value |
 

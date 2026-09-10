@@ -31,9 +31,9 @@ Use `x-cardnotification` when the host is not a `<aside>` and you want the same 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `info` · `success` · `warning` · `error` | `info` | Notification type/severity |
-| `title` | `string` | — | Notification title |
-| `message` | `string` | — | Notification message |
-| `icon` | `string` | — | Custom icon (overrides variant-based icon) |
+| `title` | `string` | `this is the title` | Notification title |
+| `message` | `string` | `this is the message` | Notification message |
+| `icon` | `string` | `this is the icon` | Custom icon (overrides variant-based icon) |
 | `dismissible` | `boolean` | `true` | Show dismiss button |
 | `elevated` | `boolean` | `false` | Add shadow elevation |
 
