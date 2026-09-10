@@ -160,6 +160,7 @@ import { pubsub } from './pubsub.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { createInjectionTracker } from './injection-tracker.js';
+import { teachByExample } from './teach-by-example.js';
 
 // Global dev/test diagnostics: surface uncaught errors/rejections to console so Playwright traces capture them.
 try {
@@ -485,6 +486,12 @@ const WB = {
       // touches the DOM, so there's no flash of unstyled content on a
       // behavior's first use in a session (#342).
       await ensureBehaviorCss(behaviorName);
+
+      // An empty invocation is a cry for help — answer it by demonstrating.
+      // Shared with wb-lazy.js: doc-viewer.html loads THIS runtime, the demo
+      // pages load that one, and the same empty <div x-cardhero> has to teach
+      // in both. Written once so the two cannot drift (#333, #1056).
+      await teachByExample(element, behaviorName);
 
       // Apply behavior
       // Pass schemaProcessed flag so behavior knows DOM is already built

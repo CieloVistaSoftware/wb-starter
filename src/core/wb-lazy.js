@@ -23,6 +23,7 @@ import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 import { createInjectionTracker } from './injection-tracker.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
+import { teachByExample } from './teach-by-example.js';
 
 // Debug logging — silent unless localStorage['x-debug'] names a category
 // (or is '1' for everything). Was forced true|| for a while; reverted per
@@ -626,6 +627,9 @@ const WB = {
       if (!element.isConnected) {
         return null;
       }
+
+      // An empty invocation is a cry for help — answer it by demonstrating.
+      await teachByExample(element, behaviorName);
 
       // Apply behavior
       const cleanup = behaviorFn(element, options);
@@ -1300,6 +1304,11 @@ const NON_BEHAVIOR_X_ATTRIBUTES = new Set([
   // correct markup, which is the one thing that makes a check worth ignoring.
   // The full list comes from grepping setAttribute('x-*') across all of src/.
   'x-hydrated',
+  // Written by teachByExample onto an element it filled in. Same mistake as
+  // x-hydrated, made again the same day: a new marker added without adding it
+  // here, so the reporter flagged output it had produced itself.
+  'x-docs',
+  'x-teaching-example',
 ]);
 
 /**
@@ -1364,6 +1373,8 @@ function reportUnknownBehaviorAttributes(root) {
     }
   }
 }
+
+
 
 // Global export
 if (typeof window !== 'undefined') {

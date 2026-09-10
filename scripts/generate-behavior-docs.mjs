@@ -224,6 +224,46 @@ function usage(token, schema) {
   return `<div ${token}>\n  …\n</div>`;
 }
 
+/**
+ * The "On a different element" example, on a <div> host.
+ *
+ * This was hardcoded to `<div ${token}>\n  …\n</div>`. The ellipsis gives the
+ * behavior nothing to show: x-cardhero on that div DOES build a hero card
+ * (classes x-card--hero x-hero, min-height 400px, three children) — it is just
+ * empty, so a reader sees a blank box with three dots and concludes the behavior
+ * is broken. John: "<div x-cardhero> … </div> doesn't show card hero at all just
+ * three dots."
+ *
+ * The curated example already carries real attributes and content. Reuse it and
+ * swap the host tag for a div, which is exactly what this section is
+ * demonstrating: the same behavior on a different element. The example then
+ * RENDERS, and shows its markup, which is what every doc is supposed to do.
+ *
+ * Falls back to the placeholder only when there is no curated example to borrow
+ * from — nothing better exists, and mdhtml leaves a content-free snippet as a
+ * code sample rather than rendering an empty component.
+ */
+function alternateHostUsage(token, schema) {
+  const curated = examples[token]?.source;
+  if (!curated) return `<div ${token}>\n  …\n</div>`;
+
+  const source = docSafeAssets(curated);
+  const open = source.match(/^\s*<\s*([a-zA-Z][\w-]*)([\s\S]*?)>/);
+  if (!open) return `<div ${token}>\n  …\n</div>`;
+
+  const hostTag = open[1];
+  if (hostTag.toLowerCase() === 'div') return source;   // already a div
+
+  let attrs = open[2];
+  // The host tag carried the behavior implicitly; a <div> does not, so the
+  // attribute becomes load-bearing and has to be written out.
+  if (!new RegExp(`(^|\\s)${token}(\\s|=|$)`).test(attrs)) attrs = ` ${token}${attrs}`;
+
+  const rest = source.slice(open[0].length);
+  const closed = rest.replace(new RegExp(`</\\s*${hostTag}\\s*>\\s*$`, 'i'), '</div>');
+  return `<div${attrs}>${closed === rest ? `${rest}\n</div>` : closed}`;
+}
+
 function buildDoc({ token, docName }) {
   const schema = schemaFor(docName);
   const title = schema?.title || docName.replace(/(^|-)(\w)/g, (_, s, c) => (s ? ' ' : '') + c.toUpperCase());
@@ -269,9 +309,7 @@ function buildDoc({ token, docName }) {
       `Use \`${token}\` when the host is not a \`<${tag}>\` and you want the same behavior:`,
       '',
       '```html',
-      `<div ${token}>
-  …
-</div>`,
+      alternateHostUsage(token, schema),
       '```',
       '',
     );
