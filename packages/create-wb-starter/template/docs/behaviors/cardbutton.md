@@ -30,12 +30,12 @@ Use `x-cardbutton` when the host is not a `<article>` and you want the same beha
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title |
-| `content` | `string` | — | Card content/description |
-| `primary` | `string` | — | Primary button text |
-| `primary-href` | `string` | — | Primary button link URL |
-| `secondary` | `string` | — | Secondary button text |
-| `secondary-href` | `string` | — | Secondary button link URL |
+| `title` | `string` | `this is the title` | Card title |
+| `content` | `string` | `this is the content` | Card content/description |
+| `primary` | `string` | `this is the primary` | Primary button text |
+| `primary-href` | `string` | `#` | Primary button link URL |
+| `secondary` | `string` | `this is the secondary` | Secondary button text |
+| `secondary-href` | `string` | `#` | Secondary button link URL |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 
 ## Events

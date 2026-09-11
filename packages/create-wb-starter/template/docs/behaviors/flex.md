@@ -18,11 +18,11 @@ Behavior applied with x-flex.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `direction` | `string` | `row` | Read by flex(). |
-| `wrap` | `string` | `wrap` | Read by flex(). |
-| `justify` | `string` | `flex-start` | Read by flex(). |
-| `align` | `string` | `stretch` | Read by flex(). |
-| `gap` | `string` | `1rem` | Read by flex(). |
+| `direction` | `string` | `row` | Flex direction: `row` (default) or `column`, plus the `-reverse` forms. Maps to CSS `flex-direction`. |
+| `wrap` | `string` | `wrap` | Whether items wrap onto more lines: `wrap` (default) or `nowrap`. Maps to CSS `flex-wrap`. |
+| `justify` | `string` | `flex-start` | Distribution along the main axis — `flex-start` (default), `center`, `space-between`, and the rest of CSS `justify-content`. |
+| `align` | `string` | `stretch` | Alignment across the cross axis — `stretch` (default), `center`, `flex-start`, and the rest of CSS `align-items`. |
+| `gap` | `string` | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
 
 ## Live example
 

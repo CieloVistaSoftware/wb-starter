@@ -16,7 +16,7 @@ Vertical timeline behavior for displaying sequential events
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `string` | — | Comma-separated list of timeline items |
+| `items` | `string` | `this is the items` | Comma-separated list of timeline items |
 
 ## Methods
 

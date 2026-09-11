@@ -590,7 +590,25 @@ function Counter() {
     // reasoning as x-demo.js's own EAGER_BUILD_COUNT for small pages).
     // Awaited AFTER WB.init()'s own scan settles, so this doesn't race the
     // same element's lazy registration.
-    const soleDemo = document.querySelector('x-demo');
+    //
+    // The selector is the ATTRIBUTE form, not a tag name. This used to look
+    // for a TAG that cannot exist: 4.0.0 removed custom elements, so a demo
+    // is only ever the x-demo ATTRIBUTE on a plain host (tag-map.js maps the
+    // attribute, never a tag). The tag lookup returned null on every load,
+    // so the eager scan this comment describes never ran once and the demo
+    // stayed lazily registered exactly as the comment above warns --
+    // including its CSS. src/styles/behaviors/demo.css is JIT-loaded by
+    // WB.inject() (style-loader.js), so an unbuilt demo has NO demo.css at
+    // all and renders with zero padding, breaking DEMOS-AND-DOCS-
+    // STANDARDS.md §13's ">= 1rem padding inside example/demo containers" --
+    // measured 0px. Same tag-vs-attribute bug demo.js's own source
+    // extraction already hit and fixed (#934).
+    //
+    // NB: no tag-shaped text in this comment on purpose. page-source-cache.js
+    // strips HTML comments before its ordinal scan but NOT JS ones, so a
+    // literal open-tag mention here would be counted as a real demo occurrence
+    // and mis-attribute this page's source panel (the #580/#934 incident).
+    const soleDemo = document.querySelector('[x-demo]');
     if (soleDemo) await WB.scan(soleDemo.parentElement, { eager: true });
 
   </script>

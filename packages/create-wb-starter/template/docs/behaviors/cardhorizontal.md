@@ -31,12 +31,12 @@ Use `x-cardhorizontal` when the host is not a `<article>` and you want the same 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | — | Image URL |
-| `image-alt` | `string` | — | Image alt text |
+| `image` | `string` | `this is the image` | Image URL |
+| `image-alt` | `string` | `this is the image alt` | Image alt text |
 | `image-position` | `left` · `right` | `left` | Image position |
 | `image-width` | `string` | `40%` | Image width (CSS value) |
-| `title` | `string` | — | Card title |
-| `subtitle` | `string` | — | Card subtitle |
+| `title` | `string` | `this is the title` | Card title |
+| `subtitle` | `string` | `this is the subtitle` | Card subtitle |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` | `default` | Visual style variant |
 
 ## Methods

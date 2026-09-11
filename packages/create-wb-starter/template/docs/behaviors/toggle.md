@@ -19,7 +19,7 @@ Toggle visibility or state of another element.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | — | Selector of target element |
+| `target` | `string` | `this is the target` | Selector of target element |
 
 ## Live example
 

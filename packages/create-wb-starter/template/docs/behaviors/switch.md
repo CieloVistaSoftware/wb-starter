@@ -16,11 +16,11 @@ Toggle switch for boolean settings
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Switch label |
+| `label` | `string` | `this is the label` | Switch label |
 | `checked` | `boolean` | `false` | On/off state |
 | `disabled` | `boolean` | `false` | Disabled state |
-| `name` | `string` | — | Form field name |
-| `value` | `string` | — | Form field value when checked |
+| `name` | `string` | `this is the name` | Form field name |
+| `value` | `string` | `this is the value` | Form field value when checked |
 | `label-position` | `start` · `end` | `end` |  |
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `primary` · `success` | `default` |  |

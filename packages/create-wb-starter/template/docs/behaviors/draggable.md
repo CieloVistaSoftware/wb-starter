@@ -17,7 +17,7 @@ Make an element draggable.
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `axis` | `x` · `y` · `both` | `both` |  |
-| `handle` | `string` | — | Selector for drag handle |
+| `handle` | `string` | `this is the handle` | Selector for drag handle |
 
 ## Live example
 

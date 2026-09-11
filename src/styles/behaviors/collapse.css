@@ -46,7 +46,17 @@ x-collapse, [x-collapse]{
 }
 
 .x-collapse__content {
-  padding: 0.75rem 1rem;
+  /* DEMOS-AND-DOCS-STANDARDS.md §13 ("Every example has proper margins &
+     padding"): a bordered, background-filled panel holding block text must
+     give that text >= 1rem of breathing room, and the value must come from
+     the --space-* scale rather than an ad-hoc number. This was
+     `0.75rem 1rem` -- 12px top/bottom, under the 1rem floor, so the panel's
+     own copy sat cramped against its top and bottom borders (flagged live
+     on demos/site/interactive.html: "This is example collapse content."
+     measured 12px on its tightest side). --space-md IS 1rem, and it also
+     matches the trigger's own 1rem horizontal inset, so the trigger's label
+     and the content text stay on the same left edge. */
+  padding: var(--space-md, 1rem);
   border: 1px solid var(--border-color, #374151);
   border-top: none;
   border-radius: 0 0 6px 6px;

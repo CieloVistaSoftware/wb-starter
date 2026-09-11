@@ -59,6 +59,11 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '..');
 const BASELINE_PATH = join(REPO, 'data', 'test-baseline-failures.json');
 const FAILURES_PATH = join(REPO, 'data', 'test-results', 'failures.json');
+
+// Upper bound on one full Playwright run. ~47 minutes is normal at 4 workers;
+// 75 leaves room for a slow run while guaranteeing a stuck one ends. Before
+// this existed a stalled run held a commit for 13 hours with no output.
+const RUN_TIMEOUT_MS = (Number(process.env.WB_GATE_TIMEOUT_MIN) || 75) * 60 * 1000;
 const PROJECTS = ['compliance', 'regression', 'behaviors'];
 
 const update = process.argv.includes('--update');
@@ -161,8 +166,29 @@ function runGate(port) {
       encoding: 'utf8',
       stdio: ['ignore', 'inherit', 'inherit'],
       env: { ...process.env, ...(port ? { WB_TEST_PORT: String(port) } : {}) },
+      // A GATE THAT CAN NEITHER PASS NOR FAIL IS THE WORST KIND.
+      //
+      // This spawnSync had no timeout, so a Playwright run that stalled -- a
+      // webServer that never came up, a worker wedged on a port -- blocked the
+      // commit forever with no output. On 2026-09-10/11 that happened three
+      // times in a row on one release: 45 minutes, 5 hours, then 13 hours, the
+      // last with its Playwright process burning 50s of CPU in all that time.
+      // The full suite takes ~47 minutes at 4 workers; 75 is room for a slow
+      // run, not for a stuck one. WB_GATE_TIMEOUT_MIN overrides it.
+      timeout: RUN_TIMEOUT_MS,
+      killSignal: 'SIGKILL',
     }
   );
+
+  // A timeout is its own verdict, not "could not start". Reporting it as a
+  // spawn failure would send the next person hunting for a missing binary.
+  if (res.error && (res.error.code === 'ETIMEDOUT' || res.signal === 'SIGKILL')) {
+    return {
+      failures: null,
+      why: `the suite did not finish within ${RUN_TIMEOUT_MS / 60000} minutes and was killed. ` +
+        'That is a hang, not a result -- check for another Playwright process or a dev server holding the port.',
+    };
+  }
 
   // Never swallow the spawn error. The first version of this discarded `res`
   // entirely, so a plain EINVAL was reported as the far more alarming and

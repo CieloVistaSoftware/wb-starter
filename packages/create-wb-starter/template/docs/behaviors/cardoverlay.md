@@ -30,9 +30,9 @@ Use `x-cardoverlay` when the host is not a `<article>` and you want the same beh
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | — | Background image URL |
-| `title` | `string` | — | Overlay title |
-| `subtitle` | `string` | — | Overlay subtitle |
+| `image` | `string` | `this is the image` | Background image URL |
+| `title` | `string` | `this is the title` | Overlay title |
+| `subtitle` | `string` | `this is the subtitle` | Overlay subtitle |
 | `position` | `top` · `center` · `bottom` | `bottom` | Content position |
 | `xalign` | `left` · `center` · `right` | `left` | Horizontal text alignment (x-axis) |
 | `gradient` | `boolean` | `true` | Show gradient overlay for text readability |

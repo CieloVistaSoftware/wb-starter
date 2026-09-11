@@ -16,9 +16,9 @@ Behavior applied with x-typewriter.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `speed` | `string` | `50` | Read by typewriter(). |
-| `text` | `string` | — | Read by typewriter(). |
-| `cursor` | `string` | — | Read by typewriter(). |
+| `speed` | `string` | `50` | Milliseconds between characters. Defaults to `50` — lower is faster. |
+| `text` | `string` | `this is the text` | Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup. |
+| `cursor` | `string` | `this is the cursor` | Show the blinking cursor. On unless set to `"false"`. |
 
 ## Live example
 

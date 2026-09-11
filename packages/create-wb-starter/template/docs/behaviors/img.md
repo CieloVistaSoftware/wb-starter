@@ -12,17 +12,30 @@ Behavior applied with x-img.
 <img src="images/placeholder.svg" alt="Prime lens on a wooden desk">
 ```
 
+
+
+### Declining it
+
+A `<img>` **is** the img behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<img x-ignore>
+  <!-- a plain img: no behavior is injected -->
+</img>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `placeholder` | `string` | — | Read by img(). |
-| `fallback` | `string` | — | Read by img(). |
-| `aspect-ratio` | `string` | — | Read by img(). |
-| `lazy` | `boolean` | `false` | Read by img(). Bare attribute. |
-| `data-lazy` | `boolean` | `false` | Read by img(). Bare attribute. |
-| `zoomable` | `boolean` | `false` | Read by img(). Bare attribute. |
-| `data-zoomable` | `boolean` | `false` | Read by img(). Bare attribute. |
+| `placeholder` | `string` | `this is the placeholder` | Image shown while the real `src` loads. Replaced the moment the real image decodes. |
+| `fallback` | `string` | `this is the fallback` | Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty. |
+| `aspect-ratio` | `string` | `this is the aspect ratio` | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
+| `lazy` | `boolean` | `false` | Sets `loading="lazy"`, so the browser defers fetching until the image nears the viewport. Bare attribute. |
+| `data-lazy` | `boolean` | `false` | The `data-` spelling of `lazy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `lazy`. |
+| `zoomable` | `boolean` | `false` | Clicking the image opens it full-size in a lightbox. Bare attribute. |
+| `data-zoomable` | `boolean` | `false` | The `data-` spelling of `zoomable`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `zoomable`. |
 
 ## Live example
 

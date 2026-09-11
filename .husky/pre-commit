@@ -62,6 +62,12 @@ node .husky/lint-ratchet.mjs --staged || exit 1
 # makes everything after it meaningless.
 node scripts/check-spec-collection.mjs || exit 1
 
+# The machine-wide lock guards (#651, #1106). Milliseconds, no Playwright. Until
+# now nothing ran this at all -- which is how "a single run is admitted while a
+# suite holds the machine" survived: every case it had tested one kind of run
+# against its own kind. scripts/lock-permutations.schema.json now drives all 18.
+node scripts/test-lock-guards.mjs || exit 1
+
 # ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
 # John: "each issue will have a priority 1 through 5 assessed based on negative
 # impact to the project... now change our gates based on priorities."

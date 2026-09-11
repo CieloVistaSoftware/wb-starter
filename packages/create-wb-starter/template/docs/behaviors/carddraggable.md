@@ -26,8 +26,8 @@ Use `x-carddraggable` when the host is not a `<article>` and you want the same b
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title |
-| `content` | `string` | — | Card content |
+| `title` | `string` | `this is the title` | Card title |
+| `content` | `string` | `this is the content` | Card content |
 | `constrain` | `none` · `parent` · `viewport` | `none` | Constrain to area |
 | `axis` | `both` · `x` · `y` | `both` | Drag axis |
 | `snap-to-grid` | `number` | `0` | Snap grid size (0=disabled) |

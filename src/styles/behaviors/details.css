@@ -30,9 +30,36 @@
   display: none;
 }
 
+/* A SQUARE BOX, because this one gets ROTATED.
+ *
+ * The closed-state arrow is `transform: rotate(-90deg)` (#775). A rotated box's
+ * bounding box is its rotated EXTENT, so a non-square glyph box — the ▼ span
+ * measures about 11px wide by 19px tall — becomes ~19px wide once turned, and
+ * bleeds (19 − 11) / 2 ≈ 4px past each side of the box the layout gave it.
+ *
+ * `.x-details__summary` is `justify-content: space-between` with no gap, so in a
+ * shrink-to-fit host there is no slack to absorb that, and the arrow lands on the
+ * label's last glyph. compliance/no-element-overlap.spec.ts measured it on
+ * demos/site/layout.html as exactly 4x14px, three times, on three unrelated
+ * summaries ("Details", "Details", "Sample summary") — the constant is the tell.
+ *
+ * A square box rotates onto itself, so the geometry stops changing at all. The
+ * gap below is the second half: a label and its control should never be flush
+ * (§13). Fixed in the behavior stylesheet, not on the page — every <details> on
+ * the site has this.
+ */
 .x-details__icon {
   transition: transform 0.2s ease;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+.x-details > .x-details__summary {
+  gap: var(--space-sm);
 }
 
 /* Use class-based toggle for icon rotation to support JS-less fallback if needed, 

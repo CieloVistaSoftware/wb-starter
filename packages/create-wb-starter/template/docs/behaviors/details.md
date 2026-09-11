@@ -30,13 +30,26 @@ Use `x-details` when the host is not a `<details>` and you want the same behavio
 
 > Do not write `<details x-details>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
+### Declining it
+
+A `<details>` **is** the details behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<details x-ignore>
+  <!-- a plain details: no behavior is injected -->
+</details>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+
+
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `summary` | `string` | — | Clickable summary text |
+| `summary` | `string` | `this is the summary` | Clickable summary text |
 | `open` | `boolean` | `false` | Initially expanded |
-| `name` | `string` | — | Accordion group name (native exclusive behavior) |
+| `name` | `string` | `this is the name` | Accordion group name (native exclusive behavior) |
 | `animated` | `boolean` | `true` | Animate open/close |
 | `variant` | `default` · `bordered` · `filled` | `default` |  |
 

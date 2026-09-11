@@ -4,7 +4,7 @@ Semantic article behavior for blog posts, news, and documentation pages.
 
 ## Type — decorates a semantic element
 
-`x-card` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
+`x-article` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
 
 ### How to write it
 
@@ -17,14 +17,27 @@ Semantic article behavior for blog posts, news, and documentation pages.
 
 ### On a different element
 
-Use `x-card` when the host is not a `<article>` and you want the same behavior:
+Use `x-article` when the host is not a `<article>` and you want the same behavior:
 
 ```html
-<div x-card>
+<div x-article>
   …
 </div>
 ```
 
+
+
+### Declining it
+
+A `<article>` **is** the article behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<article x-ignore>
+  <!-- a plain article: no behavior is injected -->
+</article>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
@@ -41,7 +54,7 @@ Use `x-card` when the host is not a `<article>` and you want the same behavior:
 
 ## Live example
 
-See `x-card` on the [Behaviors showcase](/?page=behaviors) — search for `x-card` to run it and copy its markup.
+See `x-article` on the [Behaviors showcase](/?page=behaviors) — search for `x-article` to run it and copy its markup.
 
 ---
 

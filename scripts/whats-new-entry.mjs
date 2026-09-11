@@ -25,6 +25,21 @@
  * it is silently dropped from the table rather than erroring, which is the worst
  * possible failure for a changelog.
  *
+ * EVERY CONTAINER THIS WRITES CARRIES AN ID
+ *
+ * tests/compliance/html-ids.spec.ts requires an id on every element with more
+ * than one element child. This generator emits three such containers per
+ * release — the lead `<p>` (strong + code + a + code), the `<ul>`, and every
+ * `<li>` (span.wn-tag + strong + issue links) — so a page that was compliant
+ * before a release stops being compliant the moment one is cut. #1087: the
+ * page had accumulated 264 of them that way, against a budget of 75.
+ *
+ * The ids are derived from the section id, so they are stable across reruns and
+ * unique against the sections already on the page:
+ *   <p id="{section}-note">  <ul id="{section}-list">  <li id="{section}-list-item-N">
+ * The `-item-` segment is what keeps the Nth list item apart from the Nth list
+ * in a section that has more than one (`-list-2` vs `-list-item-2`).
+ *
  * Usage:
  *   node scripts/whats-new-entry.mjs            # write the section for the next patch
  *   node scripts/whats-new-entry.mjs --check    # print it, change nothing
@@ -104,7 +119,7 @@ const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
 
 const ISSUE_URL = 'https://github.com/CieloVistaSoftware/wb-starter/issues/';
 
-function itemFor(commit) {
+function itemFor(commit, index, listId) {
   const [label, cls] = kindOf(commit.subject);
   // Every issue the commit cites, deduped and in citation order. A commit
   // routinely closes two (`fix(#991,#1057):`).
@@ -112,7 +127,7 @@ function itemFor(commit) {
   const links = issues
     .map((n) => `<a href="${ISSUE_URL}${n}" target="_blank" rel="noopener">#${n}</a>`)
     .join(' ');
-  return `    <li class="wn-item ${cls}"><span class="wn-tag">${label}</span> `
+  return `    <li id="${listId}-item-${index + 1}" class="wn-item ${cls}"><span class="wn-tag">${label}</span> `
     + `<strong>${esc(prose(commit.subject))}</strong>`
     + (links ? ` ${links}` : '')
     + '</li>';
@@ -124,14 +139,16 @@ const lead = commits.length === 1
   ? 'One change, shipped as its own batch.'
   : `${commits.length} changes, shipped as one batch.`;
 
+const listId = `${id}-list`;
+
 const section = [
   `<section id="${id}">`,
   `  <h2>${next} — ${today}</h2>`,
-  `  <p><strong>${lead}</strong> Everything listed here is on <code>main</code> and therefore live at`,
+  `  <p id="${id}-note"><strong>${lead}</strong> Everything listed here is on <code>main</code> and therefore live at`,
   '  <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>.',
   `  A push to <code>main</code> IS the deploy, so this version names exactly one published state (#1076).</p>`,
-  '  <ul>',
-  ...commits.map(itemFor),
+  `  <ul id="${listId}">`,
+  ...commits.map((commit, index) => itemFor(commit, index, listId)),
   '  </ul>',
   '</section>',
   '',

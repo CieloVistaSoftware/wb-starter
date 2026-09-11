@@ -1,92 +1,66 @@
-# CURRENT HANDOFF — 2026-09-08 (night)
+# CURRENT HANDOFF — 2026-09-11
 
-## PARKING LOT
+## 🅿️ PARKING LOT
 
-**The suite could report success for doing nothing, and had been able to since
-before any of tonight's issues were filed. That is now gated. It is the most
-important thing on this page.**
+**Task:** ship the release batch that has been blocked since 2026-09-09.
 
-John: *"nothing here can distinguish a test that passed from a test that never
-ran ... is a serious oversight, should not have ever happened."*
+**Last action:** committed the batch. The gate's two remaining new failures were
+traced with probes and fixed; both specs verified 10/10 alone, the workspace one
+as test 1 on a cold page, which is the exact condition it failed under.
 
-He is right. Playwright exits `0` when a spec collects **zero** tests, so a file
-that throws at module scope — or that no project's `testMatch` covers — reports
-success from every gate, runner and status file in this repo. It appears in the
-listing, carries a name describing a real guarantee, and is admissible as release
-evidence.
+**Next step, in order:**
+1. The commit's gate verdict. On a pass: `npm run ship` end to end, no review
+   pause (John: "I want the releases all automated").
+2. Law 17: `npm run test:smoke:deployed`.
+3. Close what the release unblocks: #1070, #1075, #1078, #1102, #1103, #1104,
+   #1106, #792. Four of those (#1070, #1075, #1078, #792) were reshaped for the
+   signature validator in parallel; confirm each passes
+   `node scripts/check-issue-signatures.mjs --number N` before closing.
+4. Commit the two held-back changes, each through its own gate:
+   - the article -> card registry change (saved in the session scratchpad:
+     'article': 'card', x-article removed, index.js redirect removed, the dead
+     article() deleted). It took the gate from 2 failures to 10 when bundled,
+     because removing x-article changes the behaviors catalogue four specs
+     assert over. Those specs must change in the same commit.
+   - wb-starter CLAUDE.md and docs/claude/TIER1-LAWS.md step 1 still name
+     `list_allowed_directories`; the filesystem MCP server was dropped.
 
-**Seven historical sightings, one hole:** #975 (twelve days of "Total: 0 tests"
-read as a passing gate), #1049, #1041, #1085, the doc-viewer end-key dead
-fixture, plus **two specs written tonight** that collected nothing and reported
-green — one of them the spec written to fix another instance of it.
+## What this batch fixes
 
-**Fix:** `scripts/check-spec-collection.mjs`, wired into `.husky/pre-commit`.
-Lists (does not run) every test and compares what collected against what is on
-disk. **First run found 3 spec files that had never executed once** — 6 `test()`
-calls, 7 `expect()` assertions. Now 602/602 collecting.
+| issue | fix | proof |
+|---|---|---|
+| #1102 | an empty behavior fills from the curated example, not its field names; `data-` counts as authored | tests/behaviors/empty-behavior-teaches-by-example.spec.ts |
+| #1103 | article.schema.json restored from 0 bytes; parse gate added | tests/compliance/every-schema-parses.spec.ts |
+| #1104 | the hooksPath check asserts the guarantee, not a location | tests/regression/every-push-to-main-is-a-release.spec.ts |
+| #1106 | the gate is bounded (75/80 min) and holds the machine lock; single runs are held while a suite runs; a blocked gate is notified on release, never polls | scripts/lock-permutations.schema.json via scripts/test-lock-guards.mjs, 47/0, run in pre-commit |
+| #792 | x-footer renders `links` and `social` | tests/behaviors/every-declared-attribute.spec.ts |
+| — | cardstats compact/large/minimal never applied (keyed on classes a8a7362e stopped injecting) | card-typed-variants-no-op.spec.ts, now waits on animation `finished` |
+| — | the workspace spec read the page mid-entrance (site.css fadeIn slides 10px) | behaviors-workspace-single-scroll.spec.ts, now waits on whenIdle + the page's own animations |
 
----
+## Lessons written into this batch, so they are not relearned
 
-## What is committed
-
-`53b44913` — #1076 (a push to main is a release), #1082 (porcelain parsing —
-and the reason #1071 never worked), #1081 (generated output untracked), #1077
-(Fix Viewer issue link), #1083 (nav: Demos + A.I. Docs removed).
-
-`0e143e38` — #1085 (element scanner counted a tag named in a comment), #1070
-(dead `x-demo` selector), #1086 (template docs), the End-key fixture repair.
-
-## What is NOT committed — 111 files in the working tree
-
-Everything below this line is uncommitted. **Commit before anything else.**
-
-| area | files |
-|---|---|
-| #1091 collection gate | `scripts/check-spec-collection.mjs`, `tests/compliance/every-spec-collects-a-test.spec.ts`, `.husky/pre-commit`, `playwright.config.ts` (added `issues/**`, `debug-css.spec.ts` to testMatch) |
-| #1093 doc coverage | `tests/compliance/every-behavior-is-documented.spec.ts`, `scripts/sync-attribute-descriptions.mjs`, **142 attribute descriptions** across `src/wb-models/*.schema.json` + `docs/behaviors/*.md` |
-| #1094 x-ready | `src/core/ready-signal.js` (new), `src/core/wb.js`, `src/core/wb-lazy.js` |
-| #1090 issue state | `scripts/issue-state.mjs`, `scripts/lib/test-citations.mjs`, `tests/regression/issue-state-finds-an-unrecorded-test.spec.ts` |
-| #1096 classes | `docs/standards/CSS-CLASS-CONVENTION.md` (new), `scripts/lib/behavior-classes.mjs`, `scripts/document-behavior-classes.mjs`, `tests/behaviors/default-gui-census.spec.ts` |
-| #1094 opt-out docs | `scripts/backfill-opt-out-docs.mjs`, `scripts/generate-behavior-docs.mjs`, 19 behavior docs |
-| #1089 | `pages/issues.html` — Work done window 24h → 4 weeks |
-
-## NEXT STEP, in order
-
-1. **Commit the 111 files.** The pre-commit gate now includes the collection
-   check, so expect it to run.
-2. **Wire `document-behavior-classes.mjs` to the census.** The census now records
-   real rendered classes (`data/default-gui-census.json`, 149 behaviors, 131 with
-   classes). The generator still guesses from source — switch it to read the
-   census and emit the `## Classes` table. **This is the half-finished piece.**
-3. **`npm run ship`.** Aborted twice tonight, both times on ~3 NEW failures that
-   were **different each run** — instability, not regression (#961, open).
+- **A logged cause does not prevent a recurrence; only an enforced one does.**
+  The five-hour gate hang was already recorded in Law 4, #1072 and the agent's
+  own notes. It recurred because nothing refused the second run.
+- **Permutations come from a schema, not from hand-picked cases** — params, one
+  simple working case, a schema with min/max/edges and an oracle, tests
+  generated from it, run red first. The lock gap survived because every
+  hand-written case held one kind of run against its own kind.
+- **Values read while an animation is moving are not facts.** Both of the last
+  two gate failures were a measurement taken mid-transition. Wait on
+  `animation.finished` — the browser's own notification.
+- **Three diagnoses of the workspace failure were wrong** (a half-built page, the
+  nav rail's max-height, header.css padding). A probe that reproduced the
+  failing condition exactly — first, on a cold page — found it in one run.
 
 ## Open questions
 
-- **#961 is not fixed** and its author said so explicitly: 6 tests still change
-  state between identical runs. Two ship attempts died on it.
-- **#1084** — the ratchet register was recorded on Windows; CI runs Linux. 15
-  "new failures" on CI are platform-dependent, not regressions. The register
-  cannot be trusted in either direction until it is recorded on the platform the
-  gate runs on.
-- **#1092** — 87 tests have every `expect()` inside an `if()`. Upper bound; each
-  needs reading. Same disease as the collection hole: passes when its subject is
-  absent.
-- **#1088** — the template ships a 175-file drifted copy of the runtime with 6
-  core modules missing. Diverges **both** ways (`card.css` is 112 rules here, 246
-  there), so no blind copy.
-- **`ratio` schema declares default `16x9`; the code produces `16/9`.** Recorded
-  in the description, not yet filed.
-
-## Issues filed tonight
-
-#1076 #1077 #1081 #1082 #1083 #1084 #1085 #1086 #1087 #1088 #1089 #1090 #1091
-#1092 #1093 #1094 #1095 #1096
-
-## The pattern worth carrying forward
-
-Every gate I fault-injected caught a real defect (#1076, #1081, #1082, #1090).
-Every one I did not was wrong — including three that passed while asserting
-nothing, and two false accusations against docs that were fine. **Write the gate,
-then break it on purpose.** A green gate that has never been seen red is not
-evidence.
+- The page entrance animation briefly lets #siteBody scroll on every page load.
+  Whether readers see a scrollbar flash depends on `.site__body` clipping.
+  Recorded on #1020; a product fix is a design choice (opacity-only, or
+  `overflow: clip`).
+- The general form of the cardstats bug: card.css variant rules keyed on classes
+  that a8a7362e stopped injecting. Fixed for cardstats only; the rest belongs
+  to #969 / #914.
+- `maxParallelSingle: 2` in lock-permutations.schema.json lets two single-spec
+  runs share the machine, which #1072 says collide on the port. Policy call.

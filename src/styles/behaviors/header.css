@@ -11,7 +11,30 @@ x-header, [x-header],
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
+  /* DEMOS-AND-DOCS-STANDARDS.md §13: a header is a bordered, background-
+     filled panel that holds its own text, so it owes that text >= 1rem on
+     EVERY side -- and the value has to come from the --space-* scale, not an
+     ad-hoc number. This was `0 1.5rem`: zero vertical padding, plus a
+     hand-picked 1.5rem horizontally that matches no token.
+     Two live defects came out of that single declaration:
+       - demos/site/layout.html's five <header> examples each reported 0px on
+         their tightest side (the §13 "no text within 1rem of a content-panel
+         edge" check).
+       - tests/regression/modal-spacing-compliance.spec.ts's last test is
+         RED against it by name: this rule beats .x-dialog__header's own
+         `padding: 1rem 1.5rem`, so every dialog header has no vertical
+         padding at all and only LOOKS right because `min-height: 60px`
+         below happens to prop a single-line title open. Give the title
+         enough words to wrap and it goes flush to the edges (measured
+         0.74px above, 0.86px below).
+     --space-md is exactly the 1rem §13 asks for, and --space-lg (1.618rem)
+     is the scale's next step up from it -- the nearest token to the 1.5rem
+     that was there, so the horizontal look is preserved (24px -> 25.9px).
+     box-sizing is border-box globally (site.css), so the 60px min-height
+     below still governs the common single-line header: the box only grows
+     when its content genuinely needs more than 60px - 2rem, which is the
+     clipping this file's min-height comment already argues for. */
+  padding: var(--space-md, 1rem) var(--space-lg, 1.618rem);
   /* min-height, not height: a fixed height silently clips a title/subtitle
      that needs more than 60px (e.g. wraps to 2 lines) instead of growing to
      fit -- confirmed live on pages/behaviors.html's hero <header>, which
@@ -101,7 +124,12 @@ x-header, [x-header],
 @media (max-width: 768px) {
   x-header, [x-header],
   .x-header {
-    padding: 0 1rem;
+    /* §13 again: narrowing the horizontal gutter on small screens is fine,
+       dropping the vertical padding back to 0 is not -- the text would sit
+       flush against the top/bottom borders on exactly the screens with the
+       least room to spare. Keep the full 1rem vertically, step the
+       horizontal inset down one rung on the scale. */
+    padding: var(--space-md, 1rem);
   }
   
   .x-header__subtitle {

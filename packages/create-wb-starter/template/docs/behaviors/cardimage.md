@@ -31,11 +31,11 @@ Use `x-cardimage` when the host is not a `<article>` and you want the same behav
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `src` | `string` | `/images/placeholder.svg` | Image source URL |
-| `alt` | `string` | — | Image alt text (accessibility) |
-| `title` | `string` | — | Card title |
-| `subtitle` | `string` | — | Card subtitle |
-| `caption` | `string` | — | Image caption (displayed below image) |
-| `href` | `string` | — | Link URL (makes card clickable) |
+| `alt` | `string` | `this is the alt` | Image alt text (accessibility) |
+| `title` | `string` | `this is the title` | Card title |
+| `subtitle` | `string` | `this is the subtitle` | Card subtitle |
+| `caption` | `string` | `this is the caption` | Image caption (displayed below image) |
+| `href` | `string` | `#` | Link URL (makes card clickable) |
 | `aspect` | `16/9` · `4/3` · `1/1` · `3/2` · `21/9` · `auto` | `16/9` | Image aspect ratio |
 | `position` | `top` · `bottom` · `left` · `right` | `top` | Image position relative to content |
 | `fit` | `cover` · `contain` · `fill` · `none` | `cover` | Image object-fit mode |

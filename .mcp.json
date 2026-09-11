@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "wb-starter": {
+      "command": "node",
+      "args": [
+        "mcp-server/server.js"
+      ],
+      "env": {
+        "MCP_HEALTH_PORT": "52100"
+      }
+    }
+  }
+}

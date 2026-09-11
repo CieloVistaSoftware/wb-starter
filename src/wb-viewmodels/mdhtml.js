@@ -21,6 +21,25 @@ import { readAttr } from '../core/read-attr.js';
 import { logError } from '../core/error-logger.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 
+/**
+ * Is the page going away?
+ *
+ * A fetch that rejects because the document is unloading did not fail to find a
+ * document -- the browser simply stopped caring, and reports it as the same
+ * `TypeError: Failed to fetch` a real network failure gives. Logging those put
+ * entries in data/errors.json that compliance/error-log-empty.spec.ts then
+ * failed on, while the same spec passed with ZERO errors run on its own. A
+ * verdict that only appears under load is #961's shape and is worth nothing.
+ *
+ * Narrow on purpose: a genuine 404 during ordinary use still reports, because
+ * the page is not unloading then. Paired with the `element.isConnected` check
+ * below, which covers the other abandonment -- a panel replaced mid-fetch.
+ */
+let pageIsUnloading = false;
+if (typeof window !== 'undefined') {
+  window.addEventListener('pagehide', () => { pageIsUnloading = true; }, { once: true });
+}
+
 // Check if marked is available, if not load it
 let markedLoaded = false;
 let markedPromise = null;
@@ -239,7 +258,26 @@ export async function mdhtml(element, options = {}) {
       } catch (err) {
         element.classList.remove('x-mdhtml--loading');
         element.classList.add('x-mdhtml--error');
-        
+
+        // A PANEL NOBODY IS SHOWING ANY MORE DID NOT FAIL TO LOAD ANYTHING.
+        //
+        // If the host was taken out of the DOM while the fetch was in flight,
+        // the rejection is the discard, not a broken document. The behaviors
+        // page is where this shows: its live example for x-mdhtml is the curated
+        // `<div x-mdhtml src="/docs/behaviors/dropdown.md">`, and every click on
+        // another behavior replaces that panel — so the abandoned element's
+        // fetch rejects with "TypeError: Failed to fetch" a moment later.
+        //
+        // It logged five of those into data/errors.json under the full suite,
+        // failing compliance/error-log-empty.spec.ts, while passing on its own
+        // with zero errors — the #961 shape, a verdict that only appears under
+        // load. Console still says it, because a developer watching a panel
+        // vanish mid-load should be able to see why.
+        if (!element.isConnected || pageIsUnloading) {
+          console.warn('[mdhtml] load abandoned (host removed or page unloading): ' + config.src);
+          return;
+        }
+
         console.warn('[mdhtml] Failed to load file: ' + config.src);
         logError('Unable to Load Documentation', {
           // #1010: stable identity -- the message quotes the failing path, which
@@ -492,6 +530,37 @@ export async function mdhtml(element, options = {}) {
         // used to bail out here, leaving <div x-cardhero>…</div> as a code block
         // — which is exactly the "three dots" John was looking at.
 
+        // A FENCE THAT IS ALREADY A DEMO DOES NOT GET WRAPPED IN ANOTHER ONE.
+        //
+        // Two docs author `<div x-demo>` INSIDE a ```html fence: demo.md (the
+        // doc for x-demo itself) and DEMOS-AND-DOCS-STANDARDS.md. Wrapping those
+        // produced a demo inside a demo, and the reader saw the consequences:
+        //
+        //   - the example rendered twice, once per nesting level;
+        //   - the INNER demo has no `_rawSource` (only the wrapper this function
+        //     creates gets one) and its markup never existed in doc-viewer.html's
+        //     page source either, so its panel printed "<!-- source unavailable"
+        //     directly beneath the wrapper's panel showing the very same code;
+        //   - every nesting level costs 34px (demo.css's 1rem padding + 1px
+        //     border, twice), so the inner panel was cramped 34px narrower than
+        //     the space it had — the #560/#563 shape that
+        //     tests/compliance/doc-viewer-code-panel-audit.spec.ts check (a)
+        //     exists to catch, and did.
+        //
+        // The authored markup is already exactly what the wrapper was there to
+        // provide, so promote it as itself. Each authored demo gets its OWN
+        // pristine `outerHTML` as `_rawSource`, read off the inert <template>
+        // before anything has upgraded it — which is also what makes the nested
+        // case correct: a panel shows the block it belongs to, not an ancestor's.
+        const authored = Array.from(tpl.content.querySelectorAll('[x-demo]'));
+        if (authored.length) {
+            for (const el of authored) el._rawSource = el.outerHTML;
+            // replaceWith(DocumentFragment) ADOPTS these exact nodes, so the
+            // expandos set above survive the move into the live document.
+            pre.replaceWith(tpl.content);
+            return;
+        }
+
         // A DIV CARRYING THE ATTRIBUTE, not an <x-demo> TAG.
         //
         // This created document.createElement('x-demo'). WB dispatches x-demo on
@@ -521,7 +590,9 @@ export async function mdhtml(element, options = {}) {
         pre.replaceWith(wbDemo);
     });
 
-    // NOT DONE HERE: hand-written <div x-demo> blocks inside markdown.
+    // NOT DONE HERE: <div x-demo> written as RAW HTML in the markdown — i.e. not
+    // inside a ```html fence, so marked passes it through and it is already live
+    // DOM by the time this function runs. (A fenced one IS handled, above.)
     //
     // They have the same underlying problem — demo.js recovers source from the
     // PAGE source, which never contains markup that only ever existed in a
@@ -535,6 +606,11 @@ export async function mdhtml(element, options = {}) {
     // the result was empty panels: worse than a message that at least explains
     // itself. Fixing it properly means resolving per-panel, which belongs with
     // demo.js's own nesting logic rather than being guessed at from here.
+    //
+    // Note that giving them a source would not make those docs pass the code
+    // panel audit anyway: a demo nested inside a demo is 34px narrower than the
+    // space it has (demo.css padding + border), which is the audit's check (a).
+    // That is a property of the AUTHORED nesting, and only the doc can fix it.
     //
     // Left as-is deliberately. The pre-existing behaviour is unchanged.
 

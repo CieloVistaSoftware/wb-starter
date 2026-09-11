@@ -44,6 +44,35 @@ async function openBehaviors(page: import('@playwright/test').Page) {
     undefined,
     { timeout: 20_000 },
   );
+  // MEASURE THE PAGE AT REST, NOT MID-ENTRANCE (#1106).
+  //
+  // Two things are still moving when the result rows first exist, and #1020
+  // guards the STEADY state, so wait for both to announce they are done:
+  //
+  //   1. Injection. 21 code blocks, 2 pre, a table and an article are still
+  //      being enhanced. WB.whenIdle() is the runtime's own signal (#961/#962)
+  //      and rejects on timeout, so a hung build fails here instead of passing.
+  //
+  //   2. The page's entrance animation -- the actual cause of the 10px. site.css
+  //      gives every .page `animation: fadeIn 0.3s ease`, which starts at
+  //      `transform: translateY(10px)`. Chrome counts a transformed box toward
+  //      its container's scroll overflow, so #siteBody could scroll by whatever
+  //      offset remained. Traced 2026-09-11 on a cold page at this exact point:
+  //      9px, then 8.87, then 3.34, then 0 -- the slide landing. This test is
+  //      test 1 in its file, so it always met the page mid-slide; the two tests
+  //      after it, on warm pages, never did.
+  //
+  // Only the page's OWN animations, not { subtree: true }: the page contains an
+  // infinite spinner (x-spin), whose `finished` never resolves. Three earlier
+  // diagnoses of this failure were wrong -- a half-built page, the nav rail's
+  // max-height, and header.css padding -- and are recorded on #1106 so they are
+  // not tried again.
+  await page.evaluate(() => (window as any).WB.whenIdle({ timeout: 15_000 }));
+  await page.evaluate(() => {
+    const pageBox = document.querySelector('#mainPage-behaviors');
+    return Promise.all((pageBox ? pageBox.getAnimations() : [])
+      .map((a) => a.finished.catch(() => undefined)));
+  });
 }
 
 test.describe('behaviors workspace scrolling and gap (#1020)', () => {

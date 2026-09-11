@@ -39,17 +39,30 @@ window.addEventListener('resize', onResize);
 </code>
 ```
 
+
+
+### Declining it
+
+A `<code>` **is** the code behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<code x-ignore>
+  <!-- a plain code: no behavior is injected -->
+</code>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `language` | `string` | — | Read by code(). |
-| `variant` | `string` | — | Read by code(). |
-| `scrollable` | `string` | — | Read by code(). |
-| `size` | `string` | — | Read by code(). |
-| `show-copy` | `boolean` | `false` | Read by code(). Bare attribute. |
-| `data-show-copy` | `boolean` | `false` | Read by code(). Bare attribute. |
-| `data-copy` | `boolean` | `false` | Read by code(). Bare attribute. |
+| `language` | `string` | `this is the language` | Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text. |
+| `variant` | `string` | `this is the variant` | Visual treatment of the code span or block — controls the surface it is drawn on. |
+| `scrollable` | `string` | `this is the scrollable` | When `"true"`, scroll horizontally rather than wrapping long lines. |
+| `size` | `string` | `this is the size` | Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`. |
+| `show-copy` | `boolean` | `false` | Show a copy-to-clipboard button. |
+| `data-show-copy` | `boolean` | `false` | The `data-` spelling of `show-copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `show-copy`. |
+| `data-copy` | `boolean` | `false` | The `data-` spelling of `copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `copy`. |
 
 ## Events
 

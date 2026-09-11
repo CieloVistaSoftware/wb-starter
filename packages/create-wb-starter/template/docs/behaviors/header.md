@@ -26,14 +26,27 @@ Use `x-header` when the host is not a `<header>` and you want the same behavior:
 
 > Do not write `<header x-header>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
+### Declining it
+
+A `<header>` **is** the header behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<header x-ignore>
+  <!-- a plain header: no behavior is injected -->
+</header>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+
+
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `icon` | `string` | — | Logo icon (emoji or text) |
-| `title` | `string` | — | Header title |
-| `subtitle` | `string` | — | Subtitle text |
-| `badge` | `string` | — | Badge text (e.g., version) |
+| `icon` | `string` | `this is the icon` | Logo icon (emoji or text) |
+| `title` | `string` | `this is the title` | Header title |
+| `subtitle` | `string` | `this is the subtitle` | Subtitle text |
+| `badge` | `string` | `this is the badge` | Badge text (e.g., version) |
 | `logo-href` | `string` | `/` | Logo link URL |
 | `sticky` | `boolean` | `false` | Sticky at top |
 

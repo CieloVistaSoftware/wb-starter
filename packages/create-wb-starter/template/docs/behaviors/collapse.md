@@ -20,7 +20,7 @@ Collapsible content area.
 | --- | --- | --- | --- |
 | `heading` | `string` | `Toggle` | Text displayed on the clickable trigger button |
 | `expanded` | `boolean` | `false` | Whether the content is initially visible |
-| `target` | `string` | — | CSS selector of a remote element to toggle instead of wrapping content |
+| `target` | `string` | `this is the target` | CSS selector of a remote element to toggle instead of wrapping content |
 
 ## Live example
 

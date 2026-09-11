@@ -23,11 +23,11 @@ Simple profile card. Composes the shared card structure and adds profile element
 | `name` | `string` | `John Doe` | Person's name |
 | `role` | `string` | `Designer` | Job title or role |
 | `avatar` | `string` | `/images/avatar.svg` | Avatar image URL |
-| `bio` | `string` | — | Short biography |
-| `cover` | `string` | — | Cover/banner image URL |
+| `bio` | `string` | `this is the bio` | Short biography |
+| `cover` | `string` | `this is the cover` | Cover/banner image URL |
 | `size` | `sm` · `md` · `lg` | `md` | Avatar size |
 | `align` | `left` · `center` | `center` | Content alignment |
-| `hover-text` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hover-text` | `string` | `this is the hover text` | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 

@@ -660,6 +660,36 @@ article[variant="flat"],
   box-shadow: none;
 }
 
+/* CARDSTATS VARIANTS BY ATTRIBUTE (#1106). Append after the existing
+   cardstats compact/large rules (~card.css:289), so these win on source order.
+
+   Traced 2026-09-11 on the test harness: every cardstats host -- default,
+   compact, large, minimal -- carries only `x-card--stats x-stats`. No variant
+   class is ever applied (a8a7362e, "specificity replaces class injection",
+   stopped injecting them), so every rule above keyed on `.x-card--compact`,
+   `.x-card--large` or `.x-card--minimal` matches nothing. The one branch that
+   keys on the attribute, `.x-stats[variant="compact"]`, is (0,2,0) and loses
+   to the no-header fallback at (0,3,0) -- `:is([x-cardstats])` plus two
+   `:not(:has(.class))`. Result: all four variants rendered at the fallback's
+   16px, pixel-identical, and card-typed-variants-no-op caught it.
+
+   Keyed on the authored attribute, at (0,3,0): two host classes the behavior
+   DOES apply (`x-card--stats`, `x-stats`) plus `[variant]`. Placed after the
+   fallback, equal specificity, so source order decides and these win. */
+.x-card--stats.x-stats[variant="compact"] {
+  padding: 0.5rem 0.75rem;
+}
+
+.x-card--stats.x-stats[variant="large"] {
+  padding: 2rem;
+}
+
+.x-card--stats.x-stats[variant="minimal"] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 /* Minimal (#457) — same gap as bordered/flat above: cardhorizontal,
    cardimage, cardlink, cardpricing, cardproduct, cardstats, cardtestimonial
    and cardvideo (see their .schema.json `variant` enums) all declare

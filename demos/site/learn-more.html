@@ -38,7 +38,20 @@
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
-    await WB.scan(document.body);
+    // eager, not the lazy default. WB.scan()'s default path only REGISTERS
+    // this page's single x-demo host with an IntersectionObserver and
+    // returns immediately -- it awaits nothing, so the page has no point at
+    // which the demo is known to be built. src/styles/behaviors/demo.css
+    // (which carries DEMOS-AND-DOCS-STANDARDS.md §13's ">= 1rem padding
+    // inside example/demo containers") is JIT-loaded by WB.inject() via
+    // style-loader.js, so until that injection happens the demo has no
+    // demo.css and renders at zero padding, content flush to its own box
+    // edge -- measured 0px. `eager: true` injects and AWAITS every behavior
+    // on this page instead, so demo.css is in the document before this
+    // script resolves. This page is ~40 lines with one demo, so there is no
+    // laziness worth buying here (same reasoning demos/playground.html
+    // already applies to its preview pane).
+    await WB.scan(document.body, { eager: true });
   </script>
 </body>
 

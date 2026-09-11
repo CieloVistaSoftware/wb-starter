@@ -194,6 +194,17 @@ async function runLauncher(args) {
   } else {
     slotPath = await guards.acquireSingleSlot(specFile);
     if (!slotPath) {
+      // Null has two causes since #1106, and naming the wrong one sends the
+      // reader looking at the wrong holder: a suite (or the commit gate) owns
+      // the whole machine, or every single-run slot is taken.
+      const suite = await guards.readLock();
+      if (suite && suite.pid) {
+        console.error(
+          `❌ A suite holds the machine (PID ${suite.pid}, ${suite.command || "suite"}, ` +
+          `from ${suite.root || "unknown worktree"}). A single run cannot share it.`
+        );
+        process.exit(1);
+      }
       console.error(
         `❌ All ${guards.maxParallelSingle} single-run slots are busy machine-wide.`
       );

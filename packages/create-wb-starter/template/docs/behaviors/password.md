@@ -16,8 +16,8 @@ Schema for x-password behavior (password input enhancements)
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `toggle` | `boolean` | — | Show/hide password toggle |
-| `strength` | `boolean` | — | Show password strength meter |
+| `toggle` | `boolean` | `false` | Show/hide password toggle |
+| `strength` | `boolean` | `false` | Show password strength meter |
 
 ## Live example
 

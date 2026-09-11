@@ -26,12 +26,12 @@ Use `x-navbar` when the host is not a `<nav>` and you want the same behavior:
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `brand` | `string` | — | Brand text |
+| `brand` | `string` | `this is the brand` | Brand text |
 | `brand-href` | `string` | `/` | Brand link URL |
-| `logo` | `string` | — | Logo image URL |
+| `logo` | `string` | `this is the logo` | Logo image URL |
 | `logo-size` | `string` | `32` | Logo size in pixels |
-| `tagline` | `string` | — | Brand tagline or subtitle |
-| `items` | `string` | — | Navigation items as JSON [{label, href}] |
+| `tagline` | `string` | `this is the tagline` | Brand tagline or subtitle |
+| `items` | `string` | `this is the items` | Navigation items as JSON [{label, href}] |
 | `sticky` | `boolean` | `false` | Sticky positioning |
 | `variant` | `default` · `dark` · `transparent` | `default` |  |
 

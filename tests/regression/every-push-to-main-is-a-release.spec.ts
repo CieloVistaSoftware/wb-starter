@@ -82,11 +82,39 @@ test.describe('#1076 — a push to main must carry a version', () => {
     // husky sets core.hooksPath. Without it the file above is decoration:
     // present, correct, and never executed — the same shape as the stylesheet
     // that was loaded by nothing (#1008).
+    //
+    // ASSERT THE GUARANTEE, NOT THE LOCATION.
+    //
+    // The question is "will git run our hooks". It was asked as "does
+    // core.hooksPath equal THIS directory's .husky", with the directory taken
+    // from this file's own path — and the commit gate runs the suite from a temp
+    // copy of the staged tree (#1065). There, that compared the real checkout's
+    // absolute hooksPath against a temp path:
+    //
+    //   Expected: "…\Temp\wb-gate-mtvxwtev-17212\.husky"
+    //   Received: "…\Downloads\AI\wb-starter\.husky"
+    //
+    // It passed when run directly and could never pass in the gate, so every
+    // commit was refused on it and two releases died there (#1104). A first
+    // attempt asked git for the work tree and skipped when there was none — but
+    // the copy IS a work tree, so the skip never fired and it failed identically.
+    //
+    // So compare nothing about location. hooksPath is set, it names a `.husky`
+    // directory, and the hook this file is about is in it. True in the
+    // developer's checkout and in any copy of it; false exactly when husky is
+    // not wired up, which is the failure worth catching — the #1008 shape, a
+    // file that is present, correct, and never executed.
     const hooksPath = execFileSync('git', ['config', 'core.hooksPath'], {
       cwd: REPO,
       encoding: 'utf8',
     }).trim();
-    expect(path.resolve(REPO, hooksPath)).toBe(path.join(REPO, '.husky'));
+
+    expect(hooksPath, 'core.hooksPath is unset — .husky/pre-push is decoration').not.toBe('');
+    expect(path.basename(hooksPath), `core.hooksPath is "${hooksPath}", not a .husky directory`).toBe('.husky');
+    expect(
+      fs.existsSync(path.join(hooksPath, 'pre-push')),
+      `${hooksPath} carries no pre-push hook, so nothing guards the deploy`,
+    ).toBe(true);
   });
 
   test('an untagged push to main is REFUSED', () => {

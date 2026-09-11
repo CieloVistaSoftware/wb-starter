@@ -408,10 +408,19 @@
       }
       // Sorted so `variant` leads -- it is the axis most readers look for --
       // and the rest follow alphabetically rather than in schema-key order.
-      out.sort((a, b) =>
-        (a.prop === 'variant' ? -1 : b.prop === 'variant' ? 1 : a.prop.localeCompare(b.prop)) ||
-        0
-      );
+      //
+      // Two rows of the SAME property must compare equal, or the enum order is
+      // lost. This used to read `a.prop === 'variant' ? -1 : ...`, which returns
+      // -1 even when BOTH are variant -- an inconsistent comparator that told
+      // the sort every variant row was smaller than every other variant row, and
+      // reversed them: x-alert listed error, warning, success, info, with its
+      // declared default (info) last. Same for every other enum.
+      out.sort((a, b) => {
+        if (a.prop === b.prop) return 0;             // keep the schema's enum order
+        if (a.prop === 'variant') return -1;
+        if (b.prop === 'variant') return 1;
+        return a.prop.localeCompare(b.prop);
+      });
       return out.length ? out : [{ prop: '', value: '' }];
     }
 
@@ -1972,7 +1981,28 @@
 
     // Shared by the real-demo and generated-example paths: pretty-print the
     // source and hand it to the project's own pre/code highlighting pair.
-    async function renderSource(src) {
+    // WHY A GENERATION COUNTER
+    // ========================
+    // showLive() writes the header synchronously and the code panel four awaits
+    // later (a dynamic import of demo.js, then one of wb-lazy.js, then an eager
+    // WB.scan -- ~1000ms behind the header, measured in #950). Two selections in
+    // flight at once therefore finish in whatever order their imports resolve,
+    // NOT the order they were asked for, and the slower one wins the panel.
+    //
+    // That is not hypothetical: selectFirstOnLoad() renders the first row the
+    // instant the list fills (#771), and its render pays the uncached
+    // demo.js fetch. A reader who clicks a row while that is still in flight
+    // gets the header of the row they clicked above the SOURCE OF THE FIRST ROW
+    // -- one pane describing two different behaviors. Caught by
+    // behaviors-live-selector.spec.ts, which failed on the first permutation it
+    // clicked (x-alert - error, table - bordered) and passed on every one after.
+    //
+    // Each render takes a ticket; after every await it checks whether a newer
+    // render has been asked for and, if so, drops what it was about to paint.
+    let renderSeq = 0;
+    const stale = (seq) => seq !== renderSeq;
+
+    async function renderSource(src, seq) {
       let pretty = src;
       try {
         const demoMod = await import(siteRoot() + 'src/wb-viewmodels/demo.js');
@@ -1980,6 +2010,7 @@
       } catch (err) {
         console.warn('[behaviors] could not format source', err);
       }
+      if (seq !== undefined && stale(seq)) return;   // a newer selection owns the panel
       liveCode.innerHTML = '';
 
       // Copy button. It copies `pretty` -- the exact source we just formatted --
@@ -2058,6 +2089,7 @@
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
+        if (seq !== undefined && stale(seq)) return;
         if (WB && WB.scan) {
           await WB.scan(liveStage, { eager: true });
           await WB.scan(liveCode, { eager: true });
@@ -2378,6 +2410,9 @@
       // branch render. Reset here instead, before either branch runs, so a
       // path cannot be missed again.
       liveStage.style.minHeight = '';
+      // This render's ticket. Everything below the first await is only painted
+      // while this is still the newest selection -- see renderSeq above.
+      const seq = ++renderSeq;
       const raw = sourceFor(token, form);
       const src = raw ? withOption(raw, token, prop, variant, isBool) : raw;
       liveEl.hidden = false;
@@ -2409,7 +2444,8 @@
         maybeWarnServerRequired(generated);
         const genRootId = assignExampleIds(token, optionText);
         resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, genRootId);
-        await renderSource(withRootId(generatedShown, genRootId));
+        await renderSource(withRootId(generatedShown, genRootId), seq);
+        if (stale(seq)) return;
         assignExampleIds(token, optionText); // #675: catch behavior-injected children
         const genDescribed = optionDescription(token, prop);
         const genSummary = genDescribed || summarise(liveExample.firstElementChild);
@@ -2457,7 +2493,8 @@
       maybeWarnServerRequired(src);
       const rootId = assignExampleIds(token, optionText);
       resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, rootId);
-      await renderSource(withRootId(srcShown, rootId));
+      await renderSource(withRootId(srcShown, rootId), seq);
+      if (stale(seq)) return;
       assignExampleIds(token, optionText); // #675: catch behavior-injected children
       // After the upgrade, so the summary describes the UPGRADED element rather
       // than the bare markup it was built from.

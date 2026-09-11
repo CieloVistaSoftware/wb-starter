@@ -16,7 +16,7 @@ Small label/tag for status indicators, counts, or categories
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Badge text content |
+| `label` | `string` | `this is the label` | Badge text content |
 | `variant` | `default` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `glass` · `gradient` | `default` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` | `md` | Badge size |
 | `pill` | `boolean` | `false` | Pill shape with full border radius |
@@ -24,7 +24,7 @@ Small label/tag for status indicators, counts, or categories
 | `outline` | `boolean` | `false` | Outline style (transparent background) |
 | `removable` | `boolean` | `false` | Show remove/close button |
 | `glow` | `boolean` | `false` | Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges) |
-| `icon` | `string` | — | Leading icon/emoji shown before the label |
+| `icon` | `string` | `this is the icon` | Leading icon/emoji shown before the label |
 
 ## Methods
 

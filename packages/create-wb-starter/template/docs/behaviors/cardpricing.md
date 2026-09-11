@@ -31,11 +31,11 @@ Use `x-cardpricing` when the host is not a `<article>` and you want the same beh
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `plan` | `string` | — | Plan name (e.g., Basic, Pro, Enterprise) |
-| `price` | `string` | — | Price amount (e.g., $29) |
+| `plan` | `string` | `this is the plan` | Plan name (e.g., Basic, Pro, Enterprise) |
+| `price` | `string` | `this is the price` | Price amount (e.g., $29) |
 | `period` | `string` | `/month` | Billing period (e.g., /month, /year) |
-| `description` | `string` | — | Short plan description |
-| `features` | `string` | — | Comma-separated list of features |
+| `description` | `string` | `this is the description` | Short plan description |
+| `features` | `string` | `this is the features` | Comma-separated list of features |
 | `cta` | `string` | `Get Started` | Call-to-action button text |
 | `cta-href` | `string` | `#` | Call-to-action link URL |
 | `featured` | `boolean` | `false` | Highlight as featured/recommended plan |

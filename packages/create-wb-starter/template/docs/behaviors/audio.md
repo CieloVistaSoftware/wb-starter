@@ -12,6 +12,19 @@ Audio player with optional 15-band graphic equalizer
 <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" controls></audio>
 ```
 
+
+
+### Declining it
+
+A `<audio>` **is** the audio behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<audio x-ignore>
+  <!-- a plain audio: no behavior is injected -->
+</audio>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |

@@ -26,13 +26,13 @@ Use `x-cardstats` when the host is not a `<article>` and you want the same behav
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `value` | `string` | — | The main statistic value (e.g., 1,234 or $50K) |
-| `label` | `string` | — | Label describing what the value represents |
-| `icon` | `string` | — | Icon (emoji or icon name) |
+| `value` | `string` | `this is the value` | The main statistic value (e.g., 1,234 or $50K) |
+| `label` | `string` | `this is the label` | Label describing what the value represents |
+| `icon` | `string` | `this is the icon` | Icon (emoji or icon name) |
 | `trend` | `` · `up` · `down` · `neutral` | — | Trend direction |
-| `trend-value` | `string` | — | Trend amount (e.g., +12%, -5%) |
+| `trend-value` | `string` | `this is the trend value` | Trend amount (e.g., +12%, -5%) |
 | `variant` | `default` · `compact` · `large` · `minimal` | `default` | Visual style variant |
-| `color` | `string` | — | Accent color (CSS color value) |
+| `color` | `string` | `this is the color` | Accent color (CSS color value) |
 
 ## Methods
 

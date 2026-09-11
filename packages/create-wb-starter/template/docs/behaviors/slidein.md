@@ -18,7 +18,7 @@ On click, plays the slide-in-<dir> animation for 0.5s.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `direction` | `string` | `left` | Read by slidein(). |
+| `direction` | `string` | `left` | Edge the element slides in from: `left` (default), `right`, `top` or `bottom`. |
 
 ## Live example
 

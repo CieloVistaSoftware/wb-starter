@@ -21,11 +21,22 @@
 </div>
 
 <!-- QUICK STATS -->
+<!-- size="full" is load-bearing, not decoration (§22 overlap gate). Same cause
+     as pages/home.html's stats row: card.css gives every card the floor
+     `min-width: min(17.5rem, calc(100vw - 2rem))` = 280px on desktop, while
+     .themes-stats (src/styles/pages/themes-showcase.css) lays these four out
+     on `repeat(auto-fit, minmax(140px, 1fr))` tracks that measure ~246px. A
+     grid item cannot shrink below its own min-width, so each card spilled
+     18px past its track and painted over the next one. `size="full"` is
+     card.base.schema.json's declared value for "fill the box you are given"
+     (.x-card--full => min-width: 0; max-width: 100%) -- the right contract
+     for a grid cell, and it beats the base floor on specificity without an
+     !important. -->
 <div id="themes-stats" class="themes-stats">
-  <article x-cardstats id="themes-stats-total" value="23" label="Total Themes" icon="🎨"></article>
-  <article x-cardstats id="themes-stats-dark" value="12" label="Dark Themes" icon="🌙"></article>
-  <article x-cardstats id="themes-stats-light" value="11" label="Light Themes" icon="☀️"></article>
-  <article x-cardstats id="themes-stats-vars" value="∞" label="CSS Variables" icon="🎯"></article>
+  <article x-cardstats size="full" id="themes-stats-total" value="23" label="Total Themes" icon="🎨"></article>
+  <article x-cardstats size="full" id="themes-stats-dark" value="12" label="Dark Themes" icon="🌙"></article>
+  <article x-cardstats size="full" id="themes-stats-light" value="11" label="Light Themes" icon="☀️"></article>
+  <article x-cardstats size="full" id="themes-stats-vars" value="∞" label="CSS Variables" icon="🎯"></article>
 </div>
 
 <!-- HARMONIC COLOR SYSTEM DEMO -->

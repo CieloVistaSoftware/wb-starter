@@ -18,12 +18,12 @@ Behavior applied with x-share.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `text` | `string` | — | Read by share(). |
-| `label` | `string` | `📤 Share` | Read by share(). |
-| `share-title` | `string` | — | Read by share(). |
-| `share-text` | `string` | — | Read by share(). |
-| `share-url` | `string` | — | Read by share(). |
-| `url` | `string` | — | Read by share(). |
+| `text` | `string` | `this is the text` | Body text. Only used when `share-text` is absent. |
+| `label` | `string` | `📤 Share` | Button label. Defaults to `📤 Share`. |
+| `share-title` | `string` | `this is the share title` | Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`. |
+| `share-text` | `string` | `this is the share text` | Body text passed to the share sheet. Read BEFORE `text`. |
+| `share-url` | `string` | `#` | URL to share. Read BEFORE `url`; falls back to the current page address. |
+| `url` | `string` | `#` | URL to share. Only used when `share-url` is absent. |
 
 ## Live example
 

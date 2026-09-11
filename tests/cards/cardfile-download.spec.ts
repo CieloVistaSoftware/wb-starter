@@ -63,10 +63,23 @@ test.describe('[x-cardfile] download', () => {
     await expect(card).not.toHaveAttribute('role', 'button');
     await expect(card).not.toHaveAttribute('tabindex', '0');
     await expect(card.locator('.x-card__file-download')).toHaveCount(0);
-    // Silently doing nothing is confusing to whoever's authoring/testing
-    // the card -- surface it visibly instead.
-    await expect(card.locator('.x-card__file-warning')).toBeVisible();
-    await expect(card.locator('.x-card__file-warning')).toHaveText(/no href/i);
+    // AND IT SAYS NOTHING TO THE VISITOR ABOUT IT.
+    //
+    // This used to require the opposite -- a visible `.x-card__file-warning`
+    // reading "No href given" -- on the reasoning that silently doing nothing
+    // confuses whoever is authoring the card. Two gates then asserted opposite
+    // things about the same element: compliance/no-runtime-warning-leaks.spec.ts
+    // forbids author-facing prose rendered at visitors, and it caught this one on
+    // demos/site/cards.html.
+    //
+    // The newer rule wins, because the old one fired on the DEFAULT.
+    // `downloadable` defaults to true, so all 15 cardfile demos on that page --
+    // each demonstrating a file type or a variant, none claiming to download
+    // anything -- were labelled broken in front of readers. A card with no href
+    // is simply not a download card, which is what the assertions above check.
+    // The author who writes `downloadable` AND omits href still gets told, in
+    // the console, where framework diagnostics belong.
+    await expect(card.locator('.x-card__file-warning')).toHaveCount(0);
   });
 
   test('file-type attribute (the schema-declared name) picks the matching icon', async ({ page }) => {

@@ -64,7 +64,16 @@ async function inject(page: Page, html: string) {
 }
 
 async function surface(page: Page, selector: string) {
-  return page.locator(selector).first().evaluate((el) => {
+  return page.locator(selector).first().evaluate(async (el) => {
+    // SETTLE BEFORE READING (#1106). card.css gives the host
+    // `transition: all 0.2s ease`, so reading computed style the moment the card
+    // is built samples a value in flight. Traced 2026-09-11: default, compact,
+    // large and minimal all read 1.13058px at the instant this used to measure,
+    // and 16px two seconds later — the same number for all four each time, and a
+    // different number every run (6.52px, 16px, 1.13px). Wait on each running
+    // animation's `finished` promise: the browser announces the settled value,
+    // no sleep and no guess at 0.2s.
+    await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)));
     const cs = getComputedStyle(el);
     return { background: cs.backgroundColor, border: cs.border, boxShadow: cs.boxShadow, padding: cs.padding };
   });

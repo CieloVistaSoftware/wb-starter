@@ -15,14 +15,27 @@ Multi-line text input with autosize and character count
   rows="3"></textarea>
 ```
 
+
+
+### Declining it
+
+A `<textarea>` **is** the textarea behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<textarea x-ignore>
+  <!-- a plain textarea: no behavior is injected -->
+</textarea>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | — | Field label |
-| `placeholder` | `string` | — | Placeholder text |
-| `value` | `string` | — | Text value |
-| `name` | `string` | — | Form field name |
+| `label` | `string` | `this is the label` | Field label |
+| `placeholder` | `string` | `this is the placeholder` | Placeholder text |
+| `value` | `string` | `this is the value` | Text value |
+| `name` | `string` | `this is the name` | Form field name |
 | `rows` | `number` | `3` | Visible rows |
 | `max-length` | `number` | `0` | Max character limit |
 | `show-count` | `boolean` | `false` | Show character count |

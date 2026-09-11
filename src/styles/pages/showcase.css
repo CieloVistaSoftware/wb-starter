@@ -17,3 +17,20 @@ body.feedback-page .x-demo__grid {
     grid-template-columns: 1fr;
   }
 }
+
+/* §22 (#274) — a `featured` pricing card is drawn at `transform: scale(1.05)`
+   (cardpricing(), src/wb-viewmodels/card.js, and card.css's
+   `.x-pricing--featured`). A transform paints outside the layout box without
+   changing it, so the card renders ~2.5% of its own height ABOVE and BELOW the
+   space the demo reserved for it. Measured live on demos/site/cards.html: the
+   featured "Pro" card's 2px border landed 3px onto the top edge of that same
+   demo's own <div class="x-pre-wrapper"> code panel, while the two
+   non-featured cards beside it — identical in every other way — sat clean.
+   The scale IS what `featured` demonstrates, so reserve the growth as real
+   layout space instead of un-scaling the card. Attribute-keyed because the
+   behavior writes the transform inline on the host rather than via the class,
+   so the class alone is not a reliable handle. */
+[x-cardpricing][featured],
+.x-pricing--featured {
+  margin-block: var(--space-md);
+}

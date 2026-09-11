@@ -29,12 +29,25 @@ Use `x-table` when the host is not a `<table>` and you want the same behavior:
 
 > Do not write `<table x-table>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
 
+### Declining it
+
+A `<table>` **is** the table behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<table x-ignore>
+  <!-- a plain table: no behavior is injected -->
+</table>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+
+
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `data` | `string` | — | Table data as JSON array |
-| `columns` | `string` | — | Column config as JSON [{key, label, sortable}] |
+| `data` | `string` | `this is the data` | Table data as JSON array |
+| `columns` | `string` | `this is the columns` | Column config as JSON [{key, label, sortable}] |
 | `sortable` | `boolean` | `true` | Enable column sorting |
 | `filterable` | `boolean` | `false` | Enable filtering |
 | `paginated` | `boolean` | `false` | Enable pagination |
@@ -43,8 +56,8 @@ Use `x-table` when the host is not a `<table>` and you want the same behavior:
 | `hoverable` | `boolean` | `true` | Hover effect on rows |
 | `compact` | `boolean` | `false` | Compact row spacing |
 | `bordered` | `boolean` | `false` | Cell borders |
-| `headers` | `string` | — | Comma-separated column headings. |
-| `rows` | `string` | — | JSON array-of-arrays of row data. |
+| `headers` | `string` | `this is the headers` | Comma-separated column headings. |
+| `rows` | `string` | `this is the rows` | JSON array-of-arrays of row data. |
 | `searchable` | `boolean` | `false` | Show a filter input above the table. Alias of filterable. |
 | `copyable` | `boolean` | `false` | Add a control that copies the table as text. |
 | `selectable` | `boolean` | `false` | Let a row be clicked to become the active row. |

@@ -18,7 +18,7 @@ Behavior applied with x-sparkle.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `count` | `string` | `15` | Read by sparkle(). |
+| `count` | `string` | `15` | How many sparkle particles to emit. The behavior's default is `15`. |
 
 ## Live example
 

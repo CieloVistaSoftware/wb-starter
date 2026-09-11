@@ -26,7 +26,15 @@ illustration referenced from the text", which is exactly what a live example wit
 source is. The host tag is the author's choice everywhere else in this project — the
 attribute IS the behavior — and examples are not an exception.
 
-```html
+<!-- `text`, not `html`, ON PURPOSE. These are three ALTERNATIVE host tags, written
+     as bare opening tags — not markup anyone should run. In an `html` fence the
+     doc-viewer live-renders the block (mdhtml.js), the parser reads three unclosed
+     tags as a NESTING, and the reader gets a demo inside a demo inside a demo.
+     Each level costs a flat 34px of x-demo box, which is the 739 / 705 / 673 / 641
+     progression doc-viewer-code-panel-audit.spec.ts measured here. Leave it as
+     `text`; the fence is a vocabulary, not an example. -->
+
+```text
 <figure x-demo>            <!-- preferred: an example IS a figure -->
 <section x-demo>           <!-- when the example is a titled subsection -->
 <div x-demo>               <!-- only when no semantic element fits -->

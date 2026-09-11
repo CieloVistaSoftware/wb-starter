@@ -28,8 +28,8 @@ Use `x-cardminimizable` when the host is not a `<article>` and you want the same
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title (always visible) |
-| `content` | `string` | — | Minimizable content |
+| `title` | `string` | `this is the title` | Card title (always visible) |
+| `content` | `string` | `this is the content` | Minimizable content |
 | `minimized` | `boolean` | `false` | Initial minimized state |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 

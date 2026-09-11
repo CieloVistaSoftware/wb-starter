@@ -32,14 +32,14 @@ Use `x-cardhero` when the host is not a `<section>` and you want the same behavi
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `background` | `string` | — | Background image URL |
-| `title` | `string` | — | Hero headline |
-| `pretitle` | `string` | — | Small label or count shown above the title (e.g. '100 Behaviors') |
-| `subtitle` | `string` | — | Hero tagline/subheadline |
-| `content` | `string` | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) |
-| `cta` | `string` | — | Call-to-action button text |
+| `background` | `string` | `this is the background` | Background image URL |
+| `title` | `string` | `this is the title` | Hero headline |
+| `pretitle` | `string` | `this is the pretitle` | Small label or count shown above the title (e.g. '100 Behaviors') |
+| `subtitle` | `string` | `this is the subtitle` | Hero tagline/subheadline |
+| `content` | `string` | `this is the content` | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) |
+| `cta` | `string` | `this is the cta` | Call-to-action button text |
 | `cta-href` | `string` | `#` | Call-to-action link URL |
-| `cta-secondary` | `string` | — | Secondary CTA text |
+| `cta-secondary` | `string` | `this is the cta secondary` | Secondary CTA text |
 | `cta-secondary-href` | `string` | `#` | Secondary CTA URL |
 | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant |
 | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) |

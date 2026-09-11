@@ -29,8 +29,8 @@ Use `x-cardexpandable` when the host is not a `<article>` and you want the same 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | — | Card title |
-| `content` | `string` | — | Expandable content |
+| `title` | `string` | `this is the title` | Card title |
+| `content` | `string` | `this is the content` | Expandable content |
 | `expanded` | `boolean` | `false` | Initial expanded state |
 | `max-height` | `string` | `100px` | Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply. |
 | `lines` | `number` | `null` | Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set. |

@@ -2056,15 +2056,28 @@ export function cardfile(element, options = {}) {
       element.removeEventListener('keydown', onKey);
       if (typeof baseCleanup === 'function') { baseCleanup(); }
     };
-  } else if (config.downloadable) {
-    // downloadable but no href: silently doing nothing on click is
-    // confusing for anyone authoring/testing this component -- surface it
-    // visibly instead of leaving it a silent dead end.
-    const warning = document.createElement('div');
-    warning.className = 'x-card__file-warning';
-    warning.style.cssText = 'margin-top:0.25rem;font-size:0.8rem;color:var(--danger-color,#ef4444);';
-    warning.textContent = 'No href given — nothing to download.';
-    element.appendChild(warning);
+  } else if (config.downloadable && element.hasAttribute('downloadable')) {
+    // NO href AND `downloadable` WRITTEN OUT: a contradiction the author can
+    // fix, so say so — in the console, where every other framework diagnostic
+    // goes.
+    //
+    // This used to append visible text reading "No href given — nothing to
+    // download.", reasoning that a silent dead end is worse. Two things were
+    // wrong with that. It rendered author-facing prose at visitors, which
+    // compliance/no-runtime-warning-leaks.spec.ts forbids and which caught it
+    // on demos/site/cards.html. And it fired on the DEFAULT: `downloadable`
+    // defaults to true, so all 15 cardfile demos on that page — each
+    // demonstrating a file type or a variant, none claiming to download
+    // anything — were told they were broken. A check that fires on correct
+    // markup is one people learn to ignore (#1101).
+    //
+    // A card with no href is not a download card, and that is not an error.
+    // Only the author who typed `downloadable` and left out the target has
+    // stated an intention the markup cannot satisfy.
+    console.warn(
+      `[WB] x-cardfile "${config.filename || '(unnamed)'}" declares downloadable `
+      + 'with no href — there is nothing to download. Add href, or drop downloadable.'
+    );
   }
 
   // #678: show the author's own content -- see renderAuthoredContent().

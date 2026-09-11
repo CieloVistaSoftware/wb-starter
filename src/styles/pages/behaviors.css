@@ -2088,15 +2088,43 @@ main.site__main:has(#mainPage-behaviors) {
     overflow: hidden;
   }
 
+  /* THE NAV RAIL IS THE OTHER CHILD OF .site__body, AND IT SIZES ITSELF OFF THE
+     VIEWPORT
+     ----------------------------------------------------------------------
+     site.css: `.site__nav { align-self: flex-start; max-height: calc(100vh -
+     60px); overflow-y: auto }`. That 60px is a header height that has not been
+     true since the header grew to 64px -- site.css says so itself, in the
+     comment that deleted the matching stale `height: calc(100vh - 60px)` from
+     .site__body. .site__body is `flex: 1` of a 100dvh column, so it is
+     (viewport - header) tall, while the rail is allowed to stand
+     (viewport - 60px) tall: whenever the rail's items reach that cap it is
+     taller than the box holding it, and .site__body scrolls by the difference.
+     Everywhere else that is a few invisible pixels on a page that scrolls
+     anyway. Here .site__body is the one element told NOT to scroll, so those
+     pixels are the second scrollbar #1020 removed, coming back through the
+     other column.
+     Cap the rail at the space it was actually given. It keeps its own
+     overflow-y: auto, so every nav item stays reachable. */
+  .site__body:has(#behaviors-workspace) > .site__nav {
+    max-height: 100%;
+  }
+
   /* The two links between main and the workspace. Neither carries any visual
      role here -- they exist for routing (.page) and for the fullscreen target's
-     positioning (.page__hero) -- so they only pass the height through. */
+     positioning (.page__hero) -- so they only pass the height through.
+     overflow: hidden for the same reason .behaviors-workspace carries it (see
+     below): passing the height through is not enough on its own, because a
+     single stray pixel from a taller chrome row under a different font stack
+     still escapes a link that does not clip, and .site__body -- which has been
+     told not to scroll on this page -- is the next thing out. Both panels
+     scroll internally, so clipping here can make nothing unreachable. */
   #mainPage-behaviors,
   #behaviors-hero.page__hero {
     display: flex;
     flex-direction: column;
     flex: 1;
     min-height: 0;
+    overflow: hidden;
   }
 
   /* ...and the workspace itself takes the rest. */

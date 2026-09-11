@@ -17,8 +17,8 @@ Alert behavior for displaying messages with severity levels
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `info` · `success` · `warning` · `error` | `info` | Alert severity/style variant |
-| `title` | `string` | — | Alert title (optional heading) |
-| `message` | `string` | — | Alert message content |
+| `title` | `string` | `this is the title` | Alert title (optional heading) |
+| `message` | `string` | `this is the message` | Alert message content |
 | `icon` | `string` | — | Icon (emoji or icon name) |
 | `dismissible` | `boolean` | `false` | Show close button to dismiss alert |
 

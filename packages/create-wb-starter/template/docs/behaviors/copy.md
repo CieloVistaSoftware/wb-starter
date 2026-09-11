@@ -18,8 +18,8 @@ Click to copy text to clipboard.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `text` | `string` | — | Text to copy |
-| `target` | `string` | — | Selector of element to copy from |
+| `text` | `string` | `this is the text` | Text to copy |
+| `target` | `string` | `this is the target` | Selector of element to copy from |
 
 ## Live example
 

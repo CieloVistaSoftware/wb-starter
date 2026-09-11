@@ -16,10 +16,10 @@ Behavior applied with x-countdown.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `seconds` | `string` | `0` | Read by countdown(). |
-| `format` | `string` | `auto` | Read by countdown(). |
-| `date` | `string` | — | Read by countdown(). |
-| `to` | `string` | — | Read by countdown(). |
+| `seconds` | `string` | `0` | A fixed duration in seconds, used instead of an absolute `date`. |
+| `format` | `string` | `auto` | How the remaining time is rendered. `auto` (default) drops units that are zero. |
+| `date` | `string` | `this is the date` | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. |
+| `to` | `string` | `this is the to` | Alias of `date`, read only when `date` is absent. |
 
 ## Events
 

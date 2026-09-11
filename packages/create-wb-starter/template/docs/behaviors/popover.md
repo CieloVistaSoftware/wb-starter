@@ -18,12 +18,12 @@ Behavior applied with x-popover.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `description` | `string` | — | Read by popover(). |
-| `heading` | `string` | — | Read by popover(). |
-| `trigger` | `string` | `click` | Read by popover(). |
-| `position` | `string` | `top` | Read by popover(). |
-| `popover-content` | `string` | — | Read by popover(). |
-| `popover-title` | `string` | — | Read by popover(). |
+| `description` | `string` | `this is the description` | Popover body text. Only used when `popover-content` is absent. |
+| `heading` | `string` | `this is the heading` | Popover heading. Only used when `popover-title` is absent. |
+| `trigger` | `string` | `click` | What opens it: `click` (default) or `hover`. |
+| `position` | `string` | `top` | Side the popover opens on: `top` (default), `bottom`, `left` or `right`. |
+| `popover-content` | `string` | `this is the popover content` | Popover body text. Read BEFORE `description`. |
+| `popover-title` | `string` | `this is the popover title` | Popover heading. Read BEFORE `heading`. |
 
 ## Live example
 

@@ -333,9 +333,28 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // that's true on paper but never actually painted on top of
         // anything, exactly the same false positive already fixed for
         // overflow:hidden above, just via scroll instead of clip.
+        //
+        // The walk starts at `el` ITSELF, not at el.parentElement. For a
+        // border-box paint rect that is a no-op (intersecting a box with its
+        // own box changes nothing), but the Range-based rect above is NOT a
+        // box the element clips for free: it is the geometry of the element's
+        // own text runs in full, laid out as though nothing capped them. An
+        // element that clips ITSELF -- `overflow: hidden` plus a max-height or
+        // a line-clamp -- therefore reported text hundreds of pixels below the
+        // region Chromium actually paints. Found live on demos/site/cards.html:
+        // card.css's `.x-card__expandable-content` is exactly that shape
+        // (`overflow: hidden; max-height: var(--x-card-expandable-max-height,
+        // none)`), and cardexpandable() (src/wb-viewmodels/card.js) collapses
+        // it to its 100px default; the ~330 characters of that demo's own
+        // `content` wrap to roughly 330px of text inside a `size="sm"` card, so
+        // the unclipped Range rect ran ~230px past the collapsed box and was
+        // reported as overlapping the card's OWN footer (232x60px) and its
+        // "Show More" button (232x35px) -- neither of which anything is ever
+        // drawn on top of. Same class of false positive the ancestor walk below
+        // already fixes, just one level closer in.
         function getClippedRect(el: HTMLElement, rect: DOMRect | Rect): Rect | null {
           let r: Rect = { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: 0, height: 0 };
-          let node = el.parentElement;
+          let node: HTMLElement | null = el;
           while (node && node !== document.documentElement) {
             const ncs = getComputedStyle(node);
             const clipsX = ncs.overflowX === 'hidden' || ncs.overflowX === 'clip' || ncs.overflowX === 'auto' || ncs.overflowX === 'scroll';

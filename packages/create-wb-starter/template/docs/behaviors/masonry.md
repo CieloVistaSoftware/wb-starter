@@ -21,8 +21,8 @@ Behavior applied with x-masonry.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `columns` | `string` | `3` | Read by masonry(). |
-| `gap` | `string` | `1rem` | Read by masonry(). |
+| `columns` | `string` | `3` | Number of masonry columns. Defaults to `3`. |
+| `gap` | `string` | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
 
 ## Live example
 

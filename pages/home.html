@@ -24,11 +24,27 @@
 
 <h2>By the Numbers</h2>
 <div x-container max-width="900px" padding="2rem">
+  <!-- size="full" is load-bearing, not decoration (§22 overlap gate).
+       Every card carries card.css's default floor
+       `min-width: min(17.5rem, calc(100vw - 2rem))` = 280px on a desktop
+       viewport -- deliberate, so a card in a shrink-to-fit context does not
+       collapse to a sliver. This grid's tracks are narrower than that: x-grid
+       lays columns="4" out as `repeat(auto-fit, minmax(min(200px, 100%), 1fr))`
+       inside a 900px container, which sizes each track well under 280px. A
+       grid item cannot shrink below its own min-width, so each 280px card
+       spilled out of its track and painted over the card in the next one --
+       measured live at 26px of card-on-card overlap, and 10px of card over the
+       neighbour's icon header. `size="full"` is card.base.schema.json's own
+       declared value for "this card fills the box it is given"
+       (.x-card--full => min-width: 0; max-width: 100%), which is exactly the
+       contract a grid cell wants. Fixing it here rather than widening the
+       tracks: 4 tracks of 280px need 1168px of content box, which this page
+       does not have at any supported width. -->
   <div x-grid columns="4">
-    <article x-cardstats id="autogen-home-stat-0" value="100+" label="Behaviors" icon="🧩"></article>
-    <article x-cardstats id="autogen-home-stat-1" value="Light" label="DOM Only" icon="☀️"></article>
-    <article x-cardstats id="autogen-home-stat-2" value="&lt;1s" label="Build Time" icon="⚡"></article>
-    <article x-cardstats id="autogen-home-stat-3" value="100%" label="Standards" icon="✅"></article>
+    <article x-cardstats size="full" id="autogen-home-stat-0" value="100+" label="Behaviors" icon="🧩"></article>
+    <article x-cardstats size="full" id="autogen-home-stat-1" value="Light" label="DOM Only" icon="☀️"></article>
+    <article x-cardstats size="full" id="autogen-home-stat-2" value="&lt;1s" label="Build Time" icon="⚡"></article>
+    <article x-cardstats size="full" id="autogen-home-stat-3" value="100%" label="Standards" icon="✅"></article>
   </div>
   <div class="x-divider"></div>
   <div x-flex id="home-preview-row-1" justify="center" gap="1rem">

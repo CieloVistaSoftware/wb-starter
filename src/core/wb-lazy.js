@@ -1330,6 +1330,21 @@ function knownBehaviorAttributes() {
   return new Set([
     ...Object.keys(extensionMap || {}),
     ...Object.keys(WB_LAZY_ONLY_ATTRIBUTES || {}),
+    // THE THIRD REGISTRY, and the one that actually decides existence.
+    //
+    // A behaviour may wire its own helper attributes: move.js:242 does
+    // `wire('x-moveright', moveright)` for all six directions, and those names
+    // are in behaviorModules (index.js:250 -- moveright: 'move') without ever
+    // appearing in either selector map. So the reporter called x-moveright and
+    // x-moveleft unknown on the behaviours page -- 9 errors in data/errors.json,
+    // which failed compliance/error-log-empty.spec.ts and dark-mode.spec.ts.
+    //
+    // That is the incomplete-registry mistake this function's own comment warns
+    // about, made one map short of the warning. behaviorModules is what
+    // getBehavior() consults before throwing "Unknown behavior", so it is the
+    // registry whose answer matters; read it rather than list its members here
+    // (#831 is the work of collapsing all of them into one).
+    ...Object.keys(behaviorModules || {}).map((name) => `x-${name}`),
   ]);
 }
 
@@ -1351,6 +1366,12 @@ function reportUnknownBehaviorAttributes(root) {
     for (const attr of Array.from(element.attributes)) {
       const name = attr.name;
       if (!name.startsWith('x-')) { continue; }
+      // A BARE `x-` NAMES NOTHING, so it is not a misspelling of anything.
+      // demos/intellisense-check.html:26 is `<div x-tabs x->` on purpose — that
+      // is the page where you type the prefix to see what IntelliSense offers.
+      // Reporting it made the reporter fire on deliberately correct markup,
+      // which is the one thing that teaches people to ignore a check.
+      if (name === 'x-') { continue; }
       if (NON_BEHAVIOR_X_ATTRIBUTES.has(name)) { continue; }
       if (STATE_MARKER_SUFFIX.test(name)) { continue; }
       if (known.has(name)) { continue; }

@@ -18,6 +18,19 @@ Schema for x-form behavior (form enhancement)
 </form>
 ```
 
+
+
+### Declining it
+
+A `<form>` **is** the form behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+
+```html
+<form x-ignore>
+  <!-- a plain form: no behavior is injected -->
+</form>
+```
+
+Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
