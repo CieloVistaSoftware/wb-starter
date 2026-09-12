@@ -2586,7 +2586,43 @@
       "createdAt": "2026-09-09T01:51:42.073Z",
       "updatedAt": "2026-09-09T01:51:42.073Z",
       "issueUrl": null
+    },
+    {
+      "id": "note-1789245149555",
+      "page": null,
+      "content": "Test note content 1789245149203",
+      "selectedElement": null,
+      "createdAt": "2026-09-12T20:32:29.555Z",
+      "updatedAt": "2026-09-12T20:32:29.555Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1789245157384",
+      "page": null,
+      "content": "Test note content 1789245157094",
+      "selectedElement": null,
+      "createdAt": "2026-09-12T20:32:37.384Z",
+      "updatedAt": "2026-09-12T20:32:37.384Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1789245158100",
+      "page": null,
+      "content": "Duplicate test 1789245157785",
+      "selectedElement": null,
+      "createdAt": "2026-09-12T20:32:38.100Z",
+      "updatedAt": "2026-09-12T20:32:38.100Z",
+      "issueUrl": null
+    },
+    {
+      "id": "note-1789245159316",
+      "page": null,
+      "content": "Outgoing note 1789245159007",
+      "selectedElement": null,
+      "createdAt": "2026-09-12T20:32:39.316Z",
+      "updatedAt": "2026-09-12T20:32:39.316Z",
+      "issueUrl": null
     }
   ],
-  "lastUpdated": "2026-09-09T01:51:42.076Z"
+  "lastUpdated": "2026-09-12T20:32:39.318Z"
 }
