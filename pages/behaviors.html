@@ -1717,7 +1717,7 @@
     // Access-Control-Allow-Origin: * -- show-eq feeds the element through the Web
     // Audio analyser, and a source without CORS headers analyses as silence
     // (soundhelix.com, the obvious pick, sends none: checked).
-    const FALLBACK_MEDIA = { audio: 'demos/audio.mp3' };
+    const FALLBACK_MEDIA = { audio: 'https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3' };
     function seedAttributes(behavior) {
       const sc = schemaByName.get(behavior);
       const props = (sc && sc.properties) || {};
@@ -1762,7 +1762,7 @@
           // plain .x-button anchor rendered as flat text. Modifier CLASSES work
           // without the behavior; a variant= ATTRIBUTE would not, since button()
           // only decorates <button>.
-          '<a href="demos/audio.mp3" download="ghosts-i-01.mp3" class="x-button x-button--primary">',
+          '<a href="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" download="ghosts-i-01.mp3" class="x-button x-button--primary">',
           '  ↓ Download the sample',
           '</a>',
         ].join('\n');

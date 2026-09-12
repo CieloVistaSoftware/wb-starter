@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T07:33:35.673Z",
+  "generatedAt": "2026-08-26T17:57:07.232Z",
   "count": 152,
   "schemas": [
     {
@@ -12,19 +12,17 @@
       "properties": {
         "data-title": {
           "type": "boolean",
-          "description": "Legacy fallback for `accordion-title`, read only when the canonical form is absent.",
-          "default": false,
-          "scope": "child"
+          "description": "Read by accordion(). Bare attribute.",
+          "default": false
         },
         "accordion-title": {
           "type": "boolean",
-          "description": "Marks a child as an accordion panel and supplies its header text. This is the canonical spelling; `data-accordion-title` is read as a fallback.",
-          "default": false,
-          "scope": "child"
+          "description": "Read by accordion(). Bare attribute.",
+          "default": false
         },
         "open": {
           "type": "boolean",
-          "description": "Start expanded. `expanded` is accepted as an equivalent. Bare attribute.",
+          "description": "Read by accordion(). Bare attribute.",
           "default": false
         }
       },
@@ -39,7 +37,7 @@
       "file": "alert.schema.json",
       "name": "alert",
       "title": "Alert",
-      "description": "Alert behavior for displaying messages with severity levels",
+      "description": "Alert component for displaying messages with severity levels",
       "tag": "wb-alert",
       "baseClass": "x-alert",
       "properties": {
@@ -58,13 +56,13 @@
         "title": {
           "type": "string",
           "description": "Alert title (optional heading)",
-          "default": "this is the title"
+          "default": ""
         },
         "message": {
           "type": "string",
           "description": "Alert message content",
           "required": true,
-          "default": "this is the message"
+          "default": ""
         },
         "icon": {
           "type": "string",
@@ -127,50 +125,50 @@
     {
       "file": "article.schema.json",
       "name": "article",
-      "title": "Article",
-      "description": "Semantic article behavior for blog posts, news, and documentation pages.",
+      "title": "Article Component",
+      "description": "Semantic article component for blog posts, news, and documentation pages.",
       "tag": "wb-article",
       "baseClass": "x-article",
       "properties": {
         "title": {
           "type": "string",
           "description": "Article title",
-          "default": "this is the title"
+          "default": ""
         },
         "subtitle": {
           "type": "string",
           "description": "Article subtitle or deck",
-          "default": "this is the subtitle"
+          "default": ""
         },
         "author": {
           "type": "string",
           "description": "Author name",
-          "default": "this is the author"
+          "default": ""
         },
         "date": {
           "type": "string",
           "description": "Publication date",
-          "default": "this is the date"
+          "default": ""
         },
         "category": {
           "type": "string",
           "description": "Category or tag",
-          "default": "this is the category"
+          "default": ""
         },
         "image": {
           "type": "string",
           "description": "Cover image URL",
-          "default": "this is the image"
+          "default": ""
         },
         "imageAlt": {
           "type": "string",
           "description": "Cover image alt text",
-          "default": "this is the image alt"
+          "default": ""
         },
         "readingTime": {
           "type": "string",
           "description": "Estimated reading time",
-          "default": "this is the reading time"
+          "default": ""
         },
         "featured": {
           "type": "boolean",
@@ -213,8 +211,8 @@
     {
       "file": "articles.schema.json",
       "name": "articles",
-      "title": "Articles List",
-      "description": "A wrapper behavior to display a list or grid of articles.",
+      "title": "Articles List Component",
+      "description": "A wrapper component to display a list or grid of articles.",
       "tag": "wb-articles",
       "baseClass": "x-articles",
       "properties": {
@@ -241,7 +239,7 @@
         "source": {
           "type": "string",
           "description": "Data source URL for fetching articles dynamically",
-          "default": "this is the source"
+          "default": ""
         },
         "pagination": {
           "type": "boolean",
@@ -281,7 +279,7 @@
         "src": {
           "type": "string",
           "description": "Audio source URL",
-          "default": "demos/audio.mp3",
+          "default": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "required": true
         },
         "volume": {
@@ -332,18 +330,18 @@
       },
       "matrix": [
         {
-          "src": "demos/audio.mp3"
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
         },
         {
-          "src": "demos/audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "showEq": true
         },
         {
-          "src": "demos/audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "volume": 0.5
         },
         {
-          "src": "demos/audio.mp3",
+          "src": "https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3",
           "loop": true
         }
       ],
@@ -400,22 +398,22 @@
         "src": {
           "type": "string",
           "description": "Image source URL",
-          "default": "#"
+          "default": ""
         },
         "alt": {
           "type": "string",
           "description": "Alt text for image",
-          "default": "this is the alt"
+          "default": ""
         },
         "initials": {
           "type": "string",
           "description": "Fallback initials (2 chars)",
-          "default": "this is the initials"
+          "default": ""
         },
         "name": {
           "type": "string",
           "description": "Full name (generates initials if not provided)",
-          "default": "this is the name"
+          "default": ""
         },
         "size": {
           "type": "string",
@@ -497,7 +495,7 @@
         "label": {
           "type": "string",
           "description": "Badge text content",
-          "default": "this is the label"
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -560,7 +558,7 @@
         "icon": {
           "type": "string",
           "description": "Leading icon/emoji shown before the label",
-          "default": "this is the icon"
+          "default": ""
         }
       },
       "matrix": [
@@ -906,12 +904,12 @@
       "properties": {
         "items": {
           "type": "string",
-          "description": "Comma-separated trail labels, e.g. `Home,Docs,Behaviors`. Split on commas — a label containing a comma cannot be expressed.",
-          "default": "this is the items"
+          "description": "Read by breadcrumb().",
+          "default": ""
         },
         "separator": {
           "type": "string",
-          "description": "Character drawn between items. Defaults to `/`.",
+          "description": "Read by breadcrumb().",
           "default": "/"
         }
       },
@@ -933,7 +931,7 @@
         "label": {
           "type": "string",
           "description": "Button text",
-          "default": "this is the label"
+          "default": ""
         },
         "icon": {
           "type": "string",
@@ -960,7 +958,7 @@
             "copy",
             "save"
           ],
-          "default": "star"
+          "default": ""
         },
         "iconPosition": {
           "type": "string",
@@ -1026,7 +1024,7 @@
         "href": {
           "type": "string",
           "description": "Destination URL. Turns the control into a real link — required for variant=\"link\" to mean anything.",
-          "default": "#"
+          "default": ""
         },
         "target": {
           "type": "string",
@@ -1106,33 +1104,33 @@
         "title": {
           "type": "string",
           "description": "Card title",
-          "default": "this is the title"
+          "default": ""
         },
         "content": {
           "type": "string",
           "description": "Card content/description",
-          "default": "this is the content"
+          "default": ""
         },
         "primary": {
           "type": "string",
           "description": "Primary button text",
           "required": true,
-          "default": "this is the primary"
+          "default": ""
         },
         "primaryHref": {
           "type": "string",
           "description": "Primary button link URL",
-          "default": "#"
+          "default": ""
         },
         "secondary": {
           "type": "string",
           "description": "Secondary button text",
-          "default": "this is the secondary"
+          "default": ""
         },
         "secondaryHref": {
           "type": "string",
           "description": "Secondary button link URL",
-          "default": "#"
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -1171,25 +1169,25 @@
     {
       "file": "card.schema.json",
       "name": "card",
-      "title": "Card",
-      "description": "Card. Composes an article with a header, main and footer.",
+      "title": "Card Component",
+      "description": "Card component. IS-A article, HAS-A header, main, footer.",
       "tag": "wb-card",
       "baseClass": "x-card",
       "properties": {
         "title": {
           "type": "string",
           "description": "Card title displayed in header",
-          "default": "this is the title"
+          "default": ""
         },
         "subtitle": {
           "type": "string",
           "description": "Card subtitle displayed below title",
-          "default": "this is the subtitle"
+          "default": ""
         },
         "footer": {
           "type": "string",
           "description": "Card footer text",
-          "default": "this is the footer"
+          "default": ""
         },
         "elevated": {
           "type": "boolean",
@@ -1232,13 +1230,13 @@
         "tooltip": {
           "type": "string",
           "description": "Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283).",
-          "default": "this is the tooltip",
+          "default": "",
           "appliesAttribute": "x-tooltip"
         },
         "hoverText": {
           "type": "string",
           "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
-          "default": "this is the hover text",
+          "default": "",
           "appliesAttribute": "x-tooltip"
         }
       },
@@ -1315,7 +1313,7 @@
       "file": "cardprofile.schema.json",
       "name": "cardprofile",
       "title": "Card Profile",
-      "description": "Simple profile card. Composes the shared card structure and adds profile elements (avatar, name, role, bio, cover).",
+      "description": "Simple profile card. INHERITS from card.base (IS-A card), CONTAINS profile elements (HAS-A avatar, name, role, bio, cover).",
       "tag": "wb-cardprofile",
       "baseClass": "x-card",
       "properties": {
@@ -1339,12 +1337,12 @@
           "type": "string",
           "description": "Short biography",
           "inputType": "textarea",
-          "default": "this is the bio"
+          "default": ""
         },
         "cover": {
           "type": "string",
           "description": "Cover/banner image URL",
-          "default": "this is the cover"
+          "default": ""
         },
         "size": {
           "type": "string",
@@ -1370,7 +1368,7 @@
         "hoverText": {
           "type": "string",
           "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
-          "default": "this is the hover text",
+          "default": "",
           "appliesAttribute": "x-tooltip"
         }
       },
@@ -1429,12 +1427,13 @@
         "label": {
           "type": "string",
           "description": "Label text",
-          "default": "this is the label"
+          "default": ""
         },
         "checked": {
           "type": "boolean",
           "description": "Checked state",
-          "default": false
+          "default": false,
+          "appliesClass": "x-checkbox--checked"
         },
         "disabled": {
           "type": "boolean",
@@ -1449,12 +1448,12 @@
         "name": {
           "type": "string",
           "description": "Form field name",
-          "default": "this is the name"
+          "default": ""
         },
         "value": {
           "type": "string",
           "description": "Form field value",
-          "default": "this is the value"
+          "default": ""
         },
         "required": {
           "type": "boolean",
@@ -1530,12 +1529,12 @@
         "label": {
           "type": "string",
           "description": "Chip text content",
-          "default": "this is the label"
+          "default": ""
         },
         "icon": {
           "type": "string",
           "description": "Leading icon",
-          "default": "this is the icon"
+          "default": ""
         },
         "dismissible": {
           "type": "boolean",
@@ -1611,18 +1610,17 @@
       "properties": {
         "variant": {
           "type": "string",
-          "description": "Clock face: `digital` (default) or the analogue rendering.",
+          "description": "Read by clock().",
           "default": "digital"
         },
         "format": {
           "type": "string",
-          "description": "`24` (default) or `12` for a 12-hour clock with AM/PM.",
+          "description": "Read by clock().",
           "default": "24"
         },
         "show-seconds": {
           "type": "string",
-          "description": "Show the seconds field. On unless set to `\"false\"`.",
-          "default": "this is the show seconds"
+          "description": "Read by clock()."
         }
       },
       "matrix": [],
@@ -1642,17 +1640,17 @@
       "properties": {
         "gap": {
           "type": "string",
-          "description": "Space between clustered items, as a CSS length. Defaults to `1rem`.",
+          "description": "Read by cluster().",
           "default": "1rem"
         },
         "justify": {
           "type": "string",
-          "description": "How items are distributed along the row — CSS `justify-content`. Defaults to `flex-start`.",
+          "description": "Read by cluster().",
           "default": "flex-start"
         },
         "align": {
           "type": "string",
-          "description": "How items line up across the row — CSS `align-items`. Defaults to `center`, which is what keeps mixed-height chips and buttons on a shared centre line.",
+          "description": "Read by cluster().",
           "default": "center"
         }
       },
@@ -1673,32 +1671,28 @@
       "properties": {
         "language": {
           "type": "string",
-          "description": "Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text.",
-          "default": "this is the language"
+          "description": "Read by code()."
         },
         "variant": {
           "type": "string",
-          "description": "Visual treatment of the code span or block — controls the surface it is drawn on.",
-          "default": "this is the variant"
+          "description": "Read by code()."
         },
         "scrollable": {
           "type": "string",
-          "description": "When `\"true\"`, scroll horizontally rather than wrapping long lines.",
-          "default": "this is the scrollable"
+          "description": "Read by code()."
         },
         "size": {
           "type": "string",
-          "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
-          "default": "this is the size"
+          "description": "Read by code()."
         },
         "show-copy": {
           "type": "boolean",
-          "description": "Show a copy-to-clipboard button.",
+          "description": "Read by code(). Bare attribute.",
           "default": false
         },
-        "copy": {
+        "data-copy": {
           "type": "boolean",
-          "description": "Alias of `show-copy`.",
+          "description": "Read by code(). Bare attribute.",
           "default": false
         }
       },
@@ -1742,7 +1736,7 @@
         },
         "target": {
           "type": "string",
-          "default": "this is the target",
+          "default": "",
           "description": "CSS selector of a remote element to toggle instead of wrapping content"
         }
       },
@@ -1837,33 +1831,31 @@
       "properties": {
         "heading": {
           "type": "string",
-          "description": "Dialog heading. Only used when `confirm-title` is absent.",
+          "description": "Read by confirm().",
           "default": "Confirm"
         },
         "message": {
           "type": "string",
-          "description": "Body text. Only used when `confirm-message` is absent.",
+          "description": "Read by confirm().",
           "default": "Are you sure?"
         },
         "confirm-text": {
           "type": "string",
-          "description": "Label on the confirming button. Defaults to `OK`.",
+          "description": "Read by confirm().",
           "default": "OK"
         },
         "cancel-text": {
           "type": "string",
-          "description": "Label on the dismissing button. Defaults to `Cancel`.",
+          "description": "Read by confirm().",
           "default": "Cancel"
         },
         "confirm-title": {
           "type": "string",
-          "description": "Dialog heading. Read BEFORE `heading`; defaults to `Confirm`.",
-          "default": "this is the confirm title"
+          "description": "Read by confirm()."
         },
         "confirm-message": {
           "type": "string",
-          "description": "Body text. Read BEFORE `message`; defaults to `Are you sure?`.",
-          "default": "this is the confirm message"
+          "description": "Read by confirm()."
         }
       },
       "matrix": [],
@@ -1899,12 +1891,12 @@
         "text": {
           "type": "string",
           "description": "Text to copy",
-          "default": "this is the text"
+          "default": ""
         },
         "target": {
           "type": "string",
           "description": "Selector of element to copy from",
-          "default": "this is the target"
+          "default": ""
         }
       },
       "matrix": [
@@ -1927,33 +1919,32 @@
       "properties": {
         "x-copybutton": {
           "type": "string",
-          "description": "The attribute value doubles as the CSS selector for what to copy — `x-copybutton=\"#snippet\"`. Leave it empty to copy the host element's own text.",
-          "default": "this is the x copybutton"
+          "description": "Read by copybutton().",
+          "default": ""
         },
         "label": {
           "type": "string",
-          "description": "Accessible name for the button (`aria-label`/`title`). Defaults to `Copy`.",
+          "description": "Read by copybutton().",
           "default": "Copy"
         },
         "position": {
           "type": "string",
-          "description": "Corner the button is placed in, e.g. `top-right` (default).",
+          "description": "Read by copybutton().",
           "default": "top-right"
         },
         "copy-feedback": {
           "type": "string",
-          "description": "Message shown after a successful copy. Defaults to `Copied!`.",
+          "description": "Read by copybutton().",
           "default": "Copied ✓"
         },
         "copy-duration": {
           "type": "string",
-          "description": "How long the feedback stays visible, in milliseconds. Defaults to `2000`.",
+          "description": "Read by copybutton().",
           "default": "2000"
         },
         "copy-target": {
           "type": "string",
-          "description": "CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first.",
-          "default": "this is the copy target"
+          "description": "Read by copybutton()."
         }
       },
       "matrix": [],
@@ -1973,23 +1964,21 @@
       "properties": {
         "seconds": {
           "type": "string",
-          "description": "A fixed duration in seconds, used instead of an absolute `date`.",
+          "description": "Read by countdown().",
           "default": "0"
         },
         "format": {
           "type": "string",
-          "description": "How the remaining time is rendered. `auto` (default) drops units that are zero.",
+          "description": "Read by countdown().",
           "default": "auto"
         },
         "date": {
           "type": "string",
-          "description": "Target date/time to count down to. `to` is accepted as an alias; `date` is read first.",
-          "default": "this is the date"
+          "description": "Read by countdown()."
         },
         "to": {
           "type": "string",
-          "description": "Alias of `date`, read only when `date` is absent.",
-          "default": "this is the to"
+          "description": "Read by countdown()."
         }
       },
       "matrix": [],
@@ -2075,7 +2064,7 @@
           "type": "string",
           "description": "Clickable summary text",
           "required": true,
-          "default": "this is the summary"
+          "default": ""
         },
         "open": {
           "type": "boolean",
@@ -2085,7 +2074,7 @@
         "name": {
           "type": "string",
           "description": "Accordion group name (native exclusive behavior)",
-          "default": "this is the name"
+          "default": ""
         },
         "animated": {
           "type": "boolean",
@@ -2134,12 +2123,12 @@
         "title": {
           "type": "string",
           "description": "Dialog title",
-          "default": "this is the title"
+          "default": ""
         },
         "content": {
           "type": "string",
           "description": "Dialog body content",
-          "default": "this is the content"
+          "default": ""
         },
         "size": {
           "type": "string",
@@ -2223,7 +2212,7 @@
         "handle": {
           "type": "string",
           "description": "Selector for drag handle",
-          "default": "this is the handle"
+          "default": ""
         }
       },
       "matrix": [
@@ -2250,12 +2239,12 @@
         "title": {
           "type": "string",
           "description": "Card title",
-          "default": "this is the title"
+          "default": ""
         },
         "content": {
           "type": "string",
           "description": "Card content",
-          "default": "this is the content"
+          "default": ""
         },
         "constrain": {
           "type": "string",
@@ -2326,12 +2315,12 @@
         "title": {
           "type": "string",
           "description": "Drawer title",
-          "default": "this is the title"
+          "default": ""
         },
         "content": {
           "type": "string",
           "description": "Drawer body content",
-          "default": "this is the content"
+          "default": ""
         },
         "position": {
           "type": "string",
@@ -2536,12 +2525,12 @@
           "type": "string",
           "description": "Card title",
           "required": true,
-          "default": "this is the title"
+          "default": ""
         },
         "content": {
           "type": "string",
           "description": "Expandable content",
-          "default": "this is the content"
+          "default": ""
         },
         "expanded": {
           "type": "boolean",
@@ -2612,10 +2601,21 @@
       "file": "fieldset.schema.json",
       "name": "fieldset",
       "title": "Fieldset Behavior",
-      "description": "Schema for the fieldset behavior (a group of form controls)",
+      "description": "Schema for x-fieldset behavior (collapsible fieldset)",
       "tag": "wb-fieldset",
       "baseClass": "wb-fieldset",
-      "properties": {},
+      "properties": {
+        "collapsible": {
+          "type": "boolean",
+          "description": "Turns the <legend> into a toggle: clicking it hides and shows the fieldset's contents. The legend stays visible when collapsed, and collapsed contents are removed from the tab order.",
+          "default": false
+        },
+        "collapsed": {
+          "type": "boolean",
+          "description": "Start collapsed. Requires collapsible — on its own it does nothing, because nothing would be able to reopen it.",
+          "default": false
+        }
+      },
       "matrix": [],
       "_metadata": {}
     },
@@ -2629,23 +2629,21 @@
       "properties": {
         "caption-position": {
           "type": "string",
-          "description": "Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar.",
+          "description": "Read by figure().",
           "default": "bottom"
         },
         "zoom": {
           "type": "boolean",
-          "description": "Clicking the image opens it at full size. Bare attribute.",
+          "description": "Read by figure(). Bare attribute.",
           "default": false
         },
         "lightbox": {
           "type": "string",
-          "description": "Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox=\"false\"` to disable it.",
-          "default": "this is the lightbox"
+          "description": "Read by figure()."
         },
         "caption": {
           "type": "string",
-          "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none.",
-          "default": "this is the caption"
+          "description": "Read by figure()."
         }
       },
       "matrix": [],
@@ -2678,7 +2676,7 @@
           "type": "string",
           "description": "File name",
           "required": true,
-          "default": "this is the filename"
+          "default": ""
         },
         "fileType": {
           "type": "string",
@@ -2697,17 +2695,17 @@
         "size": {
           "type": "string",
           "description": "File size (e.g., 2.4 MB)",
-          "default": "this is the size"
+          "default": ""
         },
         "date": {
           "type": "string",
           "description": "File date",
-          "default": "this is the date"
+          "default": ""
         },
         "href": {
           "type": "string",
           "description": "Download URL",
-          "default": "#"
+          "default": ""
         },
         "downloadable": {
           "type": "boolean",
@@ -2727,7 +2725,7 @@
         "hoverText": {
           "type": "string",
           "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
-          "default": "this is the hover text",
+          "default": "",
           "appliesAttribute": "x-tooltip"
         }
       },
@@ -2835,7 +2833,7 @@
       "file": "fix-card.schema.json",
       "name": "fix-card",
       "title": "Fix Card",
-      "description": "Behavior for displaying fix/remediation details.",
+      "description": "Component for displaying fix/remediation details.",
       "tag": "wb-fix-card",
       "baseClass": "wb-fix-card",
       "properties": {},
@@ -2867,27 +2865,27 @@
       "properties": {
         "direction": {
           "type": "string",
-          "description": "Flex direction: `row` (default) or `column`, plus the `-reverse` forms. Maps to CSS `flex-direction`.",
+          "description": "Read by flex().",
           "default": "row"
         },
         "wrap": {
           "type": "string",
-          "description": "Whether items wrap onto more lines: `wrap` (default) or `nowrap`. Maps to CSS `flex-wrap`.",
+          "description": "Read by flex().",
           "default": "wrap"
         },
         "justify": {
           "type": "string",
-          "description": "Distribution along the main axis — `flex-start` (default), `center`, `space-between`, and the rest of CSS `justify-content`.",
+          "description": "Read by flex().",
           "default": "flex-start"
         },
         "align": {
           "type": "string",
-          "description": "Alignment across the cross axis — `stretch` (default), `center`, `flex-start`, and the rest of CSS `align-items`.",
+          "description": "Read by flex().",
           "default": "stretch"
         },
         "gap": {
           "type": "string",
-          "description": "Space between items, as a CSS length. Defaults to `1rem`.",
+          "description": "Read by flex().",
           "default": "1rem"
         }
       },
@@ -2935,22 +2933,22 @@
         "copyright": {
           "type": "string",
           "description": "Copyright text",
-          "default": "this is the copyright"
+          "default": ""
         },
         "brand": {
           "type": "string",
           "description": "Brand name",
-          "default": "this is the brand"
+          "default": ""
         },
         "links": {
           "type": "string",
           "description": "Navigation links as JSON [{label, href}]",
-          "default": "this is the links"
+          "default": ""
         },
         "social": {
           "type": "string",
           "description": "Social links as JSON [{platform, href}]",
-          "default": "this is the social"
+          "default": ""
         },
         "sticky": {
           "type": "boolean",
@@ -3028,12 +3026,12 @@
       "properties": {
         "target": {
           "type": "string",
-          "description": "CSS selector for the element to expand. Empty means the document element.",
-          "default": "this is the target"
+          "description": "Read by fullscreen().",
+          "default": ""
         },
         "label": {
           "type": "string",
-          "description": "Button label when not fullscreen. Defaults to `⛶ Fullscreen`.",
+          "description": "Read by fullscreen().",
           "default": "⛶ Fullscreen"
         }
       },
@@ -3054,23 +3052,22 @@
       "properties": {
         "columns": {
           "type": "string",
-          "description": "Number of columns in the grid. Defaults to `3`.",
+          "description": "Read by gallery().",
           "default": "3"
         },
         "size": {
           "type": "string",
-          "description": "Fixed thumbnail size (e.g. `150px`), independent of the column count — use it when you want uniform tiles rather than columns dividing the width.",
-          "default": "this is the size"
+          "description": "Read by gallery().",
+          "default": ""
         },
         "gap": {
           "type": "string",
-          "description": "Space between items, as a CSS length. Defaults to `1rem`.",
+          "description": "Read by gallery().",
           "default": "1rem"
         },
         "lightbox": {
           "type": "string",
-          "description": "Clicking any item opens it full-size in a lightbox.",
-          "default": "this is the lightbox"
+          "description": "Read by gallery()."
         }
       },
       "matrix": [],
@@ -3101,7 +3098,7 @@
       "properties": {
         "color": {
           "type": "string",
-          "description": "Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it.",
+          "description": "Read by glow().",
           "default": "var(--primary, #6366f1)"
         }
       },
@@ -3123,22 +3120,22 @@
         "icon": {
           "type": "string",
           "description": "Logo icon (emoji or text)",
-          "default": "this is the icon"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Header title",
-          "default": "this is the title"
+          "default": ""
         },
         "subtitle": {
           "type": "string",
           "description": "Subtitle text",
-          "default": "this is the subtitle"
+          "default": ""
         },
         "badge": {
           "type": "string",
           "description": "Badge text (e.g., version)",
-          "default": "this is the badge"
+          "default": ""
         },
         "logoHref": {
           "type": "string",
@@ -3243,33 +3240,33 @@
           "type": "string",
           "description": "Background image URL",
           "required": true,
-          "default": "this is the background"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Hero headline",
           "required": true,
-          "default": "this is the title"
+          "default": ""
         },
         "pretitle": {
           "type": "string",
-          "description": "Small label or count shown above the title (e.g. '100 Behaviors')",
-          "default": "this is the pretitle"
+          "description": "Small label or count shown above the title (e.g. '100 Components')",
+          "default": ""
         },
         "subtitle": {
           "type": "string",
           "description": "Hero tagline/subheadline",
-          "default": "this is the subtitle"
+          "default": ""
         },
         "content": {
           "type": "string",
           "description": "HTML content rendered in the hero content area (allows attribute-only usage instead of slots)",
-          "default": "this is the content"
+          "default": ""
         },
         "cta": {
           "type": "string",
           "description": "Call-to-action button text",
-          "default": "this is the cta"
+          "default": ""
         },
         "ctaHref": {
           "type": "string",
@@ -3279,7 +3276,7 @@
         "ctaSecondary": {
           "type": "string",
           "description": "Secondary CTA text",
-          "default": "this is the cta secondary"
+          "default": ""
         },
         "ctaSecondaryHref": {
           "type": "string",
@@ -3321,19 +3318,6 @@
           "description": "Make hero full viewport height",
           "default": false,
           "appliesClass": "x-hero--full"
-        },
-        "headingLevel": {
-          "type": "string",
-          "description": "Heading level for the hero title (1-6). A page hero is usually the page's h1; a hero inside a section is not. Default 3.",
-          "default": "3",
-          "enum": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"
-          ]
         }
       },
       "matrix": [
@@ -3385,7 +3369,7 @@
       "file": "home-page.schema.json",
       "name": "home-page",
       "title": "Home Page",
-      "description": "Schema for the home page layout and behavior structure.",
+      "description": "Schema for the home page layout and component structure.",
       "tag": "wb-home-page",
       "baseClass": "wb-home-page",
       "properties": {
@@ -3516,8 +3500,8 @@
           },
           "default": [
             {
-              "title": "🧩 Behavior Library",
-              "description": "Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation."
+              "title": "🧩 Component Library",
+              "description": "Over 40 ready-to-use UI components including Cards, Modals, Drawers, and Navigation."
             },
             {
               "title": "⚡ Behaviors System",
@@ -3533,7 +3517,7 @@
             },
             {
               "title": "♿ Accessible",
-              "description": "ARIA attributes and keyboard navigation are baked into every behavior by default."
+              "description": "ARIA attributes and keyboard navigation are baked into every component by default."
             },
             {
               "title": "🚀 Performance",
@@ -3656,8 +3640,8 @@
         },
         {
           "_section": "features",
-          "title": "🧩 Behavior Library",
-          "description": "Over 40 ready-to-use UI behaviors."
+          "title": "🧩 Component Library",
+          "description": "Over 40 ready-to-use UI components."
         },
         {
           "_section": "features",
@@ -3695,12 +3679,12 @@
         "image": {
           "type": "string",
           "description": "Image URL",
-          "default": "this is the image"
+          "default": ""
         },
         "imageAlt": {
           "type": "string",
           "description": "Image alt text",
-          "default": "this is the image alt"
+          "default": ""
         },
         "imagePosition": {
           "type": "string",
@@ -3720,12 +3704,12 @@
         "title": {
           "type": "string",
           "description": "Card title",
-          "default": "this is the title"
+          "default": ""
         },
         "subtitle": {
           "type": "string",
           "description": "Card subtitle",
-          "default": "this is the subtitle"
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -3778,27 +3762,27 @@
       "properties": {
         "placeholder": {
           "type": "string",
-          "description": "Image shown while the real `src` loads. Replaced the moment the real image decodes.",
-          "default": "this is the placeholder"
+          "description": "Read by image().",
+          "default": ""
         },
         "fallback": {
           "type": "string",
-          "description": "Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty.",
-          "default": "this is the fallback"
+          "description": "Read by image().",
+          "default": ""
         },
         "aspect-ratio": {
           "type": "string",
-          "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
-          "default": "this is the aspect ratio"
+          "description": "Read by image().",
+          "default": ""
         },
         "lazy": {
           "type": "boolean",
-          "description": "Sets `loading=\"lazy\"`, so the browser defers fetching until the image nears the viewport. Bare attribute.",
+          "description": "Read by image(). Bare attribute.",
           "default": false
         },
         "zoomable": {
           "type": "boolean",
-          "description": "Clicking the image opens it full-size in a lightbox. Bare attribute.",
+          "description": "Read by image(). Bare attribute.",
           "default": false
         }
       },
@@ -3826,27 +3810,27 @@
         "alt": {
           "type": "string",
           "description": "Image alt text (accessibility)",
-          "default": "this is the alt"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Card title",
-          "default": "this is the title"
+          "default": ""
         },
         "subtitle": {
           "type": "string",
           "description": "Card subtitle",
-          "default": "this is the subtitle"
+          "default": ""
         },
         "caption": {
           "type": "string",
           "description": "Image caption (displayed below image)",
-          "default": "this is the caption"
+          "default": ""
         },
         "href": {
           "type": "string",
           "description": "Link URL (makes card clickable)",
-          "default": "#"
+          "default": ""
         },
         "aspect": {
           "type": "string",
@@ -3958,27 +3942,27 @@
       "properties": {
         "placeholder": {
           "type": "string",
-          "description": "Image shown while the real `src` loads. Replaced the moment the real image decodes.",
-          "default": "this is the placeholder"
+          "description": "Read by img().",
+          "default": ""
         },
         "fallback": {
           "type": "string",
-          "description": "Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty.",
-          "default": "this is the fallback"
+          "description": "Read by img().",
+          "default": ""
         },
         "aspect-ratio": {
           "type": "string",
-          "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
-          "default": "this is the aspect ratio"
+          "description": "Read by img().",
+          "default": ""
         },
         "lazy": {
           "type": "boolean",
-          "description": "Sets `loading=\"lazy\"`, so the browser defers fetching until the image nears the viewport. Bare attribute.",
+          "description": "Read by img(). Bare attribute.",
           "default": false
         },
         "zoomable": {
           "type": "boolean",
-          "description": "Clicking the image opens it full-size in a lightbox. Bare attribute.",
+          "description": "Read by img(). Bare attribute.",
           "default": false
         }
       },
@@ -4000,22 +3984,22 @@
         "label": {
           "type": "string",
           "description": "Input label text",
-          "default": "this is the label"
+          "default": ""
         },
         "placeholder": {
           "type": "string",
           "description": "Placeholder text",
-          "default": "this is the placeholder"
+          "default": ""
         },
         "value": {
           "type": "string",
           "description": "Input value",
-          "default": "this is the value"
+          "default": ""
         },
         "name": {
           "type": "string",
           "description": "Form field name",
-          "default": "this is the name"
+          "default": ""
         },
         "inputType": {
           "type": "string",
@@ -4037,12 +4021,12 @@
         "helper": {
           "type": "string",
           "description": "Helper text below input",
-          "default": "this is the helper"
+          "default": ""
         },
         "error": {
           "type": "string",
           "description": "Error message (shows error state)",
-          "default": "this is the error"
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -4084,7 +4068,7 @@
         "icon": {
           "type": "string",
           "description": "Icon (emoji or icon name)",
-          "default": "this is the icon"
+          "default": ""
         },
         "iconPosition": {
           "type": "string",
@@ -4213,7 +4197,7 @@
         "x-label": {
           "type": "string",
           "description": "The label text",
-          "default": "this is the x label"
+          "default": ""
         },
         "label-position": {
           "type": "string",
@@ -4270,22 +4254,22 @@
         "title": {
           "type": "string",
           "description": "Card title",
-          "default": "this is the title"
+          "default": ""
         },
         "description": {
           "type": "string",
           "description": "Card description text",
-          "default": "this is the description"
+          "default": ""
         },
         "icon": {
           "type": "string",
           "description": "Icon (emoji or icon name)",
-          "default": "this is the icon"
+          "default": ""
         },
         "badge": {
           "type": "string",
           "description": "Badge text",
-          "default": "this is the badge"
+          "default": ""
         },
         "target": {
           "type": "string",
@@ -4353,13 +4337,11 @@
       "properties": {
         "variant": {
           "type": "string",
-          "description": "Semantic highlight colour: `success`, `warning`, `danger` or `info`. **Ignored when `color` is set** — an explicit colour wins.",
-          "default": "this is the variant"
+          "description": "Read by mark()."
         },
         "color": {
           "type": "string",
-          "description": "Any CSS colour, used as the highlight background. The text colour is computed from its luminance so the mark stays readable, and setting this overrides `variant`.",
-          "default": "this is the color"
+          "description": "Read by mark()."
         }
       },
       "matrix": [],
@@ -4381,7 +4363,7 @@
           "type": "string",
           "description": "Path to external markdown file",
           "attribute": "src",
-          "default": "#"
+          "default": ""
         },
         "sanitize": {
           "type": "boolean",
@@ -4391,7 +4373,7 @@
         "gfm": {
           "type": "boolean",
           "default": true,
-          "attribute": "gfm"
+          "attribute": "data-gfm"
         }
       },
       "matrix": [
@@ -4424,12 +4406,12 @@
         "mask": {
           "type": "string",
           "description": "Input mask pattern (e.g. '999-99-9999')",
-          "default": "this is the mask"
+          "default": ""
         },
         "placeholder": {
           "type": "string",
           "description": "Mask placeholder character",
-          "default": "this is the placeholder"
+          "default": ""
         }
       },
       "matrix": [],
@@ -4445,12 +4427,12 @@
       "properties": {
         "columns": {
           "type": "string",
-          "description": "Number of masonry columns. Defaults to `3`.",
+          "description": "Read by masonry().",
           "default": "3"
         },
         "gap": {
           "type": "string",
-          "description": "Space between items, as a CSS length. Defaults to `1rem`.",
+          "description": "Read by masonry().",
           "default": "1rem"
         }
       },
@@ -4473,12 +4455,12 @@
           "type": "string",
           "description": "Card title (always visible)",
           "required": true,
-          "default": "this is the title"
+          "default": ""
         },
         "content": {
           "type": "string",
           "description": "Minimizable content",
-          "default": "this is the content"
+          "default": ""
         },
         "minimized": {
           "type": "boolean",
@@ -4537,7 +4519,7 @@
         "brand": {
           "type": "string",
           "description": "Brand text",
-          "default": "this is the brand"
+          "default": ""
         },
         "brandHref": {
           "type": "string",
@@ -4547,7 +4529,7 @@
         "logo": {
           "type": "string",
           "description": "Logo image URL",
-          "default": "this is the logo"
+          "default": ""
         },
         "logoSize": {
           "type": "string",
@@ -4557,12 +4539,12 @@
         "tagline": {
           "type": "string",
           "description": "Brand tagline or subtitle",
-          "default": "this is the tagline"
+          "default": ""
         },
         "items": {
           "type": "string",
           "description": "Navigation items as JSON [{label, href}]",
-          "default": "this is the items"
+          "default": ""
         },
         "sticky": {
           "type": "boolean",
@@ -4687,18 +4669,18 @@
         "title": {
           "type": "string",
           "description": "Notification title",
-          "default": "this is the title"
+          "default": ""
         },
         "message": {
           "type": "string",
           "description": "Notification message",
           "required": true,
-          "default": "this is the message"
+          "default": ""
         },
         "icon": {
           "type": "string",
           "description": "Custom icon (overrides variant-based icon)",
-          "default": "this is the icon"
+          "default": ""
         },
         "dismissible": {
           "type": "boolean",
@@ -4754,12 +4736,12 @@
       "properties": {
         "message": {
           "type": "string",
-          "description": "Text of the notification. Defaults to `Notification`.",
+          "description": "Read by notify().",
           "default": "Notification"
         },
         "duration": {
           "type": "string",
-          "description": "How long the notification stays up, in milliseconds. Defaults to `3000`.",
+          "description": "Read by notify().",
           "default": "3000"
         }
       },
@@ -4779,8 +4761,7 @@
       "properties": {
         "length": {
           "type": "integer",
-          "description": "Number of OTP digits",
-          "default": 0
+          "description": "Number of OTP digits"
         }
       },
       "matrix": [],
@@ -4798,17 +4779,17 @@
           "type": "string",
           "description": "Background image URL",
           "required": true,
-          "default": "this is the image"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Overlay title",
-          "default": "this is the title"
+          "default": ""
         },
         "subtitle": {
           "type": "string",
           "description": "Overlay subtitle",
-          "default": "this is the subtitle"
+          "default": ""
         },
         "position": {
           "type": "string",
@@ -4904,38 +4885,35 @@
       "properties": {
         "total": {
           "type": "string",
-          "description": "Total number of items. With `per-page` this derives the page count.",
+          "description": "Read by pagination().",
           "default": "0"
         },
         "per-page": {
           "type": "string",
-          "description": "Items per page. Defaults to `10`.",
+          "description": "Read by pagination().",
           "default": "10"
         },
         "pages": {
           "type": "string",
-          "description": "Explicit page count. Overrides the count derived from `total`/`per-page`.",
+          "description": "Read by pagination().",
           "default": "0"
         },
         "current": {
           "type": "string",
-          "description": "Active page, counting from **1**. Defaults to `1`.",
+          "description": "Read by pagination().",
           "default": "1"
         },
         "aria-disabled": {
           "type": "string",
-          "description": "Set to `\"true\"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author.",
-          "default": "this is the aria disabled"
+          "description": "Read by pagination()."
         },
         "action": {
           "type": "string",
-          "description": "Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand.",
-          "default": "this is the action"
+          "description": "Read by pagination()."
         },
         "page": {
           "type": "string",
-          "description": "Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current=\"page\"`.",
-          "default": "this is the page"
+          "description": "Read by pagination()."
         }
       },
       "matrix": [],
@@ -4954,13 +4932,11 @@
       "properties": {
         "toggle": {
           "type": "boolean",
-          "description": "Show/hide password toggle",
-          "default": false
+          "description": "Show/hide password toggle"
         },
         "strength": {
           "type": "boolean",
-          "description": "Show password strength meter",
-          "default": false
+          "description": "Show password strength meter"
         }
       },
       "matrix": [],
@@ -4976,33 +4952,31 @@
       "properties": {
         "description": {
           "type": "string",
-          "description": "Popover body text. Only used when `popover-content` is absent.",
-          "default": "this is the description"
+          "description": "Read by popover().",
+          "default": ""
         },
         "heading": {
           "type": "string",
-          "description": "Popover heading. Only used when `popover-title` is absent.",
-          "default": "this is the heading"
+          "description": "Read by popover().",
+          "default": ""
         },
         "trigger": {
           "type": "string",
-          "description": "What opens it: `click` (default) or `hover`.",
+          "description": "Read by popover().",
           "default": "click"
         },
         "position": {
           "type": "string",
-          "description": "Side the popover opens on: `top` (default), `bottom`, `left` or `right`.",
+          "description": "Read by popover().",
           "default": "top"
         },
         "popover-content": {
           "type": "string",
-          "description": "Popover body text. Read BEFORE `description`.",
-          "default": "this is the popover content"
+          "description": "Read by popover()."
         },
         "popover-title": {
           "type": "string",
-          "description": "Popover heading. Read BEFORE `heading`.",
-          "default": "this is the popover title"
+          "description": "Read by popover()."
         }
       },
       "matrix": [],
@@ -5024,42 +4998,42 @@
           "type": "string",
           "description": "Full name",
           "required": true,
-          "default": "this is the name"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Job title / role",
-          "default": "this is the title"
+          "default": ""
         },
         "company": {
           "type": "string",
           "description": "Current company name",
-          "default": "this is the company"
+          "default": ""
         },
         "location": {
           "type": "string",
           "description": "Location (city, country)",
-          "default": "this is the location"
+          "default": ""
         },
         "cover": {
           "type": "string",
           "description": "Cover/banner image URL",
-          "default": "this is the cover"
+          "default": ""
         },
         "avatar": {
           "type": "string",
           "description": "Profile photo URL",
-          "default": "this is the avatar"
+          "default": ""
         },
         "bio": {
           "type": "string",
           "description": "Short biography / summary",
-          "default": "this is the bio"
+          "default": ""
         },
         "tagline": {
           "type": "string",
           "description": "Professional tagline or motto",
-          "default": "this is the tagline"
+          "default": ""
         },
         "availability": {
           "type": "string",
@@ -5075,87 +5049,87 @@
         "email": {
           "type": "string",
           "description": "Email address",
-          "default": "this is the email"
+          "default": ""
         },
         "phone": {
           "type": "string",
           "description": "Phone number",
-          "default": "this is the phone"
+          "default": ""
         },
         "website": {
           "type": "string",
           "description": "Personal website URL",
-          "default": "this is the website"
+          "default": ""
         },
         "linkedin": {
           "type": "string",
           "description": "LinkedIn profile URL",
-          "default": "this is the linkedin"
+          "default": ""
         },
         "twitter": {
           "type": "string",
           "description": "Twitter/X profile URL",
-          "default": "this is the twitter"
+          "default": ""
         },
         "github": {
           "type": "string",
           "description": "GitHub profile URL",
-          "default": "this is the github"
+          "default": ""
         },
         "dribbble": {
           "type": "string",
           "description": "Dribbble profile URL",
-          "default": "this is the dribbble"
+          "default": ""
         },
         "skills": {
           "type": "string",
           "description": "Comma-separated list of skills",
-          "default": "this is the skills"
+          "default": ""
         },
         "skillLevels": {
           "type": "string",
           "description": "JSON array of {name, level (0-100)} for skill bars",
-          "default": "this is the skill levels"
+          "default": ""
         },
         "experience": {
           "type": "string",
           "description": "JSON array of {company, role, period, description}",
-          "default": "this is the experience"
+          "default": ""
         },
         "education": {
           "type": "string",
           "description": "JSON array of {school, degree, year}",
-          "default": "this is the education"
+          "default": ""
         },
         "projects": {
           "type": "string",
           "description": "JSON array of {name, description, url, image}",
-          "default": "this is the projects"
+          "default": ""
         },
         "certifications": {
           "type": "string",
           "description": "Comma-separated list of certifications",
-          "default": "this is the certifications"
+          "default": ""
         },
         "languages": {
           "type": "string",
           "description": "Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)')",
-          "default": "this is the languages"
+          "default": ""
         },
         "stats": {
           "type": "string",
           "description": "JSON array of {label, value} for stats display",
-          "default": "this is the stats"
+          "default": ""
         },
         "cta": {
           "type": "string",
           "description": "Call-to-action button text",
-          "default": "this is the cta"
+          "default": ""
         },
         "ctaHref": {
           "type": "string",
           "description": "Call-to-action button link",
-          "default": "#"
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -5232,42 +5206,37 @@
       "properties": {
         "language": {
           "type": "string",
-          "description": "Language for syntax highlighting (e.g. `html`, `js`, `css`). Falls back to a `language` on the inner `<code>`, then to none — an unset language renders plain, uncoloured text.",
-          "default": "this is the language"
+          "description": "Read by pre()."
         },
         "scrollable": {
           "type": "string",
-          "description": "When `\"true\"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing.",
-          "default": "this is the scrollable"
+          "description": "Read by pre()."
         },
         "show-line-numbers": {
           "type": "string",
-          "description": "Line numbers in a gutter beside the code. On unless set to `\"false\"`.",
-          "default": "this is the show line numbers"
+          "description": "Read by pre()."
         },
         "max-height": {
           "type": "string",
-          "description": "A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page.",
-          "default": "this is the max height"
+          "description": "Read by pre()."
         },
         "wrap": {
           "type": "boolean",
-          "description": "Wrap long lines instead of overflowing. Off unless set; `wrap=\"false\"` is honoured as off.",
+          "description": "Read by pre(). Bare attribute.",
           "default": false
         },
         "size": {
           "type": "string",
-          "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
-          "default": "this is the size"
+          "description": "Read by pre()."
         },
         "show-copy": {
           "type": "boolean",
-          "description": "Show a copy-to-clipboard button in the corner of the block.",
+          "description": "Read by pre(). Bare attribute.",
           "default": false
         },
-        "copy": {
+        "data-copy": {
           "type": "boolean",
-          "description": "Alias of `show-copy`.",
+          "description": "Read by pre(). Bare attribute.",
           "default": false
         }
       },
@@ -5290,13 +5259,13 @@
           "type": "string",
           "description": "Plan name (e.g., Basic, Pro, Enterprise)",
           "required": true,
-          "default": "this is the plan"
+          "default": ""
         },
         "price": {
           "type": "string",
           "description": "Price amount (e.g., $29)",
           "required": true,
-          "default": "this is the price"
+          "default": ""
         },
         "period": {
           "type": "string",
@@ -5306,12 +5275,12 @@
         "description": {
           "type": "string",
           "description": "Short plan description",
-          "default": "this is the description"
+          "default": ""
         },
         "features": {
           "type": "string",
           "description": "Comma-separated list of features",
-          "default": "this is the features"
+          "default": ""
         },
         "cta": {
           "type": "string",
@@ -5391,12 +5360,12 @@
       "properties": {
         "target": {
           "type": "string",
-          "description": "CSS selector for the region to print. Empty prints the whole page.",
-          "default": "this is the target"
+          "description": "Read by print().",
+          "default": ""
         },
         "label": {
           "type": "string",
-          "description": "Button label. Defaults to `🖨️ Print`.",
+          "description": "Read by print().",
           "default": "🖨️ Print"
         }
       },
@@ -5418,34 +5387,34 @@
         "image": {
           "type": "string",
           "description": "Product image URL",
-          "default": "this is the image"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Product name",
           "required": true,
-          "default": "this is the title"
+          "default": ""
         },
         "description": {
           "type": "string",
           "description": "Product description",
-          "default": "this is the description"
+          "default": ""
         },
         "price": {
           "type": "string",
           "description": "Current price",
           "required": true,
-          "default": "this is the price"
+          "default": ""
         },
         "originalPrice": {
           "type": "string",
           "description": "Original price (shows discount)",
-          "default": "this is the original price"
+          "default": ""
         },
         "badge": {
           "type": "string",
           "description": "Badge text (Sale, New, etc.)",
-          "default": "this is the badge"
+          "default": ""
         },
         "rating": {
           "type": "number",
@@ -5539,7 +5508,7 @@
         "label": {
           "type": "string",
           "description": "Progress label text",
-          "default": "this is the label"
+          "default": ""
         },
         "showValue": {
           "type": "boolean",
@@ -5660,33 +5629,31 @@
       "properties": {
         "heading": {
           "type": "string",
-          "description": "Dialog heading. Only used when `prompt-title` is absent.",
+          "description": "Read by prompt().",
           "default": "Input"
         },
         "message": {
           "type": "string",
-          "description": "Body text. Only used when `prompt-message` is absent.",
-          "default": "this is the message"
+          "description": "Read by prompt().",
+          "default": ""
         },
         "placeholder": {
           "type": "string",
-          "description": "Placeholder shown in the empty input.",
-          "default": "this is the placeholder"
+          "description": "Read by prompt().",
+          "default": ""
         },
         "default-value": {
           "type": "string",
-          "description": "Value the input starts with, already selected so typing replaces it.",
-          "default": "this is the default value"
+          "description": "Read by prompt().",
+          "default": ""
         },
         "prompt-title": {
           "type": "string",
-          "description": "Dialog heading. Read BEFORE `heading`; defaults to `Input`.",
-          "default": "this is the prompt title"
+          "description": "Read by prompt()."
         },
         "prompt-message": {
           "type": "string",
-          "description": "Body text above the field. Read BEFORE `message`.",
-          "default": "this is the prompt message"
+          "description": "Read by prompt()."
         }
       },
       "matrix": [],
@@ -5721,7 +5688,7 @@
       "properties": {
         "duration": {
           "type": "string",
-          "description": "How long one full colour cycle takes, as a CSS duration (e.g. `3s`). Longer is slower.",
+          "description": "Read by rainbow().",
           "default": "3s"
         }
       },
@@ -5736,7 +5703,7 @@
       "file": "rating.schema.json",
       "name": "rating",
       "title": "Rating",
-      "description": "Star rating behavior for displaying or collecting ratings",
+      "description": "Star rating component for displaying or collecting ratings",
       "tag": "wb-rating",
       "baseClass": "x-rating",
       "properties": {
@@ -5819,7 +5786,7 @@
       "properties": {
         "ratio": {
           "type": "string",
-          "description": "The aspect ratio the frame holds its child to, applied as the `--x-frame-ratio` custom property. The behavior's own default is `16/9`. NOTE: this schema declares a default of `16x9`, which the code never produces — the two disagree and the code is authoritative.",
+          "description": "Read by ratio().",
           "default": "16x9"
         }
       },
@@ -5840,18 +5807,17 @@
       "properties": {
         "datetime": {
           "type": "string",
-          "description": "Alias of `date`, read only when `date` is absent.",
-          "default": "this is the datetime"
+          "description": "Read by relativetime().",
+          "default": ""
         },
         "refresh": {
           "type": "string",
-          "description": "How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute.",
+          "description": "Read by relativetime().",
           "default": "60000"
         },
         "date": {
           "type": "string",
-          "description": "The timestamp to describe. `datetime` is accepted as an alias; `date` is read first.",
-          "default": "this is the date"
+          "description": "Read by relativetime()."
         }
       },
       "matrix": [],
@@ -5871,13 +5837,12 @@
       "properties": {
         "format": {
           "type": "string",
-          "description": "Template for the badge text, with `{version}` replaced. Defaults to `v{version}`.",
+          "description": "Read by release().",
           "default": "v{version}"
         },
         "reload": {
           "type": "string",
-          "description": "Clear caches and reload when the badge is activated. On unless set to `\"false\"`.",
-          "default": "this is the reload"
+          "description": "Read by release()."
         }
       },
       "matrix": [],
@@ -5897,7 +5862,7 @@
       "properties": {
         "count": {
           "type": "string",
-          "description": "How many copies of the template content to render.",
+          "description": "Read by repeater().",
           "default": "0"
         }
       },
@@ -5996,7 +5961,7 @@
       "file": "search.schema.json",
       "name": "search",
       "title": "Search",
-      "description": "Search input behavior with icon and debounced search events",
+      "description": "Search input component with icon and debounced search events",
       "tag": "wb-search",
       "baseClass": "x-search",
       "properties": {
@@ -6008,12 +5973,12 @@
         "value": {
           "type": "string",
           "description": "Search value",
-          "default": "this is the value"
+          "default": ""
         },
         "name": {
           "type": "string",
           "description": "Form field name",
-          "default": "this is the name"
+          "default": ""
         },
         "debounce": {
           "type": "number",
@@ -6112,47 +6077,46 @@
       "properties": {
         "size": {
           "type": "string",
-          "description": "Control size: `xs`, `sm`, `md` (default), `lg`.",
+          "description": "Read by searchfield().",
           "default": "md"
         },
         "variant": {
           "type": "string",
-          "description": "Visual treatment — `default`, plus the state variants the input styles define.",
+          "description": "Read by searchfield().",
           "default": "default"
         },
         "placeholder": {
           "type": "string",
-          "description": "Placeholder text in the empty field. Defaults to `Search...`.",
+          "description": "Read by searchfield().",
           "default": "Search..."
         },
         "debounce": {
           "type": "string",
-          "description": "Milliseconds to wait after typing stops before searching. Defaults to `300` — lower feels faster and searches more often.",
+          "description": "Read by searchfield().",
           "default": "300"
         },
         "icon": {
           "type": "string",
-          "description": "Icon shown inside the field. Defaults to `🔍`.",
+          "description": "Read by searchfield().",
           "default": "🔍"
         },
         "clearable": {
           "type": "string",
-          "description": "Show a clear (×) control once there is text. On unless set to `\"false\"`.",
-          "default": "this is the clearable"
+          "description": "Read by searchfield()."
         },
         "disabled": {
           "type": "boolean",
-          "description": "Disable the field. Bare attribute.",
+          "description": "Read by searchfield(). Bare attribute.",
           "default": false
         },
         "loading": {
           "type": "boolean",
-          "description": "Show the busy indicator, for while results are being fetched. Bare attribute.",
+          "description": "Read by searchfield(). Bare attribute.",
           "default": false
         },
         "instant": {
           "type": "boolean",
-          "description": "Search on every keystroke, bypassing `debounce`. Bare attribute.",
+          "description": "Read by searchfield(). Bare attribute.",
           "default": false
         }
       },
@@ -6174,7 +6138,7 @@
         "label": {
           "type": "string",
           "description": "Select label",
-          "default": "this is the label"
+          "default": ""
         },
         "placeholder": {
           "type": "string",
@@ -6184,17 +6148,17 @@
         "options": {
           "type": "string",
           "description": "Options as JSON [{value, label}]",
-          "default": "this is the options"
+          "default": ""
         },
         "value": {
           "type": "string",
           "description": "Selected value",
-          "default": "this is the value"
+          "default": ""
         },
         "name": {
           "type": "string",
           "description": "Form field name",
-          "default": "this is the name"
+          "default": ""
         },
         "searchable": {
           "type": "boolean",
@@ -6292,33 +6256,29 @@
       "properties": {
         "text": {
           "type": "string",
-          "description": "Body text. Only used when `share-text` is absent.",
-          "default": "this is the text"
+          "description": "Read by share().",
+          "default": ""
         },
         "label": {
           "type": "string",
-          "description": "Button label. Defaults to `📤 Share`.",
+          "description": "Read by share().",
           "default": "📤 Share"
         },
         "share-title": {
           "type": "string",
-          "description": "Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`.",
-          "default": "this is the share title"
+          "description": "Read by share()."
         },
         "share-text": {
           "type": "string",
-          "description": "Body text passed to the share sheet. Read BEFORE `text`.",
-          "default": "this is the share text"
+          "description": "Read by share()."
         },
         "share-url": {
           "type": "string",
-          "description": "URL to share. Read BEFORE `url`; falls back to the current page address.",
-          "default": "#"
+          "description": "Read by share()."
         },
         "url": {
           "type": "string",
-          "description": "URL to share. Only used when `share-url` is absent.",
-          "default": "#"
+          "description": "Read by share()."
         }
       },
       "matrix": [],
@@ -6404,7 +6364,7 @@
       "properties": {
         "direction": {
           "type": "string",
-          "description": "Edge the element slides in from: `left` (default), `right`, `top` or `bottom`.",
+          "description": "Read by slidein().",
           "default": "left"
         }
       },
@@ -6530,7 +6490,7 @@
       "properties": {
         "count": {
           "type": "string",
-          "description": "How many sparkle particles to emit. The behavior's default is `15`.",
+          "description": "Read by sparkle().",
           "default": "15"
         }
       },
@@ -6614,8 +6574,8 @@
     {
       "file": "stack.schema.json",
       "name": "stack",
-      "title": "Stack Layout",
-      "description": "Vertical stack layout behavior. Renders children in a column with configurable gap, background color, padding, and border radius.",
+      "title": "Stack Layout Component",
+      "description": "Vertical stack layout component. Renders children in a column with configurable gap, background color, padding, and border radius.",
       "tag": "wb-stack",
       "baseClass": "x-stack",
       "properties": {
@@ -6628,19 +6588,19 @@
         "bg": {
           "type": "string",
           "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
-          "default": "this is the bg",
+          "default": "",
           "example": "#1a2f4e"
         },
         "pad": {
           "type": "string",
           "description": "CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges).",
-          "default": "this is the pad",
+          "default": "",
           "example": "0 0 0.75rem"
         },
         "radius": {
           "type": "string",
           "description": "CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value.",
-          "default": "this is the radius",
+          "default": "",
           "example": "8px"
         }
       },
@@ -6698,7 +6658,7 @@
         "label": {
           "type": "string",
           "description": "Label for the fixture variant",
-          "default": "this is the label"
+          "default": ""
         }
       },
       "matrix": [
@@ -6738,17 +6698,17 @@
           "type": "string",
           "description": "The main statistic value (e.g., 1,234 or $50K)",
           "required": true,
-          "default": "this is the value"
+          "default": ""
         },
         "label": {
           "type": "string",
           "description": "Label describing what the value represents",
-          "default": "this is the label"
+          "default": ""
         },
         "icon": {
           "type": "string",
           "description": "Icon (emoji or icon name)",
-          "default": "this is the icon"
+          "default": ""
         },
         "trend": {
           "type": "string",
@@ -6765,7 +6725,7 @@
         "trendValue": {
           "type": "string",
           "description": "Trend amount (e.g., +12%, -5%)",
-          "default": "this is the trend value"
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -6782,7 +6742,7 @@
         "color": {
           "type": "string",
           "description": "Accent color (CSS color value)",
-          "default": "this is the color"
+          "default": ""
         }
       },
       "matrix": [
@@ -6831,18 +6791,15 @@
       "properties": {
         "min": {
           "type": "number",
-          "description": "Minimum value",
-          "default": 0
+          "description": "Minimum value"
         },
         "max": {
           "type": "number",
-          "description": "Maximum value",
-          "default": 0
+          "description": "Maximum value"
         },
         "step": {
           "type": "number",
-          "description": "Step increment",
-          "default": 0
+          "description": "Step increment"
         }
       },
       "matrix": [],
@@ -6858,12 +6815,12 @@
       "properties": {
         "items": {
           "type": "string",
-          "description": "Comma-separated step labels, e.g. `Details,Payment,Confirm`. Whitespace around each is trimmed.",
-          "default": "this is the items"
+          "description": "Read by steps().",
+          "default": ""
         },
         "current": {
           "type": "string",
-          "description": "Which step is active, counting from **1**, not 0. Defaults to `1`.",
+          "description": "Read by steps().",
           "default": "1"
         }
       },
@@ -6935,7 +6892,7 @@
         "label": {
           "type": "string",
           "description": "Switch label",
-          "default": "this is the label"
+          "default": ""
         },
         "checked": {
           "type": "boolean",
@@ -6950,12 +6907,12 @@
         "name": {
           "type": "string",
           "description": "Form field name",
-          "default": "this is the name"
+          "default": ""
         },
         "value": {
           "type": "string",
           "description": "Form field value when checked",
-          "default": "this is the value"
+          "default": ""
         },
         "labelPosition": {
           "type": "string",
@@ -7021,12 +6978,12 @@
         "data": {
           "type": "string",
           "description": "Table data as JSON array",
-          "default": "this is the data"
+          "default": ""
         },
         "columns": {
           "type": "string",
           "description": "Column config as JSON [{key, label, sortable}]",
-          "default": "this is the columns"
+          "default": ""
         },
         "sortable": {
           "type": "boolean",
@@ -7074,12 +7031,12 @@
         },
         "headers": {
           "type": "string",
-          "default": "this is the headers",
+          "default": "",
           "description": "Comma-separated column headings."
         },
         "rows": {
           "type": "string",
-          "default": "this is the rows",
+          "default": "",
           "description": "JSON array-of-arrays of row data."
         },
         "searchable": {
@@ -7227,23 +7184,23 @@
           "type": "string",
           "description": "Testimonial quote text",
           "required": true,
-          "default": "this is the quote"
+          "default": ""
         },
         "author": {
           "type": "string",
           "description": "Author name",
           "required": true,
-          "default": "this is the author"
+          "default": ""
         },
         "role": {
           "type": "string",
           "description": "Author role/title/company",
-          "default": "this is the role"
+          "default": ""
         },
         "avatar": {
           "type": "string",
           "description": "Author avatar image URL",
-          "default": "this is the avatar"
+          "default": ""
         },
         "rating": {
           "type": "number",
@@ -7338,22 +7295,22 @@
         "label": {
           "type": "string",
           "description": "Field label",
-          "default": "this is the label"
+          "default": ""
         },
         "placeholder": {
           "type": "string",
           "description": "Placeholder text",
-          "default": "this is the placeholder"
+          "default": ""
         },
         "value": {
           "type": "string",
           "description": "Text value",
-          "default": "this is the value"
+          "default": ""
         },
         "name": {
           "type": "string",
           "description": "Form field name",
-          "default": "this is the name"
+          "default": ""
         },
         "rows": {
           "type": "number",
@@ -7454,14 +7411,14 @@
       "file": "timeline.schema.json",
       "name": "timeline",
       "title": "Timeline",
-      "description": "Vertical timeline behavior for displaying sequential events",
+      "description": "Vertical timeline component for displaying sequential events",
       "tag": "wb-timeline",
       "baseClass": "x-timeline",
       "properties": {
         "items": {
           "type": "string",
           "description": "Comma-separated list of timeline items",
-          "default": "this is the items"
+          "default": ""
         }
       },
       "matrix": [
@@ -7488,18 +7445,18 @@
       "title": "Toast",
       "description": "Toast notification system for temporary messages. Container (.x-toast-container, feedback.js's createToast()) is fixed-positioned below the site header rather than the viewport top -- top: calc(var(--site-header-height) + 1rem), so toasts never cover the nav/logo. --site-header-height (site.css) defaults to 0 and is only set to 64px when the page actually has a .site__header, so standalone pages without one are unaffected.",
       "tag": "wb-toast",
-      "baseClass": "x-toast-trigger",
+      "baseClass": "x-toast",
       "properties": {
         "message": {
           "type": "string",
           "description": "Toast notification message",
           "required": true,
-          "default": "this is the message"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Toast title (optional)",
-          "default": "this is the title"
+          "default": ""
         },
         "variant": {
           "type": "string",
@@ -7516,7 +7473,7 @@
         "icon": {
           "type": "string",
           "description": "Icon (emoji or icon name)",
-          "default": "this is the icon"
+          "default": ""
         },
         "duration": {
           "type": "number",
@@ -7546,12 +7503,12 @@
         "action": {
           "type": "string",
           "description": "Action button text",
-          "default": "this is the action"
+          "default": ""
         },
         "actionHref": {
           "type": "string",
           "description": "Action button link URL",
-          "default": "#"
+          "default": ""
         }
       },
       "matrix": [
@@ -7609,7 +7566,7 @@
         "target": {
           "type": "string",
           "description": "Selector of target element",
-          "default": "this is the target"
+          "default": ""
         }
       },
       "matrix": [
@@ -7631,7 +7588,7 @@
           "type": "string",
           "description": "Tooltip text content",
           "required": true,
-          "default": "this is the content"
+          "default": ""
         },
         "position": {
           "type": "string",
@@ -7752,12 +7709,12 @@
       "properties": {
         "lines": {
           "type": "string",
-          "description": "Number of lines to clamp to before truncating. Defaults to `1`.",
+          "description": "Read by truncate().",
           "default": "1"
         },
         "expandable": {
           "type": "boolean",
-          "description": "Add a control that reveals the full text. Bare attribute — the plain spelling only began working in #752; before that `data-expandable` was the only form read.",
+          "description": "Read by truncate(). Bare attribute.",
           "default": false
         }
       },
@@ -7778,18 +7735,16 @@
       "properties": {
         "speed": {
           "type": "string",
-          "description": "Milliseconds between characters. Defaults to `50` — lower is faster.",
+          "description": "Read by typewriter().",
           "default": "50"
         },
         "text": {
           "type": "string",
-          "description": "Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup.",
-          "default": "this is the text"
+          "description": "Read by typewriter()."
         },
         "cursor": {
           "type": "string",
-          "description": "Show the blinking cursor. On unless set to `\"false\"`.",
-          "default": "this is the cursor"
+          "description": "Read by typewriter()."
         }
       },
       "matrix": [],
@@ -7809,32 +7764,30 @@
       "properties": {
         "poster": {
           "type": "string",
-          "description": "Image shown before playback starts, and after the video ends. Without one the first frame is used, which is often black.",
-          "default": "#"
+          "description": "Read by video().",
+          "default": ""
         },
         "controls": {
           "type": "string",
-          "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script.",
-          "default": "this is the controls"
+          "description": "Read by video()."
         },
         "playsinline": {
           "type": "string",
-          "description": "Play inline on mobile rather than taking over the screen. iOS goes fullscreen by default without it.",
-          "default": "this is the playsinline"
+          "description": "Read by video()."
         },
         "autoplay": {
           "type": "boolean",
-          "description": "Begin playing on load. Browsers block autoplay with sound, so this needs `muted` to work unattended.",
+          "description": "Read by video(). Bare attribute.",
           "default": false
         },
         "muted": {
           "type": "boolean",
-          "description": "Start with the audio track silenced. Required for `autoplay` to be allowed.",
+          "description": "Read by video(). Bare attribute.",
           "default": false
         },
         "loop": {
           "type": "boolean",
-          "description": "Restart from the beginning when playback reaches the end.",
+          "description": "Read by video(). Bare attribute.",
           "default": false
         }
       },
@@ -7862,17 +7815,17 @@
         "poster": {
           "type": "string",
           "description": "Poster image URL",
-          "default": "#"
+          "default": ""
         },
         "title": {
           "type": "string",
           "description": "Video title",
-          "default": "this is the title"
+          "default": ""
         },
         "description": {
           "type": "string",
           "description": "Video description",
-          "default": "this is the description"
+          "default": ""
         },
         "autoplay": {
           "type": "boolean",
@@ -7966,22 +7919,21 @@
       "properties": {
         "video-id": {
           "type": "string",
-          "description": "The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed.",
-          "default": "this is the video id"
+          "description": "Read by vimeo()."
         },
         "autoplay": {
           "type": "boolean",
-          "description": "Begin playing on load. Browsers block autoplay with sound, so it needs `muted` to work unattended.",
+          "description": "Read by vimeo(). Bare attribute.",
           "default": false
         },
         "muted": {
           "type": "boolean",
-          "description": "Start with audio silenced. Required for `autoplay` to be permitted.",
+          "description": "Read by vimeo(). Bare attribute.",
           "default": false
         },
         "loop": {
           "type": "boolean",
-          "description": "Restart from the beginning when playback ends.",
+          "description": "Read by vimeo(). Bare attribute.",
           "default": false
         }
       },
@@ -7993,26 +7945,130 @@
       }
     },
     {
+      "file": "behaviors.schema.json",
+      "name": "behaviors",
+      "title": "WB Behaviors Schema",
+      "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
+      "tag": "wb-behaviors",
+      "baseClass": "wb-behaviors",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique identifier for the behavior",
+          "default": ""
+        },
+        "src": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
+        },
+        "type": {
+          "$ref": "#/definitions/behaviorType",
+          "type": "string",
+          "default": ""
+        },
+        "category": {
+          "$ref": "#/definitions/behaviorCategory",
+          "type": "string",
+          "default": ""
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of what the behavior does",
+          "default": ""
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector that identifies elements this behavior applies to",
+          "default": ""
+        },
+        "attributes": {
+          "type": "object",
+          "description": "Configuration attributes for the behavior",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {}
+        },
+        "events": {
+          "type": "array",
+          "description": "Events this behavior responds to",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "dependencies": {
+          "type": "array",
+          "description": "Other behaviors or components this behavior depends on",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "accessibility": {
+          "type": "object",
+          "description": "Accessibility requirements and ARIA attributes",
+          "properties": {
+            "role": {
+              "type": "string"
+            },
+            "ariaAttributes": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "keyboardSupport": {
+              "type": "boolean"
+            }
+          },
+          "default": {}
+        },
+        "testCases": {
+          "type": "array",
+          "description": "Test scenarios for this behavior",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "setup": {
+                "type": "string"
+              },
+              "action": {
+                "type": "string"
+              },
+              "expected": {
+                "type": "string"
+              }
+            }
+          },
+          "default": []
+        }
+      },
+      "matrix": [],
+      "_metadata": {}
+    },
+    {
       "file": "schema.schema.json",
-      "title": "WB Behavior Schema Meta-Schema",
-      "description": "Validates WB schema files across 3 tiers. Behavior schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
+      "title": "WB Component Schema Meta-Schema",
+      "description": "Validates WB schema files across 3 tiers. Component schemas (default) require all fields. Base schemas (inherited from, never instantiated) relax $view/$methods/behavior. Definition schemas (pure reference docs) require only title + description. Enforces v3.0 rules: every property must have type + default, enums must be arrays, $view items need name + tag.",
       "tag": "wb-undefined",
       "baseClass": "wb-undefined",
       "properties": {
         "src": {
           "type": "string",
-          "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')",
-          "default": "#"
+          "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
         },
         "category": {
           "type": "string",
-          "description": "Behavior category (e.g. 'inputs', 'buttons', etc.)",
-          "default": "this is the category"
+          "description": "Behavior category (e.g. 'inputs', 'buttons', etc.)"
         },
         "name": {
           "type": "string",
-          "description": "Unique identifier for the behavior",
-          "default": "this is the name"
+          "description": "Unique identifier for the behavior"
         },
         "schemaType": {
           "type": "string",
@@ -8023,48 +8079,41 @@
             "page"
           ],
           "default": "component",
-          "description": "Schema tier. 'behavior' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
+          "description": "Schema tier. 'component' (default) = full rules. 'base' = abstract/inherited, $view/$methods optional. 'definition' = reference doc, only title+description required."
         },
         "$schema": {
           "type": "string",
-          "description": "JSON Schema draft reference",
-          "default": "this is the $schema"
+          "description": "JSON Schema draft reference"
         },
         "$id": {
           "type": "string",
           "description": "Schema identifier (filename)",
-          "pattern": "^[a-z][a-z0-9-]*\\.schema\\.json$",
-          "default": "this is the $id"
+          "pattern": "^[a-z][a-z0-9-]*\\.schema\\.json$"
         },
         "title": {
           "type": "string",
           "minLength": 1,
-          "description": "Human-readable behavior name",
-          "default": "this is the title"
+          "description": "Human-readable component name"
         },
         "description": {
           "type": "string",
           "minLength": 1,
-          "description": "What this behavior does",
-          "default": "this is the description"
+          "description": "What this component does"
         },
         "behavior": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$",
-          "description": "Behavior name in kebab-case",
-          "default": "this is the behavior"
+          "description": "Behavior name in kebab-case"
         },
         "schemaFor": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$",
-          "description": "Legacy behavior identifier (prefer 'behavior')",
-          "default": "this is the schema for"
+          "description": "Legacy behavior identifier (prefer 'behavior')"
         },
         "baseClass": {
           "type": "string",
           "pattern": "^wb-[a-z][a-z0-9-]*$",
-          "description": "Base CSS class (BEM block). Must start with wb-",
-          "default": "this is the base class"
+          "description": "Base CSS class (BEM block). Must start with wb-"
         },
         "semanticElement": {
           "type": "object",
@@ -8195,113 +8244,6 @@
       "_metadata": {}
     },
     {
-      "file": "behaviors.schema.json",
-      "name": "behaviors",
-      "title": "WB Behaviors Schema",
-      "description": "Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements",
-      "tag": "wb-behaviors",
-      "baseClass": "wb-behaviors",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Unique identifier for the behavior",
-          "default": "this is the name"
-        },
-        "src": {
-          "type": "string",
-          "default": "#",
-          "description": "Path to the JavaScript file implementing this behavior (e.g. 'src/wb-viewmodels/ripple.js')"
-        },
-        "type": {
-          "$ref": "#/definitions/behaviorType",
-          "type": "string",
-          "default": "this is the type"
-        },
-        "category": {
-          "$ref": "#/definitions/behaviorCategory",
-          "type": "string",
-          "default": "this is the category"
-        },
-        "description": {
-          "type": "string",
-          "description": "Human-readable description of what the behavior does",
-          "default": "this is the description"
-        },
-        "selector": {
-          "type": "string",
-          "description": "CSS selector that identifies elements this behavior applies to",
-          "default": "this is the selector"
-        },
-        "attributes": {
-          "type": "object",
-          "description": "Configuration attributes for the behavior",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "default": {}
-        },
-        "events": {
-          "type": "array",
-          "description": "Events this behavior responds to",
-          "items": {
-            "type": "string"
-          },
-          "default": []
-        },
-        "dependencies": {
-          "type": "array",
-          "description": "Other behaviors or behaviors this behavior depends on",
-          "items": {
-            "type": "string"
-          },
-          "default": []
-        },
-        "accessibility": {
-          "type": "object",
-          "description": "Accessibility requirements and ARIA attributes",
-          "properties": {
-            "role": {
-              "type": "string"
-            },
-            "ariaAttributes": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            },
-            "keyboardSupport": {
-              "type": "boolean"
-            }
-          },
-          "default": {}
-        },
-        "testCases": {
-          "type": "array",
-          "description": "Test scenarios for this behavior",
-          "items": {
-            "type": "object",
-            "properties": {
-              "description": {
-                "type": "string"
-              },
-              "setup": {
-                "type": "string"
-              },
-              "action": {
-                "type": "string"
-              },
-              "expected": {
-                "type": "string"
-              }
-            }
-          },
-          "default": []
-        }
-      },
-      "matrix": [],
-      "_metadata": {}
-    },
-    {
       "file": "wobble.schema.json",
       "name": "x-wobble",
       "title": "Wobble",
@@ -8324,28 +8266,22 @@
       "baseClass": "wb-undefined",
       "properties": {
         "x-animate": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-fadein": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-fadeout": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-slidein": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-confetti": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-typewriter": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         }
       },
       "matrix": [],
@@ -8359,20 +8295,16 @@
       "baseClass": "wb-undefined",
       "properties": {
         "x-form": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-password": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-tags": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         },
         "x-file": {
-          "type": "boolean",
-          "default": false
+          "type": "boolean"
         }
       },
       "matrix": [],
@@ -8388,32 +8320,29 @@
       "properties": {
         "url": {
           "type": "string",
-          "description": "A full YouTube watch or share URL. The id is extracted from it, so use this OR `video-id`, not both.",
-          "default": "#"
+          "description": "Read by youtube()."
         },
         "video-id": {
           "type": "string",
-          "description": "The 11-character YouTube id — the `v=` value in a watch URL. Use this OR `url`.",
-          "default": "this is the video id"
+          "description": "Read by youtube()."
         },
         "controls": {
           "type": "string",
-          "description": "Show YouTube's own player controls. Without them the video can only be driven by script.",
-          "default": "this is the controls"
+          "description": "Read by youtube()."
         },
         "autoplay": {
           "type": "boolean",
-          "description": "Begin playing on load. Needs `muted`, since browsers block autoplay with sound.",
+          "description": "Read by youtube(). Bare attribute.",
           "default": false
         },
         "muted": {
           "type": "boolean",
-          "description": "Start with audio silenced. Required for `autoplay` to be permitted.",
+          "description": "Read by youtube(). Bare attribute.",
           "default": false
         },
         "loop": {
           "type": "boolean",
-          "description": "Restart from the beginning when playback ends.",
+          "description": "Read by youtube(). Bare attribute.",
           "default": false
         }
       },

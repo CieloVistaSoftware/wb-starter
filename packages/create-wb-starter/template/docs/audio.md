@@ -13,7 +13,7 @@ under it is the exact markup that produced it.
 One attribute. Everything else has a default.
 
 <div x-demo>
-<div x-audio src="../demos/audio.mp3"></div>
+<div x-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 Omit `src` entirely and it falls back to that same royalty-free track, so
@@ -45,7 +45,7 @@ Attributes are kebab-case in markup (`show-eq`), camelCase in the schema
 
 <div x-demo>
 <div x-audio show-eq
-     src="../demos/audio.mp3"></div>
+     src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 The EQ uses the Web Audio API, which reads the raw samples. That means a
@@ -57,35 +57,35 @@ silence.
 
 <div x-demo>
 <div x-audio volume="0.3"
-     src="../demos/audio.mp3"></div>
+     src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 ### `loop` — repeat on finish
 
 <div x-demo>
 <div x-audio loop
-     src="../demos/audio.mp3"></div>
+     src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 ### `show-display="false"` — hide the track display
 
 <div x-demo>
 <div x-audio show-display="false"
-     src="../demos/audio.mp3"></div>
+     src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 ### `show-play-button="false"` — no custom transport
 
 <div x-demo>
 <div x-audio show-play-button="false"
-     src="../demos/audio.mp3"></div>
+     src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 ### `autoplay` + `muted`
 
 <div x-demo>
 <div x-audio autoplay muted
-     src="../demos/audio.mp3"></div>
+     src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 Every current browser blocks autoplay with sound. `muted` is the documented
@@ -101,7 +101,7 @@ blocked rather than starting silently.
      show-play-button
      volume="0.6"
      loop
-     src="../demos/audio.mp3"></div>
+     src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
 ---

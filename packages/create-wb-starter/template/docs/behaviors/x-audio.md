@@ -5,7 +5,7 @@ A premium custom audio player with a 15-band graphic equalizer, Web Audio API su
 Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
-<audio src="../../demos/audio.mp3"></audio>
+<audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 </div>
 
 ---
@@ -14,18 +14,18 @@ Wrapped in `<div x-demo>`, so the live behavior renders below with its source sh
 
 ```html
 <!-- Basic usage -- src is required, there is no default track -->
-<audio src="../../demos/audio.mp3"></audio>
+<audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 <!-- With a different audio source -->
-<audio src="../../demos/audio.mp3"></audio>
+<audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 <!-- With equalizer and custom volume -->
 <audio
-  src="../../demos/audio.mp3"
+  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
   show-eq
   volume="0.8">
 </audio>
 <!-- With controls, looping, and podcast -->
 <audio
-  src="../../demos/audio.mp3"
+  src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"
   controls
   loop>
 </audio>

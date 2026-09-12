@@ -55,6 +55,36 @@ test.describe('Error Log Compliance', () => {
     // Ignore expected errors from compliance tests
     errors = errors.filter(e => !e.url?.includes('legacy-syntax-check.html'));
 
+    // #1115: a demo's media is deliberately REMOTE (#762 -- "all audio and video
+    // must be from out there not local"), because these are copy-paste examples
+    // and a relative src 404s for whoever pastes it. The cost of that rule is
+    // that a third-party host having a bad minute makes audio.js throw -- which
+    // it MUST, per DEMOS-AND-DOCS §30 -- and that error lands here.
+    //
+    // Measured 2026-09-12: one slow archive.org response failed this spec and
+    // compliance/dark-mode.spec.ts together, and no release could be cut for as
+    // long as it lasted. Neither spec is on the baseline register, so there was
+    // no allowance to fall back on.
+    //
+    // A failure to reach SOMEONE ELSE'S server is not a defect in this repo.
+    // Narrow on purpose: the message must name an off-origin http(s) URL ending
+    // in a media extension. A same-origin media failure, or any other error
+    // from any host, still fails -- that is the #514/#763 lesson about
+    // exemptions that quietly become "ignore media".
+    const EXTERNAL_MEDIA = /https?:\/\/(?!localhost|127\.0\.0\.1)[^\s"']+\.(?:mp3|mp4|wav|ogg|oga|webm|m4a|aac|flac|mov)/i;
+    const isExternalMediaFailure = (e: ErrorEntry) => {
+      const text = `${e.message ?? ''} ${e.details?.reason ?? ''} ${e.details?.file ?? ''}`;
+      return EXTERNAL_MEDIA.test(text) && /failed to load|not supported|MEDIA_ERR|network/i.test(text);
+    };
+    const externalMediaErrors = errors.filter(isExternalMediaFailure);
+    errors = errors.filter(e => !isExternalMediaFailure(e));
+    if (externalMediaErrors.length) {
+      console.warn(
+        `[error-log-empty] ignoring ${externalMediaErrors.length} external media load failure(s) ` +
+        `(#1115): ${externalMediaErrors.map(e => e.message?.slice(0, 90)).join(' | ')}`
+      );
+    }
+
     if (errors.length > 0) {
       // Format errors for clear reporting
       const errorReport = errors.map((e, i) => {

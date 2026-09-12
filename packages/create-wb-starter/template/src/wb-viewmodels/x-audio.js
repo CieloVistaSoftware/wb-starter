@@ -12,9 +12,9 @@ import { readFlag } from '../core/read-attr.js';
  * 
  * Usage:
  *   <audio></audio>  (uses default pleasant demo: "Carefree" by Kevin MacLeod)
- *   <audio src="demos/audio.mp3"></audio>
- *   <audio src="demos/audio.mp3" show-eq volume="0.8"></audio>
- *   <audio src="demos/audio.mp3" controls loop></audio>
+ *   <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></audio>
+ *   <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" show-eq volume="0.8"></audio>
+ *   <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" controls loop></audio>
  */
 
 import { audio as audioBehavior } from './semantics/audio.js';

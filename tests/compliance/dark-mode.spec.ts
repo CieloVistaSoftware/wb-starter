@@ -159,11 +159,27 @@ test.describe('Dark Mode Compliance', () => {
         console.warn(`⚠️ ${htmlFile} has potential dark mode issues:\n  ${colorIssues.join('\n  ')}`);
       }
       
+      // #1115: demo media is deliberately REMOTE (#762). When that third-party
+      // host is slow or unreachable, audio.js throws -- correctly, per
+      // DEMOS-AND-DOCS §30 -- and the error surfaces here as a JS error on a
+      // page whose dark-mode rendering is perfectly fine. Measured 2026-09-12:
+      // one archive.org hiccup failed this spec and error-log-empty together,
+      // and blocked a release for as long as it lasted.
+      //
+      // Narrow on purpose: the text must name an off-origin http(s) media URL
+      // AND read as a load failure. A same-origin media failure still fails,
+      // and so does every other error -- an exemption that widens into
+      // "ignore media" is the #514/#763 mistake.
+      const externalMediaFailure = (t: string) =>
+        /https?:\/\/(?!localhost|127\.0\.0\.1)[^\s"']+\.(?:mp3|mp4|wav|ogg|oga|webm|m4a|aac|flac|mov)/i.test(t)
+        && /failed to load|not supported|MEDIA_ERR|network/i.test(t);
+
       // Filter for critical errors only
       const criticalErrors = errors.filter(e => 
         !e.includes('favicon') && 
         !e.includes('404') &&
         !e.includes('net::ERR') &&
+        !externalMediaFailure(e) &&
         !e.includes('Cannot read properties of null')  // Skip init errors for pages without #app
       );
       

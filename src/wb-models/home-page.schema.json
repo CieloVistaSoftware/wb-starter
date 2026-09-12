@@ -510,7 +510,7 @@
       "<div x-container max-width='900px' padding='2rem'><div x-flex><div x-cardstats value='100+' label='Behaviors' icon='🧩'></div></div></div>",
       "<div x-grid><article variant='float'><h3>🧩 Title</h3><p>Description</p></article></div>",
       "<div x-stack><div x-cardnotification variant='info' title='Test' message='Message'></div></div>",
-      "<audio src='demos/audio.mp3' show-eq volume='0.5'></audio>"
+      "<audio src='https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3' show-eq volume='0.5'></audio>"
     ],
     "matrix": {
       "combinations": [

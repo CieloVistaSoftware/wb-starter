@@ -71,20 +71,9 @@ for (const file of demoFiles()) {
       const url = req.url();
       // Same-origin requests that never get a response (ERR_CONNECTION_CLOSED,
       // aborted module fetch, etc.). External resource flakiness is ignored.
-      if (!sameOrigin(url)) return;
-      // #1116: a ranged MEDIA fetch that the browser cancels once it has
-      // buffered enough reports net::ERR_ABORTED while the element sits at
-      // readyState 4 with error null. Measured on autoinject.html: 4 players,
-      // 4 requests, every one 206 Partial Content -> ERR_ABORTED, every element
-      // fully loaded. That is normal playback behaviour, not a broken resource.
-      //
-      // Deliberately narrow -- media AND that exact error. A media 404 still
-      // fails (it arrives through the response listener above), and any other
-      // aborted same-origin request still fails. "Ignore aborted media" must
-      // not drift into "ignore media", which is how #514/#763 produced checks
-      // that had quietly stopped looking.
-      if (req.resourceType() === 'media' && req.failure()?.errorText === 'net::ERR_ABORTED') return;
-      badRequests.push(`FAILED ${req.failure()?.errorText ?? ''} ${url.replace(origin, '')}`.trim());
+      if (sameOrigin(url)) {
+        badRequests.push(`FAILED ${req.failure()?.errorText ?? ''} ${url.replace(origin, '')}`.trim());
+      }
     });
 
     await page.goto(`/demos/${file}`, { waitUntil: 'domcontentloaded' });
@@ -102,63 +91,3 @@ for (const file of demoFiles()) {
     expect(bodyText.length, `${file} rendered no meaningful content (body text length ${bodyText.length})`).toBeGreaterThan(30);
   });
 }
-
-/**
- * #1116 guard: the media-abort exemption above must stay narrow.
- *
- * Exempting `net::ERR_ABORTED` on media requests is correct -- the browser
- * cancels a ranged media fetch once it has buffered enough. But an exemption
- * that widens into "ignore media" turns this gate into a test that passes
- * because it stopped looking, which is exactly what #514 and #763 were.
- *
- * These assert the exemption's edges rather than its happy path.
- */
-test.describe('#1116: the media-abort exemption does not widen', () => {
-  test('a media file that 404s is still reported', async ({ page, baseURL }) => {
-    const bad: string[] = [];
-    const origin = baseURL ? new URL(baseURL).origin : '';
-    page.on('response', (res) => {
-      if (origin && res.url().startsWith(origin) && res.status() >= 400) bad.push(`${res.status()} ${res.url().replace(origin, '')}`);
-    });
-
-    await page.goto('/tests/fixtures/blank.html', { waitUntil: 'domcontentloaded' });
-    await page.evaluate(async () => {
-      const a = document.createElement('audio');
-      a.src = '/demos/__no_such_file__.mp3';
-      document.body.appendChild(a);
-      a.load();
-      await new Promise((r) => setTimeout(r, 1200));
-    });
-
-    expect(
-      bad.filter((b) => b.includes('__no_such_file__')),
-      'a missing media file must still fail the gate -- it arrives as a 404 through the response listener, not as an abort'
-    ).not.toEqual([]);
-  });
-
-  test('a non-media aborted same-origin request is still reported', async ({ page, baseURL }) => {
-    const bad: string[] = [];
-    const origin = baseURL ? new URL(baseURL).origin : '';
-    page.on('requestfailed', (req) => {
-      const url = req.url();
-      if (!origin || !url.startsWith(origin)) return;
-      if (req.resourceType() === 'media' && req.failure()?.errorText === 'net::ERR_ABORTED') return;
-      bad.push(`FAILED ${req.failure()?.errorText ?? ''} ${url.replace(origin, '')}`.trim());
-    });
-
-    await page.goto('/tests/fixtures/blank.html', { waitUntil: 'domcontentloaded' });
-    await page.evaluate(async () => {
-      // A fetch aborted mid-flight: same origin, NOT media.
-      const c = new AbortController();
-      const p = fetch('/data/schema-index.json', { signal: c.signal }).catch(() => {});
-      c.abort();
-      await p;
-      await new Promise((r) => setTimeout(r, 500));
-    });
-
-    expect(
-      bad.filter((b) => b.includes('schema-index.json')),
-      'an aborted NON-media request must still fail -- the exemption is for media only'
-    ).not.toEqual([]);
-  });
-});
