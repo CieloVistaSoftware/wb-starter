@@ -16,6 +16,7 @@
  *   node scripts/check-issue-signatures.mjs --since 2026-09-01
  *   node scripts/check-issue-signatures.mjs --number 1031   # exactly one issue
  *   node scripts/check-issue-signatures.mjs --json
+ *   node scripts/check-issue-signatures.mjs --kinds     # repo-wide: kind only
  *
  * Exit 1 when anything is missing, so it can gate.
  *
@@ -28,13 +29,17 @@
 
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
-import { SCHEMA, parseSignature } from './lib/signature-schema.mjs';
+import { SCHEMA, parseSignature, kindProblem } from './lib/signature-schema.mjs';
 
 const args = process.argv.slice(2);
 const wantClosed = args.includes('--closed');
 const asJson = args.includes('--json');
 const sinceIdx = args.indexOf('--since');
 const since = sinceIdx >= 0 ? args[sinceIdx + 1] : null;
+// `--kinds` sweeps the WHOLE open backlog against one rule: every issue has a
+// Signature block and its kind is one of the six. See kindProblem() for why that
+// single field is the only part of the standard that can be gated repo-wide.
+const kindsOnly = args.includes('--kinds');
 const numberIdx = args.indexOf('--number');
 const only = numberIdx >= 0 ? args[numberIdx + 1] : null;
 
@@ -101,20 +106,45 @@ function templateSections() {
 const SECTIONS = templateSections();
 
 function problemsFor(issue) {
+  // The repo-wide sweep judges one rule and says nothing about the rest, so a
+  // backlog that has not yet been brought up to the full standard still gives a
+  // meaningful pass/fail on the field a future error matches on first.
+  if (kindsOnly) {
+    const p = kindProblem(issue.body);
+    return { problems: p ? [p] : [], advice: [] };
+  }
+
   const problems = [];
 
-  // Structure first: a missing section is a different complaint from a missing
-  // signature field, and an issue can have a perfect Signature block inside an
-  // otherwise shapeless body.
+  // ADVICE, NOT FAILURE -- and the distinction is the whole point.
+  //
+  // A missing section is a different complaint from a missing signature field:
+  // an issue can carry a perfect Signature block inside an otherwise shapeless
+  // body. It used to fail the run all the same, and the consequence is measured
+  // in this very file's own notes: ZERO of 190 open issues follow the template
+  // completely, and the "What is actually happening" section has 0% uptake. The
+  // check was therefore red for practically every issue it ever looked at.
+  //
+  // A gate that is always red is not a gate. #1068, #1069 and #1074 each went
+  // red at filing time for a REAL violation -- a `kind` that does not exist in
+  // the standard -- and all three landed in the backlog regardless, because red
+  // was the colour that check always was. Nobody could tell the wolf from the
+  // noise, and the invalid kinds survived until someone counted them by hand
+  // three weeks later (#1121).
+  //
+  // Template conformance is worth reporting; the standard does not make it
+  // required. The Signature fields ARE required, and they are satisfiable. Only
+  // those fail the run now.
+  const advice = [];
   for (const heading of SECTIONS) {
     const re = new RegExp(`^##\\s+${heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'im');
-    if (!re.test(issue.body || '')) problems.push(`missing section: ## ${heading}`);
+    if (!re.test(issue.body || '')) advice.push(`missing section: ## ${heading}`);
   }
 
   // parseSignature returns { fields, block, full } so callers that REWRITE a
   // block can find it; this one only reads, so it takes the fields.
   const parsed = parseSignature(issue.body);
-  if (!parsed) return [...problems, 'no Signature block'];
+  if (!parsed) return { problems: [...problems, 'no Signature block'], advice };
   const sig = parsed.fields;
 
   for (const key of REQUIRED_AT_FILING) {
@@ -153,13 +183,16 @@ function problemsFor(issue) {
       problems.push(`${banned} is written down — ${BANNED_BECAUSE[banned]}`);
     }
   }
-  return problems;
+  return { problems, advice };
 }
 
 const issues = fetchIssues();
-const failing = issues
-  .map((i) => ({ number: i.number, title: i.title, state: i.state, problems: problemsFor(i) }))
-  .filter((r) => r.problems.length);
+const scored = issues.map((i) => {
+  const { problems, advice } = problemsFor(i);
+  return { number: i.number, title: i.title, state: i.state, problems, advice };
+});
+const failing = scored.filter((r) => r.problems.length);
+const advised = scored.filter((r) => !r.problems.length && r.advice.length);
 
 if (asJson) {
   console.log(JSON.stringify({ scanned: issues.length, failing }, null, 2));
@@ -167,14 +200,20 @@ if (asJson) {
   const scope = wantClosed ? 'closed' : 'open';
   console.log(`Scanned ${issues.length} ${scope} issue(s)${since ? ` created >= ${since}` : ''}.`);
   if (!failing.length) {
-    console.log('All carry a complete Signature block.');
+    console.log(kindsOnly ? 'All carry a valid kind.' : 'All carry a complete Signature block.');
   } else {
     console.log(`\n${failing.length} missing or incomplete:\n`);
     for (const f of failing) {
       console.log(`  #${f.number}  ${f.title.slice(0, 68)}`);
       for (const p of f.problems) console.log(`      - ${p}`);
+      for (const a of f.advice) console.log(`      ~ ${a}   (advice — does not fail)`);
     }
     console.log(`\nFormat: docs/standards/ISSUE-SIGNATURE-BLOCK.md`);
+  }
+  // Printed after the verdict so it can never read as a reason for the verdict.
+  if (advised.length) {
+    console.log(`\n${advised.length} pass the standard but do not follow the template:`);
+    for (const a of advised) console.log(`  #${a.number}  ${a.advice.join('; ')}`);
   }
 }
 

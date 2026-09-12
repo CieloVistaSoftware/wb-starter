@@ -1,0 +1,77 @@
+name: Issue kinds
+
+# THE HOLE THIS CLOSES (#1121)
+#
+# issue-signature-check.yml validates the ONE issue that just changed. That was
+# a deliberate choice and its reasoning still holds for the full standard: zero
+# of 190 open issues satisfy every rule, and a gate nobody can satisfy is one
+# people route around.
+#
+# But it means an issue is only ever examined at the moment it is an event. An
+# issue filed before that workflow existed is never an event again, so it is
+# never checked — and nothing else looked at the backlog. Measured 2026-09-12:
+# 88 of 189 open issues carried no Signature block at all, and three more used a
+# `kind` that does not exist in the standard (infrastructure, tooling,
+# dead-code). Each of those three went RED at filing time. A red run on an
+# `issues:` event blocks nothing and is reported nowhere a person looks, so all
+# three landed in the backlog anyway.
+#
+# `kind` alone gets the repo-wide sweep, because after the #1121 backfill the
+# whole backlog can actually satisfy it. One line, required at filing, and the
+# field a future error matches on first. Narrow enough to stay green, load
+# bearing enough to be worth the red.
+on:
+  schedule:
+    - cron: '17 12 * * *'          # 07:17 US Central, once a day
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    # A change to the standard, the parser or the validator can silently widen
+    # or break the rule — #1121 found parseSignature returning null for every
+    # CRLF body, i.e. the check reporting "no Signature block" on issues that
+    # had one. Re-sweep whenever any of those three move.
+    paths:
+      - 'docs/standards/ISSUE-SIGNATURE-BLOCK.md'
+      - 'scripts/lib/signature-schema.mjs'
+      - 'scripts/check-issue-signatures.mjs'
+      - '.github/workflows/issue-kinds-sweep.yml'
+
+permissions:
+  issues: read
+  contents: read
+
+jobs:
+  kinds:
+    name: every open issue has a valid kind
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sweep the open backlog
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/check-issue-signatures.mjs --kinds
+
+      # The sweep's own value is the number, not just the exit code — a run that
+      # says "190 scanned, all valid" is the evidence that the backfill held.
+      - name: Record the count
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node scripts/check-issue-signatures.mjs --kinds --json > kinds.json || true
+          node -e "
+            const r = require('./kinds.json');
+            const bad = r.failing.length;
+            const line = bad
+              ? '**' + bad + ' of ' + r.scanned + '** open issues have a missing or invalid kind.'
+              : 'All **' + r.scanned + '** open issues carry a valid kind.';
+            const rows = r.failing.map(f => '| #' + f.number + ' | ' + f.problems.join('; ') + ' |').join('\n');
+            require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+              '## Issue kinds\n\n' + line + '\n\n' +
+              (bad ? '| issue | problem |\n|---|---|\n' + rows + '\n' : '') +
+              '\nFormat: docs/standards/ISSUE-SIGNATURE-BLOCK.md\n');
+          "

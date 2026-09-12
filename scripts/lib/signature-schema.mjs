@@ -99,7 +99,22 @@ export const SCHEMA = load();
  * caller can rewrite in place.
  */
 export function parseSignature(body) {
-  const m = (body || '').match(/##\s*Signature\s*\n+```ya?ml\n([\s\S]*?)```/i);
+  // GitHub stores CRLF for anything typed in the web UI or posted from a CRLF
+  // file, and the fence regex needs a newline immediately after the ```yaml
+  // opener. A carriage return sits in that slot, so the whole block reads as
+  // ABSENT -- and the validator reports "no Signature block" on an issue that
+  // plainly has one. That is a false negative in the worst direction: it is
+  // indistinguishable from an issue that genuinely has none.
+  //
+  // Measured 2026-09-12: #1107, #1115 and #1116 each carried a complete block
+  // and all three parsed as null, while #1068/#1069/#1074 -- same shape, filed
+  // from an LF file -- parsed fine. The line ending decided it, nothing else.
+  //
+  // load() above already normalises for exactly this reason when it reads the
+  // standard off disk. The issue body needed it too and never had it.
+  const text = (body || '').split('\r\n').join('\n');
+
+  const m = text.match(/##\s*Signature\s*\n+```ya?ml\n([\s\S]*?)```/i);
   if (!m) return null;
   const fields = {};
   let key = null;
@@ -115,4 +130,32 @@ export function parseSignature(body) {
     else { key = null; fields[f[1]] = f[2].trim().replace(/^["']|["']$/g, ''); }
   }
   return { fields, block: m[1], full: m[0] };
+}
+
+/**
+ * The `kind` rule, on its own, so it can be swept repo-wide.
+ * =========================================================
+ * The full validator checks template sections, every required field, the
+ * conditional pairs and the banned fields. Measured 2026-09-07: ZERO of 190
+ * open issues pass all of that. A gate nothing can satisfy is one people route
+ * around, which is exactly why issue-signature-check.yml scopes itself to the
+ * single issue being edited -- correct at the time, and the reason the backlog
+ * was never re-examined after the rule existed.
+ *
+ * `kind` alone is different: it is one line, it is required at filing, and once
+ * backfilled the whole backlog CAN satisfy it. So it gets the repo-wide sweep
+ * the rest cannot have yet. Narrow enough to be green, load-bearing enough to
+ * matter -- it is the field a future error matches on first.
+ *
+ * Returns null when the issue is fine, else a one-line reason.
+ */
+export function kindProblem(body) {
+  const parsed = parseSignature(body);
+  if (!parsed) return 'no Signature block, so no kind';
+  const kind = String(parsed.fields.kind || '').trim();
+  if (!kind) return 'Signature block has no kind';
+  if (!SCHEMA.kinds.has(kind)) {
+    return `kind "${kind}" is not one of: ${[...SCHEMA.kinds].join(', ')}`;
+  }
+  return null;
 }
