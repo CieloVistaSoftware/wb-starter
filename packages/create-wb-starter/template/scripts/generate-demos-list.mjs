@@ -129,7 +129,7 @@ const CATEGORY_EXAMPLES = {
   ],
   media: [
     `<div x-demo><img src="https://picsum.photos/id/1015/400/240" zoomable alt="River" style="width:100%;border-radius:8px;"></div>`,
-    `<div x-demo><audio controls src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio></div>`,
+    `<div x-demo><audio controls src="/demos/audio.mp3"></audio></div>`,
   ],
   navigation: [
     `<div x-demo><div x-tabs><div tab="Tab 1">Content for Tab 1</div><div tab="Tab 2">Content for Tab 2</div></div></div>`,

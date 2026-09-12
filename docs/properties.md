@@ -510,7 +510,7 @@ Each behavior has predefined defaults loaded from `propertyconfig.json`. When a 
 
 ```json
 {
-  "src": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  "src": "/demos/audio.mp3",
   "volume": "0.8",
   "bass": "0",
   "treble": "0",

@@ -444,9 +444,15 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
   the repo or a real remote URL — is not "illustrative," it's a broken control that ships (2026-08-15
   retrospective: this exact mistake caused 9+ separate issues in one week, #610/#605/#601/#551/#548/#529/
   #526/#519/#514).
-- Use real remote assets: `/images/placeholder.svg` for images (distinct `n` per
-  example, ≥800px on the short edge so it doesn't look blurry when cropped into a card), a real hosted
-  sample for audio/video (this codebase's established convention is soundhelix.com for audio).
+- Use real assets that are COMMITTED TO THIS REPO: `/images/placeholder.svg` for images (distinct `n` per
+  example, ≥800px on the short edge so it doesn't look blurry when cropped into a card), and for audio
+  `/demos/audio.mp3` (also `success.mp3`, `warning.mp3`, `danger.mp3`, `sample.wav`).
+- NEVER a third-party host — not archive.org, w3schools.com, freemusicarchive.org, soundhelix.com or a CDN.
+  This rule previously said the opposite ("a real hosted sample ... soundhelix.com"), and #1115 is what that
+  cost: one archive.org hiccup made `audio.js` throw (correctly, per §30), which wrote to the error log and
+  failed BOTH `compliance/error-log-empty.spec.ts` and `compliance/dark-mode.spec.ts` — neither of which is
+  on the baseline register. A release could not be cut while someone else's server was slow. 117 references
+  across 21 files had to be swept. An example is not allowed to depend on the internet being up.
 - Never invent a local path unless the file is actually committed to the repo at that exact path — verify
   with a file-existence check, not by eye.
 - Test: `tests/compliance/docs-live-media-assets-exist.spec.ts` (markdown docs),

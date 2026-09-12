@@ -9,7 +9,7 @@ Audio player with optional 15-band graphic equalizer
 ### How to write it
 
 ```html
-<audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" controls></audio>
+<audio src="/demos/audio.mp3" controls></audio>
 ```
 
 
@@ -29,7 +29,7 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3` | Audio source URL |
+| `src` | `string` | `/demos/audio.mp3` | Audio source URL |
 | `volume` | `number` | `0.8` | Initial volume (0-1) |
 | `loop` | `boolean` | `false` | Loop playback |
 | `autoplay` | `boolean` | `false` | Auto-play (requires muted) |

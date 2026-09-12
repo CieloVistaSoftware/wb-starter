@@ -535,9 +535,9 @@
       "alternates": []
     },
     "x-audio": {
-      "source": "<audio src=\"https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3\" controls></audio>",
+      "source": "<audio src=\"/demos/audio.mp3\" controls></audio>",
       "alternates": [
-        "<div x-audio src=\"https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3\" volume=\"0.8\"></div>"
+        "<div x-audio src=\"/demos/audio.mp3\" volume=\"0.8\"></div>"
       ]
     },
     "x-video": {
