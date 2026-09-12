@@ -676,12 +676,30 @@
         + `</li>`;
     }).join('');
 
-    document.getElementById('activity-closed').innerHTML = issueItems(data.closed || []);
-    document.getElementById('activity-opened').innerHTML = issueItems(data.opened || []);
-    document.getElementById('activity-commits').innerHTML = commitItems(data.commits || []);
-    document.getElementById('activity-closed-n').textContent = c.closed;
-    document.getElementById('activity-opened-n').textContent = c.opened;
-    document.getElementById('activity-commits-n').textContent = c.commits;
+    // #1118 -- this fetch can outlive the page that started it. The SPA injects
+    // page fragments with innerHTML and re-runs their <script> tags, so leaving
+    // Issues does not stop this work; when it resolved against a replaced DOM,
+    // getElementById returned null and the write threw. John saw the result as
+    // an error attributed to /?page=whats-new -- a page that has nothing to do
+    // with this code. Same reasoning as mdhtml.js's isConnected/pagehide guard.
+    //
+    // An early return, not optional chaining on each write: a half-filled panel
+    // is worse than an unfilled one, and the reader has navigated away anyway.
+    if (!panel.isConnected) return;
+    const closedEl = document.getElementById('activity-closed');
+    const openedEl = document.getElementById('activity-opened');
+    const commitsEl = document.getElementById('activity-commits');
+    const closedN = document.getElementById('activity-closed-n');
+    const openedN = document.getElementById('activity-opened-n');
+    const commitsN = document.getElementById('activity-commits-n');
+    if (!closedEl || !openedEl || !commitsEl || !closedN || !openedN || !commitsN) return;
+
+    closedEl.innerHTML = issueItems(data.closed || []);
+    openedEl.innerHTML = issueItems(data.opened || []);
+    commitsEl.innerHTML = commitItems(data.commits || []);
+    closedN.textContent = c.closed;
+    openedN.textContent = c.opened;
+    commitsN.textContent = c.commits;
 
     const empty = document.getElementById('activity-empty');
     if (empty) empty.hidden = (c.closed + c.opened + c.commits) > 0;

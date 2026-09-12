@@ -1491,6 +1491,31 @@
       'button:variant:link': ` href="${siteRoot()}pages/docs.html" target="_blank"`,
     };
 
+    /**
+     * #1114 / #1117 -- two attributes that are ONE fact must move together.
+     *
+     * cardfile's icon now derives from the filename's extension (card.js,
+     * cardFileTypeFromName). Permuting the fileType axis while leaving
+     * `filename` alone produced exactly what John photographed: an example
+     * labelled fileType=image rendering "quarterly-report.pdf" -- teaching the
+     * contradiction the derivation was added to remove. Six of seven cardfile
+     * permutations contradicted themselves.
+     *
+     * Unlike COMPANIONS, which only ADDS an absent partner, this REWRITES an
+     * existing one, because the stale value is the whole problem. Filenames
+     * match src/wb-models/cardfile.schema.json and data/behavior-examples.json
+     * so the page, the schema and the catalogue tell one story.
+     */
+    const PAIRED_VALUE = {
+      'cardfile:fileType:pdf':   { attr: 'filename', value: 'quarterly-report.pdf' },
+      'cardfile:fileType:doc':   { attr: 'filename', value: 'meeting-notes.docx' },
+      'cardfile:fileType:image': { attr: 'filename', value: 'architecture-diagram.png' },
+      'cardfile:fileType:video': { attr: 'filename', value: 'product-walkthrough.mp4' },
+      'cardfile:fileType:audio': { attr: 'filename', value: 'interview-recording.m4a' },
+      'cardfile:fileType:zip':   { attr: 'filename', value: 'release-assets.zip' },
+      'cardfile:fileType:file':  { attr: 'filename', value: 'sensor-capture.bin' },
+    };
+
     function companionFor(attr, prop, value) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
       const byValue = VALUE_COMPANIONS[`${behavior}:${prop}:${value}`];
@@ -1627,6 +1652,15 @@
       if (partner && !new RegExp('\s' + partner + '\s*=').test(src)) {
         const add = companionFor(attr, prop, value);
         if (add) src = src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1${add}`);
+      }
+
+      // Move the paired attribute with the axis -- see PAIRED_VALUE above.
+      const paired = PAIRED_VALUE[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`];
+      if (paired) {
+        const pairRe = new RegExp('\s' + paired.attr + '\s*=\s*"[^"]*"', 'i');
+        src = pairRe.test(src)
+          ? src.replace(pairRe, ` ${paired.attr}="${paired.value}"`)
+          : src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${paired.attr}="${paired.value}"`);
       }
 
       for (const name of [target, ...aliases]) {

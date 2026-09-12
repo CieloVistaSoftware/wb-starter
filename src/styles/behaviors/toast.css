@@ -18,6 +18,62 @@
   pointer-events: none;
 }
 
+/* Position modifiers (#1109)
+ * ---------------------------------------------------------------------------
+ * toast.schema.json declares six positions. Until now none of them existed in
+ * CSS -- the block above was the only placement rule in the file, so all six
+ * declared values rendered top-right and the attribute was decoration.
+ * feedback.js's toastContainer() creates one container per position and puts
+ * the matching modifier on it.
+ *
+ * Each modifier UNSETS what the base rule set (`top`/`right`) rather than
+ * relying on source order alone, so a bottom-left stack doesn't inherit a top
+ * offset and end up pinned to both edges.
+ *
+ * Bottom stacks use column-reverse: a new toast should appear nearest the
+ * screen edge it grows from, so the newest is always the one closest to the
+ * corner in every position, not only the top ones.
+ *
+ * There is deliberately no `--top-right` rule: that is the schema's default
+ * and the base `.x-toast-container` block above already places it. The class
+ * is still on the element so feedback.js can find that stack by class alone.
+ */
+.x-toast-container--top-left {
+  right: auto;
+  left: 1rem;
+}
+
+.x-toast-container--top-center {
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.x-toast-container--bottom-right {
+  top: auto;
+  bottom: 1rem;
+  flex-direction: column-reverse;
+}
+
+.x-toast-container--bottom-left {
+  top: auto;
+  bottom: 1rem;
+  right: auto;
+  left: 1rem;
+  flex-direction: column-reverse;
+}
+
+.x-toast-container--bottom-center {
+  top: auto;
+  bottom: 1rem;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  flex-direction: column-reverse;
+}
+
 .x-toast {
   pointer-events: auto;
   display: flex;
@@ -43,6 +99,62 @@
 .x-toast--primary { background: var(--primary, #6366f1); }
 .x-toast--secondary { background: var(--secondary, #64748b); }
 
+/* Toast parts (#1109)
+ * ---------------------------------------------------------------------------
+ * icon + content(title, message) + actions(action, close) -- the structure
+ * toast.schema.json's $view described and createToast() never built. Colors
+ * are inherited from .x-toast above on purpose: a toast's foreground is set
+ * once, by its variant, and every part rides on it.
+ */
+.x-toast__icon {
+  flex: 0 0 auto;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.x-toast__content {
+  /* Takes the slack so the icon and the actions stay pinned to the two ends,
+   * which is what the base rule's justify-content: space-between wanted from
+   * a flat toast and can no longer get from three fixed-width children.
+   * min-width: 0 lets a long message wrap instead of forcing the toast past
+   * its max-width. */
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.x-toast__title {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.x-toast__message {
+  /* <p> per the schema's $view, so it needs the UA margin off. */
+  margin: 0;
+  font-size: inherit;
+}
+
+.x-toast__actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.x-toast__action {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+}
+
 /* Close button */
 .x-toast__close {
   background: none;
@@ -54,12 +166,31 @@
   line-height: 1;
   opacity: 0.7;
 }
+/* The glyph lives here, not in the DOM (#1109): the button carries an
+ * aria-label so a screen reader says "Dismiss notification" instead of
+ * spelling out a symbol, and a toast's textContent stays the message. */
+.x-toast__close::before { content: '✕'; }
 .x-toast__close:hover { opacity: 1; }
 
 /* Exit animation */
 .x-toast--exiting {
   animation: x-toast-out 0.3s ease forwards;
 }
+
+/* Enter/exit direction follows the position (#1109) -- a toast in the left
+ * corners sliding in from the right edge reads as an animation bug. Higher
+ * specificity than the .x-toast / .x-toast--exiting shorthands above, so only
+ * the animation-name is replaced and the timing stays shared. */
+.x-toast-container--top-left .x-toast,
+.x-toast-container--bottom-left .x-toast { animation-name: x-toast-in-left; }
+.x-toast-container--top-left .x-toast--exiting,
+.x-toast-container--bottom-left .x-toast--exiting { animation-name: x-toast-out-left; }
+
+.x-toast-container--top-center .x-toast { animation-name: x-toast-in-top; }
+.x-toast-container--top-center .x-toast--exiting { animation-name: x-toast-out-top; }
+
+.x-toast-container--bottom-center .x-toast { animation-name: x-toast-in-bottom; }
+.x-toast-container--bottom-center .x-toast--exiting { animation-name: x-toast-out-bottom; }
 
 @keyframes x-toast-in {
   from { transform: translateX(100%); opacity: 0; }
@@ -69,4 +200,34 @@
 @keyframes x-toast-out {
   from { transform: translateX(0); opacity: 1; }
   to   { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes x-toast-in-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes x-toast-out-left {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(-100%); opacity: 0; }
+}
+
+@keyframes x-toast-in-top {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes x-toast-out-top {
+  from { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(-100%); opacity: 0; }
+}
+
+@keyframes x-toast-in-bottom {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes x-toast-out-bottom {
+  from { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
 }

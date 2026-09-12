@@ -273,8 +273,17 @@
       "alternates": []
     },
     "x-cardfile": {
-      "source": "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
-      "alternates": []
+      "source": "<article x-cardfile filename=\"quarterly-report.pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
+      "alternates": [
+        "<article x-cardfile filename=\"quarterly-report.pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
+        "<article x-cardfile filename=\"meeting-notes.docx\" size=\"480 KB\" date=\"2026-08-21\" href=\"#\"></article>",
+        "<article x-cardfile filename=\"architecture-diagram.png\" size=\"1.1 MB\" date=\"2026-07-30\" href=\"#\"></article>",
+        "<article x-cardfile filename=\"product-walkthrough.mp4\" size=\"58 MB\" date=\"2026-06-12\" href=\"#\"></article>",
+        "<article x-cardfile filename=\"interview-recording.m4a\" size=\"12 MB\" date=\"2026-05-04\" href=\"#\"></article>",
+        "<article x-cardfile filename=\"release-assets.zip\" size=\"104 MB\" date=\"2026-09-01\" href=\"#\"></article>",
+        "<article x-cardfile filename=\"sensor-capture.bin\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>",
+        "<article x-cardfile filename=\"sensor-capture.bin\" file-type=\"video\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>"
+      ]
     },
     "x-cardhero": {
       "source": "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real components.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",

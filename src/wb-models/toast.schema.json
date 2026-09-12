@@ -79,75 +79,8 @@
       "default": "#"
     }
   },
-  "$view": [
-    {
-      "name": "container",
-      "tag": "div",
-      "public": false,
-      "required": true,
-      "description": "Internal layout container"
-    },
-    {
-      "name": "icon",
-      "tag": "span",
-      "parent": "container",
-      "public": true,
-      "content": "{{icon}}",
-      "createdWhen": "icon",
-      "description": "Toast icon"
-    },
-    {
-      "name": "content",
-      "tag": "div",
-      "parent": "container",
-      "public": true,
-      "required": true,
-      "description": "Content container"
-    },
-    {
-      "name": "title",
-      "tag": "strong",
-      "parent": "content",
-      "public": true,
-      "content": "{{title}}",
-      "createdWhen": "title",
-      "description": "Toast title"
-    },
-    {
-      "name": "message",
-      "tag": "p",
-      "parent": "content",
-      "public": true,
-      "content": "{{message}}",
-      "description": "Toast message"
-    },
-    {
-      "name": "actions",
-      "tag": "div",
-      "parent": "container",
-      "public": true,
-      "createdWhen": "action OR dismissible",
-      "description": "Action buttons container"
-    },
-    {
-      "name": "action",
-      "tag": "a",
-      "parent": "actions",
-      "public": true,
-      "content": "{{action}}",
-      "createdWhen": "action",
-      "description": "Action button"
-    },
-    {
-      "name": "close",
-      "tag": "button",
-      "parent": "actions",
-      "public": true,
-      "content": "✕",
-      "createdWhen": "dismissible",
-      "description": "Close button"
-    }
-  ],
+  "_view_note": "#1109: EMPTY on purpose. A toast has TWO elements and this schema describes the wrong one. The host (<div x-toast>, baseClass x-toast-trigger) is the TRIGGER; the toast itself is a popup createToast() (src/wb-viewmodels/feedback.js) appends to .x-toast-container on document.body. This $view listed container > icon + content(title, message) + actions(action, close) -- the popup's structure -- and schema-builder built it INTO THE TRIGGER, before the behavior ran (wb-lazy.js buildSchemaIfNeeded). Three consequences, all confirmed by reading the source: the trigger's own authored label was wiped by buildStructure()'s innerHTML clear; the trigger was repainted as a static look-alike toast with an inert ✕; and getPartClass() named the parts off the trigger's baseClass, emitting x-toast-trigger__close where toast.css styles .x-toast__close, so not one of them was ever styled. createToast() now builds exactly this structure, on the popup, with x-toast__* classes -- one definition of a toast, in the behavior. Same fix, same reason, as 'alert' and 'card' (#202).",
+  "$view": [],
   "$methods": {
     "show": {
       "description": "Shows a toast notification",

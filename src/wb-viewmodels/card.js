@@ -1953,19 +1953,66 @@ export function cardnotification(element, options = {}) {
 }
 
 /**
+ * Extension -> icon family (#1117).
+ *
+ * John: "Why do we need filetype, can't it come from the filename?" It can.
+ * `fileType`'s only job was picking one of the seven emoji below, and
+ * "quarterly-report.pdf" already says it is a PDF. Restating that in a second
+ * attribute is duplicated truth, and duplicated truth drifts -- which is
+ * exactly what #1114 caught: six of seven cardfile permutations declared
+ * doc/image/video/audio/zip while rendering a filename ending `.pdf`.
+ *
+ * Deriving also matches the project's semantic-first rule: the name already
+ * carries the meaning, so the framework reads it rather than making an author
+ * write the same fact twice.
+ *
+ * Anything not listed here is a plain file, which is the honest answer -- a
+ * `.xyz` we cannot classify gets the generic icon rather than a guess.
+ */
+const CARD_FILE_TYPE_BY_EXT = {
+  pdf: 'pdf',
+  doc: 'doc', docx: 'doc', rtf: 'doc', odt: 'doc', txt: 'doc', md: 'doc',
+  png: 'image', jpg: 'image', jpeg: 'image', gif: 'image', svg: 'image', webp: 'image', avif: 'image',
+  mp4: 'video', mov: 'video', webm: 'video', mkv: 'video',
+  mp3: 'audio', wav: 'audio', m4a: 'audio', ogg: 'audio', flac: 'audio',
+  zip: 'zip', tar: 'zip', gz: 'zip', '7z': 'zip', rar: 'zip'
+};
+
+/**
+ * "architecture-diagram.png" -> "image". A name with no dot, or one whose
+ * extension is not in the table, falls back to the generic file icon.
+ */
+const cardFileTypeFromName = (name) => {
+  const parts = String(name || '').split('.');
+  const ext = parts.length > 1 ? parts.pop().toLowerCase() : '';
+  return CARD_FILE_TYPE_BY_EXT[ext] || 'file';
+};
+
+/**
  * Card File Component
  * Custom Tag: <card-file>
  */
 export function cardfile(element, options = {}) {
+  const filename = options.filename || readAttr(element, 'filename') || element.getAttribute('filename');
   const config = {
-    filename: options.filename || readAttr(element, 'filename') || element.getAttribute('filename'),
+    filename,
     // cardfile.schema.json declares this property as `fileType` (HTML
     // attribute `file-type`, per project convention) -- reading the bare
     // `type` attribute never matched any real markup (every demo/doc author
     // used file-type=), so every card silently fell back to the generic
     // 'file' icon regardless of its declared type. `type` kept as a
     // fallback in case something out there authored it that way already.
-    type: options.type || readAttr(element, 'fileType') || element.getAttribute('file-type') || readAttr(element, 'type') || element.getAttribute('type') || 'file',
+    //
+    // #1117: the filename decides. `fileType` survives ONLY as an explicit
+    // override for what a name cannot express -- a `.bin` that really is a
+    // video, a name with no extension at all -- so an author who states it
+    // still wins, and no ordinary file needs it. Note the old `|| 'file'`
+    // default is gone: hardcoding it here meant the derivation could never
+    // run.
+    type: options.type
+      || readAttr(element, 'fileType') || element.getAttribute('file-type')
+      || readAttr(element, 'type') || element.getAttribute('type')
+      || cardFileTypeFromName(filename),
     size: options.size || readAttr(element, 'size') || element.getAttribute('size'),
     date: options.date || readAttr(element, 'date') || element.getAttribute('date'),
     downloadable: parseBoolean(options.downloadable) ?? (readAttr(element, 'downloadable') !== 'false' && element.getAttribute('downloadable') !== 'false'),

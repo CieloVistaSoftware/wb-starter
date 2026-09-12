@@ -100,14 +100,20 @@ export function footer(element) {
   };
 
   const links = parseList(element.getAttribute('links'));
-  if (links.length && !element.querySelector('.x-footer__nav')) {
+  // wb-lazy builds footer.schema.json's $view before footer() runs, and that
+  // $view declares the links nav as the `center` part and the social nav as
+  // `social` -- both EMPTY. Skipping on "the nav exists" left social links
+  // unrendered on every wb-lazy page, and built a second links nav beside an
+  // empty one. So a nav counts as done only when it holds links; an empty one
+  // the schema built is the place to put them.
+  if (links.length && !element.querySelector('.x-footer__nav .x-footer__link')) {
     // linkNav / linkEl rather than nav / a: the social block below builds the
     // same two shapes, and compliance/source-schema-compliance.spec.ts reads
     // this file line by line without tracking block scope, so two `const nav`
     // in one function count as a redeclaration against its ratchet. Distinct
     // names cost nothing and read better next to the social pair anyway.
-    const linkNav = document.createElement('nav');
-    linkNav.className = 'x-footer__nav';
+    const linkNav = element.querySelector('.x-footer__nav, .x-footer__center') || document.createElement('nav');
+    linkNav.classList.add('x-footer__nav');
     linkNav.setAttribute('aria-label', 'Footer');
     links.forEach((item) => {
       const linkEl = document.createElement('a');
@@ -117,7 +123,7 @@ export function footer(element) {
       linkEl.textContent = String(item.label ?? item.text ?? item.href ?? '').trim();
       if (linkEl.textContent) linkNav.appendChild(linkEl);
     });
-    if (linkNav.children.length) element.appendChild(linkNav);
+    if (linkNav.children.length && !linkNav.isConnected) element.appendChild(linkNav);
   }
 
   // The glyph is what the schema calls "social icons". A platform with no
@@ -129,9 +135,9 @@ export function footer(element) {
   };
 
   const social = parseList(element.getAttribute('social'));
-  if (social.length && !element.querySelector('.x-footer__social')) {
-    const socialNav = document.createElement('nav');
-    socialNav.className = 'x-footer__social';
+  if (social.length && !element.querySelector('.x-footer__social .x-footer__social-link')) {
+    const socialNav = element.querySelector('.x-footer__social') || document.createElement('nav');
+    socialNav.classList.add('x-footer__social');
     socialNav.setAttribute('aria-label', 'Social');
     social.forEach((item) => {
       const platform = String(item.platform ?? item.label ?? '').trim();
@@ -146,7 +152,7 @@ export function footer(element) {
       socialEl.textContent = SOCIAL_GLYPHS[platform.toLowerCase()] || platform;
       socialNav.appendChild(socialEl);
     });
-    if (socialNav.children.length) element.appendChild(socialNav);
+    if (socialNav.children.length && !socialNav.isConnected) element.appendChild(socialNav);
   }
 
   // API

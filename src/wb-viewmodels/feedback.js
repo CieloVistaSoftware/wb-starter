@@ -11,21 +11,128 @@ import { readFlag } from '../core/read-attr.js';
  */
 
 /**
+ * The six values toast.schema.json's `position` enum declares. #1109: the
+ * attribute was declared and never read -- every toast went into the ONE
+ * `.x-toast-container` whose CSS pins it top-right, so all six documented
+ * positions rendered in the same corner. Each position now gets its own
+ * container element carrying its own `x-toast-container--{position}`
+ * modifier (toast.css), because a container is a positioned stack: two
+ * toasts asking for opposite corners cannot share one box.
+ */
+const TOAST_POSITIONS = [
+  'top-right', 'top-left', 'top-center',
+  'bottom-right', 'bottom-left', 'bottom-center'
+];
+const DEFAULT_TOAST_POSITION = 'top-right';
+
+/**
+ * The stack for one position, created on first use.
+ *
+ * Keyed off the modifier CLASS, not a `data-position` attribute -- Law 11
+ * (no data-* on behavior DOM), and the class has to exist anyway for the
+ * CSS to place the box.
+ *
+ * @param {string} position one of TOAST_POSITIONS; anything else falls back
+ * @returns {HTMLElement}
+ */
+function toastContainer(position) {
+  const pos = TOAST_POSITIONS.includes(position) ? position : DEFAULT_TOAST_POSITION;
+  const modifier = `x-toast-container--${pos}`;
+  let container = document.querySelector(`.${modifier}`);
+  if (!container) {
+    // A container built before #1109 has no modifier class at all. Adopt it
+    // for the default position rather than stacking a second box on top of
+    // it -- click-confirm.js and the specs both reach for `.x-toast-container`
+    // unqualified and must keep finding exactly one for the default corner.
+    if (pos === DEFAULT_TOAST_POSITION) {
+      container = Array.from(document.querySelectorAll('.x-toast-container'))
+        .find((el) => !TOAST_POSITIONS.some((p) => el.classList.contains(`x-toast-container--${p}`))) || null;
+    }
+    if (!container) {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+    }
+    container.classList.add('x-toast-container', modifier);
+  }
+  return container;
+}
+
+/**
  * createToast - Programmatic toast creation
  * CSS: src/styles/behaviors/toast.css
+ *
+ * #1109: this used to build a flat `div.x-toast` whose entire body was
+ * `textContent = message`, while toast.schema.json's `$view` described
+ * container > icon + content(title, message) + actions(action, close). Both
+ * claimed to define "a toast" and they described different elements, so on
+ * the lazy runtime (which builds `$view` into the host BEFORE the behavior
+ * runs -- wb-lazy.js buildSchemaIfNeeded) an `<div x-toast>` trigger was
+ * repainted as a static look-alike toast with an ✕ wired to nothing, and
+ * `title`/`icon`/`dismissible` had nowhere to render in the real one.
+ *
+ * The structure below IS that `$view`, built where a toast actually lives
+ * (the popup, in the container) instead of inside the trigger. The schema's
+ * `$view` is now `[]` -- "the behavior owns all DOM" -- so there is one
+ * definition of a toast, and it is this function.
+ *
+ * @param {string} message
+ * @param {string} [variant='info']
+ * @param {number} [duration=3000] auto-dismiss ms; 0 = stay until dismissed
+ * @param {{title?:string, icon?:string, position?:string, dismissible?:boolean,
+ *          action?:string, actionHref?:string}} [opts]
+ * @returns {HTMLElement} the toast element
  */
 export function createToast(message, variant = 'info', duration = 3000, opts = {}) {
-  let container = document.querySelector('.x-toast-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.className = 'x-toast-container';
-    document.body.appendChild(container);
-  }
+  const container = toastContainer(opts.position);
 
   const toast = document.createElement('div');
   toast.className = `x-toast x-toast--${variant}`;
   toast.setAttribute('role', 'status');
-  toast.textContent = message;
+
+  let autoTimer = null;
+  const dismiss = () => {
+    if (toast._wbToastDismissing) return;
+    toast._wbToastDismissing = true;
+    if (autoTimer) clearTimeout(autoTimer);
+    toast.classList.add('x-toast--exiting');
+    setTimeout(() => {
+      // Dispatched while still attached, or it bubbles to nothing. The schema
+      // has declared wb:toast:hide since it was written and nothing ever
+      // fired it -- a dismissible toast needs to be observable (#1109).
+      toast.dispatchEvent(new CustomEvent('wb:toast:hide', { bubbles: true, detail: { message } }));
+      toast.remove();
+    }, 300);
+  };
+
+  // icon → $view's `icon` span. aria-hidden: it is decoration next to the
+  // message, and a screen reader announcing "party popper" before the text
+  // of an error toast is noise, not information.
+  const icon = opts.icon || '';
+  if (icon) {
+    const iconEl = document.createElement('span');
+    iconEl.className = 'x-toast__icon';
+    iconEl.setAttribute('aria-hidden', 'true');
+    iconEl.textContent = icon;
+    toast.appendChild(iconEl);
+  }
+
+  // content → $view's `content` div wrapping `title` (<strong>) + `message`
+  // (<p>). The wrapper is what lets the icon and the actions sit beside a
+  // two-line title+message block instead of being pushed onto their own row.
+  const content = document.createElement('div');
+  content.className = 'x-toast__content';
+  const title = opts.title || '';
+  if (title) {
+    const titleEl = document.createElement('strong');
+    titleEl.className = 'x-toast__title';
+    titleEl.textContent = title;
+    content.appendChild(titleEl);
+  }
+  const messageEl = document.createElement('p');
+  messageEl.className = 'x-toast__message';
+  messageEl.textContent = message;
+  content.appendChild(messageEl);
+  toast.appendChild(content);
 
   // toast.schema.json declares `action` (button text) and `actionHref` (link
   // URL). createToast() had no action support at all, so both were documented
@@ -33,30 +140,54 @@ export function createToast(message, variant = 'info', duration = 3000, opts = {
   // button that navigates is not middle-clickable or open-in-new-tab-able,
   // and the schema names this one "Action button link URL".
   const actionText = opts.action || '';
-  if (actionText) {
-    const href = opts.actionHref || '';
-    const action = document.createElement(href ? 'a' : 'button');
-    action.className = 'x-toast__action';
-    action.textContent = actionText;
-    if (href) {
-      action.setAttribute('href', href);
-    } else {
-      action.setAttribute('type', 'button');
-      action.addEventListener('click', () => {
-        toast.dispatchEvent(new CustomEvent('wb:toast:action', { bubbles: true, detail: { message } }));
-      });
+  // `dismissible` defaults TRUE, as the schema declares. `!== false` (not
+  // `|| true`) so an explicit false from a caller wins while an omitted
+  // option still takes the declared default.
+  const dismissible = opts.dismissible !== false;
+  if (actionText || dismissible) {
+    const actions = document.createElement('div');
+    actions.className = 'x-toast__actions';
+
+    if (actionText) {
+      const href = opts.actionHref || '';
+      const action = document.createElement(href ? 'a' : 'button');
+      action.className = 'x-toast__action';
+      action.textContent = actionText;
+      if (href) {
+        action.setAttribute('href', href);
+      } else {
+        action.setAttribute('type', 'button');
+        action.addEventListener('click', () => {
+          toast.dispatchEvent(new CustomEvent('wb:toast:action', { bubbles: true, detail: { message } }));
+        });
+      }
+      actions.appendChild(action);
     }
-    toast.appendChild(action);
+
+    if (dismissible) {
+      // toast.css has styled `.x-toast__close` since it was written and
+      // nothing ever built the element (#1109) -- dead style, dead flag.
+      const close = document.createElement('button');
+      close.className = 'x-toast__close';
+      close.setAttribute('type', 'button');
+      close.setAttribute('aria-label', 'Dismiss notification');
+      // The ✕ glyph is CSS (`.x-toast__close::before`), not a text node, for
+      // two reasons: a screen reader should hear the aria-label, not the
+      // character; and a toast's textContent must stay the MESSAGE. Baking
+      // the glyph into the element makes every `toast.textContent` read --
+      // in copy.js, in click-confirm.js, in the #458 spec -- come back as
+      // "Saved!✕".
+      close.addEventListener('click', dismiss);
+      actions.appendChild(close);
+    }
+
+    toast.appendChild(actions);
   }
 
   container.appendChild(toast);
 
-  // Auto-dismiss — no close button needed
   if (duration > 0) {
-    setTimeout(() => {
-      toast.classList.add('x-toast--exiting');
-      setTimeout(() => toast.remove(), 300);
-    }, duration);
+    autoTimer = setTimeout(dismiss, duration);
   }
 
   return toast;
@@ -98,10 +229,26 @@ export function toast(element, options = {}) {
     // Read at click time for the same #458 reason as message/variant/duration.
     const action = options.action || element.getAttribute('action') || '';
     const actionHref = options.actionHref || element.getAttribute('action-href') || '';
-    createToast(message, variant, duration, { action, actionHref });
+    // #1109: position/title/icon/dismissible were declared in
+    // toast.schema.json and read by nobody, so the Behaviors page's six
+    // position permutations all rendered in the same corner and the other
+    // three attributes rendered nothing at all. Read at click time for the
+    // same #458 reason as everything above.
+    const position = options.position || element.getAttribute('position') || DEFAULT_TOAST_POSITION;
+    // `toast-title` FIRST, for the reason `toast-variant` exists: `title` is
+    // a native global attribute (the browser's own tooltip). A trigger that
+    // legitimately carries `<button title="Save your work">` must not have
+    // that tooltip silently promoted into the toast's heading -- but a
+    // trigger authored per the schema (`title="Saved"`) still works.
+    const title = options.title || element.getAttribute('toast-title') || element.getAttribute('title') || '';
+    const icon = options.icon || element.getAttribute('icon') || '';
+    // Schema default is true; readFlag also honors `dismissible="false"`,
+    // which a bare hasAttribute() check would read as ON (the #747 trap).
+    const dismissible = options.dismissible ?? readFlag(element, 'dismissible', true);
+    createToast(message, variant, duration, { action, actionHref, position, title, icon, dismissible });
     element.dispatchEvent(new CustomEvent('wb:toast:show', {
       bubbles: true,
-      detail: { message, variant, action, actionHref }
+      detail: { message, variant, action, actionHref, position, title, icon, dismissible }
     }));
   };
 

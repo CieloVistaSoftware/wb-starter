@@ -1,0 +1,193 @@
+{
+  "$comment": "Permutation source for x-tooltip. Params and values come from src/wb-models/tooltip.schema.json -- every declared property, its enum, its default, plus min/max/edge values the enum does not state. Tests are GENERATED from this file; none are hand-picked.",
+  "behavior": "x-tooltip",
+  "source": "src/wb-models/tooltip.schema.json",
+  "host": "<button x-tooltip>Trigger</button>",
+  "simpleWorkingCase": {
+    "markup": "<button x-tooltip content=\"hello\">Trigger</button>",
+    "action": "hover the trigger",
+    "expect": "a tooltip element appears containing the text 'hello', and disappears when the pointer leaves"
+  },
+  "params": {
+    "content": {
+      "type": "string",
+      "default": "this is the content",
+      "read": true,
+      "values": [
+        "hello",
+        "",
+        "   ",
+        "a very long string of 400 characters used to test maxWidth wrapping",
+        "<b>not html</b>",
+        "quote\" and 'apos",
+        "emoji 🎯 and ünïcode"
+      ],
+      "edges": [
+        "",
+        "   ",
+        "<b>not html</b>"
+      ]
+    },
+    "position": {
+      "type": "enum",
+      "default": "top",
+      "read": true,
+      "values": [
+        "top",
+        "bottom",
+        "left",
+        "right",
+        "top-start",
+        "top-end",
+        "bottom-start",
+        "bottom-end"
+      ],
+      "edges": [
+        "top-start",
+        "bottom-end"
+      ],
+      "alsoAccepts": [
+        "x-position",
+        "tooltip-position"
+      ]
+    },
+    "variant": {
+      "type": "enum",
+      "default": "default",
+      "read": true,
+      "values": [
+        "default",
+        "dark",
+        "light",
+        "primary"
+      ],
+      "edges": [
+        "default"
+      ]
+    },
+    "delay": {
+      "type": "number",
+      "default": 200,
+      "read": true,
+      "values": [
+        0,
+        1,
+        200,
+        5000
+      ],
+      "edges": [
+        0,
+        -50,
+        "abc",
+        5000
+      ],
+      "note": "tooltip.js clamps with Math.max(0, parseInt(...)). -50 and 'abc' are the min/invalid edges."
+    },
+    "hideDelay": {
+      "type": "number",
+      "default": 100,
+      "read": true,
+      "values": [
+        0,
+        100,
+        2000
+      ],
+      "edges": [
+        -1,
+        "abc"
+      ],
+      "note": "Was a disagreement: tooltip.schema.json said 0, tooltip.js used 100. Reconciled to 100 in #1107 -- it is the shipped behaviour, and it is the value interactive=true needs, so the pointer can cross the 8px gap onto the tooltip before it hides."
+    },
+    "trigger": {
+      "type": "enum",
+      "default": "hover-focus",
+      "read": true,
+      "values": [
+        "hover",
+        "focus",
+        "click",
+        "hover-focus"
+      ],
+      "edges": [
+        "click",
+        "focus"
+      ],
+      "wasDead": true,
+      "note": "Was DECLARED, NEVER READ: tooltip.js bound mouseenter, mouseleave and focus always, so click never opened the tooltip and hover always did. #1107 gates the listeners per mode -- hover binds mouseenter/mouseleave, focus binds focus/blur, click binds click alone (neither hover nor focus) and toggles, hover-focus binds both. Default reconciled to hover-focus (#1107): focus was always bound before gating, and dropping it would remove keyboard access (WCAG 1.4.13)."
+    },
+    "arrow": {
+      "type": "boolean",
+      "default": true,
+      "read": true,
+      "values": [
+        true,
+        false
+      ],
+      "edges": [
+        false
+      ],
+      "wasDead": true,
+      "note": "Was DECLARED, NEVER READ: tooltip.js built .x-tooltip__arrow unconditionally, so arrow=false could not remove it. #1107 builds the arrow only when the flag is on."
+    },
+    "interactive": {
+      "type": "boolean",
+      "default": false,
+      "read": true,
+      "values": [
+        true,
+        false
+      ],
+      "edges": [
+        true
+      ],
+      "wasDead": true,
+      "note": "Was DECLARED, NEVER READ: no pointer-bridge logic existed, and .x-tooltip is pointer-events:none, so the pointer could never reach the tooltip anyway. #1107 adds .x-tooltip--interactive (pointer-events:auto) and cancels the pending hide when the pointer enters the tooltip."
+    },
+    "maxWidth": {
+      "type": "string",
+      "default": "200px",
+      "read": true,
+      "values": [
+        "200px",
+        "0px",
+        "10000px",
+        "50%",
+        "notalength"
+      ],
+      "edges": [
+        "0px",
+        "10000px",
+        "notalength"
+      ],
+      "wasDead": true,
+      "note": "Was DECLARED, NEVER READ: the cap was a hardcoded 250px in the injected CSS. #1107 sets the declared --x-tooltip-max-width CSS API variable per instance on a border-box element, so the cap means the rendered width. A 0px cap still renders the padding box -- padding cannot shrink."
+    }
+  },
+  "oracle": {
+    "rule": [
+      "content: the tooltip's text equals the authored content exactly; markup in it is text, never parsed as HTML.",
+      "content empty or whitespace-only: falls through to the trigger's own text, which #861 made the last content source on purpose so the bare <button x-tooltip>Save</button> form works. Only a trigger with no text at all has nothing to say.",
+      "position: the tooltip carries .x-tooltip--<position> AND sits on that side of the trigger, measured by rect.",
+      "position: the 4 compound values (top-start/top-end/bottom-start/bottom-end) must place the tooltip too -- tooltip.js only styles the 4 simple sides.",
+      "variant: each of the 4 values paints a visually distinct tooltip; two variants may not be pixel-identical.",
+      "delay: the tooltip does not appear before `delay` ms and does appear after; delay=0 appears immediately.",
+      "delay invalid or negative: clamped to 0, never NaN and never a permanent no-show.",
+      "hideDelay: the tooltip survives at least `hideDelay` ms after the pointer leaves, then goes.",
+      "trigger: the tooltip opens on the named interaction AND NOT on the others.",
+      "arrow=false: no .x-tooltip__arrow element; arrow=true: exactly one.",
+      "interactive=true: moving the pointer from trigger onto the tooltip keeps it open.",
+      "maxWidth: the rendered tooltip's width never exceeds the value.",
+      "every permutation: exactly one .x-tooltip exists while shown, and it is removed from the DOM on hide -- none may leak."
+    ],
+    "expectedRedOnCurrentCode": [
+      "trigger=click: never opens on click, and wrongly opens on hover/focus",
+      "trigger=focus / hover-focus: indistinguishable from hover, since all three are always bound",
+      "arrow=false: the arrow is built unconditionally (tooltip.js:181-185)",
+      "interactive=true: no pointer-bridge logic exists",
+      "maxWidth: never applied to the built element",
+      "hideDelay default disagreement: schema says 0, tooltip.js defaults to 100",
+      "position compound values: only top/bottom/left/right have arrow/placement CSS"
+    ],
+    "resolvedIn": "#1107 -- every case listed in expectedRedOnCurrentCode is now expected GREEN. The list stays as written: it is the definition of done for that fix and the record of what was wrong."
+  }
+}
