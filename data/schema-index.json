@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T06:08:51.413Z",
+  "generatedAt": "2026-09-12T07:33:35.673Z",
   "count": 152,
   "schemas": [
     {
@@ -281,7 +281,7 @@
         "src": {
           "type": "string",
           "description": "Audio source URL",
-          "default": "/demos/audio.mp3",
+          "default": "demos/audio.mp3",
           "required": true
         },
         "volume": {
@@ -332,18 +332,18 @@
       },
       "matrix": [
         {
-          "src": "/demos/audio.mp3"
+          "src": "demos/audio.mp3"
         },
         {
-          "src": "/demos/audio.mp3",
+          "src": "demos/audio.mp3",
           "showEq": true
         },
         {
-          "src": "/demos/audio.mp3",
+          "src": "demos/audio.mp3",
           "volume": 0.5
         },
         {
-          "src": "/demos/audio.mp3",
+          "src": "demos/audio.mp3",
           "loop": true
         }
       ],

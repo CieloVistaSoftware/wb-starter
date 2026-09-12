@@ -137,7 +137,7 @@ Enhances standard HTML elements with better styling and functionality.
 **`audio`**
 
 <div x-demo>
-<audio src="/demos/audio.mp3"></audio>
+<audio src="../demos/audio.mp3"></audio>
 </div>
 
 **`video`**

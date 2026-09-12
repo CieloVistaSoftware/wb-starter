@@ -136,7 +136,7 @@ function renderAudio(viewDef) {
     const propName = attrDef.name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
     const propDefault = audioProps[propName]?.default;
     if (attrDef.name === 'src') {
-      attrs.push(`src="/demos/audio.mp3"`);
+      attrs.push(`src="demos/audio.mp3"`);
     } else if (attrDef.name === 'show-eq') {
       attrs.push('show-eq');
     } else if (propDefault !== undefined) {

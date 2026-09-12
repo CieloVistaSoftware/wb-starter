@@ -79,14 +79,17 @@ test('Studio EQ Player: playlist attribute renders a track picker with all track
   const result = await page.evaluate(() => {
     const picker = document.querySelector('.x-audio__track-picker') as HTMLSelectElement;
     const before = picker.value;
-    picker.value = '5';
+    picker.value = '4';
     picker.dispatchEvent(new Event('change', { bubbles: true }));
     const audioEl = picker.closest('.x-audio')!.querySelector('audio') as HTMLAudioElement;
     return { optionCount: picker.options.length, before, after: audioEl.src };
   });
 
-  expect(result.optionCount, 'playlist="…" (18 tracks) should render 18 options').toBe(18);
-  expect(result.after, 'selecting a different track must load its src').toContain('05_Ghosts_I.mp3');
+  // #1115: the playlist is five repo-committed tracks now. It used to be 18
+  // archive.org URLs, which is what made a release impossible whenever that
+  // host was slow -- the count is not the point, reaching every track is.
+  expect(result.optionCount, 'playlist="…" (5 tracks) should render 5 options').toBe(5);
+  expect(result.after, 'selecting a different track must load its src').toContain('sample.wav');
 });
 
 /**

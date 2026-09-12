@@ -496,7 +496,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
 
   // 'Zero All' removed — identical to the 'Flat' preset below (all-zero gains),
   // just a redundant second button for the same action.
-  // 'Demo Track' removed — swapped in /demos/audio.mp3 (committed to this repo, #1115) regardless of the
+  // 'Demo Track' removed — swapped in demos/audio.mp3 (committed to this repo, #1115) regardless of the
   // author's chosen src, and that file has had its own load reliability
   // issues; a preset button silently changing the loaded track is also
   // surprising UX.

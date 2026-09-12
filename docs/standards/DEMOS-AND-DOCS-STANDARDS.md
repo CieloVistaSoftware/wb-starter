@@ -444,9 +444,17 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
   the repo or a real remote URL — is not "illustrative," it's a broken control that ships (2026-08-15
   retrospective: this exact mistake caused 9+ separate issues in one week, #610/#605/#601/#551/#548/#529/
   #526/#519/#514).
-- Use real assets that are COMMITTED TO THIS REPO: `/images/placeholder.svg` for images (distinct `n` per
+- Use real assets that are COMMITTED TO THIS REPO: `images/placeholder.svg` for images (distinct `n` per
   example, ≥800px on the short edge so it doesn't look blurry when cropped into a card), and for audio
-  `/demos/audio.mp3` (also `success.mp3`, `warning.mp3`, `danger.mp3`, `sample.wav`).
+  `demos/audio.mp3` (also `success.mp3`, `warning.mp3`, `danger.mp3`, `sample.wav`).
+- Write the reference RELATIVE TO THE FILE, never with a leading slash — a leading `/` resolves to the
+  DOMAIN root and 404s under the `/wb-starter/` project base. The correct prefix depends on where the file
+  sits, so there is no single string to paste:
+  `pages/*.html` (SPA fragments, injected into the shell) -> `demos/audio.mp3`;
+  `demos/*.html` -> `audio.mp3`; `demos/site/*.html` -> `../audio.mp3`;
+  `docs/*.md` -> `../demos/audio.mp3`; `docs/behaviors/*.md` -> `../../demos/audio.mp3`.
+  Enforced by `no-absolute-asset-paths`, `no-absolute-paths-in-md` and
+  `injected-pages-root-relative-resources` — 12 failures the first time this was got wrong.
 - NEVER a third-party host — not archive.org, w3schools.com, freemusicarchive.org, soundhelix.com or a CDN.
   This rule previously said the opposite ("a real hosted sample ... soundhelix.com"), and #1115 is what that
   cost: one archive.org hiccup made `audio.js` throw (correctly, per §30), which wrote to the error log and
