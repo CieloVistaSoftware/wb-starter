@@ -112,8 +112,8 @@
 </script>
 
 <section id="whats-new-4-0-3">
-  <h2>4.0.3 — 2026-09-08</h2>
-  <p id="whats-new-4-0-3-note"><strong>10 changes, shipped as one batch.</strong> Everything listed here is on <code>main</code> and therefore live at
+  <h2>4.0.3 — 2026-09-12</h2>
+  <p id="whats-new-4-0-3-note"><strong>16 changes, shipped as one batch.</strong> Everything listed here is on <code>main</code> and therefore live at
   <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>.
   A push to <code>main</code> IS the deploy, so this version names exactly one published state (#1076).</p>
   <ul id="whats-new-4-0-3-list">
@@ -127,6 +127,12 @@
     <li id="whats-new-4-0-3-list-item-8" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Example assets 404 on the deployed sub-path</strong></li>
     <li id="whats-new-4-0-3-list-item-9" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The version stamp names where the code lives, not where it was authored</strong></li>
     <li id="whats-new-4-0-3-list-item-10" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The deploy gate compared the deployed site to itself</strong></li>
+    <li id="whats-new-4-0-3-list-item-11" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The commit gate could hang forever, and two test runs could collide on one machine</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1106" target="_blank" rel="noopener">#1106</a></li>
+    <li id="whats-new-4-0-3-list-item-12" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The commit gate could never pass: a test asked git about the repository but found it from its own file path</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1104" target="_blank" rel="noopener">#1104</a></li>
+    <li id="whats-new-4-0-3-list-item-13" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>An empty behavior taught its own field names instead of a real example</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1102" target="_blank" rel="noopener">#1102</a></li>
+    <li id="whats-new-4-0-3-list-item-14" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>A schema was committed as an empty file and every gate passed it</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1103" target="_blank" rel="noopener">#1103</a></li>
+    <li id="whats-new-4-0-3-list-item-15" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Building a page finished before the things on it were built</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1075" target="_blank" rel="noopener">#1075</a></li>
+    <li id="whats-new-4-0-3-list-item-16" class="wn-item wn-fix"><span class="wn-tag">Change</span> <strong>Card variants, footer links, collapsing panels and the behaviours workspace all render as their schemas describe</strong></li>
   </ul>
 </section>
 <section id="whats-new-unreleased">
