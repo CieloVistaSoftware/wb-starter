@@ -202,7 +202,13 @@ export default defineConfig({
   
   use: {
     baseURL: `http://localhost:${TEST_PORT}`,
-    trace: 'off',
+    // #961/#1097: a gate that HANGS gives no verdict and costs 3 hours. Tracing
+    // is off by default because a trace per test is expensive, but WB_TRACE=on
+    // records actions, network and timings so a stall can be read backwards to
+    // the exact step instead of guessed at.
+    //   WB_TRACE=on npm run test:async -- <spec>
+    // then: npx playwright show-trace test-results/<dir>/trace.zip
+    trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure') || 'off',
     // #961 experiment: src/main.js:133 registers sw.js, which is network-first
     // with a CACHE FALLBACK — when a fetch fails it silently serves a cached
     // copy rather than failing. A service worker also does not control the

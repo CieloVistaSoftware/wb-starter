@@ -120,6 +120,57 @@ if (already) {
 
 const minorFlag = MINOR ? ' --minor' : '';
 
+// A FAILED SHIP MUST LEAVE NOTHING BEHIND (#1097).
+//
+// Everything below writes to the tree BEFORE the release is real: the What's
+// New entry, the version bump, and the ?v= cache-bust query on every demo and
+// page. If any later step fails (the ratchet, the commit gate, the push) those
+// writes used to simply stay there.
+//
+// 2026-09-12 is what that costs. Three ships failed in a row and the site spent
+// the evening advertising 4.0.4 in What's New, with package.json and version.js
+// agreeing, while 4.0.3 was what was actually live. Working out which was true
+// took a tag listing.
+//
+// The tree is guaranteed clean at this point (the check above exits if it is
+// not), so anything dirty afterwards was written by this script. That makes the
+// undo exact: restore everything, and drop the tag if one was cut.
+
+/** The tag this run would cut. Readable before AND after the bump. */
+function tagFor() {
+  try {
+    return 'v' + JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
+  } catch {
+    return '';
+  }
+}
+
+let rolledBack = false;
+function rollback(why) {
+  if (rolledBack) return;
+  rolledBack = true;
+  console.error(`\nRolling back: ${why}`);
+  try {
+    const cut = capture(`git tag --list ${tagFor()}`).trim();
+    if (cut) execFileSync('git', ['tag', '-d', cut], { cwd: ROOT, stdio: 'inherit' });
+    execFileSync('git', ['checkout', '--', '.'], { cwd: ROOT, stdio: 'inherit' });
+  } catch (err) {
+    console.error(`   rollback itself failed: ${err.message}`);
+    console.error('   The tree still holds a version that was never released.');
+    console.error('   Undo by hand:  git checkout -- .');
+    return;
+  }
+  console.error('   Tree restored. Nothing claims a version that does not exist.');
+}
+
+// execSync throws synchronously, and an uncaught throw from top-level module
+// code arrives here. die() exits instead of throwing, so it calls rollback
+// itself where it can leave a half-written release.
+process.on('uncaughtException', (err) => {
+  rollback(String(err && err.message || err).split('\n')[0]);
+  process.exit(1);
+});
+
 console.log('\n📋 Writing the What\'s New entry for this batch\n');
 run(`node scripts/whats-new-entry.mjs${minorFlag}`);
 
