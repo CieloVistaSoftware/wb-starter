@@ -9,7 +9,7 @@ File display card with icon, name, size, and download
 ### How to write it
 
 ```html
-<article x-cardfile filename="quarterly-report.pdf" file-type="pdf" size="2.4 MB" date="2026-08-14" href="#"></article>
+<article x-cardfile filename="quarterly-report.pdf" size="2.4 MB" date="2026-08-14" href="#"></article>
 ```
 
 ### On a different element
@@ -26,8 +26,8 @@ Use `x-cardfile` when the host is not a `<article>` and you want the same behavi
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `filename` | `string` | `this is the filename` | File name |
-| `file-type` | `pdf` · `doc` · `image` · `video` · `audio` · `zip` · `file` | `file` | File type for icon |
+| `filename` | `string` | `this is the filename` | File name. Its extension picks the icon (#1117). |
+| `file-type` | `pdf` · `doc` · `image` · `video` · `audio` · `zip` · `file` | derived from `filename` | OVERRIDE only. The icon normally comes from the filename's extension; set this when the name cannot say the type (no extension, or a `.bin` that really is a video). Contradicting the extension is honoured, but produces a self-contradicting example (#1114). |
 | `size` | `string` | `this is the size` | File size (e.g., 2.4 MB) |
 | `date` | `string` | `this is the date` | File date |
 | `href` | `string` | `#` | Download URL |

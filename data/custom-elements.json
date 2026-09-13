@@ -1018,7 +1018,7 @@
           "attributes": [
             {
               "name": "filename",
-              "description": "File name",
+              "description": "File name. Its extension also picks the icon (#1117) -- `architecture-diagram.png` renders the image icon with no second attribute to write.",
               "type": {
                 "text": "string"
               },
@@ -1026,7 +1026,7 @@
             },
             {
               "name": "file-type",
-              "description": "File type for icon",
+              "description": "OVERRIDE for the icon family, which is normally derived from the filename's extension (#1117). Only set this when the name cannot say it -- an extensionless name, or a `.bin` that really is a video. Setting it to something the extension contradicts is honoured but produces a self-contradicting example (#1114).",
               "type": {
                 "text": "pdf | doc | image | video | audio | zip | file"
               },
