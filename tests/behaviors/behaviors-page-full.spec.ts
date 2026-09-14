@@ -19,6 +19,7 @@
  * local fix→rerun loop (which reflects the latest merged source).
  */
 import { test, expect, Page, Locator } from '@playwright/test';
+import { settledStyle } from '../helpers/settled-style';
 
 // The browse list renders every behavior x every option axis — ~750 rows —
 // and each selection is a fresh WB.scan() over freshly injected markup. Several
@@ -118,7 +119,10 @@ async function show(page: Page, pick: Pick): Promise<Locator> {
 /** Background colour of the host after selecting one variant row. */
 async function bgFor(page: Page, pick: Pick): Promise<string> {
   const el = await show(page, pick);
-  return el.evaluate((n) => getComputedStyle(n as HTMLElement).backgroundColor);
+  // Settled, not read once (#1165): buttons transition `all 0.2s`, and a read
+  // taken as the variant class lands returns the neutral starting color for
+  // every variant. That aborted the 4.0.5 release gate.
+  return settledStyle(el, 'background-color');
 }
 
 test.describe('Behaviors page — full coverage', () => {
