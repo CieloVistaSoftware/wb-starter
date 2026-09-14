@@ -1,4 +1,5 @@
 import { readFlag, readAttr } from '../../core/read-attr.js';
+import { reportIfThirdPartyMedia } from '../media-unreachable.js';
 /**
  * Audio - Enhanced <audio> element with 15-Band Graphic Equalizer
  * Premium audio player with Web Audio API EQ, presets, and master volume
@@ -193,6 +194,10 @@ export function audio(element, options = {}) {
       audioEl.src = config.src;
       return;
     }
+    // #1115: a third-party host being down is not this page's defect. Reported
+    // on the element instead (warning + error="unreachable" + event); a
+    // same-origin or malformed src still throws below.
+    if (reportIfThirdPartyMedia(element, config.src, 'x-audio')) return;
     const mediaError = audioEl.error;
     const reason = mediaError ? `code ${mediaError.code} (${mediaError.message || 'no message'})` : 'unknown';
     throw new Error(`x-audio: failed to load src "${config.src}" -- ${reason}. The file is missing, unreachable, or has no real content (0 bytes).`);

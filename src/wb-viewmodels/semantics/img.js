@@ -13,6 +13,7 @@ import { readFlag } from '../../core/read-attr.js';
  * config reads + aspect-ratio support, this file's better lightbox.
  */
 import { attachImageLoadRetry } from '../media-load-retry.js';
+import { reportIfThirdPartyMedia } from '../media-unreachable.js';
 
 export function img(element, options = {}) {
   const config = {
@@ -55,6 +56,9 @@ export function img(element, options = {}) {
         element.src = config.fallback;
         return;
       }
+      // #1115: only when BOTH are on someone else's server is this weather
+      // rather than an authoring mistake; any same-origin half still throws.
+      if (reportIfThirdPartyMedia(element, [originalSrc, config.fallback], 'x-img')) return;
       // Async so it reaches window.onerror (error-logger.js) rather than being
       // swallowed inside this event handler.
       setTimeout(() => {

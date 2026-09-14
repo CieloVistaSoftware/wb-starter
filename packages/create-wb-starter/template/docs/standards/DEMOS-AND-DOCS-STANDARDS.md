@@ -467,6 +467,15 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
   fall back to a themed default, then throw).
 - A working fallback (a themed gradient, a default image) must still render — the loud error is in addition
   to graceful degradation, not instead of it.
+- **Whose server decides whose defect (#1115).** Demo media is remote by rule (§29, #762), and a page
+  cannot tell "that host is down" from "that URL is wrong". So the throw applies to media on the page's
+  own origin, or any src that is not http(s) (relative typo, malformed scheme, data:/blob:). An http(s)
+  src on **another origin** that fails is reported through `reportIfThirdPartyMedia()`
+  (`src/wb-viewmodels/media-unreachable.js`) instead: a `[WB:media-unreachable]` console warning, an
+  `error="unreachable"` attribute on the element, and a bubbling `wb:media:unreachable` event — visible,
+  never silent, but not a runtime error, so someone else's outage cannot fail `error-log-empty` or block a
+  release. Every media behavior that throws on load failure must call it first. Test:
+  `tests/regression/third-party-media-outage-is-not-a-page-error.spec.ts`.
 
 ## 31. HTML attributes are kebab-case — never author a camelCase schema property name directly
 

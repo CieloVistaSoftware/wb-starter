@@ -30,6 +30,7 @@ import { readFlag, readAttr } from '../core/read-attr.js';
  */
 
 import { attachVideoLoadRetry, attachImageLoadRetry } from './media-load-retry.js';
+import { reportIfThirdPartyMedia } from './media-unreachable.js';
 import { tooltip as tooltipBehavior } from './tooltip.js';
 
 // Always-on, dedicated cardimage/cardvideo load tracing -- this exact failure
@@ -1153,6 +1154,9 @@ export function cardhero(element, options = {}) {
         if (!document.contains(element)) return;
         element.removeAttribute('background');
         element.style.removeProperty('background-image');
+        // #1115: gradient fallback above still applies; an unreachable
+        // third-party host is reported on the card, not thrown.
+        if (reportIfThirdPartyMedia(element, config.background, 'x-cardhero')) return;
         throw new Error(`x-cardhero: failed to load background "${config.background}" -- the file is missing or unreachable. Falling back to the default gradient.`);
       });
       probe.src = config.background;
@@ -2325,6 +2329,8 @@ export function cardhorizontal(element, options = {}) {
     // fallback to apply here -- just the loud signal that was missing.
     img.addEventListener('error', () => {
       if (!document.contains(img)) return;
+      // #1115: an unreachable third-party host is reported on the img, not thrown.
+      if (reportIfThirdPartyMedia(img, config.image, 'x-cardhorizontal')) return;
       throw new Error(`x-cardhorizontal: failed to load image "${config.image}" -- the file is missing or unreachable.`);
     });
     figure.appendChild(img);
@@ -2424,6 +2430,9 @@ export function cardoverlay(element, options = {}) {
     probe.addEventListener('error', () => {
       if (!document.contains(element)) return;
       element.style.backgroundImage = 'linear-gradient(135deg, #667eea, #764ba2)';
+      // #1115: gradient fallback above still applies; an unreachable
+      // third-party host is reported on the card, not thrown.
+      if (reportIfThirdPartyMedia(element, config.image, 'x-cardoverlay')) return;
       throw new Error(`x-cardoverlay: failed to load image "${config.image}" -- the file is missing or unreachable. Falling back to the default gradient.`);
     });
     probe.src = config.image;
