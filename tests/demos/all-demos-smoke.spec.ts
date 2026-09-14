@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+import { watchBrokenRequests } from '../helpers/broken-requests';
 
 /**
  * All-demos smoke test.
@@ -10,7 +11,8 @@ import * as path from 'path';
  *   - uncaught JS exceptions (pageerror)
  *   - console.error output
  *   - broken SAME-ORIGIN requests (a missing local asset/module) — external
- *     CDN/image/audio failures are ignored (not the demo's fault)
+ *     CDN/image/audio failures are ignored (not the demo's fault), and so is a
+ *     same-origin media fetch the browser cancels after buffering (#1116)
  *   - pages that render no meaningful content
  *
  * One test per demo so failures name the exact file.
@@ -42,7 +44,6 @@ for (const file of demoFiles()) {
   test(`demo loads clean: ${file}`, async ({ page, baseURL }) => {
     const pageErrors: string[] = [];
     const consoleErrors: string[] = [];
-    const badRequests: string[] = [];
 
     // The dev server's origin, taken from the run rather than hardcoded. Both
     // filters below used to test `url.includes('localhost:3000')`, which held
@@ -51,7 +52,6 @@ for (const file of demoFiles()) {
     // smoke test silently stopped reporting ANY bad request -- passing because
     // it checked nothing, which is worse than failing.
     const origin = baseURL ? new URL(baseURL).origin : '';
-    const sameOrigin = (url: string) => Boolean(origin) && url.startsWith(origin);
 
     page.on('pageerror', (e) => pageErrors.push(e.message));
     page.on('console', (msg) => {
@@ -60,21 +60,11 @@ for (const file of demoFiles()) {
         if (!BENIGN.some((re) => re.test(t))) consoleErrors.push(t);
       }
     });
-    page.on('response', (res) => {
-      const url = res.url();
-      // Only same-origin (dev server) assets — external CDNs/images/audio are ignored.
-      if (sameOrigin(url) && res.status() >= 400) {
-        badRequests.push(`${res.status()} ${url.replace(origin, '')}`);
-      }
-    });
-    page.on('requestfailed', (req) => {
-      const url = req.url();
-      // Same-origin requests that never get a response (ERR_CONNECTION_CLOSED,
-      // aborted module fetch, etc.). External resource flakiness is ignored.
-      if (sameOrigin(url)) {
-        badRequests.push(`FAILED ${req.failure()?.errorText ?? ''} ${url.replace(origin, '')}`.trim());
-      }
-    });
+    // Same-origin >= 400 responses and same-origin request failures, except a
+    // media fetch the browser cancels after buffering (#1116). The rules and
+    // their guard live in tests/helpers/broken-requests.ts and
+    // tests/demos/broken-requests-classification.spec.ts.
+    const badRequests = watchBrokenRequests(page, origin);
 
     await page.goto(`/demos/${file}`, { waitUntil: 'domcontentloaded' });
     // Give WB.init() + the lazy-load IntersectionObserver time to activate behaviors.
