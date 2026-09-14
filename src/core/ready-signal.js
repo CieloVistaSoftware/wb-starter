@@ -80,6 +80,18 @@ export function exposesReadyAttribute() {
  */
 export function markReady(element, detail = {}) {
   if (!element) return;
+
+  // A MOMENT HAPPENS ONCE (#1126).
+  //
+  // The WeakSet below is idempotent, so isReady() was always correct however
+  // many times this ran. The dispatch was not, and there are two callers
+  // (wb.js and wb-lazy.js). John, on the progressbar permutation view:
+  // "WHY TWO EVENTS?" -- the panel logged wb:ready twice for one element.
+  //
+  // Guarded here rather than at the call sites: readiness is this module idea,
+  // and a third caller added later would otherwise reintroduce it. The event
+  // bubbles, so the duplicate reached every listening ancestor as well.
+  if (ready.has(element)) return;
   ready.add(element);
 
   // THE SIGNAL IS AN EVENT. #1094 — John: "minimally x-ready is an event, or a
