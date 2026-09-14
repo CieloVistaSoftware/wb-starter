@@ -1191,7 +1191,13 @@ export function cardhero(element, options = {}) {
     // followed by h2 "By the Numbers"), so the level is now the author's
     // choice with h3 as the unchanged default.
     const level = String(
-      options.headingLevel ?? element.getAttribute('heading-level') ?? '3',
+      // readAttr, not getAttribute (#1124). The schema declares headingLevel,
+      // the HTML parser lowercases it to headinglevel, and a literal
+      // getAttribute('heading-level') can never match that -- so all six
+      // declared values silently rendered h3 and the six demo rows were
+      // identical. readAttr tries every spelling. John: no attribute name
+      // carries a dash; the only dash is the x- behavior prefix (#1125).
+      options.headingLevel ?? readAttr(element, 'headingLevel', '3'),
     ).replace(/^h/i, '');
     const tag = /^[1-6]$/.test(level) ? `h${level}` : 'h3';
     const titleEl = document.createElement(tag);
