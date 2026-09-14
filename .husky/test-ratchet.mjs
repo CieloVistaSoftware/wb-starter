@@ -206,7 +206,17 @@ async function runGate(port) {
   });
 
   // `  ok  1234 [project] > file:line > title (12ms)` and its x/- variants.
-  const ACK = /^\s*(ok|x|-)\s+\d+\s/;
+  //
+  // THE MARK DEPENDS ON THE COMMITTER'S TERMINAL (#1106). Playwright's list
+  // reporter prints ok/x only on a Windows console that is neither Windows
+  // Terminal nor VS Code; under WT_SESSION or TERM_PROGRAM=vscode it prints
+  // U+2713/U+2718, and FORCE_COLOR wraps the mark in ANSI codes. The hook
+  // inherits that environment, so matching ok|x alone saw zero tests finish
+  // and killed a HEALTHY gate as a stall three minutes in. Strip colour, accept
+  // both mark sets. Guarded by scripts/test-gate-guards.mjs.
+  const ACK = /^\s*(ok|x|-|✓|✘)\s+\d+\s/;
+  // ESC built from its code, so the regex carries no literal control character.
+  const ANSI = new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*[A-Za-z]`, 'g');
   let acks = 0;
   let lastAckAt = Date.now();
   let lastTest = '(none yet)';
@@ -219,7 +229,8 @@ async function runGate(port) {
       out.write(buf);
       const lines = (carry + buf.toString()).split('\n');
       carry = lines.pop() || '';
-      for (const line of lines) {
+      for (const raw of lines) {
+        const line = raw.replace(ANSI, '');
         const dbg = line.match(/Debugger listening on (ws:\/\/\S+)/);
         if (dbg) inspectorUrls.add(dbg[1]);
         if (!ACK.test(line)) continue;

@@ -68,6 +68,12 @@ node scripts/check-spec-collection.mjs || exit 1
 # against its own kind. scripts/lock-permutations.schema.json now drives all 18.
 node scripts/test-lock-guards.mjs || exit 1
 
+# The GATE itself is bounded and holds that lock (#1106). test-lock-guards proves
+# the library refuses a run; this proves the gate ever takes the lock and that
+# its bounds fire -- deleting either used to leave every check green. ~20s, no
+# Playwright run, a private lock dir: it cannot collide with a real suite.
+node scripts/test-gate-guards.mjs || exit 1
+
 # ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
 # John: "each issue will have a priority 1 through 5 assessed based on negative
 # impact to the project... now change our gates based on priorities."

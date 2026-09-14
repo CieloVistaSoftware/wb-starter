@@ -51,7 +51,10 @@ const REPO = resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 // Outer bound, five minutes past test-ratchet.mjs's own RUN_TIMEOUT_MS so the
 // inner one fires first with the more specific message. Same override.
-const GATE_TIMEOUT_MS = ((Number(process.env.WB_GATE_TIMEOUT_MIN) || 75) + 5) * 60 * 1000;
+// Rounded: spawnSync throws on a non-integer timeout, and (m + 5) * 60000 is
+// not an integer for many fractional overrides (0.01 -> 300599.99999999994),
+// which killed the gate before it ran anything (#1106).
+const GATE_TIMEOUT_MS = Math.round(((Number(process.env.WB_GATE_TIMEOUT_MIN) || 75) + 5) * 60 * 1000);
 
 const git = (args, opts = {}) =>
   execFileSync('git', args, { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
