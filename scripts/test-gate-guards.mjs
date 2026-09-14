@@ -261,6 +261,9 @@ async function gateFixture() {
   await mkdir(lockDir, { recursive: true });
   await copyFile(join(REPO, '.husky', 'gate-staged-tree.mjs'), join(repo, '.husky', 'gate-staged-tree.mjs'));
   await copyFile(join(REPO, 'scripts', 'lib', 'test-lock.mjs'), join(repo, 'scripts', 'lib', 'test-lock.mjs'));
+  // The gate builds the suite's env with this (#1161); without it the copied gate
+  // cannot load and every Gate case fails on ERR_MODULE_NOT_FOUND, not on a verdict.
+  await copyFile(join(REPO, 'scripts', 'lib', 'suite-env.mjs'), join(repo, 'scripts', 'lib', 'suite-env.mjs'));
   await writeFile(join(repo, '.husky', 'test-ratchet.mjs'), STUB_RATCHET);
   await writeFile(join(repo, 'package.json'), '{"type":"module"}\n');
   await writeFile(join(repo, 'staged.txt'), 'one\n');

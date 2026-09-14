@@ -74,6 +74,14 @@ node scripts/test-lock-guards.mjs || exit 1
 # Playwright run, a private lock dir: it cannot collide with a real suite.
 node scripts/test-gate-guards.mjs || exit 1
 
+# The gate once ran the suite with the hook's GIT_DIR, and a spec's scratch
+# `git init` rewrote the REAL repo as bare with a fake identity (#1161).
+node scripts/test-suite-env.mjs || exit 1
+
+# A failed ship deleted the LIVE release's tag (#1157). Milliseconds, throwaway
+# repos only: proves a rollback removes just the tag its own run cut.
+node scripts/test-ship-rollback.mjs || exit 1
+
 # ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
 # John: "each issue will have a priority 1 through 5 assessed based on negative
 # impact to the project... now change our gates based on priorities."

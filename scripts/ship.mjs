@@ -39,6 +39,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { changedPaths } from './lib/git-status.mjs';
+import { releaseTags, deleteTagsCreatedSince } from './lib/ship-rollback.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DRY = process.argv.includes('--dry');
@@ -120,6 +121,12 @@ if (already) {
 
 const minorFlag = MINOR ? ' --minor' : '';
 
+// THE TAGS THAT EXISTED BEFORE THIS RUN (#1157). Recorded before anything is
+// written, so the rollback can tell a tag this run cut from a release that was
+// already there. Reading the version at rollback time could not: a failure
+// before the bump still names the live release, and its tag got deleted.
+const TAGS_BEFORE = releaseTags(ROOT);
+
 // A FAILED SHIP MUST LEAVE NOTHING BEHIND (#1097).
 //
 // Everything below writes to the tree BEFORE the release is real: the What's
@@ -134,16 +141,8 @@ const minorFlag = MINOR ? ' --minor' : '';
 //
 // The tree is guaranteed clean at this point (the check above exits if it is
 // not), so anything dirty afterwards was written by this script. That makes the
-// undo exact: restore everything, and drop the tag if one was cut.
-
-/** The tag this run would cut. Readable before AND after the bump. */
-function tagFor() {
-  try {
-    return 'v' + JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
-  } catch {
-    return '';
-  }
-}
+// undo exact: restore everything, and drop the tag if THIS run cut one. "The tag
+// matching package.json" is not that tag before the bump (#1157); TAGS_BEFORE is.
 
 let rolledBack = false;
 function rollback(why) {
@@ -151,8 +150,8 @@ function rollback(why) {
   rolledBack = true;
   console.error(`\nRolling back: ${why}`);
   try {
-    const cut = capture(`git tag --list ${tagFor()}`).trim();
-    if (cut) execFileSync('git', ['tag', '-d', cut], { cwd: ROOT, stdio: 'inherit' });
+    // Only tags created since TAGS_BEFORE; never the release that was live (#1157).
+    deleteTagsCreatedSince(ROOT, TAGS_BEFORE);
     execFileSync('git', ['checkout', '--', '.'], { cwd: ROOT, stdio: 'inherit' });
   } catch (err) {
     console.error(`   rollback itself failed: ${err.message}`);

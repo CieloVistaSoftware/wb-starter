@@ -46,6 +46,7 @@ import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createGuards } from '../scripts/lib/test-lock.mjs';
+import { suiteEnv } from '../scripts/lib/suite-env.mjs';
 
 const REPO = resolve(fileURLToPath(new URL('..', import.meta.url)));
 
@@ -172,14 +173,16 @@ function main() {
   const run = spawnSync(process.execPath, [join('.husky', 'test-ratchet.mjs'), ...process.argv.slice(2)], {
     cwd: TMP,
     stdio: 'inherit',
-    env: {
-      ...process.env,
+    // suiteEnv strips the hook's GIT_DIR/GIT_INDEX_FILE/... (#1161): with them,
+    // a spec's scratch `git init` reinitialised the REAL repo as bare and wrote a
+    // fake identity into its config.
+    env: suiteEnv(process.env, {
       // Never adopt a server from the real checkout: that would serve the
       // working directory and reintroduce exactly the bug being fixed.
       WB_TEST_PORT: '',
       // Let the suite know where it really lives, for anything that reports paths.
       WB_GATE_SOURCE_REPO: REPO,
-    },
+    }),
     // Outer bound, deliberately a little longer than test-ratchet.mjs's own so
     // the inner one fires first and reports the more specific reason. Without
     // either, a stalled run held the commit for 13 hours on 2026-09-11.
