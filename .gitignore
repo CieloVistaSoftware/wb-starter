@@ -66,6 +66,10 @@ data/error-log-archive/
 # its outputDir on every run and was erasing that record.
 data/playwright-output/
 
+# Dev-server output from test runs (#1074), one file per run, written by
+# scripts/serve-with-log.mjs. Local forensic evidence, never worth committing.
+data/test-server-logs/
+
 # Scratch file left by the issue tooling when composing an issue body.
 .issue-body.tmp
 

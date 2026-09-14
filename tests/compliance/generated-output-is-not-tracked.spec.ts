@@ -45,6 +45,7 @@ const GENERATED_DIRS = [
   'data/test-results',      // scripts/tools/test-reporter.ts
   'data/playwright-output', // playwright.config.ts outputDir (cleared every run)
   'data/gate-evidence',     // .husky/test-ratchet.mjs
+  'data/test-server-logs',  // scripts/serve-with-log.mjs, one dev-server log per run (#1074)
 ];
 
 /**

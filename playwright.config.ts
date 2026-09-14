@@ -230,7 +230,12 @@ export default defineConfig({
   // still starts one via `command`. A WB_TEST_PORT override never reuses --
   // see the #518 comment above.
   webServer: {
-    command: 'npm start',
+    // #1074: through scripts/serve-with-log.mjs, not `npm start` directly.
+    // Playwright discards webServer stdout by default, so when the server died
+    // mid-run nothing recorded why — only the ERR_CONNECTION_REFUSED failures
+    // that followed. The wrapper tees stdout+stderr to a file under data/
+    // ($WB_SERVER_LOG, else data/test-server-logs/) and records the exit code.
+    command: 'node scripts/serve-with-log.mjs npm start',
     port: TEST_PORT,
     // Only CI may adopt an already-running server, because only there do we
     // know who started it. Locally this is always false, so a run can neither

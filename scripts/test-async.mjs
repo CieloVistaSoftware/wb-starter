@@ -37,6 +37,7 @@ import { join, dirname, basename } from "path";
 import { fileURLToPath } from "url";
 import { createGuards, isProcessRunning } from "./lib/test-lock.mjs";
 import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
+import { classifyRun, readServerLogPort } from "./lib/server-down.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -289,11 +290,38 @@ async function runMonitor(args) {
   // can free it the moment Playwright is done (#651).
   const ownSlot = mode === "single" ? await guards.findOwnSlot() : null;
 
+  // #1074: the dev server's own output goes to a file, and the status file
+  // says which one. scripts/serve-with-log.mjs (playwright.config.ts
+  // webServer.command) reads WB_SERVER_LOG; Playwright passes its environment
+  // through to the webServer process. One file per run, never overwritten.
+  const runStamp = startTime.replace(/[:.]/g, "-");
+  const serverLogName = mode === "suite"
+    ? `suite-${runStamp}.log`
+    : `${basename(specFile, ".spec.ts")}-${runStamp}.log`;
+  const serverLog = process.env.WB_SERVER_LOG || join(DATA_DIR, "test-server-logs", serverLogName);
+  status.serverLog = serverLog;
+
+  /**
+   * Split failures into "our own server was unreachable" and real test results
+   * (#1074). The port comes from WB_TEST_PORT when the caller pinned one, else
+   * from the header serve-with-log.mjs writes — playwright.config.ts picks a
+   * free port inside the Playwright process, where this monitor cannot see it.
+   */
+  const applyClassification = (exitCode) => {
+    const port = Number(process.env.WB_TEST_PORT) || readServerLogPort(serverLog);
+    const run = classifyRun({ exitCode, failures: status.failures, port });
+    status.failures = run.failures;
+    status.serverDown = run.serverDown;
+    status.testFailed = run.testFailed;
+    status.reliable = run.reliable;
+    return run;
+  };
+
   // Spawn Playwright with pipes so we can read output
   const proc = spawn("npx", cmdArgs, {
     cwd: ROOT,
     shell: true,
-    env: { ...process.env, FORCE_COLOR: "0" },
+    env: { ...process.env, FORCE_COLOR: "0", WB_SERVER_LOG: serverLog },
     stdio: ["ignore", "pipe", "pipe"],
   });
 
@@ -406,6 +434,7 @@ function extractErrors(text) {
       name: t.name,
       error: errorText.get(`${t.project} › ${t.name}`) || null,
     }));
+    applyClassification(null);
 
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
@@ -450,7 +479,6 @@ function extractErrors(text) {
     const durationMs = new Date(endTime) - new Date(status.startedAt);
     const duration = (durationMs / 1000).toFixed(2);
 
-    status.state = exitCode === 0 ? "passed" : "failed";
     status.updatedAt = endTime;
     status.completedAt = endTime;
     status.duration = `${duration}s`;
@@ -473,6 +501,12 @@ function extractErrors(text) {
       name: t.name,
       error: errorText.get(`${t.project} › ${t.name}`) || null,
     }));
+
+    // passed | failed | unreliable (#1074). "unreliable" = non-zero exit where
+    // every failure is the run's own server refusing connections: the run
+    // measured the server's absence, not the code. `failed` stays Playwright's
+    // own total; `testFailed` and `serverDown` split it.
+    status.state = applyClassification(exitCode).state;
 
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
