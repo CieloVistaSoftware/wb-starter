@@ -34,6 +34,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { resolvePosixShell, shellEnv } from '../../scripts/lib/posix-shell.mjs';
 
 // ESM: this repo runs specs as modules, so __dirname does not exist. Using it
 // threw at COLLECTION time, which Playwright reports as 0 tests and a silent
@@ -56,20 +57,39 @@ function scratchRepo(): string {
   return dir;
 }
 
+// #1156: NOT the bare name 'sh'. On Windows it is on PATH only inside Git Bash,
+// so from a gate started by PowerShell or cmd the spawn failed with ENOENT, the
+// catch below turned that into -1, and the test reported "unnamed code would
+// have reached the published site" about a hook that had never run. It aborted
+// the 4.0.6 release. resolvePosixShell() asks git where its own shell is.
+const SH = resolvePosixShell();
+
 /** Feed the hook the stdin line git would, and report its exit code. */
 function runHook(cwd: string, remoteRef: string): { code: number; err: string } {
   const sha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd, encoding: 'utf8' }).trim();
   const zero = '0'.repeat(40);
   try {
-    execFileSync('sh', [HOOK, 'origin', 'git@example.invalid:x/y.git'], {
+    execFileSync(SH as string, [HOOK, 'origin', 'git@example.invalid:x/y.git'], {
       cwd,
       input: `${remoteRef} ${sha} ${remoteRef} ${zero}\n`,
       stdio: 'pipe',
       encoding: 'utf8',
+      // The hook's own body calls cat and grep, which live beside sh.exe. With
+      // only the shell resolved it started and died on "cat: command not found".
+      env: shellEnv(SH),
     });
     return { code: 0, err: '' };
   } catch (e: any) {
-    return { code: e.status ?? -1, err: String(e.stderr ?? '') };
+    // A spawn failure is NOT a verdict (#1156). e.status is undefined when the
+    // shell could not be started at all; saying -1 there let "we could not run
+    // the hook" masquerade as "the hook let it through".
+    if (e?.status === undefined || e?.status === null) {
+      throw new Error(
+        `could not run the pre-push hook with ${SH ?? 'no shell found'}: ${e?.code ?? e?.message}. ` +
+        'This is not a verdict about the hook — nothing was evaluated.'
+      );
+    }
+    return { code: e.status, err: String(e.stderr ?? '') };
   }
 }
 

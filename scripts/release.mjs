@@ -90,8 +90,19 @@ try {
 // hook's full run too (#1178). Without this, a release commit landing on the
 // 10th count ran all ~7,800 tests a second time on the batch just tested.
 // Outside the try: a failure to write the counter is not "NEW failures".
-resetFullRunCounter(ROOT);
-console.log('   ✓ 10th-commit counter reset — the release commit will not rerun the suite');
+//
+// And never fatal. The counter is an optimisation — the worst case without it is
+// a commit rerunning the suite — so a release that has just passed its ratchet
+// must not abort because a file could not be written. It did: the #991 fixture
+// runs release.mjs in a plain temp directory, git rev-parse failed there, and
+// the throw was scored as a NEW failure that aborted the 4.0.6 release.
+try {
+  resetFullRunCounter(ROOT);
+  console.log('   ✓ 10th-commit counter reset — the release commit will not rerun the suite');
+} catch (err) {
+  console.warn(`   ⚠ could not reset the 10th-commit counter (${err.message.split('\n')[0]})`);
+  console.warn('     Harmless: the release commit may run the full suite again (#1178).');
+}
 
 // ── 2. What's New must name the version being released ───────────────────────
 // The rule John states directly: the version number and what it contains

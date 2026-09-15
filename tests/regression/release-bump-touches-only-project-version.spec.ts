@@ -31,7 +31,7 @@
 
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -87,6 +87,16 @@ function buildFakeProject(): string {
 
   // The script under test — the real one, not a copy of its logic.
   copyFileSync(join(ROOT, 'scripts/release.mjs'), join(dir, 'scripts/release.mjs'));
+
+  // ...with EVERY scripts/lib/*.mjs beside it, not a hand-listed few. release.mjs
+  // gained an import (#1178's full-run-counter) and this fixture died with
+  // ERR_MODULE_NOT_FOUND, which the ratchet scored as a NEW failure and which
+  // aborted the 4.0.6 release. A fixture that lists its dependencies by name is
+  // a gate that breaks on the next import.
+  mkdirSync(join(dir, 'scripts/lib'), { recursive: true });
+  for (const name of readdirSync(join(ROOT, 'scripts/lib'))) {
+    if (name.endsWith('.mjs')) copyFileSync(join(ROOT, 'scripts/lib', name), join(dir, 'scripts/lib', name));
+  }
 
   // Gate 1: the ratchet. Nothing to ratchet here, so it passes.
   writeFileSync(join(dir, '.husky/test-ratchet.mjs'), 'process.exit(0);\n');
