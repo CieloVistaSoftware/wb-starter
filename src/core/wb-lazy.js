@@ -489,18 +489,49 @@ const injectionTracker = createInjectionTracker();
 const lazyPending = new WeakMap();
 let lazyObserver = null;
 
+// DEFERRED IS NOT IDLE UNTIL THE OBSERVER HAS ANSWERED (#962).
+//
+// lazyInject() hands an element to the IntersectionObserver and returns; the
+// observer's first callback, a frame or more later, decides whether it is on
+// screen and only then calls WB.inject(), which is the first thing that told
+// the injection tracker about it. In that gap the element was pending and the
+// tracker said "nothing", so WB.whenIdle() resolved and a test that waited
+// properly still read an unbuilt element: measured on the test harness, a
+// <span x-badge> had class "" and 16px right after `await WB.scan()`, and
+// "x-badge x-badge--default" and 14px three seconds later. Under load the
+// callback slips further, which is the gate's rotating badge/tooltip/avatar
+// failures (#961).
+//
+// So an element waiting for its FIRST visibility answer is counted as work in
+// flight. The record ends in that first callback, after WB.inject() has started
+// its own record for an on-screen element (inject records synchronously, before
+// its first await), so the count never touches zero between the two. An element
+// the observer reports off screen stops counting: deferring it is the design,
+// and a scroll that later brings it in is a user action with its own signal
+// (x-ready on the element).
+//
+// A Map, not a WeakMap: WB.disconnect() drops the observer, so no callback will
+// ever end these records, and it must be able to end every one of them itself or
+// WB.whenIdle() waits out its timeout. Entries live only until the first answer.
+const lazyDeciding = new Map();
+
 function getLazyObserver() {
   if (!lazyObserver) {
     lazyObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const element = entry.target;
         if (entry.isIntersecting) {
-          const element = entry.target;
           const behaviors = lazyPending.get(element);
           if (behaviors) {
             behaviors.forEach(name => WB.inject(element, name));
             lazyPending.delete(element);
             lazyObserver.unobserve(element);
           }
+        }
+        const deciding = lazyDeciding.get(element);
+        if (deciding) {
+          lazyDeciding.delete(element);
+          injectionTracker.end(deciding);
         }
       });
     }, {
@@ -759,6 +790,10 @@ const WB = {
     if (!behaviors) {
       behaviors = new Set();
       lazyPending.set(element, behaviors);
+      // Counted until the observer's first answer (#962, see lazyDeciding).
+      if (!lazyDeciding.has(element)) {
+        lazyDeciding.set(element, injectionTracker.start(`${behaviorName} (lazy)`, element));
+      }
       getLazyObserver().observe(element);
     }
     behaviors.add(behaviorName);
@@ -1002,6 +1037,9 @@ const WB = {
       lazyObserver.disconnect();
       lazyObserver = null;
     }
+    // No observer is left to answer for these, so they are no longer in flight.
+    lazyDeciding.forEach(record => injectionTracker.end(record));
+    lazyDeciding.clear();
   },
 
   /**
