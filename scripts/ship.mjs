@@ -39,7 +39,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { changedPaths } from './lib/git-status.mjs';
-import { releaseTags, deleteTagsCreatedSince } from './lib/ship-rollback.mjs';
+import { releaseTags, deleteTagsCreatedSince, restoreTreeToHead } from './lib/ship-rollback.mjs';
 import { versionFlags } from './lib/next-version.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -151,14 +151,23 @@ function rollback(why) {
   if (rolledBack) return;
   rolledBack = true;
   console.error(`\nRolling back: ${why}`);
+  let leftovers;
   try {
     // Only tags created since TAGS_BEFORE; never the release that was live (#1157).
     deleteTagsCreatedSince(ROOT, TAGS_BEFORE);
-    execFileSync('git', ['checkout', '--', '.'], { cwd: ROOT, stdio: 'inherit' });
+    // From HEAD, index included: a refused commit fails AFTER `git add -A` (#1179).
+    leftovers = restoreTreeToHead(ROOT);
   } catch (err) {
     console.error(`   rollback itself failed: ${err.message}`);
     console.error('   The tree still holds a version that was never released.');
-    console.error('   Undo by hand:  git checkout -- .');
+    console.error('   Undo by hand:  git restore --source=HEAD --staged --worktree -- .');
+    return;
+  }
+  // Said only when it is true (#1179): this line used to print over 33 staged files.
+  if (leftovers.length) {
+    console.error(`   rollback left ${leftovers.length} tracked change(s) behind:`);
+    for (const f of leftovers.slice(0, 15)) console.error(`     ${f}`);
+    console.error('   Undo by hand:  git restore --source=HEAD --staged --worktree -- .');
     return;
   }
   console.error('   Tree restored. Nothing claims a version that does not exist.');
