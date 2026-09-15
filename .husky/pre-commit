@@ -95,6 +95,14 @@ node scripts/check-register-shrinks.mjs || exit 1
 # Seconds, throwaway repos only.
 node scripts/test-full-run-counter.mjs || exit 1
 
+# A control byte in staged source (#1162). Before this, the only check was a
+# compliance spec inside the 10th-commit gate, so an ESC decoded from an escape an
+# agent wrote was found 59 minutes later as one of 14 "new failures". This reads
+# the index, uses the spec's own rule (scripts/lib/control-bytes.mjs), and takes
+# milliseconds. Its guard proves every byte value and every placement.
+node scripts/check-staged-control-bytes.mjs || exit 1
+node scripts/test-staged-control-bytes.mjs || exit 1
+
 # ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
 # John: "each issue will have a priority 1 through 5 assessed based on negative
 # impact to the project... now change our gates based on priorities."
