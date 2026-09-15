@@ -55,7 +55,9 @@ can never rot again. Never raise a ceiling to make a build pass — that is the
 moment the gate stops meaning anything.
 
 The pre-commit hook runs lint on **every** commit and the test ratchet on every
-**10th** (counter at `.git/wb-fix-count`).
+**10th** (counter at `.git/wb-fix-count`, located by
+`scripts/lib/full-run-counter.mjs`). A passing `release.mjs` full run resets the
+counter too, so a release commit does not rerun the suite (#1178).
 
 ## Reading attributes in a behavior
 
