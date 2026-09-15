@@ -8,12 +8,15 @@
  *      release, and its tag must survive. This is the case that deleted v4.0.4.
  *   2. AFTER the bump and tag: exactly the new tag goes, the old one stays.
  * plus the no-op (nothing cut, nothing deleted) and a second pre-existing tag.
+ *
+ * And #1179: the rollback returns the TREE to HEAD whether or not the release
+ * was already staged, which it always is by the time the commit gate refuses.
  */
 import { execFileSync } from 'child_process';
-import { mkdtempSync, writeFileSync, rmSync } from 'fs';
+import { mkdtempSync, writeFileSync, rmSync, existsSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
-import { releaseTags, tagsCreatedSince, deleteTagsCreatedSince } from './lib/ship-rollback.mjs';
+import { releaseTags, tagsCreatedSince, deleteTagsCreatedSince, restoreTreeToHead } from './lib/ship-rollback.mjs';
 
 let passed = 0;
 let failed = 0;
@@ -96,6 +99,80 @@ check(
   tagsCreatedSince(new Set(['v1']), new Set(['v1'])).length === 0,
   'tagsCreatedSince is exactly the set difference',
 );
+
+// ── #1179: a failed ship leaves HEAD's tree, staged or not ────────────────────
+//
+// ship.mjs runs `git add -A` before its commit. The commit is the gate, so a
+// refused commit fails AFTER staging, and the old rollback (`git checkout -- .`)
+// restored the working tree FROM THE INDEX, which held the release. On
+// 2026-09-15 it printed "Tree restored" over 33 staged files and a package.json
+// reading 4.0.6.
+//
+// Every shape a release write can take, each alone and all together, the last
+// being what ship actually does. Oracle: nothing tracked differs from HEAD, a
+// file that only the release added is gone, restoreTreeToHead() reports no
+// leftovers, and an ignored file the user already had is left alone.
+console.log('\nA failed ship restores HEAD whether or not the release was staged (#1179):');
+
+const SHAPES = {
+  'modified, staged': ({ dir, git }) => { writeFileSync(join(dir, 'package.json'), '{"version":"4.0.6"}\n'); git('add', '-A'); },
+  'modified, unstaged': ({ dir }) => { writeFileSync(join(dir, 'package.json'), '{"version":"4.0.6"}\n'); },
+  'modified, staged then edited again': ({ dir, git }) => {
+    writeFileSync(join(dir, 'package.json'), '{"version":"4.0.6"}\n'); git('add', '-A');
+    writeFileSync(join(dir, 'package.json'), '{"version":"4.0.7"}\n');
+  },
+  'deleted, staged': ({ git }) => { git('rm', '-q', 'page.html'); },
+  'deleted, unstaged': ({ dir }) => { rmSync(join(dir, 'page.html')); },
+  'added, staged': ({ dir, git }) => { writeFileSync(join(dir, 'release-only.txt'), 'cut by the release\n'); git('add', '-A'); },
+};
+
+function restoreCase(label, apply) {
+  withRepo('4.0.5', ['v4.0.5'], (r) => {
+    const { dir, git } = r;
+    writeFileSync(join(dir, 'page.html'), '<p>v=4.0.5</p>\n');
+    // ship refuses to start with untracked files, so what a user can have is an
+    // IGNORED one (a log, a scratch file). git add -A skips it; the restore must too.
+    writeFileSync(join(dir, '.gitignore'), 'mine.txt\n');
+    git('add', '-A');
+    git('commit', '-q', '-m', 'page');
+    writeFileSync(join(dir, 'mine.txt'), 'ignored, the user\'s\n');
+
+    apply(r);
+    let leftovers;
+    try {
+      leftovers = restoreTreeToHead(dir);
+    } catch (err) {
+      check(false, `${label}: restore runs`, err.message.split(String.fromCharCode(10))[0]);
+      return;
+    }
+    const status = git('status', '--porcelain', '--untracked-files=no');
+    let cleanVsHead = true;
+    try { git('diff', '--quiet', 'HEAD'); } catch { cleanVsHead = false; }
+    const ok = leftovers.length === 0 && status.trim() === '' && cleanVsHead &&
+      !existsSync(join(dir, 'release-only.txt')) && existsSync(join(dir, 'mine.txt'));
+    check(ok, `${label}: tree matches HEAD, nothing reported left over, ignored user file kept`,
+      `leftovers [${leftovers.join(', ')}], status ${JSON.stringify(status.trim())}, ` +
+      `diff vs HEAD ${cleanVsHead ? 'none' : 'present'}, release-only.txt ${existsSync(join(dir, 'release-only.txt')) ? 'still there' : 'gone'}, ` +
+      `mine.txt ${existsSync(join(dir, 'mine.txt')) ? 'kept' : 'DELETED'}`);
+  });
+}
+
+for (const [label, apply] of Object.entries(SHAPES)) restoreCase(label, apply);
+restoreCase('every shape at once, then git add -A (what ship does)', (r) => {
+  for (const apply of Object.values(SHAPES)) { try { apply(r); } catch { /* a shape already applied by another */ } }
+  r.git('add', '-A');
+});
+
+// #1161 again: the restore must act on the named repo, not a hook's GIT_DIR.
+withRepo('9.9.9', [], ({ dir: other }) => {
+  const saved = process.env.GIT_DIR;
+  process.env.GIT_DIR = join(other, '.git');
+  try {
+    restoreCase('staged, with a foreign GIT_DIR set', SHAPES['modified, staged']);
+  } finally {
+    if (saved === undefined) delete process.env.GIT_DIR; else process.env.GIT_DIR = saved;
+  }
+});
 
 console.log(`\n${failed ? '❌' : '✅'} ${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

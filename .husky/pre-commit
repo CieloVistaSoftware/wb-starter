@@ -78,8 +78,10 @@ node scripts/test-gate-guards.mjs || exit 1
 # `git init` rewrote the REAL repo as bare with a fake identity (#1161).
 node scripts/test-suite-env.mjs || exit 1
 
-# A failed ship deleted the LIVE release's tag (#1157). Milliseconds, throwaway
-# repos only: proves a rollback removes just the tag its own run cut.
+# A failed ship deleted the LIVE release's tag (#1157), and a refused release
+# commit left the whole release staged under "Tree restored" (#1179). Throwaway
+# repos only: proves a rollback removes just the tag its own run cut and returns
+# the tree, index included, to HEAD.
 node scripts/test-ship-rollback.mjs || exit 1
 
 # A ship ran all ~7,800 tests twice: release.mjs's full run never reset the
