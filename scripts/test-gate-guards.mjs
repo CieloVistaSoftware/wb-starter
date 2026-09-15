@@ -154,6 +154,23 @@ if (mode === 'silent') {
     reporter._updateTestLine({ expectedStatus: 'passed', outcome: () => 'expected' },
       { status: 'passed', duration: 12, retry: 0 });
   }, 500);
+  if (mode === 'server-died' || mode === 'mixed' || mode === 'remote-refused') {
+    // #1127: a finished run whose failures.json carries connection refusals.
+    const port = process.env.WB_TEST_PORT || '3000';
+    const refused = (p) => 'Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:' + p + '/x';
+    const failures = mode === 'server-died'
+      ? [1, 2, 3].map((i) => ({ project: 'compliance', file: 'down-' + i + '.spec.ts', title: 'needs the server ' + i, error: refused(port) }))
+      : mode === 'mixed'
+        ? [{ project: 'compliance', file: 'down.spec.ts', title: 'needs the server', error: refused(port) },
+           { project: 'compliance', file: 'real.spec.ts', title: 'a real regression', error: 'Error: expect(received).toBe(expected)' }]
+        : [{ project: 'compliance', file: 'probe.spec.ts', title: 'probes another port', error: refused('9') }];
+    setTimeout(() => {
+      clearInterval(tick);
+      mkdirSync('data/test-results', { recursive: true });
+      writeFileSync('data/test-results/failures.json', JSON.stringify({ timestamp: new Date().toISOString(), failures }));
+      process.exit(1);
+    }, 1500);
+  }
   if (mode === 'healthy') {
     setTimeout(() => {
       clearInterval(tick);
@@ -172,6 +189,9 @@ async function ratchetFixture() {
   await mkdir(join(dir, 'node_modules', '@playwright', 'test'), { recursive: true });
   await mkdir(join(dir, 'data'), { recursive: true });
   await copyFile(join(REPO, '.husky', 'test-ratchet.mjs'), join(dir, '.husky', 'test-ratchet.mjs'));
+  // #1127: the ratchet classifies server-down failures with the shared library.
+  await mkdir(join(dir, 'scripts', 'lib'), { recursive: true });
+  await copyFile(join(REPO, 'scripts', 'lib', 'server-down.mjs'), join(dir, 'scripts', 'lib', 'server-down.mjs'));
   await writeFile(join(dir, 'node_modules', '@playwright', 'test', 'package.json'), '{"type":"module"}\n');
   await writeFile(join(dir, 'node_modules', '@playwright', 'test', 'cli.js'), FAKE_CLI);
   await writeFile(join(dir, 'data', 'test-baseline-failures.json'), '{"failures":[]}\n');
@@ -240,6 +260,49 @@ const endlessRun = () => ratchetCase(
     ['the ratchet returns on its own', !r.boundHit, `still running after ${r.ms}ms`],
     ['it exits non-zero, naming the ceiling', r.code === 1 && out.includes('minute ceiling') && out.includes('That is a HANG'),
       `exit ${r.code}\n${tail(out.split('\n').filter((l) => !/fake\.spec/.test(l)).join('\n'))}`],
+  ]
+);
+
+/**
+ * A server that dies is not a regression (#1127).
+ *
+ * #1074 taught test-async.mjs to tell "the test failed" from "the run's own
+ * server refused the connection". The ratchet reads a different file and kept
+ * scoring every refusal as a NEW failure, so a server death during the
+ * 10th-commit gate blocked the commit with a list of tests that never ran.
+ */
+const serverDiedRun = () => ratchetCase(
+  'Ratchet: a run whose own server died is reported as that, not as new failures (#1127)',
+  { WB_FAKE_PW_MODE: 'server-died', WB_GATE_ACK_MIN: '5' },
+  90_000,
+  async (r, out) => [
+    ['it blocks (nothing was verified)', r.code === 1 && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
+    ['it says the server died, not that the change broke tests',
+      out.includes('SERVER DIED') && !out.includes('NEW test failures'), tail(out)],
+    ['it counts the tests that never reached the server', /3 test\(s\) could not reach/.test(out), tail(out)],
+  ]
+);
+
+const mixedRun = () => ratchetCase(
+  'Ratchet: a real regression beside a dead server is still named as a regression (#1127)',
+  { WB_FAKE_PW_MODE: 'mixed', WB_GATE_ACK_MIN: '5' },
+  90_000,
+  async (r, out) => [
+    ['it blocks', r.code === 1 && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
+    ['the real failure is listed as NEW', out.includes('NEW test failures') && out.includes('real.spec.ts › a real regression'), tail(out, 20)],
+    ['the server-down one is not listed as NEW',
+      out.includes('NEW test failures') && !out.slice(out.indexOf('NEW test failures')).includes('down.spec.ts › needs the server'), tail(out, 20)],
+    ['and the server death is reported too', out.includes('SERVER DIED'), tail(out, 20)],
+  ]
+);
+
+const remoteRefusedRun = () => ratchetCase(
+  "Ratchet: a refusal from some other port is a real failure, not the gate's server (#1127)",
+  { WB_FAKE_PW_MODE: 'remote-refused', WB_GATE_ACK_MIN: '5' },
+  90_000,
+  async (r, out) => [
+    ['it is a NEW failure', r.code === 1 && out.includes('NEW test failures') && out.includes('probe.spec.ts › probes another port'), tail(out)],
+    ['it is not called a server death', !out.includes('SERVER DIED'), tail(out)],
   ]
 );
 
@@ -407,6 +470,9 @@ if (!existsSync(LIST_REPORTER)) {
 const sections = await Promise.all([
   silentRun(),
   endlessRun(),
+  serverDiedRun(),
+  mixedRun(),
+  remoteRefusedRun(),
   healthyRun('a plain Windows console', {}),
   healthyRun('Windows Terminal (WT_SESSION)', { WT_SESSION: 'gate-guard' }),
   healthyRun('the VS Code terminal (TERM_PROGRAM=vscode)', { TERM_PROGRAM: 'vscode' }),

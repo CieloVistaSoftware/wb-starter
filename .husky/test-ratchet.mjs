@@ -54,6 +54,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
+import { classifyFailure } from '../scripts/lib/server-down.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '..');
@@ -457,11 +458,20 @@ async function runGate(port) {
     return { failures: null, why: `failures.json is stale (${report.timestamp}) — the run wrote nothing new` };
   }
 
+  // A REFUSED CONNECTION TO THIS RUN'S OWN SERVER IS NOT A TEST RESULT (#1127).
+  //
+  // #1074 taught scripts/test-async.mjs to separate "the test failed" from "the
+  // server it needed was gone", but this file read failures.json raw, so a server
+  // that died mid-gate still came back as a list of NEW failures and blocked the
+  // commit over tests that never ran. The same classifier decides here, with the
+  // port this gate chose itself (null in CI, where any loopback refusal counts).
   const gate = new Set(PROJECTS);
-  const failures = (report.failures || [])
-    .filter((f) => gate.has(f.project))
+  const inGate = (report.failures || []).filter((f) => gate.has(f.project));
+  const serverDown = inGate.filter((f) => classifyFailure(f.error, port) === 'server-down');
+  const failures = inGate
+    .filter((f) => classifyFailure(f.error, port) !== 'server-down')
     .map((f) => idFor(f.file, f.title));
-  return { failures };
+  return { failures, serverDown };
 }
 
 function freePort() {
@@ -499,7 +509,14 @@ if (!gate.failures) {
   process.exit(1);
 }
 const failing = new Set(gate.failures);
+// Tests that never reached the server have no result this run (#1127).
+const unrun = new Set(gate.serverDown.map((f) => idFor(f.file, f.title)));
 
+if (update && unrun.size) {
+  console.error(`\n🛑 Not recording a baseline: the test server died and ${unrun.size} test(s) never ran.`);
+  console.error('   A register written from this run would drop entries it never measured. Run again.\n');
+  process.exit(1);
+}
 if (update) {
   // --update only SHRINKS the register: it drops what passed and never adds a
   // new failure (scripts/check-register-shrinks.mjs refuses that commit anyway).
@@ -537,12 +554,29 @@ const regressions = [...failing].filter((f) => !baseline.has(f));
 // Repaired = in the register, but no longer failing. The run covers all three
 // gate projects, so "absent from the failure list" means it passed — or the
 // test was renamed/deleted, which equally means the entry must not linger.
-const repaired = [...baseline].filter((b) => !failing.has(b));
+// A register entry that could not reach the server did not pass: it did not run.
+const repaired = [...baseline].filter((b) => !failing.has(b) && !unrun.has(b));
 
 console.log('');
 console.log(`   known-failing (debt) : ${failing.size - regressions.length}`);
 console.log(`   new failures         : ${regressions.length}`);
 console.log(`   repaired since baseline: ${repaired.length}`);
+console.log(`   never reached server : ${gate.serverDown.length}`);
+
+// The server died: those tests did not run, so this run can claim nothing about
+// them -- not "new failures", and not "no new failures" either (#1127). Real
+// regressions found alongside it are still printed below.
+if (gate.serverDown.length) {
+  console.error(`\n🛑 THE TEST SERVER DIED — ${gate.serverDown.length} test(s) could not reach it.`);
+  console.error('   That is not a verdict on this change: those tests never ran.');
+  for (const f of gate.serverDown.slice(0, 5)) {
+    console.error(`     • ${idFor(f.file, f.title)} — ${String(f.error || '').split('\n')[0].slice(0, 120)}`);
+  }
+  if (gate.serverDown.length > 5) console.error(`     … and ${gate.serverDown.length - 5} more`);
+  console.error('   The server log for the run is under data/test-server-logs/. Commit blocked until a run completes.\n');
+  // Stated once more in plain words, so a summary that greps for it cannot miss it.
+  console.error('   SERVER DIED: nothing about those tests is known.\n');
+}
 
 if (regressions.length) {
   console.error('\n❌ NEW test failures — commit blocked.');
@@ -552,6 +586,7 @@ if (regressions.length) {
   console.error('');
   process.exit(1);
 }
+if (gate.serverDown.length) process.exit(1);
 
 // Removal is DELIBERATE, never automatic.
 //
