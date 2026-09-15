@@ -328,23 +328,80 @@ export function createGuards(opts) {
   }
 
   /**
-   * Take the machine, or be notified when it is free and take it then.
+   * Try, and if refused, wait for a release notification and try again --
+   * until `timeoutMs` has passed (#1128).
    *
    * The subscription is armed BEFORE the attempt, so a release that lands
    * between a refusal and the subscribe cannot be missed. John: "try -- if
    * locked -- wait for notification. Waiting for notification requires no CPU."
    *
-   * @param {(why: string) => void} [onHeld] told once per hold, with the reason
+   * THE WAIT HAS AN END. A holder that is alive but stuck never releases and
+   * never goes stale, so without a deadline the waiter waited forever -- a
+   * commit stalled behind someone else's hang. The deadline is one timer, not
+   * a poll; one last attempt runs when it fires.
+   *
+   * @param {() => Promise<{got: any, why?: string}>} attempt
+   * @param {(why: string) => void} [onHeld] told each time it is held, with the reason
+   * @param {number} [timeoutMs] omitted = no deadline
+   * @returns {Promise<{got: any, why: string|null}>} got is falsy when the deadline passed
    */
-  async function acquireSuiteLockOnRelease(startedAt, command, onHeld) {
+  async function waitForMachine(attempt, onHeld, timeoutMs) {
     await ensureDirs();
+    const deadline = Number.isFinite(timeoutMs) ? Date.now() + Math.max(0, timeoutMs) : Infinity;
     for (;;) {
       const release = subscribeToRelease();
-      const denied = await acquireSuiteLock(startedAt, command);
-      if (denied === null) { release.cancel(); return null; }
-      if (onHeld) onHeld(denied);
-      await release.promise;
+      const first = await attempt();
+      if (first.got) { release.cancel(); return { got: first.got, why: null }; }
+      const left = deadline - Date.now();
+      if (left <= 0) { release.cancel(); return { got: null, why: first.why }; }
+      if (onHeld) onHeld(first.why);
+      if (deadline === Infinity) { await release.promise; continue; }
+
+      let timer;
+      const expired = new Promise((res) => { timer = setTimeout(() => res(true), left); });
+      const timedOut = await Promise.race([release.promise.then(() => false), expired]);
+      clearTimeout(timer);
+      release.cancel();
+      if (timedOut) {
+        const last = await attempt();
+        return last.got ? { got: last.got, why: null } : { got: null, why: last.why };
+      }
     }
+  }
+
+  /**
+   * Take the machine for a suite, or be notified when it is free and take it then.
+   * @returns {Promise<string|null>} null once held; the last refusal if `timeoutMs` passed first
+   */
+  async function acquireSuiteLockOnRelease(startedAt, command, onHeld, { timeoutMs } = {}) {
+    const r = await waitForMachine(async () => {
+      const denied = await acquireSuiteLock(startedAt, command);
+      return { got: denied === null, why: denied };
+    }, onHeld, timeoutMs);
+    return r.got ? null : r.why;
+  }
+
+  /** Why a single run is being held right now, naming the holder. */
+  async function describeSingleRefusal() {
+    const suite = await liveSuite();
+    if (suite) {
+      return `A suite holds the machine (PID ${suite.pid || "starting"}, ${suite.command || "suite"}, ` +
+        `from ${suite.root || "unknown worktree"}). A single run cannot share it.`;
+    }
+    return `All ${maxParallelSingle} single-run slots are busy machine-wide:\n` +
+      (await describeSingleSlots()).join("\n");
+  }
+
+  /**
+   * Take a single-run slot, or be notified when one is free (#1128).
+   * @returns {Promise<{slot: string|null, why: string|null}>} slot is null if `timeoutMs` passed first
+   */
+  async function acquireSingleSlotOnRelease(specFile, onHeld, { timeoutMs } = {}) {
+    const r = await waitForMachine(async () => {
+      const slot = await acquireSingleSlot(specFile);
+      return slot ? { got: slot } : { got: null, why: await describeSingleRefusal() };
+    }, onHeld, timeoutMs);
+    return { slot: r.got || null, why: r.why };
   }
 
   return {
@@ -363,5 +420,6 @@ export function createGuards(opts) {
     releaseSlot,
     readLock: () => readJson(lockFile),
     acquireSuiteLockOnRelease,
+    acquireSingleSlotOnRelease,
   };
 }

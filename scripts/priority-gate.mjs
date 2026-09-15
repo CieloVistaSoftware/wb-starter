@@ -22,8 +22,8 @@
  *   - run priority 2-5 tests. Those live in the 10th-commit ratchet.
  */
 import { existsSync, readFileSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
+import { runSpecsHoldingSlot } from './lib/hold-machine.mjs';
 
 const MANIFEST = 'data/priority-gate.json';
 const STALE_DAYS = 7;
@@ -80,12 +80,27 @@ if (!existsSync(cli)) {
   process.exit(0);
 }
 
-const res = spawnSync(process.execPath, [cli, 'test', ...specs, '--reporter=line'], {
-  encoding: 'utf8',
-  stdio: 'inherit',
-  env: { ...process.env, WB_TEST_PORT: process.env.WB_TEST_PORT || '3399' },
+// HOLDS A SLOT, IS BOUNDED, AND PICKS NO PORT (#1128).
+//
+// This runs on EVERY commit, and it used to be a bare spawnSync: no
+// machine-wide slot, so it ran beside a suite or another commit's gate; no
+// timeout, so a wedged run held the commit forever; and a fixed port 3399, so
+// two commits at once (two agents, two worktrees) served on the same port and
+// one of them tested the other's tree or died on "already used". The port is
+// now left to playwright.config.ts, which asks the OS for a free one and pins
+// it for every worker (#1079) -- the way every other run in this repo gets one.
+const res = await runSpecsHoldingSlot({
+  root: process.cwd(),
+  cli,
+  specs,
+  args: ['--reporter=line'],
+  label: 'priority-gate',
 });
 
+if (!res.held || res.hung) {
+  console.log('\n❌ The priority-1 tests did not run to a verdict (see above) — commit blocked.');
+  process.exit(1);
+}
 if (res.status !== 0) {
   console.log('\n❌ A priority-1 test failed. These are the defects rated as');
   console.log('   "destroys work, blinds the gates, or blocks everyone" — fix before committing.');
