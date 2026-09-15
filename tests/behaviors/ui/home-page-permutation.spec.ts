@@ -3,14 +3,17 @@
  * Generated from: home-page.schema.json → test.site
  */
 import { test, expect, Page } from '../../fixtures/offline';
-import { safeScrollIntoView, buildInView } from '../../base';
+import { safeScrollIntoView, buildInView, gotoSettled } from '../../base';
 
 const HOME_URL = '/pages/home.html';
 
 test.describe('Home Page — Schema Permutation Tests', () => {
 
+  // gotoSettled, not waitUntil:'networkidle' (#1087). networkidle waited on the
+  // home page's archive.org MP3, not on the page. Under load that passed the 30s
+  // timeout, and seven of these tests died here and aborted the 4.0.6 release.
   test.beforeEach(async ({ page }) => {
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    await gotoSettled(page, HOME_URL);
   });
 
   // ═══════════════════════════════════════════════════════════════
@@ -290,7 +293,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Mobile-first: no element overflows viewport at 375px', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    await gotoSettled(page, HOME_URL);
     const overflows = await page.evaluate(() => {
       const vw = document.documentElement.clientWidth;
       // Measure what is VISIBLE, not an element's layout box. The home page's
@@ -326,7 +329,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Mobile-first: feature cards stack single-column at 375px', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    await gotoSettled(page, HOME_URL);
     // Target the features grid, not the stats grid (#854: `body > [x-grid]`
     // never matched -- server.js wraps fragments in <div class="demo-page">).
     const columns = await page.locator(FEATURES_GRID).evaluate(el => {
@@ -337,7 +340,7 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Desktop: feature cards show multiple columns at 1280px', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
-    await page.goto(HOME_URL, { waitUntil: 'networkidle' });
+    await gotoSettled(page, HOME_URL);
     const columns = await page.locator(FEATURES_GRID).evaluate(el => {   // #854
       return getComputedStyle(el).gridTemplateColumns.split(' ').length;
     });
