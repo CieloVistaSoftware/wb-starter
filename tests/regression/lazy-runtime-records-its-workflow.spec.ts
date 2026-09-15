@@ -94,8 +94,37 @@ test.describe('#970: the lazy runtime records its own workflow', () => {
     // be noise and the trace would be useless for the thing it exists for.
     const capture = async () => {
       await page.goto(DEMO, { waitUntil: 'domcontentloaded' });
-      await page.waitForFunction(() => (window as any).WB?.flowTrace);
-      return page.evaluate(() => (window as any).WB.flowTrace() as string[]);
+      // WB.ready, not just flowTrace/whenIdle (#1167). flowTrace and whenIdle
+      // exist as soon as the module loads, but WB.ready is only assigned when
+      // init() starts the boot scan (src/core/wb-lazy.js). Waiting on the first
+      // two let a loaded-but-not-initialised page through: `await WB.ready` was
+      // `await undefined`, whenIdle() was trivially idle, and the read was early
+      // (1 of 20 at 4 workers).
+      await page.waitForFunction(() => {
+        const WB = (window as any).WB;
+        return WB?.flowTrace && WB?.whenIdle && WB?.ready instanceof Promise;
+      });
+      // Read the trace AFTER the workflow it records has run (#1167). flowTrace
+      // exists from boot, but inject / buildSchemaIfNeeded / getAutoInjectBehaviors
+      // happen afterwards; reading at once compared a finished load with an
+      // unfinished one and failed 12 of 20 runs at 4 workers. WB.ready then
+      // WB.whenIdle() is the runtime's own completion signal, not a sleep.
+      return page.evaluate(async () => {
+        const WB = (window as any).WB;
+        await WB.ready;
+        // A non-eager scan does not call inject(): it hands elements to an
+        // IntersectionObserver (lazyInject), and inject() runs only when the
+        // observer's callback fires after a rendering update. WB.ready awaits an
+        // empty injection list for those, and whenIdle() counts only injections
+        // already in flight, so both said "done" before any inject had begun
+        // (6 of 40 at 4 workers). The observer's first batch is queued during a
+        // rendering update, so two animation frames guarantee its callbacks have
+        // run and the injections have started; whenIdle() then waits for them to
+        // finish. Rendering steps, not a time guess.
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        await WB.whenIdle();
+        return WB.flowTrace() as string[];
+      });
     };
 
     const a = await capture();
