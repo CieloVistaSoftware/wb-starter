@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  SCAN_ROOTS, SKIP_DIRS, ROOT_ENTRIES, isScannedPath, findControlBytes,
+} from '../../scripts/lib/control-bytes.mjs';
 
 /**
  * No stray control characters in source (#888).
@@ -37,25 +40,11 @@ import path from 'node:path';
 // directories away.
 //
 // Scan where executable source IS, not where it was last found.
-const ROOTS = ['src', 'scripts', 'tests', 'pages', 'demos'];
-const EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.ts', '.tsx', '.css', '.json', '.html']);
-const SKIP_DIRS = new Set(['node_modules', '.git', 'out', 'dist', 'test-results', 'playwright-report', '.claude']);
-
-const TAB = 0x09;
-const LF = 0x0a;
-const CR = 0x0d;
-const DEL = 0x7f;
-const SPACE = 0x20;
-
-/** Name the ones that actually happen, so a failure explains itself. */
-const NAMES: Record<number, string> = {
-  0x00: 'NUL',
-  0x07: 'BEL (\\a)',
-  0x08: 'BACKSPACE (\\b — almost certainly a word-boundary escape that got eaten)',
-  0x0b: 'VERTICAL TAB (\\v)',
-  0x0c: 'FORM FEED (\\f)',
-  0x1b: 'ESC (\\e)',
-};
+//
+// #1162: the roots, extensions, skipped directories and the byte rule live in
+// scripts/lib/control-bytes.mjs (imported above), shared with the staged-file
+// check that now runs in the fast part of pre-commit. Two copies would drift the
+// way #1049's did.
 
 function sourceFiles(dir: string, out: string[] = []): string[] {
   if (!fs.existsSync(dir)) return out;
@@ -63,7 +52,7 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       if (!SKIP_DIRS.has(entry.name)) sourceFiles(full, out);
-    } else if (EXTENSIONS.has(path.extname(entry.name))) {
+    } else if (isScannedPath(full)) {
       out.push(full);
     }
   }
@@ -71,31 +60,23 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
 }
 
 test.describe('source contains no stray control characters', () => {
-  // Plus the repo-root HTML entry points, which no ROOT directory covers.
-  const rootEntries = ['index.html', 'project-index.html'].filter((f) => fs.existsSync(f));
-  const files = ROOTS.flatMap((r) => sourceFiles(r)).concat(rootEntries);
+  // Plus the repo-root HTML entry points, which no root directory covers.
+  const rootEntries = ROOT_ENTRIES.filter((f: string) => fs.existsSync(f));
+  const files = SCAN_ROOTS.flatMap((r: string) => sourceFiles(r)).concat(rootEntries);
 
   test('the sweep actually ran', () => {
     // A glob that matched nothing would report perfect compliance forever.
-    expect(files.length, `no source files found under ${ROOTS.join(', ')}`).toBeGreaterThan(100);
+    expect(files.length, `no source files found under ${SCAN_ROOTS.join(', ')}`).toBeGreaterThan(100);
   });
 
   test('no file carries a control character', () => {
     const found: string[] = [];
 
     for (const file of files) {
-      const buf = fs.readFileSync(file);
-      for (let i = 0; i < buf.length; i++) {
-        const byte = buf[i];
-        const isControl = (byte < SPACE && byte !== TAB && byte !== LF && byte !== CR) || byte === DEL;
-        if (!isControl) continue;
-
-        // Report the line, since the character itself will not be visible.
-        const line = buf.subarray(0, i).toString('utf8').split('\n').length;
-        const name = NAMES[byte] || `0x${byte.toString(16).padStart(2, '0')}`;
-        found.push(`${file.split(path.sep).join('/')}:${line} contains ${name}`);
-        break; // one report per file is enough to send someone looking
-      }
+      const [first] = findControlBytes(fs.readFileSync(file));
+      // Report the line, since the character itself will not be visible.
+      // One report per file is enough to send someone looking.
+      if (first) found.push(`${file.split(path.sep).join('/')}:${first.line} contains ${first.name}`);
     }
 
     expect(
