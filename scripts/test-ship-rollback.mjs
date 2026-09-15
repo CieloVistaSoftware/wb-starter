@@ -71,6 +71,29 @@ withRepo('4.0.4', ['v4.0.4'], ({ dir, git }) => {
   check(after.has('v4.0.4'), 'the previous release tag v4.0.4 is untouched');
 });
 
+// #1161: an inherited GIT_DIR must not redirect the library to another repo.
+// Inside a worktree's pre-commit hook GIT_DIR names the real repository; the
+// rollback then listed (and would have deleted) THAT repo's tags. Simulated here
+// with a second scratch repo standing in for "the repo the hook belongs to".
+withRepo('9.9.9', ['v9.9.9', 'v9.9.10'], ({ dir: other }) => {
+  withRepo('4.0.4', ['v4.0.4'], ({ dir, git }) => {
+    const saved = process.env.GIT_DIR;
+    process.env.GIT_DIR = join(other, '.git');
+    try {
+      const before = releaseTags(dir);
+      git('tag', '-a', 'v4.0.5', '-m', 'v4.0.5');
+      const deleted = deleteTagsCreatedSince(dir, before);
+      check(before.has('v4.0.4') && !before.has('v9.9.9'), 'with a foreign GIT_DIR set, tags are read from the named repo',
+        `read: ${[...before].join(', ')}`);
+      check(deleted.join() === 'v4.0.5', 'with a foreign GIT_DIR set, exactly the new tag is deleted', `deleted: ${deleted.join(', ')}`);
+    } finally {
+      if (saved === undefined) delete process.env.GIT_DIR; else process.env.GIT_DIR = saved;
+    }
+    const otherTags = execFileSync('git', ['tag', '--list', 'v*'], { cwd: other, env, encoding: 'utf8' }).split(/\r?\n/).filter(Boolean);
+    check(otherTags.includes('v9.9.9') && otherTags.includes('v9.9.10'), "the other repo's tags are untouched", `left: ${otherTags.join(', ')}`);
+  });
+});
+
 check(
   tagsCreatedSince(new Set(['v1', 'v2']), new Set(['v1', 'v2', 'v3'])).join() === 'v3' &&
   tagsCreatedSince(new Set(['v1']), new Set(['v1'])).length === 0,
