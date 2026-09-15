@@ -31,6 +31,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { resetFullRunCounter } from './lib/full-run-counter.mjs';
+import { gateBounds, withMachine, runBounded, reportBusy } from './lib/hold-machine.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK_ONLY = process.argv.includes('--check');
@@ -70,11 +71,33 @@ console.log(`\n📦 Release: ${pkg.version} → ${next}\n`);
 // THIS batch break anything NEW, measured against data/test-baseline-failures.json.
 // That is strictly stronger than what was happening in practice, which was
 // bypassing the check entirely.
+//
+// THE RATCHET RUNS THE FULL SUITE, SO IT HOLDS THE MACHINE, AND IT IS BOUNDED
+// (#1128). It used to be a bare execSync: no machine-wide lock, so a release
+// suite ran beside any other run on the box and fought it for memory and ports
+// (Tier-1 Law 4, #1072); and no timeout, so a wedged run held the release
+// forever. Same lock and same bounds as the 10th-commit gate, from one place.
 console.log('🔒 Gate 1 — no NEW failures vs the register (compliance + regression + behaviors)\n');
-try {
-  execSync('node .husky/test-ratchet.mjs', { cwd: ROOT, stdio: 'inherit' });
+const { suiteMs, lockWaitMs } = gateBounds();
+const ratchet = await withMachine(
+  { root: ROOT, kind: 'suite', label: 'release gate', waitMs: lockWaitMs },
+  () => runBounded(process.execPath, [path.join('.husky', 'test-ratchet.mjs')], {
+    cwd: ROOT, timeoutMs: suiteMs, label: 'release',
+  })
+);
+if (!ratchet.held) {
+  reportBusy('release', lockWaitMs, ratchet.why);
+  die('the machine stayed busy, so the suite never ran — that is not a verdict on this batch');
+}
+if (ratchet.result.hung) {
+  die('the ratchet did not finish in time — that is a HANG, not a verdict on this batch');
+}
+if (ratchet.result.error) {
+  die(`the ratchet could not start: ${ratchet.result.error.message}`);
+}
+if (ratchet.result.status === 0) {
   console.log('   ✓ no new failures');
-} catch {
+} else {
   die(
     'the ratchet found NEW failures',
     '\n   These are not the pre-existing debt in data/test-baseline-failures.json —\n' +
@@ -93,9 +116,12 @@ try {
 //
 // And never fatal. The counter is an optimisation — the worst case without it is
 // a commit rerunning the suite — so a release that has just passed its ratchet
-// must not abort because a file could not be written. It did: the #991 fixture
-// runs release.mjs in a plain temp directory, git rev-parse failed there, and
-// the throw was scored as a NEW failure that aborted the 4.0.6 release.
+// must not abort because a file could not be written. It did, and twice over:
+// the #991 fixture runs release.mjs in a plain temp directory where git
+// rev-parse fails, which the ratchet scored as a NEW failure and which aborted
+// the 4.0.6 release; and #1128's release guard runs a copy of this script
+// outside any repository, where the throw (git's status 128) took the whole
+// release down with it.
 try {
   resetFullRunCounter(ROOT);
   console.log('   ✓ 10th-commit counter reset — the release commit will not rerun the suite');

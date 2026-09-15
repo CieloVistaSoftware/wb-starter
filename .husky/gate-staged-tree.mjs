@@ -40,22 +40,23 @@
  * Nothing here touches the user's files.
  */
 
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, rmSync, symlinkSync, copyFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { createGuards } from '../scripts/lib/test-lock.mjs';
+import { gateBounds, withMachine, runBounded, reportBusy } from '../scripts/lib/hold-machine.mjs';
+// #1161: suiteEnv comes from its own module, the one every other gate script
+// imports, rather than through a re-export.
 import { suiteEnv } from '../scripts/lib/suite-env.mjs';
 
 const REPO = resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 // Outer bound, five minutes past test-ratchet.mjs's own RUN_TIMEOUT_MS so the
-// inner one fires first with the more specific message. Same override.
-// Rounded: spawnSync throws on a non-integer timeout, and (m + 5) * 60000 is
-// not an integer for many fractional overrides (0.01 -> 300599.99999999994),
-// which killed the gate before it ran anything (#1106).
-const GATE_TIMEOUT_MS = Math.round(((Number(process.env.WB_GATE_TIMEOUT_MIN) || 75) + 5) * 60 * 1000);
+// inner one fires first with the more specific message; and how long to wait
+// for someone else's run. Both live in scripts/lib/hold-machine.mjs, shared with
+// every other Playwright launch on the commit and release path (#1128).
+const { suiteMs: GATE_TIMEOUT_MS, lockWaitMs: LOCK_WAIT_MS } = gateBounds();
 
 const git = (args, opts = {}) =>
   execFileSync('git', args, { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...opts }).trim();
@@ -65,20 +66,6 @@ const stamp = `${Date.now().toString(36)}-${process.pid}`;
 const TMP = join(tmpdir(), `wb-gate-${stamp}`);
 
 let worktreeAdded = false;
-
-// THE GATE HOLDS THE MACHINE (#1106). It runs the full suite, so it takes the
-// same machine-wide lock npm_test_async honours. Before this it took none, so a
-// single-spec run launched mid-commit was admitted beside it, the two fought
-// over the dev-server port, and the gate hung for five hours.
-const guards = createGuards({ root: REPO });
-let holdingLock = false;
-
-/** Release on EVERY exit path -- a gate that dies holding the lock blocks the next run. */
-function releaseLock() {
-  if (!holdingLock) return;
-  holdingLock = false;
-  try { rmSync(guards.lockFile, { force: true }); } catch { /* best effort */ }
-}
 
 function cleanup() {
   // Always, on every path — a failed gate must not leave a checkout behind, or
@@ -123,8 +110,9 @@ function cleanup() {
 
 // Interrupts included: Ctrl-C during a fifty-minute gate is normal, and it must
 // not be the thing that leaves the repo in a worse state than not running it.
+// process.exit() also releases the machine: hold-machine.mjs releases on 'exit'.
 for (const sig of ['SIGINT', 'SIGTERM', 'SIGHUP']) {
-  process.on(sig, () => { cleanup(); releaseLock(); process.exit(130); });
+  process.on(sig, () => { cleanup(); process.exit(130); });
 }
 
 function main() {
@@ -170,7 +158,7 @@ function main() {
     }
   }
 
-  const run = spawnSync(process.execPath, [join('.husky', 'test-ratchet.mjs'), ...process.argv.slice(2)], {
+  const run = runBounded(process.execPath, [join('.husky', 'test-ratchet.mjs'), ...process.argv.slice(2)], {
     cwd: TMP,
     stdio: 'inherit',
     // suiteEnv strips the hook's GIT_DIR/GIT_INDEX_FILE/... (#1161): with them,
@@ -186,17 +174,9 @@ function main() {
     // Outer bound, deliberately a little longer than test-ratchet.mjs's own so
     // the inner one fires first and reports the more specific reason. Without
     // either, a stalled run held the commit for 13 hours on 2026-09-11.
-    timeout: GATE_TIMEOUT_MS,
-    killSignal: 'SIGKILL',
+    timeoutMs: GATE_TIMEOUT_MS,
+    label: 'gate',
   });
-
-  if (run.error && (run.error.code === 'ETIMEDOUT' || run.signal === 'SIGKILL')) {
-    console.error(
-      `\n[gate] The gate did not finish within ${GATE_TIMEOUT_MS / 60000} minutes and was killed.\n` +
-      '[gate] That is a HANG, not a verdict on your commit. Look for another Playwright\n' +
-      '[gate] process or a dev server holding the port, then commit again.\n'
-    );
-  }
 
   // The reporter's evidence is written inside the temp tree, which is correct —
   // the gate must not clobber data/test-results/ in the real checkout, since
@@ -221,23 +201,32 @@ function main() {
   return run.status === 0 ? 0 : 1;
 }
 
+// THE GATE HOLDS THE MACHINE (#1106). It runs the full suite, so it takes the
+// same machine-wide lock npm_test_async honours. Before this it took none, so a
+// single-spec run launched mid-commit was admitted beside it, the two fought
+// over the dev-server port, and the gate hung for five hours.
+//
+// Take the machine, or subscribe and be notified the moment it is released.
+// No polling: zero CPU while another run holds it. And the wait ENDS (#1128):
+// a holder that stays alive but stuck never releases, and used to stall the
+// commit forever.
 let code = 1;
 try {
-  // Take the machine, or subscribe and be notified the moment it is released.
-  // No refusal, no polling: zero CPU while another run holds it.
-  await guards.acquireSuiteLockOnRelease(new Date().toISOString(), 'pre-commit gate', (why) => {
-    console.log('[gate] the machine is busy -- subscribed; the gate starts the moment it is released.');
-    console.log(why);
-  });
-  holdingLock = true;
-  await guards.bindSuiteLock(process.pid, { command: 'pre-commit gate' });
-  code = main();
+  const outcome = await withMachine(
+    { root: REPO, kind: 'suite', label: 'pre-commit gate', waitMs: LOCK_WAIT_MS, handleSignals: false },
+    () => main()
+  );
+  if (outcome.held) {
+    code = outcome.result;
+  } else {
+    reportBusy('gate', LOCK_WAIT_MS, outcome.why);
+    code = 1;
+  }
 } catch (err) {
   console.error(`[gate] failed to set up the staged-tree checkout: ${err.message}`);
   console.error('[gate] NOT falling back to testing the working directory — that is the bug (#1065).');
   code = 1;
 } finally {
   cleanup();
-  releaseLock();
 }
 process.exit(code);

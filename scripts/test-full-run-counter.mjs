@@ -18,7 +18,7 @@
  * the shared module rather than its own copy of the git command.
  */
 import { execFileSync, spawnSync } from 'child_process';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, existsSync, rmSync } from 'fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, readdirSync, existsSync, rmSync } from 'fs';
 import { join, resolve, dirname } from 'path';
 import { tmpdir } from 'os';
 import { fileURLToPath } from 'url';
@@ -37,6 +37,20 @@ const check = (ok, name, detail = '') => {
 const env = suiteEnv(process.env);
 const scratch = [];
 
+/**
+ * release.mjs plus EVERY scripts/lib/*.mjs, not a hand-listed few. release.mjs
+ * gained an import (#1128's hold-machine.mjs) and a fixture listing three files
+ * by name failed to load it, so every case here failed for a reason that had
+ * nothing to do with the counter.
+ */
+function copyRelease(dir) {
+  mkdirSync(join(dir, 'scripts', 'lib'), { recursive: true });
+  copyFileSync(join(ROOT, 'scripts', 'release.mjs'), join(dir, 'scripts', 'release.mjs'));
+  for (const name of readdirSync(join(ROOT, 'scripts', 'lib'))) {
+    if (name.endsWith('.mjs')) copyFileSync(join(ROOT, 'scripts', 'lib', name), join(dir, 'scripts', 'lib', name));
+  }
+}
+
 /** A repo that can run a copy of release.mjs with a stub ratchet. */
 function releaseRepo(ratchetExit) {
   const dir = mkdtempSync(join(tmpdir(), 'wb-full-run-counter-'));
@@ -46,10 +60,7 @@ function releaseRepo(ratchetExit) {
   git('config', 'user.email', 'guard@example.invalid');
   git('config', 'user.name', 'guard');
 
-  for (const f of ['scripts/release.mjs', 'scripts/lib/full-run-counter.mjs', 'scripts/lib/suite-env.mjs']) {
-    mkdirSync(dirname(join(dir, f)), { recursive: true });
-    copyFileSync(join(ROOT, f), join(dir, f));
-  }
+  copyRelease(dir);
   mkdirSync(join(dir, '.husky'), { recursive: true });
   writeFileSync(join(dir, '.husky', 'test-ratchet.mjs'), `process.exit(${ratchetExit});\n`);
   mkdirSync(join(dir, 'pages'), { recursive: true });
@@ -122,6 +133,31 @@ for (const verdict of ['pass', 'fail']) {
       }
     }
   }
+}
+
+// ── 3b. The counter is an optimisation: it can never abort a release ─────────
+//
+// Found by #1128's release guard, which runs a copy of release.mjs outside any
+// git repository: the reset threw (git exits 128) and took a release that had
+// just passed its ratchet down with it.
+console.log('\nthe reset never aborts a release');
+{
+  const loose = mkdtempSync(join(tmpdir(), 'wb-full-run-counter-nogit-'));
+  scratch.push(loose);
+  copyRelease(loose);
+  mkdirSync(join(loose, '.husky'), { recursive: true });
+  writeFileSync(join(loose, '.husky', 'test-ratchet.mjs'), 'process.exit(0);\n');
+  mkdirSync(join(loose, 'pages'), { recursive: true });
+  writeFileSync(join(loose, 'pages', 'whats-new.html'), '<section id="whats-new-1-0-1"></section>\n');
+  writeFileSync(join(loose, 'package.json'), JSON.stringify({ name: 'guard', version: '1.0.0', type: 'module' }) + '\n');
+
+  const run = spawnSync(process.execPath, [join(loose, 'scripts', 'release.mjs'), '--check'], {
+    cwd: loose, env, encoding: 'utf8',
+  });
+  const text = `${run.stdout}${run.stderr}`;
+  check(run.status === 0 && /could not reset/i.test(text),
+    'outside a git repository the release still passes, with a warning',
+    `exit ${run.status}: ${text.trim().split(String.fromCharCode(10)).slice(-2).join(' | ')}`);
 }
 
 // ── 4. The hook takes its path from the shared module ────────────────────────
