@@ -32,6 +32,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { nextVersion } from './lib/next-version.mjs';
+import { resetFullRunCounter } from './lib/full-run-counter.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK_ONLY = process.argv.includes('--check');
@@ -80,6 +81,13 @@ try {
       '   or fix the failure. Both leave a trail; a bypass does not.'
   );
 }
+
+// That was the same full ratchet the 10th-commit hook runs, so it counts as the
+// hook's full run too (#1178). Without this, a release commit landing on the
+// 10th count ran all ~7,800 tests a second time on the batch just tested.
+// Outside the try: a failure to write the counter is not "NEW failures".
+resetFullRunCounter(ROOT);
+console.log('   ✓ 10th-commit counter reset — the release commit will not rerun the suite');
 
 // ── 2. The Releases page must name the version being released ─────────────────
 // The rule John states directly: the version number and what it contains
