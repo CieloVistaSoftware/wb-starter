@@ -17,10 +17,19 @@
  * new since then.
  */
 import { execFileSync } from 'child_process';
+import { suiteEnv } from './suite-env.mjs';
+
+// `root` names the repository. An inherited GIT_DIR must not override it (#1161):
+// inside a git hook it points at whichever repo the hook belongs to, so a caller
+// asking about `root` would list -- and DELETE -- that repo's tags instead. Seen
+// 2026-09-14: scripts/test-ship-rollback.mjs, run from the pre-commit hook of a
+// worktree, listed the real repo's tags and its "deletes exactly the new tag"
+// check came back empty.
+const gitEnv = () => suiteEnv(process.env);
 
 /** Every v* tag in the repo, as a Set. */
 export function releaseTags(root) {
-  const out = execFileSync('git', ['tag', '--list', 'v*'], { cwd: root, encoding: 'utf8' });
+  const out = execFileSync('git', ['tag', '--list', 'v*'], { cwd: root, encoding: 'utf8', env: gitEnv() });
   return new Set(out.split(/\r?\n/).map((t) => t.trim()).filter(Boolean));
 }
 
@@ -36,7 +45,7 @@ export function tagsCreatedSince(before, now) {
 export function deleteTagsCreatedSince(root, before) {
   const created = tagsCreatedSince(before, releaseTags(root));
   for (const tag of created) {
-    execFileSync('git', ['tag', '-d', tag], { cwd: root, stdio: 'inherit' });
+    execFileSync('git', ['tag', '-d', tag], { cwd: root, stdio: 'inherit', env: gitEnv() });
   }
   return created;
 }
