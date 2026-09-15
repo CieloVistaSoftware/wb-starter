@@ -4,16 +4,19 @@
 ## Session Start (DO THIS FIRST - NO EXCEPTIONS)
 
 1. **We are not using Claude.ai web — do not start a Chrome task. Instead, use Claude Desktop and you have full MCP access.**
-2. **Call `list_allowed_directories`** to confirm MCP access
-3. **Read `docs/claude/TIER1-LAWS.md`** — the 10 non-negotiable rules
-4. **Read `docs/_today/CURRENT-STATUS.md`** — current project state
-5. **Use `recent_chats`** — continue from last session, don't start blind
-6. **Identify task domain** → load only the relevant section from `docs/claude/TIER2-DOMAIN-GUIDES.md`
-7. **Start working** — no questions, no fumbling
-8. **Acknowledge that you will not use Claude.ai web, but only use MCP access.**
+2. **Read `docs/claude/TIER1-LAWS.md`** — the 10 non-negotiable rules
+3. **Read `docs/_today/CURRENT-STATUS.md`** — current project state
+4. **Use `recent_chats`** — continue from last session, don't start blind
+5. **Identify task domain** → load only the relevant section from `docs/claude/TIER2-DOMAIN-GUIDES.md`
+6. **Start working** — no questions, no fumbling
+7. **Acknowledge that you will not use Claude.ai web, but only use MCP access.**
+
+File access comes from the built-in file tools (Read, Write, Edit, Glob, Grep). The
+wb-starter MCP server (`npm_test_async`, Law 4) comes from this repo's `.mcp.json`. There is
+no filesystem MCP server to check first: it was removed on 2026-09-14 (#1166).
 
 ### What NOT To Do
-- ❌ Never ask John to upload files — you have MCP access
+- ❌ Never ask John to upload files — the built-in file tools reach the project
 - ❌ Never ask "what are you working on" — read the status file
 - ❌ Never run tests synchronously — see async syntax below
 - ❌ Never skip reading Tier 1 — that's how regressions happen
