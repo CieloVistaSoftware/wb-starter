@@ -154,6 +154,8 @@ import { spawn } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
 const mode = process.env.WB_FAKE_PW_MODE;
+// #1163: record the argv so a guard can assert which projects were asked for.
+try { writeFileSync('fake-pw-argv.json', JSON.stringify(process.argv.slice(2))); } catch {}
 
 if (mode === 'finished-then-quiet') {
   // #1180: a run that COMPLETES and then goes quiet while it shuts down.
@@ -282,6 +284,49 @@ const silentRun = () => ratchetCase(
     }
     return checks;
   }
+);
+
+/**
+ * WB_GATE_PROJECTS narrows the gate, and an unknown name is refused (#1163).
+ *
+ * 'CI - Full Compliance' wanted the compliance project only and, having no way
+ * to ask the gate for it, hand-wrote its own playwright command: no register,
+ * so 66 of its 79 failures were recorded debt; --reporter= replacing the
+ * project's reporters, so data/errors.json was never written. The workflow had
+ * never been green.
+ *
+ * The refusal matters as much as the narrowing. A typo in WB_GATE_PROJECTS must
+ * not leave the gate running NO projects and reporting success -- that is #1091,
+ * an instrument reporting a verdict it never measured.
+ */
+const narrowedRun = () => ratchetCase(
+  'Ratchet: WB_GATE_PROJECTS narrows the run to the projects it names (#1163)',
+  { WB_FAKE_PW_MODE: 'healthy', WB_FAKE_PW_MS: '1500', WB_GATE_ACK_MIN: '5', WB_GATE_PROJECTS: 'compliance' },
+  90_000,
+  async (r, out, dir) => {
+    let argv = [];
+    try { argv = JSON.parse(readFileSync(join(dir, 'fake-pw-argv.json'), 'utf8')); } catch { /* never ran */ }
+    const projects = argv.filter((a) => a.startsWith('--project='));
+    return [
+      ['the run reaches a verdict', r.code === 0 && out.includes('No new failures'), `exit ${r.code}\n${tail(out)}`],
+      ['exactly the named project is run', JSON.stringify(projects) === JSON.stringify(['--project=compliance']),
+        `playwright was asked for: ${JSON.stringify(projects)}`],
+    ];
+  }
+);
+
+const unknownProjectRefused = () => ratchetCase(
+  'Ratchet: an unknown WB_GATE_PROJECTS name is refused, not silently skipped (#1163)',
+  { WB_FAKE_PW_MODE: 'healthy', WB_FAKE_PW_MS: '1500', WB_GATE_ACK_MIN: '5', WB_GATE_PROJECTS: 'complaince' },
+  90_000,
+  async (r, out, dir) => [
+    ['it refuses rather than running', r.code !== 0 && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
+    ['it never started Playwright at all', !existsSync(join(dir, 'fake-pw-argv.json')),
+      'the fake runner was launched despite the unknown project name'],
+    ['it names the typo and the projects it does have', /complaince/.test(out) && /compliance, regression, behaviors/.test(out), tail(out)],
+    // Nothing was measured, so this is not a verdict on the code (#1181).
+    ['it exits with the no-verdict code', r.code === NO_VERDICT_EXIT, `exit ${r.code}`],
+  ]
 );
 
 /** A healthy run is never mistaken for a stall, whatever terminal it came from. */
@@ -972,6 +1017,8 @@ if (!existsSync(LIST_REPORTER)) {
 const sections = await Promise.all([
   silentRun(),
   endlessRun(),
+  narrowedRun(),
+  unknownProjectRefused(),
   finishedThenQuietRun(),
   serverDiedRun(),
   mixedRun(),

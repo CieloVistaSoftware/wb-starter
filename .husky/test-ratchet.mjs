@@ -108,7 +108,38 @@ const SIGTERM_GRACE_MS = 30_000;
 // schema-viewer: its own project (playwright.config.ts), so no gate ran it and
 // it failed for every schema, unnoticed, until someone opened the page. Its
 // 29 tests take ~1 minute; a page nobody measures is a page that rots.
-const PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer'];
+const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer'];
+
+/**
+ * The gate's projects, narrowable by WB_GATE_PROJECTS (#1163).
+ *
+ * "CI — Full Compliance" wanted the compliance project only and, having no way
+ * to ask for it, wrote its own `npx playwright test --project=compliance
+ * --reporter=list --trace=on` instead. That command has no register (66 of its
+ * 79 failures were recorded debt), replaces the project's reporter (so
+ * data/errors.json is never created and "error log should exist" fails), and
+ * traces every test at 8 workers (9 timeouts). The workflow has never been green.
+ *
+ * So the narrowing belongs here, where the register, the reporters and the
+ * worker count come with it. An unknown name is refused rather than silently
+ * running nothing — a gate that measures no projects reports success (#1091).
+ */
+const PROJECTS = (() => {
+  const wanted = (process.env.WB_GATE_PROJECTS || '').split(',').map((p) => p.trim()).filter(Boolean);
+  if (!wanted.length) return ALL_PROJECTS;
+  const unknown = wanted.filter((p) => !ALL_PROJECTS.includes(p));
+  if (unknown.length) {
+    console.error(
+      `❌ WB_GATE_PROJECTS names ${unknown.join(', ')}, which the gate does not run.\n` +
+      `   Known projects: ${ALL_PROJECTS.join(', ')}.`
+    );
+    // A gate asked for a project it does not have measures nothing, which is
+    // the no-verdict case rather than a failing batch (#1181). Exiting 1 here
+    // would tell a workflow with a typo in WB_GATE_PROJECTS that its code broke.
+    process.exit(NO_VERDICT_EXIT);
+  }
+  return wanted;
+})();
 
 const update = process.argv.includes('--update');
 

@@ -68,7 +68,10 @@ jobs:
       - name: Run builder del() contract test
         run: |
           if [ -f tests/behaviors/ui/builder-del-return.spec.ts ]; then
-            npx playwright test tests/behaviors/ui/builder-del-return.spec.ts --project=base --reporter=list
+            # locked-spec-run, not raw playwright (#1163): --reporter=list would
+            # replace the project's own reporters, and scripts/tools/test-reporter.ts
+            # is what creates data/errors.json at the start of a run.
+            node scripts/locked-spec-run.mjs tests/behaviors/ui/builder-del-return.spec.ts --project=base
           else
             echo "::notice::builder del() contract test (tests/behaviors/ui/builder-del-return.spec.ts) is not present and schema-builder.js has no del() method — skipping. Add the test to re-enable this guard."
           fi
