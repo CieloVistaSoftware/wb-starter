@@ -55,6 +55,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
 import { classifyFailure } from '../scripts/lib/server-down.mjs';
+import { NO_VERDICT_EXIT } from '../scripts/lib/gate-exit.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '..');
@@ -115,7 +116,7 @@ function loadBaseline() {
   if (!existsSync(BASELINE_PATH)) {
     console.error(`\n🛑 No test baseline at ${BASELINE_PATH}.`);
     console.error('   Record one with:  node .husky/test-ratchet.mjs --update\n');
-    process.exit(1);
+    process.exit(NO_VERDICT_EXIT);
   }
   try {
     const raw = JSON.parse(readFileSync(BASELINE_PATH, 'utf8'));
@@ -123,7 +124,7 @@ function loadBaseline() {
   } catch (err) {
     console.error(`\n🛑 Test baseline is unreadable: ${err.message}`);
     console.error('   Fix or re-record it; refusing to guess.\n');
-    process.exit(1);
+    process.exit(NO_VERDICT_EXIT);
   }
 }
 
@@ -546,7 +547,9 @@ if (!gate.failures) {
   console.error('     • the dev server port is still held by an orphaned run');
   console.error('     • node_modules is missing or incomplete (run: npm install)');
   console.error('   Nothing was verified, so nothing is known. Commit blocked.\n');
-  process.exit(1);
+  // Not exit 1: nothing was measured, so no caller may say this batch broke
+  // anything. release.mjs said exactly that about this path on 2026-09-15 (#1181).
+  process.exit(NO_VERDICT_EXIT);
 }
 const failing = new Set(gate.failures);
 // Tests that never reached the server have no result this run (#1127).
@@ -615,7 +618,9 @@ if (regressions.length) {
   console.error('');
   process.exit(1);
 }
-if (gate.serverDown.length) process.exit(1);
+// The server died, so those tests never reported. That is not a verdict on
+// this batch either (#1181).
+if (gate.serverDown.length) process.exit(NO_VERDICT_EXIT);
 
 // Removal is DELIBERATE, never automatic.
 //

@@ -31,6 +31,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { resetFullRunCounter } from './lib/full-run-counter.mjs';
+import { isNoVerdict } from './lib/gate-exit.mjs';
 import { gateBounds, withMachine, runBounded, reportBusy } from './lib/hold-machine.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -94,6 +95,22 @@ if (ratchet.result.hung) {
 }
 if (ratchet.result.error) {
   die(`the ratchet could not start: ${ratchet.result.error.message}`);
+}
+// NOTHING MEASURED IS NOT A FAILING BATCH (#1181).
+//
+// The ratchet used to exit 1 both for NEW failures and for its own
+// 'THE SUITE NEVER RAN - this is not a code failure' report, so this gate
+// answered a no-verdict run with 'this batch broke them' and sent someone
+// looking for a regression that did not exist (2026-09-15, 4.0.6 attempt 3).
+if (isNoVerdict(ratchet.result.status)) {
+  die(
+    'the suite produced no verdict, so nothing is known about this batch',
+    '\n   The ratchet stopped without measuring anything - a stall, a dead test\n' +
+      '   server, or a missing register. Its own output above says which.\n\n' +
+      '   This is NOT a report that the batch broke tests. Nothing was compared\n' +
+      '   against data/test-baseline-failures.json, so there is nothing to blame\n' +
+      '   the batch for. Fix the run and release again.'
+  );
 }
 if (ratchet.result.status === 0) {
   console.log('   ✓ no new failures');

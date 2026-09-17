@@ -46,6 +46,7 @@ import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { gateBounds, withMachine, runBounded, reportBusy } from '../scripts/lib/hold-machine.mjs';
+import { isNoVerdict } from '../scripts/lib/gate-exit.mjs';
 // #1161: suiteEnv comes from its own module, the one every other gate script
 // imports, rather than through a re-export.
 import { suiteEnv } from '../scripts/lib/suite-env.mjs';
@@ -192,13 +193,29 @@ function main() {
     } catch { /* diagnosis aid only */ }
   }
 
-  if (run.status !== 0) {
+  // A NO-VERDICT RUN IS NOT A VERDICT ABOUT THE COMMIT (#1181).
+  //
+  // The ratchet distinguishes 'this batch broke tests' from 'nothing was
+  // measured' — a stall, a dead test server, a missing register. Collapsing
+  // both into 'the STAGED tree did not pass' tells someone to go fix staged
+  // content over a run that never compared anything, which is what
+  // release.mjs did on 2026-09-15 one level up.
+  if (isNoVerdict(run.status)) {
+    console.error('');
+    console.error('[gate] The suite produced NO VERDICT — a stall, a dead test server, or a');
+    console.error('[gate] missing register. Its output above says which.');
+    console.error('[gate] Nothing was measured, so this says nothing about the staged tree.');
+    console.error('[gate] The commit is blocked because nothing is known, not because it failed.');
+  } else if (run.status !== 0) {
     console.error('');
     console.error('[gate] The STAGED tree did not pass. This verdict is about the commit itself,');
     console.error('[gate] so editing files now cannot change it — fix the staged content, restage,');
     console.error('[gate] and commit again. Evidence: data/gate-evidence/');
   }
-  return run.status === 0 ? 0 : 1;
+  // Forward the no-verdict code rather than flattening it (#1181): the hook,
+  // and anything reading the hook, must be able to tell the two apart.
+  if (run.status === 0) return 0;
+  return isNoVerdict(run.status) ? run.status : 1;
 }
 
 // THE GATE HOLDS THE MACHINE (#1106). It runs the full suite, so it takes the
