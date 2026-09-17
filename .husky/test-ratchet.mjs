@@ -81,6 +81,24 @@ const RUN_TIMEOUT_MS = (Number(process.env.WB_GATE_TIMEOUT_MIN) || 75) * 60 * 10
 // between lines.
 const ACK_SILENCE_MS = (Number(process.env.WB_GATE_ACK_MIN) || 3) * 60 * 1000;
 
+// SILENCE AFTER THE LAST TEST IS NOT SILENCE (#1180).
+//
+// The deadline above is right while tests are still finishing and wrong the
+// moment they stop. Playwright's shutdown -- flushing the HTML report, writing
+// traces, tearing down the web server -- prints no per-test lines, so to a
+// watchdog counting acks it is indistinguishable from a hang.
+//
+// On 2026-09-15 that cost a release. All 7,862 tests finished, the ack deadline
+// then expired 190s into shutdown, the gate SIGINTed a completed run and printed
+// 'THE SUITE NEVER RAN', and 4.0.6 aborted on a run that had in fact passed.
+//
+// So once the acks reach the count Playwright announced in its own
+// 'Running N tests' header, the ack deadline stops applying and this bounded
+// shutdown grace takes over. A genuinely wedged teardown still ends -- it just
+// is not called a hang three minutes in, and it is measured against a budget
+// that reflects what shutdown actually does.
+const SHUTDOWN_GRACE_MS = (Number(process.env.WB_GATE_SHUTDOWN_MIN) || 10) * 60 * 1000;
+
 // After evidence is captured, SIGTERM first: Playwright can flush its trace and
 // its report on a catchable signal. SIGKILL cannot be caught, which is exactly
 // why the 185-minute run left nothing behind to read.
@@ -218,7 +236,12 @@ async function runGate(port) {
   const ACK = /^\s*(ok|x|-|✓|✘)\s+\d+\s/;
   // ESC built from its code, so the regex carries no literal control character.
   const ANSI = new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*[A-Za-z]`, 'g');
+  // Playwright announces its collected count before the first test. That number
+  // is what tells the watchdog when a run is finished rather than merely quiet (#1180).
+  const COLLECTED = /^\s*Running\s+(\d+)\s+tests?\b/;
   let acks = 0;
+  let collected = null;
+  let allTestsDoneAt = null;
   let lastAckAt = Date.now();
   let lastTest = '(none yet)';
   const inspectorUrls = new Set();
@@ -234,10 +257,20 @@ async function runGate(port) {
         const line = raw.replace(ANSI, '');
         const dbg = line.match(/Debugger listening on (ws:\/\/\S+)/);
         if (dbg) inspectorUrls.add(dbg[1]);
+        const header = line.match(COLLECTED);
+        if (header) {
+          collected = Number(header[1]);
+          continue;
+        }
         if (!ACK.test(line)) continue;
         acks += 1;
         lastAckAt = Date.now();
         lastTest = line.trim().slice(0, 160);
+        // Every collected test has reported. Whatever the process does from
+        // here is shutdown, not progress, and must not be timed as silence.
+        if (collected !== null && acks >= collected && allTestsDoneAt === null) {
+          allTestsDoneAt = Date.now();
+        }
       }
     });
   };
@@ -389,13 +422,23 @@ async function runGate(port) {
     let firing = false;
     const watch = setInterval(async () => {
       if (firing) return;
-      const quiet = Date.now() - lastAckAt;
       const overall = Date.now() - started;
-      if (quiet < ACK_SILENCE_MS && overall < RUN_TIMEOUT_MS) return;
+
+      // #1180: which deadline applies depends on whether the run still has
+      // tests to report. Before the last ack, silence means stuck. After it,
+      // silence is what shutdown sounds like, and only the shutdown grace and
+      // the overall ceiling can end the run.
+      const finished = allTestsDoneAt !== null;
+      const quiet = Date.now() - (finished ? allTestsDoneAt : lastAckAt);
+      const quietLimit = finished ? SHUTDOWN_GRACE_MS : ACK_SILENCE_MS;
+
+      if (quiet < quietLimit && overall < RUN_TIMEOUT_MS) return;
       firing = true;
 
-      const reason = quiet >= ACK_SILENCE_MS
-        ? `no test finished for ${Math.round(quiet / 1000)}s`
+      const reason = quiet >= quietLimit
+        ? (finished
+          ? `all ${collected} tests finished, but shutdown did not complete within ${Math.round(quiet / 1000)}s`
+          : `no test finished for ${Math.round(quiet / 1000)}s`)
         : `the run passed its ${RUN_TIMEOUT_MS / 60000}-minute ceiling`;
 
       // Stack BEFORE any signal: a terminated process has no stack to give.

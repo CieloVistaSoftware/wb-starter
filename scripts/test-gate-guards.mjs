@@ -154,7 +154,29 @@ import { pathToFileURL } from 'node:url';
 
 const mode = process.env.WB_FAKE_PW_MODE;
 
-if (mode === 'silent') {
+if (mode === 'finished-then-quiet') {
+  // #1180: a run that COMPLETES and then goes quiet while it shuts down.
+  // Playwright prints no per-test lines while it writes the report and tears
+  // down the web server, which is exactly what a hang looks like to a
+  // watchdog counting acks. On 2026-09-15 that discarded a 7,862-test run.
+  const mod = await import(pathToFileURL(process.env.WB_FAKE_PW_LIST).href);
+  const ListReporter = mod.default?.default ?? mod.default;
+  const reporter = new ListReporter({});
+  reporter.totalTestCount = 2;
+  reporter.formatTestTitle = () => '[compliance] > fake.spec.ts:1:1 > a test that finished';
+  console.log('Running 2 tests using 1 worker');
+  for (let i = 0; i < 2; i += 1) {
+    reporter._updateTestLine({ expectedStatus: 'passed', outcome: () => 'expected' },
+      { status: 'passed', duration: 12, retry: 0 });
+  }
+  // Silent for longer than the ack deadline, shorter than the shutdown grace.
+  setTimeout(() => {
+    mkdirSync('data/test-results', { recursive: true });
+    writeFileSync('data/test-results/failures.json',
+      JSON.stringify({ timestamp: new Date().toISOString(), failures: [] }));
+    process.exit(0);
+  }, Number(process.env.WB_FAKE_PW_QUIET_MS));
+} else if (mode === 'silent') {
   // A wedged run: alive, printing nothing, with a worker of its own.
   const worker = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'],
     { stdio: 'ignore', env: { ...process.env, NODE_OPTIONS: '' } });
@@ -266,6 +288,34 @@ const healthyRun = (terminal, env) => ratchetCase(
       tail(out.split('\n').filter((l) => !/fake\.spec/.test(l)).join('\n'))],
     ['it reaches a verdict', r.code === 0 && out.includes('No new failures'), `exit ${r.code}`],
   ]
+);
+
+/**
+ * A run that finished every test is not a hang, however quiet shutdown is (#1180).
+ *
+ * The ack deadline is the right instrument while tests are still reporting and
+ * the wrong one afterwards. On 2026-09-15 all 7,862 tests finished, the deadline
+ * expired 190s into Playwright's shutdown, and the gate SIGINTed a completed run
+ * and printed 'THE SUITE NEVER RAN'. Release 4.0.6 aborted on a run that passed.
+ *
+ * The fake acks both of the 2 tests it announced, then stays silent for 15s with
+ * the ack deadline at 3s. The watchdog only looks every 10s, so the quiet spell
+ * has to outlast a tick to be seen at all -- a stall by the old rule, a pass by
+ * the new one.
+ */
+const finishedThenQuietRun = () => ratchetCase(
+  'Ratchet: a run that finished every test is not killed while it shuts down (#1180)',
+  { WB_FAKE_PW_MODE: 'finished-then-quiet', WB_FAKE_PW_QUIET_MS: '15000', WB_GATE_ACK_MIN: '0.05' },
+  90_000,
+  async (r, out) => {
+    const clean = tail(out.split('\n').filter((l) => !/fake\.spec/.test(l)).join('\n'));
+    return [
+      ['the run is not killed as a stall', !out.includes('GATE STALLED'), clean],
+      ['it is not reported as a hang', !out.includes('That is a HANG'), clean],
+      ['the verdict comes from the exit code and the register',
+        r.code === 0 && out.includes('No new failures'), `exit ${r.code}\n${clean}`],
+    ];
+  }
 );
 
 /** Progress is not enough: the wall-clock ceiling still ends a run that never finishes. */
@@ -844,6 +894,7 @@ if (!existsSync(LIST_REPORTER)) {
 const sections = await Promise.all([
   silentRun(),
   endlessRun(),
+  finishedThenQuietRun(),
   serverDiedRun(),
   mixedRun(),
   remoteRefusedRun(),
