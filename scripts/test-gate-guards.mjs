@@ -58,6 +58,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createGuards, isProcessRunning } from './lib/test-lock.mjs';
+import { NO_VERDICT_EXIT } from './lib/gate-exit.mjs';
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const LIST_REPORTER = join(REPO, 'node_modules', 'playwright', 'lib', 'reporters', 'list.js');
@@ -228,9 +229,12 @@ async function ratchetFixture() {
   await mkdir(join(dir, 'node_modules', '@playwright', 'test'), { recursive: true });
   await mkdir(join(dir, 'data'), { recursive: true });
   await copyFile(join(REPO, '.husky', 'test-ratchet.mjs'), join(dir, '.husky', 'test-ratchet.mjs'));
-  // #1127: the ratchet classifies server-down failures with the shared library.
-  await mkdir(join(dir, 'scripts', 'lib'), { recursive: true });
-  await copyFile(join(REPO, 'scripts', 'lib', 'server-down.mjs'), join(dir, 'scripts', 'lib', 'server-down.mjs'));
+  // Every scripts/lib/*.mjs, not a hand-listed few. Naming them one at a time
+  // is the fixture bug this repo has already paid for: the ratchet gained a
+  // single import (#1181) and all 17 ratchet cases died on ERR_MODULE_NOT_FOUND
+  // instead of on a verdict -- which is what #1161 says about the gate cases,
+  // and why gateFixture has copied the whole directory since.
+  await copyLib(dir);
   await writeFile(join(dir, 'node_modules', '@playwright', 'test', 'package.json'), '{"type":"module"}\n');
   await writeFile(join(dir, 'node_modules', '@playwright', 'test', 'cli.js'), FAKE_CLI);
   await writeFile(join(dir, 'data', 'test-baseline-failures.json'), '{"failures":[]}\n');
@@ -263,7 +267,9 @@ const silentRun = () => ratchetCase(
       : null;
     const checks = [
       ['the ratchet returns on its own (not killed by this harness)', !r.boundHit, `still running after ${r.ms}ms\n${tail(out)}`],
-      ['it exits non-zero', r.code === 1, `exit ${r.code}`],
+      // #1181: a stall measured nothing. Still non-zero, still blocking -- but
+      // distinguishable from 'this batch broke tests', which is the whole point.
+      ['it exits with the no-verdict code', r.code === NO_VERDICT_EXIT, `exit ${r.code}`],
       ['it says HANG, not a verdict', out.includes('That is a HANG'), tail(out)],
       ['it records where it stopped', out.includes('GATE STALLED') && out.includes('last test seen'), tail(out)],
     ];
@@ -325,7 +331,9 @@ const endlessRun = () => ratchetCase(
   90_000,
   async (r, out) => [
     ['the ratchet returns on its own', !r.boundHit, `still running after ${r.ms}ms`],
-    ['it exits non-zero, naming the ceiling', r.code === 1 && out.includes('minute ceiling') && out.includes('That is a HANG'),
+    // #1181: the ceiling is a stall too -- nothing was measured.
+    ['it exits with the no-verdict code, naming the ceiling',
+      r.code === NO_VERDICT_EXIT && out.includes('minute ceiling') && out.includes('That is a HANG'),
       `exit ${r.code}\n${tail(out.split('\n').filter((l) => !/fake\.spec/.test(l)).join('\n'))}`],
   ]
 );
@@ -343,7 +351,9 @@ const serverDiedRun = () => ratchetCase(
   { WB_FAKE_PW_MODE: 'server-died', WB_GATE_ACK_MIN: '5' },
   90_000,
   async (r, out) => [
-    ['it blocks (nothing was verified)', r.code === 1 && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
+    // #1181: a dead server measured nothing, so this is NO_VERDICT_EXIT rather
+    // than 1. Blocking is still the point; blaming the batch never was.
+    ['it blocks (nothing was verified)', r.code === NO_VERDICT_EXIT && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
     ['it says the server died, not that the change broke tests',
       out.includes('SERVER DIED') && !out.includes('NEW test failures'), tail(out)],
     ['it counts the tests that never reached the server', /3 test\(s\) could not reach/.test(out), tail(out)],
@@ -383,7 +393,21 @@ process.stdin.resume();
 process.stdin.on('end', () => { console.log('STUB-RATCHET-DONE'); process.exit(0); });
 `;
 
-async function gateFixture() {
+/**
+ * Stands in for a ratchet that measured nothing (#1181).
+ *
+ * It prints the real ratchet's own words and exits with the no-verdict code.
+ * Callers must repeat that, not translate it into 'the batch broke tests' --
+ * which is what release.mjs did on 2026-09-15 about a run that had passed.
+ */
+const STUB_RATCHET_NO_VERDICT = `
+console.log('STUB-RATCHET-STARTED');
+console.error('THE SUITE NEVER RAN - this is not a code failure.');
+console.error('   Nothing was verified, so nothing is known.');
+process.exit(3);
+`;
+
+async function gateFixture(ratchet = STUB_RATCHET) {
   const dir = await mkdtemp(join(tmpdir(), 'wb-gate-guard-gate-'));
   const repo = join(dir, 'repo');
   const lockDir = join(dir, 'locks');
@@ -395,7 +419,7 @@ async function gateFixture() {
   // test-lock, suite-env and hold-machine, and a missing one fails every Gate
   // case on ERR_MODULE_NOT_FOUND instead of on a verdict (#1161).
   await copyLib(repo);
-  await writeFile(join(repo, '.husky', 'test-ratchet.mjs'), STUB_RATCHET);
+  await writeFile(join(repo, '.husky', 'test-ratchet.mjs'), ratchet);
   await writeFile(join(repo, 'package.json'), '{"type":"module"}\n');
   await writeFile(join(repo, 'staged.txt'), 'one\n');
 
@@ -410,8 +434,8 @@ async function gateFixture() {
   return { dir, repo, lockDir, git };
 }
 
-async function gateCase(label, envExtra, body) {
-  const fx = await gateFixture();
+async function gateCase(label, envExtra, body, ratchet) {
+  const fx = await gateFixture(ratchet);
   try {
     const guards = createGuards({ root: 'C:/elsewhere/arriving', globalDir: fx.lockDir, minFreeMb: 0 });
     const launch = (boundMs) => start(join('.husky', 'gate-staged-tree.mjs'), {
@@ -796,6 +820,58 @@ const releaseHoldsTheMachine = () => pathCase(
   }
 );
 
+/**
+ * A release aborted on a no-verdict run says so, and does not blame the batch (#1181).
+ *
+ * On 2026-09-15 the ratchet printed 'THE SUITE NEVER RAN - this is not a code
+ * failure' and release.mjs answered, about that same run, 'the ratchet found
+ * NEW failures ... this batch broke them'. Someone then went looking for a
+ * regression that did not exist. The distinction was in the output and died at
+ * the process boundary.
+ */
+const releaseNoVerdict = () => pathCase(
+  'Release: a ratchet that measured nothing aborts without blaming the batch (#1181)',
+  { ...releaseFiles(), '.husky/test-ratchet.mjs': STUB_RATCHET_NO_VERDICT },
+  async ({ launch }) => {
+    const rel = launch(RELEASE, { args: ['--check'] });
+    const r = await rel.exited;
+    const out = rel.output();
+    return [
+      ['the release is aborted', r.code !== 0 && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
+      ['it does NOT claim new failures', !/found NEW failures|this batch broke them/.test(out), tail(out)],
+      ['it says nothing was measured', /no verdict|nothing is known/i.test(out), tail(out)],
+    ];
+  }
+);
+
+/**
+ * The commit gate carries the same distinction (#1181).
+ *
+ * gate-staged-tree.mjs collapsed every non-zero ratchet exit to 1 and said
+ * 'The STAGED tree did not pass. This verdict is about the commit itself' --
+ * sending someone to fix staged content over a run that compared nothing.
+ *
+ * It uses the gate fixture, not the path fixture: the gate needs a real git
+ * repo with a staged tree, and without one it dies in `git diff` long before
+ * it reaches the verdict this case is about.
+ */
+const gateNoVerdict = () => gateCase(
+  'Commit gate: a ratchet that measured nothing is not a verdict on the staged tree (#1181)',
+  {},
+  async ({ launch }) => {
+    const gate = launch(60_000);
+    const r = await gate.exited;
+    const out = gate.output();
+    return [
+      ['the commit is blocked', r.code !== 0 && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
+      ['the no-verdict code reaches the hook, not a flattened 1', r.code === NO_VERDICT_EXIT, `exit ${r.code}\n${tail(out)}`],
+      ['it does NOT say the staged tree failed', !/STAGED tree did not pass/.test(out), tail(out)],
+      ['it says nothing was measured', /NO VERDICT|Nothing was measured/i.test(out), tail(out)],
+    ];
+  },
+  STUB_RATCHET_NO_VERDICT,
+);
+
 const releaseBound = () => pathCase(
   'Release: a ratchet that never returns is killed at the bound, releasing the machine',
   releaseFiles(),
@@ -916,6 +992,8 @@ const sections = await Promise.all([
   priorityWaitBound(),
   releaseHoldsTheMachine(),
   releaseBound(),
+  releaseNoVerdict(),
+  gateNoVerdict(),
   integrityHoldsASlot(),
   integrityBound(),
 ]);
