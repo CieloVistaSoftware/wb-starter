@@ -54,22 +54,25 @@ jobs:
           # Ensure Playwright browsers are available
           npx playwright install --with-deps
 
+      # Same two paths as every other workflow (#1163): named specs through
+      # scripts/locked-spec-run.mjs, a whole project through the ratchet. Both
+      # keep playwright.config.ts's own reporters — a `--reporter=` flag REPLACES
+      # them, which is how data/errors.json stopped being created and
+      # "error log should exist" came to pass only when the site was broken.
+      # Tracing is asked for with WB_TRACE, not a flag, for the same reason.
       - name: Run Playwright (focused)
         id: run
+        env:
+          WB_TRACE: ${{ github.event.inputs.trace == 'true' && 'on' || 'off' }}
         run: |
           set -e
           REF="${{ github.event.inputs.ref || github.ref }}"
           echo "Running tests on ref: ${REF}"
           if [ -n "${{ github.event.inputs.tests }}" ]; then
-            TEST_CMD="npx playwright test ${{ github.event.inputs.tests }} --reporter=list"
+            node scripts/locked-spec-run.mjs ${{ github.event.inputs.tests }}
           else
-            TEST_CMD="npx playwright test --project=compliance --reporter=list"
+            WB_GATE_PROJECTS=compliance node .husky/test-ratchet.mjs
           fi
-          if [ "${{ github.event.inputs.trace }}" = 'true' ]; then
-            TEST_CMD="$TEST_CMD --trace=on"
-          fi
-          echo "$TEST_CMD"
-          eval "$TEST_CMD"
         shell: bash
 
       - name: Collect artifacts (trace + logs)
