@@ -171,6 +171,18 @@ function main() {
       WB_TEST_PORT: '',
       // Let the suite know where it really lives, for anything that reports paths.
       WB_GATE_SOURCE_REPO: REPO,
+      // #1200: server.js arms a recursive fs.watch on the served directory
+      // unless told not to, and the throwaway checkout has no use for
+      // live-reload -- nothing here is ever edited after the initial
+      // materialisation, and there is no human tab to reload. Measured
+      // 2026-09-19/21: in every gate run the watcher logged a spurious
+      // '[File Changed] ... -> Reloading clients...' seconds after start
+      // (server.js's own comment on RELOAD_IGNORE_DIRS documents Windows'
+      // recursive fs.watch firing on a plain READ), telling every open test
+      // page to reload mid-run. The server log going quiet after that is
+      // ordinary browser caching, not a dead server, and this does NOT fix
+      // the tail-of-suite stall -- that is #962.
+      DISABLE_WATCH: 'true',
     }),
     // Outer bound, deliberately a little longer than test-ratchet.mjs's own so
     // the inner one fires first and reports the more specific reason. Without
