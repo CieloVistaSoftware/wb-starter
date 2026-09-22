@@ -164,7 +164,7 @@ if (CHECK_ONLY) {
   process.exit(0);
 }
 
-const page = fs.readFileSync(PAGE, 'utf8');
+let page = fs.readFileSync(PAGE, 'utf8');
 if (page.includes(`id="${id}"`)) {
   console.log(`[whats-new-entry] ${next} already has a section — leaving it alone.`);
   process.exit(0);
@@ -177,6 +177,35 @@ if (page.includes(`id="${id}"`)) {
  * more thing that can be deleted by an unrelated edit, and this anchor is the
  * page's own structure.
  */
+/**
+ * A hand-written `<section id="whats-new-unreleased">` is allowed BETWEEN
+ * releases: it describes work on main that no number contains yet. The release
+ * being written now is the number that contains it, so its entries move into
+ * this section and the unreleased section is removed (#1182). Before this, 4.0.3
+ * was inserted above it and it survived three releases, and the What's New table
+ * showed its heading -- "Live on the site, but not in any numbered release" -- as
+ * the Version of seven fixes that were in 4.0.3.
+ */
+const UNRELEASED_OPEN = '<section id="whats-new-unreleased">';
+let folded = [];
+const uStart = page.indexOf(UNRELEASED_OPEN);
+if (uStart !== -1) {
+  const uEnd = page.indexOf('</section>', uStart) + '</section>'.length;
+  const uBlock = page.slice(uStart, uEnd);
+  folded = uBlock
+    .split(/(?=<li id="whats-new-unreleased-list-item-\d+")/)
+    .filter((part) => part.startsWith('<li id="whats-new-unreleased-list-item-'))
+    .map((part) => part.split('</ul>')[0].replace(/\s*<\/li>\s*$/, '').trimEnd());
+  let after = page.slice(uEnd);
+  after = after.replace(/^(\r?\n)+/, '');
+  page = page.slice(0, uStart) + after;
+}
+const foldedItems = folded.map((item, i) =>
+  '    ' + item.replace(/^<li id="whats-new-unreleased-list-item-\d+"/, `<li id="${listId}-item-${commits.length + i + 1}"`) + '</li>');
+const sectionOut = foldedItems.length
+  ? section.replace('  </ul>\n</section>', foldedItems.join('\n') + '\n  </ul>\n</section>')
+  : section;
+
 const anchor = page.indexOf('<section id="whats-new-');
 if (anchor === -1) {
   console.error('\n❌ pages/whats-new.html has no <section id="whats-new-…"> to insert before.\n');
@@ -184,7 +213,8 @@ if (anchor === -1) {
 }
 
 const eol = page.includes('\r\n') ? '\r\n' : '\n';
-const body = eol === '\r\n' ? section.split('\n').join('\r\n') : section;
+const body = eol === '\r\n' ? sectionOut.split('\n').join('\r\n') : sectionOut;
 fs.writeFileSync(PAGE, page.slice(0, anchor) + body + page.slice(anchor));
 
-console.log(`[whats-new-entry] wrote ${commits.length} item(s) for ${next} (${range})`);
+console.log(`[whats-new-entry] wrote ${commits.length} item(s) for ${next} (${range})`
+  + (folded.length ? `, plus ${folded.length} folded in from the unreleased section` : ''));

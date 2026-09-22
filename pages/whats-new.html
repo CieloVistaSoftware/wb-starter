@@ -47,7 +47,8 @@
   for (const section of sections) {
     const heading = text(section.querySelector('h2'));
     // "4.0.1 — 2026-09-03" / "3.0.91 — 2026-08-21"
-    const version = (heading.match(/^([\d.]+)/) || [, heading])[1];
+    // A heading starts with its version (#1182); a date or prose is never one.
+    const version = (heading.match(/^(\d+\.\d+\.\d+)/) || [, ''])[1];
     const date = (heading.match(/(\d{4}-\d{2}-\d{2})/) || [, ''])[1];
 
     for (const item of section.querySelectorAll('.wn-item')) {
@@ -142,9 +143,14 @@
 </section>
 <section id="whats-new-4-0-3">
   <h2>4.0.3 — 2026-09-12</h2>
-  <p id="whats-new-4-0-3-note"><strong>16 changes, shipped as one batch.</strong> Everything listed here is on <code>main</code> and therefore live at
+  <p id="whats-new-4-0-3-note"><strong>22 changes, shipped as one batch.</strong> Everything listed here is on <code>main</code> and therefore live at
   <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>.
   A push to <code>main</code> IS the deploy, so this version names exactly one published state (#1076).</p>
+  <p id="whats-new-4-0-3-context"><strong>Things that were broken only where anyone could see them.</strong> John opened the deployed
+  behaviours page and its error log showed images failing to load. Everything about them was correct on
+  localhost. Chasing that turned up a second family of defects: checks that had been quietly matching nothing
+  for months. (Until #1182 these entries sat under a heading saying no numbered release contained them;
+  4.0.3 did.)</p>
   <ul id="whats-new-4-0-3-list">
     <li id="whats-new-4-0-3-list-item-1" class="wn-item wn-new"><span class="wn-tag">New</span> <strong>A push to main is a release, so no code reaches the site unnamed</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1076" target="_blank" rel="noopener">#1076</a></li>
     <li id="whats-new-4-0-3-list-item-2" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Release.mjs no longer corrupts the lockfile, and the IntelliSense manifest has a gate</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/991" target="_blank" rel="noopener">#991</a> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1057" target="_blank" rel="noopener">#1057</a></li>
@@ -153,7 +159,14 @@
     <li id="whats-new-4-0-3-list-item-5" class="wn-item wn-fix"><span class="wn-tag">Change</span> <strong>Commit everything, so local and the deployed site actually match</strong></li>
     <li id="whats-new-4-0-3-list-item-6" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The Fix Viewer could not load its own data on the deployed site</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1067" target="_blank" rel="noopener">#1067</a></li>
     <li id="whats-new-4-0-3-list-item-7" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Errors recorded where nobody could read them, assets that 404&#39;d on the deployed site, and a commit gate that tested the wrong tree</strong></li>
-    <li id="whats-new-4-0-3-list-item-8" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Example assets 404 on the deployed sub-path</strong></li>
+    <li id="whats-new-4-0-3-list-item-8" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Every example image was broken
+    on the published site.</strong> The site lives at two addresses. On your own machine it sits at the
+    top level (<code>localhost:3000/</code>); published, it sits inside a folder
+    (<code>&hellip;github.io/wb-starter/</code>). The examples asked for images starting from the top,
+    <code>/images/placeholder.svg</code>, which finds the file on your machine but on the published site
+    points outside the project entirely, to an address that does not exist. So every example image
+    failed to load, and only ever for visitors. The page now adds the folder to those addresses before
+    the examples render.</li>
     <li id="whats-new-4-0-3-list-item-9" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The version stamp names where the code lives, not where it was authored</strong></li>
     <li id="whats-new-4-0-3-list-item-10" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The deploy gate compared the deployed site to itself</strong></li>
     <li id="whats-new-4-0-3-list-item-11" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The commit gate could hang forever, and two test runs could collide on one machine</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1106" target="_blank" rel="noopener">#1106</a></li>
@@ -162,34 +175,13 @@
     <li id="whats-new-4-0-3-list-item-14" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>A schema was committed as an empty file and every gate passed it</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1103" target="_blank" rel="noopener">#1103</a></li>
     <li id="whats-new-4-0-3-list-item-15" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Building a page finished before the things on it were built</strong> <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1075" target="_blank" rel="noopener">#1075</a></li>
     <li id="whats-new-4-0-3-list-item-16" class="wn-item wn-fix"><span class="wn-tag">Change</span> <strong>Card variants, footer links, collapsing panels and the behaviours workspace all render as their schemas describe</strong></li>
-  </ul>
-</section>
-<section id="whats-new-unreleased">
-  <h2>Live on the site, but not in any numbered release</h2>
-  <p>These fixes are on <code>main</code> and deployed. The last version number, 4.0.2, was
-  cut before them, so nothing you can name contains them yet.</p>
-  <p><strong>Things that were broken only where anyone could see them.</strong> John opened the deployed
-  behaviours page and its error log showed images failing to load. Everything about them was correct on
-  localhost. Chasing that turned up a second family of defects: checks that had been quietly matching nothing
-  for months.</p>
-  <ul id="whats-new-unreleased-list">
-    <li id="whats-new-unreleased-list-item-1" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Every example image was broken
-    on the published site.</strong> The site lives at two addresses. On your own machine it sits at the
-    top level (<code>localhost:3000/</code>); published, it sits inside a folder
-    (<code>&hellip;github.io/wb-starter/</code>). The examples asked for images starting from the top,
-    <code>/images/placeholder.svg</code>, which finds the file on your machine but on the published site
-    points outside the project entirely, to an address that does not exist. So every example image
-    failed to load, and only ever for visitors. The page now adds the folder to those addresses before
-    the examples render.
-
-    <li id="whats-new-unreleased-list-item-2" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The first version of that fix missed every
+    <li id="whats-new-4-0-3-list-item-17" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The first version of that fix missed every
     portfolio card.</strong> It re-rooted a fixed list of attribute names &mdash; <code>src</code>,
     <code>image</code>, <code>avatar</code> &mdash; and <code>cover</code> was not on it, so
     <code>x-cardportfolio</code> kept 404ing while the fix looked complete. A list of names is only as good as
     whoever last remembered to extend it, so the value now gets a vote: an attribute whose value ends in a media
     extension is an asset, whatever it is called.</li>
-
-    <li id="whats-new-unreleased-list-item-3" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Four checks were matching nothing at
+    <li id="whats-new-4-0-3-list-item-18" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Four checks were matching nothing at
     all.</strong> A <code>\b</code> word boundary written through a tool that eats escapes becomes a literal
     backspace character, which no real source contains &mdash; so the check silently passes forever. The guard
     that exists to catch exactly this scanned <code>src</code>, <code>scripts</code> and <code>tests</code> for
@@ -197,31 +189,27 @@
     JavaScript, the largest body of source in the project. One of the dead checks was the warning that tells
     readers of the static site which examples need the local dev server &mdash; present, styled, and unable to
     fire. <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1049" target="_blank" rel="noopener">#1049</a></li>
-
-    <li id="whats-new-unreleased-list-item-4" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The version badge had no styling at
+    <li id="whats-new-4-0-3-list-item-19" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The version badge had no styling at
     all.</strong> <code>release.css</code> existed, was correct, and was loaded by nothing. When site.css stopped
     importing every behaviour stylesheet and switched to loading them on demand, each one had to be named in a
     manifest &mdash; and this one never was, so its three classes had no rules behind them on every page. A
     stylesheet that never loads raises no error and the element still renders its text, which is why nobody
     caught it. A new check fails if any behaviour stylesheet is reachable from nothing.
     <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1008" target="_blank" rel="noopener">#1008</a></li>
-
-    <li id="whats-new-unreleased-list-item-5" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Unshipped work was reported as
+    <li id="whats-new-4-0-3-list-item-20" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Unshipped work was reported as
     delivered.</strong> The tool that says how far a fix has travelled counted a commit on <em>any</em> remote
     branch as &ldquo;pushed&rdquo;, so work sitting on a feature branch &mdash; where most work starts &mdash;
     read as shipped. Travel is now measured by reachability from the branch the site actually ships from; a
     commit that is only on a working branch stays &ldquo;committed&rdquo;, which is what it is.
     <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1043" target="_blank" rel="noopener">#1043</a></li>
-
-    <li id="whats-new-unreleased-list-item-6" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The deployed error viewer reported
+    <li id="whats-new-4-0-3-list-item-21" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>The deployed error viewer reported
     &ldquo;No errors found. Great job!&rdquo; while it was reading the wrong address.</strong> It fetched the log
     from the organisation root rather than from this site, got a 404, and treated that as &ldquo;nothing has gone
     wrong&rdquo; &mdash; a false all-clear on a site that had errors, which is worse than an error message. It
     now reads the log relative to itself, and when there genuinely is no log it says which address it checked,
     so a wrong path can never again look like good news.
     <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1000" target="_blank" rel="noopener">#1000</a></li>
-
-    <li id="whats-new-unreleased-list-item-7" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Sorting a date column sorted it by month
+    <li id="whats-new-4-0-3-list-item-22" class="wn-item wn-bug"><span class="wn-tag">Bug</span> <strong>Sorting a date column sorted it by month
     name.</strong> Table sorting understood dates written the way data stores them
     (<code>2026-09-03</code>) but not the way pages print them (<code>Sep 5, 2026</code>), so a rendered date fell
     through to plain text sorting: April before March, January after February. On the issues list that put
@@ -229,7 +217,6 @@
     right by accident that the column looked fine at a glance. Rendered dates are now compared as dates, and a
     column of ordinary text is still sorted as text.
     <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/1011" target="_blank" rel="noopener">#1011</a></li>
-
   </ul>
 </section>
 
@@ -738,7 +725,7 @@
 </section>
 
 <section id="whats-new-2026-08-19">
-  <h2>2026-08-19</h2>
+  <h2>3.0.38 — 2026-08-19</h2>
   <ul id="whats-new-2026-08-19-list">
     <li id="whats-new-2026-08-19-list-item-1"><strong>Behaviors showcase rebuilt around a live selector.</strong> Pick any behavior or variant from the list and it renders immediately beside the list, with its formatted source, its live events, the handler you would copy, and its docs — replacing the 88 hand-written demo sections that used to run down the page (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/664" target="_blank" rel="noopener">#664</a>, <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/666" target="_blank" rel="noopener">#666</a>).</li>
     <li id="whats-new-2026-08-19-list-item-2"><strong><code>&lt;x-table paginated&gt;</code> now paginates.</strong> <code>paginated</code> and <code>pageSize</code> were declared in the schema and read nowhere, so the attribute rendered every row and no controls. Rows are hidden rather than removed, so sorting, searching and row listeners keep working on the same nodes. <code>hoverable</code> and <code>filterable</code> — the documented spellings — did nothing either, because the behavior only ever read <code>hover</code> and <code>searchable</code>; both are accepted now (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/669" target="_blank" rel="noopener">#669</a>).</li>
@@ -755,7 +742,7 @@
 </section>
 
 <section id="whats-new-2026-08-16">
-  <h2>2026-08-16</h2>
+  <h2>3.0.14 — 2026-08-16</h2>
   <ul id="whats-new-2026-08-16-list">
     <li id="whats-new-2026-08-16-list-item-1">Fixed <code>docs/components/feedback/badge.md</code>'s "Color Variants" section rendering as a single stacked column with a huge empty gap — an auto-promoted fenced code block with several children and no way to declare <code>columns</code> in markdown source always collapsed to <code>cols-1</code>, regardless of how many children it actually had (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/617" target="_blank" rel="noopener">#617</a>).</li>
     <li id="whats-new-2026-08-16-list-item-2">Fixed every badge shown inside a <code>&lt;x-demo&gt;</code> losing its <code>label</code> text entirely, rendering only the 📖 doc-link icon — the "children win over label" check was fooled by the doc-link icon itself, appended as a DOM child before the badge behavior ran (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/618" target="_blank" rel="noopener">#618</a>).</li>
@@ -769,7 +756,7 @@
 </section>
 
 <section id="whats-new-2026-08-15">
-  <h2>2026-08-15</h2>
+  <h2>3.0.10 — 2026-08-15</h2>
   <ul id="whats-new-2026-08-15-list">
     <li id="whats-new-2026-08-15-list-item-1"><strong id="whats-new-2026-08-15-list-item-1-lead"><code>autoInject</code> now defaults to <code>true</code> site-wide</strong> — a plain semantic element (<code>&lt;article&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;table&gt;</code>, ...) gets real component behavior automatically, zero extra markup required. A page can still opt out via <code>WB.init({ autoInject: false })</code>. This is the core architectural shift behind moving away from <code>wb-*</code> custom tags toward semantic HTML across the docs.</li>
     <li>Published a retrospective on the week's most common error patterns (layout/CSS violations, placeholder assets, compliance-test process gaps, x-demo source-extraction bugs, attribute-reading gaps) and codified 4 new standards rules from it, including a ban on placeholder asset paths and a requirement that broken media throw a real, loggable error instead of failing silently.</li>
@@ -777,7 +764,7 @@
 </section>
 
 <section id="whats-new-2026-08-14">
-  <h2>2026-08-14</h2>
+  <h2>3.0.10 — 2026-08-14</h2>
   <ul id="whats-new-2026-08-14-list">
     <li id="whats-new-2026-08-14-list-item-1">Rewrote <code>docs/components/semantics/table.md</code> to cover all 12 attribute permutations with real 5+ row examples, retired the old slotted <code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code> authoring method entirely (it silently rendered 0 rows), and fixed <code>searchable</code> so it actually renders a working search input for the first time (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/433" target="_blank" rel="noopener">#433</a>, <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/588" target="_blank" rel="noopener">#588</a>).</li>
     <li id="whats-new-2026-08-14-list-item-2">Added Ctrl/Cmd multi-select to <code>&lt;x-table selectable&gt;</code> — clicking a row used to always clear every other selected row; holding Ctrl (Cmd on Mac) now adds/removes just that row instead (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/592" target="_blank" rel="noopener">#592</a>).</li>
@@ -796,7 +783,7 @@
 </section>
 
 <section id="whats-new-2026-08-13">
-  <h2>2026-08-13</h2>
+  <h2>3.0.10 — 2026-08-13</h2>
   <ul id="whats-new-2026-08-13-list">
     <li id="whats-new-2026-08-13-list-item-1">Enforced <code>DEMOS-AND-DOCS-STANDARDS.md</code> §3 ("demos are vertical — never side-by-side"): removed the <code>demo-section__grid</code> side-by-side wrapper across the site generators and 9 hand-authored demo files (187 instances) — every <code>&lt;x-demo&gt;</code> now stacks vertically instead of sharing a grid row with its siblings (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/563" target="_blank" rel="noopener">#563</a>).</li>
     <li id="whats-new-2026-08-13-list-item-2">Fixed code samples getting cut off with a horizontal scrollbar on normal-length lines — the demo box's shrink-to-fit measurement only ever sized itself to the rendered CONTROL, capping the code panel to the control's own width even when the code needed more room. It now sizes to whichever is wider, control or code. A follow-up timing bug (locking in a stale width before syntax-highlighting/line-numbers finished rendering) and a second bug (only ever measuring the FIRST of a demo's code panels, missing a second JS-interaction sample) are both fixed too (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/563" target="_blank" rel="noopener">#563</a>, <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/569" target="_blank" rel="noopener">#569</a>).</li>
@@ -811,7 +798,7 @@
 </section>
 
 <section id="whats-new-2026-08-12">
-  <h2>2026-08-12</h2>
+  <h2>3.0.10 — 2026-08-12</h2>
   <ul id="whats-new-2026-08-12-list">
     <li id="whats-new-2026-08-12-list-item-1">Fixed the site failing to load at all in some contexts: <code>card.js</code>'s internal helper was renamed from <code>cardBase</code> to <code>composeCard</code> as part of the composition-over-inheritance cleanup, but <code>x-card.js</code>'s import was never updated — a syntax error that broke module loading for every page pulling in the Fix Viewer. Also fixed <code>&lt;x-audio&gt;</code> (and every other <code>&lt;wb-*&gt;</code> component with a media <code>src</code>) 404ing when a page under <code>pages/</code> is opened directly instead of through the site's normal navigation — the server's own path-rewriting for that case only recognized native <code>&lt;audio&gt;</code>/<code>&lt;video&gt;</code>/<code>&lt;img&gt;</code> tags, not this project's own custom elements (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/542" target="_blank" rel="noopener">#542</a>).</li>
     <li id="whats-new-2026-08-12-list-item-2">Increased the theme count from 23 to 50, removing one (<code>charcoal-light-text</code>) that failed contrast requirements (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/470" target="_blank" rel="noopener">#470</a>).</li>
@@ -830,7 +817,7 @@
 </section>
 
 <section id="whats-new-2026-08-09">
-  <h2>2026-08-09</h2>
+  <h2>3.0.10 — 2026-08-09</h2>
   <ul id="whats-new-2026-08-09-list">
     <li id="whats-new-2026-08-09-list-item-1">Fixed <code>pages/behaviors.html</code>'s missing <code>x-alert</code> demo section (3 broken tests), and a matching gap in <code>alert()</code> that only ever read a literal <code>variant</code> attribute even though the schema declares <code>type</code> as an alias (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/522" target="_blank" rel="noopener">#522</a>).</li>
     <li id="whats-new-2026-08-09-list-item-2">Added regression coverage confirming <code>demos/frameworks.html</code>'s legacy code-panel duplication stays fixed, and that <code>wb-lazy.js</code>'s IntersectionObserver preload still enhances off-screen elements before they scroll into view — both behaviors were already correct in production but untested (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/449" target="_blank" rel="noopener">#449</a>, <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/491" target="_blank" rel="noopener">#491</a>).</li>
@@ -843,7 +830,7 @@
 </section>
 
 <section id="whats-new-2026-08-08">
-  <h2>2026-08-08</h2>
+  <h2>3.0.9 — 2026-08-08</h2>
   <ul id="whats-new-2026-08-08-list">
     <li>Reconciled overlapping fixes from two parallel work streams that had independently patched the same 7 issues in different ways — reviewed each pair, kept the better-rooted fix (or merged the best of both), and verified the result against the full compliance suite before shipping.</li>
     <li>Fixed the home page's "Live Demos" section heading to read "Notification Card Examples" (<a href="https://github.com/CieloVistaSoftware/wb-starter/issues/507" target="_blank" rel="noopener">#507</a>).</li>
@@ -865,7 +852,7 @@
 </section>
 
 <section id="whats-new-2026-08-07">
-  <h2>2026-08-07</h2>
+  <h2>3.0.8 — 2026-08-07</h2>
   <ul id="whats-new-2026-08-07-list">
     <li><strong>UI Standards Audit + 20-Fix Batch:</strong> Comprehensive audit of deployed site found 4 critical bugs affecting media loading, template syntax, and component rendering. All fixed and covered by new regression tests.</li>
     <li id="whats-new-2026-08-07-list-item-1">Fixed audio files not loading on pages/components.html and pages/home.html — relative paths (<code>demos/sample.wav</code>) weren't resolving from different base URLs. Now absolute (<code>/demos/sample.wav</code>).</li>
@@ -896,7 +883,7 @@
 </section>
 
 <section id="whats-new-2026-08-05">
-  <h2>2026-08-05</h2>
+  <h2>3.0.6 — 2026-08-05</h2>
   <ul id="whats-new-2026-08-05-list">
     <li>Fixed several pages/list items sitting flush against neighboring content with no gap at all (list items wrapping onto a new line touched the item below; several code snippets sitting close together visually overlapped) — added real minimum spacing project-wide.</li>
     <li>8 of the standalone component-showcase pages (Cards, Content, Effects, Feedback, Forms, Interactive, Layout, Overlays) rendered with their content flush against the browser edge, no page margin at all — now match every other page's breathing room.</li>
@@ -921,7 +908,7 @@
 </section>
 
 <section id="whats-new-2026-08-04">
-  <h2>2026-08-04</h2>
+  <h2>3.0.3 — 2026-08-04</h2>
   <ul id="whats-new-2026-08-04-list">
     <li id="whats-new-2026-08-04-list-item-1"><code>&lt;input type="password"&gt;</code> now gets the show/hide toggle automatically, just like <code>type="checkbox"</code>/<code>type="radio"</code>/<code>type="range"</code> already did — no more redundant <code>x-password</code> attribute needed.</li>
     <li>Fixed a real double-border on styled inputs (Success/Error variants showed two concentric rings) — a wrapper div was reusing the same CSS class as the input it wrapped.</li>
@@ -943,7 +930,7 @@
 </section>
 
 <section id="whats-new-2026-08-03">
-  <h2>2026-08-03</h2>
+  <h2>3.0.3 — 2026-08-03</h2>
   <ul id="whats-new-2026-08-03-list">
     <li id="whats-new-2026-08-03-list-item-1">Fixed <code>docs/manifest.json</code> 404ing on the root SPA (<code>/index.html</code>) — every component's "Docs:" link on the main site was silently dead.</li>
     <li id="whats-new-2026-08-03-list-item-2">45 components (<code>&lt;x-card&gt;</code>, <code>&lt;x-button&gt;</code>, <code>&lt;x-badge&gt;</code>, and more) no longer carry a redundant CSS class that just repeated their own tag name.</li>
@@ -961,7 +948,7 @@
 </section>
 
 <section id="whats-new-2026-08-02">
-  <h2>2026-08-02</h2>
+  <h2>3.0.3 — 2026-08-02</h2>
   <ul id="whats-new-2026-08-02-list">
     <li id="whats-new-2026-08-02-list-item-1">Fixed <code>&lt;x-input&gt;</code> rendering no real <code>&lt;input&gt;</code> element at all on any standalone demo page (32 broken instances on the Form Controls page alone) — the schema-driven markup it depends on was never built under this site's lazy-loading runtime. It's now constructed directly, matching how other components already handle this.</li>
     <li>Fixed the theme picker breaking syntax-highlighting colors site-wide on any page that includes it — it was resolving to a dev-only file path that doesn't exist in production.</li>
@@ -975,7 +962,7 @@
 </section>
 
 <section id="whats-new-2026-08-01">
-  <h2>2026-08-01</h2>
+  <h2>3.0.3 — 2026-08-01</h2>
   <ul id="whats-new-2026-08-01-list">
     <li id="whats-new-2026-08-01-list-item-1">Fixed <code>&lt;x-select&gt;</code> silently discarding real <code>&lt;option&gt;</code> children — every documented example (<code>&lt;x-select&gt;&lt;option&gt;...&lt;/option&gt;&lt;/x-select&gt;</code>) rendered an empty dropdown with only the placeholder.</li>
     <li id="whats-new-2026-08-01-list-item-2">Fixed <code>&lt;x-draggable&gt;</code>/<code>x-draggable</code> jumping to a wildly wrong position on every drag instead of tracking the mouse — and getting worse with each subsequent drag. Also fixed <code>axis="x"</code>/<code>axis="y"</code>, which never actually constrained movement.</li>
@@ -988,7 +975,7 @@
 </section>
 
 <section id="whats-new-2026-07-30">
-  <h2>2026-07-30</h2>
+  <h2>3.0.3 — 2026-07-30</h2>
   <ul id="whats-new-2026-07-30-list">
     <li id="whats-new-2026-07-30-list-item-1">Fixed a sanitizer bug in the markdown renderer that silently ate any attribute whose name contained "on" followed by more letters before its own <code>=</code> (e.g. <code>options='...'</code>) — this was corrupting JSON-in-attribute examples site-wide, including live <code>&lt;x-select&gt;</code> dropdowns that quietly lost all their options.</li>
     <li>Fixed <code>&lt;x-cardportfolio&gt;</code>'s variant, size, and availability-status indicator — none of them had any visible effect before today.</li>
@@ -1006,7 +993,7 @@
 </section>
 
 <section id="whats-new-2026-07-29">
-  <h2>2026-07-29</h2>
+  <h2>3.0.2 — 2026-07-29</h2>
   <ul id="whats-new-2026-07-29-list">
     <li>Fixed a Playwright-suite-wide "app ready" race: dozens of tests waited on the WB object existing, which is true before the app actually finishes initializing — now they wait for the real ready signal.</li>
     <li>Restored the Behaviors page's missing content (spinner, and more) by regenerating it from its own schema, and fixed two stale button/alert markup patterns flagged by the compliance gate.</li>
@@ -1017,7 +1004,7 @@
 </section>
 
 <section id="whats-new-2026-07-28">
-  <h2>2026-07-28</h2>
+  <h2>3.0.0 — 2026-07-28</h2>
   <ul id="whats-new-2026-07-28-list">
     <li>Split the Card Components demo page apart from its 56-card permutation test matrix — the demo page loads faster and the matrix now has its own dedicated test fixture.</li>
     <li id="whats-new-2026-07-28-list-item-1">Deprecated <code>&lt;x-checkbox&gt;</code>/<code>&lt;x-textarea&gt;</code> in favor of native <code>&lt;input type="checkbox"&gt;</code>/<code>&lt;textarea&gt;</code> with attributes — no more reinventing what the browser already does.</li>
@@ -1030,7 +1017,7 @@
 </section>
 
 <section id="whats-new-2026-07-1x">
-  <h2>Week of 2026-07-14 – 18</h2>
+  <h2>3.0.0 — 2026-07-18</h2>
   <ul id="whats-new-2026-07-1x-list">
     <li>Consolidated demo pages into 8 clear categories, up from a sprawling flat index.</li>
     <li>Fixed dispatch collisions where multiple behaviors fought over the same host element (switch, checkbox, select, textarea, input, button).</li>

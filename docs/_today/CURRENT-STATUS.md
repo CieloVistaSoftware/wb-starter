@@ -1,66 +1,74 @@
-# CURRENT HANDOFF — 2026-09-11
+# CURRENT HANDOFF — 2026-09-17
 
 ## 🅿️ PARKING LOT
 
-**Task:** ship the release batch that has been blocked since 2026-09-09.
+**Task:** release 4.0.6. The three defects that killed ship attempts 1–3 are fixed
+and committed; the release itself is the next action.
 
-**Last action:** committed the batch. The gate's two remaining new failures were
-traced with probes and fixed; both specs verified 10/10 alone, the workspace one
-as test 1 on a cold page, which is the exact condition it failed under.
+**Last action:** committed #1180, #1181 and #1163. Guard suite 99 passed, 0 failed.
 
 **Next step, in order:**
-1. The commit's gate verdict. On a pass: `npm run ship` end to end, no review
-   pause (John: "I want the releases all automated").
-2. Law 17: `npm run test:smoke:deployed`.
-3. Close what the release unblocks: #1070, #1075, #1078, #1102, #1103, #1104,
-   #1106, #792. Four of those (#1070, #1075, #1078, #792) were reshaped for the
-   signature validator in parallel; confirm each passes
-   `node scripts/check-issue-signatures.mjs --number N` before closing.
-4. Commit the two held-back changes, each through its own gate:
-   - the article -> card registry change (saved in the session scratchpad:
-     'article': 'card', x-article removed, index.js redirect removed, the dead
-     article() deleted). It took the gate from 2 failures to 10 when bundled,
-     because removing x-article changes the behaviors catalogue four specs
-     assert over. Those specs must change in the same commit.
-   - wb-starter CLAUDE.md and docs/claude/TIER1-LAWS.md step 1 still name
-     `list_allowed_directories`; the filesystem MCP server was dropped.
+1. **`npm run ship`,** end to end, no review pause (John: "I want the releases all
+   automated").
+2. **Law 17: `npm run test:smoke:deployed`.** A push is not the deliverable; a
+   booting site is.
+3. **Close on green:** the 8 verified earlier (#678, #1074, #1076, #1085, #1106,
+   #1115, #1116, #1124 — drafts in the session scratchpad under `close-drafts/`),
+   plus #1180, #1181, #1163, and the seven from 2026-09-15.
+4. `.claude/worktrees/fix-1163` is now landed and can be removed. ~40 worktrees
+   remain; most are finished work.
 
-## What this batch fixes
+## What landed today
 
-| issue | fix | proof |
+| commit | issue | what it fixes |
 |---|---|---|
-| #1102 | an empty behavior fills from the curated example, not its field names; `data-` counts as authored | tests/behaviors/empty-behavior-teaches-by-example.spec.ts |
-| #1103 | article.schema.json restored from 0 bytes; parse gate added | tests/compliance/every-schema-parses.spec.ts |
-| #1104 | the hooksPath check asserts the guarantee, not a location | tests/regression/every-push-to-main-is-a-release.spec.ts |
-| #1106 | the gate is bounded (75/80 min) and holds the machine lock; single runs are held while a suite runs; a blocked gate is notified on release, never polls | scripts/lock-permutations.schema.json via scripts/test-lock-guards.mjs, 47/0, run in pre-commit |
-| #792 | x-footer renders `links` and `social` | tests/behaviors/every-declared-attribute.spec.ts |
-| — | cardstats compact/large/minimal never applied (keyed on classes a8a7362e stopped injecting) | card-typed-variants-no-op.spec.ts, now waits on animation `finished` |
-| — | the workspace spec read the page mid-entrance (site.css fadeIn slides 10px) | behaviors-workspace-single-scroll.spec.ts, now waits on whenIdle + the page's own animations |
+| d4f1bb33 | #1180 | the stall watchdog stops applying once every collected test has reported, so Playwright's shutdown is no longer read as a hang |
+| abbcf54e | #1181 | `NO_VERDICT_EXIT`: a run that measured nothing is no longer reported as "this batch broke them", in `release.mjs` **or** `gate-staged-tree.mjs` |
+| 24d5ae57 | #1163 | CI runs the ratchet narrowed by `WB_GATE_PROJECTS` instead of hand-writing a Playwright command with no register and no reporters |
 
-## Lessons written into this batch, so they are not relearned
+#1181 was filed against `release.mjs` alone. `gate-staged-tree.mjs` had the same
+defect one level down — it collapsed every non-zero ratchet exit to 1 and printed
+"The STAGED tree did not pass. This verdict is about the commit itself", sending
+someone to fix staged content over a run that had compared nothing. Both callers
+carry the distinction now.
 
-- **A logged cause does not prevent a recurrence; only an enforced one does.**
-  The five-hour gate hang was already recorded in Law 4, #1072 and the agent's
-  own notes. It recurred because nothing refused the second run.
-- **Permutations come from a schema, not from hand-picked cases** — params, one
-  simple working case, a schema with min/max/edges and an oracle, tests
-  generated from it, run red first. The lock gap survived because every
-  hand-written case held one kind of run against its own kind.
-- **Values read while an animation is moving are not facts.** Both of the last
-  two gate failures were a measurement taken mid-transition. Wait on
-  `animation.finished` — the browser's own notification.
-- **Three diagnoses of the workspace failure were wrong** (a half-built page, the
-  nav rail's max-height, header.css padding). A probe that reproduced the
-  failing condition exactly — first, on a cold page — found it in one run.
+## Lessons this batch, so they are not relearned
+
+- **A guard whose quiet period is shorter than the watchdog's own tick proves
+  nothing.** #1180's first guard went silent for 6s against a 3s ack deadline and
+  passed against the UNPATCHED ratchet, because the watchdog only looks every 10s.
+  Always run a new guard against HEAD before trusting it.
+- **A fixture that names its dependencies breaks on the next import — again.**
+  `ratchetFixture` copied `scripts/lib/server-down.mjs` by name, so adding one
+  import to the ratchet killed all 17 ratchet cases with `ERR_MODULE_NOT_FOUND`
+  instead of a verdict. `gateFixture` learned this in #1161 and copies the whole
+  directory; `ratchetFixture` now does too. Check the third fixture before it
+  bites.
+- **A test that hard-codes an exit code encodes yesterday's contract.** Four
+  assertions checked `r.code === 1` for a stall, the ceiling and a dead server —
+  exactly the conflation #1181 removes. Tier-1 Law 5: the tests were wrong, not
+  the code.
+- **`cmd | tail -20` reports tail's exit code, not cmd's.** A failing build reads
+  as a successful one. Redirect to a file and check `$?`.
 
 ## Open questions
 
-- The page entrance animation briefly lets #siteBody scroll on every page load.
-  Whether readers see a scrollbar flash depends on `.site__body` clipping.
-  Recorded on #1020; a product fix is a design choice (opacity-only, or
-  `overflow: clip`).
-- The general form of the cardstats bug: card.css variant rules keyed on classes
-  that a8a7362e stopped injecting. Fixed for cardstats only; the rest belongs
-  to #969 / #914.
-- `maxParallelSingle: 2` in lock-permutations.schema.json lets two single-spec
-  runs share the machine, which #1072 says collide on the port. Policy call.
+- Three single tests failed in ship attempt 2 and were never investigated:
+  `api-docs-panels-cover-the-pane` (#1175 covers it), `avatar-shape-and-size`,
+  `dropdown-position-and-content`. They may be the #961 flapping class.
+- `core.hooksPath` is absolute to the main checkout, so a commit made from a
+  worktree runs main's hooks, not the ones it is changing. Still unfiled.
+
+---
+docid: 100.1.today
+id: current-status
+title: Current handoff
+project: wb-starter
+description: The live parking lot — what the last session did, what is blocked, and what to do next.
+status: active
+tags: [handoff, status, release]
+category: 100.1 — Today
+updated: 2026-09-17
+author: CieloVista Software
+relativepath: docs/_today/CURRENT-STATUS.md
+---
