@@ -1,6 +1,6 @@
 # Vimeo
 
-Behavior applied with x-vimeo.
+Embeds a Vimeo video by its numeric id, with autoplay/mute/loop support.
 
 ## Type — new capability
 

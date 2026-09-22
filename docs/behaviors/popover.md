@@ -1,6 +1,6 @@
 # Popover
 
-Behavior applied with x-popover.
+A click- or hover-triggered popover with a heading and body text, positioned on any of the element's four sides.
 
 ## Type — new capability
 

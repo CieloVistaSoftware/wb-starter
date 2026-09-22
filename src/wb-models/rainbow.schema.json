@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "rainbow.schema.json",
   "title": "Rainbow",
-  "description": "Behavior applied with x-rainbow.",
+  "description": "Continuously cycles the element's color through the rainbow at a configurable speed.",
   "schemaFor": "x-rainbow",
   "properties": {
     "duration": {

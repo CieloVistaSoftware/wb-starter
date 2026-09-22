@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "vimeo.schema.json",
   "title": "Vimeo",
-  "description": "Behavior applied with x-vimeo.",
+  "description": "Embeds a Vimeo video by its numeric id, with autoplay/mute/loop support.",
   "schemaFor": "x-vimeo",
   "properties": {
     "video-id": {

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "gallery.schema.json",
   "title": "Gallery",
-  "description": "Behavior applied with x-gallery.",
+  "description": "Arranges child images into a grid — a fixed column count or a fixed tile size — with an optional click-to-enlarge lightbox.",
   "schemaFor": "x-gallery",
   "properties": {
     "columns": {

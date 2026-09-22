@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "masonry.schema.json",
   "title": "Masonry",
-  "description": "Behavior applied with x-masonry.",
+  "description": "Arranges children into a Pinterest-style masonry grid with a configurable column count and gap.",
   "schemaFor": "x-masonry",
   "properties": {
     "columns": {

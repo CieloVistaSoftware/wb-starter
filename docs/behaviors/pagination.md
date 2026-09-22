@@ -1,6 +1,6 @@
 # Pagination
 
-Behavior applied with x-pagination.
+Renders Previous/page-number/Next controls from a total item count (or an explicit page count), tracks the active page, and fires an event when the user changes it.
 
 ## Type — new capability
 

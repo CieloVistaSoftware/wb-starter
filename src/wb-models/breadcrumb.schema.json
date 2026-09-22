@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "breadcrumb.schema.json",
   "title": "Breadcrumb",
-  "description": "Behavior applied with x-breadcrumb.",
+  "description": "Renders a comma-separated trail of labels as a breadcrumb, e.g. `Home,Docs,Behaviors` becomes Home / Docs / Behaviors, with a configurable separator.",
   "schemaFor": "x-breadcrumb",
   "properties": {
     "items": {

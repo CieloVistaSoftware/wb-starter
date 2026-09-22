@@ -1,6 +1,6 @@
 # Video
 
-Behavior applied with x-video.
+Adds a poster image, native controls, inline mobile playback, and safe autoplay/mute/loop handling to a `<video>` element.
 
 ## Type — new capability
 

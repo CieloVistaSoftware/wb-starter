@@ -1,6 +1,6 @@
 # Pre
 
-Behavior applied with x-pre.
+Renders a preformatted code block with optional syntax highlighting, line numbers, a max-height with scrolling, line wrapping, and a copy-to-clipboard button.
 
 ## Type — new capability
 

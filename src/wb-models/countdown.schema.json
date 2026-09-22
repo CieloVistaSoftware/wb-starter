@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "countdown.schema.json",
   "title": "Countdown",
-  "description": "Behavior applied with x-countdown.",
+  "description": "Counts down to a target date, or a fixed duration in seconds, updating the rendered time and firing an event when it reaches zero.",
   "schemaFor": "x-countdown",
   "properties": {
     "seconds": {

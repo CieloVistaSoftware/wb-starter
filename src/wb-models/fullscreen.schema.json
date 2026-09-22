@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fullscreen.schema.json",
   "title": "Fullscreen",
-  "description": "Behavior applied with x-fullscreen.",
+  "description": "A button that toggles a target element — or the whole page — into the browser's fullscreen mode.",
   "schemaFor": "x-fullscreen",
   "properties": {
     "target": {

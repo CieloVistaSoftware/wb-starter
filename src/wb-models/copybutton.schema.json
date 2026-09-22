@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "copybutton.schema.json",
   "title": "Copybutton",
-  "description": "Behavior applied with x-copybutton.",
+  "description": "A button that copies text to the clipboard — either the host element's own text or another element matched by a CSS selector — and shows a temporary confirmation message.",
   "schemaFor": "x-copybutton",
   "properties": {
     "x-copybutton": {

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "prompt.schema.json",
   "title": "Prompt",
-  "description": "Behavior applied with x-prompt.",
+  "description": "A single-field text-input dialog with a heading, message, placeholder and default value, firing an event with the entered value or the cancellation.",
   "schemaFor": "x-prompt",
   "properties": {
     "heading": {

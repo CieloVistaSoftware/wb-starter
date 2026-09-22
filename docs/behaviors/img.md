@@ -1,6 +1,6 @@
 # Img
 
-Behavior applied with x-img.
+Adds a loading placeholder, a fallback for failed loads, a reserved aspect-ratio box to prevent layout shift, native lazy-loading, and an optional click-to-zoom lightbox to an image.
 
 ## Type — new capability
 

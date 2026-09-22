@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "glow.schema.json",
   "title": "Glow",
-  "description": "Behavior applied with x-glow.",
+  "description": "Applies a soft, theme-colored glow around the element, for drawing attention to it.",
   "schemaFor": "x-glow",
   "properties": {
     "color": {

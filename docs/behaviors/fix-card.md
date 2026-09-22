@@ -1,6 +1,6 @@
 # Fix Card
 
-Behavior for displaying fix/remediation details.
+Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.
 
 ## Type — new capability
 

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "figure.schema.json",
   "title": "Figure",
-  "description": "Behavior applied with x-figure.",
+  "description": "Adds a caption (below the image or overlaid on it) and an optional click-to-zoom lightbox to a figure's image.",
   "schemaFor": "x-figure",
   "properties": {
     "caption-position": {

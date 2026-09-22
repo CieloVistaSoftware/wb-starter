@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "pre.schema.json",
   "title": "Pre",
-  "description": "Behavior applied with x-pre.",
+  "description": "Renders a preformatted code block with optional syntax highlighting, line numbers, a max-height with scrolling, line wrapping, and a copy-to-clipboard button.",
   "schemaFor": "x-pre",
   "properties": {
     "language": {

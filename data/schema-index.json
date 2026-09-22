@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-12T21:35:58.250Z",
+  "generatedAt": "2026-09-22T20:50:56.062Z",
   "count": 152,
   "schemas": [
     {
       "file": "accordion.schema.json",
       "name": "x-accordion",
       "title": "Accordion",
-      "description": "Behavior applied with x-accordion.",
+      "description": "Turns a set of titled child sections into independently expandable/collapsible items. Deprecated: new pages should use the native <details> element.",
       "tag": "wb-x-accordion",
       "baseClass": "wb-x-accordion",
       "properties": {
@@ -378,7 +378,7 @@
       "file": "autosize.schema.json",
       "name": "x-autosize",
       "title": "Autosize",
-      "description": "Behavior applied with x-autosize.",
+      "description": "Automatically resizes a textarea to fit its content as the user types.",
       "tag": "wb-x-autosize",
       "baseClass": "wb-x-autosize",
       "properties": {},
@@ -900,7 +900,7 @@
       "file": "breadcrumb.schema.json",
       "name": "x-breadcrumb",
       "title": "Breadcrumb",
-      "description": "Behavior applied with x-breadcrumb.",
+      "description": "Renders a comma-separated trail of labels as a breadcrumb, e.g. `Home,Docs,Behaviors` becomes Home / Docs / Behaviors, with a configurable separator.",
       "tag": "wb-x-breadcrumb",
       "baseClass": "wb-x-breadcrumb",
       "properties": {
@@ -1605,7 +1605,7 @@
       "file": "clock.schema.json",
       "name": "x-clock",
       "title": "Clock",
-      "description": "Behavior applied with x-clock.",
+      "description": "A self-updating clock face — digital or analogue, 12- or 24-hour, with seconds shown or hidden.",
       "tag": "wb-x-clock",
       "baseClass": "wb-x-clock",
       "properties": {
@@ -1636,7 +1636,7 @@
       "file": "cluster.schema.json",
       "name": "x-cluster",
       "title": "Cluster",
-      "description": "Behavior applied with x-cluster.",
+      "description": "Lays out children in a wrapping horizontal row with a consistent gap and configurable justification/alignment — the common case for chips, tags and buttons that need to flow together.",
       "tag": "wb-x-cluster",
       "baseClass": "wb-x-cluster",
       "properties": {
@@ -1667,7 +1667,7 @@
       "file": "code.schema.json",
       "name": "x-code",
       "title": "Code",
-      "description": "Behavior applied with x-code.",
+      "description": "Renders inline or block code with optional syntax highlighting, a type-scale size, horizontal scrolling for long lines, and an optional copy-to-clipboard button.",
       "tag": "wb-x-code",
       "baseClass": "wb-x-code",
       "properties": {
@@ -1831,7 +1831,7 @@
       "file": "confirm.schema.json",
       "name": "x-confirm",
       "title": "Confirm",
-      "description": "Behavior applied with x-confirm.",
+      "description": "An OK/Cancel confirmation dialog with a configurable heading and message, firing an event naming which button was pressed.",
       "tag": "wb-x-confirm",
       "baseClass": "wb-x-confirm",
       "properties": {
@@ -1877,7 +1877,7 @@
       "file": "control.schema.json",
       "name": "control",
       "title": "Control",
-      "description": "Behavior applied with x-control.",
+      "description": "A styling hook: applies the `x-control` CSS class to the element and nothing else. (Earlier move/action-button wiring documented in this behavior's own source comment was never actually registered and has never run — see #1063.)",
       "tag": "wb-control",
       "baseClass": "wb-control",
       "properties": {},
@@ -1921,7 +1921,7 @@
       "file": "copybutton.schema.json",
       "name": "x-copybutton",
       "title": "Copybutton",
-      "description": "Behavior applied with x-copybutton.",
+      "description": "A button that copies text to the clipboard — either the host element's own text or another element matched by a CSS selector — and shows a temporary confirmation message.",
       "tag": "wb-x-copybutton",
       "baseClass": "wb-x-copybutton",
       "properties": {
@@ -1967,7 +1967,7 @@
       "file": "countdown.schema.json",
       "name": "x-countdown",
       "title": "Countdown",
-      "description": "Behavior applied with x-countdown.",
+      "description": "Counts down to a target date, or a fixed duration in seconds, updating the rendered time and firing an event when it reaches zero.",
       "tag": "wb-x-countdown",
       "baseClass": "wb-x-countdown",
       "properties": {
@@ -2623,7 +2623,7 @@
       "file": "figure.schema.json",
       "name": "x-figure",
       "title": "Figure",
-      "description": "Behavior applied with x-figure.",
+      "description": "Adds a caption (below the image or overlaid on it) and an optional click-to-zoom lightbox to a figure's image.",
       "tag": "wb-x-figure",
       "baseClass": "wb-x-figure",
       "properties": {
@@ -2856,7 +2856,7 @@
       "file": "fix-card.schema.json",
       "name": "fix-card",
       "title": "Fix Card",
-      "description": "Behavior for displaying fix/remediation details.",
+      "description": "Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.",
       "tag": "wb-fix-card",
       "baseClass": "wb-fix-card",
       "properties": {},
@@ -2882,7 +2882,7 @@
       "file": "flex.schema.json",
       "name": "x-flex",
       "title": "Flex",
-      "description": "Behavior applied with x-flex.",
+      "description": "Lays out children with CSS flexbox — direction, wrap, main- and cross-axis alignment, and gap — set as attributes instead of hand-written CSS.",
       "tag": "wb-x-flex",
       "baseClass": "wb-x-flex",
       "properties": {
@@ -3043,7 +3043,7 @@
       "file": "fullscreen.schema.json",
       "name": "x-fullscreen",
       "title": "Fullscreen",
-      "description": "Behavior applied with x-fullscreen.",
+      "description": "A button that toggles a target element — or the whole page — into the browser's fullscreen mode.",
       "tag": "wb-x-fullscreen",
       "baseClass": "wb-x-fullscreen",
       "properties": {
@@ -3069,7 +3069,7 @@
       "file": "gallery.schema.json",
       "name": "x-gallery",
       "title": "Gallery",
-      "description": "Behavior applied with x-gallery.",
+      "description": "Arranges child images into a grid — a fixed column count or a fixed tile size — with an optional click-to-enlarge lightbox.",
       "tag": "wb-x-gallery",
       "baseClass": "wb-x-gallery",
       "properties": {
@@ -3116,7 +3116,7 @@
       "file": "glow.schema.json",
       "name": "x-glow",
       "title": "Glow",
-      "description": "Behavior applied with x-glow.",
+      "description": "Applies a soft, theme-colored glow around the element, for drawing attention to it.",
       "tag": "wb-x-glow",
       "baseClass": "wb-x-glow",
       "properties": {
@@ -3973,7 +3973,7 @@
       "file": "img.schema.json",
       "name": "x-img",
       "title": "Img",
-      "description": "Behavior applied with x-img.",
+      "description": "Adds a loading placeholder, a fallback for failed loads, a reserved aspect-ratio box to prevent layout shift, native lazy-loading, and an optional click-to-zoom lightbox to an image.",
       "tag": "wb-x-img",
       "baseClass": "wb-x-img",
       "properties": {
@@ -4212,7 +4212,7 @@
       "file": "kbd.schema.json",
       "name": "x-kbd",
       "title": "Kbd",
-      "description": "Behavior applied with x-kbd.",
+      "description": "Styles a keyboard-key label — monospace, bordered, key-cap look — applied automatically to every native `<kbd>` element.",
       "tag": "wb-x-kbd",
       "baseClass": "wb-x-kbd",
       "properties": {},
@@ -4263,7 +4263,7 @@
       "file": "lightbox.schema.json",
       "name": "x-lightbox",
       "title": "Lightbox",
-      "description": "Behavior applied with x-lightbox.",
+      "description": "Clicking the element opens its image full-screen in an overlay viewer.",
       "tag": "wb-x-lightbox",
       "baseClass": "wb-x-lightbox",
       "properties": {},
@@ -4368,7 +4368,7 @@
       "file": "mark.schema.json",
       "name": "x-mark",
       "title": "Mark",
-      "description": "Behavior applied with x-mark.",
+      "description": "Highlights text with a background color — a named semantic variant (success/warning/danger/info) or any explicit CSS color — computing a readable text color automatically.",
       "tag": "wb-x-mark",
       "baseClass": "wb-x-mark",
       "properties": {
@@ -4460,7 +4460,7 @@
       "file": "masonry.schema.json",
       "name": "x-masonry",
       "title": "Masonry",
-      "description": "Behavior applied with x-masonry.",
+      "description": "Arranges children into a Pinterest-style masonry grid with a configurable column count and gap.",
       "tag": "wb-x-masonry",
       "baseClass": "wb-x-masonry",
       "properties": {
@@ -4769,7 +4769,7 @@
       "file": "notify.schema.json",
       "name": "x-notify",
       "title": "Notify",
-      "description": "Behavior applied with x-notify.",
+      "description": "Shows a temporary toast notification with a message, dismissing itself automatically after a set duration.",
       "tag": "wb-x-notify",
       "baseClass": "wb-x-notify",
       "properties": {
@@ -4919,7 +4919,7 @@
       "file": "pagination.schema.json",
       "name": "x-pagination",
       "title": "Pagination",
-      "description": "Behavior applied with x-pagination.",
+      "description": "Renders Previous/page-number/Next controls from a total item count (or an explicit page count), tracks the active page, and fires an event when the user changes it.",
       "tag": "wb-x-pagination",
       "baseClass": "wb-x-pagination",
       "properties": {
@@ -4991,7 +4991,7 @@
       "file": "popover.schema.json",
       "name": "x-popover",
       "title": "Popover",
-      "description": "Behavior applied with x-popover.",
+      "description": "A click- or hover-triggered popover with a heading and body text, positioned on any of the element's four sides.",
       "tag": "wb-x-popover",
       "baseClass": "wb-x-popover",
       "properties": {
@@ -5247,7 +5247,7 @@
       "file": "pre.schema.json",
       "name": "x-pre",
       "title": "Pre",
-      "description": "Behavior applied with x-pre.",
+      "description": "Renders a preformatted code block with optional syntax highlighting, line numbers, a max-height with scrolling, line wrapping, and a copy-to-clipboard button.",
       "tag": "wb-x-pre",
       "baseClass": "wb-x-pre",
       "properties": {
@@ -5406,7 +5406,7 @@
       "file": "print.schema.json",
       "name": "x-print",
       "title": "Print",
-      "description": "Behavior applied with x-print.",
+      "description": "A button that opens the browser's print dialog, scoped to a target region of the page or the whole page.",
       "tag": "wb-x-print",
       "baseClass": "wb-x-print",
       "properties": {
@@ -5675,7 +5675,7 @@
       "file": "prompt.schema.json",
       "name": "x-prompt",
       "title": "Prompt",
-      "description": "Behavior applied with x-prompt.",
+      "description": "A single-field text-input dialog with a heading, message, placeholder and default value, firing an event with the entered value or the cancellation.",
       "tag": "wb-x-prompt",
       "baseClass": "wb-x-prompt",
       "properties": {
@@ -5736,7 +5736,7 @@
       "file": "rainbow.schema.json",
       "name": "x-rainbow",
       "title": "Rainbow",
-      "description": "Behavior applied with x-rainbow.",
+      "description": "Continuously cycles the element's color through the rainbow at a configurable speed.",
       "tag": "wb-x-rainbow",
       "baseClass": "wb-x-rainbow",
       "properties": {
@@ -5834,7 +5834,7 @@
       "file": "ratio.schema.json",
       "name": "x-ratio",
       "title": "Ratio",
-      "description": "Behavior applied with x-ratio.",
+      "description": "Holds a child element to a fixed aspect ratio (default 16:9), so it neither stretches nor collapses as its container resizes.",
       "tag": "wb-x-ratio",
       "baseClass": "wb-x-ratio",
       "properties": {
@@ -5855,7 +5855,7 @@
       "file": "relativetime.schema.json",
       "name": "x-relativetime",
       "title": "Relativetime",
-      "description": "Behavior applied with x-relativetime.",
+      "description": "Renders a timestamp as relative text (e.g. \"3 minutes ago\") and keeps it updated on an interval.",
       "tag": "wb-x-relativetime",
       "baseClass": "wb-x-relativetime",
       "properties": {
@@ -5886,7 +5886,7 @@
       "file": "release.schema.json",
       "name": "x-release",
       "title": "Release",
-      "description": "Behavior applied with x-release.",
+      "description": "Displays the site's build/release number, read from the one version stamp instead of a hardcoded literal.",
       "tag": "wb-x-release",
       "baseClass": "wb-x-release",
       "properties": {
@@ -5912,7 +5912,7 @@
       "file": "repeater.schema.json",
       "name": "repeater",
       "title": "Repeater",
-      "description": "Behavior applied with x-repeater.",
+      "description": "Renders a fixed number of copies of its template content.",
       "tag": "wb-repeater",
       "baseClass": "wb-repeater",
       "properties": {
@@ -6127,7 +6127,7 @@
       "file": "searchfield.schema.json",
       "name": "x-searchfield",
       "title": "Searchfield",
-      "description": "Behavior applied with x-searchfield.",
+      "description": "A complete search input: icon, debounced/instant search events, clear button, and loading state.",
       "tag": "wb-x-searchfield",
       "baseClass": "wb-x-searchfield",
       "properties": {
@@ -6307,7 +6307,7 @@
       "file": "share.schema.json",
       "name": "x-share",
       "title": "Share",
-      "description": "Behavior applied with x-share.",
+      "description": "A button that opens the browser's native share sheet with a configurable title, text and URL.",
       "tag": "wb-x-share",
       "baseClass": "wb-x-share",
       "properties": {
@@ -6545,7 +6545,7 @@
       "file": "sparkle.schema.json",
       "name": "x-sparkle",
       "title": "Sparkle",
-      "description": "Behavior applied with x-sparkle.",
+      "description": "Emits a burst of animated sparkle particles from the element.",
       "tag": "wb-x-sparkle",
       "baseClass": "wb-x-sparkle",
       "properties": {
@@ -6873,7 +6873,7 @@
       "file": "steps.schema.json",
       "name": "x-steps",
       "title": "Steps",
-      "description": "Behavior applied with x-steps.",
+      "description": "Renders a numbered step/progress indicator from a comma-separated list of labels, highlighting the current step.",
       "tag": "wb-x-steps",
       "baseClass": "wb-x-steps",
       "properties": {
@@ -7767,7 +7767,7 @@
       "file": "truncate.schema.json",
       "name": "x-truncate",
       "title": "Truncate",
-      "description": "Behavior applied with x-truncate.",
+      "description": "Clamps text to a fixed number of lines, with an optional control that expands it to reveal the rest.",
       "tag": "wb-x-truncate",
       "baseClass": "wb-x-truncate",
       "properties": {
@@ -7793,7 +7793,7 @@
       "file": "typewriter.schema.json",
       "name": "x-typewriter",
       "title": "Typewriter",
-      "description": "Behavior applied with x-typewriter.",
+      "description": "Types out text one character at a time at a configurable speed, with an optional blinking cursor — defaults to the element's own existing text.",
       "tag": "wb-x-typewriter",
       "baseClass": "wb-x-typewriter",
       "properties": {
@@ -7824,7 +7824,7 @@
       "file": "video.schema.json",
       "name": "x-video",
       "title": "Video",
-      "description": "Behavior applied with x-video.",
+      "description": "Adds a poster image, native controls, inline mobile playback, and safe autoplay/mute/loop handling to a `<video>` element.",
       "tag": "wb-x-video",
       "baseClass": "wb-x-video",
       "properties": {
@@ -7981,7 +7981,7 @@
       "file": "vimeo.schema.json",
       "name": "x-vimeo",
       "title": "Vimeo",
-      "description": "Behavior applied with x-vimeo.",
+      "description": "Embeds a Vimeo video by its numeric id, with autoplay/mute/loop support.",
       "tag": "wb-x-vimeo",
       "baseClass": "wb-x-vimeo",
       "properties": {
@@ -8403,7 +8403,7 @@
       "file": "youtube.schema.json",
       "name": "x-youtube",
       "title": "Youtube",
-      "description": "Behavior applied with x-youtube.",
+      "description": "Embeds a YouTube video from a full watch URL or its 11-character id, with native controls and autoplay/mute/loop support.",
       "tag": "wb-x-youtube",
       "baseClass": "wb-x-youtube",
       "properties": {

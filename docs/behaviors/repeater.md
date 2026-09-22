@@ -1,6 +1,6 @@
 # Repeater
 
-Behavior applied with x-repeater.
+Renders a fixed number of copies of its template content.
 
 ## Type — new capability
 

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "repeater.schema.json",
   "title": "Repeater",
-  "description": "Behavior applied with x-repeater.",
+  "description": "Renders a fixed number of copies of its template content.",
   "schemaFor": "repeater",
   "compliance": {
     "baseClass": "x-repeater",

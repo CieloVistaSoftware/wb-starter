@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "popover.schema.json",
   "title": "Popover",
-  "description": "Behavior applied with x-popover.",
+  "description": "A click- or hover-triggered popover with a heading and body text, positioned on any of the element's four sides.",
   "schemaFor": "x-popover",
   "properties": {
     "description": {

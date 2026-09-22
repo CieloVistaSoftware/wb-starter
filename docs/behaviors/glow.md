@@ -1,6 +1,6 @@
 # Glow
 
-Behavior applied with x-glow.
+Applies a soft, theme-colored glow around the element, for drawing attention to it.
 
 ## Type — new capability
 

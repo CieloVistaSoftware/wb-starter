@@ -1,6 +1,6 @@
 # Code
 
-Behavior applied with x-code.
+Renders inline or block code with optional syntax highlighting, a type-scale size, horizontal scrolling for long lines, and an optional copy-to-clipboard button.
 
 ## Type — new capability
 

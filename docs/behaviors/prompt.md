@@ -1,6 +1,6 @@
 # Prompt
 
-Behavior applied with x-prompt.
+A single-field text-input dialog with a heading, message, placeholder and default value, firing an event with the entered value or the cancellation.
 
 ## Type — new capability
 

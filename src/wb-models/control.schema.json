@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "control.schema.json",
   "title": "Control",
-  "description": "Behavior applied with x-control.",
+  "description": "A styling hook: applies the `x-control` CSS class to the element and nothing else. (Earlier move/action-button wiring documented in this behavior's own source comment was never actually registered and has never run — see #1063.)",
   "schemaFor": "control",
   "compliance": {
     "baseClass": "x-control",

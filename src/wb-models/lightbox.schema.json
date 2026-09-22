@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "lightbox.schema.json",
   "title": "Lightbox",
-  "description": "Behavior applied with x-lightbox.",
+  "description": "Clicking the element opens its image full-screen in an overlay viewer.",
   "schemaFor": "x-lightbox",
   "properties": {},
   "_metadata": {

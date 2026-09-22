@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "confirm.schema.json",
   "title": "Confirm",
-  "description": "Behavior applied with x-confirm.",
+  "description": "An OK/Cancel confirmation dialog with a configurable heading and message, firing an event naming which button was pressed.",
   "schemaFor": "x-confirm",
   "properties": {
     "heading": {

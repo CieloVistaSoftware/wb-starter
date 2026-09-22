@@ -1,6 +1,6 @@
 # Ratio
 
-Behavior applied with x-ratio.
+Holds a child element to a fixed aspect ratio (default 16:9), so it neither stretches nor collapses as its container resizes.
 
 ## Type — new capability
 

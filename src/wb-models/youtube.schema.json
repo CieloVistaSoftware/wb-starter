@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "youtube.schema.json",
   "title": "Youtube",
-  "description": "Behavior applied with x-youtube.",
+  "description": "Embeds a YouTube video from a full watch URL or its 11-character id, with native controls and autoplay/mute/loop support.",
   "schemaFor": "x-youtube",
   "properties": {
     "url": {

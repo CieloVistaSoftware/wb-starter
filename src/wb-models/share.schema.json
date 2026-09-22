@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "share.schema.json",
   "title": "Share",
-  "description": "Behavior applied with x-share.",
+  "description": "A button that opens the browser's native share sheet with a configurable title, text and URL.",
   "schemaFor": "x-share",
   "properties": {
     "text": {

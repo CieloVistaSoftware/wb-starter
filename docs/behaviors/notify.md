@@ -1,6 +1,6 @@
 # Notify
 
-Behavior applied with x-notify.
+Shows a temporary toast notification with a message, dismissing itself automatically after a set duration.
 
 ## Type — new capability
 

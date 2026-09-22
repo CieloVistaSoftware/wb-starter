@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "autosize.schema.json",
   "title": "Autosize",
-  "description": "Behavior applied with x-autosize.",
+  "description": "Automatically resizes a textarea to fit its content as the user types.",
   "schemaFor": "x-autosize",
   "properties": {},
   "_metadata": {

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "ratio.schema.json",
   "title": "Ratio",
-  "description": "Behavior applied with x-ratio.",
+  "description": "Holds a child element to a fixed aspect ratio (default 16:9), so it neither stretches nor collapses as its container resizes.",
   "schemaFor": "x-ratio",
   "properties": {
     "ratio": {

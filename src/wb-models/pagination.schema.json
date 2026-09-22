@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "pagination.schema.json",
   "title": "Pagination",
-  "description": "Behavior applied with x-pagination.",
+  "description": "Renders Previous/page-number/Next controls from a total item count (or an explicit page count), tracks the active page, and fires an event when the user changes it.",
   "schemaFor": "x-pagination",
   "properties": {
     "total": {

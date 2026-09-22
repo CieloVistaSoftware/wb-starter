@@ -1,6 +1,6 @@
 # Confirm
 
-Behavior applied with x-confirm.
+An OK/Cancel confirmation dialog with a configurable heading and message, firing an event naming which button was pressed.
 
 ## Type — new capability
 

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "relativetime.schema.json",
   "title": "Relativetime",
-  "description": "Behavior applied with x-relativetime.",
+  "description": "Renders a timestamp as relative text (e.g. \"3 minutes ago\") and keeps it updated on an interval.",
   "schemaFor": "x-relativetime",
   "properties": {
     "datetime": {

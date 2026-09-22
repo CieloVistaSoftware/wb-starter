@@ -1,6 +1,6 @@
 # Control
 
-Behavior applied with x-control.
+A styling hook: applies the `x-control` CSS class to the element and nothing else. (Earlier move/action-button wiring documented in this behavior's own source comment was never actually registered and has never run — see #1063.)
 
 ## Type — new capability
 

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "release.schema.json",
   "title": "Release",
-  "description": "Behavior applied with x-release.",
+  "description": "Displays the site's build/release number, read from the one version stamp instead of a hardcoded literal.",
   "schemaFor": "x-release",
   "properties": {
     "format": {

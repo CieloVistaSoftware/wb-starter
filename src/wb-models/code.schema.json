@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "code.schema.json",
   "title": "Code",
-  "description": "Behavior applied with x-code.",
+  "description": "Renders inline or block code with optional syntax highlighting, a type-scale size, horizontal scrolling for long lines, and an optional copy-to-clipboard button.",
   "schemaFor": "x-code",
   "properties": {
     "language": {

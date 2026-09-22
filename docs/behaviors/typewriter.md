@@ -1,6 +1,6 @@
 # Typewriter
 
-Behavior applied with x-typewriter.
+Types out text one character at a time at a configurable speed, with an optional blinking cursor — defaults to the element's own existing text.
 
 ## Type — new capability
 

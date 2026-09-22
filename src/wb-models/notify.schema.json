@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "notify.schema.json",
   "title": "Notify",
-  "description": "Behavior applied with x-notify.",
+  "description": "Shows a temporary toast notification with a message, dismissing itself automatically after a set duration.",
   "schemaFor": "x-notify",
   "properties": {
     "message": {

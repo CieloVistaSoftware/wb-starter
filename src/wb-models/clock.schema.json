@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "clock.schema.json",
   "title": "Clock",
-  "description": "Behavior applied with x-clock.",
+  "description": "A self-updating clock face — digital or analogue, 12- or 24-hour, with seconds shown or hidden.",
   "schemaFor": "x-clock",
   "properties": {
     "variant": {

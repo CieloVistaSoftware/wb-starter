@@ -1,6 +1,6 @@
 # Breadcrumb
 
-Behavior applied with x-breadcrumb.
+Renders a comma-separated trail of labels as a breadcrumb, e.g. `Home,Docs,Behaviors` becomes Home / Docs / Behaviors, with a configurable separator.
 
 ## Type — new capability
 

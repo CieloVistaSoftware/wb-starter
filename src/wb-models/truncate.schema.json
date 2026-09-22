@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "truncate.schema.json",
   "title": "Truncate",
-  "description": "Behavior applied with x-truncate.",
+  "description": "Clamps text to a fixed number of lines, with an optional control that expands it to reveal the rest.",
   "schemaFor": "x-truncate",
   "properties": {
     "lines": {

@@ -1,6 +1,6 @@
 # Relativetime
 
-Behavior applied with x-relativetime.
+Renders a timestamp as relative text (e.g. "3 minutes ago") and keeps it updated on an interval.
 
 ## Type — new capability
 

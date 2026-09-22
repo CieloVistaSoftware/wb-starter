@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "flex.schema.json",
   "title": "Flex",
-  "description": "Behavior applied with x-flex.",
+  "description": "Lays out children with CSS flexbox — direction, wrap, main- and cross-axis alignment, and gap — set as attributes instead of hand-written CSS.",
   "schemaFor": "x-flex",
   "properties": {
     "direction": {

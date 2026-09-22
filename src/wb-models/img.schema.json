@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "img.schema.json",
   "title": "Img",
-  "description": "Behavior applied with x-img.",
+  "description": "Adds a loading placeholder, a fallback for failed loads, a reserved aspect-ratio box to prevent layout shift, native lazy-loading, and an optional click-to-zoom lightbox to an image.",
   "schemaFor": "x-img",
   "properties": {
     "placeholder": {

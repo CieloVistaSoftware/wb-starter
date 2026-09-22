@@ -1,6 +1,6 @@
 # Print
 
-Behavior applied with x-print.
+A button that opens the browser's print dialog, scoped to a target region of the page or the whole page.
 
 ## Type — new capability
 

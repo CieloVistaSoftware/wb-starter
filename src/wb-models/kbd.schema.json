@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "kbd.schema.json",
   "title": "Kbd",
-  "description": "Behavior applied with x-kbd.",
+  "description": "Styles a keyboard-key label — monospace, bordered, key-cap look — applied automatically to every native `<kbd>` element.",
   "schemaFor": "x-kbd",
   "properties": {},
   "_metadata": {

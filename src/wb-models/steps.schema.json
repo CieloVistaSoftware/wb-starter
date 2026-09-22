@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "steps.schema.json",
   "title": "Steps",
-  "description": "Behavior applied with x-steps.",
+  "description": "Renders a numbered step/progress indicator from a comma-separated list of labels, highlighting the current step.",
   "schemaFor": "x-steps",
   "properties": {
     "items": {

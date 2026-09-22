@@ -2814,7 +2814,7 @@
           "name": "x-flex",
           "tagName": "x-flex",
           "customElement": true,
-          "description": "Behavior applied with x-flex.",
+          "description": "Lays out children with CSS flexbox — direction, wrap, main- and cross-axis alignment, and gap — set as attributes instead of hand-written CSS.",
           "attributes": [
             {
               "name": "direction",
@@ -2956,7 +2956,7 @@
           "name": "x-cluster",
           "tagName": "x-cluster",
           "customElement": true,
-          "description": "Behavior applied with x-cluster.",
+          "description": "Lays out children in a wrapping horizontal row with a consistent gap and configurable justification/alignment — the common case for chips, tags and buttons that need to flow together.",
           "attributes": [
             {
               "name": "gap",
@@ -3151,7 +3151,7 @@
           "name": "x-masonry",
           "tagName": "x-masonry",
           "customElement": true,
-          "description": "Behavior applied with x-masonry.",
+          "description": "Arranges children into a Pinterest-style masonry grid with a configurable column count and gap.",
           "attributes": [
             {
               "name": "columns",
@@ -3523,7 +3523,7 @@
           "name": "x-control",
           "tagName": "x-control",
           "customElement": true,
-          "description": "Behavior applied with x-control.",
+          "description": "A styling hook: applies the `x-control` CSS class to the element and nothing else. (Earlier move/action-button wiring documented in this behavior's own source comment was never actually registered and has never run — see #1063.)",
           "attributes": [],
           "slots": [
             {
@@ -3557,7 +3557,7 @@
           "name": "x-repeater",
           "tagName": "x-repeater",
           "customElement": true,
-          "description": "Behavior applied with x-repeater.",
+          "description": "Renders a fixed number of copies of its template content.",
           "attributes": [
             {
               "name": "count",

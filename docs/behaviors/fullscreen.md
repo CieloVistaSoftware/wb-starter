@@ -1,6 +1,6 @@
 # Fullscreen
 
-Behavior applied with x-fullscreen.
+A button that toggles a target element — or the whole page — into the browser's fullscreen mode.
 
 ## Type — new capability
 
