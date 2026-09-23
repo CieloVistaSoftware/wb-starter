@@ -1,6 +1,6 @@
 # Youtube
 
-Behavior applied with x-youtube.
+Embeds a YouTube video from a full watch URL or its 11-character id, with native controls and autoplay/mute/loop support.
 
 ## Type — new capability
 

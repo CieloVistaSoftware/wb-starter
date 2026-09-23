@@ -1,6 +1,6 @@
 # Countdown
 
-Behavior applied with x-countdown.
+Counts down to a target date, or a fixed duration in seconds, updating the rendered time and firing an event when it reaches zero.
 
 ## Type — new capability
 

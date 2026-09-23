@@ -1,6 +1,6 @@
 # Sparkle
 
-Behavior applied with x-sparkle.
+Emits a burst of animated sparkle particles from the element.
 
 ## Type — new capability
 

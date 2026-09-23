@@ -1,6 +1,6 @@
 # Truncate
 
-Behavior applied with x-truncate.
+Clamps text to a fixed number of lines, with an optional control that expands it to reveal the rest.
 
 ## Type — new capability
 

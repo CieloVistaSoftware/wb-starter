@@ -1,6 +1,6 @@
 # Cluster
 
-Behavior applied with x-cluster.
+Lays out children in a wrapping horizontal row with a consistent gap and configurable justification/alignment — the common case for chips, tags and buttons that need to flow together.
 
 ## Type — new capability
 

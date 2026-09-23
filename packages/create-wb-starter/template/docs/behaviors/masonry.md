@@ -1,6 +1,6 @@
 # Masonry
 
-Behavior applied with x-masonry.
+Arranges children into a Pinterest-style masonry grid with a configurable column count and gap.
 
 ## Type — new capability
 

@@ -1,6 +1,6 @@
 # Copybutton
 
-Behavior applied with x-copybutton.
+A button that copies text to the clipboard — either the host element's own text or another element matched by a CSS selector — and shows a temporary confirmation message.
 
 ## Type — new capability
 

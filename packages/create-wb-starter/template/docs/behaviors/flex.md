@@ -1,6 +1,6 @@
 # Flex
 
-Behavior applied with x-flex.
+Lays out children with CSS flexbox — direction, wrap, main- and cross-axis alignment, and gap — set as attributes instead of hand-written CSS.
 
 ## Type — new capability
 

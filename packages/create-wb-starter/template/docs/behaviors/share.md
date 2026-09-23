@@ -1,6 +1,6 @@
 # Share
 
-Behavior applied with x-share.
+A button that opens the browser's native share sheet with a configurable title, text and URL.
 
 ## Type — new capability
 

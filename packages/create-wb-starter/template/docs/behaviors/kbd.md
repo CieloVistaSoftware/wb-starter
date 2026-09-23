@@ -1,6 +1,6 @@
 # Kbd
 
-Behavior applied with x-kbd.
+Styles a keyboard-key label — monospace, bordered, key-cap look — applied automatically to every native `<kbd>` element.
 
 ## Type — new capability
 

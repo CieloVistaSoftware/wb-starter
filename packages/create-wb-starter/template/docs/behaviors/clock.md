@@ -1,6 +1,6 @@
 # Clock
 
-Behavior applied with x-clock.
+A self-updating clock face — digital or analogue, 12- or 24-hour, with seconds shown or hidden.
 
 ## Type — new capability
 

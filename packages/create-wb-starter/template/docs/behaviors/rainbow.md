@@ -1,6 +1,6 @@
 # Rainbow
 
-Behavior applied with x-rainbow.
+Continuously cycles the element's color through the rainbow at a configurable speed.
 
 ## Type — new capability
 

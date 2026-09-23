@@ -1,6 +1,6 @@
 # Gallery
 
-Behavior applied with x-gallery.
+Arranges child images into a grid — a fixed column count or a fixed tile size — with an optional click-to-enlarge lightbox.
 
 ## Type — new capability
 

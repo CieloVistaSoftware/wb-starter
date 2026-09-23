@@ -1,6 +1,6 @@
 # Mark
 
-Behavior applied with x-mark.
+Highlights text with a background color — a named semantic variant (success/warning/danger/info) or any explicit CSS color — computing a readable text color automatically.
 
 ## Type — new capability
 

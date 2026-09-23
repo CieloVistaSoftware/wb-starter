@@ -1,6 +1,6 @@
 # Figure
 
-Behavior applied with x-figure.
+Adds a caption (below the image or overlaid on it) and an optional click-to-zoom lightbox to a figure's image.
 
 ## Type — new capability
 

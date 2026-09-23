@@ -1,6 +1,6 @@
 # Lightbox
 
-Behavior applied with x-lightbox.
+Clicking the element opens its image full-screen in an overlay viewer.
 
 ## Type — new capability
 

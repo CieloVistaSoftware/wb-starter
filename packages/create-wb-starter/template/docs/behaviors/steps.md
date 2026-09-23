@@ -1,6 +1,6 @@
 # Steps
 
-Behavior applied with x-steps.
+Renders a numbered step/progress indicator from a comma-separated list of labels, highlighting the current step.
 
 ## Type — new capability
 
