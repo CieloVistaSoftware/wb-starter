@@ -70,7 +70,7 @@
     "block the next release. The register is a union. Root cause is #961/#962."
   ],
   "recorded": "2026-09-08",
-  "count": 463,
+  "count": 465,
   "failures": [
     "behaviors/accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)",
     "behaviors/alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load",
@@ -224,8 +224,10 @@
     "compliance/behavior-registry-validation.spec.ts › behavior registry matches data/behavior-inventory.json",
     "compliance/cross-browser-support.spec.ts › CSS custom properties can override component styles",
     "compliance/css-oop-compliance.spec.ts › no hardcoded colors in CSS (except themes.css)",
+    "compliance/dark-mode.spec.ts › tests/repro_card_semantic.html renders in dark mode without errors",
     "compliance/demos-list-drift.spec.ts › pages/demos.html + demos/index.html match generate-demos-list.mjs output (#501)",
     "compliance/demos-registry-coverage.spec.ts › every demos/*.html file is accounted for in the #268 registry",
+    "compliance/doc-viewer-code-panel-audit.spec.ts › demos/site/cards.html: .x-demo__code panels show all the code, no phantom blanks, no wrap",
     "compliance/doc-viewer-code-panel-audit.spec.ts › demos/site/content.html: .x-demo__code panels show all the code, no phantom blanks, no wrap",
     "compliance/doc-viewer-code-panel-audit.spec.ts › docs/standards/DEMOS-AND-DOCS-STANDARDS.md: .x-demo__code panels show all the code, no phantom blanks, no wrap",
     "compliance/docs-manifest-integrity.spec.ts › All markdown files in docs/ should be listed in manifest.json",
