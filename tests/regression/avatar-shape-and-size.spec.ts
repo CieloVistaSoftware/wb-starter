@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Locator } from '@playwright/test';
 
 /**
  * avatar.schema.json declares `shape` (circle/square/rounded) and `size`
@@ -13,14 +13,28 @@ import { test, expect } from '@playwright/test';
  * default 40px. Confirmed live (screenshot) before the fix: three
  * "shape variants" avatars, all circles.
  */
+/**
+ * #1206: read a size only after the avatar is built. avatar.css loads just in
+ * time, when the lazy runtime first injects an avatar -- and it injects an
+ * element only once it is visible. The avatars are in the static HTML, so
+ * waiting for the selector returned before any of that, and an unstyled avatar
+ * measured as a block the width of the column (1052px). Scroll each one in and
+ * wait for its x-ready stamp (written under automation, src/core/ready-signal.js).
+ */
+async function settled(locator: Locator): Promise<Locator> {
+  await locator.scrollIntoViewIfNeeded();
+  await expect(locator).toHaveAttribute('x-ready', '');
+  return locator;
+}
+
 test.describe('[x-avatar] shape and size (feedback demo page)', () => {
   test('shape="circle"/"square"/"rounded" render visibly distinct border-radius', async ({ page }) => {
     await page.goto('/demos/site/feedback.html');
     await page.waitForSelector('[x-avatar][shape="circle"]');
 
-    const circle = page.locator('[x-avatar][shape="circle"]').first();
-    const square = page.locator('[x-avatar][shape="square"]').first();
-    const rounded = page.locator('[x-avatar][shape="rounded"]').first();
+    const circle = await settled(page.locator('[x-avatar][shape="circle"]').first());
+    const square = await settled(page.locator('[x-avatar][shape="square"]').first());
+    const rounded = await settled(page.locator('[x-avatar][shape="rounded"]').first());
 
     const [circleRadius, squareRadius, roundedRadius] = await Promise.all([
       circle.evaluate((el) => getComputedStyle(el).borderRadius),
@@ -38,9 +52,9 @@ test.describe('[x-avatar] shape and size (feedback demo page)', () => {
     await page.goto('/demos/site/feedback.html');
     await page.waitForSelector('[x-avatar][size="xs"]');
 
-    const xs = page.locator('[x-avatar][size="xs"]').first();
-    const md = page.locator('[x-avatar][size="md"]').first();
-    const xxl = page.locator('[x-avatar][size="2xl"]').first();
+    const xs = await settled(page.locator('[x-avatar][size="xs"]').first());
+    const md = await settled(page.locator('[x-avatar][size="md"]').first());
+    const xxl = await settled(page.locator('[x-avatar][size="2xl"]').first());
 
     const [xsWidth, mdWidth, xxlWidth] = await Promise.all([
       xs.evaluate((el) => getComputedStyle(el).width),
