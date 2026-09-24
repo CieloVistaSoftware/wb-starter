@@ -173,7 +173,15 @@ export default defineConfig({
     ['./scripts/tools/test-reporter.ts'],
     ['list']
   ],
-  
+
+  // #1209: never let Playwright rewrite the clone. On a GitHub Actions
+  // pull_request run its gitCommitInfo plugin records a diff for report
+  // metadata by running `git fetch origin <PR base sha> --depth=1`. In a full
+  // clone that writes .git/shallow and hides every commit behind main's tip,
+  // so specs that read history (unshipped-work-is-not-called-pushed) saw 16
+  // commits instead of 1130. Neither reporter above uses the diff.
+  captureGitInfo: { diff: false },
+
   // Fail fast option via env var
   maxFailures: process.env.FAIL_FAST === 'true' ? 1 : undefined,
   

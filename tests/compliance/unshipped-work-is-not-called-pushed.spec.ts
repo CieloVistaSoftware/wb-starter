@@ -50,12 +50,13 @@ test('an issue whose commits are not on the shipping branch does not report as p
 
   const git = (...args: string[]) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 
-  // This test reads ~120 commits of history, so it needs the history. #1209's
-  // CI runs checked out all of it (ci-tests.yml prints shallow=false) and then
-  // found .git/shallow written 1.5s into the gate, before any test body ran --
-  // cut at main's tip by something not yet identified (ci-tests.yml watches for
-  // it). Record when it happened, then put the history back: the question here
-  // is how issue-state.mjs decides "pushed", not how the runner's clone was left.
+  // This test reads ~120 commits of history, so it needs the history. On
+  // #1209's CI runs it found .git/shallow written at startup: Playwright's
+  // gitCommitInfo plugin ran `git fetch origin <PR base> --depth=1`, which cuts
+  // a full clone at main's tip. playwright.config.ts now sets
+  // captureGitInfo.diff = false. If anything shallows the clone again, say so
+  // and put the history back: the question here is how issue-state.mjs decides
+  // "pushed", not how the runner's clone was left.
   const shallowFile = path.join(git('rev-parse', '--git-common-dir'), 'shallow');
   if (fs.existsSync(shallowFile)) {
     const boundaries = fs.readFileSync(shallowFile, 'utf8').trim().split('\n').length;
