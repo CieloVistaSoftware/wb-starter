@@ -124,15 +124,25 @@ export function checkbox(element, options = {}) {
   // processing already builds this correctly (confirmed working); racing it
   // with a synchronous self-build here clobbers whichever one finishes last
   // (confirmed live: reading host.textContent/attributes AFTER the other
-  // path already cleared them). Only self-build when schema support
-  // genuinely doesn't exist at all.
-  if (element.tagName.toLowerCase() === 'x-checkbox' && !_checkboxHostDeprecationWarned) {
+  // path already cleared them). So self-build only when no input exists yet;
+  // a schema-built input is reflected onto instead, below.
+  // The HOST is any non-input element carrying the behavior -- in practice
+  // <div x-checkbox>, which is what every example and the schema use. This
+  // used to test `tagName === 'x-checkbox'`, a leftover from the 4.0.0 tag ->
+  // attribute rename: no <div x-checkbox> ever matched, so neither host path
+  // below ran and every example rendered unchecked, enabled and unclickable.
+  const isHost = element.tagName !== 'INPUT' &&
+    (element.hasAttribute('x-checkbox') || element.tagName.toLowerCase() === 'x-checkbox');
+
+  if (isHost && !_checkboxHostDeprecationWarned) {
     _checkboxHostDeprecationWarned = true;
     console.warn('[x-checkbox] is deprecated — use a bare <input type="checkbox"> instead, it already gets this same custom styling with no wrapper element needed.');
   }
 
-  if (element.tagName !== 'INPUT' && element.tagName.toLowerCase() === 'x-checkbox' && !window.WB?.schema) {
-    if (element.querySelector('input[type="checkbox"]')) return () => {};
+  // Decided by the DOM, not by whether WB.schema exists: WB.scan() stopped
+  // running the schema builder in 4.0.0, so on wb.js pages the schema API is
+  // present and the input is still never built. No input yet -> build it.
+  if (isHost && !element.querySelector('input[type="checkbox"]')) {
     const host = element;
     const label = host.getAttribute('label') || '';
     host.textContent = '';
@@ -176,14 +186,28 @@ export function checkbox(element, options = {}) {
   // just never had the equivalent step. Runs before the schema-built input's
   // own `.x-checkbox__input` early-return below, since it targets the HOST
   // (x-checkbox), not that input.
-  if (element.tagName.toLowerCase() === 'x-checkbox' && window.WB?.schema) {
+  if (isHost) {
     const input = element.querySelector('input[type="checkbox"]');
-    if (input) {
-      if (element.hasAttribute('checked')) input.checked = true;
-      if (element.hasAttribute('disabled')) input.disabled = true;
-      if (element.hasAttribute('required')) input.required = true;
-      if (element.hasAttribute('indeterminate')) input.indeterminate = true;
-    }
+    if (element.hasAttribute('checked')) input.checked = true;
+    if (element.hasAttribute('disabled')) input.disabled = true;
+    if (element.hasAttribute('required')) input.required = true;
+    if (element.hasAttribute('indeterminate')) input.indeterminate = true;
+    const name = element.getAttribute('name');
+    if (name) input.name = name;
+    const value = element.getAttribute('value');
+    if (value) input.value = value;
+
+    // The schema host is a <div>, not a <label>, and the input is hidden with
+    // pointer-events:none -- so nothing carried a click on the box or label
+    // text to the input. Toggle it here, the way switch.js does for its host.
+    const onClick = (event) => {
+      if (event.target === input || input.disabled) return;
+      input.checked = !input.checked;
+      input.indeterminate = false;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+    element.addEventListener('click', onClick);
+    return () => element.removeEventListener('click', onClick);
   }
 
   if (element.tagName !== 'INPUT' || element.type !== 'checkbox') return () => {};

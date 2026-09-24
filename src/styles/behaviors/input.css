@@ -128,9 +128,12 @@ x-select:disabled, [x-select]:disabled{
   box-shadow: 0 0 0 3px hsla(0, 84%, 60%, 0.2);
 }
 
-/* Checkbox & Radio */
-.x-checkbox,
-.x-radio {
+/* Checkbox & Radio -- the bare <input> form only. Scoped to `input` because
+   <div x-checkbox> also carries .x-checkbox (the schema's host class), and
+   this 1.2em box squeezed the whole widget until its label wrapped one word
+   per line. checkbox.css styles that host. */
+input.x-checkbox,
+input.x-radio {
   accent-color: var(--primary);
   width: 1.2em;
   height: 1.2em;
