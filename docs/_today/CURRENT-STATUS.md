@@ -35,8 +35,8 @@ any longer", 176381aa), and x-progressbar removed so x-progress is the one name
    merges: it adds the register gate ([#1163](https://github.com/CieloVistaSoftware/wb-starter/issues/1163)). Then merge main into this branch.
 4. packages/create-wb-starter/template still has the old article, manifest and
    progressbar files. sync-template.mjs refreshes it before a publish.
-5. Judgement call to confirm with John: behaviors-list-grouped now allows the
-   group holding the auto-selected first row to start open ([#771](https://github.com/CieloVistaSoftware/wb-starter/issues/771) vs [#995](https://github.com/CieloVistaSoftware/wb-starter/issues/995)).
+5. Decided (John, 2026-09-24: "one open group on load is fine"): the group
+   holding the auto-selected first row starts open; every other group is closed ([#771](https://github.com/CieloVistaSoftware/wb-starter/issues/771) vs [#995](https://github.com/CieloVistaSoftware/wb-starter/issues/995)).
 6. Pre-existing and left alone: content-html-article-layout-demos (baselined),
    article.css `.x-articles--* > x-article` rules, html-validity (fails on main),
    and intermittent dropdown / header-controls / api-docs-panels specs.
