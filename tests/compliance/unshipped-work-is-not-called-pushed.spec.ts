@@ -51,14 +51,23 @@ test('an issue whose commits are not on the shipping branch does not report as p
   // A ref far enough back that a good deal of recent history is not reachable
   // from it. HEAD~120 is arbitrary only in size; what matters is that it splits
   // the history, which the guard below confirms.
-  const olderRef = execFileSync('git', ['rev-parse', 'HEAD~120'], { encoding: 'utf8' }).trim();
-  const unreachable = execFileSync(
-    'git', ['rev-list', '--count', `${olderRef}..HEAD`], { encoding: 'utf8' },
-  ).trim();
+  //
+  // Walked with rev-list rather than `git rev-parse HEAD~120`: in CI (#1209,
+  // run 36040202768) rev-parse threw "unknown revision" on the PR merge commit,
+  // which a fresh fetch of that same commit resolves fine. rev-list names the
+  // same commit whenever the history is there and cannot throw; if the history
+  // is short, the guard below fails and says what git actually saw.
+  const git = (...args: string[]) => execFileSync('git', args, { encoding: 'utf8' }).trim();
+  const firstParents = git('rev-list', '--first-parent', '--max-count=121', 'HEAD').split('\n');
+  const olderRef = firstParents[firstParents.length - 1];
+  const unreachable = git('rev-list', '--count', `${olderRef}..HEAD`);
 
   expect(
     Number(unreachable),
-    'the chosen ref does not actually exclude any history, so this test would prove nothing',
+    'the chosen ref does not actually exclude any history, so this test would prove nothing. ' +
+    `git saw: cwd=${process.cwd()} toplevel=${git('rev-parse', '--show-toplevel')} ` +
+    `shallow=${git('rev-parse', '--is-shallow-repository')} ` +
+    `commits=${git('rev-list', '--count', 'HEAD')} first-parents=${firstParents.length}`,
   ).toBeGreaterThan(20);
 
   const asOlder = pushedIssues(olderRef);
