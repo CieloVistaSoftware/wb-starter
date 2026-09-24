@@ -21,10 +21,22 @@ test.describe('Global Attributes', () => {
       '<button tooltip="Global Tooltip">Hover me</button>'
     );
 
-    await element.hover();
+    // The tooltip THIS button owns, not any `.x-tooltip` on the page: the home
+    // page behind the test container has its own tooltip demo, and a pointer
+    // that lands there showed that one's text instead.
+    const tooltipId = await element.getAttribute('aria-describedby');
+    expect(tooltipId, 'tooltip behavior did not link a tooltip to the button').toBeTruthy();
+    const tooltip = page.locator(`#${tooltipId}`);
 
-    const tooltip = page.locator('.x-tooltip');
-    await expect(tooltip).toBeVisible();
+    // Hover until it opens. The test container sits below #app (which fills the
+    // viewport with overflow: hidden), so hover() scrolls to reach it; a late
+    // scroll reset by the page could then leave the pointer over #siteFooter
+    // and the tooltip never opened -- about 1 run in 20, on main as well.
+    // Re-hovering scrolls back and re-enters the button.
+    await expect(async () => {
+      await element.hover();
+      await expect(tooltip).toBeVisible({ timeout: 1000 });
+    }).toPass({ timeout: 10_000 });
     await expect(tooltip).toContainText('Global Tooltip');
   });
 
