@@ -67,8 +67,12 @@ function reachableBehaviors(): Array<{ token: string; name: string; autoInjected
     // A key WITHOUT the x- prefix is a tag: <button> injects `button` on its own.
     // A key WITH it is opted into by attribute and has no tag that implies it.
     const autoInjected = !/^\[?x-/.test(key);
-    const token = key.replace(/^\[/, '').replace(/\]$/, '').replace(/^x-/, '').toLowerCase();
     const name = value.trim();
+    // A tag is named by the behavior it injects: <article> injects card, so the
+    // attribute a reader types for it elsewhere is x-card, not x-article.
+    const token = autoInjected
+      ? name.toLowerCase()
+      : key.replace(/^\[/, '').replace(/\]$/, '').replace(/^x-/, '').toLowerCase();
     if (!/^[a-z][a-z0-9-]*$/.test(token)) continue;
     if (!/^[a-zA-Z][a-zA-Z0-9.-]*$/.test(name)) continue;
     out.set(`${token}|${name}`, { token, name, autoInjected });

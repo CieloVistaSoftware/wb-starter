@@ -355,15 +355,24 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
           scrollTop: Math.round(list.scrollTop),
           visible: rb.top >= lb.top - 1 && rb.bottom <= lb.bottom + 1,
           fromTop: Math.round(rb.top - lb.top),
+          // The row's position in the list's own content, so the distance the
+          // selection moved can be compared with how far the list scrolled.
+          contentTop: Math.round(rb.top - lb.top + list.scrollTop),
         };
       };
       rows[0].focus();
       const scrolls = [];
+      let prev = null;
       for (let i = 0; i < 40 && scrolls.length < 4; i++) {
         press('ArrowDown');
         await sleep(80);
         const s = state();
-        if (s.scrollTop > 0) scrolls.push(s);
+        // How far the selection moved down the content for this one press:
+        // one row pitch inside a group, more when it crosses into the next
+        // group, whose <summary> header sits between the two rows (#995).
+        const moved = prev ? s.contentTop - prev.contentTop : 0;
+        prev = s;
+        if (s.scrollTop > 0) scrolls.push({ ...s, moved });
       }
       press('End');
       await sleep(400);
@@ -379,13 +388,16 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
     expect(result.scrolls.length, 'expected the list to start scrolling eventually').toBeGreaterThan(2);
     expect(result.scrolls.every((s) => s.visible), 'the selection stays visible while scrolling').toBe(true);
 
-    // Minimum scroll = about one row per press, and the row sits at the BOTTOM
-    // edge — not pulled to the top.
-    const steps = result.scrolls.slice(1).map((s, i) => s.scrollTop - result.scrolls[i].scrollTop);
-    for (const step of steps) {
-      expect(step, `scrolled ${step}px for one row pitch of ${result.rowPitch}px`)
-        .toBeLessThanOrEqual(result.rowPitch + 2);
-    }
+    // Minimum scroll = no further than the selection itself moved, so the row
+    // sits at the BOTTOM edge — not pulled to the top. Inside a group that is
+    // one row pitch; crossing into the next group it includes that group's
+    // header, which is still the minimum that brings the row into view.
+    // Align-to-top (#687) would scroll the whole viewport height instead.
+    result.scrolls.slice(1).forEach((s, i) => {
+      const step = s.scrollTop - result.scrolls[i].scrollTop;
+      expect(step, `scrolled ${step}px for a selection that moved ${s.moved}px (row pitch ${result.rowPitch}px)`)
+        .toBeLessThanOrEqual(Math.max(s.moved, result.rowPitch) + 2);
+    });
 
     expect(result.end.visible, 'End must leave the last row visible').toBe(true);
   });

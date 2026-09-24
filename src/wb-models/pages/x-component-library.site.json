@@ -154,7 +154,6 @@
       "description": "Articles, markdown rendering, audio, tables",
       "icon": "📄",
       "components": [
-        "article",
         "articles",
         "mdhtml",
         "audio",
