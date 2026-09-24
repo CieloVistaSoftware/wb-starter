@@ -26,69 +26,15 @@
         "category": "root"
       },
       {
-        "path": "docs/Auto-Injection.md",
-        "title": "Auto Injection (Preview)",
-        "name": "Auto-Injection",
-        "category": "root"
-      },
-      {
-        "path": "docs/BRANCH_PROTECTION.md",
-        "title": "Branch protection: require fast Tier‑1 check",
-        "name": "BRANCH_PROTECTION",
-        "category": "root"
-      },
-      {
-        "path": "docs/CommittingFixes.md",
-        "title": "Committing Fixes Workflow",
-        "name": "CommittingFixes",
-        "category": "root"
-      },
-      {
-        "path": "docs/IMPROVEMENTS.md",
-        "title": "Potential Improvements for WB-Starter",
-        "name": "IMPROVEMENTS",
-        "category": "root"
-      },
-      {
-        "path": "docs/INTELLISENSE-TOOLTIPS.md",
-        "title": "Intellisense Tooltip Audit Report",
-        "name": "INTELLISENSE-TOOLTIPS",
-        "category": "root"
-      },
-      {
-        "path": "docs/MVVM-MIGRATION-PLAN.md",
-        "title": "WB-Starter MVVM Migration Plan",
-        "name": "MVVM-MIGRATION-PLAN",
-        "category": "root"
-      },
-      {
-        "path": "docs/MVVM-MIGRATION.md",
-        "title": "wb-starter v3.0 - MVVM Architecture",
-        "name": "MVVM-MIGRATION",
-        "category": "root"
-      },
-      {
-        "path": "docs/NOTES-V3-GUIDE.md",
-        "title": "Notes Behavior v3.0 - Updates Summary",
-        "name": "NOTES-V3-GUIDE",
-        "category": "root"
-      },
-      {
-        "path": "docs/V3-GUIDE.md",
-        "title": "wb-starter v3 — Complete Guide",
-        "name": "V3-GUIDE",
-        "category": "root"
-      },
-      {
-        "path": "docs/WB_BEHAVIOR_SYSTEM.md",
-        "title": "WB-Starter Behavior System - Technical Workflow",
-        "name": "WB_BEHAVIOR_SYSTEM",
-        "category": "root"
-      },
-      {
         "path": "docs/audio.md",
         "title": "Audio",
         "name": "audio",
+        "category": "root"
+      },
+      {
+        "path": "docs/Auto-Injection.md",
+        "title": "Auto Injection (Preview)",
+        "name": "Auto-Injection",
         "category": "root"
       },
       {
@@ -104,6 +50,12 @@
         "category": "root"
       },
       {
+        "path": "docs/BRANCH_PROTECTION.md",
+        "title": "Branch protection: require fast Tier‑1 check",
+        "name": "BRANCH_PROTECTION",
+        "category": "root"
+      },
+      {
         "path": "docs/card.md",
         "title": "Card Behavior Documentation",
         "name": "card",
@@ -113,6 +65,12 @@
         "path": "docs/code-examples-standard.md",
         "title": "Code Examples Standard",
         "name": "code-examples-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/CommittingFixes.md",
+        "title": "Committing Fixes Workflow",
+        "name": "CommittingFixes",
         "category": "root"
       },
       {
@@ -134,6 +92,12 @@
         "category": "root"
       },
       {
+        "path": "docs/IMPROVEMENTS.md",
+        "title": "Potential Improvements for WB-Starter",
+        "name": "IMPROVEMENTS",
+        "category": "root"
+      },
+      {
         "path": "docs/index.md",
         "title": "WB-Starter Documentation",
         "name": "index",
@@ -143,6 +107,12 @@
         "path": "docs/inline-editing.md",
         "title": "Double-Click Inline Editing System",
         "name": "inline-editing",
+        "category": "root"
+      },
+      {
+        "path": "docs/INTELLISENSE-TOOLTIPS.md",
+        "title": "Intellisense Tooltip Audit Report",
+        "name": "INTELLISENSE-TOOLTIPS",
         "category": "root"
       },
       {
@@ -167,6 +137,24 @@
         "path": "docs/mcp.md",
         "title": "MCP Runner & Docs Access",
         "name": "mcp",
+        "category": "root"
+      },
+      {
+        "path": "docs/MVVM-MIGRATION-PLAN.md",
+        "title": "WB-Starter MVVM Migration Plan",
+        "name": "MVVM-MIGRATION-PLAN",
+        "category": "root"
+      },
+      {
+        "path": "docs/MVVM-MIGRATION.md",
+        "title": "wb-starter v3.0 - MVVM Architecture",
+        "name": "MVVM-MIGRATION",
+        "category": "root"
+      },
+      {
+        "path": "docs/NOTES-V3-GUIDE.md",
+        "title": "Notes Behavior v3.0 - Updates Summary",
+        "name": "NOTES-V3-GUIDE",
         "category": "root"
       },
       {
@@ -284,135 +272,25 @@
         "category": "root"
       },
       {
+        "path": "docs/V3-GUIDE.md",
+        "title": "wb-starter v3 — Complete Guide",
+        "name": "V3-GUIDE",
+        "category": "root"
+      },
+      {
         "path": "docs/wbservices.md",
         "title": "wbservices",
         "name": "wbservices",
         "category": "root"
-      }
-    ],
-    "_today": [
-      {
-        "path": "docs/_today/021426FIXPLAN.md",
-        "title": "021426FIXPLAN",
-        "name": "021426FIXPLAN",
-        "category": "_today"
       },
       {
-        "path": "docs/_today/AI-COORDINATION.md",
-        "title": "AI Coordination Protocol",
-        "name": "AI-COORDINATION",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/ANSWERS.md",
-        "title": "AI Answers",
-        "name": "ANSWERS",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
-        "title": "CSS Ownership Migration Plan",
-        "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/CURRENT-STATUS.md",
-        "title": "CURRENT HANDOFF — 2026-09-11",
-        "name": "CURRENT-STATUS",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/MERGE-PLAN.md",
-        "title": "Merge Plan - Completed",
-        "name": "MERGE-PLAN",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/PAGE-REPAIR-PLAN.md",
-        "title": "PAGE REPAIR PLAN — Master Execution Guide",
-        "name": "PAGE-REPAIR-PLAN",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/QUESTIONS.md",
-        "title": "AI Questions",
-        "name": "QUESTIONS",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/REPAIR-PLAN-021526.md",
-        "title": "REPAIR PLAN — Page & Demo Compliance",
-        "name": "REPAIR-PLAN-021526",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
-        "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
-        "name": "ROOT-CAUSE-md-double-parse",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/TODO.md",
-        "title": "---",
-        "name": "TODO",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/audit-code-panels-v3-standards.md",
-        "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
-        "name": "audit-code-panels-v3-standards",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/audit-v3-guide-doc-viewer.md",
-        "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
-        "name": "audit-v3-guide-doc-viewer",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
-        "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
-        "name": "common-errors-retrospective-2026-08-15",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/demos-redo-plan-268.md",
-        "title": "#268 — demos/ consolidation plan (closed 2026-07-15)",
-        "name": "demos-redo-plan-268",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/hardcoded-colors-audit.md",
-        "title": "Hardcoded-Color Audit & Recommendations",
-        "name": "hardcoded-colors-audit",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/inheritance-usage-report.md",
-        "title": "\"inheritance\" usage report — `.md` files",
-        "name": "inheritance-usage-report",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/slot-audit.md",
-        "title": "\"slot\" Audit & Retirement Plan",
-        "name": "slot-audit",
-        "category": "_today"
-      },
-      {
-        "path": "docs/_today/test-audit-2026-08-14.md",
-        "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
-        "name": "test-audit-2026-08-14",
-        "category": "_today"
+        "path": "docs/WB_BEHAVIOR_SYSTEM.md",
+        "title": "WB-Starter Behavior System - Technical Workflow",
+        "name": "WB_BEHAVIOR_SYSTEM",
+        "category": "root"
       }
     ],
     "architecture": [
-      {
-        "path": "docs/architecture/WB-PREFIX-AUDIT.md",
-        "title": "`wb-` Prefix Audit",
-        "name": "WB-PREFIX-AUDIT",
-        "category": "architecture"
-      },
       {
         "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
         "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
@@ -459,6 +337,12 @@
         "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
         "title": "WB-Starter Schema Specification v3.0",
         "name": "SCHEMA-SPECIFICATION",
+        "category": "architecture"
+      },
+      {
+        "path": "docs/architecture/WB-PREFIX-AUDIT.md",
+        "title": "`wb-` Prefix Audit",
+        "name": "WB-PREFIX-AUDIT",
         "category": "architecture"
       }
     ],
@@ -1654,6 +1538,122 @@
         "title": "WB-Starter v3 Standards",
         "name": "V3-STANDARDS",
         "category": "standards"
+      }
+    ],
+    "_today": [
+      {
+        "path": "docs/_today/021426FIXPLAN.md",
+        "title": "021426FIXPLAN",
+        "name": "021426FIXPLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/AI-COORDINATION.md",
+        "title": "AI Coordination Protocol",
+        "name": "AI-COORDINATION",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/ANSWERS.md",
+        "title": "AI Answers",
+        "name": "ANSWERS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/audit-code-panels-v3-standards.md",
+        "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
+        "name": "audit-code-panels-v3-standards",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/audit-v3-guide-doc-viewer.md",
+        "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
+        "name": "audit-v3-guide-doc-viewer",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
+        "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
+        "name": "common-errors-retrospective-2026-08-15",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
+        "title": "CSS Ownership Migration Plan",
+        "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/CURRENT-STATUS.md",
+        "title": "CURRENT HANDOFF — 2026-09-11",
+        "name": "CURRENT-STATUS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/demos-redo-plan-268.md",
+        "title": "#268 — demos/ consolidation plan (closed 2026-07-15)",
+        "name": "demos-redo-plan-268",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/hardcoded-colors-audit.md",
+        "title": "Hardcoded-Color Audit & Recommendations",
+        "name": "hardcoded-colors-audit",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/inheritance-usage-report.md",
+        "title": "\"inheritance\" usage report — `.md` files",
+        "name": "inheritance-usage-report",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/MERGE-PLAN.md",
+        "title": "Merge Plan - Completed",
+        "name": "MERGE-PLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/PAGE-REPAIR-PLAN.md",
+        "title": "PAGE REPAIR PLAN — Master Execution Guide",
+        "name": "PAGE-REPAIR-PLAN",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/QUESTIONS.md",
+        "title": "AI Questions",
+        "name": "QUESTIONS",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/REPAIR-PLAN-021526.md",
+        "title": "REPAIR PLAN — Page & Demo Compliance",
+        "name": "REPAIR-PLAN-021526",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
+        "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
+        "name": "ROOT-CAUSE-md-double-parse",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/slot-audit.md",
+        "title": "\"slot\" Audit & Retirement Plan",
+        "name": "slot-audit",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/test-audit-2026-08-14.md",
+        "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
+        "name": "test-audit-2026-08-14",
+        "category": "_today"
+      },
+      {
+        "path": "docs/_today/TODO.md",
+        "title": "---",
+        "name": "TODO",
+        "category": "_today"
       }
     ]
   },
