@@ -111,6 +111,17 @@ jobs:
             echo "after unshallow: shallow=$(git rev-parse --is-shallow-repository) commits=$(git rev-list --count HEAD)"
           fi
 
+      # Run 36053018239 proved the checkout is NOT the problem: the step above
+      # printed shallow=false commits=1131, then .git/shallow appeared 1.5s into
+      # the gate (20:10:41, before any test body ran). Nothing in the repo asks
+      # git for a shallow fetch and it does not reproduce locally, so catch it
+      # in the act: the moment the file appears, record every process running.
+      - name: Watch for the git history being cut (diagnostic)
+        run: |
+          nohup sh -c 'while [ ! -f .git/shallow ]; do sleep 0.05; done
+            { date -u +%FT%T.%NZ; cat .git/shallow; ps -eo pid,ppid,lstart,args --forest; } > "$RUNNER_TEMP/shallow-culprit.txt"' \
+            >/dev/null 2>&1 &
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
@@ -213,6 +224,10 @@ jobs:
           if [ -f server.pid ]; then
             kill "$(cat server.pid)" 2>/dev/null || true
           fi
+
+      - name: Show what cut the git history, if anything did
+        if: always()
+        run: cat "$RUNNER_TEMP/shallow-culprit.txt" 2>/dev/null || echo "history was never cut during this job"
 
       - name: Show server log on failure
         if: failure()
