@@ -96,6 +96,21 @@ jobs:
       - name: Wire the git hooks (husky)
         run: git config core.hooksPath .husky
 
+      # unshipped-work-is-not-called-pushed walks ~120 first-parent commits back
+      # from HEAD. #1209's runs saw the checkout as shallow (16 commits, cut at
+      # main's tip) despite fetch-depth: 0 above. Say what the runner has, and
+      # deepen it if it is shallow, so the gate measures the code and not the
+      # clone. The spec's own failure message reports when .git/shallow was
+      # written, in case something later in the job cuts it again.
+      - name: Full git history for the specs that read it
+        run: |
+          echo "shallow=$(git rev-parse --is-shallow-repository) commits=$(git rev-list --count HEAD)"
+          if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then
+            ls -la --time-style=full-iso .git/shallow
+            git fetch --unshallow --no-tags origin
+            echo "after unshallow: shallow=$(git rev-parse --is-shallow-repository) commits=$(git rev-list --count HEAD)"
+          fi
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 

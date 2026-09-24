@@ -25,6 +25,8 @@
 
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
 
 /** Issue numbers the engine currently reports as `pushed`, given a shipping ref. */
 function pushedIssues(defaultRef?: string): Set<number> {
@@ -62,12 +64,20 @@ test('an issue whose commits are not on the shipping branch does not report as p
   const olderRef = firstParents[firstParents.length - 1];
   const unreachable = git('rev-list', '--count', `${olderRef}..HEAD`);
 
+  // When was the history cut? ci-tests.yml prints the clone's state before the
+  // gate; this says whether something during the run truncated it afterwards.
+  const shallowFile = path.join(git('rev-parse', '--git-common-dir'), 'shallow');
+  const shallowWritten = fs.existsSync(shallowFile)
+    ? `${fs.statSync(shallowFile).mtime.toISOString()} (${fs.readFileSync(shallowFile, 'utf8').trim().split('\n').length} boundary commits)`
+    : 'no';
+
   expect(
     Number(unreachable),
     'the chosen ref does not actually exclude any history, so this test would prove nothing. ' +
     `git saw: cwd=${process.cwd()} toplevel=${git('rev-parse', '--show-toplevel')} ` +
     `shallow=${git('rev-parse', '--is-shallow-repository')} ` +
-    `commits=${git('rev-list', '--count', 'HEAD')} first-parents=${firstParents.length}`,
+    `commits=${git('rev-list', '--count', 'HEAD')} first-parents=${firstParents.length} ` +
+    `shallow-file-written=${shallowWritten}`,
   ).toBeGreaterThan(20);
 
   const asOlder = pushedIssues(olderRef);
