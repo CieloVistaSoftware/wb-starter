@@ -991,7 +991,12 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   // That is precisely the schema-vs-behavior race this list exists for
   // ("whichever finishes last wins via its own innerHTML = ''"), and it also
   // destroyed the host's authored text on every <div x-stagelight>.
-  'x-stagelight'
+  'x-stagelight',
+  // checkbox() builds a native <label><input type="checkbox"> text</label>.
+  // The $view built a hidden input plus a fake span box instead, and the two
+  // disagreeing is what left every x-checkbox example unchecked, enabled and
+  // unclickable. One builder, and it is the native element.
+  'x-checkbox'
 ]);
 
 // x-{name} attribute matching a registered schema: <article x-card> resolves

@@ -70,7 +70,7 @@
     "block the next release. The register is a union. Root cause is #961/#962."
   ],
   "recorded": "2026-09-08",
-  "count": 594,
+  "count": 593,
   "failures": [
     "behaviors/accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)",
     "behaviors/alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load",
@@ -630,7 +630,6 @@
     "regression/x-cardhorizontal-content-not-cut-off.spec.ts › figure and content boxes do not overlap",
     "regression/x-cardhorizontal-content-not-cut-off.spec.ts › title, subtitle, and body text are all fully present and visible, none clipped",
     "regression/x-cardhorizontal-image-error-on-broken-src.spec.ts › [x-cardhorizontal] throws a catchable runtime error when its image src is missing/unreachable",
-    "regression/x-checkbox-hidden-input.spec.ts › the internal input is a real checkbox, not wrapped in .x-input",
     "regression/x-demo-doc-badge-click-through.spec.ts › Popover and Confirm Dialog demo badges are both clickable and open a real doc in a new tab",
     "regression/x-demo-doc-badge-click-through.spec.ts › x-confirm badge href resolves to a real, loadable doc (fallback to behaviors-reference.md, since no dedicated confirm.md exists)",
     "regression/x-demo-doc-badge-click-through.spec.ts › x-confirm: clicking the doc badge navigates instead of triggering the behavior's own overlay",
