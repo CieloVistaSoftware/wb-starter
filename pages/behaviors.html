@@ -1119,11 +1119,26 @@
     // list to a row the reader had deliberately scrolled away from.
     let selectedByKeyboard = false;
 
+    /**
+     * A row's top within the list's scrolled content. NOT offsetTop: a row in a
+     * group sits inside a <details>, and the details behavior (auto-injected on
+     * every <details>) wraps the group's content in a positioned
+     * .x-details__content. Once it has run, that wrapper is the row's
+     * offsetParent and `row.offsetTop - resultsEl.offsetTop` is off by the
+     * group's own offset -- measured 514 vs a true 567, so arrowing left the
+     * selection a row or more below the fold. Whether the wrapper existed yet
+     * depended on timing, which is why it failed only some of the time.
+     * Rect-based, it is right whatever the row's offsetParent is.
+     */
+    function rowTopInList(row) {
+      return row.getBoundingClientRect().top - resultsEl.getBoundingClientRect().top + resultsEl.scrollTop;
+    }
+
     function keepSelectionVisible() {
       if (!selectedByKeyboard) return;
       const cur = resultsEl.querySelector('[aria-current="true"]');
       if (!cur) return;
-      const top = cur.offsetTop - resultsEl.offsetTop;
+      const top = rowTopInList(cur);
       const bottom = top + cur.offsetHeight;
       if (top < resultsEl.scrollTop) resultsEl.scrollTop = top;
       else if (bottom > resultsEl.scrollTop + resultsEl.clientHeight) {
@@ -2585,7 +2600,7 @@
       // out of view, by the minimum needed. A row already on screen leaves the
       // list where it is. This replaces #687/#717.
       const listTop = resultsEl.scrollTop;
-      const rowTop = row.offsetTop - resultsEl.offsetTop;
+      const rowTop = rowTopInList(row);
       const rowBottom = rowTop + row.offsetHeight;
       if (rowTop < listTop) resultsEl.scrollTop = rowTop;
       else if (rowBottom > listTop + resultsEl.clientHeight) {
@@ -2879,7 +2894,7 @@
     liveStage.addEventListener('click', () => {
       const current = resultsEl.querySelector('[aria-current="true"]');
       if (!current) return;
-      resultsEl.scrollTop = current.offsetTop - resultsEl.offsetTop;
+      resultsEl.scrollTop = rowTopInList(current);
     }, true);
 
     resultsEl.addEventListener('click', (e) => {
