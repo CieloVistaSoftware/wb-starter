@@ -119,7 +119,11 @@ jobs:
       - name: Watch for the git history being cut (diagnostic)
         run: |
           nohup sh -c 'while [ ! -f .git/shallow ]; do sleep 0.05; done
-            { date -u +%FT%T.%NZ; cat .git/shallow; ps -eo pid,ppid,lstart,args --forest; } > "$RUNNER_TEMP/shallow-culprit.txt"' \
+            sleep 1
+            { date -u +%FT%T.%NZ; cat .git/shallow; ps -eo pid,ppid,lstart,args --forest
+              echo "--- FETCH_HEAD"; ls -la --time-style=full-iso .git/FETCH_HEAD; cat .git/FETCH_HEAD
+              echo "--- reflogs"; git reflog show --date=iso origin/main | head -5; git reflog --date=iso | head -5
+              echo "--- trace config"; git config --show-origin --list | grep -iv "extraheader"; } > "$RUNNER_TEMP/shallow-culprit.txt" 2>&1' \
             >/dev/null 2>&1 &
 
       - name: Install Playwright browsers
