@@ -23,7 +23,7 @@ is likely unpushed local work. Merge #1209 with that in mind.
 
 Guard added: `tests/compliance/no-runtime-cdn.spec.ts` — no CDN URL in `src/` JS,
 every code theme has a local stylesheet, vendored marked matches package.json.
-Failure baseline: 598 -> 589.
+Failure baseline: 598 -> 590.
 
 **Files touched:**
 - `C:\Users\jwpmi\Downloads\AI\wb-starter\src\wb-viewmodels\semantics\checkbox.js`
@@ -45,10 +45,26 @@ Failure baseline: 598 -> 589.
 - `C:\Users\jwpmi\Downloads\AI\wb-starter\tests\regression\code-theme-control-and-host.spec.ts`
 - `C:\Users\jwpmi\Downloads\AI\wb-starter\data\test-baseline-failures.json`
 
-**Last action:** pushed 00ee0b9 (flaky x-code spec fix) and updated the PR body.
+**CI (first full run of the PR, bbe3b11):** the ratchet flagged 6 new failures.
+- 4 are red on `main` too (4.0.5's own CI run lists the same 4): they fail on the
+  CI machine itself -- `gh` has no GH_TOKEN (unshipped-work-is-not-called-pushed,
+  fixes-api-is-cached), `git config core.hooksPath` is unset
+  (every-push-to-main-is-a-release), and injection-survives-setcontent-mid-boot-repeated.
+- `content-html-code-demos-colored` was taken off the baseline by mistake
+  (5 lucky passes). It fails whenever content.html's markdown demo has rendered:
+  raw `<div x-demo>` blocks in a fetched .md show "source unavailable" (one
+  comment span, one colour) -- the limitation mdhtml.js documents and leaves
+  alone. Back on the baseline.
+- `global-attributes › tooltip global attribute` is intermittent on `main` too
+  (1 in 20 on a clean main checkout); waiting for x-ready before hover did not
+  fix it (1 in 40). Unexplained; needs its own issue.
+Earlier PR runs were all cancelled by the next push, never finished.
+
+**Last action:** restored the content-html-code-demos-colored baseline entry.
 
 **Next step, in order:**
-1. Check #1209's CI on 00ee0b9. On green: mark ready, merge.
+1. #1209's CI cannot go green until the 4 CI-machine failures red on `main`
+   are fixed (GH_TOKEN for `gh`, hooksPath) -- give them an issue. Then merge.
 2. Reconcile with any local unpushed 4.0.6 work. Watch
    `release-bump-touches-only-project-version.spec.ts`: if the local #1128
    `release.mjs` imports `scripts/lib/`, `buildFakeProject()` must copy it too.
