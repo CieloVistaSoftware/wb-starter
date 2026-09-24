@@ -27,6 +27,18 @@
  * unfixed release.mjs this test reports 3 extra changed paths —
  * /packages/node_modules/has-flag/version, /packages/node_modules/resolve-from/version
  * and /packages/node_modules/path-exists/version — all 4.0.0 -> 4.0.1.
+ *
+ * #1203 — THE FIXTURE GETS ITS OWN MACHINE LOCK
+ *
+ * #1128 made release.mjs take the machine-wide suite lock before its ratchet.
+ * Inside a gate or ship run the gate already holds that lock, so the fixture's
+ * release waited for it (up to 85 minutes) inside execFileSync. That blocks the
+ * worker's event loop, so Playwright's own timeout could not fire either. The
+ * test never reported, the ratchet counted one result short, and every full run
+ * since 2026-09-17 was killed as a HANG. Alone it passed, because nothing held
+ * the lock. runFixtureRelease() now gives the child a private WB_TEST_LOCK_DIR
+ * and a hard time limit, and the last test below runs it while a live suite
+ * lock is held: the exact gate condition.
  */
 
 import { test, expect } from '@playwright/test';
@@ -35,11 +47,18 @@ import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync,
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createGuards } from '../../scripts/lib/test-lock.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 
 const START = '4.0.0';
 const NEXT = '4.0.1';
+
+/**
+ * Well under the 30s test timeout. execFileSync blocks the worker, so this
+ * limit is the only thing that can end a stuck child and let the test report.
+ */
+const RELEASE_TIMEOUT_MS = 20_000;
 
 /** A lockfile shaped like a real one: the project, plus deps ON the project's version. */
 function fixtureLock() {
@@ -143,6 +162,38 @@ function versionFields(node: unknown, prefix = '', out: Record<string, string> =
   return out;
 }
 
+/**
+ * Runs the real release.mjs in the fixture and returns its stdout.
+ *
+ * `inheritedEnv` is what the child would otherwise inherit (a gate's env, in
+ * the guard test). WB_TEST_LOCK_DIR is always overridden with a directory
+ * inside the fixture, so the child can never queue on a lock this run holds.
+ */
+function runFixtureRelease(dir: string, inheritedEnv: NodeJS.ProcessEnv = process.env): string {
+  const privateLockDir = join(dir, '.wb-test-lock');
+  try {
+    return execFileSync(process.execPath, ['scripts/release.mjs'], {
+      cwd: dir,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...inheritedEnv, WB_TEST_LOCK_DIR: privateLockDir },
+      timeout: RELEASE_TIMEOUT_MS,
+      killSignal: 'SIGKILL',
+    });
+  } catch (err: any) {
+    if (err.signal) {
+      throw new Error(
+        `release.mjs did not finish within ${RELEASE_TIMEOUT_MS / 1000}s in the fixture project ` +
+          `(killed with ${err.signal}). It is waiting on something outside the fixture, ` +
+          `most likely a machine lock (#1203).\n${err.stdout || ''}\n${err.stderr || ''}`
+      );
+    }
+    throw new Error(
+      `release.mjs exited non-zero in the fixture project:\n${err.stdout || ''}\n${err.stderr || ''}`
+    );
+  }
+}
+
 function changedPaths(before: Record<string, string>, after: Record<string, string>): string[] {
   const keys = new Set([...Object.keys(before), ...Object.keys(after)]);
   return [...keys].filter((k) => before[k] !== after[k]).sort();
@@ -163,18 +214,7 @@ test('a release bumps only the project\'s own version fields in package-lock.jso
       'fixture is vacuous: no dependency sits on the project version, so nothing could be wrongly bumped'
     ).toBeGreaterThanOrEqual(2);
 
-    let output = '';
-    try {
-      output = execFileSync(process.execPath, ['scripts/release.mjs'], {
-        cwd: dir,
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'pipe'],
-      });
-    } catch (err: any) {
-      throw new Error(
-        `release.mjs exited non-zero in the fixture project:\n${err.stdout || ''}\n${err.stderr || ''}`
-      );
-    }
+    const output = runFixtureRelease(dir);
 
     const lockAfter = JSON.parse(readFileSync(join(dir, 'package-lock.json'), 'utf8'));
     const after = versionFields(lockAfter);
@@ -233,4 +273,33 @@ test('no release script bumps a version by whole-file string replacement', () =>
     offenders,
     `these bump the version with an unanchored whole-file replace (#991):\n${offenders.join('\n')}`
   ).toEqual([]);
+});
+
+test('the fixture release finishes while the machine suite lock is held (#1203)', async () => {
+  // Stand in for the gate: a live suite lock, held by this process, in a lock
+  // dir the child would inherit. A temp dir, so the real machine lock is never
+  // touched from inside a gate that already holds it.
+  const gateLockDir = mkdtempSync(join(tmpdir(), 'wb-gate-lock-1203-'));
+  const gate = createGuards({ root: ROOT, globalDir: gateLockDir, minFreeMb: 0 });
+  const dir = buildFakeProject();
+  try {
+    expect(await gate.acquireSuiteLock(new Date().toISOString(), 'gate stand-in (#1203)')).toBeNull();
+    await gate.bindSuiteLock(process.pid);
+
+    // The lock must really be held, or a pass below proves nothing.
+    const rival = createGuards({ root: ROOT, globalDir: gateLockDir, minFreeMb: 0 });
+    expect(
+      await rival.acquireSuiteLock(new Date().toISOString(), 'rival'),
+      'the stand-in lock is not held, so this test cannot reproduce the gate condition'
+    ).toMatch(/Tests already running/);
+
+    runFixtureRelease(dir, { ...process.env, WB_TEST_LOCK_DIR: gateLockDir });
+
+    expect(JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8')).version).toBe(NEXT);
+    expect((await gate.readLock())?.pid, 'the fixture release took or cleared the held lock').toBe(process.pid);
+  } finally {
+    await gate.removeLock();
+    rmSync(dir, { recursive: true, force: true });
+    rmSync(gateLockDir, { recursive: true, force: true });
+  }
 });
