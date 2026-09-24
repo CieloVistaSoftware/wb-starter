@@ -37,7 +37,9 @@ test('saved local code theme (e.g. x-grayscale-dark) resolves to its local path,
   expect(response.status(), 'the local theme file itself must actually serve').toBe(200);
 });
 
-test('a real CDN theme id still builds a cdnjs URL as before', async ({ page }) => {
+// Every highlight.js theme is now vendored into src/styles/code-themes/hljs/;
+// none is loaded from cdnjs any more (compliance/no-runtime-cdn.spec.ts).
+test('a highlight.js theme id resolves to its vendored local file, not cdnjs', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => localStorage.setItem('x-code-theme', 'monokai'));
   await page.setContent(`
@@ -53,7 +55,9 @@ test('a real CDN theme id still builds a cdnjs URL as before', async ({ page }) 
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 30000 });
 
   const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
-  expect(href, 'a genuine CDN theme id must still resolve to cdnjs, not be misrouted').toBe(
-    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css'
-  );
+  expect(href, 'must not load from a CDN').not.toContain('cdnjs.cloudflare.com');
+  expect(href, 'must resolve to the vendored theme file').toContain('/src/styles/code-themes/hljs/monokai.min.css');
+
+  const response = await page.request.get(href!);
+  expect(response.status(), 'the vendored theme file must actually serve').toBe(200);
 });

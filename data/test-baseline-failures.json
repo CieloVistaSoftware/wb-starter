@@ -70,7 +70,7 @@
     "block the next release. The register is a union. Root cause is #961/#962."
   ],
   "recorded": "2026-09-08",
-  "count": 593,
+  "count": 589,
   "failures": [
     "behaviors/accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)",
     "behaviors/alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load",
@@ -475,13 +475,9 @@
     "regression/code-panel-50vw-min-width.spec.ts › behaviors.html: the \"This is the title\" card demo code panel is not cramped",
     "regression/code-panel-width-compliance.spec.ts › link demo uses narrow width for short snippet",
     "regression/code-theme-control.spec.ts › the dropdown lists all 49 themes grouped into the 4 documented categories",
-    "regression/codecontrol-theme-cdn-url.spec.ts › selecting a non-local theme from the dropdown (e.g. monokai) also resolves to a working cdnjs URL",
-    "regression/codecontrol-theme-cdn-url.spec.ts › selecting the local x-grayscale-dark theme still resolves to its real local file, not a CDN URL",
-    "regression/codecontrol-theme-cdn-url.spec.ts › the default theme (atom-one-dark) resolves to a real cdnjs URL, not /node_modules/",
     "regression/component-attribute-validation.spec.ts › [x-avatar] size must be valid (xs, sm, md, lg, xl)",
     "regression/component-attribute-validation.spec.ts › cardhero height must be in standard range (400px-600px)",
     "regression/content-html-article-layout-demos.spec.ts › content.html visibly demonstrates featured articles and article layouts",
-    "regression/content-html-code-demos-colored.spec.ts › every [x-demo] code panel on content.html has real syntax coloring",
     "regression/countdown-to-attribute.spec.ts › counts down to a real future date instead of showing a stuck 00:00",
     "regression/demo-code-panel-50vw.spec.ts › narrow control does not starve its code panel",
     "regression/demo-code-panel-50vw.spec.ts › single-item demos show all their code, or sit at the 50vw cap",
