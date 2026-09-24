@@ -102,11 +102,16 @@ test.describe('Bare .x-btn (no modifier) renders with real visible styling', () 
       <button id="bare-button" class="x-btn">Bare button trigger</button>
     `);
 
-    const divStyle = await hasVisibleBoxStyle(page, '#bare-div');
-    expect(divStyle.hasBg || divStyle.hasBorder, `bare div.x-btn must be visibly styled, got ${JSON.stringify(divStyle)}`).toBe(true);
-
-    const btnStyle = await hasVisibleBoxStyle(page, '#bare-button');
-    expect(btnStyle.hasBg || btnStyle.hasBorder, `bare button.x-btn must be visibly styled, got ${JSON.stringify(btnStyle)}`).toBe(true);
+    // Polled, not read once: button.css arrives through the just-in-time
+    // loader, and on a loaded CI runner (#1209, run 36068811350) a single read
+    // caught the element before the sheet applied. An element that never gets
+    // styled still fails, and the failure shows the last computed style.
+    const styledOrWhy = (selector: string) => async () => {
+      const s = await hasVisibleBoxStyle(page, selector);
+      return s.hasBg || s.hasBorder ? 'styled' : JSON.stringify(s);
+    };
+    await expect.poll(styledOrWhy('#bare-div'), { message: 'bare div.x-btn must be visibly styled', timeout: 10_000 }).toBe('styled');
+    await expect.poll(styledOrWhy('#bare-button'), { message: 'bare button.x-btn must be visibly styled', timeout: 10_000 }).toBe('styled');
   });
 
   test('existing .x-btn.x-btn--primary keeps its variant background (no regression)', async ({ page }) => {
