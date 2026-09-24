@@ -80,6 +80,13 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      # A developer's checkout gets this from husky; the runner's never did, so
+      # every-push-to-main-is-a-release › "git is configured to run the hook"
+      # failed on every branch. It asserts the hook is WIRED, not that it runs
+      # here -- nothing in this job pushes.
+      - name: Wire the git hooks (husky)
+        run: git config core.hooksPath .husky
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
