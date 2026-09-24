@@ -23,14 +23,23 @@ on the old mapping.
 touch article, card or the catalogue, before and after. No test that passed
 before fails now; `x-card: all 14 declared attributes take effect` passes.
 
+**Also on PR #1210 since:** the CI fixes the merge caused (e298bc67), the
+custom-elements manifest removed (John: "we are not supporting custom elements
+any longer", 176381aa), and x-progressbar removed so x-progress is the one name
+(e6612759).
+
 **Next step:**
 1. Run the full commit gate on John's machine against PR #1210's head.
 2. Merge PR #1210, then close [#1166](https://github.com/CieloVistaSoftware/wb-starter/issues/1166).
-3. packages/create-wb-starter/template still has the old article files. It is
-   refreshed wholesale by sync-template.mjs before a publish, not by hand.
-4. Pre-existing and left alone: regression/content-html-article-layout-demos
-   (baselined, asserts ids content.html no longer has) and article.css's
-   `.x-articles--* > x-article` rules, which match no element.
+3. CI's `CI — Tests` stays red until [PR #1209](https://github.com/CieloVistaSoftware/wb-starter/pull/1209)
+   merges: it adds the register gate ([#1163](https://github.com/CieloVistaSoftware/wb-starter/issues/1163)). Then merge main into this branch.
+4. packages/create-wb-starter/template still has the old article, manifest and
+   progressbar files. sync-template.mjs refreshes it before a publish.
+5. Judgement call to confirm with John: behaviors-list-grouped now allows the
+   group holding the auto-selected first row to start open ([#771](https://github.com/CieloVistaSoftware/wb-starter/issues/771) vs [#995](https://github.com/CieloVistaSoftware/wb-starter/issues/995)).
+6. Pre-existing and left alone: content-html-article-layout-demos (baselined),
+   article.css `.x-articles--* > x-article` rules, html-validity (fails on main),
+   and intermittent dropdown / header-controls / api-docs-panels specs.
 
 **Open questions:** see the list at the end of this file.
 
