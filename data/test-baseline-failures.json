@@ -70,7 +70,7 @@
     "block the next release. The register is a union. Root cause is #961/#962."
   ],
   "recorded": "2026-09-08",
-  "count": 596,
+  "count": 595,
   "failures": [
     "behaviors/accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)",
     "behaviors/alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load",
@@ -341,7 +341,6 @@
     "compliance/md-code-format.spec.ts › docs/behaviors/flex.md: code samples not crammed onto one line",
     "compliance/md-code-format.spec.ts › docs/behaviors/stack.md: code samples not crammed onto one line",
     "compliance/md-wb-demo-required.spec.ts › audit: markdown code fences that should be live [x-demo] blocks (Rule 4, #307)",
-    "compliance/no-data-attributes.spec.ts › data/custom-elements.json: zero data-* attributes",
     "compliance/no-data-attributes.spec.ts › pages/demos.html: zero data-* attributes",
     "compliance/no-data-attributes.spec.ts › pages/issues.html: zero data-* attributes",
     "compliance/no-data-attributes.spec.ts › src/wb-models/accordion.schema.json: zero data-* attributes",

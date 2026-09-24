@@ -96,7 +96,7 @@ function scannedFiles(): string[] {
   for (const dir of ['src', 'config']) {
     walk(path.join(ROOT, dir), ['.json'], out);
   }
-  for (const f of ['README.md', 'CONTRIBUTING.md', '.vscode/html-custom-data.json', 'data/custom-elements.json']) {
+  for (const f of ['README.md', 'CONTRIBUTING.md', '.vscode/html-custom-data.json']) {
     if (fs.existsSync(path.join(ROOT, f))) out.push(f);
   }
   return [...new Set(out)];

@@ -96,7 +96,6 @@
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
-    "generate:custom-elements": "node scripts/generate-custom-elements.js",
     "lint:md-powershell": "node scripts/lint-md-powershell.js",
     "lint:md-powershell:staged": "node scripts/lint-md-powershell-staged.js",
     "check:spec-collection": "node scripts/check-spec-collection.mjs",
@@ -192,7 +191,6 @@
     "marked": "^17.0.1",
     "ws": "^8.18.3"
   },
-  "customElements": "./data/custom-elements.json",
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@playwright/test": "1.58.2",

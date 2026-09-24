@@ -699,21 +699,22 @@ See [Error Message Standard](./ERROR-MESSAGE.md) for all error message and error
 
 ### VS Code Custom Data
 
-The project includes custom element definitions for VS Code autocomplete:
+The project includes attribute definitions for VS Code autocomplete. WB
+has no custom element tags (4.0.0 removed them), so there is no custom
+elements manifest; autocomplete describes the x-* attributes:
 
 ```
-data/custom-elements.json    # Generated from schemas
-.vscode/settings.json        # Points to custom data
+.vscode/html-custom-data.json    # Generated from schemas
+.vscode/settings.json            # Points to custom data
 ```
 
-### Generating Definitions
+### Updating Definitions
 
 ```bash
-npm run generate:vscode-data
+node scripts/update-intellisense.js
 ```
 
 This creates autocomplete for:
-- Custom element tags
 - Attribute names
 - Attribute values (enums)
 - Descriptions/documentation
