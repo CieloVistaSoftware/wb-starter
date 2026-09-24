@@ -94,11 +94,10 @@ If something fails, don't pattern-match to symptoms and apply patches. That's ho
 ## 8. Session Start Protocol
 
 Every session, before doing anything:
-1. `list_allowed_directories` — confirm MCP access
-2. Read this file (`docs/claude/TIER1-LAWS.md`)
-3. Read `docs/_today/CURRENT-STATUS.md`
-4. Use `recent_chats` to read last conversation — continue from where it left off
-5. Never ask John to upload files or explain what he's working on
+1. Read this file (`docs/claude/TIER1-LAWS.md`)
+2. Read `docs/_today/CURRENT-STATUS.md`
+3. Use `recent_chats` to read last conversation — continue from where it left off
+4. Never ask John to upload files or explain what he's working on — the built-in file tools reach the project directly
 
 ## 9. No One-Off Styles — Use Existing CSS or Extend It
 

@@ -2,28 +2,28 @@
 
 ## 🅿️ PARKING LOT
 
-**Task:** ship the release batch that has been blocked since 2026-09-09.
+**Updated 2026-09-24.** The release batch below shipped as **4.0.5** (482b940,
+2026-09-14). Every issue it unblocked is closed: #1070, #1075, #1078, #1102,
+#1103, #1104, #1106, #792.
 
-**Last action:** committed the batch. The gate's two remaining new failures were
-traced with probes and fixed; both specs verified 10/10 alone, the workspace one
-as test 1 on a cold page, which is the exact condition it failed under.
+**Task:** #1166, session start no longer calls `list_allowed_directories`.
 
-**Next step, in order:**
-1. The commit's gate verdict. On a pass: `npm run ship` end to end, no review
-   pause (John: "I want the releases all automated").
-2. Law 17: `npm run test:smoke:deployed`.
-3. Close what the release unblocks: #1070, #1075, #1078, #1102, #1103, #1104,
-   #1106, #792. Four of those (#1070, #1075, #1078, #792) were reshaped for the
-   signature validator in parallel; confirm each passes
-   `node scripts/check-issue-signatures.mjs --number N` before closing.
-4. Commit the two held-back changes, each through its own gate:
-   - the article -> card registry change (saved in the session scratchpad:
-     'article': 'card', x-article removed, index.js redirect removed, the dead
-     article() deleted). It took the gate from 2 failures to 10 when bundled,
-     because removing x-article changes the behaviors catalogue four specs
-     assert over. Those specs must change in the same commit.
-   - wb-starter CLAUDE.md and docs/claude/TIER1-LAWS.md step 1 still name
-     `list_allowed_directories`; the filesystem MCP server was dropped.
+**Files touched:** `CLAUDE.md`, `docs/claude/TIER1-LAWS.md` (Law 8),
+`packages/create-wb-starter/template/docs/claude/TIER1-LAWS.md`
+
+**Last action:** removed the step, renumbered, and pointed file access at the
+built-in tools and the `wb-starter` server from `.mcp.json`. The guard grep
+prints nothing. `template-docs-match-the-repo.spec.ts` passes 2/2.
+
+**Next step:**
+1. Merge the #1166 PR, then close #1166.
+2. Redo the article -> card registry change. Its saved copy lived in a session
+   scratchpad and is gone. What it did: `'article': 'card'`, x-article removed
+   from tag-map.js, the index.js redirect removed, and the dead `article()`
+   deleted. It changes the behaviors catalogue four specs assert over, so
+   those specs change in the same commit, through its own gate.
+
+**Open questions:** see the list at the end of this file.
 
 ## What this batch fixes
 
