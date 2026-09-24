@@ -1,13 +1,11 @@
 /**
- * Article / Articles List Behaviors
+ * Articles List Behavior
  * -----------------------------------------------------------------------------
- * <article> was mapped (tag-map.js elementMap) and schema'd
- * (wb-models/article.schema.json) but had no behavior implementation of any
- * kind -- pages using wb-lazy.js (no schema-builder/MVVM engine at all) got
- * zero enhancement, and even wb.js pages relied on the schema's $view alone
- * with no interactivity layer. This builds the full structure directly, the
- * same self-sufficient pattern card.js/alert()/chip() (feedback.js) use, so
- * it works identically under both runtimes.
+ * articles() is the grid/list wrapper that lays out <article> children. Each
+ * child is a card: tag-map.js routes <article> to card.js, which renders the
+ * title, author, date, category and reading time. There is no separate
+ * article() any more -- it was unreachable (the `article` name loaded card.js)
+ * and was deleted.
  *
  * CSS: src/styles/behaviors/article.css
  */
@@ -21,128 +19,6 @@ function takeChildren(element) {
   const frag = document.createDocumentFragment();
   while (element.firstChild) frag.appendChild(element.firstChild);
   return frag;
-}
-
-export function article(element, options = {}) {
-  const title = options.title || element.getAttribute('title') || '';
-  const subtitle = options.subtitle || element.getAttribute('subtitle') || '';
-  const author = options.author || element.getAttribute('author') || '';
-  const date = options.date || element.getAttribute('date') || '';
-  const category = options.category || element.getAttribute('category') || '';
-  const image = options.image || element.getAttribute('image') || '';
-  const imageAlt = options.imageAlt || element.getAttribute('image-alt') || title;
-  const readingTime = options.readingTime || element.getAttribute('reading-time') || '';
-  const footer = options.footer || element.getAttribute('footer') || '';
-  const featured = options.featured ?? element.hasAttribute('featured');
-
-  const body = takeChildren(element);
-
-  // #448 dropped classList.add('x-article') on the assumption article.css's
-  // bare `x-article {}` tag selector covers every consumer -- true only for
-  // a REAL <article> tag. #528: schema-builder.js's buildStructure() (and
-  // any other non-<article>-tagged host wb-lazy.js's runtime hands this
-  // function) can't be reached by that tag selector at all, so those hosts
-  // never got styled. Same guard chip()'s #521 fix uses (feedback.js) and
-  // articles()'s #523-follow-up fix uses just below in this file: only a
-  // host whose tag ISN'T already x-article needs the class -- adding it
-  // unconditionally would trip no-redundant-tag-name-class.spec.ts on real
-  // <article> tags (demos/site/content.html).
-  element.classList.add('x-article');
-  element.classList.toggle('x-article--featured', featured);
-
-  const hasHeaderContent = image || category || date || readingTime || title || subtitle || author;
-  if (hasHeaderContent) {
-    // A semantic <header> tag here collides with the header() behavior's
-    // own autoInject nativeMap entry ('header' -> 'header', tag-map.js):
-    // WB.init({autoInject:true}) treats ANY native <header> element on the
-    // page as a site/page-header candidate and adds the 'x-header' class,
-    // and behaviors/header.css's `x-header, header { display: flex; ... }`
-    // rule (meant for the site's own nav header) then applies its row-flex
-    // layout here too -- cramming the media/meta/title/subtitle/byline
-    // that are meant to stack vertically into one horizontal row instead.
-    // A plain <div> sidesteps the collision entirely and matches every
-    // other internal wrapper in this file (.x-article__meta/__byline are
-    // already <div>, not semantic tags, for the same reason).
-    const header = document.createElement('div');
-    header.className = 'x-article__header';
-
-    if (image) {
-      const media = document.createElement('figure');
-      media.className = 'x-article__media';
-      const img = document.createElement('img');
-      img.src = image;
-      img.alt = imageAlt;
-      media.appendChild(img);
-      header.appendChild(media);
-    }
-
-    if (category || date || readingTime) {
-      const meta = document.createElement('div');
-      meta.className = 'x-article__meta';
-      if (category) {
-        const categoryEl = document.createElement('span');
-        categoryEl.className = 'x-article__category';
-        categoryEl.textContent = category;
-        meta.appendChild(categoryEl);
-      }
-      if (date) {
-        const dateEl = document.createElement('time');
-        dateEl.className = 'x-article__date';
-        dateEl.textContent = date;
-        dateEl.setAttribute('datetime', date);
-        meta.appendChild(dateEl);
-      }
-      if (readingTime) {
-        const readingTimeEl = document.createElement('span');
-        readingTimeEl.className = 'x-article__reading-time';
-        readingTimeEl.textContent = readingTime;
-        meta.appendChild(readingTimeEl);
-      }
-      header.appendChild(meta);
-    }
-
-    if (title) {
-      const titleEl = document.createElement('h1');
-      titleEl.className = 'x-article__title';
-      titleEl.textContent = title;
-      header.appendChild(titleEl);
-    }
-
-    if (subtitle) {
-      const subtitleEl = document.createElement('p');
-      subtitleEl.className = 'x-article__subtitle';
-      subtitleEl.textContent = subtitle;
-      header.appendChild(subtitleEl);
-    }
-
-    if (author) {
-      const byline = document.createElement('div');
-      byline.className = 'x-article__byline';
-      const authorLabel = document.createElement('span');
-      authorLabel.textContent = `By ${author}`;
-      byline.appendChild(authorLabel);
-      header.appendChild(byline);
-    }
-
-    element.appendChild(header);
-  }
-
-  const content = document.createElement('div');
-  content.className = 'x-article__content';
-  content.appendChild(body);
-  element.appendChild(content);
-
-  if (footer) {
-    const footerEl = document.createElement('footer');
-    footerEl.className = 'x-article__footer';
-    footerEl.textContent = footer;
-    element.appendChild(footerEl);
-  }
-
-  return () => {
-    element.classList.remove('x-article', 'x-article--featured');
-    element.innerHTML = '';
-  };
 }
 
 export function articles(element, options = {}) {
@@ -163,8 +39,8 @@ export function articles(element, options = {}) {
   element.classList.add('x-articles');
 
   if (title) {
-    // Same native-<header>/header() autoInject collision as article()
-    // above (see its comment) -- a plain <div> avoids it.
+    // A native <header> here would auto-inject the header() behavior on top
+    // of this one -- a plain <div> avoids that collision.
     const header = document.createElement('div');
     header.className = 'x-articles__header';
     const titleEl = document.createElement('h2');
@@ -228,7 +104,6 @@ export function articles(element, options = {}) {
         const shown = Number.isFinite(limit) && limit >= 0 ? items.slice(0, limit) : items;
         for (const item of shown) {
           const art = document.createElement('article');
-          art.setAttribute('x-article', '');
           for (const [key, attr] of [
             ['title', 'title'], ['subtitle', 'subtitle'], ['author', 'author'],
             ['date', 'date'], ['category', 'category'], ['image', 'image'],
@@ -241,8 +116,7 @@ export function articles(element, options = {}) {
           list.appendChild(art);
         }
         element.removeAttribute('aria-busy');
-        // The appended hosts carry x-article and must be scanned to become
-        // articles. WB.scan is async (#845), so it is awaited here rather
+        // The appended <article> hosts must be scanned to become cards. WB.scan is async (#845), so it is awaited here rather
         // than fired and forgotten.
         await globalThis.WB?.scan?.(list);
         element.dispatchEvent(new CustomEvent('wb:articles:loaded', {

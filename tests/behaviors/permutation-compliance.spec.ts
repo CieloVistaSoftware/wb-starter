@@ -363,7 +363,7 @@ const CHILD_BUILDERS: Record<string, string> = {
   accordion: '<div accordion-title="One">First body</div><div accordion-title="Two">Second body</div>',
   collapse: '<div accordion-title="One">First body</div>',
   tabs: '<div tab-title="One">First panel</div><div tab-title="Two">Second panel</div>',
-  articles: '<article x-article title="One"></article><article x-article title="Two"></article>',
+  articles: '<article title="One"></article><article title="Two"></article>',
   cluster: '<span>one</span><span>two</span>',
   stack: '<span>one</span><span>two</span>',
   grid: '<span>one</span><span>two</span>',

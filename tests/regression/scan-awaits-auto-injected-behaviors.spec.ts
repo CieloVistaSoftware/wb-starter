@@ -89,10 +89,8 @@ test.describe('WB.scan() awaits the behaviors it starts (#961/#962)', () => {
     expect(idle.error, 'WB.whenIdle() must exist and resolve').toBeUndefined();
     expect(idle.pending, 'WB.pendingCount must be 0 once whenIdle() resolves').toBe(0);
     expect(idle.btn).toContain('x-button');
-    // nativeMap routes <article> to the ARTICLE behavior, which adds
-    // `x-article` (article.js:50) — not to card. Checked in tag-map.js rather
-    // than assumed: the first version of this line asserted `x-card` and was
-    // simply wrong about the mapping.
+    // nativeMap routes <article> straight to the card behavior (there is no
+    // separate article behavior any more).
     // NOT asserted here: the <article> in the fixture ends with NO class at
     // all, while being stamped x-ready with no x-error, deterministically 3/3.
     // That is a real defect but a DIFFERENT one — this test is about scan()

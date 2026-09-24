@@ -53,11 +53,13 @@ async function select(page, token: string) {
 }
 
 test.describe('the API panel states its attribute count (#993)', () => {
-  test('article: the chip says 9, and the panel lists all 9', async ({ page }) => {
-    const declared = declaredAttributes('article');
-    expect(declared.length, 'article.schema.json should declare nine attributes').toBe(9);
+  test('card: the chip states the count, and the panel lists every attribute', async ({ page }) => {
+    // card.schema.json holds the byline attributes merged from the former
+    // article schema (author, date, category, readingTime, featured).
+    const declared = declaredAttributes('card');
+    expect(declared.length, 'card.schema.json should declare fourteen attributes').toBe(14);
 
-    await select(page, 'x-article');
+    await select(page, 'x-card');
 
     const result = await page.evaluate(async () => {
       const summary = document.querySelector('#behaviors-live-api .behaviors-live__api-summary');
@@ -85,18 +87,21 @@ test.describe('the API panel states its attribute count (#993)', () => {
     // The point of #993: string attributes never reach the list. This asserts
     // the gap the API panel exists to close, so a future change that starts
     // emitting string rows does not silently make this test meaningless.
-    await select(page, 'x-article');
+    // x-share declares six attributes, every one a plain string: the purest
+    // form of the gap. (It was article's, until article merged into card, whose
+    // enums and booleans give it more option rows than attributes.)
+    await select(page, 'x-share');
 
     const listRows = await page.evaluate(
       ({ LIST, ROW }) =>
         Array.from(document.querySelectorAll(`${LIST} ${ROW}`)).filter(
-          (r) => (r as HTMLElement).dataset.browseToken === 'x-article'
+          (r) => (r as HTMLElement).dataset.browseToken === 'x-share'
         ).length,
       { LIST, ROW }
     );
 
-    const declared = declaredAttributes('article').length;
-    expect(listRows, 'article should still produce few option rows').toBeLessThan(declared);
+    const declared = declaredAttributes('share').length;
+    expect(listRows, 'share should still produce fewer option rows than attributes').toBeLessThan(declared);
     expect(declared, 'the API panel is where the rest live').toBeGreaterThan(listRows);
   });
 

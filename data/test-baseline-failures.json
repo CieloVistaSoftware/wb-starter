@@ -70,7 +70,7 @@
     "block the next release. The register is a union. Root cause is #961/#962."
   ],
   "recorded": "2026-09-08",
-  "count": 598,
+  "count": 596,
   "failures": [
     "behaviors/accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)",
     "behaviors/alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load",
@@ -111,7 +111,6 @@
     "behaviors/dropdown-examples.spec.ts › the stage returns to its normal height for the next example",
     "behaviors/effects-actions.spec.ts › particle effects (confetti/rainbow/glow/sparkle/snow/fireworks) inject and fire without error",
     "behaviors/every-declared-attribute.spec.ts › x-accordion: all 3 declared attributes take effect",
-    "behaviors/every-declared-attribute.spec.ts › x-article: all 9 declared attributes take effect",
     "behaviors/every-declared-attribute.spec.ts › x-audio: all 10 declared attributes take effect",
     "behaviors/every-declared-attribute.spec.ts › x-button: all 11 declared attributes take effect",
     "behaviors/every-declared-attribute.spec.ts › x-cardhero: all 14 declared attributes take effect",
@@ -491,7 +490,7 @@
     "regression/demo-single-item-late-render-width.spec.ts › single-item demo self-corrects width after its lazily-loaded control renders late",
     "regression/demos-site-page-padding.spec.ts › index.html: .site-index wrapper has real padding",
     "regression/doc-viewer-boilerplate-example-no-live-render.spec.ts › V3-GUIDE.md loads with no 404s and no console errors",
-    "regression/doc-viewer-code-panel-not-narrow.spec.ts › docs/behaviors/article.md: no <div x-demo> code panel shows a forced horizontal scrollbar",
+    "regression/doc-viewer-code-panel-not-narrow.spec.ts › docs/behaviors/card.md: no <div x-demo> code panel shows a forced horizontal scrollbar",
     "regression/doc-viewer-code-panel-not-narrow.spec.ts › docs/behaviors/figure.md: no <div x-demo> code panel shows a forced horizontal scrollbar",
     "regression/doc-viewer-code-panel-not-narrow.spec.ts › docs/behaviors/table.md: no <div x-demo> code panel shows a forced horizontal scrollbar",
     "regression/doc-viewer-end-key-true-bottom.spec.ts › End on a doc with lazy <div x-demo> blocks lands within a few px of true bottom",
@@ -595,7 +594,6 @@
     "regression/ripple-and-confetti-keep-authored-content.spec.ts › <div x-confetti repeat> fires more than once unattended, and stops cleanly",
     "regression/schema-dependent-hosts-self-build.spec.ts › demos/site/forms.html: .x-textarea gets a real, working textarea",
     "regression/schema-dependent-hosts-self-build.spec.ts › demos/site/forms.html: every [x-checkbox] gets a real, working input",
-    "regression/schema-tag-name-resolution.spec.ts › [x-article] builds a real structure from a bare tag",
     "regression/schema-tags-render-audit.spec.ts › bare <div x-fix-card> upgrades to the real custom element class",
     "regression/schema-tags-render-audit.spec.ts › setting .data on an upgraded <div x-fix-card> actually renders content",
     "regression/schema-x-attribute-detection.spec.ts › <span x-chip variant=\"primary\"> gets the same modifier class as <span x-chip variant=\"primary\">",

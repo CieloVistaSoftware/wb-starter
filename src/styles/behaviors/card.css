@@ -324,7 +324,7 @@ article.x-stats.x-card--large,
   color: var(--text-primary);
 }
 
-/* Article metadata in a card header. article.schema.json declares
+/* Article metadata in a card header. card.schema.json declares
    category/date/reading-time/author; the card renders each as its own
    semantic tag so CSS can name it without a class. */article > header > small,
 article > header > time,
@@ -464,11 +464,11 @@ article,
 
 /* featured — this card matters more than the ones beside it (#886).
    John: "what does featured do?" Measured answer at the time: nothing.
-   article.schema.json declared it, article.css styled a class the card never
+   the article schema declared it, article.css styled a class the card never
    emits, and card.js read it only inside cardpricing() -- so a featured
    article rendered pixel-identical to a plain one.
    The promotion is the border and the heading. NOT padding: a featured card
-   sits in a grid beside its siblings, and .x-article--featured's extra
+   sits in a grid beside its siblings, and the old article padding's extra
    1.5rem would have pushed it out of alignment with them. No injected class
    either -- `article[featured]` already names it. */article[featured],
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo])[featured] {

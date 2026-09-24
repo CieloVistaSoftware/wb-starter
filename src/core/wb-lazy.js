@@ -262,9 +262,8 @@ export const WB_LAZY_ONLY_ATTRIBUTES = {
   // #645: x-form, x-tags, x-file, x-masked, x-counter, x-autocomplete,
   // x-colorpicker, x-floatinglabel, x-label, x-youtube, x-timeline,
   // x-gallery, x-drawer, x-dropdown, x-toggle, x-drawer-layout, x-copy,
-  // x-toast, x-collapse, and x-article (new) all moved to/added in
-  // tag-map.js's extensionMap (shared with wb.js) -- see the comment block
-  // there for the drawer/drawer-layout and article/articles/as-article
+  // x-toast and x-collapse all moved to tag-map.js's extensionMap (shared
+  // with wb.js) -- see the comment block there for the drawer/drawer-layout
   // disambiguation notes.
 };
 
@@ -374,12 +373,12 @@ function getAutoInjectBehaviors(element) {
 // build their own complete DOM unconditionally, so letting schema ALSO run
 // on them would be a pure async race that silently wipes whichever of the
 // two finishes second (the x-card* family, x-demo, x-details,
-// x-skeleton, x-dialog, x-select, x-article/x-articles, x-fix-card),
+// x-skeleton, x-dialog, x-select, x-articles, x-fix-card),
 // or -- for x-cluster/x-stack/x-row/x-search/x-accordion, which have no
 // schema.json of their own at all -- a dead fetch that just 404s.
 const SCHEMA_SKIP_TAGS = new Set([
   '[x-demo]', '.x-details', '[x-cluster]', '[x-stack]', '[x-flex]', '[x-searchfield]',
-  '[x-accordion]', '[x-article]', '[x-articles]', '.x-select', '[x-skeleton]',
+  '[x-accordion]', '[x-articles]', '.x-select', '[x-skeleton]',
   '.x-dialog', '[x-fix-card]', 'x-view', '.x-audio',
 ]);
 

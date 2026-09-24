@@ -195,9 +195,9 @@ test.describe('R3: attributes that were declared and inert', () => {
     const host = await mount(
       page,
       `<div id="ar" x-articles limit="2">
-         <article x-article title="a"></article>
-         <article x-article title="b"></article>
-         <article x-article title="c"></article>
+         <article title="a"></article>
+         <article title="b"></article>
+         <article title="c"></article>
        </div>`,
     );
     // "Maximum number of articles to SHOW" — authored children count too.
@@ -209,7 +209,7 @@ test.describe('R3: attributes that were declared and inert', () => {
     // interception did not fire for this fetch, and mocking it would have
     // tested the mock rather than the code path an author uses.
     const host = await mount(page, `<div id="ar2" x-articles source="/demos/fixtures/articles.json"></div>`);
-    await expect(host.locator('#ar2 [x-article]')).toHaveCount(3, { timeout: 10000 });
+    await expect(host.locator('#ar2 .x-articles__list > article')).toHaveCount(3, { timeout: 10000 });
     await expect(host.locator('#ar2')).not.toHaveAttribute('aria-busy', 'true');
   });
 
@@ -217,11 +217,11 @@ test.describe('R3: attributes that were declared and inert', () => {
     const host = await mount(
       page,
       `<div id="ar3" x-articles source="/missing-articles.json">
-         <article x-article title="hand-written"></article>
+         <article title="hand-written"></article>
        </div>`,
     );
     await expect(host.locator('#ar3')).toHaveAttribute('data-articles-error', /404/, { timeout: 10000 });
     // The author's own content must survive a failed fetch.
-    await expect(host.locator('#ar3 [x-article]')).toHaveCount(1);
+    await expect(host.locator('#ar3 .x-articles__list > article')).toHaveCount(1);
   });
 });

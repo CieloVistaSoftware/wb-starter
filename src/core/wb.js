@@ -734,10 +734,10 @@ const WB = {
       return;
     }
 
-    // x-article/x-articles: article.js now builds their entire structure
-    // itself, unconditionally (same self-sufficient pattern as the card
-    // family below) -- matches schema-builder.js's own SCHEMA_EXCLUDED_TAGS.
-    if (element.tagName === 'WB-ARTICLE' || element.tagName === 'WB-ARTICLES') {
+    // x-articles: article.js builds its entire structure itself,
+    // unconditionally (same self-sufficient pattern as the card family
+    // below) -- matches schema-builder.js's own SCHEMA_EXCLUDED_TAGS.
+    if (element.tagName === 'WB-ARTICLES') {
       return;
     }
 

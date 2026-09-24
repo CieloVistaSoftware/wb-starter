@@ -6,22 +6,31 @@
 2026-09-14). Every issue it unblocked is closed: [#1070](https://github.com/CieloVistaSoftware/wb-starter/issues/1070), [#1075](https://github.com/CieloVistaSoftware/wb-starter/issues/1075), [#1078](https://github.com/CieloVistaSoftware/wb-starter/issues/1078), [#1102](https://github.com/CieloVistaSoftware/wb-starter/issues/1102),
 [#1103](https://github.com/CieloVistaSoftware/wb-starter/issues/1103), [#1104](https://github.com/CieloVistaSoftware/wb-starter/issues/1104), [#1106](https://github.com/CieloVistaSoftware/wb-starter/issues/1106), [#792](https://github.com/CieloVistaSoftware/wb-starter/issues/792).
 
-**Task:** [#1166](https://github.com/CieloVistaSoftware/wb-starter/issues/1166), session start no longer calls `list_allowed_directories`.
+**Task:** [#1166](https://github.com/CieloVistaSoftware/wb-starter/issues/1166) (session start), then the article -> card merge. Both are on
+[PR #1210](https://github.com/CieloVistaSoftware/wb-starter/pull/1210), one commit each.
 
-**Files touched:** `CLAUDE.md`, `docs/claude/TIER1-LAWS.md` (Law 8),
-`packages/create-wb-starter/template/docs/claude/TIER1-LAWS.md`
+**Article -> card (John chose "merge into card"):** `<article>` routes straight
+to `card` in tag-map.js; `x-article`, index.js's `article: 'card'` redirect and
+the unreachable `article()` are gone. card.schema.json gained author, date,
+category, readingTime and featured, which card.js already rendered.
+article.schema.json and docs/behaviors/article.md are deleted; card.md teaches
+the byline. The inert `image`/`imageAlt` were dropped, not merged. The doc and
+schema generators now name a native tag by its behavior (`<article>` -> x-card).
+The #880 spec became tests/regression/article-is-a-card.spec.ts, seen to fail
+on the old mapping.
 
-**Last action:** removed the step, renumbered, and pointed file access at the
-built-in tools and the `wb-starter` server from `.mcp.json`. The guard grep
-prints nothing. `template-docs-match-the-repo.spec.ts` passes 2/2.
+**Verified in the cloud session, not by the full gate:** the 47 spec files that
+touch article, card or the catalogue, before and after. No test that passed
+before fails now; `x-card: all 14 declared attributes take effect` passes.
 
 **Next step:**
-1. Merge [PR #1210](https://github.com/CieloVistaSoftware/wb-starter/pull/1210), then close [#1166](https://github.com/CieloVistaSoftware/wb-starter/issues/1166).
-2. Redo the article -> card registry change. Its saved copy lived in a session
-   scratchpad and is gone. What it did: `'article': 'card'`, x-article removed
-   from tag-map.js, the index.js redirect removed, and the dead `article()`
-   deleted. It changes the behaviors catalogue four specs assert over, so
-   those specs change in the same commit, through its own gate.
+1. Run the full commit gate on John's machine against PR #1210's head.
+2. Merge PR #1210, then close [#1166](https://github.com/CieloVistaSoftware/wb-starter/issues/1166).
+3. packages/create-wb-starter/template still has the old article files. It is
+   refreshed wholesale by sync-template.mjs before a publish, not by hand.
+4. Pre-existing and left alone: regression/content-html-article-layout-demos
+   (baselined, asserts ids content.html no longer has) and article.css's
+   `.x-articles--* > x-article` rules, which match no element.
 
 **Open questions:** see the list at the end of this file.
 

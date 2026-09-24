@@ -155,11 +155,11 @@ export function composeCard(element, options = {}) {
     behavior: options.behavior || 'card',
     title: options.title || readAttr(element, 'title') || element.getAttribute('title') || '',
     subtitle: options.subtitle || readAttr(element, 'subtitle') || element.getAttribute('subtitle') || '',
-    // article.schema.json declares author/date/category/reading-time, and
-    // nativeMap routes <article> to THIS module -- so these have to render
-    // here or not at all. They previously lived only in article.js's
-    // article(), which `article: 'card'` makes unreachable, leaving four
-    // declared attributes silently ignored (#861).
+    // card.schema.json declares author/date/category/reading-time (merged
+    // from the former article schema), and nativeMap routes <article> to
+    // this module -- so these render here or not at all. They once lived
+    // only in article.js's article(), which was unreachable and has been
+    // deleted; that left four declared attributes silently ignored (#861).
     author: options.author || readAttr(element, 'author') || element.getAttribute('author') || '',
     date: options.date || readAttr(element, 'date') || element.getAttribute('date') || '',
     category: options.category || readAttr(element, 'category') || element.getAttribute('category') || '',

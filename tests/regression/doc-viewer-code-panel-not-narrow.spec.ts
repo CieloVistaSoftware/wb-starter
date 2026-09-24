@@ -23,12 +23,12 @@ import { test, expect } from '@playwright/test';
  * already-small code sample look even more cramped, clipping its last
  * character(s). This test locks that in specifically for doc-viewer.html
  * (tests/integration/doc-viewer-wb-demo.spec.ts covers upgrade behavior
- * but not width), across both a small-content doc (article.md) and a
+ * but not width), across both a small-content doc (card.md) and a
  * wide-content doc (table.md) so a regression in either direction is
  * caught.
  */
 const DOCS = [
-  'docs/behaviors/article.md',
+  'docs/behaviors/card.md',
   'docs/behaviors/figure.md',
   'docs/behaviors/table.md',
 ];
@@ -69,8 +69,8 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
     });
   }
 
-  test('article.md: a plain (non-wb-demo) fenced code block spans the full reading column, not a cramped sliver', async ({ page }) => {
-    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/article.md'), {
+  test('card.md: a plain (non-wb-demo) fenced code block spans the full reading column, not a cramped sliver', async ({ page }) => {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/card.md'), {
       waitUntil: 'domcontentloaded',
     });
 

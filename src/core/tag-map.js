@@ -66,10 +66,10 @@ export const nativeMap = {
   'form': 'form',
   'fieldset': 'fieldset',
   'label': 'label',
-  // <article> injects the article behavior, which renders a card. The
-  // behavior is named for the element that triggers it; "card" describes
-  // what you see, and lives in the class and the docs, not the registry.
-  'article': 'article',
+  // <article> IS a card in this system (John: "an article is a card in this
+  // system"). It names the card behavior directly: there is no separate
+  // article behavior, and x-card is the attribute form for any other host.
+  'article': 'card',
 
   // Media
   'img': 'img',
@@ -270,17 +270,9 @@ export const extensionMap = {
   // Moving them here gives both runtimes the same source of truth and lets
   // the matching lines in wb-lazy.js be deleted instead of drifting.
   //
-  // x-article is the one genuine addition, not a relocation -- it had ZERO
-  // x-attribute coverage anywhere (absent from both this table and
-  // wb-lazy.js's), unlike the other 19 below, which were already fully
-  // functional via wb-lazy.js's table. Routes to the 'article' behavior
-  // (src/wb-viewmodels/article.js, already reachable via the <div x-article>
-  // tag in elementMap above). Distinct from 'x-articles' just above (plural
-  // LIST view, a different behavior) and from the former 'x-as-article' in the
-  // Morphing section above (morph-only form that rewrites an existing
-  // element's semantics) -- three different names for three different
-  // behaviors, not aliases of each other.
-  'x-article': 'article',
+  // x-article was added here once and is gone again: it routed to an
+  // 'article' behavior that index.js sent to card.js anyway, so it was a
+  // second spelling of x-card. <article> is a card; x-card is its attribute.
 
   // #834 -- the three native mappings that had no x- form at all. A tag that
   // auto-injects must have an attribute that applies the same behavior to

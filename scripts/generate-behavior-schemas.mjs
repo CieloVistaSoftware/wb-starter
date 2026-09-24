@@ -182,7 +182,8 @@ function buildSchema(name, token, facts) {
 
 const tokens = [...new Set([
   ...Object.keys(MERGED).filter((a) => !a.startsWith('x-as-')),
-  ...Object.keys(nativeMap).map((t) => 'x-' + t),
+  // Named by the behavior a native tag injects (<article> -> x-card), not the tag.
+  ...Object.values(nativeMap).map((b) => 'x-' + b),
 ])].sort();
 
 const missing = [];

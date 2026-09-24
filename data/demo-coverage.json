@@ -2,8 +2,8 @@
   "generated": "demo-coverage",
   "totals": {
     "tags": 0,
-    "behaviors": 14,
-    "demoFiles": 18
+    "behaviors": 13,
+    "demoFiles": 17
   },
   "missing": [
     "x-pre",
@@ -11,7 +11,6 @@
     "x-flex",
     "x-searchfield",
     "x-accordion",
-    "x-article",
     "x-articles",
     "x-skeleton",
     "x-fix-card"
@@ -29,8 +28,7 @@
       "inWbDemo": [],
       "bare": [
         "demos/frameworks.html",
-        "demos/playground.html",
-        "demos/registry-browser.html"
+        "demos/playground.html"
       ]
     },
     "x-behavior": {

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-12T21:35:58.250Z",
-  "count": 152,
+  "generatedAt": "2026-09-24T19:56:23.714Z",
+  "count": 151,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -122,92 +122,6 @@
         "icon": "🔔",
         "since": "1.0.0",
         "status": "stable"
-      }
-    },
-    {
-      "file": "article.schema.json",
-      "name": "article",
-      "title": "Article",
-      "description": "Semantic article behavior for blog posts, news, and documentation pages.",
-      "tag": "wb-article",
-      "baseClass": "x-article",
-      "properties": {
-        "title": {
-          "type": "string",
-          "description": "Article title",
-          "default": "this is the title"
-        },
-        "subtitle": {
-          "type": "string",
-          "description": "Article subtitle or deck",
-          "default": "this is the subtitle"
-        },
-        "author": {
-          "type": "string",
-          "description": "Author name",
-          "default": "this is the author"
-        },
-        "date": {
-          "type": "string",
-          "description": "Publication date",
-          "default": "this is the date"
-        },
-        "category": {
-          "type": "string",
-          "description": "Category or tag",
-          "default": "this is the category"
-        },
-        "image": {
-          "type": "string",
-          "description": "Cover image URL",
-          "default": "this is the image"
-        },
-        "imageAlt": {
-          "type": "string",
-          "description": "Cover image alt text",
-          "default": "this is the image alt"
-        },
-        "readingTime": {
-          "type": "string",
-          "description": "Estimated reading time",
-          "default": "this is the reading time"
-        },
-        "featured": {
-          "type": "boolean",
-          "description": "Whether the article is featured",
-          "default": false,
-          "appliesClass": "x-article--featured"
-        }
-      },
-      "matrix": [
-        {
-          "title": "Article"
-        },
-        {
-          "title": "Article",
-          "subtitle": "Deck"
-        },
-        {
-          "title": "Article",
-          "image": "/images/dachshund-puppy-image-960x540.jpg"
-        },
-        {
-          "title": "Article",
-          "author": "John Doe",
-          "date": "2026-01-01"
-        },
-        {
-          "title": "Article",
-          "featured": true
-        }
-      ],
-      "_metadata": {
-        "category": "content",
-        "icon": "📄",
-        "related": [
-          "card",
-          "hero"
-        ]
       }
     },
     {
@@ -1186,6 +1100,26 @@
           "description": "Card subtitle displayed below title",
           "default": "this is the subtitle"
         },
+        "author": {
+          "type": "string",
+          "description": "Author name, rendered as the card's byline in an <address>",
+          "default": "this is the author"
+        },
+        "date": {
+          "type": "string",
+          "description": "Publication date, rendered in a <time> element",
+          "default": "this is the date"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category or tag shown above the title",
+          "default": "this is the category"
+        },
+        "readingTime": {
+          "type": "string",
+          "description": "Estimated reading time",
+          "default": "this is the reading time"
+        },
         "footer": {
           "type": "string",
           "description": "Card footer text",
@@ -1240,6 +1174,11 @@
           "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
           "default": "this is the hover text",
           "appliesAttribute": "x-tooltip"
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Promote this card over its siblings: a heavier border and a visible marker. Bare featured prints \"Featured\"; featured=\"Deal of the week\" prints that label instead",
+          "default": false
         }
       },
       "matrix": [
