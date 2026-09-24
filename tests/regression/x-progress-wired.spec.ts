@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * docs/behaviors/*.md documents `x-progressbar` ("attribute-based progress
- * bar -- apply directly to any element, no custom tag required") with
- * examples like `<div x-progressbar value="40">` and `<div x-progressbar
- * value="80" variant="success">` -- but neither `x-progressbar` nor
- * `x-progress` was ever registered in tag-map.js's extensionMap OR
- * wb-lazy.js's own attribute table. Every documented example was a fully
- * inert div: no class, no fill, no percent text.
+ * x-progress applies the progress behavior to any host that is not a
+ * <progress>. It was once documented but registered nowhere, so every
+ * example was an inert div: no class, no fill, no percent text.
+ *
+ * It also had a second spelling, x-progressbar, routed to the same behavior.
+ * That alias is gone -- one behavior, one name, as x-article -> x-card -- and
+ * the last test here keeps it from coming back.
  */
 const HARNESS = '/demos/test-harness.html';
 
@@ -26,10 +26,10 @@ async function inject(page, html: string) {
   }, html);
 }
 
-test('x-progressbar on a plain div actually renders a fill matching its value/variant', async ({ page }) => {
+test('x-progress on a plain div actually renders a fill matching its value/variant', async ({ page }) => {
   await inject(page, `
-    <div id="p1" x-progressbar value="40" style="width:300px;height:24px;"></div>
-    <div id="p2" x-progressbar value="80" variant="success" style="width:300px;height:24px;"></div>
+    <div id="p1" x-progress value="40" style="width:300px;height:24px;"></div>
+    <div id="p2" x-progress value="80" variant="success" style="width:300px;height:24px;"></div>
   `);
   const p1Bar = page.locator('#p1 .x-progress__bar');
   const p2Bar = page.locator('#p2 .x-progress__bar');
@@ -44,4 +44,14 @@ test('x-progressbar on a plain div actually renders a fill matching its value/va
   const p2Bg = await p2Bar.evaluate((el) => getComputedStyle(el).backgroundColor);
   const p1Bg = await p1Bar.evaluate((el) => getComputedStyle(el).backgroundColor);
   expect(p2Bg, 'variant="success" should differ from default color').not.toBe(p1Bg);
+});
+
+test('x-progressbar is not a second name for progress', async ({ page }) => {
+  await page.goto(HARNESS);
+  const map = await page.evaluate(async () => {
+    const m = await import('/src/core/tag-map.js');
+    return { alias: m.extensionMap['x-progressbar'] ?? null, main: m.extensionMap['x-progress'] ?? null };
+  });
+  expect(map.main, 'x-progress must stay registered').toBe('progress');
+  expect(map.alias, 'x-progressbar is back: one behavior, one name -- write x-progress').toBeNull();
 });

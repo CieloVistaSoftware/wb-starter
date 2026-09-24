@@ -186,13 +186,13 @@ test.describe('Behaviors page — full coverage', () => {
   });
 
   test('progress: bar fill width reflects value', async ({ page }) => {
-    // Registered as x-progressbar (src/core/tag-map.js:136), listed as `progress`.
+    // Registered as x-progress (src/core/tag-map.js), listed as `progress`.
     // The fill selector accepts both class spellings deliberately — see the
     // same test in behaviors-page.spec.ts and #862. The assertion is the RATIO,
     // not the class: value="72" max="100" must paint ~72% of the track, which
     // is what "reflects value" means and stays true whichever module wins.
     const FILL = '.x-progress__bar, .x-progress-bar';
-    const p = await show(page, { token: 'x-progressbar', prop: 'variant', value: 'primary', host: '.x-progress', ready: FILL });
+    const p = await show(page, { token: 'x-progress', prop: 'variant', value: 'primary', host: '.x-progress', ready: FILL });
     const percentPainted = () => p.evaluate((el, fillSel) => {
       const fill = el.querySelector(fillSel) as HTMLElement;
       if (!fill) return -1;
@@ -200,7 +200,7 @@ test.describe('Behaviors page — full coverage', () => {
       return track ? Math.round((fill.getBoundingClientRect().width / track) * 100) : -1;
     }, FILL);
     // Polled, not read once: the fill carries `transition: width 0.3s`
-    // (src/wb-viewmodels/progressbar.js:60), so a single measurement taken the
+    // (semantics/progress.js), so a single measurement taken the
     // instant the bar is appended reads 0 under `--workers=8` while the
     // transition is still running.
     await expect.poll(percentPainted, { timeout: 10000 }).toBeGreaterThan(60);

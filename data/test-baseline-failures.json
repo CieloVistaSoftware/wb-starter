@@ -539,7 +539,7 @@
     "regression/feedback-page-wb-demo-coverage.spec.ts › #tooltip-trigger-variants has a live grid + source panel inside <div x-demo>",
     "regression/feedback-page-wb-demo-coverage.spec.ts › #tooltip-variant-variants has a live grid + source panel inside <div x-demo>",
     "regression/feedback-page-wb-demo-coverage.spec.ts › #x-notify-one-off-notification has a live grid + source panel inside <div x-demo>",
-    "regression/feedback-page-wb-demo-coverage.spec.ts › #x-progressbar-attribute-based-progress-bar has a live grid + source panel inside <div x-demo>",
+    "regression/feedback-page-wb-demo-coverage.spec.ts › #x-progress-on-any-element has a live grid + source panel inside <div x-demo>",
     "regression/feedback-page-wb-demo-coverage.spec.ts › #x-tooltip-on-a-real-trigger-element has a live grid + source panel inside <div x-demo>",
     "regression/forms-no-deprecated-wrappers.spec.ts › checkboxes and textareas actually render (regression didn't just hide them)",
     "regression/forms-no-deprecated-wrappers.spec.ts › no <div x-checkbox> or <textarea> custom elements remain",

@@ -4,20 +4,22 @@ Progress bar with determinate and indeterminate states
 
 ## Type — decorates a semantic element
 
-`x-progress` is the **progress behavior**, and `x-progressbar` is a registered alias for it (`'x-progressbar': 'progress'` in tag-map.js) — both reach the same code. It attaches to `<progress>`, the element you would have reached for anyway — there is no new tag to learn.
+`x-progress` is the **progress behavior**. It attaches to `<progress>`, the element you would have reached for anyway — there is no new tag to learn.
 
 ### How to write it
 
 ```html
-<progress x-progressbar value="72" max="100" label="Uploading footage" show-value></progress>
+<!-- Plain semantic HTML. The behavior is injected automatically -->
+<!-- because the element itself implies it. No attribute needed. -->
+<progress value="72" max="100" label="Uploading footage" show-value></progress>
 ```
 
 ### On a different element
 
-Use `x-progressbar` when the host is not a `<progress>` and you want the same behavior:
+Use `x-progress` when the host is not a `<progress>` and you want the same behavior:
 
 ```html
-<div x-progressbar>
+<div x-progress>
   …
 </div>
 ```
@@ -69,7 +71,7 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 ## Live example
 
-See `x-progressbar` on the [Behaviors showcase](/?page=behaviors) — search for `x-progressbar` to run it and copy its markup.
+See `x-progress` on the [Behaviors showcase](/?page=behaviors) — search for `x-progress` to run it and copy its markup.
 
 ---
 

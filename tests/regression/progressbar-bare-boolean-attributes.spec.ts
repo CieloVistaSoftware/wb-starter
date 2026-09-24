@@ -7,7 +7,7 @@ import { test, expect, Page } from '@playwright/test';
  * this? first recreate with a test, then correct, then retest to prove it
  * works."
  *
- * `<div x-progressbar striped>` rendered a plain solid bar. progressbar.js
+ * `<div x-progress striped>` rendered a plain solid bar. progressbar.js
  * read the option as:
  *
  *     striped: options.striped ?? readAttr(element, 'striped') === 'true'
@@ -50,14 +50,14 @@ async function mount(page: Page, html: string) {
 /** The built fill element, whichever block name it carries. */
 const barOf = (host: any) => host.locator('[class*="progress-bar"], [class*="__bar"]').first();
 
-test.describe('x-progressbar: bare boolean attributes', () => {
+test.describe('x-progress: bare boolean attributes', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
   });
 
   test('a bare `striped` paints stripes', async ({ page }) => {
-    const host = await mount(page, `<div id="p" x-progressbar striped value="72" max="100"></div>`);
+    const host = await mount(page, `<div id="p" x-progress striped value="72" max="100"></div>`);
     const bar = barOf(host);
     await expect(bar).toHaveCount(1, { timeout: 10000 });
 
@@ -74,8 +74,8 @@ test.describe('x-progressbar: bare boolean attributes', () => {
     // The assertion that could not be satisfied by "the bar rendered".
     const host = await mount(
       page,
-      `<div id="a" x-progressbar striped value="72" max="100"></div>
-       <div id="b" x-progressbar value="72" max="100"></div>`,
+      `<div id="a" x-progress striped value="72" max="100"></div>
+       <div id="b" x-progress value="72" max="100"></div>`,
     );
     const striped = await host.locator('#a [class*="progress-bar"], #a [class*="__bar"]').first()
       .evaluate((el) => getComputedStyle(el).backgroundImage);
@@ -91,7 +91,7 @@ test.describe('x-progressbar: bare boolean attributes', () => {
 
   test('striped="true" still works', async ({ page }) => {
     // The one spelling that DID work must not break.
-    const host = await mount(page, `<div id="p" x-progressbar striped="true" value="50" max="100"></div>`);
+    const host = await mount(page, `<div id="p" x-progress striped="true" value="50" max="100"></div>`);
     const bg = await barOf(host).evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bg).toMatch(STRIPE_PATTERN);
   });
@@ -99,14 +99,14 @@ test.describe('x-progressbar: bare boolean attributes', () => {
   test('striped="false" turns stripes OFF', async ({ page }) => {
     // #747: "false"/"0" mean off. A bare-presence check would read the string
     // "false" as true, which is the opposite of what the markup says.
-    const host = await mount(page, `<div id="p" x-progressbar striped="false" value="50" max="100"></div>`);
+    const host = await mount(page, `<div id="p" x-progress striped="false" value="50" max="100"></div>`);
     const bg = await barOf(host).evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bg, 'striped="false" still painted stripes').not.toMatch(STRIPE_PATTERN);
   });
 
   test('a bare `animated` animates', async ({ page }) => {
     // Same defect, same line: animated used the identical === 'true' compare.
-    const host = await mount(page, `<div id="p" x-progressbar animated value="60" max="100"></div>`);
+    const host = await mount(page, `<div id="p" x-progress animated value="60" max="100"></div>`);
     const anim = await barOf(host).evaluate((el) => getComputedStyle(el).animationName);
     expect(anim, 'a bare `animated` set no animation').not.toBe('none');
   });

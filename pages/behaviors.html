@@ -500,8 +500,8 @@
           .forEach((attr) => {
             const beh = extensionMap[attr];
             const host = autoHost[beh];
-            // Key on the BEHAVIOR for auto-injected ones, so x-progress and
-            // x-progressbar (same behavior) collapse to a single <progress> row
+            // Key on the BEHAVIOR for auto-injected ones, so two attributes
+            // that name the same behavior collapse to a single semantic row
             // instead of duplicating it.
             const key = host ? 'native:' + beh : attr;
             if (seen.has(key)) return;

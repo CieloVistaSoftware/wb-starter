@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 156,
+  "count": 155,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -376,10 +376,6 @@
       "alternates": [
         "<div x-progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></div>"
       ]
-    },
-    "x-progressbar": {
-      "source": "<progress x-progressbar value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
-      "alternates": []
     },
     "x-rating": {
       "source": "<div x-rating value=\"4\" max=\"5\" half></div>",

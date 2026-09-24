@@ -62,8 +62,8 @@
           "html": "  <p>The tooltip <em>behavior</em> attaches via <code>x-tooltip</code> to a real trigger element (button, span, …) — not a standalone custom tag.</p>\n  <div class=\"demo-section__grid demo-section__grid--cols-4\">\n    <div x-demo columns=\"1\">\n      <button id=\"btn-top\" x-tooltip=\"Tooltip text\" position=\"top\">Top</button>\n    </div>\n    <div x-demo columns=\"1\">\n      <button id=\"btn-bottom\" x-tooltip=\"Tooltip text\" position=\"bottom\">Bottom</button>\n    </div>\n    <div x-demo columns=\"1\">\n      <button id=\"btn-left\" x-tooltip=\"Tooltip text\" position=\"left\">Left</button>\n    </div>\n    <div x-demo columns=\"1\">\n      <button id=\"btn-right\" x-tooltip=\"Tooltip text\" position=\"right\">Right</button>\n    </div>\n  </div>"
         },
         {
-          "heading": "🧩 x-progressbar — attribute-based progress bar",
-          "html": "  <p>Apply directly to any element, no custom tag required — an alternative to <code>&lt;x-progress&gt;</code> above.</p>\n  <div x-demo>\n    <div x-progressbar value=\"40\" style=\"width: 300px; height: 24px;\"></div>\n  </div>\n  <div x-demo>\n    <div x-progressbar value=\"80\" variant=\"success\" style=\"width: 300px; height: 24px;\"></div>\n  </div>"
+          "heading": "🧩 x-progress — on any element",
+          "html": "  <p>A <code>&lt;progress&gt;</code> is the progress behavior on its own; <code>x-progress</code> applies the same behavior to any other element.</p>\n  <div x-demo>\n    <div x-progress value=\"40\" style=\"width: 300px; height: 24px;\"></div>\n  </div>\n  <div x-demo>\n    <div x-progress value=\"80\" variant=\"success\" style=\"width: 300px; height: 24px;\"></div>\n  </div>"
         },
         {
           "heading": "🧩 x-notify — one-off notification",

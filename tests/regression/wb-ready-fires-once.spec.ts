@@ -63,7 +63,7 @@ test.describe('wb:ready is a moment, and a moment happens once (#1126)', () => {
 
       const host = document.createElement('div');
       host.innerHTML =
-        '<div id="r-progress" x-progressbar value="40"></div>' +
+        '<div id="r-progress" x-progress value="40"></div>' +
         '<div id="r-hero" x-cardhero title="Hero"></div>' +
         '<article id="r-article" title="Plain article">Body.</article>';
       document.body.appendChild(host);

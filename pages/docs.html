@@ -253,10 +253,9 @@
     if (!tagMod) return;
 
     // Keep the attribute -> BEHAVIOUR mapping, not just the attribute names.
-    // A doc is named after the behaviour, and several attributes are aliases of
-    // one: x-progressbar and x-progress both map to `progress`, x-drawer-layout
-    // maps to `drawerLayout`. Looking a doc up by ATTRIBUTE name reported both
-    // as undocumented when progress.md and drawerLayout.md were right there.
+    // A doc is named after the behaviour, which need not match the attribute:
+    // x-drawer-layout maps to `drawerLayout`. Looking a doc up by ATTRIBUTE
+    // name reported it as undocumented when drawerLayout.md was right there.
     const extMap = Object.assign(
       {},
       lazyMod.WB_LAZY_ONLY_ATTRIBUTES || {},

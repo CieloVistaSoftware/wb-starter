@@ -47,15 +47,14 @@ const DOCS = path.join(ROOT, 'docs', 'behaviors');
  *
  * tag-map.js maps a SELECTOR to a BEHAVIOR:
  *
- *   'x-progressbar':   'progress'        <- an alias
  *   'x-drawer-layout': 'drawerLayout'    <- kebab selector, camelCase module
  *   'button':          'button'
  *
  * The doc file is named for the behavior (the VALUE); the authoring token comes
  * from the selector (the KEY). The first draft of this gate looked docs up by
- * key and reported `x-progressbar` and `x-drawer-layout` as undocumented. Both
- * are documented — in progress.md and drawerLayout.md. Two false accusations,
- * caught by opening the files instead of trusting the count.
+ * key and reported `x-drawer-layout` (and a since-removed alias) as
+ * undocumented. Both were documented. False accusations, caught by opening the
+ * files instead of trusting the count.
  */
 function reachableBehaviors(): Array<{ token: string; name: string; autoInjected: boolean }> {
   const src = fs.readFileSync(path.join(ROOT, 'src', 'core', 'tag-map.js'), 'utf8');

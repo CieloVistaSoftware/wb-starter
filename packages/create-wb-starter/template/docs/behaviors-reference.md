@@ -259,7 +259,7 @@ Rich interactive behaviors.
 | [`card`](card.md) | `<article>` | - | Card behavior |
 | `cardlink` | `<article href>` | - | Clickable card |
 | `card*` | `<article>` | - | Card variants — [cardimage](behaviors/cardimage.md), [cardvideo](behaviors/cardvideo.md), [cardpricing](behaviors/cardpricing.md), [cardprofile](behaviors/cardprofile.md), … one page each under `docs/behaviors/` |
-| [`progressbar`](behaviors/progress.md) | `<progress>` | Decorate | Progress bar styling |
+| [`progress`](behaviors/progress.md) | `<progress>` | Decorate | Progress bar styling |
 | `spinner` | `<div>` | - | Loading spinner |
 | [`toast`](behaviors/toast.md) | `<div>` | - | Toast notification |
 | `notify` | `<div>` | - | Cycling notification |
@@ -300,7 +300,7 @@ Rich interactive behaviors.
 </div>
 </div>
 
-**`progressbar`**
+**`progress`**
 
 <div x-demo>
 <progress value="50"></progress>

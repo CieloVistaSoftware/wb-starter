@@ -151,19 +151,14 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('progress bars render a fill child', async ({ page }) => {
     await loadBrowse(page);
-    // The registry key is x-progressbar (src/core/tag-map.js:136) and the row
-    // is labelled `progress`. Both class spellings are accepted on purpose:
-    // tag-map:136 routes x-progressbar to the modern `progress` behavior
-    // (semantics/progress.js, `.x-progress__bar`), but what actually renders
-    // today is the @deprecated progressbar.js (`.x-progress-bar`) that same
-    // comment says it deliberately routes AWAY from. Naming one spelling would
-    // make this test a referendum on that unresolved routing (filed on #862)
-    // instead of on whether the bar renders at all.
+    // The registry key is x-progress and the row is labelled `progress`. Both
+    // class spellings are accepted on purpose (#862): this test is about
+    // whether the bar renders at all, not which class name it carries.
     const FILL = '.x-progress__bar, .x-progress-bar';
-    const p = await show(page, { token: 'x-progressbar', prop: 'variant', value: 'primary', host: '.x-progress', ready: FILL });
+    const p = await show(page, { token: 'x-progress', prop: 'variant', value: 'primary', host: '.x-progress', ready: FILL });
     await expect(p.locator(FILL)).toHaveCount(1);
     // Polled, not read once: the fill carries `transition: width 0.3s`
-    // (src/wb-viewmodels/progressbar.js:60), so a single measurement taken the
+    // (semantics/progress.js), so a single measurement taken the
     // instant the bar is appended reads 0 under `--workers=8` while the
     // transition is still running.
     await expect

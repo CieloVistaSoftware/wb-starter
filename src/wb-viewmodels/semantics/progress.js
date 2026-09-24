@@ -4,7 +4,7 @@ import { readFlag } from '../../core/read-attr.js';
  * Helper Attribute: [x-behavior="progress"]
  *
  * Authoring forms: <progress value="60">, <div x-progress value="60">,
- * <div x-progressbar value="60"> (src/core/tag-map.js).
+ * <div x-progress value="60"> (src/core/tag-map.js).
  */
 
 /**

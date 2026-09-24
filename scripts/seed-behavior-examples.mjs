@@ -151,8 +151,7 @@ export const EXAMPLES = {
 
   'x-skeleton': `<div x-skeleton variant="text" lines="3" animated></div>`,
 
-  'x-progress': `<progress x-progress value="72" max="100" label="Uploading footage" show-value></progress>`,
-  'x-progressbar': `<progress x-progressbar value="72" max="100" label="Uploading footage" show-value></progress>`,
+  'x-progress': `<progress value="72" max="100" label="Uploading footage" show-value></progress>`,
 
   'x-rating': `<div x-rating value="4" max="5" half></div>`,
 

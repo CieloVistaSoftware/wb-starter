@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
  * §1 -- "Every component example is a <div x-demo>"), same sweep already done
  * for demos/site/overlays.html and pages/behaviors.html. Auditing the page's
  * own markup, every example section (Alert/Avatar/Badge/Chip/Progress/
- * Rating/Skeleton/Spinner/Toast/Tooltip, plus the x-tooltip/x-progressbar/
+ * Rating/Skeleton/Spinner/Toast/Tooltip, plus the x-tooltip/x-progress/
  * x-notify behavior sections) was already wrapped in <div x-demo>, including
  * the §17 grouped-control cases (e.g. the big Badge combinatorial grid is
  * one logical group in one <div x-demo>, not split per-badge). This is the
@@ -62,7 +62,7 @@ const SECTIONS = [
   'tooltip-trigger-variants',
   'tooltip-toggles',
   'x-tooltip-on-a-real-trigger-element',
-  'x-progressbar-attribute-based-progress-bar',
+  'x-progress-on-any-element',
   'x-notify-one-off-notification',
 ];
 
