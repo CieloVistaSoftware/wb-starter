@@ -20,6 +20,7 @@ import { readAttr } from '../core/read-attr.js';
  */
 import { logError } from '../core/error-logger.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
+import { marked } from '../lib/marked.js';
 
 /**
  * Is the page going away?
@@ -40,36 +41,12 @@ if (typeof window !== 'undefined') {
   window.addEventListener('pagehide', () => { pageIsUnloading = true; }, { once: true });
 }
 
-// Check if marked is available, if not load it
-let markedLoaded = false;
-let markedPromise = null;
-
-async function loadMarked() {
-  if (markedLoaded && window.marked) return window.marked;
-  
-  if (markedPromise) return markedPromise;
-  
-  markedPromise = new Promise((resolve, reject) => {
-    // Check if already loaded
-    if (window.marked) {
-      markedLoaded = true;
-      resolve(window.marked);
-      return;
-    }
-    
-    // Load from CDN
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
-    script.onload = () => {
-      markedLoaded = true;
-      resolve(window.marked);
-    };
-    script.onerror = () => reject(new Error('Failed to load marked.js from CDN'));
-    document.head.appendChild(script);
-  });
-  
-  return markedPromise;
-}
+// marked.js is vendored in src/lib (v17.0.1, the version package.json pins),
+// the same way highlight.js is. It used to be injected at runtime from
+// cdn.jsdelivr.net, unpinned: every x-mdhtml on the site depended on a third
+// party being reachable, and "Failed to load marked.js from CDN" was logged as
+// a page error whenever it was not (offline, firewalled, CDN outage) -- a
+// failure the site could neither prevent nor fix. Now it cannot happen.
 
 // #295: a <table> given `display: block` (mdhtml.css, so wide tables scroll
 // inside their own container instead of blowing out the page) is STILL a
@@ -182,8 +159,6 @@ export async function mdhtml(element, options = {}) {
   element.classList.add('x-mdhtml--loading');
 
   try {
-    // Load marked library
-    const marked = await loadMarked();
     
     // Custom renderer to add heading IDs. marked v5+ calls heading(token) with a
     // single token object {depth, text, tokens}; older marked called
