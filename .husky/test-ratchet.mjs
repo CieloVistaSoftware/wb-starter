@@ -498,8 +498,19 @@ if (!gate.failures) {
 const failing = new Set(gate.failures);
 
 if (update) {
-  saveBaseline([...failing], new Date().toISOString().slice(0, 10));
-  console.log(`\n✅ Baseline recorded: ${failing.size} known-failing tests.`);
+  // --update only SHRINKS the register: it drops what passed and never adds a
+  // new failure (scripts/check-register-shrinks.mjs refuses that commit anyway).
+  // A new failure is fixed, not recorded.
+  const known = existsSync(BASELINE_PATH) ? loadBaseline() : failing;
+  const kept = [...failing].filter((f) => known.has(f));
+  const refused = [...failing].filter((f) => !known.has(f));
+  saveBaseline(kept, new Date().toISOString().slice(0, 10));
+  console.log(`\n✅ Baseline recorded: ${kept.length} known-failing tests (was ${known.size}).`);
+  if (refused.length) {
+    console.error(`\n❌ ${refused.length} NEW failure(s) were NOT recorded — fix them:`);
+    for (const r of refused.slice(0, 25)) console.error(`     • ${r}`);
+    process.exit(1);
+  }
   process.exit(0);
 }
 
