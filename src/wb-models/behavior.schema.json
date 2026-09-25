@@ -511,16 +511,16 @@
   "behaviorProperties": {
     "description": "Common properties shared across behaviors",
     "commonAttributes": {
-      "data-wb": {
+      "x-behavior": {
         "type": "string",
-        "required": true,
-        "description": "The behavior name"
+        "required": false,
+        "description": "Space-separated behavior names (or use the x-{name} attribute directly)"
       },
       "x-ready": {
         "type": "boolean",
         "description": "Class added by WB when behavior is initialized"
       },
-      "data-variant": {
+      "variant": {
         "type": "string",
         "description": "Visual variant (e.g., primary, secondary, success, warning, error, info)"
       },

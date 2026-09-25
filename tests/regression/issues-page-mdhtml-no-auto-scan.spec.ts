@@ -30,12 +30,12 @@ test('pages/issues.html never fetches the fake illustrative path embedded in iss
   });
 
   await page.goto('/?page=issues');
-  await page.waitForSelector('.issue-row[data-number="527"]', { timeout: 15000 });
+  await page.waitForSelector('.issue-row[number="527"]', { timeout: 15000 });
 
   // The original bug fired on a fresh, un-interacted load -- but also verify
   // expanding the row (which renders the body, embedded example included)
   // stays inert too.
-  await page.locator('.issue-row[data-number="527"] .issue-row__summary').click();
+  await page.locator('.issue-row[number="527"] .issue-row__summary').click();
   await page.waitForTimeout(1000);
 
   expect(fetched, 'the fake illustrative /docs/guide.md path embedded in #527\'s own body must never actually be fetched').toEqual([]);

@@ -24,10 +24,10 @@
 <h2 class="sr-only">Filter and search</h2>
 <div class="issues-toolbar">
   <div class="issues-tabs" role="tablist" aria-label="Filter issues by state">
-    <button type="button" class="issues-tab issues-tab--active" data-state="open" x-ripple>Open</button>
-    <button type="button" class="issues-tab" data-state="closed" x-ripple>Closed</button>
-    <button type="button" class="issues-tab" data-state="all" x-ripple>All</button>
-    <button type="button" class="issues-tab" data-state="in-progress" x-ripple>In Progress</button>
+    <button type="button" class="issues-tab issues-tab--active" state="open" x-ripple>Open</button>
+    <button type="button" class="issues-tab" state="closed" x-ripple>Closed</button>
+    <button type="button" class="issues-tab" state="all" x-ripple>All</button>
+    <button type="button" class="issues-tab" state="in-progress" x-ripple>In Progress</button>
   </div>
   <!-- #1046 — John: "add a button work completed when pressed i can see what
        your done". The panel below is collapsed until this is pressed, so the
@@ -321,7 +321,7 @@
         .map((n) => `<span class="issue-label">${escapeHtml(n)}</span>`)
         .join(' ');
       return `
-        <tr class="issues-row issues-row--p${p}" data-number="${issue.number}" tabindex="0">
+        <tr class="issues-row issues-row--p${p}" number="${issue.number}" tabindex="0">
           <td class="issues-cell--priority" sort-value="${p}"><span class="issue-priority issue-priority--${p}">${p === 9 ? '—' : p}</span></td>
           <td>#${issue.number}</td>
           <td class="issues-cell--title">${escapeHtml(issue.title)}</td>
@@ -352,7 +352,7 @@
      * next to its own priority and state.
      */
     async function toggle(row) {
-      const issue = byNumber.get(row.dataset.number);
+      const issue = byNumber.get(row.getAttribute('number'));
       if (!issue) return;
 
       const wasOpen = row.classList.contains('issues-row--open');
@@ -411,7 +411,7 @@
     tab.addEventListener('click', () => {
       tabs.forEach((t) => t.classList.remove('issues-tab--active'));
       tab.classList.add('issues-tab--active');
-      currentState = tab.dataset.state;
+      currentState = tab.getAttribute('state');
       render();
     });
   });
