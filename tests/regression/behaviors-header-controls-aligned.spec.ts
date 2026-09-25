@@ -26,6 +26,7 @@
  */
 
 import { test, expect } from '@playwright/test';
+import { wbIdle } from '../base';
 
 const STRIP = '#behaviors-header-tools';
 
@@ -38,6 +39,11 @@ test.describe('behaviors header control strip alignment (#1004)', () => {
       undefined,
       { timeout: 20_000 }
     );
+    // Four children exist before they are BUILT: measured at that moment, the
+    // Docs summary read height 0 and the strip sat mid-move above the header
+    // (1 run in 5 under load). Geometry is only meaningful once nothing is left
+    // to inject.
+    await wbIdle(page);
   });
 
   test('all four controls share one baseline and one height', async ({ page }) => {

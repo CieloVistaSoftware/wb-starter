@@ -478,6 +478,9 @@ const applied = new WeakMap();
 // Track pending injections to prevent race conditions
 // Map<HTMLElement, Set<string>>
 const pendingInjections = new Map();
+// element -> Map<behaviorName, Promise> settling when that injection finishes,
+// so a second inject() of an in-flight behavior can wait for it.
+const inFlight = new WeakMap();
 let injectionTimeout = null;
 // #961/#962: the countable, awaitable view of the same in-flight work.
 // Same module wb.js uses — one contract, implemented once (#923/#951 are what
@@ -586,7 +589,10 @@ const WB = {
     // Check if pending (prevent race conditions)
     let pending = pendingInjections.get(element);
     if (pending && pending.has(behaviorName)) {
-      return null; // Already pending
+      // Already pending: wait for it, as wb.js does. Returning at once let
+      // `await WB.scan(root)` resolve while the injection was still in flight.
+      await inFlight.get(element)?.get(behaviorName);
+      return null; // the first caller owns the cleanup
     }
 
     // Mark as pending
@@ -595,6 +601,10 @@ const WB = {
       pendingInjections.set(element, pending);
     }
     pending.add(behaviorName);
+    let settle = () => {};
+    const done = new Promise((resolve) => { settle = resolve; });
+    if (!inFlight.has(element)) inFlight.set(element, new Map());
+    inFlight.get(element).set(behaviorName, done);
     // Counted here, AFTER every early return above, so start/end always pair:
     // an invalid element, an unknown behavior, an already-applied or
     // already-pending behavior all bail before this line and never reach the
@@ -656,7 +666,9 @@ const WB = {
       
       return null;
     } finally {
-      // Remove from pending
+      // Release anyone awaiting this injection, then remove from pending.
+      inFlight.get(element)?.delete(behaviorName);
+      settle();
       const p = pendingInjections.get(element);
       if (p) {
         p.delete(behaviorName);

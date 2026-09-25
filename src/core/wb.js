@@ -387,6 +387,9 @@ function applyDeclaredModifiers(element, behaviorName) {
 const applied = new WeakMap();
 // Track pending injections to prevent re-entry
 const pending = new WeakMap();
+// element -> Map<behaviorName, Promise> settling when that injection finishes,
+// so a second inject() of an in-flight behavior can wait for it (see inject()).
+const inFlight = new WeakMap();
 // #961/#962: a COUNTABLE view of the same thing `pending` tracks. A WeakMap
 // cannot be counted, so "is WB still building?" was unanswerable from outside
 // and tests slept instead. Shared with wb-lazy.js — one contract, one file.
@@ -473,9 +476,18 @@ const WB = {
       pending.set(element, elementPending);
     }
     if (elementPending.has(behaviorName)) {
-      return null; // Already pending
+      // Already pending: WAIT for it rather than returning at once. Returning
+      // straight away let `await WB.scan(root)` resolve while an injection the
+      // MutationObserver had started was still in flight, so a caller saw an
+      // unbuilt element (x-code on an appended <div>, 3 runs in 5 under load).
+      await inFlight.get(element)?.get(behaviorName);
+      return null; // the first caller owns the cleanup
     }
     elementPending.add(behaviorName);
+    let settle = () => {};
+    const done = new Promise((resolve) => { settle = resolve; });
+    if (!inFlight.has(element)) inFlight.set(element, new Map());
+    inFlight.get(element).set(behaviorName, done);
     // Counted here, AFTER every early return above, so start/end always pair:
     // x-ignore, an unknown behavior, an already-applied or already-pending
     // behavior all bail before this line and never enter the finally below.
@@ -545,8 +557,10 @@ const WB = {
       
       return null;
     } finally {
-      // Remove from pending
+      // Remove from pending, and release anyone awaiting this injection.
       elementPending.delete(behaviorName);
+      inFlight.get(element)?.delete(behaviorName);
+      settle();
       if (elementPending.size === 0) {
         pending.delete(element);
 

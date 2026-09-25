@@ -185,11 +185,23 @@ export function sticky(element, options = {}) {
     }));
   }
 
-  // Scroll handler
+  // Scroll handler.
+  //
+  // Measured LIVE, not from a trigger point cached at init: content above the
+  // host (lazy injection, images, a demo rendering late) moves it after init,
+  // and a stale point made it stick late or never -- 'wb:sticky:stuck never
+  // fired' in x-sticky-behavior.spec.ts under load. While stuck the host is
+  // fixed, so its in-flow stand-in, the placeholder, is what is measured.
   function handleScroll() {
-    const scrollY = window.scrollY;
-    
-    if (scrollY >= triggerPoint - config.offset) {
+    let past;
+    if (config.threshold) {
+      past = window.scrollY >= triggerPoint - config.offset;
+    } else {
+      const ref = isStuck && placeholder ? placeholder : element;
+      past = ref.getBoundingClientRect().top <= config.offset;
+    }
+
+    if (past) {
       stick();
     } else {
       unstick();
