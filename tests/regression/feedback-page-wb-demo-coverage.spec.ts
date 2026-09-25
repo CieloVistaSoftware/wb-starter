@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../base';
 
 /**
  * demos/site/feedback.html: John asked that every rendered example on this
@@ -82,6 +83,10 @@ test.describe('Feedback & Status page: every example section renders inside <div
 
       for (let i = 0; i < demoCount; i++) {
         const demo = demos.nth(i);
+        // The page builds a demo only as it nears the viewport (#491), so one
+        // far down the page is unbuilt until a reader scrolls to it. Scroll
+        // there first, as a reader does -- the check stopped at badge demo 22.
+        await safeScrollIntoView(demo);
         await expect(demo.locator('.x-demo__grid'), `section#${id} [x-demo][${i}] should render a live grid`).toBeVisible();
         const codePanel = demo.locator('.x-demo__code, pre').first();
         await expect(codePanel, `section#${id} [x-demo][${i}] should render a source/code panel`).toBeVisible();
