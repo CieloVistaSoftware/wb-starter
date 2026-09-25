@@ -50,9 +50,16 @@ const uncovered = p1.filter((x) => !x.test);
 console.log(`🔴 priority-1 gate — ${p1.length} open, ${runnable.length} with a spec, ${uncovered.length} with no test`);
 for (const x of uncovered) console.log(`     #${x.number} has no test — CI reports this, see issue-priority-check`);
 
-const specs = [...new Set(runnable.map((x) => x.test.split(/\s+/)[0]))]
+// tests/deployed/ needs the live site or GitHub (`npm run test:deployed`). A gate
+// must not depend on the network, so an issue naming one of those is reported
+// here and left to that run, never executed per commit.
+const named = [...new Set(runnable.map((x) => x.test.split(/\s+/)[0]))];
+const isDeployed = (f) => f.replace(/\\/g, '/').replace(/^\.\//, '').startsWith('tests/deployed/');
+for (const f of named.filter(isDeployed)) console.log(`     ↪ ${f} needs the network — left to npm run test:deployed`);
+const specs = named
+  .filter((f) => !isDeployed(f))
   .filter((f) => existsSync(f) || existsSync(join(process.cwd(), f)));
-const missing = [...new Set(runnable.map((x) => x.test.split(/\s+/)[0]))].filter((f) => !specs.includes(f));
+const missing = named.filter((f) => !isDeployed(f) && !specs.includes(f));
 for (const f of missing) console.log(`     ⚠️  named test not on disk: ${f}`);
 
 if (listOnly) {
