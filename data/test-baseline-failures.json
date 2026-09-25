@@ -70,7 +70,7 @@
     "block the next release. The register is a union. Root cause is #961/#962."
   ],
   "recorded": "2026-09-08",
-  "count": 590,
+  "count": 589,
   "failures": [
     "behaviors/accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)",
     "behaviors/alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load",
@@ -574,7 +574,6 @@
     "regression/media-path-validation.spec.ts › all href attributes in asset contexts must use absolute paths",
     "regression/media-path-validation.spec.ts › all src attributes must use absolute paths (start with /)",
     "regression/media-path-validation.spec.ts › audio/video src paths specifically validated",
-    "regression/modal-spacing-compliance.spec.ts › a title that wraps still keeps 1rem above and below it",
     "regression/multi-component-demo-progress-value.spec.ts › every progress demo in the enum-variants section has a non-zero value/fill",
     "regression/nav-parity-with-main.spec.ts › no menu item present on main has gone missing here",
     "regression/no-inert-behaviors.spec.ts › every x- attribute changes the element it is applied to",
