@@ -96,27 +96,39 @@ test.describe('code theme control + x-code host (#1012, #1016, #1022)', () => {
     await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     await page.locator('#behaviors-workspace').waitFor({ state: 'attached', timeout: 20_000 });
 
-    const rendered = await page.evaluate(async () => {
+    // Wait on THIS element's own completion signal, not on WB.scan() plus a
+    // sleep. The behaviors page loads both runtimes: pages/behaviors.html also
+    // imports wb-lazy.js, which copies its methods onto window.WB, so
+    // `window.WB.scan()` here is the LAZY scan -- it schedules the element for
+    // when it is visible and returns in ~10ms. The host is actually built by
+    // wb.js's MutationObserver ~450-600ms later, so the old fixed 400ms sleep
+    // lost the race about half the time. x-ready is stamped by both runtimes
+    // (ready-signal.js) once the element is finished, and the host is scrolled
+    // into view so the lazy runtime's visibility gate cannot hold it back.
+    await page.evaluate(() => {
       const host = document.createElement('div');
+      host.id = 'x-code-non-code-host';
       host.setAttribute('x-code', '');
       host.setAttribute('language', 'javascript');
       host.textContent = 'const a = 1;\nconst b = 2;';
       document.body.appendChild(host);
+    });
+    const host = page.locator('#x-code-non-code-host');
+    await host.scrollIntoViewIfNeeded();
+    await page.evaluate(() => (window as any).WB?.scan?.(document.body));
+    await expect(host, 'x-code host never finished injecting').toHaveAttribute('x-ready', '', { timeout: 10_000 });
 
-      await (window as any).WB?.scan?.(document.body);
-      await new Promise((r) => setTimeout(r, 400));
-
-      const inner = host.querySelector('code');
-      const out = {
+    const rendered = await host.evaluate((el) => {
+      const inner = el.querySelector('code');
+      return {
         wrappedInRealCode: !!inner,
-        text: (inner || host).textContent || '',
+        text: (inner || el).textContent || '',
         // The point of #1013: presentation lives in the stylesheet, so the
         // rendered element carries no inline style of its own.
-        inlineStyle: (inner || host).getAttribute('style') || '',
+        inlineStyle: (inner || el).getAttribute('style') || '',
       };
-      host.remove();
-      return out;
     });
+    await host.evaluate((el) => el.remove());
 
     expect(
       rendered.wrappedInRealCode,

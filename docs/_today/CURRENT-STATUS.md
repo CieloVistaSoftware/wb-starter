@@ -1,66 +1,69 @@
-# CURRENT HANDOFF — 2026-09-11
+# CURRENT HANDOFF — 2026-09-24
 
 ## 🅿️ PARKING LOT
 
-**Task:** ship the release batch that has been blocked since 2026-09-09.
+**Task:** get `main` out of the 4-week broken state. Everything is on branch
+`claude/sleepy-lovelace-33wbry`, PR #1209. **CI is green** (all 8 checks,
+Playwright ratchet: 0 new failures, 152 repaired since baseline). It is ready
+for John to merge -- a merge to `main` is a release, so John presses the button.
 
-**Last action:** committed the batch. The gate's two remaining new failures were
-traced with probes and fixed; both specs verified 10/10 alone, the workspace one
-as test 1 on a cold page, which is the exact condition it failed under.
+**State of the repo:** `main` is still 4.0.5 (2026-09-14). Issues filed through
+2026-09-23 mention a 4.0.6 release attempt that never reached `main`, so there
+is likely unpushed local work. Merge #1209 with that in mind.
+
+**What #1209 does:**
+
+| commit | fix |
+|---|---|
+| a9bd2c7 | #1206 avatar spec waits for `x-ready` instead of measuring unstyled avatars |
+| e0117a9 | #1203 release-bump fixture gets a private `WB_TEST_LOCK_DIR` + 20s limit |
+| cef0673 | x-checkbox is ONE native `<label><input type="checkbox"></label>` (97e326b superseded) |
+| 3a7d0b4 | marked.js vendored at `src/lib/marked.js`, no CDN |
+| b1b2dd4 | 45 highlight.js themes vendored; `codeThemeHref()` builds every theme URL |
+| 00ee0b9 | x-code non-code-host spec waits on `x-ready` |
+| d8541de | tooltip spec hovers until the button's own tooltip opens |
+| bce693e | forced #1078 spec stops starving the runtime it verifies |
+| 4404db8 | CI wires `core.hooksPath .husky` |
+| 7732478 | CI gets the read-only `GH_TOKEN` so `gh` works (issues:read, pull-requests:read) |
+| 1708fdb2 | html-validity `[x-demo]` spec waits for the panels to finish rendering |
+| (last) | `playwright.config.ts`: `captureGitInfo: { diff: false }` -- see below |
+
+**The CI history mystery, solved.** `unshipped-work-is-not-called-pushed`
+saw 16 commits on every PR run. Playwright's built-in gitCommitInfo plugin, on a
+GitHub Actions `pull_request` run, runs `git fetch origin <PR base sha>
+--depth=1` to record a diff for report metadata; in a full clone that writes
+`.git/shallow` and hides all history behind main's tip. Proven in CI (a
+watcher caught `.git/shallow` + `FETCH_HEAD` naming the base SHA 1.5s into the
+gate) and locally (faked PR env: 1132 -> 18 commits; with the fix, 1132 stays).
+The spec also restores history itself if anything shallows the clone again.
 
 **Next step, in order:**
-1. The commit's gate verdict. On a pass: `npm run ship` end to end, no review
-   pause (John: "I want the releases all automated").
-2. Law 17: `npm run test:smoke:deployed`.
-3. Close what the release unblocks: #1070, #1075, #1078, #1102, #1103, #1104,
-   #1106, #792. Four of those (#1070, #1075, #1078, #792) were reshaped for the
-   signature validator in parallel; confirm each passes
-   `node scripts/check-issue-signatures.mjs --number N` before closing.
-4. Commit the two held-back changes, each through its own gate:
-   - the article -> card registry change (saved in the session scratchpad:
-     'article': 'card', x-article removed, index.js redirect removed, the dead
-     article() deleted). It took the gate from 2 failures to 10 when bundled,
-     because removing x-article changes the behaviors catalogue four specs
-     assert over. Those specs must change in the same commit.
-   - wb-starter CLAUDE.md and docs/claude/TIER1-LAWS.md step 1 still name
-     `list_allowed_directories`; the filesystem MCP server was dropped.
+1. John: merge #1209 (closes #1206, #1203).
+2. Reconcile with any local unpushed 4.0.6 work. Watch
+   `release-bump-touches-only-project-version.spec.ts`: if the local #1128
+   `release.mjs` imports `scripts/lib/`, `buildFakeProject()` must copy it too.
+3. Ratchet the baseline down: 152 tests repaired since it was recorded
+   (`node .husky/test-ratchet.mjs --update` on a clean full run).
 
-## What this batch fixes
-
-| issue | fix | proof |
-|---|---|---|
-| #1102 | an empty behavior fills from the curated example, not its field names; `data-` counts as authored | tests/behaviors/empty-behavior-teaches-by-example.spec.ts |
-| #1103 | article.schema.json restored from 0 bytes; parse gate added | tests/compliance/every-schema-parses.spec.ts |
-| #1104 | the hooksPath check asserts the guarantee, not a location | tests/regression/every-push-to-main-is-a-release.spec.ts |
-| #1106 | the gate is bounded (75/80 min) and holds the machine lock; single runs are held while a suite runs; a blocked gate is notified on release, never polls | scripts/lock-permutations.schema.json via scripts/test-lock-guards.mjs, 47/0, run in pre-commit |
-| #792 | x-footer renders `links` and `social` | tests/behaviors/every-declared-attribute.spec.ts |
-| — | cardstats compact/large/minimal never applied (keyed on classes a8a7362e stopped injecting) | card-typed-variants-no-op.spec.ts, now waits on animation `finished` |
-| — | the workspace spec read the page mid-entrance (site.css fadeIn slides 10px) | behaviors-workspace-single-scroll.spec.ts, now waits on whenIdle + the page's own animations |
-
-## Lessons written into this batch, so they are not relearned
-
-- **A logged cause does not prevent a recurrence; only an enforced one does.**
-  The five-hour gate hang was already recorded in Law 4, #1072 and the agent's
-  own notes. It recurred because nothing refused the second run.
-- **Permutations come from a schema, not from hand-picked cases** — params, one
-  simple working case, a schema with min/max/edges and an oracle, tests
-  generated from it, run red first. The lock gap survived because every
-  hand-written case held one kind of run against its own kind.
-- **Values read while an animation is moving are not facts.** Both of the last
-  two gate failures were a measurement taken mid-transition. Wait on
-  `animation.finished` — the browser's own notification.
-- **Three diagnoses of the workspace failure were wrong** (a half-built page, the
-  nav rail's max-height, header.css padding). A probe that reproduced the
-  failing condition exactly — first, on a cold page — found it in one run.
+**Local machine note:** the chip.css / progress.js / schema 503s seen on
+2026-09-23 were the dev server going down (`ERR_CONNECTION_REFUSED`); `sw.js`
+turns an unreachable, uncached request into a synthetic 503. Restart the
+server. The server dying is #1200.
 
 ## Open questions
 
-- The page entrance animation briefly lets #siteBody scroll on every page load.
-  Whether readers see a scrollbar flash depends on `.site__body` clipping.
-  Recorded on #1020; a product fix is a design choice (opacity-only, or
-  `overflow: clip`).
-- The general form of the cardstats bug: card.css variant rules keyed on classes
-  that a8a7362e stopped injecting. Fixed for cardstats only; the rest belongs
-  to #969 / #914.
-- `maxParallelSingle: 2` in lock-permutations.schema.json lets two single-spec
-  runs share the machine, which #1072 says collide on the port. Policy call.
+- **Two runtimes on one `window.WB`.** `pages/behaviors.html` imports
+  `wb-lazy.js`, which copies its methods onto `window.WB` (wb-lazy.js:1409), so
+  `WB.scan()` on that page is the lazy scan and does not wait for anything below
+  the fold. Anything awaiting `WB.scan()` there has the same trap the x-code
+  spec had. Needs its own issue and a design call.
+- **content.html markdown code panel is 34px narrower than its space**
+  (doc-viewer-code-panel-audit, already baselined). It was invisible here
+  while the CDN outage kept markdown from rendering.
+- **"49 themes" spec** (code-theme-control.spec.ts) expects 49; CODE_THEMES
+  has 46. Baselined; either the list or the spec is wrong.
+- Seen, not chased: `size="sm"`/`"lg"` x-checkbox look like the default; the
+  success variant is blue; x-chip `icon="check"` prints the word "check".
+- Carried over from 2026-09-11: the page entrance animation's scrollbar flash
+  (#1020); card.css variant rules keyed on classes a8a7362e stopped injecting
+  (#969 / #914); `maxParallelSingle: 2` port collisions (#1072).

@@ -1,7 +1,7 @@
 import { readFlag, readAttr } from '../../core/read-attr.js';
 import hljs from '../../lib/highlight.js';
 import { pre } from './pre.js';
-import { CODE_THEMES } from '../codecontrol.js';
+import { CODE_THEMES, codeThemeHref } from '../codecontrol.js';
 
 // Inject CSS if not present (codecontrol behavior will override if used)
 if (!document.querySelector('link[data-highlight-theme]')) {
@@ -20,14 +20,9 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   if (!CODE_THEMES.some((t) => t.id === savedTheme)) {
     savedTheme = 'atom-one-dark-reasonable';
   }
-  // A handful of CODE_THEMES entries (e.g. x-grayscale-dark) are WB's own
-  // local themes, not real highlight.js CDN theme names -- blindly building
-  // a cdnjs URL from ANY saved theme id 404'd for those (confirmed live:
-  // x-grayscale-dark.min.css never existed on cdnjs). Use the local path
-  // when the saved theme is one of ours.
-  const localTheme = CODE_THEMES.find(t => t.id === savedTheme && t.path);
-  // Use CDNJS for reliable loading
-  link.href = localTheme ? localTheme.path : `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${savedTheme}.min.css`;
+  // Local, vendored stylesheet -- built in one place, codecontrol.js's
+  // codeThemeHref(). This used to build a cdnjs URL of its own.
+  link.href = codeThemeHref(savedTheme);
   link.setAttribute('data-highlight-theme', 'true');
   document.head.appendChild(link);
   

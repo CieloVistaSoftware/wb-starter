@@ -132,17 +132,27 @@ test.describe('a stylesheet cancelled mid-load settles (#1078)', () => {
     }
   });
 
+  test.describe('with the network held', () => {
+  // sw.js calls skipWaiting() + clients.claim(), so the service worker can take
+  // control of the page mid-boot, and requests it serves bypass page.route():
+  // the boot's button.css was requested but never reached the handler below
+  // (the "precondition" failure, 2 of 40 at --workers=8). This test is about
+  // style-loader, not the service worker, so it runs without one.
+  test.use({ serviceWorkers: 'block' });
+
   test('forced: setContent lands while a boot stylesheet is provably still loading', async ({ page }) => {
     let held: Route | null = null;
+    let heldOnce = false;
     let signalHeld!: () => void;
     const bootRequestHeld = new Promise<void>((resolve) => { signalHeld = resolve; });
 
     await page.route(
       (url) => url.pathname.endsWith('/src/styles/behaviors/button.css'),
       async (route) => {
-        if (!held) {
+        if (!heldOnce) {
           // The boot's own button.css <link>: hold it so it is still loading
-          // when setContent detaches it. Released in `finally`.
+          // when setContent detaches it. Released right after setContent.
+          heldOnce = true;
           held = route;
           signalHeld();
           return;
@@ -168,13 +178,28 @@ test.describe('a stylesheet cancelled mid-load settles (#1078)', () => {
       // ('load') waits on subresources -- so the held request deadlocked the
       // TEST instead of the runtime, timing out at 30s. Measured 2026-09-12.
       await page.setContent(CONTENT, { waitUntil: 'domcontentloaded' });
+
+      // Release the held request NOW that setContent has detached its <link>.
+      // Holding it any longer starved the FIXED runtime: the new document's own
+      // button.css <link> asks for the same URL, the browser merges it with the
+      // request still in flight, so it never reached this handler (0 later
+      // requests in all 12 failures of 30 at --workers=8) and never loaded.
+      // Releasing keeps the test's power against #1078: the detached <link>
+      // fires no load event even when its response arrives, so the OLD code's
+      // cached promise still never settles.
+      const route = held as Route | null;
+      held = null;
+      if (route) await route.continue().catch(() => {});
+
       await assertSettled(page, 'forced run');
     } finally {
-      // The held request belonged to a <link> setContent destroyed; the browser
-      // has usually cancelled it already, so continuing it may throw.
+      // If the test failed before the release above, the held request belongs
+      // to a <link> setContent destroyed; the browser has usually cancelled it
+      // already, so continuing it may throw.
       const route = held as Route | null;
       if (route) await route.continue().catch(() => {});
       await page.unrouteAll({ behavior: 'ignoreErrors' }).catch(() => {});
     }
+  });
   });
 });

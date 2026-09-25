@@ -13,17 +13,24 @@
  *
  * Tested against demos/site/content.html, a real page that already ships
  * a <div x-codecontrol> instance, rather than synthetic injection.
+ *
+ * Since then: the fix for that moved every theme to cdnjs (pinned to 11.9.0,
+ * while the highlighter is 11.11.1), which failed whenever cdnjs was
+ * unreachable and 404'd "dracula" everywhere. Every theme is now vendored
+ * into src/styles/code-themes/hljs/ and served by the site itself.
  */
 import { test, expect } from '@playwright/test';
 
 const PAGE_URL = '/demos/site/content.html';
 
-test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', () => {
+const LOCAL_HLJS = '/src/styles/code-themes/hljs/';
+
+test.describe('[x-codecontrol] theme URLs are served by the site, never node_modules or a CDN', () => {
   test.beforeEach(async ({ page }) => {
     await page.evaluate(() => localStorage.removeItem('x-code-theme')).catch(() => {});
   });
 
-  test('the default theme (atom-one-dark) resolves to a real cdnjs URL, not /node_modules/', async ({ page }) => {
+  test('the default theme (atom-one-dark) resolves to its vendored local file', async ({ page }) => {
     await page.goto(PAGE_URL);
     await page.waitForFunction(() => {
       const el = document.querySelector('[x-codecontrol]') as any;
@@ -33,13 +40,13 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
     const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
 
     expect(href, 'must not build a dev-only node_modules path').not.toContain('/node_modules/');
-    expect(href, 'must resolve to a real cdnjs URL for a genuine CDN theme').toContain('cdnjs.cloudflare.com');
+    expect(href, 'must be served by this site, not a CDN').toContain(`${LOCAL_HLJS}atom-one-dark.min.css`);
 
     const response = await page.request.get(href!);
     expect(response.status(), 'the resolved theme stylesheet must actually serve (not 404)').toBe(200);
   });
 
-  test('selecting a non-local theme from the dropdown (e.g. monokai) also resolves to a working cdnjs URL', async ({ page }) => {
+  test('selecting a highlight.js theme from the dropdown (e.g. monokai) resolves to its vendored local file', async ({ page }) => {
     await page.goto(PAGE_URL);
     await page.waitForFunction(() => {
       const el = document.querySelector('[x-codecontrol]') as any;
@@ -54,7 +61,7 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
 
     const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
     expect(href, 'must not build a dev-only node_modules path').not.toContain('/node_modules/');
-    expect(href, 'must resolve to a real cdnjs URL').toContain('cdnjs.cloudflare.com');
+    expect(href, 'must be served by this site, not a CDN').toContain(`${LOCAL_HLJS}monokai.min.css`);
 
     const response = await page.request.get(href!);
     expect(response.status(), 'the resolved theme stylesheet must actually serve (not 404)').toBe(200);
@@ -79,5 +86,27 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
 
     const response = await page.request.get(href!);
     expect(response.status(), 'the local theme file itself must actually serve').toBe(200);
+  });
+
+  test('selecting "dracula" (base16/dracula in highlight.js) serves a real stylesheet', async ({ page }) => {
+    // On cdnjs this was .../styles/dracula.min.css, which never existed:
+    // choosing it always left code uncoloured.
+    await page.goto(PAGE_URL);
+    await page.waitForFunction(() => {
+      const el = document.querySelector('[x-codecontrol]') as any;
+      return !!(el && el.wbCodeControl);
+    }, { timeout: 15000 });
+
+    await page.evaluate(() => {
+      const el = document.querySelector('[x-codecontrol]') as any;
+      el.wbCodeControl.setTheme('dracula');
+    });
+    await page.waitForTimeout(200);
+
+    const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
+    expect(href).toContain(`${LOCAL_HLJS}dracula.min.css`);
+    const response = await page.request.get(href!);
+    expect(response.status(), 'the dracula stylesheet must actually serve').toBe(200);
+    expect(await response.text(), 'and must be a real highlight.js theme').toContain('.hljs');
   });
 });

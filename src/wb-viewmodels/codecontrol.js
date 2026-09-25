@@ -74,6 +74,37 @@ const CODE_THEMES = [
   { id: 'kimbie-light', name: 'Kimbie Light', category: 'Special', description: 'Warm light theme' },
 ];
 
+/**
+ * Where a theme id's stylesheet comes from inside highlight.js's styles/
+ * folder, when that is not simply `<id>.min.css`. Read by
+ * scripts/vendor-code-themes.mjs.
+ */
+const HLJS_THEME_SOURCE = {
+  dracula: 'base16/dracula',
+};
+
+const DEFAULT_CODE_THEME = 'atom-one-dark';
+
+/**
+ * The stylesheet URL for a code theme -- the one place it is built.
+ *
+ * Every theme is served from this site: WB's own from their `path`, and the
+ * highlight.js ones from src/styles/code-themes/hljs/, vendored from the
+ * installed highlight.js by scripts/vendor-code-themes.mjs. They used to load
+ * from cdnjs at 11.9.0 (the highlighter is 11.11.1), so code blocks lost their
+ * colours whenever cdnjs was unreachable, and "dracula" 404'd everywhere.
+ * An unknown id (a stale saved choice) falls back to the default theme.
+ *
+ * @param {string} themeId
+ * @returns {string}
+ */
+function codeThemeHref(themeId) {
+  const theme = CODE_THEMES.find((t) => t.id === themeId) ||
+    CODE_THEMES.find((t) => t.id === DEFAULT_CODE_THEME);
+  if (theme.path) return theme.path;
+  return new URL(`../styles/code-themes/hljs/${theme.id}.min.css`, import.meta.url).href;
+}
+
 // Size configurations
 const SIZES = {
   xs: { fontSize: '0.65rem', padding: '0.2rem 1.25rem 0.2rem 0.4rem', minWidth: '80px', arrowSize: '8' },
@@ -100,7 +131,7 @@ export function codecontrol(element, options = {}) {
   if (element._wbCodeControlInit) return () => {};
   element._wbCodeControlInit = true;
   const config = {
-    default: options.default || element.getAttribute('default') || element.dataset.default || 'atom-one-dark',
+    default: options.default || element.getAttribute('default') || element.dataset.default || DEFAULT_CODE_THEME,
     showLabel: options.showLabel ?? (
       element.hasAttribute('show-label')
         ? element.getAttribute('show-label') !== 'false'
@@ -220,17 +251,9 @@ export function codecontrol(element, options = {}) {
   const applyTheme = (themeId, broadcast = true) => {
     currentTheme = themeId;
     
-    // #431: HLJS_STYLES_PATH ('/node_modules/highlight.js/styles/') is a
-    // dev-only path never deployed to production -- every non-local theme
-    // 404'd there, silently stripping all syntax coloring. Real highlight.js
-    // themes are served from cdnjs instead, matching the pattern
-    // semantics/code.js's own fallback loader already uses correctly.
-    const themeObj = CODE_THEMES.find(t => t.id === themeId);
-    if (themeObj && themeObj.path) {
-      themeLink.href = themeObj.path;
-    } else {
-      themeLink.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeId}.min.css`;
-    }
+    // #431: never /node_modules/ (not deployed) and never a CDN (see
+    // codeThemeHref) -- every theme is vendored into src/styles.
+    themeLink.href = codeThemeHref(themeId);
     
     select.value = themeId;
 
@@ -296,5 +319,5 @@ export function codecontrol(element, options = {}) {
 }
 
 // Export themes list for external use
-export { CODE_THEMES, SIZES };
+export { CODE_THEMES, SIZES, HLJS_THEME_SOURCE, codeThemeHref };
 export default codecontrol;

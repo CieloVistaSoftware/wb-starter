@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Locator } from '@playwright/test';
 
 /**
  * avatar.schema.json declares `shape` (circle/square/rounded) and `size`
@@ -12,15 +12,30 @@ import { test, expect } from '@playwright/test';
  * shape="rounded", and size="xs"/size="2xl" silently fell back to the
  * default 40px. Confirmed live (screenshot) before the fix: three
  * "shape variants" avatars, all circles.
+ *
+ * #1206: the avatars are in the page's static HTML, so waiting for them to
+ * exist returned before any had been injected. The lazy runtime injects an
+ * element only when it first becomes visible, and loads avatar.css at that
+ * moment -- so the spec was reading an unstyled block element (1052px, the
+ * whole content column) in about 3 runs of 7. Each measured avatar is now
+ * scrolled into view and awaited on its x-ready stamp, which the runtime
+ * writes only after the behavior ran with its CSS loaded.
  */
+
+/** Bring an avatar into view and wait until the runtime has finished it. */
+async function settled(avatar: Locator): Promise<Locator> {
+  await avatar.scrollIntoViewIfNeeded();
+  await expect(avatar).toHaveAttribute('x-ready', '');
+  return avatar;
+}
+
 test.describe('[x-avatar] shape and size (feedback demo page)', () => {
   test('shape="circle"/"square"/"rounded" render visibly distinct border-radius', async ({ page }) => {
     await page.goto('/demos/site/feedback.html');
-    await page.waitForSelector('[x-avatar][shape="circle"]');
 
-    const circle = page.locator('[x-avatar][shape="circle"]').first();
-    const square = page.locator('[x-avatar][shape="square"]').first();
-    const rounded = page.locator('[x-avatar][shape="rounded"]').first();
+    const circle = await settled(page.locator('[x-avatar][shape="circle"]').first());
+    const square = await settled(page.locator('[x-avatar][shape="square"]').first());
+    const rounded = await settled(page.locator('[x-avatar][shape="rounded"]').first());
 
     const [circleRadius, squareRadius, roundedRadius] = await Promise.all([
       circle.evaluate((el) => getComputedStyle(el).borderRadius),
@@ -36,11 +51,10 @@ test.describe('[x-avatar] shape and size (feedback demo page)', () => {
 
   test('size="xs" and size="2xl" render visibly distinct dimensions from the default', async ({ page }) => {
     await page.goto('/demos/site/feedback.html');
-    await page.waitForSelector('[x-avatar][size="xs"]');
 
-    const xs = page.locator('[x-avatar][size="xs"]').first();
-    const md = page.locator('[x-avatar][size="md"]').first();
-    const xxl = page.locator('[x-avatar][size="2xl"]').first();
+    const xs = await settled(page.locator('[x-avatar][size="xs"]').first());
+    const md = await settled(page.locator('[x-avatar][size="md"]').first());
+    const xxl = await settled(page.locator('[x-avatar][size="2xl"]').first());
 
     const [xsWidth, mdWidth, xxlWidth] = await Promise.all([
       xs.evaluate((el) => getComputedStyle(el).width),

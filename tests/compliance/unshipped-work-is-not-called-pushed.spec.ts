@@ -25,6 +25,8 @@
 
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
 
 /** Issue numbers the engine currently reports as `pushed`, given a shipping ref. */
 function pushedIssues(defaultRef?: string): Set<number> {
@@ -46,19 +48,46 @@ function pushedIssues(defaultRef?: string): Set<number> {
 test('an issue whose commits are not on the shipping branch does not report as pushed', () => {
   test.slow(); // two full passes over the git log.
 
+  const git = (...args: string[]) => execFileSync('git', args, { encoding: 'utf8' }).trim();
+
+  // This test reads ~120 commits of history, so it needs the history. On
+  // #1209's CI runs it found .git/shallow written at startup: Playwright's
+  // gitCommitInfo plugin ran `git fetch origin <PR base> --depth=1`, which cuts
+  // a full clone at main's tip. playwright.config.ts now sets
+  // captureGitInfo.diff = false. If anything shallows the clone again, say so
+  // and put the history back: the question here is how issue-state.mjs decides
+  // "pushed", not how the runner's clone was left.
+  const shallowFile = path.join(git('rev-parse', '--git-common-dir'), 'shallow');
+  if (fs.existsSync(shallowFile)) {
+    const boundaries = fs.readFileSync(shallowFile, 'utf8').trim().split('\n').length;
+    console.log(
+      `[unshipped-work] clone is shallow: .git/shallow written ${fs.statSync(shallowFile).mtime.toISOString()} ` +
+      `(${boundaries} boundary commits, ${git('rev-list', '--count', 'HEAD')} commits visible). Fetching the rest.`,
+    );
+    execFileSync('git', ['fetch', '--quiet', '--unshallow', '--no-tags', 'origin'], { stdio: 'pipe', timeout: 120_000 });
+  }
+
   const asShipped = pushedIssues();
 
   // A ref far enough back that a good deal of recent history is not reachable
   // from it. HEAD~120 is arbitrary only in size; what matters is that it splits
   // the history, which the guard below confirms.
-  const olderRef = execFileSync('git', ['rev-parse', 'HEAD~120'], { encoding: 'utf8' }).trim();
-  const unreachable = execFileSync(
-    'git', ['rev-list', '--count', `${olderRef}..HEAD`], { encoding: 'utf8' },
-  ).trim();
+  //
+  // Walked with rev-list rather than `git rev-parse HEAD~120`: in CI (#1209,
+  // run 36040202768) rev-parse threw "unknown revision" on the PR merge commit,
+  // which a fresh fetch of that same commit resolves fine. rev-list names the
+  // same commit whenever the history is there and cannot throw; if the history
+  // is short, the guard below fails and says what git actually saw.
+  const firstParents = git('rev-list', '--first-parent', '--max-count=121', 'HEAD').split('\n');
+  const olderRef = firstParents[firstParents.length - 1];
+  const unreachable = git('rev-list', '--count', `${olderRef}..HEAD`);
 
   expect(
     Number(unreachable),
-    'the chosen ref does not actually exclude any history, so this test would prove nothing',
+    'the chosen ref does not actually exclude any history, so this test would prove nothing. ' +
+    `git saw: cwd=${process.cwd()} toplevel=${git('rev-parse', '--show-toplevel')} ` +
+    `shallow=${git('rev-parse', '--is-shallow-repository')} ` +
+    `commits=${git('rev-list', '--count', 'HEAD')} first-parents=${firstParents.length}`,
   ).toBeGreaterThan(20);
 
   const asOlder = pushedIssues(olderRef);

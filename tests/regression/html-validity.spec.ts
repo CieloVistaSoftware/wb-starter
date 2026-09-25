@@ -114,17 +114,20 @@ test.describe('HTML Validity', () => {
   test('[x-demo] code panels contain valid HTML markup', async ({ page }) => {
     await page.goto('/demos/site/content.html');
 
+    // x-demo builds its code panel after the page loads, so a one-shot count()
+    // or textContent() races it: locally count() read 0, and in CI (#1209, run
+    // 36058716668) panel 0 was read mid-render, before its markup was in. Wait
+    // for each panel's finished text; a panel that never shows markup still fails.
     const codePanels = page.locator('.x-demo__code');
+    await expect(codePanels.first(), 'no x-demo code panels rendered').toBeAttached({ timeout: 15_000 });
     const count = await codePanels.count();
-    expect(count, 'no x-demo code panels rendered').toBeGreaterThan(0);
 
     for (let i = 0; i < Math.min(count, 5); i++) {
-      const codeText = await codePanels.nth(i).textContent();
-      if (codeText && codeText.length > 50) {
-        expect(/<[a-z][^>]*>/i.test(codeText), `code panel ${i} lacks HTML tags`).toBe(true);
-        if (codeText.includes('<tr>')) {
-          expect(codeText.split('\n').length, `table code panel ${i} should be multi-line`).toBeGreaterThan(3);
-        }
+      const panel = codePanels.nth(i);
+      await expect(panel, `code panel ${i} lacks HTML tags`).toHaveText(/<[a-z][^>]*>/i, { timeout: 10_000 });
+      const codeText = (await panel.textContent()) || '';
+      if (codeText.includes('<tr>')) {
+        expect(codeText.split('\n').length, `table code panel ${i} should be multi-line`).toBeGreaterThan(3);
       }
     }
   });

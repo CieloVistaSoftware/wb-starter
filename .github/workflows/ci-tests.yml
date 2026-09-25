@@ -8,6 +8,10 @@ on:
 
 permissions:
   contents: read
+  # The gate runs `gh issue list` (scripts/issue-state.mjs, read-only without
+  # --apply) and server.js's /api/issues and /api/fixes, which shell out to gh.
+  issues: read
+  pull-requests: read
 
 # #341, second cause — a run cancelled by the next push is a run with no verdict.
 #
@@ -64,7 +68,12 @@ jobs:
     env:
       CI: 'true'
       DISABLE_WATCH: 'true'
-    
+      # Without it every `gh` call on the runner failed: unshipped-work-is-not-
+      # called-pushed and fixes-api-is-cached went red on every branch, main
+      # included, and /api/issues answered 503 whenever its cache was cold
+      # (dark-mode › pages/issues.html). The workflow's own token, read-only.
+      GH_TOKEN: ${{ github.token }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -79,6 +88,13 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
+
+      # A developer's checkout gets this from husky; the runner's never did, so
+      # every-push-to-main-is-a-release › "git is configured to run the hook"
+      # failed on every branch. It asserts the hook is WIRED, not that it runs
+      # here -- nothing in this job pushes.
+      - name: Wire the git hooks (husky)
+        run: git config core.hooksPath .husky
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
