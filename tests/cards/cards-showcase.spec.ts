@@ -101,6 +101,17 @@ async function waitForWbReady(page: Page): Promise<void> {
   }, null, { timeout: 30000, polling: 200 });
 }
 
+/**
+ * Scroll to every element a locator matches, so each one is built (#491: the
+ * lazy runtime builds an element only as it nears the viewport). A test that
+ * asserts on EVERY card of a kind must first visit every one, as a reader
+ * scrolling the page would.
+ */
+async function visitAll(locator: import('@playwright/test').Locator, limit = Infinity): Promise<void> {
+  const n = Math.min(await locator.count(), limit);
+  for (let i = 0; i < n; i++) await locator.nth(i).scrollIntoViewIfNeeded();
+}
+
 /*
  * GEOMETRY NOTE -- read before adding any test that measures layout.
  *
@@ -208,8 +219,10 @@ test.describe('Cards Showcase Page', () => {
       ];
 
       for (const variant of variants) {
+        // The base card is an <article> -- "an <article> IS a card" (#908) --
+        // so it carries no [x-card] attribute to find.
         await expect(
-          page.locator(`[${variant}]`),
+          page.locator(variant === 'x-card' ? 'article' : `[${variant}]`),
           `[${variant}] should be demonstrated on ${CARDS_PAGE}`
         ).not.toHaveCount(0);
       }
@@ -283,6 +296,9 @@ test.describe('Cards Showcase Page', () => {
     test('stats card with trend down shows down arrow', async ({ page }) => {
       const statsCard = page.locator('[x-cardstats][trend="down"]').first();
       await expect(statsCard).toBeVisible();
+      // #491: a card is built only as it nears the viewport; scroll to it
+      // as a reader does before looking inside it.
+      await statsCard.scrollIntoViewIfNeeded();
       const trend = statsCard.locator('.x-card__stats-trend');
       await expect(trend).toContainText('↓');
     });
@@ -382,6 +398,9 @@ test.describe('Cards Showcase Page', () => {
     test('image card respects aspect ratio', async ({ page }) => {
       const imageCard = page.locator('[x-cardimage][aspect]').first();
       await expect(imageCard).toBeVisible();
+      // #491: a card is built only as it nears the viewport; scroll to it
+      // as a reader does before looking inside it.
+      await imageCard.scrollIntoViewIfNeeded();
       const figure = imageCard.locator('.x-card__figure').first();
       await expect(figure).toBeAttached();
       await expect.poll(() => figure.evaluate(el =>
@@ -467,6 +486,9 @@ test.describe('Cards Showcase Page', () => {
       // 4.0.0: original-price, not data-original-price.
       const productCard = page.locator('[x-cardproduct][original-price]').first();
       await expect(productCard).toBeVisible();
+      // #491: a card is built only as it nears the viewport; scroll to it
+      // as a reader does before looking inside it.
+      await productCard.scrollIntoViewIfNeeded();
       const original = productCard.locator('.x-card__price-original');
       await expect(original).toBeAttached();
       await expect.poll(() => original.evaluate(el =>
@@ -485,6 +507,7 @@ test.describe('Cards Showcase Page', () => {
       const variants = ['info', 'success', 'warning', 'error'];
 
       for (const variant of variants) {
+        await visitAll(page.locator(`[x-cardnotification][variant="${variant}"]`), 1);
         const card = page.locator(`.x-notification[x-cardnotification][variant="${variant}"]`);
         await expect(card, `variant="${variant}" should be demonstrated`).not.toHaveCount(0);
         await expect(card.first()).toBeVisible();
@@ -678,18 +701,24 @@ test.describe('Cards Showcase Page', () => {
     test('clicking expand button toggles content', async ({ page }) => {
       const expandCard = page.locator('[x-cardexpandable]').first();
       await expect(expandCard).toBeVisible();
+      // #491: a card is built only as it nears the viewport; scroll to it
+      // as a reader does before looking inside it.
+      await expandCard.scrollIntoViewIfNeeded();
 
       const btn = expandCard.locator('.x-card__expand-btn');
       const content = expandCard.locator('.x-card__expandable-content');
       await expect(btn).toBeVisible();
       await expect(content).toBeAttached();
 
-      const initialHeight = await content.evaluate(el => (el as HTMLElement).style.maxHeight);
+      // Computed, not el.style: since #779 the height is set through the
+      // --x-card-expandable-max-height custom property, so style.maxHeight
+      // stays "" whatever the card does. What the reader sees is the computed value.
+      const initialHeight = await content.evaluate(el => getComputedStyle(el).maxHeight);
 
       await btn.click();
 
       await expect.poll(() =>
-        content.evaluate(el => (el as HTMLElement).style.maxHeight)
+        content.evaluate(el => getComputedStyle(el).maxHeight)
       ).not.toBe(initialHeight);
     });
 
@@ -741,6 +770,9 @@ test.describe('Cards Showcase Page', () => {
     test('draggable card has drag handle', async ({ page }) => {
       const dragCard = page.locator('[x-carddraggable]').first();
       await expect(dragCard).toBeVisible();
+      // #491: a card is built only as it nears the viewport; scroll to it
+      // as a reader does before looking inside it.
+      await dragCard.scrollIntoViewIfNeeded();
 
       const handle = dragCard.locator('.x-card__drag-handle');
       await expect(handle).toBeVisible();
@@ -748,6 +780,9 @@ test.describe('Cards Showcase Page', () => {
 
     test('drag handle has grab cursor', async ({ page }) => {
       const dragCard = page.locator('[x-carddraggable]').first();
+      // #491: a card is built only as it nears the viewport; scroll to it
+      // as a reader does before looking inside it.
+      await dragCard.scrollIntoViewIfNeeded();
       const handle = dragCard.locator('.x-card__drag-handle');
       await expect(handle).toBeVisible();
 
@@ -799,6 +834,7 @@ test.describe('Cards Showcase Page', () => {
     test('interactive cards are focusable', async ({ page }) => {
       const clickableCards = page.locator('[clickable], [role="button"], [role="link"]');
       await expect.poll(() => clickableCards.count()).toBeGreaterThan(0);
+      await visitAll(clickableCards, 5);
 
       await expect.poll(() => clickableCards.evaluateAll(els =>
         els.slice(0, 5)
@@ -814,6 +850,7 @@ test.describe('Cards Showcase Page', () => {
     test('notification cards have role=alert', async ({ page }) => {
       const notifications = page.locator('[x-cardnotification]');
       await expect.poll(() => notifications.count()).toBeGreaterThan(0);
+      await visitAll(notifications);
 
       await expect.poll(() => notifications.evaluateAll(els =>
         els.filter(el => el.getAttribute('role') !== 'alert').length
