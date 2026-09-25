@@ -370,6 +370,18 @@ export default defineConfig({
     // INTEGRATION TESTS
     // Phase 2: Wizard validation, builder integration, end-to-end flows
     // ═══════════════════════════════════════════════════════════════
+    // Tests that NEED the outside world: the live GitHub Pages site, or GitHub
+    // itself through `gh`. Kept out of every gate project on purpose -- a gate
+    // must not depend on the network, a login or a remote host's mood, or its
+    // verdict describes the internet rather than the code. Run on demand, and
+    // after a push (the deployed site is what they check):
+    //   npm run test:deployed
+    {
+      name: 'deployed',
+      testDir: './tests/deployed',
+      testMatch: '**/*.spec.ts',
+    },
+
     {
       name: 'integration',
       testDir: './tests/integration',
