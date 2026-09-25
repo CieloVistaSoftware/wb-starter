@@ -219,6 +219,12 @@ export default defineConfig({
     // the flapping stops. The default stays 'allow' — this measures rather than
     // quietly changing what every run exercises.
     serviceWorkers: process.env.WB_BLOCK_SW ? 'block' : 'allow',
+    // A click on a hidden element waits for it to become visible. With no
+    // action timeout that wait silently eats the whole test budget -- 90s in
+    // remaining-coverage, where 7 tests timed out on rows inside a collapsed
+    // <details> group. 30s changes nothing for tests on the default 30s budget
+    // but makes a stuck action in a long-budget spec fail by name, fast.
+    actionTimeout: 30_000,
   },
 
   // Web server - automatically starts before tests.

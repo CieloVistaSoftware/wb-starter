@@ -70,7 +70,7 @@
     "block the next release. The register is a union. Root cause is #961/#962."
   ],
   "recorded": "2026-09-08",
-  "count": 595,
+  "count": 588,
   "failures": [
     "behaviors/accordion-render.spec.ts › three sibling accordions, each with its distinct answer (not the title)",
     "behaviors/alert-dismiss-button.spec.ts › dismissible alert close button removes the alert on click, on a fresh page load",
@@ -164,13 +164,6 @@
     "behaviors/rating-icon-value.spec.ts › custom icon= is honored (hearts / thumbs, not stars)",
     "behaviors/rating-icon-value.spec.ts › filled stars use the theme rating color, not a hardcoded gray",
     "behaviors/rating-icon-value.spec.ts › value is painted on first render (filled count == value)",
-    "behaviors/remaining-coverage.spec.ts › checkbox toggles",
-    "behaviors/remaining-coverage.spec.ts › tooltip appears on hover",
-    "behaviors/remaining-coverage.spec.ts › x-audio renders its example and upgrades without error",
-    "behaviors/remaining-coverage.spec.ts › x-checkbox renders its example and upgrades without error",
-    "behaviors/remaining-coverage.spec.ts › x-drawer renders its example and upgrades without error",
-    "behaviors/remaining-coverage.spec.ts › x-select renders its example and upgrades without error",
-    "behaviors/remaining-coverage.spec.ts › x-tooltip renders its example and upgrades without error",
     "behaviors/scrollalong.spec.ts › nav stays visible when scrolling content",
     "behaviors/section-nav.spec.ts › clicking a section link scrolls it into view below the header",
     "behaviors/section-nav.spec.ts › every section link resolves to an existing target",
