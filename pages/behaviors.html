@@ -953,7 +953,20 @@
     // ended at 321px and the code panel started there, so the menu rendered
     // straight over the code. Standard 15: an overlay must not overflow its
     // parent. Grow the stage to whatever the example actually put on screen.
-    const STAGE_MIN_PX = 96;   // 6rem, matching .behaviors-live__stage in behaviors.css
+    // The floor is whatever behaviors.css says the stage's min-height is, read
+    // live rather than copied. It used to be a hard-coded 96 ("6rem, matching
+    // .behaviors-live__stage"), and #774 then set that rule to `min-height: 0`
+    // so the stage hugs its example 1rem from the strip. The copy did not
+    // follow: every fit re-imposed 96px, so a one-line example (a single
+    // x-button) sat with 16px above it and 28px below -- the #711 imbalance,
+    // brought back by a constant that had stopped matching its source.
+    function stageMinPx() {
+      const inline = liveStage.style.minHeight;
+      liveStage.style.minHeight = '';
+      const px = parseFloat(getComputedStyle(liveStage).minHeight) || 0;
+      liveStage.style.minHeight = inline;
+      return px;
+    }
     let fitQueued = false;
     function fitStageToOverlays() {
       if (fitQueued) return;
@@ -968,7 +981,7 @@
           deepest = Math.max(deepest, r.bottom - stageTop);
         }
         const padding = parseFloat(getComputedStyle(liveStage).paddingBottom) || 0;
-        const wanted = Math.max(STAGE_MIN_PX, Math.ceil(deepest + padding));
+        const wanted = Math.max(stageMinPx(), Math.ceil(deepest + padding));
         // #760 -- John, on a collapsed <details>: "Why blank space?"
         //
         // This used to only ever GROW. Opening the details grew the stage to

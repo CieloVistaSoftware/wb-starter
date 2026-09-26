@@ -246,10 +246,14 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     expect(wiring.upgraded, "it must be the framework's own x-fullscreen behavior").toBe(true);
     // #722 -- John: "When clicking fullscreen all of these elements go
     // fullscreen." The stage is the panel-sized surface the example is centred
-    // in, so expanding it expanded the empty space too. The target is the
-    // wrapper that hugs the example.
-    expect(wiring.target, 'it must target the example wrapper, not the stage or the document')
-      .toBe('#behaviors-live-example');
+    // in, so expanding it expanded the empty space too -- #722 moved the
+    // target to the wrapper that hugs the example.
+    // #744 -- John: "when full screen show both navigator and the rendered side
+    // plus the search elements." That superseded #722 on purpose: the target is
+    // now #behaviors-workspace (search + list + panel), still never the stage
+    // and never the whole document. See the #744 note in pages/behaviors.html.
+    expect(wiring.target, 'it must target the workspace (#744), not the stage or the document')
+      .toBe('#behaviors-workspace');
     expect(wiring.label.length, 'the control must be labelled').toBeGreaterThan(0);
   });
 
@@ -261,7 +265,9 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     const trip = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       const stage = document.getElementById('behaviors-live-stage')!;
-      const wrapper = document.getElementById('behaviors-live-example')!;
+      // #744: the fullscreen target is the workspace, so that is the element
+      // whose inline styles are set and must be restored.
+      const wrapper = document.getElementById('behaviors-workspace')!;
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
       const before = wrapper.getBoundingClientRect();
       const stageBefore = stage.getBoundingClientRect();
@@ -295,14 +301,14 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
         cleared: !wrapper.style.height && !wrapper.style.overflow,
         sameRect: same(before, after),
         stageSameRect: same(stageBefore, stageAfter),
-        example: !!wrapper.firstElementChild,
+        example: !!document.getElementById('behaviors-live-example')!.firstElementChild,
       };
     });
 
-    expect(trip.requestedOn, 'fullscreen must be requested on the example wrapper').toBe('behaviors-live-example');
-    expect(trip.during.height, 'the example fills the viewport while fullscreen').toBe('100vh');
+    expect(trip.requestedOn, 'fullscreen must be requested on the workspace (#744)').toBe('behaviors-workspace');
+    expect(trip.during.height, 'the workspace fills the viewport while fullscreen').toBe('100vh');
     expect(trip.cleared, 'the inline styles must be cleared on the way out').toBe(true);
-    expect(trip.sameRect, 'the example must return to the same position and size').toBe(true);
+    expect(trip.sameRect, 'the workspace must return to the same position and size').toBe(true);
     expect(trip.stageSameRect, 'and the stage around it must not move either').toBe(true);
     expect(trip.example, 'the example must survive the round trip').toBe(true);
   });

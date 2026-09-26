@@ -1109,9 +1109,6 @@
         msg = 'Schema validation skipped (unresolved $ref): ' + e.message;
       }
       const out = document.createElement('pre');
-      out.style.background = '#222';
-      out.style.color = '#fff';
-      out.style.padding = '0.5em';
       out.textContent = msg;
       document.getElementById('label-schema-validation').appendChild(out);
     });

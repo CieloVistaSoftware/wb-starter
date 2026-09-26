@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import { readFileSync } from 'fs';
 import { globSync } from 'glob';
 
@@ -29,6 +29,63 @@ const FILES = [
 const MIN_GAP_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding
 const MIN_PADDING_PX = 15;
 const MIN_TEXT_EDGE_PX = 16; // 1rem — matches DEMOS-AND-DOCS-STANDARDS.md §13's documented minimum
+
+/**
+ * Read the page the way a reader does before measuring it.
+ *
+ * The lazy runtime (#491) builds an element only as it nears the viewport, so
+ * a check that measures right after load only ever sees the first screen
+ * built -- everything below the fold is still raw markup, carrying none of the
+ * padding, backgrounds or grids its behavior will give it. That is how
+ * demos/autoinject.html's decorator table (cells under a distinct header
+ * background) stayed invisible to the content-panel check: it is built only
+ * once it is scrolled near. Scroll through once, back to the top, then wait
+ * for every finite CSS transition/animation to finish (#1165,
+ * tests/helpers/settled-style.ts) -- cards carry `transition: all`, and a
+ * padding read mid-transition reports the STARTING value, a failure that
+ * appears only under load.
+ */
+async function readThrough(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const frame = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
+    // wb-lazy.js observes with rootMargin 1200px: a viewport at scrollY
+    // builds everything from scrollY-1200 to scrollY+innerHeight+1200, so a
+    // step of innerHeight+2000 still overlaps and skips nothing -- and keeps
+    // demos/site/cards.html (~160,000px tall) inside the test timeout.
+    const step = window.innerHeight + 2000;
+    for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await frame();
+      await frame();
+    }
+    window.scrollTo(0, 0);
+    await frame();
+    await frame();
+  });
+  // Building is asynchronous (a behavior's module and stylesheet load on
+  // first use). waitForLoadState('networkidle') resolves at once here -- the
+  // page already reached it before the scroll -- so watch the resource
+  // timeline instead: measure once it has stopped growing for 500ms.
+  await page.evaluate(async () => {
+    const count = () => performance.getEntriesByType('resource').length;
+    const deadline = Date.now() + 10_000;
+    let last = -1;
+    while (Date.now() < deadline && count() !== last) {
+      last = count();
+      await new Promise((r) => setTimeout(r, 500));
+    }
+  });
+  await page.evaluate(async () => {
+    const running = document.getAnimations().filter(
+      (a) => a.effect?.getTiming().iterations !== Infinity
+    );
+    await Promise.all(running.map((a) => a.finished.catch(() => undefined)));
+  });
+}
+
+// Reading demos/site/cards.html through (~160,000px, several hundred cards
+// built on the way down) takes longer than the default 30s on its own.
+test.describe.configure({ timeout: 90_000 });
 
 function parseWbDemoBlocks(html: string): string[] {
   const blocks: string[] = [];
@@ -102,6 +159,7 @@ test.describe('Demo layout standards (§13) — live spacing', () => {
       if (count === 0) test.skip(true, 'no <div x-demo> blocks on this page');
 
       await page.waitForTimeout(800); // settle lazy/eager scan + grid build
+      await readThrough(page);
 
       const violations = await page.evaluate((minGap) => {
         const problems: string[] = [];
@@ -164,6 +222,7 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
       if ((await demos.count()) === 0) test.skip(true, 'no <div x-demo> blocks on this page');
 
       await page.waitForTimeout(800); // settle lazy/eager scan + grid build
+      await readThrough(page);
 
       const violations = await page.evaluate(() => {
         const problems: string[] = [];
@@ -261,6 +320,7 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(800);
+      await readThrough(page);
 
       const violations = await page.evaluate(({ minPad, minW, minH }) => {
         const problems: string[] = [];

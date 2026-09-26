@@ -1,7 +1,7 @@
 /**
  * Behaviors Showcase Visual Tests
  * ================================
- * Visual regression tests for demos/behaviors-showcase.html
+ * Visual regression tests for the behaviors page (/?page=behaviors).
  * Validates rendering, layout, and interaction of all behaviors.
  *
  * Known Issues to Catch:
@@ -11,11 +11,33 @@
  * 4. masonry: Column layout not working
  * 5. tabs: Buttons too high
  * 6. code-examples: Text overflow, invalid HTML
+ *
+ * WHERE THESE RUN
+ * ---------------
+ * This file was written against demos/behaviors-showcase.html, which rendered
+ * every behavior inline. That page was removed when its content moved into the
+ * SPA route (see the header of behaviors-showcase.spec.ts), and #664/#666 then
+ * made that route a BROWSER: nothing renders until a behavior is picked from
+ * the list. Every test here was loading a 404, so the `if (count > 0)` guards
+ * made most of them pass without looking at anything, and the three with an
+ * unconditional expect() failed.
+ *
+ * Each block now picks its behavior out of the list with showBehavior() and
+ * reads what renders in the live panel -- the same authored example a reader
+ * sees. showBehavior() fails if the behavior has no row, so a block cannot
+ * silently measure nothing again.
  */
 
 import { test, expect } from '@playwright/test';
+import { showBehavior } from '../helpers/behaviors-page';
 
-const BEHAVIORS_URL = '/demos/behaviors-showcase.html';
+// Booting the page, filling the list from its two fetches, then rendering and
+// scanning one example is ~10s per test; the waits are event-driven, so the
+// longer ceiling buys tolerance under parallel workers without hiding a hang.
+test.describe.configure({ timeout: 90_000 });
+
+/** Everything below is read from inside the rendered example, never the page chrome. */
+const EX = '#behaviors-live-example';
 
 test.describe('Behaviors Showcase Visual Tests', () => {
 
@@ -23,16 +45,16 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   test.describe('Drawer Layout', () => {
     test('drawer-layout should have [x-drawer-layout] class', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const dl = page.locator('[x-drawer-layout]').first();
+      await showBehavior(page, 'x-drawer-layout');
+      const dl = page.locator(`${EX} [x-drawer-layout]`).first();
       if (await dl.count() > 0) {
         await expect(dl).toHaveClass(/x-drawer-layout/);
       }
     });
 
     test('drawer text should not be cut off', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const main = page.locator('[x-drawer-layout] .x-drawer-layout__content').first();
+      await showBehavior(page, 'x-drawer-layout');
+      const main = page.locator(`${EX} [x-drawer-layout] .x-drawer-layout__content`).first();
       if (await main.count() > 0) {
         const box = await main.boundingBox();
         expect(box).not.toBeNull();
@@ -41,9 +63,9 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('drawer toggle button should not overlap content text', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const toggle = page.locator('[x-drawer-layout] .x-drawer-layout__toggle').first();
-      const content = page.locator('[x-drawer-layout] .x-drawer-layout__content').first();
+      await showBehavior(page, 'x-drawer-layout');
+      const toggle = page.locator(`${EX} [x-drawer-layout] .x-drawer-layout__toggle`).first();
+      const content = page.locator(`${EX} [x-drawer-layout] .x-drawer-layout__content`).first();
       if (await toggle.count() > 0 && await content.count() > 0) {
         const tBox = await toggle.boundingBox();
         const cBox = await content.boundingBox();
@@ -55,8 +77,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('"Main Content" text should be fully visible', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const main = page.getByText('Main Content').first();
+      await showBehavior(page, 'x-drawer-layout');
+      const main = page.locator(EX).getByText('Main Content').first();
       if (await main.count() > 0) {
         await expect(main).toBeVisible();
         const box = await main.boundingBox();
@@ -69,39 +91,39 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   test.describe('Dropdown', () => {
     test('dropdown should have [x-dropdown] class', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const dd = page.locator('[x-dropdown]').first();
+      await showBehavior(page, 'x-dropdown');
+      const dd = page.locator(`${EX} [x-dropdown]`).first();
       if (await dd.count() > 0) {
         await expect(dd).toHaveClass(/x-dropdown/);
       }
     });
 
     test('dropdown should create a trigger button', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const trigger = page.locator('.x-dropdown__trigger').first();
+      await showBehavior(page, 'x-dropdown');
+      const trigger = page.locator(`${EX} .x-dropdown__trigger`).first();
       if (await trigger.count() > 0) {
         await expect(trigger).toBeVisible();
       }
     });
 
     test('dropdown should create a menu container', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const menu = page.locator('.x-dropdown__menu').first();
+      await showBehavior(page, 'x-dropdown');
+      const menu = page.locator(`${EX} .x-dropdown__menu`).first();
       expect(await menu.count()).toBeGreaterThan(0);
     });
 
     test('dropdown menu should be hidden initially', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const menu = page.locator('.x-dropdown__menu').first();
+      await showBehavior(page, 'x-dropdown');
+      const menu = page.locator(`${EX} .x-dropdown__menu`).first();
       if (await menu.count() > 0) {
         await expect(menu).not.toBeVisible();
       }
     });
 
     test('dropdown should NOT show raw links without trigger', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
+      await showBehavior(page, 'x-dropdown');
       // If dropdown is working, raw <a> children should be inside a menu, not loose
-      const dd = page.locator('[x-dropdown]').first();
+      const dd = page.locator(`${EX} [x-dropdown]`).first();
       if (await dd.count() > 0) {
         const directLinks = await dd.evaluate(el => {
           return Array.from(el.children).filter(c => c.tagName === 'A' && !c.closest('.x-dropdown__menu')).length;
@@ -111,9 +133,9 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('clicking dropdown trigger should open menu', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const trigger = page.locator('.x-dropdown__trigger').first();
-      const menu = page.locator('.x-dropdown__menu').first();
+      await showBehavior(page, 'x-dropdown');
+      const trigger = page.locator(`${EX} .x-dropdown__trigger`).first();
+      const menu = page.locator(`${EX} .x-dropdown__menu`).first();
       if (await trigger.count() > 0 && await menu.count() > 0) {
         await trigger.click();
         await page.waitForTimeout(300);
@@ -126,8 +148,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   test.describe('Toggle', () => {
     test('toggle button should have visible background color', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const toggle = page.locator('[x-toggle]').first();
+      await showBehavior(page, 'x-toggle');
+      const toggle = page.locator(`${EX} [x-toggle]`).first();
       if (await toggle.count() > 0) {
         const bg = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
         // Should not be transparent or white-on-white
@@ -136,8 +158,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('toggle button should maintain styling after click', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const toggle = page.locator('[x-toggle]').first();
+      await showBehavior(page, 'x-toggle');
+      const toggle = page.locator(`${EX} [x-toggle]`).first();
       if (await toggle.count() > 0) {
         const bgBefore = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
         await toggle.click();
@@ -149,8 +171,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('toggle button text should be visible (not white on white)', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const toggle = page.locator('[x-toggle]').first();
+      await showBehavior(page, 'x-toggle');
+      const toggle = page.locator(`${EX} [x-toggle]`).first();
       if (await toggle.count() > 0) {
         const { color, bg } = await toggle.evaluate(el => {
           const s = window.getComputedStyle(el);
@@ -165,16 +187,16 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   test.describe('Masonry', () => {
     test('masonry should have [x-masonry] class', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const m = page.locator('[x-masonry]').first();
+      await showBehavior(page, 'x-masonry');
+      const m = page.locator(`${EX} [x-masonry]`).first();
       if (await m.count() > 0) {
         await expect(m).toHaveClass(/x-masonry/);
       }
     });
 
     test('masonry should have column-count CSS applied', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const m = page.locator('.x-masonry').first();
+      await showBehavior(page, 'x-masonry');
+      const m = page.locator(`${EX} .x-masonry`).first();
       if (await m.count() > 0) {
         const cc = await m.evaluate(el => window.getComputedStyle(el).columnCount);
         expect(parseInt(cc)).toBeGreaterThanOrEqual(2);
@@ -182,8 +204,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('masonry children should have break-inside: avoid', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const child = page.locator('.x-masonry > *').first();
+      await showBehavior(page, 'x-masonry');
+      const child = page.locator(`${EX} .x-masonry > *`).first();
       if (await child.count() > 0) {
         const bi = await child.evaluate(el => window.getComputedStyle(el).breakInside);
         expect(bi).toBe('avoid');
@@ -191,8 +213,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('masonry items should be distributed across columns', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const children = page.locator('.x-masonry > *');
+      await showBehavior(page, 'x-masonry');
+      const children = page.locator(`${EX} .x-masonry > *`);
       if (await children.count() >= 2) {
         const positions = await children.evaluateAll(els =>
           els.slice(0, 4).map(el => el.getBoundingClientRect().left)
@@ -207,16 +229,16 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   test.describe('Tabs', () => {
     test('tabs should have [x-tabs] class', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const tabs = page.locator('[x-tabs]').first();
+      await showBehavior(page, 'x-tabs');
+      const tabs = page.locator(`${EX} [x-tabs]`).first();
       if (await tabs.count() > 0) {
         await expect(tabs).toHaveClass(/x-tabs/);
       }
     });
 
     test('tab buttons should have reasonable height/padding', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const btn = page.locator('.x-tabs__nav button').first();
+      await showBehavior(page, 'x-tabs');
+      const btn = page.locator(`${EX} .x-tabs__nav button`).first();
       if (await btn.count() > 0) {
         const h = await btn.evaluate(el => el.getBoundingClientRect().height);
         expect(h).toBeLessThanOrEqual(60);
@@ -225,16 +247,16 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('tabs navigation should exist', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const nav = page.locator('.x-tabs__nav').first();
+      await showBehavior(page, 'x-tabs');
+      const nav = page.locator(`${EX} .x-tabs__nav`).first();
       if (await nav.count() > 0) {
         await expect(nav).toBeVisible();
       }
     });
 
     test('clicking tab should switch content', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const buttons = page.locator('.x-tabs__nav button');
+      await showBehavior(page, 'x-tabs');
+      const buttons = page.locator(`${EX} .x-tabs__nav button`);
       if (await buttons.count() >= 2) {
         await buttons.nth(1).click();
         await page.waitForTimeout(300);
@@ -248,8 +270,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   test.describe('Code Examples', () => {
     test('code blocks should not have horizontal overflow', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const codeBlocks = page.locator('pre, code, [x-mdhtml]');
+      await showBehavior(page, 'x-mdhtml');
+      const codeBlocks = page.locator(`${EX} pre, ${EX} code, ${EX} [x-mdhtml]`);
       const count = await codeBlocks.count();
 
       const overflows: string[] = [];
@@ -262,8 +284,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('code example HTML should be parseable', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
-      const examples = page.locator('[x-mdhtml]');
+      await showBehavior(page, 'x-mdhtml');
+      const examples = page.locator(`${EX} [x-mdhtml]`);
       const count = await examples.count();
       expect(count).toBeGreaterThan(0);
     });
@@ -273,7 +295,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   test.describe('Global Page Tests', () => {
     test('page should not have horizontal scrollbar', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
+      await page.goto('/?page=behaviors');
       const hasHScroll = await page.evaluate(() =>
         document.body.scrollWidth > window.innerWidth
       );
@@ -281,7 +303,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('all behavior elements should be initialized', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
+      await page.goto('/?page=behaviors');
       await page.waitForFunction(() => (window as any).WB, { timeout: 10000 });
       await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
       await page.waitForTimeout(1000);
@@ -291,7 +313,7 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     });
 
     test('no visible text should overflow its container', async ({ page }) => {
-      await page.goto(BEHAVIORS_URL);
+      await page.goto('/?page=behaviors');
       const overflows = await page.evaluate(() => {
         const issues: string[] = [];
         document.querySelectorAll('section, .demo-area, .card-body').forEach(c => {
@@ -312,9 +334,9 @@ test.describe('Behaviors Showcase Visual Tests', () => {
   // ── Known Issues Detection ─────────────────────────────────────────────
 
   test('KNOWN ISSUE: drawer-layout toggle overlaps text', async ({ page }) => {
-    await page.goto(BEHAVIORS_URL);
-    const toggle = page.locator('.x-drawer-layout__toggle').first();
-    const content = page.locator('.x-drawer-layout__content p').first();
+    await showBehavior(page, 'x-drawer-layout');
+    const toggle = page.locator(`${EX} .x-drawer-layout__toggle`).first();
+    const content = page.locator(`${EX} .x-drawer-layout__content p`).first();
     if (await toggle.count() > 0 && await content.count() > 0) {
       const tBox = await toggle.boundingBox();
       const cBox = await content.boundingBox();
@@ -325,8 +347,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
   });
 
   test('KNOWN ISSUE: toggle button loses styling', async ({ page }) => {
-    await page.goto(BEHAVIORS_URL);
-    const toggle = page.locator('[x-toggle]').first();
+    await showBehavior(page, 'x-toggle');
+    const toggle = page.locator(`${EX} [x-toggle]`).first();
     if (await toggle.count() > 0) {
       await toggle.click();
       await page.waitForTimeout(300);

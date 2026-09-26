@@ -1,5 +1,6 @@
 import { WB_DOC_MAP } from './demo-docmap.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
+import { hasBehavior } from './index.js';
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------
@@ -306,6 +307,24 @@ function findXBehaviors(html) {
         matches.push(match[1].toLowerCase());
     }
     return [...new Set(matches)]; // unique
+}
+
+// The same x-* behavior names, read from the LIVE elements instead of the
+// authored text -- for a demo whose source could not be found (#1003 leaves
+// rawBlock empty then, e.g. a <div x-demo> injected by script, which the page
+// file never contained). Without this such a demo lost every doc-link badge,
+// not just its source panel. The live DOM also carries attributes the runtime
+// adds (x-ready, x-behavior), so only names that ARE registered behaviors count.
+function findLiveXBehaviors(root) {
+    const names = new Set();
+    for (const el of [root, ...root.querySelectorAll('*')]) {
+        for (const { name } of Array.from(el.attributes || [])) {
+            if (!name.startsWith('x-')) continue;
+            const behavior = name.slice(2);
+            if (/^[a-z][a-z0-9]*$/.test(behavior) && hasBehavior(behavior)) names.add(behavior);
+        }
+    }
+    return [...names];
 }
 
 // Resolve `x-<name>` to ITS OWN doc page.
@@ -624,7 +643,7 @@ export async function demo(element, options = {}) {
     );
     const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));
     const sharedComponents = allComponents.filter((comp) => !perInstanceComps.has(comp));
-    const xBehaviors = findXBehaviors(rawBlock);
+    const xBehaviors = sourceUnavailable ? findLiveXBehaviors(grid) : findXBehaviors(rawBlock);
     if (perInstanceChildren.length > 0 || sharedComponents.length > 0 || xBehaviors.length > 0) {
         // Deterministic: await the (cached) manifest and build the links inline —
         // a floating .then() left empty divs when init raced page load.

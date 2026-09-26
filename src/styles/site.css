@@ -211,7 +211,19 @@ body > button[x-copy] {
 /* #448: tag selectors -- spinner() no longer adds a redundant
    classList.add('x-spinner') that just duplicated the <span x-spinner> tag
    name. */
-x-spinner {
+/* The ATTRIBUTE form too. #448 moved these rules to the `x-spinner` TAG, but
+   the authored form is almost always an attribute host -- <span x-spinner>,
+   <div x-spinner> -- and a tag selector never matches those. Measured on the
+   behaviors page: <div x-spinner> kept effects.css's legacy host ring (a 20px
+   ring spinning at 0.8s) while the inner <div> that spinner() builds had no
+   border and no animation -- the md/lg/xl size, the colour and the speed
+   modifiers, which all style that inner <div>, changed nothing on screen.
+   `.x-spinner` is added by spinner() alongside the inner ring, so an
+   un-upgraded host keeps effects.css's ring as its no-JS fallback; the
+   compound (0,2,0) outranks effects.css's `[x-spinner]` (0,1,0) whichever of
+   the two stylesheets loads last. */
+x-spinner,
+[x-spinner].x-spinner {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -224,7 +236,10 @@ x-spinner {
   animation: none;
 }
 
-x-spinner div {
+/* (0,1,1) for the attribute form: equal to the size/speed/colour modifiers
+   below, which come later in this file and so still win. */
+x-spinner div,
+[x-spinner] > div {
   /* Explicit longhands instead of the `border` shorthand: if --border-color is
      ever unset, only the color is lost, not the whole border (which previously
      made the ring vanish entirely). #182 */

@@ -1,61 +1,95 @@
 /**
- * #181 — the behaviors-page section nav links must (a) read as distinct pills
- * (not crowded text) and (b) jump to their section with the heading clear of the
- * 64px sticky header (previously they landed hidden behind it, appearing dead).
+ * #181 — reaching a part of the behaviors page must actually show it, clear of
+ * the 64px sticky site header.
  *
- * Fix: .nav-links pills get a background/border; section[id] gets scroll-margin-top.
+ * AS FILED: the section jump-nav's links (.nav-links: Buttons, Inputs, ... ,
+ * Utilities) read as crowded text, and jumped to their <section id> with the
+ * heading hidden behind the sticky header, so they appeared dead. The fix was
+ * pill styling plus `scroll-margin-top` on section[id].
+ *
+ * WHY THIS FILE NO LONGER CLICKS .nav-links
+ * -----------------------------------------
+ * #666 deleted both halves of that. The ten category sections and their 88
+ * <div x-demo> blocks moved to data/behavior-examples.json and render on demand
+ * in the live panel beside the browse list; the jump-nav went with them, since
+ * there was nothing below to jump to (the note after #behaviors-workspace in
+ * pages/behaviors.html says so). Every test here then waited 20s for a
+ * `.nav-links` that can never appear and failed in beforeEach, asserting
+ * nothing about the page as it is.
+ *
+ * The same precedent as tests/issues/issue-note-1769220751805-p0.spec.ts: pin
+ * the retired mechanism as gone, so bringing it back is a decision rather than
+ * an accident, and assert the USER need #181 was about against the mechanism
+ * that replaced it — picking a behavior far down the list puts its example on
+ * screen, below the header rather than under it.
  */
 import { test, expect } from '@playwright/test';
+import { pickBehavior } from '../helpers/behaviors-page';
 
+// The ten section ids the jump-nav linked to.
 const SECTION_IDS = ['buttons', 'inputs', 'selection', 'feedback', 'overlays', 'navigation', 'data', 'media', 'effects', 'utilities'];
 
-test.describe('#181 — section nav links', () => {
+test.describe.configure({ timeout: 90_000 });
+
+test.describe('#181 — reaching a behavior shows it below the header', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=behaviors');
-    await page.waitForSelector('.nav-links', { timeout: 20000 });
-    await page.waitForTimeout(2500);
-  });
-
-  test('every section link resolves to an existing target', async ({ page }) => {
-    const dead = await page.evaluate((ids) => {
-      const links = [...document.querySelectorAll('.nav-links a[href^="#"]')];
-      return links
-        .map((a) => a.getAttribute('href') || '')
-        .filter((h) => h.length > 1 && !document.querySelector(h));
-    }, SECTION_IDS);
-    expect(dead, `nav links point to missing anchors: ${dead.join(', ')}`).toEqual([]);
-  });
-
-  test('nav pills are visible chips (have a background, not crowded text)', async ({ page }) => {
-    const bg = await page.evaluate(() => {
-      const a = document.querySelector('.nav-links a') as HTMLElement;
-      return a ? getComputedStyle(a).backgroundColor : 'NONE';
-    });
-    expect(bg).not.toBe('NONE');
-    expect(bg, 'nav pill has no background (reads as crowded text)').not.toBe('rgba(0, 0, 0, 0)');
-  });
-
-  test('sections have scroll-margin to clear the sticky header', async ({ page }) => {
-    const margins = await page.evaluate((ids) =>
-      ids.map((id) => {
-        const el = document.getElementById(id);
-        return { id, sm: el ? parseFloat(getComputedStyle(el).scrollMarginTop) : -1 };
-      }),
-      SECTION_IDS
+    await page.waitForFunction(
+      () => document.querySelectorAll('.behaviors-search-results__row').length > 100,
+      null,
+      { timeout: 30000 },
     );
-    for (const { id, sm } of margins) {
-      expect(sm, `#${id} has no scroll-margin-top (heading would hide under header)`).toBeGreaterThanOrEqual(64);
-    }
   });
 
-  test('clicking a section link scrolls it into view below the header', async ({ page }) => {
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(150);
-    await page.click('.nav-links a[href="#data"]');
-    await page.waitForTimeout(1500); // allow smooth scroll over a long distance to settle
-    const top = await page.evaluate(() => Math.round(document.getElementById('data')!.getBoundingClientRect().top));
-    // landed near the top, but clear of the 64px header (scroll-margin-top: 80)
-    expect(top, `#data landed at ${top}px (expected ~80, below the 64px header)`).toBeGreaterThanOrEqual(40);
-    expect(top, `#data did not scroll into view (top=${top})`).toBeLessThanOrEqual(120);
+  test('the section jump-nav is gone, with the sections it jumped to (#666)', async ({ page }) => {
+    const leftovers = await page.evaluate((ids) => ({
+      nav: document.querySelectorAll('.nav-links').length,
+      sections: ids.filter((id) => document.querySelector(`section#${id}`)),
+    }), SECTION_IDS);
+    expect(
+      leftovers.nav,
+      'the section jump-nav was removed with the demo sections (#666). If it is back, '
+      + 'restore the #181 link/pill/scroll-margin assertions this file used to make.',
+    ).toBe(0);
+    expect(leftovers.sections, 'the per-category demo sections were removed (#666)').toEqual([]);
+
+    // ...and the thing that replaced it is present and populated.
+    await expect(page.locator('#behaviors-search')).toBeVisible();
+  });
+
+  test('picking a behavior far down the list shows its example, clear of the sticky header', async ({ page }) => {
+    // The last behavior in the list: the modern equivalent of the far-away
+    // `#data` section the old test jumped to.
+    const token = await page.evaluate(() => {
+      const rows = [...document.querySelectorAll('.behaviors-search-results__row')];
+      return rows[rows.length - 1].getAttribute('data-browse-token') || '';
+    });
+    expect(token, 'the last row must name a behavior').not.toBe('');
+
+    await pickBehavior(page, token);
+
+    const geo = await page.evaluate(() => {
+      const header = document.querySelector('.site__header') as HTMLElement | null;
+      const stage = document.getElementById('behaviors-live-stage')!;
+      const s = stage.getBoundingClientRect();
+      return {
+        headerBottom: header ? Math.round(header.getBoundingClientRect().bottom) : 0,
+        stageTop: Math.round(s.top),
+        stageHeight: Math.round(s.height),
+        viewport: window.innerHeight,
+      };
+    });
+
+    expect(geo.stageHeight, `${token}: the example stage has no height`).toBeGreaterThan(0);
+    expect(
+      geo.stageTop,
+      `${token}: the example starts at ${geo.stageTop}px, under the header that ends at ${geo.headerBottom}px`,
+    ).toBeGreaterThanOrEqual(geo.headerBottom);
+    expect(
+      geo.stageTop,
+      `${token}: the example starts at ${geo.stageTop}px, below the ${geo.viewport}px viewport`,
+    ).toBeLessThan(geo.viewport);
   });
 });

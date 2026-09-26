@@ -1,5 +1,4 @@
 import { test, expect, Page } from '@playwright/test';
-import { safeScrollIntoView, elementReady } from '../base';
 
 /**
  * #593: John, live on pages/behaviors.html — the small 📖 doc-link badge in
@@ -138,7 +137,7 @@ test.describe('[x-demo] doc-badge click-through on x-* behaviors (#593)', () => 
     });
   }
 
-  test('x-confirm badge href resolves to a real, loadable doc (fallback to behaviors-reference.md, since no dedicated confirm.md exists)', async ({ page, request }) => {
+  test('x-confirm badge href resolves to a real, loadable doc (its own docs/behaviors/confirm.md)', async ({ page, request }) => {
     await inject(page, `<div x-demo id="d"><button x-confirm confirm-title="t" confirm-message="m">Confirm Dialog</button></div>`);
     // #977: two distinct docs (auto-injected <button> + x-confirm) legitimately
     // render two badges. Assert on x-confirm's own, not on there being only one.
@@ -148,61 +147,26 @@ test.describe('[x-demo] doc-badge click-through on x-* behaviors (#593)', () => 
       els.map((e) => (e as HTMLAnchorElement).getAttribute('href'))
     );
     expect(new Set(hrefs).size, `duplicate badges for one href (${hrefs.join(', ')})`).toBe(hrefs.length);
-    const href = hrefs.find((h) => (h || '').includes('behaviors-reference.md')) ?? hrefs[0];
+    const href = hrefs.find((h) => (h || '').includes('confirm.md')) ?? hrefs[0];
 
-    // No dedicated confirm.md/x-confirm.md/x-confirm.md exists under docs/
-    // (checked live) -- the shared reference page is the correct, intended
-    // fallback here, not a bug. If a dedicated doc is ever added, this
-    // assertion should be updated to expect it instead.
-    expect(href).toContain('behaviors-reference.md');
+    // This used to expect the shared behaviors-reference.md fallback, with a
+    // note to switch to the dedicated doc once one existed. It does now:
+    // docs/behaviors/confirm.md (generated from the schema, #842), which
+    // findBehaviorDocFile() prefers over the shared reference.
+    expect(href).toContain(encodeURIComponent('behaviors/confirm.md'));
 
     const res = await request.get(href!);
     expect(res.ok(), `fallback doc link ${href} did not load`).toBeTruthy();
   });
 });
 
-test.describe('pages/behaviors.html: the exact cards John reported (#593)', () => {
-  test('Popover and Confirm Dialog demo badges are both clickable and open a real doc in a new tab', async ({ page, context }) => {
-    await page.goto('/pages/behaviors.html');
-    // #962: behaviors.html runs the lazy runtime, so a demo below the fold is
-    // not injected until it intersects — waiting for '[x-demo] .x-demo__grid'
-    // to appear on its own timed out at 10s. Scroll one into view, then settle
-    // that element rather than the page.
-    const firstDemo = page.locator('[x-demo]').first();
-    await safeScrollIntoView(firstDemo);
-    await elementReady(firstDemo);
-
-    for (const attr of ['x-popover', 'x-confirm']) {
-      const demo = page.locator(`[x-demo]:has([${attr}])`).first();
-      await safeScrollIntoView(demo);
-      // #962: settle THIS demo rather than sleeping 1000ms and hoping the lazy
-      // demo() init and doc-manifest fetch finished.
-      await elementReady(demo);
-
-      // #977: a demo carrying two distinct docs renders one badge per doc, so
-      // pick this behavior's own instead of asserting there is exactly one.
-      const badges = demo.locator('.x-demo__card-doc-link');
-      await expect(
-        badges.first(),
-        `${attr}'s x-demo has no doc-link badge on the real page`
-      ).toBeAttached({ timeout: 5000 });
-      const allHrefs = await badges.evaluateAll((els) =>
-        els.map((e) => (e as HTMLAnchorElement).getAttribute('href'))
-      );
-      expect(
-        new Set(allHrefs).size,
-        `${attr}: duplicate doc-link badges for one href (${allHrefs.join(', ')})`
-      ).toBe(allHrefs.length);
-      const own = attr.replace(/^x-/, '');
-      const badge = badges.nth(Math.max(0, allHrefs.findIndex((h) => (h || '').includes(own))));
-
-      const [popup] = await Promise.all([
-        context.waitForEvent('page', { timeout: 5000 }),
-        badge.click(),
-      ]);
-      await popup.waitForLoadState();
-      expect(popup.url(), `${attr}'s doc badge must actually navigate`).toContain('doc-viewer.html?file=');
-      await popup.close();
-    }
-  });
-});
+// RETIRED: "pages/behaviors.html: the exact cards John reported (#593)".
+//
+// It clicked the doc badges on the Popover and Confirm Dialog demos of
+// pages/behaviors.html. #666 removed every <div x-demo> from that page:
+// examples now render on demand in the live panel, which carries no x-demo and
+// no badges, so there was nothing left for it to click. Retired on John's
+// decision (2026-09-25). The #593 bug itself -- a badge click must navigate,
+// not trigger the behavior's own overlay -- stays covered by the
+// '[x-demo] doc-badge click-through' tests above, for x-confirm and x-popover
+// among others.

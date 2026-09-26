@@ -54,7 +54,7 @@ test.describe('button label attribute renders as text (#632)', () => {
   });
 
   test('label + doc-link icon ([x-demo]) coexist -- doc-link does not block label rendering', async ({ page }) => {
-    await renderButtons(page, `<button id="b4" label="Save"><a class="[x-demo]__card-doc-link">📖</a></button>`);
+    await renderButtons(page, `<button id="b4" label="Save"><a class="x-demo__card-doc-link">📖</a></button>`);
     const text = await page.locator('#b4').textContent();
     expect(text?.trim(), 'label was skipped because the doc-link icon looked like author content').toContain('Save');
   });
@@ -64,18 +64,18 @@ test.describe('button icon-position: both hyphenated and no-hyphen forms work (#
   test('<button icon-position="end"> (correct kebab-case) places the icon after the label', async ({ page }) => {
     await renderButtons(page, `<button id="b5" label="Next" icon="→" icon-position="end"></button>`);
     const html = await page.locator('#b5').innerHTML();
-    expect(html.indexOf('.x-button__icon')).toBeGreaterThan(html.indexOf('Next'));
+    expect(html.indexOf('x-button__icon')).toBeGreaterThan(html.indexOf('Next'));
   });
 
   test('<button iconposition="end"> (no hyphen, as authored) still places the icon after the label', async ({ page }) => {
     await renderButtons(page, `<button id="b6" label="Next" icon="→" iconposition="end"></button>`);
     const html = await page.locator('#b6').innerHTML();
-    expect(html.indexOf('.x-button__icon'), 'iconposition (no hyphen) was ignored, icon stayed at the default start position').toBeGreaterThan(html.indexOf('Next'));
+    expect(html.indexOf('x-button__icon'), 'iconposition (no hyphen) was ignored, icon stayed at the default start position').toBeGreaterThan(html.indexOf('Next'));
   });
 
   test('default (no icon-position at all) places the icon before the label', async ({ page }) => {
     await renderButtons(page, `<button id="b7" label="Save" icon="💾"></button>`);
     const html = await page.locator('#b7').innerHTML();
-    expect(html.indexOf('.x-button__icon')).toBeLessThan(html.indexOf('Save'));
+    expect(html.indexOf('x-button__icon')).toBeLessThan(html.indexOf('Save'));
   });
 });
