@@ -14,6 +14,11 @@ export default [
       'playwright-report/**',
       'docs/**',
       '**/*.min.js',
+      // Vendored third-party builds (see src/lib/VENDOR.md) -- not our code.
+      'src/lib/marked/**',
+      'src/lib/ajv/**',
+      'src/lib/chart.js/**',
+      'src/lib/frameworks/**',
     ],
   },
   js.configs.recommended,

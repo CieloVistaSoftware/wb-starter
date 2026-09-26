@@ -38,14 +38,16 @@ async function loadMarked() {
       return;
     }
     
-    // Load from CDN
+    // Load the vendored UMD build (src/lib/marked, see src/lib/VENDOR.md).
+    // Module-relative so it resolves under the GitHub Pages sub-path too;
+    // nothing is ever fetched from a CDN.
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+    script.src = new URL('../lib/marked/marked.umd.js', import.meta.url).href;
     script.onload = () => {
       markedLoaded = true;
       resolve(window.marked);
     };
-    script.onerror = () => reject(new Error('Failed to load marked.js from CDN'));
+    script.onerror = () => reject(new Error('Failed to load vendored marked.js'));
     document.head.appendChild(script);
   });
   
