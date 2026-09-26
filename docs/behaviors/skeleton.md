@@ -14,7 +14,7 @@ stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in
 | Semantic element | `<div role="status">` |
 | Root CSS Class | none added by JS — `skeleton.css` styles the `<div x-skeleton>` **tag** directly, so `x-skeleton` on any other element gets no shimmer styling from the base rule (only the `.x-skeleton--{variant}` modifier class is added) |
 | Category | Feedback |
-| Schema | [skeleton.schema.json](../../src/wb-models/skeleton.schema.json) — declares an `animated` property the JS never reads; the shimmer animation always runs, it isn't toggleable |
+| Schema | [skeleton.schema.json](../../src/wb-models/skeleton.schema.json) — declares an `animated` property (default `true`); `animated="false"` adds `.x-skeleton--static`, which stops the shimmer |
 
 ## Properties
 

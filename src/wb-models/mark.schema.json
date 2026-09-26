@@ -3,7 +3,7 @@
   "$id": "mark.schema.json",
   "title": "Mark",
   "description": "Behavior applied with x-mark.",
-  "schemaFor": "x-mark",
+  "schemaFor": "mark",
   "properties": {
     "variant": {
       "type": "string",
@@ -15,6 +15,17 @@
       "description": "Any CSS colour, used as the highlight background. The text colour is computed from its luminance so the mark stays readable, and setting this overrides `variant`.",
       "default": "this is the color"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-mark"
+  },
+  "test": {
+    "setup": [
+      "<div x-mark>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

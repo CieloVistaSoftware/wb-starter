@@ -45,7 +45,9 @@ function docNameFor(token) {
 function behaviors() {
   // x-as-* are aliases the page itself filters out of the list.
   const tokens = new Set(Object.keys(MERGED).filter((a) => !a.startsWith('x-as-')));
-  for (const tag of Object.keys(nativeMap)) tokens.add('x-' + tag);
+  // A native tag is named by the behavior it injects, not by the tag:
+  // <article> injects card, so its token is x-card, never x-article.
+  for (const behavior of Object.values(nativeMap)) tokens.add('x-' + behavior);
   return [...tokens].sort().map((token) => ({ token, docName: docNameFor(token) }));
 }
 
@@ -243,7 +245,7 @@ function usage(token, schema) {
  * from — nothing better exists, and mdhtml leaves a content-free snippet as a
  * code sample rather than rendering an empty component.
  */
-function alternateHostUsage(token, schema) {
+function alternateHostUsage(token, _schema) {
   const curated = examples[token]?.source;
   if (!curated) return `<div ${token}>\n  …\n</div>`;
 

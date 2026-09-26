@@ -186,7 +186,7 @@
       "<div x-cardbutton content=\"Sample content\">content=\"Sample content\"</div>",
       "<div x-cardbutton primary=\"Sample primary\">primary=\"Sample primary\"</div>",
       "<div x-cardbutton primary-href=\"Sample primaryHref\">primaryHref=\"Sample primaryHref\"</div>",
-      "<div title=\"Confirm\" primary=\"Yes\" secondary=\"No\"></div>"
+      "<div x-cardbutton title=\"Confirm\" primary=\"Yes\" secondary=\"No\"></div>"
     ],
     "matrix": {
       "combinations": [

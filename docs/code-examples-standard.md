@@ -170,7 +170,7 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
 | `input` | — (not auto-injected; bare `<input>` needs `x-input`) | `<input>` |
 | `textarea` | `<textarea>` | — (auto-injects, `x-textarea` is redundant) |
 | `select` | `<select>` | — (auto-injects, `x-select` is redundant) |
-| `progress` | `<progress>` | `<div x-progressbar>` |
+| `progress` | `<progress>` | `<div x-progress>` |
 
 ---
 

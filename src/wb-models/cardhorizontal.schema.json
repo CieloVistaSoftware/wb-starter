@@ -196,7 +196,7 @@
       "<div x-cardhorizontal image=\"/images/dachshund-puppy-image-960x540.jpg\">image=\"/images/dachshund-puppy-image-960x540.jpg\"</div>",
       "<div x-cardhorizontal image-alt=\"Sample imageAlt\">imageAlt=\"Sample imageAlt\"</div>",
       "<div x-cardhorizontal title=\"Test Title\">With title attribute</div>",
-      "<div image=\"photo.jpg\" title=\"Title\"></div>"
+      "<div x-cardhorizontal image=\"photo.jpg\" title=\"Title\"></div>"
     ],
     "matrix": {
       "combinations": [

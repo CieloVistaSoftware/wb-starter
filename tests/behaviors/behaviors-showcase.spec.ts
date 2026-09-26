@@ -14,6 +14,7 @@
  */
 
 import { test, expect, Page } from '@playwright/test';
+import { pickBehavior } from '../helpers/behaviors-page';
 
 test.describe('Behaviors Showcase Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -46,25 +47,39 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('all behavior sections have a demo area', async ({ page }) => {
-      // .behavior-card/.demo-area were the old standalone
-      // demos/behaviors-showcase.html's grid-card layout; the schema-generated
-      // page (behaviors.schema.json -> generate-behaviors-page.js) uses
-      // <section id="..."> + <div x-demo> instead. Same intent, current markup.
-      const sections = await page.locator('main section[id], section[id]').all();
-      expect(sections.length).toBeGreaterThan(5);
+      // The intent: every behavior the page offers has a real, rendered demo.
+      //
+      // It used to count `<section id>` blocks (and, before that, the old
+      // standalone page's .behavior-card/.demo-area). #666 removed all of them
+      // -- see the note after #behaviors-workspace in pages/behaviors.html --
+      // and the browse list replaced them: one row per behavior, and picking a
+      // row renders its demo in #behaviors-live-example. So this counts the
+      // behaviors the list offers, then picks a spread of them across the list
+      // and checks each one's demo actually painted something.
+      await page.waitForFunction(
+        () => document.querySelectorAll('.behaviors-search-results__row').length > 100,
+        null,
+        { timeout: 30000 },
+      );
+      const tokens: string[] = await page.evaluate(() => [
+        ...new Set(
+          [...document.querySelectorAll('.behaviors-search-results__row')]
+            .map((r) => r.getAttribute('data-browse-token') || '')
+            .filter(Boolean),
+        ),
+      ]);
+      expect(tokens.length, 'the browse list must offer the behaviors').toBeGreaterThan(5);
 
-      for (const section of sections) {
-        // Sections use several different demo-container conventions
-        // (<div x-demo>, .demo-grid-*, .demo-row, .alerts-stack,
-        // .progress-stack, ...) depending on whether the behavior is a
-        // custom wb-* element or a native element being enhanced in place --
-        // rather than enumerate every container class name (guaranteed to
-        // drift), just confirm the section has real content beyond its own
-        // heading/description note.
-        const contentCount = await section.evaluate(el =>
-          el.querySelectorAll('*:not(h2):not(h3):not(.section-note):not(.section-note *)').length
+      const sample = [...new Set([0.1, 0.3, 0.5, 0.7, 0.9].map((f) => tokens[Math.floor(f * (tokens.length - 1))]))];
+      for (const token of sample) {
+        await pickBehavior(page, token);
+        const painted = await page.locator('#behaviors-live-example').evaluate((el) =>
+          [...el.querySelectorAll('*')].some((c) => {
+            const r = c.getBoundingClientRect();
+            return r.width > 0 && r.height > 0;
+          }),
         );
-        expect(contentCount, `section#${await section.getAttribute('id')} has no demo content`).toBeGreaterThan(0);
+        expect(painted, `${token}: its demo rendered nothing with a box`).toBe(true);
       }
     });
   });
@@ -206,8 +221,16 @@ test.describe('Behaviors Showcase Page', () => {
   });
 
   test.describe('Tabs Behavior', () => {
+    // #666: the page renders nothing until a behavior is picked, so every
+    // `[x-tabs]` locator below matched zero elements -- three of these passed
+    // by looping over nothing, and the click test timed out. Pick x-tabs so
+    // they measure its rendered example.
+    test.beforeEach(async ({ page }) => {
+      await pickBehavior(page, 'x-tabs');
+    });
+
     test('tabs children should use tab-title attribute', async ({ page }) => {
-      const tabContainers = await page.locator('[x-tabs]').all();
+      const tabContainers = await page.locator('#behaviors-live-example [x-tabs]').all();
       
       for (const tabs of tabContainers) {
         const children = await tabs.locator('> div[tab-title], > div[tab]').all();
@@ -228,7 +251,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('tabs generate tab buttons', async ({ page }) => {
-      const tabContainers = await page.locator('[x-tabs]').all();
+      const tabContainers = await page.locator('#behaviors-live-example [x-tabs]').all();
       
       for (const tabs of tabContainers) {
         const nav = tabs.locator('.x-tabs__nav');
@@ -242,7 +265,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('tab buttons are properly sized (not too tall)', async ({ page }) => {
-      const tabButtons = await page.locator('.x-tabs__tab').all();
+      const tabButtons = await page.locator('#behaviors-live-example .x-tabs__tab').all();
       
       for (const button of tabButtons) {
         const box = await button.boundingBox();
@@ -254,7 +277,7 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('clicking tab shows corresponding panel', async ({ page }) => {
-      const tabContainer = page.locator('[x-tabs]').first();
+      const tabContainer = page.locator('#behaviors-live-example [x-tabs]').first();
       
       // Click second tab
       const secondTab = tabContainer.locator('.x-tabs__tab').nth(1);
@@ -527,8 +550,19 @@ test.describe('Behaviors Showcase Page', () => {
         )
         .toBe(variants.length * 2);
 
-      const probes = await page.locator('#wb-style-probe [data-probe]').evaluateAll((els) =>
-        els.map((el) => {
+      // Read paint only once each probe's own transitions have finished
+      // (#1165, tests/helpers/settled-style.ts). .x-button carries
+      // `transition: all 0.2s ease`, so a read taken the moment the class lands
+      // catches the <div> mid-fade -- measured under parallel load:
+      // rgba(38, 38, 217, 0.706) and a 4.2px radius against the settled
+      // rgb(38, 38, 217) / 6px -- and reports every variant as inconsistent.
+      const probes = await page.locator('#wb-style-probe [data-probe]').evaluateAll(async (els) => {
+        await Promise.all(
+          els.flatMap((el) => el.getAnimations())
+            .filter((a) => a.effect?.getTiming().iterations !== Infinity)
+            .map((a) => a.finished.catch(() => undefined)),
+        );
+        return els.map((el) => {
           const c = getComputedStyle(el);
           return {
             probe: el.getAttribute('data-probe') as string,
@@ -539,8 +573,8 @@ test.describe('Behaviors Showcase Page', () => {
             // variant styling this test is named after.
             paint: [c.backgroundColor, c.color, c.borderRadius, c.borderStyle, c.borderColor].join(' | '),
           };
-        })
-      );
+        });
+      });
 
       const byProbe = new Map(probes.map((p) => [p.probe, p]));
 
@@ -557,22 +591,15 @@ test.describe('Behaviors Showcase Page', () => {
       // 2. Same variant, two authoring forms, identical paint. No palette is
       //    hard-coded, so this survives every theme.
       //
-      //    KNOWN EXCEPTION, tracked as #875: `outline` is in
-      //    button.schema.json's variant enum but NOTHING implements it --
-      //    there is no .x-button--outline rule and no
-      //    x-button[variant="outline"] rule anywhere in src/. With no variant
-      //    rule the two forms fall through to DIFFERENT defaults: the native
-      //    <button> keeps a site-level button border, the decorated <div>
-      //    keeps .x-button's own `border: 1px solid transparent`. Measured:
-      //      <button>       ... | solid | color(srgb 0.9425 0.9475 0.9575 / 0.22)
-      //      <div x-button> ... | solid | rgba(0, 0, 0, 0)
-      //
-      //    Named here rather than quietly filtered out of `variants`, and
-      //    asserted with toEqual rather than a subset check, so this is a
-      //    RATCHET: the day #875 is implemented the list goes empty, this
-      //    fails, and whoever fixed it deletes the exception. A silent
-      //    exclusion would instead outlive the bug forever.
-      const KNOWN_INCONSISTENT = ['outline'];
+      //    This was a RATCHET with one exception, `outline` (#875): it was in
+      //    button.schema.json's variant enum with no rule implementing it, so
+      //    the two forms fell through to different default borders. The
+      //    exception was asserted with toEqual, not filtered out, so that the
+      //    day #875 was fixed this would fail and the exception be deleted.
+      //    #875 is fixed -- `.x-button.x-button--outline` in
+      //    src/styles/behaviors/button.css -- the ratchet fired, and the list
+      //    is now empty: every variant must paint identically in both forms.
+      const KNOWN_INCONSISTENT: string[] = [];
 
       const inconsistent = variants
         .map((v) => ({
@@ -655,7 +682,9 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('spinners are animating', async ({ page }) => {
-      const spinners = await page.locator('[x-spinner]').all();
+      // #666: no spinner exists on the page until one is picked from the list.
+      await pickBehavior(page, 'x-spinner');
+      const spinners = await page.locator('#behaviors-live-example [x-spinner]').all();
       
       expect(spinners.length).toBeGreaterThan(0);
       

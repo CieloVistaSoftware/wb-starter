@@ -129,7 +129,7 @@
       "<div x-cardminimizable minimized>with minimized</div>",
       "<div x-cardminimizable title=\"Sample title\">title=\"Sample title\"</div>",
       "<div x-cardminimizable content=\"Sample content\">content=\"Sample content\"</div>",
-      "<div title=\"Panel\">Content</div>"
+      "<div x-cardminimizable title=\"Panel\">Content</div>"
     ],
     "matrix": {
       "combinations": [

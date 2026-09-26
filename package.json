@@ -69,6 +69,8 @@
     "test:inc": "node scripts/test-incremental.js",
     "test:async": "node scripts/test-async.mjs",
     "test:smoke:deployed": "node scripts/smoke-deployed.mjs",
+    "test:deployed": "playwright test --project=deployed",
+    "prepare": "node scripts/install-hooks.mjs",
     "test:stop": "node scripts/test-async.mjs --stop",
     "test:ui": "npx playwright test --ui",
     "test:single": "npx playwright test --workers=1",
@@ -96,7 +98,6 @@
     "generate:wb-tests": "node scripts/generate-wb-tests.mjs",
     "generate:schema-tests": "node scripts/generate-schema-tests.js",
     "generate:search": "node scripts/generate-search-index.js",
-    "generate:custom-elements": "node scripts/generate-custom-elements.js",
     "lint:md-powershell": "node scripts/lint-md-powershell.js",
     "lint:md-powershell:staged": "node scripts/lint-md-powershell-staged.js",
     "check:spec-collection": "node scripts/check-spec-collection.mjs",
@@ -132,6 +133,8 @@
     "test:single": "Run Playwright with a single worker (isolation)",
     "test:compliance": "Run compliance Playwright project (all 79 files — pre-push-to-.io gate)",
     "test:smoke:deployed": "Smoke the DEPLOYED site after a push — POST-push-to-.io gate (Law 17)",
+    "test:deployed": "Tests that need the live site or GitHub (gh) -- never part of a gate",
+    "prepare": "Runs on npm install: points git at .husky/ so the repo hooks run on every clone",
     "test:compliance:css": "Run only CSS/layout compliance checks (fast subset)",
     "test:compliance:docs": "Run only markdown/doc-format compliance checks (fast subset)",
     "test:compliance:demos": "Run only demo-page/registry compliance checks (fast subset)",
@@ -192,7 +195,6 @@
     "marked": "^17.0.1",
     "ws": "^8.18.3"
   },
-  "customElements": "./data/custom-elements.json",
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@playwright/test": "1.58.2",

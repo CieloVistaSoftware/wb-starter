@@ -7,7 +7,6 @@
   "schemas": [
     "accordion.schema.json",
     "alert.schema.json",
-    "article.schema.json",
     "articles.schema.json",
     "audio.schema.json",
     "autocomplete.schema.json",
@@ -296,9 +295,8 @@
     },
     "content": {
       "description": "Content and documentation behaviors",
-      "count": 3,
+      "count": 2,
       "schemas": [
-        "article.schema.json",
         "articles.schema.json",
         "mdhtml.schema.json"
       ]

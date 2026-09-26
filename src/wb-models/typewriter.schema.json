@@ -3,7 +3,7 @@
   "$id": "typewriter.schema.json",
   "title": "Typewriter",
   "description": "Behavior applied with x-typewriter.",
-  "schemaFor": "x-typewriter",
+  "schemaFor": "typewriter",
   "properties": {
     "speed": {
       "type": "string",
@@ -20,6 +20,18 @@
       "description": "Show the blinking cursor. On unless set to `\"false\"`.",
       "default": "this is the cursor"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-typewriter"
+  },
+  "test": {
+    "setup": [
+      "<div x-typewriter>Test Content</div>",
+      "<div x-typewriter speed=\"50\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

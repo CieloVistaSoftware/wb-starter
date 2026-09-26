@@ -124,6 +124,15 @@ async function openDialog(page: Page, size: string = 'md', title: string = SHORT
   const dialog = page.locator('dialog.x-dialog[open]');
   await expect(dialog, 'clicking an x-modal trigger must open the shipped dialog').toHaveCount(1);
   await expect(dialog.locator('.x-dialog__title'), 'the dialog must carry the authored title').toHaveText(title);
+  // Measure the dialog a reader sees. dialog.css arrives just-in-time (#342),
+  // and opens with a 0.3s x-scale-in: measured before the sheet applied, or
+  // mid-animation while the box is scaled down, the title/body gap read 7px
+  // and a wrapped title 0px in CI (16px at rest). So: wait for the sheet --
+  // its animation is on the dialog only once it applies -- then for the
+  // animation to finish.
+  await expect.poll(() => dialog.evaluate((d) => getComputedStyle(d).animationName),
+    { message: 'dialog.css never applied to the open dialog' }).not.toBe('none');
+  await dialog.evaluate((d) => Promise.all(d.getAnimations({ subtree: true }).map((a) => a.finished)));
   return dialog;
 }
 

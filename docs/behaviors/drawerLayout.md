@@ -10,7 +10,11 @@ Collapsible sidebar layout with toggle
 
 ```html
 <aside x-drawer-layout position="start" width="220px" min-width="64px">
-  <nav><a href="#">Overview</a><a href="#">Runs</a><a href="#">Settings</a></nav>
+  <nav>
+    <a href="#">Overview</a>
+    <a href="#">Runs</a>
+    <a href="#">Settings</a>
+  </nav>
 </aside>
 ```
 

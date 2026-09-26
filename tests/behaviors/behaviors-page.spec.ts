@@ -151,19 +151,14 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('progress bars render a fill child', async ({ page }) => {
     await loadBrowse(page);
-    // The registry key is x-progressbar (src/core/tag-map.js:136) and the row
-    // is labelled `progress`. Both class spellings are accepted on purpose:
-    // tag-map:136 routes x-progressbar to the modern `progress` behavior
-    // (semantics/progress.js, `.x-progress__bar`), but what actually renders
-    // today is the @deprecated progressbar.js (`.x-progress-bar`) that same
-    // comment says it deliberately routes AWAY from. Naming one spelling would
-    // make this test a referendum on that unresolved routing (filed on #862)
-    // instead of on whether the bar renders at all.
+    // The registry key is x-progress and the row is labelled `progress`. Both
+    // class spellings are accepted on purpose (#862): this test is about
+    // whether the bar renders at all, not which class name it carries.
     const FILL = '.x-progress__bar, .x-progress-bar';
-    const p = await show(page, { token: 'x-progressbar', prop: 'variant', value: 'primary', host: '.x-progress', ready: FILL });
+    const p = await show(page, { token: 'x-progress', prop: 'variant', value: 'primary', host: '.x-progress', ready: FILL });
     await expect(p.locator(FILL)).toHaveCount(1);
     // Polled, not read once: the fill carries `transition: width 0.3s`
-    // (src/wb-viewmodels/progressbar.js:60), so a single measurement taken the
+    // (semantics/progress.js), so a single measurement taken the
     // instant the bar is appended reads 0 under `--workers=8` while the
     // transition is still running.
     await expect
@@ -174,12 +169,12 @@ test.describe('Behaviors page — Feedback', () => {
   test('spinners animate', async ({ page }) => {
     await loadBrowse(page);
     const s = await show(page, { token: 'x-spinner', prop: 'variant', value: 'primary', ready: '[class*="x-spinner--"]' });
-    // #862/#857: for the attribute form the ring is on the HOST. site.css:227's
-    // `x-spinner div { ... }` is a TAG selector and never matches [x-spinner],
-    // so the inner <div> the schema builds is unstyled — measuring it would
-    // assert a defect that lives in src/styles, not on this page.
+    // The ring is the inner <div> spinner() builds. #862/#857 measured the HOST
+    // while site.css styled only the `x-spinner` TAG (the attribute form's inner
+    // <div> was unstyled); site.css now styles `[x-spinner] > div`, so measure
+    // the ring itself.
     const ring = await s.evaluate((el) => {
-      const cs = getComputedStyle(el as HTMLElement);
+      const cs = getComputedStyle((el.querySelector(':scope > div') || el) as HTMLElement);
       return { anim: cs.animationName, bw: parseFloat(cs.borderTopWidth), bs: cs.borderTopStyle };
     });
     expect(ring.anim, 'the spinner is not animated').not.toBe('none');

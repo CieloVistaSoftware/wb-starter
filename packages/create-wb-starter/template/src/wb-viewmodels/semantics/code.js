@@ -27,7 +27,7 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   // when the saved theme is one of ours.
   const localTheme = CODE_THEMES.find(t => t.id === savedTheme && t.path);
   // Use CDNJS for reliable loading
-  link.href = localTheme ? localTheme.path : `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${savedTheme}.min.css`;
+  link.href = localTheme ? localTheme.path : new URL(`../../lib/hljs-styles/${savedTheme}.min.css`, import.meta.url).href;
   link.setAttribute('data-highlight-theme', 'true');
   document.head.appendChild(link);
   

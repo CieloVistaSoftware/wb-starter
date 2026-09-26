@@ -305,6 +305,23 @@ export function accordion(element, options = {}) {
       return () => element.classList.remove('x-accordion');
     }
 
+    // The host itself carries the panel title — single form without the
+    // <wb-accordion> tag: <div x-accordion accordion-title="Q">answer</div>.
+    // Same spellings (and precedence) the child form accepts above; before
+    // this, a titled host silently fell through to a plain collapse and the
+    // title was dropped.
+    const ownTitleAttr = ['accordion-title', 'data-accordion-title', 'data-title']
+      .find((n) => element.hasAttribute(n));
+    if (ownTitleAttr) {
+      const hostTitle = element.getAttribute(ownTitleAttr) || 'Accordion Item';
+      const hostContent = element.innerHTML;
+      element.innerHTML = '';
+      element.classList.add('x-accordion');
+      element.appendChild(buildAccordionItem(element, hostTitle, hostContent, element.hasAttribute('open')));
+      element.dataset.wbHydrated = '1';
+      return () => element.classList.remove('x-accordion');
+    }
+
     // Any other element with neither titled children nor being a
     // <div x-accordion> — fall back to single-item collapse.
     return collapse(element, options);

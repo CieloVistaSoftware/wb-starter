@@ -21,6 +21,8 @@
  * Usage:
  *   node scripts/generate-behavior-schemas.mjs           # write missing schemas
  *   node scripts/generate-behavior-schemas.mjs --check   # report only
+ *   node scripts/generate-behavior-schemas.mjs --backfill  # add the component
+ *                                                          # contract to schemas it wrote
  */
 import fs from 'fs';
 import path from 'path';
@@ -32,6 +34,9 @@ const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MODELS = path.join(ROOT, 'src', 'wb-models');
 const VIEWMODELS = path.join(ROOT, 'src', 'wb-viewmodels');
 const CHECK = process.argv.includes('--check');
+// --backfill: add the component contract (componentContract below) to schemas
+// this script ALREADY wrote, without touching any key they already have.
+const BACKFILL = process.argv.includes('--backfill');
 
 const MERGED = { ...(WB_LAZY_ONLY_ATTRIBUTES || {}), ...extensionMap };
 const FILENAME_SAFE = /^[a-z0-9][a-z0-9-]*$/i;
@@ -155,6 +160,68 @@ function analyse(name) {
   return { properties, events, anim };
 }
 
+/**
+ * The component contract every component-tier schema carries (#344,
+ * tests/compliance/schema-validation.spec.ts + v3-syntax-compliance.spec.ts).
+ * The first version of this script wrote properties only, so all 51 schemas
+ * it produced failed $view/$methods/$cssAPI/compliance/test at once.
+ *
+ *   $view: []     the BEHAVIOR owns all DOM content. This is not filler:
+ *                 schema-builder.js processSchema() returns early on an empty
+ *                 $view, and with NO $view it falls through to wiping
+ *                 innerHTML and restoring it as text -- destroying whatever the
+ *                 behavior built.
+ *   $methods: {}  no schema-bound methods; the behavior's own code is the API.
+ *   $cssAPI: {}   no documented custom properties yet (expand by hand).
+ *   compliance.baseClass  x-<name>, the class schema-builder's getBaseClass()
+ *                 applies to the host anyway.
+ *   test.setup    setup[0] is exactly the markup permutation-compliance
+ *                 generated for this behavior before it had a setup (same
+ *                 child content), then one entry per host option with a REAL
+ *                 default. Placeholder defaults ("this is the …") and
+ *                 child-scoped options are not host markup and are skipped.
+ */
+const CHILD_BUILDERS = {
+  accordion: '<div accordion-title="One">First body</div><div accordion-title="Two">Second body</div>',
+  cluster: '<span>one</span><span>two</span>',
+  steps: '<div>Step one</div><div>Step two</div>',
+};
+
+// Behaviors that only run on one <input type>: radio() and range() refuse any
+// other host outright, so a <div x-radio> example would demonstrate nothing.
+const INPUT_TYPE_HOSTS = Object.fromEntries(
+  Object.entries(nativeMap)
+    .map(([selector, behavior]) => [behavior, /^input\[type="([a-z-]+)"\]$/.exec(selector)?.[1]])
+    .filter(([, type]) => type),
+);
+
+export function componentContract(name, properties = {}) {
+  const content = CHILD_BUILDERS[name] ?? 'Test Content';
+  const inputType = INPUT_TYPE_HOSTS[name];
+  const host = (attrs = '') => (inputType
+    ? `<input type="${inputType}" x-${name}${attrs}>`
+    : `<div x-${name}${attrs}>${content}</div>`);
+  const setup = [host()];
+  for (const [attr, def] of Object.entries(properties)) {
+    if (def.scope === 'child' || attr.startsWith('x-') || attr.startsWith('aria-')) continue;
+    if (def.type === 'boolean') {
+      setup.push(host(` ${attr}`));
+    } else if (typeof def.default === 'string' && def.default !== '' && !def.default.startsWith('this is the ')) {
+      const safe = def.default.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+      setup.push(host(` ${attr}="${safe}"`));
+    }
+  }
+  return {
+    // Tells every-declared-attribute.spec.ts which host to probe on.
+    ...(inputType ? { semanticElement: { tagName: 'input', type: inputType } } : {}),
+    $view: [],
+    $methods: {},
+    $cssAPI: {},
+    compliance: { baseClass: `x-${name}` },
+    test: { setup },
+  };
+}
+
 function buildSchema(name, token, facts) {
   const title = name.replace(/(^|-)(\w)/g, (_, s, c) => (s ? ' ' : '') + c.toUpperCase());
   const description = facts.anim
@@ -166,8 +233,12 @@ function buildSchema(name, token, facts) {
     $id: `${name}.schema.json`,
     title,
     description,
-    schemaFor: token,
+    // The behavior NAME, as every hand-written schema declares it ("badge", not
+    // "x-badge"). The x- token here made 51 schemas resolve to no registry
+    // entry and no exported function (schema-behavior-completeness, #344).
+    schemaFor: name,
     properties: facts.properties,
+    ...componentContract(name, facts.properties),
   };
   if (facts.events.length) {
     schema.events = Object.fromEntries(facts.events.map((e) => [e, `Fired by ${name}().`]));
@@ -180,9 +251,33 @@ function buildSchema(name, token, facts) {
   return schema;
 }
 
+if (BACKFILL) {
+  let filled = 0;
+  for (const file of fs.readdirSync(MODELS).filter((f) => f.endsWith('.schema.json'))) {
+    const full = path.join(MODELS, file);
+    const schema = JSON.parse(fs.readFileSync(full, 'utf8'));
+    if (!String(schema._metadata?.generatedBy || '').startsWith('scripts/generate-behavior-schemas.mjs')) continue;
+    if (schema.schemaType && schema.schemaType !== 'component') continue;
+    const add = componentContract(schema.schemaFor, schema.properties);
+    const missingKeys = Object.keys(add).filter((k) => schema[k] === undefined);
+    if (!missingKeys.length) continue;
+    // Keep key order readable: the contract goes right after `properties`.
+    const out = {};
+    for (const [k, v] of Object.entries(schema)) {
+      out[k] = v;
+      if (k === 'properties') for (const m of missingKeys) out[m] = add[m];
+    }
+    fs.writeFileSync(full, JSON.stringify(out, null, 2) + '\n', 'utf8');
+    filled++;
+  }
+  console.log(`[behavior-schemas] backfilled the component contract into ${filled} schema(s).`);
+  process.exit(0);
+}
+
 const tokens = [...new Set([
   ...Object.keys(MERGED).filter((a) => !a.startsWith('x-as-')),
-  ...Object.keys(nativeMap).map((t) => 'x-' + t),
+  // Named by the behavior a native tag injects (<article> -> x-card), not the tag.
+  ...Object.values(nativeMap).map((b) => 'x-' + b),
 ])].sort();
 
 const missing = [];

@@ -5,14 +5,11 @@
  * that page. Per DEMOS-AND-DOCS-STANDARDS.md §19, every declared attribute below is asserted
  * by its real computed-style/behavioral effect, not by presence of a class or attribute alone.
  *
- * IMPORTANT — searchable on <div x-select>: demos/site/forms.html itself documents (near its
- * "Standard Select" demo) that filtering is done via `x-autocomplete`, "not a `searchable`
- * attribute on <select> (which doesn't exist)". Confirmed in source: buildWbSelect() in
- * src/wb-viewmodels/semantics/select.js never reads a `searchable` attribute/option at all —
- * only select.schema.json (a stale/aspirational spec) declares it. So the `searchable` test
- * below asserts the CURRENT real behavior (it's inert — no filter UI appears, matching the
- * page's own disclaimer) rather than the schema's aspirational claim, per TIER1 Law #5/#7.
- * Real typed-filtering coverage lives in the x-autocomplete test instead.
+ * searchable on <div x-select>: select.schema.json declares it ("Enable search") and
+ * buildWbSelect() used to ignore it entirely, so this spec once pinned it as inert. It now
+ * builds an <input type="search" class="x-select__search"> above the real <select> that hides
+ * the options not matching the typed text (#768 sweep); the test below asserts that effect.
+ * The native-<select> alternative, x-autocomplete, keeps its own test further down.
  */
 import { test, expect, Page } from '@playwright/test';
 
@@ -161,19 +158,25 @@ test.describe('<div x-searchfield> effect-based attribute coverage', () => {
 test.describe('<div x-select> effect-based attribute coverage', () => {
   const FRUIT_OPTIONS = '[{"value":"a","label":"Apple"},{"value":"b","label":"Banana"},{"value":"c","label":"Cherry"}]';
 
-  test('searchable is currently inert -- no filter UI, identical to a plain <select> (see file header)', async ({ page }) => {
+  test('searchable adds a filter box that hides non-matching options', async ({ page }) => {
     await setup(page, `
       <div x-select id="sel-plain" options='${FRUIT_OPTIONS}'></div>
       <div x-select id="sel-searchable" searchable options='${FRUIT_OPTIONS}'></div>
     `);
 
-    // No dedicated search/filter input is rendered by the searchable attribute.
-    await expect(page.locator('#sel-searchable input[type="text"], #sel-searchable input[type="search"]')).toHaveCount(0);
+    // The plain select gets no filter box; the searchable one does.
+    await expect(page.locator('#sel-plain input[type="search"]')).toHaveCount(0);
+    const search = page.locator('#sel-searchable input[type="search"]');
+    await expect(search).toHaveCount(1);
 
-    // Same option count as the plain select -- searchable does not add or remove anything.
+    // Same options either way -- filtering hides, it never removes.
     const plainCount = await page.locator('#sel-plain select option').count();
-    const searchableCount = await page.locator('#sel-searchable select option').count();
-    expect(searchableCount).toBe(plainCount);
+    expect(await page.locator('#sel-searchable select option').count()).toBe(plainCount);
+
+    await search.fill('an');
+    const visible = await page.locator('#sel-searchable select option').evaluateAll((opts) =>
+      (opts as HTMLOptionElement[]).filter((o) => !o.hidden && o.value).map((o) => o.textContent));
+    expect(visible).toEqual(['Banana']);
   });
 
   test('clearable actually empties the current selection', async ({ page }) => {

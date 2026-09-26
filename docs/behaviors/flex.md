@@ -10,7 +10,9 @@ Behavior applied with x-flex.
 
 ```html
 <div x-flex gap="1rem">
-  <div>First</div><div>Second</div><div>Third</div>
+  <div>First</div>
+  <div>Second</div>
+  <div>Third</div>
 </div>
 ```
 

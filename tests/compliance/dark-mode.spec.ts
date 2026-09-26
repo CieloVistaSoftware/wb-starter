@@ -61,23 +61,33 @@ const SKIP_DARK_MODE = [
   'public/performance-dashboard.html',     // Fetches JSON that may not exist
 ];
 
-// #546: pages/issues.html (and its template copy) call the unauthenticated
-// GitHub REST API (60 requests/hour per source IP) to list live issues.
-// GitHub Actions runners share IP ranges with countless other unauthenticated
-// callers and can start a job already near/at that limit, well before this
-// page ever loads -- there's no way to attach a token client-side on a
-// static site. When that happens, the request comes back 403 and Chromium's
-// own network layer logs "Failed to load resource: the server responded
-// with a status of 403 ()" to the console regardless of how gracefully
-// issues.html's own try/catch handles the response (that message is emitted
-// by the browser for the failed resource load itself, not by application
-// code, so there is no app-level fix that suppresses it). That makes this an
-// inherent CI-environment limitation rather than a real bug -- scoped to
-// just the page(s) that make this call so a genuine 403 elsewhere still
-// fails the test.
+// pages/issues.html lists live issues: /api/issues and /api/activity (the dev
+// server, which asks GitHub through `gh`), falling back to the public GitHub
+// API. None of that is the page's dark-mode rendering, and a gate must not
+// depend on GitHub, a login or a rate limit -- in CI the server answered 503
+// with no `gh` login, and before that the public API answered 403 (#546),
+// which an exemption for "403" used to wave through. Serve fixed data instead,
+// so the page renders the same everywhere and any real error still fails.
 const GITHUB_API_PAGES = ['pages/issues.html'];
+const FIXTURE_ISSUE = {
+  number: 1, title: 'Fixture issue', state: 'open', labels: [], body: '',
+  created_at: '2026-01-01T00:00:00Z', updated_at: '2026-01-01T00:00:00Z',
+  html_url: 'https://github.com/CieloVistaSoftware/wb-starter/issues/1', user: { login: 'fixture' },
+};
+async function serveIssueFixtures(page: import('@playwright/test').Page) {
+  const json = (body: unknown) => ({ status: 200, contentType: 'application/json', body: JSON.stringify(body) });
+  await page.route('**/api/issues*', (r) => r.fulfill(json({ source: 'live', issues: [FIXTURE_ISSUE] })));
+  await page.route('**/api/activity*', (r) => r.fulfill(json({ counts: { closed: 0, opened: 0, commits: 0, netOpen: 0 } })));
+  await page.route('https://api.github.com/**', (r) => r.fulfill(json([FIXTURE_ISSUE])));
+}
 
 test.describe('Dark Mode Compliance', () => {
+  // The service worker (src/main.js registers sw.js) makes the page's fetches
+  // itself, and Playwright cannot route a service worker's requests -- so the
+  // issue fixtures below never applied and /api/issues still reached the real,
+  // gh-backed server. Nothing here measures the worker; dark mode is CSS.
+  test.use({ serviceWorkers: 'block' });
+
 
   for (const htmlFile of relativeHtmlFiles) {
     // Skip pages known to redirect/navigate and destroy context
@@ -95,14 +105,14 @@ test.describe('Dark Mode Compliance', () => {
           const text = msg.text();
           // Skip known warnings that aren't dark-mode related
           const isKnownWarning = knownWarnings.some(w => text.includes(w));
-          // Skip GitHub API rate-limit 403s on the pages that call it (#546)
-          const isGithubRateLimit = isGithubApiPage && text.includes('403');
-          if (!isKnownWarning && !isGithubRateLimit) {
+          if (!isKnownWarning) {
             errors.push(text);
           }
         }
       });
       
+      if (isGithubApiPage) await serveIssueFixtures(page);
+
       // Navigate to the page
       const url = `/${htmlFile}`;
       const response = await page.goto(url);

@@ -155,11 +155,11 @@ export function composeCard(element, options = {}) {
     behavior: options.behavior || 'card',
     title: options.title || readAttr(element, 'title') || element.getAttribute('title') || '',
     subtitle: options.subtitle || readAttr(element, 'subtitle') || element.getAttribute('subtitle') || '',
-    // article.schema.json declares author/date/category/reading-time, and
-    // nativeMap routes <article> to THIS module -- so these have to render
-    // here or not at all. They previously lived only in article.js's
-    // article(), which `article: 'card'` makes unreachable, leaving four
-    // declared attributes silently ignored (#861).
+    // card.schema.json declares author/date/category/reading-time (merged
+    // from the former article schema), and nativeMap routes <article> to
+    // this module -- so these render here or not at all. They once lived
+    // only in article.js's article(), which was unreachable and has been
+    // deleted; that left four declared attributes silently ignored (#861).
     author: options.author || readAttr(element, 'author') || element.getAttribute('author') || '',
     date: options.date || readAttr(element, 'date') || element.getAttribute('date') || '',
     category: options.category || readAttr(element, 'category') || element.getAttribute('category') || '',
@@ -855,12 +855,28 @@ export function cardimage(element, options = {}) {
     // src="..." content="...">. Confirmed live: "Optional content below the
     // image." never rendered, just an empty content area.
     content: options.content || readAttr(element, 'content') || element.getAttribute('content') || element.innerHTML,
+    // caption / href / loading were declared in cardimage.schema.json and read
+    // nowhere: no caption ever rendered, href never made the card clickable,
+    // and every image was hard-wired to loading="lazy".
+    caption: options.caption || readAttr(element, 'caption'),
+    href: options.href || readAttr(element, 'href'),
+    loading: (options.loading || readAttr(element, 'loading')) === 'eager' ? 'eager' : 'lazy',
     ...options
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardimage' });
   element.classList.add('x-card-image');
   element.innerHTML = '';
+
+  // Caption under the image, inside the same <figure> so it is announced
+  // with it. textContent: the caption is authored text, not markup.
+  const addCaption = (figure) => {
+    if (!config.caption) return;
+    const cap = document.createElement('figcaption');
+    cap.className = 'x-card__caption';
+    cap.textContent = config.caption;
+    figure.appendChild(cap);
+  };
 
   // Build header/main/footer structure
   base.buildStructure();
@@ -874,7 +890,7 @@ export function cardimage(element, options = {}) {
     const img = document.createElement('img');
     img.src = config.src;
     img.alt = config.alt;
-    img.loading = 'lazy';
+    img.loading = config.loading;
         if (config.fit) img.style.setProperty('--card-image-fit', config.fit);
     // #1003 -- this used to write
     //   style.cssText = "width:100%;height:100%;object-fit:<fit>;display:block;"
@@ -888,6 +904,7 @@ export function cardimage(element, options = {}) {
     retryCleanups.push(attachImageLoadRetry(img));
     traceCardMedia('cardimage', element, img, config.src);
     figure.appendChild(img);
+    addCaption(figure);
     element.insertBefore(figure, element.firstChild);
   }
 
@@ -898,7 +915,7 @@ export function cardimage(element, options = {}) {
     const imgBottom = document.createElement('img');
     imgBottom.src = config.src;
     imgBottom.alt = config.alt;
-    imgBottom.loading = 'lazy';
+    imgBottom.loading = config.loading;
         if (config.fit) imgBottom.style.setProperty('--card-image-fit', config.fit);
     // #1003 -- this used to write
     //   style.cssText = "width:100%;height:100%;object-fit:<fit>;display:block;"
@@ -912,10 +929,29 @@ export function cardimage(element, options = {}) {
     retryCleanups.push(attachImageLoadRetry(imgBottom));
     traceCardMedia('cardimage', element, imgBottom, config.src);
     figureBottom.appendChild(imgBottom);
+    addCaption(figureBottom);
     element.appendChild(figureBottom);
   }
 
-  return () => { base.cleanup(); retryCleanups.forEach(fn => fn()); };
+  // href: the whole card becomes the link target. A real <a> stretched over
+  // the card (same approach as cardlink) rather than a click handler, so it
+  // keeps native link semantics. Positioning lives in card.css.
+  let stretchedLink = null;
+  if (config.href && config.href !== '#') {
+    element.classList.add('x-card-image--linked');
+    stretchedLink = document.createElement('a');
+    stretchedLink.className = 'x-card__link-overlay';
+    stretchedLink.href = config.href;
+    stretchedLink.setAttribute('aria-label', config.title || config.alt || config.href);
+    element.appendChild(stretchedLink);
+  }
+
+  return () => {
+    base.cleanup();
+    retryCleanups.forEach(fn => fn());
+    if (stretchedLink) stretchedLink.remove();
+    element.classList.remove('x-card-image--linked');
+  };
 }
 
 /**
@@ -939,8 +975,13 @@ export function cardvideo(element, options = {}) {
     aspect: getAttr(element, options, 'aspect') || '16/9',
     // #608: same missing getAttribute('content') gap as cardimage() above.
     content: options.content || readAttr(element, 'content') || element.getAttribute('content') || element.innerHTML,
+    // cardvideo.schema.json declares `description`, not `subtitle`; it was
+    // never read. Render it where cardproduct renders its own description:
+    // as the header subtitle, unless an explicit subtitle already fills it.
+    description: getAttr(element, options, 'description'),
     ...options
   };
+  if (config.description && !config.subtitle) config.subtitle = config.description;
 
   const base = composeCard(element, { ...config, behavior: 'cardvideo' });
   element.classList.add('x-card-video');
@@ -1085,6 +1126,12 @@ export function cardhero(element, options = {}) {
     // corresponding .x-cardhero--<variant> rule either, so every variant
     // rendered pixel-identical (#383).
     variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
+    // Declared in cardhero.schema.json ("Make hero full viewport height") and
+    // read nowhere, so <x-cardhero full-height> rendered at the default 400px.
+    fullHeight: parseBoolean(options.fullHeight) ?? readFlag(element, 'fullHeight'),
+    // Read with the rest of the config (#1124 explains why readAttr, not
+    // getAttribute). Applied to the title element below.
+    headingLevel: options.headingLevel ?? readAttr(element, 'headingLevel', '3'),
     ...options
   };
 
@@ -1121,7 +1168,10 @@ export function cardhero(element, options = {}) {
   });
 
   element.innerHTML = '';
-  element.style.minHeight = config.height;
+  // full-height: the viewport-height rule lives in hero.css; the inline
+  // default min-height would beat it, so it is only set otherwise.
+  if (config.fullHeight) element.classList.add('x-cardhero--full-height');
+  else element.style.minHeight = config.height;
   element.classList.add(`x-card--xalign-${config.xalign}`);
 
   // Background: a user-provided image/gradient is applied inline; the default
@@ -1194,15 +1244,14 @@ export function cardhero(element, options = {}) {
     // page with NO h1 at all and a backwards outline (h3 "Build stunning UIs"
     // followed by h2 "By the Numbers"), so the level is now the author's
     // choice with h3 as the unchanged default.
-    const level = String(
-      // readAttr, not getAttribute (#1124). The schema declares headingLevel,
-      // the HTML parser lowercases it to headinglevel, and a literal
-      // getAttribute('heading-level') can never match that -- so all six
-      // declared values silently rendered h3 and the six demo rows were
-      // identical. readAttr tries every spelling. John: no attribute name
-      // carries a dash; the only dash is the x- behavior prefix (#1125).
-      options.headingLevel ?? readAttr(element, 'headingLevel', '3'),
-    ).replace(/^h/i, '');
+    // readAttr, not getAttribute (#1124). The schema declares headingLevel,
+    // the HTML parser lowercases it to headinglevel, and a literal
+    // getAttribute('heading-level') can never match that -- so all six
+    // declared values silently rendered h3 and the six demo rows were
+    // identical. readAttr tries every spelling. John: no attribute name
+    // carries a dash; the only dash is the x- behavior prefix (#1125).
+    // Now read once into config.headingLevel above.
+    const level = String(config.headingLevel).replace(/^h/i, '');
     const tag = /^[1-6]$/.test(level) ? `h${level}` : 'h3';
     const titleEl = document.createElement(tag);
     titleEl.className = 'x-card__title x-card__hero-title';
@@ -1382,6 +1431,8 @@ export function cardpricing(element, options = {}) {
     plan: options.plan || readAttr(element, 'plan') || element.getAttribute('plan') || 'Basic Plan',
     price: options.price || readAttr(element, 'price') || element.getAttribute('price') || '$0',
     period: options.period || readAttr(element, 'period') || element.getAttribute('period') || '/month',
+    // Declared in cardpricing.schema.json ("Short plan description"), read nowhere.
+    description: options.description || readAttr(element, 'description'),
     features: options.features || readAttr(element, 'features')?.split(',') || element.getAttribute('features')?.split(',') || ['Feature 1', 'Feature 2'],
     cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta') || 'Get Started',
     ctaHref: options.ctaHref || readAttr(element, 'ctaHref') || element.getAttribute('cta-href') || '#',
@@ -1420,6 +1471,13 @@ export function cardpricing(element, options = {}) {
   planEl.style.cssText = 'margin:0;font-size:1.25rem;color:var(--text-primary,#f9fafb);';
   planEl.textContent = config.plan;
   header.appendChild(planEl);
+  // Plan description under the name; .x-card__description is styled in card.css.
+  if (config.description) {
+    const descEl = document.createElement('p');
+    descEl.className = 'x-card__description';
+    descEl.textContent = config.description;
+    header.appendChild(descEl);
+  }
   element.appendChild(header);
 
   // Main content with Price and Features
@@ -1498,6 +1556,8 @@ export function cardstats(element, options = {}) {
     icon: options.icon || readAttr(element, 'icon') || element.getAttribute('icon'),
     trend: options.trend || readAttr(element, 'trend') || element.getAttribute('trend'),
     trendValue: options.trendValue || element.getAttribute('trend-value') || readAttr(element, 'trendValue'),
+    // Declared in cardstats.schema.json ("Accent color"), read nowhere.
+    color: options.color || readAttr(element, 'color'),
     ...options
   };
 
@@ -1506,6 +1566,13 @@ export function cardstats(element, options = {}) {
     const base = composeCard(element, { ...config, behavior: 'cardstats', hoverable: false });
     element.classList.add('x-stats');
     element.innerHTML = '';
+    // Accent color: an author-supplied, per-instance value, so it travels as a
+    // custom property (same convention as --card-image-aspect); what it
+    // colors is card.css's .x-stats--accent rule.
+    if (config.color) {
+      element.classList.add('x-stats--accent');
+      element.style.setProperty('--x-stats-accent', config.color);
+    }
     // Layout, container-query sizing, and default padding all live in
     // card.css's `.x-stats` rule now (Law 9, #370 -- was unconditional
     // inline styles here, which also silently beat x-card--compact/large's
@@ -2281,6 +2348,10 @@ export function cardhorizontal(element, options = {}) {
       || element.getAttribute('image-position') || element.getAttribute('imageposition') || 'left',
     imageWidth: options.imageWidth || readAttr(element, 'imageWidth')
       || element.getAttribute('image-width') || element.getAttribute('imagewidth') || '40%',
+    // Declared in cardhorizontal.schema.json but never read: the <img> always
+    // took its alt from the title. The author's alt text wins; title stays
+    // the fallback.
+    imageAlt: options.imageAlt ?? readAttr(element, 'imageAlt', null),
     // #455: unlike card()/cardimage()/cardvideo(), this never fell back to
     // element.innerHTML -- only a `content="..."` ATTRIBUTE worked (via
     // composeCard's own generic getAttribute('content') fallback below). Any
@@ -2308,7 +2379,7 @@ export function cardhorizontal(element, options = {}) {
 
     const img = document.createElement('img');
     img.src = config.image;
-    img.alt = base.config.title || '';
+    img.alt = config.imageAlt ?? (base.config.title || '');
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;min-height:200px;';
     // #604. John: "cardhorizontal is failing now on images. I want a runtime
     // error that says that, it should log and error" -- a broken `image`

@@ -500,8 +500,8 @@
           .forEach((attr) => {
             const beh = extensionMap[attr];
             const host = autoHost[beh];
-            // Key on the BEHAVIOR for auto-injected ones, so x-progress and
-            // x-progressbar (same behavior) collapse to a single <progress> row
+            // Key on the BEHAVIOR for auto-injected ones, so two attributes
+            // that name the same behavior collapse to a single semantic row
             // instead of duplicating it.
             const key = host ? 'native:' + beh : attr;
             if (seen.has(key)) return;
@@ -953,7 +953,20 @@
     // ended at 321px and the code panel started there, so the menu rendered
     // straight over the code. Standard 15: an overlay must not overflow its
     // parent. Grow the stage to whatever the example actually put on screen.
-    const STAGE_MIN_PX = 96;   // 6rem, matching .behaviors-live__stage in behaviors.css
+    // The floor is whatever behaviors.css says the stage's min-height is, read
+    // live rather than copied. It used to be a hard-coded 96 ("6rem, matching
+    // .behaviors-live__stage"), and #774 then set that rule to `min-height: 0`
+    // so the stage hugs its example 1rem from the strip. The copy did not
+    // follow: every fit re-imposed 96px, so a one-line example (a single
+    // x-button) sat with 16px above it and 28px below -- the #711 imbalance,
+    // brought back by a constant that had stopped matching its source.
+    function stageMinPx() {
+      const inline = liveStage.style.minHeight;
+      liveStage.style.minHeight = '';
+      const px = parseFloat(getComputedStyle(liveStage).minHeight) || 0;
+      liveStage.style.minHeight = inline;
+      return px;
+    }
     let fitQueued = false;
     function fitStageToOverlays() {
       if (fitQueued) return;
@@ -968,7 +981,7 @@
           deepest = Math.max(deepest, r.bottom - stageTop);
         }
         const padding = parseFloat(getComputedStyle(liveStage).paddingBottom) || 0;
-        const wanted = Math.max(STAGE_MIN_PX, Math.ceil(deepest + padding));
+        const wanted = Math.max(stageMinPx(), Math.ceil(deepest + padding));
         // #760 -- John, on a collapsed <details>: "Why blank space?"
         //
         // This used to only ever GROW. Opening the details grew the stage to
@@ -1119,11 +1132,26 @@
     // list to a row the reader had deliberately scrolled away from.
     let selectedByKeyboard = false;
 
+    /**
+     * A row's top within the list's scrolled content. NOT offsetTop: a row in a
+     * group sits inside a <details>, and the details behavior (auto-injected on
+     * every <details>) wraps the group's content in a positioned
+     * .x-details__content. Once it has run, that wrapper is the row's
+     * offsetParent and `row.offsetTop - resultsEl.offsetTop` is off by the
+     * group's own offset -- measured 514 vs a true 567, so arrowing left the
+     * selection a row or more below the fold. Whether the wrapper existed yet
+     * depended on timing, which is why it failed only some of the time.
+     * Rect-based, it is right whatever the row's offsetParent is.
+     */
+    function rowTopInList(row) {
+      return row.getBoundingClientRect().top - resultsEl.getBoundingClientRect().top + resultsEl.scrollTop;
+    }
+
     function keepSelectionVisible() {
       if (!selectedByKeyboard) return;
       const cur = resultsEl.querySelector('[aria-current="true"]');
       if (!cur) return;
-      const top = cur.offsetTop - resultsEl.offsetTop;
+      const top = rowTopInList(cur);
       const bottom = top + cur.offsetHeight;
       if (top < resultsEl.scrollTop) resultsEl.scrollTop = top;
       else if (bottom > resultsEl.scrollTop + resultsEl.clientHeight) {
@@ -2585,7 +2613,7 @@
       // out of view, by the minimum needed. A row already on screen leaves the
       // list where it is. This replaces #687/#717.
       const listTop = resultsEl.scrollTop;
-      const rowTop = row.offsetTop - resultsEl.offsetTop;
+      const rowTop = rowTopInList(row);
       const rowBottom = rowTop + row.offsetHeight;
       if (rowTop < listTop) resultsEl.scrollTop = rowTop;
       else if (rowBottom > listTop + resultsEl.clientHeight) {
@@ -2879,7 +2907,7 @@
     liveStage.addEventListener('click', () => {
       const current = resultsEl.querySelector('[aria-current="true"]');
       if (!current) return;
-      resultsEl.scrollTop = current.offsetTop - resultsEl.offsetTop;
+      resultsEl.scrollTop = rowTopInList(current);
     }, true);
 
     resultsEl.addEventListener('click', (e) => {

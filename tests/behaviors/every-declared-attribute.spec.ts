@@ -75,7 +75,7 @@ const ROOT = process.cwd();
 const MODELS = join(ROOT, 'src/wb-models');
 
 interface Attr { name: string; sample: string; bare: boolean; }
-interface Behavior { name: string; token: string; tag: string; attrs: Attr[]; }
+interface Behavior { name: string; token: string; tag: string; inputType: string; attrs: Attr[]; }
 
 /** kebab-case is what the DOM sees: iconPosition -> icon-position. */
 const kebab = (s: string) => s.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
@@ -128,7 +128,10 @@ function loadBehaviors(): Behavior[] {
     if (!attrs.length) continue;
 
     const tag = String(schema?.semanticElement?.tagName || 'div').toLowerCase();
-    out.push({ name: file.replace('.schema.json', ''), token, tag, attrs });
+    // radio()/range() refuse any host but <input type="radio"/"range">; probing
+    // them on a bare <input> (type=text) meant nothing was ever read.
+    const inputType = schema?.semanticElement?.type ? String(schema.semanticElement.type) : '';
+    out.push({ name: file.replace('.schema.json', ''), token, tag, inputType, attrs });
   }
   return out.sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -145,7 +148,7 @@ async function harness(page: Page) {
  * then report which ones never reached the behavior at all.
  */
 async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
-  return page.evaluate(async ({ token, tag, attrs }) => {
+  return page.evaluate(async ({ token, tag, inputType, attrs }) => {
     // A broad-but-fixed slice of computed style. Behaviors that express an
     // option purely through a CSS attribute selector change nothing in the
     // markup, so `outerHTML` cannot see them — this is what does.
@@ -190,8 +193,9 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
     host.style.cssText = 'position:absolute;left:-9999px;top:0;width:600px';
     document.body.appendChild(host);
 
+    const typeAttr = inputType ? ` type="${inputType}"` : '';
     const mk = (extra: string, id: string) =>
-      `<${tag} id="${id}" ${token}${extra}>probe</${tag}>`;
+      `<${tag} id="${id}"${typeAttr} ${token}${extra}>probe</${tag}>`;
 
     host.innerHTML =
       mk('', 'base') +
@@ -245,7 +249,7 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
 
     host.remove();
     return ignored;
-  }, { token: b.token, tag: b.tag, attrs: b.attrs } as any);
+  }, { token: b.token, tag: b.tag, inputType: b.inputType, attrs: b.attrs } as any);
 }
 
 test.describe('Every declared attribute reaches the element', () => {

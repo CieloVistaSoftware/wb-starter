@@ -3,7 +3,7 @@
   "$id": "searchfield.schema.json",
   "title": "Searchfield",
   "description": "Behavior applied with x-searchfield.",
-  "schemaFor": "x-searchfield",
+  "schemaFor": "searchfield",
   "properties": {
     "size": {
       "type": "string",
@@ -50,6 +50,25 @@
       "description": "Search on every keystroke, bypassing `debounce`. Bare attribute.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-searchfield"
+  },
+  "test": {
+    "setup": [
+      "<div x-searchfield>Test Content</div>",
+      "<div x-searchfield size=\"md\">Test Content</div>",
+      "<div x-searchfield variant=\"default\">Test Content</div>",
+      "<div x-searchfield placeholder=\"Search...\">Test Content</div>",
+      "<div x-searchfield debounce=\"300\">Test Content</div>",
+      "<div x-searchfield icon=\"🔍\">Test Content</div>",
+      "<div x-searchfield disabled>Test Content</div>",
+      "<div x-searchfield loading>Test Content</div>",
+      "<div x-searchfield instant>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

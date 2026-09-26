@@ -25,6 +25,26 @@
       "description": "Card subtitle displayed below title",
       "default": "this is the subtitle"
     },
+    "author": {
+      "type": "string",
+      "description": "Author name, rendered as the card's byline in an <address>",
+      "default": "this is the author"
+    },
+    "date": {
+      "type": "string",
+      "description": "Publication date, rendered in a <time> element",
+      "default": "this is the date"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category or tag shown above the title",
+      "default": "this is the category"
+    },
+    "readingTime": {
+      "type": "string",
+      "description": "Estimated reading time",
+      "default": "this is the reading time"
+    },
     "footer": {
       "type": "string",
       "description": "Card footer text",
@@ -79,6 +99,11 @@
       "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
       "default": "this is the hover text",
       "appliesAttribute": "x-tooltip"
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "Promote this card over its siblings: a heavier border and a visible marker. Bare featured prints \"Featured\"; featured=\"Deal of the week\" prints that label instead",
+      "default": false
     }
   },
   "$view": [],

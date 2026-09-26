@@ -53,8 +53,14 @@ test.describe('demos/site/cards.html: full-page fixes', () => {
     await expect(stretched).toHaveCount(1);
     await expect(stretched).toHaveAttribute('href', /.+/);
 
-    const badge = card.locator('a.x-demo__card-doc-link');
+    // #630/#641: the badge is anchored to the card's outer <div x-demo>, not
+    // inside the card itself -- so it can never be clipped by the card or
+    // collide with a neighbour. It is still the card's own: the x-demo that
+    // holds this card.
+    const demo = page.locator('#card-gallery [x-demo]:has([x-cardlink])').first();
+    const badge = demo.locator(':scope > a.x-demo__card-doc-link');
     await expect(badge).toHaveCount(1);
+    await expect(badge).toHaveAttribute('href', /cardlink\.md/);
 
     // The badge must be independently clickable (its z-index keeps it
     // reachable above the full-card stretched anchor beneath it) -- clicking
@@ -73,15 +79,21 @@ test.describe('demos/site/cards.html: full-page fixes', () => {
 
     const card = page.locator('#card-gallery [x-cardimage]').first();
     await card.scrollIntoViewIfNeeded();
-    await expect(card.locator('a.x-demo__card-doc-link')).toHaveCount(1);
+    // #630/#641: anchored to the card's outer <div x-demo> (see above).
+    const demo = page.locator('#card-gallery [x-demo]:has([x-cardimage])').first();
+    await expect(demo.locator(':scope > a.x-demo__card-doc-link')).toHaveCount(1);
   });
 
-  test('?page=behaviors: inline <code> tag-name chip does not wrap mid-word', async ({ page }) => {
-    await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
+  test('?page=about: inline <code> tag-name chip does not wrap mid-word', async ({ page }) => {
+    // Was ?page=behaviors' #components-hero, whose prose held the chip. #774
+    // removed that hero's heading and strapline (the page is a workspace now),
+    // so the check moves to a page whose prose still carries a hyphenated
+    // tag-name chip -- the exact shape that split mid-hyphen.
+    await page.goto('/?page=about', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
-    const hero = page.locator('#components-hero');
-    const codeChip = hero.locator('code', { hasText: '.x-card' }).first();
+    const codeChip = page.locator('main code', { hasText: '<wb-*>' }).first();
+    await codeChip.scrollIntoViewIfNeeded();
     await expect(codeChip).toBeVisible({ timeout: 10000 });
     await expect(codeChip).toHaveCSS('white-space', 'nowrap');
 

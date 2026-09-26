@@ -85,6 +85,17 @@ async function show(page: Page, token: string) {
   // the scroll into the click is what makes this stable rather than lucky.
   await expect(rows.first(), `${token} must appear in the behaviors list`).toBeAttached();
 
+  // #995 put a behavior with several options into a collapsed <details> group.
+  // Its rows are attached but hidden, and click() waits for visibility -- with
+  // no action timeout it waited out the whole 90s test budget, so x-checkbox,
+  // x-audio, x-drawer, x-select and x-tooltip "failed" without ever being
+  // looked at. Open the group the way a reader does, by its summary.
+  const group = page.locator('#behaviors-search-results details', { has: rows.first() });
+  if (await group.count() && !(await group.first().evaluate((d) => (d as HTMLDetailsElement).open))) {
+    await group.first().locator(':scope > summary').click();
+  }
+  await expect(rows.first(), `${token}'s row must be visible to be picked`).toBeVisible();
+
   const before = await page.evaluate(
     () => document.getElementById('behaviors-live-example')?.innerHTML ?? '',
   );
@@ -162,7 +173,9 @@ test.describe('Behaviors page — key interactions', () => {
   test('modal opens from its trigger', async ({ page }) => {
     await loadBrowse(page);
     await show(page, 'x-modal');
-    await page.locator('#behaviors-live-example [x-modal]').first().click();
+    // .x-modal-trigger is added in the same step as the click listener
+    // (dialog.js trigger mode) -- clicking before it lands opened nothing, 1 run in 4.
+    await page.locator('#behaviors-live-example [x-modal].x-modal-trigger').first().click();
 
     const dialog = page.locator('dialog.x-modal').first();
     await expect(dialog).toHaveAttribute('open', '');

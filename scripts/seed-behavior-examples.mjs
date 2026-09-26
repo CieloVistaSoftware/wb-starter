@@ -151,8 +151,7 @@ export const EXAMPLES = {
 
   'x-skeleton': `<div x-skeleton variant="text" lines="3" animated></div>`,
 
-  'x-progress': `<progress x-progress value="72" max="100" label="Uploading footage" show-value></progress>`,
-  'x-progressbar': `<progress x-progressbar value="72" max="100" label="Uploading footage" show-value></progress>`,
+  'x-progress': `<progress value="72" max="100" label="Uploading footage" show-value></progress>`,
 
   'x-rating': `<div x-rating value="4" max="5" half></div>`,
 
@@ -379,11 +378,6 @@ export const EXAMPLES = {
   'x-codecontrol': `<div x-codecontrol></div>`,
 
   // ── Positional / motion ────────────────────────────────────────────────────
-  'x-article': `<article x-article title="Ridge loop, 8km" subtitle="Moderate · 3h" author="Ada Lovelace" date="2026-08-20" category="Trails">
-  The north gate is open and the creek crossing is dry. Parking fills by 9am on
-  weekends — the overflow lot adds about ten minutes on foot.
-</article>`,
-
   'x-articles': `<section x-articles layout="grid" columns="2" limit="4">
   <article title="Ridge loop, 8km">Moderate, three hours, dry crossing.</article>
   <article title="Harbour wall at dawn">Flat, two hours, best before the fog lifts.</article>

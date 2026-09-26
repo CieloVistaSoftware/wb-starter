@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { safeScrollIntoView } from '../base';
 
 /**
  * demos/site/feedback.html: John asked that every rendered example on this
@@ -6,7 +7,7 @@ import { test, expect } from '@playwright/test';
  * §1 -- "Every component example is a <div x-demo>"), same sweep already done
  * for demos/site/overlays.html and pages/behaviors.html. Auditing the page's
  * own markup, every example section (Alert/Avatar/Badge/Chip/Progress/
- * Rating/Skeleton/Spinner/Toast/Tooltip, plus the x-tooltip/x-progressbar/
+ * Rating/Skeleton/Spinner/Toast/Tooltip, plus the x-tooltip/x-progress/
  * x-notify behavior sections) was already wrapped in <div x-demo>, including
  * the §17 grouped-control cases (e.g. the big Badge combinatorial grid is
  * one logical group in one <div x-demo>, not split per-badge). This is the
@@ -62,7 +63,7 @@ const SECTIONS = [
   'tooltip-trigger-variants',
   'tooltip-toggles',
   'x-tooltip-on-a-real-trigger-element',
-  'x-progressbar-attribute-based-progress-bar',
+  'x-progress-on-any-element',
   'x-notify-one-off-notification',
 ];
 
@@ -82,6 +83,10 @@ test.describe('Feedback & Status page: every example section renders inside <div
 
       for (let i = 0; i < demoCount; i++) {
         const demo = demos.nth(i);
+        // The page builds a demo only as it nears the viewport (#491), so one
+        // far down the page is unbuilt until a reader scrolls to it. Scroll
+        // there first, as a reader does -- the check stopped at badge demo 22.
+        await safeScrollIntoView(demo);
         await expect(demo.locator('.x-demo__grid'), `section#${id} [x-demo][${i}] should render a live grid`).toBeVisible();
         const codePanel = demo.locator('.x-demo__code, pre').first();
         await expect(codePanel, `section#${id} [x-demo][${i}] should render a source/code panel`).toBeVisible();

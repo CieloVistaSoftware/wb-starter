@@ -3,11 +3,15 @@ export function masked(element, options = {}) {
   const config = {
     mask: options.mask || element.getAttribute('mask') || '',
     placeholder: options.placeholder || element.getAttribute('mask-placeholder') || '_',
+    // The author's own `placeholder` (masked.schema.json) always wins over the
+    // one derived from the mask. Read as the plain attribute rather than the
+    // `.placeholder` property, which exists only on <input>/<textarea>.
+    authoredPlaceholder: element.getAttribute('placeholder') || '',
     ...options
   };
   element.classList.add('x-masked');
   if (!config.mask) return () => element.classList.remove('x-masked');
-  if (!element.placeholder) {
+  if (!config.authoredPlaceholder) {
     element.placeholder = config.mask.replace(/9/g, config.placeholder).replace(/A/g, config.placeholder);
   }
   function isSlot(c) { return c === '9' || c === 'A'; }

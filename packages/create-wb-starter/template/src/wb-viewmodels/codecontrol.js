@@ -74,6 +74,11 @@ const CODE_THEMES = [
   { id: 'kimbie-light', name: 'Kimbie Light', category: 'Special', description: 'Warm light theme' },
 ];
 
+// Vendored highlight.js theme stylesheet for a real hljs theme id
+// (src/lib/hljs-styles/<id>.min.css). Module-relative, so it works under any
+// deploy sub-path (e.g. GitHub Pages /wb-starter/).
+const hljsThemeUrl = (themeId) => new URL(`../lib/hljs-styles/${themeId}.min.css`, import.meta.url).href;
+
 // Size configurations
 const SIZES = {
   xs: { fontSize: '0.65rem', padding: '0.2rem 1.25rem 0.2rem 0.4rem', minWidth: '80px', arrowSize: '8' },
@@ -210,13 +215,14 @@ export function codecontrol(element, options = {}) {
     // #431: HLJS_STYLES_PATH ('/node_modules/highlight.js/styles/') is a
     // dev-only path never deployed to production -- every non-local theme
     // 404'd there, silently stripping all syntax coloring. Real highlight.js
-    // themes are served from cdnjs instead, matching the pattern
-    // semantics/code.js's own fallback loader already uses correctly.
+    // themes are vendored under src/lib/hljs-styles/ (same version as
+    // src/lib/highlight.js -- see src/lib/VENDOR.md) and resolved relative
+    // to this module, so they deploy with the site and never hit a CDN.
     const themeObj = CODE_THEMES.find(t => t.id === themeId);
     if (themeObj && themeObj.path) {
       themeLink.href = themeObj.path;
     } else {
-      themeLink.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${themeId}.min.css`;
+      themeLink.href = hljsThemeUrl(themeId);
     }
     
     select.value = themeId;

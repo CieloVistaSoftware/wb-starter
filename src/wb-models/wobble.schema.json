@@ -3,8 +3,19 @@
   "$id": "wobble.schema.json",
   "title": "Wobble",
   "description": "On click, plays the wobble animation for 1s.",
-  "schemaFor": "x-wobble",
+  "schemaFor": "wobble",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-wobble"
+  },
+  "test": {
+    "setup": [
+      "<div x-wobble>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

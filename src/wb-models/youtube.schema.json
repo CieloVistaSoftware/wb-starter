@@ -3,7 +3,7 @@
   "$id": "youtube.schema.json",
   "title": "Youtube",
   "description": "Behavior applied with x-youtube.",
-  "schemaFor": "x-youtube",
+  "schemaFor": "youtube",
   "properties": {
     "url": {
       "type": "string",
@@ -35,6 +35,21 @@
       "description": "Restart from the beginning when playback ends.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-youtube"
+  },
+  "test": {
+    "setup": [
+      "<div x-youtube>Test Content</div>",
+      "<div x-youtube url=\"#\">Test Content</div>",
+      "<div x-youtube autoplay>Test Content</div>",
+      "<div x-youtube muted>Test Content</div>",
+      "<div x-youtube loop>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

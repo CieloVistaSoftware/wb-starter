@@ -3,7 +3,7 @@
   "$id": "release.schema.json",
   "title": "Release",
   "description": "Behavior applied with x-release.",
-  "schemaFor": "x-release",
+  "schemaFor": "release",
   "properties": {
     "format": {
       "type": "string",
@@ -15,6 +15,18 @@
       "description": "Clear caches and reload when the badge is activated. On unless set to `\"false\"`.",
       "default": "this is the reload"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-release"
+  },
+  "test": {
+    "setup": [
+      "<div x-release>Test Content</div>",
+      "<div x-release format=\"v{version}\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

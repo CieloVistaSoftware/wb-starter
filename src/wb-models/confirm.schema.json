@@ -3,7 +3,7 @@
   "$id": "confirm.schema.json",
   "title": "Confirm",
   "description": "Behavior applied with x-confirm.",
-  "schemaFor": "x-confirm",
+  "schemaFor": "confirm",
   "properties": {
     "heading": {
       "type": "string",
@@ -35,6 +35,21 @@
       "description": "Body text. Read BEFORE `message`; defaults to `Are you sure?`.",
       "default": "this is the confirm message"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-confirm"
+  },
+  "test": {
+    "setup": [
+      "<div x-confirm>Test Content</div>",
+      "<div x-confirm heading=\"Confirm\">Test Content</div>",
+      "<div x-confirm message=\"Are you sure?\">Test Content</div>",
+      "<div x-confirm confirm-text=\"OK\">Test Content</div>",
+      "<div x-confirm cancel-text=\"Cancel\">Test Content</div>"
+    ]
   },
   "events": {
     "wb:confirm:cancel": "Fired by confirm().",

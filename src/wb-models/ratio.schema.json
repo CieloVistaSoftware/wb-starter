@@ -3,13 +3,25 @@
   "$id": "ratio.schema.json",
   "title": "Ratio",
   "description": "Behavior applied with x-ratio.",
-  "schemaFor": "x-ratio",
+  "schemaFor": "ratio",
   "properties": {
     "ratio": {
       "type": "string",
       "description": "The aspect ratio the frame holds its child to, applied as the `--x-frame-ratio` custom property. The behavior's own default is `16/9`. NOTE: this schema declares a default of `16x9`, which the code never produces — the two disagree and the code is authoritative.",
       "default": "16x9"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-ratio"
+  },
+  "test": {
+    "setup": [
+      "<div x-ratio>Test Content</div>",
+      "<div x-ratio ratio=\"16x9\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

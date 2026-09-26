@@ -27,3 +27,16 @@
 .x-rating--sm .x-rating__star { font-size: 1rem; }
 .x-rating--md .x-rating__star { font-size: 1.5rem; }
 .x-rating--lg .x-rating__star { font-size: 2.25rem; }
+
+/* `half` (rating.js): a half-filled star clips its inline two-stop gradient
+   to the glyph, so exactly the left half shows the filled colour. */
+.x-rating__star--half {
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* `disabled` (rating.js): no interaction, visibly inert. */
+.x-rating--disabled {
+  opacity: 0.5;
+}

@@ -1,4 +1,4 @@
-import { readFlag } from '../core/read-attr.js';
+import { readFlag, readAttr } from '../core/read-attr.js';
 /**
  * Feedback Behaviors
  * -----------------------------------------------------------------------------
@@ -428,7 +428,10 @@ export function spinner(element, options = {}) {
   element._wbSpinnerInit = true;
 
   element.setAttribute('role', 'status');
-  element.setAttribute('aria-label', 'Loading');
+  // spinner.schema.json declares `label` ("Accessible label", default
+  // "Loading") and the docs say the aria-label is taken from it; it used to
+  // be hard-coded to "Loading" whatever the author wrote.
+  element.setAttribute('aria-label', options.label || readAttr(element, 'label') || 'Loading');
   element.innerHTML = '';
 
   // spinner.schema.json declares size default:"md" -- that default used to
@@ -677,6 +680,10 @@ export function skeleton(element) {
   // is needed here -- #448 removed the redundant base token, which just
   // duplicated the tag name and was never itself selected by any rule.
   element.classList.add(`x-skeleton--${variant}`);
+  // skeleton.schema.json declares `animated` (default true) and nothing read
+  // it, so the shimmer could not be turned off. `animated="false"` now adds
+  // the static modifier, which skeleton.css uses to stop the animation.
+  if (!readFlag(element, 'animated', true)) element.classList.add('x-skeleton--static');
 
   element.setAttribute('variant', variant);
   if (width) element.style.width = width;

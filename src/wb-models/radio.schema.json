@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "radio.schema.json",
+  "title": "Radio",
+  "description": "Behavior applied with x-radio.",
+  "schemaFor": "radio",
+  "semanticElement": {
+    "tagName": "input",
+    "type": "radio"
+  },
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Read by radio().",
+      "default": "this is the label"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Read by radio().",
+      "default": "this is the variant"
+    },
+    "size": {
+      "type": "string",
+      "description": "Read by radio().",
+      "default": "this is the size"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-radio"
+  },
+  "test": {
+    "setup": [
+      "<input type=\"radio\" x-radio>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

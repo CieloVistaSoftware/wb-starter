@@ -52,6 +52,11 @@ x-skeleton:has(> span), [x-skeleton]:has(> span){
   height: auto;
 }
 
+/* animated="false" — a still placeholder, no shimmer (skeleton.js adds the class) */
+.x-skeleton--static, .x-skeleton--static > span{
+  animation: none;
+}
+
 @keyframes x-skeleton-shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }

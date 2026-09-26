@@ -1,4 +1,4 @@
-import { readAttr } from '../core/read-attr.js';
+import { readAttr, readFlag } from '../core/read-attr.js';
 /**
  * Overlay Behaviors
  * -----------------------------------------------------------------------------
@@ -254,6 +254,12 @@ export function drawer(element, options = {}) {
     // variants are all the same?" because nothing ever looked at the
     // attribute. Default matches the schema's own `"default": "overlay"`.
     variant: options.variant || element.getAttribute('variant') || 'overlay',
+    // Declared in drawer.schema.json / docs/behaviors/drawer.md (all default
+    // true) and read by nothing until now. readFlag: `show-close="false"`
+    // must mean off, not "present, so on" (#747).
+    closeOnBackdrop: options.closeOnBackdrop ?? readFlag(element, 'close-on-backdrop', true),
+    closeOnEscape: options.closeOnEscape ?? readFlag(element, 'close-on-escape', true),
+    showClose: options.showClose ?? readFlag(element, 'show-close', true),
     ...options
   };
 
@@ -302,8 +308,9 @@ export function drawer(element, options = {}) {
       // never gives it a label) -- give it one only if still empty, so an
       // author-supplied close label (via a future schema change) isn't
       // clobbered.
-      const closeBtn = builtPanel.querySelector('.x-drawer__close');
-      if (closeBtn && !closeBtn.textContent.trim()) closeBtn.innerHTML = '&times;';
+      const builtCloseBtn = builtPanel.querySelector('.x-drawer__close');
+      if (builtCloseBtn && !builtCloseBtn.textContent.trim()) builtCloseBtn.innerHTML = '&times;';
+      if (builtCloseBtn && !config.showClose) builtCloseBtn.hidden = true;
 
       const isOpen = () => builtPanel.classList.contains('x-drawer__panel--open');
       const show = () => {
@@ -318,12 +325,13 @@ export function drawer(element, options = {}) {
       };
       const toggle = () => (isOpen() ? hide() : show());
 
-      const onEscape = (e) => { if (e.key === 'Escape' && isOpen()) hide(); };
+      const onBuiltEscape = (e) => { if (config.closeOnEscape && e.key === 'Escape' && isOpen()) hide(); };
+      const onBackdrop = () => { if (config.closeOnBackdrop) hide(); };
 
       element.addEventListener('click', toggle);
-      if (closeBtn) closeBtn.addEventListener('click', hide);
-      if (builtBackdrop) builtBackdrop.addEventListener('click', hide);
-      document.addEventListener('keydown', onEscape);
+      if (builtCloseBtn) builtCloseBtn.addEventListener('click', hide);
+      if (builtBackdrop) builtBackdrop.addEventListener('click', onBackdrop);
+      document.addEventListener('keydown', onBuiltEscape);
 
       // Matches the wbPopover/wbOffcanvas/wbSheet naming convention already
       // used by this file's sibling overlay functions -- not element.open/
@@ -337,9 +345,9 @@ export function drawer(element, options = {}) {
       return () => {
         hide();
         element.removeEventListener('click', toggle);
-        if (closeBtn) closeBtn.removeEventListener('click', hide);
-        if (builtBackdrop) builtBackdrop.removeEventListener('click', hide);
-        document.removeEventListener('keydown', onEscape);
+        if (builtCloseBtn) builtCloseBtn.removeEventListener('click', hide);
+        if (builtBackdrop) builtBackdrop.removeEventListener('click', onBackdrop);
+        document.removeEventListener('keydown', onBuiltEscape);
         builtPanel.remove();
         if (builtBackdrop) builtBackdrop.remove();
         element.classList.remove('x-drawer-trigger');
@@ -391,7 +399,7 @@ export function drawer(element, options = {}) {
     if (!isPush) {
       backdropEl = document.createElement('div');
       backdropEl.className = 'x-drawer__backdrop';
-      backdropEl.onclick = hide;
+      if (config.closeOnBackdrop) backdropEl.onclick = hide;
       document.body.appendChild(backdropEl);
     }
 
@@ -409,12 +417,14 @@ export function drawer(element, options = {}) {
     panelEl.innerHTML = `
       <div class="x-drawer__header">
         ${config.title ? `<h2 class="x-drawer__title">${config.title}</h2>` : ''}
-        <button type="button" class="x-drawer__close" aria-label="Close">&times;</button>
+        ${config.showClose ? '<button type="button" class="x-drawer__close" aria-label="Close">&times;</button>' : ''}
       </div>
       <div class="x-drawer__body">${config.content}</div>
     `;
-    panelEl.querySelector('.x-drawer__close').onclick = hide;
+    const closeBtn = panelEl.querySelector('.x-drawer__close');
+    if (closeBtn) closeBtn.onclick = hide;
     document.body.appendChild(panelEl);
+    if (config.closeOnEscape) document.addEventListener('keydown', onEscape);
     document.body.classList.add('x-scroll-lock');
 
     if (isPush) {
@@ -447,7 +457,12 @@ export function drawer(element, options = {}) {
     });
   };
 
+  // PATH B had no Escape handling at all; close-on-escape (default true)
+  // gives it the documented one, attached only while the panel is open.
+  const onEscape = (e) => { if (e.key === 'Escape') hide(); };
+
   const hide = () => {
+    document.removeEventListener('keydown', onEscape);
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { panelEl.remove(); panelEl = null; }
     if (pushTarget) {

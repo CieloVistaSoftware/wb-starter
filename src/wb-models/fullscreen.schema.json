@@ -3,7 +3,7 @@
   "$id": "fullscreen.schema.json",
   "title": "Fullscreen",
   "description": "Behavior applied with x-fullscreen.",
-  "schemaFor": "x-fullscreen",
+  "schemaFor": "fullscreen",
   "properties": {
     "target": {
       "type": "string",
@@ -15,6 +15,18 @@
       "description": "Button label when not fullscreen. Defaults to `⛶ Fullscreen`.",
       "default": "⛶ Fullscreen"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-fullscreen"
+  },
+  "test": {
+    "setup": [
+      "<div x-fullscreen>Test Content</div>",
+      "<div x-fullscreen label=\"⛶ Fullscreen\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

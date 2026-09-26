@@ -126,13 +126,23 @@ export function checkbox(element, options = {}) {
   // (confirmed live: reading host.textContent/attributes AFTER the other
   // path already cleared them). Only self-build when schema support
   // genuinely doesn't exist at all.
-  if (element.tagName.toLowerCase() === 'x-checkbox' && !_checkboxHostDeprecationWarned) {
+  // The host is <div x-checkbox> (the schema's own semanticElement) as well as
+  // a custom <x-checkbox> tag. Testing only the tag name missed every
+  // <div x-checkbox>, so none of its checked/disabled/name/value/size/variant
+  // attributes were ever reflected onto the real input.
+  const isHost = element.tagName !== 'INPUT' &&
+    (element.tagName.toLowerCase() === 'x-checkbox' || element.hasAttribute('x-checkbox'));
+
+  if (isHost && !_checkboxHostDeprecationWarned) {
     _checkboxHostDeprecationWarned = true;
     console.warn('[x-checkbox] is deprecated — use a bare <input type="checkbox"> instead, it already gets this same custom styling with no wrapper element needed.');
   }
 
-  if (element.tagName !== 'INPUT' && element.tagName.toLowerCase() === 'x-checkbox' && !window.WB?.schema) {
-    if (element.querySelector('input[type="checkbox"]')) return () => {};
+  // wb-lazy.js DOES build the schema $view now (buildSchemaIfNeeded, #489)
+  // without exposing window.WB.schema, so an input already present here was
+  // schema-built: fall through and reflect the host's attributes onto it
+  // below instead of returning -- returning left every one of them inert.
+  if (isHost && !window.WB?.schema && !element.querySelector('input[type="checkbox"]')) {
     const host = element;
     const label = host.getAttribute('label') || '';
     host.textContent = '';
@@ -176,14 +186,25 @@ export function checkbox(element, options = {}) {
   // just never had the equivalent step. Runs before the schema-built input's
   // own `.x-checkbox__input` early-return below, since it targets the HOST
   // (x-checkbox), not that input.
-  if (element.tagName.toLowerCase() === 'x-checkbox' && window.WB?.schema) {
+  if (isHost) {
     const input = element.querySelector('input[type="checkbox"]');
     if (input) {
       if (element.hasAttribute('checked')) input.checked = true;
       if (element.hasAttribute('disabled')) input.disabled = true;
       if (element.hasAttribute('required')) input.required = true;
       if (element.hasAttribute('indeterminate')) input.indeterminate = true;
+      const hostName = element.getAttribute('name');
+      if (hostName) input.name = hostName;
+      const hostValue = element.getAttribute('value');
+      if (hostValue) input.value = hostValue;
     }
+    // size/variant: the schema's appliesClass (x-checkbox--{{value}}) as a
+    // host class, styled in checkbox.css. Only the schema's enum members that
+    // have a rule -- an unknown value would mint a class no CSS matches (#885).
+    const hostSize = element.getAttribute('size');
+    if (hostSize === 'sm' || hostSize === 'lg') element.classList.add(`x-checkbox--${hostSize}`);
+    const hostVariant = element.getAttribute('variant');
+    if (hostVariant === 'primary' || hostVariant === 'success') element.classList.add(`x-checkbox--${hostVariant}`);
   }
 
   if (element.tagName !== 'INPUT' || element.type !== 'checkbox') return () => {};

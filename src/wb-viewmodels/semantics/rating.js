@@ -1,4 +1,4 @@
-import { readAttr } from '../../core/read-attr.js';
+import { readAttr, readFlag } from '../../core/read-attr.js';
 /**
  * Rating Behavior
  * ===============
@@ -23,9 +23,21 @@ export function rating(element, options = {}) {
   // filled on first paint and the custom icon was dropped. (#177)
   const attr = (name) => element.getAttribute(name);
   const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
+  // Declared in rating.schema.json / docs/behaviors/rating.md and read by
+  // nothing until now: `half` (allow x.5 values) and `disabled` (no
+  // interaction, dimmed, aria-disabled). Read first because `half` decides
+  // how `value` parses -- parseInt dropped the .5 of value="3.5".
+  const half = options.half ?? readFlag(element, 'half');
+  const disabled = options.disabled ?? readFlag(element, 'disabled');
+  const parseValue = (raw) => {
+    const n = half ? Math.round(parseFloat(raw) * 2) / 2 : parseInt(raw, 10);
+    return Number.isFinite(n) ? n : 0;
+  };
   const config = {
     max: parseInt(options.max || attr('max') || readAttr(element, 'max') || '5', 10),
-    value: parseInt(options.value || attr('value') || readAttr(element, 'value') || authoredValue || '0', 10),
+    value: parseValue(options.value || attr('value') || readAttr(element, 'value') || authoredValue || '0'),
+    half,
+    disabled,
     readonly: options.readonly ?? (element.hasAttribute('readonly') || readAttr(element, 'readonly') === 'true'),
     icon: options.icon || attr('icon') || readAttr(element, 'icon') || '★',
     // Filled colour: theme's rating colour by default; override via color="…"
@@ -53,9 +65,14 @@ export function rating(element, options = {}) {
   // rule is already dead/unmatched per its own comment). The size modifier
   // class is real and stays.
   element.classList.add(`x-rating--${config.size}`);
+  element.classList.toggle('x-rating--half', !!config.half);
+  element.classList.toggle('x-rating--disabled', !!config.disabled);
+  if (config.disabled) element.setAttribute('aria-disabled', 'true');
+  // Disabled is readonly plus the disabled presentation (rating.css).
+  const interactive = !config.readonly && !config.disabled;
   element.style.display = 'inline-flex';
   element.style.gap = '0.25rem';
-  element.style.cursor = config.readonly ? 'default' : 'pointer';
+  element.style.cursor = config.disabled ? 'not-allowed' : (interactive ? 'pointer' : 'default');
 
   // Create stars
   const stars = [];
@@ -70,16 +87,23 @@ export function rating(element, options = {}) {
     star.style.transition = 'color 0.2s ease, transform 0.1s ease';
     star.style.color = config.emptyColor; // empty
     
-    if (!config.readonly) {
+    if (interactive) {
+      // With `half`, the left half of a star means i - 0.5.
+      const valueAt = (e) => {
+        if (!config.half) return i;
+        const r = star.getBoundingClientRect();
+        return (e.clientX - r.left) < r.width / 2 ? i - 0.5 : i;
+      };
+
       // Hover effects
-      star.addEventListener('mouseenter', () => {
-        hoverValue = i;
+      star.addEventListener(config.half ? 'mousemove' : 'mouseenter', (e) => {
+        hoverValue = valueAt(e);
         updateStars();
       });
       
       // Click handler
-      star.addEventListener('click', () => {
-        currentValue = i;
+      star.addEventListener('click', (e) => {
+        currentValue = valueAt(e);
         updateStars();
         
         // Dispatch event
@@ -99,7 +123,7 @@ export function rating(element, options = {}) {
   }
 
   // Reset hover on leave
-  if (!config.readonly) {
+  if (interactive) {
     element.addEventListener('mouseleave', () => {
       hoverValue = 0;
       updateStars();
@@ -113,13 +137,18 @@ export function rating(element, options = {}) {
     stars.forEach((star, index) => {
       const value = index + 1;
       const isFull = value <= targetValue;
+      const isHalf = !isFull && config.half && value - 0.5 === targetValue;
       
-      if (isFull) {
-        star.classList.add('x-rating__star--full');
-        star.style.color = config.color;
+      star.classList.toggle('x-rating__star--full', isFull);
+      star.classList.toggle('x-rating__star--half', isHalf);
+      if (isHalf) {
+        // Left half filled, right half empty: rating.css clips this gradient
+        // to the glyph (.x-rating__star--half).
+        star.style.color = '';
+        star.style.backgroundImage = `linear-gradient(90deg, ${config.color} 50%, ${config.emptyColor} 50%)`;
       } else {
-        star.classList.remove('x-rating__star--full');
-        star.style.color = config.emptyColor;
+        star.style.backgroundImage = '';
+        star.style.color = isFull ? config.color : config.emptyColor;
       }
     });
   }
@@ -131,7 +160,7 @@ export function rating(element, options = {}) {
   element.wbRating = {
     getValue: () => currentValue,
     setValue: (val) => {
-      currentValue = Math.max(0, Math.min(val, config.max));
+      currentValue = Math.max(0, Math.min(parseValue(val), config.max));
       updateStars();
     }
   };

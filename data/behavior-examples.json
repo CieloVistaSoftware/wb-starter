@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 157,
+  "count": 155,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -377,10 +377,6 @@
         "<div x-progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></div>"
       ]
     },
-    "x-progressbar": {
-      "source": "<progress x-progressbar value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
-      "alternates": []
-    },
     "x-rating": {
       "source": "<div x-rating value=\"4\" max=\"5\" half></div>",
       "alternates": []
@@ -631,10 +627,6 @@
     },
     "x-tags": {
       "source": "<input x-tags value=\"light-dom,no-build,playwright\" placeholder=\"Add a tag…\">",
-      "alternates": []
-    },
-    "x-article": {
-      "source": "<article title=\"Ridge loop, 8km\" subtitle=\"Moderate · 3h\" author=\"Ada Lovelace\" date=\"2026-08-20\" category=\"Trails\">\n  The north gate is open and the creek crossing is dry. Parking fills by 9am on\n  weekends — the overflow lot adds about ten minutes on foot.\n</article>",
       "alternates": []
     },
     "x-articles": {

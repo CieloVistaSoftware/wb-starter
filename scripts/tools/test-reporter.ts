@@ -174,6 +174,7 @@ class WBTestReporter implements Reporter {
   private failures: FailureEntry[] = [];
   private startTime: number = 0;
   private failureLogPath: string = '';
+  private resultsLivePath: string = '';
   private failureCount: number = 0;
   private previousFailures: Set<string> = new Set();
 
@@ -189,6 +190,14 @@ class WBTestReporter implements Reporter {
       unlinkSync(this.failureLogPath);
     }
     writeFileSync(this.failureLogPath, `=== Test Run Started: ${new Date().toISOString()} ===\n\n`);
+
+    // Every result as it is known, one JSON line per test -- pass, fail or skip.
+    // failures.json and the per-project files are only written in onEnd, so a
+    // run that is still going (or died) had nothing readable but the failures
+    // above. John: "write results as soon as they are known then append the
+    // next result." Tail it, or read it any time mid-run.
+    this.resultsLivePath = join(this.outDir, 'results-live.jsonl');
+    writeFileSync(this.resultsLivePath, '');
 
     // #562: data/errors.json (src/core/error-logger.js's shared, server-side
     // runtime error log) used to carry over from whatever the PREVIOUS
@@ -288,6 +297,18 @@ class WBTestReporter implements Reporter {
 
     project.duration += result.duration;
     project.tests.push(entry);
+
+    appendFileSync(this.resultsLivePath, JSON.stringify({
+      at: new Date().toISOString(),
+      project: projectName,
+      file: entry.file,
+      line: entry.line,
+      title: entry.title,
+      status: result.status,
+      duration: result.duration,
+      retry: result.retry,
+      error: entry.error ? String(entry.error).split('\n')[0].slice(0, 300) : undefined,
+    }) + '\n');
   }
 
   /**

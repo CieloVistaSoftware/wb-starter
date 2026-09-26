@@ -924,13 +924,10 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // the same async-schema-race. This was a LATENT, previously-unreported bug
 // (found auditing schemas while investigating #279, not from a live
 // complaint) -- <div x-skeleton> was never in this list before tonight.
-// x-article/x-articles: had a real $view but NO behavior implementation at
-// all (confirmed: no article.js existed anywhere) -- <article> rendered
-// as bare unstyled text on any page not running the schema-builder engine
-// (e.g. wb-lazy.js-based demo pages, which have no MVVM layer whatsoever).
-// article.js now builds the full structure itself, unconditionally, the same
-// self-sufficient pattern as the card family -- so it's added here for the
-// same reason, not left to race with schema's $view build.
+// x-articles: articles() (article.js) builds the full list wrapper itself,
+// unconditionally, the same self-sufficient pattern as the card family -- so
+// it's here for the same reason, not left to race with schema's $view build.
+// (<article> itself is a card and is covered by the x-card entries below.)
 // x-select: select.schema.json's $view built a fake dropdown out of
 // <button>/<div>/<ul> -- no real <select> anywhere in it, so it had none of
 // a native <select>'s keyboard nav/mobile picker/form submission/screen
@@ -967,7 +964,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // over the real "x-drawer-toggle" arrow.
 const SCHEMA_EXCLUDED_TAGS = new Set([
   'x-demo', 'x-details', 'x-stack', 'x-search', 'x-skeleton', 'x-select',
-  'x-article', 'x-articles', 'x-dialog', 'x-drawer-layout',
+  'x-articles', 'x-dialog', 'x-drawer-layout',
   'x-card', 'x-cardimage', 'x-cardvideo', 'x-cardbutton', 'x-carddraggable',
   'x-cardexpandable', 'x-cardfile', 'x-cardhero', 'x-cardhorizontal',
   'x-cardlink', 'x-card-link', 'x-cardminimizable', 'x-cardnotification',

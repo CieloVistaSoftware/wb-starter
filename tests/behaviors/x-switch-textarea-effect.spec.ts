@@ -124,8 +124,10 @@ test.describe('<div x-switch> — real effects (self-build path, #279)', () => {
     expect(await host.getAttribute('aria-checked'), 'a disabled switch must never report checked').toBe('false');
   });
 
-  test('SUSPECTED BUG: label-position start/end has no effect on real DOM order', async ({ page }) => {
-    test.fail(true, 'switchInput() (semantics/switch.js) never reads the label-position attribute in its self-build fallback — it always appends an x-switch__label-end span regardless of the declared position. Also broken via the schema-driven engine (main site): switch.schema.json\'s label-start/label-end createdWhen conditions use "labelPosition == \'start\'" equality syntax, but schema-builder.js\'s evaluateCondition() only supports truthy-field lookups, not "==" comparisons, so neither $view part is ever created there either — same root cause, both engines.');
+  test('label-position start/end sets the real DOM order', async ({ page }) => {
+    // Was a pinned test.fail(): switchInput() never read label-position and
+    // always appended an x-switch__label-end span. It now reads it and puts a
+    // label-start span before the track (#768 sweep).
     await setup(
       page,
       '<div x-switch id="sw-start" label="Start" label-position="start"></div>' +
@@ -270,8 +272,9 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
     expect(await enabled.inputValue()).toBe('hello');
   });
 
-  test('SUSPECTED BUG: resize has no effect on the computed CSS resize property', async ({ page }) => {
-    test.fail(true, 'textarea.js never reads the resize attribute/property at all -- it only ever sets style.resize based on autosize (none if autosize is set, vertical otherwise), completely ignoring the declared resize value. Confirmed live: resize="none"/"horizontal"/"both" all compute to resize:"vertical" (the autosize-less default), identical to resize="vertical" itself.');
+  test('resize sets the computed CSS resize property', async ({ page }) => {
+    // Was a pinned test.fail(): textarea.js ignored the declared resize value
+    // and always set vertical (or none under autosize). It now reads it (#768 sweep).
     await setup(
       page,
       '<textarea id="ta-resize-none" x-behavior="textarea" resize="none"></textarea>' +

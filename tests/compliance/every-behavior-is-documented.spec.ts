@@ -47,15 +47,14 @@ const DOCS = path.join(ROOT, 'docs', 'behaviors');
  *
  * tag-map.js maps a SELECTOR to a BEHAVIOR:
  *
- *   'x-progressbar':   'progress'        <- an alias
  *   'x-drawer-layout': 'drawerLayout'    <- kebab selector, camelCase module
  *   'button':          'button'
  *
  * The doc file is named for the behavior (the VALUE); the authoring token comes
  * from the selector (the KEY). The first draft of this gate looked docs up by
- * key and reported `x-progressbar` and `x-drawer-layout` as undocumented. Both
- * are documented — in progress.md and drawerLayout.md. Two false accusations,
- * caught by opening the files instead of trusting the count.
+ * key and reported `x-drawer-layout` (and a since-removed alias) as
+ * undocumented. Both were documented. False accusations, caught by opening the
+ * files instead of trusting the count.
  */
 function reachableBehaviors(): Array<{ token: string; name: string; autoInjected: boolean }> {
   const src = fs.readFileSync(path.join(ROOT, 'src', 'core', 'tag-map.js'), 'utf8');
@@ -67,8 +66,12 @@ function reachableBehaviors(): Array<{ token: string; name: string; autoInjected
     // A key WITHOUT the x- prefix is a tag: <button> injects `button` on its own.
     // A key WITH it is opted into by attribute and has no tag that implies it.
     const autoInjected = !/^\[?x-/.test(key);
-    const token = key.replace(/^\[/, '').replace(/\]$/, '').replace(/^x-/, '').toLowerCase();
     const name = value.trim();
+    // A tag is named by the behavior it injects: <article> injects card, so the
+    // attribute a reader types for it elsewhere is x-card, not x-article.
+    const token = autoInjected
+      ? name.toLowerCase()
+      : key.replace(/^\[/, '').replace(/\]$/, '').replace(/^x-/, '').toLowerCase();
     if (!/^[a-z][a-z0-9-]*$/.test(token)) continue;
     if (!/^[a-zA-Z][a-zA-Z0-9.-]*$/.test(name)) continue;
     out.set(`${token}|${name}`, { token, name, autoInjected });

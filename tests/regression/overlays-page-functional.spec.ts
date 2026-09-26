@@ -57,7 +57,9 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
   });
 
   test('.x-dialog trigger opens a real dialog with its own title/content', async ({ page }) => {
-    const trigger = page.locator('.x-dialog').first();
+    // #448: a <dialog> acting as its own trigger carries .x-dialog-trigger,
+    // not .x-dialog (that class is the popped-open dialog box).
+    const trigger = page.locator('.x-dialog-trigger').first();
     await expect(trigger).toBeVisible();
     await trigger.click();
     const dialog = page.locator('dialog[open]').first();
@@ -97,7 +99,10 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     // uniqueness) -- so assert every trigger opens with SOME real content,
     // and separately assert the Basic Dialog section specifically is
     // all-distinct (that's the section whose markup actually varies title).
-    const triggers = page.locator('.x-dialog');
+    // The authored <dialog>s, not a class: the lazy runtime (#491) only builds
+    // a trigger as it nears the viewport, so counting .x-dialog-trigger up
+    // front would count only the ones already built. Each is scrolled to below.
+    const triggers = page.locator('section[id^="dialog-"] dialog');
     const count = await triggers.count();
     expect(count, 'expected multiple .x-dialog triggers on this page').toBeGreaterThan(1);
 
@@ -113,10 +118,11 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
       await expect(dialog).not.toBeVisible({ timeout: 3000 }).catch(() => {});
     }
 
-    const basicSection = page.locator('#dialog-dialog .x-dialog');
+    const basicSection = page.locator('#dialog-dialog dialog');
     const basicCount = await basicSection.count();
     const basicTexts = new Set<string>();
     for (let i = 0; i < basicCount; i++) {
+      await basicSection.nth(i).scrollIntoViewIfNeeded();
       await basicSection.nth(i).click();
       const dialog = page.locator('dialog[open]').first();
       await expect(dialog).toBeVisible({ timeout: 5000 });
@@ -131,7 +137,7 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     // The "size variants" section triggers are unlabeled ("size=sm" etc as
     // their own text) -- select them by that section's own scope.
     const section = page.locator('#dialog-size-variants');
-    const triggers = section.locator('.x-dialog');
+    const triggers = section.locator('dialog');
     const count = await triggers.count();
     expect(count).toBeGreaterThanOrEqual(5);
 
@@ -173,9 +179,13 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
         return last ? last.getBoundingClientRect() : null;
       });
       expect(panelRect, `trigger[${i}] (position=${expectedPosition}) should open a panel`).not.toBeNull();
-      // Close it (click its own close button if present, else re-click trigger to toggle).
-      const closeBtn = page.locator('body > div button', { hasText: '×' }).last();
-      if (await closeBtn.count()) await closeBtn.click().catch(() => {});
+      // Close it before the next trigger: an open panel covers the page and
+      // intercepts the next click. drawer() builds every trigger's panel up
+      // front (all in <body>, closed ones off-screen), so the LAST `×` in the
+      // body is some other, closed panel's -- close the one that is open.
+      const closeBtn = page.locator('.x-drawer__panel--open .x-drawer__close');
+      if (await closeBtn.count()) await closeBtn.first().click();
+      await expect(page.locator('.x-drawer__panel--open')).toHaveCount(0);
     }
   });
 

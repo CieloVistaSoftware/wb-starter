@@ -3,7 +3,7 @@
   "$id": "vimeo.schema.json",
   "title": "Vimeo",
   "description": "Behavior applied with x-vimeo.",
-  "schemaFor": "x-vimeo",
+  "schemaFor": "vimeo",
   "properties": {
     "video-id": {
       "type": "string",
@@ -25,6 +25,20 @@
       "description": "Restart from the beginning when playback ends.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-vimeo"
+  },
+  "test": {
+    "setup": [
+      "<div x-vimeo>Test Content</div>",
+      "<div x-vimeo autoplay>Test Content</div>",
+      "<div x-vimeo muted>Test Content</div>",
+      "<div x-vimeo loop>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

@@ -40,6 +40,7 @@
       "default": true
     }
   },
+  "$view": [],
   "$methods": {
     "stick": {
       "description": "Forces sticky state",

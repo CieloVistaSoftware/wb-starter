@@ -144,7 +144,7 @@ test.describe('frameworks demo: [x-demo] / build-step exception (§25, #324, #46
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     const button = page.locator('#svelte-root button');
-    await expect(button, 'svelte/compiler (loaded from esm.sh) must compile and mount a real component').toBeVisible({ timeout: 15000 });
+    await expect(button, 'svelte/compiler (vendored under src/lib/frameworks/svelte) must compile and mount a real component').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('Svelte Button');
 
     // #591: clicking the button must also update a persistent, visible
@@ -187,7 +187,7 @@ test.describe('frameworks demo: [x-demo] / build-step exception (§25, #324, #46
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     const button = page.locator('#solid-root button');
-    await expect(button, 'babel-plugin-jsx-dom-expressions (loaded from esm.sh via @babel/standalone) must compile and mount a real component').toBeVisible({ timeout: 15000 });
+    await expect(button, 'babel-plugin-jsx-dom-expressions (vendored, run via vendored @babel/standalone) must compile and mount a real component').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('SolidJS Button');
 
     // #591: clicking the button must also update a persistent, visible

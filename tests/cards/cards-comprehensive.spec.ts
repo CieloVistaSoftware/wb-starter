@@ -50,14 +50,16 @@ test.describe('Base Cards', () => {
   test.describe('card (base)', () => {
     test('renders with title and subtitle', async ({ page }) => {
       await createTestPage(page, `
-        <article data-title="Test Title" data-subtitle="Test Subtitle">
+        <article title="Test Title" subtitle="Test Subtitle">
           <p>Card content</p>
         </article>
       `);
       
-      const card = page.locator('.x-card');
+      // a8a7362e: cards no longer carry x-card / x-card--* classes; card.css
+      // selects the <article> and its attributes directly (specificity, not
+      // injected classes). Assert what the reader gets, not a class.
+      const card = page.locator('article');
       await expect(card).toBeVisible();
-      await expect(card).toHaveClass(/x-card/);
       
       // Check title rendered
       const title = card.locator('.x-card__title, h3');
@@ -70,13 +72,16 @@ test.describe('Base Cards', () => {
     
     test('elevated variant has shadow', async ({ page }) => {
       await createTestPage(page, `
-        <article data-title="Elevated" data-elevated="true">
+        <article title="Elevated" elevated="true">
           Content
         </article>
       `);
       
-      const card = page.locator('.x-card');
-      await expect(card).toHaveClass(/x-card--elevated/);
+      // a8a7362e: cards no longer carry x-card / x-card--* classes; card.css
+      // selects the <article> and its attributes directly (specificity, not
+      // injected classes). Assert what the reader gets, not a class.
+      const card = page.locator('article[elevated]');
+      await expect(card).toBeVisible();
       
       const boxShadow = await card.evaluate(el => getComputedStyle(el).boxShadow);
       expect(boxShadow).not.toBe('none');
@@ -84,48 +89,60 @@ test.describe('Base Cards', () => {
     
     test('clickable variant is interactive', async ({ page }) => {
       await createTestPage(page, `
-        <article data-title="Clickable" data-clickable="true">
+        <article title="Clickable" clickable="true">
           Click me
         </article>
       `);
       
-      const card = page.locator('.x-card');
-      await expect(card).toHaveClass(/x-card--clickable/);
+      // a8a7362e: cards no longer carry x-card / x-card--* classes; card.css
+      // selects the <article> and its attributes directly (specificity, not
+      // injected classes). Assert what the reader gets, not a class.
+      const card = page.locator('article[clickable]');
+      await expect(card).toBeVisible();
       await expect(card).toHaveAttribute('role', 'button');
       await expect(card).toHaveAttribute('tabindex', '0');
       
-      const cursor = await card.evaluate(el => getComputedStyle(el).cursor);
-      expect(cursor).toBe('pointer');
+      // card.css arrives just-in-time with the behavior (#342): wait for the
+      // rule to apply rather than reading the cursor once, immediately.
+      await expect.poll(() => card.evaluate(el => getComputedStyle(el).cursor)).toBe('pointer');
     });
     
     test('glass variant has backdrop filter', async ({ page }) => {
       await createTestPage(page, `
-        <article data-title="Glass" data-variant="glass">
+        <article title="Glass" variant="glass">
           Glass effect
         </article>
       `);
       
-      const card = page.locator('.x-card');
-      await expect(card).toHaveClass(/x-card--glass/);
+      // a8a7362e: cards no longer carry x-card / x-card--* classes; card.css
+      // selects the <article> and its attributes directly (specificity, not
+      // injected classes). Assert what the reader gets, not a class.
+      const card = page.locator('article[variant="glass"]');
+      await expect(card).toBeVisible();
+      await expect.poll(() => card.evaluate(el => getComputedStyle(el).backdropFilter))
+        .not.toBe('none');
     });
   });
   
   test.describe('cardlink', () => {
     test('renders with href and navigates', async ({ page }) => {
       await createTestPage(page, `
-        <div x-cardlink data-title="Link Card" data-href="https://example.com" data-target="_blank">
+        <div x-cardlink title="Link Card" href="https://example.com" target="_blank">
           Click to navigate
         </div>
       `);
       
       const card = page.locator('[x-cardlink]');
       await expect(card).toBeVisible();
-      await expect(card).toHaveAttribute('role', 'link');
+      // The card navigates through a REAL anchor stretched over it (card.js
+      // cardlink), not a role="link" on a div: a real link is what keyboard,
+      // middle-click and screen readers understand.
+      await expect(card.locator('a[href="https://example.com"]')).toBeAttached();
     });
     
     test('shows external indicator for _blank target', async ({ page }) => {
       await createTestPage(page, `
-        <div x-cardlink data-title="External" data-href="https://example.com" data-target="_blank">
+        <div x-cardlink title="External" href="https://example.com" target="_blank">
           External link
         </div>
       `);
@@ -137,7 +154,7 @@ test.describe('Base Cards', () => {
     
     test('renders badge when provided', async ({ page }) => {
       await createTestPage(page, `
-        <div x-cardlink data-title="With Badge" data-badge="NEW" data-href="#">
+        <div x-cardlink title="With Badge" badge="NEW" href="#">
           Has badge
         </div>
       `);
@@ -150,7 +167,7 @@ test.describe('Base Cards', () => {
   test.describe('cardbutton', () => {
     test('renders with primary and secondary buttons', async ({ page }) => {
       await createTestPage(page, `
-        <div x-cardbutton data-title="Action Card" data-primary="Submit" data-secondary="Cancel">
+        <div x-cardbutton title="Action Card" primary="Submit" secondary="Cancel">
           Card with buttons
         </div>
       `);
@@ -173,10 +190,10 @@ test.describe('Content Cards', () => {
     test('renders with name, role, avatar', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardprofile 
-          data-name="John Doe" 
-          data-role="Developer" 
-          data-avatar="https://i.pravatar.cc/80?u=1"
-          data-bio="Building cool stuff">
+          name="John Doe" 
+          role="Developer" 
+          avatar="https://i.pravatar.cc/80?u=1"
+          bio="Building cool stuff">
         </div>
       `);
       
@@ -200,8 +217,8 @@ test.describe('Content Cards', () => {
     test('renders cover image when provided', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardprofile 
-          data-name="Jane Smith" 
-          data-cover="https://picsum.photos/400/100">
+          name="Jane Smith" 
+          cover="https://picsum.photos/400/100">
         </div>
       `);
       
@@ -215,10 +232,10 @@ test.describe('Content Cards', () => {
     test('renders with quote, author, rating', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardtestimonial 
-          data-quote="This product is amazing!" 
-          data-author="Jane Smith" 
-          data-role="CEO" 
-          data-rating="5">
+          quote="This product is amazing!" 
+          author="Jane Smith" 
+          role="CEO" 
+          rating="5">
         </div>
       `);
       
@@ -243,9 +260,9 @@ test.describe('Media Cards', () => {
     test('renders image with correct src and alt', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardimage 
-          data-src="https://picsum.photos/400/300" 
-          data-alt="Test image"
-          data-title="Image Title">
+          src="https://picsum.photos/400/300" 
+          alt="Test image"
+          title="Image Title">
         </div>
       `);
       
@@ -262,8 +279,8 @@ test.describe('Media Cards', () => {
     test('respects aspect ratio', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardimage 
-          data-src="https://picsum.photos/400/400" 
-          data-aspect="1/1">
+          src="https://picsum.photos/400/400" 
+          aspect="1/1">
         </div>
       `);
       
@@ -279,8 +296,8 @@ test.describe('Media Cards', () => {
     test('renders video element with controls', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardvideo 
-          data-src="https://www.w3schools.com/html/mov_bbb.mp4"
-          data-title="Video Title">
+          src="https://www.w3schools.com/html/mov_bbb.mp4"
+          title="Video Title">
         </div>
       `);
       
@@ -297,9 +314,9 @@ test.describe('Media Cards', () => {
     test('renders file info with icon', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardfile 
-          data-filename="document.pdf" 
-          data-type="pdf" 
-          data-size="2.5 MB">
+          filename="document.pdf" 
+          type="pdf" 
+          size="2.5 MB">
         </div>
       `);
       
@@ -320,8 +337,8 @@ test.describe('Data Cards', () => {
     test('renders value and label', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardstats 
-          data-value="1,234" 
-          data-label="Total Users">
+          value="1,234" 
+          label="Total Users">
         </div>
       `);
       
@@ -335,10 +352,10 @@ test.describe('Data Cards', () => {
     test('shows trend indicator', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardstats 
-          data-value="$50K" 
-          data-label="Revenue" 
-          data-trend="up" 
-          data-trend-value="+12%">
+          value="$50K" 
+          label="Revenue" 
+          trend="up" 
+          trend-value="+12%">
         </div>
       `);
       
@@ -350,9 +367,9 @@ test.describe('Data Cards', () => {
     test('shows icon when provided', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardstats 
-          data-value="42" 
-          data-label="Projects" 
-          data-icon="🚀">
+          value="42" 
+          label="Projects" 
+          icon="🚀">
         </div>
       `);
       
@@ -365,11 +382,11 @@ test.describe('Data Cards', () => {
     test('renders plan, price, and features', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardpricing 
-          data-plan="Pro" 
-          data-price="$29" 
-          data-period="/month"
-          data-features="Feature 1,Feature 2,Feature 3"
-          data-cta="Get Started">
+          plan="Pro" 
+          price="$29" 
+          period="/month"
+          features="Feature 1,Feature 2,Feature 3"
+          cta="Get Started">
         </div>
       `);
       
@@ -387,9 +404,9 @@ test.describe('Data Cards', () => {
     test('featured variant has special styling', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardpricing 
-          data-plan="Pro" 
-          data-price="$29" 
-          data-featured="true">
+          plan="Pro" 
+          price="$29" 
+          featured="true">
         </div>
       `);
       
@@ -409,11 +426,11 @@ test.describe('Data Cards', () => {
     test('renders product with price and CTA', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardproduct 
-          data-title="Product Name"
-          data-image="https://picsum.photos/200"
-          data-price="$99"
-          data-rating="4.5"
-          data-cta="Add to Cart">
+          title="Product Name"
+          image="https://picsum.photos/200"
+          price="$99"
+          rating="4.5"
+          cta="Add to Cart">
         </div>
       `);
       
@@ -433,8 +450,8 @@ test.describe('Interactive Cards', () => {
     test('expands and collapses on button click', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardexpandable 
-          data-title="Expandable" 
-          data-content="<p>Hidden content that can be revealed</p>">
+          title="Expandable" 
+          content="<p>Hidden content that can be revealed</p>">
         </div>
       `);
       
@@ -459,11 +476,11 @@ test.describe('Interactive Cards', () => {
       await expect(card).not.toHaveClass(/x-card--expanded/);
     });
     
-    test('starts expanded when data-expanded="true"', async ({ page }) => {
+    test('starts expanded when expanded="true"', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardexpandable 
-          data-title="Pre-expanded" 
-          data-expanded="true">
+          title="Pre-expanded" 
+          expanded="true">
         </div>
       `);
       
@@ -476,8 +493,8 @@ test.describe('Interactive Cards', () => {
     test('minimizes and expands on button click', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardminimizable 
-          data-title="Minimizable Card"
-          data-content="<p>Content that can be minimized</p>">
+          title="Minimizable Card"
+          content="<p>Content that can be minimized</p>">
         </div>
       `);
       
@@ -500,7 +517,7 @@ test.describe('Interactive Cards', () => {
       await createTestPage(page, `
         <div style="position: relative; width: 500px; height: 500px;">
           <div x-carddraggable 
-            data-title="Drag Me"
+            title="Drag Me"
             style="position: absolute; top: 50px; left: 50px;">
             Draggable content
           </div>
@@ -523,10 +540,10 @@ test.describe('Interactive Cards', () => {
     test('renders with background image and text overlay', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardoverlay 
-          data-title="Overlay Title"
-          data-subtitle="Overlay subtitle"
-          data-image="https://picsum.photos/400/300"
-          data-height="300px">
+          title="Overlay Title"
+          subtitle="Overlay subtitle"
+          image="/packages/create-wb-starter/template/images/wb.png"
+          height="300px">
         </div>
       `);
       
@@ -536,7 +553,9 @@ test.describe('Interactive Cards', () => {
       await expect(card).toContainText('Overlay Title');
       await expect(card).toContainText('Overlay subtitle');
       
-      // Check has background image
+      // Check has background image. A repo image, not picsum.photos: a remote
+      // host that is slow or unreachable made the card fall back to its
+      // gradient (correctly, #1115) and this test fail for the network's sake.
       const bgImage = await card.evaluate(el => getComputedStyle(el).backgroundImage);
       expect(bgImage).toContain('url');
     });
@@ -552,9 +571,9 @@ test.describe('Notification Cards', () => {
       test(`renders ${variant} variant with correct styling`, async ({ page }) => {
         await createTestPage(page, `
           <div x-cardnotification 
-            data-type="${variant}"
-            data-title="${variant.charAt(0).toUpperCase() + variant.slice(1)}"
-            data-message="This is a ${variant} notification">
+            type="${variant}"
+            title="${variant.charAt(0).toUpperCase() + variant.slice(1)}"
+            message="This is a ${variant} notification">
           </div>
         `);
         
@@ -569,9 +588,9 @@ test.describe('Notification Cards', () => {
     test('dismissible notification can be closed', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardnotification 
-          data-type="info"
-          data-message="Dismissible notification"
-          data-dismissible="true">
+          type="info"
+          message="Dismissible notification"
+          dismissible="true">
         </div>
       `);
       
@@ -594,11 +613,11 @@ test.describe('Hero Cards', () => {
     test('renders with background, title, subtitle, and CTA', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardhero 
-          data-title="Hero Title"
-          data-subtitle="Hero subtitle text"
-          data-cta="Get Started"
-          data-cta-href="#start"
-          data-height="400px">
+          title="Hero Title"
+          subtitle="Hero subtitle text"
+          cta="Get Started"
+          cta-href="#start"
+          height="400px">
         </div>
       `);
       
@@ -613,8 +632,8 @@ test.describe('Hero Cards', () => {
     test('xalign positions content correctly', async ({ page }) => {
       await createTestPage(page, `
         <div x-cardhero 
-          data-title="Left Aligned"
-          data-xalign="left">
+          title="Left Aligned"
+          xalign="left">
         </div>
       `);
       
@@ -629,7 +648,7 @@ test.describe('Theme Control', () => {
   test('[x-themecontrol] renders and changes theme', async ({ page }) => {
     await createTestPage(page, `
       <div x-themecontrol></div>
-      <article data-title="Test Card">Content</article>
+      <article title="Test Card">Content</article>
     `);
     
     const themeControl = page.locator('[x-themecontrol]');
@@ -648,7 +667,7 @@ test.describe('Animation Effects', () => {
   
   test('bounce animation triggers correctly', async ({ page }) => {
     await createTestPage(page, `
-      <article data-title="Animated" id="animated-card">
+      <article title="Animated" id="animated-card">
         Click for animation
       </article>
       <script type="module">

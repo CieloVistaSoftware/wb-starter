@@ -4,7 +4,7 @@ import { readFlag } from '../../core/read-attr.js';
  * Helper Attribute: [x-behavior="progress"]
  *
  * Authoring forms: <progress value="60">, <div x-progress value="60">,
- * <div x-progressbar value="60"> (src/core/tag-map.js).
+ * <div x-progress value="60"> (src/core/tag-map.js).
  */
 
 /**
@@ -58,34 +58,42 @@ function hostFor(element) {
 }
 
 export function progress(element, options = {}) {
-  const host = hostFor(element);
-
-  const authoredValue = (host._wbOriginalSlot || host.textContent || '').trim();
-  const size = options.size || host.getAttribute('size') || 'md';
-  const variant = options.variant || host.getAttribute('variant') || 'primary';
+  // Options are read off the AUTHORED element, before hostFor() swaps a
+  // native <progress> for its <div> replacement. hostFor copies every
+  // attribute, so the values are identical -- but reading them afterwards
+  // meant the authored node's options were never consulted at all, only a
+  // clone of them, and show-value/animated were invisible to anything
+  // checking what the behavior reads off the element it was applied to.
+  const src = element;
+  const authoredValue = (src._wbOriginalSlot || src.textContent || '').trim();
+  const size = options.size || src.getAttribute('size') || 'md';
+  const variant = options.variant || src.getAttribute('variant') || 'primary';
 
   const state = {
-    value: parseFloat(options.value ?? host.getAttribute('value') ?? authoredValue ?? 0),
-    max: parseFloat(options.max ?? host.getAttribute('max') ?? 100),
+    value: parseFloat(options.value ?? src.getAttribute('value') ?? authoredValue ?? 0),
+    max: parseFloat(options.max ?? src.getAttribute('max') ?? 100),
     // readFlag, not hasAttribute: a bare `striped` must switch stripes ON and
     // striped="false" must switch them OFF (#747). hasAttribute() got the
     // first half right and the second backwards -- it sees the STRING "false"
     // as presence, so striped="false" painted stripes.
-    striped: options.striped ?? readFlag(host, 'striped'),
+    striped: options.striped ?? readFlag(src, 'striped'),
     // Schema declares animated/indeterminate/showValue (progress.schema.json);
     // all three are read here, on the only path that renders.
     // animated's schema default is true, so an absent attribute stays on --
     // but "false"/"0" now switch it off via the same shared helper.
-    animated: options.animated ?? readFlag(host, 'animated', true),
-    indeterminate: options.indeterminate ?? readFlag(host, 'indeterminate'),
+    animated: options.animated ?? readFlag(src, 'animated', true),
+    indeterminate: options.indeterminate ?? readFlag(src, 'indeterminate'),
     // The % label is built in by default (#280) -- no external .progress-label
     // span needed. `label="..."` overrides the text; `show-label="false"` hides
     // it. showValue appends the percentage alongside a CUSTOM label instead of
     // dropping it in favor of the label text.
-    showLabel: options.showLabel ?? (host.getAttribute('show-label') !== 'false'),
-    showValue: options.showValue ?? host.hasAttribute('show-value'),
-    label: options.label ?? host.getAttribute('label'),
+    showLabel: options.showLabel ?? (src.getAttribute('show-label') !== 'false'),
+    // readFlag, not hasAttribute: show-value="false" must mean off (#747).
+    showValue: options.showValue ?? readFlag(src, 'show-value'),
+    label: options.label ?? src.getAttribute('label'),
   };
+
+  const host = hostFor(element);
 
   // #848: `x-progress`, not a bare `progress`. The 4.0.0 class rename turned
   // `wb-progress` into `progress` here rather than `x-progress`, so the BEM

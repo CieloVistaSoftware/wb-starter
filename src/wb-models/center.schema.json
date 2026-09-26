@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "center.schema.json",
+  "title": "Center",
+  "description": "Behavior applied with x-center.",
+  "schemaFor": "center",
+  "properties": {
+    "max-width": {
+      "type": "string",
+      "description": "Read by center().",
+      "default": "this is the max width"
+    },
+    "gutters": {
+      "type": "string",
+      "description": "Read by center().",
+      "default": "1rem"
+    },
+    "intrinsic": {
+      "type": "boolean",
+      "description": "Read by center(). Bare attribute.",
+      "default": false
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-center"
+  },
+  "test": {
+    "setup": [
+      "<div x-center>Test Content</div>",
+      "<div x-center gutters=\"1rem\">Test Content</div>",
+      "<div x-center intrinsic>Test Content</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

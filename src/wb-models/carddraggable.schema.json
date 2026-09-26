@@ -167,7 +167,7 @@
       "<div x-carddraggable axis=\"y\">axis=y</div>",
       "<div x-carddraggable variant=\"default\">variant=default</div>",
       "<div x-carddraggable title=\"Test Title\">With title attribute</div>",
-      "<div title=\"Drag Me\">Content</div>"
+      "<div x-carddraggable title=\"Drag Me\">Content</div>"
     ],
     "matrix": {
       "combinations": [

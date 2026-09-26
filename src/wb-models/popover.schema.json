@@ -3,7 +3,7 @@
   "$id": "popover.schema.json",
   "title": "Popover",
   "description": "Behavior applied with x-popover.",
-  "schemaFor": "x-popover",
+  "schemaFor": "popover",
   "properties": {
     "description": {
       "type": "string",
@@ -35,6 +35,19 @@
       "description": "Popover heading. Read BEFORE `heading`.",
       "default": "this is the popover title"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-popover"
+  },
+  "test": {
+    "setup": [
+      "<div x-popover>Test Content</div>",
+      "<div x-popover trigger=\"click\">Test Content</div>",
+      "<div x-popover position=\"top\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

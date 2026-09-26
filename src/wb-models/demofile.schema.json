@@ -93,7 +93,7 @@
   "scripts": {
     "description": "How demos load JavaScript",
     "wbComponents": {
-      "description": "Demos that use <wb-*> tags or data-wb= attributes MUST load WB",
+      "description": "Demos that use <wb-*> tags or x-* attributes MUST load WB",
       "required": "conditional — only if demo uses WB components",
       "acceptedLoaders": [
         "src/core/wb-lazy.js",

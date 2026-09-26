@@ -3,8 +3,19 @@
   "$id": "kbd.schema.json",
   "title": "Kbd",
   "description": "Behavior applied with x-kbd.",
-  "schemaFor": "x-kbd",
+  "schemaFor": "kbd",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-kbd"
+  },
+  "test": {
+    "setup": [
+      "<div x-kbd>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

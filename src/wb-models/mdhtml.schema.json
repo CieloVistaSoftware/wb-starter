@@ -24,7 +24,7 @@
     "sanitize": {
       "type": "boolean",
       "default": true,
-      "attribute": "data-sanitize"
+      "attribute": "sanitize"
     },
     "gfm": {
       "type": "boolean",

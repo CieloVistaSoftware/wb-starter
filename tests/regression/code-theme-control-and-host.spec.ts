@@ -103,8 +103,12 @@ test.describe('code theme control + x-code host (#1012, #1016, #1022)', () => {
       host.textContent = 'const a = 1;\nconst b = 2;';
       document.body.appendChild(host);
 
-      await (window as any).WB?.scan?.(document.body);
-      await new Promise((r) => setTimeout(r, 400));
+      // eager: this page runs the lazy runtime, where a plain scan only
+      // SCHEDULES an element for when it nears the viewport -- the host is
+      // appended at the very bottom -- and the old 400ms sleep was a guess at
+      // how long that takes (lost 3 runs in 5 under load). Eager builds it now,
+      // the way demo.js does, and the await covers it.
+      await (window as any).WB?.scan?.(host, { eager: true });
 
       const inner = host.querySelector('code');
       const out = {

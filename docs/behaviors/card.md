@@ -39,6 +39,10 @@ no header; a card with no `footer` gets no footer. Nothing is emitted empty.
 | --- | --- | --- | --- |
 | `title` | `string` | `""` | Card title displayed in header |
 | `subtitle` | `string` | `""` | Card subtitle displayed below title |
+| `author` | `string` | `""` | Author name, rendered as the card's byline in an `<address>` |
+| `date` | `string` | `""` | Publication date, rendered in a `<time>` element |
+| `category` | `string` | `""` | Category or tag shown above the title |
+| `reading-time` | `string` | `""` | Estimated reading time |
 | `footer` | `string` | `""` | Card footer text |
 | `elevated` | `boolean` | `false` | Add drop shadow |
 | `clickable` | `boolean` | `false` | Make card clickable |
@@ -46,6 +50,21 @@ no header; a card with no `footer` gets no footer. Nothing is emitted empty.
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` | Card size variant controlling max/min width |
 | `tooltip` | `string` | `""` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). |
 | `hover-text` | `string` | `""` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. |
+| `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints "Featured"; `featured="Deal of the week"` prints that label instead. |
+
+### An article is a card
+
+There is no separate article behavior. A blog post, news item or doc page is an
+`<article>`, so it is a card, and the byline attributes above are how it says who
+wrote it and when:
+
+```html
+<article title="Ada on Engines" author="Ada Lovelace" date="1843-10-01"
+         category="Computing" reading-time="7 min">
+  The Analytical Engine weaves algebraic patterns just as the Jacquard loom
+  weaves flowers and leaves.
+</article>
+```
 
 ## Methods
 

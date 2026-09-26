@@ -35,16 +35,23 @@ test.describe('behaviors list is grouped (#995)', () => {
       const l = document.querySelector(LIST)!;
       const rows = Array.from(l.querySelectorAll(ROW)) as HTMLElement[];
       const groups = Array.from(l.querySelectorAll('details')) as HTMLDetailsElement[];
+      // #771 selects the first row on load, and a selected row is never left
+      // hidden, so the group holding it opens. That group is the one exception:
+      // it shows what is selected. Every OTHER group waits for the reader.
+      // (While the first row was article's own single row, no group had to
+      // open; since <article> became a card, the first row sits in card's.)
+      const selected = l.querySelector('[aria-current="true"]');
+      const holder = selected ? selected.closest('details') : null;
       return {
         groups: groups.length,
-        open: groups.filter((d) => d.open).length,
+        open: groups.filter((d) => d.open && d !== holder).length,
         total: rows.length,
         visible: rows.filter((r) => r.offsetParent !== null).length,
       };
     }, { LIST, ROW });
 
     expect(stats.groups, 'the list should contain grouped behaviors').toBeGreaterThan(10);
-    expect(stats.open, 'every group must start collapsed — John: "expand it first"').toBe(0);
+    expect(stats.open, 'every group but the selected row\'s must start collapsed — John: "expand it first"').toBe(0);
     // The point of the change: far fewer rows on screen than exist.
     expect(
       stats.visible,
@@ -61,7 +68,9 @@ test.describe('behaviors list is grouped (#995)', () => {
         (Array.from(l.querySelectorAll(ROW)) as HTMLElement[]).filter((r) => r.offsetParent !== null)
           .length;
       const before = visible();
-      const d = l.querySelector('details') as HTMLDetailsElement;
+      // A group that starts collapsed: the one holding the selected row is
+      // already open, and clicking it would close it.
+      const d = Array.from(l.querySelectorAll('details')).find((g) => !(g as HTMLDetailsElement).open) as HTMLDetailsElement;
       const own = d.querySelectorAll(ROW).length;
       (d.querySelector('summary') as HTMLElement).click();
       await new Promise((r) => setTimeout(r, 400));

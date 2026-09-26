@@ -3,8 +3,19 @@
   "$id": "lightbox.schema.json",
   "title": "Lightbox",
   "description": "Behavior applied with x-lightbox.",
-  "schemaFor": "x-lightbox",
+  "schemaFor": "lightbox",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-lightbox"
+  },
+  "test": {
+    "setup": [
+      "<div x-lightbox>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

@@ -538,3 +538,10 @@ x-hero button[data-secondary]:hover, [x-hero] button[data-secondary]:hover{
     margin-bottom: 1.5rem;
   }
 }
+
+/* full-height (cardhero.schema.json fullHeight) — fill the viewport.
+   svh keeps mobile browser chrome from pushing the fold below the screen. */
+x-cardhero.x-cardhero--full-height, [x-cardhero].x-cardhero--full-height{
+  min-height: 100vh;
+  min-height: 100svh;
+}

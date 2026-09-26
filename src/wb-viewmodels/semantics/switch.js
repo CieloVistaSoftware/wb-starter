@@ -9,6 +9,7 @@
  * legacy form where the element IS a bare <input type=checkbox>. (#197)
  */
 import { createToast } from '../feedback.js';
+import { readAttr } from '../../core/read-attr.js';
 
 export function switchInput(element, options = {}) {
   const host = element;
@@ -151,11 +152,16 @@ export function switchInput(element, options = {}) {
     // span was appended on every run (duplicate labels on any re-scan). It is
     // the signature of a bulk x-switch -> [x-switch] rewrite that hit a string
     // literal instead of a selector.
+    // `label-position` (start|end, default end) is declared in the schema and
+    // was never read: the label always went after the track. `start` now puts
+    // it first, matching the schema's own label-start/label-end $view parts.
+    const labelPosition = readAttr(host, 'label-position', 'end') === 'start' ? 'start' : 'end';
     if (label && !container.querySelector('[class*="x-switch__label"]')) {
       const span = document.createElement('span');
-      span.className = 'x-switch__label-end';
+      span.className = `x-switch__label-${labelPosition}`;
       span.textContent = label;
-      container.appendChild(span);
+      if (labelPosition === 'start') container.prepend(span);
+      else container.appendChild(span);
     }
   }
 

@@ -262,9 +262,8 @@ export const WB_LAZY_ONLY_ATTRIBUTES = {
   // #645: x-form, x-tags, x-file, x-masked, x-counter, x-autocomplete,
   // x-colorpicker, x-floatinglabel, x-label, x-youtube, x-timeline,
   // x-gallery, x-drawer, x-dropdown, x-toggle, x-drawer-layout, x-copy,
-  // x-toast, x-collapse, and x-article (new) all moved to/added in
-  // tag-map.js's extensionMap (shared with wb.js) -- see the comment block
-  // there for the drawer/drawer-layout and article/articles/as-article
+  // x-toast and x-collapse all moved to tag-map.js's extensionMap (shared
+  // with wb.js) -- see the comment block there for the drawer/drawer-layout
   // disambiguation notes.
 };
 
@@ -374,12 +373,12 @@ function getAutoInjectBehaviors(element) {
 // build their own complete DOM unconditionally, so letting schema ALSO run
 // on them would be a pure async race that silently wipes whichever of the
 // two finishes second (the x-card* family, x-demo, x-details,
-// x-skeleton, x-dialog, x-select, x-article/x-articles, x-fix-card),
+// x-skeleton, x-dialog, x-select, x-articles, x-fix-card),
 // or -- for x-cluster/x-stack/x-row/x-search/x-accordion, which have no
 // schema.json of their own at all -- a dead fetch that just 404s.
 const SCHEMA_SKIP_TAGS = new Set([
   '[x-demo]', '.x-details', '[x-cluster]', '[x-stack]', '[x-flex]', '[x-searchfield]',
-  '[x-accordion]', '[x-article]', '[x-articles]', '.x-select', '[x-skeleton]',
+  '[x-accordion]', '[x-articles]', '.x-select', '[x-skeleton]',
   '.x-dialog', '[x-fix-card]', 'x-view', '.x-audio',
 ]);
 
@@ -479,6 +478,9 @@ const applied = new WeakMap();
 // Track pending injections to prevent race conditions
 // Map<HTMLElement, Set<string>>
 const pendingInjections = new Map();
+// element -> Map<behaviorName, Promise> settling when that injection finishes,
+// so a second inject() of an in-flight behavior can wait for it.
+const inFlight = new WeakMap();
 let injectionTimeout = null;
 // #961/#962: the countable, awaitable view of the same in-flight work.
 // Same module wb.js uses — one contract, implemented once (#923/#951 are what
@@ -587,7 +589,10 @@ const WB = {
     // Check if pending (prevent race conditions)
     let pending = pendingInjections.get(element);
     if (pending && pending.has(behaviorName)) {
-      return null; // Already pending
+      // Already pending: wait for it, as wb.js does. Returning at once let
+      // `await WB.scan(root)` resolve while the injection was still in flight.
+      await inFlight.get(element)?.get(behaviorName);
+      return null; // the first caller owns the cleanup
     }
 
     // Mark as pending
@@ -596,6 +601,10 @@ const WB = {
       pendingInjections.set(element, pending);
     }
     pending.add(behaviorName);
+    let settle = () => {};
+    const done = new Promise((resolve) => { settle = resolve; });
+    if (!inFlight.has(element)) inFlight.set(element, new Map());
+    inFlight.get(element).set(behaviorName, done);
     // Counted here, AFTER every early return above, so start/end always pair:
     // an invalid element, an unknown behavior, an already-applied or
     // already-pending behavior all bail before this line and never reach the
@@ -657,7 +666,9 @@ const WB = {
       
       return null;
     } finally {
-      // Remove from pending
+      // Release anyone awaiting this injection, then remove from pending.
+      inFlight.get(element)?.delete(behaviorName);
+      settle();
       const p = pendingInjections.get(element);
       if (p) {
         p.delete(behaviorName);

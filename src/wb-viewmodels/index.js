@@ -44,9 +44,7 @@ const exportAliases = {
   searchfield: 'searchField',
   // x-copybutton (#291) — copy.js exports the function as `copyButton`
   // (camelCase), but the behavior/attribute name is lowercase `copybutton`.
-  copybutton: 'copyButton',
-  // progressbar resolves to semantics/progress.js, whose export is progress().
-  progressbar: 'progress'
+  copybutton: 'copyButton'
 };
 
 /**
@@ -54,30 +52,17 @@ const exportAliases = {
  * Maps behavior names to their module paths
  */
 const behaviorModules = {
-  // An <article> IS a card in this system.
-  //
-  // John: "an article is a card in this system. with autoinjection on and no
-  // opt out, articles show up as cards."
-  //
-  // This key WAS declared twice -- `article: 'article'` here and
-  // `article: 'card'` further down -- and the later one won, so `article`
-  // resolved to card.js. #880 called that a duplicate-declaration bug and
-  // kept the FIRST entry. Wrong survivor: the duplicate was real, but the
-  // winning value was the correct one. Routing article to article.js made
-  // every <article> render article markup instead of a card, and on an
-  // <article x-card> both ran and built two titles into one element.
-  //
-  // One declaration now, with the intended target.
-  article: 'card',
+  // An <article> IS a card in this system: tag-map.js routes <article>
+  // straight to `card`, so there is no `article` behavior to register here.
+  // (It used to be `article: 'card'`, a redirect from a name nothing needs.)
   // The plural is a different thing: articles() is the grid/list WRAPPER that
-  // lays out article children, and it does live in article.js.
+  // lays out article children, and it lives in article.js.
   articles: 'article',
 
   // Hero → hero.js
   hero: 'hero',
   
-  // Cards (19) → card.js. `article` is declared once, above, and points here:
-  // auto-injection makes a bare <article> a card.
+  // Cards (19) → card.js. Auto-injection makes a bare <article> a card.
   card: 'card', cardimage: 'card', cardvideo: 'card', cardbutton: 'card',
   cardhero: 'card', cardprofile: 'card', cardpricing: 'card', cardstats: 'card',
   cardtestimonial: 'card', cardproduct: 'card', cardnotification: 'card',
@@ -96,16 +81,6 @@ const behaviorModules = {
 
   // UI Core
   demo: 'demo',
-  // x-progressbar is the SAME control as x-progress, not a second one.
-  // tag-map.js:136 already resolves '[x-progressbar]' -> 'progress', so a
-  // normal scan got semantics/progress.js. But anything that derives the
-  // name by stripping the x- prefix (the behaviors showcase does exactly
-  // that) landed on 'progressbar' and loaded a SECOND, divergent module:
-  // different class names (x-progress-bar vs x-progress__bar), inline
-  // styles instead of CSS, and a `striped` that only responded to
-  // striped="true" -- so a bare `striped` rendered a plain bar on the
-  // showcase while working everywhere else. One behavior, one module.
-  progressbar: 'semantics/progress',
   modal: 'semantics/dialog',
   dialog: 'semantics/dialog',
   tooltip: 'tooltip',

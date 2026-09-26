@@ -3,7 +3,7 @@
   "$id": "flex.schema.json",
   "title": "Flex",
   "description": "Behavior applied with x-flex.",
-  "schemaFor": "x-flex",
+  "schemaFor": "flex",
   "properties": {
     "direction": {
       "type": "string",
@@ -30,6 +30,22 @@
       "description": "Space between items, as a CSS length. Defaults to `1rem`.",
       "default": "1rem"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-flex"
+  },
+  "test": {
+    "setup": [
+      "<div x-flex>Test Content</div>",
+      "<div x-flex direction=\"row\">Test Content</div>",
+      "<div x-flex wrap=\"wrap\">Test Content</div>",
+      "<div x-flex justify=\"flex-start\">Test Content</div>",
+      "<div x-flex align=\"stretch\">Test Content</div>",
+      "<div x-flex gap=\"1rem\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

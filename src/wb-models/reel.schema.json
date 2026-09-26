@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "reel.schema.json",
+  "title": "Reel",
+  "description": "Behavior applied with x-reel.",
+  "schemaFor": "reel",
+  "properties": {
+    "item-width": {
+      "type": "string",
+      "description": "Read by reel().",
+      "default": "auto"
+    },
+    "gap": {
+      "type": "string",
+      "description": "Read by reel().",
+      "default": "1rem"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-reel"
+  },
+  "test": {
+    "setup": [
+      "<div x-reel>Test Content</div>",
+      "<div x-reel item-width=\"auto\">Test Content</div>",
+      "<div x-reel gap=\"1rem\">Test Content</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

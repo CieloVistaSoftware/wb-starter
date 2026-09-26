@@ -132,6 +132,10 @@
         "implicitRole": {
           "type": "string",
           "description": "WAI-ARIA implicit role"
+        },
+        "type": {
+          "type": "string",
+          "description": "The `type` the host needs when tagName is input (radio(), range() refuse any other input)"
         }
       },
       "required": [

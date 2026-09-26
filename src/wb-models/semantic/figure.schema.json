@@ -81,8 +81,8 @@
     ]
   },
   "structure": {
-    "preferredTemplate": "<figure img-src=\"{{imgSrc}}\" alt=\"{{alt}}\" data-caption=\"{{caption}}\"></figure>",
-    "legacyTemplate": "<figure data-caption=\"{{caption}}\">\n  <img src=\"{{src}}\" alt=\"{{alt}}\" />\n</figure>",
+    "preferredTemplate": "<figure img-src=\"{{imgSrc}}\" alt=\"{{alt}}\" caption=\"{{caption}}\"></figure>",
+    "legacyTemplate": "<figure caption=\"{{caption}}\">\n  <img src=\"{{src}}\" alt=\"{{alt}}\" />\n</figure>",
     "conditionalRendering": {
       "caption": "Render figcaption only if caption is not empty",
       "alt": "If omitted, defaults to imgSrc value"

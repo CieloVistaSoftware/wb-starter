@@ -3,7 +3,7 @@
   "$id": "relativetime.schema.json",
   "title": "Relativetime",
   "description": "Behavior applied with x-relativetime.",
-  "schemaFor": "x-relativetime",
+  "schemaFor": "relativetime",
   "properties": {
     "datetime": {
       "type": "string",
@@ -20,6 +20,18 @@
       "description": "The timestamp to describe. `datetime` is accepted as an alias; `date` is read first.",
       "default": "this is the date"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-relativetime"
+  },
+  "test": {
+    "setup": [
+      "<div x-relativetime>Test Content</div>",
+      "<div x-relativetime refresh=\"60000\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

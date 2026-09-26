@@ -3,8 +3,19 @@
   "$id": "autosize.schema.json",
   "title": "Autosize",
   "description": "Behavior applied with x-autosize.",
-  "schemaFor": "x-autosize",
+  "schemaFor": "autosize",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-autosize"
+  },
+  "test": {
+    "setup": [
+      "<div x-autosize>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

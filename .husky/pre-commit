@@ -82,6 +82,10 @@ node scripts/test-suite-env.mjs || exit 1
 # repos only: proves a rollback removes just the tag its own run cut.
 node scripts/test-ship-rollback.mjs || exit 1
 
+# The known-failures register only shrinks. A new failure is fixed, never
+# recorded -- John: "I want all the failures to stop." Milliseconds, git only.
+node scripts/check-register-shrinks.mjs || exit 1
+
 # ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
 # John: "each issue will have a priority 1 through 5 assessed based on negative
 # impact to the project... now change our gates based on priorities."

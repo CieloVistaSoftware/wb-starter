@@ -11,7 +11,7 @@ optional heading and static pagination controls. Implemented by `articles()` in
 | Attribute | `x-articles` |
 | Attribute form | `<div x-as-articles>` |
 | Behavior function | `articles()` — `src/wb-viewmodels/article.js` |
-| Pairs with | [`article`](../behaviors/article.md) / `x-article` for each child |
+| Pairs with | `<article>` children, each of which is a [card](../behaviors/card.md) |
 | Semantic element | `<section role="feed">` (schema default; the behavior itself doesn't add a role) |
 | Root CSS Class | `<section x-articles>` |
 | Category | Layout |
@@ -28,23 +28,16 @@ optional heading and static pagination controls. Implemented by `articles()` in
 
 ## Usage
 
-> Children below use `<div x-article>`, not `<article x-article>`. `tag-map.js`'s
-> `nativeMap` auto-injects the bare `<article>` **tag** as a `card` (site-wide,
-> whenever autoInject is on — the default), and that auto-inject currently
-> doesn't check whether the element already opted into a different, explicit
-> `x-article` behavior — confirmed live, a `<article x-article>` renders with
-> both `<div x-as-article>` AND `<article>`/`x-card--auto`/`x-card--hoverable` classes
-> at once. Filed as
-> [#639](https://github.com/CieloVistaSoftware/wb-starter/issues/639); until
-> it's fixed, pair `x-article` with a non-`<article>` element to get clean,
-> single-behavior output.
+Each child is a plain `<article>`. An `<article>` is a card, so every child gets
+its title, byline and body from the [card](../behaviors/card.md) behavior with no
+attribute needed.
 
 ### Grid layout
 
 <div x-demo columns="1">
 <div x-articles title="Grid layout" layout="grid" columns="2">
-  <div x-article title="TypeScript Mastery">TypeScript transforms JavaScript development with type safety: generics, unions, interfaces, and decorators.</div>
-  <div x-article title="React Hooks Deep Dive">Master modern React with Hooks — useState, useEffect, useContext, and custom hooks for cleaner behaviors.</div>
+  <article title="TypeScript Mastery">TypeScript transforms JavaScript development with type safety: generics, unions, interfaces, and decorators.</article>
+  <article title="React Hooks Deep Dive">Master modern React with Hooks — useState, useEffect, useContext, and custom hooks for cleaner behaviors.</article>
 </div>
 </div>
 
@@ -52,8 +45,8 @@ optional heading and static pagination controls. Implemented by `articles()` in
 
 <div x-demo columns="1">
 <div x-articles title="List layout" layout="list">
-  <div x-article title="API Design Best Practices">Build RESTful APIs with proper versioning, pagination, error handling, and documentation.</div>
-  <div x-article title="Testing Strategies">Unit tests, integration tests, end-to-end tests, and performance testing for reliable software.</div>
+  <article title="API Design Best Practices">Build RESTful APIs with proper versioning, pagination, error handling, and documentation.</article>
+  <article title="Testing Strategies">Unit tests, integration tests, end-to-end tests, and performance testing for reliable software.</article>
 </div>
 </div>
 
@@ -61,9 +54,9 @@ optional heading and static pagination controls. Implemented by `articles()` in
 
 <div x-demo columns="1">
 <div x-articles title="Masonry layout" layout="masonry" columns="2">
-  <div x-article title="Microservices Architecture">Break monoliths into independently deployable services with service discovery and circuit breakers.</div>
-  <div x-article title="State Management">Redux, Zustand, Recoil, and context patterns — choosing the right fit for your app's complexity.</div>
-  <div x-article title="Performance Monitoring">Core Web Vitals, Lighthouse, and Real User Monitoring for finding and fixing bottlenecks.</div>
+  <article title="Microservices Architecture">Break monoliths into independently deployable services with service discovery and circuit breakers.</article>
+  <article title="State Management">Redux, Zustand, Recoil, and context patterns — choosing the right fit for your app's complexity.</article>
+  <article title="Performance Monitoring">Core Web Vitals, Lighthouse, and Real User Monitoring for finding and fixing bottlenecks.</article>
 </div>
 </div>
 
@@ -71,8 +64,8 @@ optional heading and static pagination controls. Implemented by `articles()` in
 
 <div x-demo columns="1">
 <div x-articles title="With pagination" pagination>
-  <div x-article title="Cloud Computing Basics">AWS, Azure, and Google Cloud services, pricing models, and when to use each.</div>
-  <div x-article title="Containerization with Docker">Images, containers, registries, and compose for microservices.</div>
+  <article title="Cloud Computing Basics">AWS, Azure, and Google Cloud services, pricing models, and when to use each.</article>
+  <article title="Containerization with Docker">Images, containers, registries, and compose for microservices.</article>
 </div>
 </div>
 

@@ -62,8 +62,8 @@
           "html": "  <p>The tooltip <em>behavior</em> attaches via <code>x-tooltip</code> to a real trigger element (button, span, …) — not a standalone custom tag.</p>\n  <div class=\"demo-section__grid demo-section__grid--cols-4\">\n    <div x-demo columns=\"1\">\n      <button id=\"btn-top\" x-tooltip=\"Tooltip text\" position=\"top\">Top</button>\n    </div>\n    <div x-demo columns=\"1\">\n      <button id=\"btn-bottom\" x-tooltip=\"Tooltip text\" position=\"bottom\">Bottom</button>\n    </div>\n    <div x-demo columns=\"1\">\n      <button id=\"btn-left\" x-tooltip=\"Tooltip text\" position=\"left\">Left</button>\n    </div>\n    <div x-demo columns=\"1\">\n      <button id=\"btn-right\" x-tooltip=\"Tooltip text\" position=\"right\">Right</button>\n    </div>\n  </div>"
         },
         {
-          "heading": "🧩 x-progressbar — attribute-based progress bar",
-          "html": "  <p>Apply directly to any element, no custom tag required — an alternative to <code>&lt;x-progress&gt;</code> above.</p>\n  <div x-demo>\n    <div x-progressbar value=\"40\" style=\"width: 300px; height: 24px;\"></div>\n  </div>\n  <div x-demo>\n    <div x-progressbar value=\"80\" variant=\"success\" style=\"width: 300px; height: 24px;\"></div>\n  </div>"
+          "heading": "🧩 x-progress — on any element",
+          "html": "  <p>A <code>&lt;progress&gt;</code> is the progress behavior on its own; <code>x-progress</code> applies the same behavior to any other element.</p>\n  <div x-demo>\n    <div x-progress value=\"40\" style=\"width: 300px; height: 24px;\"></div>\n  </div>\n  <div x-demo>\n    <div x-progress value=\"80\" variant=\"success\" style=\"width: 300px; height: 24px;\"></div>\n  </div>"
         },
         {
           "heading": "🧩 x-notify — one-off notification",
@@ -107,7 +107,7 @@
         {
           "heading": "🧩 x-label — including RTL layouts",
           "html": "  <div x-demo>\n    <input x-label=\"Label for input:\" type=\"text\">\n  </div>\n  <p>RTL layouts (Hebrew, Arabic) via <code>label-position=\"right\"</code>:</p>\n  <div x-demo>\n    <input x-label=\"שם מלא\" label-position=\"right\" dir=\"rtl\" type=\"text\">\n  </div>\n  <div id=\"label-schema-validation\"></div>",
-          "script": "    import Ajv from 'https://cdn.jsdelivr.net/npm/ajv@8.12.0/+esm';\n    const schemaUrl = '../../src/wb-models/label.schema.json';\n    const ajv = new Ajv({ strict: false });\n    fetch(schemaUrl).then(r => r.json()).then(schema => {\n      const data = { required: false, optional: false };\n      let msg;\n      try {\n        const valid = ajv.validate(schema, data);\n        msg = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\\n' + JSON.stringify(ajv.errors, null, 2);\n      } catch (e) {\n        msg = 'Schema validation skipped (unresolved $ref): ' + e.message;\n      }\n      const out = document.createElement('pre');\n      out.style.background = '#222';\n      out.style.color = '#fff';\n      out.style.padding = '0.5em';\n      out.textContent = msg;\n      document.getElementById('label-schema-validation').appendChild(out);\n    });"
+          "script": "    import Ajv from '../../src/lib/ajv/ajv.esm.js';\n    const schemaUrl = '../../src/wb-models/label.schema.json';\n    const ajv = new Ajv({ strict: false });\n    fetch(schemaUrl).then(r => r.json()).then(schema => {\n      const data = { required: false, optional: false };\n      let msg;\n      try {\n        const valid = ajv.validate(schema, data);\n        msg = valid ? 'Schema validation: PASS' : 'Schema validation: FAIL\\n' + JSON.stringify(ajv.errors, null, 2);\n      } catch (e) {\n        msg = 'Schema validation skipped (unresolved $ref): ' + e.message;\n      }\n      const out = document.createElement('pre');\n      out.style.background = '#222';\n      out.style.color = '#fff';\n      out.style.padding = '0.5em';\n      out.textContent = msg;\n      document.getElementById('label-schema-validation').appendChild(out);\n    });"
         },
         {
           "heading": "🧩 x-autosize — textarea that grows with content",
@@ -154,7 +154,6 @@
       "description": "Articles, markdown rendering, audio, tables",
       "icon": "📄",
       "components": [
-        "article",
         "articles",
         "mdhtml",
         "audio",

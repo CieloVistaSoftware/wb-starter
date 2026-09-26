@@ -3,7 +3,7 @@
   "$id": "accordion.schema.json",
   "title": "Accordion",
   "description": "Behavior applied with x-accordion.",
-  "schemaFor": "x-accordion",
+  "schemaFor": "accordion",
   "properties": {
     "data-title": {
       "type": "boolean",
@@ -22,6 +22,18 @@
       "description": "Start expanded. `expanded` is accepted as an equivalent. Bare attribute.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-accordion"
+  },
+  "test": {
+    "setup": [
+      "<div x-accordion><div accordion-title=\"One\">First body</div><div accordion-title=\"Two\">Second body</div></div>",
+      "<div x-accordion open><div accordion-title=\"One\">First body</div><div accordion-title=\"Two\">Second body</div></div>"
+    ]
   },
   "events": {
     "wb:accordion:ready": "Fired by accordion()."

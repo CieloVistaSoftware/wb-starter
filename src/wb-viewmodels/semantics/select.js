@@ -1,4 +1,5 @@
 import { logError } from '../../core/error-logger.js';
+import { readFlag } from '../../core/read-attr.js';
 /**
  * Select - Enhanced <select> element
  * CSS targets `select` tag directly — no classes, no inline styles.
@@ -152,6 +153,10 @@ function buildWbSelect(element, options) {
   const size = options.size || element.getAttribute('size') || 'md';
   const variant = options.variant || element.getAttribute('variant') || 'default';
   const clearable = options.clearable ?? element.hasAttribute('clearable');
+  // `searchable` was declared in select.schema.json and documented, but no
+  // code read it. It now builds a filter box above the real <select> that
+  // hides the options which do not match what was typed.
+  const searchable = options.searchable ?? readFlag(element, 'searchable');
 
   element.innerHTML = '';
   // #448: no bare '.x-select' token -- input.css selects the `.x-select`
@@ -160,6 +165,7 @@ function buildWbSelect(element, options) {
   // never reaches this function at all, so the class never mattered for it).
   if (size !== 'md') element.classList.add(`x-select--${size}`);
   if (variant !== 'default') element.classList.add(`x-select--${variant}`);
+  if (searchable) element.classList.add('x-select--searchable');
   // #497: the classes above only ever reached this HOST wrapper. The
   // actually-visible control is the real <select class="x-select__field">
   // built below -- input.css's `.x-select--*` size/variant rules are bare
@@ -213,6 +219,23 @@ function buildWbSelect(element, options) {
     sel.setAttribute('aria-labelledby', labelId);
   }
 
+  if (searchable) {
+    const search = document.createElement('input');
+    search.type = 'search';
+    search.className = 'x-select__search';
+    search.placeholder = 'Search...';
+    search.setAttribute('aria-label', label ? `Search ${label}` : 'Search options');
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      Array.from(sel.options).forEach((o) => {
+        // The placeholder option (value "") is never filtered away.
+        if (o.value === '' && o.disabled) return;
+        o.hidden = !!q && !o.textContent.toLowerCase().includes(q);
+      });
+    });
+    element.appendChild(search);
+  }
+
   element.appendChild(sel);
 
   const cleanupField = select(sel, { clearable });
@@ -221,7 +244,7 @@ function buildWbSelect(element, options) {
   return () => {
     if (cleanupField) cleanupField();
     element.innerHTML = '';
-    element.classList.remove(`x-select--${size}`, `x-select--${variant}`);
+    element.classList.remove(`x-select--${size}`, `x-select--${variant}`, 'x-select--searchable');
     delete element.wbSelect;
   };
 }

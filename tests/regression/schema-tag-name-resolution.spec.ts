@@ -43,26 +43,15 @@ test.describe('Schema-driven tags resolve to a real, class-bearing element', () 
     await expect(el).toHaveClass(/x-drawer/);
   });
 
-  test('[x-article] builds a real structure from a bare tag', async ({ page }) => {
-    const el = await setupTestContainer(page, '<div x-article title="Test Article" author="Jane">Body text.</div>');
-    // Not toHaveClass(/x-article/) on el -- a real <div x-article> tag must NOT
-    // also carry a same-named class (no-redundant-tag-name-class.spec.ts);
-    // article.css's bare `[x-article] {}` tag selector already styles it.
-    // The structural checks below prove article() actually ran instead.
-    await expect(el.locator('.x-article__title')).toHaveText('Test Article');
-    await expect(el.locator('.x-article__byline')).toContainText('Jane');
-    await expect(el.locator('.x-article__content')).toContainText('Body text.');
-  });
-
-  test('[x-articles] builds a list wrapper around [x-article] children', async ({ page }) => {
+  test('[x-articles] builds a list wrapper around <article> children', async ({ page }) => {
     const el = await setupTestContainer(
       page,
-      '<div x-articles title="Recent"><div x-article title="One">A</div><div x-article title="Two">B</div></div>'
+      '<div x-articles title="Recent"><article title="One">A</article><article title="Two">B</article></div>'
     );
     // Not toHaveClass(/x-articles/) on el -- a real <div x-articles> tag must NOT
     // also carry a same-named class (no-redundant-tag-name-class.spec.ts).
     // The structural check below proves articles() actually ran instead.
     await expect(el.locator('.x-articles__list')).toBeVisible();
-    await expect(el.locator('[x-article]')).toHaveCount(2);
+    await expect(el.locator('.x-articles__list article')).toHaveCount(2);
   });
 });

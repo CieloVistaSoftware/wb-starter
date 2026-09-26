@@ -167,7 +167,7 @@
       "<div x-cardprofile align=\"center\">align=center</div>",
       "<div x-cardprofile name=\"John Doe\">name=\"John Doe\"</div>",
       "<div x-cardprofile role=\"Designer\">role=\"Designer\"</div>",
-      "<div name=\"Jane\" role=\"Designer\" avatar=\"/images/avatar.svg\"></div>"
+      "<div x-cardprofile name=\"Jane\" role=\"Designer\" avatar=\"/images/avatar.svg\"></div>"
     ],
     "matrix": {
       "combinations": [

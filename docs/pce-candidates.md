@@ -192,11 +192,6 @@ const customElementMappings = [
 
 4. **Add schema** (optional) at `src/wb-models/mycomponent.schema.json`
 
-5. **Update VS Code IntelliSense** (optional):
-   ```bash
-   node scripts/generate-custom-elements.js
-   ```
-
 ---
 
 ## Performance
@@ -255,4 +250,3 @@ Or with behavior attribute:
 - WB Architecture
 - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md)
 - [Escape Hatches](./escape-hatches.md)
-- [Custom Elements Manifest](/data/custom-elements.json)

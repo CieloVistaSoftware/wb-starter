@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 import {
-  PATHS, getSchemaFiles, loadSchema, getComponentSchemas, Schema
+  PATHS, getSchemaFiles, loadSchema, getComponentSchemas, Schema, usesNativeHost
 } from '../base';
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -360,8 +360,11 @@ test.describe('Schema Validation: Test Section Completeness', () => {
           // x-* attributes are the v3 primary syntax for attaching behaviors
           // to native elements (e.g. <form x-form>, <button x-ripple>).
           const hasXBehavior = /\sx-[a-z][\w-]*/.test(html);
-          if (!hasWbTag && !hasDataWb && !hasXBehavior) {
-            issues.push(`${file}: setup[${i}] missing <wb-*> tag, data-wb, or x-* behavior attribute`);
+          // A native host that auto-injects this behavior (<audio>, <dialog>,
+          // <article> for card -- tag-map.js nativeMap) needs no marker at all.
+          const isNativeHost = usesNativeHost(html, schema.schemaFor);
+          if (!hasWbTag && !hasDataWb && !hasXBehavior && !isNativeHost) {
+            issues.push(`${file}: setup[${i}] missing <wb-*> tag, data-wb, x-* behavior attribute, or auto-injecting native host`);
           }
         }
       }
@@ -428,11 +431,12 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         const hasWbTag = possibleTags.some(tag => html.includes(tag));
         const hasDataWb = html.includes(dataWbPattern);
         const hasXAttr = xAttrPattern.test(html);
+        const isNativeHost = usesNativeHost(html, schema.schemaFor);
 
         const usesSharedCardMarkup = schema.schemaFor.startsWith('card') &&
           (html.includes('data-wb="card"') || html.includes('<article'));
 
-        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesSharedCardMarkup) {
+        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesSharedCardMarkup && !isNativeHost) {
           issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}>, x-${schema.schemaFor}, or data-wb="${schema.schemaFor}"`);
         }
       }

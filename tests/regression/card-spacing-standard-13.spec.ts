@@ -12,6 +12,17 @@ import { test, expect, Page } from '@playwright/test';
  * and that card CSS enforces 1rem padding on all card parts.
  */
 
+/*
+ * a8a7362e ("specificity replaces class injection") stopped cards emitting
+ * x-card / x-card__header / __main / __title: card.css names each part by
+ * tag and position (`article > header`, `article > main`, `article > header
+ * > h3`). The selectors below name the same parts the same way.
+ */
+const CARD = 'article';
+const CARD_HEADER = 'article > header';
+const CARD_MAIN = 'article > main';
+const CARD_TITLE = 'article > header > :is(h1, h2, h3, h4)';
+
 test.describe('Card Spacing — Standard §13 Compliance', () => {
   test('card demo page loads without errors', async ({ page }) => {
     await page.goto('/demos/site/cards.html');
@@ -36,8 +47,8 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    // Find all .x-card__main elements
-    const mainPadding = await page.locator('.x-card__main').first().evaluate((el) => {
+    // Find the card's <main> (its body)
+    const mainPadding = await page.locator(CARD_MAIN).first().evaluate((el) => {
       const cs = getComputedStyle(el);
       return {
         paddingTop: cs.paddingTop,
@@ -62,7 +73,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    const headerPadding = await page.locator('.x-card__header').first().evaluate((el) => {
+    const headerPadding = await page.locator(CARD_HEADER).first().evaluate((el) => {
       const cs = getComputedStyle(el);
       return {
         paddingTop: cs.paddingTop,
@@ -112,11 +123,11 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
     );
 
     // Get the height of a card's content area
-    const cardHeight = await page.locator('.x-card').first().evaluate((el) => {
+    const cardHeight = await page.locator(CARD).first().evaluate((el) => {
       return {
         minHeight: getComputedStyle(el).minHeight,
         height: getComputedStyle(el).height,
-        lineHeight: getComputedStyle(el.querySelector('.x-card__main') || el).lineHeight,
+        lineHeight: getComputedStyle(el.querySelector(':scope > main') || el).lineHeight,
       };
     });
 
@@ -132,8 +143,10 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
-    // Get the gap property of x-demo (grid)
-    const demoGap = await page.locator('[x-demo]').first().evaluate((el) => {
+    // Get the gap of the grid the cards sit in. demo.js wraps an x-demo's
+    // children in .x-demo__grid (#211) -- the x-demo itself is a block and
+    // has no gap of its own to read.
+    const demoGap = await page.locator('[x-demo] > .x-demo__grid').first().evaluate((el) => {
       return getComputedStyle(el).gap || getComputedStyle(el).columnGap || 'auto';
     });
 
@@ -175,7 +188,7 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
     );
 
     // Check title/subtitle margin spacing
-    const titleSpacing = await page.locator('.x-card__title').first().evaluate((el) => {
+    const titleSpacing = await page.locator(CARD_TITLE).first().evaluate((el) => {
       return getComputedStyle(el).marginBottom;
     });
 

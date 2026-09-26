@@ -3,7 +3,7 @@
   "$id": "copybutton.schema.json",
   "title": "Copybutton",
   "description": "Behavior applied with x-copybutton.",
-  "schemaFor": "x-copybutton",
+  "schemaFor": "copybutton",
   "properties": {
     "x-copybutton": {
       "type": "string",
@@ -35,6 +35,21 @@
       "description": "CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first.",
       "default": "this is the copy target"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-copybutton"
+  },
+  "test": {
+    "setup": [
+      "<div x-copybutton>Test Content</div>",
+      "<div x-copybutton label=\"Copy\">Test Content</div>",
+      "<div x-copybutton position=\"top-right\">Test Content</div>",
+      "<div x-copybutton copy-feedback=\"Copied ✓\">Test Content</div>",
+      "<div x-copybutton copy-duration=\"2000\">Test Content</div>"
+    ]
   },
   "events": {
     "wb:copy:success": "Fired by copybutton().",

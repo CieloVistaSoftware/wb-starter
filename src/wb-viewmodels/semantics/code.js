@@ -27,7 +27,7 @@ if (!document.querySelector('link[data-highlight-theme]')) {
   // when the saved theme is one of ours.
   const localTheme = CODE_THEMES.find(t => t.id === savedTheme && t.path);
   // Use CDNJS for reliable loading
-  link.href = localTheme ? localTheme.path : `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${savedTheme}.min.css`;
+  link.href = localTheme ? localTheme.path : new URL(`../../lib/hljs-styles/${savedTheme}.min.css`, import.meta.url).href;
   link.setAttribute('data-highlight-theme', 'true');
   document.head.appendChild(link);
   
@@ -111,7 +111,19 @@ export function code(element, options = {}) {
       || readAttr(element, 'language')
       || langFromClass(element)
       || langFromClass(inner);
-    return code(inner, { ...options, language: hostLang });
+    // So do variant/size/scrollable/show-copy: the recursive call reads its
+    // config off the inner <code>, which carries none of them, so every one
+    // of them was silently dropped for a <div x-code> host. Forward only the
+    // ones actually set -- an explicit `undefined` would clobber the inner
+    // call's own defaults through its `...options` spread.
+    const hostOpts = {};
+    const hostVariant = readAttr(element, 'variant');
+    if (hostVariant) hostOpts.variant = hostVariant;
+    const hostSize = readAttr(element, 'size');
+    if (hostSize) hostOpts.size = hostSize;
+    if (readAttr(element, 'scrollable') === 'true') hostOpts.scrollable = true;
+    if (readFlag(element, 'show-copy') || readFlag(element, 'copy')) hostOpts.showCopy = true;
+    return code(inner, { ...hostOpts, ...options, language: hostLang });
   }
 
   const config = {

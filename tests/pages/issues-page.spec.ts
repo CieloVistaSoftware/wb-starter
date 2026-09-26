@@ -41,7 +41,7 @@ test.describe('Issues page', () => {
     // Checking a canned issue first turns that into a failure that names its own
     // cause, rather than a number mismatch that looks like a broken page.
     await expect(
-      page.locator('.issue-row[data-number="517"]'),
+      page.locator('.issue-row[number="517"]'),
       'the route fixture was not served — the page rendered live GitHub data'
     ).toBeAttached({ timeout: 10000 });
 

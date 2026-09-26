@@ -17,9 +17,35 @@ import { writeToClipboard } from '../copy.js';
  * so that logic exists in exactly one place project-wide (#291).
  */
 export function pre(element, options = {}) {
+  // `x-pre` is an attribute behavior (wb-lazy.js maps 'x-pre' -> 'pre'), and
+  // pre.schema.json declares no semanticElement, so its host is a <div x-pre>
+  // as often as a <pre>. That host used to warn and return while WB still
+  // marked it x-ready -- none of its attributes did anything. Same fix as
+  // code.js's #1016 <div x-code> branch: move the content into a real inner
+  // <pre> and decorate that, carrying the host's options across (the inner
+  // element has none of them). Only options actually set are forwarded, so
+  // an explicit `undefined` never clobbers a default via `...options`.
   if (element.tagName !== 'PRE') {
-    console.warn('[pre] Element must be a <pre>');
-    return () => {};
+    let inner = element.querySelector(':scope > pre');
+    if (!inner) {
+      if (element.querySelector(':scope > .x-pre-wrapper')) return () => {};
+      inner = document.createElement('pre');
+      while (element.firstChild) inner.appendChild(element.firstChild);
+      element.appendChild(inner);
+    }
+    const hostOpts = {};
+    const lang = readAttr(element, 'language');
+    if (lang) hostOpts.language = lang;
+    if (readAttr(element, 'scrollable') === 'true') hostOpts.scrollable = true;
+    const lineNumbers = readAttr(element, 'show-line-numbers');
+    if (lineNumbers) hostOpts.showLineNumbers = lineNumbers !== 'false';
+    const maxHeight = readAttr(element, 'max-height');
+    if (maxHeight) hostOpts.maxHeight = maxHeight;
+    if (element.hasAttribute('wrap') || element.hasAttribute('data-wrap')) hostOpts.wrap = readFlag(element, 'wrap');
+    const hostSize = readAttr(element, 'size');
+    if (hostSize) hostOpts.size = hostSize;
+    if (readFlag(element, 'show-copy') || readFlag(element, 'copy')) hostOpts.showCopy = true;
+    return pre(inner, { ...hostOpts, ...options });
   }
 
   // Idempotency check
