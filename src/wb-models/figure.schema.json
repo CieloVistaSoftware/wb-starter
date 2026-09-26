@@ -3,7 +3,7 @@
   "$id": "figure.schema.json",
   "title": "Figure",
   "description": "Behavior applied with x-figure.",
-  "schemaFor": "x-figure",
+  "schemaFor": "figure",
   "properties": {
     "caption-position": {
       "type": "string",
@@ -25,6 +25,19 @@
       "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none.",
       "default": "this is the caption"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-figure"
+  },
+  "test": {
+    "setup": [
+      "<div x-figure>Test Content</div>",
+      "<div x-figure caption-position=\"bottom\">Test Content</div>",
+      "<div x-figure zoom>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

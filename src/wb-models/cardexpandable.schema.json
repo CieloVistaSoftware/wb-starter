@@ -165,7 +165,7 @@
       "<div x-cardexpandable title=\"Sample title\">title=\"Sample title\"</div>",
       "<div x-cardexpandable content=\"Sample content\">content=\"Sample content\"</div>",
       "<div x-cardexpandable max-height=\"100px\">maxHeight=\"100px\"</div>",
-      "<div title=\"Details\">Content here</div>"
+      "<div x-cardexpandable title=\"Details\">Content here</div>"
     ],
     "matrix": {
       "combinations": [

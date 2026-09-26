@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "switcher.schema.json",
+  "title": "Switcher",
+  "description": "Behavior applied with x-switcher.",
+  "schemaFor": "switcher",
+  "properties": {
+    "threshold": {
+      "type": "string",
+      "description": "Read by switcher().",
+      "default": "30rem"
+    },
+    "gap": {
+      "type": "string",
+      "description": "Read by switcher().",
+      "default": "1rem"
+    },
+    "limit": {
+      "type": "string",
+      "description": "Read by switcher().",
+      "default": "4"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-switcher"
+  },
+  "test": {
+    "setup": [
+      "<div x-switcher>Test Content</div>",
+      "<div x-switcher threshold=\"30rem\">Test Content</div>",
+      "<div x-switcher gap=\"1rem\">Test Content</div>",
+      "<div x-switcher limit=\"4\">Test Content</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

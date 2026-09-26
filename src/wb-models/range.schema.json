@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "range.schema.json",
+  "title": "Range",
+  "description": "Behavior applied with x-range.",
+  "schemaFor": "range",
+  "semanticElement": {
+    "tagName": "input",
+    "type": "range"
+  },
+  "properties": {
+    "value-prefix": {
+      "type": "string",
+      "description": "Read by range().",
+      "default": "this is the value prefix"
+    },
+    "value-suffix": {
+      "type": "string",
+      "description": "Read by range().",
+      "default": "this is the value suffix"
+    },
+    "show-value": {
+      "type": "boolean",
+      "description": "Read by range(). Bare attribute.",
+      "default": false
+    },
+    "show-labels": {
+      "type": "boolean",
+      "description": "Read by range(). Bare attribute.",
+      "default": false
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-range"
+  },
+  "test": {
+    "setup": [
+      "<input type=\"range\" x-range>",
+      "<input type=\"range\" x-range show-value>",
+      "<input type=\"range\" x-range show-labels>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

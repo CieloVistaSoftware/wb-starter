@@ -3,7 +3,7 @@
   "$id": "video.schema.json",
   "title": "Video",
   "description": "Behavior applied with x-video.",
-  "schemaFor": "x-video",
+  "schemaFor": "video",
   "properties": {
     "poster": {
       "type": "string",
@@ -35,6 +35,21 @@
       "description": "Restart from the beginning when playback reaches the end.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-video"
+  },
+  "test": {
+    "setup": [
+      "<div x-video>Test Content</div>",
+      "<div x-video poster=\"#\">Test Content</div>",
+      "<div x-video autoplay>Test Content</div>",
+      "<div x-video muted>Test Content</div>",
+      "<div x-video loop>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

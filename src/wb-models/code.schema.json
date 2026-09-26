@@ -3,7 +3,7 @@
   "$id": "code.schema.json",
   "title": "Code",
   "description": "Behavior applied with x-code.",
-  "schemaFor": "x-code",
+  "schemaFor": "code",
   "properties": {
     "language": {
       "type": "string",
@@ -35,6 +35,19 @@
       "description": "Alias of `show-copy`.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-code"
+  },
+  "test": {
+    "setup": [
+      "<div x-code>Test Content</div>",
+      "<div x-code show-copy>Test Content</div>",
+      "<div x-code copy>Test Content</div>"
+    ]
   },
   "events": {
     "wb:code:copy": "Fired by code()."

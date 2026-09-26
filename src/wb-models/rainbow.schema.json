@@ -3,13 +3,25 @@
   "$id": "rainbow.schema.json",
   "title": "Rainbow",
   "description": "Behavior applied with x-rainbow.",
-  "schemaFor": "x-rainbow",
+  "schemaFor": "rainbow",
   "properties": {
     "duration": {
       "type": "string",
       "description": "How long one full colour cycle takes, as a CSS duration (e.g. `3s`). Longer is slower.",
       "default": "3s"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-rainbow"
+  },
+  "test": {
+    "setup": [
+      "<div x-rainbow>Test Content</div>",
+      "<div x-rainbow duration=\"3s\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

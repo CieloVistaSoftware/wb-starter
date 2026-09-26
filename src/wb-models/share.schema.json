@@ -3,7 +3,7 @@
   "$id": "share.schema.json",
   "title": "Share",
   "description": "Behavior applied with x-share.",
-  "schemaFor": "x-share",
+  "schemaFor": "share",
   "properties": {
     "text": {
       "type": "string",
@@ -35,6 +35,20 @@
       "description": "URL to share. Only used when `share-url` is absent.",
       "default": "#"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-share"
+  },
+  "test": {
+    "setup": [
+      "<div x-share>Test Content</div>",
+      "<div x-share label=\"📤 Share\">Test Content</div>",
+      "<div x-share share-url=\"#\">Test Content</div>",
+      "<div x-share url=\"#\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

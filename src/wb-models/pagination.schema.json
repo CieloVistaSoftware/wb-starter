@@ -3,7 +3,7 @@
   "$id": "pagination.schema.json",
   "title": "Pagination",
   "description": "Behavior applied with x-pagination.",
-  "schemaFor": "x-pagination",
+  "schemaFor": "pagination",
   "properties": {
     "total": {
       "type": "string",
@@ -40,6 +40,21 @@
       "description": "Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current=\"page\"`.",
       "default": "this is the page"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-pagination"
+  },
+  "test": {
+    "setup": [
+      "<div x-pagination>Test Content</div>",
+      "<div x-pagination total=\"0\">Test Content</div>",
+      "<div x-pagination per-page=\"10\">Test Content</div>",
+      "<div x-pagination pages=\"0\">Test Content</div>",
+      "<div x-pagination current=\"1\">Test Content</div>"
+    ]
   },
   "events": {
     "wb:pagination:change": "Fired by pagination()."

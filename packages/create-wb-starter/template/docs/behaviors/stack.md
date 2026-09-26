@@ -10,7 +10,9 @@ Vertical stack layout behavior. Renders children in a column with configurable g
 
 ```html
 <div x-stack gap="0.75rem" pad="1rem" radius="8px">
-  <div>Queued</div><div>Running</div><div>Passed</div>
+  <div>Queued</div>
+  <div>Running</div>
+  <div>Passed</div>
 </div>
 ```
 

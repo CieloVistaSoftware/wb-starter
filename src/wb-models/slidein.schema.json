@@ -3,13 +3,25 @@
   "$id": "slidein.schema.json",
   "title": "Slidein",
   "description": "On click, plays the slide-in-<dir> animation for 0.5s.",
-  "schemaFor": "x-slidein",
+  "schemaFor": "slidein",
   "properties": {
     "direction": {
       "type": "string",
       "description": "Edge the element slides in from: `left` (default), `right`, `top` or `bottom`.",
       "default": "left"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-slidein"
+  },
+  "test": {
+    "setup": [
+      "<div x-slidein>Test Content</div>",
+      "<div x-slidein direction=\"left\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

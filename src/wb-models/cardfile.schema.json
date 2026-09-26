@@ -178,7 +178,7 @@
       "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"compact\">variant=compact</div>",
       "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"elevated\">variant=elevated</div>",
       "<div x-cardfile filename=\"quarterly-report.pdf\" href=\"#\" downloadable>with downloadable</div>",
-      "<div filename=\"quarterly-report.pdf\"></div>"
+      "<div x-cardfile filename=\"quarterly-report.pdf\"></div>"
     ],
     "matrix": {
       "combinations": [

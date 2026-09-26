@@ -3,8 +3,19 @@
   "$id": "fadein.schema.json",
   "title": "Fadein",
   "description": "On click, plays the fade-in animation for 0.5s.",
-  "schemaFor": "x-fadein",
+  "schemaFor": "fadein",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-fadein"
+  },
+  "test": {
+    "setup": [
+      "<div x-fadein>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

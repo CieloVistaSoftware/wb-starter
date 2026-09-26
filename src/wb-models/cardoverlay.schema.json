@@ -204,7 +204,7 @@
       "<div x-cardoverlay xalign=\"right\">xalign=right</div>",
       "<div x-cardoverlay variant=\"default\">variant=default</div>",
       "<div x-cardoverlay title=\"Test Title\">With title attribute</div>",
-      "<div image=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Overlay Title\"></div>"
+      "<div x-cardoverlay image=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Overlay Title\"></div>"
     ],
     "matrix": {
       "combinations": [

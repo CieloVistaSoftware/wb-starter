@@ -3,8 +3,19 @@
   "$id": "flash.schema.json",
   "title": "Flash",
   "description": "On click, plays the flash animation for 0.75s.",
-  "schemaFor": "x-flash",
+  "schemaFor": "flash",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-flash"
+  },
+  "test": {
+    "setup": [
+      "<div x-flash>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

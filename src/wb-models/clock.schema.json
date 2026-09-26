@@ -3,7 +3,7 @@
   "$id": "clock.schema.json",
   "title": "Clock",
   "description": "Behavior applied with x-clock.",
-  "schemaFor": "x-clock",
+  "schemaFor": "clock",
   "properties": {
     "variant": {
       "type": "string",
@@ -20,6 +20,19 @@
       "description": "Show the seconds field. On unless set to `\"false\"`.",
       "default": "this is the show seconds"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-clock"
+  },
+  "test": {
+    "setup": [
+      "<div x-clock>Test Content</div>",
+      "<div x-clock variant=\"digital\">Test Content</div>",
+      "<div x-clock format=\"24\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

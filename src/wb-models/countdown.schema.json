@@ -3,7 +3,7 @@
   "$id": "countdown.schema.json",
   "title": "Countdown",
   "description": "Behavior applied with x-countdown.",
-  "schemaFor": "x-countdown",
+  "schemaFor": "countdown",
   "properties": {
     "seconds": {
       "type": "string",
@@ -25,6 +25,19 @@
       "description": "Alias of `date`, read only when `date` is absent.",
       "default": "this is the to"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-countdown"
+  },
+  "test": {
+    "setup": [
+      "<div x-countdown>Test Content</div>",
+      "<div x-countdown seconds=\"0\">Test Content</div>",
+      "<div x-countdown format=\"auto\">Test Content</div>"
+    ]
   },
   "events": {
     "wb:countdown:complete": "Fired by countdown()."

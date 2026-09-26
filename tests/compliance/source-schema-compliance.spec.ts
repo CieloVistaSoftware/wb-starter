@@ -36,6 +36,8 @@ const FUNCTION_NAME_MAP: Record<string, string> = {
   'switch': 'switchInput',
   'fix-card': 'fixCard',
   'drawer-layout': 'drawerLayout',
+  // semantics/dialog.js: `export { dialog as modal }` -- x-modal IS dialog().
+  'modal': 'dialog',
 };
 
 function getAllJsSource(): string {
@@ -265,7 +267,12 @@ test.describe('Source-Schema: Event Compliance', () => {
     // Ratcheted at the measured count rather than asserted at zero, because
     // fixing 42 event contracts is its own piece of work and an unsatisfiable
     // gate gets bypassed. THIS CEILING MUST ONLY COME DOWN.
-    const EVENT_DISPATCH_BASELINE = 71;
+    //
+    // 71 -> 56: extractFunction() (tests/base.ts) ended every
+    // `function x(element, options = {})` at the `{}` default parameter, so
+    // those behaviors were checked as empty bodies. Measured again once it
+    // sliced the real body.
+    const EVENT_DISPATCH_BASELINE = 56;
     expect(
       issues.length,
       `${issues.length} schema events are not dispatched by their behavior `

@@ -10,7 +10,10 @@ Behavior applied with x-cluster.
 
 ```html
 <div x-cluster gap="0.5rem">
-  <span>typescript</span><span>playwright</span><span>light-dom</span><span>no-build</span>
+  <span>typescript</span>
+  <span>playwright</span>
+  <span>light-dom</span>
+  <span>no-build</span>
 </div>
 ```
 

@@ -3,7 +3,7 @@
   "$id": "prompt.schema.json",
   "title": "Prompt",
   "description": "Behavior applied with x-prompt.",
-  "schemaFor": "x-prompt",
+  "schemaFor": "prompt",
   "properties": {
     "heading": {
       "type": "string",
@@ -35,6 +35,18 @@
       "description": "Body text above the field. Read BEFORE `message`.",
       "default": "this is the prompt message"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-prompt"
+  },
+  "test": {
+    "setup": [
+      "<div x-prompt>Test Content</div>",
+      "<div x-prompt heading=\"Input\">Test Content</div>"
+    ]
   },
   "events": {
     "wb:prompt:cancel": "Fired by prompt().",

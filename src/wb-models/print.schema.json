@@ -3,7 +3,7 @@
   "$id": "print.schema.json",
   "title": "Print",
   "description": "Behavior applied with x-print.",
-  "schemaFor": "x-print",
+  "schemaFor": "print",
   "properties": {
     "target": {
       "type": "string",
@@ -15,6 +15,18 @@
       "description": "Button label. Defaults to `🖨️ Print`.",
       "default": "🖨️ Print"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-print"
+  },
+  "test": {
+    "setup": [
+      "<div x-print>Test Content</div>",
+      "<div x-print label=\"🖨️ Print\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

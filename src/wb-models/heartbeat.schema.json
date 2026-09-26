@@ -3,8 +3,19 @@
   "$id": "heartbeat.schema.json",
   "title": "Heartbeat",
   "description": "On click, plays the heartbeat animation for 1.3s.",
-  "schemaFor": "x-heartbeat",
+  "schemaFor": "heartbeat",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-heartbeat"
+  },
+  "test": {
+    "setup": [
+      "<div x-heartbeat>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

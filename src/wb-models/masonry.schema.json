@@ -3,7 +3,7 @@
   "$id": "masonry.schema.json",
   "title": "Masonry",
   "description": "Behavior applied with x-masonry.",
-  "schemaFor": "x-masonry",
+  "schemaFor": "masonry",
   "properties": {
     "columns": {
       "type": "string",
@@ -15,6 +15,19 @@
       "description": "Space between items, as a CSS length. Defaults to `1rem`.",
       "default": "1rem"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-masonry"
+  },
+  "test": {
+    "setup": [
+      "<div x-masonry>Test Content</div>",
+      "<div x-masonry columns=\"3\">Test Content</div>",
+      "<div x-masonry gap=\"1rem\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

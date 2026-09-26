@@ -49,9 +49,16 @@ const SKIP_DIRS = new Set([
 // track how much failure text the PREVIOUS run happened to capture -- the
 // ceilings passed after a small run and failed after a large one with no source
 // change between. A gate whose answer depends on its own exhaust is not a gate.
+//
+// data/priority-gate.json is the same kind of file: a snapshot of open GitHub
+// issue titles and bodies written by scripts/build-priority-gate.mjs. Issues
+// ABOUT the removed tags quote them ("<wb-select> ..."); that is a recorded
+// quotation of a bug report, not a tag anything renders, and it changes every
+// time the manifest is refreshed from GitHub with no source change at all.
 const SKIP_FILES = new Set([
   'test-results.json',
   'test-status.json',
+  'priority-gate.json',
 ]);
 const EXT = /\.(js|mjs|cjs|ts|tsx|css|html|json|md|yml|yaml)$/;
 

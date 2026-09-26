@@ -271,8 +271,8 @@
       "<div x-cardimage fit=\"cover\">fit=cover</div>",
       "<div x-cardimage title=\"Test Title\">With title attribute</div>",
       "<div x-cardimage variant=\"default\">Variant: default</div>",
-      "<div src=\"photo.jpg\" alt=\"Photo\"></div>",
-      "<div src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></div>"
+      "<div x-cardimage src=\"photo.jpg\" alt=\"Photo\"></div>",
+      "<div x-cardimage src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></div>"
     ],
     "matrix": {
       "combinations": [

@@ -32,7 +32,9 @@ function isEnhanced(behaviorName) {
   if (behaviorName === 'password') {
     return !!el.parentElement && el.parentElement.classList.contains('x-password');
   }
-  return el.classList.contains(`wb-${behaviorName}`);
+  // 4.0.0 renamed every wb-* class to x-* (radio.js/range.js add `x-radio`/`x-range`);
+  // probing the old `wb-` class reported working behaviors as never having run.
+  return el.classList.contains(`x-${behaviorName}`);
 }
 
 // Behaviors whose name exactly matches a native <input type="…"> value, but that

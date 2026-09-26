@@ -8,8 +8,8 @@
  */
 export const VERSION = {
   "version": "4.0.5",
-  "commit": "3b0e83d4",
-  "builtAt": "2026-09-26T03:10:42.819Z",
+  "commit": "f430322d",
+  "builtAt": "2026-09-26T03:17:25.886Z",
   "branch": "claude/fervent-noether-ydmxea",
   "dirty": true,
   "ahead": 0,

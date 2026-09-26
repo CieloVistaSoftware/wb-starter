@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { test, expect } from '@playwright/test';
+import { usesNativeHost } from '../base';
 
 const ROOT = process.cwd();
 const SCHEMA_DIR = path.join(ROOT, 'src', 'wb-models');
@@ -15,6 +16,8 @@ const EXPORT_ALIASES: Record<string, string> = {
   searchfield: 'searchField',
   copybutton: 'copyButton',
   'fix-card': 'fixCard',
+  // semantics/dialog.js: `export { dialog as modal }` -- x-modal IS dialog().
+  modal: 'dialog',
 };
 
 const NON_COMPONENT_SCHEMAS = new Set([
@@ -155,10 +158,14 @@ test.describe('Schema/behavior completeness audit (#344)', () => {
       const setups = schema.test?.setup || [];
       const surface = behaviorSurface(behavior);
       if (behavior.startsWith('card')) surface.push('<article');
-      const relevant = setups.filter((html: string) => surface.some(marker => html.includes(marker)));
+      // A native host that auto-injects the behavior (<audio>, <dialog> -- see
+      // tag-map.js nativeMap) is part of its surface: the element implies it.
+      const usesSurface = (html: string) =>
+        surface.some(marker => html.includes(marker)) || usesNativeHost(html, behavior);
+      const relevant = setups.filter(usesSurface);
 
-      if (setups.some((html: string) => !surface.some(marker => html.includes(marker)))) {
-        mismatches.push(`${file}: setup entry does not use <wb-${behavior}> or x-${behavior}`);
+      if (setups.some((html: string) => !usesSurface(html))) {
+        mismatches.push(`${file}: setup entry does not use <wb-${behavior}>, x-${behavior} or an auto-injecting native host`);
       }
       if (relevant.length < 5) coverageGaps.push(`${file}: ${relevant.length}/5 relevant setup entries`);
     }

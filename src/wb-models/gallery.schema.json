@@ -3,7 +3,7 @@
   "$id": "gallery.schema.json",
   "title": "Gallery",
   "description": "Behavior applied with x-gallery.",
-  "schemaFor": "x-gallery",
+  "schemaFor": "gallery",
   "properties": {
     "columns": {
       "type": "string",
@@ -25,6 +25,19 @@
       "description": "Clicking any item opens it full-size in a lightbox.",
       "default": "this is the lightbox"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-gallery"
+  },
+  "test": {
+    "setup": [
+      "<div x-gallery>Test Content</div>",
+      "<div x-gallery columns=\"3\">Test Content</div>",
+      "<div x-gallery gap=\"1rem\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

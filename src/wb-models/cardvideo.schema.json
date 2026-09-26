@@ -246,8 +246,8 @@
       "<div x-cardvideo variant=\"bordered\">variant=bordered</div>",
       "<div x-cardvideo autoplay>with autoplay</div>",
       "<div x-cardvideo title=\"Test Title\">With title attribute</div>",
-      "<div src=\"https://www.w3schools.com/html/mov_bbb.mp4\"></div>",
-      "<div src=\"https://www.w3schools.com/html/mov_bbb.mp4\" title=\"My Video\" poster=\"/images/placeholder.svg\"></div>"
+      "<div x-cardvideo src=\"https://www.w3schools.com/html/mov_bbb.mp4\"></div>",
+      "<div x-cardvideo src=\"https://www.w3schools.com/html/mov_bbb.mp4\" title=\"My Video\" poster=\"/images/placeholder.svg\"></div>"
     ],
     "matrix": {
       "combinations": [

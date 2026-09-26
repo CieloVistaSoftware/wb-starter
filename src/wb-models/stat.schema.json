@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "stat.schema.json",
+  "title": "Stat",
+  "description": "Behavior applied with x-stat.",
+  "schemaFor": "stat",
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "Read by stat().",
+      "default": "this is the label"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Read by stat().",
+      "default": "this is the variant"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-stat"
+  },
+  "test": {
+    "setup": [
+      "<div x-stat>Test Content</div>"
+    ]
+  },
+  "_metadata": {
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
+    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+  }
+}

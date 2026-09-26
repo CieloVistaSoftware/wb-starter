@@ -3,7 +3,7 @@
   "$id": "pre.schema.json",
   "title": "Pre",
   "description": "Behavior applied with x-pre.",
-  "schemaFor": "x-pre",
+  "schemaFor": "pre",
   "properties": {
     "language": {
       "type": "string",
@@ -45,6 +45,20 @@
       "description": "Alias of `show-copy`.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-pre"
+  },
+  "test": {
+    "setup": [
+      "<div x-pre>Test Content</div>",
+      "<div x-pre wrap>Test Content</div>",
+      "<div x-pre show-copy>Test Content</div>",
+      "<div x-pre copy>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

@@ -3,7 +3,7 @@
   "$id": "cluster.schema.json",
   "title": "Cluster",
   "description": "Behavior applied with x-cluster.",
-  "schemaFor": "x-cluster",
+  "schemaFor": "cluster",
   "properties": {
     "gap": {
       "type": "string",
@@ -20,6 +20,20 @@
       "description": "How items line up across the row — CSS `align-items`. Defaults to `center`, which is what keeps mixed-height chips and buttons on a shared centre line.",
       "default": "center"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-cluster"
+  },
+  "test": {
+    "setup": [
+      "<div x-cluster><span>one</span><span>two</span></div>",
+      "<div x-cluster gap=\"1rem\"><span>one</span><span>two</span></div>",
+      "<div x-cluster justify=\"flex-start\"><span>one</span><span>two</span></div>",
+      "<div x-cluster align=\"center\"><span>one</span><span>two</span></div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

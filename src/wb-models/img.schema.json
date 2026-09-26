@@ -3,7 +3,7 @@
   "$id": "img.schema.json",
   "title": "Img",
   "description": "Behavior applied with x-img.",
-  "schemaFor": "x-img",
+  "schemaFor": "img",
   "properties": {
     "placeholder": {
       "type": "string",
@@ -30,6 +30,19 @@
       "description": "Clicking the image opens it full-size in a lightbox. Bare attribute.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-img"
+  },
+  "test": {
+    "setup": [
+      "<div x-img>Test Content</div>",
+      "<div x-img lazy>Test Content</div>",
+      "<div x-img zoomable>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

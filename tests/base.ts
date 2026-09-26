@@ -377,6 +377,45 @@ export function isBlackWhiteTransparency(match: string, content: string, matchIn
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// NATIVE HOSTS (auto-injection)
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * The bare native tags that auto-inject `behavior` through tag-map.js's
+ * nativeMap -- `<audio>` for audio, `<article>` for card, `<dialog>` for
+ * dialog. Read from the source table itself, so this list cannot drift from
+ * what the runtime actually does.
+ *
+ * A setup example written as `<audio loop>` IS the behavior: the element
+ * implies it, and for a type-1 behavior on its own element an added x-audio is
+ * redundant (#746). Checks that demand an `x-{name}`/`<wb-*>` marker in every
+ * setup string predate auto-injection and reported that correct form as a
+ * mismatch. Only plain tag selectors are returned; `input[type="radio"]`-style
+ * keys are not a tag a setup string can start with.
+ */
+let NATIVE_HOSTS: Map<string, string[]> | null = null;
+export function nativeHostsFor(behavior: string): string[] {
+  if (!NATIVE_HOSTS) {
+    NATIVE_HOSTS = new Map();
+    const src = fs.readFileSync(path.join(ROOT, 'src/core/tag-map.js'), 'utf-8');
+    const block = src.match(/export const nativeMap = \{([\s\S]*?)\n\};/);
+    if (!block) throw new Error('nativeMap not found in src/core/tag-map.js');
+    for (const m of block[1].matchAll(/^\s*'([a-z][a-z0-9]*)'\s*:\s*'([a-z0-9-]+)'/gm)) {
+      const list = NATIVE_HOSTS.get(m[2]) || [];
+      list.push(m[1]);
+      NATIVE_HOSTS.set(m[2], list);
+    }
+  }
+  return NATIVE_HOSTS.get(behavior) || [];
+}
+
+/** True when `html`'s root element is a native tag that auto-injects `behavior`. */
+export function usesNativeHost(html: string, behavior: string): boolean {
+  const root = /^\s*<([a-z][a-z0-9]*)[\s>/]/i.exec(html);
+  return !!root && nativeHostsFor(behavior).includes(root[1].toLowerCase());
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // SOURCE CODE ANALYSIS
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -395,7 +434,13 @@ export function extractFunction(source: string, funcName: string): string | null
   const startIdx = match.index;
   let braceCount = 0;
   let endIdx = startIdx;
-  let i = startIdx;
+  // Count braces from the BODY's opening brace (the `{` the pattern ends on),
+  // not from `export`. Starting at `export` counted the `{}` of a default
+  // parameter -- `function code(element, options = {})` -- as the whole body:
+  // the count returned to zero inside the parameter list, so every behavior
+  // written that way came back as its bare signature, and the event, baseClass
+  // and requiredChildren checks were run against an empty function.
+  let i = match.index + match[0].length - 1;
   
   while (i < source.length) {
     const char = source[i];

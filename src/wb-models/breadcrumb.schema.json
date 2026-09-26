@@ -3,7 +3,7 @@
   "$id": "breadcrumb.schema.json",
   "title": "Breadcrumb",
   "description": "Behavior applied with x-breadcrumb.",
-  "schemaFor": "x-breadcrumb",
+  "schemaFor": "breadcrumb",
   "properties": {
     "items": {
       "type": "string",
@@ -15,6 +15,18 @@
       "description": "Character drawn between items. Defaults to `/`.",
       "default": "/"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-breadcrumb"
+  },
+  "test": {
+    "setup": [
+      "<div x-breadcrumb>Test Content</div>",
+      "<div x-breadcrumb separator=\"/\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

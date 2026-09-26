@@ -3,7 +3,7 @@
   "$id": "steps.schema.json",
   "title": "Steps",
   "description": "Behavior applied with x-steps.",
-  "schemaFor": "x-steps",
+  "schemaFor": "steps",
   "properties": {
     "items": {
       "type": "string",
@@ -15,6 +15,18 @@
       "description": "Which step is active, counting from **1**, not 0. Defaults to `1`.",
       "default": "1"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-steps"
+  },
+  "test": {
+    "setup": [
+      "<div x-steps><div>Step one</div><div>Step two</div></div>",
+      "<div x-steps current=\"1\"><div>Step one</div><div>Step two</div></div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

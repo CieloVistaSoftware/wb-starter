@@ -3,13 +3,25 @@
   "$id": "glow.schema.json",
   "title": "Glow",
   "description": "Behavior applied with x-glow.",
-  "schemaFor": "x-glow",
+  "schemaFor": "glow",
   "properties": {
     "color": {
       "type": "string",
       "description": "Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it.",
       "default": "var(--primary, #6366f1)"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-glow"
+  },
+  "test": {
+    "setup": [
+      "<div x-glow>Test Content</div>",
+      "<div x-glow color=\"var(--primary, #6366f1)\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
