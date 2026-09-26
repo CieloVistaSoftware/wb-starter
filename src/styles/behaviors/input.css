@@ -79,6 +79,13 @@ x-select:disabled, [x-select]:disabled{
 }
 
 /* Sizes */
+/* textarea `resize` (none|vertical|horizontal|both), applied by textarea.js
+   to the real <textarea> inside a schema-built <div x-textarea> host. */
+.x-textarea--resize-none { resize: none; }
+.x-textarea--resize-vertical { resize: vertical; }
+.x-textarea--resize-horizontal { resize: horizontal; }
+.x-textarea--resize-both { resize: both; }
+
 .x-input--xs, .x-select--xs, .x-textarea--xs {
   padding: 0.125rem 0.5rem;
   font-size: 0.75rem;
@@ -193,6 +200,20 @@ input[type="radio"] {
    around it rather than a fixed pixel value, so it tracks the select's own
    size variant.
    ───────────────────────────────────────────────────────────────────────── */
+/* `searchable` filter box built by select.js above the real <select>. */
+.x-select__search {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font: inherit;
+}
+
 .x-select-clearable {
   display: inline-flex;
   align-items: center;

@@ -76,3 +76,11 @@
 .x-checkbox__label {
   font-size: var(--x-checkbox-label-size, 0.875rem);
 }
+
+/* size -- checkbox.schema.json `size` (appliesClass x-checkbox--{{value}}) */
+.x-checkbox--sm { --x-checkbox-size: 14px; --x-checkbox-label-size: 0.75rem; }
+.x-checkbox--lg { --x-checkbox-size: 22px; --x-checkbox-label-size: 1rem; }
+
+/* variant -- checkbox.schema.json `variant` (appliesClass x-checkbox--{{value}}) */
+.x-checkbox--primary { --x-checkbox-checked-bg: var(--primary); --x-checkbox-checked-border: var(--primary); }
+.x-checkbox--success { --x-checkbox-checked-bg: var(--success-color, #22c55e); --x-checkbox-checked-border: var(--success-color, #22c55e); }

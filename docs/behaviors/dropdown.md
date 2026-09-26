@@ -14,7 +14,7 @@ real child `<a>`/`<button>`/`<div>` elements. Implemented by `dropdown()` in
 | Semantic element | `<div implicitRole="menu">` |
 | Root CSS Class | `<div x-dropdown>` (plus `x-dropdown-trigger` on the host itself) |
 | Category | Overlay |
-| Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — declares `closeOnOutside`/`offset` properties the JS never reads; outside-click-to-close is always on unconditionally, it isn't configurable |
+| Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — `close-on-outside="false"` keeps the menu open on outside clicks; `offset` is the gap in px between trigger and menu (default 4) |
 
 ## Properties
 

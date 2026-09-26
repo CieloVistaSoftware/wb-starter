@@ -1,3 +1,4 @@
+import { readFlag, readNumber } from '../core/read-attr.js';
 /**
  * Dropdown Behavior
  * -----------------------------------------------------------------------------
@@ -32,6 +33,10 @@ export function dropdown(element, options = {}) {
     // (confirmed live: hovering never opened the menu, only clicking did,
     // identical to every other dropdown regardless of this attribute).
     trigger: options.trigger || element.getAttribute('trigger') || 'click',
+    // Both declared in dropdown.schema.json and read by nothing until now:
+    // outside-click-to-close was unconditional and the menu gap a fixed 4px.
+    closeOnOutside: options.closeOnOutside ?? readFlag(element, 'close-on-outside', true),
+    offset: options.offset ?? readNumber(element, 'offset', 4),
     ...options
   };
 
@@ -101,7 +106,7 @@ export function dropdown(element, options = {}) {
     width:max-content;max-width:min(90vw,32rem);
     box-shadow:0 10px 25px rgba(0,0,0,0.2);
     display:none;z-index:1000;overflow:hidden;
-    margin-top:4px;
+    ${String(config.position).startsWith('top') ? 'margin-bottom' : 'margin-top'}:${config.offset}px;
   `;
 
   // Populate menu from items OR move child elements into menu
@@ -252,7 +257,7 @@ export function dropdown(element, options = {}) {
   const outsideClickHandler = (e) => {
     if (!element.contains(e.target)) close();
   };
-  document.addEventListener('click', outsideClickHandler);
+  if (config.closeOnOutside) document.addEventListener('click', outsideClickHandler);
 
   // Keyboard support
   const keyHandler = (e) => {

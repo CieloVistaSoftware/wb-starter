@@ -6,6 +6,8 @@
  * Custom Tag: <div x-tabs>
  * -----------------------------------------------------------------------------
  */
+import { readAttr, readFlag } from '../core/read-attr.js';
+
 export function tabs(element, options = {}) {
   // #448: no classList.add('x-tabs') -- no CSS selector anywhere depends
   // on the bare class.
@@ -15,6 +17,25 @@ export function tabs(element, options = {}) {
   // like <div x-tabs> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-tabs> tag does not get a redundant class.
   element.classList.add('x-tabs');
+
+  // Config is read once, up front, before any early return below. `variant`,
+  // `size`, `fullWidth` and `vertical` are declared with appliesClass
+  // "x-tabs--{{value}}", but that is schema-builder's mechanism and it never
+  // runs on a wb-lazy-only page (same gap switch.js documents), so the host
+  // never got the modifier classes tabs.css is written against.
+  const config = {
+    activeTab: options.activeTab ?? readAttr(element, 'active-tab', '0'),
+    variant: options.variant || readAttr(element, 'variant', 'default'),
+    size: options.size || readAttr(element, 'size', 'md'),
+    fullWidth: options.fullWidth ?? readFlag(element, 'full-width'),
+    vertical: options.vertical ?? readFlag(element, 'vertical'),
+  };
+  const modifiers = [];
+  if (config.variant !== 'default') modifiers.push(`x-tabs--${config.variant}`);
+  if (config.size !== 'md') modifiers.push(`x-tabs--${config.size}`);
+  if (config.fullWidth) modifiers.push('x-tabs--full-width');
+  if (config.vertical) modifiers.push('x-tabs--vertical');
+  if (modifiers.length) element.classList.add(...modifiers);
 
   // 1. Check if structure exists (Pre-rendered from Template)
   let nav = element.querySelector('.x-tabs__nav');
@@ -46,9 +67,7 @@ export function tabs(element, options = {}) {
     // hard-coded to index 0, so the attribute did nothing (#861). Clamped
     // deliberately: an out-of-range index would open no panel at all, which
     // reads as a broken control rather than a bad attribute value.
-    const requestedActive = parseInt(
-      options.activeTab ?? element.getAttribute('active-tab') ?? '0', 10,
-    );
+    const requestedActive = parseInt(config.activeTab, 10);
     const activeIndex = Number.isFinite(requestedActive)
       ? Math.min(Math.max(requestedActive, 0), originalPanels.length - 1)
       : 0;
@@ -140,7 +159,7 @@ export function tabs(element, options = {}) {
   nav.addEventListener('click', clickHandler);
 
   return () => {
-    element.classList.remove('x-tabs');
+    element.classList.remove('x-tabs', ...modifiers);
     nav.removeEventListener('click', clickHandler);
   };
 }

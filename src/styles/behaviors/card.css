@@ -1120,3 +1120,24 @@ article.x-card--link.x-card-link,
   height: 100%;
   object-fit: cover;
 }
+
+/* cardimage `caption` — a <figcaption> inside the card's <figure>. The figure
+   normally carries the aspect ratio and the img fills it; with a caption the
+   ratio moves onto the img so the caption is not clipped by overflow:hidden. */
+.x-card__figure:has(> .x-card__caption) { aspect-ratio: auto; }
+.x-card__figure:has(> .x-card__caption) img { aspect-ratio: var(--card-image-aspect, auto); height: auto; }
+.x-card__caption {
+  padding: 0.5rem 1rem 0;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* cardimage `href` — the whole card is the link; .x-card__link-overlay is the
+   stretched <a> (position:absolute; inset:0) and needs a positioned card. */
+.x-card-image--linked { position: relative; cursor: pointer; }
+
+/* cardstats `color` — accent stripe + icon tint. The value itself arrives as
+   the --x-stats-accent custom property set by cardstats() (card.js). */
+.x-stats.x-stats--accent { border-top: 3px solid var(--x-stats-accent); }
+.x-stats.x-stats--accent .x-card__icon { color: var(--x-stats-accent); }

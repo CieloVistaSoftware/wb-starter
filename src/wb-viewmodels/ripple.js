@@ -1,4 +1,4 @@
-import { readFlag } from '../core/read-attr.js';
+import { readFlag, readAttr, readNumber } from '../core/read-attr.js';
 /**
  * Ripple Behavior
  * -----------------------------------------------------------------------------
@@ -8,10 +8,12 @@ import { readFlag } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  */
 export function ripple(element, options = {}) {
+  // The schema declares plain `color` / `duration` / `centered`; the older
+  // `ripple-*` spellings are still honoured as a fallback.
   const config = {
-    color: options.color || element.getAttribute('ripple-color') || element.getAttribute('ripple-color') || 'rgba(255, 255, 255, 0.4)',
-    duration: parseInt(options.duration || element.getAttribute('ripple-duration') || element.getAttribute('ripple-duration') || '600', 10),
-    centered: options.centered ?? (readFlag(element, 'ripple-centered') || element.hasAttribute('ripple-centered')),
+    color: options.color || readAttr(element, 'color') || readAttr(element, 'ripple-color') || 'rgba(255, 255, 255, 0.4)',
+    duration: parseInt(options.duration || readNumber(element, 'duration', 0) || readNumber(element, 'ripple-duration', 600), 10),
+    centered: options.centered ?? (readFlag(element, 'centered') || readFlag(element, 'ripple-centered')),
     ...options
   };
 

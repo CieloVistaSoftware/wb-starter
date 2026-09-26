@@ -22,6 +22,12 @@ export function dialog(element, options = {}) {
     // "Fullscreen" demo triggers opened the exact same default-positioned,
     // default-sized dialog).
     variant: options.variant || element.getAttribute('variant') || 'default',
+    // Declared in dialog.schema.json and documented in docs/behaviors/dialog.md
+    // (all default true) but read by no code (#1005). readFlag so that
+    // `close-on-backdrop="false"` really means off -- the #747 trap.
+    closeOnBackdrop: options.closeOnBackdrop ?? readFlag(element, 'close-on-backdrop', true),
+    closeOnEscape: options.closeOnEscape ?? readFlag(element, 'close-on-escape', true),
+    showClose: options.showClose ?? readFlag(element, 'show-close', true),
     ...options
   };
 
@@ -54,12 +60,15 @@ export function dialog(element, options = {}) {
     title.textContent = titleText;
     header.appendChild(title);
     
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'x-dialog__close';
-    closeBtn.type = 'button';
-    closeBtn.setAttribute('aria-label', 'Close dialog');
-    closeBtn.innerHTML = '&times;';
-    header.appendChild(closeBtn);
+    let closeBtn = null;
+    if (config.showClose) {
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'x-dialog__close';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close dialog');
+      closeBtn.innerHTML = '&times;';
+      header.appendChild(closeBtn);
+    }
     
     dialogEl.appendChild(header);
 
@@ -99,7 +108,7 @@ export function dialog(element, options = {}) {
       dialogEl.remove();
     };
 
-    closeBtn.onclick = close;
+    if (closeBtn) closeBtn.onclick = close;
     cancelBtn.onclick = close;
     okBtn.onclick = () => {
       element.dispatchEvent(new CustomEvent('wb:dialog:ok', { bubbles: true }));
@@ -107,11 +116,17 @@ export function dialog(element, options = {}) {
     };
     
     // Click outside to close (on backdrop)
-    dialogEl.addEventListener('click', (e) => {
-      if (e.target === dialogEl) close();
-    });
+    if (config.closeOnBackdrop) {
+      dialogEl.addEventListener('click', (e) => {
+        if (e.target === dialogEl) close();
+      });
+    }
     
-    // ESC key handled automatically by <dialog>
+    // ESC key handled automatically by <dialog>; `close-on-escape="false"`
+    // cancels the native 'cancel' event so Escape leaves it open.
+    if (!config.closeOnEscape) {
+      dialogEl.addEventListener('cancel', (e) => e.preventDefault());
+    }
     dialogEl.addEventListener('close', () => {
       dialogEl.remove();
     });
@@ -226,12 +241,15 @@ export function dialog(element, options = {}) {
       header.appendChild(heading);
     }
 
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'x-dialog__close';
-    closeBtn.type = 'button';
-    closeBtn.setAttribute('aria-label', 'Close dialog');
-    closeBtn.innerHTML = '&times;';
-    header.appendChild(closeBtn);
+    let closeBtn = null;
+    if (config.showClose) {
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'x-dialog__close';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close dialog');
+      closeBtn.innerHTML = '&times;';
+      header.appendChild(closeBtn);
+    }
 
     const body = document.createElement('main');
     body.className = 'x-dialog__body';
@@ -244,17 +262,22 @@ export function dialog(element, options = {}) {
     element.prepend(header);
 
     const closeDialog = () => element.close();
-    closeBtn.addEventListener('click', closeDialog);
+    if (closeBtn) closeBtn.addEventListener('click', closeDialog);
 
-    // Deliberately NOT wiring backdrop-click here. It would be one line, but
-    // `closeOnBackdrop=false` is one of the sample rows, and giving that sample
-    // backdrop-close is worse than leaving it inert. That attribute, along with
-    // closeOnEscape, showClose and size, is declared in dialog.schema.json and
-    // read by no code at all -- tracked in #1005 rather than quietly decided
-    // here. Escape still works: <dialog> gives that natively.
+    // #1005: close-on-backdrop / close-on-escape / show-close are now read
+    // (config above), so the `close-on-backdrop="false"` sample stays inert
+    // while the default gets the documented backdrop-close. A click whose
+    // target is the <dialog> itself landed on the ::backdrop, since every
+    // child sits inside header/body.
+    const onBackdrop = (e) => { if (e.target === element) element.close(); };
+    if (config.closeOnBackdrop) element.addEventListener('click', onBackdrop);
+    const onCancel = (e) => e.preventDefault();
+    if (!config.closeOnEscape) element.addEventListener('cancel', onCancel);
 
     return () => {
-      closeBtn.removeEventListener('click', closeDialog);
+      if (closeBtn) closeBtn.removeEventListener('click', closeDialog);
+      element.removeEventListener('click', onBackdrop);
+      element.removeEventListener('cancel', onCancel);
       if (heading) {
         heading.classList.remove('x-dialog__title');
         element.prepend(heading);

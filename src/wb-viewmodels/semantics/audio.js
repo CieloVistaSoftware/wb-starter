@@ -25,6 +25,16 @@ const EQ_BANDS = [
   { freq: 16000, label: '16K' }
 ];
 
+/** How many of the lowest / highest EQ bands `bass` / `treble` drive. */
+const BASS_BANDS = 4;
+const TREBLE_BANDS = 4;
+
+/** Parse a dB value and clamp it to the EQ slider range (-12..12). */
+function clampDb(v) {
+  const n = parseFloat(v);
+  return Number.isFinite(n) ? Math.max(-12, Math.min(12, n)) : 0;
+}
+
 export function audio(element, options = {}) {
   // Read plain attributes first (wb-* custom elements), fall back to data-*
   function attr(name) {
@@ -56,6 +66,13 @@ export function audio(element, options = {}) {
     controls: options.controls ?? attr('controls') !== 'false',
     autoplay: options.autoplay ?? (element.hasAttribute('autoplay') || readFlag(element, 'autoplay')),
     loop: options.loop ?? (element.hasAttribute('loop') || readFlag(element, 'loop')),
+    // Declared in audio.schema.json ("Start muted") and needed for autoplay,
+    // which browsers only allow on a muted element.
+    muted: options.muted ?? readFlag(element, 'muted'),
+    // Initial bass/treble shelf in dB (-12..12), applied to the low and high
+    // EQ bands. Read at init so the config is complete before anything throws.
+    bass: clampDb(options.bass ?? readAttr(element, 'bass', '0')),
+    treble: clampDb(options.treble ?? readAttr(element, 'treble', '0')),
     volume: parseFloat(options.volume || attr('volume') || '0.8'),
     // #669 -- accept BOTH spellings. audio.schema.json publishes `showEq`,
     // this code only ever read `show-eq`, so the documented name silently did
@@ -138,6 +155,7 @@ export function audio(element, options = {}) {
   if (config.controls) audioEl.controls = true;
   if (config.autoplay) audioEl.autoplay = true;
   if (config.loop) audioEl.loop = true;
+  if (config.muted) { audioEl.muted = true; audioEl.defaultMuted = true; }
   audioEl.volume = Math.max(0, Math.min(1, config.volume));
 
   // #433: surface a real runtime error (caught by the app's global error
@@ -218,6 +236,12 @@ export function audio(element, options = {}) {
     audioEl.style.display = 'none';
   }
 
+  // Starting gain per EQ band: `bass` lifts/cuts the four lowest bands
+  // (25-100 Hz), `treble` the four highest (4K-16K). Flat when neither is set.
+  const initialGains = EQ_BANDS.map((_, i) =>
+    i < BASS_BANDS ? config.bass : i >= EQ_BANDS.length - TREBLE_BANDS ? config.treble : 0);
+  config.initialGains = initialGains;
+
   // Web Audio API for EQ
   let audioContext = null;
   let sourceNode = null;
@@ -254,7 +278,7 @@ export function audio(element, options = {}) {
         filter.type = 'peaking';
         filter.frequency.value = band.freq;
         filter.Q.value = 1.4;
-        filter.gain.value = 0;
+        filter.gain.value = initialGains[filters.length];
         filters.push(filter);
       });
 
@@ -531,6 +555,11 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
 
   EQ_BANDS.forEach((band, index) => {
     const { bandContainer, slider, activeTrack, dbDisplay } = createBandSlider(band, index, initAudioContext, filters, updateSliderVisual);
+    const start = (config.initialGains && config.initialGains[index]) || 0;
+    if (start) {
+      slider.value = start;
+      updateSliderVisual(slider, start, activeTrack, dbDisplay);
+    }
     sliders.push(slider);
     sliderVisuals.push({ activeTrack, dbDisplay });
     eqPanel.appendChild(bandContainer);

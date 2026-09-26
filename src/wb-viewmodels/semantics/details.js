@@ -26,6 +26,11 @@ export function details(element, options = {}) {
     const detailsEl = document.createElement('details');
     detailsEl.className = 'x-details ' + (element.className || '');
     if (config.open) detailsEl.open = true;
+    // `name` is the native exclusive-accordion group. It only means anything
+    // on a real <details>, so it has to travel with the rebuild -- the
+    // wrapped element used to drop it and every panel opened independently.
+    const groupName = element.getAttribute('name');
+    if (groupName) detailsEl.setAttribute('name', groupName);
     
     detailsEl.innerHTML = `
       <summary class="x-details__summary">${summaryText}</summary>
@@ -122,6 +127,20 @@ export function details(element, options = {}) {
       detail: { open: element.open }
     }));
   });
+
+  // `name` groups panels into an exclusive accordion: opening one closes the
+  // others with the same name. Browsers that implement it natively do this
+  // themselves; where HTMLDetailsElement has no `name` property the attribute
+  // is inert, so close the siblings here instead.
+  const group = element.getAttribute('name');
+  if (group && !('name' in HTMLDetailsElement.prototype)) {
+    element.addEventListener('toggle', () => {
+      if (!element.open) return;
+      document.querySelectorAll('details[name]').forEach((other) => {
+        if (other !== element && other.open && other.getAttribute('name') === group) other.open = false;
+      });
+    });
+  }
 
   // API
   element.wbDetails = {

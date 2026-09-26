@@ -8,7 +8,35 @@
  * no wrapper element ever needed. Retained for back-compat (self-builds
  * the real textarea now, see below); emits a one-time console warning.
  */
+import { readAttr, readFlag } from '../../core/read-attr.js';
+
 let _textareaHostDeprecationWarned = false;
+
+/** textarea.schema.json's `resize` enum. */
+const RESIZE_VALUES = ['none', 'vertical', 'horizontal', 'both'];
+
+/**
+ * Copy the declared host attributes the schema $view does not bind onto the
+ * real <textarea> inside a schema-built host. `rows` is bound by the $view
+ * already, but only to the schema default when the lazy builder fills it, so
+ * the author's value is re-applied here.
+ *
+ * @param {HTMLElement} host
+ * @param {HTMLTextAreaElement} inner
+ */
+function reflectHostAttributes(host, inner) {
+  const value = readAttr(host, 'value');
+  // textContent is the textarea's default value -- the declarative spelling,
+  // so it also survives a form reset.
+  if (value && !inner.textContent) inner.textContent = value;
+  const rows = parseInt(readAttr(host, 'rows'), 10);
+  if (Number.isFinite(rows) && rows > 0) inner.rows = rows;
+  if (readFlag(host, 'disabled')) inner.disabled = true;
+  if (readFlag(host, 'readonly')) inner.readOnly = true;
+  if (readFlag(host, 'required')) inner.required = true;
+  const resize = readAttr(host, 'resize');
+  if (RESIZE_VALUES.includes(resize)) inner.classList.add(`x-textarea--resize-${resize}`);
+}
 
 export function textarea(element, options = {}) {
   if (!element || typeof element.classList === 'undefined') {
@@ -46,8 +74,10 @@ export function textarea(element, options = {}) {
     if (name) built.name = name;
     if (host.hasAttribute('disabled')) built.disabled = true;
     if (host.hasAttribute('required')) built.required = true;
+    if (readFlag(host, 'readonly')) built.readOnly = true;
     if (host.textContent && host.textContent.trim()) built.value = host.textContent.trim();
-    ['variant', 'size', 'autosize', 'max-length', 'show-count', 'min-rows', 'max-rows'].forEach((attr) => {
+    else if (host.getAttribute('value')) built.value = host.getAttribute('value');
+    ['variant', 'size', 'autosize', 'max-length', 'show-count', 'min-rows', 'max-rows', 'resize'].forEach((attr) => {
       if (host.hasAttribute(attr)) built.setAttribute(attr, host.getAttribute(attr));
     });
     host.textContent = '';
@@ -81,6 +111,16 @@ export function textarea(element, options = {}) {
   // host itself, host.classList/host.style writes below are harmless no-ops
   // visually (nothing targets them), consistent with how switch.js/select.js
   // handle their own host-vs-child split. (#362)
+  // A schema-built host (<div x-textarea>): wb-lazy's buildSchemaIfNeeded
+  // has already built the $view into it before this runs, but the $view only
+  // binds placeholder/rows/name/variant. value/disabled/readonly/required/
+  // resize are declared in textarea.schema.json and had nowhere to land, so
+  // they were silently dropped. Reflect them onto the real <textarea> child.
+  if (element.tagName !== 'TEXTAREA') {
+    const inner = element.querySelector(':scope > textarea');
+    if (inner) reflectHostAttributes(element, inner);
+  }
+
   const variant = options.variant || element.getAttribute('variant') || 'default';
   if (variant !== 'default') element.classList.add(`x-textarea--${variant}`);
 
@@ -91,6 +131,7 @@ export function textarea(element, options = {}) {
     minRows: parseInt(options.minRows || element.getAttribute('min-rows') || '2'),
     maxRows: parseInt(options.maxRows || element.getAttribute('max-rows') || '10'),
     size: options.size || element.getAttribute('size') || 'md',
+    resize: options.resize || readAttr(element, 'resize', 'vertical'),
     ...options
   };
 
@@ -111,7 +152,7 @@ export function textarea(element, options = {}) {
   // What stays inline is what genuinely cannot be a static rule: both depend
   // on runtime config.
   Object.assign(element.style, {
-    resize: config.autosize ? 'none' : 'vertical',
+    resize: config.autosize ? 'none' : (RESIZE_VALUES.includes(config.resize) ? config.resize : 'vertical'),
     minHeight: `${config.minRows * 1.5}rem`
   });
 
