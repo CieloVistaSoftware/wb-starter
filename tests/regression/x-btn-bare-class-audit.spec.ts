@@ -102,11 +102,21 @@ test.describe('Bare .x-btn (no modifier) renders with real visible styling', () 
       <button id="bare-button" class="x-btn">Bare button trigger</button>
     `);
 
-    const divStyle = await hasVisibleBoxStyle(page, '#bare-div');
-    expect(divStyle.hasBg || divStyle.hasBorder, `bare div.x-btn must be visibly styled, got ${JSON.stringify(divStyle)}`).toBe(true);
+    // button.css arrives when #css-trigger's behavior runs, which is after
+    // inject() returns: reading the style once, at once, raced it and read an
+    // unstyled box in CI. Wait for the stylesheet to apply; still a failure if
+    // it never does.
+    let divStyle: Awaited<ReturnType<typeof hasVisibleBoxStyle>> | undefined;
+    await expect.poll(async () => {
+      divStyle = await hasVisibleBoxStyle(page, '#bare-div');
+      return divStyle.hasBg || divStyle.hasBorder;
+    }, { message: `bare div.x-btn must be visibly styled, got ${JSON.stringify(divStyle)}` }).toBe(true);
 
-    const btnStyle = await hasVisibleBoxStyle(page, '#bare-button');
-    expect(btnStyle.hasBg || btnStyle.hasBorder, `bare button.x-btn must be visibly styled, got ${JSON.stringify(btnStyle)}`).toBe(true);
+    let btnStyle: Awaited<ReturnType<typeof hasVisibleBoxStyle>> | undefined;
+    await expect.poll(async () => {
+      btnStyle = await hasVisibleBoxStyle(page, '#bare-button');
+      return btnStyle.hasBg || btnStyle.hasBorder;
+    }, { message: `bare button.x-btn must be visibly styled, got ${JSON.stringify(btnStyle)}` }).toBe(true);
   });
 
   test('existing .x-btn.x-btn--primary keeps its variant background (no regression)', async ({ page }) => {
