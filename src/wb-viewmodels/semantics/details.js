@@ -133,7 +133,7 @@ export function details(element, options = {}) {
   // themselves; where HTMLDetailsElement has no `name` property the attribute
   // is inert, so close the siblings here instead.
   const group = element.getAttribute('name');
-  if (group && !('name' in HTMLDetailsElement.prototype)) {
+  if (group && !('name' in window.HTMLDetailsElement.prototype)) {
     element.addEventListener('toggle', () => {
       if (!element.open) return;
       document.querySelectorAll('details[name]').forEach((other) => {
