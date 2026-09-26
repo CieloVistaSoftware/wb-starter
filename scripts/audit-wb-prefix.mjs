@@ -41,6 +41,9 @@ const SKIP_DIRS = new Set([
   // this audit forbids. Counting a recorded quotation as a surviving tag
   // makes the gate fail for reporting a problem accurately.
   'test-single',
+  // Runtime logs: what the app WROTE while tests ran, not source. An error
+  // message quoting a tag landed here and counted as a live <wb-*> tag in CI.
+  'error-log-archive',
 ]);
 
 // #960: the same rule, for FILES. data/test-results.json (7,080 wb- refs) and
@@ -59,6 +62,7 @@ const SKIP_FILES = new Set([
   'test-results.json',
   'test-status.json',
   'priority-gate.json',
+  'errors.json',
 ]);
 const EXT = /\.(js|mjs|cjs|ts|tsx|css|html|json|md|yml|yaml)$/;
 

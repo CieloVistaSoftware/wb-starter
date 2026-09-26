@@ -136,8 +136,15 @@ test.describe('Schema Test Coverage', () => {
       
       const hasTestFile = testFileExistsForBehavior(schema.behavior) !== null;
       const inPermTests = isInPermutationTests(schema.behavior);
-      
-      if (!hasTestFile && !inPermTests) missing.push(`${schema.behavior} (from ${file})`);
+      // permutation-compliance.spec.ts does not list behaviors by name: it
+      // loads every component schema from disk and runs its test.setup
+      // (loadSchemas() there -- a behavior, and schemaType absent or
+      // 'component'). A name search of its source never saw that, so a schema
+      // gaining a test.setup looked LESS covered, not more.
+      const sweptByPermutations = Array.isArray(schema.test.setup) && schema.test.setup.length > 0
+        && (!schema.schemaType || schema.schemaType === 'component');
+
+      if (!hasTestFile && !inPermTests && !sweptByPermutations) missing.push(`${schema.behavior} (from ${file})`);
     }
     
     expect(missing.length, 'Schemas without tests').toBeLessThan(80);

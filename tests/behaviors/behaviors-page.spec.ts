@@ -169,12 +169,12 @@ test.describe('Behaviors page — Feedback', () => {
   test('spinners animate', async ({ page }) => {
     await loadBrowse(page);
     const s = await show(page, { token: 'x-spinner', prop: 'variant', value: 'primary', ready: '[class*="x-spinner--"]' });
-    // #862/#857: for the attribute form the ring is on the HOST. site.css:227's
-    // `x-spinner div { ... }` is a TAG selector and never matches [x-spinner],
-    // so the inner <div> the schema builds is unstyled — measuring it would
-    // assert a defect that lives in src/styles, not on this page.
+    // The ring is the inner <div> spinner() builds. #862/#857 measured the HOST
+    // while site.css styled only the `x-spinner` TAG (the attribute form's inner
+    // <div> was unstyled); site.css now styles `[x-spinner] > div`, so measure
+    // the ring itself.
     const ring = await s.evaluate((el) => {
-      const cs = getComputedStyle(el as HTMLElement);
+      const cs = getComputedStyle((el.querySelector(':scope > div') || el) as HTMLElement);
       return { anim: cs.animationName, bw: parseFloat(cs.borderTopWidth), bs: cs.borderTopStyle };
     });
     expect(ring.anim, 'the spinner is not animated').not.toBe('none');

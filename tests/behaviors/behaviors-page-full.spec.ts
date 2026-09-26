@@ -218,15 +218,16 @@ test.describe('Behaviors page — full coverage', () => {
   });
 
   test('spinners: visible and animated', async ({ page }) => {
-    // #862/#857: for the attribute form the ring is on the HOST —
-    // src/styles/site.css:227's `x-spinner div { … }` is a TAG selector and
-    // never matches [x-spinner], so the inner <div> is unstyled. Measuring it
-    // would assert a src/styles defect, not this page's behaviour.
+    // The ring is the inner <div> spinner() builds. #862/#857 measured the HOST
+    // because site.css only styled the `x-spinner` TAG, so the attribute form's
+    // inner <div> was unstyled and size/colour/speed changed nothing. site.css
+    // now styles `[x-spinner] > div` too, so the ring is where the modifiers
+    // apply -- measure that, not the host.
     const seen: unknown[] = [];
     for (const size of ['sm', 'md', 'lg', 'xl']) {
       const sp = await show(page, { token: 'x-spinner', prop: 'size', value: size, ready: '[class*="x-spinner--"]' });
       seen.push(await sp.evaluate((el) => {
-        const cs = getComputedStyle(el as HTMLElement);
+        const cs = getComputedStyle((el.querySelector(':scope > div') || el) as HTMLElement);
         return { bw: parseFloat(cs.borderTopWidth), bs: cs.borderTopStyle, anim: cs.animationName };
       }));
     }

@@ -995,12 +995,12 @@ const WB = {
         const val = element.dataset.wb || '';
         const name = val.split(/\s+/)[0] || 'unknown';
       
-        const errorMsg = `Legacy syntax data-wb="${val}" detected on <${element.tagName.toLowerCase()}>. Please use <wb-${name}> instead.`;
+        const errorMsg = `Legacy syntax data-wb="${val}" detected on <${element.tagName.toLowerCase()}>. Please use the x-${name} attribute instead.`;
         console.error(`[WB] ${errorMsg}`);
       
         Events.error('WB:LegacySyntax', new Error(errorMsg), {
           element: element.tagName,
-          fix: `<wb-${name}>`
+          fix: `x-${name}`
         });
       
         // Mark element but do not process
@@ -1162,7 +1162,7 @@ const WB = {
           if (el.hasAttribute('data-wb')) {
             const val = el.getAttribute('data-wb') || '';
             const name = val.split(/\s+/)[0] || 'unknown';
-            console.error(`[WB] Legacy syntax data-wb="${val}" detected. Use <wb-${name}> or x-${name}.`);
+            console.error(`[WB] Legacy syntax data-wb="${val}" detected. Use the x-${name} attribute.`);
             el.setAttribute('x-error', 'legacy');
           }
 
@@ -1217,7 +1217,7 @@ const WB = {
             const descEl = /** @type {HTMLElement} */ (descendant);
             const val = descEl.getAttribute('data-wb') || '';
             const name = val.split(/\s+/)[0] || 'unknown';
-            console.error(`[WB] Legacy syntax data-wb="${val}" detected. Use <wb-${name}> or x-${name}.`);
+            console.error(`[WB] Legacy syntax data-wb="${val}" detected. Use the x-${name} attribute.`);
             descEl.setAttribute('x-error', 'legacy');
           });
             
