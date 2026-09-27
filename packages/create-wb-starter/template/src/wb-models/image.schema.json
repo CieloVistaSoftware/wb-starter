@@ -2,44 +2,47 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "image.schema.json",
   "title": "Image",
-  "description": "Behavior applied with x-image.",
-  "schemaFor": "x-image",
+  "description": "Alias of img: placeholder, fallback, aspect ratio, lazy loading and click-to-zoom for an image.",
+  "schemaFor": "image",
   "properties": {
     "placeholder": {
       "type": "string",
-      "description": "Read by image().",
-      "default": ""
+      "description": "Image shown while the real `src` loads. Replaced the moment the real image decodes.",
+      "default": "this is the placeholder"
     },
     "fallback": {
       "type": "string",
-      "description": "Read by image().",
-      "default": ""
+      "description": "Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty.",
+      "default": "this is the fallback"
     },
     "aspect-ratio": {
       "type": "string",
-      "description": "Read by image().",
-      "default": ""
+      "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
+      "default": "this is the aspect ratio"
     },
     "lazy": {
       "type": "boolean",
-      "description": "Read by image(). Bare attribute.",
-      "default": false
-    },
-    "data-lazy": {
-      "type": "boolean",
-      "description": "Read by image(). Bare attribute.",
+      "description": "Sets `loading=\"lazy\"`, so the browser defers fetching until the image nears the viewport. Bare attribute.",
       "default": false
     },
     "zoomable": {
       "type": "boolean",
-      "description": "Read by image(). Bare attribute.",
-      "default": false
-    },
-    "data-zoomable": {
-      "type": "boolean",
-      "description": "Read by image(). Bare attribute.",
+      "description": "Clicking the image opens it full-size in a lightbox. Bare attribute.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-image"
+  },
+  "test": {
+    "setup": [
+      "<div x-image>Test Content</div>",
+      "<div x-image lazy>Test Content</div>",
+      "<div x-image zoomable>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

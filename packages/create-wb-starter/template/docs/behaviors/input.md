@@ -1,51 +1,38 @@
 # Input
 
-Text input field with label, helper text, and validation states
+A plain `<input>` gets the form styling: `variant` shows a success or error state, `size` sets the scale, and `clearable` adds a button that empties it. `label`, `helper` and `error` add text around the field.
 
-## Type — new capability
+## Usage
 
-`x-input` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <input
   variant="error"
   placeholder="owner/name"
   name="repo"
   type="text">
-```
+</div>
 
+No attribute needed on `<input>`. Don't add `x-input` to it (#746).
 
+`<input x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
-### Declining it
-
-A `<input>` **is** the input behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
-
-```html
-<input x-ignore>
-  <!-- a plain input: no behavior is injected -->
-</input>
-```
-
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | `this is the label` | Input label text |
-| `placeholder` | `string` | `this is the placeholder` | Placeholder text |
-| `value` | `string` | `this is the value` | Input value |
-| `name` | `string` | `this is the name` | Form field name |
+| `label` | `string` | — | Input label text |
+| `placeholder` | `string` | — | Placeholder text |
+| `value` | `string` | — | Input value |
+| `name` | `string` | — | Form field name |
 | `input-type` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type |
-| `helper` | `string` | `this is the helper` | Helper text below input |
-| `error` | `string` | `this is the error` | Error message (shows error state) |
+| `helper` | `string` | — | Helper text below input |
+| `error` | `string` | — | Error message (shows error state) |
 | `variant` | `default` · `success` · `error` | `default` | Visual validation state |
 | `size` | `sm` · `md` · `lg` | `md` | Input size |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `readonly` | `boolean` | `false` | Read-only state |
 | `required` | `boolean` | `false` | Required field |
-| `icon` | `string` | `this is the icon` | Icon (emoji or icon name) |
+| `icon` | `string` | — | Icon (emoji or icon name) |
 | `icon-position` | `start` · `end` | `start` | Icon position |
 | `clearable` | `boolean` | `false` | Show clear button when has value |
 
@@ -77,10 +64,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - **ariaInvalid** — dynamic when error
 - **ariaDescribedBy** — helper or error text id
 
-## Live example
-
-See `x-input` on the [Behaviors showcase](/?page=behaviors) — search for `x-input` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/input.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`input.schema.json`](../../src/wb-models/input.schema.json)</sub>

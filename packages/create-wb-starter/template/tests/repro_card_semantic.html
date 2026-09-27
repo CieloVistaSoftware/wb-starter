@@ -38,22 +38,34 @@
     <article id="div-card" title="Div Title" content="Div Content" footer="Div Footer"></article>
 
     <script>
-        setTimeout(() => {
-            const semantic = document.getElementById('semantic-card');
-            const div = document.getElementById('div-card');
-
-            console.log('Semantic Classes:', semantic.className);
-            console.log('Div Classes:', div.className);
-
-            const semanticHeader = semantic.querySelector('header');
-            console.log('Semantic Header Classes:', semanticHeader.className);
-
-            if (semantic.classList.contains('x-card') && semanticHeader.classList.contains('x-card__header')) {
+        // The card contract no longer injects classes onto an <article> or its
+        // <header> (card.js #478 / "specificity, not class injection"):
+        // card.css matches `article` and `article > header` by tag. So "became
+        // a card" means: the card behavior ran (x-ready), the authored header
+        // survived in place with its heading, and card.css's header rule
+        // (display:grid) applies.
+        //
+        // Polled, not read once at a fixed 1s: the behavior and its JIT
+        // stylesheet land whenever the page gets to them, and a one-shot timer
+        // reported FAIL on a busy machine for a card that was fine 200ms later.
+        const semantic = document.getElementById('semantic-card');
+        const semanticHeader = semantic.querySelector('header');
+        const becameCard = () => semantic.hasAttribute('x-ready')
+            && semanticHeader.parentElement === semantic
+            && !!semanticHeader.querySelector('h3')
+            && getComputedStyle(semanticHeader).display === 'grid';
+        const deadline = Date.now() + 10000;
+        (function check() {
+            if (becameCard()) {
                 console.log('PASS: Semantic Article became a Card and preserved structure');
+            } else if (Date.now() < deadline) {
+                setTimeout(check, 100);
             } else {
+                console.log('Semantic Classes:', semantic.className);
+                console.log('Semantic Header Classes:', semanticHeader.className);
                 console.error('FAIL: Semantic Article did not become a proper Card');
             }
-        }, 1000);
+        })();
     </script>
 </body>
 </html>

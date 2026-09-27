@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/offline';
 
 /**
  * #654 — `<div x-ripple>text</div>` rendered NOTHING.
- * #655 — `<div x-confetti repeat>` never repeated, and lost its authored text.
+ * #655 — `<div x-confetti>` lost its authored text.
  *
  * Shared root cause: `schema-builder.js`'s `processSchema()` wipes a
  * schema-built element's content before rebuilding `$view` (the mechanism
@@ -20,9 +20,8 @@ import { test, expect } from '../fixtures/offline';
  *
  * Both tags are now in SCHEMA_EXCLUDED_TAGS.
  *
- * Separately, #655: `repeat` was declared in confetti.schema.json and shipped
- * as an official example, but confetti() only ever read `count` and `label`.
- * The attribute was inert.
+ * #655 also wired up confetti's `repeat`; it has since been removed (a burst
+ * every 3s with no way to stop it), so the test now pins that it stays inert.
  */
 
 test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => {
@@ -63,13 +62,15 @@ test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => 
   });
 });
 
-test.describe('[x-confetti] honours repeat and keeps authored content (#655)', () => {
-  test('<div x-confetti repeat> fires more than once unattended, and stops cleanly', async ({ page }) => {
+test.describe('[x-confetti] keeps authored content and never fires unattended (#655)', () => {
+  test('<div x-confetti> keeps its text; a leftover repeat attribute does nothing', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => !!(window as any).WB, null, { timeout: 30000 });
 
     const result = await page.evaluate(async () => {
       const host = document.createElement('div');
+      // `repeat` was removed: it looped a burst every 3s with no way to stop
+      // it from the page. Markup that still carries it must stay inert.
       host.innerHTML =
         '<div x-confetti repeat duration="600ms">This is example confetti content.</div>';
       document.body.appendChild(host);
@@ -78,26 +79,19 @@ test.describe('[x-confetti] honours repeat and keeps authored content (#655)', (
 
       const count = () => document.querySelectorAll('.x-confetti-container').length;
       const base = count();
-      await new Promise((r) => setTimeout(r, 3000));
-      const bursts = count() - base;
-
-      el.wbConfetti.stopRepeat();
-      const afterStop = count();
-      await new Promise((r) => setTimeout(r, 1500));
-      const afterWait = count();
+      await new Promise((r) => setTimeout(r, 3500));
+      const unattended = count() - base;
+      el.click();
+      const afterClick = count() - base;
 
       const text = el.textContent?.trim() ?? '';
       host.remove();
       document.querySelectorAll('.x-confetti-container').forEach((c) => c.remove());
-      return { bursts, text, afterStop, afterWait };
+      return { unattended, afterClick, text };
     });
 
-    // Without the fix `repeat` was inert and fire() only ran on click, so this
-    // count is exactly 0.
-    expect(result.bursts, 'repeat must fire the burst unattended, more than once').toBeGreaterThan(1);
+    expect(result.unattended, 'confetti must never fire on its own').toBe(0);
+    expect(result.afterClick, 'a click still fires one burst').toBe(1);
     expect(result.text, 'authored text must survive the schema pass').toContain('example confetti content');
-    // A leaked interval here would keep appending fixed-position containers to
-    // <body> for the life of the page.
-    expect(result.afterWait, 'stopRepeat() must halt the loop').toBeLessThanOrEqual(result.afterStop);
   });
 });

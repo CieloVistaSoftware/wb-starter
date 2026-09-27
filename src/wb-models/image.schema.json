@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "image.schema.json",
   "title": "Image",
-  "description": "Behavior applied with x-image.",
+  "description": "Alias of img: placeholder, fallback, aspect ratio, lazy loading and click-to-zoom for an image.",
   "schemaFor": "image",
   "properties": {
     "placeholder": {

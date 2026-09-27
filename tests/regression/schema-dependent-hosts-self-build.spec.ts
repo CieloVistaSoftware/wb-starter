@@ -27,8 +27,12 @@ test.describe('[x-checkbox] self-builds on wb-lazy.js pages (no schema support)'
     const count = await checkboxes.count();
     expect(count, 'page must actually have [x-checkbox] demos to test').toBeGreaterThan(0);
 
+    // The lazy runtime (#491) builds an element only once it nears the
+    // viewport, and these demos start ~10,000px down -- so bring each one
+    // into view first, the way a reader reaches it.
     for (let i = 0; i < count; i++) {
       const host = checkboxes.nth(i);
+      await host.scrollIntoViewIfNeeded();
       const input = host.locator('input[type="checkbox"]');
       await expect(input, `checkbox #${i} must have a real input`).toHaveCount(1);
     }
@@ -41,7 +45,8 @@ test.describe('[x-checkbox] self-builds on wb-lazy.js pages (no schema support)'
     const defaultHost = page.locator('[x-checkbox][label="Default checkbox"]');
     const defaultInput = defaultHost.locator('input');
     await expect(defaultInput).not.toBeChecked();
-    await defaultInput.click();
+    // Click the host, as a reader does: the input is the hidden state carrier.
+    await defaultHost.click();
     await expect(defaultInput).toBeChecked();
   });
 });

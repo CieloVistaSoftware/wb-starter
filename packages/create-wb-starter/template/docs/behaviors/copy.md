@@ -1,30 +1,18 @@
 # Copy
 
-Click to copy text to clipboard.
+`x-copy` copies text to the clipboard when the element is clicked: the value of `copy-text`, or the text of the element matched by `copy-target`. The element's label briefly changes to "Copied!" and `wb:copy:success` fires.
 
-## Type — new capability
+## Usage
 
-`x-copy` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<button variant="primary" x-copy copy-text="Text copied to clipboard!">
-  x-copy · variant: primary · copy-text: Text copied to clipboard!
-</button>
-```
+<div x-demo>
+<button x-copy copy-text="npm run test:compliance">Copy the test command</button>
+</div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `text` | `string` | `this is the text` | Text to copy |
-| `target` | `string` | `this is the target` | Selector of element to copy from |
+| `text` | `string` | — | Text to copy |
+| `target` | `string` | — | Selector of element to copy from |
 
-## Live example
-
-See `x-copy` on the [Behaviors showcase](/?page=behaviors) — search for `x-copy` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/copy.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`copy.schema.json`](../../src/wb-models/copy.schema.json)</sub>

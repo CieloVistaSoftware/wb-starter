@@ -14,12 +14,14 @@ test.describe('cardhero variant= produces genuinely distinct visuals (#383)', ()
       { timeout: 10000 }
     );
 
+    // 800px: below 40rem split deliberately collapses to one full-width
+    // column (hero.css @container), so a 400px hero could never show it.
     const variants = ['default', 'cosmic', 'split', 'minimal', 'gradient'];
     await page.evaluate((vs) => {
       const container = document.createElement('div');
       container.id = 'cardhero-variant-test';
       container.innerHTML = vs
-        .map((v) => `<div x-cardhero variant="${v}" title="Title" style="width:400px;height:200px;"></div>`)
+        .map((v) => `<div x-cardhero variant="${v}" title="Title" style="width:800px;height:200px;"></div>`)
         .join('');
       document.body.appendChild(container);
     }, variants);

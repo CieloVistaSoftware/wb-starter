@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "img.schema.json",
   "title": "Img",
-  "description": "Behavior applied with x-img.",
+  "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspect-ratio reserves its box so the page does not jump, and zoomable opens it full-size on click.",
   "schemaFor": "img",
   "properties": {
     "placeholder": {

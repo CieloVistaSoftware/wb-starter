@@ -27,7 +27,7 @@ Each code example should include an xs-font note explaining alternative syntax o
 
 ### Rule 4: Every renderable code example MUST use `<div x-demo>` — no static, un-rendered code fences
 
-A code example that shows real `wb-*`/`x-*` markup must be a LIVE `<div x-demo>` block, not
+A code example that shows real `x-*` behavior markup must be a LIVE `<div x-demo>` block, not
 a plain ` ```html ` fenced code block that only shows text. `<div x-demo>` renders the markup
 for real AND auto-generates the formatted code sample (with copy button) from it — one
 source of truth, always in sync, never a hand-typed sample that silently drifts from what

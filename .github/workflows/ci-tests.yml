@@ -126,7 +126,7 @@ jobs:
       # next push, which is why this went unnoticed for days. A step timeout
       # says which step ran out of time, and leaves the report + artifact steps
       # enough of the job budget to still upload the evidence.
-      - name: Gate — no NEW failures vs the register (compliance, regression, behaviors)
+      - name: Gate — no NEW failures vs the register (compliance, regression, behaviors, schema-viewer)
         timeout-minutes: 45
         run: node .husky/test-ratchet.mjs
         continue-on-error: false

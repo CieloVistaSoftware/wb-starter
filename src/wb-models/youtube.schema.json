@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "youtube.schema.json",
   "title": "Youtube",
-  "description": "Behavior applied with x-youtube.",
+  "description": "x-youtube embeds a YouTube video from video-id or a full url as a responsive player that keeps its aspect ratio.",
   "schemaFor": "youtube",
   "properties": {
     "url": {

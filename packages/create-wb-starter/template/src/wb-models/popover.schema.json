@@ -2,37 +2,52 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "popover.schema.json",
   "title": "Popover",
-  "description": "Behavior applied with x-popover.",
-  "schemaFor": "x-popover",
+  "description": "x-popover attaches a small panel with popover-title and popover-content to the element, opened by a click (or on hover with trigger=\"hover\") on the position side.",
+  "schemaFor": "popover",
   "properties": {
     "description": {
       "type": "string",
-      "description": "Read by popover().",
-      "default": ""
+      "description": "Popover body text. Only used when `popover-content` is absent.",
+      "default": "this is the description"
     },
     "heading": {
       "type": "string",
-      "description": "Read by popover().",
-      "default": ""
+      "description": "Popover heading. Only used when `popover-title` is absent.",
+      "default": "this is the heading"
     },
     "trigger": {
       "type": "string",
-      "description": "Read by popover().",
+      "description": "What opens it: `click` (default) or `hover`.",
       "default": "click"
     },
     "position": {
       "type": "string",
-      "description": "Read by popover().",
+      "description": "Side the popover opens on: `top` (default), `bottom`, `left` or `right`.",
       "default": "top"
     },
     "popover-content": {
       "type": "string",
-      "description": "Read by popover()."
+      "description": "Popover body text. Read BEFORE `description`.",
+      "default": "this is the popover content"
     },
     "popover-title": {
       "type": "string",
-      "description": "Read by popover()."
+      "description": "Popover heading. Read BEFORE `heading`.",
+      "default": "this is the popover title"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-popover"
+  },
+  "test": {
+    "setup": [
+      "<div x-popover>Test Content</div>",
+      "<div x-popover trigger=\"click\">Test Content</div>",
+      "<div x-popover position=\"top\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

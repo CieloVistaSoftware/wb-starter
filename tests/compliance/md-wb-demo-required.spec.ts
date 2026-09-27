@@ -29,7 +29,12 @@ function mdFiles(dir: string, acc: string[] = []): string[] {
 }
 
 const RENDERABLE = /<(wb-[a-z-]+)[\s>]|\sx-[a-z][a-z0-9-]*(=|[\s>])/;
-const WB_DEMO_OPEN = String.fromCharCode(60) + '[x-demo]';
+// The live-demo wrapper is `<div x-demo>`. This used to be
+// `String.fromCharCode(60) + '[x-demo]'` -- the literal text "<[x-demo]", left by
+// the 4.0.0 rename from <wb-demo>. No doc contains that text, so EVERY doc with a
+// renderable fence counted as having no live demo, and the gate failed on 100+
+// files that were fine (figure.md among them, which really had none).
+const WB_DEMO_OPEN = /<div\b[^>]*\bx-demo\b/;
 
 // These are the issue #423 legacy files. They remain visible in the audit
 // report until their examples are migrated, but new zero-demo files are not
@@ -111,7 +116,7 @@ test('audit: markdown code fences that should be live [x-demo] blocks (Rule 4, #
       totalFences += count;
       offenders.push({ file: path.relative(DOCS_DIR, file), count });
       const relative = path.relative(DOCS_DIR, file).replace(/\\/g, '/');
-      if (!text.includes(WB_DEMO_OPEN) && !LEGACY_ZERO_DEMO_FILES.has(relative)) {
+      if (!WB_DEMO_OPEN.test(text) && !LEGACY_ZERO_DEMO_FILES.has(relative)) {
         unexpectedZeroDemoFiles.push(relative);
       }
     }

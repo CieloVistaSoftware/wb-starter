@@ -135,9 +135,11 @@ x-select:disabled, [x-select]:disabled{
   box-shadow: 0 0 0 3px hsla(0, 84%, 60%, 0.2);
 }
 
-/* Checkbox & Radio */
-.x-checkbox,
-.x-radio {
+/* Checkbox & Radio -- the bare INPUT only. .x-checkbox is also the class of
+   the <div x-checkbox> host (box + label), and sizing that to 1.2em squeezed
+   the label into a 19px column, one word per line. */
+input.x-checkbox,
+input.x-radio {
   accent-color: var(--primary);
   width: 1.2em;
   height: 1.2em;

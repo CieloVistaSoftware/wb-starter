@@ -1,15 +1,12 @@
 # x-behavior
 
-This is a helper attribute for generic behavior attachment. See [src/wb-viewmodels/behavior.js](../../src/wb-viewmodels/behavior.js).
+`x-behavior="name"` applies the behavior named in its value, and takes several separated by spaces: `<span x-behavior="chip">` does what `<span x-chip>` does. The runtime uses it for elements it creates itself, such as the `<pre x-behavior="pre">` blocks in code panels. When writing markup by hand, prefer the direct attribute (`x-chip`).
 
-- **Type:** Attribute
-- **Usage:** `[x-behavior="behavior"]`
+Do not name a behavior the element already gets from its tag: `<textarea x-behavior="textarea">` is redundant, the same way writing `x-button` on a `<button>` is (#967).
 
-## Description
-Attach generic behaviors to elements using the `x-behavior` attribute. Used for dynamic or programmatic behavior binding.
+<div x-demo>
+<span x-behavior="badge" label="Beta" variant="warning"></span>
+</div>
 
-## Demo
-See [autoinject.html](../../demos/autoinject.html).
-
-## Schema/Test
-No dedicated schema or test file; see code for usage patterns.
+- **Implementation:** [src/wb-viewmodels/behavior.js](../../src/wb-viewmodels/behavior.js) adds the `x-behavior` class; the dispatch by value is in `src/core/wb.js`.
+- **Demo:** [autoinject.html](../../demos/autoinject.html).

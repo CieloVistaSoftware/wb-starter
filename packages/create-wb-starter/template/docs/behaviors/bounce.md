@@ -1,23 +1,11 @@
 # Bounce
 
-On click, plays the bounce animation for 0.75s.
+`x-bounce` makes the element jump up 30px and settle with a smaller second hop, over 0.75 s, on every click. Good for a control you want noticed, such as a call to action.
 
-## Type — new capability
+## Usage
 
-`x-bounce` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button class="effect-demo" x-bounce>Click me</button>
+</div>
 
-### How to write it
-
-```html
-<button class="effect-demo" x-bounce>
-  x-bounce
-</button>
-```
-
-## Live example
-
-See `x-bounce` on the [Behaviors showcase](/?page=behaviors) — search for `x-bounce` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/bounce.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`bounce.schema.json`](../../src/wb-models/bounce.schema.json)</sub>

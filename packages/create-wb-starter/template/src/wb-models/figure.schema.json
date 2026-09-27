@@ -2,27 +2,42 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "figure.schema.json",
   "title": "Figure",
-  "description": "Behavior applied with x-figure.",
-  "schemaFor": "x-figure",
+  "description": "A plain <figure> gets image handling: clicking the image opens it in a lightbox (write lightbox=\"false\" to stop that), caption sets the <figcaption> text, and caption-position=\"overlay\" lays the caption across the bottom of the image.",
+  "schemaFor": "figure",
   "properties": {
     "caption-position": {
       "type": "string",
-      "description": "Read by figure().",
+      "description": "Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar.",
       "default": "bottom"
     },
     "zoom": {
       "type": "boolean",
-      "description": "Read by figure(). Bare attribute.",
+      "description": "Clicking the image opens it at full size. Bare attribute.",
       "default": false
     },
     "lightbox": {
       "type": "string",
-      "description": "Read by figure()."
+      "description": "Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox=\"false\"` to disable it.",
+      "default": "this is the lightbox"
     },
     "caption": {
       "type": "string",
-      "description": "Read by figure()."
+      "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none.",
+      "default": "this is the caption"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-figure"
+  },
+  "test": {
+    "setup": [
+      "<div x-figure>Test Content</div>",
+      "<div x-figure caption-position=\"bottom\">Test Content</div>",
+      "<div x-figure zoom>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

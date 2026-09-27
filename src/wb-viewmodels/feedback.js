@@ -524,7 +524,14 @@ export function avatar(element, options = {}) {
  * CSS: src/styles/behaviors/chip.css
  */
 export function chip(element, options = {}) {
-  const label = options.label ?? element.getAttribute('label') ?? '';
+  // Authored text is the label when no `label` attribute is given -- the same
+  // primary-value rule input/rating/progress/timeline already follow, read the
+  // same way (the schema builder has wiped innerHTML by now and stashed it on
+  // _wbOriginalSlot). Without it `<span x-chip>New</span>`, the form every
+  // schema's test.setup and the schema viewer use, rendered an empty pill:
+  // innerHTML is cleared below and the label fell back to ''.
+  const authoredLabel = (element._wbOriginalSlot || element.textContent || '').trim();
+  const label = options.label ?? element.getAttribute('label') ?? authoredLabel;
   const icon = options.icon || element.getAttribute('icon') || '';
   // Bare (dismissible) and data-prefixed (data-dismissible) attributes both
   // opt in -- consistent with cardBase()'s clickable/elevated dual-check

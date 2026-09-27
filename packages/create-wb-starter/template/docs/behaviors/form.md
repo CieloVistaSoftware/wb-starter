@@ -1,14 +1,10 @@
 # Form Behavior
 
-Schema for x-form behavior (form enhancement)
+A plain `<form>` gets validation on submit, and with `ajax` it sends its fields to `action` with `fetch` instead of reloading the page, firing `wb:form:submit`, then `wb:form:success` or `wb:form:error`.
 
-## Type — new capability
+## Usage
 
-`x-form` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <form validate ajax action="/api/demo-form" successMessage="Sent — check the events panel below.">
   <label>Email <input type="email" name="email" required placeholder="you@example.com"></label>
   <label>Message <textarea name="message" rows="3" required></textarea></label>
@@ -16,21 +12,12 @@ Schema for x-form behavior (form enhancement)
   type: submit
 </button>
 </form>
-```
+</div>
 
+No attribute needed on `<form>`. Don't add `x-form` to it (#746).
 
+`<form x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
-### Declining it
-
-A `<form>` **is** the form behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
-
-```html
-<form x-ignore>
-  <!-- a plain form: no behavior is injected -->
-</form>
-```
-
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
@@ -38,10 +25,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 | `ajax` | `boolean` | `false` | Enable AJAX form submission |
 | `validate` | `boolean` | `false` | Enable validation on submit |
 
-## Live example
-
-See `x-form` on the [Behaviors showcase](/?page=behaviors) — search for `x-form` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/form.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`form.schema.json`](../../src/wb-models/form.schema.json)</sub>

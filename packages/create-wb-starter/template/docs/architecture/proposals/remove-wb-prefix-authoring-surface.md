@@ -1,6 +1,8 @@
 # Proposal: Drop the `wb-` Tag Prefix from the Authoring Surface
 
-**Status:** Draft, for discussion
+**Status:** Implemented — 4.0.0 removed the `wb-*` tags. Kept as the record of the reasoning;
+where the text below says "today" it describes the codebase before 4.0.0, and `wb-*` tags
+should not be written in new markup.
 **Author:** Claude (research + draft), for John Peters
 **Scope:** Author-facing HTML only. Does not touch internal CSS class naming (`.x-card__header` etc. stays as-is).
 

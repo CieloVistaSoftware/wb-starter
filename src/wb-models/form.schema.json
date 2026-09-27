@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Form Behavior",
   "type": "object",
-  "description": "Schema for x-form behavior (form enhancement)",
+  "description": "A plain <form> gets validation on submit, and with ajax it sends its fields to action with fetch instead of reloading the page, firing wb:form:submit, then wb:form:success or wb:form:error.",
   "properties": {
     "ajax": { "type": "boolean", "description": "Enable AJAX form submission", "default": false },
     "validate": { "type": "boolean", "description": "Enable validation on submit", "default": false }

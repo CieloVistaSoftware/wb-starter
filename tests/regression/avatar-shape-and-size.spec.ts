@@ -22,12 +22,21 @@ test.describe('[x-avatar] shape and size (feedback demo page)', () => {
     const square = page.locator('[x-avatar][shape="square"]').first();
     const rounded = page.locator('[x-avatar][shape="rounded"]').first();
 
-    const [circleRadius, squareRadius, roundedRadius] = await Promise.all([
-      circle.evaluate((el) => getComputedStyle(el).borderRadius),
-      square.evaluate((el) => getComputedStyle(el).borderRadius),
-      rounded.evaluate((el) => getComputedStyle(el).borderRadius),
-    ]);
+    // Lazy runtime (#491) + just-in-time CSS (#342): an avatar is only built
+    // and styled once it nears the viewport; before that every one of them is
+    // an unstyled box with border-radius 0px, so "circle" measured the same as
+    // "square". Bring each into view and wait for it to be built first.
+    for (const el of [circle, square, rounded]) {
+      await el.scrollIntoViewIfNeeded();
+      await expect(el).toHaveAttribute('x-ready', '');
+    }
+    const radii = () => Promise.all([circle, square, rounded].map((el) => el.evaluate((e) => getComputedStyle(e).borderRadius)));
+    await expect.poll(async () => {
+      const [circleRadius, squareRadius, roundedRadius] = await radii();
+      return squareRadius === '0px' && new Set([circleRadius, squareRadius, roundedRadius]).size === 3;
+    }, { message: 'square must be 0px and circle/square/rounded three different radii', timeout: 10_000 }).toBe(true);
 
+    const [circleRadius, squareRadius, roundedRadius] = await radii();
     expect(squareRadius).toBe('0px');
     expect(circleRadius).not.toBe(squareRadius);
     expect(roundedRadius).not.toBe(squareRadius);

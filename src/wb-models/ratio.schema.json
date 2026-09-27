@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "ratio.schema.json",
   "title": "Ratio",
-  "description": "Behavior applied with x-ratio.",
+  "description": "x-ratio gives the element a fixed aspect ratio from ratio (16:9, 4x3 or 1/1 all work) and makes a direct image, video or iframe child cover it.",
   "schemaFor": "ratio",
   "properties": {
     "ratio": {

@@ -4,7 +4,6 @@ Turns a field's placeholder into a label that floats above the field once it
 has focus or a value. See
 [src/wb-viewmodels/floatinglabel.js](../../src/wb-viewmodels/floatinglabel.js).
 
-- **Type:** Modifier
 - **Root CSS class:** `x-floating-label`
 - **Schema:** [floatinglabel.schema.json](../../src/wb-models/floatinglabel.schema.json)
 
@@ -13,10 +12,6 @@ has focus or a value. See
 The label text comes from the field's `placeholder`, or from a `label`
 attribute if there's no placeholder — either way, the placeholder is cleared
 once the label is built:
-
-```html
-<input type="email" x-floatinglabel placeholder="Email address">
-```
 
 <div x-demo>
 <input type="email" x-floatinglabel placeholder="Email address">

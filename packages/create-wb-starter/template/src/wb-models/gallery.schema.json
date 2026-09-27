@@ -2,28 +2,42 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "gallery.schema.json",
   "title": "Gallery",
-  "description": "Behavior applied with x-gallery.",
-  "schemaFor": "x-gallery",
+  "description": "x-gallery lays the images inside it out as a grid of columns (or fixed-size tiles with size), and clicking any image opens it full-size in a lightbox you can step through.",
+  "schemaFor": "gallery",
   "properties": {
     "columns": {
       "type": "string",
-      "description": "Read by gallery().",
+      "description": "Number of columns in the grid. Defaults to `3`.",
       "default": "3"
     },
     "size": {
       "type": "string",
-      "description": "Read by gallery().",
-      "default": ""
+      "description": "Fixed thumbnail size (e.g. `150px`), independent of the column count — use it when you want uniform tiles rather than columns dividing the width.",
+      "default": "this is the size"
     },
     "gap": {
       "type": "string",
-      "description": "Read by gallery().",
+      "description": "Space between items, as a CSS length. Defaults to `1rem`.",
       "default": "1rem"
     },
     "lightbox": {
       "type": "string",
-      "description": "Read by gallery()."
+      "description": "Clicking any item opens it full-size in a lightbox.",
+      "default": "this is the lightbox"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-gallery"
+  },
+  "test": {
+    "setup": [
+      "<div x-gallery>Test Content</div>",
+      "<div x-gallery columns=\"3\">Test Content</div>",
+      "<div x-gallery gap=\"1rem\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

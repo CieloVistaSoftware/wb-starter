@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "grid.schema.json",
   "title": "Grid",
-  "description": "Behavior applied with x-grid.",
+  "description": "Responsive CSS grid: items auto-fit into columns from a minimum item width.",
   "schemaFor": "grid",
   "properties": {
     "columns": {

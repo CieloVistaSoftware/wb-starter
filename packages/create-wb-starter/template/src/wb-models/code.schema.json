@@ -2,40 +2,52 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "code.schema.json",
   "title": "Code",
-  "description": "Behavior applied with x-code.",
-  "schemaFor": "x-code",
+  "description": "A <code> block gets syntax highlighting for its language, a surface to sit on, and an optional copy button (show-copy).",
+  "schemaFor": "code",
   "properties": {
     "language": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "Language for syntax highlighting (e.g. `html`, `js`). Unset renders plain, uncoloured text.",
+      "default": "this is the language"
     },
     "variant": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "Visual treatment of the code span or block — controls the surface it is drawn on.",
+      "default": "this is the variant"
     },
     "scrollable": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "When `\"true\"`, scroll horizontally rather than wrapping long lines.",
+      "default": "this is the scrollable"
     },
     "size": {
       "type": "string",
-      "description": "Read by code()."
+      "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
+      "default": "this is the size"
     },
     "show-copy": {
       "type": "boolean",
-      "description": "Read by code(). Bare attribute.",
+      "description": "Show a copy-to-clipboard button.",
       "default": false
     },
-    "data-show-copy": {
+    "copy": {
       "type": "boolean",
-      "description": "Read by code(). Bare attribute.",
-      "default": false
-    },
-    "data-copy": {
-      "type": "boolean",
-      "description": "Read by code(). Bare attribute.",
+      "description": "Alias of `show-copy`.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-code"
+  },
+  "test": {
+    "setup": [
+      "<div x-code>Test Content</div>",
+      "<div x-code show-copy>Test Content</div>",
+      "<div x-code copy>Test Content</div>"
+    ]
   },
   "events": {
     "wb:code:copy": "Fired by code()."

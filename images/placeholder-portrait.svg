@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500" preserveAspectRatio="none" role="img" aria-label="Placeholder image (portrait)">
+  <!--
+    Portrait stand-in that behaves like a PHOTO, for demos of object-fit.
+    placeholder.svg is `preserveAspectRatio="slice"`, so it always paints as
+    if cropped to cover and every fit= option looked identical on it. This one
+    has an intrinsic size (400x500, taller than any card frame) and "none",
+    so cover crops it, contain letterboxes it, fill visibly stretches the
+    circle, and none shows it at natural size: four different pictures.
+    Colours are baked in for the reason placeholder.svg gives: it is an image
+    file, rendered in its own document, and cannot read theme tokens.
+  -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4b5563"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#g)"/>
+  <g fill="none" stroke="#9ca3af" stroke-width="3" opacity="0.6">
+    <circle cx="200" cy="170" r="60"/>
+    <path d="M40 440 L150 300 L230 380 L300 290 L360 440 Z"/>
+  </g>
+  <rect x="1.5" y="1.5" width="397" height="497" fill="none" stroke="#9ca3af" stroke-width="3" opacity="0.35"/>
+</svg>

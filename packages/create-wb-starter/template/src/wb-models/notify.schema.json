@@ -2,19 +2,32 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "notify.schema.json",
   "title": "Notify",
-  "description": "Behavior applied with x-notify.",
-  "schemaFor": "x-notify",
+  "description": "x-notify makes the element pop a toast notification on each click.",
+  "schemaFor": "notify",
   "properties": {
     "message": {
       "type": "string",
-      "description": "Read by notify().",
+      "description": "Text of the notification. Defaults to `Notification`.",
       "default": "Notification"
     },
     "duration": {
       "type": "string",
-      "description": "Read by notify().",
+      "description": "How long the notification stays up, in milliseconds. Defaults to `3000`.",
       "default": "3000"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-notify"
+  },
+  "test": {
+    "setup": [
+      "<div x-notify>Test Content</div>",
+      "<div x-notify message=\"Notification\">Test Content</div>",
+      "<div x-notify duration=\"3000\">Test Content</div>"
+    ]
   },
   "events": {
     "wb:notify:show": "Fired by notify()."

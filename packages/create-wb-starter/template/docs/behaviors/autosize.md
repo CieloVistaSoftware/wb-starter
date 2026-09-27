@@ -2,7 +2,6 @@
 
 Automatically resizes a textarea to fit its content as the user types.
 
-- **Type:** Modifier
 - **Usage:**
   ```html
   <textarea x-autosize></textarea>

@@ -2,18 +2,31 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "release.schema.json",
   "title": "Release",
-  "description": "Behavior applied with x-release.",
-  "schemaFor": "x-release",
+  "description": "Renders the site's current build/release number from its single source of truth.",
+  "schemaFor": "release",
   "properties": {
     "format": {
       "type": "string",
-      "description": "Read by release().",
+      "description": "Template for the badge text, with `{version}` replaced. Defaults to `v{version}`.",
       "default": "v{version}"
     },
     "reload": {
       "type": "string",
-      "description": "Read by release()."
+      "description": "Clear caches and reload when the badge is activated. On unless set to `\"false\"`.",
+      "default": "this is the reload"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-release"
+  },
+  "test": {
+    "setup": [
+      "<div x-release>Test Content</div>",
+      "<div x-release format=\"v{version}\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

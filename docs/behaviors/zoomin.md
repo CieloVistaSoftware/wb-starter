@@ -1,23 +1,11 @@
 # Zoomin
 
-On click, plays the zoom-in animation for 0.4s.
+`x-zoomin` grows the element from half size and transparent to full size over 0.4 s when clicked.
 
-## Type — new capability
+## Usage
 
-`x-zoomin` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button class="effect-demo" x-zoomin>Click to zoom in</button>
+</div>
 
-### How to write it
-
-```html
-<button class="effect-demo" x-zoomin>
-  x-zoomin
-</button>
-```
-
-## Live example
-
-See `x-zoomin` on the [Behaviors showcase](/?page=behaviors) — search for `x-zoomin` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/zoomin.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`zoomin.schema.json`](../../src/wb-models/zoomin.schema.json)</sub>

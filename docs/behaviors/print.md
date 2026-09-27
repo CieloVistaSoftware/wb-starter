@@ -1,30 +1,18 @@
 # Print
 
-Behavior applied with x-print.
+`x-print` makes the element a button that prints the page, or only the element matched by `target`. With no text of its own it shows the `label`, "🖨️ Print" by default.
 
-## Type — new capability
+## Usage
 
-`x-print` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<button variant="secondary" x-print>
-  x-print · variant: secondary
-</button>
-```
+<div x-demo>
+<button x-print></button>
+</div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | `this is the target` | CSS selector for the region to print. Empty prints the whole page. |
+| `target` | `string` | — | CSS selector for the region to print. Empty prints the whole page. |
 | `label` | `string` | `🖨️ Print` | Button label. Defaults to `🖨️ Print`. |
 
-## Live example
-
-See `x-print` on the [Behaviors showcase](/?page=behaviors) — search for `x-print` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/print.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`print.schema.json`](../../src/wb-models/print.schema.json)</sub>

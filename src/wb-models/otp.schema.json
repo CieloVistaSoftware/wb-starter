@@ -3,7 +3,7 @@
   "title": "OTP Behavior",
   "schemaType": "behavior",
   "type": "object",
-  "description": "Schema for x-otp behavior (one-time password input)",
+  "description": "x-otp replaces the element's content with length single-digit boxes for a one-time code: typing moves to the next box, and non-digits are rejected.",
   "properties": {
     "length": {
       "type": "integer",

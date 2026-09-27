@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "clock.schema.json",
   "title": "Clock",
-  "description": "Behavior applied with x-clock.",
+  "description": "x-clock shows the current time in the element and updates it every second.",
   "schemaFor": "clock",
   "properties": {
     "variant": {

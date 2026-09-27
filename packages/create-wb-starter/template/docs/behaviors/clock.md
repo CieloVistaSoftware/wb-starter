@@ -1,16 +1,13 @@
 # Clock
 
-Behavior applied with x-clock.
+`x-clock` shows the current time in the element and updates it every second. `format="12"` switches to a 12-hour clock with AM/PM, `show-seconds="false"` drops the seconds, and `variant="led"` gives a green seven-segment look.
 
-## Type — new capability
+## Usage
 
-`x-clock` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-clock></div>
-```
+<div x-clock format="12" variant="led"></div>
+</div>
 
 ## Attributes
 
@@ -18,12 +15,6 @@ Behavior applied with x-clock.
 | --- | --- | --- | --- |
 | `variant` | `string` | `digital` | Clock face: `digital` (default) or the analogue rendering. |
 | `format` | `string` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. |
-| `show-seconds` | `string` | `this is the show seconds` | Show the seconds field. On unless set to `"false"`. |
+| `show-seconds` | `string` | — | Show the seconds field. On unless set to `"false"`. |
 
-## Live example
-
-See `x-clock` on the [Behaviors showcase](/?page=behaviors) — search for `x-clock` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/clock.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`clock.schema.json`](../../src/wb-models/clock.schema.json)</sub>

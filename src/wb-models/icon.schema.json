@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "icon.schema.json",
   "title": "Icon",
-  "description": "Behavior applied with x-icon.",
+  "description": "Pairs an inline SVG icon with adjacent text in an inline-flex row and sizes the icon to the text.",
   "schemaFor": "icon",
   "properties": {
     "size": {

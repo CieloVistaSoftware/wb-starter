@@ -51,7 +51,7 @@ All three are equivalent and produce the same result.
 
 ### Card Behaviors
 
-| Tag (wb-*) | Tag (noun-first) | Behavior | Description |
+| Markup | Alternative | Behavior | Description |
 |------------|------------------|----------|-------------|
 | `<article>` | `<article>` | `card` | Basic card container |
 | `<div x-cardprofile>` | `<div x-cardprofile>` | `cardprofile` | User profiles with avatar, bio |
@@ -146,7 +146,7 @@ The registry is defined in `src/core/wb-lazy.js`:
 
 ```javascript
 const customElementMappings = [
-  // wb-* prefix (primary)
+  // x-* attribute (primary)
   { selector: 'x-card', behavior: 'card' },
   { selector: 'x-cardprofile', behavior: 'cardprofile' },
   { selector: 'x-cardhero', behavior: 'cardhero' },

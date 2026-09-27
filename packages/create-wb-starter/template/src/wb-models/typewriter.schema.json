@@ -2,22 +2,36 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "typewriter.schema.json",
   "title": "Typewriter",
-  "description": "Behavior applied with x-typewriter.",
-  "schemaFor": "x-typewriter",
+  "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
+  "schemaFor": "typewriter",
   "properties": {
     "speed": {
       "type": "string",
-      "description": "Read by typewriter().",
+      "description": "Milliseconds between characters. Defaults to `50` — lower is faster.",
       "default": "50"
     },
     "text": {
       "type": "string",
-      "description": "Read by typewriter()."
+      "description": "Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup.",
+      "default": "this is the text"
     },
     "cursor": {
       "type": "string",
-      "description": "Read by typewriter()."
+      "description": "Show the blinking cursor. On unless set to `\"false\"`.",
+      "default": "this is the cursor"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-typewriter"
+  },
+  "test": {
+    "setup": [
+      "<div x-typewriter>Test Content</div>",
+      "<div x-typewriter speed=\"50\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

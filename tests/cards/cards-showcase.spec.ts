@@ -891,18 +891,18 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('text does not overflow cards', async ({ page }) => {
-      // KNOWN DEFECT -- see #864. x-cardhero and x-cardpricing lay out content
-      // wider than the card and rely on overflow:hidden to clip it, so 46
-      // elements (up to 135px past the right edge) are silently truncated.
-      // This is marked test.fail() rather than skipped so it flips the suite
-      // RED the moment #864 is fixed and the marker must be removed. It was
-      // passing vacuously before #863 because the 404 page had zero .x-card.
-      test.fail(true, 'x-cardhero / x-cardpricing content overflow -- see #864');
-
-      // test.fail() inverts the result, so an under-rendered page would report
-      // as a FAILURE here. This one measures every .x-card AND depends on the
-      // page being fully laid out, so wait for real completion, then pin down
-      // that the two overflowing variants specifically have rendered.
+      // #864: x-cardhero and x-cardpricing used to lay out content wider than
+      // the card and rely on overflow:hidden to clip it (46 elements, up to
+      // 135px past the right edge). This was marked test.fail() so it would flip
+      // RED the moment that was fixed -- and it did ("expected to fail, but
+      // passed") once the cardhero rework stopped overflowing. The marker is
+      // gone; this now guards the fix.
+      //
+      // It measures every card AND depends on the page being fully laid out, so
+      // wait for real completion, then pin down that the two formerly
+      // overflowing variants have rendered -- otherwise an under-rendered page
+      // would pass vacuously (as it did before #863, when the 404 page had zero
+      // cards).
       await waitForWbReady(page);
       await expect(page.locator('[x-cardhero]').first()).toBeVisible();
       await expect(page.locator('[x-cardpricing]').first()).toBeVisible();
@@ -921,7 +921,7 @@ test.describe('Cards Showcase Page', () => {
         return issues;
       });
 
-      expect(overflows.length).toBe(0);
+      expect(overflows, overflows.join("\n")).toEqual([]);
     });
   });
 });

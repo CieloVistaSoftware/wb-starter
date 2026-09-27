@@ -65,6 +65,18 @@
 .x-checkbox__input:checked ~ .x-checkbox__box .x-checkbox__check {
   opacity: 1;
 }
+/* INDETERMINATE -- filled like ON, with a dash in place of the tick. It is a
+   DOM property checkbox.js sets from the `indeterminate` attribute; with no
+   rule here it rendered as a blank, unchecked box. */
+.x-checkbox__input:indeterminate ~ .x-checkbox__box {
+  background: var(--x-checkbox-checked-bg, var(--primary));
+  border-color: var(--x-checkbox-checked-border, var(--primary));
+}
+.x-checkbox__input:indeterminate ~ .x-checkbox__box .x-checkbox__check {
+  opacity: 1;
+  -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3crect x='3' y='7' width='10' height='2' rx='1'/%3e%3c/svg%3e") center / 100% no-repeat;
+  mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3crect x='3' y='7' width='10' height='2' rx='1'/%3e%3c/svg%3e") center / 100% no-repeat;
+}
 .x-checkbox__input:focus-visible ~ .x-checkbox__box {
   box-shadow: var(--x-checkbox-focus-ring, 0 0 0 3px rgba(99, 102, 241, 0.2));
 }

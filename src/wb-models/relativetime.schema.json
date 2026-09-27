@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "relativetime.schema.json",
   "title": "Relativetime",
-  "description": "Behavior applied with x-relativetime.",
+  "description": "x-relativetime replaces the element's text with how long ago date was — \"3 days ago\", \"Just now\" — and recomputes it every refresh milliseconds.",
   "schemaFor": "relativetime",
   "properties": {
     "datetime": {

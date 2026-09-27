@@ -1,18 +1,14 @@
 # Resizable
 
-Make an element resizable.
+`x-resizable` adds drag handles to the element so the user can resize it; `handles` lists which edges and corners get one (`se`, the bottom-right corner, by default).
 
-## Type — new capability
+## Usage
 
-`x-resizable` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<div x-resizable handles="se">
-  Grab the corner and resize this panel.
+<div x-demo>
+<div x-resizable handles="se" style="width:240px;height:120px;padding:1rem;border:1px solid var(--border-color);background:var(--bg-secondary)">
+  Drag the bottom-right corner.
 </div>
-```
+</div>
 
 ## Attributes
 
@@ -20,10 +16,4 @@ Make an element resizable.
 | --- | --- | --- | --- |
 | `handles` | `string` | `se` |  |
 
-## Live example
-
-See `x-resizable` on the [Behaviors showcase](/?page=behaviors) — search for `x-resizable` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/resizable.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`resizable.schema.json`](../../src/wb-models/resizable.schema.json)</sub>

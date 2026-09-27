@@ -1,25 +1,22 @@
 # Avatar
 
-User avatar with image, initials fallback, and status indicator
+`x-avatar` renders a round (or `shape`d) picture from `src`, and falls back to initials taken from `name` when there is no image or it fails to load. `status` adds an online/busy/away dot. Put it on an empty `<div>` or `<span>`.
 
-## Type — new capability
+## Usage
 
-`x-avatar` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<div x-avatar src="images/placeholder.svg" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
-```
+<div x-demo>
+<div x-avatar name="Ada Lovelace" size="lg" status="online"></div>
+<div x-avatar src="../../images/placeholder.svg" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
+</div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `src` | `string` | `#` | Image source URL |
-| `alt` | `string` | `this is the alt` | Alt text for image |
-| `initials` | `string` | `this is the initials` | Fallback initials (2 chars) |
-| `name` | `string` | `this is the name` | Full name (generates initials if not provided) |
+| `alt` | `string` | — | Alt text for image |
+| `initials` | `string` | — | Fallback initials (2 chars) |
+| `name` | `string` | — | Full name (generates initials if not provided) |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `2xl` | `md` |  |
 | `shape` | `circle` · `square` · `rounded` | `circle` |  |
 | `status` | `` · `online` · `offline` · `busy` · `away` | — | Status indicator (empty = no indicator) |
@@ -37,10 +34,4 @@ User avatar with image, initials fallback, and status indicator
 - **role** — img
 - **ariaLabel** — dynamic from name or alt
 
-## Live example
-
-See `x-avatar` on the [Behaviors showcase](/?page=behaviors) — search for `x-avatar` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/avatar.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`avatar.schema.json`](../../src/wb-models/avatar.schema.json)</sub>

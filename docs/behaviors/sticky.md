@@ -1,18 +1,14 @@
 # Sticky
 
-Makes element stick to viewport on scroll
+`x-sticky` keeps the element pinned `offset` from the top of its scroll container once it scrolls there, adds `stuck-class` while pinned, and fires `wb:sticky:stuck` and `wb:sticky:unstuck`.
 
-## Type — new capability
+## Usage
 
-`x-sticky` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-sticky offset="0" stuck-class="is-stuck">
   Sticks to the top of its scroll container once you pass it.
 </div>
-```
+</div>
 
 ## Attributes
 
@@ -35,10 +31,4 @@ Makes element stick to viewport on scroll
 - `unstick()` — Forces unsticky state
 - `isStuck()` — Returns stuck state
 
-## Live example
-
-See `x-sticky` on the [Behaviors showcase](/?page=behaviors) — search for `x-sticky` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/sticky.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`sticky.schema.json`](../../src/wb-models/sticky.schema.json)</sub>

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "fullscreen.schema.json",
   "title": "Fullscreen",
-  "description": "Behavior applied with x-fullscreen.",
+  "description": "x-fullscreen makes the element a button that expands the page (or the element matched by target) to full screen and back.",
   "schemaFor": "fullscreen",
   "properties": {
     "target": {

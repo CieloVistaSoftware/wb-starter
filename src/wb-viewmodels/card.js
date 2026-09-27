@@ -883,54 +883,37 @@ export function cardimage(element, options = {}) {
 
   const retryCleanups = [];
 
-  // Image at top
-  if (config.src && config.position === 'top') {
+  // One figure for every position. top/bottom used to be two verbatim copies
+  // of this, and left/right -- declared in cardimage.schema.json's enum --
+  // matched neither branch, so those cards rendered with no image at all.
+  const buildFigure = () => {
     const figure = base.createFigure();
     figure.style.setProperty('--card-image-aspect', config.aspect);   // #1003: the property card.css already reads
     const img = document.createElement('img');
     img.src = config.src;
     img.alt = config.alt;
     img.loading = config.loading;
-        if (config.fit) img.style.setProperty('--card-image-fit', config.fit);
-    // #1003 -- this used to write
-    //   style.cssText = "width:100%;height:100%;object-fit:<fit>;display:block;"
-    // which was a verbatim duplicate of CSS that ALREADY existed:
-    //   .x-card__figure img { display:block; width:100%; height:100%;
-    //                         object-fit: var(--card-image-fit, cover); }
-    // An inline style beats every stylesheet, so the duplicate silently made
-    // the image unthemeable -- a theme could not change it without !important,
-    // which the laws also forbid. Only `fit` varies, and card.css already reads
-    // it from --card-image-fit, so that is all that is set here.
+    // #1003: only `fit` varies; card.css reads it from --card-image-fit. An
+    // inline object-fit/width/height here would make the image unthemeable.
+    if (config.fit) img.style.setProperty('--card-image-fit', config.fit);
     retryCleanups.push(attachImageLoadRetry(img));
     traceCardMedia('cardimage', element, img, config.src);
     figure.appendChild(img);
     addCaption(figure);
-    element.insertBefore(figure, element.firstChild);
-  }
+    return figure;
+  };
 
-  // Image at bottom
-  if (config.src && config.position === 'bottom') {
-    const figureBottom = base.createFigure();
-    figureBottom.style.setProperty('--card-image-aspect', config.aspect);   // #1003: the property card.css already reads
-    const imgBottom = document.createElement('img');
-    imgBottom.src = config.src;
-    imgBottom.alt = config.alt;
-    imgBottom.loading = config.loading;
-        if (config.fit) imgBottom.style.setProperty('--card-image-fit', config.fit);
-    // #1003 -- this used to write
-    //   style.cssText = "width:100%;height:100%;object-fit:<fit>;display:block;"
-    // which was a verbatim duplicate of CSS that ALREADY existed:
-    //   .x-card__figure img { display:block; width:100%; height:100%;
-    //                         object-fit: var(--card-image-fit, cover); }
-    // An inline style beats every stylesheet, so the duplicate silently made
-    // the image unthemeable -- a theme could not change it without !important,
-    // which the laws also forbid. Only `fit` varies, and card.css already reads
-    // it from --card-image-fit, so that is all that is set here.
-    retryCleanups.push(attachImageLoadRetry(imgBottom));
-    traceCardMedia('cardimage', element, imgBottom, config.src);
-    figureBottom.appendChild(imgBottom);
-    addCaption(figureBottom);
-    element.appendChild(figureBottom);
+  if (config.src) {
+    const figure = buildFigure();
+    // bottom goes last; top, left and right go first -- card.css puts the
+    // side positions in their own grid column, keyed on the host's
+    // `position` attribute, so DOM order only decides top vs bottom.
+    if (config.position === 'bottom') element.appendChild(figure);
+    else element.insertBefore(figure, element.firstChild);
+    // position given via options only: reflect it so card.css can select it.
+    if ((config.position === 'left' || config.position === 'right') && !element.hasAttribute('position')) {
+      element.setAttribute('position', config.position);
+    }
   }
 
   // href: the whole card becomes the link target. A real <a> stretched over
@@ -3126,90 +3109,92 @@ export function cardportfolio(element, options = {}) {
   }
   element.innerHTML = '';
   
-  // Size handling. compact/horizontal have their own CSS-driven max-width
-  // (card.css `.x-portfolio.x-portfolio--compact` / `--horizontal`,
-  // specificity 0,2,0) -- setting an inline default here for those variants
-  // would force !important to let that CSS win (same "inline always beats
-  // class" issue documented throughout this file), so skip the inline
-  // default for them and let card.css own their width.
-  if (config.variant === 'full') {
-    element.style.maxWidth = '800px';
-  } else if (config.size === 'auto' && config.variant !== 'compact' && config.variant !== 'horizontal') {
-    element.style.maxWidth = '400px';
-  }
+  // Width is card.css's job, not an inline write. This used to set
+  // `max-width: 400px` (or 800px for variant="full") on the element, and an
+  // inline declaration outranks every stylesheet rule -- so size="sm"/"lg"/...
+  // (composeCard's `.x-card--{size}` classes) could never change the width of
+  // a default-variant card. The defaults now live in card.css's
+  // `.x-portfolio` / `.x-portfolio--full` rules, which the size classes beat.
 
-  // Availability colors
+  // Availability. The colour of each status is a THEME value (card.css maps
+  // `x-portfolio__availability--{status}` onto --success-color etc.), not a
+  // hex baked in here -- the dot used to carry `style="background:#22c55e"`,
+  // which no theme could restyle. The label is shown as visible text next to
+  // the name, not only as a hover title on a 24px dot: "busy" vs
+  // "not-available" is information, and colour alone does not carry it.
   const availabilityConfig = {
-    'available': { color: '#22c55e', label: 'Available for work', icon: '🟢' },
-    'busy': { color: '#f59e0b', label: 'Currently busy', icon: '🟡' },
-    'not-available': { color: '#ef4444', label: 'Not available', icon: '🔴' },
-    'open-to-opportunities': { color: '#3b82f6', label: 'Open to opportunities', icon: '🔵' }
+    'available': { label: 'Available for work' },
+    'busy': { label: 'Currently busy' },
+    'not-available': { label: 'Not available' },
+    'open-to-opportunities': { label: 'Open to opportunities' }
   };
+  const AVAILABILITY_STATES = Object.keys(availabilityConfig);
+  const hasAvailability = Boolean(config.availability && availabilityConfig[config.availability]);
 
   // ==================== COVER ====================
+  // A banner strip ABOVE the identity block -- never under it. It used to be
+  // an EMPTY <figure> painted with an inline background-image, and the header
+  // below it carried `margin-top:-60px` to pull the avatar up over it. Three
+  // things went wrong at once on the behaviors page:
+  //   - the figure is `position: relative` (card.css `article figure`), the
+  //     header is not, so the cover PAINTED OVER the header: the avatar was
+  //     invisible and the name/title sat half under the image;
+  //   - an empty <figure> is auto-injected with the figure behavior, and
+  //     teach-by-example fills an element the author left empty -- so the
+  //     cover grew caption="this is the caption" and printed it on the image;
+  //   - John: "the image hides the rest of the card".
+  // A real <img> makes the figure a real figure (and non-empty, so nothing
+  // "teaches" into it), lightbox="false" is the figure behavior's own opt-out
+  // (a decorative banner is not something to zoom), and sizing lives in
+  // card.css so compact/horizontal/full can reshape it.
   if (config.cover) {
     const coverFigure = document.createElement('figure');
     coverFigure.className = 'x-portfolio__cover';
-    coverFigure.style.cssText = `margin:0;height:150px;background-image:url(${config.cover});background-size:cover;background-position:center;position:relative;`;
+    coverFigure.setAttribute('lightbox', 'false');
+    const coverImg = document.createElement('img');
+    coverImg.className = 'x-portfolio__cover-img';
+    coverImg.src = config.cover;
+    // Decorative: the card's name/title already say who this is.
+    coverImg.alt = '';
+    coverFigure.appendChild(coverImg);
     element.appendChild(coverFigure);
   }
 
   // ==================== HEADER ====================
   const header = document.createElement('header');
   header.className = 'x-portfolio__header';
-  // The <header> also inherits the generic .x-header navbar rule
-  // (display:flex; height:60px; fixed bg + border-bottom + 0.8em font). The
-  // flex squeezed the avatar into a column and the fixed 60px height clipped
-  // the header so its 120px avatar + text overflowed onto the sections below.
-  // display/text-align/padding now live in card.css's compound
-  // `.x-portfolio__header.x-header` rule (0,2,0 always outranks the plain
-  // .x-header selector's 0,1,0 -- same pattern as .x-card__footer.x-footer
-  // above) instead of being forced inline, so the compact/horizontal/full/
-  // size-scaling CSS below can override the default padding/display without
-  // needing !important. Only the properties nothing else needs to override
-  // (height/background/border-bottom/font-size, plus the cover offset) stay
-  // inline.
-  header.style.cssText = `height:auto;min-height:0;background:transparent;border-bottom:none;font-size:1rem;${config.cover ? 'margin-top:-60px;' : ''}`;
+  // No inline styles. The header also picks up the generic card header rule
+  // (`article > header`: grid, tinted background, border-bottom) and, via
+  // tag-map.js, the page navbar's `.x-header` (flex, 60px height). card.css's
+  // `.x-portfolio > .x-portfolio__header` (0,2,0) outranks both, so the
+  // resets that used to be forced inline here live there -- where the
+  // compact/horizontal/full/size rules can still override them.
 
-  // Avatar (real image, OR a fallback initials placeholder). This block used
-  // to be gated on `config.avatar` alone, which meant the availability dot
-  // -- built inside it -- silently never rendered for the (very common) case
-  // of a portfolio card with no avatar image, even though `availability`
-  // defaults to 'available' (cardportfolio.schema.json) and is meant to
-  // always be visible. Build the wrap whenever there's an avatar image OR an
-  // availability status to show, and fall back to an initials circle so the
-  // dot always has something to attach to.
-  if (config.avatar || (config.availability && availabilityConfig[config.availability])) {
-    const avatarWrap = document.createElement('figure');
+  // Avatar (real image, OR a fallback initials placeholder), built whenever
+  // there's an avatar image OR an availability status to show, so the status
+  // dot always has something to attach to (availability defaults to
+  // 'available' -- cardportfolio.schema.json).
+  //
+  // A <div>, not a <figure>: card.css styles `article figure > span` as an
+  // absolutely-positioned overlay BADGE (the cardimage "New" pill). With a
+  // <figure> wrap, the initials <span> and the status-dot <span> both became
+  // position:absolute badges, the wrap collapsed to 0x0, and the avatar
+  // vanished behind the cover. It holds an image and a status dot -- a
+  // layout wrapper, not a self-contained figure.
+  if (config.avatar || hasAvailability) {
+    const avatarWrap = document.createElement('div');
     avatarWrap.className = 'x-portfolio__avatar-wrap';
-    // margin/position/display now live in card.css's `.x-portfolio__avatar-wrap`
-    // base rule -- kept out of inline so the horizontal variant's own margin
-    // override (card.css) can win by normal cascade instead of !important.
 
     if (config.avatar) {
       const avatarImg = document.createElement('img');
       avatarImg.className = 'x-portfolio__avatar';
       avatarImg.src = config.avatar;
       avatarImg.alt = config.name || 'Avatar';
-      // width/height/border-radius/border/object-fit/display now live in
-      // card.css's `.x-portfolio__avatar` base rule -- see the comment on
-      // avatarWrap above; same reason (lets compact/full/size-scaling CSS
-      // resize the avatar without !important).
-      // #556: deliberately overlaps .x-portfolio__cover -- the `header`
-      // above gets `margin-top:-60px` exactly when config.cover is set,
-      // pulling this avatar up to straddle the cover photo's bottom edge
-      // (the standard social-profile "avatar over cover" layout, same
-      // pattern LinkedIn/Twitter/Facebook headers use). no-element-overlap
-      // .spec.ts (#540) already flagged this pair on demos/site/cards.html
-      // as "probable-but-unconfirmed intentional" without a source read to
-      // confirm it; the -60px margin above confirms it's deliberate, not a
-      // layout bug.
-      if (config.cover) avatarImg.setAttribute('data-allow-overlap', '');
       avatarWrap.appendChild(avatarImg);
     } else {
-      // No avatar image supplied — render initials (or a generic mark) in a
-      // themed circle (styling in card.css: .x-portfolio__avatar-placeholder,
-      // Law 9) so the availability dot below still has a visible anchor.
+      // No avatar image supplied -- render initials in a themed circle
+      // (card.css: .x-portfolio__avatar-placeholder) so the availability dot
+      // still has a visible anchor.
       const placeholder = document.createElement('span');
       placeholder.className = 'x-portfolio__avatar x-portfolio__avatar-placeholder';
       const initials = (config.name || '')
@@ -3223,19 +3208,12 @@ export function cardportfolio(element, options = {}) {
       avatarWrap.appendChild(placeholder);
     }
 
-    // Availability indicator
-    if (config.availability && availabilityConfig[config.availability]) {
+    if (hasAvailability) {
       const availDot = document.createElement('span');
-      availDot.className = 'x-portfolio__availability';
+      availDot.className = `x-portfolio__availability x-portfolio__availability--${config.availability}`;
       availDot.title = availabilityConfig[config.availability].label;
-      // position/size/border/cursor now live in card.css's
-      // `.x-portfolio__availability` base rule -- only `background` stays
-      // inline since it's the one genuinely per-instance value (the status
-      // color), matching the same only-inline-what's-dynamic pattern
-      // `setAvailability()` below already uses. Keeping the rest out of
-      // inline lets the compact variant's smaller-dot CSS override them
-      // without !important.
-      availDot.style.background = availabilityConfig[config.availability].color;
+      // The visible label below says the same thing in words.
+      availDot.setAttribute('aria-hidden', 'true');
       avatarWrap.appendChild(availDot);
     }
 
@@ -3258,13 +3236,15 @@ export function cardportfolio(element, options = {}) {
   if (config.title) {
     const titleEl = document.createElement('div');
     titleEl.className = 'x-portfolio__title';
-    titleEl.style.cssText = 'margin:0.25rem 0 0;color:var(--primary,#6366f1);font-weight:600;font-size:1.1rem;';
+    // Styled by card.css `.x-portfolio__title`. The inline
+    // `color: var(--primary)` it replaced measured rgb(38,38,217) on the
+    // card's dark surface -- the same unreadable accent-on-dark #887 fixed
+    // for card titles.
     titleEl.textContent = config.title + (config.company ? ` at ${config.company}` : '');
     header.appendChild(titleEl);
   } else if (config.company) {
     const companyEl = document.createElement('div');
     companyEl.className = 'x-portfolio__company';
-    companyEl.style.cssText = 'margin:0.25rem 0 0;color:var(--text-secondary,#9ca3af);';
     companyEl.textContent = config.company;
     header.appendChild(companyEl);
   }
@@ -3273,16 +3253,23 @@ export function cardportfolio(element, options = {}) {
   if (config.location) {
     const locEl = document.createElement('div');
     locEl.className = 'x-portfolio__location';
-    locEl.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
     locEl.textContent = `📍 ${config.location}`;
     header.appendChild(locEl);
+  }
+
+  // Availability, in words. Same modifier class as the dot, so one theme
+  // rule colours both.
+  if (hasAvailability) {
+    const statusEl = document.createElement('div');
+    statusEl.className = `x-portfolio__status x-portfolio__status--${config.availability}`;
+    statusEl.textContent = availabilityConfig[config.availability].label;
+    header.appendChild(statusEl);
   }
 
   // Tagline
   if (config.tagline) {
     const tagEl = document.createElement('div');
     tagEl.className = 'x-portfolio__tagline';
-    tagEl.style.cssText = 'margin:0.75rem 0 0;color:var(--text-secondary,#9ca3af);font-style:italic;font-size:0.95rem;';
     tagEl.textContent = `"${config.tagline}"`;
     header.appendChild(tagEl);
   }
@@ -3651,11 +3638,23 @@ export function cardportfolio(element, options = {}) {
 
   // API
   element.wbPortfolio = {
+    // Swaps the modifier class on the dot AND the label -- the colour comes
+    // from card.css, so there is no inline background to rewrite.
     setAvailability: (status) => {
+      if (!availabilityConfig[status]) return;
       const dot = element.querySelector('.x-portfolio__availability');
-      if (dot && availabilityConfig[status]) {
-        dot.style.background = availabilityConfig[status].color;
+      const label = element.querySelector('.x-portfolio__status');
+      for (const state of AVAILABILITY_STATES) {
+        dot?.classList.remove(`x-portfolio__availability--${state}`);
+        label?.classList.remove(`x-portfolio__status--${state}`);
+      }
+      if (dot) {
+        dot.classList.add(`x-portfolio__availability--${status}`);
         dot.title = availabilityConfig[status].label;
+      }
+      if (label) {
+        label.classList.add(`x-portfolio__status--${status}`);
+        label.textContent = availabilityConfig[status].label;
       }
     }
   };

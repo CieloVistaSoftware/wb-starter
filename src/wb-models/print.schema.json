@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "print.schema.json",
   "title": "Print",
-  "description": "Behavior applied with x-print.",
+  "description": "x-print makes the element a button that prints the page, or only the element matched by target.",
   "schemaFor": "print",
   "properties": {
     "target": {

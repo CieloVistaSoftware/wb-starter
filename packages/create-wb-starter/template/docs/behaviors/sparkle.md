@@ -1,18 +1,12 @@
 # Sparkle
 
-Behavior applied with x-sparkle.
+`x-sparkle` bursts `count` sparkle symbols out from the centre of the element each time it is clicked.
 
-## Type — new capability
+## Usage
 
-`x-sparkle` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<button variant="primary" x-sparkle>
-  x-sparkle · variant: primary
-</button>
-```
+<div x-demo>
+<button x-sparkle>Make it sparkle</button>
+</div>
 
 ## Attributes
 
@@ -20,10 +14,4 @@ Behavior applied with x-sparkle.
 | --- | --- | --- | --- |
 | `count` | `string` | `15` | How many sparkle particles to emit. The behavior's default is `15`. |
 
-## Live example
-
-See `x-sparkle` on the [Behaviors showcase](/?page=behaviors) — search for `x-sparkle` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/sparkle.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`sparkle.schema.json`](../../src/wb-models/sparkle.schema.json)</sub>

@@ -469,7 +469,32 @@ async function buildSchemaIfNeeded(element) {
   // idempotent via its own processedElements WeakSet) -- safely no-ops if
   // nothing got registered above (no matching *.schema.json) or it's a tag
   // its own internal SCHEMA_EXCLUDED_TAGS list also excludes.
+  keepAuthoredText(element, SchemaBuilder.getSchema(name));
   SchemaBuilder.processElement(element);
+}
+
+/**
+ * Text written INSIDE the tag is the author's content: <div x-checkbox>Run
+ * tests</div> means a checkbox labelled "Run tests". processElement() clears
+ * the host and fills each {{prop}} slot of the $view from the attribute or,
+ * failing that, the schema default -- so the author's words were thrown away
+ * and the placeholder "this is the label" rendered instead (wb.js pages kept
+ * the text, because checkbox.js builds there and reads textContent). When the
+ * host holds only text and no attribute sets the $view's text slot, that text
+ * becomes the slot's attribute before the build runs.
+ */
+function keepAuthoredText(element, schema) {
+  if (!schema || element.children.length) return;
+  const text = (element.textContent || '').trim();
+  if (!text) return;
+  const slot = (schema.$view || [])
+    .map((part) => /^\{\{(\w+)\}\}$/.exec(String(part.content || '').trim()))
+    .find(Boolean);
+  if (!slot) return;
+  const prop = slot[1];
+  const attr = prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+  if (element.hasAttribute(attr) || element.hasAttribute(prop)) return;
+  element.setAttribute(attr, text);
 }
 
 // Track applied behaviors for cleanup

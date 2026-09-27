@@ -81,19 +81,14 @@ test.describe('<div x-searchfield> effect-based attribute coverage', () => {
   });
 
   test('variant produces real computed style differences (glass backdrop-filter, minimal border)', async ({ page }) => {
-    // SUSPECTED BUG (confirmed via this test's real run, not guessed): search.js's search()
-    // adds the `x-search--{variant}` class to `element`, which IS the <input> itself --
-    // see the classList.add() calls at the top of search(element, options) in
-    // src/wb-viewmodels/search.js, all executed BEFORE the wrapper div is created and the
-    // input is moved inside it. So the modifier class ends up on a DESCENDANT of
-    // .x-search__wrapper, never an ancestor. But search.css's variant rules are all
-    // ancestor-descendant selectors (`.x-search--glass .x-search__wrapper`,
-    // `.x-search--minimal .x-search__wrapper`) expecting the modifier class on an
-    // ancestor of the wrapper -- so they never match. Empirically confirmed: glass
-    // backdrop-filter computes to 'none' (same as default), identical to no variant at all.
-    // Marked test.fail() so the suite stays green until src/wb-viewmodels/search.js applies
-    // the modifier class to the wrapper (or the host <div x-searchfield> tag) instead of the input.
-    test.fail();
+    // #359: searchField() puts `x-search--{variant}` on the HOST <div x-searchfield>,
+    // an ancestor of .x-search__wrapper, which is what search.css's
+    // `.x-search--glass .x-search__wrapper` / `.x-search--minimal .x-search__wrapper`
+    // rules need. This test was once marked test.fail() because search() only classed
+    // the inner <input> (a descendant of the wrapper), so the rules never matched.
+    // With the host classed it passes for real, and test.fail() turned that into a
+    // red "expected to fail, but passed" -- so the marker is gone and this now
+    // guards the fix.
     await setup(page, `
       <div x-searchfield id="s-default" placeholder="default"></div>
       <div x-searchfield id="s-glass" variant="glass" placeholder="glass"></div>
@@ -116,16 +111,10 @@ test.describe('<div x-searchfield> effect-based attribute coverage', () => {
   });
 
   test('size sm vs lg produce a real computed height difference', async ({ page }) => {
-    // SUSPECTED BUG (same root cause as the variant test above, confirmed via this test's
-    // real run): the `x-search--sm`/`x-search--lg` class is added to the <input> element
-    // in search.js, before that input is moved inside .x-search__wrapper -- so it ends up
-    // a descendant of the wrapper, not an ancestor. search.css's size rules
-    // (`.x-search--sm .x-search__wrapper`, `.x-search--lg .x-search__wrapper`) need the
-    // modifier class on an ancestor of the wrapper, so they never match. Empirically
-    // confirmed: both sm and lg wrappers compute to the same 40px (2.5rem) default height.
-    // Marked test.fail() so the suite stays green until src/wb-viewmodels/search.js applies
-    // the modifier class to the wrapper (or the host <div x-searchfield> tag) instead of the input.
-    test.fail();
+    // Same root cause and same fix as the variant test above (#359): the size class
+    // is on the host, an ancestor of .x-search__wrapper, so search.css's
+    // `.x-search--sm .x-search__wrapper` / `.x-search--lg .x-search__wrapper` rules
+    // apply. No longer test.fail() -- it passes for real and now guards the fix.
     await setup(page, `
       <div x-searchfield id="s-sm" size="sm" placeholder="sm"></div>
       <div x-searchfield id="s-lg" size="lg" placeholder="lg"></div>

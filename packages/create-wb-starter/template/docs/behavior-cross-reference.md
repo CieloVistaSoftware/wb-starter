@@ -3267,10 +3267,8 @@ Full-screen hero with vertical centering:
 <div x-demo>
 <div x-cover min-height="320px">
   <header>Logo</header>
-  <div principal>
-    <h1>Main Content</h1>
-    <p>This is vertically centered</p>
-  </div>
+  <h1>Main Content</h1>
+  <p>This is vertically centered</p>
   <footer>Scroll down ↓</footer>
 </div>
 </div>

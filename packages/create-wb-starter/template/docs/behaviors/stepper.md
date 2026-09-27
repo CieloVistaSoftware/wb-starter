@@ -1,16 +1,12 @@
 # Stepper Behavior
 
-Schema for x-stepper behavior (numeric stepper)
+`x-stepper` builds a number field with − and + buttons that change the value by `step`, never going below `min` or above `max`.
 
-## Type — new capability
+## Usage
 
-`x-stepper` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-stepper value="5" min="0" max="10"></div>
-```
+</div>
 
 ## Attributes
 
@@ -20,10 +16,4 @@ Schema for x-stepper behavior (numeric stepper)
 | `max` | `number` | `0` | Maximum value |
 | `step` | `number` | `0` | Step increment |
 
-## Live example
-
-See `x-stepper` on the [Behaviors showcase](/?page=behaviors) — search for `x-stepper` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/stepper.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`stepper.schema.json`](../../src/wb-models/stepper.schema.json)</sub>

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "accordion.schema.json",
   "title": "Accordion",
-  "description": "Behavior applied with x-accordion.",
+  "description": "Turns titled child sections into independently expandable items. Deprecated: use <details>/<summary> instead.",
   "schemaFor": "accordion",
   "properties": {
     "data-title": {

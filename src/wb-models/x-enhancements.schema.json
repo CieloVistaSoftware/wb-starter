@@ -3,7 +3,7 @@
   "title": "x-enhancements Attributes",
   "schemaType": "behavior",
   "type": "object",
-  "description": "Schema for x-enhancements attributes (x-form, x-password, x-tags, x-file).",
+  "description": "Shared attributes of the form-control behaviors (x-form, x-password, x-tags, x-file).",
   "properties": {
     "x-form": {
       "type": "boolean",

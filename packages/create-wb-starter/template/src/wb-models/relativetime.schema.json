@@ -2,23 +2,36 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "relativetime.schema.json",
   "title": "Relativetime",
-  "description": "Behavior applied with x-relativetime.",
-  "schemaFor": "x-relativetime",
+  "description": "x-relativetime replaces the element's text with how long ago date was — \"3 days ago\", \"Just now\" — and recomputes it every refresh milliseconds.",
+  "schemaFor": "relativetime",
   "properties": {
     "datetime": {
       "type": "string",
-      "description": "Read by relativetime().",
-      "default": ""
+      "description": "Alias of `date`, read only when `date` is absent.",
+      "default": "this is the datetime"
     },
     "refresh": {
       "type": "string",
-      "description": "Read by relativetime().",
+      "description": "How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute.",
       "default": "60000"
     },
     "date": {
       "type": "string",
-      "description": "Read by relativetime()."
+      "description": "The timestamp to describe. `datetime` is accepted as an alias; `date` is read first.",
+      "default": "this is the date"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-relativetime"
+  },
+  "test": {
+    "setup": [
+      "<div x-relativetime>Test Content</div>",
+      "<div x-relativetime refresh=\"60000\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

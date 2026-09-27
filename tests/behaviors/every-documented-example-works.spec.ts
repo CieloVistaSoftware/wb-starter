@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { extractDemoBlocks } from '../../scripts/lib/demo-blocks.mjs';
 
 /**
  * Every documented example must actually render.
@@ -30,11 +31,19 @@ const DOCS_DIR = 'docs/behaviors';
 
 type Example = { name: string; html: string };
 
-/** The first fenced html block in a doc: the "how to write it" sample. */
+/**
+ * The doc's first example: a live `<div x-demo>` block or a fenced html block,
+ * whichever comes first. Docs lead with the live form now (a fence of plain
+ * semantic HTML is never rendered by the viewer), so reading fences only would
+ * silently skip every doc whose sample is the one a reader actually sees.
+ */
 function firstHtmlSample(md: string): string | null {
-  const m = /```html\n([\s\S]*?)```/.exec(md);
-  if (!m) return null;
-  const body = m[1]
+  const fence = /```html\n([\s\S]*?)```/.exec(md);
+  const demo = extractDemoBlocks(md)[0] as { inner: string; start: number } | undefined;
+  const useDemo = demo && (!fence || demo.start < fence.index);
+  const raw = useDemo ? demo!.inner : fence?.[1];
+  if (!raw) return null;
+  const body = raw
     .split('\n')
     .filter((l) => !/^\s*<!--/.test(l))
     .join('\n')

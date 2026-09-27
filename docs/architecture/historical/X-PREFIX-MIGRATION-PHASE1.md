@@ -90,7 +90,7 @@ Future (Modular):
 
 **Exports:**
 ```javascript
-export const elementMap       // <wb-*> custom elements
+export const elementMap       // wb-* custom elements (removed in 4.0.0)
 export const nativeMap        // <input>, <button>, etc.
 export const extensionMap     // x-ripple, x-tooltip, etc.
 export const allBehaviors     // Merged set of all behaviors
@@ -102,7 +102,7 @@ export function getExtensionBehavior(attrName)
 **Content:**
 
 #### `elementMap` — Custom Element Mappings
-Maps `<wb-*>` tag names to behavior names.
+Mapped `wb-*` tag names to behavior names. (Historical: component tags were removed in 4.0.0.)
 
 **Source Data:** Schema filenames in `src/wb-models/`  
 **Format:** `{ 'x-card': 'card', 'x-alert': 'alert', ... }`
@@ -511,7 +511,7 @@ Phase 1 is complete when:
 
 2. **Functionality Preserved**
    - [ ] All 26 tests pass (Chromium, WebKit, Firefox, Mobile)
-   - [ ] Custom elements (`<wb-*>`) still auto-detected
+   - [ ] Custom elements (`wb-*`, since removed) still auto-detected
    - [ ] Extensions (`x-*`) still auto-detected
    - [ ] Auto-inject still works (when enabled)
 

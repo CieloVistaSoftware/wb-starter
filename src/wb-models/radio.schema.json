@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "radio.schema.json",
   "title": "Radio",
-  "description": "Behavior applied with x-radio.",
+  "description": "Styles a native radio button, keeping it a real form control.",
   "schemaFor": "radio",
   "semanticElement": {
     "tagName": "input",

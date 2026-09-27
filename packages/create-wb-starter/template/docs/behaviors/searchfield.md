@@ -6,8 +6,7 @@ button, and loading state. See `searchField()` in
 container-aware wrapper around the lower-level `search()`/`x-search`
 behavior in the same file.
 
-- **Type:** Modifier
-- **Root CSS class:** `<div x-searchfield>`
+- **Root CSS class:** `x-searchfield`
 - **Schema:** none dedicated (the plain `x-search` behavior it wraps has
   [search.schema.json](../../src/wb-models/search.schema.json); `searchfield`
   itself has no separate schema file)
@@ -19,10 +18,6 @@ behavior in the same file.
 
 On a plain container, `searchField()` finds (or creates) a child `<input>`
 and wires the full search UI around it:
-
-```html
-<div x-searchfield placeholder="Search docs..." variant="glass"></div>
-```
 
 <div x-demo>
 <div x-searchfield placeholder="Search docs..." variant="glass"></div>

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Error Behavior",
   "type": "object",
-  "description": "Schema for x-error behavior (error message)",
+  "description": "x-error marks an element as an error message: it adds the x-error class and role=\"alert\", so assistive technology announces the text as soon as it appears.",
   "properties": {},
   "required": [],
   "schemaFor": "error",

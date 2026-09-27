@@ -1,23 +1,13 @@
 # Control
 
-Behavior applied with x-control.
+`x-control` adds the `x-control` class to the element and does nothing else; no stylesheet targets that class yet. The former button treatment (`action="move-up"` and so on) never ran and is not supported — use the `x-move*` behaviors for that.
 
-## Type — new capability
+## Usage
 
-`x-control` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-control label="Threshold">
   <input type="range" min="0" max="100" value="60">
 </div>
-```
+</div>
 
-## Live example
-
-See `x-control` on the [Behaviors showcase](/?page=behaviors) — search for `x-control` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/control.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`control.schema.json`](../../src/wb-models/control.schema.json)</sub>

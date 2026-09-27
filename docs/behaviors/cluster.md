@@ -1,21 +1,18 @@
 # Cluster
 
-Behavior applied with x-cluster.
+`x-cluster` lays its children out in a wrapping row with a fixed `gap`, centred on a shared line. Use it for groups of small items of different widths, such as tags or buttons, that should flow onto a new line when space runs out.
 
-## Type — new capability
+## Usage
 
-`x-cluster` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-cluster gap="0.5rem">
-  <span>typescript</span>
-  <span>playwright</span>
-  <span>light-dom</span>
-  <span>no-build</span>
+  <span x-badge label="typescript"></span>
+  <span x-badge label="playwright"></span>
+  <span x-badge label="light-dom"></span>
+  <span x-badge label="no-build"></span>
+  <span x-badge label="composition"></span>
 </div>
-```
+</div>
 
 ## Attributes
 
@@ -25,10 +22,4 @@ Behavior applied with x-cluster.
 | `justify` | `string` | `flex-start` | How items are distributed along the row — CSS `justify-content`. Defaults to `flex-start`. |
 | `align` | `string` | `center` | How items line up across the row — CSS `align-items`. Defaults to `center`, which is what keeps mixed-height chips and buttons on a shared centre line. |
 
-## Live example
-
-See `x-cluster` on the [Behaviors showcase](/?page=behaviors) — search for `x-cluster` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cluster.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cluster.schema.json`](../../src/wb-models/cluster.schema.json)</sub>

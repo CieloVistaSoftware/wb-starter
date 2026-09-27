@@ -1,15 +1,9 @@
 # x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)
 
-These are helper attributes for visual and animated effects. See [src/wb-viewmodels/effects.js](../../src/wb-viewmodels/effects.js).
+[src/wb-viewmodels/effects.js](../../src/wb-viewmodels/effects.js) holds the animation behaviors. Each has its own page:
 
-- **Type:** Attribute
-- **Usage:** `[x-animate]`, `[x-fadein]`, `[x-fadeout]`, `[x-slidein]`, `[x-confetti]`, `[x-typewriter]`
+- One-shot animations played on click: [bounce](bounce.md), [fadein](fadein.md), [flash](flash.md), [flip](flip.md), [heartbeat](heartbeat.md), [jello](jello.md), [pulse](pulse.md), [shake](shake.md), [slidein](slidein.md), [tada](tada.md), [wobble](wobble.md), [zoomin](zoomin.md).
+- Particle bursts: [confetti](confetti.md), [fireworks](fireworks.md), [sparkle](sparkle.md), [snow](snow.md).
+- Continuous effects: [glow](glow.md), [rainbow](rainbow.md), [typewriter](typewriter.md).
 
-## Description
-Provides a set of visual and animated effects for UI elements. Add the relevant `x-*` attribute to enable the effect.
-
-## Demo
-See [behaviors-showcase.html](../../pages/behaviors.html).
-
-## Schema/Test
-No dedicated schema or test file; see code for usage patterns.
+The shared attributes are listed in [x-effects.schema.json](../../src/wb-models/x-effects.schema.json).

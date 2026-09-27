@@ -1,16 +1,12 @@
 # Countdown
 
-Behavior applied with x-countdown.
+`x-countdown` shows the time left until `date` (or `to`), or for a fixed number of `seconds`, and updates it every second until it reaches zero, when `wb:countdown:complete` fires. Put it on an empty `<div>` or `<span>`.
 
-## Type — new capability
+## Usage
 
-`x-countdown` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-countdown to="2027-12-31" class="time-display"></div>
-```
+</div>
 
 ## Attributes
 
@@ -18,17 +14,11 @@ Behavior applied with x-countdown.
 | --- | --- | --- | --- |
 | `seconds` | `string` | `0` | A fixed duration in seconds, used instead of an absolute `date`. |
 | `format` | `string` | `auto` | How the remaining time is rendered. `auto` (default) drops units that are zero. |
-| `date` | `string` | `this is the date` | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. |
-| `to` | `string` | `this is the to` | Alias of `date`, read only when `date` is absent. |
+| `date` | `string` | — | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. |
+| `to` | `string` | — | Alias of `date`, read only when `date` is absent. |
 
 ## Events
 
-- `wb:countdown:complete` — Fired by countdown().
+- `wb:countdown:complete` — The countdown reached zero.
 
-## Live example
-
-See `x-countdown` on the [Behaviors showcase](/?page=behaviors) — search for `x-countdown` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/countdown.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`countdown.schema.json`](../../src/wb-models/countdown.schema.json)</sub>

@@ -1,30 +1,16 @@
 # Video Card
 
-Card with embedded video player
+`x-cardvideo` renders a card with a video player from `src` (with `poster` shown before playback) above a title and description. Use it where the video needs a heading and context; for a bare player use `<video>`.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardvideo` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardvideo
   src="https://www.w3schools.com/html/mov_bbb.mp4"
   poster="/images/placeholder.svg"
   title="Behaviors in 90 seconds"
   description="What replaced the behavior base class, and why."></article>
-```
-
-### On a different element
-
-Use `x-cardvideo` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardvideo>
-  …
 </div>
-```
 
 ## Attributes
 
@@ -32,8 +18,8 @@ Use `x-cardvideo` when the host is not a `<article>` and you want the same behav
 | --- | --- | --- | --- |
 | `src` | `string` | `https://www.w3schools.com/html/mov_bbb.mp4` | Video source URL |
 | `poster` | `string` | `#` | Poster image URL |
-| `title` | `string` | `this is the title` | Video title |
-| `description` | `string` | `this is the description` | Video description |
+| `title` | `string` | — | Video title |
+| `description` | `string` | — | Video description |
 | `autoplay` | `boolean` | `false` | Auto-play video (requires muted) |
 | `muted` | `boolean` | `false` | Mute video |
 | `loop` | `boolean` | `false` | Loop video playback |
@@ -61,10 +47,4 @@ Use `x-cardvideo` when the host is not a `<article>` and you want the same behav
 - `setCurrentTime()` — Seeks to time
 - `getDuration()` — Gets video duration
 
-## Live example
-
-See `x-cardvideo` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardvideo` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardvideo.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardvideo.schema.json`](../../src/wb-models/cardvideo.schema.json)</sub>

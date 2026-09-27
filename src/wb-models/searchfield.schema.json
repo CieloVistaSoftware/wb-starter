@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "searchfield.schema.json",
   "title": "Searchfield",
-  "description": "Behavior applied with x-searchfield.",
+  "description": "Complete search field: icon, debounced search events, clear button and loading state.",
   "schemaFor": "searchfield",
   "properties": {
     "size": {

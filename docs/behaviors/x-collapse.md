@@ -1,15 +1,6 @@
 # x-collapse
 
-This is a helper attribute for collapsible UI sections. See [src/wb-viewmodels/collapse.js](../../src/wb-viewmodels/collapse.js).
+The collapse behavior is documented in [collapse.md](collapse.md): `x-collapse` hides an element's content behind a button labelled with `heading`, and `target` makes it toggle another element instead.
 
-- **Type:** Attribute
-- **Usage:** `[x-collapse]`
-
-## Description
-Enables collapsible/expandable sections in the UI. Add `x-collapse` to any element to make it collapsible.
-
-## Demo
-See [Interactive & Utility demos](../../demos/site/interactive.html#collapse-collapse).
-
-## Schema/Test
-No dedicated schema or test file; see code for usage patterns.
+- **Demo:** [Interactive & Utility demos](../../demos/site/interactive.html#collapse-collapse).
+- **Schema:** [collapse.schema.json](../../src/wb-models/collapse.schema.json).

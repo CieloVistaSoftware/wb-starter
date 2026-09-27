@@ -81,12 +81,13 @@ test.describe('Card Hero (integration)', () => {
       el.id = 'test-hero-left';
       el.setAttribute('x-cardhero', '');
       el.setAttribute('data-title', 'Left Aligned');
-      el.setAttribute('data-align', 'left');
+      // cardhero.schema.json declares `xalign`; data-align was never an option.
+      el.setAttribute('xalign', 'left');
       document.body.appendChild(el);
       await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-hero-left');
-    await expect(card).toHaveClass(/x-card--align-left/);
+    await expect(card).toHaveClass(/x-card--xalign-left/);
   });
 });

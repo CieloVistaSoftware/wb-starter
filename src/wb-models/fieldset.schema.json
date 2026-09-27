@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Fieldset Behavior",
   "type": "object",
-  "description": "Schema for the fieldset behavior (a group of form controls)",
+  "description": "Marks a <fieldset> as a group of related form controls, named by its <legend>. It has no open/closed state; wrap it in <details> for that.",
   "properties": {},
   "required": [],
   "schemaFor": "fieldset",

@@ -3,8 +3,7 @@
 Lets a user type and press Enter to build a list of removable tags/chips next
 to a text input. See [src/wb-viewmodels/tags.js](../../src/wb-viewmodels/tags.js).
 
-- **Type:** Modifier
-- **Root CSS class:** `<div x-tags>`
+- **Root CSS class:** `x-tags`
 - **Schema:** [tags.schema.json](../../src/wb-models/tags.schema.json)
 
 ## Usage
@@ -12,10 +11,6 @@ to a text input. See [src/wb-viewmodels/tags.js](../../src/wb-viewmodels/tags.js
 Apply `x-tags` directly to a real `<input>` — the behavior wraps it in a
 `.x-tags` container and adds the tag list as a sibling (an `<input>` is a
 void element and can't hold children, so nothing is ever appended inside it).
-
-```html
-<input type="text" x-tags placeholder="Type a skill and press Enter…">
-```
 
 <div x-demo>
 <input type="text" x-tags placeholder="Type a skill and press Enter…">

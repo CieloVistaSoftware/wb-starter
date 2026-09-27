@@ -69,7 +69,7 @@ console.log(`\n📦 Release: ${pkg.version} → ${next}\n`);
 // THIS batch break anything NEW, measured against data/test-baseline-failures.json.
 // That is strictly stronger than what was happening in practice, which was
 // bypassing the check entirely.
-console.log('🔒 Gate 1 — no NEW failures vs the register (compliance + regression + behaviors)\n');
+console.log('🔒 Gate 1 — no NEW failures vs the register (compliance + regression + behaviors + schema-viewer)\n');
 try {
   execSync('node .husky/test-ratchet.mjs', { cwd: ROOT, stdio: 'inherit' });
   console.log('   ✓ no new failures');

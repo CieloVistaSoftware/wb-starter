@@ -1,39 +1,25 @@
 # File Card
 
-File display card with icon, name, size, and download
+`x-cardfile` renders a file entry as a card: an icon chosen from the extension of `filename`, the file size and date, and a download link to `href`. Use it for attachments and downloads.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardfile` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardfile filename="quarterly-report.pdf" size="2.4 MB" date="2026-08-14" href="#"></article>
-```
-
-### On a different element
-
-Use `x-cardfile` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardfile>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `filename` | `string` | `this is the filename` | File name. Its extension picks the icon (#1117). |
+| `filename` | `string` | — | File name. Its extension picks the icon (#1117). |
 | `file-type` | `pdf` · `doc` · `image` · `video` · `audio` · `zip` · `file` | derived from `filename` | OVERRIDE only. The icon normally comes from the filename's extension; set this when the name cannot say the type (no extension, or a `.bin` that really is a video). Contradicting the extension is honoured, but produces a self-contradicting example (#1114). |
-| `size` | `string` | `this is the size` | File size (e.g., 2.4 MB) |
-| `date` | `string` | `this is the date` | File date |
+| `size` | `string` | — | File size (e.g., 2.4 MB) |
+| `date` | `string` | — | File date |
 | `href` | `string` | `#` | Download URL |
 | `downloadable` | `boolean` | `true` | Show download link |
 | `variant` | `default` · `compact` · `elevated` | `default` |  |
-| `hover-text` | `string` | `this is the hover text` | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hover-text` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 
@@ -41,10 +27,4 @@ Use `x-cardfile` when the host is not a `<article>` and you want the same behavi
 - `hide()` — Hides the card
 - `download()` — Triggers download
 
-## Live example
-
-See `x-cardfile` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardfile` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardfile.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardfile.schema.json`](../../src/wb-models/cardfile.schema.json)</sub>

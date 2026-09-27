@@ -128,9 +128,9 @@ into the live example above:
 
 ---
 
-## 3. Using behaviors (custom tags)
+## 3. Using behaviors (semantic elements)
 
-Custom `wb-*` tags map to behaviors. Pass **plain attributes**; children are slotted as content.
+A semantic element maps to its behavior, and any other element takes the `x-*` attribute. Pass **plain attributes**; children stay as content.
 
 **Card** — `<article>`:
 

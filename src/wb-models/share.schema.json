@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "share.schema.json",
   "title": "Share",
-  "description": "Behavior applied with x-share.",
+  "description": "x-share makes the element open the device's share sheet with share-title, share-text and share-url; where the Web Share API is missing it copies the URL to the clipboard instead.",
   "schemaFor": "share",
   "properties": {
     "text": {

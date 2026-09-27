@@ -16,13 +16,6 @@ renders the version. Reads a single source of truth
 | Category | Content |
 | Source | `src/wb-viewmodels/release.js` |
 
-Both forms run the same behavior: `<span x-release>` and `<div x-release>` are
-equivalent — the tag form is registered in the tag map
-([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
-`release()` function. `autoInject` is on by default site-wide
-([`src/core/config.js`](../../src/core/config.js)), so `x-release` activates
-without any manual `WB.scan()` call.
-
 ## Properties
 
 | Property | Attribute | Type | Default | Description |
@@ -50,7 +43,7 @@ without any manual `WB.scan()` call.
 <span x-release reload="false"></span>
 </div>
 
-### Attribute form
+### On a plain `<div>`
 
 <div x-demo>
 <div x-release></div>

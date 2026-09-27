@@ -1,21 +1,11 @@
 # Kbd
 
-Behavior applied with x-kbd.
+A plain `<kbd>` is drawn as a keycap: monospace text on a raised, bordered key. Use it for keys and shortcuts in running text; on any other inline element, `x-kbd` gives the same look.
 
-## Type — new capability
+## Usage
 
-`x-kbd` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p>
-```
+</div>
 
-## Live example
-
-See `x-kbd` on the [Behaviors showcase](/?page=behaviors) — search for `x-kbd` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/kbd.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`kbd.schema.json`](../../src/wb-models/kbd.schema.json)</sub>

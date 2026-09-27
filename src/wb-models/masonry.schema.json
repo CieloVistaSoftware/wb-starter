@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "masonry.schema.json",
   "title": "Masonry",
-  "description": "Behavior applied with x-masonry.",
+  "description": "x-masonry flows its children into columns like a newspaper, so items of different heights pack without gaps.",
   "schemaFor": "masonry",
   "properties": {
     "columns": {

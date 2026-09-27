@@ -10,7 +10,8 @@
 Shadow DOM causes silent failures. Behaviors render empty, tests still pass because the element exists but has no content. This has burned us multiple times.
 
 - Never use `this.shadowRoot`, `attachShadow()`, or `ShadowRoot`
-- Every `<wb-*>` behavior renders directly into Light DOM
+- Every behavior renders directly into Light DOM, whether it arrives by an `x-*` attribute
+  (`<div x-tooltip>`) or by auto-injection on a semantic element (`<details>`, `<dialog>`)
 - If you see Shadow DOM in existing code, it's a bug — don't copy it
 
 ## 2. Composition — WBServices Pattern, Never A Behavior Base Class
@@ -19,8 +20,8 @@ Architecture v3.0 is composition, not inheritance. Capability is **applied to** 
 element by behavior functions; it is never **acquired by** subclassing.
 
 - Never create or extend `WBBaseComponent` — there is no behavior base class
-- A `<wb-*>` tag maps to a behavior function (`src/core/tag-map.js`), which decorates
-  the element in place in Light DOM
+- An `x-*` attribute, or a semantic element in `nativeMap`, maps to a behavior function
+  (`src/core/tag-map.js`), which decorates the element in place in Light DOM
 - Behaviors are registered via `WBServices.register()`
 - Behavior functions receive `(element, options)` — they don't use `this`
 - The few tags that still keep an `extends HTMLElement` class are registration shims
@@ -67,8 +68,8 @@ because the agents silently shared one dev server port (#643).
 **This is the #1 source of regressions.** Old tests enforce old specs (v1/v2 patterns). When AI makes an old test pass, it reverts code to deprecated patterns and breaks current functionality.
 
 Before fixing code to pass a test:
-- Read the test — does it check v3 patterns (`<wb-*>`, `x-*`, Light DOM)?
-- Or does it check v1/v2 patterns (`x-behavior`, Shadow DOM, `WBBaseComponent`)?
+- Read the test — does it check current patterns (`x-*` attributes, semantic elements, Light DOM)?
+- Or does it check removed patterns (`wb-*` component tags, Shadow DOM, `WBBaseComponent`)?
 - If the test is wrong, **fix the test**, don't revert the code
 - If unsure, ask John
 
@@ -146,43 +147,22 @@ Every `.spec.ts` file must live in a directory that a Playwright project's `test
 
 If a test isn't in one of these directories, it won't run. Check `playwright.config.ts` before creating tests in new locations.
 
-## 11. No data- Attributes on wb-* Behaviors
+## 11. No data- Attributes on Behavior Elements
 
-**Never use `data-` attributes on `<wb-*>` custom elements or `x-*` behavior elements.** Use plain attributes instead. This applies to HTML pages, tests, demos, and behavior JS code.
+**Never use `data-` attributes to configure a behavior** — on an `x-*` element or on an auto-injected semantic element. Use plain attributes instead. This applies to HTML pages, tests, demos, and behavior JS code.
 
-- Never use `message`, `type`, `value`, `items`, etc.
-- Use plain attributes: `message`, `variant`, `value`, `items`, etc.
+- Never use `data-message`, `data-type`, `data-value`, `data-items`, etc.
+- Use plain attributes: `message`, `variant`, `value`, `items`, etc. (`variant`, not `type`, for a visual style)
 - Never use `this.dataset` or `element.dataset` in behavior code — use `element.getAttribute()`
 - Never spread dataset properties
 - See `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` for the full naming spec
 
 ```html
-<!-- ❌ WRONG -->
-<div x-alert
-  type="warning"
-  message="Check input">
-  <div
-    x-stepper
-    value="5"
-    min="0"
-    max="10">
-    <button
-      x-toast
-      message="Saved!"
-      type="success">
-      <!-- ✅ CORRECT -->
-      <div x-alert
-        variant="warning"
-        message="Check input">
-        <div
-          x-stepper
-          value="5"
-          min="0"
-          max="10">
-          <button
-            x-toast
-            message="Saved!"
-            variant="success">
+<!-- ❌ WRONG: data-message / data-type, and type for what is a variant -->
+<!-- ✅ CORRECT -->
+<div x-alert variant="warning" message="Check input"></div>
+<div x-stepper value="5" min="0" max="10"></div>
+<button x-toast message="Saved!" variant="success">Save</button>
 ```
 
 ## 12. Script Output Goes to data/*.json

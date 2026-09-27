@@ -1,18 +1,14 @@
 # Ratio
 
-Behavior applied with x-ratio.
+`x-ratio` gives the element a fixed aspect ratio from `ratio` (`16:9`, `4x3` or `1/1` all work) and makes a direct image, video or iframe child cover it. Use it to reserve space for media before it loads.
 
-## Type — new capability
+## Usage
 
-`x-ratio` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<div x-ratio ratio="16:9">
-  <img src="images/placeholder.svg" alt="Coastline from the air">
+<div x-demo>
+<div x-ratio ratio="16:9" style="max-width:320px">
+  <img src="../../images/placeholder.svg" alt="Coastline from the air">
 </div>
-```
+</div>
 
 ## Attributes
 
@@ -20,10 +16,4 @@ Behavior applied with x-ratio.
 | --- | --- | --- | --- |
 | `ratio` | `string` | `16x9` | The aspect ratio the frame holds its child to, applied as the `--x-frame-ratio` custom property. The behavior's own default is `16/9`. NOTE: this schema declares a default of `16x9`, which the code never produces — the two disagree and the code is authoritative. |
 
-## Live example
-
-See `x-ratio` on the [Behaviors showcase](/?page=behaviors) — search for `x-ratio` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/ratio.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`ratio.schema.json`](../../src/wb-models/ratio.schema.json)</sub>

@@ -1,16 +1,10 @@
 # Dialog
 
-Modal dialog using native HTML5 dialog element
+A plain `<dialog>` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-dialog` is the **dialog behavior**. It attaches to `<dialog>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
-<!-- Plain semantic HTML. The behavior is injected automatically -->
-<!-- because the element itself implies it. No attribute needed. -->
+<div x-demo>
 <button onclick="document.getElementById('delete-branch').showModal()">
   Open the dialog
 </button>
@@ -18,39 +12,24 @@ Modal dialog using native HTML5 dialog element
   <h2>Delete branch?</h2>
   <p>fix/706-dropdown will be removed. This cannot be undone.</p>
 </dialog>
-```
-
-### On a different element
-
-Use `x-dialog` when the host is not a `<dialog>` and you want the same behavior:
-
-```html
-<div x-dialog>
-  …
 </div>
-```
 
-> Do not write `<dialog x-dialog>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
+No attribute needed on `<dialog>`. Don't add `x-dialog` to it (#746).
 
-### Declining it
-
-A `<dialog>` **is** the dialog behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+On another element, write `x-dialog`:
 
 ```html
-<dialog x-ignore>
-  <!-- a plain dialog: no behavior is injected -->
-</dialog>
+<button x-dialog modal-title="Delete branch?" modal-content="fix/706-dropdown will be removed. This cannot be undone.">Delete branch…</button>
 ```
 
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
-
+`<dialog x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | `this is the title` | Dialog title |
-| `content` | `string` | `this is the content` | Dialog body content |
+| `title` | `string` | — | Dialog title |
+| `content` | `string` | — | Dialog body content |
 | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` |  |
 | `close-on-backdrop` | `boolean` | `true` | Close on backdrop click |
 | `close-on-escape` | `boolean` | `true` | Close on Escape key |
@@ -78,10 +57,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - **ariaModal** — true
 - **ariaLabelledBy** — dialog title id
 
-## Live example
-
-See `x-dialog` on the [Behaviors showcase](/?page=behaviors) — search for `x-dialog` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/dialog.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)</sub>

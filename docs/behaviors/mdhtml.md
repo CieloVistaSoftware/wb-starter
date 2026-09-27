@@ -1,16 +1,12 @@
 # Markdown to HTML
 
-Renders Markdown content as HTML, either from inline content or external source
+`x-mdhtml` fetches the Markdown file at `src` (or reads its own text) and renders it as HTML in place, including live `x-demo` examples. This documentation viewer uses it.
 
-## Type — new capability
+## Usage
 
-`x-mdhtml` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<div x-mdhtml src="/docs/behaviors/dropdown.md"></div>
-```
+<div x-demo>
+<div x-mdhtml src="/docs/behaviors/x-copy.md"></div>
+</div>
 
 ## Attributes
 
@@ -20,10 +16,4 @@ Renders Markdown content as HTML, either from inline content or external source
 | `sanitize` | `boolean` | `true` |  |
 | `gfm` | `boolean` | `true` |  |
 
-## Live example
-
-See `x-mdhtml` on the [Behaviors showcase](/?page=behaviors) — search for `x-mdhtml` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/mdhtml.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`mdhtml.schema.json`](../../src/wb-models/mdhtml.schema.json)</sub>

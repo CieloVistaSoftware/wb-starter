@@ -12,15 +12,14 @@ The `range` behavior improves the `<input type="range">` slider by adding contex
 ## 2. User Guide
 
 ### Basic Usage
-Add `x-range` to an `<input type="range">`.
+A plain `<input type="range">` gets this behavior automatically; there is no attribute to add. Writing `x-range` on it is redundant (#746).
 
-```html
+<div x-demo>
 <input
   type="range"
-  x-range
   min="0"
   max="100">
-```
+</div>
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
@@ -35,29 +34,27 @@ Add `x-range` to an `<input type="range">`.
 ### Example 1: Percentage Slider
 A slider showing the percentage value.
 
-```html
+<div x-demo>
 <input
   type="range"
-  x-range
   show-value="true"
   value-suffix="%"
   min="0"
   max="100">
-```
+</div>
 
 ### Example 2: Price Range
 A slider with currency formatting and bounds.
 
-```html
+<div x-demo>
 <input
   type="range"
-  x-range
   show-value="true"
   show-labels="true"
   value-prefix="$"
   min="10"
   max="1000">
-```
+</div>
 
 ## 4. Why It Works
 The behavior wraps the input in a container and injects an `<output>` element for the value and `<span>` elements for the labels. It attaches an `input` event listener to the range slider to update the text content of the `<output>` element in real-time.

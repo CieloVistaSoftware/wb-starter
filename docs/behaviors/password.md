@@ -1,16 +1,12 @@
 # Password Behavior
 
-Schema for x-password behavior (password input enhancements)
+`x-password` wraps a password `<input>` with a show/hide button, and with `strength` adds a meter that rates the password as it is typed.
 
-## Type — new capability
+## Usage
 
-`x-password` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<input type="password" x-password placeholder="Password with toggle">
-```
+<div x-demo>
+<input type="password" x-password strength placeholder="Choose a password">
+</div>
 
 ## Attributes
 
@@ -19,10 +15,4 @@ Schema for x-password behavior (password input enhancements)
 | `toggle` | `boolean` | `false` | Show/hide password toggle |
 | `strength` | `boolean` | `false` | Show password strength meter |
 
-## Live example
-
-See `x-password` on the [Behaviors showcase](/?page=behaviors) — search for `x-password` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/password.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`password.schema.json`](../../src/wb-models/password.schema.json)</sub>

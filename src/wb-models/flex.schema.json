@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "flex.schema.json",
   "title": "Flex",
-  "description": "Behavior applied with x-flex.",
+  "description": "x-flex makes the element a flex container and sets direction, wrap, justify, align and gap from attributes, so a row or column layout needs no CSS.",
   "schemaFor": "flex",
   "properties": {
     "direction": {

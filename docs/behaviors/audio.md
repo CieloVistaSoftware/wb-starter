@@ -1,30 +1,17 @@
 # Audio
 
-Audio player with optional 15-band graphic equalizer
+A bare `<audio>` gets a styled player with a track display, a play button and, when `show-eq` is set, a 15-band graphic equaliser with bass and treble controls. Write the native element with `src` and `controls`; the behavior adds the rest around it.
 
-## Type — new capability
+## Usage
 
-`x-audio` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" controls></audio>
-```
+</div>
 
+No attribute needed on `<audio>`. Don't add `x-audio` to it (#746).
 
+`<audio x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
-### Declining it
-
-A `<audio>` **is** the audio behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
-
-```html
-<audio x-ignore>
-  <!-- a plain audio: no behavior is injected -->
-</audio>
-```
-
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
@@ -60,10 +47,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - `applyPreset()` — Applies EQ preset
 - `resetEq()` — Resets all EQ bands to 0
 
-## Live example
-
-See `x-audio` on the [Behaviors showcase](/?page=behaviors) — search for `x-audio` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/audio.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`audio.schema.json`](../../src/wb-models/audio.schema.json)</sub>

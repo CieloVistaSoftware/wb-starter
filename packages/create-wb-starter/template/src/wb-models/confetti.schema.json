@@ -29,11 +29,6 @@
       "description": "Show trigger button",
       "default": true
     },
-    "repeat": {
-      "type": "boolean",
-      "description": "Loop animation",
-      "default": false
-    },
     "delay": {
       "type": "string",
       "description": "Start delay",
@@ -94,7 +89,6 @@
     "setup": [
       "<div x-confetti>Basic confetti content</div>",
       "<div x-confetti show-button>with showButton</div>",
-      "<div x-confetti repeat>with repeat</div>",
       "<div x-confetti count=\"50\">count=50</div>",
       "<div x-confetti label=\"Fire Confetti!\">label=\"Fire Confetti!\"</div>",
       "<div x-confetti delay=\"0s\">delay=\"0s\"</div>",
@@ -106,9 +100,6 @@
         {},
         {
           "count": 100
-        },
-        {
-          "repeat": true
         }
       ]
     },

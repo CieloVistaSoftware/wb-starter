@@ -13,7 +13,7 @@ illustration (`<!DOCTYPE html><html><head><link href="src/styles/themes.css">...
 that happens to contain a real `<article>` tag nested inside.
 
 **Cause:** the newly-shipped auto-live-render conversion (mdhtml.js) matched the block
-because it contains a `<wb-*>` tag, and wrapped the *entire* boilerplate — `<link>` tags
+because it contained a (since removed) `wb-*` component tag, and wrapped the *entire* boilerplate — `<link>` tags
 included — in a live `<div x-demo>`. Browsers parse and fetch `<link href>` regardless of
 how oddly it's nested, so `src/styles/themes.css` and `src/styles/site.css` were
 requested as real page resources, resolving (wrongly) against doc-viewer.html's own

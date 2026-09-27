@@ -4,17 +4,10 @@ Displays a live `length/max` character counter beneath a text field and
 enforces the limit via the native `maxlength`. See
 [src/wb-viewmodels/counter.js](../../src/wb-viewmodels/counter.js).
 
-- **Type:** Modifier
-- **Root CSS class:** `<div x-counter>`
+- **Root CSS class:** `x-counter`
 - **Schema:** [counter.schema.json](../../src/wb-models/counter.schema.json)
 
 ## Usage
-
-```html
-<input type="text" x-counter max="50" placeholder="Type here — counts up to 50">
-```
-
-Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <input type="text" x-counter max="50" placeholder="Type here — counts up to 50">

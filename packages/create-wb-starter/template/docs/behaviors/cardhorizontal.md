@@ -1,42 +1,28 @@
 # Horizontal Card
 
-Card with horizontal layout - image on side, content on other
+`x-cardhorizontal` renders a card with the image beside the text instead of above it; `image-position` picks the side and `image-width` how much of the card it takes. Use it for list-style layouts where cards are wide and short.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardhorizontal` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardhorizontal
   image="/images/placeholder.svg"
   image-alt="Pine trail at dawn"
   image-position="start"
   title="Ridge loop, 8km"
   subtitle="Moderate · 3h"></article>
-```
-
-### On a different element
-
-Use `x-cardhorizontal` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardhorizontal>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | `this is the image` | Image URL |
-| `image-alt` | `string` | `this is the image alt` | Image alt text |
+| `image` | `string` | — | Image URL |
+| `image-alt` | `string` | — | Image alt text |
 | `image-position` | `left` · `right` | `left` | Image position |
 | `image-width` | `string` | `40%` | Image width (CSS value) |
-| `title` | `string` | `this is the title` | Card title |
-| `subtitle` | `string` | `this is the subtitle` | Card subtitle |
+| `title` | `string` | — | Card title |
+| `subtitle` | `string` | — | Card subtitle |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` | `default` | Visual style variant |
 
 ## Methods
@@ -46,10 +32,4 @@ Use `x-cardhorizontal` when the host is not a `<article>` and you want the same 
 - `toggle()` — Toggles visibility
 - `setImage()` — Changes the image
 
-## Live example
-
-See `x-cardhorizontal` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardhorizontal` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardhorizontal.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardhorizontal.schema.json`](../../src/wb-models/cardhorizontal.schema.json)</sub>

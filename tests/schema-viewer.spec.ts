@@ -1,4 +1,13 @@
 import { test, expect } from './fixtures/offline';
+import { readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const MODELS = join(dirname(fileURLToPath(import.meta.url)), '../src/wb-models');
+
+/** The heading shows the schema's own `title`, read from the file itself. */
+const titleOf = (name: string): string =>
+  JSON.parse(readFileSync(join(MODELS, `${name}.schema.json`), 'utf8')).title;
 
 const schemas = [
   'alert', 'audio', 'avatar', 'badge', 'button', 'card', 'checkbox', 'chip',
@@ -50,7 +59,11 @@ test.describe('Schema Viewer Rendering Tests', () => {
       // Check that live preview has content
       const livePreview = page.locator('#livePreview');
       await expect(livePreview).toBeVisible();
-      await expect(livePreview).not.toBeEmpty();
+      // An ELEMENT, not text. This was not.toBeEmpty(), which is a text check,
+      // and a spinner, a switch and an input render correctly with no text at
+      // all -- those three failed while working. What has to be true is that
+      // the example was rendered into the preview.
+      await expect(livePreview.locator(':scope > *')).not.toHaveCount(0);
 
       // Check that code example has content and is rendered as code block
       const codeExample = page.locator('#codeExample');
@@ -72,7 +85,10 @@ test.describe('Schema Viewer Rendering Tests', () => {
       // Check that the component info is displayed
       const componentInfo = page.locator('.sv-info h2');
       await expect(componentInfo).toBeVisible();
-      await expect(componentInfo).toContainText(schemaName.charAt(0).toUpperCase() + schemaName.slice(1));
+      // The schema's title, not the capitalised file name: the page shows
+      // `title`, and drawerLayout's is "Drawer Layout" -- the file name never
+      // was the heading, it only happened to match for single-word names.
+      await expect(componentInfo).toHaveText(titleOf(schemaName));
 
       // Check that properties are listed
       const propsList = page.locator('.sv-prop');

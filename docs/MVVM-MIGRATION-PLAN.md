@@ -206,7 +206,7 @@ Callable functions exposed on the component:
 ### Phase 5: Integration
 - [ ] Wire schema-builder into WB.init()
 - [ ] Update existing behaviors to not use innerHTML
-- [ ] Add CSS for all wb-* tags
+- [ ] Add CSS for every behavior's `x-*` class
 - [ ] Update documentation
 
 ## File Changes Required

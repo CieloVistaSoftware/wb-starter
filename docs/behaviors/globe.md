@@ -1,21 +1,11 @@
 # Globe
 
-3D Globe visualization.
+`x-globe` currently only adds the `x-globe` class; no globe is drawn, and no stylesheet targets the class. It is registered so markup that uses it does not fail; treat it as a placeholder.
 
-## Type — new capability
+## Usage
 
-`x-globe` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<div x-globe>No globe is drawn here: this div only gains the x-globe class.</div>
+</div>
 
-### How to write it
-
-```html
-<div x-globe></div>
-```
-
-## Live example
-
-See `x-globe` on the [Behaviors showcase](/?page=behaviors) — search for `x-globe` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/globe.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`globe.schema.json`](../../src/wb-models/globe.schema.json)</sub>

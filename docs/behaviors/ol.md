@@ -15,12 +15,12 @@ The `ol` behavior transforms the standard ordered list into a versatile tool for
 ### Basic Usage
 Add `x-ol` to an `<ol>` element.
 
-```html
+<div x-demo>
 <ol x-ol>
   <li>First item</li>
   <li>Second item</li>
 </ol>
-```
+</div>
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
@@ -35,7 +35,7 @@ Add `x-ol` to an `<ol>` element.
 ### Example 1: Stepped Guide
 Perfect for "How-to" instructions.
 
-```html
+<div x-demo>
 <ol
   x-ol
   variant="stepped">
@@ -43,12 +43,12 @@ Perfect for "How-to" instructions.
   <li>Verify Email</li>
   <li>Setup Profile</li>
 </ol>
-```
+</div>
 
 ### Example 2: Vertical Timeline
 Visualizing a history or log.
 
-```html
+<div x-demo>
 <ol
   x-ol
   variant="timeline">
@@ -62,7 +62,7 @@ Visualizing a history or log.
     <strong>2022:</strong> Major Update
   </li>
 </ol>
-```
+</div>
 
 ## 4. Why It Works
 For the `stepped` and `timeline` variants, the behavior suppresses the default list styling (`list-style-type: none`) and uses CSS counters and pseudo-elements (`::before`) to draw the custom markers. This allows for complete styling control over the numbers/bullets, which is not possible with standard CSS list styles.

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Floating Label Behavior",
   "type": "object",
-  "description": "Schema for x-floatinglabel behavior (floating label UI)",
+  "description": "Turns a field's placeholder into a label that floats above the field once it has focus or a value.",
   "properties": {},
   "required": [],
   "schemaFor": "floatinglabel",

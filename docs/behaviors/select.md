@@ -1,43 +1,30 @@
 # Select
 
-Enhanced select dropdown with search, clear, and multi-select
+A plain `<select>` gets the form styling, with `variant` for validation state, `size`, and `clearable` for a button that resets it. Its `<option>` children stay the source of choices.
 
-## Type — new capability
+## Usage
 
-`x-select` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <select name="branch">
   <option value="main">main</option>
   <option value="develop">develop</option>
   <option value="fix/706-dropdown">fix/706-dropdown</option>
 </select>
-```
+</div>
 
+No attribute needed on `<select>`. Don't add `x-select` to it (#746).
 
+`<select x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
-### Declining it
-
-A `<select>` **is** the select behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
-
-```html
-<select x-ignore>
-  <!-- a plain select: no behavior is injected -->
-</select>
-```
-
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | `this is the label` | Select label |
+| `label` | `string` | — | Select label |
 | `placeholder` | `string` | `Select...` | Placeholder text |
-| `options` | `string` | `this is the options` | Options as JSON [{value, label}] |
-| `value` | `string` | `this is the value` | Selected value |
-| `name` | `string` | `this is the name` | Form field name |
+| `options` | `string` | — | Options as JSON [{value, label}] |
+| `value` | `string` | — | Selected value |
+| `name` | `string` | — | Form field name |
 | `searchable` | `boolean` | `false` | Enable search |
 | `clearable` | `boolean` | `false` | Enable clear button |
 | `multiple` | `boolean` | `false` | Allow multiple selection |
@@ -65,10 +52,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - `disable()` — Disables the select
 - `setOptions()` — Updates options
 
-## Live example
-
-See `x-select` on the [Behaviors showcase](/?page=behaviors) — search for `x-select` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/select.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`select.schema.json`](../../src/wb-models/select.schema.json)</sub>

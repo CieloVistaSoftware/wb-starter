@@ -47,6 +47,17 @@ test.describe('[x-checkbox] reflects checked/disabled onto its real input', () =
     await expect(input).toBeEnabled();
   });
 
+  test('an enabled checkbox toggles on click, on and off', async ({ page }) => {
+    // The host is a <div> and the real input is hidden with pointer-events:none,
+    // so without click forwarding a mouse could never tick it.
+    const el = await setupTestContainer(page, '<div x-checkbox label="Toggle me"></div>');
+    const input = el.locator('input[type="checkbox"]');
+    await el.locator('.x-checkbox__box').click();
+    await expect(input).toBeChecked();
+    await el.locator('.x-checkbox__label').click();
+    await expect(input).not.toBeChecked();
+  });
+
   test('a disabled checkbox does not toggle on click', async ({ page }) => {
     const el = await setupTestContainer(page, '<div x-checkbox label="Disabled" disabled></div>');
     const input = el.locator('input[type="checkbox"]');

@@ -1,8 +1,8 @@
 # Cover - wb-starter v3.0
 
-A full-height (or custom-height) flex column that vertically centers one
-designated "principal" child, with any other children pushed to the top and
-bottom — the classic hero/splash-screen layout.
+A full-height (or custom-height) flex column that vertically centers its
+content, with a `<header>` child pinned to the top and a `<footer>` child pinned
+to the bottom — the classic hero/splash-screen layout.
 
 ## Overview
 
@@ -21,22 +21,19 @@ bottom — the classic hero/splash-screen layout.
 | `minHeight` | `min-height` | string | `"100vh"` | Minimum height of the cover container |
 | `padding` | `padding` | string | `"1rem"` | Padding around the container's content |
 
-The container becomes a `display: flex; flex-direction: column` box. Any
-descendant marked with the `data-principal` attribute gets `margin-top: auto`
-and `margin-bottom: auto`, which pushes it to vertical center while other
-children (e.g. a header above it, a footer below it) stay pinned to the
-container's edges.
+The container becomes a `display: flex; flex-direction: column` box. When it
+has a `<header>` or `<footer>` child, those stay pinned to the container's
+edges and every child between them is centered as one group. With neither, the
+whole content is centered. No marker attribute is needed.
 
 ## Usage
 
-### Basic cover with a centered principal element
+### Header and footer pinned, content centered
 
 <div x-demo>
 <div x-cover min-height="300px">
   <header>Top content</header>
-  <div data-principal>
-    <h2>Vertically centered principal content</h2>
-  </div>
+  <h2>Vertically centered content</h2>
   <footer>Bottom content</footer>
 </div>
 </div>
@@ -45,9 +42,7 @@ container's edges.
 
 <div x-demo>
 <div x-cover min-height="200px" padding="2rem">
-  <div data-principal>
-    <p>Centered, with extra padding around the whole container.</p>
-  </div>
+  <p>Centered, with extra padding around the whole container.</p>
 </div>
 </div>
 

@@ -13,14 +13,13 @@ The `radio` behavior modernizes the `<input type="radio">` element. Like the che
 ## 2. User Guide
 
 ### Basic Usage
-Add `x-radio` to an `<input type="radio">`.
+A plain `<input type="radio">` gets this behavior automatically; there is no attribute to add. Writing `x-radio` on it is redundant (#746).
 
-```html
+<div x-demo>
 <input
   type="radio"
-  name="option"
-  x-radio>
-```
+  name="option">
+</div>
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
@@ -34,32 +33,29 @@ Add `x-radio` to an `<input type="radio">`.
 ### Example 1: Radio Group
 A standard group of options.
 
-```html
+<div x-demo>
 <input
   type="radio"
   name="plan"
-  x-radio
   label="Free Plan"
   value="free">
 <input
   type="radio"
   name="plan"
-  x-radio
   label="Pro Plan"
   value="pro">
-```
+</div>
 
 ### Example 2: Large Selection
 Larger targets for touch devices.
 
-```html
+<div x-demo>
 <input
   type="radio"
   name="size"
-  x-radio
   size="lg"
   label="Extra Large">
-```
+</div>
 
 ## 4. Why It Works
 Similar to the checkbox, it checks for a parent `<label>`. If missing, it creates one to wrap the input and the text. This ensures that clicking the text label selects the radio button. The custom styling is applied via CSS classes that override the default browser appearance using `appearance: none` (or similar techniques in the CSS).

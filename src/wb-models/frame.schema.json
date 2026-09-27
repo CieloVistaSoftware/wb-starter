@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "frame.schema.json",
   "title": "Frame",
-  "description": "Behavior applied with x-frame.",
+  "description": "x-frame holds its first child to an aspect ratio: it sets --x-frame-ratio from ratio (default 16/9) and makes the child fill the frame.",
   "schemaFor": "frame",
   "properties": {
     "ratio": {

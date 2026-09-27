@@ -11,12 +11,11 @@
  *   <label><input type="checkbox" disabled> Disabled</label>
  *   <label><input type="checkbox" variant="success"> Success</label>
  *
- * ⚠️ <div x-checkbox> is DEPRECATED — prefer a native <input type="checkbox">
- * directly (see usage above); this behavior already enhances a bare input
- * fully, no wrapper element ever needed. Retained for back-compat (self-
- * builds the real input now, see below); emits a one-time console warning.
+ * <div x-checkbox label="…"> is the schema-built form: a hidden native
+ * input, a styled box and a label, with size/variant/checked/indeterminate/
+ * disabled options (checkbox.schema.json). A bare <input type="checkbox">
+ * gets the lighter styling below with no wrapper.
  */
-let _checkboxHostDeprecationWarned = false;
 
 let stylesInjected = false;
 function injectStyles() {
@@ -109,23 +108,6 @@ function injectStyles() {
 }
 
 export function checkbox(element, options = {}) {
-  // <div x-checkbox> host with no real <input> yet (schema $view never ran --
-  // e.g. on wb-lazy.js pages, which have no schema-processing support at
-  // all): self-build a real, semantic <label><input type="checkbox">text</label>
-  // and enhance THAT, the same way switch.js already does for <div x-switch>.
-  // Deliberately does NOT replicate checkbox.schema.json's separate
-  // .x-checkbox__box/.x-checkbox__check span visual -- this file's own
-  // injectStyles() below already gives a fully custom-styled checkbox on a
-  // bare input via appearance:none, with no extra DOM needed. Native
-  // .indeterminate is a DOM property, not an HTML attribute, so it's the
-  // only piece that genuinely can't be done without JS.
-  // WB.schema is only exposed on wb.js (window.WB.schema = SchemaBuilder) --
-  // absent entirely on wb-lazy.js. When it IS present, wb.js's own schema
-  // processing already builds this correctly (confirmed working); racing it
-  // with a synchronous self-build here clobbers whichever one finishes last
-  // (confirmed live: reading host.textContent/attributes AFTER the other
-  // path already cleared them). Only self-build when schema support
-  // genuinely doesn't exist at all.
   // The host is <div x-checkbox> (the schema's own semanticElement) as well as
   // a custom <x-checkbox> tag. Testing only the tag name missed every
   // <div x-checkbox>, so none of its checked/disabled/name/value/size/variant
@@ -133,41 +115,39 @@ export function checkbox(element, options = {}) {
   const isHost = element.tagName !== 'INPUT' &&
     (element.tagName.toLowerCase() === 'x-checkbox' || element.hasAttribute('x-checkbox'));
 
-  if (isHost && !_checkboxHostDeprecationWarned) {
-    _checkboxHostDeprecationWarned = true;
-    console.warn('[x-checkbox] is deprecated — use a bare <input type="checkbox"> instead, it already gets this same custom styling with no wrapper element needed.');
-  }
-
-  // wb-lazy.js DOES build the schema $view now (buildSchemaIfNeeded, #489)
-  // without exposing window.WB.schema, so an input already present here was
-  // schema-built: fall through and reflect the host's attributes onto it
-  // below instead of returning -- returning left every one of them inert.
-  if (isHost && !window.WB?.schema && !element.querySelector('input[type="checkbox"]')) {
-    const host = element;
-    const label = host.getAttribute('label') || '';
-    host.textContent = '';
-    const labelEl = document.createElement('label');
-    labelEl.style.cssText = 'display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;';
-    const input = document.createElement('input');
+  // No input yet: build checkbox.schema.json's $view here, part for part
+  // (input.x-checkbox__input, span.x-checkbox__box > span.x-checkbox__check,
+  // span.x-checkbox__label), so checkbox.css styles it the same wherever it
+  // runs. This used to build only when window.WB.schema was ABSENT, on the
+  // theory that wb.js would build the $view itself -- but wb.js's schema pass
+  // has been empty since 4.0.0 removed the component tags. So on every wb.js
+  // page (index.html, and the tests that load it) <div x-checkbox checked>
+  // stayed an empty div: no box, no label, nothing to check. wb-lazy.js does
+  // still build the $view, BEFORE the behavior runs, so there the input
+  // already exists and this is skipped; x-schema marks the host built so
+  // neither runtime builds it a second time.
+  if (isHost && !element.querySelector('input[type="checkbox"]')) {
+    const id = element.id;
+    const part = (tag, cls, suffix) => {
+      const el = document.createElement(tag);
+      el.className = cls;
+      if (id) el.id = `${id}-${suffix}`;
+      return el;
+    };
+    const input = part('input', 'x-checkbox__input', 'input');
     input.type = 'checkbox';
-    if (host.hasAttribute('checked')) input.checked = true;
-    if (host.hasAttribute('disabled')) input.disabled = true;
-    if (host.hasAttribute('required')) input.required = true;
-    const name = host.getAttribute('name');
-    if (name) input.name = name;
-    const value = host.getAttribute('value');
-    if (value) input.value = value;
-    const variant = host.getAttribute('variant');
-    if (variant && variant !== 'default') input.setAttribute('variant', variant);
-    const size = host.getAttribute('size');
-    if (size && size !== 'md') input.setAttribute('size', size);
-    labelEl.appendChild(input);
-    if (label) labelEl.appendChild(document.createTextNode(label));
-    host.appendChild(labelEl);
-    // Redundant when host IS <div x-checkbox> (#478) -- checkbox.css matches the
-    // tag directly too now.
-    host.classList.add('x-checkbox');
-    return checkbox(input, options);
+    const box = part('span', 'x-checkbox__box', 'box');
+    box.appendChild(part('span', 'x-checkbox__check', 'check'));
+    const labelText = element.getAttribute('label') || element.textContent.trim();
+    element.textContent = '';
+    element.append(input, box);
+    if (labelText) {
+      const label = part('span', 'x-checkbox__label', 'label');
+      label.textContent = labelText;
+      element.appendChild(label);
+    }
+    element.classList.add('x-checkbox');
+    element.setAttribute('x-schema', 'checkbox');
   }
 
   // Schema already built the real, hidden <input class="[x-checkbox]__input">
@@ -205,6 +185,16 @@ export function checkbox(element, options = {}) {
     if (hostSize === 'sm' || hostSize === 'lg') element.classList.add(`x-checkbox--${hostSize}`);
     const hostVariant = element.getAttribute('variant');
     if (hostVariant === 'primary' || hostVariant === 'success') element.classList.add(`x-checkbox--${hostVariant}`);
+
+    // The host is a <div>, not a <label>, and the real input is visually
+    // hidden with pointer-events:none -- so a click on the box or its text
+    // reached nothing and the checkbox could not be ticked with a mouse.
+    // Forward it: input.click() toggles and fires input/change natively, and
+    // does nothing on a disabled input, so disabled needs no special case.
+    if (input && !element._xCheckboxClick) {
+      element._xCheckboxClick = (e) => { if (e.target !== input) input.click(); };
+      element.addEventListener('click', element._xCheckboxClick);
+    }
   }
 
   if (element.tagName !== 'INPUT' || element.type !== 'checkbox') return () => {};

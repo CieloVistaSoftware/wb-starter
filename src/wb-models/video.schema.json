@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "video.schema.json",
   "title": "Video",
-  "description": "Behavior applied with x-video.",
+  "description": "A plain <video> gets native controls and inline playback on phones by default; autoplay works only together with muted, and poster sets the image shown before playback.",
   "schemaFor": "video",
   "properties": {
     "poster": {

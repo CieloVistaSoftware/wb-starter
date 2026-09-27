@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "pre.schema.json",
   "title": "Pre",
-  "description": "Behavior applied with x-pre.",
+  "description": "A plain <pre> gets a code block: syntax highlighting for language, line numbers, an optional copy button (show-copy), wrapping or horizontal scrolling, and a max-height after which it scrolls.",
   "schemaFor": "pre",
   "properties": {
     "language": {

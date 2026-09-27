@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "center.schema.json",
   "title": "Center",
-  "description": "Behavior applied with x-center.",
+  "description": "Centres the element horizontally, or with flexbox centres its children.",
   "schemaFor": "center",
   "properties": {
     "max-width": {

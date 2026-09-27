@@ -2,23 +2,37 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "clock.schema.json",
   "title": "Clock",
-  "description": "Behavior applied with x-clock.",
-  "schemaFor": "x-clock",
+  "description": "x-clock shows the current time in the element and updates it every second.",
+  "schemaFor": "clock",
   "properties": {
     "variant": {
       "type": "string",
-      "description": "Read by clock().",
+      "description": "Clock face: `digital` (default) or the analogue rendering.",
       "default": "digital"
     },
     "format": {
       "type": "string",
-      "description": "Read by clock().",
+      "description": "`24` (default) or `12` for a 12-hour clock with AM/PM.",
       "default": "24"
     },
     "show-seconds": {
       "type": "string",
-      "description": "Read by clock()."
+      "description": "Show the seconds field. On unless set to `\"false\"`.",
+      "default": "this is the show seconds"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-clock"
+  },
+  "test": {
+    "setup": [
+      "<div x-clock>Test Content</div>",
+      "<div x-clock variant=\"digital\">Test Content</div>",
+      "<div x-clock format=\"24\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

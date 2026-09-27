@@ -1,23 +1,11 @@
 # Pulse
 
-On click, plays the pulse animation for 0.5s.
+`x-pulse` grows the element to 110% and back over 0.5 s when clicked — a small confirmation that the press registered.
 
-## Type — new capability
+## Usage
 
-`x-pulse` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button class="effect-demo" x-pulse>Click to pulse</button>
+</div>
 
-### How to write it
-
-```html
-<button class="effect-demo" x-pulse>
-  x-pulse
-</button>
-```
-
-## Live example
-
-See `x-pulse` on the [Behaviors showcase](/?page=behaviors) — search for `x-pulse` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/pulse.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`pulse.schema.json`](../../src/wb-models/pulse.schema.json)</sub>

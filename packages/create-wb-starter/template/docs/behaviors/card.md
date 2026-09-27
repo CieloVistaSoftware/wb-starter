@@ -7,18 +7,11 @@ There is no behavior base class (TIER1-LAWS §2): `composeCard()` is a function
 each variant calls, and the variants below are separate behaviors that decorate
 an element in place, exactly as `x-ripple` does.
 
-## Type — semantic
+## Usage
 
-`<article>` already means "self-contained composition", so an `<article>` **is**
-a card: auto-injection applies the behavior with no attribute needed. Write the
-attribute explicitly when you want a card on some other element, or when you
-want the intent to be obvious at the call site.
-
-### How to write it
-
-```html
+<div x-demo>
 <article title="Card title" subtitle="A line under it" footer="Footer text"></article>
-```
+</div>
 
 Explicitly, or on a non-article element:
 
@@ -105,9 +98,6 @@ The card variants are separate behaviors, each with its own page:
 [cardprofile](cardprofile.md) · [cardstats](cardstats.md) ·
 [cardtestimonial](cardtestimonial.md) · [cardvideo](cardvideo.md)
 
-## Live example
-
-See `x-card` on the [Behaviors showcase](/?page=behaviors) — search for `x-card`
 to run it and copy its markup.
 
 ---
@@ -115,3 +105,5 @@ to run it and copy its markup.
 <sub>Hand-written to match `src/wb-models/card.schema.json` (#892). Attribute
 names, defaults and methods are the declared ones. `scripts/generate-behavior-docs.mjs`
 never overwrites an existing doc, so expand this file by hand.</sub>
+
+<sub>Schema: [`card.schema.json`](../../src/wb-models/card.schema.json)</sub>

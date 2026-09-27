@@ -1,64 +1,57 @@
 # x-fieldset Behavior
 
-Styles a `<fieldset>` and, optionally, makes it collapsible by clicking its
-`<legend>`. See [src/wb-viewmodels/fieldset.js](../../src/wb-viewmodels/fieldset.js).
+Marks a `<fieldset>` as a group of related form controls by adding the
+`x-fieldset` class. That is all it does: a fieldset groups controls under its
+`<legend>`, and has no disclosure (open/closed) semantics. See
+[src/wb-viewmodels/fieldset.js](../../src/wb-viewmodels/fieldset.js).
 
-- **Type:** Modifier
-- **Root CSS class:** `<fieldset>`
+- **Root CSS class:** `x-fieldset`
 - **Schema:** [fieldset.schema.json](../../src/wb-models/fieldset.schema.json)
-- **Auto-inject:** `<fieldset>` is in `nativeMap` (`src/core/config.js` has
-  `autoInject: true` site-wide), so a bare `<fieldset>` gets the `<fieldset>`
-  class automatically — `x-fieldset` is only required to opt into the
-  `collapsible` behavior.
+- **Auto-inject:** `<fieldset>` is in the tag map (`src/core/tag-map.js`), so a
+  bare `<fieldset>` gets the `x-fieldset` class without any attribute.
 
 ## Usage
 
-The collapsible flags read `data-collapsible` / `data-collapsed` (plain
-`data-*` attributes, not `x-*`):
-
-```html
-<fieldset data-collapsible>
-  <legend>Shipping details</legend>
-  <input type="text" placeholder="Address line 1">
-</fieldset>
-```
-
 <div x-demo>
-<fieldset data-collapsible>
+<fieldset>
   <legend>Shipping details</legend>
   <input type="text" placeholder="Address line 1">
+  <input type="text" placeholder="City">
 </fieldset>
 </div>
 
-Add `data-collapsed` to start collapsed:
+The `<legend>` is the group's accessible name, so screen readers announce
+"Shipping details" when focus enters either input.
+
+If a group genuinely needs to open and close, wrap it in the platform's
+disclosure element instead of asking the fieldset to do it:
 
 <div x-demo>
-<fieldset data-collapsible data-collapsed>
-  <legend>Advanced options</legend>
-  <input type="text" placeholder="Coupon code">
-</fieldset>
+<details>
+  <summary>Advanced options</summary>
+  <fieldset>
+    <legend>Coupon</legend>
+    <input type="text" placeholder="Coupon code">
+  </fieldset>
+</details>
 </div>
 
 ## Properties
 
-| Attribute | Type | Default | Description |
-|---|---|---|---|
-| `data-collapsible` | boolean (presence) | `false` | Makes the `<legend>` clickable to toggle collapse. Requires a real `<legend>` child. |
-| `data-collapsed` | boolean (presence) | `false` | Starts the fieldset collapsed. Only meaningful with `data-collapsible`. |
+None. The former open/close flags were removed in #999: they were implemented
+twice, each overwriting the other's `legend.onclick`, and never visibly did
+anything.
 
 ## CSS Classes
 
 | Class | Applies to | When |
 |---|---|---|
-| `<fieldset>` | the `<fieldset>` | always |
-| `x-fieldset__legend` | the `<legend>` | `data-collapsible` present |
-| `x-fieldset__legend--collapsible` | the `<legend>` | `data-collapsible` present |
-| `x-fieldset--collapsed` | the `<fieldset>` | collapsed (toggled by clicking the legend) |
+| `x-fieldset` | the `<fieldset>` | always |
 
 ## Events
 
 None.
 
 - [Schema](../../src/wb-models/fieldset.schema.json)
-- [Demo](../../demos/site/forms.html#x-fieldset-collapsible-fieldset)
+- [Demo](../../demos/site/forms.html#x-fieldset-grouping)
 - [Source](../../src/wb-viewmodels/fieldset.js)

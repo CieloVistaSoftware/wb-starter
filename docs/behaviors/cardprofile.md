@@ -1,20 +1,16 @@
 # Card Profile
 
-Simple profile card. Composes the shared card structure and adds profile elements (avatar, name, role, bio, cover).
+`x-cardprofile` renders a short profile card: an avatar, the person's `name` and `role`, and an optional `bio` and cover image. Use `x-cardportfolio` when you need skills, experience and links as well.
 
-## Type — new capability
+## Usage
 
-`x-cardprofile` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardprofile
   name="Grace Hopper"
   role="Compiler pioneer"
   avatar="/images/placeholder.svg"
   bio="Wrote the first compiler, then spent a career arguing that people should not have to write machine code."></article>
-```
+</div>
 
 ## Attributes
 
@@ -23,11 +19,11 @@ Simple profile card. Composes the shared card structure and adds profile element
 | `name` | `string` | `John Doe` | Person's name |
 | `role` | `string` | `Designer` | Job title or role |
 | `avatar` | `string` | `/images/avatar.svg` | Avatar image URL |
-| `bio` | `string` | `this is the bio` | Short biography |
-| `cover` | `string` | `this is the cover` | Cover/banner image URL |
+| `bio` | `string` | — | Short biography |
+| `cover` | `string` | — | Cover/banner image URL |
 | `size` | `sm` · `md` · `lg` | `md` | Avatar size |
 | `align` | `left` · `center` | `center` | Content alignment |
-| `hover-text` | `string` | `this is the hover text` | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hover-text` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 
@@ -40,10 +36,4 @@ Simple profile card. Composes the shared card structure and adds profile element
 - **$inherits** — card.base.schema.json#accessibility
 - **avatar** — {"alt":"Profile photo of {name}"}
 
-## Live example
-
-See `x-cardprofile` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardprofile` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardprofile.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardprofile.schema.json`](../../src/wb-models/cardprofile.schema.json)</sub>

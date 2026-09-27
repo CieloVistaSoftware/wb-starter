@@ -1,15 +1,6 @@
 # x-copy
 
-This is a helper attribute for copy-to-clipboard functionality. See [src/wb-viewmodels/copy.js](../../src/wb-viewmodels/copy.js).
+The copy behavior is documented in [copy.md](copy.md): `x-copy` copies `copy-text`, or the text of the element matched by `copy-target`, to the clipboard when the element is clicked. For a button placed in the corner of a code block, see [copybutton.md](copybutton.md).
 
-- **Type:** Attribute
-- **Usage:** `[x-copy]`
-
-## Description
-Adds copy-to-clipboard behavior to elements. Add `x-copy` to enable copying content on click or interaction.
-
-## Demo
-See [Interactive & Utility demos](../../demos/site/interactive.html#copy-copy).
-
-## Schema/Test
-No dedicated schema or test file; see code for usage patterns.
+- **Demo:** [Interactive & Utility demos](../../demos/site/interactive.html#copy-copy).
+- **Schema:** [copy.schema.json](../../src/wb-models/copy.schema.json).

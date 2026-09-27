@@ -3,17 +3,45 @@
   "title": "x-enhancements Attributes",
   "schemaType": "behavior",
   "type": "object",
-  "description": "Schema for x-enhancements attributes (x-form, x-password, x-tags, x-file).",
+  "description": "Shared attributes of the form-control behaviors (x-form, x-password, x-tags, x-file).",
   "properties": {
-    "x-form": { "type": "boolean" },
-    "x-password": { "type": "boolean" },
-    "x-tags": { "type": "boolean" },
-    "x-file": { "type": "boolean" }
+    "x-form": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-password": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-tags": {
+      "type": "boolean",
+      "default": false
+    },
+    "x-file": {
+      "type": "boolean",
+      "default": false
+    }
   },
   "anyOf": [
-    { "required": ["x-form"] },
-    { "required": ["x-password"] },
-    { "required": ["x-tags"] },
-    { "required": ["x-file"] }
+    {
+      "required": [
+        "x-form"
+      ]
+    },
+    {
+      "required": [
+        "x-password"
+      ]
+    },
+    {
+      "required": [
+        "x-tags"
+      ]
+    },
+    {
+      "required": [
+        "x-file"
+      ]
+    }
   ]
 }

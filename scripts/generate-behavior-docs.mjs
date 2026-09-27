@@ -11,8 +11,14 @@
  * events, methods and accessibility notes are the real declared ones — a
  * generated table of what the code actually accepts, not filler prose.
  *
- * NEVER overwrites an existing file: the 27 hand-written docs are the better
- * kind and this must not touch them. Re-running only fills new gaps.
+ * NEVER overwrites an existing file: a doc is expanded by hand once written,
+ * and this must not touch that. Re-running only fills new gaps.
+ *
+ * It writes no stock prose. The opening sentence is the schema's description
+ * or the behavior function's JSDoc (scripts/lib/behavior-prose.mjs); with
+ * neither, the doc is not written and the gap is reported. Anything a reader
+ * needs in every doc (auto-injection, x-ignore) is a short pointer to the one
+ * page that explains it, not a paragraph pasted 89 times.
  *
  * Usage:
  *   node scripts/generate-behavior-docs.mjs            # write missing docs
@@ -20,9 +26,10 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { extensionMap, nativeMap } from '../src/core/tag-map.js';
 import { WB_LAZY_ONLY_ATTRIBUTES } from '../src/core/wb-lazy.js';
+import { isFillerDescription, jsdocSummary } from './lib/behavior-prose.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs', 'behaviors');
@@ -42,7 +49,7 @@ function docNameFor(token) {
 }
 
 /** Every behavior the page can show, as {token, docName}. */
-function behaviors() {
+export function behaviors() {
   // x-as-* are aliases the page itself filters out of the list.
   const tokens = new Set(Object.keys(MERGED).filter((a) => !a.startsWith('x-as-')));
   // A native tag is named by the behavior it injects, not by the tag:
@@ -57,7 +64,7 @@ function readJson(file) {
 
 const examples = readJson(EXAMPLES)?.examples || {};
 
-function schemaFor(docName) {
+export function schemaFor(docName) {
   return readJson(path.join(MODELS, `${docName}.schema.json`));
 }
 
@@ -66,14 +73,14 @@ function attrName(prop) {
   return prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
 }
 
-function attributesTable(schema) {
+export function attributesTable(schema) {
   const props = schema?.properties || {};
   const rows = Object.entries(props).map(([name, def]) => {
     if (!def || typeof def !== 'object') return null;
     const values = Array.isArray(def.enum) && def.enum.length
       ? def.enum.map((v) => `\`${v}\``).join(' · ')
       : `\`${def.type || 'string'}\``;
-    const dflt = def.default === undefined || def.default === ''
+    const dflt = def.default === undefined || def.default === '' || isPlaceholderDefault(def.default)
       ? '—' : `\`${String(def.default)}\``;
     return `| \`${attrName(name)}\` | ${values} | ${dflt} | ${(def.description || '').replace(/\|/g, '\\|')} |`;
   }).filter(Boolean);
@@ -86,7 +93,7 @@ function attributesTable(schema) {
   ].join('\n');
 }
 
-function eventsList(schema) {
+export function eventsList(schema) {
   const events = schema?.events;
   if (!events) return null;
   const entries = Array.isArray(events)
@@ -97,7 +104,7 @@ function eventsList(schema) {
   return rows.map(([name, desc]) => `- \`${name}\`${desc ? ` — ${desc}` : ''}`).join('\n');
 }
 
-function methodsList(schema) {
+export function methodsList(schema) {
   const m = schema?.$methods;
   if (!m) return null;
   const entries = Array.isArray(m)
@@ -152,7 +159,7 @@ function behaviorBody(name) {
   return null;
 }
 
-function sourceFacts(docName) {
+export function sourceFacts(docName) {
   const body = behaviorBody(docName);
   if (!body) return null;
   const anim = /clickAnim\(\s*element\s*,\s*[`'"]([^`'"]+)[`'"]\s*,\s*[`'"]([^`'"]+)[`'"]/.exec(body);
@@ -176,7 +183,7 @@ function sourceFacts(docName) {
  */
 const NEUTRAL_HOSTS = new Set(['div', 'span']);
 
-function semanticTag(schema) {
+export function semanticTag(schema) {
   const el = schema?.semanticElement;
   if (!el) return null;
   const tag = typeof el === 'string' ? el : (el.tagName || null);
@@ -191,7 +198,7 @@ function semanticTag(schema) {
  * can suppress the behavior outright. nativeMap is the authority; its keys are
  * selectors, so only bare-tag entries can be compared against a host tag.
  */
-function autoInjects(tag, token) {
+export function autoInjects(tag, token) {
   return nativeMap[tag] === token.replace(/^x-/, '');
 }
 
@@ -213,7 +220,7 @@ function docSafeAssets(sample) {
   );
 }
 
-function usage(token, schema) {
+export function usage(token, schema) {
   const fromCatalogue = examples[token]?.source;
   if (fromCatalogue) return docSafeAssets(fromCatalogue);
   const el = semanticTag(schema);
@@ -245,7 +252,7 @@ function usage(token, schema) {
  * from — nothing better exists, and mdhtml leaves a content-free snippet as a
  * code sample rather than rendering an empty component.
  */
-function alternateHostUsage(token, _schema) {
+export function alternateHostUsage(token, _schema) {
   const curated = examples[token]?.source;
   if (!curated) return `<div ${token}>\n  …\n</div>`;
 
@@ -266,107 +273,71 @@ function alternateHostUsage(token, _schema) {
   return `<div${attrs}>${closed === rest ? `${rest}\n</div>` : closed}`;
 }
 
-function buildDoc({ token, docName }) {
+/** `this is the title` is a schema placeholder, not a default anyone chose. */
+export function isPlaceholderDefault(value) {
+  return typeof value === 'string' && /^this is the /i.test(value);
+}
+
+/**
+ * The one sentence under the title. It must be about THIS behavior: the
+ * schema's description, else the JSDoc on the behavior function. Filler
+ * ("Schema for x-error behavior (error message)", "Behavior applied with
+ * x-clock.") does not count -- see scripts/lib/behavior-prose.mjs.
+ */
+export function summaryFor(docName, schema) {
+  if (schema?.description && !isFillerDescription(schema.description)) return schema.description;
+  if (!SOURCES) behaviorBody(docName); // populates SOURCES
+  for (const src of SOURCES) {
+    const s = jsdocSummary(src, docName);
+    if (s) return s;
+  }
+  return null;
+}
+
+/**
+ * A raw `<div x-demo>` block. The doc viewer renders it live AND shows the
+ * markup under it; a bare ```html fence of plain semantic HTML (no x-* in it)
+ * is left as unrendered text (John, on figure.md: "why does this not show the
+ * rendered result?"). Markdown ends a raw HTML block at a blank line, so
+ * there must not be one inside.
+ */
+export function demoBlock(markup) {
+  const body = markup.split('\n').filter((l) => l.trim() && !/^\s*<!--.*-->\s*$/.test(l)).join('\n');
+  return `<div x-demo>\n${body}\n</div>`;
+}
+
+export function buildDoc({ token, docName }) {
   const schema = schemaFor(docName);
   const title = schema?.title || docName.replace(/(^|-)(\w)/g, (_, s, c) => (s ? ' ' : '') + c.toUpperCase());
-  const summary = schema?.description || `The \`${token}\` behavior.`;
+  const summary = summaryFor(docName, schema);
+  // No real sentence to open with -> no doc. The caller reports it.
+  if (!summary) return null;
 
   const out = [`# ${title}`, '', summary, ''];
 
-  // John: "there are two types: 1) those that use the semantic name and
-  // decorate that element and 2) those which are 100% new function. those two
-  // concepts should be clear to the user."
-  //
-  // It was one buried sentence before. It is the first thing a reader needs,
-  // because it decides whether they write an attribute at all -- and for a
-  // type-1 behavior on its own element the attribute is not merely redundant,
-  // it can suppress the behavior outright (#746).
+  // Two kinds of behavior (John: "those that use the semantic name and
+  // decorate that element and 2) those which are 100% new function"). This
+  // used to be a "## Type" section of stock prose, identical in 89 docs but for
+  // the token. What the reader needs is the markup, so the kind is shown BY the
+  // markup: a bare `<header>` for an auto-injected one, an attribute otherwise.
   const tag = semanticTag(schema);
+  const auto = tag ? autoInjects(tag, token) : false;
 
-  if (tag) {
-    const auto = autoInjects(tag, token);
+  out.push('## Usage', '', demoBlock(usage(token, schema)), '');
+
+  if (auto) {
+    // Kept short on purpose: the full explanation lives once, in
+    // Auto-Injection.md and escape-hatches.md, not pasted into every doc.
     out.push(
-      '## Type — decorates a semantic element',
+      `No attribute needed on \`<${tag}>\`. Don't add \`${token}\` to it (#746).`,
       '',
-      `\`${token}\` is the **${tag} behavior**. It attaches to \`<${tag}>\`, the element `
-      + `you would have reached for anyway — there is no new tag to learn.`,
-      '',
-    );
-
-    out.push('### How to write it', '', '```html');
-    if (auto) {
-      out.push(
-        `<!-- Plain semantic HTML. The behavior is injected automatically -->`,
-        `<!-- because the element itself implies it. No attribute needed. -->`,
-        usage(token, schema),
-      );
-    } else {
-      out.push(usage(token, schema));
-    }
-    out.push('```', '');
-
-    out.push(
-      `### On a different element`,
-      '',
-      `Use \`${token}\` when the host is not a \`<${tag}>\` and you want the same behavior:`,
+      `On another element, write \`${token}\`:`,
       '',
       '```html',
       alternateHostUsage(token, schema),
       '```',
       '',
-    );
-
-    if (auto) {
-      out.push(
-        `> Do not write \`<${tag} ${token}>\`. The element already injects it, and the `
-        + `redundant attribute can suppress the behavior (#746).`,
-        '',
-      );
-
-      // #1094 — John: "if you don't want our additional behavior put in the opt
-      // out."
-      //
-      // This is the half of auto-injection nobody documented. The behavior
-      // arrives WITH the element whether it was wanted or not, so the escape
-      // hatch is not a footnote — it is the other half of the contract. It
-      // existed in exactly one line of docs/escape-hatches.md, on a <button>,
-      // and in none of the 178 behavior docs.
-      //
-      // The wrong answer is named explicitly because it is the one a reader
-      // reaches for first — and the one I gave John before he corrected me:
-      // "then don't use <header>". That trades correct HTML for a workaround,
-      // in a framework whose whole premise is that you write the semantic
-      // element BECAUSE it is the thing.
-      out.push(
-        '### Declining it',
-        '',
-        `A \`<${tag}>\` **is** the ${tag} behavior, so it arrives with the element. To `
-        + `keep the semantic element and decline the behavior, add \`x-ignore\`:`,
-        '',
-        '```html',
-        `<${tag} x-ignore>`,
-        `  <!-- a plain ${tag}: no behavior is injected -->`,
-        `</${tag}>`,
-        '```',
-        '',
-        'Reaching for a different element instead is the wrong fix — it trades correct '
-        + 'HTML for a workaround. See [escape hatches](../escape-hatches.md).',
-        '',
-      );
-    }
-  } else {
-    out.push(
-      '## Type — new capability',
-      '',
-      `\`${token}\` adds behavior that no HTML element implies. Nothing about a tag `
-      + `says "ripple" or "tooltip", so this is always opted into by attribute, on `
-      + `whatever element you already chose.`,
-      '',
-      '### How to write it',
-      '',
-      '```html',
-      usage(token, schema),
-      '```',
+      `\`<${tag} x-ignore>\` opts out ([escape hatches](../escape-hatches.md)).`,
       '',
     );
   }
@@ -377,26 +348,11 @@ function buildDoc({ token, docName }) {
   // No schema -- say what the implementation actually does instead of nothing.
   const facts = schema ? null : sourceFacts(docName);
   if (facts) {
-    if (facts.anim) {
-      out.push(
-        '## What it does',
-        '',
-        `On click, plays the \`${facts.anim[1].replace(/\$\{(\w+)\}/g, '<$1>')}\` animation for \`${facts.anim[2]}\` and removes it when it finishes.`,
-        '',
-      );
-    }
     if (facts.classes.length) {
       out.push('## Classes applied', '', facts.classes.map((c) => `- \`${c}\``).join('\n'), '');
     }
     if (facts.attrs.length) {
-      out.push(
-        '## Attributes read',
-        '',
-        facts.attrs.map((a) => `- \`${a}\``).join('\n'),
-        '',
-        '<sub>Taken from the behavior source — these are the attribute names it actually reads.</sub>',
-        '',
-      );
+      out.push('## Attributes read', '', facts.attrs.map((a) => `- \`${a}\``).join('\n'), '');
     }
     if (facts.events.length) {
       out.push('## Events', '', facts.events.map((e) => `- \`${e}\``).join('\n'), '');
@@ -415,50 +371,46 @@ function buildDoc({ token, docName }) {
     out.push('## Accessibility', '', lines.join('\n'), '');
   }
 
-  out.push(
-    '## Live example',
-    '',
-    `See \`${token}\` on the [Behaviors showcase](/?page=behaviors) — search for \`${token}\` to run it and copy its markup.`,
-    '',
-    '---',
-    '',
-    schema
-      ? `<sub>Generated from \`src/wb-models/${docName}.schema.json\` by \`scripts/generate-behavior-docs.mjs\` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>`
-      : `<sub>Stub generated by \`scripts/generate-behavior-docs.mjs\` (#713). There is no schema for \`${docName}\`, so this file has only what the registry knows. Worth writing by hand.</sub>`,
-    '',
-  );
+  if (schema) out.push(`<sub>Schema: [\`${docName}.schema.json\`](../../src/wb-models/${docName}.schema.json)</sub>`, '');
 
   return out.join('\n');
 }
 
-const all = behaviors();
-// A selector-shaped token (input[type="checkbox"]) has no legal filename, and
-// the page never fetches a doc for one either -- it looks up the behavior name.
-const FILENAME_SAFE = /^[a-z0-9][a-z0-9-]*$/i;
-const skipped = all.filter(({ docName }) => !FILENAME_SAFE.test(docName));
-const usable = all.filter(({ docName }) => FILENAME_SAFE.test(docName));
-const missing = usable.filter(({ docName }) => !fs.existsSync(path.join(DOCS, `${docName}.md`)));
-const noSchema = missing.filter(({ docName }) => !schemaFor(docName));
+function main() {
+  const all = behaviors();
+  // A selector-shaped token (input[type="checkbox"]) has no legal filename, and
+  // the page never fetches a doc for one either -- it looks up the behavior name.
+  const FILENAME_SAFE = /^[a-z0-9][a-z0-9-]*$/i;
+  const skipped = all.filter(({ docName }) => !FILENAME_SAFE.test(docName));
+  const usable = all.filter(({ docName }) => FILENAME_SAFE.test(docName));
+  const missing = usable.filter(({ docName }) => !fs.existsSync(path.join(DOCS, `${docName}.md`)));
+  const unwritable = missing.filter(({ docName }) => !summaryFor(docName, schemaFor(docName)));
 
-if (CHECK) {
-  console.log(`[behavior-docs] ${usable.length - missing.length}/${usable.length} documented, ${missing.length} missing`);
-  if (missing.length) console.log(missing.map((m) => `  ${m.token} -> docs/behaviors/${m.docName}.md`).join('\n'));
-  process.exit(missing.length ? 1 : 0);
+  if (CHECK) {
+    console.log(`[behavior-docs] ${usable.length - missing.length}/${usable.length} documented, ${missing.length} missing`);
+    if (missing.length) console.log(missing.map((m) => `  ${m.token} -> docs/behaviors/${m.docName}.md`).join('\n'));
+    process.exit(missing.length ? 1 : 0);
+  }
+
+  if (!fs.existsSync(DOCS)) fs.mkdirSync(DOCS, { recursive: true });
+  let written = 0;
+  for (const b of missing) {
+    const doc = buildDoc(b);
+    if (!doc) continue;
+    fs.writeFileSync(path.join(DOCS, `${b.docName}.md`), doc, 'utf8');
+    written++;
+  }
+
+  console.log(`[behavior-docs] wrote ${written} doc(s); ${usable.length - missing.length} already existed and were left alone.`);
+  if (skipped.length) {
+    console.log(`[behavior-docs] skipped ${skipped.length} selector-shaped token(s) with no legal filename: ` +
+      skipped.map((s2) => s2.docName).join(', '));
+  }
+  if (unwritable.length) {
+    console.log(`[behavior-docs] ${unwritable.length} NOT written: no schema description and no JSDoc on the behavior `
+      + 'function, so there is no true sentence to open the doc with. Write one (schema "description" or a JSDoc '
+      + `summary) and re-run:\n  ${unwritable.map((m) => m.docName).join(', ')}`);
+  }
 }
 
-if (!fs.existsSync(DOCS)) fs.mkdirSync(DOCS, { recursive: true });
-let written = 0;
-for (const b of missing) {
-  fs.writeFileSync(path.join(DOCS, `${b.docName}.md`), buildDoc(b), 'utf8');
-  written++;
-}
-
-console.log(`[behavior-docs] wrote ${written} doc(s); ${usable.length - missing.length} already existed and were left alone.`);
-if (skipped.length) {
-  console.log(`[behavior-docs] skipped ${skipped.length} selector-shaped token(s) with no legal filename: ` +
-    skipped.map((s2) => s2.docName).join(', '));
-}
-if (noSchema.length) {
-  console.log(`[behavior-docs] ${noSchema.length} of those have NO schema, so they are thin and want a human:\n  ` +
-    noSchema.map((m) => m.docName).join(', '));
-}
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

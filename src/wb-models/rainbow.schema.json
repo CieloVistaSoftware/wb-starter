@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "rainbow.schema.json",
   "title": "Rainbow",
-  "description": "Behavior applied with x-rainbow.",
+  "description": "x-rainbow paints the element's text with a moving rainbow gradient that cycles every duration.",
   "schemaFor": "rainbow",
   "properties": {
     "duration": {

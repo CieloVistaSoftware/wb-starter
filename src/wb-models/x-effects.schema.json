@@ -3,7 +3,7 @@
   "title": "x-effects Attributes",
   "schemaType": "behavior",
   "type": "object",
-  "description": "Schema for x-effects attributes (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter).",
+  "description": "Shared attributes of the animation behaviors (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter).",
   "properties": {
     "x-animate": {
       "type": "boolean",

@@ -2,17 +2,12 @@
 
 Checkbox input with label and custom styling
 
-## Type — semantic, and available as an attribute
+## Usage
 
-`tag-map.js` maps `input[type="checkbox"]` to this behavior, so a plain checkbox
-gets it with nothing added — the element already says what it is.
-
-### How to write it
-
-```html
+<div x-demo>
 <input type="checkbox" name="full-suite" checked>
 <label for="full-suite">Run the full suite before pushing</label>
-```
+</div>
 
 That is the form to reach for. The behavior styles the control, keeps the native
 checked/indeterminate state, and leaves the element a real form control, so it
@@ -36,12 +31,12 @@ already has.
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | `this is the label` | Label text |
+| `label` | `string` | — | Label text |
 | `checked` | `boolean` | `false` | Checked state |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `indeterminate` | `boolean` | `false` | Indeterminate state |
-| `name` | `string` | `this is the name` | Form field name |
-| `value` | `string` | `this is the value` | Form field value |
+| `name` | `string` | — | Form field name |
+| `value` | `string` | — | Form field value |
 | `required` | `boolean` | `false` | Required field |
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `primary` · `success` | `default` |  |
@@ -59,10 +54,4 @@ already has.
 - `enable()` — Enables the checkbox
 - `disable()` — Disables the checkbox
 
-## Live example
-
-See `x-checkbox` on the [Behaviors showcase](/?page=behaviors) — search for `x-checkbox` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/checkbox.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`checkbox.schema.json`](../../src/wb-models/checkbox.schema.json)</sub>

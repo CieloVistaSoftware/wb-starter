@@ -1,16 +1,12 @@
 # OTP Behavior
 
-Schema for x-otp behavior (one-time password input)
+`x-otp` replaces the element's content with `length` single-digit boxes for a one-time code: typing moves to the next box, and non-digits are rejected.
 
-## Type — new capability
+## Usage
 
-`x-otp` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-otp length="6"></div>
-```
+</div>
 
 ## Attributes
 
@@ -18,10 +14,4 @@ Schema for x-otp behavior (one-time password input)
 | --- | --- | --- | --- |
 | `length` | `integer` | `0` | Number of OTP digits |
 
-## Live example
-
-See `x-otp` on the [Behaviors showcase](/?page=behaviors) — search for `x-otp` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/otp.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`otp.schema.json`](../../src/wb-models/otp.schema.json)</sub>

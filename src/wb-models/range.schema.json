@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "range.schema.json",
   "title": "Range",
-  "description": "Behavior applied with x-range.",
+  "description": "Styles a native range input, keeping it a real form control.",
   "schemaFor": "range",
   "semanticElement": {
     "tagName": "input",

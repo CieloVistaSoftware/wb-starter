@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "code.schema.json",
   "title": "Code",
-  "description": "Behavior applied with x-code.",
+  "description": "A <code> block gets syntax highlighting for its language, a surface to sit on, and an optional copy button (show-copy).",
   "schemaFor": "code",
   "properties": {
     "language": {

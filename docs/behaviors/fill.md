@@ -2,9 +2,18 @@
 
 `x-fill` makes an element take all the width its container will give it.
 
-```html
-<div x-fill>I am as wide as my parent allows</div>
-```
+Both rows below are flex containers with a dashed border. The first holds a
+plain `<span>`, which hugs its text; the second holds the same `<span>` with
+`x-fill`, which stretches to the container's edge:
+
+<div x-demo columns="1">
+<div style="display:flex;padding:0.25rem;border:1px dashed var(--border-color)">
+  <span style="padding:0.25rem 0.5rem;background:var(--bg-tertiary)">No x-fill: as wide as its text</span>
+</div>
+<div style="display:flex;padding:0.25rem;border:1px dashed var(--border-color)">
+  <span x-fill style="padding:0.25rem 0.5rem;background:var(--bg-tertiary);outline:2px solid var(--primary)">x-fill: out to the container's edge</span>
+</div>
+</div>
 
 ## Why this is not just `width: 100%`
 

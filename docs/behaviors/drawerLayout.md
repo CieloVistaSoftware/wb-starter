@@ -1,14 +1,10 @@
 # Drawer Layout
 
-Collapsible sidebar layout with toggle
+`x-drawer-layout` makes a sidebar collapsible: a toggle shrinks it from `width` to `min-width` and back. Put it on the `<aside>` or `<nav>` that holds your side navigation.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-drawer-layout` is the **aside behavior**. It attaches to `<aside>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <aside x-drawer-layout position="start" width="220px" min-width="64px">
   <nav>
     <a href="#">Overview</a>
@@ -16,17 +12,7 @@ Collapsible sidebar layout with toggle
     <a href="#">Settings</a>
   </nav>
 </aside>
-```
-
-### On a different element
-
-Use `x-drawer-layout` when the host is not a `<aside>` and you want the same behavior:
-
-```html
-<div x-drawer-layout>
-  …
 </div>
-```
 
 ## Attributes
 
@@ -48,10 +34,4 @@ Use `x-drawer-layout` when the host is not a `<aside>` and you want the same beh
 - `toggle()` — Toggles collapsed state
 - `isCollapsed()` — Returns collapsed state
 
-## Live example
-
-See `x-drawer-layout` on the [Behaviors showcase](/?page=behaviors) — search for `x-drawer-layout` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/drawerLayout.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`drawerLayout.schema.json`](../../src/wb-models/drawerLayout.schema.json)</sub>

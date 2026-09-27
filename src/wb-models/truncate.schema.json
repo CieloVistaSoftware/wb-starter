@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "truncate.schema.json",
   "title": "Truncate",
-  "description": "Behavior applied with x-truncate.",
+  "description": "x-truncate cuts text off after lines lines with an ellipsis; expandable adds a \"Show more\" control that reveals the rest.",
   "schemaFor": "truncate",
   "properties": {
     "lines": {

@@ -1,24 +1,20 @@
 # Search
 
-Search input behavior with icon and debounced search events
+`x-search` turns a text `<input>` into a search box with an icon and a clear button, and fires `wb:search` once typing pauses for `debounce` milliseconds (or on every key with `instant`).
 
-## Type — new capability
+## Usage
 
-`x-search` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <input type="text" x-search placeholder="Search with icon">
-```
+</div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `placeholder` | `string` | `Search...` | Placeholder text |
-| `value` | `string` | `this is the value` | Search value |
-| `name` | `string` | `this is the name` | Form field name |
+| `value` | `string` | — | Search value |
+| `name` | `string` | — | Form field name |
 | `debounce` | `number` | `300` | Debounce delay in milliseconds |
 | `instant` | `boolean` | `false` | Search on every keystroke (no debounce) |
 | `disabled` | `boolean` | `false` | Disabled state |
@@ -52,10 +48,4 @@ Search input behavior with icon and debounced search events
 - **ariaLabel** — Search input
 - **ariaDescribedBy** — search results if applicable
 
-## Live example
-
-See `x-search` on the [Behaviors showcase](/?page=behaviors) — search for `x-search` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/search.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`search.schema.json`](../../src/wb-models/search.schema.json)</sub>

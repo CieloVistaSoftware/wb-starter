@@ -9,7 +9,8 @@
  * So this classifies before it counts. Each category has a different owner, a
  * different risk, and a different answer to "should this go at all":
  *
- *   TAG        <div>       components are gone; any hit is a live defect
+ *   TAG        <wb-card>, <wb-*>  components are gone; any hit is a live defect,
+ *                             including the generic `<wb-*>` a doc uses to talk about them
  *   CLASS      .x-foo        the styling system -- the big one, and the only
  *                             category where "remove" means a real migration
  *   MODULE     wb-lazy.js     file and directory names (src/wb-models/ ...)
@@ -99,6 +100,14 @@ for (const file of walk(ROOT)) {
   if (!text.includes('wb-')) continue;
   const rel = path.relative(ROOT, file).split(path.sep).join('/');
   const IS_CODE = /\.(js|mjs|cjs|ts|tsx)$/.test(file);
+  // In prose, the generic `<wb-*>` is a tag too: it is how docs/claude/TIER1-LAWS.md
+  // kept teaching the removed tags ("Every `<wb-*>` behavior renders directly into
+  // Light DOM"), and [a-z0-9-] never matched the asterisk, so the audit said 0.
+  // Code keeps the narrow pattern: there `<wb-*>` is a comment or a log line
+  // ABOUT the removal, not markup anyone copies.
+  const categories = /\.md$/.test(file)
+    ? CATEGORIES.map(([c, re]) => (c === 'TAG' ? [c, /<\/?wb-(?:[a-z0-9-]+|\*)/g] : [c, re]))
+    : CATEGORIES;
 
   const lines = text.split(/\r?\n/);
   lines.forEach((line, i) => {
@@ -115,7 +124,7 @@ for (const file of walk(ROOT)) {
     if (IS_CODE && /^\s*(\/\/|\*|\/\*)/.test(line)) return;
 
     let rest = line;
-    for (const [cat, re] of CATEGORIES) {
+    for (const [cat, re] of categories) {
       re.lastIndex = 0;
       const found = rest.match(re);
       if (!found) continue;

@@ -27,7 +27,7 @@ only 2 generated showcases exist** (`demos/*-showcase.html`) — the generator i
 used, not missing. The gap isn't tooling, it's adoption + a registry telling the
 generator what's already covered by hand-written pages vs. what still needs generating.
 
-The generator only covers **schema-backed `wb-*` custom tags** (via `test.matrix` /
+The generator only covers **schema-backed behaviors** (then written as `wb-*` custom tags, since removed) (via `test.matrix` /
 `enum` / `boolean` properties). It does NOT cover pure `x-*` attribute behaviors that
 have no schema (ripple, tooltip, draggable, copy, sticky, …) — 113 total registered
 behaviors in `src/wb-viewmodels/index.js`, a meaningful chunk of which are schema-less.
@@ -51,7 +51,7 @@ in 1 spot — needs full conversion, not zero), retire `pce-test.html`.**
   looks like an early/scratch version
 - `button-variants-tags-demo.html` — "Button Variants (wb-* tags)", **most complete**
   (8 variants incl. `link`, which the others lack), 10 `<div x-demo>` blocks already
-- `button-composition-demo.html` — **NOT a duplicate**: demonstrates `x-button` +
+- `button-composition-demo.html` — **NOT a duplicate**: demonstrates `<button>` +
   `x-*` behavior composition, a different subject entirely.
 
 **Recommendation: keep `button-variants-tags-demo.html` as canonical for plain variant
@@ -123,7 +123,7 @@ format-upgrade case.
 
 ## Recommended next steps (in order)
 
-1. ~~Build `data/demos-registry.json`~~ — done. Maps every `wb-*` tag / `x-*` behavior
+1. ~~Build `data/demos-registry.json`~~ — done. Maps every behavior
    name to its designated canonical demo file.
 2. ~~Add a coverage gate (compliance test)~~ — done:
    `tests/compliance/demos-registry-coverage.spec.ts`.

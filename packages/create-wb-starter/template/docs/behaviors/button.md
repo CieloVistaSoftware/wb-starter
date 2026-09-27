@@ -1,51 +1,30 @@
 # Button
 
-Interactive button with variants, sizes, and optional icon
+A plain `<button>` gets the button styling: `variant` sets the colour, `size` the scale, `icon` adds a leading icon, and `loading` swaps the label for a spinner. Setting `href` makes it navigate like a link.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-button` is the **button behavior**. It attaches to `<button>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
-<!-- Plain semantic HTML. The behavior is injected automatically -->
-<!-- because the element itself implies it. No attribute needed. -->
-<button variant="primary" icon="download" size="md">
-  variant: primary · icon: download · size: md
-</button>
-```
-
-### On a different element
-
-Use `x-button` when the host is not a `<button>` and you want the same behavior:
-
-```html
-<div x-button>
-  …
+<div x-demo>
+<button variant="primary" icon="download">Download report</button>
+<button variant="secondary" size="sm">Cancel</button>
+<button variant="primary" loading>Saving</button>
 </div>
-```
 
-> Do not write `<button x-button>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
+No attribute needed on `<button>`. Don't add `x-button` to it (#746).
 
-### Declining it
-
-A `<button>` **is** the button behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+On another element, write `x-button`:
 
 ```html
-<button x-ignore>
-  <!-- a plain button: no behavior is injected -->
-</button>
+<div x-button variant="primary" icon="download">Download report</div>
 ```
 
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
-
+`<button x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | `this is the label` | Button text |
+| `label` | `string` | — | Button text |
 | `icon` | `star` · `check` · `close` · `warning` · `info` · `error` · `heart` · `search` · `edit` · `trash` · `plus` · `minus` · `home` · `settings` · `download` · `upload` · `arrow_right` · `arrow_left` · `copy` · `save` | `star` | Icon name from built-in library, or any emoji/text |
 | `icon-position` | `start` · `end` | `start` | Icon position relative to label |
 | `variant` | `primary` · `secondary` · `success` · `warning` · `error` · `ghost` · `outline` · `link` | `primary` | Visual style variant |
@@ -76,10 +55,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - **role** — button
 - **ariaDisabled** — dynamic when disabled
 
-## Live example
-
-See `x-button` on the [Behaviors showcase](/?page=behaviors) — search for `x-button` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/button.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`button.schema.json`](../../src/wb-models/button.schema.json)</sub>

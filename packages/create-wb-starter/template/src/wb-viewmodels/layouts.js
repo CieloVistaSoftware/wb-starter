@@ -431,10 +431,19 @@ export function cover(element, options = {}) {
   element.style.minHeight = config.minHeight;
   element.style.padding = config.padding;
 
-  const principal = element.querySelector('[data-principal]');
-  if (principal) {
-    principal.style.marginTop = 'auto';
-    principal.style.marginBottom = 'auto';
+  // What gets centred is read from the markup itself, not from a marker
+  // attribute (John: "what is data-principal? remove it"). A <header> and a
+  // <footer> child pin to the top and bottom edges; everything between them is
+  // centred as one group. With neither, the whole content is centred -- which
+  // is what "Vertically centred" in the example always claimed and never did.
+  const children = Array.from(element.children);
+  const isEdge = (el) => el.tagName === 'HEADER' || el.tagName === 'FOOTER';
+  const middle = children.filter((el) => !isEdge(el));
+  if (middle.length && middle.length < children.length) {
+    middle[0].style.marginTop = 'auto';
+    middle[middle.length - 1].style.marginBottom = 'auto';
+  } else {
+    element.style.justifyContent = 'center';
   }
 
   return () => element.classList.remove('x-cover');

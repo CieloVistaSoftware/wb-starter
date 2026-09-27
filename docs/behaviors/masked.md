@@ -3,18 +3,13 @@
 Formats input as the user types against a mask pattern (phone numbers, SSNs,
 license plates, etc). See [src/wb-viewmodels/masked.js](../../src/wb-viewmodels/masked.js).
 
-- **Type:** Modifier
-- **Root CSS class:** `<div x-masked>`
+- **Root CSS class:** `x-masked`
 - **Schema:** [masked.schema.json](../../src/wb-models/masked.schema.json)
 
 ## Usage
 
 `9` in the mask means "digit", `A` means "letter"; everything else is a
 literal separator inserted automatically as the user fills in slots:
-
-```html
-<input type="text" x-masked mask="(999) 999-9999" placeholder="(000) 000-0000">
-```
 
 <div x-demo>
 <input type="text" x-masked mask="(999) 999-9999" placeholder="(000) 000-0000">

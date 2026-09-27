@@ -5,7 +5,7 @@
 out to be instances of the same underlying architecture bug, not one-off mistakes.
 **Scope:** Every schema in `src/wb-models/*.schema.json` whose `$view` builds a real
 native form/interactive element (`input`, `select`, `textarea`, `button`) as a child
-of a custom `wb-*` host tag.
+of a behavior host (at the time, a `wb-*` tag; now an `x-*` host).
 
 ## The pattern
 

@@ -224,17 +224,16 @@ export function confetti(element, options = {}) {
   const config = {
     count: parseInt(options.count || element.getAttribute('count') || '50'),
     label: options.label || element.getAttribute('label') || 'Fire Confetti!',
-    // #655: `repeat` is declared in confetti.schema.json and shipped as an
-    // official example (`<div x-confetti repeat>with repeat</div>`), but
-    // nothing ever read it -- the attribute was silently inert.
-    repeat: options.repeat ?? element.hasAttribute('repeat'),
+    // No `repeat`. It looped a burst every few seconds, forever, with no
+    // control on the page to stop it -- John: "no way to stop it. remove
+    // x-confetti with repeat option." Confetti fires on click or fire().
     // Schema calls these strings ("3s"); accept a bare number of ms too.
     duration: options.duration || element.getAttribute('duration') || '3s',
     delay: options.delay || element.getAttribute('delay') || '0s',
     // Declared in confetti.schema.json as a JSON array; see parseColorList.
     colors: options.colors || element.getAttribute('colors') || '',
     // Declared (default true) but never read: show-button="false" keeps the
-    // effect (click, `repeat`, wbConfetti.fire()) without the button chrome.
+    // effect (click, wbConfetti.fire()) without the button chrome.
     showButton: options.showButton ?? readFlag(element, 'show-button', true),
     ...options
   };
@@ -347,13 +346,8 @@ export function confetti(element, options = {}) {
   
   element.onclick = fire;
 
-  // #655: `repeat` loops the burst unattended after an optional `delay`.
-  const { start: startRepeat, stop: stopRepeat } = repeatLoop(fire, config, 3000);
-  if (config.repeat) startRepeat();
-
-  element.wbConfetti = { fire, startRepeat, stopRepeat };
+  element.wbConfetti = { fire };
   return () => {
-    stopRepeat();
     element.classList.remove('x-confetti-trigger');
   };
 }

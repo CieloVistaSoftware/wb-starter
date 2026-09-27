@@ -3,7 +3,6 @@
 Generates a real, associated `<label>` from an `x-label="text"` attribute on a
 form control — no separate `<label for="...">` to write by hand.
 
-- **Type:** Modifier
 - **Usage:**
   ```html
   <input

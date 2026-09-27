@@ -1,40 +1,26 @@
 # Button Card
 
-Card with action buttons in footer
+`x-cardbutton` renders a card with a title and body text and one or two action buttons in its footer, taken from `primary` and `secondary`. Use it for an offer or prompt that ends in a choice; clicks fire `wb:cardbutton:primary` and `wb:cardbutton:secondary`.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardbutton` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardbutton
   title="Upgrade to Team"
   content="Shared workspaces, audit history and SSO."
   primary="Start free trial"
   secondary="Compare plans"></article>
-```
-
-### On a different element
-
-Use `x-cardbutton` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardbutton>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | `this is the title` | Card title |
-| `content` | `string` | `this is the content` | Card content/description |
-| `primary` | `string` | `this is the primary` | Primary button text |
+| `title` | `string` | — | Card title |
+| `content` | `string` | — | Card content/description |
+| `primary` | `string` | — | Primary button text |
 | `primary-href` | `string` | `#` | Primary button link URL |
-| `secondary` | `string` | `this is the secondary` | Secondary button text |
+| `secondary` | `string` | — | Secondary button text |
 | `secondary-href` | `string` | `#` | Secondary button link URL |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 
@@ -49,10 +35,4 @@ Use `x-cardbutton` when the host is not a `<article>` and you want the same beha
 - `hide()` — Hides the card
 - `toggle()` — Toggles visibility
 
-## Live example
-
-See `x-cardbutton` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardbutton` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardbutton.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardbutton.schema.json`](../../src/wb-models/cardbutton.schema.json)</sub>

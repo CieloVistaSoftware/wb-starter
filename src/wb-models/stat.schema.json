@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "stat.schema.json",
   "title": "Stat",
-  "description": "Behavior applied with x-stat.",
+  "description": "x-stat shows one figure: a large value over a small label, with an optional colour variant.",
   "schemaFor": "stat",
   "properties": {
     "label": {

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "kbd.schema.json",
   "title": "Kbd",
-  "description": "Behavior applied with x-kbd.",
+  "description": "A plain <kbd> is drawn as a keycap: monospace text on a raised, bordered key.",
   "schemaFor": "kbd",
   "properties": {},
   "$view": [],

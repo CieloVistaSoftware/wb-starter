@@ -1,15 +1,6 @@
 # x-draggable
 
-This is a helper attribute for drag-and-drop functionality. See [src/wb-viewmodels/draggable.js](../../src/wb-viewmodels/draggable.js).
+The drag behavior is documented in [draggable.md](draggable.md): `x-draggable` lets the user move an element, with `axis` to lock the direction and `handle` to limit where a drag can start. For a whole card that drags, see [carddraggable.md](carddraggable.md).
 
-- **Type:** Attribute
-- **Usage:** `[x-draggable]`
-
-## Description
-Enables drag-and-drop behavior for elements. Add `x-draggable` to make an element draggable within the UI.
-
-## Demo
-See [Interactive & Utility demos](../../demos/site/interactive.html#draggable-draggable).
-
-## Schema/Test
-No dedicated schema or test file; see code for usage patterns.
+- **Demo:** [Interactive & Utility demos](../../demos/site/interactive.html#draggable-draggable).
+- **Schema:** [draggable.schema.json](../../src/wb-models/draggable.schema.json).

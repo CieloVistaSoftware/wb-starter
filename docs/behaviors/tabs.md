@@ -1,20 +1,16 @@
 # Tabs
 
-Tab navigation for switching between content panels
+`x-tabs` turns its child sections into tab panels: each child's `title` becomes a tab button, and only the active panel is shown. `variant` picks the tab style and `active-tab` the starting panel.
 
-## Type — new capability
+## Usage
 
-`x-tabs` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-tabs active-tab="0" variant="underline">
   <section title="Overview">Composition over inheritance, in light DOM.</section>
   <section title="Attributes">Every attribute is kebab-case (§31).</section>
   <section title="Events">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>
 </div>
-```
+</div>
 
 ## Attributes
 
@@ -45,10 +41,4 @@ Tab navigation for switching between content panels
 - **tab** — {"role":"tab","ariaSelected":"dynamic","ariaControls":"panel id"}
 - **panel** — {"role":"tabpanel","ariaLabelledBy":"tab id"}
 
-## Live example
-
-See `x-tabs` on the [Behaviors showcase](/?page=behaviors) — search for `x-tabs` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/tabs.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`tabs.schema.json`](../../src/wb-models/tabs.schema.json)</sub>

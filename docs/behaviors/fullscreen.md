@@ -1,30 +1,18 @@
 # Fullscreen
 
-Behavior applied with x-fullscreen.
+`x-fullscreen` makes the element a button that expands the page (or the element matched by `target`) to full screen and back. With no text of its own it shows the `label`, "⛶ Fullscreen" by default.
 
-## Type — new capability
+## Usage
 
-`x-fullscreen` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<button variant="secondary" x-fullscreen>
-  x-fullscreen · variant: secondary
-</button>
-```
+<div x-demo>
+<button x-fullscreen></button>
+</div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `target` | `string` | `this is the target` | CSS selector for the element to expand. Empty means the document element. |
+| `target` | `string` | — | CSS selector for the element to expand. Empty means the document element. |
 | `label` | `string` | `⛶ Fullscreen` | Button label when not fullscreen. Defaults to `⛶ Fullscreen`. |
 
-## Live example
-
-See `x-fullscreen` on the [Behaviors showcase](/?page=behaviors) — search for `x-fullscreen` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/fullscreen.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`fullscreen.schema.json`](../../src/wb-models/fullscreen.schema.json)</sub>

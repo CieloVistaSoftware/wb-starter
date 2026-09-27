@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "typewriter.schema.json",
   "title": "Typewriter",
-  "description": "Behavior applied with x-typewriter.",
+  "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
   "schemaFor": "typewriter",
   "properties": {
     "speed": {

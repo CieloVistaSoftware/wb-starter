@@ -2,17 +2,30 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mark.schema.json",
   "title": "Mark",
-  "description": "Behavior applied with x-mark.",
-  "schemaFor": "x-mark",
+  "description": "A plain <mark> highlights text; variant picks a success, warning, danger or info colour, and color sets any colour with the text colour chosen to stay readable.",
+  "schemaFor": "mark",
   "properties": {
     "variant": {
       "type": "string",
-      "description": "Read by mark()."
+      "description": "Semantic highlight colour: `success`, `warning`, `danger` or `info`. **Ignored when `color` is set** — an explicit colour wins.",
+      "default": "this is the variant"
     },
     "color": {
       "type": "string",
-      "description": "Read by mark()."
+      "description": "Any CSS colour, used as the highlight background. The text colour is computed from its luminance so the mark stays readable, and setting this overrides `variant`.",
+      "default": "this is the color"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-mark"
+  },
+  "test": {
+    "setup": [
+      "<div x-mark>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

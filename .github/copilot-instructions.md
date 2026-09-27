@@ -23,7 +23,7 @@ All project docs are organized into 3 tiers. See `docs/claude/README.md` for the
 **Project location:** `C:\Users\jwpmi\Downloads\AI\wb-starter`
 
 ### Core Stack
-- **Frontend:** Vanilla JS Custom Elements (`<wb-*>`), no Shadow DOM, Native ESM
+- **Frontend:** Vanilla JS behavior functions applied to plain elements, no custom elements, no Shadow DOM, Native ESM
 - **Backend:** Node.js + Express (`server.js`)
 - **Data:** JSON-driven architecture (`data/`)
 
@@ -39,8 +39,8 @@ docs/_today/CURRENT-STATUS.md      — Current work status
 ### Critical Rules (see Tier 1 for full details)
 - **Light DOM only** — never use Shadow DOM
 - **ES Modules only** — never use `require()` or `module.exports`
-- **Behaviors:** `<wb-*>` custom element tags
-- **Behaviors:** `x-*` attributes on existing elements
+- **Behaviors:** semantic elements get theirs automatically (`<details>`, `<dialog>`, `<article>`)
+- **Behaviors:** `x-*` attributes on any other element (`<div x-tooltip>`); `wb-*` tags no longer exist
 - **No build tools** — browser runs source code directly
 - **Never run tests synchronously** — use `npm run test:async` only
 

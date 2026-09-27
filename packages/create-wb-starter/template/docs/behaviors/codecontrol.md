@@ -16,13 +16,6 @@ code block on the page — applies immediately on selection, and keeps every
 | Schema | `src/wb-models/codecontrol.schema.json` |
 | Source | `src/wb-viewmodels/codecontrol.js` |
 
-Both forms run the same behavior: `<div x-codecontrol>` and `<div x-codecontrol>` are
-equivalent — the tag form is registered in the tag map
-([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
-`codecontrol()` function. `autoInject` is on by default site-wide
-([`src/core/config.js`](../../src/core/config.js)), so `x-codecontrol` activates
-without any manual `WB.scan()` call.
-
 ## Properties
 
 | Property | Attribute | Type | Default | Description |
@@ -53,7 +46,7 @@ without any manual `WB.scan()` call.
 <div x-codecontrol show-category="false" persist="false"></div>
 </div>
 
-### Attribute form
+### On a plain `<div>`
 
 <div x-demo>
 <div x-codecontrol size="lg"></div>

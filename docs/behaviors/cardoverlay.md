@@ -1,38 +1,24 @@
 # Overlay Card
 
-Card with text overlaid on background image
+`x-cardoverlay` renders a card whose title and subtitle sit on top of a background `image`, with a gradient behind the text to keep it readable. `position` puts the text at the top, centre or bottom.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardoverlay` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardoverlay
   image="/images/placeholder.svg"
   title="Night shift"
   subtitle="City desk, 02:00"
   position="bottom"></article>
-```
-
-### On a different element
-
-Use `x-cardoverlay` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardoverlay>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `image` | `string` | `this is the image` | Background image URL |
-| `title` | `string` | `this is the title` | Overlay title |
-| `subtitle` | `string` | `this is the subtitle` | Overlay subtitle |
+| `image` | `string` | — | Background image URL |
+| `title` | `string` | — | Overlay title |
+| `subtitle` | `string` | — | Overlay subtitle |
 | `position` | `top` · `center` · `bottom` | `bottom` | Content position |
 | `xalign` | `left` · `center` · `right` | `left` | Horizontal text alignment (x-axis) |
 | `gradient` | `boolean` | `true` | Show gradient overlay for text readability |
@@ -46,10 +32,4 @@ Use `x-cardoverlay` when the host is not a `<article>` and you want the same beh
 - `toggle()` — Toggles visibility
 - `setImage()` — Changes background image
 
-## Live example
-
-See `x-cardoverlay` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardoverlay` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardoverlay.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardoverlay.schema.json`](../../src/wb-models/cardoverlay.schema.json)</sub>

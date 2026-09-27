@@ -1,16 +1,12 @@
 # Rating
 
-Star rating behavior for displaying or collecting ratings
+`x-rating` renders a row of `max` stars with `value` of them filled, and lets the user click to set a new rating unless `readonly` is set; `half` allows half stars. Changes fire `wb:rating:change`.
 
-## Type — new capability
+## Usage
 
-`x-rating` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-rating value="4" max="5" half></div>
-```
+</div>
 
 ## Attributes
 
@@ -43,10 +39,4 @@ Star rating behavior for displaying or collecting ratings
 - **ariaValueMax** — dynamic from max
 - **ariaValueNow** — dynamic from value
 
-## Live example
-
-See `x-rating` on the [Behaviors showcase](/?page=behaviors) — search for `x-rating` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/rating.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`rating.schema.json`](../../src/wb-models/rating.schema.json)</sub>

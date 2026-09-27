@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "lightbox.schema.json",
   "title": "Lightbox",
-  "description": "Behavior applied with x-lightbox.",
+  "description": "x-lightbox makes the element open the image at src full-screen over a dark backdrop when clicked; clicking the backdrop closes it.",
   "schemaFor": "lightbox",
   "properties": {},
   "$view": [],

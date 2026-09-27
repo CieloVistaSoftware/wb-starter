@@ -1,18 +1,12 @@
 # Notify
 
-Behavior applied with x-notify.
+`x-notify` makes the element pop a toast notification on each click. The first click shows `message` as an info toast; later clicks cycle through success, warning and error toasts with stock text, so it is mainly a demonstration trigger.
 
-## Type — new capability
+## Usage
 
-`x-notify` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<button x-notify message="Deploy finished — staging is live." variant="success">
-  x-notify · message: Deploy finished — staging is live. · variant: success
-</button>
-```
+<div x-demo>
+<button x-notify message="Deploy finished — staging is live.">Show notification</button>
+</div>
 
 ## Attributes
 
@@ -23,12 +17,6 @@ Behavior applied with x-notify.
 
 ## Events
 
-- `wb:notify:show` — Fired by notify().
+- `wb:notify:show` — A toast was shown; `detail` has its `message` and `variant`.
 
-## Live example
-
-See `x-notify` on the [Behaviors showcase](/?page=behaviors) — search for `x-notify` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/notify.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`notify.schema.json`](../../src/wb-models/notify.schema.json)</sub>

@@ -2,52 +2,54 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "video.schema.json",
   "title": "Video",
-  "description": "Behavior applied with x-video.",
-  "schemaFor": "x-video",
+  "description": "A plain <video> gets native controls and inline playback on phones by default; autoplay works only together with muted, and poster sets the image shown before playback.",
+  "schemaFor": "video",
   "properties": {
     "poster": {
       "type": "string",
-      "description": "Read by video().",
-      "default": ""
+      "description": "Image shown before playback starts, and after the video ends. Without one the first frame is used, which is often black.",
+      "default": "#"
     },
     "controls": {
       "type": "string",
-      "description": "Read by video()."
+      "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script.",
+      "default": "this is the controls"
     },
     "playsinline": {
       "type": "string",
-      "description": "Read by video()."
+      "description": "Play inline on mobile rather than taking over the screen. iOS goes fullscreen by default without it.",
+      "default": "this is the playsinline"
     },
     "autoplay": {
       "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
-      "default": false
-    },
-    "data-autoplay": {
-      "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
+      "description": "Begin playing on load. Browsers block autoplay with sound, so this needs `muted` to work unattended.",
       "default": false
     },
     "muted": {
       "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
-      "default": false
-    },
-    "data-muted": {
-      "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
+      "description": "Start with the audio track silenced. Required for `autoplay` to be allowed.",
       "default": false
     },
     "loop": {
       "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
-      "default": false
-    },
-    "data-loop": {
-      "type": "boolean",
-      "description": "Read by video(). Bare attribute.",
+      "description": "Restart from the beginning when playback reaches the end.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-video"
+  },
+  "test": {
+    "setup": [
+      "<div x-video>Test Content</div>",
+      "<div x-video poster=\"#\">Test Content</div>",
+      "<div x-video autoplay>Test Content</div>",
+      "<div x-video muted>Test Content</div>",
+      "<div x-video loop>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

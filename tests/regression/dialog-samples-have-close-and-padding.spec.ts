@@ -115,6 +115,17 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
         const notes: string[] = [];
         if (!ready) notes.push('the sample never signalled x-ready');
 
+        // show-close="false" is the ONE sample whose whole point is that the
+        // close button is gone -- it is the option being demonstrated. Read it
+        // off the sample's own markup (not the row label), so only a sample
+        // that really carries the option is exempt, and so the exemption is
+        // itself checked below: that sample must render NO close button. The
+        // behaviors page used to write this option as camelCase (showClose),
+        // which dialog.js never read, so the row silently showed a close button
+        // and passed this test while demonstrating nothing.
+        const sampleEl = stageSample();
+        const closeOptedOut = !!sampleEl && sampleEl.getAttribute('show-close') === 'false';
+
         // The attribute form builds its dialog on demand, so the trigger has to
         // be pressed before there is anything to measure.
         let dlg = stageDialog();
@@ -204,7 +215,7 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
           await sleep(80);
         }
 
-        out.push({ label, rendered: true, hasClose: !!close, closeVisible, hasBody: !!body, pad, padOk, notes });
+        out.push({ label, rendered: true, closeOptedOut, hasClose: !!close, closeVisible, hasBody: !!body, pad, padOk, notes });
       }
       return out;
     }, MIN_PAD_PX);
@@ -225,7 +236,19 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
         .join('\n')
     ).toEqual([]);
 
-    const noClose = findings.filter((f: any) => f.rendered && !f.closeVisible);
+    // The show-close="false" sample must exist (otherwise the exemption below
+    // is exempting nothing and could hide a regression) and must honour it.
+    const optedOut = findings.filter((f: any) => f.rendered && f.closeOptedOut);
+    expect(
+      optedOut.length,
+      'expected exactly one dialog sample demonstrating show-close="false"',
+    ).toBe(1);
+    expect(
+      optedOut.filter((f: any) => f.closeVisible).map((f: any) => f.label),
+      'show-close="false" was ignored -- these samples still show a close button',
+    ).toEqual([]);
+
+    const noClose = findings.filter((f: any) => f.rendered && !f.closeOptedOut && !f.closeVisible);
     expect(
       noClose.map((f: any) => f.label),
       'these dialog samples open with no visible close button:\n' +

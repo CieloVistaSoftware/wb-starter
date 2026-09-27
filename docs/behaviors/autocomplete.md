@@ -3,8 +3,7 @@
 Adds a filterable suggestion list under a text input as the user types. See
 [src/wb-viewmodels/autocomplete.js](../../src/wb-viewmodels/autocomplete.js).
 
-- **Type:** Modifier
-- **Root CSS class:** `<div x-autocomplete>`
+- **Root CSS class:** `x-autocomplete`
 - **Schema:** [autocomplete.schema.json](../../src/wb-models/autocomplete.schema.json)
 
 ## Usage
@@ -13,16 +12,6 @@ Apply `x-autocomplete` directly to a real `<input>` — the behavior wraps it in
 `.x-autocomplete` container and inserts the suggestion `<ul>` as a sibling (an
 `<input>` is a void element and can't hold children, so nothing is ever
 appended inside it).
-
-```html
-<input
-  type="text"
-  x-autocomplete
-  items="Apple,Banana,Cherry,Date,Elderberry"
-  placeholder="Start typing a fruit…">
-```
-
-Wrapped in `<div x-demo>`, so the live behavior renders below with its source shown underneath:
 
 <div x-demo>
 <input type="text" x-autocomplete items="Apple,Banana,Cherry,Date,Elderberry" placeholder="Start typing a fruit…">

@@ -7,7 +7,7 @@
  * legacy files remain an explicit migration baseline; a new all-static doc is
  * a failure, while partial conversions continue to be reported for follow-up.
  *
- * Heuristic: a fence "shows real behavior usage" if it contains a wb-*
+ * Heuristic: a fence "shows real component usage" if it contains a wb-*
  * custom tag or an x-* attribute. CSS/JS fences, reference tables, and
  * intentionally-invalid markup (no wb-* / x-* content) are not flagged.
  */
@@ -29,7 +29,12 @@ function mdFiles(dir: string, acc: string[] = []): string[] {
 }
 
 const RENDERABLE = /<(wb-[a-z-]+)[\s>]|\sx-[a-z][a-z0-9-]*(=|[\s>])/;
-const WB_DEMO_OPEN = String.fromCharCode(60) + 'x-demo';
+// The live-demo wrapper is `<div x-demo>`. This used to be
+// `String.fromCharCode(60) + '[x-demo]'` -- the literal text "<[x-demo]", left by
+// the 4.0.0 rename from <wb-demo>. No doc contains that text, so EVERY doc with a
+// renderable fence counted as having no live demo, and the gate failed on 100+
+// files that were fine (figure.md among them, which really had none).
+const WB_DEMO_OPEN = /<div\b[^>]*\bx-demo\b/;
 
 // These are the issue #423 legacy files. They remain visible in the audit
 // report until their examples are migrated, but new zero-demo files are not
@@ -45,21 +50,21 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'behaviors/x-control.md',
   'behaviors/x-repeater.md',
   'behaviors/x-search.md',
-  'behaviors/cards/cards.readme.md',
-  'behaviors/feedback/feedback.readme.md',
-  'behaviors/forms/forms.readme.md',
-  'behaviors/layout/layout.readme.md',
-  'behaviors/navigation/navigation.readme.md',
-  'behaviors/README.md',
-  'behaviors/semantic/semantic.readme.md',
-  'behaviors/semantics/dl.md',
-  'behaviors/semantics/figure.md',
-  'behaviors/semantics/list.md',
-  'behaviors/semantics/ol.md',
-  'behaviors/semantics/pre.md',
-  'behaviors/semantics/radio.md',
-  'behaviors/semantics/range.md',
-  'behaviors/semantics/ul.md',
+  'components/cards/cards.readme.md',
+  'components/feedback/feedback.readme.md',
+  'components/forms/forms.readme.md',
+  'components/layout/layout.readme.md',
+  'components/navigation/navigation.readme.md',
+  'components/README.md',
+  'components/semantic/semantic.readme.md',
+  'components/semantics/dl.md',
+  'components/semantics/figure.md',
+  'components/semantics/list.md',
+  'components/semantics/ol.md',
+  'components/semantics/pre.md',
+  'components/semantics/radio.md',
+  'components/semantics/range.md',
+  'components/semantics/ul.md',
   'escape-hatches.md',
   'guides/search-index.md',
   'linkedin-standards-article.md',
@@ -76,7 +81,7 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
 
   // Issue #554 (#307): these two are a different bucket than the #423 migration
   // debt above — not "not yet converted," but permanently exempt because their
-  // fences are not real behavior usage:
+  // fences are not real component usage:
   // - claude/TIER1-LAWS.md's Law 11 fence intentionally nests an unclosed
   //   "WRONG" x-alert/x-stepper/x-toast example against a "CORRECT" one to
   //   teach AI agents the attribute-naming rule. Making a rule-violation
@@ -94,7 +99,7 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'architecture/proposals/remove-wb-prefix-authoring-surface.md',
 ]);
 
-test('audit: markdown code fences that should be live x-demo blocks (Rule 4, #307)', () => {
+test('audit: markdown code fences that should be live [x-demo] blocks (Rule 4, #307)', () => {
   const offenders: { file: string; count: number }[] = [];
   const unexpectedZeroDemoFiles: string[] = [];
   let totalFences = 0;
@@ -111,7 +116,7 @@ test('audit: markdown code fences that should be live x-demo blocks (Rule 4, #30
       totalFences += count;
       offenders.push({ file: path.relative(DOCS_DIR, file), count });
       const relative = path.relative(DOCS_DIR, file).replace(/\\/g, '/');
-      if (!text.includes(WB_DEMO_OPEN) && !LEGACY_ZERO_DEMO_FILES.has(relative)) {
+      if (!WB_DEMO_OPEN.test(text) && !LEGACY_ZERO_DEMO_FILES.has(relative)) {
         unexpectedZeroDemoFiles.push(relative);
       }
     }
@@ -120,10 +125,10 @@ test('audit: markdown code fences that should be live x-demo blocks (Rule 4, #30
   offenders.sort((a, b) => b.count - a.count);
   const report = offenders.map((o) => `  ${o.file}: ${o.count}`).join('\n');
   console.log(
-    `Rule 4 audit: ${totalFences} static fence(s) across ${offenders.length} file(s) still need x-demo conversion:\n${report}`
+    `Rule 4 audit: ${totalFences} static fence(s) across ${offenders.length} file(s) still need [x-demo] conversion:\n${report}`
   );
   expect(
     unexpectedZeroDemoFiles,
-    'New markdown files with executable HTML examples must use x-demo; add a live demo or explicitly migrate a named legacy file.'
+    'New markdown files with executable HTML examples must use [x-demo]; add a live demo or explicitly migrate a named legacy file.'
   ).toEqual([]);
 });

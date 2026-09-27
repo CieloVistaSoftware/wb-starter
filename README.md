@@ -82,7 +82,7 @@ a wrapper component. Two ways to attach one, both resolving through
 <button x-ripple>Click me</button>
 ```
 
-There is no third way. `<wb-*>` tags are **gone** — 4.0.0 removed custom
+There is no third way. The `wb-*` component tags are **gone** — 4.0.0 removed custom
 elements entirely, and a compliance gate now holds the count at zero.
 
 ### Auto-injection is ON by default

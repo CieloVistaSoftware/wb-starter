@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "sparkle.schema.json",
   "title": "Sparkle",
-  "description": "Behavior applied with x-sparkle.",
+  "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
   "schemaFor": "sparkle",
   "properties": {
     "count": {

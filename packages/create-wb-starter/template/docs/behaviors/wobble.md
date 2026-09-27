@@ -1,23 +1,11 @@
 # Wobble
 
-On click, plays the wobble animation for 1s.
+`x-wobble` swings the element sideways with a slight tilt, each swing smaller than the last, over 1 s when clicked.
 
-## Type — new capability
+## Usage
 
-`x-wobble` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button class="effect-demo" x-wobble>Click to wobble</button>
+</div>
 
-### How to write it
-
-```html
-<button class="effect-demo" x-wobble>
-  x-wobble
-</button>
-```
-
-## Live example
-
-See `x-wobble` on the [Behaviors showcase](/?page=behaviors) — search for `x-wobble` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/wobble.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`wobble.schema.json`](../../src/wb-models/wobble.schema.json)</sub>

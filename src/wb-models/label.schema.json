@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Label Behavior",
   "type": "object",
-  "description": "Schema for x-label behavior. Goes directly on a form control (input, select, textarea); its value is the label text. Creates a real <label>, associates it via for/id, and inserts it right before the control (to its left) by default.",
+  "description": "Goes directly on a form control (input, select, textarea); its value is the label text. Creates a real <label>, associates it via for/id, and inserts it right before the control (to its left) by default.",
   "properties": {
     "x-label": {
       "type": "string",

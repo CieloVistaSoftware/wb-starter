@@ -331,6 +331,10 @@
   </main>
 
   <script id="schemaviewer-script-73" type="module">
+    // Called directly rather than through a declarative <div x-mdhtml> host --
+    // see renderCodeExample() below for why the attribute form cannot work here.
+    import { mdhtml } from '../src/wb-viewmodels/mdhtml.js';
+
     let schema = null;
     let currentSchemaPath = '';
 
@@ -410,7 +414,14 @@
           tagName = schema.element;
         }
         
-        exampleHTML = `<wb-${componentName}`;
+        // 4.0.0 removed component TAGS: authored markup is a plain element
+        // carrying the behavior attribute (<div x-card>), and properties are
+        // plain attributes (variant="primary"). This used to emit
+        // a wb-card element with wb-variant="..." -- a tag nothing upgrades any more, closed
+        // by the WRONG tag name (</div>), so the "example" taught markup that
+        // renders nothing.
+        const attrName = componentName.replace(/[A-Z]/g, c => '-' + c.toLowerCase());
+        exampleHTML = `<${tagName} x-${attrName}`;
         
         // Add default properties
         Object.keys(props).slice(0, 5).forEach(key => {
@@ -420,9 +431,9 @@
           const prop = props[key];
           if (prop.default !== undefined && prop.default !== null) {
             if (typeof prop.default === 'boolean') {
-              if (prop.default) exampleHTML += ` wb-${key}`;
+              if (prop.default) exampleHTML += ` ${key}`;
             } else if (typeof prop.default !== 'object') {
-              exampleHTML += ` wb-${key}="${prop.default}"`;
+              exampleHTML += ` ${key}="${escapeHTML(String(prop.default))}"`;
             }
           }
         });
@@ -438,8 +449,8 @@
       panel.innerHTML = `
         <!-- Behavior Info -->
         <div class="sv-info">
-          <h2>${schema.title || componentName}</h2>
-          <p>${schema.description || 'No description available.'}</p>
+          <h2>${escapeHTML(schema.title || componentName)}</h2>
+          <p>${escapeHTML(schema.description || 'No description available.')}</p>
         </div>
         
         <!-- Live Preview -->
@@ -459,11 +470,11 @@
           return `
             <div class="sv-prop">
               <div class="sv-prop-name">${key}</div>
-              <div class="sv-prop-desc">${prop.description || ''}</div>
+              <div class="sv-prop-desc">${escapeHTML(prop.description || '')}</div>
               <div class="sv-prop-meta">
                 <span>Type: ${propType}</span>
-                ${prop.default !== undefined ? `<span class="default">Default: ${JSON.stringify(prop.default)}</span>` : ''}
-                ${prop.enum ? `<span class="options">Options: ${prop.enum.join(', ')}</span>` : ''}
+                ${prop.default !== undefined ? `<span class="default">Default: ${escapeHTML(JSON.stringify(prop.default))}</span>` : ''}
+                ${prop.enum ? `<span class="options">Options: ${escapeHTML(prop.enum.join(', '))}</span>` : ''}
               </div>
             </div>
           `;
@@ -472,25 +483,78 @@
         <!-- Code Example -->
         <div class="sv-code-section">
           <div class="sv-props-title">Example Usage</div>
-          <div class="sv-preview has-content" id="codeExample">
-            <div x-mdhtml>\`\`\`html
-${exampleHTML}
-\`\`\`</div>
-          </div>
+          <div class="sv-preview has-content" id="codeExample"></div>
         </div>
       `;
 
-      // Initialize WB behaviors in preview
-      setTimeout(() => {
-        if (window.WB) {
-          try {
-            window.WB.scan(document.getElementById('livePreview'));
-            window.WB.scan(document.getElementById('codeExample'));
-          } catch (e) {
-            console.error('WB.scan() error:', e);
-          }
-        }
-      }, 100);
+      enhancePreview(exampleHTML);
+    }
+
+    // Schema text is TEXT. Descriptions routinely name elements -- card's
+    // "rendered in a <time> element", "byline in an <address>" -- and
+    // interpolated raw those became real (empty) elements, so the sentence
+    // read "rendered in a element". Same for the example source, which is
+    // shown as characters, not rendered a second time.
+    function escapeHTML(text) {
+      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    /**
+     * Render the example's source as a highlighted ```html block.
+     *
+     * NOT a declarative <div x-mdhtml> in the template above, which is what
+     * this was. Two things broke it, and both left the panel showing the raw
+     * fence text with no <code> in it:
+     *
+     *  1. mdhtml recovers an inline host's AUTHORED text from the page's own
+     *     source (page-source-cache.js), matching hosts by ordinal. This
+     *     page's only `<div x-mdhtml>` in source is the one inside this
+     *     script's template literal, so that lookup "succeeds" -- and returns
+     *     the JS text `\`\`\`html ${exampleHTML} \`\`\``, escaped backticks
+     *     and all, which marked renders as a paragraph, not a code block.
+     *  2. It never ran at all: see enhancePreview() on lazy scanning.
+     *
+     * Called directly on a host WITHOUT the x-mdhtml attribute, mdhtml finds
+     * no ordinal match and reads the host's own innerHTML, entity-decoding it
+     * once -- exactly the escaped fence written here. autoLiveRender is off
+     * because #livePreview above already renders the example; left on, mdhtml
+     * would promote this fence into a second live x-demo copy of it. No
+     * captions: "C0.0" numbers chapters of a document, and this is one block.
+     */
+    async function renderCodeExample(host, exampleHTML) {
+      const fence = document.createElement('div');
+      fence.textContent = '```html\n' + exampleHTML + '\n```';
+      host.replaceChildren(fence);
+      await mdhtml(fence, { autoLiveRender: false, captions: false });
+      // mdhtml marks the block x-pre/x-code and scans it LAZILY -- which, for
+      // the same reason as below, never fires here. Eager so the block is
+      // actually highlighted.
+      if (host.isConnected && window.WB) await window.WB.scan(host, { eager: true });
+    }
+
+    /**
+     * Bring the freshly rendered preview to life.
+     *
+     * EAGER, not WB.scan()'s lazy default. Lazy defers each element to an
+     * IntersectionObserver on the VIEWPORT, but everything here lives inside
+     * .sv-panel-content, a scroll container. An element that container clips
+     * never intersects, however generous the rootMargin -- and the code
+     * example sits below a list of every property, so it is always clipped.
+     * Its behaviors waited for a scroll that the observer could not see, and
+     * the panel stayed raw text. This page generates its content on demand,
+     * the same case demos/playground.html uses eager for.
+     */
+    async function enhancePreview(exampleHTML) {
+      const livePreview = document.getElementById('livePreview');
+      const codeExample = document.getElementById('codeExample');
+      try {
+        await Promise.all([
+          window.WB ? window.WB.scan(livePreview, { eager: true }) : null,
+          renderCodeExample(codeExample, exampleHTML)
+        ]);
+      } catch (e) {
+        console.error('Preview render error:', e);
+      }
     }
 
     // Update from JSON editor

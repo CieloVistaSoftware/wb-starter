@@ -1,33 +1,19 @@
 # Draggable Card
 
-Card that can be dragged around the page
+`x-carddraggable` renders a card the user can pick up by its header and move; `axis` limits the direction, `constrain` keeps it inside its parent or the viewport, and `snap-to-grid` rounds the position. Drag start, move and end each fire an event.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-carddraggable` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-carddraggable title="Drag me" content="Pick this card up and move it — the position sticks." constrain axis="both"></article>
-```
-
-### On a different element
-
-Use `x-carddraggable` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-carddraggable>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | `this is the title` | Card title |
-| `content` | `string` | `this is the content` | Card content |
+| `title` | `string` | — | Card title |
+| `content` | `string` | — | Card content |
 | `constrain` | `none` · `parent` · `viewport` | `none` | Constrain to area |
 | `axis` | `both` · `x` · `y` | `both` | Drag axis |
 | `snap-to-grid` | `number` | `0` | Snap grid size (0=disabled) |
@@ -45,10 +31,4 @@ Use `x-carddraggable` when the host is not a `<article>` and you want the same b
 - `getPosition()` — Gets current position
 - `reset()` — Resets to original position
 
-## Live example
-
-See `x-carddraggable` on the [Behaviors showcase](/?page=behaviors) — search for `x-carddraggable` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/carddraggable.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`carddraggable.schema.json`](../../src/wb-models/carddraggable.schema.json)</sub>

@@ -15,7 +15,8 @@ mechanisms: both are resolved by the WB registry and invoked as functions.
 ### Behavior
 
 Use a behavior when the markup needs a named WB-Starter boundary with a defined
-presentation or structure. Behaviors use an autonomous `<wb-*>` tag. The mapped
+presentation or structure. A behavior is reached by its semantic element (`<article>`
+is a card, `<dialog>` a dialog) or by its `x-*` attribute on any element. The mapped
 behavior may create or normalize the behavior's internal Light DOM, apply its
 classes, bind events, and expose its API.
 
@@ -31,9 +32,9 @@ classes, bind events, and expose its API.
 </dialog>
 </div>
 
-The tag is the behavior's public boundary. It is not a class instance that must
-extend a shared base class. A `<wb-*>` tag is mapped to a behavior in
-`src/core/tag-map.js`; registration shims required by the Custom Elements API do
+The element is the behavior's public boundary. It is not a class instance that must
+extend a shared base class. Semantic elements and `x-*` attributes are mapped to
+behaviors in `src/core/tag-map.js`; registration shims required by the Custom Elements API do
 not create an inheritance model or hold shared behavior logic.
 
 Behavior schemas live in `src/wb-models/{name}.schema.json`. Behavior behavior
@@ -64,8 +65,9 @@ An `x-*` attribute is an opt-in declaration. It does not replace the host elemen
 and it does not turn that element into a subclass. A behavior function must work
 with the element it receives and must preserve the element's native semantics.
 
-Effects, utilities, and enhancements generally belong here. A behavior can also
-be applied to a `<wb-*>` host when that combination is meaningful.
+Effects, utilities, and enhancements generally belong here. An enhancement can also
+be added to an element that already carries a behavior (`<article x-ripple>`) when
+that combination is meaningful.
 
 ### Semantic auto-injection
 
@@ -102,10 +104,10 @@ Use this order when authoring markup:
 
 1. Choose the correct native semantic element when it expresses the requirement.
 2. Add an `x-*` behavior when an existing element needs an explicit enhancement.
-3. Use a `<wb-*>` behavior when a named WB-Starter behavior boundary or owned
-   structure is required.
+3. Put a structural behavior's `x-*` attribute on a neutral host (`<div x-tabs>`)
+   when no semantic element carries it.
 
-Do not use a `<wb-*>` tag merely to style an element, and do not use a generic
+Do not add a structural behavior merely to style an element, and do not use a generic
 `<div>` when a native semantic element is available. Do not use both a generic
 native mapping and an explicit replacement behavior on the same host unless the
 combination is intentional and supported. More-specific mappings, such as
@@ -141,7 +143,7 @@ behavior or behavior property:
 <table sortable searchable></table>
 ```
 
-`data-*` is not the canonical configuration API for `<wb-*>` or `x-*` elements.
+`data-*` is not the canonical configuration API for behavior elements.
 Follow the behavior schema or behavior documentation for the accepted property
 names and values. Do not use `data-*` attributes as a substitute for declared
 properties.
@@ -233,7 +235,7 @@ elements in place. The markup remains valid and meaningful without WB.
 ## Migration from Legacy Syntax
 
 Legacy v2 behavior declarations used behavior attributes for structures that are
-now named behaviors. Convert the structure to a `<wb-*>` tag, while retaining
+now named behaviors. Convert the structure to its semantic element, while retaining
 `x-*` for genuine enhancements:
 
 ```html

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Help Behavior",
   "type": "object",
-  "description": "Schema for x-help behavior (help text)",
+  "description": "Always-visible help text for a form field; adds role=\"note\".",
   "properties": {},
   "required": [],
   "schemaFor": "help",

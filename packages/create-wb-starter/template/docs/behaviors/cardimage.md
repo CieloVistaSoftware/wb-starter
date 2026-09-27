@@ -1,40 +1,26 @@
 # Image Card
 
-Card with featured image and optional title/subtitle
+`x-cardimage` renders a card led by an image from `src`, with a title, subtitle and caption under it. `aspect` fixes the image ratio, and `href` makes the whole card a link.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardimage` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardimage
-  src="images/placeholder.svg"
+  src="../../images/placeholder.svg"
   alt="Fishing boats at the harbour wall"
   title="Harbour at first light"
   caption="Shot on the 6am walk-around."></article>
-```
-
-### On a different element
-
-Use `x-cardimage` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardimage>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `src` | `string` | `/images/placeholder.svg` | Image source URL |
-| `alt` | `string` | `this is the alt` | Image alt text (accessibility) |
-| `title` | `string` | `this is the title` | Card title |
-| `subtitle` | `string` | `this is the subtitle` | Card subtitle |
-| `caption` | `string` | `this is the caption` | Image caption (displayed below image) |
+| `alt` | `string` | — | Image alt text (accessibility) |
+| `title` | `string` | — | Card title |
+| `subtitle` | `string` | — | Card subtitle |
+| `caption` | `string` | — | Image caption (displayed below image) |
 | `href` | `string` | `#` | Link URL (makes card clickable) |
 | `aspect` | `16/9` · `4/3` · `1/1` · `3/2` · `21/9` · `auto` | `16/9` | Image aspect ratio |
 | `position` | `top` · `bottom` · `left` · `right` | `top` | Image position relative to content |
@@ -50,10 +36,4 @@ Use `x-cardimage` when the host is not a `<article>` and you want the same behav
 - `setImage()` — Changes the image source
 - `preload()` — Preloads the image
 
-## Live example
-
-See `x-cardimage` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardimage` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardimage.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardimage.schema.json`](../../src/wb-models/cardimage.schema.json)</sub>

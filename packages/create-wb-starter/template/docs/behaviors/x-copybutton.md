@@ -85,6 +85,5 @@ an `x-copybutton` overlay.
 ## Schema/Test
 
 No dedicated schema file — like most `x-*` attribute behaviors (`x-copy`, `x-draggable`'s siblings,
-etc.), this one is pure JS with no schema-driven rendering; schemas in this project are for
-`wb-*` custom elements. Effect test:
+etc.), this one is pure JS with no schema-driven rendering. Effect test:
 [tests/behaviors/x-copybutton-effect.spec.ts](../../tests/behaviors/x-copybutton-effect.spec.ts).

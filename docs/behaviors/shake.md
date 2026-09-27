@@ -1,23 +1,11 @@
 # Shake
 
-On click, plays the shake animation for 0.5s.
+`x-shake` jerks the element left and right five times over 0.5 s when clicked, the usual "no, try again" gesture for a rejected action.
 
-## Type — new capability
+## Usage
 
-`x-shake` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button class="effect-demo" x-shake>Wrong password</button>
+</div>
 
-### How to write it
-
-```html
-<button class="effect-demo" x-shake>
-  x-shake
-</button>
-```
-
-## Live example
-
-See `x-shake` on the [Behaviors showcase](/?page=behaviors) — search for `x-shake` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/shake.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`shake.schema.json`](../../src/wb-models/shake.schema.json)</sub>

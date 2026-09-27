@@ -1,49 +1,30 @@
 # Progress
 
-Progress bar with determinate and indeterminate states
+A plain `<progress>` gets a styled bar with an optional `label` and percentage (`show-value`), colour `variant`s, stripes, and an `indeterminate` state for work of unknown length.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-progress` is the **progress behavior**. It attaches to `<progress>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
-<!-- Plain semantic HTML. The behavior is injected automatically -->
-<!-- because the element itself implies it. No attribute needed. -->
+<div x-demo>
 <progress value="72" max="100" label="Uploading footage" show-value></progress>
-```
-
-### On a different element
-
-Use `x-progress` when the host is not a `<progress>` and you want the same behavior:
-
-```html
-<div x-progress>
-  …
 </div>
-```
 
+No attribute needed on `<progress>`. Don't add `x-progress` to it (#746).
 
-
-### Declining it
-
-A `<progress>` **is** the progress behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+On another element, write `x-progress`:
 
 ```html
-<progress x-ignore>
-  <!-- a plain progress: no behavior is injected -->
-</progress>
+<div x-progress value="72" max="100" label="Uploading footage" show-value></div>
 ```
 
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
+`<progress x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
+
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `number` | `0` | Current progress value (0-100) |
 | `max` | `number` | `100` | Maximum value |
-| `label` | `string` | `this is the label` | Progress label text |
+| `label` | `string` | — | Progress label text |
 | `show-value` | `boolean` | `false` | Show percentage value |
 | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `primary` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | Bar height size |
@@ -69,10 +50,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - **ariaValueNow** — dynamic from value
 - **ariaLabel** — dynamic from label or default
 
-## Live example
-
-See `x-progress` on the [Behaviors showcase](/?page=behaviors) — search for `x-progress` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/progress.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`progress.schema.json`](../../src/wb-models/progress.schema.json)</sub>

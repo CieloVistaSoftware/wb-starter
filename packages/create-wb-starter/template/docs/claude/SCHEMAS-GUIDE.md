@@ -103,7 +103,7 @@ Consult these meta-schemas when working in their respective domains. If you touc
 
 > **This is data-layer schema layering, not behavior inheritance.** The project's
 > behavior architecture is composition-only: there is no behavior base class, and
-> `<wb-*>` capability comes from behavior functions applied to an element (see
+> capability comes from behavior functions applied to an element (see
 > `docs/claude/TIER1-LAWS.md` §2). What follows describes a *separate* mechanism —
 > JSON documents merged by `allOf` / `$ref` / `$inherits` before a behavior is ever
 > rendered. No runtime object inherits from another here; the loader flattens several
@@ -194,7 +194,7 @@ Level 3: cardbutton.schema.json                ← Specific variants OVERRIDE pa
 |-------|--------------|
 | `baseClass` | When `compliance` section exists — CSS won't work without it |
 | `compliance` | Goal: every behavior schema should have one |
-| `test.setup` | When `test` section exists — must be valid HTML with `<wb-*>` or `x-behavior` |
+| `test.setup` | When `test` section exists — must be valid HTML using the behavior's `x-*` attribute or its semantic element |
 
 ### Base schemas
 
@@ -266,7 +266,7 @@ The schema validation test (`tests/compliance/schema-validation.spec.ts`) runs t
 7. **`compliance` section exists** — progress tracked (goal: all schemas)
 8. **`baseClass` in compliance** — if compliance exists, baseClass must too
 9. **`test` section exists** — progress tracked (goal: all schemas)
-10. **`test.setup` validity** — setup HTML must contain `<wb-*>` or `x-behavior=`
+10. **`test.setup` validity** — setup HTML must contain the behavior's `x-*` attribute (or its auto-injected semantic element)
 11. **Setup references correct behavior** — `alert.schema.json` setup must use `<div x-alert>` or `x-alert`
 12. **Property `type` and `default` fields** — every property needs both (behavior + base tiers)
 13. **Enum consistency** — if permutations say `ALL_ENUM`, the `enum` array must exist
@@ -339,13 +339,13 @@ Schema changes can break other tests. After schema edits, also run:
 
 2. **Forgetting that a card variant's SCHEMA layers on `card.base.schema.json`.** (The variant *behavior* does not subclass anything — only the JSON documents merge.) Don't duplicate the shared properties — use `"$inherits": "card.base.schema.json#compliance"`.
 
-3. **Using `x-behavior` in setup when behavior is a `<wb-*>` tag.** If registered as a custom element (`<div x-alert>`), the setup must use that tag. Only use `x-alert` for behavior-only attachment to arbitrary elements.
+3. **Using `x-behavior="alert"` in setup instead of the attribute.** Write `<div x-alert>`, not `<div x-behavior="alert">`; the direct `x-*` attribute is the authoring form.
 
 4. **Creating schemas for non-behavior files.** Files like `views.schema.json` and `behavior.schema.json` are meta-schemas. Don't add `behavior` or `compliance` to these — they should be `"schemaType": "base"` or `"definition"`.
 
 5. **Not running schema validation after changes.** ALWAYS run `tests/compliance/schema-validation.spec.ts` after any schema edit.
 
-6. **Using native HTML tags in setup instead of `<wb-*>` tags.** Setup examples like `<progress value="50">` fail validation — use `<progress value="50">`.
+6. **Adding the attribute to an element that already implies it.** Writing `x-progress` on a `<progress>` is redundant and can suppress the behavior (#746) — a bare `<progress value="50">` is the setup.
 
 ---
 

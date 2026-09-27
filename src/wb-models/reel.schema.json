@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "reel.schema.json",
   "title": "Reel",
-  "description": "Behavior applied with x-reel.",
+  "description": "Horizontally scrolling row whose children snap into place as it scrolls.",
   "schemaFor": "reel",
   "properties": {
     "item-width": {

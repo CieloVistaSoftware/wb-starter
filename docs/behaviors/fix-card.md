@@ -1,21 +1,11 @@
 # Fix Card
 
-Behavior for displaying fix/remediation details.
+`x-fix-card` displays one entry from the project's fix log — status, cause, file and code change — when a fix object is assigned to the element's `data` property from script. Written as a plain attribute it only adds the `x-fix-card` class; there is no attribute-only form yet (#660).
 
-## Type — new capability
+## Usage
 
-`x-fix-card` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<div x-fix-card>Fix #365: fix-card never upgraded</div>
+</div>
 
-### How to write it
-
-```html
-<article x-fix-card title="Pinned note" content="This card keeps its place while the rest of the page scrolls."></article>
-```
-
-## Live example
-
-See `x-fix-card` on the [Behaviors showcase](/?page=behaviors) — search for `x-fix-card` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/fix-card.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`fix-card.schema.json`](../../src/wb-models/fix-card.schema.json)</sub>

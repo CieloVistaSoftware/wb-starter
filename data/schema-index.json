@@ -1729,11 +1729,6 @@
           "description": "Show trigger button",
           "default": true
         },
-        "repeat": {
-          "type": "boolean",
-          "description": "Loop animation",
-          "default": false
-        },
         "delay": {
           "type": "string",
           "description": "Start delay",
@@ -1754,9 +1749,6 @@
         {},
         {
           "count": 100
-        },
-        {
-          "repeat": true
         }
       ],
       "_metadata": {

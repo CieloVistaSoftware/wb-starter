@@ -2,36 +2,54 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "youtube.schema.json",
   "title": "Youtube",
-  "description": "Behavior applied with x-youtube.",
-  "schemaFor": "x-youtube",
+  "description": "x-youtube embeds a YouTube video from video-id or a full url as a responsive player that keeps its aspect ratio.",
+  "schemaFor": "youtube",
   "properties": {
     "url": {
       "type": "string",
-      "description": "Read by youtube()."
+      "description": "A full YouTube watch or share URL. The id is extracted from it, so use this OR `video-id`, not both.",
+      "default": "#"
     },
     "video-id": {
       "type": "string",
-      "description": "Read by youtube()."
+      "description": "The 11-character YouTube id — the `v=` value in a watch URL. Use this OR `url`.",
+      "default": "this is the video id"
     },
     "controls": {
       "type": "string",
-      "description": "Read by youtube()."
+      "description": "Show YouTube's own player controls. Without them the video can only be driven by script.",
+      "default": "this is the controls"
     },
     "autoplay": {
       "type": "boolean",
-      "description": "Read by youtube(). Bare attribute.",
+      "description": "Begin playing on load. Needs `muted`, since browsers block autoplay with sound.",
       "default": false
     },
     "muted": {
       "type": "boolean",
-      "description": "Read by youtube(). Bare attribute.",
+      "description": "Start with audio silenced. Required for `autoplay` to be permitted.",
       "default": false
     },
     "loop": {
       "type": "boolean",
-      "description": "Read by youtube(). Bare attribute.",
+      "description": "Restart from the beginning when playback ends.",
       "default": false
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-youtube"
+  },
+  "test": {
+    "setup": [
+      "<div x-youtube>Test Content</div>",
+      "<div x-youtube url=\"#\">Test Content</div>",
+      "<div x-youtube autoplay>Test Content</div>",
+      "<div x-youtube muted>Test Content</div>",
+      "<div x-youtube loop>Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

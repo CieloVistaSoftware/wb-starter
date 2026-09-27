@@ -351,7 +351,37 @@
      * markup gets re-rooted, sample code is left exactly as authored.
      */
     function rootRelativeAssetsInMarkdown(md) {
-      if (siteRoot() === '/') return md;
+      // A doc's RELATIVE asset paths are relative to the DOC, not this page.
+      //
+      // docs/behaviors/avatar.md writes src="../../images/placeholder.svg" --
+      // correct from docs/behaviors/ on disk, on GitHub and in doc-viewer.html
+      // (whose rebaseDocResources() resolves against the doc's directory). This
+      // panel renders that markup into a page served at the SITE root, so the
+      // browser resolved it against /wb-starter/?page=behaviors: '../..' climbs
+      // past the deploy base to the ORIGIN root, and every image-bearing doc
+      // (avatar, figure, frame, gallery, img, masonry, ratio, video, ...)
+      // requested /images/placeholder.svg and 404'd under /wb-starter/.
+      //
+      // So each relative asset path is resolved against the doc's directory
+      // BEFORE render (an <img> requests the instant it is inserted) and written
+      // back site-rooted. Root-absolute values are rootRelativeAssets()'s job;
+      // scheme URLs, anchors and plain words (icon="check") are left alone.
+      // Nested, not top-level, so it travels with this function wherever it is
+      // lifted out and exercised on its own.
+      const docDir = 'http://doc.invalid' + siteRoot() + 'docs/behaviors/';
+      const docRelative = (text) => text.replace(
+        /(\s)([a-zA-Z][\w-]*)(\s*=\s*")([^"]*)(")/g,
+        (whole, ws, name, eq, value, close) => {
+          if (!value || value.startsWith('/') || value.startsWith('#')
+            || /^[a-z][a-z0-9+.-]*:/i.test(value) || /[{}\s]/.test(value)) return whole;
+          const file = value.split(/[?#]/)[0];
+          const isPath = /^\.\.?\//.test(value) || ASSET_FILE.test(file);
+          if (!isPath || !(ASSET_ATTRS.has(name.toLowerCase()) || ASSET_FILE.test(file))) return whole;
+          const url = new URL(value, docDir);
+          return `${ws}${name}${eq}${url.pathname}${url.search}${url.hash}${close}`;
+        },
+      );
+
       // The fence lines are captured so they survive the join and can flip the
       // state as they pass -- a split that dropped them would silently delete
       // every code block from the rendered doc.
@@ -360,7 +390,7 @@
         .split(/(^[ \t]*```[^\n]*$)/m)
         .map((part) => {
           if (/^[ \t]*```/.test(part)) { inFence = !inFence; return part; }
-          return inFence ? part : rootRelativeAssets(part);
+          return inFence ? part : rootRelativeAssets(docRelative(part));
         })
         .join('');
     }
@@ -559,8 +589,14 @@
             const at = src.indexOf('<' + e.host);
             const after = at === -1 ? '' : src.charAt(at + e.host.length + 1);
             const usesHost = at !== -1 && (after === '' || /[\s>/]/.test(after));
-            if (!usesHost) { e.label = e.attr; e.native = false; }
+            if (!usesHost) e.dropSemantic = true;
           });
+          // The attribute row for the same behavior already says e.attr, so
+          // relabelling the semantic row to it listed the behavior TWICE --
+          // John: "why are there 2 x-checkbox groups with 10?" A semantic row
+          // whose example never writes its host has nothing semantic to show:
+          // drop it and keep the one attribute row.
+          allEntries = allEntries.filter((e) => !e.dropSemantic);
           allEntries.sort((a, b) => a.label.localeCompare(b.label));
           // The catalogue fetch can resolve AFTER the list has rendered, in
           // which case relabelling the data alone changes nothing on screen.
@@ -1642,6 +1678,18 @@
     }
 
 
+    // An option is written as the ATTRIBUTE a reader types: kebab-case.
+    // Schemas name properties in camelCase (imagePosition, showCount), and
+    // writing that verbatim fails twice over: HTML lowercases attribute names,
+    // so imagePosition="right" arrives as `imageposition`, which most
+    // behaviors never read; and the example's own image-position="…" is left
+    // in place and wins. Both spellings are cleared before the kebab one is
+    // written.
+    const kebab = (name) => String(name).replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+    const escapeRe = (name) => String(name).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    /** Every spelling of `name` an example might carry, for a RegExp alternation. */
+    const spellings = (name) => [...new Set([name, kebab(name), name.toLowerCase()])].map(escapeRe).join('|');
+
     function withOption(src, attr, prop, value, isBoolean) {
       if (!value) return src;
 
@@ -1651,14 +1699,13 @@
       if (isBoolean) {
         // "false" must be written explicitly -- a bare attribute is TRUE in
         // HTML, so omitting it could never express "off".
-        if (value === 'false') {
-          const existing = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
-          const cleaned = src.replace(existing, '');
-          return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}="false"`);
-        }
-        const bare = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
-        const cleaned = src.replace(bare, '');
-        return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}`);
+        // \\s, not '\s': in a plain string '\s' is just "s", so these never
+        // matched and the example's own attribute survived beside the new one.
+        const existing = new RegExp('\\s(?:' + spellings(prop) + ')(?:="[^"]*")?(?=[\\s>/])', 'gi');
+        const cleaned = src.replace(existing, '');
+        return value === 'false'
+          ? cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(prop)}="false"`)
+          : cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(prop)}`);
       }
 
       // Rewrite whichever attribute the example actually used. Several schemas
@@ -1677,7 +1724,7 @@
       // Ensure the companion is present on a curated example too.
       const partner = COMPANIONS[prop] ||
         (VALUE_COMPANIONS[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`] ? 'href' : null);
-      if (partner && !new RegExp('\s' + partner + '\s*=').test(src)) {
+      if (partner && !new RegExp('\\s' + partner + '\\s*=').test(src)) {
         const add = companionFor(attr, prop, value);
         if (add) src = src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1${add}`);
       }
@@ -1685,17 +1732,21 @@
       // Move the paired attribute with the axis -- see PAIRED_VALUE above.
       const paired = PAIRED_VALUE[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`];
       if (paired) {
-        const pairRe = new RegExp('\s' + paired.attr + '\s*=\s*"[^"]*"', 'i');
+        const pairRe = new RegExp('\\s' + paired.attr + '\\s*=\\s*"[^"]*"', 'i');
         src = pairRe.test(src)
           ? src.replace(pairRe, ` ${paired.attr}="${paired.value}"`)
           : src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${paired.attr}="${paired.value}"`);
       }
 
-      for (const name of [target, ...aliases]) {
-        const re = new RegExp('\\s' + name + '\\s*=\\s*"[^"]*"', 'i');
-        if (re.test(src)) return src.replace(re, ` ${name}="${value}"`);
+      // An alias the example already uses is rewritten in place (alert's
+      // `type`); the property itself is always written kebab-case.
+      for (const name of aliases) {
+        const re = new RegExp('\\s(?:' + spellings(name) + ')\\s*=\\s*"[^"]*"', 'i');
+        if (re.test(src)) return src.replace(re, ` ${kebab(name)}="${value}"`);
       }
-      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${target}="${value}"`);
+      const own = new RegExp('\\s(?:' + spellings(target) + ')\\s*=\\s*"[^"]*"', 'i');
+      if (own.test(src)) return src.replace(own, ` ${kebab(target)}="${value}"`);
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(target)}="${value}"`);
     }
 
     // Which element should host a generated example? An x-* behavior can sit on

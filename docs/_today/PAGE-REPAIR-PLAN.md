@@ -25,4 +25,4 @@ Refer to TODO.md for the current list and progress of all page and demo repair w
 2. MUST have `<html>` with `data-theme`
 3. MUST have `<meta charset>` and `<meta viewport>`
 4. MUST have `<title>`
-5. If uses wb-* components, MUST import WB
+5. If it uses x-* behaviors, MUST import WB

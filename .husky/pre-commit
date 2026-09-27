@@ -128,7 +128,7 @@ COUNT=$((COUNT + 1))
 if [ "$COUNT" -ge 10 ]; then
   echo ""
   echo "🔁 $COUNT commits since the last full run — running the WHOLE suite"
-  echo "   (compliance + regression + behaviors)"
+  echo "   (compliance + regression + behaviors + schema-viewer)"
   echo ""
   # #959: this used to exit 1 if ANY project was red. The suite has been red for
   # months (499 failures over 227 files), so that gate blocked every commit

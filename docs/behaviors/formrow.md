@@ -3,18 +3,10 @@
 Styles a form field wrapper as a row, optionally laid out inline. See
 [src/wb-viewmodels/formrow.js](../../src/wb-viewmodels/formrow.js).
 
-- **Type:** Modifier
 - **Root CSS class:** `x-form-row`
 - **Schema:** [formrow.schema.json](../../src/wb-models/formrow.schema.json)
 
 ## Usage
-
-```html
-<div x-formrow>
-  <label>Name</label>
-  <input type="text" placeholder="Jane Doe">
-</div>
-```
 
 <div x-demo>
 <div x-formrow>

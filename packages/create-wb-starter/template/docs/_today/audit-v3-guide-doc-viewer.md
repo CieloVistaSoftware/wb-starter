@@ -13,7 +13,7 @@ illustration (`<!DOCTYPE html><html><head><link href="src/styles/themes.css">...
 that happens to contain a real `<article>` tag nested inside.
 
 **Cause:** the newly-shipped auto-live-render conversion (mdhtml.js) matched the block
-because it contains a `<wb-*>` tag, and wrapped the *entire* boilerplate — `<link>` tags
+because it contained a (since removed) `wb-*` component tag, and wrapped the *entire* boilerplate — `<link>` tags
 included — in a live `<div x-demo>`. Browsers parse and fetch `<link href>` regardless of
 how oddly it's nested, so `src/styles/themes.css` and `src/styles/site.css` were
 requested as real page resources, resolving (wrongly) against doc-viewer.html's own
@@ -28,7 +28,7 @@ regardless of what's nested inside it. (`src/wb-viewmodels/mdhtml.js`)
 real request)
 
 ### 2. Bare small-control examples (Spinner, Progress) collapsed to unreadable vertical strips
-**Where:** `docs/V3-GUIDE.md`'s `<span x-spinner></span>` and `<progress value="75"
+**Where:** `docs/V3-GUIDE.md`'s `<div x-spinner></div>` and `<progress value="75"
 striped></progress>` examples — no size-driving content of their own.
 
 **Cause:** the single-item shrink-to-fit rule (`#486`,
@@ -76,7 +76,7 @@ None of these produce broken *layout* (browsers/wb components handle a missing i
 gracefully) — they're console/network noise, not the character-wrapping or fetch-storm
 severity of findings #1-2. Filed as follow-up issues rather than fixed inline here, since
 fixing them means either replacing placeholder paths with real demo assets (content
-work, not a code bug) or auditing `x-mdhtml`'s own nested-fetch error handling (a
+work, not a code bug) or auditing `<div x-mdhtml>`'s own nested-fetch error handling (a
 separate, deeper investigation).
 
 ## Fixes shipped this session (commits, most recent first)
@@ -102,4 +102,4 @@ separate, deeper investigation).
 - `src/wb-models/video.schema.json` may not exist — worth confirming independently of
   the placeholder-path issue
 - `mdhtml.md`'s nested `<div x-mdhtml>` example cascades into ~7 additional 404s on fetch
-  failure — `x-mdhtml`'s own error-handling path needs its own investigation
+  failure — `<div x-mdhtml>`'s own error-handling path needs its own investigation

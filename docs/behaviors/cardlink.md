@@ -1,40 +1,26 @@
 # Link Card
 
-Clickable card that navigates to a URL
+`x-cardlink` renders a card that is itself a link to `href`: the whole surface is clickable and keyboard-focusable, with a title, description, optional icon and badge. Use it for navigation tiles.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardlink` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardlink
   href="#"
   title="Attribute naming standard"
   description="Why every attribute is kebab-case, and what breaks when it is not."
   badge="Standard"></article>
-```
-
-### On a different element
-
-Use `x-cardlink` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardlink>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `href` | `string` | `https://example.com` | Link destination URL |
-| `title` | `string` | `this is the title` | Card title |
-| `description` | `string` | `this is the description` | Card description text |
-| `icon` | `string` | `this is the icon` | Icon (emoji or icon name) |
-| `badge` | `string` | `this is the badge` | Badge text |
+| `title` | `string` | — | Card title |
+| `description` | `string` | — | Card description text |
+| `icon` | `string` | — | Icon (emoji or icon name) |
+| `badge` | `string` | — | Badge text |
 | `target` | `_self` · `_blank` | `_self` | Link target |
 | `variant` | `default` · `elevated` · `bordered` · `minimal` · `glass` | `default` | Visual style variant |
 
@@ -55,10 +41,4 @@ Use `x-cardlink` when the host is not a `<article>` and you want the same behavi
 - **role** — link
 - **tabindex** — 0
 
-## Live example
-
-See `x-cardlink` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardlink` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardlink.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardlink.schema.json`](../../src/wb-models/cardlink.schema.json)</sub>

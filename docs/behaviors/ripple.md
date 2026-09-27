@@ -15,13 +15,6 @@ element's center) on `mousedown`, then fades out.
 | Schema | `src/wb-models/ripple.schema.json` |
 | Source | `src/wb-viewmodels/ripple.js` |
 
-Both forms run the same behavior: `<button x-ripple>` and `<div x-ripple>` are
-equivalent — the tag form is registered in the tag map
-([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
-`ripple()` function. `autoInject` is on by default site-wide
-([`src/core/config.js`](../../src/core/config.js)), so `x-ripple` activates without
-any manual `WB.scan()` call.
-
 ## Properties
 
 | Property | Attribute | Type | Default | Description |
@@ -53,10 +46,10 @@ there's no `="true"`/`="false"` value to set.
 <button x-ripple ripple-color="rgba(99, 102, 241, 0.5)" ripple-duration="900">Slow indigo ripple</button>
 </div>
 
-### Attribute form
+### On a plain `<div>`
 
 <div x-demo>
-<div x-ripple>Same behavior via the &lt;x-ripple&gt; custom tag</div>
+<div x-ripple>A plain div with x-ripple</div>
 </div>
 
 ## CSS Classes

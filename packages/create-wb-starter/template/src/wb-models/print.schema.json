@@ -2,19 +2,31 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "print.schema.json",
   "title": "Print",
-  "description": "Behavior applied with x-print.",
-  "schemaFor": "x-print",
+  "description": "x-print makes the element a button that prints the page, or only the element matched by target.",
+  "schemaFor": "print",
   "properties": {
     "target": {
       "type": "string",
-      "description": "Read by print().",
-      "default": ""
+      "description": "CSS selector for the region to print. Empty prints the whole page.",
+      "default": "this is the target"
     },
     "label": {
       "type": "string",
-      "description": "Read by print().",
+      "description": "Button label. Defaults to `🖨️ Print`.",
       "default": "🖨️ Print"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-print"
+  },
+  "test": {
+    "setup": [
+      "<div x-print>Test Content</div>",
+      "<div x-print label=\"🖨️ Print\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

@@ -16,13 +16,6 @@ or `<nav>`) stick to the top of the viewport as the page scrolls past it, via CS
 | Schema | `src/wb-models/scrollalong.schema.json` |
 | Source | `src/wb-viewmodels/scrollalong.js` |
 
-Both forms run the same behavior: `<aside x-scrollalong>` and `<div x-scrollalong>` are
-equivalent — the tag form is registered in the tag map
-([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
-`scrollalong()` function. `autoInject` is on by default site-wide
-([`src/core/config.js`](../../src/core/config.js)), so `x-scrollalong` activates
-without any manual `WB.scan()` call.
-
 ## Properties
 
 | Property | Attribute | Type | Default | Description |
@@ -51,11 +44,11 @@ by its container, it does not add any wrapper or placeholder.
 </aside>
 </div>
 
-### Attribute form
+### On a plain `<div>`
 
 <div x-demo>
 <div x-scrollalong style="padding: 1rem; border: 1px solid var(--border-color); display: block;">
-  Same behavior via the &lt;x-scrollalong&gt; custom tag.
+  A plain div with x-scrollalong
 </div>
 </div>
 

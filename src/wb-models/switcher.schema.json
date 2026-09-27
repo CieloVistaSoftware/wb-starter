@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "switcher.schema.json",
   "title": "Switcher",
-  "description": "Behavior applied with x-switcher.",
+  "description": "Lays children out in a row, and stacks them when the space is too narrow — no media query.",
   "schemaFor": "switcher",
   "properties": {
     "threshold": {

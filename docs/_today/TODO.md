@@ -16,7 +16,7 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 - [ ] sections have proper spacing (CSS)
 - [ ] page is responsive at mobile width (horizontal scroll at 375px)
 - [ ] checkbox toggles on click (not clickable)
-- [ ] wb-* custom elements are upgraded (some not visible)
+- [ ] x-* behaviors are upgraded (some not visible)
 - [ ] x-* behavior attributes are processed (some not visible)
 - [ ] Rerun tests and confirm all pass
 

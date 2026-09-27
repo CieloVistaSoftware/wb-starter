@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "repeater.schema.json",
   "title": "Repeater",
-  "description": "Behavior applied with x-repeater.",
+  "description": "x-repeater stamps out count copies of its <template>, replacing {{index}} with 1, 2, 3… and {{i}} with 0, 1, 2….",
   "schemaFor": "repeater",
   "compliance": {
     "baseClass": "x-repeater",

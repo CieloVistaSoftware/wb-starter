@@ -1,18 +1,12 @@
 # Slidein
 
-On click, plays the slide-in-<dir> animation for 0.5s.
+`x-slidein` slides the element in from the `direction` edge (`left`, `right`, `top` or `bottom`) over 0.5 s each time it is clicked.
 
-## Type — new capability
+## Usage
 
-`x-slidein` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<button class="effect-demo" x-slidein direction="left">
-  x-slidein · direction: left
-</button>
-```
+<div x-demo>
+<button class="effect-demo" x-slidein direction="left">Click to slide in</button>
+</div>
 
 ## Attributes
 
@@ -20,10 +14,4 @@ On click, plays the slide-in-<dir> animation for 0.5s.
 | --- | --- | --- | --- |
 | `direction` | `string` | `left` | Edge the element slides in from: `left` (default), `right`, `top` or `bottom`. |
 
-## Live example
-
-See `x-slidein` on the [Behaviors showcase](/?page=behaviors) — search for `x-slidein` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/slidein.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`slidein.schema.json`](../../src/wb-models/slidein.schema.json)</sub>

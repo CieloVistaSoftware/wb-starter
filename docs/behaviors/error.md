@@ -1,21 +1,12 @@
 # Error Behavior
 
-Schema for x-error behavior (error message)
+`x-error` marks an element as an error message: it adds the `x-error` class and `role="alert"`, so assistive technology announces the text as soon as it appears. Put it on the message next to the form field it describes. It ships no styling of its own; for a visible coloured box use `x-alert variant="error"`.
 
-## Type — new capability
+## Usage
 
-`x-error` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<label>Email <input type="email" value="ada@"></label>
+<div x-error>Enter a full address, like ada@example.com.</div>
+</div>
 
-### How to write it
-
-```html
-<div x-error>Build failed: 2 of 13 catalog-integrity checks.</div>
-```
-
-## Live example
-
-See `x-error` on the [Behaviors showcase](/?page=behaviors) — search for `x-error` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/error.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`error.schema.json`](../../src/wb-models/error.schema.json)</sub>

@@ -1,18 +1,16 @@
 # Repeater
 
-Behavior applied with x-repeater.
+`x-repeater` stamps out `count` copies of its `<template>`, replacing `{{index}}` with 1, 2, 3… and `{{i}}` with 0, 1, 2…. It is meant for prototyping repeated markup; the wrapper itself adds no box.
 
-## Type — new capability
+## Usage
 
-`x-repeater` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<div x-repeater>
-  <div>Row template — add and remove copies of this block.</div>
+<div x-demo>
+<ul>
+  <div x-repeater count="3">
+    <template><li>Row {{index}}</li></template>
+  </div>
+</ul>
 </div>
-```
 
 ## Attributes
 
@@ -20,10 +18,4 @@ Behavior applied with x-repeater.
 | --- | --- | --- | --- |
 | `count` | `string` | `0` | How many copies of the template content to render. |
 
-## Live example
-
-See `x-repeater` on the [Behaviors showcase](/?page=behaviors) — search for `x-repeater` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/repeater.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`repeater.schema.json`](../../src/wb-models/repeater.schema.json)</sub>

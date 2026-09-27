@@ -1,23 +1,11 @@
 # Flash
 
-On click, plays the flash animation for 0.75s.
+`x-flash` blinks the element out and back twice over 0.75 s when clicked — a quick "this changed" signal for a value or status.
 
-## Type — new capability
+## Usage
 
-`x-flash` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button class="effect-demo" x-flash>Click to flash</button>
+</div>
 
-### How to write it
-
-```html
-<button class="effect-demo" x-flash>
-  x-flash
-</button>
-```
-
-## Live example
-
-See `x-flash` on the [Behaviors showcase](/?page=behaviors) — search for `x-flash` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/flash.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`flash.schema.json`](../../src/wb-models/flash.schema.json)</sub>

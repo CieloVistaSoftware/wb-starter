@@ -3,8 +3,7 @@
 Turns a field into a native color picker. See
 [src/wb-viewmodels/colorpicker.js](../../src/wb-viewmodels/colorpicker.js).
 
-- **Type:** Modifier
-- **Root CSS class:** `<div x-colorpicker>`
+- **Root CSS class:** `x-colorpicker`
 - **Schema:** [colorpicker.schema.json](../../src/wb-models/colorpicker.schema.json)
 
 ## Usage
@@ -14,20 +13,12 @@ Applied to a real `<input>`, the input itself is converted in place to
 element becomes the swatch's starting color) — no separate child input is
 created, since an `<input>` can't hold children:
 
-```html
-<input type="text" x-colorpicker value="#22c55e">
-```
-
 <div x-demo>
 <input type="text" x-colorpicker value="#22c55e">
 </div>
 
 Applied to a non-input container instead, it builds its own child
 `<input type="color">` inside the element:
-
-```html
-<div x-colorpicker value="#6366f1"></div>
-```
 
 <div x-demo>
 <div x-colorpicker value="#6366f1"></div>

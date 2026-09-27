@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "countdown.schema.json",
   "title": "Countdown",
-  "description": "Behavior applied with x-countdown.",
+  "description": "x-countdown shows the time left until date (or to), or for a fixed number of seconds, and updates it every second until it reaches zero, when wb:countdown:complete fires.",
   "schemaFor": "countdown",
   "properties": {
     "seconds": {

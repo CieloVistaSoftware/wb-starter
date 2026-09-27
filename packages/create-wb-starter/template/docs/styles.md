@@ -6,9 +6,9 @@
 - **HTML5 semantic elements** (e.g., `<section>`, `<header>`, `<main>`, `<footer>`, `<nav>`) must be used for all page structure. Avoid generic `<div>` for major page regions.
 - **Prohibited:**
   - Page-specific, BEM, or context-coupled class names (e.g., `home-hero`, `page__feature`, `about-section`, `main-content--dark`).
-  - `.wb-*` classes in global CSS or markup. These are reserved strictly for internal styles within custom elements (e.g., `<div x-demo>`). Do **not** use `.wb-*` classes in any global stylesheet or outside their behavior's shadow scope.
+  - A behavior's own `.x-*` classes (e.g. `.x-demo__grid`) in page markup or global CSS. They belong to the behavior that applies them; a page that styles them couples itself to that behavior's internals.
 - **No BEM or OOCSS prefixes**: Do not use double underscores, double hyphens, or page/behavior prefixes in class names.
-- **Behavior classes**: Custom elements (e.g., `<div x-demo>`) may use internal classes prefixed with their tag (e.g., `.x-demo-feature`), but these must not leak into global or page-level markup or CSS.
+- **Behavior classes**: a behavior (e.g. `x-demo`) may use internal classes prefixed with its name (e.g. `.x-demo__grid`), but these must not leak into global or page-level markup or CSS.
 - **Rationale:** This ensures maximum reusability, maintainability, and clarity across all pages and behaviors.
 
 **Example (Correct):**

@@ -24,7 +24,7 @@ Turns a set of titled child sections into independently expandable/collapsible i
 ## Properties
 
 `accordion()` only looks at plain attributes — no `data-*` equivalents beyond the
-back-compat ones listed below (Tier-1 Law 11: no `data-*` on `x-*`/`wb-*` elements).
+back-compat ones listed below (Tier-1 Law 11: no `data-*` on behavior elements).
 
 | Attribute | Applies to | Type | Description |
 |-----------|-----------|------|-------------|

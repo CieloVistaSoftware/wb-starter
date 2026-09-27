@@ -19,7 +19,7 @@ WB-Starter v3.0 implements a **Schema-Driven MVVM Architecture** that eliminates
 ┌─────────────────────────────────────────────────────────────┐
 │                    WB.init() Pipeline                       │
 │  1. Load schemas from /src/wb-models/*.schema.json         │
-│  2. Scan DOM for wb-* elements                             │
+│  2. Scan DOM for x-* attributes and semantic elements      │
 │  3. Process through Schema Builder                         │
 │  4. Apply behaviors from wb-viewmodels                     │
 │  5. Auto-load CSS from /src/styles/components              │
@@ -131,7 +131,7 @@ Every component is defined by a JSON schema that serves as the single source of 
 
 | Type | Tag | Purpose | Example |
 |------|-----|---------|---------|
-| **Component** | `<wb-*>` | Creates new DOM structure | `<article title="Hi">` |
+| **Structure** | semantic element or `x-*` on a neutral host | Creates new DOM structure | `<article title="Hi">` |
 | **Behavior** | `x-*` attribute | Enhances existing element | `<button x-ripple>` |
 
 ## File Structure

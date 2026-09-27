@@ -1,23 +1,11 @@
 # Heartbeat
 
-On click, plays the heartbeat animation for 1.3s.
+`x-heartbeat` scales the element up to 130% twice in quick succession, like a heartbeat, over 1.3 s when clicked. Suits a like or favourite button.
 
-## Type — new capability
+## Usage
 
-`x-heartbeat` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button class="effect-demo" x-heartbeat>♥ Like</button>
+</div>
 
-### How to write it
-
-```html
-<button class="effect-demo" x-heartbeat>
-  x-heartbeat
-</button>
-```
-
-## Live example
-
-See `x-heartbeat` on the [Behaviors showcase](/?page=behaviors) — search for `x-heartbeat` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/heartbeat.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`heartbeat.schema.json`](../../src/wb-models/heartbeat.schema.json)</sub>

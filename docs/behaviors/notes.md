@@ -1,28 +1,14 @@
 # Notes
 
-Slide-out notes drawer with multiple display modes
+`x-notes` adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to `localStorage` as you type.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-notes` is the **aside behavior**. It attaches to `<aside>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <aside x-notes position="end" default-width="280px">
   <p>Notes stay pinned beside the content while you scroll.</p>
 </aside>
-```
-
-### On a different element
-
-Use `x-notes` when the host is not a `<aside>` and you want the same behavior:
-
-```html
-<div x-notes>
-  …
 </div>
-```
 
 ## Attributes
 
@@ -56,10 +42,4 @@ Use `x-notes` when the host is not a `<aside>` and you want the same behavior:
 - `getContent()` — Gets notes content
 - `setContent()` — Sets notes content
 
-## Live example
-
-See `x-notes` on the [Behaviors showcase](/?page=behaviors) — search for `x-notes` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/notes.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`notes.schema.json`](../../src/wb-models/notes.schema.json)</sub>

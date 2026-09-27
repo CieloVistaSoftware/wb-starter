@@ -1,23 +1,11 @@
 # Lightbox
 
-Behavior applied with x-lightbox.
+`x-lightbox` makes the element open the image at `src` full-screen over a dark backdrop when clicked; clicking the backdrop closes it. Put it on a thumbnail or a button.
 
-## Type — new capability
+## Usage
 
-`x-lightbox` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
+<div x-demo>
+<button x-lightbox src="../../images/placeholder.svg">View full size</button>
+</div>
 
-### How to write it
-
-```html
-<button variant="primary" x-lightbox src="images/placeholder.svg">
-  x-lightbox · variant: primary · src: /images/placeholder.svg
-</button>
-```
-
-## Live example
-
-See `x-lightbox` on the [Behaviors showcase](/?page=behaviors) — search for `x-lightbox` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/lightbox.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`lightbox.schema.json`](../../src/wb-models/lightbox.schema.json)</sub>

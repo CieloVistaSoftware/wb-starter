@@ -1,55 +1,34 @@
 # Details
 
-Native HTML5 details disclosure widget with optional animation
+A plain `<details>` gets the styled disclosure: the `summary` attribute supplies the heading, `animated` slides the content open and closed, and giving several the same `name` makes them an accordion where only one stays open.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-details` is the **details behavior**. It attaches to `<details>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
-<!-- Plain semantic HTML. The behavior is injected automatically -->
-<!-- because the element itself implies it. No attribute needed. -->
-<details summary="Details sample of Trail conditions" animated>
-  <img src="images/placeholder.svg" alt="Trail through autumn woodland" width="480" height="200">
-  <p>Open to show the summary text is authored via the <code>summary</code>
-     attribute — it reads "Details" only when none is set.</p>
+<div x-demo>
+<details summary="Trail conditions" animated>
+  <p>Mud on the north ridge after Tuesday's rain; the lower loop is dry.</p>
 </details>
-```
+</div>
 
-### On a different element
+No attribute needed on `<details>`. Don't add `x-details` to it (#746).
 
-Use `x-details` when the host is not a `<details>` and you want the same behavior:
+On another element, write `x-details`:
 
 ```html
-<div x-details>
-  …
+<div x-details summary="Trail conditions" animated>
+  <p>Mud on the north ridge after Tuesday's rain; the lower loop is dry.</p>
 </div>
 ```
 
-> Do not write `<details x-details>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
-
-### Declining it
-
-A `<details>` **is** the details behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
-
-```html
-<details x-ignore>
-  <!-- a plain details: no behavior is injected -->
-</details>
-```
-
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
-
+`<details x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `summary` | `string` | `this is the summary` | Clickable summary text |
+| `summary` | `string` | — | Clickable summary text |
 | `open` | `boolean` | `false` | Initially expanded |
-| `name` | `string` | `this is the name` | Accordion group name (native exclusive behavior) |
+| `name` | `string` | — | Accordion group name (native exclusive behavior) |
 | `animated` | `boolean` | `true` | Animate open/close |
 | `variant` | `default` · `bordered` · `filled` | `default` |  |
 
@@ -65,10 +44,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - `toggle()` — Toggles open state
 - `isOpen()` — Returns open state
 
-## Live example
-
-See `x-details` on the [Behaviors showcase](/?page=behaviors) — search for `x-details` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/details.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`details.schema.json`](../../src/wb-models/details.schema.json)</sub>

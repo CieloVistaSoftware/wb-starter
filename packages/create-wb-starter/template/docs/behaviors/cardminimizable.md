@@ -1,35 +1,21 @@
 # Minimizable Card
 
-Card with minimize/expand toggle button in header
+`x-cardminimizable` renders a card with a minimise button in its header that collapses the body to just the title bar and restores it again. Use it for panels a reader may want out of the way, such as logs.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardminimizable` is the **article behavior**. It attaches to `<article>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <article x-cardminimizable
   title="Build log"
   content="tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s."></article>
-```
-
-### On a different element
-
-Use `x-cardminimizable` when the host is not a `<article>` and you want the same behavior:
-
-```html
-<div x-cardminimizable>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | `this is the title` | Card title (always visible) |
-| `content` | `string` | `this is the content` | Minimizable content |
+| `title` | `string` | — | Card title (always visible) |
+| `content` | `string` | — | Minimizable content |
 | `minimized` | `boolean` | `false` | Initial minimized state |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 
@@ -44,10 +30,4 @@ Use `x-cardminimizable` when the host is not a `<article>` and you want the same
 - `toggle()` — Toggles minimized state
 - `isMinimized()` — Returns minimized state
 
-## Live example
-
-See `x-cardminimizable` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardminimizable` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardminimizable.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardminimizable.schema.json`](../../src/wb-models/cardminimizable.schema.json)</sub>

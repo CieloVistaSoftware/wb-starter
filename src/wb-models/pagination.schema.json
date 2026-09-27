@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "pagination.schema.json",
   "title": "Pagination",
-  "description": "Behavior applied with x-pagination.",
+  "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and per-page (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
   "schemaFor": "pagination",
   "properties": {
     "total": {

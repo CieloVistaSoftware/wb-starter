@@ -17,13 +17,6 @@ an `x-move` container swap their item with the adjacent one when clicked.
 | Schema | `src/wb-models/move.schema.json` |
 | Source | `src/wb-viewmodels/move.js` |
 
-Both forms run the same behavior: `<div x-move>` and `<div x-move>` are equivalent —
-the tag form is registered in the tag map
-([`src/core/tag-map.js`](../../src/core/tag-map.js)) and dispatches to the identical
-`move()` function. `autoInject` is on by default site-wide
-([`src/core/config.js`](../../src/core/config.js)), so `x-move` activates without
-any manual `WB.scan()` call.
-
 `move()` is the **container** entry point: it adds the `<div x-move>` marker class and
 wires up any descendant element carrying one of the four direction attributes below.
 Each direction attribute works stand-alone too (a button anywhere with `x-moveup`
@@ -66,7 +59,7 @@ non-grid (flex/list) container is treated as a single column, so `x-moveup`/
 </div>
 </div>
 
-### Attribute form
+### On a plain `<div>`
 
 <div x-demo>
 <div x-move style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">

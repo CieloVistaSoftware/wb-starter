@@ -2,14 +2,31 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "repeater.schema.json",
   "title": "Repeater",
-  "description": "Behavior applied with x-repeater.",
-  "schemaFor": "x-repeater",
+  "description": "x-repeater stamps out count copies of its <template>, replacing {{index}} with 1, 2, 3… and {{i}} with 0, 1, 2….",
+  "schemaFor": "repeater",
+  "compliance": {
+    "baseClass": "x-repeater",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
   "properties": {
     "count": {
       "type": "string",
-      "description": "Read by repeater().",
+      "description": "How many copies of the template content to render.",
       "default": "0"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<div x-repeater>Basic repeater content</div>",
+      "<div x-repeater>Test permutation 2</div>",
+      "<div x-repeater>Test permutation 3</div>",
+      "<div x-repeater>Test permutation 4</div>",
+      "<div x-repeater>Test permutation 5</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

@@ -1,21 +1,11 @@
 # Theme Control
 
-Theme switcher control.
+`x-themecontrol` renders a theme picker that sets `data-theme` on the page (or on `target`) and remembers the choice in `localStorage`. Put it in a header or settings panel.
 
-## Type — new capability
+## Usage
 
-`x-themecontrol` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-themecontrol></div>
-```
+</div>
 
-## Live example
-
-See `x-themecontrol` on the [Behaviors showcase](/?page=behaviors) — search for `x-themecontrol` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/themecontrol.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`themecontrol.schema.json`](../../src/wb-models/themecontrol.schema.json)</sub>

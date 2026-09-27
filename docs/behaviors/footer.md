@@ -1,52 +1,31 @@
 # Footer
 
-Page footer with copyright, links, and social icons
+A plain `<footer>` gets a site footer built from its attributes: the `brand` name, a copyright line, a row of `links` and optional `social` icons. Add `sticky` to pin it to the bottom of the viewport.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-footer` is the **footer behavior**. It attaches to `<footer>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
-<!-- Plain semantic HTML. The behavior is injected automatically -->
-<!-- because the element itself implies it. No attribute needed. -->
+<div x-demo>
 <footer brand="Cielo Vista Software" copyright="2026" links="Privacy,Terms,Status"></footer>
-```
-
-### On a different element
-
-Use `x-footer` when the host is not a `<footer>` and you want the same behavior:
-
-```html
-<div x-footer>
-  …
 </div>
-```
 
-> Do not write `<footer x-footer>`. The element already injects it, and the redundant attribute can suppress the behavior (#746).
+No attribute needed on `<footer>`. Don't add `x-footer` to it (#746).
 
-### Declining it
-
-A `<footer>` **is** the footer behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
+On another element, write `x-footer`:
 
 ```html
-<footer x-ignore>
-  <!-- a plain footer: no behavior is injected -->
-</footer>
+<div x-footer brand="Cielo Vista Software" copyright="2026" links="Privacy,Terms,Status"></div>
 ```
 
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
-
+`<footer x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `copyright` | `string` | `this is the copyright` | Copyright text |
-| `brand` | `string` | `this is the brand` | Brand name |
-| `links` | `string` | `this is the links` | Navigation links as JSON [{label, href}] |
-| `social` | `string` | `this is the social` | Social links as JSON [{platform, href}] |
+| `copyright` | `string` | — | Copyright text |
+| `brand` | `string` | — | Brand name |
+| `links` | `string` | — | Navigation links as JSON [{label, href}] |
+| `social` | `string` | — | Social links as JSON [{platform, href}] |
 | `sticky` | `boolean` | `false` | Sticky at bottom |
 
 ## Methods
@@ -58,10 +37,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 
 - **role** — contentinfo
 
-## Live example
-
-See `x-footer` on the [Behaviors showcase](/?page=behaviors) — search for `x-footer` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/footer.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`footer.schema.json`](../../src/wb-models/footer.schema.json)</sub>

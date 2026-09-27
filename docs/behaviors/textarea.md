@@ -1,41 +1,28 @@
 # Textarea
 
-Multi-line text input with autosize and character count
+A plain `<textarea>` gets the form styling, and optionally grows with its content (`autosize`) and shows a character count against `max-length` (`show-count`).
 
-## Type — new capability
+## Usage
 
-`x-textarea` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <textarea
   placeholder="What changed in this release?"
   name="notes"
   rows="3"></textarea>
-```
+</div>
 
+No attribute needed on `<textarea>`. Don't add `x-textarea` to it (#746).
 
+`<textarea x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
-### Declining it
-
-A `<textarea>` **is** the textarea behavior, so it arrives with the element. To keep the semantic element and decline the behavior, add `x-ignore`:
-
-```html
-<textarea x-ignore>
-  <!-- a plain textarea: no behavior is injected -->
-</textarea>
-```
-
-Reaching for a different element instead is the wrong fix — it trades correct HTML for a workaround. See [escape hatches](../escape-hatches.md).
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | `this is the label` | Field label |
-| `placeholder` | `string` | `this is the placeholder` | Placeholder text |
-| `value` | `string` | `this is the value` | Text value |
-| `name` | `string` | `this is the name` | Form field name |
+| `label` | `string` | — | Field label |
+| `placeholder` | `string` | — | Placeholder text |
+| `value` | `string` | — | Text value |
+| `name` | `string` | — | Form field name |
 | `rows` | `number` | `3` | Visible rows |
 | `max-length` | `number` | `0` | Max character limit |
 | `show-count` | `boolean` | `false` | Show character count |
@@ -62,10 +49,4 @@ Reaching for a different element instead is the wrong fix — it trades correct 
 - `enable()` — Enables the textarea
 - `disable()` — Disables the textarea
 
-## Live example
-
-See `x-textarea` on the [Behaviors showcase](/?page=behaviors) — search for `x-textarea` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/textarea.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`textarea.schema.json`](../../src/wb-models/textarea.schema.json)</sub>

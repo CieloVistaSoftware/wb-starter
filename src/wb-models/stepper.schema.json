@@ -3,7 +3,7 @@
   "title": "Stepper Behavior",
   "schemaType": "behavior",
   "type": "object",
-  "description": "Schema for x-stepper behavior (numeric stepper)",
+  "description": "x-stepper builds a number field with − and + buttons that change the value by step, never going below min or above max.",
   "properties": {
     "min": {
       "type": "number",

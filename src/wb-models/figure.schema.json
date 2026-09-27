@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "figure.schema.json",
   "title": "Figure",
-  "description": "Behavior applied with x-figure.",
+  "description": "A plain <figure> gets image handling: clicking the image opens it in a lightbox (write lightbox=\"false\" to stop that), caption sets the <figcaption> text, and caption-position=\"overlay\" lays the caption across the bottom of the image.",
   "schemaFor": "figure",
   "properties": {
     "caption-position": {

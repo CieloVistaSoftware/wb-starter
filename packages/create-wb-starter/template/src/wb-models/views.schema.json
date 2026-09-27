@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://wb-starter.dev/schemas/views.schema.json",
   "title": "WB Views Registry Schema",
-  "description": "Schema for validating WB Views registry files. Views are reusable HTML templates that auto-register as custom elements.",
+  "description": "Validates WB Views registry files. Views are reusable HTML templates that auto-register as custom elements.",
   "schemaFor": "views",
   "schemaType": "definition",
   "type": "object",
@@ -18,18 +18,18 @@
     "$schema": {
       "type": "string",
       "description": "Reference to this schema file",
-      "default": ""
+      "default": "this is the $schema"
     },
     "version": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version of the views registry",
-      "default": ""
+      "default": "this is the version"
     },
     "description": {
       "type": "string",
       "description": "Description of this views registry",
-      "default": ""
+      "default": "this is the description"
     },
     "views": {
       "type": "object",

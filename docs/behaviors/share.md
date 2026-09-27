@@ -1,34 +1,22 @@
 # Share
 
-Behavior applied with x-share.
+`x-share` makes the element open the device's share sheet with `share-title`, `share-text` and `share-url`; where the Web Share API is missing it copies the URL to the clipboard instead. With no text of its own it shows "📤 Share".
 
-## Type — new capability
+## Usage
 
-`x-share` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">
-  x-share · variant: secondary · share-title: wb-starter · share-url: https://example.com
-</button>
-```
+<div x-demo>
+<button x-share share-title="wb-starter" share-url="https://example.com"></button>
+</div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `text` | `string` | `this is the text` | Body text. Only used when `share-text` is absent. |
+| `text` | `string` | — | Body text. Only used when `share-text` is absent. |
 | `label` | `string` | `📤 Share` | Button label. Defaults to `📤 Share`. |
-| `share-title` | `string` | `this is the share title` | Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`. |
-| `share-text` | `string` | `this is the share text` | Body text passed to the share sheet. Read BEFORE `text`. |
+| `share-title` | `string` | — | Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`. |
+| `share-text` | `string` | — | Body text passed to the share sheet. Read BEFORE `text`. |
 | `share-url` | `string` | `#` | URL to share. Read BEFORE `url`; falls back to the current page address. |
 | `url` | `string` | `#` | URL to share. Only used when `share-url` is absent. |
 
-## Live example
-
-See `x-share` on the [Behaviors showcase](/?page=behaviors) — search for `x-share` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/share.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`share.schema.json`](../../src/wb-models/share.schema.json)</sub>

@@ -85,7 +85,10 @@ const ACK_SILENCE_MS = (Number(process.env.WB_GATE_ACK_MIN) || 3) * 60 * 1000;
 // why the 185-minute run left nothing behind to read.
 const SIGINT_GRACE_MS = 15_000;
 const SIGTERM_GRACE_MS = 30_000;
-const PROJECTS = ['compliance', 'regression', 'behaviors'];
+// schema-viewer: its own project (playwright.config.ts), so no gate ran it and
+// it failed for every schema, unnoticed, until someone opened the page. Its
+// 29 tests take ~1 minute; a page nobody measures is a page that rots.
+const PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer'];
 
 const update = process.argv.includes('--update');
 

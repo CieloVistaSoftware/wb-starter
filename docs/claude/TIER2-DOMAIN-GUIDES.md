@@ -27,7 +27,7 @@ Read when: modifying `src/core/`, behavior registration, behavior system, or WB.
 
 ## 🧩 BEHAVIORS
 
-Read when: working on a specific `<wb-*>` behavior or `x-*` behavior
+Read when: working on a specific behavior — an `x-*` attribute or an auto-injected semantic element
 
 | File | What It Covers |
 |------|---------------|

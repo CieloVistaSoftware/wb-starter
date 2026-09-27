@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "sidebarlayout.schema.json",
   "title": "Sidebarlayout",
-  "description": "Behavior applied with x-sidebarlayout.",
+  "description": "Two-column layout: a sidebar beside a main area that grows to fill the remaining space.",
   "schemaFor": "sidebarlayout",
   "properties": {
     "side": {

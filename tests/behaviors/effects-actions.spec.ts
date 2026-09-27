@@ -282,14 +282,6 @@ test.describe('Behaviors page — Effects', () => {
       const target = await showEffect(page, e.token, e.cls);
       await expect(target, `${e.token} not errored`).not.toHaveAttribute('x-error', /.*/);
       await target.click(); // must not throw
-
-      // #655's `repeat` variant is the confetti row the browser lists first, so
-      // clicking it leaves a burst firing every 3s for the rest of the test —
-      // 50 fresh fixed-position particles a time, forever. That churn is enough
-      // to keep Playwright's "stable bounding box" check from ever settling on
-      // the NEXT row we need to click (measured: x-sparkle burned its whole
-      // budget waiting). Stop what this test started before moving on.
-      await target.evaluate((el) => (el as any).wbConfetti?.stopRepeat?.());
     }
     // Anything the clicks threw would have marked its element by now.
     const errs = await page.locator('[x-error]').evaluateAll((els) =>

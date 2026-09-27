@@ -4,7 +4,6 @@ Groups an input with prepended/appended addons (currency symbols, units,
 buttons) into one visually joined control. See
 [src/wb-viewmodels/inputgroup.js](../../src/wb-viewmodels/inputgroup.js).
 
-- **Type:** Modifier
 - **Root CSS class:** `x-input-group`
 - **Schema:** [inputgroup.schema.json](../../src/wb-models/inputgroup.schema.json)
 
@@ -12,14 +11,6 @@ buttons) into one visually joined control. See
 
 Addons are marked with `data-prepend` / `data-append` on the child elements
 themselves — the behavior finds them inside the host and classes them:
-
-```html
-<div x-inputgroup>
-  <span data-prepend>$</span>
-  <input type="number" placeholder="0.00">
-  <span data-append>USD</span>
-</div>
-```
 
 <div x-demo>
 <div x-inputgroup>

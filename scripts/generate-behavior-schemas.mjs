@@ -29,6 +29,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { extensionMap, nativeMap } from '../src/core/tag-map.js';
 import { WB_LAZY_ONLY_ATTRIBUTES } from '../src/core/wb-lazy.js';
+import { jsdocSummary } from './lib/behavior-prose.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MODELS = path.join(ROOT, 'src', 'wb-models');
@@ -57,6 +58,8 @@ function sourceFiles(dir, out = []) {
 }
 
 let INDEX = null;
+/** lowercased function name -> the summary line of its JSDoc, when it has one. */
+let JSDOC = null;
 /**
  * lowercased function name -> body, for every `export function` AND
  * `export default function` in src/wb-viewmodels. Matching on the exact name
@@ -66,13 +69,18 @@ let INDEX = null;
  */
 function buildIndex() {
   INDEX = new Map();
+  JSDOC = new Map();
   for (const file of sourceFiles(VIEWMODELS)) {
     const src = fs.readFileSync(file, 'utf8');
     const re = /export (?:default )?function ([A-Za-z_$][A-Za-z0-9_$]*)\s*\(/g;
     let m;
     while ((m = re.exec(src))) {
       const body = bodyAfter(src, m.index);
-      if (body && !INDEX.has(m[1].toLowerCase())) INDEX.set(m[1].toLowerCase(), body);
+      if (body && !INDEX.has(m[1].toLowerCase())) {
+        INDEX.set(m[1].toLowerCase(), body);
+        const doc = jsdocSummary(src, m[1]);
+        if (doc) JSDOC.set(m[1].toLowerCase(), doc);
+      }
     }
   }
 }
@@ -157,7 +165,10 @@ function analyse(name) {
   const events = [...new Set([...body.matchAll(/CustomEvent\(\s*'([^']+)'/g)].map((m) => m[1]))];
   const anim = /clickAnim\(\s*element\s*,\s*[`'"]([^`'"]+)[`'"]\s*,\s*[`'"]([^`'"]+)[`'"]/.exec(body);
 
-  return { properties, events, anim };
+  if (!JSDOC) buildIndex();
+  const summary = JSDOC.get((IMPLEMENTED_BY[name] || name).toLowerCase()) || null;
+
+  return { properties, events, anim, summary };
 }
 
 /**
@@ -224,9 +235,18 @@ export function componentContract(name, properties = {}) {
 
 function buildSchema(name, token, facts) {
   const title = name.replace(/(^|-)(\w)/g, (_, s, c) => (s ? ' ' : '') + c.toUpperCase());
-  const description = facts.anim
-    ? `On click, plays the ${facts.anim[1].replace(/\$\{(\w+)\}/g, '<$1>')} animation for ${facts.anim[2]}.`
-    : `Behavior applied with ${token}.`;
+  // The description is prose about THIS behavior or nothing. It used to fall
+  // back to `Behavior applied with ${token}.` -- 53 schemas and every doc
+  // generated from them opened with that sentence (scripts/lib/behavior-prose.mjs).
+  // An empty description fails schema-validation.spec.ts, which is the point:
+  // a person has to write it.
+  const description = facts.summary
+    || (facts.anim
+      ? `On click, plays the ${facts.anim[1].replace(/\$\{(\w+)\}/g, '<$1>')} animation for ${facts.anim[2]}.`
+      : '');
+  if (!description) {
+    console.warn(`[behavior-schemas] ${name}: no JSDoc summary on ${name}() -- write the schema description by hand.`);
+  }
 
   const schema = {
     $schema: 'http://json-schema.org/draft-07/schema#',

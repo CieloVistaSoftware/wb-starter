@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "prompt.schema.json",
   "title": "Prompt",
-  "description": "Behavior applied with x-prompt.",
+  "description": "x-prompt makes a click open a dialog that asks for a line of text, with prompt-title, prompt-message, a placeholder and an optional default-value.",
   "schemaFor": "prompt",
   "properties": {
     "heading": {

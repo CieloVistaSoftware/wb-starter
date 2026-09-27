@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Color Picker Behavior",
   "type": "object",
-  "description": "Schema for x-colorpicker behavior (color input)",
+  "description": "Turns a field into a native colour picker with a swatch.",
   "properties": {},
   "required": [],
   "schemaFor": "colorpicker",

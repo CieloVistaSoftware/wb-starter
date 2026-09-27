@@ -14,12 +14,12 @@ The `ul` behavior enhances the unordered list to support common UI patterns like
 ### Basic Usage
 Add `x-ul` to a `<ul>` element.
 
-```html
+<div x-demo>
 <ul x-ul>
   <li>Item 1</li>
   <li>Item 2</li>
 </ul>
-```
+</div>
 
 ### Configuration Options
 | Attribute | Type | Default | Description |
@@ -33,7 +33,7 @@ Add `x-ul` to a `<ul>` element.
 ### Example 1: Feature Checklist
 A list of features with checkmarks.
 
-```html
+<div x-demo>
 <ul
   x-ul
   variant="checklist">
@@ -41,12 +41,12 @@ A list of features with checkmarks.
   <li checked>Secure</li>
   <li>Offline Mode</li>
 </ul>
-```
+</div>
 
 ### Example 2: Custom Icons
 Using emojis as bullets.
 
-```html
+<div x-demo>
 <ul
   x-ul
   variant="icon-list">
@@ -54,7 +54,7 @@ Using emojis as bullets.
   <li icon="📈">Grow</li>
   <li icon="💰">Profit</li>
 </ul>
-```
+</div>
 
 ## 4. Why It Works
 For variants like `checklist` and `icon-list`, the behavior removes the default list styling and uses Flexbox to align the custom marker (injected as a `span`) with the text content. This ensures that multi-line text aligns correctly with the bullet, which is often a pain point with standard CSS `list-style-image`.

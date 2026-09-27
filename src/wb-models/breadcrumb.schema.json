@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "breadcrumb.schema.json",
   "title": "Breadcrumb",
-  "description": "Behavior applied with x-breadcrumb.",
+  "description": "x-breadcrumb builds a breadcrumb trail inside a <nav> from the comma-separated items, drawing separator between them and marking the last item as the current page.",
   "schemaFor": "breadcrumb",
   "properties": {
     "items": {

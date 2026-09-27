@@ -24,8 +24,8 @@ WBServices is the central service registry and initialization pattern for all be
    - This adds the behavior/service to the central registry.
 
 2. **Initialization:**
-   - On page load, the bootstrapper scans the DOM for `<wb-*>` tags.
-   - For each, it loads the schema, logic, and styles, then registers the custom element if not already present.
+   - On page load, the bootstrapper scans the DOM for `x-*` attributes and for semantic elements in `nativeMap` (`<details>`, `<dialog>`, `<article>`…).
+   - For each, it loads the schema, logic, and styles, then applies the behavior function to the element.
    - Shared services (e.g., event bus, theme manager) are also registered and injected as needed.
 
 3. **Usage in Behaviors:**
@@ -97,9 +97,9 @@ When you register a behavior or service via `WBServices.register()`, the followi
    - The behavior or service is added to the central WBServices registry (an in-memory JS object or Map).
    - Includes the name (e.g., 'x-card', 'theme') and the class or instance.
 
-2. **Custom Element Definition (for behaviors):**
-   - For behaviors, `customElements.define()` is called for the `<wb-*>` tag.
-   - The browser recognizes the tag as a valid custom element.
+2. **Behavior Application:**
+   - No custom element is defined: the behavior function decorates the existing element in place.
+   - The element keeps its native semantics; the behavior adds classes, structure and events.
 
 3. **Schema Association (for behaviors):**
    - The behavior’s JSON schema (from `src/wb-models/`) is linked to the registry entry for property validation and documentation.
@@ -141,10 +141,10 @@ const theme = WBServices.get('theme');
 
 ## Single Bootstrap Invocation
 
-You only need to include `wb-bootstrap.js` once in your HTML, regardless of how many `<wb-*>` elements are present. When the script loads, it:
+You only need to include `wb-bootstrap.js` once in your HTML, regardless of how many behavior elements are present. When the script loads, it:
 
 - Runs the bootstrap logic a single time (e.g., `WB.init()`)
-- Scans the entire DOM for all `<wb-*>` elements and `x-*` attributes in one pass
+- Scans the entire DOM for all `x-*` attributes and auto-injected semantic elements in one pass
 - Registers and initializes every behavior and behavior found
 
 This means:
@@ -156,7 +156,7 @@ This means:
 
 ## x-Behaviors: What They Are and How They Work
 
-**x-behaviors** are attribute-based enhancements that add logic, interactivity, or effects to any element (including <wb-*> behaviors and standard HTML tags) without requiring custom elements or a class hierarchy.
+**x-behaviors** are attribute-based enhancements that add logic, interactivity, or effects to any element (including elements that already carry a behavior, and standard HTML tags) without requiring custom elements or a class hierarchy.
 
 ### What Are x-Behaviors?
 - Declared as attributes like `x-ripple`, `x-tooltip`, `x-badge`, etc.

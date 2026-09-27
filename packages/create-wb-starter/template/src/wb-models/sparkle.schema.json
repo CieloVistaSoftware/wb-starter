@@ -2,14 +2,26 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "sparkle.schema.json",
   "title": "Sparkle",
-  "description": "Behavior applied with x-sparkle.",
-  "schemaFor": "x-sparkle",
+  "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
+  "schemaFor": "sparkle",
   "properties": {
     "count": {
       "type": "string",
-      "description": "Read by sparkle().",
+      "description": "How many sparkle particles to emit. The behavior's default is `15`.",
       "default": "15"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-sparkle"
+  },
+  "test": {
+    "setup": [
+      "<div x-sparkle>Test Content</div>",
+      "<div x-sparkle count=\"15\">Test Content</div>"
+    ]
   },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",

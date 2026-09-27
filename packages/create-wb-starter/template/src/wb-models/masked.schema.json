@@ -2,10 +2,18 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Masked Input Behavior",
   "type": "object",
-  "description": "Schema for x-masked behavior (input masking)",
+  "description": "Formats input against a mask pattern (9 = digit, A = letter) as the user types.",
   "properties": {
-    "mask": { "type": "string", "description": "Input mask pattern (e.g. '999-99-9999')", "default": "" },
-    "placeholder": { "type": "string", "description": "Mask placeholder character", "default": "" }
+    "mask": {
+      "type": "string",
+      "description": "Input mask pattern (e.g. '999-99-9999')",
+      "default": "this is the mask"
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Mask placeholder character",
+      "default": "this is the placeholder"
+    }
   },
   "required": [],
   "schemaFor": "masked",

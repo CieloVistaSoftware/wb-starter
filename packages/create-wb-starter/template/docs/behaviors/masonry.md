@@ -1,21 +1,17 @@
 # Masonry
 
-Behavior applied with x-masonry.
+`x-masonry` flows its children into `columns` like a newspaper, so items of different heights pack without gaps. Use it for image walls and cards of uneven length.
 
-## Type — new capability
+## Usage
 
-`x-masonry` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <div x-masonry columns="3" gap="0.75rem">
-  <img src="images/placeholder.svg" alt="">
-  <img src="images/placeholder.svg" alt="">
-  <img src="images/placeholder.svg" alt="">
-  <img src="images/placeholder.svg" alt="">
+  <img src="../../images/placeholder.svg" alt="">
+  <img src="../../images/placeholder.svg" alt="">
+  <img src="../../images/placeholder.svg" alt="">
+  <img src="../../images/placeholder.svg" alt="">
 </div>
-```
+</div>
 
 ## Attributes
 
@@ -24,10 +20,4 @@ Behavior applied with x-masonry.
 | `columns` | `string` | `3` | Number of masonry columns. Defaults to `3`. |
 | `gap` | `string` | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
 
-## Live example
-
-See `x-masonry` on the [Behaviors showcase](/?page=behaviors) — search for `x-masonry` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/masonry.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`masonry.schema.json`](../../src/wb-models/masonry.schema.json)</sub>

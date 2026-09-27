@@ -16,8 +16,8 @@
 > Original note (superseded): the CieloVista standard is *composition over
 > inheritance* (Light DOM, no Shadow DOM), yet many docs assert "proper HTMLElement
 > **inheritance**." The resolution under #418 is that "proper HTMLElement inheritance"
-> was never an accurate description of the architecture: `<wb-*>` tags map to behavior
-> functions that decorate elements in place, most `extends HTMLElement` wrappers were
+> was never an accurate description of the architecture: elements (then `wb-*` tags, now
+> `x-*` attributes and semantic elements) map to behavior functions that decorate elements in place, most `extends HTMLElement` wrappers were
 > removed in #279, and the handful that remain are Custom-Elements-API registration
 > shims holding no shared component logic. Grouped below by theme.
 

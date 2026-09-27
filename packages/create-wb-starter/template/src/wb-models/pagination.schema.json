@@ -2,41 +2,59 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "pagination.schema.json",
   "title": "Pagination",
-  "description": "Behavior applied with x-pagination.",
-  "schemaFor": "x-pagination",
+  "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and per-page (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
+  "schemaFor": "pagination",
   "properties": {
     "total": {
       "type": "string",
-      "description": "Read by pagination().",
+      "description": "Total number of items. With `per-page` this derives the page count.",
       "default": "0"
     },
     "per-page": {
       "type": "string",
-      "description": "Read by pagination().",
+      "description": "Items per page. Defaults to `10`.",
       "default": "10"
     },
     "pages": {
       "type": "string",
-      "description": "Read by pagination().",
+      "description": "Explicit page count. Overrides the count derived from `total`/`per-page`.",
       "default": "0"
     },
     "current": {
       "type": "string",
-      "description": "Read by pagination().",
+      "description": "Active page, counting from **1**. Defaults to `1`.",
       "default": "1"
     },
     "aria-disabled": {
       "type": "string",
-      "description": "Read by pagination()."
+      "description": "Set to `\"true\"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author.",
+      "default": "this is the aria disabled"
     },
     "action": {
       "type": "string",
-      "description": "Read by pagination()."
+      "description": "Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand.",
+      "default": "this is the action"
     },
     "page": {
       "type": "string",
-      "description": "Read by pagination()."
+      "description": "Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current=\"page\"`.",
+      "default": "this is the page"
     }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-pagination"
+  },
+  "test": {
+    "setup": [
+      "<div x-pagination>Test Content</div>",
+      "<div x-pagination total=\"0\">Test Content</div>",
+      "<div x-pagination per-page=\"10\">Test Content</div>",
+      "<div x-pagination pages=\"0\">Test Content</div>",
+      "<div x-pagination current=\"1\">Test Content</div>"
+    ]
   },
   "events": {
     "wb:pagination:change": "Fired by pagination()."

@@ -290,11 +290,11 @@
       "alternates": []
     },
     "x-cardhorizontal": {
-      "source": "<article x-cardhorizontal\n  image=\"/images/placeholder.svg\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
+      "source": "<article x-cardhorizontal\n  image=\"/images/placeholder.svg\"\n  image-alt=\"Pine trail at dawn\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
       "alternates": []
     },
     "x-cardimage": {
-      "source": "<article x-cardimage\n  src=\"/images/placeholder.svg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+      "source": "<article x-cardimage\n  src=\"/images/placeholder-portrait.svg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
       "alternates": []
     },
     "x-cardlink": {

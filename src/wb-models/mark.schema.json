@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "mark.schema.json",
   "title": "Mark",
-  "description": "Behavior applied with x-mark.",
+  "description": "A plain <mark> highlights text; variant picks a success, warning, danger or info colour, and color sets any colour with the text colour chosen to stay readable.",
   "schemaFor": "mark",
   "properties": {
     "variant": {

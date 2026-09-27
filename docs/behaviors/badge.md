@@ -1,22 +1,20 @@
 # Badge
 
-Small label/tag for status indicators, counts, or categories
+`x-badge` turns a `<span>` into a small coloured label: its text comes from `label`, its colour from `variant`, and `pill`, `dot`, `outline` and `glow` change its shape. Use it for a status, a count or a category next to other content.
 
-## Type — new capability
+## Usage
 
-`x-badge` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
+<div x-demo>
 <span x-badge label="Beta" variant="warning" pill></span>
-```
+<span x-badge label="3 failing" variant="error"></span>
+<span x-badge label="Passed" variant="success" outline></span>
+</div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `label` | `string` | `this is the label` | Badge text content |
+| `label` | `string` | — | Badge text content |
 | `variant` | `default` · `primary` · `secondary` · `success` · `warning` · `error` · `info` · `glass` · `gradient` | `default` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` | `md` | Badge size |
 | `pill` | `boolean` | `false` | Pill shape with full border radius |
@@ -24,7 +22,7 @@ Small label/tag for status indicators, counts, or categories
 | `outline` | `boolean` | `false` | Outline style (transparent background) |
 | `removable` | `boolean` | `false` | Show remove/close button |
 | `glow` | `boolean` | `false` | Soft pulsing glow halo in the badge's own variant color, for drawing attention (e.g. NEW/LIVE badges) |
-| `icon` | `string` | `this is the icon` | Leading icon/emoji shown before the label |
+| `icon` | `string` | — | Leading icon/emoji shown before the label |
 
 ## Methods
 
@@ -34,10 +32,4 @@ Small label/tag for status indicators, counts, or categories
 - `remove()` — Removes the badge from DOM with animation
 - `update()` — Updates the badge label
 
-## Live example
-
-See `x-badge` on the [Behaviors showcase](/?page=behaviors) — search for `x-badge` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/badge.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`badge.schema.json`](../../src/wb-models/badge.schema.json)</sub>

@@ -1,39 +1,25 @@
 # Notification Card
 
-Dismissible notification card with variant-based styling
+`x-cardnotification` renders a notice card coloured by `variant` (info, success, warning, error), with an icon, title, message and a dismiss button that removes it. Use it for a message tied to a place on the page.
 
-## Type — decorates a semantic element
+## Usage
 
-`x-cardnotification` is the **aside behavior**. It attaches to `<aside>`, the element you would have reached for anyway — there is no new tag to learn.
-
-### How to write it
-
-```html
+<div x-demo>
 <aside x-cardnotification
   variant="warning"
   title="Certificate expires in 6 days"
   message="Renew before 26 Aug or the staging domain will start failing TLS."
   dismissible></aside>
-```
-
-### On a different element
-
-Use `x-cardnotification` when the host is not a `<aside>` and you want the same behavior:
-
-```html
-<div x-cardnotification>
-  …
 </div>
-```
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `variant` | `info` · `success` · `warning` · `error` | `info` | Notification type/severity |
-| `title` | `string` | `this is the title` | Notification title |
-| `message` | `string` | `this is the message` | Notification message |
-| `icon` | `string` | `this is the icon` | Custom icon (overrides variant-based icon) |
+| `title` | `string` | — | Notification title |
+| `message` | `string` | — | Notification message |
+| `icon` | `string` | — | Custom icon (overrides variant-based icon) |
 | `dismissible` | `boolean` | `true` | Show dismiss button |
 | `elevated` | `boolean` | `false` | Add shadow elevation |
 
@@ -54,10 +40,4 @@ Use `x-cardnotification` when the host is not a `<aside>` and you want the same 
 - **ariaLive** — polite
 - **dismissAriaLabel** — Dismiss notification
 
-## Live example
-
-See `x-cardnotification` on the [Behaviors showcase](/?page=behaviors) — search for `x-cardnotification` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/cardnotification.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`cardnotification.schema.json`](../../src/wb-models/cardnotification.schema.json)</sub>

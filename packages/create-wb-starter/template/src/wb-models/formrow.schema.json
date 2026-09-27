@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Form Row Behavior",
   "type": "object",
-  "description": "Schema for x-formrow behavior (form row layout)",
+  "description": "Lays out a label and its field as one form row, stacked or inline.",
   "properties": {
     "inline": { "type": "boolean", "description": "Display row inline", "default": false }
   },

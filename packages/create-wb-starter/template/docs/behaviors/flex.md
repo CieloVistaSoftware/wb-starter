@@ -1,20 +1,16 @@
 # Flex
 
-Behavior applied with x-flex.
+`x-flex` makes the element a flex container and sets `direction`, `wrap`, `justify`, `align` and `gap` from attributes, so a row or column layout needs no CSS. Use `x-stack` for a plain vertical column and `x-cluster` for wrapping chips.
 
-## Type — new capability
+## Usage
 
-`x-flex` adds behavior that no HTML element implies. Nothing about a tag says "ripple" or "tooltip", so this is always opted into by attribute, on whatever element you already chose.
-
-### How to write it
-
-```html
-<div x-flex gap="1rem">
-  <div>First</div>
-  <div>Second</div>
-  <div>Third</div>
+<div x-demo>
+<div x-flex gap="1rem" justify="space-between">
+  <div style="padding:0.5rem 1rem;border:1px solid var(--border-color)">First</div>
+  <div style="padding:0.5rem 1rem;border:1px solid var(--border-color)">Second</div>
+  <div style="padding:0.5rem 1rem;border:1px solid var(--border-color)">Third</div>
 </div>
-```
+</div>
 
 ## Attributes
 
@@ -26,10 +22,4 @@ Behavior applied with x-flex.
 | `align` | `string` | `stretch` | Alignment across the cross axis — `stretch` (default), `center`, `flex-start`, and the rest of CSS `align-items`. |
 | `gap` | `string` | `1rem` | Space between items, as a CSS length. Defaults to `1rem`. |
 
-## Live example
-
-See `x-flex` on the [Behaviors showcase](/?page=behaviors) — search for `x-flex` to run it and copy its markup.
-
----
-
-<sub>Generated from `src/wb-models/flex.schema.json` by `scripts/generate-behavior-docs.mjs` (#713). Attribute names, defaults and events are the declared ones. Expand this file by hand — the generator never overwrites an existing doc.</sub>
+<sub>Schema: [`flex.schema.json`](../../src/wb-models/flex.schema.json)</sub>
