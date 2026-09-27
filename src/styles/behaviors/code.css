@@ -112,7 +112,7 @@ pre > .x-code {
 .x-code--copied.hljs,
 .x-code--copied {
   background-color: var(--success-color, #22c55e);
-  color: #fff;
+  color: var(--text-on-accent, #fff);
 }
 
 .x-code-wrapper {
@@ -144,7 +144,7 @@ pre > .x-code {
   top: 0.5rem;
   left: 0.5rem;
   background: var(--primary, #6366f1);
-  color: #fff;
+  color: var(--text-on-accent, #fff);
   padding: 0.125rem 0.5rem;
   border-radius: var(--radius-sm, 4px);
   font-size: 0.75rem;

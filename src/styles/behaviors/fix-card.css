@@ -131,7 +131,7 @@
         }
         
         .glow-red {
-          color: #ff4444;
+          color: var(--danger-color, #ef4444);
           text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
           font-weight: 600;
           animation: pulse-red 2s infinite;

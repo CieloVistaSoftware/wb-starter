@@ -51,7 +51,12 @@ test.describe('CSS OOP Compliance', () => {
       const filename = path.basename(file);
       if (COLOR_EXCEPTION_FILES.includes(filename)) continue;
       if (filename === 'audio.css') continue;
-      if (file.includes('tmp') || file.includes('.playwright-artifacts')) continue;
+      // Judge the path INSIDE the repo. The absolute path contains "tmp"
+      // whenever the checkout itself lives under /tmp (a worktree, a CI
+      // scratch dir), and then every stylesheet was skipped and this passed
+      // having checked nothing.
+      const rel = path.relative(ROOT, file).split(path.sep);
+      if (rel.includes('tmp') || rel.includes('.playwright-artifacts')) continue;
 
       // Blank out /* ... */ block comments (keep length + newlines so indices and
       // line numbers stay valid) before scanning. Otherwise issue references like

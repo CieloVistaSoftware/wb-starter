@@ -136,6 +136,12 @@ export function textarea(element, options = {}) {
   };
 
   element.classList.add('x-textarea');
+
+  // max-length used to be read only to colour the counter: typing past it
+  // left the whole value in place and the counter just read "20/10". The
+  // native maxLength property is what actually stops input (and paste), so
+  // set it -- on the real <textarea>, which is `element` here.
+  if (config.maxLength > 0 && element.tagName === 'TEXTAREA') element.maxLength = config.maxLength;
   
   // #671 -- John: "variants not being followed". This used to also set
   // borderRadius/border/background/color inline. Inline styles beat every

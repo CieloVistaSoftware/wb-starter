@@ -231,8 +231,10 @@ test.describe('.x-textarea\'s textarea() behavior — real effects (native <text
     await expect(counter).toHaveText('11/20');
   });
 
-  test('SUSPECTED BUG: max-length does not actually enforce the character limit', async ({ page }) => {
-    test.fail(true, 'textarea.js reads config.maxLength only to color/format the counter text — it never sets the native maxLength property or a maxlength attribute on the element, and never truncates config.value on input. Confirmed live: typing 20 characters past a max-length="10" textarea leaves the full 20-character value in place; the counter just shows "20/10" (and turns red) instead of blocking further input.');
+  // Was a test.fail "SUSPECTED BUG": textarea.js only coloured the counter
+  // and never set the native maxLength, so 20 typed characters stayed in a
+  // max-length="10" field. It sets element.maxLength now.
+  test('max-length enforces the character limit', async ({ page }) => {
     await setup(page, '<textarea id="ta-limit" x-behavior="textarea" show-count max-length="10"></textarea>');
     const ta = page.locator('#ta-limit');
     await ta.pressSequentially('12345678901234567890'); // 20 chars typed, limit is 10
