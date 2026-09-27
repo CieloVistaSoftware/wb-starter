@@ -375,6 +375,19 @@ export function pre(element, options = {}) {
       const ro = new ResizeObserver(() => measureAndPosition());
       ro.observe(element);
     }
+
+    // Line positions also move when the page's web fonts swap in (they load
+    // with display=swap) or a just-in-time stylesheet lands -- neither
+    // necessarily resizes the <pre>, so the observer above can miss it. CI
+    // caught the gutter measured before either arrived: every number at the
+    // same `top`, all 8 stacked on line 1 (demos/frameworks.html). Measure
+    // again once both have settled.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => requestAnimationFrame(measureAndPosition));
+    }
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', () => requestAnimationFrame(measureAndPosition), { once: true });
+    }
   }
 
   return () => {
