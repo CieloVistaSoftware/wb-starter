@@ -13,7 +13,7 @@
  * `embedParams` were ever declared) — a real ReferenceError that would
  * have fired instantly, the moment <div x-vimeo> was ever actually reachable.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const PIXEL =
   'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7';

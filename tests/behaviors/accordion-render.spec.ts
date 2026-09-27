@@ -3,7 +3,7 @@
  * the body no longer duplicates the title (#145). (The original bug was malformed
  * nested markup that made each accordion's "content" echo the title.)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');

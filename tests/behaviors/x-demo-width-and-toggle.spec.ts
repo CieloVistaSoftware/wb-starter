@@ -23,7 +23,7 @@
  * max-height, so there's nothing meaningful to collapse). Fixed in
  * src/wb-viewmodels/semantics/pre.js: gated behind config.maxHeight.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string, containerWidth = 1000): Promise<void> {
   await page.goto('/demos/test-harness.html');

@@ -21,7 +21,7 @@
  * be deliberate on main too.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';

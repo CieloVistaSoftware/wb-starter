@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * button.css has NO bare `.x-btn { ... }` base rule -- every rule in that file

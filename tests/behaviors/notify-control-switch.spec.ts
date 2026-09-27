@@ -2,7 +2,7 @@
  * A demo switch that names a real capability must invoke it when turned ON —
  * <div x-switch notify-control> fires a real toast. (DEMOS-AND-DOCS-STANDARDS.md #22)
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;

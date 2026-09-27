@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * `.page__hero` (src/styles/pages/components.css) sets `text-align: center` —

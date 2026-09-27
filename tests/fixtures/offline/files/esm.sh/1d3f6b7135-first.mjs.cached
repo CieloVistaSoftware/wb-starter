@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/first */
+import{EmptyError as p}from"../util/EmptyError.mjs";import{filter as e}from"./filter.mjs";import{take as n}from"./take.mjs";import{defaultIfEmpty as a}from"./defaultIfEmpty.mjs";import{throwIfEmpty as l}from"./throwIfEmpty.mjs";import{identity as u}from"../util/identity.mjs";function I(t,m){let o=arguments.length>=2;return r=>r.pipe(t?e((f,i)=>t(f,i,r)):u,n(1),o?a(m):l(()=>new p))}export{I as first};
+//# sourceMappingURL=first.mjs.map

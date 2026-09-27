@@ -18,7 +18,7 @@
  * convention, so a src-less <audio> shown as illustrative text inside a
  * ```html fence is fine -- nothing loads it live).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

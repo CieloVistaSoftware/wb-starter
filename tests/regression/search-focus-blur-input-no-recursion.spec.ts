@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * search() (search.js) dispatched native-named 'focus'/'blur'/'input'

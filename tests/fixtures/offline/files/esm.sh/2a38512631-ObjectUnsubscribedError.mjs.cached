@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/ObjectUnsubscribedError */
+import{createErrorClass as s}from"./createErrorClass.mjs";var t=s(r=>function(){r(this),this.name="ObjectUnsubscribedError",this.message="object unsubscribed"});export{t as ObjectUnsubscribedError};
+//# sourceMappingURL=ObjectUnsubscribedError.mjs.map

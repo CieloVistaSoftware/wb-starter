@@ -71,7 +71,7 @@ for (const [pageId, pageData] of Object.entries(pageSchemas)) {
   lines.push(` * Components: ${comps.length}`);
   lines.push(` * DO NOT EDIT — regenerate with: node scripts/generate-site-tests.mjs`);
   lines.push(` */`);
-  lines.push(`import { test, expect } from '@playwright/test';`);
+  lines.push(`import { test, expect } from '../fixtures/offline';`);
   lines.push(``);
   lines.push(`const PAGE_URL = '/demos/site/${pageId}.html';`);
   lines.push(`const TIMEOUT = 10000;`);

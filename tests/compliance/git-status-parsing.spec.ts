@@ -20,7 +20,7 @@
  * The last assertion here is that property directly, not the parsing — a parser
  * test alone would pass on a correct parser wired up wrong.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { changedPaths, isDirty } from '../../scripts/lib/git-status.mjs';
 
 // Real shapes, taken from `git status --porcelain` output rather than invented.

@@ -11,7 +11,7 @@
  * - Other syntax errors that only manifest at runtime
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('JS Syntax Compliance', () => {
   

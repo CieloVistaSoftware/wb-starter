@@ -19,7 +19,7 @@
  * To lower the baseline (after converting more files to rem), re-run the
  * audit script and update BASELINE below to match the new, lower count.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';

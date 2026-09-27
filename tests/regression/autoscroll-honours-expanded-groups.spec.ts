@@ -17,7 +17,7 @@
  * when there is none.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 async function openBehaviors(page: any) {
   await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });

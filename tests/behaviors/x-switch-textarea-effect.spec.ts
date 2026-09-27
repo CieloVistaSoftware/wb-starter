@@ -46,7 +46,7 @@
  *    "unexpected pass" that flags for follow-up), without turning the whole
  *    suite red for an already-traced, reported defect.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

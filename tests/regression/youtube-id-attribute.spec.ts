@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#377 / BUG-2026-07-27-004): <div x-youtube id="..." ratio="16:9">

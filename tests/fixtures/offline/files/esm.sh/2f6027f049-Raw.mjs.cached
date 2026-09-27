@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Raw */
+import{WhiteSpace as o}from"../../../tokenizer.mjs";function r(){return this.tokenIndex>0&&this.lookupType(-1)===o?this.tokenIndex>1?this.getTokenStart(this.tokenIndex-1):this.firstCharOffset:this.tokenStart}var h="Raw",f={value:String};function c(t,i,s){let n=this.getTokenStart(t),e;return this.skipUntilBalanced(t,i||this.consumeUntilBalanceEnd),s&&this.tokenStart>n?e=r.call(this):e=this.tokenStart,{type:"Raw",loc:this.getLocation(n,e),value:this.substring(n,e)}}function u(t){this.tokenize(t.value)}export{u as generate,h as name,c as parse,f as structure};
+//# sourceMappingURL=Raw.mjs.map

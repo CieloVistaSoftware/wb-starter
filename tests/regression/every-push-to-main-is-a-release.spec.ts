@@ -28,7 +28,7 @@
  * result depended on live git history. A gate whose answer moves on its own is
  * untrustworthy in both directions, including when it is green.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import os from 'os';

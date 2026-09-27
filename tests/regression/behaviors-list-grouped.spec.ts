@@ -15,7 +15,7 @@
  * hidden inside a closed group.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const LIST = '#behaviors-search-results';
 const ROW = '.behaviors-search-results__row';

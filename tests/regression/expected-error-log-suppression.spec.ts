@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('expected fixture errors stay out of the persistent error log', async ({ page }) => {
   let appendRequests = 0;

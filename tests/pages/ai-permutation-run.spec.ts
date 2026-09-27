@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('ai-permutation-test: find schema with gaps, run all tests live, verify results', async ({ page }) => {
   // Increase timeout - this test runs live DOM tests

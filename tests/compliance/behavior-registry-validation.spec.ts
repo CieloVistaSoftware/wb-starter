@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('behavior registry matches data/behavior-inventory.json', async ({ page }) => {
   const inventoryPath = path.join(process.cwd(), 'data', 'behavior-inventory.json');

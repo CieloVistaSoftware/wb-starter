@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 /**
  * #468: John reported the V3-GUIDE.md Quick Start x-card example reading as
  * "too stubby" — audit the actual live demo against layout standards

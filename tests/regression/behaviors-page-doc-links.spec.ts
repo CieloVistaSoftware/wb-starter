@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #475: pages/behaviors.html's demos decorate NATIVE elements with x-*

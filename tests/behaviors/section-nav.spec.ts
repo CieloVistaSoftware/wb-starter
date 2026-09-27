@@ -23,7 +23,7 @@
  * that replaced it — picking a behavior far down the list puts its example on
  * screen, below the header rather than under it.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { pickBehavior } from '../helpers/behaviors-page';
 
 // The ten section ids the jump-nav linked to.

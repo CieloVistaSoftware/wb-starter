@@ -32,7 +32,7 @@
  * never passed. Mount on the real site root, which boots WB, then replace the
  * body, the pattern no-inert-behaviors.spec.ts already uses.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /** A table whose display text and sort order deliberately disagree. */
 const FIXTURE = `

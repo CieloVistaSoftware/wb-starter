@@ -22,7 +22,7 @@
  *    attribute; rewriting them to `code-width` would document one that
  *    silently does nothing.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

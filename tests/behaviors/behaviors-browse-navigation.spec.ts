@@ -11,7 +11,7 @@
  * measured rect or scroll offset, never a visibility flag — the panel was
  * always "visible" in the DOM sense while being completely off-screen.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const PHONE = { width: 375, height: 812 };
 

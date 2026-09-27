@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * The site footer (`.site__footer`, a sibling of the scrollable `.site__body`

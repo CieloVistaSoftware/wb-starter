@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Standard §6 (#248): doc-viewer code blocks WRAP — they never show a horizontal

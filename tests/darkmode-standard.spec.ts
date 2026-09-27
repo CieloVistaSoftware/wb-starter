@@ -1,5 +1,5 @@
 // tests/darkmode-standard.spec.ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures/offline';
 
 // This test checks that demos/site/forms.html (the consolidated Form Controls
 // category page, replacing the deleted buttons.html) is in dark mode and uses

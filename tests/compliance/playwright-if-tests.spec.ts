@@ -1,6 +1,6 @@
 import { spawnSync } from 'child_process';
 import path from 'path';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('playwright-if-tests: exits 0 when no tests match', () => {
   const script = path.join(process.cwd(), 'scripts', 'playwright-if-tests.js');

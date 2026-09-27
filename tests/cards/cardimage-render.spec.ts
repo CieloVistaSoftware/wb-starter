@@ -4,7 +4,7 @@
  * Verifies x-cardimage actually displays images
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('[x-cardimage] Rendering', () => {
   

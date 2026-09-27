@@ -1,4 +1,4 @@
-import { test, expect, request as pwRequest } from '@playwright/test';
+import { test, expect, request as pwRequest } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 

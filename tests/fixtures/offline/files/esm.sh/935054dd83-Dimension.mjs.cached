@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Dimension */
+import{Dimension as e}from"../../../tokenizer.mjs";var o="Dimension",r={value:String,unit:String};function s(){let t=this.tokenStart,n=this.consumeNumber(e);return{type:"Dimension",loc:this.getLocation(t,this.tokenStart),value:n,unit:this.substring(t+n.length,this.tokenStart)}}function u(t){this.token(e,t.value+t.unit)}export{u as generate,o as name,s as parse,r as structure};
+//# sourceMappingURL=Dimension.mjs.map

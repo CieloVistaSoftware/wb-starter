@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/auditTime */
+import{asyncScheduler as i}from"../scheduler/async.mjs";import{audit as m}from"./audit.mjs";import{timer as o}from"../observable/timer.mjs";function n(r,t=i){return m(()=>o(r,t))}export{n as auditTime};
+//# sourceMappingURL=auditTime.mjs.map

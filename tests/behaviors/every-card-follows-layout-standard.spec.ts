@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page, newOfflinePage } from '../fixtures/offline';
 
 /**
  * Every card behavior obeys the layout standard.
@@ -157,7 +157,7 @@ test.describe('every card follows the layout standard', () => {
   let results: Result[];
 
   test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
+    const page = await newOfflinePage(browser);
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
     results = await measure(page, CARDS);

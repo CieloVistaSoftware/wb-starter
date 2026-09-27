@@ -1,0 +1,2 @@
+/* esm.sh - @angular/compiler@17.3.12 */
+export * from "/@angular/compiler@17.3.12/es2022/compiler.mjs";

@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * #388: <div x-demo>'s doc reference used to be ONE shared '.x-demo__links'

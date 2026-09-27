@@ -16,7 +16,7 @@
  * tag and, unless explicitly excluded, race the lazy loader and build
  * every block eagerly anyway.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#312 follow-up — <div x-demo> blocks build lazily, not all at once', () => {
   test('only a handful of demo blocks are built on initial load, not all of them', async ({ page }) => {

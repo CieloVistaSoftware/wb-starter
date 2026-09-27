@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/isAsyncIterable */
+import{isFunction as t}from"./isFunction.mjs";function o(r){return Symbol.asyncIterator&&t(r?.[Symbol.asyncIterator])}export{o as isAsyncIterable};
+//# sourceMappingURL=isAsyncIterable.mjs.map

@@ -5,7 +5,7 @@
  * <div x-demo> code panel must render with real, non-default syntax colors,
  * not just that the theme <link> resolves correctly in isolation.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('every [x-demo] code panel on content.html has real syntax coloring', async ({ page }) => {
   await page.goto('/demos/site/content.html');

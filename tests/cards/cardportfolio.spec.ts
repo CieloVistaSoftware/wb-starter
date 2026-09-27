@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Portfolio Card - Business Card (integration)', () => {
   test('should render all portfolio fields', async ({ page }: { page: Page }) => {

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'child_process';
 import * as path from 'path';
 

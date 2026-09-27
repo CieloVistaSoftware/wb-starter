@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * §19: `<span x-badge>` attributes must WORK. The behavior read variant/pill/dot/

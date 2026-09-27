@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/sequenceEqual */
+import{operate as q}from"../util/lift.mjs";import{createOperatorSubscriber as S}from"./OperatorSubscriber.mjs";import{innerFrom as h}from"../observable/innerFrom.mjs";function x(m,p=(n,e)=>n===e){return q((n,e)=>{let s=b(),f=b(),u=t=>{e.next(t),e.complete()},i=(t,l)=>{let r=S(e,o=>{let{buffer:c,complete:a}=l;c.length===0?a?u(!1):t.buffer.push(o):!p(o,c.shift())&&u(!1)},()=>{t.complete=!0;let{complete:o,buffer:c}=l;o&&u(c.length===0),r?.unsubscribe()});return r};n.subscribe(i(s,f)),h(m).subscribe(i(f,s))})}function b(){return{buffer:[],complete:!1}}export{x as sequenceEqual};
+//# sourceMappingURL=sequenceEqual.mjs.map

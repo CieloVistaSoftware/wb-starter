@@ -7,7 +7,7 @@
  * - Code panels should not be unnecessarily wide for short snippets
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Code Panel Width Compliance (Standard §28)', () => {
   test('demos with short code snippets use data-code-width="narrow"', async ({ page }) => {

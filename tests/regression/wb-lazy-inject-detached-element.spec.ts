@@ -24,7 +24,7 @@
  * page's actual content, so any of them works (demos/kitchen-sink.html,
  * the original target, was deleted as part of the demos/ consolidation).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 

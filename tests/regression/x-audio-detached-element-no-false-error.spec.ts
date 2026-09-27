@@ -19,7 +19,7 @@
  * broken src on the CURRENT, still-attached element must still throw --
  * covered separately by x-audio-error-on-broken-src.spec.ts.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('a detached (superseded) <audio> element\'s late error event does not throw', async ({ page }) => {
   const pageErrors: string[] = [];

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #489 (split off #322): <div x-switch> never rendered at all on wb-lazy.js

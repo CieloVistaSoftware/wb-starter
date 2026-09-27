@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, newOfflinePage } from '../fixtures/offline';
 
 /**
  * x-cardhero headingLevel picks the title's heading tag, for every value (#1124).
@@ -37,7 +37,7 @@ test.describe('x-cardhero headingLevel renders the declared heading (#1124)', ()
   let rows: Row[];
 
   test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
+    const page = await newOfflinePage(browser);
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 

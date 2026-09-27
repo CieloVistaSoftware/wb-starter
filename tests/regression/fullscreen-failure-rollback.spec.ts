@@ -13,7 +13,7 @@
  * grants fullscreen is not what is being tested — the contract is: nothing
  * changes unless it is granted, and a refusal says why.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function openExample(page: Page) {
   await page.goto('/?page=behaviors');

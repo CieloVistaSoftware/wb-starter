@@ -20,7 +20,7 @@
  * guards still holds (tag+tag+:not(.x-pre)'s one class still outranks the
  * single-class `.x-pre--has-line-numbers`), just via a tag selector now.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { ROOT, readFile } from '../base';
 import * as path from 'path';
 

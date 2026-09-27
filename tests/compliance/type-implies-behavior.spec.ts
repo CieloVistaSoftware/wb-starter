@@ -14,7 +14,7 @@
  * value must be explicitly classified below — an unclassified match fails loudly instead of
  * silently reproducing the #481 bug under a new name.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // Behaviors whose name exactly matches a native <input type="…"> value, and that DO get
 // auto-inferred from nativeMap alone — no x-{name} attribute should ever be required.

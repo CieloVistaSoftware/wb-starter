@@ -19,7 +19,7 @@
  * that this test cannot go stale without failing.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Every x-* attribute the runtime can actually resolve, from both registries.

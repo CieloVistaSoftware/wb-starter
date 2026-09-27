@@ -5,11 +5,11 @@
     "Pre-commit fails only if a STAGED file exceeds its number here.",
     "Numbers fall automatically when you fix things; they never rise on their own.",
     "To raise a number you must run `npm run lint:baseline` deliberately and say why.",
-    "Auto-lowered by 1 on 2026-09-26."
+    "Auto-lowered by 1 on 2026-09-27."
   ],
-  "generated": "2026-09-26",
-  "totalProblems": 418,
-  "filesWithProblems": 166,
+  "generated": "2026-09-27",
+  "totalProblems": 417,
+  "filesWithProblems": 165,
   "files": {
     "scripts/add-matrices.mjs": 3,
     "scripts/add-site-tests.mjs": 1,
@@ -169,7 +169,6 @@
     "tests/regression/countdown-to-attribute.spec.ts": 1,
     "tests/regression/demo-page-safety.spec.ts": 2,
     "tests/regression/doc-viewer-narrow-viewport-wrap.spec.ts": 1,
-    "tests/regression/html-validity.spec.ts": 1,
     "tests/regression/image-failures-raise-runtime-errors.spec.ts": 1,
     "tests/regression/media-sources-are-remote.spec.ts": 4,
     "tests/regression/no-inline-styles.spec.ts": 1,

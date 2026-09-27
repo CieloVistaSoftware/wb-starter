@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #295: rendered .md docs (via public/doc-viewer.html) must wrap text

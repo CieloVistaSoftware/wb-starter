@@ -9,7 +9,7 @@
  * real site is expected to render its header background underneath the
  * scrollbar track.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const WIDTHS = [375, 768, 1280];
 

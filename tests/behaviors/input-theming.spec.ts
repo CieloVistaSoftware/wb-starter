@@ -5,7 +5,7 @@
  * Asserts the OUTCOME (computed background luminance tracks the page surface),
  * across a matrix of dark and light themes, not merely that an <input> exists.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 // Was `/?page=behaviors` with `waitForSelector('#inputs input')`. `#inputs` was a

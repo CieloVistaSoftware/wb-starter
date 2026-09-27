@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 

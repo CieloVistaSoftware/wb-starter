@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * x-gallery `size` attribute: a fixed thumbnail size (e.g. "150px"),

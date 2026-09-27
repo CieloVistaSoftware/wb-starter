@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * avatar.schema.json declares `shape` (circle/square/rounded) and `size`
@@ -42,14 +42,18 @@ test.describe('[x-avatar] shape and size (feedback demo page)', () => {
     const md = page.locator('[x-avatar][size="md"]').first();
     const xxl = page.locator('[x-avatar][size="2xl"]').first();
 
-    const [xsWidth, mdWidth, xxlWidth] = await Promise.all([
-      xs.evaluate((el) => getComputedStyle(el).width),
-      md.evaluate((el) => getComputedStyle(el).width),
-      xxl.evaluate((el) => getComputedStyle(el).width),
-    ]);
-
-    expect(xsWidth).not.toBe(mdWidth);
-    expect(xxlWidth).not.toBe(mdWidth);
-    expect(xxlWidth).not.toBe(xsWidth);
+    // Lazy runtime (#491) + just-in-time CSS (#342): an avatar is only built
+    // and styled once it nears the viewport, and before that it is a plain
+    // block the page's width (measured 1052px). Bring each into view and wait
+    // for it to be built before measuring.
+    for (const el of [xs, md, xxl]) {
+      await el.scrollIntoViewIfNeeded();
+      await expect(el).toHaveAttribute('x-ready', '');
+    }
+    const widths = () => Promise.all([xs, md, xxl].map((el) => el.evaluate((e) => getComputedStyle(e).width)));
+    await expect.poll(async () => {
+      const [xsWidth, mdWidth, xxlWidth] = await widths();
+      return new Set([xsWidth, mdWidth, xxlWidth]).size;
+    }, { message: 'xs, md and 2xl must be three different widths', timeout: 10_000 }).toBe(3);
   });
 });

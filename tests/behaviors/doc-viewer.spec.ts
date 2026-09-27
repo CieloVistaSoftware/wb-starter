@@ -3,7 +3,7 @@
  * mdhtml() must read data-src (the doc-viewer sets content.dataset.src), else
  * config.src is null, the fetch is skipped, and the viewer is stuck on "Loading…".
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('doc-viewer renders the requested markdown, not the loading placeholder', async ({ page }) => {
   await page.goto('/public/doc-viewer.html?file=%2Fdocs%2Fbehaviors%2Fcard.md');

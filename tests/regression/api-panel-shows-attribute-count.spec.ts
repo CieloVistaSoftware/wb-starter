@@ -21,7 +21,7 @@
  * attribute set, so the chip now states its size.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ROOT } from '../base';

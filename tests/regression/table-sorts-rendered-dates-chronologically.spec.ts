@@ -23,7 +23,7 @@
  * apart, which is exactly how this shipped.
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /** Alphabetical by month name gives a DIFFERENT order to chronological here. */
 const ROWS = [

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * <div x-cardprofile cover="…" role="…"> renders the role as a pill badge

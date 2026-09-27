@@ -363,7 +363,7 @@ function generatePlaywrightTest(tests) {
  * DO NOT EDIT - Regenerate with: node scripts/generate-schema-tests.js ${behavior}
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('${behavior} component', () => {
   test.beforeEach(async ({ page }) => {

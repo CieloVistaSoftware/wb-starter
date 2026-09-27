@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/isIterable */
+import{iterator as r}from"../symbol/iterator.mjs";import{isFunction as t}from"./isFunction.mjs";function m(o){return t(o?.[r])}export{m as isIterable};
+//# sourceMappingURL=isIterable.mjs.map

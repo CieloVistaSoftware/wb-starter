@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/scanInternals */
+import{createOperatorSubscriber as f}from"./OperatorSubscriber.mjs";function S(r,a,c,l,p){return(x,t)=>{let n=c,e=a,i=0;x.subscribe(f(t,o=>{let m=i++;e=n?r(e,o,m):(n=!0,o),l&&t.next(e)},p&&(()=>{n&&t.next(e),t.complete()})))}}export{S as scanInternals};
+//# sourceMappingURL=scanInternals.mjs.map

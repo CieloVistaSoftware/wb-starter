@@ -1,7 +1,7 @@
 /**
  * x-tabs — headers from tab-title, panel switching (issue #130)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

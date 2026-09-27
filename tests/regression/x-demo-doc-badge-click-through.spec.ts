@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * #593: John, live on pages/behaviors.html — the small 📖 doc-link badge in

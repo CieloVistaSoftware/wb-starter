@@ -6,7 +6,7 @@
  * had NO CSS rule, so float cards fell back to the flat base with no elevation.
  * Added .x-card--float (+ --cosmic) with elevation in card.css.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#180 — cards are demarcated', () => {
   test.beforeEach(async ({ page }) => {

@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/pairwise */
+import{operate as a}from"../util/lift.mjs";import{createOperatorSubscriber as n}from"./OperatorSubscriber.mjs";function f(){return a((p,r)=>{let e,t=!1;p.subscribe(n(r,o=>{let i=e;e=o,t&&r.next([i,o]),t=!0}))})}export{f as pairwise};
+//# sourceMappingURL=pairwise.mjs.map

@@ -19,7 +19,7 @@
  *           "code and x-code should render the same thing".
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('code theme control + x-code host (#1012, #1016, #1022)', () => {
   test('the behaviors page carries exactly ONE code-theme control, beside the code', async ({ page }) => {

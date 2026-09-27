@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Function */
+import{Function as c,RightParenthesis as i}from"../../../tokenizer.mjs";var h="Function",u="function",l={name:String,children:[[]]};function m(t,n){let a=this.tokenStart,e=this.consumeFunctionName(),o=e.toLowerCase(),s;return s=n.hasOwnProperty(o)?n[o].call(this,n):t.call(this,n),this.eof||this.eat(i),{type:"Function",loc:this.getLocation(a,this.tokenStart),name:e,children:s}}function p(t){this.token(c,t.name+"("),this.children(t),this.token(i,")")}export{p as generate,h as name,m as parse,l as structure,u as walkContext};
+//# sourceMappingURL=Function.mjs.map

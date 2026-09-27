@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 
 const CARD_DOC = 'docs/behaviors/card.md';

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (BUG-2026-07-27-005): every <div x-cardimage> on what was then
@@ -45,8 +45,10 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     // Confirm the URL itself is genuinely valid -- this proves any
     // "unavailable" state is a false negative, not a real broken link.
     const src = await img.getAttribute('src');
-    const direct = await page.request.get(src!);
-    expect(direct.ok(), `the image URL itself must be reachable: ${src}`).toBe(true);
+    // Fetched from the page, so the offline fixture answers it (a sample-media
+    // stand-in); page.request would bypass the fixture and need the internet.
+    const directOk = await page.evaluate((u) => fetch(u).then((r) => r.ok, () => false), src!);
+    expect(directOk, `the image URL itself must be reachable: ${src}`).toBe(true);
 
     // Sit off-screen well past the OLD ~27.5s give-up window (5 attempts,
     // 4s check + exponential 500/1000/2000/4000ms backoff) without

@@ -1,0 +1,3 @@
+/* esm.sh - source-map-js@1.2.1/lib/source-map-generator */
+export * from "/source-map-js@1.2.1/es2022/lib/source-map-generator.mjs";
+export { default } from "/source-map-js@1.2.1/es2022/lib/source-map-generator.mjs";

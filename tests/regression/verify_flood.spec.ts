@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('Should not flood network with requests', async ({ page }) => {
   const requests = [];

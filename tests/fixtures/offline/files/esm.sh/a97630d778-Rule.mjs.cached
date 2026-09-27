@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Rule */
+import{LeftCurlyBracket as n}from"../../../tokenizer.mjs";function o(t){return this.Raw(t,this.consumeUntilLeftCurlyBracket,!0)}function l(){let t=this.SelectorList();return t.type!=="Raw"&&this.eof===!1&&this.tokenType!==n&&this.error(),t}var c="Rule",u="rule",a={prelude:["SelectorList","Raw"],block:["Block"]};function h(){let t=this.tokenIndex,s=this.tokenStart,e,r;return this.parseRulePrelude?e=this.parseWithFallback(l,o):e=o.call(this,t),r=this.Block(!0),{type:"Rule",loc:this.getLocation(s,this.tokenStart),prelude:e,block:r}}function p(t){this.node(t.prelude),this.node(t.block)}export{p as generate,c as name,h as parse,a as structure,u as walkContext};
+//# sourceMappingURL=Rule.mjs.map

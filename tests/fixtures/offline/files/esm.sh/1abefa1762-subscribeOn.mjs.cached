@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/subscribeOn */
+import{operate as n}from"../util/lift.mjs";function c(r,o=0){return n((t,e)=>{e.add(r.schedule(()=>t.subscribe(e),o))})}export{c as subscribeOn};
+//# sourceMappingURL=subscribeOn.mjs.map

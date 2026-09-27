@@ -14,7 +14,7 @@
  * and config/site.json's browserTabIcon now points at the same file so
  * the dynamic override stays consistent instead of fighting the static tag.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 for (const path of ['/', '/project-index.html']) {
   test(`${path}: has a working <link rel="icon">, no implicit /favicon.ico 404`, async ({ page }) => {

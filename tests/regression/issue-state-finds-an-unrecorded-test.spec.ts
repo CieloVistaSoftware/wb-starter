@@ -27,7 +27,7 @@
  * So only a test/describe TITLE counts: the assertion surface, where naming an
  * issue is a claim about what is being proven.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { issuesNamedInTestTitles } from '../../scripts/lib/test-citations.mjs';
 
 const set = (s: Set<number>) => [...s].sort((a, b) => a - b);

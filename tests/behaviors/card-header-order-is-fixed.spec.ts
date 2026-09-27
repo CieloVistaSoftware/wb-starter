@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, newOfflinePage } from '../fixtures/offline';
 
 /**
  * A card header always emits its parts in the same order.
@@ -53,7 +53,7 @@ test.describe('card header order', () => {
   let rows: Row[];
 
   test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
+    const page = await newOfflinePage(browser);
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 

@@ -7,7 +7,7 @@
  * Guards the fix in src/core/mvvm/schema-builder.js (detectSchema) +
  * src/wb-models/stack.schema.json registration.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#174 — no spurious "Schema not found" warnings', () => {
   test('behaviors page emits zero Schema-not-found warnings', async ({ page }) => {

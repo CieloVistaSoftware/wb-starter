@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * mdhtml.js's XSS sanitizer (on by default -- `sanitize="false"` opts out)

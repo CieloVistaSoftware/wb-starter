@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Chip (integration)', () => {
   test('should render chip with [x-chip] class', async ({ page }: { page: Page }) => {

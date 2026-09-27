@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Card Button (integration)', () => {
   test('should render button with primary action', async ({ page }: { page: Page }) => {

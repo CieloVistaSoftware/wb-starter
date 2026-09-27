@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/offline';
 
 test('home page highlights the one-script minimal example', async ({ page }) => {
   await page.goto('/');

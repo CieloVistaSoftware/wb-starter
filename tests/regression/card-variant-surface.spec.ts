@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * card.schema.json's `variant` enum is default/glass/bordered/flat.

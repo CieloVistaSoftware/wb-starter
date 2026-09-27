@@ -2,7 +2,7 @@
  * doc-viewer: code blocks must not exceed the element/page width, and the
  * text-size control must change the doc text size (issue #147).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const URL = '/public/doc-viewer.html?file=%2Fdocs%2Fstandards%2FV3-STANDARDS.md';
 

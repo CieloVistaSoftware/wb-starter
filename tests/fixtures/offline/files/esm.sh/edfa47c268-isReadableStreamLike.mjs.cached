@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/isReadableStreamLike */
+import{__asyncGenerator as n,__await as r}from"/tslib@^2.1.0?target=es2022";import{isFunction as o}from"./isFunction.mjs";function c(e){return n(this,arguments,function*(){let t=e.getReader();try{for(;;){let{value:a,done:i}=yield r(t.read());if(i)return yield r(void 0);yield yield r(a)}}finally{t.releaseLock()}})}function s(e){return o(e?.getReader)}export{s as isReadableStreamLike,c as readableStreamLikeToAsyncGenerator};
+//# sourceMappingURL=isReadableStreamLike.mjs.map

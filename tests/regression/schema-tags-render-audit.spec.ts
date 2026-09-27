@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * Issue #365: an audit created a bare `<wb-{tag}></wb-{tag}>` for each of 96

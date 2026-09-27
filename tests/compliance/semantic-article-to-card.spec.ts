@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('semantic <article> should be processed to card synchronously on page load', async ({ page }) => {
   await page.goto('/tests/repro_card_semantic.html');
@@ -11,5 +11,6 @@ test('semantic <article> should be processed to card synchronously on page load'
   await expect(article.locator('.x-card__header, .x-card__main, .x-card__footer')).toHaveCount(await article.locator('[class*=".x-card__"]').count());
 
   // Should be styled as a card (not just a plain article)
-  await expect(article).toHaveCSS('display', 'flex'); // x-card is a flex container
+  await expect(article).toHaveCSS('display', 'flex'); // x-card is a flex container
+
 });

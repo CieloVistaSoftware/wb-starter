@@ -11,7 +11,7 @@
  * site-engine instance, so navigation must be SPA (clicking nav links), never a
  * full reload — a reload would reset the memory.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const LINKS = ['home', 'components', 'behaviors', 'themes', 'docs', 'about'];
 

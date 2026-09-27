@@ -16,7 +16,7 @@
  * demos/behaviors-showcase.html that was removed before that — so all 15 tests
  * spent 20s timing out inside the helper without ever reaching an assertion.
  */
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, Page, Locator } from '../fixtures/offline';
 
 // The browse list renders every behavior x every option axis — ~750 rows —
 // and each selection is a fresh WB.scan() over freshly injected markup. Under

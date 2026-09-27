@@ -4,7 +4,7 @@
  * actually be small < medium < large. (Validating the demo claim, per the
  * test-schema-standard: ALL_ENUM permutations assert the rendered outcome.)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;

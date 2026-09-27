@@ -6,7 +6,7 @@
  * Dimensions: theme-correct controls, no native-white fallbacks, no zero-size /
  * unstyled custom elements, working interactions, readable contrast.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;

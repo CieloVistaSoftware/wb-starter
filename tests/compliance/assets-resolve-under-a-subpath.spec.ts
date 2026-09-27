@@ -20,7 +20,7 @@
  * completely fine while the site was broken; only the request tells the truth.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { createServer, request as httpRequest, type Server } from 'node:http';
 import { readFileSync } from 'node:fs';
 

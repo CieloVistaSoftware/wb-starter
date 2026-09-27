@@ -16,7 +16,7 @@
  * "fixed" twice by raising timeouts.
  */
 
-import { test, expect, type Locator } from '@playwright/test';
+import { test, expect, type Locator } from '../fixtures/offline';
 
 const FIXES = {
   metadata: { version: '1.0.0' },

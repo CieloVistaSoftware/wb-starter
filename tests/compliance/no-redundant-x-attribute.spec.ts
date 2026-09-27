@@ -31,7 +31,7 @@
  *     that name no behavior.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join, relative, extname } from 'path';
 

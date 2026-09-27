@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('Semantic Article should have Card behavior', async ({ page }) => {
   // Go to the repro page served by the local server

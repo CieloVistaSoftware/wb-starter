@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Page } from '../fixtures/offline';
 
 /**
  * Bring one behavior's demo into the DOM on /?page=behaviors.

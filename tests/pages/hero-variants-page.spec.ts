@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Hero Variants Page', () => {
   test.beforeEach(async ({ page }) => {

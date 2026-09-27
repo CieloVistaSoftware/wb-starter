@@ -14,11 +14,9 @@ export default [
       'playwright-report/**',
       'docs/**',
       '**/*.min.js',
-      // Vendored third-party builds (see src/lib/VENDOR.md) -- not our code.
-      'src/lib/marked/**',
-      'src/lib/ajv/**',
-      'src/lib/chart.js/**',
-      'src/lib/frameworks/**',
+      // Recorded third-party CDN responses served by the offline test
+      // fixture (tests/fixtures/offline/README.md) -- not our code.
+      'tests/fixtures/offline/**',
     ],
   },
   js.configs.recommended,

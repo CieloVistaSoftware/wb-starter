@@ -31,7 +31,7 @@
  * locator cannot silently go vacuous. show() asserts a row EXISTS before
  * clicking, so a behavior vanishing from the registry fails loudly.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 // Every test here boots the behaviors page from scratch, and that page is not
 // cheap: the SPA shell, then two fetches (tag-map, then the schema index) that

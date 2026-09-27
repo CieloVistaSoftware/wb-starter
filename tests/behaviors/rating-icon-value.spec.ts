@@ -6,7 +6,7 @@
  * (value="3" icon="❤️") were ignored: every rating showed empty ★ stars. Now it
  * reads plain attributes and honors icon + theme color (--rating-active-color).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#177 — rating icon + value + color', () => {
   test.beforeEach(async ({ page }) => {

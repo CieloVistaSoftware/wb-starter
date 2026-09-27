@@ -31,7 +31,7 @@
  *
  * Node-only: no browser, no page, no server request.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';

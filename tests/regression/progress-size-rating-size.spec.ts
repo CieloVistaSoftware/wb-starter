@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * progress.schema.json's `size` (xs/sm/md/lg/xl) and rating.schema.json's

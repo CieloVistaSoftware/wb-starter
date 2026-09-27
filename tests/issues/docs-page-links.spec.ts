@@ -2,7 +2,7 @@
  * Test: Docs page links functionality
  * Verifies that all links on the docs page work correctly
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Docs Page Links', () => {
   test('docs page loads with documentation cards', async ({ page }) => {

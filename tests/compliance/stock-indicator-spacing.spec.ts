@@ -8,7 +8,7 @@
  * Outputs unique error IDs with auto-fix suggestions for AI remediation.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ROOT, writeJson } from '../base';

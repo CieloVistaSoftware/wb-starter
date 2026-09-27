@@ -59,7 +59,7 @@
  * being weakened to accommodate it.
  */
 
-import { test, expect, type Page, type Locator } from '@playwright/test';
+import { test, expect, type Page, type Locator } from '../fixtures/offline';
 
 /** Boots WB, and carries data-x-expected-errors. */
 const HARNESS = '/demos/test-harness.html';

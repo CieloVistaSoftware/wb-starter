@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/map */
+import{operate as i}from"../util/lift.mjs";import{createOperatorSubscriber as m}from"./OperatorSubscriber.mjs";function f(e,t){return i((o,r)=>{let p=0;o.subscribe(m(r,a=>{r.next(e.call(t,a,p++))}))})}export{f as map};
+//# sourceMappingURL=map.mjs.map

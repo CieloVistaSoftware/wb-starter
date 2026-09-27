@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 // This file previously drove the notes drawer via a stale selector
 // (`buttonwb-sheet[data-title="My Notes"]`) that never matched anything real

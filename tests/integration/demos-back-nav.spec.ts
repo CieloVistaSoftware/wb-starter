@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #264: Demos page → click a demo card (opens in a NEW TAB, target=_blank) →

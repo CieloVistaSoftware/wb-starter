@@ -28,7 +28,7 @@
  * the page trips its own duplicate-id error.
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const EXEMPT_TAGS = new Set(['OPTION', 'OPTGROUP', 'BR', 'HR', 'SOURCE', 'TRACK']);
 

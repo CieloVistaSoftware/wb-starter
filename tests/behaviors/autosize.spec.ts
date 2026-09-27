@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('autosize modifier adjusts textarea and marks element', async ({ page }) => {
   await page.goto('/index.html');

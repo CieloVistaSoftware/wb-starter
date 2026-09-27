@@ -1,0 +1,3 @@
+/* esm.sh - solid-js@1.9.15/web */
+import "/solid-js@1.9.15/es2022/solid-js.mjs";
+export * from "/solid-js@1.9.15/es2022/web.mjs";

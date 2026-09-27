@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * REGRESSION (#792): `x-footer` must BUILD its declared `links` and `social`,

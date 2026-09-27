@@ -28,7 +28,7 @@
  * silently measure nothing again.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { showBehavior } from '../helpers/behaviors-page';
 
 // Booting the page, filling the list from its two fetches, then rendering and

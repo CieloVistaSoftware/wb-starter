@@ -34,7 +34,7 @@
  * ArrowDown at the input does nothing and yields a test that asserts nothing.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const LIST = '#behaviors-search-results';
 const PANEL = '#behaviors-live';

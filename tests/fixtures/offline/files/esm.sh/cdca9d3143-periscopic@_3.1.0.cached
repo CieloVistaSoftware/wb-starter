@@ -1,0 +1,4 @@
+/* esm.sh - periscopic@3.1.0 */
+import "/estree-walker@^3.0.0?target=es2022";
+import "/is-reference@^3.0.0?target=es2022";
+export * from "/periscopic@3.1.0/es2022/periscopic.mjs";

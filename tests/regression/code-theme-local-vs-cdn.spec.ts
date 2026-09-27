@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION: semantics/code.js's fallback highlight.js theme loader (used
@@ -37,10 +37,7 @@ test('saved local code theme (e.g. x-grayscale-dark) resolves to its local path,
   expect(response.status(), 'the local theme file itself must actually serve').toBe(200);
 });
 
-test('a real highlight.js theme id resolves to its vendored stylesheet under src/lib, never a CDN', async ({ page }) => {
-  // The site loads nothing from a CDN (src/lib/VENDOR.md): highlight.js
-  // themes are vendored under src/lib/hljs-styles/. Still never
-  // /node_modules/, which is not deployed.
+test('a real CDN theme id still builds a cdnjs URL as before', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => localStorage.setItem('x-code-theme', 'monokai'));
   await page.setContent(`
@@ -56,10 +53,7 @@ test('a real highlight.js theme id resolves to its vendored stylesheet under src
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 30000 });
 
   const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
-  expect(href, 'a genuine highlight.js theme id must resolve to the vendored copy').toContain('/src/lib/hljs-styles/monokai.min.css');
-  expect(href, 'must never point at a CDN').not.toMatch(/cdnjs|jsdelivr|unpkg/);
-  expect(href, 'must not build a dev-only node_modules path').not.toContain('/node_modules/');
-
-  const response = await page.request.get(href!);
-  expect(response.status(), 'the vendored theme stylesheet must actually serve').toBe(200);
+  expect(href, 'a genuine CDN theme id must still resolve to cdnjs, not be misrouted').toBe(
+    'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css'
+  );
 });

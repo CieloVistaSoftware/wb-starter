@@ -1,4 +1,4 @@
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, Page, Locator } from '../fixtures/offline';
 import { pairwiseCases } from '../../scripts/lib/pairwise.mjs';
 import * as fs from 'fs';
 import * as path from 'path';

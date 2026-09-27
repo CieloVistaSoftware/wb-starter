@@ -20,7 +20,7 @@
  * process [x-behavior="name1 name2"] directly, independent of nativeMap/
  * autoInject.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('[x-demo] code panel is syntax-highlighted on the eager (main SPA) runtime', () => {
   test('a <div x-demo> code block on pages/demos.html gets real hljs spans', async ({ page }) => {

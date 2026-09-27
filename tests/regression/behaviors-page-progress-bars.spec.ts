@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * pages/behaviors.html's Progress Bars demo used `data-value="25"` /

@@ -3,7 +3,7 @@
  * mid-token wrapping), long lines scroll horizontally. (#199 / pre.js)
  * Checks EVERY code block, fresh load (no cache).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;

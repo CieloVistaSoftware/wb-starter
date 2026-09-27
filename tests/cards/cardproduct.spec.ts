@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Product Card (integration)', () => {
   test('should render all product properties', async ({ page }: { page: Page }) => {

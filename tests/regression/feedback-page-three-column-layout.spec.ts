@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 async function gridTracks(page: Page): Promise<number[]> {
   return page.evaluate(() => Array.from(document.querySelectorAll('[x-demo] .x-demo__grid')).map((grid) => {

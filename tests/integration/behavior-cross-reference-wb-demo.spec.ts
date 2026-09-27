@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * docs/behavior-cross-reference.md must follow DEMOS-AND-DOCS-STANDARDS.md

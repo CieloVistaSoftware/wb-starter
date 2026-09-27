@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #202 REGRESSION — runs in the gate, ALWAYS. The card double/quadruple title kept

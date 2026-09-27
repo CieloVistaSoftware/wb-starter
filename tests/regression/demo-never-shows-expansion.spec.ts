@@ -23,7 +23,7 @@
  * at runtime, so it cannot exist in the page source and has no _rawSource.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Wait for the demo SOURCE PANELS, not for a duration.

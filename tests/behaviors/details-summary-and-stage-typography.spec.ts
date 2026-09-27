@@ -9,7 +9,7 @@
  * Both showed up as "the gaps here are not right": summary flush in the corner,
  * image at the border, paragraph inset 48px — three insets in one box.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function showDetailsDemo(page: Page) {
   await page.goto('/?page=behaviors');

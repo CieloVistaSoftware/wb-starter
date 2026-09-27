@@ -1,4 +1,4 @@
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, Page, Locator } from '../fixtures/offline';
 
 /**
  * docs/behaviors/cardhorizontal.md: John asked for unit tests on

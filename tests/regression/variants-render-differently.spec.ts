@@ -36,7 +36,7 @@
  * everyone.
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /** Style properties a person could actually see a difference in. */
 const VISUAL_PROPS = [

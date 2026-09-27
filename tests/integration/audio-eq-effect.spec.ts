@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #233 REGRESSION — the Studio EQ Player's band sliders visually moved but had

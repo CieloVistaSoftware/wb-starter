@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('viewport-lazy injection prepares elements before visibility (#491)', () => {
   test('uses a 1200px preparation window while preserving lazy and eager scan modes', async ({ page }) => {

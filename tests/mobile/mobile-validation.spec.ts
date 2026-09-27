@@ -12,7 +12,7 @@
  *   - iPhone 12 (390x844) — iOS baseline
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 

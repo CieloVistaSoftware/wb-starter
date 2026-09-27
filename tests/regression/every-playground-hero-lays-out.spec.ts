@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, newOfflinePage } from '../fixtures/offline';
 
 /**
  * EVERY hero in the playground lays out properly. All 120 of them.
@@ -50,7 +50,7 @@ async function sweep(page: any, width: number): Promise<Row[]> {
   await page.selectOption('#pg-examples', 'heroes-120');
   await page.waitForTimeout(3000);
 
-  return page.evaluate((minShare: number) => {
+  return page.evaluate((_minShare: number) => {
     const rows: any[] = [];
     const els = [...document.querySelectorAll('#pg-preview [x-cardhero]')] as HTMLElement[];
 
@@ -104,7 +104,7 @@ test.describe('every playground hero lays out', () => {
       let rows: Row[];
 
       test.beforeAll(async ({ browser }) => {
-        const page = await browser.newPage();
+        const page = await newOfflinePage(browser);
         rows = await sweep(page, width);
         await page.close();
       });

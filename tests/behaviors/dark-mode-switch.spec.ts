@@ -2,7 +2,7 @@
  * The Dark Mode switch (<div x-switch theme-control>) must drive the page theme:
  * ON = dark, OFF = light. (#210)
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;

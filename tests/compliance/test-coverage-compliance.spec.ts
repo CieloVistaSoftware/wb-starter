@@ -4,7 +4,7 @@
  * Validates test coverage for schemas, bugs, and regressions.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ROOT, PATHS, getSchemaFiles, loadSchema, readFile, fileExists, readJson } from '../base';
@@ -232,7 +232,10 @@ test.describe('Test File Quality', () => {
     for (const dir of allTestDirs) {
       for (const file of getTestFiles(dir)) {
         const content = readFile(path.join(dir, file));
-        if (!content.includes("from '@playwright/test'")) issues.push(`${file}: missing playwright import`);
+        // Intent: the spec uses Playwright's test API. That is either
+        // @playwright/test itself or tests/fixtures/offline.ts, which
+        // re-exports all of it with the offline network route installed.
+        if (!/from '@playwright\/test'|from '(?:\.\.?\/)+fixtures\/offline'/.test(content)) issues.push(`${file}: missing playwright import`);
       }
     }
     

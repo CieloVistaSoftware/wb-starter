@@ -19,7 +19,7 @@
  * test controls, including the exact geometry John saw.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('live note describes what is visible (#994)', () => {
   test('a background hidden behind a covering child is not described', async ({ page }) => {

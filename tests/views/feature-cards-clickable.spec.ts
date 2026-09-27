@@ -2,7 +2,7 @@
  * #184 — the home page Features cards must be clickable and navigate to their
  * subsystem pages (via the SPA ?page= router).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const EXPECTED = [
   { title: 'Component Library', href: '?page=behaviors' },

@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Card Overlay (integration)', () => {
   test('should create overlay element with data-title text', async ({ page }: { page: Page }) => {

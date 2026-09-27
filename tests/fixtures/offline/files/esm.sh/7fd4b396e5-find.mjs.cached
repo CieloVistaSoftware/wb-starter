@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/find */
+import{operate as x}from"../util/lift.mjs";import{createOperatorSubscriber as c}from"./OperatorSubscriber.mjs";function u(t,n){return x(m(t,n,"value"))}function m(t,n,f){let o=f==="index";return(i,e)=>{let p=0;i.subscribe(c(e,r=>{let d=p++;t.call(n,r,d,i)&&(e.next(o?d:r),e.complete())},()=>{e.next(o?-1:void 0),e.complete()}))}}export{m as createFind,u as find};
+//# sourceMappingURL=find.mjs.map

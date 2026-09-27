@@ -12,7 +12,7 @@
  * content -- confirmed live, nothing to type into, on all 32 instances on
  * forms.html alone.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('every non-disabled, non-readonly [x-input] on forms.html has a real, typeable <input>', async ({ page }) => {
   await page.goto('/demos/site/forms.html');

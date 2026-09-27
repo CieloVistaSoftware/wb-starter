@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, newOfflinePage } from '../fixtures/offline';
 
 /**
  * `<div x-button icon="star">` renders its icon, same as `<button icon="star">`.
@@ -38,7 +38,7 @@ test.describe('button icon parity across authoring forms', () => {
   let rows: Row[];
 
   test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
+    const page = await newOfflinePage(browser);
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 

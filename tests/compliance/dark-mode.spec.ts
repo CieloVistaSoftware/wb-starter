@@ -2,7 +2,7 @@
  * Dark Mode Compliance Tests
  * Verifies all HTML pages render correctly in dark mode
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';

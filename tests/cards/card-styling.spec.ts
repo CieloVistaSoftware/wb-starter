@@ -4,7 +4,7 @@
  * Verifies cards have proper padding and elevated cards are lighter
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Card Styling Standards', () => {
   

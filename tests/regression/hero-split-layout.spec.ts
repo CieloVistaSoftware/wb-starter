@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, newOfflinePage } from '../fixtures/offline';
 
 /**
  * variant="split" lays out as a split, and honours height=.
@@ -68,7 +68,7 @@ test.describe('cardhero variant="split"', () => {
   let shots: Shot[];
 
   test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
+    const page = await newOfflinePage(browser);
     await page.setViewportSize({ width: 1400, height: 900 });
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });

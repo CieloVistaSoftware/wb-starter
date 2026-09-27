@@ -19,7 +19,7 @@
  * @see data/FUNCTIONAL-TEST-ANALYSIS.md for gap analysis
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 

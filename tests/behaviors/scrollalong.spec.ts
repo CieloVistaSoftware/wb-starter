@@ -2,7 +2,7 @@
  * ScrollAlong Behavior Tests
  * Tests against the ACTUAL site layout to verify sticky nav works
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
   test.beforeEach(async ({ page }) => {

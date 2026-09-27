@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * A single-item demo's `--x-demo-shrink-width` (demo.js, #486) sizes the

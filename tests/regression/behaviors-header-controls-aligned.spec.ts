@@ -25,7 +25,7 @@
  * below is a geometry measurement taken from the live page.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { wbIdle } from '../base';
 
 const STRIP = '#behaviors-header-tools';

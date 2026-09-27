@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * <div x-timeline> is a custom element; timeline.css's `.x-timeline` rule

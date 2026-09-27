@@ -13,7 +13,7 @@
  * intentionally-empty fixture instead, so it stays deterministic
  * regardless of what the production files contain.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('.x-audio throws a catchable runtime error when its src is missing/empty', async ({ page }) => {
   const pageErrors: string[] = [];

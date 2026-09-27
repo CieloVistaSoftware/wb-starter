@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Error viewer routes', () => {
   for (const route of ['/errors-viewer', '/errors-viewer.html', '/public/errors-viewer.html']) {

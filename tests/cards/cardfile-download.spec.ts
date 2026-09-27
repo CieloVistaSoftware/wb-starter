@@ -3,7 +3,7 @@
  * The whole card is the click target (and keyboard-activatable); it triggers a
  * download of href (falling back to the filename), naming it after `filename`.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const HARNESS = '/demos/test-harness.html';
 

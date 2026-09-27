@@ -14,7 +14,7 @@
  * no wrapper (no spacing, no </div>/<div x-demo> match).
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { scanHtml } from '../../scripts/test-wb-demo-integrity.mjs';
 
 test.describe('<div x-demo> markup integrity — example fixtures', () => {

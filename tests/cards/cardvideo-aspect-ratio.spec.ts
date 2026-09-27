@@ -26,7 +26,7 @@
  * flaky, and contains no count-guards.
  */
 
-import { test, expect, type Page, type Locator } from '@playwright/test';
+import { test, expect, type Page, type Locator } from '../fixtures/offline';
 
 /** Boots WB, and carries data-x-expected-errors so a deliberate 404 is not a page failure. */
 const HARNESS = '/demos/test-harness.html';

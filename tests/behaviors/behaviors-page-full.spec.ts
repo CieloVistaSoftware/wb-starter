@@ -18,7 +18,7 @@
  * to run against the live GitHub Pages deploy; defaults to localhost for the
  * local fix→rerun loop (which reflects the latest merged source).
  */
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, Page, Locator } from '../fixtures/offline';
 import { settledStyle } from '../helpers/settled-style';
 
 // The browse list renders every behavior x every option axis — ~750 rows —

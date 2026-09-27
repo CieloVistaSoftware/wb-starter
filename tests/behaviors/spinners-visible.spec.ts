@@ -7,7 +7,7 @@
  * ring spun but was invisible. Fixed by defining --border-color in themes.css and
  * using explicit border longhands + neutralizing effects.css's element-level ring.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#182 — spinners visible + animated', () => {
   test.beforeEach(async ({ page }) => {

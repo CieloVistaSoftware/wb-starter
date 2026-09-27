@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('Auto-injection opt-out mechanisms', async ({ page }) => {
   await page.goto('/tests/repro_optout.html');

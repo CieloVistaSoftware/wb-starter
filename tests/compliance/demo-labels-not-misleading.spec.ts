@@ -19,7 +19,7 @@
  * An action verb is the specific trap: it reads as a working control.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 

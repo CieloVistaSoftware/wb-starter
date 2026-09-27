@@ -18,7 +18,7 @@
  * This test ensures we're migrating toward clean, semantic syntax.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 

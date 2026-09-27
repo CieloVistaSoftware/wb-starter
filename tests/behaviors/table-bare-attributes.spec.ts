@@ -4,7 +4,7 @@
  * bare-attribute-fallback gap found repeatedly this session). Fixed in
  * src/wb-viewmodels/semantics/table.js.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

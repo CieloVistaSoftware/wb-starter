@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Brackets */
+import{Delim as r,LeftSquareBracket as o,RightSquareBracket as s}from"../../../tokenizer.mjs";var c="Brackets",h={children:[[]]};function l(t,i){let n=this.tokenStart,e=null;return this.eat(o),e=t.call(this,i),this.eof||this.eat(s),{type:"Brackets",loc:this.getLocation(n,this.tokenStart),children:e}}function k(t){this.token(r,"["),this.children(t),this.token(r,"]")}export{k as generate,c as name,l as parse,h as structure};
+//# sourceMappingURL=Brackets.mjs.map

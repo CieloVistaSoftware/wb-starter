@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * John, live report -- demos/frameworks.html's HTMX section's <div x-demo> code

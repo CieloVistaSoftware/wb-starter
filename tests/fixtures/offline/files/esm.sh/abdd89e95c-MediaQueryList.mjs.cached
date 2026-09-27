@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/MediaQueryList */
+import{Comma as e}from"../../../tokenizer.mjs";var r="MediaQueryList",s={children:[["MediaQuery"]]};function o(){let t=this.createList();for(this.skipSC();!this.eof&&(t.push(this.MediaQuery()),this.tokenType===e);)this.next();return{type:"MediaQueryList",loc:this.getLocationFromList(t),children:t}}function n(t){this.children(t,()=>this.token(e,","))}export{n as generate,r as name,o as parse,s as structure};
+//# sourceMappingURL=MediaQueryList.mjs.map

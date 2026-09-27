@@ -1,4 +1,4 @@
-import { test, expect, type Page, type Route } from '@playwright/test';
+import { test, expect, type Page, type Route } from '../fixtures/offline';
 
 /**
  * REGRESSION (#1078, under #961): a behavior stylesheet cancelled mid-load must
@@ -56,9 +56,11 @@ import { test, expect, type Page, type Route } from '@playwright/test';
  *        connected `<link>`, so `loadCssFile()` discards it and loads again (or
  *        the `readystatechange` sweep has already settled it). Either way the
  *        injection completes.
- *    Only the FIRST `button.css` request is held. Every later one (the fixed
- *    code's re-load) is passed straight through, so the fixed runtime is not
- *    starved by the test itself.
+ *    Only the FIRST `button.css` request is held, and only until setContent has
+ *    landed; it is then released (see the comment at the release for why the
+ *    browser can make the fixed code's re-load join it). Every later request is
+ *    passed straight through, so the fixed runtime is not starved by the test
+ *    itself.
  *
  * HOW EACH TEST FAILS AGAINST THE OLD CODE: `WB.whenIdle({ timeout })` rejects
  * with "N injection(s) still in flight … button …", the in-page script records
@@ -168,10 +170,35 @@ test.describe('a stylesheet cancelled mid-load settles (#1078)', () => {
       // ('load') waits on subresources -- so the held request deadlocked the
       // TEST instead of the runtime, timing out at 30s. Measured 2026-09-12.
       await page.setContent(CONTENT, { waitUntil: 'domcontentloaded' });
+
+      // Release the held request NOW, not in `finally`. The hold has done its
+      // job: setContent has returned, so the boot's <link> was detached while
+      // still loading -- that is the whole precondition for #1078. Releasing it
+      // cannot rescue the OLD code: a detached <link> ignores a response that
+      // arrives after it left the document (no `load`, no `error`), so the old
+      // cached promise stays pending exactly as before and the run is still red.
+      //
+      // Holding it any longer starves the FIXED code instead of testing it.
+      // setContent is document.open() on the SAME Document, so the fixed
+      // runtime's re-load <link> goes through the same resource fetcher, and
+      // when it is inserted before Chromium has cancelled the orphaned request
+      // (a posted task, so it is a race) it JOINS that in-flight request rather
+      // than issuing a new one. Measured 2026-09-27 under the offline fixture:
+      // no second button.css request ever reached the network or this route
+      // (no `request` event, no CDP requestWillBeSent), a connected button.css
+      // <link> sat in <head> with no sheet, WB.init() was still awaiting its
+      // boot scan 15s later, and WB.pendingBehaviors was "button" -- the test
+      // deadlocked on its own hold, every run. The "every later request is
+      // passed straight through" above only holds when the browser makes a
+      // later request, and here it does not.
+      const route = held as Route | null;
+      if (route) await route.continue().catch(() => {});
+
       await assertSettled(page, 'forced run');
     } finally {
-      // The held request belonged to a <link> setContent destroyed; the browser
-      // has usually cancelled it already, so continuing it may throw.
+      // Safety net for a run that failed before the release above (e.g. the
+      // precondition or setContent threw). A route already continued, or
+      // cancelled by the browser, throws here -- hence the catch.
       const route = held as Route | null;
       if (route) await route.continue().catch(() => {});
       await page.unrouteAll({ behavior: 'ignoreErrors' }).catch(() => {});

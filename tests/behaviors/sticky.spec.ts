@@ -2,7 +2,7 @@
  * Sticky Behavior Tests
  * Tests for the sticky menu/element behavior
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Sticky Behavior', () => {
   

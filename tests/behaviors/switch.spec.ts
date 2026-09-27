@@ -2,7 +2,7 @@
  * x-switch (<div x-switch>) must be a real toggle: a checkbox input, reflecting
  * the `checked` attribute, toggling on click, showing its label. (#197)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 import { elementReady } from '../base';
 
 const BASE = process.env.WB_BASE || '';
@@ -21,16 +21,21 @@ async function load(page: Page) {
   // IntersectionObserver. The switches sit ~800 lines down, below the fold, and
   // would never upgrade on their own -- scroll the first one into view first.
   await page.waitForSelector('[x-switch]', { state: 'attached', timeout: 25000 });
-  const firstSwitch = page.locator('[x-switch]').first();
-  await firstSwitch.scrollIntoViewIfNeeded();
-  await page.waitForSelector('[x-switch]', { timeout: 25000 });
-  // The 2000ms here was a guess. Verified live: all 17 switches on this page are
-  // <div x-switch> with a descendant input[type=checkbox], all x-ready — the
-  // selector and the product are both correct. The failure was reading the inner
-  // input BEFORE injection created it, so .type came back undefined. Settle the
-  // element instead; left unguarded deliberately, because these assertions are
-  // meaningless until it is ready and elementReady names the element it waited on.
-  await elementReady(firstSwitch);
+  // Every test below reads SOME switch -- the checked one, the labelled one,
+  // an on/off pair -- not only the first, so every one must be injected before
+  // the assertions mean anything. Scroll-then-wait is retried because demos
+  // above are still building while we scroll: the page grows, the switch
+  // slides back out of range and is never injected (measured under
+  // full-suite load: "never became x-ready within 15000ms").
+  const switches = page.locator('[x-switch]');
+  const count = await switches.count();
+  for (let i = 0; i < count; i++) {
+    const sw = switches.nth(i);
+    await expect(async () => {
+      await sw.scrollIntoViewIfNeeded();
+      await elementReady(sw, 2000);
+    }).toPass({ timeout: 25_000 });
+  }
 }
 
 test.describe('Switch — real toggle', () => {

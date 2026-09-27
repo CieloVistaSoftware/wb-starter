@@ -21,7 +21,7 @@
  *     npx playwright test site-smoke --project=compliance
  */
 
-import { test, expect, type ConsoleMessage } from '@playwright/test';
+import { test, expect, type ConsoleMessage } from '../fixtures/offline';
 import { readFileSync } from 'node:fs';
 
 const BASE = process.env.SMOKE_BASE_URL?.replace(/\/$/, '') || '';

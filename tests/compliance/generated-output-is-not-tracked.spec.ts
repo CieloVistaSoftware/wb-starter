@@ -27,7 +27,7 @@
  * because this is the second time — the next generated-output directory should
  * fail here rather than be discovered a third time by a deadlock.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';

@@ -9,7 +9,7 @@
  * exceptions are occurring.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readJson, PATHS } from '../base';
 import * as path from 'path';
 

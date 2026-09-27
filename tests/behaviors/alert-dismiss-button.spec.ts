@@ -15,7 +15,7 @@
  * close button had zero listeners ~90% of loads. Fixed by never touching
  * innerHTML at all when $view is empty.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;

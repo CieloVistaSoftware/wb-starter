@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#376 / BUG-2026-07-27-003): <div x-countdown to="2027-12-31">

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * show-eq forces crossOrigin='anonymous' on the <audio> element (needed for

@@ -2,7 +2,7 @@
  * REGRESSION: issue #426 -- the canonical article demos must contain enough
  * authored content to make featured and layout differences visible.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('content.html visibly demonstrates featured articles and article layouts', async ({ page }) => {
   await page.goto('/demos/site/content.html');

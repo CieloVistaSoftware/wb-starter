@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Issues page', () => {
   test('shows the current active count from status:in-progress labels', async ({ page }) => {

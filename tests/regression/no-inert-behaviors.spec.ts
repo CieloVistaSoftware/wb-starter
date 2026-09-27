@@ -41,7 +41,7 @@
  * only the behavior's own contribution is left.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Behaviors that legitimately need something this harness cannot give them.

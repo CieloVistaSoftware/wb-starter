@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * REGRESSION (#1117 / #1114): x-cardfile's icon comes from the FILENAME.

@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * Standard §5 (#254) + §6 (#248): every `<div x-demo>` source panel is VERTICAL —

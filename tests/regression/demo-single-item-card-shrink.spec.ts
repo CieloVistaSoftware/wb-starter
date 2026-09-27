@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const CASES = [
   { name: 'pricing', file: 'docs/behaviors/cardpricing.md', selector: '[x-cardpricing]' },

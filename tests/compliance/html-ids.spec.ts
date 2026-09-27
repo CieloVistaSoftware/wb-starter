@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { getHtmlFiles, ROOT, relativePath, readFile } from '../base';
 
 // Files that are allowed to have missing IDs (test files, demos, etc.)

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * x-demo code panels: show ALL the code, up to 50vw — REGRESSION TEST

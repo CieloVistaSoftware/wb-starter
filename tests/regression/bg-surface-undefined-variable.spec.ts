@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * `--bg-surface` never existed anywhere in src/styles/themes.css (grep

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * mdhtml.js originally read element.getAttribute('data-src') as a fallback

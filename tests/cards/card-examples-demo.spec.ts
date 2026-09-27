@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { safeScrollIntoView, elementReady } from '../base';
 
 const DEMO_URL = '/demos/site/cards.html';

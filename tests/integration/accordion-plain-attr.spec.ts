@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Accordion supports the v3 PLAIN attribute (`accordion-title`), not just legacy

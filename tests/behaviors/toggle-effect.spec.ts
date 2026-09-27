@@ -6,7 +6,7 @@
  * class toggling (self and `target`), aria-pressed, keyboard activation,
  * and the wb:toggle event.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE_URL = '/demos/test-harness.html';
 

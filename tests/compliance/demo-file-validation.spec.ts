@@ -15,7 +15,7 @@
  *   5. No orphan partials: declared parent must exist and be a full document
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 

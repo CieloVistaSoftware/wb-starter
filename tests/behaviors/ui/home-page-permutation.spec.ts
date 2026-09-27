@@ -2,7 +2,7 @@
  * Home Page Permutation Test
  * Generated from: home-page.schema.json → test.site
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../../fixtures/offline';
 import { safeScrollIntoView } from '../../base';
 
 const HOME_URL = '/pages/home.html';

@@ -5,7 +5,7 @@
  * (toggle/badge/copy) stay reachable in both states since they're
  * absolutely-positioned siblings of <pre>, not children of it.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#299 — pre.js collapse/expand toggle', () => {
   test.beforeEach(async ({ page }) => {

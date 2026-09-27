@@ -4,7 +4,7 @@
  * pointer-events:none) it intercepted every click on the page content, so no
  * link/card/button responded to taps on phones.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Mobile nav backdrop click-through (#171)', () => {
   test('closed drawer: backdrop does not intercept clicks over page content', async ({ page }) => {

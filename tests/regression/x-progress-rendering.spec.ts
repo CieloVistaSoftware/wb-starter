@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('progress renders its Light DOM fill after schema-aware scanning', async ({ page }) => {
   await page.goto('/demos/test-harness.html');

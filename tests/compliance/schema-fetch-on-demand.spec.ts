@@ -17,7 +17,7 @@
  * WB.init()) actually changes network behavior, not just internal registry
  * state.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#312 — schema.json is fetched on-demand, not eagerly for every schema', () => {
   test('home page fetches only a handful of schema.json files, not all of them', async ({ page }) => {

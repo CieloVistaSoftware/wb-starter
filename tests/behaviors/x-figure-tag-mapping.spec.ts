@@ -11,7 +11,7 @@
  * calls this function." Fixed by registering figure in both tag-map.js's
  * nativeMap and wb-lazy.js's autoInjectMappings.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const PIXEL =
   'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7';

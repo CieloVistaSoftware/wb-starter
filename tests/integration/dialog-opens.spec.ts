@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * §19: interactive triggers must actually work. Clicking a dialog/modal trigger

@@ -19,7 +19,7 @@
  * So this test selects a tall example FIRST, then a short one, and measures.
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const TOLERANCE_PX = 140;   // stage padding + centring slack, generously
 

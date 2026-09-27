@@ -25,7 +25,7 @@
  * defects; an omitted `</li>` or `</td>` is valid HTML and is not one.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { findStructuralErrors } from '../../scripts/lib/html-structure.mjs';
@@ -115,6 +115,10 @@ test.describe('HTML Validity', () => {
     await page.goto('/demos/site/content.html');
 
     const codePanels = page.locator('.x-demo__code');
+    // count() does not wait. Panels are built after boot, and boot waits on
+    // the page's CDN scripts -- served from the offline cache, a beat later
+    // than the old vendored copies, which is all it took to read 0.
+    await expect(codePanels.first()).toBeAttached({ timeout: 20_000 });
     const count = await codePanels.count();
     expect(count, 'no x-demo code panels rendered').toBeGreaterThan(0);
 

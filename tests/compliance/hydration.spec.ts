@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // #562: this used to `page.goto()` the bare fragment directly
 // (http://localhost:3000/pages/behaviors.html) instead of through the SPA

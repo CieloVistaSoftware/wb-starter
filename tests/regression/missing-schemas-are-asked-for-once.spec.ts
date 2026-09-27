@@ -22,7 +22,7 @@
  * moment the warning was downgraded to debug, while the requests carried on.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('a schema that does not exist is requested once, and no schema 404s', async ({ page, baseURL }) => {
   test.slow();

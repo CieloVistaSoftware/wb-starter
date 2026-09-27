@@ -27,7 +27,7 @@
  *     <div accordion-title="Q1">answer 1</div>
  *   </div>
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const MARKUP = `
   <div x-accordion id="acc">

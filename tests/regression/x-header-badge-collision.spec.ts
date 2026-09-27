@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * <header icon="🚀" title="App" badge="v1.0"> rendered TWO rocket-ship

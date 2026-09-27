@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // feedback.html is now a large consolidated category page (750+ demos,
 // many remote <img> placeholders) — these tooltip trigger buttons sit far

@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Spinner (integration)', () => {
   test('should render a spinner with animation', async ({ page }: { page: Page }) => {

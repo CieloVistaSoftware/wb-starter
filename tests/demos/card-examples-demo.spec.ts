@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // This test checks that all <div x-demo> blocks in the cards.html demo render both the live card and the code sample
 

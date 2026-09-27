@@ -22,7 +22,7 @@
  * passing `x-dialog` sample is exactly what kept 11 broken rows invisible.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const MIN_PAD_PX = 15; // 1rem at a 16px root, with rounding slack
 

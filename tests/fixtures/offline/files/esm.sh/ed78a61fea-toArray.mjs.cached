@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/toArray */
+import{reduce as o}from"./reduce.mjs";import{operate as t}from"../util/lift.mjs";var u=(r,e)=>(r.push(e),r);function i(){return t((r,e)=>{o(u,[])(r).subscribe(e)})}export{i as toArray};
+//# sourceMappingURL=toArray.mjs.map

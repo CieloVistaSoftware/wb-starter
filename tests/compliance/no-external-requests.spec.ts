@@ -1,55 +1,27 @@
 /**
- * NO EXTERNAL REQUESTS
- * ====================
- * The site loads nothing from a CDN. Every third-party dependency (marked,
- * highlight.js themes, ajv, Chart.js, the web fonts, and the React / Vue /
- * Svelte / Angular / SolidJS / HTMX builds on demos/frameworks.html) is
- * vendored under src/lib/ -- see src/lib/VENDOR.md -- and loaded from there in
- * dev, in tests and on the published GitHub Pages site. Tests must never need
- * the internet.
+ * NO TEST REQUEST ESCAPES TO THE INTERNET
+ * =======================================
+ * The site loads its dependencies from CDNs and its sample media from remote
+ * hosts -- in development exactly as in production. The tests must never
+ * depend on the network, so tests/fixtures/offline.ts routes every browser
+ * request: localhost goes to the test server, a CDN URL is answered from the
+ * recorded cache (tests/fixtures/offline/, rebuilt by
+ * scripts/record-offline-cache.mjs), sample media from generated stand-ins,
+ * and ANYTHING ELSE is aborted and recorded as "offline-blocked".
  *
- * This drives real pages and records every request the browser makes. Any
- * request to a host other than the local test server fails the test, with the
- * offending URLs listed. External requests are also aborted, so a regression
- * fails fast instead of hanging on an unreachable host.
+ * This drives the pages that load the most third-party code and media and
+ * fails on any blocked URL -- i.e. a gap in the cache or the media mapping --
+ * listing the URLs. The fix for a failure is to re-record the cache
+ * (`NODE_USE_ENV_PROXY=1 node scripts/record-offline-cache.mjs`) or extend
+ * scripts/sample-media-catalog.mjs; never to rewrite the site's URLs.
  *
- * Two narrow exemptions, both CONTENT rather than dependencies (nothing on the
- * page waits on them, and a failed load degrades to a missing picture, not a
- * broken page):
- *   - audio/video: by the owner's rule (#762, enforced by
- *     tests/regression/media-sources-are-remote.spec.ts) media sources are
- *     remote on purpose;
- *   - example photos from the placeholder-image services the demos use as
- *     sample content (PLACEHOLDER_IMAGE_HOSTS below) -- only when the browser
- *     requests them AS AN IMAGE. A script, stylesheet or font from any of
- *     those hosts still fails.
+ * The pages also have to actually WORK offline: the frameworks demo mounts
+ * every framework from the cache, the doc viewer renders markdown with the
+ * cached marked, and the performance dashboard gets Chart.js.
  */
 
-import { test, expect, type Page, type Request } from '@playwright/test';
-
-const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1']);
-
-const PLACEHOLDER_IMAGE_HOSTS = new Set(['picsum.photos', 'fastly.picsum.photos', 'images.unsplash.com', 'i.pravatar.cc']);
-
-/** Sample content (see header), never a code/style/font dependency. */
-function isExemptContent(req: Request): boolean {
-  if (req.resourceType() === 'media') return true;
-  return req.resourceType() === 'image' && PLACEHOLDER_IMAGE_HOSTS.has(new URL(req.url()).hostname);
-}
-
-async function recordExternal(page: Page): Promise<string[]> {
-  const external: string[] = [];
-  await page.route('**/*', (route) => {
-    const req = route.request();
-    const url = new URL(req.url());
-    if ((url.protocol === 'http:' || url.protocol === 'https:') && !LOCAL_HOSTS.has(url.hostname)) {
-      if (!isExemptContent(req)) external.push(`${req.resourceType()} ${req.url()}`);
-      return route.abort();
-    }
-    return route.continue();
-  });
-  return external;
-}
+import { test, expect, type Page } from '../fixtures/offline';
+import { openBehaviorsPage } from '../helpers/behaviors-page';
 
 /** Scroll the whole page so lazily-loaded content (IntersectionObserver) runs. */
 async function scrollThrough(page: Page): Promise<void> {
@@ -67,16 +39,43 @@ async function settle(page: Page): Promise<void> {
   await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
 }
 
-const ROUTES: Array<{ name: string; path: string; ready?: (page: Page) => Promise<void> }> = [
+/** Behaviors whose demos load remote media (photos, audio, video, embeds). */
+const MEDIA_BEHAVIORS = ['audio', 'video', 'img', 'figure', 'gallery', 'youtube', 'vimeo', 'cardimage', 'cardvideo', 'cardhero', 'cardprofile', 'avatar'];
+
+type RouteCase = { name: string; path: string; ready?: (page: Page) => Promise<void> };
+
+const ROUTES: RouteCase[] = [
   { name: 'home', path: '/' },
-  { name: 'behaviors', path: '/?page=behaviors' },
+  {
+    name: 'behaviors (media rows opened)',
+    path: '/?page=behaviors',
+    ready: async (page) => {
+      await openBehaviorsPage(page);
+      let opened = 0;
+      for (const name of MEDIA_BEHAVIORS) {
+        await page.fill('#behaviors-search', name);
+        // A token can have several rows (the behavior and its attributes), some
+        // collapsed -- take the first one a user could actually click.
+        const row = page
+          .locator(`.behaviors-search-results__row[data-browse-token="x-${name}"], .behaviors-search-results__row[data-browse-token="${name}"]`)
+          .filter({ visible: true })
+          .first();
+        if (!(await row.waitFor({ state: 'visible', timeout: 5000 }).then(() => true, () => false))) continue;
+        await row.click();
+        await page.waitForTimeout(400);
+        await settle(page);
+        opened++;
+      }
+      expect(opened, 'at least some media behaviors must be listed on the behaviors page').toBeGreaterThan(3);
+    },
+  },
   {
     name: 'frameworks demo',
     path: '/demos/frameworks.html',
     ready: async (page) => {
-      // Every framework must actually mount from the vendored copies.
+      // Every framework must actually mount from the cached CDN responses.
       for (const sel of ['#react-root button', '#vue-app button', '#svelte-root button', '#angular-root button', '#solid-root button']) {
-        await expect(page.locator(sel).first(), `${sel} must render from vendored code`).toBeVisible({ timeout: 30000 });
+        await expect(page.locator(sel).first(), `${sel} must render offline`).toBeVisible({ timeout: 30000 });
       }
     },
   },
@@ -84,20 +83,18 @@ const ROUTES: Array<{ name: string; path: string; ready?: (page: Page) => Promis
     name: 'doc viewer',
     path: '/public/doc-viewer.html',
     ready: async (page) => {
-      // marked is loaded on demand -- wait for real rendered markdown.
+      // marked is loaded on demand from jsdelivr -- wait for real rendered markdown.
       await expect(page.locator('#content h1, #content h2').first()).toBeVisible({ timeout: 30000 });
-      expect(await page.evaluate(() => typeof (window as any).marked), 'marked must load (from src/lib/marked)').toBe('object');
+      expect(await page.evaluate(() => typeof (window as any).marked), 'marked must load (from the cache)').toBe('object');
     },
   },
   {
     name: 'forms demo (ajv)',
     path: '/demos/site/forms.html',
     ready: async (page) => {
-      // The x-label section validates its schema with the vendored ajv.
       await expect(page.locator('#label-schema-validation pre')).toContainText('Schema validation', { timeout: 30000 });
     },
   },
-  { name: 'code theme control', path: '/demos/site/content.html' },
   {
     name: 'performance dashboard (chart.js)',
     path: '/public/performance-dashboard.html',
@@ -105,18 +102,30 @@ const ROUTES: Array<{ name: string; path: string; ready?: (page: Page) => Promis
       await page.waitForFunction(() => typeof (window as any).Chart === 'function', null, { timeout: 15000 });
     },
   },
+  { name: 'cards', path: '/demos/site/cards.html' },
+  { name: 'content (code theme control)', path: '/demos/site/content.html' },
+  { name: 'feedback', path: '/demos/site/feedback.html' },
+  { name: 'shop now', path: '/demos/site/shop-now.html' },
+  { name: 'autoinject', path: '/demos/autoinject.html' },
+  { name: 'playground', path: '/demos/playground.html' },
+  { name: 'charity food', path: '/demos/charity-food.html' },
+  { name: 'landing page showcase', path: '/demos/landing-page-showcase.html' },
+  { name: 'hero variants', path: '/?page=hero-variants' },
 ];
 
-test.describe('no request leaves localhost', () => {
+test.describe('no test request escapes to the internet', () => {
   for (const route of ROUTES) {
-    test(`${route.name} (${route.path}) makes no external requests`, async ({ page }) => {
-      test.setTimeout(90000);
-      const external = await recordExternal(page);
+    test(`${route.name} (${route.path}) needs nothing outside the offline cache`, async ({ page, offlineBlocked }) => {
+      test.setTimeout(120000);
       await page.goto(route.path, { waitUntil: 'load' });
       if (route.ready) await route.ready(page);
       await scrollThrough(page);
       await settle(page);
-      expect(external, `external requests from ${route.path} -- vendor them under src/lib (see src/lib/VENDOR.md)`).toEqual([]);
+      expect(
+        offlineBlocked,
+        `external requests from ${route.path} that the offline cache does not cover -- ` +
+          're-record it (NODE_USE_ENV_PROXY=1 node scripts/record-offline-cache.mjs) or map the media in scripts/sample-media-catalog.mjs',
+      ).toEqual([]);
     });
   }
 });

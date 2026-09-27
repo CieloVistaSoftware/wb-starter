@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * scripts/generate-site.mjs builds demo instances for every schema's matrix

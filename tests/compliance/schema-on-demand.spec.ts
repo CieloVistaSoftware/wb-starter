@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 
 // Verifies that WB will fetch an individual schema file on-demand when index.json is unavailable.

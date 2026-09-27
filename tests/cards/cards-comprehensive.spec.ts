@@ -13,7 +13,7 @@
  * - cardhero (Hero)
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 // Helper to create a test page with WB initialized
 async function createTestPage(page: Page, html: string): Promise<void> {

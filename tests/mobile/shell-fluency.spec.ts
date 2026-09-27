@@ -7,7 +7,7 @@
  * one column, "fluent layout" with NO horizontal scroll. Runs under the
  * mobile-validation-pixel / -iphone device profiles. (#165)
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const PAGES = [
   { name: 'home', url: '/?page=home' },

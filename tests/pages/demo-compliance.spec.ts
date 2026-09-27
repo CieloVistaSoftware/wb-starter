@@ -9,7 +9,7 @@
  *   4. Have <title>
  *   5. If uses wb-* components, must import WB
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 

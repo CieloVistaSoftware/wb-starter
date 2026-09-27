@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { globSync } from 'glob';
 // The depth-aware extractor, shared with the integrity script. A regex cannot

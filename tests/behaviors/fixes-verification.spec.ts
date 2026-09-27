@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // Historically this suite used page.setContent() with its own <script
 // src="/src/index.js"> to bootstrap WB from scratch per test. That's dead

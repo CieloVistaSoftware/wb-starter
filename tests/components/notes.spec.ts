@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 import { elementReady } from '../base';
 
 const BASE_URL = '/demos/test-harness.html';

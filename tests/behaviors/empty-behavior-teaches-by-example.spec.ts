@@ -27,7 +27,7 @@
  * lives in one shared module. Asserting it in one runtime would let the other
  * drift, and that drift is precisely #333 and #1056.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

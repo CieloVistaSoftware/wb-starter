@@ -1,4 +1,4 @@
-import { test, expect, type Page, type Locator } from '@playwright/test';
+import { test, expect, type Page, type Locator } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 

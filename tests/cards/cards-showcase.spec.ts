@@ -38,7 +38,7 @@
  * cardimage-render.spec.ts / card-image-render.spec.ts.
  */
 
-import { test, expect as baseExpect, type Page } from '@playwright/test';
+import { test, expect as baseExpect, type Page } from '../fixtures/offline';
 
 /**
  * Every assertion in this file gets a 15s budget instead of Playwright's

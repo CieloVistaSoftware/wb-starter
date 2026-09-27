@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #279 — <div x-cardimage>/<div x-cardvideo> intermittently rendered as empty

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { ROOT, readFile } from '../base';
 
 test('pages/home.html: key stat-items and preview rows have IDs', async ({ page }) => {

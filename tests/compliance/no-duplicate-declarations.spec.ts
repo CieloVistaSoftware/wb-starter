@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { findDuplicates } from '../../scripts/lib/duplicate-declarations.mjs';
 
 /**

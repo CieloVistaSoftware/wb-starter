@@ -6,7 +6,7 @@
  * tore down rendering, plus the missing highlight theme. This regression test locks
  * the working state: every demo code block is highlighted.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#183 — code blocks highlight', () => {
   test.beforeEach(async ({ page }) => {

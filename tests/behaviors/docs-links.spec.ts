@@ -9,7 +9,7 @@
  * This test compares each link's body against the SPA shell, so a fallback is
  * detected as the broken link it is.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // #856: this was `const ORIGIN = ''`, used as the BASE for `new URL(href, ORIGIN)`
 // below. Every docs-card href is relative and the empty string is not a valid

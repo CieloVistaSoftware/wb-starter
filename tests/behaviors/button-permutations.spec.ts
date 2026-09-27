@@ -24,7 +24,7 @@
  * @version 3.0.0
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 

@@ -2,7 +2,7 @@
  * Card Image Rendering Test
  * Tests that x-cardimage actually displays images
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Card Image Rendering', () => {
   test('[x-cardimage] should display images on cards-showcase', async ({ page }) => {

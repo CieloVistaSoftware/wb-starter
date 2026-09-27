@@ -12,7 +12,7 @@
  * "create unit test for all x-dropdown examples". So this walks EVERY
  * x-dropdown row in the browse list, not just the first.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const MIN_OPTIONS = 4;
 const MAX_OPTIONS = 5;

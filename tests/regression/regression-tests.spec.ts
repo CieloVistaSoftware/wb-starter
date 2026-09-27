@@ -43,7 +43,7 @@
  * and is asserted against the registry so neither can drift from the other.
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';

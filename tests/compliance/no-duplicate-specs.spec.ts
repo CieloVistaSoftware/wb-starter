@@ -8,7 +8,7 @@
  * Cross-browser projects (firefox, webkit, mobile-*) are excluded
  * since they intentionally re-run specs on different engines.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';

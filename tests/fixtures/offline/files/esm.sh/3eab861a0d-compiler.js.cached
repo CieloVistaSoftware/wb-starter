@@ -1,0 +1,22 @@
+/* esm.sh - svelte@4.2.20/compiler */
+import "/@ampproject/remapping@^2.2.1?target=es2022";
+import "/@jridgewell/sourcemap-codec@^1.4.15?target=es2022";
+import "/@jridgewell/trace-mapping@^0.3.18?target=es2022";
+import "/acorn@^8.9.0?target=es2022";
+import "/aria-query@^5.3.0?target=es2022";
+import "/axobject-query@^4.0.0?target=es2022";
+import "/code-red@^1.0.3?target=es2022";
+import "/css-tree@^2.3.1/tokenizer?target=es2022";
+import "/css-tree@^2.3.1?target=es2022";
+import "/estree-walker@^3.0.3?target=es2022";
+import "/is-reference@^3.0.1?target=es2022";
+import "/locate-character@^3.0.0?target=es2022";
+import "/magic-string@^0.30.4?target=es2022";
+import "/node/buffer.mjs";
+import "/node/process.mjs";
+import "/periscopic@^3.1.0?target=es2022";
+import "/svelte@4.2.20/es2022/src/shared/boolean_attributes.mjs";
+import "/svelte@4.2.20/es2022/src/shared/utils/escape.mjs";
+import "/svelte@4.2.20/es2022/src/shared/utils/names.mjs";
+import "/svelte@4.2.20/es2022/src/shared/version.mjs";
+export * from "/svelte@4.2.20/es2022/compiler.mjs";

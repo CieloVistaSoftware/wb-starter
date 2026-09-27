@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #497: select.schema.json / semantics/select.js's buildWbSelect() declares

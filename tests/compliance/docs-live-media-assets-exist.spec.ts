@@ -43,7 +43,7 @@
  * existence check and still fail to decode at runtime (audio.js's error message
  * calls out the 0-byte case by name).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

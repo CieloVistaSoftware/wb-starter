@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
@@ -21,10 +21,15 @@ test.describe('Global Attributes', () => {
       '<button tooltip="Global Tooltip">Hover me</button>'
     );
 
-    await element.hover();
-
     const tooltip = page.locator('.x-tooltip');
-    await expect(tooltip).toBeVisible();
+    // index.html keeps building lazy sections above #test-container after
+    // boot, which can slide the button out from under a parked pointer -- a
+    // real mouseleave, so the tip correctly hides. Re-hover until it holds:
+    // what is asserted is still "hovering shows the tooltip".
+    await expect(async () => {
+      await element.hover();
+      await expect(tooltip).toBeVisible({ timeout: 1000 });
+    }).toPass({ timeout: 15_000 });
     await expect(tooltip).toContainText('Global Tooltip');
   });
 

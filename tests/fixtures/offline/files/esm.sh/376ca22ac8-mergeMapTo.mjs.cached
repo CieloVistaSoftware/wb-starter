@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/mergeMapTo */
+import{mergeMap as p}from"./mergeMap.mjs";import{isFunction as o}from"../util/isFunction.mjs";function y(m,i,f=1/0){return o(i)?p(()=>m,i,f):(typeof i=="number"&&(f=i),p(()=>m,f))}export{y as mergeMapTo};
+//# sourceMappingURL=mergeMapTo.mjs.map

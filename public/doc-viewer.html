@@ -31,7 +31,9 @@
     .hljs-emphasis { font-style: italic; }
     .hljs-strong { font-weight: 700; }
   </style>
-  <link href="../src/lib/fonts/fonts.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     /* #295: "no horizontal page scroll, ever" is a page-level guarantee, so
        it belongs on the page shell (here), not .x-mdhtml (mdhtml.css) --
@@ -460,6 +462,11 @@
           }).catch(() => {}) // one demo failing to build must not block the scroll
         );
         if (pending.length) await Promise.all(pending);
+        // Web fonts load with display=swap: the text first lays out in the
+        // fallback face, then reflows when the real one lands -- 30px taller on
+        // behavior-cross-reference.md, after the quiet window below had already
+        // ended. Wait for the swap so the bottom measured is the final one.
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
 
         // Safety net for any OTHER late-settling growth this page doesn't
         // specifically know about (images, fonts, a future async content
@@ -494,6 +501,9 @@
           }
           requestAnimationFrame(tick);
         });
+        // A smooth scroll still in flight when growth stopped can stop short
+        // of the last target; land exactly on the final bottom.
+        if (Math.abs(currentMax() - root.scrollTop) > 1) window.scrollTo({ top: currentMax() });
       } finally {
         scrollingToTrueEnd = false;
       }

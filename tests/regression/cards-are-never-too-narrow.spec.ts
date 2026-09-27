@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, newOfflinePage } from '../fixtures/offline';
 
 /**
  * A card is a layout container, so it never collapses to its text width.
@@ -28,7 +28,7 @@ test.describe('cards are never too narrow', () => {
   let rows: Row[];
 
   test.beforeAll(async ({ browser }) => {
-    const page = await browser.newPage();
+    const page = await newOfflinePage(browser);
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/demos/site/cards.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });

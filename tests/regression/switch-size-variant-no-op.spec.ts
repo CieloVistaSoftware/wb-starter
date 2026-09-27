@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * switch.schema.json declares `size` (sm/md/lg) and `variant`

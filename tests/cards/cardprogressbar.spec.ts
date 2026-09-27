@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Progress Bar (integration)', () => {
   test('should render progress bar with progress class', async ({ page }: { page: Page }) => {

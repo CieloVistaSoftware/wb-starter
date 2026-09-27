@@ -19,7 +19,7 @@
  * Fix a failure by regenerating, never by hand-editing the two outputs:
  *   node scripts/generate-demos-list.mjs
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';

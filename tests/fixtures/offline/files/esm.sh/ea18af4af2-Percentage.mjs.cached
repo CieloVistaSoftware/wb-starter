@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Percentage */
+import{Percentage as e}from"../../../tokenizer.mjs";var r="Percentage",o={value:String};function a(){return{type:"Percentage",loc:this.getLocation(this.tokenStart,this.tokenEnd),value:this.consumeNumber(e)}}function c(t){this.token(e,t.value+"%")}export{c as generate,r as name,a as parse,o as structure};
+//# sourceMappingURL=Percentage.mjs.map

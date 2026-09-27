@@ -21,7 +21,7 @@
  * "0 on disk, 598 collected", and cheerfully reported that all was well — the
  * checker committing the exact defect it exists to catch.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';

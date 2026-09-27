@@ -2,7 +2,7 @@
  * One toast per click (issue #144) — the toast behavior must not double-inject
  * its click listener.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');

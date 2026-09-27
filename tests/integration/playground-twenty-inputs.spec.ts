@@ -1,4 +1,4 @@
-import { test, expect, Locator } from '@playwright/test';
+import { test, expect, Locator } from '../fixtures/offline';
 
 // label() (src/wb-viewmodels/label.js) only assigns element.id lazily, the
 // first time IT runs -- an async, dynamic-imported behavior injection, not

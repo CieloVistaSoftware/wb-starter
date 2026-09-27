@@ -69,15 +69,6 @@ export const EXCLUDE_DIRS = [
   'test-results', '.playwright-artifacts', 'x-overlay-ext', 'template'
 ];
 
-// Third-party code vendored under src/lib (see src/lib/VENDOR.md) so the site
-// never loads from a CDN. It is not our source: UMD/CommonJS wrappers and
-// minified bundles would trip every source-rule scan (ES-modules-only,
-// imports-resolve, terminology ...). Paths are relative to ROOT.
-export const VENDOR_DIRS = [
-  'src/lib/marked', 'src/lib/ajv', 'src/lib/chart.js', 'src/lib/frameworks',
-  'src/lib/hljs-styles', 'src/lib/fonts',
-];
-
 // ═══════════════════════════════════════════════════════════════════════════
 // FILE UTILITIES
 // ═══════════════════════════════════════════════════════════════════════════
@@ -142,8 +133,7 @@ export function getFiles(
     const fullPath = path.join(dir, entry.name);
     
     if (entry.isDirectory()) {
-      const rel = path.relative(ROOT, fullPath).split(path.sep).join('/');
-      if (!EXCLUDE_DIRS.includes(entry.name) && !VENDOR_DIRS.includes(rel)) {
+      if (!EXCLUDE_DIRS.includes(entry.name)) {
         getFiles(fullPath, extensions, fileList);
       }
     } else {
@@ -782,6 +772,10 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
 export async function setupBehaviorTest(page: Page): Promise<void> {
   await page.goto('index.html');
   await waitForWB(page);
+  // The site's web fonts load with display=swap, so the page reflows when they
+  // land. A hover made before that can end up over nothing once the text
+  // reflows -- the tooltip test measured 5/5 failures under 4 workers that way.
+  await page.evaluate(() => document.fonts.ready.then(() => undefined));
 }
 
 /**

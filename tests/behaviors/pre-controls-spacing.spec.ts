@@ -8,7 +8,7 @@
  * and positions the next (further-left) control from that, guaranteeing a
  * minimum 1rem gap regardless of label length.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('pre.js header controls stay >=1rem apart', () => {
   test.beforeEach(async ({ page }) => {

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { usesNativeHost } from '../base';
 
 const ROOT = process.cwd();

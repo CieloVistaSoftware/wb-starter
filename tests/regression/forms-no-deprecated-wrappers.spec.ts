@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #390: demos/site/forms.html used <div x-checkbox>/<textarea> — both

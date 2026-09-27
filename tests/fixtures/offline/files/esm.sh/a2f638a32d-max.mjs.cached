@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/max */
+import{reduce as i}from"./reduce.mjs";import{isFunction as n}from"../util/isFunction.mjs";function e(t){return i(n(t)?(o,r)=>t(o,r)>0?o:r:(o,r)=>o>r?o:r)}export{e as max};
+//# sourceMappingURL=max.mjs.map

@@ -21,7 +21,7 @@
  * unreachable, and it had been that way since the manifest was introduced.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'node:fs';
 import path from 'node:path';
 

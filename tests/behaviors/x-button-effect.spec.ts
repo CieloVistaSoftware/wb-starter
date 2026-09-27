@@ -15,7 +15,7 @@
  * before any interaction is dispatched (TIER1 gotcha -- lazy IntersectionObserver
  * scan can leave listeners unattached for a one-shot click/keypress).
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string, id = 'x-button-effect-area'): Promise<void> {
   await page.goto('/demos/test-harness.html');

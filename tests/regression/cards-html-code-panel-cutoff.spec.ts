@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #586: demos/site/cards.html's <div x-demo> code panels didn't show all the

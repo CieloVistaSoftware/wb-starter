@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('diff behavior attaches and does not error', async ({ page }) => {
   await page.goto('/index.html');

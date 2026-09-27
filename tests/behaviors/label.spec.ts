@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('x-label behavior (value on a form control)', () => {
   test('x-label="text" on an <input> generates an associated <label> with that text', async ({ page }) => {

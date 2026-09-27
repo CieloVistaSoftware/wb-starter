@@ -27,7 +27,7 @@
  * page jump. And it pins the jump-nav as gone, so "bring the category buttons
  * back" is a deliberate decision rather than an accident.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /** The selector fills from two registries plus two data files. */
 async function openBehaviors(page: import('@playwright/test').Page) {

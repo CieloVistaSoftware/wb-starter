@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { auditAll, RULES } from '../../scripts/lib/attribute-audit.mjs';
 
 /**

@@ -1,4 +1,4 @@
-import { test, expect, type Route } from '@playwright/test';
+import { test, expect, type Route } from '../fixtures/offline';
 
 /**
  * REGRESSION (#1070): doc-viewer's End-key force-build must find the demos that

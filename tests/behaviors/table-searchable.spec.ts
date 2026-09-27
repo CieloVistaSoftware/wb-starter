@@ -9,7 +9,7 @@
  * above the table (as a previous sibling for a real `<table>`, since an
  * `<input>` isn't valid `<table>` content; as a first child otherwise).
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

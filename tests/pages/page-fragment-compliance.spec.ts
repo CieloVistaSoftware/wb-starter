@@ -18,7 +18,7 @@
  *   6. Have at least one <h2> tag (section heading — from $layout rows)
  *   7. Have no more than 3 significant inline styles
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 

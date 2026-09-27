@@ -18,7 +18,7 @@
  * at all. The only reliable gate is a source-level check that the CSS
  * default itself can never regress back to visible.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { ROOT, readFile } from '../base';
 import * as path from 'path';
 

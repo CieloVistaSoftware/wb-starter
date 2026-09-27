@@ -1,5 +1,5 @@
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Auto-Inject Demo', () => {
   test.beforeEach(async ({ page }) => {

@@ -1,0 +1,3 @@
+/* esm.sh - is-reference@3.0.3 */
+export * from "/is-reference@3.0.3/es2022/is-reference.mjs";
+export { default } from "/is-reference@3.0.3/es2022/is-reference.mjs";

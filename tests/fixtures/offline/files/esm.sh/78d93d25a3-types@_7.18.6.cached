@@ -1,0 +1,6 @@
+/* esm.sh - @babel/types@7.29.8 */
+import "/@babel/helper-string-parser@^7.29.7?target=es2022";
+import "/@babel/helper-validator-identifier@^7.29.7?target=es2022";
+import "/node/process.mjs";
+export * from "/@babel/types@7.29.8/es2022/types.mjs";
+export { default } from "/@babel/types@7.29.8/es2022/types.mjs";

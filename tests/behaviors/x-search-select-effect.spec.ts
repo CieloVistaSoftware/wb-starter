@@ -11,7 +11,7 @@
  * the options not matching the typed text (#768 sweep); the test below asserts that effect.
  * The native-<select> alternative, x-autocomplete, keeps its own test further down.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

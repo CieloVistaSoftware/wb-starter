@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/isScheduler */
+import{isFunction as e}from"./isFunction.mjs";function n(r){return r&&e(r.schedule)}export{n as isScheduler};
+//# sourceMappingURL=isScheduler.mjs.map

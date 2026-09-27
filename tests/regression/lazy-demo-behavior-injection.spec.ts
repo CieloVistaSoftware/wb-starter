@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#374 / BUG-2026-07-27-001, general mechanism): <div x-demo> blocks

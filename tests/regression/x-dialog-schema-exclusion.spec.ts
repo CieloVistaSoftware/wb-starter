@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md):

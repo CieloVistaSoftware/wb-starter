@@ -36,7 +36,7 @@
  * Selectors are attributes ([x-shake]), never tags (x-shake) — no <x-*>
  * elements exist (#857).
  */
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, Page, Locator } from '../fixtures/offline';
 
 /**
  * Effects that clickAnim() drives: attaching adds a kebab-cased x-* class and

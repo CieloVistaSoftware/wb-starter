@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #298: pre.js's line-number gutter positioned line 1 with a hardcoded

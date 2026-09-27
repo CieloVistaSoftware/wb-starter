@@ -5,7 +5,7 @@
  *   BUG-2025-12-26-002 — Audio EQ panel missing controls when show-eq
  * Source: src/wb-viewmodels/semantics/audio.js (+ x-audio.js)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE_URL = '/demos/test-harness.html';
 

@@ -15,7 +15,7 @@
  * then await WB.scan(document.body, { eager: true }) so behaviors attach
  * synchronously before any interaction is dispatched.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string, id = 'x-copybutton-effect-area'): Promise<void> {
   await page.goto('/demos/test-harness.html');

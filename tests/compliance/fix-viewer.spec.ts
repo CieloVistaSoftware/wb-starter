@@ -36,7 +36,7 @@
  * every issue is one row, and that its state and release are readable.
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * A fixed traced payload: the primary path, independent of git.

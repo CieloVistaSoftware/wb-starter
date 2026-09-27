@@ -21,7 +21,7 @@
  * been bitten by more than once.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { createServer, request as httpRequest, type Server } from 'node:http';
 
 const PREFIX = '/wb-starter';

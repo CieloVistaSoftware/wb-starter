@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function inject(page: Page, html: string) {
   await page.goto('/demos/test-harness.html');

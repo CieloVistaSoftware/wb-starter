@@ -1,4 +1,4 @@
-import { test, expect, request as pwRequest } from '@playwright/test';
+import { test, expect, request as pwRequest } from '../fixtures/offline';
 
 /**
  * FUNCTIONAL TEST: the doc-viewer auto-links path references.

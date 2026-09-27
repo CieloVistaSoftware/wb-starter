@@ -9,7 +9,7 @@
  * rule wasn't enough on its own. Fixed in src/styles/behaviors/progress.css
  * and src/wb-viewmodels/semantics/progress.js.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

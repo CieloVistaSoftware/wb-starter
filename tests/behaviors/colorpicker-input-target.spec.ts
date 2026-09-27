@@ -10,7 +10,7 @@
  * converted in place (type="color") instead of nesting a new one inside
  * it. Non-input targets keep the original append-a-child behavior.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

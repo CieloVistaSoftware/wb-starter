@@ -6,7 +6,7 @@
  * Run: npm run test:compliance (runs on all browsers with test:browsers)
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Cross-Browser Support Infrastructure', () => {
   

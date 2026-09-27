@@ -31,7 +31,7 @@
  * Both halves are geometry measured from the live page, not CSS read back.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const DESKTOP = { width: 1427, height: 861 };
 const MOBILE = { width: 375, height: 812 };

@@ -6,7 +6,7 @@
  * promise) TypeError: Failed to fetch" on every playback of demos/sample.wav
  * even though the actual range request the player needed succeeded fine.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('service worker: audio range requests do not throw unhandled rejections', () => {
   test('playing demos/sample.wav produces no console errors', async ({ page }) => {

@@ -14,7 +14,7 @@
  * This drives the panel instead, and reads the rendered example, never a
  * browse-list row (#727).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { openBehaviorsPanel, renderVariant, example, exampleStyle } from '../utils/behaviors-panel';
 
 const VARIANTS = ['info', 'success', 'warning', 'error'] as const;

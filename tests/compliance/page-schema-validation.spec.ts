@@ -10,7 +10,7 @@
  * Fragment registration → fragment-registration.spec.ts
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 

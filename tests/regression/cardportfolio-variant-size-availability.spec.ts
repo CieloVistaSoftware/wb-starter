@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * x-cardportfolio (card.js → cardportfolio(), CSS in card.css) had three

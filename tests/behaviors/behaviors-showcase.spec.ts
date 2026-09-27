@@ -13,7 +13,7 @@
  * so it's repointed here rather than deleted.
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 import { pickBehavior } from '../helpers/behaviors-page';
 
 test.describe('Behaviors Showcase Page', () => {

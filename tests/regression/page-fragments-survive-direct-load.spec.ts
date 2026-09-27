@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 // @ts-ignore -- plain .mjs auditor, shipped so consuming sites can run it too
 import { auditPageFragments, formatReport } from '../../scripts/audit-page-fragments.mjs';
 

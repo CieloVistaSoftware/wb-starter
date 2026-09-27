@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Live-reported: docs/V3-GUIDE.md:74-100 shows a full-document boilerplate

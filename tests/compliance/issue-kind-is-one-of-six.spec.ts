@@ -24,7 +24,7 @@
  * that does not run in the commit gate. The repo-wide sweep over real issues is
  * .github/workflows/issue-kinds-sweep.yml.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { SCHEMA, parseSignature, kindProblem } from '../../scripts/lib/signature-schema.mjs';
 
 const block = (yaml: string) => ['## Signature', '', '```yaml', yaml, '```'].join('\n');

@@ -5,7 +5,7 @@
  * browsing documentation, matching the pattern already used on
  * pages/themes.html and pages/behaviors.html.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Docs Page', () => {
   test.beforeEach(async ({ page }) => {

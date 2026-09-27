@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { ROOT, relativePath, readFile } from '../base';
 
 test.describe('HTML Compliance: ID attributes (themes.html)', () => {

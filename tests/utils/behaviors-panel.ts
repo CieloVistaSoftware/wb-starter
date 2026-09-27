@@ -15,7 +15,7 @@
  * Everything here reads from inside `#behaviors-live-example` for that reason —
  * the rendered example, never a list row.
  */
-import { expect, Page, Locator } from '@playwright/test';
+import { expect, Page, Locator } from '../fixtures/offline';
 
 export const EXAMPLE_ROOT = '#behaviors-live-example';
 

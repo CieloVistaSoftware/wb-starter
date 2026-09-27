@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('CardHero attribute API', () => {
   test('renders when using attributes (no slots)', async ({ page }) => {

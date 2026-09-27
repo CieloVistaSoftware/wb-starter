@@ -24,7 +24,7 @@
  * back, never measured, is not a fix (#965).
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 type BadgeMeasurement = {
   badge: string;

@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Figure Component', () => {
   test('should render caption from caption attribute', async ({ page }: { page: Page }) => {

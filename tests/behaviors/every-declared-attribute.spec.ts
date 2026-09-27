@@ -67,7 +67,7 @@
  * ignores, and the summary test carries the total.
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 

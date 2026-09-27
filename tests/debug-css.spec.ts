@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures/offline';
 
 test('debug css loading', async ({ page }) => {
   // #1091 — this file matched no project until now, so it had never run once,

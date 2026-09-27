@@ -26,7 +26,7 @@
  *
  * Failures name the files. A count is not actionable; a list is.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

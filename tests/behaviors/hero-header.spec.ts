@@ -3,7 +3,7 @@
  * sticky site header. It was rendering ~19px under the header, clipping the ⚡
  * glyph and the tops of the letters with no gap.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#179 — behaviors hero clears the sticky header', () => {
   test('hero title is fully below the header with a gap (not clipped)', async ({ page }) => {

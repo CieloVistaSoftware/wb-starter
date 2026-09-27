@@ -40,7 +40,7 @@
  * card.js's cardhero / cardhorizontal / cardoverlay probes.
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 const REMOTE = 'https://media.unreachable-1115.test';
 const LOCAL_DIR = '/tests/fixtures/unreachable-1115';

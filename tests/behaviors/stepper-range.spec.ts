@@ -6,7 +6,7 @@
  * showed no value and the buttons did nothing visible. Now it builds
  * [−][value][+] inside the container and honors data-value/min/max.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#178 — stepper + range', () => {
   test.beforeEach(async ({ page }) => {

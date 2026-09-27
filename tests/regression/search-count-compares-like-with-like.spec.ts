@@ -13,7 +13,7 @@
  * every version of this bug.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('the search counter measures rows against rows, not rows against behaviours', async ({ page }) => {
   test.slow();
