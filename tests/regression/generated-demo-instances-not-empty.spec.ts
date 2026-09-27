@@ -69,11 +69,13 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
 
   test('sibling dialog demos on overlays.html have distinct, self-describing labels', async ({ page }) => {
     await page.goto('/demos/site/overlays.html');
-    // #448: a <dialog> acting as its own trigger no longer carries a
-    // same-named `.x-dialog` class -- the tag selector alone is enough.
-    await page.waitForSelector('.x-dialog', { timeout: 10_000 });
+    // #448: a trigger no longer carries a same-named `.x-dialog` class --
+    // `.x-dialog` is the OPENED dialog. The demos are <button x-dialog>
+    // triggers now (a closed <dialog> is display:none and rendered nothing),
+    // so the attribute is the selector.
+    await page.waitForSelector('[x-dialog]', { timeout: 10_000 });
 
-    const labels = await page.locator('.x-dialog').evaluateAll((els) =>
+    const labels = await page.locator('[x-dialog]').evaluateAll((els) =>
       els.slice(0, 4).map((el) => el.textContent?.trim() ?? ''),
     );
     expect(new Set(labels).size, `dialog demo labels must be distinct: ${labels.join(' | ')}`).toBe(labels.length);
@@ -84,9 +86,10 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
 
   test('overlay variant demos expose their configuration in the closed trigger', async ({ page }) => {
     await page.goto('/demos/site/overlays.html');
-    await page.waitForSelector('.x-dialog, [x-drawer], [x-dropdown]', { timeout: 10_000 });
+    // [x-dialog], not .x-dialog: see the previous test.
+    await page.waitForSelector('[x-dialog], [x-drawer], [x-dropdown]', { timeout: 10_000 });
 
-    const unlabeled: string[] = await page.locator('.x-dialog, [x-drawer], [x-dropdown]').evaluateAll((els) => {
+    const unlabeled: string[] = await page.locator('[x-dialog], [x-drawer], [x-dropdown]').evaluateAll((els) => {
       return els.flatMap((el) => {
         const attribute = ['size', 'variant', 'position', 'trigger'].find((name) => el.hasAttribute(name));
         if (!attribute) return [];
@@ -106,11 +109,14 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
     // (confirmed live: clicking "Centered" or "Fullscreen" opened the exact
     // same dialog as "Basic Dialog").
     await page.goto('/demos/site/overlays.html');
-    // #448: a <dialog> acting as its own trigger no longer carries a
-    // same-named `.x-dialog` class -- the tag selector alone is enough.
-    await page.waitForSelector('.x-dialog', { timeout: 10_000 });
+    // [x-dialog], not .x-dialog: see the sibling-labels test above.
+    await page.waitForSelector('[x-dialog]', { timeout: 10_000 });
 
     const trigger = page.locator('[x-dialog][variant="fullscreen"]').first();
+    // The lazy runtime (#491) attaches the trigger's click handler only once
+    // the element nears the viewport; a click before x-ready does nothing.
+    await trigger.scrollIntoViewIfNeeded();
+    await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10_000 });
     await trigger.click();
 
     const box = page.locator('.x-dialog:not(.x-dialog-trigger)');

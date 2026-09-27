@@ -18,9 +18,36 @@
  * fixture answers it from its recorded copy -- the test never needs the
  * internet, and still proves the exact URL the site builds really exists.
  */
-import { test, expect } from '../fixtures/offline';
+import { test, expect, Page } from '../fixtures/offline';
 
 const PAGE_URL = '/demos/site/content.html';
+
+/**
+ * Load the page and build its <div x-codecontrol>.
+ *
+ * Scrolled to first: the lazy runtime (#491) injects a behavior only once its
+ * element nears the viewport, so waiting for `wbCodeControl` without scrolling
+ * worked only while the control happened to sit within the observer's margin
+ * of the top. content.html's table demos now hold real rows (twelve tables of
+ * three people, not one line of placeholder text each), which put the Code
+ * Control section below that margin -- it was never built, and every test here
+ * timed out waiting for it.
+ */
+async function openCodeControl(page: Page): Promise<void> {
+  await page.goto(PAGE_URL);
+  // Re-centred on every poll rather than scrolled to once: everything above it
+  // (article images, audio players, eleven tables) is still building and web
+  // fonts reflow late (display=swap), so on a cold first load a single scroll
+  // was overtaken by the page growing above it and the control never came
+  // near enough to build (seen on a cold first run: never x-ready in 15s).
+  await page.waitForFunction(() => {
+    const el = document.querySelector('[x-codecontrol]') as any;
+    if (!el) return false;
+    if (el.wbCodeControl) return true;
+    el.scrollIntoView({ block: 'center' });
+    return false;
+  }, undefined, { timeout: 15000, polling: 250 });
+}
 
 test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', () => {
   test.beforeEach(async ({ page }) => {
@@ -28,11 +55,7 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
   });
 
   test('the default theme (atom-one-dark) resolves to a real cdnjs URL, not /node_modules/', async ({ page }) => {
-    await page.goto(PAGE_URL);
-    await page.waitForFunction(() => {
-      const el = document.querySelector('[x-codecontrol]') as any;
-      return !!(el && el.wbCodeControl);
-    }, { timeout: 15000 });
+    await openCodeControl(page);
 
     const href = await page.locator('link[data-highlight-theme]').getAttribute('href');
 
@@ -46,11 +69,7 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
   });
 
   test('selecting a non-local theme from the dropdown (e.g. monokai) also resolves to a working cdnjs URL', async ({ page }) => {
-    await page.goto(PAGE_URL);
-    await page.waitForFunction(() => {
-      const el = document.querySelector('[x-codecontrol]') as any;
-      return !!(el && el.wbCodeControl);
-    }, { timeout: 15000 });
+    await openCodeControl(page);
 
     await page.evaluate(() => {
       const el = document.querySelector('[x-codecontrol]') as any;
@@ -69,11 +88,7 @@ test.describe('[x-codecontrol] theme URLs must never point at a dev-only path', 
   });
 
   test('selecting the local x-grayscale-dark theme still resolves to its real local file, not a CDN URL', async ({ page }) => {
-    await page.goto(PAGE_URL);
-    await page.waitForFunction(() => {
-      const el = document.querySelector('[x-codecontrol]') as any;
-      return !!(el && el.wbCodeControl);
-    }, { timeout: 15000 });
+    await openCodeControl(page);
 
     await page.evaluate(() => {
       const el = document.querySelector('[x-codecontrol]') as any;

@@ -66,6 +66,11 @@ test.describe('Live examples render — every <div x-demo> shows real content, n
 
       const demos = page.locator('[x-demo]');
       const demoCount = await demos.count();
+      // The work here is per block: every demo is scrolled into view so the lazy
+      // runtime (#491) builds it. demos/site/cards.html holds 293 of them and needs
+      // ~22s on an idle machine (at HEAD too), so a flat 30s budget failed it only
+      // under parallel load. The budget grows with the page; nothing asserted changes.
+      test.setTimeout(30_000 + demoCount * 150);
       if (demoCount === 0) test.skip(true, 'no <div x-demo> blocks actually rendered on this page');
 
       // x-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks

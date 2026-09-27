@@ -98,14 +98,25 @@ test.describe('demos/site/cards.html: single-item [x-demo] code panels are never
 
     for (let i = 0; i < count; i++) {
       const panel = codePanels.nth(i);
-      const { scrollWidth, clientWidth, snippet } = await panel.evaluate((el) => ({
+      const { scrollWidth, clientWidth, snippet, atCap } = await panel.evaluate((el) => ({
         scrollWidth: el.scrollWidth,
         clientWidth: el.clientWidth,
         snippet: el.textContent?.slice(0, 40) ?? '',
+        atCap: el.getBoundingClientRect().width >= window.innerWidth * 0.5 - 2,
       }));
       if (scrollWidth > pageMaxWidth) {
         // Content is unavoidably wider than the entire page -- horizontal
         // scroll is the documented, accepted behavior here, not a bug.
+        continue;
+      }
+      if (atCap) {
+        // The page width is no longer the ceiling: "all x-demo code must show
+        // all the code up to 50% vw" (owner, 2026-08-07; demo-code-panel-
+        // 50vw.spec.ts). Code wider than that sits at the cap and scrolls --
+        // the card-gallery Pro pricing demo's features="..." line is 755px of
+        // code that used to stretch the whole demo to 757px, and now stops at
+        // 640px by design. Below the cap, a scroll is still the #586
+        // locked-in-too-early bug and fails.
         continue;
       }
       expect(

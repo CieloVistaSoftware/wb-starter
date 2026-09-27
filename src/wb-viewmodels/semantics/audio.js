@@ -186,7 +186,7 @@ export function audio(element, options = {}) {
   // this specific source (a strictly better trade than "nothing plays").
   let corsFallbackTried = false;
   let genericRetryTried = false;
-  audioEl.addEventListener('error', () => {
+  const onMediaError = () => {
     if (!document.contains(audioEl)) return;
     if (!corsFallbackTried && audioEl.crossOrigin && config.src) {
       corsFallbackTried = true;
@@ -219,7 +219,16 @@ export function audio(element, options = {}) {
     const mediaError = audioEl.error;
     const reason = mediaError ? `code ${mediaError.code} (${mediaError.message || 'no message'})` : 'unknown';
     throw new Error(`x-audio: failed to load src "${config.src}" -- ${reason}. The file is missing, unreachable, or has no real content (0 bytes).`);
-  });
+  };
+  audioEl.addEventListener('error', onMediaError);
+  // An authored <audio> starts fetching the moment it is parsed, and the lazy
+  // runtime (#491) only enhances it once it nears the viewport -- so a missing
+  // or 0-byte src has often ALREADY failed by the time this listener exists.
+  // The 'error' event does not fire twice, so that failure was never seen:
+  // the #433 guarantee held only for the <div x-audio> form, which builds its
+  // own element here. A media error already on the element is the same event,
+  // just early; handle it now.
+  if (audioEl.error) onMediaError();
 
   // Only replace with the custom Marantz transport when the author actually
   // asked for the enhanced UI: the <audio> custom tag (which has nothing

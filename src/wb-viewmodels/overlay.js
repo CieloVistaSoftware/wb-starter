@@ -176,6 +176,46 @@ function positionPopover(trigger, popover, position) {
 }
 
 /**
+ * variant="push": translate the page's content aside by the panel's measured
+ * size instead of dimming it. Returns what was pushed, for releasePushedPage().
+ *
+ * The target is the page's `body > .page` wrapper when it has one. Pages
+ * without that wrapper (demos/site/*.html render straight into
+ * <body class="demo-page">) used to get NO push at all -- the lookup came
+ * back null and the variant silently behaved like a backdrop-less overlay.
+ * There, every in-flow child of body is pushed instead. Never body or html
+ * themselves: the panel is a position:fixed child of body, and a transform on
+ * an ancestor becomes the containing block for fixed descendants, so the panel
+ * would ride along with the page it is meant to push. Siblings are safe.
+ */
+function pushPageAside(panel, position, overlayParts) {
+  const wrapper = document.querySelector('body > .page');
+  const targets = wrapper
+    ? [wrapper]
+    : Array.from(document.body.children).filter((el) =>
+        !overlayParts.includes(el) &&
+        !/^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(el.tagName) &&
+        getComputedStyle(el).position !== 'fixed');
+  const vertical = position === 'top' || position === 'bottom';
+  const rect = panel.getBoundingClientRect();
+  const amount = vertical ? rect.height : rect.width;
+  const sign = (position === 'right' || position === 'bottom') ? -1 : 1;
+  for (const el of targets) {
+    el.style.setProperty(vertical ? '--x-drawer-push-y' : '--x-drawer-push-x', `${sign * amount}px`);
+    el.classList.add('x-drawer-push-target', 'x-drawer-push-target--open');
+  }
+  return targets;
+}
+
+function releasePushedPage(targets) {
+  for (const el of targets) {
+    el.classList.remove('x-drawer-push-target--open');
+    el.style.removeProperty('--x-drawer-push-x');
+    el.style.removeProperty('--x-drawer-push-y');
+  }
+}
+
+/**
  * Drawer - Slide-out panel (works on button click)
  * Custom Tag: <div x-drawer>
  *
@@ -219,7 +259,18 @@ export function drawer(element, options = {}) {
   // PATH B never touches `element` at all, it only appends its own
   // drawerEl/backdropEl to document.body) -- confirmed by reading both
   // branches below, so it's safe to read once, up front.
-  const originalText = (element.textContent || '').trim();
+  //
+  // Except when the schema has ALREADY run: then the host's textContent is
+  // the schema-built panel's own text (title + close glyph + the schema's
+  // "this is the content" default), not anything the author wrote. The
+  // pre-wipe authored content is what schema-builder.js stashed on
+  // _wbOriginalSlot, so read that instead -- otherwise PATH A's content
+  // fallback below is the panel describing itself.
+  const originalText = schemaProcessed && element._wbOriginalSlot !== undefined
+    ? String(element._wbOriginalSlot).trim()
+    : (element.textContent || '').trim();
+
+  const authoredContent = options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || originalText;
 
   const config = {
     // Plain title/content match drawer.schema.json's actual property names.
@@ -241,7 +292,7 @@ export function drawer(element, options = {}) {
     // text before falling back to the old hardcoded string, so a bare-text
     // demo shows its own words instead of a generic placeholder.
     title: options.title || element.getAttribute('title') || element.getAttribute('drawer-title') || element.getAttribute('heading') || '',
-    content: options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || originalText || 'Drawer content',
+    content: authoredContent || 'Drawer content',
     position: options.position || element.getAttribute('position') || 'right',
     width: options.width || element.getAttribute('width') || '320px',
     // height backs top/bottom positions (drawer.schema.json's `height`
@@ -262,6 +313,10 @@ export function drawer(element, options = {}) {
     showClose: options.showClose ?? readFlag(element, 'show-close', true),
     ...options
   };
+  // Read once for both paths: PATH A (schema-built panel) and PATH B (built
+  // here) each decide backdrop-vs-push from it, and config never changes after
+  // this point, so two copies could only ever drift.
+  const isPush = config.variant === 'push';
 
   element.classList.add('x-drawer-trigger');
   // #448: no classList.add('x-drawer') here -- it just duplicated this
@@ -303,6 +358,42 @@ export function drawer(element, options = {}) {
       }
 
       builtPanel.classList.add(`x-drawer--${config.position}`);
+      // variant and width/height were PATH B-only: the schema build is the path
+      // every page takes now (wb-lazy.js builds schemas for attribute hosts
+      // since #884), so on demos/site/overlays.html all three variants opened
+      // identically and `width="400px"` was ignored. Same classes and $cssAPI
+      // custom properties PATH B applies, so drawer.css styles both alike.
+      builtPanel.classList.add(`x-drawer--${config.variant}`);
+      if (config.position === 'top' || config.position === 'bottom') {
+        builtPanel.style.setProperty('--x-drawer-height', config.height);
+      } else {
+        builtPanel.style.setProperty('--x-drawer-width', config.width);
+      }
+
+      // The schema fills title/body from attributes (and their registered
+      // synonyms, attribute-aliases.js) or, failing those, from its own
+      // "this is the title"/"this is the content" defaults. It never sees the
+      // host's own text on the wb.js runtime, which has no keepAuthoredText
+      // step, so a bare `<aside x-drawer>position=left</aside>` opened on the
+      // placeholder body there. Write what the author actually supplied (an
+      // option passed to drawer() included) over the schema's output; an
+      // empty invocation keeps the schema's self-describing defaults.
+      if (config.title) {
+        let builtTitle = builtPanel.querySelector('.x-drawer__title');
+        if (!builtTitle) {
+          const header = builtPanel.querySelector('.x-drawer__header');
+          if (header) {
+            builtTitle = document.createElement('h2');
+            builtTitle.className = 'x-drawer__title';
+            header.insertBefore(builtTitle, header.firstChild);
+          }
+        }
+        if (builtTitle) builtTitle.textContent = config.title;
+      }
+      const builtBody = builtPanel.querySelector('.x-drawer__body');
+      if (builtBody && authoredContent) {
+        builtBody.innerHTML = config.content;
+      }
 
       // $view's "close" part has no default content (drawer.schema.json
       // never gives it a label) -- give it one only if still empty, so an
@@ -312,15 +403,19 @@ export function drawer(element, options = {}) {
       if (builtCloseBtn && !builtCloseBtn.textContent.trim()) builtCloseBtn.innerHTML = '&times;';
       if (builtCloseBtn && !config.showClose) builtCloseBtn.hidden = true;
 
+      let pushed = null;
       const isOpen = () => builtPanel.classList.contains('x-drawer__panel--open');
       const show = () => {
         builtPanel.classList.add('x-drawer__panel--open');
-        if (builtBackdrop) builtBackdrop.classList.add('x-drawer__backdrop--open');
+        // push has no dimming backdrop -- see PATH B's show() for the pattern.
+        if (builtBackdrop && !isPush) builtBackdrop.classList.add('x-drawer__backdrop--open');
+        if (isPush) pushed = pushPageAside(builtPanel, config.position, [builtPanel, builtBackdrop]);
         document.body.classList.add('x-scroll-lock');
       };
       const hide = () => {
         builtPanel.classList.remove('x-drawer__panel--open');
         if (builtBackdrop) builtBackdrop.classList.remove('x-drawer__backdrop--open');
+        if (pushed) { releasePushedPage(pushed); pushed = null; }
         document.body.classList.remove('x-scroll-lock');
       };
       const toggle = () => (isOpen() ? hide() : show());
@@ -385,8 +480,6 @@ export function drawer(element, options = {}) {
   const show = () => {
     if (panelEl) return;
 
-    const isPush = config.variant === 'push';
-
     // 'push' has no dimming backdrop -- it shoves the page's own content
     // aside instead of overlaying it (Material Design's "push" navigation
     // drawer is the reference pattern; drawerLayout() in layouts.js is a
@@ -427,33 +520,15 @@ export function drawer(element, options = {}) {
     if (config.closeOnEscape) document.addEventListener('keydown', onEscape);
     document.body.classList.add('x-scroll-lock');
 
-    if (isPush) {
-      // Push the page's own content wrapper (`body > .page`, the standard
-      // top-level wrapper every demos/site/*.html page renders into) --
-      // NEVER document.body itself: panelEl is `position: fixed` and is
-      // also a direct child of body, so a transform on body would make body
-      // the fixed-position containing block for its own panel child,
-      // breaking the panel's fixed-to-viewport positioning the instant the
-      // push page-content animates. Measuring after append (not using
-      // config.width/height directly) so an 'auto' height still produces a
-      // real pixel push amount for top/bottom.
-      pushTarget = document.querySelector('body > .page');
-    }
-
     // Panel/backdrop must exist in the DOM with their CLOSED transform for
     // at least one frame before `--open` is added, or the browser paints
     // the open state directly with no visible slide-in transition.
     requestAnimationFrame(() => {
       if (backdropEl) backdropEl.classList.add('x-drawer__backdrop--open');
       panelEl.classList.add('x-drawer__panel--open');
-      if (pushTarget) {
-        const rect = panelEl.getBoundingClientRect();
-        const amount = isHorizontalEdge() ? rect.height : rect.width;
-        const sign = (config.position === 'right' || config.position === 'bottom') ? -1 : 1;
-        pushTarget.style.setProperty(isHorizontalEdge() ? '--x-drawer-push-y' : '--x-drawer-push-x', `${sign * amount}px`);
-        pushTarget.classList.add('x-drawer-push-target');
-        pushTarget.classList.add('x-drawer-push-target--open');
-      }
+      // Measured after append (not config.width/height) so an 'auto' height
+      // still yields a real pixel push amount for top/bottom.
+      if (isPush) pushTarget = pushPageAside(panelEl, config.position, [panelEl, backdropEl]);
     });
   };
 
@@ -465,12 +540,7 @@ export function drawer(element, options = {}) {
     document.removeEventListener('keydown', onEscape);
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
     if (panelEl) { panelEl.remove(); panelEl = null; }
-    if (pushTarget) {
-      pushTarget.classList.remove('x-drawer-push-target--open');
-      pushTarget.style.removeProperty('--x-drawer-push-x');
-      pushTarget.style.removeProperty('--x-drawer-push-y');
-      pushTarget = null;
-    }
+    if (pushTarget) { releasePushedPage(pushTarget); pushTarget = null; }
     document.body.classList.remove('x-scroll-lock');
   };
 

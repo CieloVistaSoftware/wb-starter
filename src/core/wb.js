@@ -138,6 +138,7 @@ function traceMediaLoads() {
 import { behaviors } from '../wb-viewmodels/index.js';
 import { markReady, isReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
+import { isComponentLandmark } from './component-landmark.js';
 import { styleSheetDefinesClass } from './style-registry.js';
 import { Events } from './events.js';
 import { matchingElements } from './dom-query.js';
@@ -1062,11 +1063,10 @@ const WB = {
             // <header>/<footer> (rendered as x-card__header / x-card__footer).
             // Don't let the generic header/footer behaviors hijack a header or
             // footer that lives inside an <article>/.x-card — that produced a
-            // racing x-header instead of x-card__header. (#159)
-            if ((behavior === 'header' || behavior === 'footer') &&
-                htmlEl.parentElement && htmlEl.parentElement.closest('article, .x-card')) {
-              return;
-            }
+            // racing x-header instead of x-card__header. (#159) The rule is
+            // shared with wb-lazy.js now (component-landmark.js), which never
+            // had it.
+            if (isComponentLandmark(htmlEl)) return;
             // Additive, but NOT when an explicit x-* attribute REPLACES this
             // behavior (#923). This loop used to say "we don't check for other
             // attributes here anymore" and inject unconditionally, which is why
@@ -1256,6 +1256,9 @@ const WB = {
                 if (!getConfig('autoInject') && !descEl.hasAttribute('variant')) return;
                 // Only skip if explicitly ignored
                 if (!descEl.hasAttribute('x-ignore')) {
+                  // Same landmark rule as scan()'s loop (component-landmark.js)
+                  // -- a card built after load owns its header too.
+                  if (isComponentLandmark(descEl)) return;
                   // Same replacement guard as scan()'s loop (#923) -- a node
                   // added later must resolve identically to the same markup
                   // present at load, or the double-render comes back for

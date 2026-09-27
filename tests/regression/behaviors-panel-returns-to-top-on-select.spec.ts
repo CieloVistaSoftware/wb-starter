@@ -49,6 +49,17 @@ import { test, expect } from '../fixtures/offline';
  * Measuring with indices produced numbers that swung between -241 and +94 and
  * looked like a race; it was two different samples being compared. Named rows
  * are stable, which is what made the one-pixel result above reproducible.
+ *
+ * THE SCROLLER MOVED (#992)
+ *
+ * #992 gave the live panel a fixed height and its own scrollbar, so the page
+ * no longer scrolls at all -- #siteBody is overflow:hidden with 0px to scroll
+ * (measured at this viewport: 626 of 626) and the precondition below failed
+ * on every run. Reading a long sample now means scrolling #behaviors-live
+ * itself, and the same bug in the new layout is that panel keeping its
+ * scroll position across selections (selectRow() now resets it). So the
+ * scroller measured here is #behaviors-live, and "in view" is its scrollTop
+ * back at 0 -- the preview's first pixel at the top of the panel.
  */
 
 const WIDE = { width: 1220, height: 690 };
@@ -57,13 +68,9 @@ const ROW = '.behaviors-search-results__row';
 const TOKEN = '.behaviors-search-results__token';
 const CODE = '#behaviors-live-code pre code.hljs';
 
-/** Panel top relative to the scroller's visible region. Negative = above it. */
-async function panelTop(page: import('@playwright/test').Page): Promise<number> {
-  return page.evaluate(() => {
-    const sb = document.getElementById('siteBody')!;
-    const panel = document.querySelector('#behaviors-live')!;
-    return Math.round(panel.getBoundingClientRect().top - sb.getBoundingClientRect().top);
-  });
+/** How far the live panel has been scrolled down. 0 = its preview is at the top. */
+async function panelScroll(page: import('@playwright/test').Page): Promise<number> {
+  return page.evaluate(() => Math.round(document.getElementById('behaviors-live')!.scrollTop));
 }
 
 test.describe('behaviors browse: selecting a sample reveals its preview', () => {
@@ -78,6 +85,15 @@ test.describe('behaviors browse: selecting a sample reveals its preview', () => 
       const row = page.locator(ROW)
         .filter({ has: page.locator(TOKEN, { hasText: new RegExp(`^${name}$`) }) })
         .first();
+      // #995 folds a behavior's several option rows into a <details> that is
+      // collapsed until the reader expands it ("the user must expand it
+      // first"). audio and button both have several options, so their rows
+      // are hidden inside a closed group and could never be scrolled to.
+      // Expand the group the way a reader does -- its summary -- then pick.
+      const group = row.locator('xpath=ancestor::details[1]');
+      if (await group.count() && !(await group.evaluate((d) => (d as HTMLDetailsElement).open))) {
+        await group.locator(':scope > summary').click();
+      }
       await row.scrollIntoViewIfNeeded();
       await row.click();
       // highlight.js adds .hljs only once the panel's code is populated, so
@@ -89,22 +105,22 @@ test.describe('behaviors browse: selecting a sample reveals its preview', () => 
 
     // Scroll the way a reader does to read the sample's source.
     await page.evaluate(() => {
-      const sb = document.getElementById('siteBody')!;
-      sb.scrollTop = sb.scrollHeight;
+      const live = document.getElementById('behaviors-live')!;
+      live.scrollTop = live.scrollHeight;
     });
 
     // The precondition must really hold, or this test proves nothing: the
-    // scroller has to have moved far enough that the panel is off the top.
-    const scrolled = await page.evaluate(() => {
-      const sb = document.getElementById('siteBody')!;
-      return { top: Math.round(sb.scrollTop), max: Math.round(sb.scrollHeight - sb.clientHeight) };
+    // panel has to have moved far enough that its preview is off the top.
+    const max = await page.evaluate(() => {
+      const live = document.getElementById('behaviors-live')!;
+      return Math.round(live.scrollHeight - live.clientHeight);
     });
     expect(
-      scrolled.max,
-      '#siteBody is not scrollable here, so this test cannot exercise the behavior '
-      + 'it exists for. If the page shrank, pick a longer sample or a shorter viewport.',
+      max,
+      '#behaviors-live is not scrollable here, so this test cannot exercise the behavior '
+      + 'it exists for. If the panel shrank, pick a longer sample or a shorter viewport.',
     ).toBeGreaterThan(100);
-    expect(await panelTop(page), 'panel should be above the fold before the click').toBeLessThan(0);
+    expect(await panelScroll(page), 'panel should be scrolled down before the click').toBeGreaterThan(100);
 
     // Pick a different sample.
     await pick('button');
@@ -113,15 +129,12 @@ test.describe('behaviors browse: selecting a sample reveals its preview', () => 
     // first pixel is at or below the top of the scroller's visible region, so
     // the sample just clicked can be seen without scrolling back up.
     await expect
-      .poll(() => panelTop(page), {
+      .poll(() => panelScroll(page), {
         message:
-          'The preview panel is still above the fold after selecting a sample, so the '
-          + 'sample the reader just clicked cannot be seen without scrolling back up. '
-          + 'pages/behaviors.html calls liveEl.scrollIntoView({ block: "start" }) but '
-          + 'guards BOTH call sites with STACKED.matches, so the reveal never runs in '
-          + 'the side-by-side layout.',
+          'The live panel kept its scroll position after selecting a sample, so the '
+          + 'sample the reader just clicked renders above the visible area of the panel.',
         timeout: 10000,
       })
-      .toBeGreaterThanOrEqual(0);
+      .toBe(0);
   });
 });

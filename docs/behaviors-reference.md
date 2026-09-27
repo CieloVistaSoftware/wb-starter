@@ -185,11 +185,17 @@ Enhances standard HTML elements with better styling and functionality.
 **`select`**
 
 <div x-demo>
-<select
+<div x-select
   label="Country"
   options='[{"value":"us","label":"United States"},{"value":"uk","label":"United Kingdom"}]'>
-</select>
 </div>
+</div>
+
+`label` and `options` build the `<select>` for you, so they belong on an
+`x-select` host. A native `<select>` keeps its own `<option>` children as the
+choices and ignores an `options` attribute
+([select.md](behaviors/select.md)) -- written there, this example rendered an
+empty dropdown.
 
 **`checkbox`**
 

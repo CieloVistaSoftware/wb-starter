@@ -39,6 +39,7 @@
  */
 
 import { test, expect as baseExpect, type Page } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 /**
  * Every assertion in this file gets a 15s budget instead of Playwright's
@@ -399,8 +400,11 @@ test.describe('Cards Showcase Page', () => {
       const imageCard = page.locator('[x-cardimage][aspect]').first();
       await expect(imageCard).toBeVisible();
       // #491: a card is built only as it nears the viewport; scroll to it
-      // as a reader does before looking inside it.
-      await imageCard.scrollIntoViewIfNeeded();
+      // as a reader does before looking inside it -- and wait for THAT card to
+      // settle (x-ready). Scrolling alone left toBeAttached's 5s default as
+      // the whole budget for the build, which a loaded run (4 workers on a
+      // 39,000px page) overshot.
+      await buildInView(imageCard);
       const figure = imageCard.locator('.x-card__figure').first();
       await expect(figure).toBeAttached();
       await expect.poll(() => figure.evaluate(el =>

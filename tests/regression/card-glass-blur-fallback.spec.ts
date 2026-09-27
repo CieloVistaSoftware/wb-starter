@@ -49,11 +49,12 @@ async function injectGlassCard(page: Page) {
     await (window as any).WB.scan(container);
   });
 
-  // card.js applies the x-card--glass class asynchronously (deferred via
-  // IntersectionObserver, same as card-typed-variants-no-op.spec.ts) --
-  // poll rather than assume it's present immediately.
+  // card.js no longer stamps x-card--glass (a8a7362e): card.css reads
+  // [variant="glass"] off the element. So wait for the card behavior to
+  // settle (x-ready) -- it is what triggers card.css's JIT load -- rather than
+  // for a class that will never arrive.
   await page.waitForFunction(
-    () => document.getElementById('glass-card')?.classList.contains('x-card--glass'),
+    () => document.getElementById('glass-card')?.hasAttribute('x-ready'),
     null,
     { timeout: 5000 }
   );
@@ -76,7 +77,10 @@ test.describe('.x-card glass variant: backdrop-filter fallback (#351)', () => {
       for (const sheet of Array.from(document.styleSheets)) {
         try {
           for (const rule of Array.from(sheet.cssRules) as CSSStyleRule[]) {
-            if (rule.selectorText === '.x-card--glass' && rule.style) {
+            // The glass rule selects the attribute the card carries; the old
+            // class stays in the same selector list for markup that still
+            // writes it.
+            if (rule.selectorText?.includes('[variant="glass"]') && !rule.selectorText.includes(':') && rule.style) {
               const bd = rule.style.getPropertyValue('backdrop-filter');
               const webkitBd = rule.style.getPropertyValue('-webkit-backdrop-filter');
               if (bd || webkitBd) return { backdropFilter: bd, webkitBackdropFilter: webkitBd };
@@ -89,7 +93,7 @@ test.describe('.x-card glass variant: backdrop-filter fallback (#351)', () => {
       return null;
     });
 
-    expect(declared, '.x-card--glass rule with backdrop-filter must exist in a loaded stylesheet').not.toBeNull();
+    expect(declared, '[variant="glass"] rule with backdrop-filter must exist in a loaded stylesheet').not.toBeNull();
     // Chromium's CSSOM treats `-webkit-backdrop-filter` as an alias of the
     // canonical `backdrop-filter` longhand rather than a distinct stored
     // property, so only one of the two getPropertyValue() calls is
@@ -133,9 +137,9 @@ test.describe('.x-card glass variant: backdrop-filter fallback (#351)', () => {
             result.found = true;
             for (const inner of Array.from(r.cssRules) as CSSStyleRule[]) {
               const sel = inner.selectorText || '';
-              if (sel.includes('.x-card--glass') && sel.includes('::before')) {
+              if (sel.includes('[variant="glass"]') && sel.includes('::before')) {
                 result.shimmerDisabled = inner.style.getPropertyValue('display').trim() === 'none';
-              } else if (sel.includes('.x-card--glass')) {
+              } else if (sel.includes('[variant="glass"]')) {
                 const bg = inner.style.getPropertyValue('background');
                 const bc = inner.style.getPropertyValue('border-color');
                 if (bg) result.background = bg;
@@ -149,25 +153,38 @@ test.describe('.x-card glass variant: backdrop-filter fallback (#351)', () => {
     });
 
     expect(fallback.found, '@supports not (backdrop-filter: blur(1px)) block must exist (same pattern as navbar.css)').toBe(true);
-    expect(fallback.background, 'fallback .x-card--glass background must be set').toContain('--card-glass-bg-fallback');
-    expect(fallback.borderColor, 'fallback .x-card--glass border-color must be set').toContain('--card-glass-border-fallback');
+    expect(fallback.background, 'fallback [variant="glass"] background must be set').toContain('--card-glass-bg-fallback');
+    expect(fallback.borderColor, 'fallback [variant="glass"] border-color must be set').toContain('--card-glass-border-fallback');
     expect(fallback.shimmerDisabled, '::before shimmer must be disabled (display: none) inside the fallback block').toBe(true);
 
     // The fallback tokens themselves must resolve to a MORE opaque alpha
     // than the normal glass tokens, not just be present -- otherwise the
     // fallback swap would be a no-op dressed up as a fix.
+    //
+    // Measured on a RESOLVED color, not by parsing the token's source text.
+    // themes.css now derives these tokens with color-mix() (so they adapt to
+    // light themes), which has no literal `/ alpha)` for a regex to find --
+    // the old parser returned null for all four. Painting each token onto a
+    // probe and reading the computed color works for any spelling.
     const alphas = await page.evaluate(() => {
-      const cs = getComputedStyle(document.documentElement);
-      const alphaOf = (value: string) => {
-        const m = value.match(/\/\s*([\d.]+)\s*\)/);
-        return m ? parseFloat(m[1]) : null;
+      const probe = document.createElement('div');
+      document.body.appendChild(probe);
+      const alphaOf = (token: string) => {
+        probe.style.backgroundColor = `var(${token})`;
+        const c = getComputedStyle(probe).backgroundColor;
+        // rgba(r, g, b, a) / color(srgb r g b / a); an opaque rgb() has no alpha.
+        const m = c.match(/,\s*([\d.]+)\s*\)$/) || c.match(/\/\s*([\d.]+)\s*\)$/);
+        if (m) return parseFloat(m[1]);
+        return /^rgb\(/.test(c) ? 1 : null;
       };
-      return {
-        bg: alphaOf(cs.getPropertyValue('--card-glass-bg').trim()),
-        bgFallback: alphaOf(cs.getPropertyValue('--card-glass-bg-fallback').trim()),
-        border: alphaOf(cs.getPropertyValue('--card-glass-border').trim()),
-        borderFallback: alphaOf(cs.getPropertyValue('--card-glass-border-fallback').trim()),
+      const out = {
+        bg: alphaOf('--card-glass-bg'),
+        bgFallback: alphaOf('--card-glass-bg-fallback'),
+        border: alphaOf('--card-glass-border'),
+        borderFallback: alphaOf('--card-glass-border-fallback'),
       };
+      probe.remove();
+      return out;
     });
 
     expect(alphas.bg).not.toBeNull();

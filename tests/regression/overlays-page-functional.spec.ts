@@ -102,7 +102,13 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     // The authored <dialog>s, not a class: the lazy runtime (#491) only builds
     // a trigger as it nears the viewport, so counting .x-dialog-trigger up
     // front would count only the ones already built. Each is scrolled to below.
-    const triggers = page.locator('section[id^="dialog-"] dialog');
+    //
+    // They are <button x-dialog> now. They were generated as bare <dialog>
+    // elements (the tag-to-attribute migration's reading of <x-dialog>), which
+    // the UA hides until opened and dialog.js enhances as the dialog itself,
+    // never as a trigger -- so every one rendered as nothing to click and this
+    // test timed out. scripts/generate-site.mjs now emits the trigger form.
+    const triggers = page.locator('section[id^="dialog-"] [x-dialog]');
     const count = await triggers.count();
     expect(count, 'expected multiple .x-dialog triggers on this page').toBeGreaterThan(1);
 
@@ -118,7 +124,7 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
       await expect(dialog).not.toBeVisible({ timeout: 3000 }).catch(() => {});
     }
 
-    const basicSection = page.locator('#dialog-dialog dialog');
+    const basicSection = page.locator('#dialog-dialog [x-dialog]');
     const basicCount = await basicSection.count();
     const basicTexts = new Set<string>();
     for (let i = 0; i < basicCount; i++) {
@@ -137,7 +143,7 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     // The "size variants" section triggers are unlabeled ("size=sm" etc as
     // their own text) -- select them by that section's own scope.
     const section = page.locator('#dialog-size-variants');
-    const triggers = section.locator('dialog');
+    const triggers = section.locator('[x-dialog]');
     const count = await triggers.count();
     expect(count).toBeGreaterThanOrEqual(5);
 

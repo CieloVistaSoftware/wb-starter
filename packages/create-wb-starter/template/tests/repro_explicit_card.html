@@ -21,8 +21,11 @@
         <p>Just text.</p>
     </article>
 
-    <!-- 2. Explicit Card (Should BE a card) -->
-    <article id="explicit">
+    <!-- 2. Explicit Card (Should BE a card). It carries the behavior by name:
+         this page runs with autoInject:false, so the tag alone does nothing.
+         It was data-wb="card" originally; the data-wb migration dropped the
+         attribute and left this article indistinguishable from #plain. -->
+    <article id="explicit" x-card>
         <header>
             <h3>Explicit Card</h3>
         </header>

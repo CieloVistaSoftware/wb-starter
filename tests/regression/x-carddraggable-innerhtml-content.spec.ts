@@ -19,13 +19,16 @@ test.describe('[x-carddraggable] renders plain inner text as its content (#455-p
     await setupBehaviorTest(page);
   });
 
-  test('inner text is preserved in .x-card__main, not silently dropped', async ({ page }) => {
+  // The body is the card's own <main> (base.createMain()); it carries no
+  // .x-card__main class since a8a7362e -- card.css selects `> main` -- so
+  // both tests locate it by tag.
+  test('inner text is preserved in the card body, not silently dropped', async ({ page }) => {
     const el = await setupTestContainer(
       page,
       '<div x-carddraggable axis="both">This is example draggable card content.</div>'
     );
 
-    const main = el.locator('.x-card__main');
+    const main = el.locator(':scope > main');
     await expect(main).toBeVisible();
     await expect(main).toContainText('This is example draggable card content.');
   });
@@ -36,7 +39,7 @@ test.describe('[x-carddraggable] renders plain inner text as its content (#455-p
       '<div x-carddraggable content="Explicit content attribute"></div>'
     );
 
-    const main = el.locator('.x-card__main');
+    const main = el.locator(':scope > main');
     await expect(main).toContainText('Explicit content attribute');
   });
 });

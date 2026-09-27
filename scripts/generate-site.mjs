@@ -131,10 +131,20 @@ function findSchema(name) {
 // Warning:</strong> This is the alert content.</div>`. A generator
 // can't hand-write per-component prose, but it can stay non-empty (still
 // solving the original 0-height problem) without parroting the attrs.
-function placeholderChildren(schema) {
+function placeholderChildren(schema, host) {
+  // A <table> cannot hold text: the parser foster-parents it OUT, in front of
+  // the table, leaving an empty 0x0 <table> -- every table demo on
+  // content.html rendered as a blank box with its sentence floating above.
+  // Tables get rows instead, enough for sortable/filterable/paginated to act on.
+  if (host === 'table') return TABLE_SAMPLE;
   const label = (schema.title || schema.schemaFor || 'component').toLowerCase();
   return `This is example ${label} content.`;
 }
+
+const TABLE_SAMPLE = '<thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead>'
+  + '<tbody><tr><td>Ada Lovelace</td><td>Engineer</td><td>Active</td></tr>'
+  + '<tr><td>Grace Hopper</td><td>Admiral</td><td>Active</td></tr>'
+  + '<tr><td>Alan Turing</td><td>Researcher</td><td>Away</td></tr></tbody>';
 
 // #490: components whose resting render is a CLOSED trigger -- the
 // position/variant-differentiated panel only exists after a click
@@ -208,7 +218,6 @@ function buildDemo(schema, tag, attrs) {
   const label = Object.entries(attrs)
     .filter(([, v]) => v !== false && v !== null && v !== undefined)
     .map(([k, v]) => `${k}=${v}`).join(', ');
-  const children = (isTrigger && label) ? label : placeholderChildren(schema);
   const extras = DEMO_EXTRA_ATTRS[schema.schemaFor] || {};
 
   // Components are gone, but "no component tag" does not mean "always a div".
@@ -238,8 +247,15 @@ function buildDemo(schema, tag, attrs) {
   // nativeMap is the authority for what a bare tag actually becomes.
   const autoInjectsThis = isSemantic && NATIVE_MAP[semanticTag] === schema.schemaFor;
 
-  const host = isSemantic ? semanticTag : tag;
-  const behavior = autoInjectsThis ? {} : { [`x-${schema.schemaFor}`]: true };
+  // A closed <dialog> is display:none -- as the demo's subject it renders
+  // nothing at all, so a showcase of dialog variants was a column of empty
+  // boxes (overlays.html). A trigger component's resting render must be its
+  // TRIGGER (#490), and dialog.js's trigger mode is x-dialog on any element
+  // other than <dialog>: a <button> is the semantic one.
+  const dialogTrigger = isTrigger && isSemantic && semanticTag === 'dialog';
+  const host = dialogTrigger ? 'button' : (isSemantic ? semanticTag : tag);
+  const behavior = (autoInjectsThis && !dialogTrigger) ? {} : { [`x-${schema.schemaFor}`]: true };
+  const children = (isTrigger && label) ? label : placeholderChildren(schema, host);
 
   return { tag: host, attrs: { ...behavior, ...extras, ...attrs }, children };
 }
@@ -360,7 +376,15 @@ function deduplicateSections(sections) {
   const seen = new Set();
   for (const section of sections) {
     section.demos = section.demos.filter(demo => {
-      const key = JSON.stringify({ tag: demo.tag, attrs: demo.attrs });
+      // Key on what is RENDERED, not on the attrs object: generatePageHtml
+      // drops false/null/undefined attributes, so snow's matrix combo
+      // { repeat: false } and the empty combo {} were different keys that
+      // emitted the byte-identical <div x-snow> -- the same demo twice on
+      // effects.html (#657).
+      const rendered = Object.fromEntries(
+        Object.entries(demo.attrs).filter(([, v]) => v !== false && v !== null && v !== undefined)
+      );
+      const key = JSON.stringify({ tag: demo.tag, attrs: rendered });
       if (seen.has(key)) return false;
       seen.add(key);
       return true;

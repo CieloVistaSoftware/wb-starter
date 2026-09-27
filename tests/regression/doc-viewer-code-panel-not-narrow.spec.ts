@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { demoWidthsSettled } from '../base';
 
 /**
  * #560: "docs/behaviors/article.md: doc-viewer code panels render
@@ -42,8 +43,11 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
 
       const demos = page.locator('[x-demo]');
       await expect(demos.first()).toBeVisible({ timeout: 20000 });
-      // Let shrink-to-fit's rAF-scheduled measurement settle.
+      // Let shrink-to-fit's rAF-scheduled measurement settle -- and then wait
+      // for every demo to have committed it (demoWidthsSettled: until then
+      // demo.css holds the panel at the 50vw cap, whatever it will commit).
       await page.waitForTimeout(500);
+      await demoWidthsSettled(page);
 
       const count = await demos.count();
       expect(count, `${file} should render at least one <div x-demo>`).toBeGreaterThan(0);
@@ -53,10 +57,21 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
         const panelCount = await codePanels.count();
         for (let p = 0; p < panelCount; p++) {
           const panel = codePanels.nth(p);
-          const { scrollWidth, clientWidth } = await panel.evaluate((el) => ({
+          const { scrollWidth, clientWidth, atCap } = await panel.evaluate((el) => ({
             scrollWidth: el.scrollWidth,
             clientWidth: el.clientWidth,
+            atCap: el.getBoundingClientRect().width >= window.innerWidth * 0.5 - 2,
           }));
+          // The one scroll that is correct: code wider than 50vw sits AT the
+          // cap and scrolls the rest. Owner requirement 2026-08-07, "all
+          // x-demo code must show all the code up to 50% vw", pinned by
+          // demo-code-panel-50vw.spec.ts; #390 made scroll-not-wrap the x-demo
+          // rule. This check predates the cap and read every scroll as the
+          // #563/#569 too-narrow bug -- card.md's byline <article> demo has a
+          // 66-character body line (688px at 1280) that now correctly stops
+          // at 640px. A panel narrower than the cap is still held to its
+          // content, which is the bug this file exists for.
+          if (atCap) continue;
           // Small tolerance for sub-pixel rounding only -- any real gap
           // means the box is sized narrower than its own content again.
           expect(

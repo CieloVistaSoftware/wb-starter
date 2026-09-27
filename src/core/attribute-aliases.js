@@ -34,6 +34,12 @@
 export const ATTRIBUTE_ALIASES = Object.freeze({
   // <div x-alert type="success"> predates variant= and still ships (#176).
   alert: { variant: ['type'] },
+  // <button x-drawer drawer-title="…" drawer-content="…"> predates the schema's
+  // plain title/content and still ships (demos/playground.html's example set,
+  // the create-wb-starter template). overlay.js's drawer() always read them,
+  // but the schema build did not, so the schema-built panel opened on its
+  // "this is the title"/"this is the content" defaults instead.
+  drawer: { title: ['drawer-title', 'heading'], content: ['drawer-content', 'description'] },
 });
 
 /**

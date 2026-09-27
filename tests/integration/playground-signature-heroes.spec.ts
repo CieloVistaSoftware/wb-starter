@@ -62,7 +62,14 @@ test.describe('Playground: 20 signature heroes example set', () => {
 
   test('a signature hero companion [x-modal] trigger actually opens a dialog', async ({ page }) => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
-    await page.selectOption('#pg-examples', 'signature-heroes');
+    // The "20 signature heroes" set was folded into "120 card heroes"
+    // (oneTwentyHeroes(): every other hero is the signature style with its
+    // companion modal), so the 'signature-heroes' option no longer exists and
+    // selectOption waited out the timeout.
+    await page.selectOption('#pg-examples', 'heroes-120');
+    const first = page.locator('#pg-preview [x-modal]').first();
+    // Lazy runtime (#491): the trigger is only enhanced near the viewport.
+    await first.scrollIntoViewIfNeeded();
     await page.waitForFunction(() => {
       const trigger = document.querySelector('#pg-preview [x-modal]');
       return !!trigger && typeof (trigger as any).showModal === 'function';

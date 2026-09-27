@@ -3,7 +3,7 @@
  * Generated from: home-page.schema.json → test.site
  */
 import { test, expect, Page } from '../../fixtures/offline';
-import { safeScrollIntoView } from '../../base';
+import { safeScrollIntoView, buildInView } from '../../base';
 
 const HOME_URL = '/pages/home.html';
 
@@ -186,10 +186,17 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     await expect(page.locator(FEATURE_CARD)).toHaveCount(6);
   });
 
-  test('Features: cards have x-card--float class after hydration', async ({ page }) => {
+  // Cards stopped stamping x-card--{variant} (a8a7362e): card.css reads
+  // [variant="float"] straight off the element. So "hydrated as a float card"
+  // is the card behavior settling (x-ready) plus the float rule's own shadow
+  // actually painting -- the thing the class was only ever a proxy for.
+  test('Features: float cards hydrate and paint the float shadow', async ({ page }) => {
     const cards = page.locator(FEATURE_CARD);
     for (let i = 0; i < 6; i++) {
-      await expect(cards.nth(i)).toHaveClass(/x-card--float/);
+      const card = cards.nth(i);
+      await buildInView(card);
+      await expect(card).not.toHaveClass(/x-card--float/);
+      await expect.poll(() => card.evaluate((el) => getComputedStyle(el).boxShadow)).not.toBe('none');
     }
   });
 

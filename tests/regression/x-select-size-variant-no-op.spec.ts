@@ -14,6 +14,11 @@ import { test, expect } from '../fixtures/offline';
  * ignoring variant entirely. Confirmed by John pasting ~23 x-select combos
  * (every size x variant) and reporting "almost zero variation" between
  * combos that should look visibly different.
+ *
+ * The built-from-attributes hosts below are `<div x-select>`. They were
+ * `<wb-select>`, and the tag-to-attribute migration rewrote them as bare
+ * `<select>` elements -- which take select()'s native branch, build nothing,
+ * and so could never contain the inner <select> these assertions look for.
  */
 const HARNESS = '/demos/test-harness.html';
 
@@ -46,10 +51,10 @@ async function inject(page: import('@playwright/test').Page, html: string) {
 test.describe('.x-select size/variant classes actually differ from default', () => {
   test('xs/sm/md/lg render distinct rendered <select> padding', async ({ page }) => {
     await inject(page, `
-      <select id="sel-xs" size="xs" options='[{"value":"1","label":"One"}]'></select>
-      <select id="sel-sm" size="sm" options='[{"value":"1","label":"One"}]'></select>
-      <select id="sel-md" size="md" options='[{"value":"1","label":"One"}]'></select>
-      <select id="sel-lg" size="lg" options='[{"value":"1","label":"One"}]'></select>
+      <div x-select id="sel-xs" size="xs" options='[{"value":"1","label":"One"}]'></div>
+      <div x-select id="sel-sm" size="sm" options='[{"value":"1","label":"One"}]'></div>
+      <div x-select id="sel-md" size="md" options='[{"value":"1","label":"One"}]'></div>
+      <div x-select id="sel-lg" size="lg" options='[{"value":"1","label":"One"}]'></div>
     `);
     // Padding is NOT inherited, so unlike font-size it can only differ if the
     // size class actually lands on the rendered <select> itself. Confirmed
@@ -66,9 +71,9 @@ test.describe('.x-select size/variant classes actually differ from default', () 
 
   test('default/success/error render three distinct rendered <select> border colors', async ({ page }) => {
     await inject(page, `
-      <select id="sel-default" variant="default" options='[{"value":"1","label":"One"}]'></select>
-      <select id="sel-success" variant="success" options='[{"value":"1","label":"One"}]'></select>
-      <select id="sel-error" variant="error" options='[{"value":"1","label":"One"}]'></select>
+      <div x-select id="sel-default" variant="default" options='[{"value":"1","label":"One"}]'></div>
+      <div x-select id="sel-success" variant="success" options='[{"value":"1","label":"One"}]'></div>
+      <div x-select id="sel-error" variant="error" options='[{"value":"1","label":"One"}]'></div>
     `);
     const colors = await Promise.all(
       ['#sel-default', '#sel-success', '#sel-error'].map((sel) =>

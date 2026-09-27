@@ -1,6 +1,7 @@
 import { WB_DOC_MAP } from './demo-docmap.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 import { hasBehavior } from './index.js';
+import { getNativeBehavior } from '../core/tag-map.js';
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------
@@ -85,9 +86,19 @@ export function formatHtml(raw) {
             const tag = node.tagName.toLowerCase();
             const attrs = Array.from(node.attributes);
             const isVoid = VOID.has(tag);
+            // A bare leading x-* attribute NAMES the element -- `<div
+            // x-cardpricing>` is what `<wb-cardpricing>` was before 4.0
+            // removed custom tags -- so it stays on the tag's own line, where
+            // the reader looks for what the element is. Splitting it off left
+            // every behavior example opening with an anonymous `<div` and its
+            // identity one line down among the options.
+            const lead = attrs.length > 1 && attrs[0].name.startsWith('x-') && attrs[0].value === ''
+                ? attrs[0]
+                : null;
             if (attrs.length > 1) {
-                out.push(`${pad}<${tag}`);
+                out.push(`${pad}<${tag}${lead ? ' ' + lead.name : ''}`);
                 attrs.forEach((a, i) => {
+                    if (a === lead) return;
                     const last = i === attrs.length - 1;
                     out.push(`${pad}${INDENT}${attrStr(a)}${last ? (isVoid ? ' />' : '>') : ''}`);
                 });
@@ -478,6 +489,19 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     setTimeout(() => observer.disconnect(), 8000);
 }
 
+// Owner requirement (2026-08-07): "all x-demo code must show all the code up
+// to 50% vw". A single-item demo is sized to the wider of its control and its
+// code (#563), and nothing bounded the code side: one long attribute line --
+// a features="..." list, an image URL -- stretched the demo, control and all,
+// to 757px or 1018px on a 1280px screen (demo-code-panel-50vw.spec.ts). Code
+// wider than half the viewport now sizes the panel to exactly 50vw and scrolls
+// the rest, which #390 made the intended treatment for x-demo code (scroll,
+// never wrap). A control wider than that still widens the demo on its own.
+// innerWidth, not clientWidth: 50vw in CSS includes the scrollbar too.
+function capCodeWidth(codeWidth) {
+    return Math.min(codeWidth, window.innerWidth * 0.5);
+}
+
 export async function demo(element, options = {}) {
     // Guard against double initialization
     if (element._demoInitialized) return () => {};
@@ -517,8 +541,17 @@ export async function demo(element, options = {}) {
             // the fully expanded runtime DOM, and taught readers they must
             // hand-write the <figure>/<header>/inline styles a behavior builds
             // for them.
-            const allDemos = document.querySelectorAll('[x-demo]');
-            const idx = Array.from(allDemos).indexOf(element);
+            // Count only the demos the PAGE FILE authored. A demo that
+            // mdhtml.js rendered out of fetched markdown is in the live DOM but
+            // not in this source, and mdhtml marks every one it renders with
+            // `_rawSource` before anything scans it. Counted, one such demo --
+            // demos/site/content.html's <div x-mdhtml src="../code.md"> holds
+            // one -- made the live total exceed the source total by one, so
+            // #580's guard below refused EVERY block built after the markdown
+            // arrived: "source unavailable" on 30 demos, the page's second half.
+            const allDemos = Array.from(document.querySelectorAll('[x-demo]'))
+                .filter((d) => d === element || !d._rawSource);
+            const idx = allDemos.indexOf(element);
             rawBlock = extractAttrBlock(pageSource, 'x-demo', idx, allDemos.length);
         } catch (e) {
             // ignore fetch errors
@@ -644,7 +677,22 @@ export async function demo(element, options = {}) {
     const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));
     const sharedComponents = allComponents.filter((comp) => !perInstanceComps.has(comp));
     const xBehaviors = sourceUnavailable ? findLiveXBehaviors(grid) : findXBehaviors(rawBlock);
-    if (perInstanceChildren.length > 0 || sharedComponents.length > 0 || xBehaviors.length > 0) {
+    // A demo's subject can also be a plain semantic element that tag-map
+    // decorates on its own -- `<article title="...">` IS a card (nativeMap
+    // 'article' -> 'card') with no x-* attribute and no <wb-*> tag. The two
+    // lookups above match only those, so every such demo got no 📖 at all even
+    // though docs/behaviors/card.md exists (cards-permutation-matrix.html: the
+    // four base-card blocks, #262/#388). Only DIRECT grid children count --
+    // they are what the block demonstrates, not incidental markup inside a
+    // card -- and only when the child carries no x-* behavior of its own,
+    // since `<article x-cardhero>` is documented by the cardhero badge.
+    const nativeSubjects = Array.from(grid.children)
+        .filter((child) => !Array.from(child.attributes).some(
+            ({ name }) => name.startsWith('x-') && hasBehavior(name.slice(2))
+        ))
+        .map((child) => ({ el: child, name: getNativeBehavior(child) }))
+        .filter(({ name }) => name);
+    if (perInstanceChildren.length > 0 || sharedComponents.length > 0 || xBehaviors.length > 0 || nativeSubjects.length > 0) {
         // Deterministic: await the (cached) manifest and build the links inline —
         // a floating .then() left empty divs when init raced page load.
         // #842: the generated docs index rides along in the same await — both
@@ -681,6 +729,17 @@ export async function demo(element, options = {}) {
             if (!hosts.length) return; // name matched in source text but no live element carries it
             resolvedXBehaviorNames.add(name);
             hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root, element));
+        });
+
+        // Exact per-behavior page only -- no behaviors-reference.md last
+        // resort: a native element with no page of its own is ordinary HTML,
+        // and a generic badge on every plain <button> would say nothing.
+        nativeSubjects.forEach(({ el, name }) => {
+            const behaviorDoc = findGeneratedBehaviorDoc(docsIndex, name);
+            if (!behaviorDoc) return; // never a dead link
+            // Labelled by the behavior, as every other badge is: the doc it
+            // opens is the behavior's page, which x-<name> also names.
+            attachInstanceDocLink(el, behaviorDoc, `x-${name}`, root, element);
         });
 
         const linkedComponents = sharedComponents
@@ -758,6 +817,15 @@ export async function demo(element, options = {}) {
     // visibility (not display) so the box still lays out and can be measured;
     // revealed unconditionally below, including when WB never arrives.
     pre.style.visibility = 'hidden';
+    // demo.css caps the code panel at 50vw while this is set, so every
+    // fit-content width painted before the single-item measurement below
+    // commits is already the width it will commit (see capCodeWidth). Set
+    // here, before the panel is in the document, so no frame lays the block
+    // out uncapped; and only on blocks that measurement will actually run for
+    // (same condition), since only its commit ever removes it.
+    if (cols === 1 && childCount === 1 && grid.children[0] && !element.classList.contains('x-demo--full-width')) {
+        element.classList.add('x-demo--measuring');
+    }
     element.appendChild(pre);
 
     // Syntax highlight the "view source" panel just created above — scoped to
@@ -965,9 +1033,12 @@ export async function demo(element, options = {}) {
                     // comment below for why (a header/copy-button code panel's
                     // wrapper chrome isn't visible to a scrollWidth read).
                     const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + 4
+                        ? capCodeWidth(Math.max(...Array.from(codeEls, el => el.scrollWidth)) + 4) + hPad
                         : 0;
                     element.style.setProperty('--x-demo-shrink-width', Math.max(naturalWidth + extra + hPad, codeWidth) + 'px');
+                    // Lifts demo.css's pre-measure 50vw code cap -- see there.
+                    element.classList.remove('x-demo--measuring');
+                    element.classList.add('x-demo--measured');
                     return true;
                 };
                 if (applyNaturalWidth()) {
@@ -984,7 +1055,12 @@ export async function demo(element, options = {}) {
                     // (same MAX_MS budget as the poll path below).
                     const readyEvent = media.tagName === 'VIDEO' ? 'loadedmetadata' : 'load';
                     media.addEventListener(readyEvent, applyNaturalWidth, { once: true });
-                    setTimeout(applyNaturalWidth, 5000);
+                    setTimeout(() => {
+                        // Media that never loads never commits a width; drop
+                        // the pre-measure code cap anyway so the panel is
+                        // never left narrower than its block for good.
+                        if (!applyNaturalWidth()) element.classList.remove('x-demo--measuring');
+                    }, 5000);
                 }
             } else {
                 let lastControlWidth = null;
@@ -1037,7 +1113,7 @@ export async function demo(element, options = {}) {
                     // icon-button/loading-skeleton examples (2px short).
                     const CODE_WIDTH_SAFETY_PX = 4;
                     const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + CODE_WIDTH_SAFETY_PX
+                        ? capCodeWidth(Math.max(...Array.from(codeEls, el => el.scrollWidth)) + CODE_WIDTH_SAFETY_PX) + hPad
                         : 0;
                     const shrinkWidth = Math.max(controlWidth, codeWidth);
                     // #985: do NOT commit every tick. This used to write the
@@ -1107,6 +1183,9 @@ export async function demo(element, options = {}) {
                         if (pendingShrinkWidth > 0) {
                             element.style.setProperty('--x-demo-shrink-width', pendingShrinkWidth + 'px');
                         }
+                        // Lifts demo.css's pre-measure 50vw code cap -- see there.
+                        element.classList.remove('x-demo--measuring');
+                        element.classList.add('x-demo--measured');
                         return;
                     }
                     setTimeout(measure, POLL_MS);

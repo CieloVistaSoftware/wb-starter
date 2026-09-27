@@ -678,6 +678,10 @@
         const height = HEIGHTS[(i + round * 3) % HEIGHTS.length];
         const bg = BGS[(i + round * 5) % BGS.length];
         const overlay = (i + round) % 5 !== 0; // on by default; off roughly 1-in-5 so it's exercised too
+        // The companion trigger is <button x-modal>: it was a bare <dialog
+        // modal-title> (the migration's reading of <x-modal>), which only
+        // showed at all because .x-dialog-trigger overrode the UA's hidden
+        // <dialog>, and read to assistive tech as a dialog rather than a button.
         const signatureStyle = i % 2 === 1; // alternate the two original styles
         const attrs = [
           `pretitle="${pre} #${i + 1}"`,
@@ -697,7 +701,7 @@
         const hero = `<section x-cardhero\n  ${attrs.join('\n  ')}>\n</section>`;
         out.push(
           signatureStyle
-            ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <dialog\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </dialog>\n</div>`
+            ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <button x-modal\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </button>\n</div>`
             : hero
         );
       }

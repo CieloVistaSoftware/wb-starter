@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { pickBehavior } from '../helpers/behaviors-page';
 
 /**
  * #279 — <div x-cardimage>/<div x-cardvideo> intermittently rendered as empty
@@ -21,28 +22,31 @@ import { test, expect } from '../fixtures/offline';
  * test asserts on the DOM state directly rather than parsing console output.
  */
 test('cardimage/cardvideo survive a fresh nav to Components without being wiped', async ({ page }) => {
+  // Two picks, each followed by the #279 race window.
+  test.setTimeout(60_000);
   await page.goto('/?page=home', { waitUntil: 'networkidle' });
   await page.click('a.nav__item[href="?page=behaviors"]');
 
-  // Give the real behavior time to build + load, AND give a stale/cold
-  // schema fetch time to resolve and (if the bug regressed) wipe it — the
-  // race window that made this non-deterministic before the fix.
-  await page.waitForTimeout(2500);
-
-  const survived = await page.evaluate(() => {
-    const images = Array.from(document.querySelectorAll('[x-cardimage] img'));
-    const videos = Array.from(document.querySelectorAll('[x-cardvideo] video'));
-    const check = (el: Element) => ({
-      inDom: el.isConnected,
-      hasCard: !!el.closest('[x-cardimage], [x-cardvideo]'),
-    });
-    return {
-      imageCount: images.length,
-      videoCount: videos.length,
-      images: images.map(check),
-      videos: videos.map(check),
-    };
-  });
+  // The behaviors page is a searchable browser now (#910): nothing is on the
+  // stage until a behavior is picked, so the fresh navigation above is
+  // followed by picking each media card the way a reader would. The race this
+  // guards (#279) is a cold schema fetch resolving AFTER the behavior built its
+  // media, so each pick is still followed by a wait long enough for a stale
+  // fetch to land and wipe it, if the exclusion ever regressed.
+  const survivors = async (token: 'x-cardimage' | 'x-cardvideo', media: 'img' | 'video') => {
+    await pickBehavior(page, token);
+    await page.waitForTimeout(2500);
+    return page.evaluate(([t, m]) => {
+      const found = Array.from(document.querySelectorAll(`#behaviors-live-example [${t}] ${m}`));
+      return found.map((el) => ({
+        inDom: el.isConnected,
+        hasCard: !!el.closest('[x-cardimage], [x-cardvideo]'),
+      }));
+    }, [token, media] as const);
+  };
+  const images = await survivors('x-cardimage', 'img');
+  const videos = await survivors('x-cardvideo', 'video');
+  const survived = { imageCount: images.length, videoCount: videos.length, images, videos };
 
   expect(survived.imageCount, 'no <div x-cardimage> images found on Components page').toBeGreaterThan(0);
   expect(survived.videoCount, 'no <div x-cardvideo> videos found on Components page').toBeGreaterThan(0);

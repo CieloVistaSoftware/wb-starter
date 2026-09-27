@@ -13,6 +13,22 @@ import { test, expect, Page } from '../fixtures/offline';
  * see demo.js's attachCardDocLink), resolved from THAT card's own tag —
  * not a generic/shared one. Non-card content (badges, alerts, buttons, ...)
  * is untouched and keeps using the original shared line.
+ *
+ * UPDATED for #390 / #630 / #641 (the assertions below were written for the
+ * #388 shape and went stale when demo.js moved on deliberately):
+ *   - #630/#641: the badge is anchored on the OUTER <div x-demo>, never on
+ *     the card -- a badge on a tiny host collided with its neighbour or was
+ *     clipped by x-demo's overflow:hidden. So `#card > .x-demo__card-doc-link`
+ *     can no longer exist; each card's doc is a badge on its demo block.
+ *   - #390: every component gets a corner badge, not just cards, so an
+ *     [x-badge] beside a card gets its own badge too rather than the shared
+ *     "Docs:" line.
+ * What #388 was actually about still holds and is what is asserted: each
+ * card's badge opens THAT card's own doc (card.md vs cardhero.md), none of
+ * it is a detached caption under the grid, and a tag with no doc gets no
+ * link. The bare <article> case is also a real regression guard: an
+ * <article> is a card by tag-map alone, and demo.js gave it no badge at all
+ * until it learned to read native subjects.
  */
 
 const HARNESS = '/demos/test-harness.html';
@@ -46,8 +62,18 @@ async function inject(page: Page, html: string) {
   await page.waitForSelector('#test-container [x-demo] .x-demo__grid', { timeout: 10000 });
 }
 
+/** The doc files each demo block's corner badges open, sorted. */
+async function badgeFiles(page: Page, demoId: string): Promise<string[]> {
+  const hrefs = await page
+    .locator(`#${demoId} > .x-demo__card-doc-link`)
+    .evaluateAll((as) => as.map((a) => a.getAttribute('href') || ''));
+  return hrefs
+    .map((h) => decodeURIComponent(new URL(h, 'http://x/').searchParams.get('file') || ''))
+    .sort();
+}
+
 test.describe('[x-demo]: per-card doc links (#388)', () => {
-  test('each card in a multi-card demo gets its own top-right doc link, not a shared line', async ({ page }) => {
+  test('each card in a multi-card demo gets its own doc link, not a shared line', async ({ page }) => {
     await inject(page, `
       <div x-demo id="multi" columns="2">
         <article id="c1" title="Plain Card">Body text</article>
@@ -55,28 +81,21 @@ test.describe('[x-demo]: per-card doc links (#388)', () => {
       </div>
     `);
 
-    const c1Link = page.locator('#c1 > .x-demo__card-doc-link');
-    const c2Link = page.locator('#c2 > .x-demo__card-doc-link');
-    // Each card gets exactly one link, scoped to that card (direct child).
-    await expect(c1Link, '.x-card must get its own doc link').toHaveCount(1, { timeout: 10000 });
-    await expect(c2Link, '[x-cardhero] must get its own doc link').toHaveCount(1, { timeout: 10000 });
+    const links = page.locator('#multi > .x-demo__card-doc-link');
+    // One badge per distinct card doc: the bare <article> (a card via
+    // tag-map) AND the [x-cardhero] each get their own.
+    await expect(links, 'the <article> card and the [x-cardhero] each need a badge').toHaveCount(2, { timeout: 10000 });
 
-    // Positioned ON the card itself (absolute within the card's own box,
-    // which is position:relative via .x-card in card.css).
-    expect(await c1Link.evaluate((el) => getComputedStyle(el).position)).toBe('absolute');
-    expect(await c2Link.evaluate((el) => getComputedStyle(el).position)).toBe('absolute');
+    // Positioned in the demo block's own top-right corner (absolute within
+    // the x-demo, which demo.js makes a positioning context).
+    for (const pos of await links.evaluateAll((as) => as.map((a) => getComputedStyle(a).position))) {
+      expect(pos).toBe('absolute');
+    }
 
-    // Each href resolves to THAT card's OWN doc — not a generic/wrong one.
-    const c1Href = await c1Link.getAttribute('href');
-    const c2Href = await c2Link.getAttribute('href');
-    expect(c1Href, '.x-card link must target card.md').toContain('card.md');
-    expect(c1Href, '.x-card link must NOT target cardhero.md').not.toContain('cardhero.md');
-    expect(c2Href, '[x-cardhero] link must target cardhero.md, not a generic/wrong doc').toContain('cardhero.md');
-    expect(c2Href).not.toBe(c1Href);
+    // Each resolves to THAT card's OWN doc -- not a generic/shared one.
+    expect(await badgeFiles(page, 'multi')).toEqual(['docs/behaviors/card.md', 'docs/behaviors/cardhero.md']);
 
-    // The OLD shared line must not appear for an all-cards demo — the doc
-    // reference now lives on the cards themselves, not a detached caption
-    // below the whole group.
+    // The OLD shared line must not appear for an all-cards demo.
     await expect(page.locator('#multi .x-demo__links')).toHaveCount(0);
   });
 
@@ -89,20 +108,20 @@ test.describe('[x-demo]: per-card doc links (#388)', () => {
     `);
 
     await expect(
-      page.locator('#real > .x-demo__card-doc-link'),
+      page.locator('#nodoc > .x-demo__card-doc-link'),
       'a card whose tag DOES resolve must still get its link'
     ).toHaveCount(1, { timeout: 10000 });
 
-    // Give the no-doc card the same settling time as the real one, then
-    // confirm it was never given a (necessarily broken) link.
+    // Give the no-doc element the same settling time as the real one, then
+    // confirm it never added a (necessarily broken) link of its own.
     await page.waitForTimeout(500);
-    await expect(
-      page.locator('#fake > .x-demo__card-doc-link'),
-      'a card whose tag has no manifest doc must get NO link'
-    ).toHaveCount(0);
+    expect(await badgeFiles(page, 'nodoc'), 'only the card doc; the plain <div> gets none').toEqual([
+      'docs/behaviors/card.md',
+    ]);
+    await expect(page.locator('#nodoc .x-demo__links')).toHaveCount(0);
   });
 
-  test('mixed demo: non-card content keeps the shared Docs: line, the card gets its own', async ({ page }) => {
+  test('mixed demo: the card and the non-card component each get their own badge', async ({ page }) => {
     await inject(page, `
       <div x-demo id="mixed" columns="2">
         <article id="mc" title="Card In Mixed Block">Body</article>
@@ -110,21 +129,13 @@ test.describe('[x-demo]: per-card doc links (#388)', () => {
       </div>
     `);
 
-    await expect(
-      page.locator('#mc > .x-demo__card-doc-link'),
-      'the card keeps its own per-card link even in a mixed block'
-    ).toHaveCount(1, { timeout: 10000 });
-
-    const sharedLine = page.locator('#mixed .x-demo__links');
-    await expect(
-      sharedLine,
-      'the non-card [x-badge] must still fall back to the original shared line'
-    ).toHaveCount(1, { timeout: 10000 });
-    const sharedText = (await sharedLine.textContent()) || '';
-    expect(sharedText).toContain('[x-badge]');
-    expect(
-      sharedText,
-      'the card must NOT also be listed in the shared line (it already has its own link — no duplicate reference)'
-    ).not.toContain('.x-card');
+    await expect(page.locator('#mixed > .x-demo__card-doc-link')).toHaveCount(2, { timeout: 10000 });
+    expect(await badgeFiles(page, 'mixed'), 'card.md for the card, badge.md for the [x-badge]').toEqual([
+      'docs/behaviors/badge.md',
+      'docs/behaviors/card.md',
+    ]);
+    // Both are resolved per-instance, so nothing is left for the shared line
+    // (no duplicate reference to either).
+    await expect(page.locator('#mixed .x-demo__links')).toHaveCount(0);
   });
 });

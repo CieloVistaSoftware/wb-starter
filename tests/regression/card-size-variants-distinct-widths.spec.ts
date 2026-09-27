@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 /**
  * "write a test to prove that these all are the same size" -- the size
@@ -22,24 +23,31 @@ import { test, expect } from '../fixtures/offline';
 test('.x-card size variants render at genuinely distinct widths', async ({ page }) => {
   await page.goto('/tests/fixtures/cards-permutation-matrix.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
-  await page.waitForTimeout(500);
 
   const section = page.locator('#card-size-variants');
+  // Cards carry no .x-card class since a8a7362e -- a base card is its
+  // <article>. And the page runs the lazy runtime (#491): scroll each card in
+  // and let it build before measuring, rather than a 500ms guess.
+  const cards = section.locator('article[size]');
+  await expect(cards, 'expected all 7 size-variant cards').toHaveCount(7);
+  for (const card of await cards.all()) await buildInView(card);
   await expect(section).toBeVisible();
 
-  const widths = await section.evaluate((el) => {
-    const cards = [...el.querySelectorAll('.x-card')];
-    return cards.map((c) => ({
-      size: c.getAttribute('size'),
-      width: c.getBoundingClientRect().width,
-      hasClass: c.className.includes(`x-card--${c.getAttribute('size')}`),
-    }));
-  });
-
-  expect(widths.length, 'expected all 7 size-variant cards').toBe(7);
+  const widths = await cards.evaluateAll((els) => els.map((c) => ({
+    size: c.getAttribute('size'),
+    width: c.getBoundingClientRect().width,
+    hasClass: c.classList.contains(`x-card--${c.getAttribute('size')}`),
+  })));
 
   for (const { size, hasClass } of widths) {
-    expect(hasClass, `x-card size="${size}" must get its x-card--${size} class applied`).toBe(true);
+    // `auto` is the DEFAULT and card.css declares it on the base rule, so
+    // composeCard deliberately stamps no --auto modifier (it would sit on
+    // every card and mean nothing). Every other size is a real modifier.
+    if (size === 'auto') {
+      expect(hasClass, 'size="auto" is the default and carries no modifier class').toBe(false);
+    } else {
+      expect(hasClass, `x-card size="${size}" must get its x-card--${size} class applied`).toBe(true);
+    }
   }
 
   const bySize = Object.fromEntries(widths.map((w) => [w.size, w.width]));

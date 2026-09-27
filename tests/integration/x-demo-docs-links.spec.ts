@@ -215,23 +215,15 @@ test.describe('[x-demo] Docs: links resolve to real docs (#262)', () => {
     // Every one of the 65 <div x-demo> blocks on this page wraps a card, so this
     // must produce a real per-instance badge count, not just a nonzero one.
     //
-    // CURRENTLY RED AT 64, AND THAT IS THE POINT — do not "fix" this by lowering
-    // the number. Measured live: 65 blocks, 64 badges, and the 4 blocks with NO
-    // badge are exactly the four base-card demos, whose grid child is a bare
-    // `<article title subtitle footer>` / `<article variant>` / `<article size>`
-    // / `<article elevated>` carrying no x-* attribute at all. (64 rather than
-    // 61 because 3 blocks carry two badges each.)
-    //
-    // demo.js resolves a doc link down two paths: findWbComponents() matches
-    // literal <wb-*> TAGS and findXBehaviors() matches x-* ATTRIBUTES. A demo
-    // whose subject is a plain semantic element decorated by tag-map alone
-    // matches NEITHER, so it gets no 📖 — even though docs/card.md exists on
-    // disk. Note also that findBehaviorDocFile() keeps a behaviors-reference.md
-    // last resort while findDocFile() does not, so the two paths disagree about
-    // whether "no page of its own" means fallback or silence.
-    //
-    // That is a src/wb-viewmodels/demo.js defect, out of scope for this spec.
-    // Lowering this floor to 64 would delete the only thing that reports it.
+    // This floor was red at 64 (later 61) for a real reason: the four base-card
+    // demos' grid child is a bare `<article title subtitle footer>` /
+    // `<article variant>` / `<article size>` / `<article elevated>` carrying no
+    // x-* attribute, and demo.js only resolved doc links from literal <wb-*>
+    // TAGS (findWbComponents) and x-* ATTRIBUTES (findXBehaviors). A demo whose
+    // subject is a plain semantic element decorated by tag-map alone matched
+    // neither, so it got no 📖 although docs/behaviors/card.md exists. demo.js
+    // now also reads a direct grid child's native behavior (getNativeBehavior),
+    // so those blocks carry their badge. Do not lower this number.
     expect(links.length).toBeGreaterThanOrEqual(65);
     await assertAllResolve(links, baseURL);
     assertPerBehaviorDocs(links, 'cards-permutation-matrix.html');

@@ -59,9 +59,16 @@ test.describe('Auto-Inject Demo', () => {
       expect(hasApi, 'select behavior should attach element.wbSelect').toBe(true);
     });
 
-    test('Article is auto-injected as a card (.x-card class)', async ({ page }) => {
+    test('Article is auto-injected as a card', async ({ page }) => {
+      // Cards no longer stamp .x-card onto an <article> (a8a7362e: card.css
+      // matches the tag), so "became a card" is what the card behavior itself
+      // leaves behind: it settled (x-ready), and it moved the loose text into
+      // the card's <main>, where card.css pads it.
       const article = page.locator('#fixture-article');
-      await expect(article).toHaveClass(/x-card/);
+      await expect(article).toHaveAttribute('x-ready', '');
+      await expect(article).not.toHaveClass(/x-card/);
+      await expect(article.locator(':scope > main')).toHaveText('An article, auto-injected as a card.');
+      await expect(article).toHaveCSS('display', 'flex');
     });
   });
 });

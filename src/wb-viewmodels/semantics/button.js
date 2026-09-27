@@ -376,6 +376,17 @@ export function button(element, options = {}) {
   }
 
   const href = element.getAttribute('href');
+  // `target` only says WHERE an href opens. On its own it cannot do anything,
+  // and nothing used to say so: <button target="_blank">Docs</button> rendered
+  // as a normal button that silently did nothing when clicked -- the same
+  // "declared, documented, inert" shape #669 fixed for href itself. Name the
+  // missing half instead of failing quietly.
+  // Its own name: navigate() below re-reads `target` at click time on purpose,
+  // so a later setAttribute('target') takes effect without a re-inject.
+  const declaredTarget = element.getAttribute('target');
+  if (declaredTarget && !href && element.tagName !== 'A') {
+    console.warn(`[x-button] target="${declaredTarget}" has no effect without an href -- add href="..." for it to open anywhere.`);
+  }
   // Any host, not just <button>. This guard read `element.tagName === 'BUTTON'`,
   // which was correct when a native <button> was the only host — the #669 note
   // above reasons entirely about <button>, and a <button> genuinely cannot

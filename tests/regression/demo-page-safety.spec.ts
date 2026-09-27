@@ -47,17 +47,31 @@ test.describe('Demo Page Safety', () => {
     return files;
   };
 
-  test('all demo pages load without crashing', async ({ page }) => {
+  test('all demo pages load without crashing', async () => {
     const demoFiles = getDemoHtmlFiles();
+    // `expect.fail` is not a Playwright API: every call threw "expect.fail
+    // is not a function" instead of naming the page, so this test could only
+    // ever fail with a TypeError. Problems are collected and asserted once.
+    const problems: string[] = [];
 
     // Just verify they exist and are valid HTML
     for (const file of demoFiles) {
-      const content = fs.readFileSync(file, 'utf-8');
+      const rel = path.relative(htmlDir, file);
+      // Count real markup only. Comments and <script>/<style> bodies routinely
+      // QUOTE tags (frameworks.html's comments say "<pre> block below", its
+      // Svelte source is a JS string holding a <script>), and counting those
+      // reported div:+9/pre:+4 on a page whose actual structure balances.
+      // A script body ends at its first </script> -- the HTML parser's rule --
+      // so any <script left once complete blocks are removed is unclosed.
+      const content = fs.readFileSync(file, 'utf-8')
+        .replace(/<!--[\s\S]*?-->/g, '')
+        .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+        .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
 
       // Check for common issues:
       // 1. Missing closing tags
-      if ((content.match(/<script[^>]*>/g) || []).length > (content.match(/<\/script>/g) || []).length) {
-        expect.fail(`${path.relative(htmlDir, file)}: unclosed <script> tag`);
+      if (/<script\b/i.test(content)) {
+        problems.push(`${rel}: unclosed <script> tag`);
       }
 
       // 2. Malformed HTML structure
@@ -80,11 +94,13 @@ test.describe('Demo Page Safety', () => {
       // Allow some imbalance (HTML parser is forgiving), just check for extreme problems
       const imbalanced = Object.entries(tagBalance).filter(([_, count]) => Math.abs(count) > 2);
       if (imbalanced.length > 0) {
-        expect.fail(
-          `${path.relative(htmlDir, file)}: severe tag imbalance: ${imbalanced.map(([tag, count]) => `${tag}:${count}`).join(', ')}`
+        problems.push(
+          `${rel}: severe tag imbalance: ${imbalanced.map(([tag, count]) => `${tag}:${count}`).join(', ')}`
         );
       }
     }
+
+    expect(problems).toEqual([]);
   });
 
   test('demo pages with src/index.js do not expect #app container', () => {
@@ -131,9 +147,9 @@ test.describe('Demo Page Safety', () => {
 
       try {
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 5000 });
-        if (errors.length > 0) {
-          expect.fail(`Found null-reference errors:\n${errors.join('\n')}`);
-        }
+        // Asserted directly: `expect.fail` does not exist in Playwright, so a
+        // real null-reference crash here would have surfaced as a TypeError.
+        expect(errors, `Found null-reference errors:\n${errors.join('\n')}`).toEqual([]);
       } catch (e: any) {
         // Navigation timeout is OK for this test (just checking for crashes, not full load)
         if (!e.message?.includes('timeout')) {

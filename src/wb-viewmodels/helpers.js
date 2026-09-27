@@ -1,4 +1,5 @@
 import { readFlag, readAttr } from '../core/read-attr.js';
+import { writeToClipboard } from './copy.js';
 /**
  * Utility Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -169,9 +170,15 @@ export function share(element, options = {}) {
         await navigator.share({ title: config.title, text: config.text, url: config.url });
       } catch (e) {}
     } else {
-      await navigator.clipboard.writeText(config.url);
+      // writeToClipboard (copy.js), not a bare navigator.clipboard.writeText:
+      // the bare call REJECTS whenever clipboard permission is denied or the
+      // context is insecure, and inside this async handler that rejection went
+      // unhandled -- pressing Share threw "Write permission denied" and the
+      // button claimed nothing either way. The shared writer falls back to
+      // execCommand('copy') and reports whether anything worked.
+      const copied = await writeToClipboard(config.url);
       const original = element.innerHTML;
-      element.innerHTML = '✓ Copied!';
+      element.innerHTML = copied ? '✓ Copied!' : '⚠️ Copy failed';
       setTimeout(() => { element.innerHTML = original; }, 2000);
     }
   };
@@ -399,7 +406,13 @@ export function clipboard(element, options = {}) {
   element.onclick = async () => {
     const text = config.text || (config.target ? document.querySelector(config.target)?.textContent : '');
     if (text) {
-      await navigator.clipboard.writeText(text);
+      // Same unhandled-rejection trap as share() above; the shared writer
+      // falls back instead of throwing when permission is denied.
+      if (!(await writeToClipboard(text))) {
+        element.innerHTML = '⚠️ Copy failed';
+        setTimeout(() => { element.innerHTML = original; }, 2000);
+        return;
+      }
       element.innerHTML = config.feedback;
       element.style.background = 'var(--success, #22c55e)';
       element.style.color = 'white';

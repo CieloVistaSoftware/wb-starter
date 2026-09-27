@@ -149,6 +149,11 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
     return [];
   }
   const demoCount = await demos.count();
+  // The work here is per block: every demo is scrolled into view so the lazy
+  // runtime (#491) builds it. demos/site/cards.html holds 293 of them and needs
+  // ~22s on an idle machine (at HEAD too), so a flat 30s budget failed it only
+  // under parallel load. The budget grows with the page; nothing asserted changes.
+  test.setTimeout(30_000 + demoCount * 150);
   if (demoCount === 0) return [];
 
   // x-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
@@ -182,8 +187,24 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
       const demoEls = Array.from(document.querySelectorAll('[x-demo]'));
       if (demoEls.length === 0) return false;
       return demoEls.every((demo) => {
-        const panels = Array.from(demo.querySelectorAll('.x-demo__code'));
-        if (panels.length === 0) return true; // nothing on this demo to wait for
+        const panels = Array.from(demo.querySelectorAll('.x-demo__code'))
+          .filter((panel) => panel.closest('[x-demo]') === demo);
+        // Nothing to wait for -- unless demo.js has already started this block.
+        // It lays out the grid first and appends the code panel only after
+        // awaiting the docs manifest, so a block caught between the two looked
+        // finished here, passed the wait vacuously, and was then measured
+        // mid-measure at the 50vw cap: counter.md's input demos, whose
+        // x-counter adds a sibling and so span the 836px column, read as "640px
+        // inside 804px" under load. Every block demo.js builds gets a panel.
+        if (panels.length === 0) {
+          return !Array.from(demo.children).some((c) => c.classList.contains('x-demo__grid'));
+        }
+        // A single-item block is still being sized while demo.js holds
+        // .x-demo--measuring (it commits once, when control and code stop
+        // moving -- #985). Until then its panel is provisionally capped at
+        // 50vw, so measuring "cramped" mid-flight reads a width no reader is
+        // left with.
+        if (demo.classList.contains('x-demo--measuring')) return false;
         return panels.every((panel) => {
           const code = panel.querySelector('code');
           const text = (code || panel).textContent || '';
@@ -205,7 +226,15 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
     const out: PanelReport[] = [];
     const demoEls = Array.from(document.querySelectorAll('[x-demo]'));
     demoEls.forEach((demo, demoIndex) => {
-      const panels = Array.from(demo.querySelectorAll('.x-demo__code')) as HTMLElement[];
+      // A demo's OWN panels only. A demo can hold another: content.html's
+      // <div x-mdhtml src="../code.md"> renders a markdown file that carries
+      // its own <div x-demo>, and a descendant query attributed THAT demo's
+      // panel to the outer block -- then measured it against the outer
+      // block's width and called a correctly sized 453px panel "cramped"
+      // inside 487px that was never its container. The inner demo is in
+      // demoEls too, and is audited against its own box.
+      const panels = (Array.from(demo.querySelectorAll('.x-demo__code')) as HTMLElement[])
+        .filter((panel) => panel.closest('[x-demo]') === demo);
       panels.forEach((panel, panelIndex) => {
         const code = panel.querySelector('code');
         const text = (code || panel).textContent || '';

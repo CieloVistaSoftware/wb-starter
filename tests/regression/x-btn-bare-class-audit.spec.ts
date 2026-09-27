@@ -127,20 +127,36 @@ test.describe('Bare .x-btn (no modifier) renders with real visible styling', () 
     expect(style.hasBg, `x-btn--primary must keep a real background, got ${JSON.stringify(style)}`).toBe(true);
   });
 
-  test.describe('pages/behaviors.html', () => {
+  // These two ran against the Modal/Drawer demos pages/behaviors.html used to
+  // carry. That page is now a catalogue that renders one example at a time
+  // from data/behavior-examples.json (#666) and has no [x-modal].x-btn or
+  // [x-drawer].x-btn at all -- so the modal test timed out and the drawer test
+  // counted 0 triggers. The audited markup is injected instead, with a button
+  // variant alongside it for the same reason as the harness test above (it is
+  // what loads button.css on a real page).
+  test.describe('audited behaviors.html triggers', () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/?page=behaviors');
-      await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-  // #735: NOT WBSite. This page is a standalone harness, not an SPA route, so
-  // window.WBSite is never created here -- the wait burned its full timeout and
-  // failed before a single assertion ran. WB.behaviors is the readiness signal
-  // that applies, and this setup scans the DOM itself below.
-      await page.waitForTimeout(1000);
+      await inject(page, `
+        <button variant="primary">Trigger button.css load</button>
+        <div x-modal class="x-btn" modal-title="Modal Dialog" modal-content="This is modal content.">Open Modal</div>
+        <div x-drawer class="x-btn" title="Left Drawer" position="left">Left Drawer</div>
+        <div x-drawer class="x-btn" title="Right Drawer" position="right">Right Drawer</div>
+      `);
+      // Lazy runtime (#491) + JIT CSS (#342): bring the triggers into view and
+      // wait until each has been enhanced before reading computed styles.
+      await page.locator('#test-container').scrollIntoViewIfNeeded();
+      await page.waitForFunction(
+        () => Array.from(document.querySelectorAll('#test-container [x-modal], #test-container [x-drawer]')).every((el) => el.hasAttribute('x-ready')),
+        { timeout: 15000 }
+      );
     });
 
     test('Modal trigger ([x-modal].x-btn) is visibly styled', async ({ page }) => {
-      const style = await hasVisibleBoxStyle(page, '[x-modal].x-btn');
-      expect(style.hasBg || style.hasBorder, `Open Modal trigger must be visibly styled, got ${JSON.stringify(style)}`).toBe(true);
+      let style: Awaited<ReturnType<typeof hasVisibleBoxStyle>> | undefined;
+      await expect.poll(async () => {
+        style = await hasVisibleBoxStyle(page, '[x-modal].x-btn');
+        return style.hasBg || style.hasBorder;
+      }, { message: `Open Modal trigger must be visibly styled, got ${JSON.stringify(style)}` }).toBe(true);
     });
 
     test('Drawer triggers ([x-drawer].x-btn) are visibly styled', async ({ page }) => {

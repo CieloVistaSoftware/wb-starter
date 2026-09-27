@@ -3,11 +3,14 @@
  * Tests that x-cardimage actually displays images
  */
 import { test, expect } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 test.describe('Card Image Rendering', () => {
   test('[x-cardimage] should display images on cards-showcase', async ({ page }) => {
+    // Lazy runtime (#491): each card is built only once scrolled to, which the
+    // loop below does per card -- ~30 of them, hence the longer budget.
+    test.setTimeout(120_000);
     await page.goto('/demos/site/cards.html');
-    await page.waitForTimeout(2000);
     
     // Find the cardimage section
     const cardimageSection = page.locator('#demo-image');
@@ -23,6 +26,7 @@ test.describe('Card Image Rendering', () => {
     // Check each cardimage has an actual <img> inside
     for (let i = 0; i < count; i++) {
       const card = cardImages.nth(i);
+      await buildInView(card);
       const img = card.locator('img');
       
       // Should have an img element

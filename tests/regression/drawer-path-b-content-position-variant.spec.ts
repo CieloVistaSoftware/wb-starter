@@ -38,6 +38,24 @@ import { test, expect } from '../fixtures/offline';
  * "default", and the schema's own declared default IS "overlay", so
  * "default" is an explicit alias) but still carry distinct
  * x-drawer--default/x-drawer--overlay classes on the panel.
+ *
+ * Since #884 wb-lazy.js builds schemas for attribute hosts too, so this page
+ * now takes drawer()'s PATH A (schema-built panel relocated to <body>), not
+ * PATH B. PATH A had none of the three fixes above: the host's text landed
+ * in the schema's `title` (keepAuthoredText picked the first `{{prop}}` part
+ * instead of the `<slot>` body), the body showed the schema default, and
+ * variant/push were never applied. Both paths now honour all three. Two
+ * assertions changed with the path, because they described PATH B's DOM
+ * rather than the behavior:
+ *   - PATH A pre-builds every panel, so "the panel just appended" (`.last()`)
+ *     is no longer the one that opened; the rect is read from the OPEN panel
+ *     once its slide-in transform has settled.
+ *   - A bare drawer's title is the schema's own default (b3fc6036, John:
+ *     every attribute states a default -- "this is the title"), not absent.
+ *     What must never happen is the old "Drawer" placeholder or the host's
+ *     own text being used as the title.
+ * The push target is `body > .page` where a page has one; this page renders
+ * straight into <body class="demo-page">, so its in-flow sections are pushed.
  */
 
 async function ready(page) {
@@ -58,8 +76,11 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
 
     const panel = page.locator('.x-drawer__panel--open');
     await expect(panel).toBeVisible({ timeout: 5000 });
-    // The old hardcoded placeholders must never appear.
-    await expect(panel.locator('.x-drawer__title')).toHaveCount(0);
+    // The old hardcoded placeholders must never appear, and the host's own
+    // text is the BODY, not the heading.
+    const titles = (await panel.locator('.x-drawer__title').allTextContents()).map((t) => t.trim());
+    expect(titles).not.toContain('Drawer');
+    expect(titles).not.toContain('position=left');
     const body = panel.locator('.x-drawer__body');
     await expect(body).toContainText('position=left');
     const text = (await body.textContent()) ?? '';
@@ -90,27 +111,12 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
       await trigger.scrollIntoViewIfNeeded();
       await trigger.click();
 
-      // The panel element exists synchronously right after click() (show()
-      // appends it to document.body before its rAF-deferred `--open` add),
-      // still in its CLOSED transform -- attach the transitionend listener
-      // NOW, before `--open` triggers the animated transform, so there is
-      // no race where the transition could complete before we start
-      // listening (which polling/fixed-sleep approaches both hit: e.g.
-      // position=left's x read as -283 instead of the settled 0, and a
-      // fixed 350ms sleep was still occasionally too short under load).
-      const panel = page.locator('.x-drawer__panel').last();
-      await expect(panel).toBeAttached();
-      const transitionSettled = panel.evaluate((el) => new Promise((resolve) => {
-        const done = () => { el.removeEventListener('transitionend', done); resolve(true); };
-        el.addEventListener('transitionend', done, { once: true });
-        // Safety net only (e.g. prefers-reduced-motion disabling the
-        // transition entirely) -- well past the declared 0.3s duration.
-        setTimeout(done, 600);
-      }));
-
-      const openPanel = page.locator('.x-drawer__panel--open');
-      await expect(openPanel, `position=${pos} should open a panel`).toBeVisible({ timeout: 5000 });
-      await transitionSettled;
+      // Read the rect only once the slide-in transition has finished: the
+      // open transform is the identity matrix, so toHaveCSS (which retries)
+      // waits out the 0.3s transition instead of guessing at a duration.
+      const panel = page.locator('.x-drawer__panel--open');
+      await expect(panel, `position=${pos} should open a panel`).toBeVisible({ timeout: 5000 });
+      await expect(panel).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)', { timeout: 5000 });
       rects[pos] = await panel.evaluate((el) => el.getBoundingClientRect().toJSON());
       // Close via the panel's own close button, not a second click on the
       // trigger -- once open, the full-screen .x-drawer__backdrop (fixed,
@@ -153,12 +159,16 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
     await expect(pushPanel).toBeVisible({ timeout: 5000 });
     await expect(pushPanel).toHaveClass(/x-drawer--push/);
     await expect(page.locator('.x-drawer__backdrop--open')).toHaveCount(0);
-    const pageTransform = await page.locator('body > .page').evaluate((el) => getComputedStyle(el).transform);
-    expect(pageTransform, 'push variant should translate the page content wrapper').not.toBe('none');
+    // This page has no `body > .page` wrapper, so the push moves body's
+    // in-flow children -- the section holding the trigger among them.
+    const pageContent = page.locator('#drawer-variant-variants');
+    await expect
+      .poll(async () => pageContent.evaluate((el) => getComputedStyle(el).transform), { message: 'push variant should translate the page content' })
+      .not.toBe('none');
     await page.locator('.x-drawer__panel--open .x-drawer__close').click();
     await expect(page.locator('.x-drawer__panel--open')).toHaveCount(0, { timeout: 5000 });
     await expect
-      .poll(async () => page.locator('body > .page').evaluate((el) => getComputedStyle(el).transform))
+      .poll(async () => pageContent.evaluate((el) => getComputedStyle(el).transform))
       .toBe('none');
 
     // overlay: dimming backdrop present, page content wrapper NOT translated.
@@ -169,7 +179,7 @@ test.describe('demos/site/overlays.html <div x-drawer> PATH B: content, position
     await expect(overlayPanel).toBeVisible({ timeout: 5000 });
     await expect(overlayPanel).toHaveClass(/x-drawer--overlay/);
     await expect(page.locator('.x-drawer__backdrop--open')).toHaveCount(1);
-    const overlayPageTransform = await page.locator('body > .page').evaluate((el) => getComputedStyle(el).transform);
+    const overlayPageTransform = await pageContent.evaluate((el) => getComputedStyle(el).transform);
     expect(overlayPageTransform).toBe('none');
     // Close via the close button, not a second trigger click -- the
     // dimming backdrop now covers the trigger (correct modal UX), so

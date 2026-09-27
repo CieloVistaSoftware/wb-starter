@@ -614,6 +614,60 @@ export async function elementReady(locator: Locator, timeoutMs = 15000): Promise
 }
 
 /**
+ * Bring ONE element into the viewport and wait for it to finish building.
+ *
+ *     for (const card of await page.locator('[x-cardimage]').all()) {
+ *       await buildInView(card);
+ *       expect(await card.locator('img').count()).toBeGreaterThan(0);
+ *     }
+ *
+ * The lazy runtime (#491) injects nothing until an element nears the viewport,
+ * and CSS is JIT (#342), so a spec that counts or measures every card on a long
+ * page read the first screenful as built and the rest as broken -- 26 of 30
+ * cardimage demos on cards.html "had no <figure>" for exactly that reason, and
+ * every one of them rendered the moment it was scrolled to.
+ *
+ * scrollIntoView() rather than safeScrollIntoView(): that helper waits for the
+ * element to be VISIBLE, and an unbuilt host can legitimately have no size yet
+ * -- building it is what this is waiting for.
+ */
+export async function buildInView(locator: Locator, timeoutMs = 15000): Promise<void> {
+  const el = locator.first();
+  await el.waitFor({ state: 'attached', timeout: timeoutMs });
+  await el.evaluate((node: Element) => node.scrollIntoView({ block: 'center' }));
+  await elementReady(el, timeoutMs);
+}
+
+/**
+ * Wait until no BUILT <div x-demo> is still measuring its single-item width.
+ *
+ * demo.js marks a block `.x-demo--measuring` from the moment its code panel
+ * exists until it commits --x-demo-shrink-width, and demo.css caps the code
+ * panel at 50vw for exactly that window. A demo whose control is wider than
+ * that (a horizontal card with a photo) is therefore mid-measure at 640px and
+ * committed at 800px; a demo waiting on an image to decode stays mid-measure
+ * until it loads. A fixed "let the rAF settle" sleep read whichever of those
+ * it landed on. The class is the product's own "measured yet?" answer, and it
+ * is always cleared (media that never loads drops it after 5s). Unbuilt demos
+ * (#491: the lazy runtime builds only near the viewport) never carry it.
+ */
+export async function demoWidthsSettled(page: Page, timeoutMs = 15000): Promise<void> {
+  await page.waitForFunction(
+    () => Array.from(document.querySelectorAll('[x-demo], x-demo')).every((d) => {
+      if (d.classList.contains('x-demo--measuring')) return false;
+      // Started but not yet measuring: demo.js lays out the grid, then awaits
+      // the docs manifest before it appends the code panel and sets the class.
+      // A block in that gap is not finished; one with no grid is unbuilt.
+      const grid = Array.from(d.children).some((c) => c.classList.contains('x-demo__grid'));
+      const panel = Array.from(d.querySelectorAll('.x-demo__code')).some((p) => p.closest('[x-demo], x-demo') === d);
+      return !grid || panel;
+    }),
+    undefined,
+    { timeout: timeoutMs }
+  );
+}
+
+/**
  * Wait until the runtime has no injection in flight (#961/#962).
  *
  *     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });

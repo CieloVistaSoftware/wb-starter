@@ -190,6 +190,28 @@ export function scanHtml(rawHtml) {
     );
   }
 
+  // The depth-aware block scan above only looks INSIDE demo blocks, so the
+  // original bug's second half -- a stray </div> left after a self-closed
+  // <div x-demo></div> -- sailed through: the block closes cleanly, and the
+  // orphan sits outside every block where nothing counts it. A </div> with no
+  // open <div> to close is what re-parents the content after it, so count
+  // those across the whole document. Script/style bodies are skipped: markup
+  // quoted inside JS strings is not part of the document's own structure.
+  const structure = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '');
+  let depth = 0;
+  let orphans = 0;
+  for (const tag of structure.match(/<div\b[^>]*>|<\/div\s*>/gi) || []) {
+    if (tag.startsWith('</')) {
+      if (depth === 0) orphans++;
+      else depth--;
+    } else if (!tag.endsWith('/>')) {
+      depth++;
+    }
+  }
+  if (orphans > 0) {
+    issues.push(`unbalanced markup: ${orphans} stray </div> with no matching open <div>`);
+  }
+
   const empty = blocks.filter((b) => b.inner.trim() === '');
   if (empty.length > 0) {
     issues.push(`${empty.length} empty <div x-demo></div> block(s) — renders as a blank box`);

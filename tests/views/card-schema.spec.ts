@@ -21,8 +21,11 @@ test.describe('Card Schema-First Architecture', () => {
 
   test('Enhancer: Injects badge into existing header', async ({ page }) => {
     const card = page.locator('#semantic-card-badge');
-    // The JS should have injected the badge into the header
-    const badge = card.locator('.x-card__badge');
+    // The JS should have injected the badge into the header. Cards stopped
+    // stamping .x-card__badge (a8a7362e): the badge is the header's trailing
+    // <span>, which is exactly what card.css selects
+    // (`article > header > span:last-child`).
+    const badge = card.locator(':scope > header > span:last-child');
     await expect(badge).toBeVisible();
     await expect(badge).toHaveText('Verified');
     

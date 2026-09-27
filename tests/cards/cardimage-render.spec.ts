@@ -5,12 +5,18 @@
  */
 
 import { test, expect } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 test.describe('[x-cardimage] Rendering', () => {
   
+  // cards.html runs the lazy runtime (#491): a card below the fold is not
+  // built until it is scrolled to, so the fixed 1500ms sleep that stood here
+  // only ever covered the first screenful. Each test now brings every card it
+  // inspects into view with buildInView() and waits for THAT card's x-ready.
+  // Walking ~90 cards one at a time needs more than the default 30s.
   test.beforeEach(async ({ page }) => {
+    test.setTimeout(120_000);
     await page.goto('/demos/site/cards.html');
-    await page.waitForTimeout(1500);
   });
 
   test('[x-cardimage] should have img elements', async ({ page }) => {
@@ -22,6 +28,7 @@ test.describe('[x-cardimage] Rendering', () => {
     
     for (let i = 0; i < cardImages.length; i++) {
       const card = cardImages[i];
+      await buildInView(card);
       
       // Each cardimage should have an img element
       const img = card.locator('img');
@@ -41,6 +48,7 @@ test.describe('[x-cardimage] Rendering', () => {
   test('[x-cardimage] should have title rendered', async ({ page }) => {
     // Find Mountain Vista card
     const mountainCard = page.locator('[x-cardimage][title="Mountain Vista"]');
+    await buildInView(mountainCard);
     await expect(mountainCard).toBeVisible();
     
     // Should have title text
@@ -71,6 +79,11 @@ test.describe('[x-cardimage] Rendering', () => {
     );
     await expect(cards).not.toHaveCount(0);
 
+    // Nothing below the fold is built until it is scrolled to (#491), so the
+    // poll below could only ever see the first screenful -- it reported 26
+    // cards with no figure, each of which rendered once scrolled to.
+    for (const card of await cards.all()) await buildInView(card);
+
     // WB.scan() is async and cards.html does not await it, so wait on the
     // OUTCOME with an auto-retrying matcher -- reading computed styles off a
     // one-shot query would race hydration under --workers=8.
@@ -92,10 +105,15 @@ test.describe('[x-cardimage] Rendering', () => {
         // '16/9' is cardimage()'s own default when the attribute is absent.
         const asked = (el.getAttribute('aspect') || '16/9').trim();
         const figure = el.querySelector('figure, .x-card__figure');
+        // A captioned figure hands its ratio to the <img> (card.css, 3afb42b7):
+        // the figure itself goes `aspect-ratio: auto` so overflow:hidden cannot
+        // clip the <figcaption>. The ratio the markup asked for is then painted
+        // by the image, so that is the box to measure.
+        const painter = figure?.querySelector(':scope > figcaption') ? figure.querySelector('img') : figure;
         return {
           asked,
           // Chromium reports the computed value with spaces: "16 / 9".
-          got: figure ? getComputedStyle(figure).aspectRatio : '(no figure rendered)',
+          got: painter ? getComputedStyle(painter).aspectRatio : '(no figure rendered)',
         };
       })
     );
@@ -117,6 +135,7 @@ test.describe('[x-cardimage] Rendering', () => {
     expect(cardVideos.length).toBeGreaterThan(0);
     
     for (const card of cardVideos) {
+      await buildInView(card);
       const video = card.locator('video');
       const videoCount = await video.count();
       console.log(`Video card: found ${videoCount} video elements`);
@@ -129,6 +148,11 @@ test.describe('[x-cardimage] Rendering', () => {
 
   test('ALL cards with images should render them', async ({ page }) => {
     const issues: string[] = [];
+    // Every card family below is built lazily (#491); bring each into view and
+    // wait for it to settle before counting what it rendered.
+    for (const card of await page.locator(
+      '[x-cardimage], [x-cardproduct], [x-cardprofile], [x-cardtestimonial], [x-cardhorizontal]'
+    ).all()) await buildInView(card);
     
     // Check x-cardimage
     const cardImages = await page.locator('[x-cardimage]').all();
@@ -139,9 +163,13 @@ test.describe('[x-cardimage] Rendering', () => {
       }
     }
     
-    // Check x-cardproduct (should have product images)
+    // Check x-cardproduct (the image is OPTIONAL). cardproduct() builds its
+    // <figure><img> only when `image` is set; cards.html now demos every
+    // cardproduct attribute one at a time, and most of those cards carry no
+    // image by design. Gated on the attribute like the avatar checks below.
     const productCards = await page.locator('[x-cardproduct]').all();
     for (let i = 0; i < productCards.length; i++) {
+      if (!(await productCards[i].getAttribute('image'))) continue;
       const imgCount = await productCards[i].locator('img').count();
       if (imgCount === 0) {
         issues.push(`[x-cardproduct] #${i} has no img element`);

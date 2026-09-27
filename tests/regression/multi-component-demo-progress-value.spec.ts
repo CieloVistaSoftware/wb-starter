@@ -18,22 +18,34 @@ import { test, expect } from '../fixtures/offline';
  * enum-sweep demos), and applied directly to this hand-composed page's
  * source JSON + regenerated HTML since it isn't produced by auto-showcase.mjs
  * itself.
+ *
+ * Updated: the page was renamed demos/multi-behavior-demo-generated.html
+ * (482b940c), so the old URL served nothing and the heading never appeared.
+ * And progress() MORPHS the element -- the authored <progress value="60">
+ * is replaced by its own div.x-progress (value carried over) -- so counting
+ * `progress` after the runtime has run counts only the blocks not yet built.
+ * Each bar is brought into view first (lazy runtime, #491), then read in
+ * whichever form it is in.
  */
 
 test.describe('multi-component-demo-generated.html: progress enum sweep is actually visible', () => {
   test('every progress demo in the enum-variants section has a non-zero value/fill', async ({ page }) => {
-    await page.goto('/demos/multi-component-demo-generated.html', { waitUntil: 'domcontentloaded' });
+    await page.goto('/demos/multi-behavior-demo-generated.html', { waitUntil: 'domcontentloaded' });
 
     const heading = page.getByRole('heading', { name: /Progress — All Enum Variants/i });
     await expect(heading).toBeVisible({ timeout: 20000 });
 
-    const bars = page.locator('progress');
-    const count = await bars.count();
+    // Every bar demo in the page, in authored order: the <div x-demo> blocks
+    // whose grid holds a progress bar (built or not yet built).
+    const demos = page.locator('[x-demo]').filter({ has: page.locator('progress, .x-progress') });
+    const count = await demos.count();
     expect(count).toBeGreaterThanOrEqual(11); // 6 variants + 5 sizes
 
     for (let i = 0; i < count; i++) {
-      const bar = bars.nth(i);
-      await bar.scrollIntoViewIfNeeded();
+      const demo = demos.nth(i);
+      await demo.scrollIntoViewIfNeeded();
+      const bar = demo.locator('.x-progress').first();
+      await expect(bar, `progress demo #${i} should be built into a .x-progress bar`).toBeAttached({ timeout: 10000 });
       await expect(bar).toHaveAttribute('value', '60');
 
       const fill = bar.locator('[class*="fill"], [class*="bar"]').first();

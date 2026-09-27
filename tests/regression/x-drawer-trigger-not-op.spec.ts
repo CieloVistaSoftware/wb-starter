@@ -1,7 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 
 /**
- * A native button using x-drawer (pages/behaviors.html) must remain a
+ * A native button using x-drawer (formerly pages/behaviors.html) must remain a
  * visible, working "Left Drawer" trigger.
  *
  * Root cause (two competing DOM owners for the same element):
@@ -20,22 +20,39 @@ import { test, expect } from '../fixtures/offline';
  * self-building overlay path directly.
  */
 
+// The two triggers pages/behaviors.html used to carry. That page is now a
+// catalogue that renders one example at a time from
+// data/behavior-examples.json (#666), so it no longer has a Left/Right pair --
+// every test here failed on "no [x-drawer] on the page", not on the drawer.
+// The same markup is injected into the harness instead, so the contract under
+// test (a native button trigger keeps its label, opens exactly one panel,
+// closes) is still exercised against the real runtime.
+const TRIGGERS = `
+  <button x-drawer drawer-title="Left Drawer" drawer-content="Slide-out panel from the left." position="left">Left Drawer</button>
+  <button x-drawer drawer-title="Right Drawer" drawer-content="Slide-out panel from the right." position="right">Right Drawer</button>
+`;
+
 async function ready(page) {
-  await page.goto('/?page=behaviors');
+  await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-  await page.waitForTimeout(1000);
-  // drawer()'s Path A (overlay.js) only runs once WB.inject() awaits
-  // ensureBehaviorCss('drawer') -- a real network fetch for drawer.css on
-  // first use -- so it can land meaningfully later than the generic
-  // "page settled" signal above under load (confirmed flaky without this:
-  // the flat 1000ms wait sometimes wasn't enough, leaving the schema-built
-  // panel un-relocated and no click handler attached yet when a test then
-  // interacted with the trigger). Wait for the actual completion signal
-  // instead of a fixed timeout: element.wbDrawer is only set at the end of
-  // drawer()'s Path A, after relocation and listener wiring are both done.
+  await page.evaluate(async (html: string) => {
+    const c = document.createElement('div');
+    c.id = 'drawer-trigger-test';
+    c.innerHTML = html;
+    document.body.appendChild(c);
+    await (window as any).WB.scan(c);
+  }, TRIGGERS);
+  // The lazy runtime (#491) only builds an element once it is near the
+  // viewport: bring both triggers into view before waiting on them.
+  await page.locator('#drawer-trigger-test').scrollIntoViewIfNeeded();
+  // element.wbDrawer is only set at the end of drawer() -- after relocation
+  // and listener wiring are both done -- so it is the real completion
+  // signal, not a guess at a duration.
   await page.waitForFunction(
-    () => Array.from(document.querySelectorAll('[x-drawer]')).every((el: any) => !!el.wbDrawer),
+    () => {
+      const all = Array.from(document.querySelectorAll('[x-drawer]'));
+      return all.length === 2 && all.every((el: any) => !!el.wbDrawer);
+    },
     { timeout: 15000 }
   );
 }
@@ -73,7 +90,7 @@ test.describe('<div x-drawer> trigger renders and opens correctly (not a broken 
   });
 
   test('exactly one panel+backdrop pair exists per trigger (no duplicate/competing overlay)', async ({ page }) => {
-    // pages/behaviors.html has two <div x-drawer> triggers (Left + Right), each
+    // The fixture has two x-drawer triggers (Left + Right), each
     // schema-built with its own panel/backdrop pair -- so the page-wide
     // total is legitimately 2, not 1. The regression this guards against is
     // a SINGLE trigger ending up with two competing panels (the schema-built

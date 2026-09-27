@@ -29,36 +29,52 @@ import { test, expect } from '../fixtures/offline';
  * localhost network jitter to get lucky.
  */
 
+/*
+ * Retargeted: #666 moved every <div x-demo> off pages/behaviors.html (its
+ * examples render one at a time in the live preview), so there is no
+ * standalone cardhero demo there to measure and the test timed out waiting
+ * for one. demos/site/cards.html's #demo-profile is the same case -- a single
+ * card whose behavior builds its own header, avatar and cover image late -- in
+ * a demo that IS shrink-to-fit (the cards.html hero is `full-width`, which
+ * opts out of the measurement entirely, so it could not show this bug).
+ */
 test('single-item demo self-corrects width after its lazily-loaded control renders late', async ({ page }) => {
   const client = await page.context().newCDPSession(page);
   await client.send('Emulation.setCPUThrottlingRate', { rate: 6 });
 
-  await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
+  await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
 
-  const hero = page.locator('[x-cardhero]').first();
-  await expect(hero).toBeVisible({ timeout: 15000 });
+  const demo = page.locator('#demo-profile');
+  await demo.scrollIntoViewIfNeeded({ timeout: 15000 });
+  const card = demo.locator('.x-demo__grid > [x-cardprofile]');
+  await expect(card).toBeVisible({ timeout: 15000 });
+  // demo.js commits the measured width once, when it settles (#985).
+  await expect(demo).toHaveClass(/x-demo--measured/, { timeout: 20000 });
 
   // Let everything -- including any legitimate delayed re-measure -- settle,
   // still under throttling, before removing it and reading the final state.
-  await page.waitForLoadState('networkidle', { timeout: 20000 });
   await page.waitForTimeout(1000);
   await client.send('Emulation.setCPUThrottlingRate', { rate: 1 });
   // One more settle pass at normal speed so a resize triggered right at the
   // throttle boundary has a frame to actually paint before we measure.
   await page.waitForTimeout(500);
 
-  const heroBox = await hero.boundingBox();
-  expect(heroBox, '[x-cardhero] must have a measurable box').not.toBeNull();
+  const m = await demo.evaluate((el) => {
+    const grid = el.querySelector('.x-demo__grid') as HTMLElement;
+    const control = grid.firstElementChild as HTMLElement;
+    return {
+      control: control.getBoundingClientRect().width,
+      gridScroll: grid.scrollWidth,
+      gridClient: grid.clientWidth,
+      demo: el.getBoundingClientRect().width,
+    };
+  });
 
-  const contentBox = await page.locator('.page__hero').first().boundingBox();
-  expect(contentBox, 'page content container must have a measurable box').not.toBeNull();
-
-  const ratio = heroBox!.width / contentBox!.width;
   expect(
-    ratio,
-    `[x-cardhero] settled at ${Math.round(heroBox!.width)}px wide against a ` +
-    `${Math.round(contentBox!.width)}px content column (ratio ${ratio.toFixed(2)}) under a slow ` +
-    `device (6x CPU throttle) -- a control that renders late must still end up full-width, not ` +
-    `permanently stuck at whatever it measured as ~0px before its own rendering finished.`
-  ).toBeGreaterThan(0.85);
+    m.control,
+    `[x-cardprofile] settled at ${Math.round(m.control)}px under a slow device (6x CPU throttle) -- a ` +
+    `control that renders late must not stay stuck at whatever it measured before its own rendering finished`
+  ).toBeGreaterThan(250);
+  expect(m.gridScroll, 'the demo box must hold its control, not clip it').toBeLessThanOrEqual(m.gridClient + 2);
+  expect(m.demo, 'the demo is at least as wide as its control').toBeGreaterThanOrEqual(m.control);
 });

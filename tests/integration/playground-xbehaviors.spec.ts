@@ -32,7 +32,11 @@ test.describe('Playground: 50 x-* behaviors example set', () => {
 
     await page.waitForFunction(() => {
       const ripples = document.querySelectorAll('#pg-preview [x-ripple]');
-      return ripples.length > 0 && [...ripples].every((el) => el.classList.contains('[x-ripple]'));
+      // 'x-ripple' is the class ripple.js adds. This read '[x-ripple]' -- the
+      // wb-ripple -> [x-ripple] attribute rename applied to a CLASS name, which
+      // no element can ever carry, so this setup waited out its full timeout
+      // and every test in the file failed before asserting anything.
+      return ripples.length > 0 && [...ripples].every((el) => el.classList.contains('x-ripple'));
     }, { timeout: 20000 });
     await page.waitForFunction(() => {
       const clocks = document.querySelectorAll('#pg-preview [x-clock]');

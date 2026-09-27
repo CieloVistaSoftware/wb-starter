@@ -27,49 +27,55 @@ test.describe('Portfolio Card - Business Card (integration)', () => {
       await (window as any).WB.scan();
     });
     
+    // cardportfolio renders its own BEM block, .x-portfolio__* -- the
+    // .x-card__portfolio-* names this used to query are not emitted anywhere
+    // in card.js, so every field below read as missing while it rendered.
     const card = page.locator('#test-portfolio');
-    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveAttribute('x-ready', '');
     await expect(card).toHaveClass(/x-card--portfolio/);
+    await expect(card).toHaveClass(/\bx-portfolio\b/);
     
     // Name
-    const name = card.locator('.x-card__portfolio-name');
+    const name = card.locator('.x-portfolio__name');
     await expect(name).toHaveText('John Doe');
     
-    // Title
-    const title = card.locator('.x-card__portfolio-title');
-    await expect(title).toHaveText('Senior Developer');
-    
-    // Company
-    const company = card.locator('.x-card__portfolio-company');
-    await expect(company).toHaveText('Acme Corp');
+    // Title -- the company is written into the title line ("<title> at
+    // <company>"); a separate company line is only built when there is no
+    // title to attach it to.
+    const title = card.locator('.x-portfolio__title');
+    await expect(title).toHaveText('Senior Developer at Acme Corp');
+    await expect(card.locator('.x-portfolio__company')).toHaveCount(0);
     
     // Location
-    const location = card.locator('.x-card__portfolio-location');
+    const location = card.locator('.x-portfolio__location');
     await expect(location).toContainText('San Francisco, CA');
     
     // Bio
-    const bio = card.locator('.x-card__portfolio-bio');
+    const bio = card.locator('.x-portfolio__bio');
     await expect(bio).toHaveText('Passionate developer with 10+ years experience.');
     
+    // Contact links live in the card's <address>, each named by its href.
+    const contact = card.locator('address.x-portfolio__contact');
+
     // Email link
-    const email = card.locator('.x-card__portfolio-email');
+    const email = contact.locator('a[href^="mailto:"]');
     await expect(email).toContainText('john@example.com');
     await expect(email).toHaveAttribute('href', 'mailto:john@example.com');
     
     // Phone link
-    const phone = card.locator('.x-card__portfolio-phone');
+    const phone = contact.locator('a[href^="tel:"]');
     await expect(phone).toContainText('+1-555-1234');
     
     // Website link
-    const website = card.locator('.x-card__portfolio-website');
+    const website = contact.locator('a[href="https://johndoe.com"]');
     await expect(website).toContainText('https://johndoe.com');
     
     // Avatar
-    const avatar = card.locator('.x-card__portfolio-avatar');
+    const avatar = card.locator('.x-portfolio__avatar');
     await expect(avatar).toBeVisible();
     
     // Social links
-    const social = card.locator('.x-card__portfolio-social');
+    const social = card.locator('.x-portfolio__social');
     await expect(social).toBeVisible();
     await expect(social.locator('a')).toHaveCount(3); // linkedin, twitter, github
   });
@@ -109,7 +115,8 @@ test.describe('Portfolio Card - Business Card (integration)', () => {
       await (window as any).WB.scan();
     });
     
-    const cover = page.locator('#test-portfolio-cover .x-card__portfolio-cover');
+    // The cover is the card's own .x-portfolio__cover banner (see above).
+    const cover = page.locator('#test-portfolio-cover .x-portfolio__cover');
     await expect(cover).toBeVisible();
   });
 });

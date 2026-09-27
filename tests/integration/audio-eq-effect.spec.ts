@@ -11,26 +11,35 @@ import { test, expect } from '../fixtures/offline';
  * live (but never-updated) array. Fixed by mutating the array in place
  * (`filters.length = 0; filters.push(...)`) instead of reassigning it.
  */
+// The Studio EQ Player on content.html is a native <audio show-eq playlist>.
+// These tests looked for `.x-audio[playlist]` -- a class the lazy runtime (#491)
+// only adds once the element is enhanced, so it could never be what scrolls it
+// into view -- and for `[class*=".x-audio"]`, a selector no class attribute can
+// match (the wb-audio -> .x-audio rename applied inside a class string). A native
+// <audio> renders no children, so audio.js mounts its UI in a wrapping
+// .x-audio-host (uiHost()) while wbAudio stays on the <audio> itself; the
+// tests address both where they actually live. Without `controls` that <audio>
+// has no box of its own, so it is the demo around it that gets scrolled to.
 test('Studio EQ Player: a band slider actually changes its filter gain (#233)', async ({ page }) => {
   await page.goto('/demos/site/content.html', { waitUntil: 'domcontentloaded' });
   // wb-lazy.js only enhances an element once it intersects the viewport
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
+  await page.locator('[x-demo]:has(audio[playlist])').scrollIntoViewIfNeeded();
   // WB scans/enhances asynchronously — wait for wbAudio to actually attach
   // (domcontentloaded alone is not enough and was flaky).
-  await page.waitForFunction(() => [...document.querySelectorAll('[class*=".x-audio"]')]
-    .some((el) => (el as any).wbAudio && el.querySelectorAll('.x-audio__eq-slider').length > 5),
-    { timeout: 20000 });
+  await page.waitForFunction(() => {
+    const host = document.querySelector('audio[playlist]') as any;
+    return !!host?.wbAudio && (host.closest('.x-audio-host') || host).querySelectorAll('.x-audio__eq-slider').length > 5;
+  }, { timeout: 20000 });
 
   const result = await page.evaluate(() => {
-    const audioEls = [...document.querySelectorAll('[class*=".x-audio"]')]
-      .filter((el) => (el as any).wbAudio);
-    const studio = audioEls.find((el) => el.querySelectorAll('.x-audio__eq-slider').length > 5);
-    if (!studio) return { found: false };
+    const studio = document.querySelector('audio[playlist]') as any;
+    const ui = studio?.closest('.x-audio-host') || studio;
+    if (!studio?.wbAudio || ui.querySelectorAll('.x-audio__eq-slider').length <= 5) return { found: false };
 
-    const slider = studio.querySelectorAll('.x-audio__eq-slider')[3] as HTMLInputElement;
+    const slider = ui.querySelectorAll('.x-audio__eq-slider')[3] as HTMLInputElement;
     slider.value = '10';
     slider.dispatchEvent(new Event('input', { bubbles: true }));
 
@@ -48,17 +57,17 @@ test('Studio EQ Player: a preset applies its gain curve to the real filters (#23
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
-  await page.waitForFunction(() => [...document.querySelectorAll('[class*=".x-audio"]')]
-    .some((el) => (el as any).wbAudio && el.querySelectorAll('.x-audio__eq-slider').length > 5),
-    { timeout: 20000 });
+  await page.locator('[x-demo]:has(audio[playlist])').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => {
+    const host = document.querySelector('audio[playlist]') as any;
+    return !!host?.wbAudio && (host.closest('.x-audio-host') || host).querySelectorAll('.x-audio__eq-slider').length > 5;
+  }, { timeout: 20000 });
 
   const gains = await page.evaluate(() => {
-    const audioEls = [...document.querySelectorAll('[class*=".x-audio"]')]
-      .filter((el) => (el as any).wbAudio);
-    const studio = audioEls.find((el) => el.querySelectorAll('.x-audio__eq-slider').length > 5);
-    if (!studio) return null;
-    const bassBtn = [...studio.querySelectorAll('button')].find((b) => /bass boost/i.test(b.textContent || ''));
+    const studio = document.querySelector('audio[playlist]') as any;
+    const ui = studio?.closest('.x-audio-host') || studio;
+    if (!studio?.wbAudio) return null;
+    const bassBtn = [...ui.querySelectorAll('button')].find((b) => /bass boost/i.test(b.textContent || ''));
     bassBtn?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     const filters = (studio as any).wbAudio.getFilters();
     return filters.slice(0, 5).map((f: any) => f.gain.value);
@@ -73,7 +82,7 @@ test('Studio EQ Player: playlist attribute renders a track picker with all track
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
+  await page.locator('[x-demo]:has(audio[playlist])').scrollIntoViewIfNeeded();
   await page.waitForFunction(() => !!document.querySelector('.x-audio__track-picker'), { timeout: 20000 });
 
   const result = await page.evaluate(() => {
@@ -109,7 +118,7 @@ test('Studio EQ Player: every playlist track actually loads (catches CORS-silent
   // (IntersectionObserver) — content.html is now a long consolidated
   // category page, so the Studio EQ Player sits well below the fold at
   // load and never gets scanned unless explicitly scrolled into view.
-  await page.locator('.x-audio[playlist]').scrollIntoViewIfNeeded();
+  await page.locator('[x-demo]:has(audio[playlist])').scrollIntoViewIfNeeded();
   await page.waitForFunction(() => !!document.querySelector('.x-audio__track-picker'), { timeout: 20000 });
 
   const results = await page.evaluate(async () => {

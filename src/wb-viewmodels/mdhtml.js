@@ -190,6 +190,13 @@ export async function mdhtml(element, options = {}) {
     // heading(text, level). Reading `level` off the v5+ call yields undefined —
     // which produced `<hundefined>` tags. Support both signatures.
     const renderer = new marked.Renderer();
+    // Slugs already issued in THIS render. Two headings with the same text are
+    // ordinary markdown (card.md has an H3 "Variants" demo section under Usage
+    // and an H2 "Variants" list of variant behaviors), but two identical slugs
+    // are two identical ids -- getElementById then silently returns the first
+    // and #730 reports it as a runtime error. Suffix repeats `-1`, `-2`, the
+    // same scheme GitHub uses, so the first heading keeps its natural anchor.
+    const issuedSlugs = new Map();
     renderer.heading = function(arg, level) {
       let depth, html, plain;
       if (arg && typeof arg === 'object') {
@@ -210,8 +217,11 @@ export async function mdhtml(element, options = {}) {
         .replace(/\s+/g, '-')              // Replace spaces with hyphens
         .replace(/-+/g, '-')               // Collapse multiple hyphens
         .replace(/^-|-$/g, '');            // Trim hyphens from ends
+      const seen = issuedSlugs.get(slug) || 0;
+      issuedSlugs.set(slug, seen + 1);
+      const id = seen ? `${slug}-${seen}` : slug;
 
-      return `<h${depth} id="${slug}">${html}</h${depth}>\n`;
+      return `<h${depth} id="${id}">${html}</h${depth}>\n`;
     };
     
     // Configure marked

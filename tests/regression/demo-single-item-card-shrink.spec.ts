@@ -16,6 +16,10 @@ for (const cardCase of CASES) {
     const code = demo.locator('.x-demo__code').first();
     await expect(card).toBeVisible({ timeout: 20000 });
     await expect(code).toBeVisible({ timeout: 20000 });
+    // demo.js commits a single-item block's width once, when control and code
+    // stop moving (#985), and marks it .x-demo--measured. Reading earlier
+    // measures a provisional width no reader is left with.
+    await expect(demo).toHaveClass(/x-demo--measured/, { timeout: 20000 });
 
     const metrics = await demo.evaluate((demoElement) => {
       const grid = demoElement.querySelector('.x-demo__grid') as HTMLElement | null;

@@ -221,6 +221,12 @@ x-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
 .x-demo__grid--cols-1:has(> :only-child):has(> [x-skeleton]) {
   width: 100%;
   grid-template-columns: 1fr;
+  /* The track alone is not enough for a skeleton: it is display:block with
+     NO width of its own (progress at least says 100%), so under the
+     `justify-items: start` inherited from the rule above it shrank to its
+     content -- and <div x-skeleton lines="3"> has none, only empty line
+     <span>s. It measured 0px wide on feedback.html. Stretch it into the track. */
+  justify-items: stretch;
 }
 
 /* Standard §7 (default / desktop): a single-item demo hugs its content as
@@ -241,6 +247,32 @@ x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid-
   width: var(--x-demo-shrink-width, fit-content);
   max-width: 100%;
   min-width: min(var(--demo-code-min-width, 0px), 90vw);
+}
+
+/* "All x-demo code must show all the code up to 50% vw" (owner, 2026-08-07),
+   for the stretch BEFORE demo.js commits --x-demo-shrink-width. Until then the
+   rule above falls back to `fit-content`, i.e. the code panel's full unwrapped
+   width: one long features="..." line painted a single-item pricing demo 757px
+   wide on a 1280px screen and then snapped it back when the measurement landed
+   (demo-single-item-card-shrink / demo-code-panel-50vw measured exactly that
+   frame). Capping the panel here makes fit-content resolve to what demo.js will
+   commit anyway -- max(control, min(code, 50vw)) -- so the first paint is the
+   final width. demo.js sets .x-demo--measuring for exactly as long as it is
+   measuring and swaps it for .x-demo--measured when it commits, which lifts
+   the cap: from then on the panel is width:100% of a demo sized to hold it,
+   and a control wider than 50vw keeps a panel as wide as the demo (never
+   cramped inside it). Keyed on demo.js's own class, not on a :has()
+   single-child shape: blocks demo.js never measures (built with two children,
+   one of which later leaves) matched the shape and kept the cap forever.
+   The block's OWN panels only (child combinators), never a nested demo's.
+   Desktop only: below 700px the panel is full width (§26). */
+@media (min-width: 701px) {
+  x-demo.x-demo--measuring > .x-pre-wrapper > .x-demo__code,
+  [x-demo].x-demo--measuring > .x-pre-wrapper > .x-demo__code,
+  x-demo.x-demo--measuring > .x-demo__code,
+  [x-demo].x-demo--measuring > .x-demo__code {
+    max-width: 50vw;
+  }
 }
 
 /* Escape hatch for §7: a `full-width` demo (e.g. a page hero) is a single

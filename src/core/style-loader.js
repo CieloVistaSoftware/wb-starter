@@ -50,9 +50,20 @@ const loaded = new Map();
 
 function loadCssFile(fileName) {
   const cached = loaded.get(fileName);
-  // Reuse a load that FINISHED, or one whose <link> is still in the document
-  // and can therefore still fire. Anything else is a corpse — start over.
-  if (cached && (cached.settled || (cached.link && cached.link.isConnected))) {
+  // Reuse a load whose <link> is still in the document and can therefore
+  // still fire, or a FINISHED one whose stylesheet is still in the document.
+  // Anything else is a corpse — start over.
+  //
+  // "Finished" alone was not enough. A page.setContent() (or anything else
+  // that rewrites <head>) removes a stylesheet that loaded long ago; the
+  // module outlives it, the cached entry still said settled, and every later
+  // injection of that behavior ran with no CSS at all. It went unseen while
+  // behaviors wrote their layout inline -- x-cardhorizontal's figure measured
+  // 94% of the card instead of its image-width="60%" once that width moved
+  // into card.css where it belongs.
+  const stillInDocument = () => typeof document === 'undefined'
+    || !!document.querySelector(`link[data-x-behavior-css="${fileName}"]`);
+  if (cached && ((cached.link && cached.link.isConnected) || (cached.settled && stillInDocument()))) {
     return cached.promise;
   }
 

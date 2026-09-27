@@ -30,9 +30,12 @@ test('.x-audio throws a catchable runtime error when its src is missing/empty', 
     // A real 0-byte file dedicated to this test -- genuinely undecodable,
     // not a network 404 (keeps this test deterministic regardless of
     // external network availability).
-    container.innerHTML = '<audio src="/tests/fixtures/broken-audio-0-bytes.mp3"></audio>';
+    // <div x-audio>: this was <x-audio>, and the tag-to-attribute migration made it
+    // a bare <audio> -- which the harness (autoInject off) never enhances and
+    // which, being its own media element, has no inner <audio> to find.
+    container.innerHTML = '<div x-audio src="/tests/fixtures/broken-audio-0-bytes.mp3"></div>';
     document.body.appendChild(container);
-    return await (window as any).WB.scan(container);
+    return await (window as any).WB.scan(container, { eager: true });
   });
 
   await page.waitForFunction(
@@ -41,6 +44,10 @@ test('.x-audio throws a catchable runtime error when its src is missing/empty', 
   ).catch(() => {});
   await page.waitForTimeout(1500);
 
-  const audioError = pageErrors.find(e => e.includes('.x-audio') && e.includes('broken-audio-0-bytes.mp3'));
+  // audio.js's errors begin "x-audio:" (the behavior's token). This filter
+  // read '.x-audio' -- a class-selector spelling no message contains -- so
+  // it could never match: a real error went unseen and a false positive
+  // would have passed unnoticed.
+  const audioError = pageErrors.find(e => e.includes('x-audio:') && e.includes('broken-audio-0-bytes.mp3'));
   expect(audioError, `expected a .x-audio runtime error for the empty file, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
 });

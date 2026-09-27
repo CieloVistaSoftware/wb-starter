@@ -187,9 +187,17 @@ for (const form of FORMS) {
       // #745: href IS implemented in button.js but never ran, because the
       // behavior was not applied. Assert the navigation intent, not a real
       // page load, so the suite stays hermetic.
+      //
+      // The href is a same-document fragment. It was /pages/docs.html, and the
+      // schema's target enum lists _self FIRST -- so clicking #h0 really did
+      // navigate the harness away, and every later button was looked up on a
+      // page that no longer had it (one form timed out "waiting for navigation
+      // to finish", the other read a half-torn-down page and saw no
+      // window.open). A fragment keeps _self observable without leaving: the
+      // hash is the navigation.
       await render(page,
         TARGETS.map((t, i) =>
-          `<button id="h${i}"${form.attr} href="/pages/docs.html" target="${t}">go</button>`).join(''));
+          `<button id="h${i}"${form.attr} href="#nav-${i}" target="${t}">go</button>`).join(''));
       for (const [i, t] of TARGETS.entries()) {
         // el.click(), not dispatchEvent: verified live that the real click
         // path is what the handler sees. An earlier revision of this test used
@@ -201,16 +209,17 @@ for (const form of FORMS) {
           (window as any).open = (u: string, tg: string) => { opened = { u, tg }; return null; };
           (el as HTMLButtonElement).click();
           (window as any).open = realOpen;
-          return opened;
+          return { opened, hash: location.hash };
         });
         if (t === '_blank') {
-          expect(nav, `target="_blank" did not call window.open`).not.toBeNull();
-          expect(nav.u, `target="_blank" opened the wrong URL`).toContain('/pages/docs.html');
-          expect(nav.tg, `target="_blank" passed the wrong window target`).toBe('_blank');
+          expect(nav.opened, `target="_blank" did not call window.open`).not.toBeNull();
+          expect(nav.opened.u, `target="_blank" opened the wrong URL`).toBe(`#nav-${i}`);
+          expect(nav.opened.tg, `target="_blank" passed the wrong window target`).toBe('_blank');
+          expect(nav.hash, `target="_blank" must not ALSO navigate this window`).not.toBe(`#nav-${i}`);
         } else {
-          // _self assigns location rather than opening a window, so the
-          // absence of a window.open call is the correct outcome here.
-          expect(nav, `target="_self" must NOT open a new window`).toBeNull();
+          // _self assigns location rather than opening a window.
+          expect(nav.opened, `target="${t}" must NOT open a new window`).toBeNull();
+          expect(nav.hash, `target="${t}" did not navigate this window`).toBe(`#nav-${i}`);
         }
       }
     });

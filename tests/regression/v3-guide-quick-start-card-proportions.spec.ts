@@ -22,6 +22,13 @@ import { test, expect } from '../fixtures/offline';
  * 4. The live demo also exposes the matching source code
  */
 
+// The guide writes the card as a plain <article> -- a card by auto-injection --
+// and cards carry no .x-card / .x-card__* classes since a8a7362e. So the card
+// is found by its tag and title, and its parts by tag: the <header>'s <h3>
+// and <p>, and the <main>. The old `[x-card][title=...]` / `.x-card__*`
+// selectors matched nothing, which is the whole of what these tests reported.
+const QUICK_START_CARD = 'article[title="Build resilient interfaces"]';
+
 test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
   test.beforeEach(async ({ page }) => {
     // Use a standard desktop viewport for consistent measurements
@@ -35,24 +42,27 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
     page,
   }) => {
     const demo = page.locator('[x-demo]').filter({
-      has: page.locator('[x-card][title="Build resilient interfaces"]'),
+      has: page.locator(QUICK_START_CARD),
     }).first();
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
     await expect(demo.locator('.x-demo__code, pre').first()).toBeVisible();
 
-    const card = demo.locator('.x-demo__grid .x-card').first();
+    const card = demo.locator(`.x-demo__grid ${QUICK_START_CARD}`).first();
     await expect(card).toBeVisible();
-    await expect(card.locator('.x-card__title')).toHaveText('Build resilient interfaces');
-    await expect(card.locator('.x-card__subtitle')).toHaveText('Separate structure from behavior');
-    await expect(card.locator('.x-card__main')).toContainText('Keep content readable and focused');
-    await expect(card.locator('.x-card__main')).toContainText('applies behavior directly to the element');
+    // An <article> is visible before the card behavior has built its header
+    // and main; measure only once it has settled.
+    await expect(card).toHaveAttribute('x-ready', '', { timeout: 20000 });
+    await expect(card.locator(':scope > header > h3')).toHaveText('Build resilient interfaces');
+    await expect(card.locator(':scope > header > p')).toHaveText('Separate structure from behavior');
+    await expect(card.locator(':scope > main')).toContainText('Keep content readable and focused');
+    await expect(card.locator(':scope > main')).toContainText('applies behavior directly to the element');
 
     // Get detailed measurements
     const measurements = await card.evaluate((node: HTMLElement) => {
       const rect = node.getBoundingClientRect();
       const styles = getComputedStyle(node);
-      const header = (node as any).querySelector('.x-card__header');
-      const main = (node as any).querySelector('.x-card__main');
+      const header = (node as any).querySelector(':scope > header');
+      const main = (node as any).querySelector(':scope > main');
 
       // Parse padding values (handle rem, px, etc.)
       const parseSize = (value: string) => {
@@ -135,17 +145,20 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
 
   test('Quick Start card content has visible spacing (not cramped)', async ({ page }) => {
     const demo = page.locator('[x-demo]').filter({
-      has: page.locator('[x-card][title="Build resilient interfaces"]'),
+      has: page.locator(QUICK_START_CARD),
     }).first();
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
-    const card = demo.locator('.x-demo__grid .x-card').first();
+    const card = demo.locator(`.x-demo__grid ${QUICK_START_CARD}`).first();
     await expect(card).toBeVisible();
+    // An <article> is visible before the card behavior has built its header
+    // and main; measure only once it has settled.
+    await expect(card).toHaveAttribute('x-ready', '', { timeout: 20000 });
 
     // Check header/body spacing
     const spacingData = await card.evaluate((node: HTMLElement) => {
-      const header = (node as any).querySelector('.x-card__header');
-      const main = (node as any).querySelector('.x-card__main');
-      const title = header?.querySelector('.x-card__title');
+      const header = (node as any).querySelector(':scope > header');
+      const main = (node as any).querySelector(':scope > main');
+      const title = header?.querySelector(':scope > h3');
       const body = main?.querySelector('p');
 
       const titleRect = title?.getBoundingClientRect();
@@ -185,12 +198,15 @@ test.describe('V3-GUIDE Quick Start card proportions (#468)', () => {
 
   test('Quick Start card keeps one docs link when its Light DOM is built', async ({ page }) => {
     const demo = page.locator('[x-demo]').filter({
-      has: page.locator('[x-card][title="Build resilient interfaces"]'),
+      has: page.locator(QUICK_START_CARD),
     }).first();
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
 
-    const card = demo.locator('.x-demo__grid .x-card').first();
-    await expect(card.locator('.x-card__main')).toContainText('Keep content readable and focused');
-    await expect(card.locator('.x-demo__card-doc-link')).toHaveCount(1);
+    const card = demo.locator(`.x-demo__grid ${QUICK_START_CARD}`).first();
+    await expect(card.locator(':scope > main')).toContainText('Keep content readable and focused');
+    // The doc link is anchored on the OUTER x-demo, not inside the card
+    // (#630/#641: one link per demo block, never clipped by the card), so a
+    // card rebuilding its Light DOM can no longer wipe it -- count it there.
+    await expect(demo.locator(':scope > a.x-demo__card-doc-link')).toHaveCount(1);
   });
 });

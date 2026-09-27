@@ -26,11 +26,16 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-name', 'John Doe');
     await expect(element).toHaveAttribute('data-role', 'Developer');
     
-    // Check if behavior was applied (may add .x-ready class)
-    const wbReady = await element.classList.contains('x-ready');
-    // Behavior either adds .x-ready class or adds content
-    const hasContent = (await element.textContent())?.trim().length > 0;
-    expect(wbReady !== null || hasContent).toBeTruthy();
+    // Check the behavior was applied. This used to call
+    // `element.classList.contains(...)` -- but `element` is a Playwright
+    // Locator, which has no classList, so the test threw a TypeError before
+    // asserting anything. And `wbReady !== null || ...` was true for any
+    // boolean, so even a working call could never have failed.
+    //
+    // x-ready is an ATTRIBUTE (#970), and cardprofile builds its name from
+    // data-name, so both are real, falsifiable signs the behavior ran.
+    await expect(element).toHaveAttribute('x-ready', '');
+    await expect(element).toContainText('John Doe');
   });
 
   test('[x-cardprofile] alias also works', async ({ page }) => {

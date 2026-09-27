@@ -1378,8 +1378,16 @@
     }
 
     async function showDoc(behavior) {
-      liveDoc.hidden = true;
-      if (!behavior) return;
+      // Hidden only when there is nothing to document. It used to be hidden
+      // for every selection and unhidden after the .md fetch, so for the
+      // length of that fetch the Docs chip had no box: the header strip
+      // reflowed (Fullscreen and AutoScroll jumped left, then back), and
+      // anything measuring the strip in that window read Docs as top=0 h=0
+      // (behaviors-header-controls-aligned). The initial selection runs after
+      // the runtime reports idle, and a fetch is not an injection, so idle
+      // cannot cover it. The body below is replaced with an empty host first,
+      // so a stale doc is never shown under the new behavior's name.
+      if (!behavior) { liveDoc.hidden = true; return; }
 
       // A FRESH host element per behavior. WB.inject() will not re-apply a
       // behavior to an element that already carries it, so reusing one div
@@ -1737,6 +1745,18 @@
           ? src.replace(pairRe, ` ${paired.attr}="${paired.value}"`)
           : src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${paired.attr}="${paired.value}"`);
       }
+
+      // A property namespaced with the behavior's own name -- toast-variant on
+      // <button variant="primary" x-toast> -- is spelled that way because the
+      // HOST owns the plain name: `variant` there is the button's colour, and
+      // feedback.js reads toast-variant first for exactly that reason. Writing
+      // the row's value to `variant` recoloured the button and left
+      // toast-variant="success" in charge, so the info/warning/error rows all
+      // fired the same green success toast. The namespaced spelling, when the
+      // example carries it, is the one this row is about.
+      const behaviorName = extensionMap[attr] || attr.replace(/^x-/, '');
+      const namespaced = new RegExp('\\s' + escapeRe(`${behaviorName}-${kebab(target)}`) + '\\s*=\\s*"[^"]*"', 'i');
+      if (namespaced.test(src)) return src.replace(namespaced, ` ${behaviorName}-${kebab(target)}="${value}"`);
 
       // An alias the example already uses is rewritten in place (alert's
       // `type`); the property itself is always written kebab-case.

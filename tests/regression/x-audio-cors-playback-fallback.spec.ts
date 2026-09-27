@@ -28,11 +28,14 @@ test('the error handler retries without crossOrigin exactly once when show-eq ca
 
   const result = await page.evaluate(async (src) => {
     const container = document.createElement('div');
-    container.innerHTML = `<audio src="${src}" show-eq></audio>`;
+    // <div x-audio>: this was <x-audio>, and the tag-to-attribute migration made it
+    // a bare <audio> -- which the harness (autoInject off) never enhances and
+    // which, being its own media element, has no inner <audio> to find.
+    container.innerHTML = `<div x-audio src="${src}" show-eq></div>`;
     document.body.appendChild(container);
 
     const { audio } = await import('/src/wb-viewmodels/semantics/audio.js');
-    const host = container.querySelector('.x-audio')!;
+    const host = container.querySelector('[x-audio]')!;
     audio(host, {});
 
     const audioEl = host.querySelector('audio')!;
@@ -67,12 +70,19 @@ test('a genuinely broken src (not a CORS failure) still throws after the one COR
 
   await page.evaluate(async () => {
     const container = document.createElement('div');
-    container.innerHTML = '<audio src="/tests/fixtures/broken-audio-0-bytes.mp3" show-eq></audio>';
+    // <div x-audio>: this was <x-audio>, and the tag-to-attribute migration made it
+    // a bare <audio> -- which the harness (autoInject off) never enhances and
+    // which, being its own media element, has no inner <audio> to find.
+    container.innerHTML = '<div x-audio src="/tests/fixtures/broken-audio-0-bytes.mp3" show-eq></div>';
     document.body.appendChild(container);
-    await (window as any).WB.scan(container);
+    await (window as any).WB.scan(container, { eager: true });
   });
 
   await page.waitForTimeout(2000);
-  const audioError = pageErrors.find((e) => e.includes('.x-audio') && e.includes('broken-audio-0-bytes.mp3'));
+  // audio.js's errors begin "x-audio:" (the behavior's token). This filter
+  // read '.x-audio' -- a class-selector spelling no message contains -- so
+  // it could never match: a real error went unseen and a false positive
+  // would have passed unnoticed.
+  const audioError = pageErrors.find((e) => e.includes('x-audio:') && e.includes('broken-audio-0-bytes.mp3'));
   expect(audioError, `a genuinely broken file must still surface a real error after the CORS-retry gives it one more chance, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
 });

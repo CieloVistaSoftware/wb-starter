@@ -50,6 +50,12 @@ type Pick = {
   /** Selector for the rendered host; defaults to `[<token>]`. */
   host?: string;
   /**
+   * The attribute the option is written to, when it is not `prop` itself --
+   * x-toast's variant axis lands on `toast-variant`, because the trigger
+   * button owns its own `variant`.
+   */
+  attr?: string;
+  /**
    * Proof the BEHAVIOR ran, matched against the host or any descendant.
    * Defaults to `[class*="x-"]` — every behavior on this page applies an x-*
    * class to the host or to something it builds.
@@ -105,7 +111,7 @@ async function show(page: Page, pick: Pick): Promise<Locator> {
       if (value === 'false') return true;                 // demonstrated by ABSENCE
       return applied === value;
     },
-    { sel: host, prop: pick.prop || '', value: pick.value || '', proof: ready },
+    { sel: host, prop: pick.attr || pick.prop || '', value: pick.value || '', proof: ready },
     { timeout: 25000 },
   );
 
@@ -191,18 +197,25 @@ test.describe('Behaviors page — Feedback', () => {
 
   test('toast fires with the correct type', async ({ page }) => {
     await loadBrowse(page);
-    // The catalogue example carries toast-variant="success"; the row's own
-    // `variant` axis colours the BUTTON, not the toast, so any variant row
-    // still fires a success toast.
-    const btn = await show(page, { token: 'x-toast', prop: 'variant', value: 'info', ready: '[x-toast]' });
+    // The row's variant axis is the TOAST's variant (toast.schema.json), so the
+    // "info" row must fire an info toast. It used to be written to the example
+    // button's own `variant`, leaving the catalogue's toast-variant="success"
+    // in charge -- every toast row fired the same success toast, and this test
+    // had been rewritten to expect exactly that. pages/behaviors.html's
+    // withOption() now writes the namespaced toast-variant the example uses.
+    const btn = await show(page, { token: 'x-toast', prop: 'variant', attr: 'toast-variant', value: 'info', ready: '[x-toast]' });
+    // By its message: picking the row raises the site-wide click confirmation
+    // (#456), which is itself an info toast, and must not count as this one.
+    const message = await btn.getAttribute('message');
+    const fired = page.locator('.x-toast--info', { hasText: message || '' });
     // Unlike every other behavior here, x-toast leaves no mark on its host —
     // it only attaches a click handler — so there is no DOM proof the example
     // is live. Click until it fires rather than asserting on one speculative
     // click that can land before WB.scan() wires the button.
     await expect
-      .poll(async () => { await btn.click(); return page.locator('.x-toast--success').count(); }, { timeout: 20000 })
+      .poll(async () => { await btn.click(); return fired.count(); }, { timeout: 20000 })
       .toBeGreaterThan(0);
-    await expect(page.locator('.x-toast--success').first()).toBeVisible();
+    await expect(fired.first()).toBeVisible();
   });
 });
 

@@ -9,6 +9,11 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * semantics. semantics/select.js now builds a real <select>/<option> tree
  * for this tag and re-invokes its own native-<select> enhancement path on
  * it, so both share identical logic.
+ *
+ * The built-from-attributes hosts below are `<div x-select>`. They were
+ * `<wb-select>`, and the tag-to-attribute migration rewrote them as bare
+ * `<select>` elements -- which take select()'s native branch, build nothing,
+ * and so could never contain the inner <select> these assertions look for.
  */
 test.describe('.x-select builds a real <select>, not a fake widget', () => {
   test.beforeEach(async ({ page }) => {
@@ -18,11 +23,11 @@ test.describe('.x-select builds a real <select>, not a fake widget', () => {
   test('a .x-select with options= builds a real <select> with real <option>s', async ({ page }) => {
     const el = await setupTestContainer(
       page,
-      `<select label="Fruit" placeholder="Choose one" options='[{"value":"apple","label":"Apple"},{"value":"banana","label":"Banana"}]'></select>`
+      `<div x-select label="Fruit" placeholder="Choose one" options='[{"value":"apple","label":"Apple"},{"value":"banana","label":"Banana"}]'></div>`
     );
     const select = el.locator('select');
     await expect(select).toHaveCount(1);
-    await expect(select).toHaveClass('.x-select__field');
+    await expect(select).toHaveClass(/\bx-select__field\b/);
     await expect(select.locator('option')).toHaveCount(3); // placeholder + 2
     await expect(select.locator('option[value="apple"]')).toHaveText('Apple');
 
@@ -42,7 +47,7 @@ test.describe('.x-select builds a real <select>, not a fake widget', () => {
   test('reapplying clearable enhancement does not nest duplicate wrappers', async ({ page }) => {
     const el = await setupTestContainer(
       page,
-      '<select clearable options="[{&quot;value&quot;:&quot;one&quot;,&quot;label&quot;:&quot;One&quot;}]\"></select>'
+      '<div x-select clearable options="[{&quot;value&quot;:&quot;one&quot;,&quot;label&quot;:&quot;One&quot;}]"></div>'
     );
 
     await page.evaluate((host) => {

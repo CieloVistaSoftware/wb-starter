@@ -18,23 +18,29 @@ import { test, expect } from '../fixtures/offline';
 test.describe('Button variant colors (#button-variant-colors)', () => {
   test('primary/success/error/warning render distinct backgrounds', async ({ page }) => {
     await page.goto('/demos/site/forms.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(500);
-    // wb-lazy.js only injects a custom tag's behavior once it intersects the
-    // viewport (IntersectionObserver) — scroll each variant into view before
-    // reading its computed style, or it reads the pre-enhancement default.
+    // `<button variant>` is what forms.html authors: the selector used to be
+    // `[x-button][variant]`, left over from the <x-button> tag, and matched
+    // nothing on the page, so the first scrollIntoViewIfNeeded() waited out
+    // the whole test timeout. The lazy runtime (#491) only enhances a button
+    // near the viewport and button.css arrives just in time (#342), so scroll
+    // each one in, wait for x-ready, then read.
     const bg = async (variant: string) => {
-      const el = page.locator(`[x-button][variant="${variant}"]`).first();
+      const el = page.locator(`button[variant="${variant}"]`).first();
       await el.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(300);
+      await expect(el).toHaveAttribute('x-ready', '', { timeout: 10000 });
       return el.evaluate((node) => getComputedStyle(node as HTMLElement).backgroundColor);
     };
 
-    const colors = {
-      primary: await bg('primary'),
-      success: await bg('success'),
-      error: await bg('error'),
-      warning: await bg('warning'),
-    };
+    let colors: Record<string, string> = {};
+    await expect.poll(async () => {
+      colors = {
+        primary: await bg('primary'),
+        success: await bg('success'),
+        error: await bg('error'),
+        warning: await bg('warning'),
+      };
+      return new Set(Object.values(colors)).size;
+    }, { timeout: 10000 }).toBe(4);
 
     // Bug signature: all variants collapse to the same neutral background.
     const distinct = new Set(Object.values(colors));

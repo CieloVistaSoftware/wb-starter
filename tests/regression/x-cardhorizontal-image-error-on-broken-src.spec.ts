@@ -40,8 +40,14 @@ test('[x-cardhorizontal] throws a catchable runtime error when its image src is 
 
   await page.waitForTimeout(1500);
 
+  // The runtime's media errors are prefixed `x-<name>:` -- the same form as
+  // x-cardhero's, x-cardoverlay's and x-audio's. This used to look for
+  // `[x-cardhorizontal]`, a spelling no error in src/ has ever used, so it
+  // failed while the error it wanted was sitting in pageErrors -- and the
+  // control test below, which checks that spelling is ABSENT, could never fail.
+  const CARD_ERROR_PREFIX = 'x-cardhorizontal:';
   const cardError = pageErrors.find(
-    (e) => e.includes('[x-cardhorizontal]') && e.includes('does-not-exist-cardhorizontal.jpg')
+    (e) => e.startsWith(CARD_ERROR_PREFIX) && e.includes('does-not-exist-cardhorizontal.jpg')
   );
   expect(cardError, `expected a [x-cardhorizontal] runtime error for the broken image, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
 });
@@ -69,6 +75,7 @@ test('[x-cardhorizontal] with a real, working image never throws', async ({ page
     { timeout: 15000 }
   ).toBe(true);
 
-  const cardError = pageErrors.find((e) => e.includes('[x-cardhorizontal]'));
+  // Same `x-cardhorizontal:` prefix as the broken-image test above.
+  const cardError = pageErrors.find((e) => e.startsWith('x-cardhorizontal:'));
   expect(cardError, `a real, working image must never throw a [x-cardhorizontal] error, got: ${JSON.stringify(pageErrors)}`).toBeFalsy();
 });

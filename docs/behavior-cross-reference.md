@@ -527,71 +527,72 @@ Settings panel:
 The `dialog` behavior only decorates a **real, already-open** `<dialog open>` in
 place (see the Auto-Injection demo above) — it does not wire up a show/hide
 trigger. For a self-contained trigger button that builds and opens a dialog on
-click with no JavaScript, use the `<dialog>` custom tag (`semantics/dialog.js`,
+click with no JavaScript, put `x-modal` on a `<button>` (`semantics/dialog.js`,
 exported as `modal`): `modal-title`/`modal-content` attributes supply the
-dialog's contents, and the element's own text becomes the trigger label. Every
-`<dialog>` dialog gets the same auto-generated Cancel/OK footer.
+dialog's contents, and the button's own text becomes the trigger label. Every
+dialog it opens gets the same auto-generated Cancel/OK footer. (A `<dialog>` is
+the popup itself, hidden until opened -- it is never the thing you click.)
 
 Basic modal:
 
 <div x-demo>
-<dialog
+<button x-modal
   modal-title="Welcome!"
   modal-content="<p>Thanks for visiting our site.</p>">
   Show Welcome
-</dialog>
+</button>
 </div>
 
 Confirmation dialog:
 
 <div x-demo>
-<dialog
+<button x-modal
   modal-title="Delete Item?"
   modal-content="<p>This action cannot be undone. Are you sure?</p>">
   🗑️ Delete
-</dialog>
+</button>
 </div>
 
 Form in dialog:
 
 <div x-demo>
-<dialog
+<button x-modal
   modal-title="Sign In"
   modal-content='<label>Email <input type="email" placeholder="you@example.com"></label><label>Password <input type="password" placeholder="••••••••"></label>'>
   Sign In
-</dialog>
+</button>
 </div>
 
 Image lightbox dialog:
 
 <div x-demo>
-<dialog
+<button x-modal
   modal-title="Full Size Photo"
   modal-content='<img src="https://placehold.co/1200x800/1e293b/e2e8f0?text=Full+Size+Photo" alt="Full size photo">'>
   <img
     src="https://placehold.co/200x150/1e293b/e2e8f0?text=Thumbnail"
     alt="Click to enlarge">
-</dialog>
+</button>
 </div>
 
 Terms and conditions:
 
 <div x-demo>
-<dialog
+<button x-modal
   modal-title="Terms of Service"
   modal-content='<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p><label><input type="checkbox"> I agree to the terms and conditions</label>'>
   📜 View Terms
-</dialog>
+</button>
 </div>
 
 Settings dialog:
 
 <div x-demo>
-<dialog
+<button x-modal
   modal-title="Settings"
   modal-content='<fieldset><legend>Notifications</legend><label><input type="checkbox" checked> Email notifications</label><label><input type="checkbox"> Push notifications</label><label><input type="checkbox" checked> Weekly digest</label></fieldset><fieldset><legend>Privacy</legend><label><input type="checkbox"> Show online status</label><label><input type="checkbox" checked> Allow search engines</label></fieldset>'>
   ⚙️ Settings
-</dialog>
+</button>
 </div>
 
 ---
@@ -2688,10 +2689,13 @@ With logo image:
 </nav>
 </div>
 
-Generated navbar (content built from `brand`/`items` attributes, no children needed):
+Generated navbar (content built from `brand`/`items` attributes, no children needed).
+A bare `<nav>` is not auto-injected -- `nativeMap` has no `nav` entry -- so the
+generator runs only with `x-navbar` on it; without it the element stays empty:
 
 <div x-demo>
 <nav
+  x-navbar
   brand="WB Behaviors"
   items="Home, Features, Docs, Pricing, Contact">
 </nav>
@@ -2701,6 +2705,7 @@ Sticky navbar:
 
 <div x-demo>
 <nav
+  x-navbar
   brand="MySite"
   items="Home, About, Blog, Contact"
   sticky>
@@ -2834,16 +2839,13 @@ Documentation navbar:
 - `active` - Currently active item
 - `collapsed` - Start in collapsed state
 
+> **Not wired today:** `<aside>` is not in tag-map's `nativeMap` and there is
+> no `x-sidebar` attribute, so nothing runs `navigation.js`'s `sidebar()` and
+> `items` / `active` / `collapsed` generate nothing. A bare
+> `<aside items="…">` renders as an empty, zero-width box. Write the links
+> yourself, as below.
+
 **Examples:**
-
-Basic sidebar (content built from `items`/`active` attributes, no children needed):
-
-<div x-demo>
-<aside
-  items="Dashboard, Projects, Team, Settings"
-  active="Dashboard">
-</aside>
-</div>
 
 Semantic sidebar:
 

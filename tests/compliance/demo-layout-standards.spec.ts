@@ -346,6 +346,18 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
 
         for (const el of all) {
           if (isAtomByRole(el)) continue;
+          // A cell of a table its author declared `compact` is on the
+          // compact padding scale on purpose -- data.css's
+          // `.x-table--compact` 0.5rem is the whole point of the variant,
+          // exactly as a badge's small padding is the point of a badge. The
+          // size cut-off below was the stand-in for "intentionally compact",
+          // and it only held while the demo tables were empty: with real rows
+          // (demos/site/content.html) a compact "Name" header is 127px wide
+          // and got judged as a 1rem content panel. No compact padding can
+          // satisfy that (with `bordered` every compact cell has four edges),
+          // so the variant itself is the exclusion. Non-compact cells are
+          // still held to 1rem (#545).
+          if ((el.tagName === 'TH' || el.tagName === 'TD') && el.closest('table.x-table--compact')) continue;
           const rect = el.getBoundingClientRect();
           if (rect.width < minW || rect.height < minH) continue; // a UI atom, not a content panel
           // #561: the SIZE-based atom exclusion above (width/height < 120px)

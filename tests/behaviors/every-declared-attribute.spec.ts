@@ -43,6 +43,15 @@
  * exact contract the generated schemas state for themselves:
  * "every property here is one the code actually reads".
  *
+ * A fourth detector covers category 2 honestly: an attribute that none of the
+ * three saw gets one activation -- a click on its element -- and counts as
+ * reached if the behavior reads it THEN. x-toast is why: #458 moved every
+ * toast option to click time on purpose (a framework that re-renders the
+ * trigger must see the current values), so all nine of its attributes were
+ * reported "never read off the host" while each one demonstrably shapes the
+ * toast it fires. Default actions (navigation) are suppressed; the click only
+ * runs the behavior's own handler.
+ *
  * WHAT COUNTS AS A BEHAVIOR SCHEMA  (#861)
  *
  * `src/wb-models/` also holds the meta-schema that validates schema files, a
@@ -247,6 +256,22 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
       if (!renderedDiffers && !styleDiffers && !wasRead) ignored.push(a.name);
     });
 
+    // Fourth detector: activation. Only elements whose attribute nothing above
+    // saw are clicked, and the host swallows any default action so a link or
+    // form cannot navigate the harness away.
+    host.addEventListener('click', (e) => e.preventDefault());
+    const stillIgnored = ignored.filter((name) => {
+      const i = attrs.findIndex((a: any) => a.name === name);
+      const el = document.getElementById('p' + i) as HTMLElement | null;
+      if (!el) return true;
+      el.click();
+      const seen = seenBy[i];
+      const n = name.toLowerCase();
+      return !(seen.has(n) || seen.has(n.replace(/-/g, '')) || seen.has('data-' + n));
+    });
+    ignored.length = 0;
+    ignored.push(...stillIgnored);
+
     host.remove();
     return ignored;
   }, { token: b.token, tag: b.tag, inputType: b.inputType, attrs: b.attrs } as any);
@@ -268,7 +293,7 @@ test.describe('Every declared attribute reaches the element', () => {
         `${b.token} ignores ${ignored.length}/${b.attrs.length} declared attributes: ${ignored.join(', ')}\n` +
         `Each is declared in ${b.name}.schema.json, documented from it, and written in examples — ` +
         `setting it on <${b.tag} ${b.token}> changed no markup, changed no computed style, and was ` +
-        `never read off the host.`,
+        `never read off the host -- not even when the element was clicked.`,
       ).toEqual([]);
     });
   }

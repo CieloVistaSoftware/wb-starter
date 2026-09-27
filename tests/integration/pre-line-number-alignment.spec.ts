@@ -48,8 +48,33 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
     const pre = gutter.parentElement.querySelector('pre') || gutter.nextElementSibling;
     if (!pre) return { error: 'could not locate the <pre> sibling of the gutter' };
     const paddingTop = parseFloat(getComputedStyle(pre).paddingTop) || 0;
+    const lineHeight = parseFloat(getComputedStyle(pre).lineHeight) || 0;
     const gutterTops = [...gutter.children].map((el) => parseFloat(el.style.top));
-    return { paddingTop, gutterTops };
+
+    // How many visual rows each SOURCE line occupies. This page's panel is
+    // white-space: pre-wrap (the live preview on /?page=behaviors), and one of
+    // its lines -- a 109-character sentence -- wraps onto a second row, so its
+    // number is correctly followed by a 2-row gap (#559 is the rule: a number
+    // marks where its line starts). Measured from the rendered text itself.
+    const walker = document.createTreeWalker(pre, NodeFilter.SHOW_TEXT);
+    const nodes: Text[] = [];
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) nodes.push(n as Text);
+    const rowsPerLine: number[] = [];
+    let rowTops = new Set<number>();
+    const endLine = () => { rowsPerLine.push(Math.max(1, rowTops.size)); rowTops = new Set(); };
+    for (const node of nodes) {
+      const text = node.nodeValue || '';
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === '\n') { endLine(); continue; }
+        const range = document.createRange();
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        const rect = range.getClientRects()[0];
+        if (rect) rowTops.add(Math.round(rect.top));
+      }
+    }
+    if (rowTops.size) endLine();
+    return { paddingTop, lineHeight, gutterTops, rowsPerLine };
   });
 
   expect(result.error, result.error).toBeUndefined();
@@ -63,13 +88,15 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
     `line 1 top (${result.gutterTops[0]}px) should match <pre>'s padding-top (${result.paddingTop}px), not sit above it`
   ).toBeLessThan(3);
 
-  // Every consecutive gap (including line 1 -> line 2) should be uniform.
+  // Every consecutive gap (including line 1 -> line 2) is one line-height per
+  // visual row the earlier line occupies: uniform wherever nothing wraps, and
+  // exactly N rows where a line does. That is the sequence #298 broke.
   const gaps = result.gutterTops.slice(1).map((top, i) => top - result.gutterTops[i]);
-  const firstGap = gaps[0];
   gaps.forEach((gap, i) => {
+    const expected = result.lineHeight * (result.rowsPerLine[i] ?? 1);
     expect(
-      Math.abs(gap - firstGap),
-      `gap between line ${i + 1} and line ${i + 2} (${gap}px) should match the other gaps (${firstGap}px)`
+      Math.abs(gap - expected),
+      `gap between line ${i + 1} and line ${i + 2} (${gap}px) should be ${result.rowsPerLine[i]} row(s) of ${result.lineHeight}px`
     ).toBeLessThan(3);
   });
 });

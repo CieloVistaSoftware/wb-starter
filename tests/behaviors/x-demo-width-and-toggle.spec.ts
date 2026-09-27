@@ -134,10 +134,10 @@ test.describe('<div x-demo> single-item shrink works for stretchy content, not j
     await setup(page, `
       <div x-demo id="d9"><article title="Card" class="x-card--auto">Short content.</article></div>
     `);
-    await page.waitForFunction(() => {
-      const card = document.querySelector('#d9 .x-card');
-      return !!card && card.classList.contains('x-card');
-    }, { timeout: 5000 });
+    // #448: the card no longer carries an .x-card class echoing its own
+    // behavior (this waited 30s for one); card() having built the header
+    // from `title` is the proof it ran.
+    await page.waitForFunction(() => !!document.querySelector('#d9 article > header'), { timeout: 5000 });
     const gridWidth = await page.locator('#d9 .x-demo__grid').evaluate((el) => el.getBoundingClientRect().width);
     expect(gridWidth).toBeLessThan(500); // hugs the card's own content, not the 1000px container
   });

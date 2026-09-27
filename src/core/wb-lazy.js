@@ -18,11 +18,13 @@ import { matchingElements } from './dom-query.js';
 import { setupGlobalErrorHandler } from './error-logger.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
+import { isComponentLandmark } from './component-landmark.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 import { createInjectionTracker } from './injection-tracker.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
+import { aliasesFor } from './attribute-aliases.js';
 import { teachByExample } from './teach-by-example.js';
 
 // Debug logging — silent unless localStorage['x-debug'] names a category
@@ -328,6 +330,11 @@ function getAutoInjectBehaviors(element) {
   // behavior's classes/layout regardless of x-ignore.
   if (element.hasAttribute('x-ignore')) return behaviors;
 
+  // A card's own <header>/<footer> is the card's, not the page's
+  // (component-landmark.js). This runtime never had the rule, so card headers
+  // on every lazy page picked up x-header and its padding.
+  if (isComponentLandmark(element)) return behaviors;
+
   const prefix = getConfig('prefix') || 'x';
   for (const { selector, behavior } of autoInjectMappings) {
     if (!element.matches(selector)) continue;
@@ -487,13 +494,22 @@ function keepAuthoredText(element, schema) {
   if (!schema || element.children.length) return;
   const text = (element.textContent || '').trim();
   if (!text) return;
-  const slot = (schema.$view || [])
-    .map((part) => /^\{\{(\w+)\}\}$/.exec(String(part.content || '').trim()))
-    .find(Boolean);
+  // A part whose content is `<slot>{{prop}}</slot>` is where the schema says
+  // authored content goes, so it wins over the first bare `{{prop}}`. Without
+  // this, drawer.schema.json's `{{title}}` part (listed before its
+  // `<slot>{{content}}</slot>` body) took the text: `<aside x-drawer>position=
+  // left</aside>` got title="position=left" -- a panel headed by what should
+  // have been its body, plus a native tooltip repeating it on the trigger.
+  const parts = (schema.$view || []).map((part) => String(part.content || '').trim());
+  const slot = parts.map((c) => /^<slot>\{\{(\w+)\}\}<\/slot>$/.exec(c)).find(Boolean)
+    || parts.map((c) => /^\{\{(\w+)\}\}$/.exec(c)).find(Boolean);
   if (!slot) return;
   const prop = slot[1];
   const attr = prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
   if (element.hasAttribute(attr) || element.hasAttribute(prop)) return;
+  // A registered synonym (drawer-content for content) is the author setting
+  // that slot too; the text is then the trigger's label, not its content.
+  if (aliasesFor(schema.schemaFor, prop).some((a) => element.hasAttribute(a))) return;
   element.setAttribute(attr, text);
 }
 
@@ -514,20 +530,52 @@ const injectionTracker = createInjectionTracker();
 
 // Shared observer for lazy loading
 const lazyPending = new WeakMap();
+// observed element -> the elements waiting on it. Usually just itself; see
+// lazyWatchTarget() for when it is not.
+const lazyWatchers = new WeakMap();
 let lazyObserver = null;
+
+/**
+ * The element whose intersection stands in for `element`'s.
+ *
+ * An element that is display:none BY ITS OWN STYLE has no box, and an
+ * IntersectionObserver never reports a boxless element as intersecting -- so
+ * a behavior deferred until it is near the viewport was deferred forever.
+ * That is exactly the elements whose behavior is what makes them visible: a
+ * native <audio> without `controls` is display:none until audio.js builds its
+ * player, so <audio src playlist show-eq> rendered as nothing at all
+ * (demos/site/content.html; live-examples-render.spec.ts). Its parent has a
+ * box in the same place, so watch that instead. An element hidden by an
+ * ANCESTOR (a closed <details>, an inactive tab) keeps being watched itself:
+ * it gains a box the moment that ancestor shows, and that is when it should
+ * build.
+ */
+function lazyWatchTarget(element) {
+  // Computed display, not getClientRects(): it answers the same question for
+  // the element's OWN style (an ancestor's display:none leaves the child's
+  // computed value alone) and costs a style lookup, not a forced layout per
+  // deferred element.
+  if (!element.parentElement) return element;
+  return getComputedStyle(element).display === 'none' ? element.parentElement : element;
+}
 
 function getLazyObserver() {
   if (!lazyObserver) {
     lazyObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const element = entry.target;
-          const behaviors = lazyPending.get(element);
-          if (behaviors) {
-            behaviors.forEach(name => WB.inject(element, name));
-            lazyPending.delete(element);
-            lazyObserver.unobserve(element);
-          }
+          const target = entry.target;
+          const waiting = lazyWatchers.get(target);
+          lazyWatchers.delete(target);
+          lazyObserver.unobserve(target);
+          if (!waiting) return;
+          waiting.forEach((element) => {
+            const behaviors = lazyPending.get(element);
+            if (behaviors) {
+              behaviors.forEach(name => WB.inject(element, name));
+              lazyPending.delete(element);
+            }
+          });
         }
       });
     }, {
@@ -795,7 +843,14 @@ const WB = {
     if (!behaviors) {
       behaviors = new Set();
       lazyPending.set(element, behaviors);
-      getLazyObserver().observe(element);
+      const target = lazyWatchTarget(element);
+      let waiting = lazyWatchers.get(target);
+      if (!waiting) {
+        waiting = new Set();
+        lazyWatchers.set(target, waiting);
+        getLazyObserver().observe(target);
+      }
+      waiting.add(element);
     }
     behaviors.add(behaviorName);
   },
@@ -892,6 +947,8 @@ const WB = {
           // inline copy lacked it, so a plain <header>/<footer>/etc. used for
           // page content had no working escape hatch on the initial scan.
           if (element.hasAttribute('x-ignore')) return;
+          // A card's own landmark is not the page's (component-landmark.js).
+          if (isComponentLandmark(element)) return;
           // #923: and skip when an explicit x-* attribute REPLACES this
           // behavior. This inline copy never had the check, which is why
           // <article x-cardimage> still rendered twice after the guard was
@@ -979,6 +1036,8 @@ const WB = {
               autoInjectMappings.forEach(({ selector, behavior }) => {
                 node.querySelectorAll?.(selector).forEach(el => {
                   if (!getConfig('autoInject') && !el.hasAttribute('variant')) return;
+                  // Same landmark rule as the scan path (component-landmark.js).
+                  if (isComponentLandmark(el)) return;
                   // #923: same replacement guard as the scan path -- a node
                   // added later must resolve identically to the same markup
                   // present at load.

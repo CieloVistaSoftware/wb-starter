@@ -174,7 +174,9 @@ export const EXAMPLES = {
 
   'x-dialog': `<button x-dialog title="Delete branch?" content="fix/706-dropdown will be removed. This cannot be undone." size="md">Delete branch…</button>`,
 
-  'x-drawer': `<button x-drawer title="Filters" content="Status, owner, label and date range live here." position="end" width="320px">Open filters</button>`,
+  // position is left/right/top/bottom (drawer.schema.json). "end" matched no
+  // .x-drawer--{position} rule, so this panel opened with no edge at all.
+  'x-drawer': `<button x-drawer title="Filters" content="Status, owner, label and date range live here." position="right" width="320px">Open filters</button>`,
 
   'x-accordion': `<div x-accordion>
   <details summary="How do behaviors attach?"><p>WB scans for x-* attributes and calls the matching behavior function on the element, in place.</p></details>

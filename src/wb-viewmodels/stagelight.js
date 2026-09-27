@@ -29,24 +29,29 @@ function injectStyles() {
     }
 
     /* === VARIANT: BEAM === */
+    /* The HOST is the stage, in normal flow, keeping its own text -- the same
+       change #647 made for spotlight, for the same reason. The host used to BE
+       the beam's pivot: position absolute, width 0, height 0. Its authored
+       text sat in a zero-size box, it contributed nothing to layout, and in a
+       demo grid the whole example measured 0x0 and rendered as an empty box
+       (live-examples-render.spec.ts, demos/site/effects.html). The swing now
+       lives on the beam itself, pivoting from the fixture at the top centre,
+       and overflow is clipped to the stage: a 100vh beam used to sweep across
+       whatever sat below it, its own code sample included. */
     .x-stagelight--beam {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 0;
-      height: 0;
-      z-index: 10;
-      /* Swing animation */
-      animation: x-beam-swing var(--speed, 3s) ease-in-out infinite alternate;
-      transform-origin: top center;
+      position: relative;
+      overflow: hidden;
+      /* A beam needs room to be seen -- the same canvas spotlight gets. */
+      min-width: 18rem;
+      min-height: 14rem;
     }
 
     .x-stagelight__beam {
       position: absolute;
       top: 0;
-      left: calc(var(--x-stagelight-size) / -2);
+      left: calc(50% - var(--x-stagelight-size) / 2);
       width: var(--x-stagelight-size);
-      height: 100vh; /* Long beam */
+      height: 100%;
       background: linear-gradient(
         to bottom, 
         rgba(255, 255, 255, var(--x-stagelight-intensity)) 0%, 
@@ -57,17 +62,21 @@ function injectStyles() {
       clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);
       filter: blur(10px);
       mix-blend-mode: screen;
+      /* Swing animation, pivoting where the cone meets the fixture */
+      animation: x-beam-swing var(--speed, 3s) ease-in-out infinite alternate;
+      transform-origin: top center;
     }
 
     .x-stagelight__source {
       position: absolute;
       top: -10px;
-      left: -20px;
+      left: calc(50% - 20px);
       width: 40px;
       height: 20px;
       background: #333;
       border-radius: 0 0 20px 20px;
       box-shadow: 0 0 10px var(--x-stagelight-color);
+      z-index: 1;
     }
 
     @keyframes x-beam-swing {

@@ -1319,24 +1319,25 @@ export function cardprofile(element, options = {}) {
   if (config.cover) {
     const coverFig = base.createFigure();
     coverFig.className = 'x-card__figure x-card__cover';
-    coverFig.style.cssText = `position:relative;margin:0;height:36px;background-image:url(${config.cover});background-size:cover;background-position:center;`;
+    // Only the cover photo is per-instance. The strip's height, positioning
+    // and background sizing are `.x-card__cover` in card.css (Law 9, #370);
+    // writing them inline here too pinned the strip at 36px while card.css
+    // said 44px, and the inline value always won.
+    coverFig.style.backgroundImage = `url(${config.cover})`;
 
     // Role sits on the cover (the card's top half) instead of below the
     // avatar/name, so it reads immediately alongside the cover photo.
-    // top:50%/translateY(-50%) centered the badge's BOUNDING BOX correctly
-    // within the cover strip, but with the strip flush against the card's
-    // own top-right corner, that centered position landed almost entirely
-    // inside the card's 8px border-radius + overflow:hidden curve -- the
-    // rectangular bounding-box math never overflowed, but the pill's own
-    // rounded corner still visibly clipped against that curve (confirmed
-    // via screenshot; a plain getBoundingClientRect containment check
-    // can't detect corner-radius clipping, only real rectangle overlap).
-    // Fixed top offset that clears the corner radius, on a slightly
-    // taller strip so there's still balanced clearance below.
+    //
+    // Its placement is card.css's `.x-card__role--badge`: vertically centred
+    // on the strip (top:50% / translateY(-50%)) and 0.75rem in from the right,
+    // which clears the card's 8px corner radius. John asked for exactly that
+    // ("center this vertically and put it on the right side") and card.css
+    // records the change -- but this function kept writing the OLD placement
+    // inline (top:8px; right:0.6rem) and never emitted the class, so the
+    // badge sat above centre on every profile card.
     if (config.role) {
       const roleBadge = document.createElement('div');
-      roleBadge.className = 'x-card__subtitle x-card__role';
-      roleBadge.style.cssText = 'position:absolute;top:8px;right:0.6rem;padding:0.15rem 0.6rem;border-radius:999px;background:rgba(0,0,0,0.55);color:#fff;font-size:0.7rem;';
+      roleBadge.className = 'x-card__subtitle x-card__role x-card__role--badge';
       roleBadge.textContent = config.role;
       coverFig.appendChild(roleBadge);
     }
@@ -2350,20 +2351,25 @@ export function cardhorizontal(element, options = {}) {
   const base = composeCard(element, { ...config, behavior: 'cardhorizontal' });
   element.classList.add('x-card-horizontal');
   element.innerHTML = '';
-  element.style.flexDirection = config.imagePosition === 'right' ? 'row-reverse' : 'row';
+  // The Law 9 migration (#370) moved every one of these declarations into
+  // card.css -- `.x-card-horizontal(--reverse)`, `.x-card__horizontal-figure`,
+  // `.x-card__horizontal-image`, `.x-card__horizontal-content` -- but left the
+  // inline writes here AND never emitted the classes those rules select. The
+  // stylesheet was dead and the card unthemeable: an inline declaration beats
+  // any rule. Now the classes carry the layout, and the one per-instance value
+  // (image-width) arrives as the custom property card.css already reads.
+  element.classList.toggle('x-card-horizontal--reverse', config.imagePosition === 'right');
 
   // Image
   if (config.image) {
     const figure = base.createFigure();
-    figure.style.width = config.imageWidth;
-    figure.style.flexShrink = '0';
-    figure.style.minHeight = '200px';
-    figure.style.alignSelf = 'stretch';
+    figure.classList.add('x-card__horizontal-figure');
+    figure.style.setProperty('--horizontal-image-width', config.imageWidth);
 
     const img = document.createElement('img');
+    img.className = 'x-card__horizontal-image';
     img.src = config.image;
     img.alt = config.imageAlt ?? (base.config.title || '');
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;min-height:200px;';
     // #604. John: "cardhorizontal is failing now on images. I want a runtime
     // error that says that, it should log and error" -- a broken `image`
     // src previously failed completely silently: the <img>'s native
@@ -2394,20 +2400,19 @@ export function cardhorizontal(element, options = {}) {
   // Content
   const content = document.createElement('div');
   content.className = 'x-card__horizontal-content';
-  content.style.cssText = 'flex:1;padding:1rem;display:flex;flex-direction:column;justify-content:center;';
 
+  // Title and subtitle are named by tag, like every other card's header
+  // (a8a7362e): card.css reaches them as `.x-card__horizontal-content > h3`
+  // and `> p`. The subtitle was a bare <div>, which gave CSS nothing to
+  // select it by; a <p> is what it is.
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    
-    titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     content.appendChild(titleEl);
   }
 
   if (base.config.subtitle) {
-    const subtitleEl = document.createElement('div');
-    
-    subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);';
+    const subtitleEl = document.createElement('p');
     subtitleEl.textContent = base.config.subtitle;
     content.appendChild(subtitleEl);
   }
@@ -2415,7 +2420,6 @@ export function cardhorizontal(element, options = {}) {
   if (base.config.content) {
     const bodyEl = document.createElement('div');
     bodyEl.className = 'x-card__horiz-body';
-    bodyEl.style.cssText = 'margin-top:0.75rem;color:var(--text-primary,#f9fafb);';
     bodyEl.innerHTML = base.config.content;
     content.appendChild(bodyEl);
   }

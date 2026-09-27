@@ -412,7 +412,7 @@
       ]
     },
     "x-drawer": {
-      "source": "<button x-drawer title=\"Filters\" content=\"Status, owner, label and date range live here.\" position=\"end\" width=\"320px\">\n  x-drawer · title: Filters · content: Status, owner, label and date range live here. · position: end · width: 320px\n</button>",
+      "source": "<button x-drawer title=\"Filters\" content=\"Status, owner, label and date range live here.\" position=\"right\" width=\"320px\">\n  x-drawer · title: Filters · content: Status, owner, label and date range live here. · position: right · width: 320px\n</button>",
       "alternates": []
     },
     "x-accordion": {

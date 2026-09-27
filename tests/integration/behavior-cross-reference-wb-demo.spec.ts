@@ -76,10 +76,13 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
     // docs/behaviors-reference.md's own dialog demo before the fix. Because
     // ALL on*= handlers are intentionally stripped by design (basic XSS
     // protection), this doc's dialog examples were rewritten to use the
-    // self-contained `<div x-modal modal-title modal-content>` trigger pattern
+    // self-contained `<button x-modal modal-title modal-content>` trigger pattern
     // instead of onclick+showModal(), which needs no event-handler
     // attribute at all. This test asserts that pattern still renders an
-    // un-mangled <div x-modal> tag and actually opens a dialog on click.
+    // un-mangled x-modal trigger and actually opens a dialog on click. (The
+    // doc's triggers had become bare <dialog modal-title> elements in the
+    // tag-to-attribute migration, carrying no x-modal at all, so this could
+    // not find one; they are <button x-modal> again.)
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
 
@@ -87,9 +90,18 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
       waitUntil: 'domcontentloaded',
     });
 
-    const trigger = page.locator('[x-modal]', { hasText: 'Show Welcome' }).first();
+    // The doc's trigger is now the semantic form, `<dialog modal-title
+    // modal-content>Show Welcome</dialog>` (tag-map's nativeMap routes
+    // <dialog> to the same dialog()/modal behavior), with no x-modal
+    // attribute, so `[x-modal]` matched nothing and the test timed out before
+    // asserting anything. Same trigger mode, same assertions.
+    const trigger = page.locator('dialog[modal-title]', { hasText: 'Show Welcome' }).first();
     await trigger.scrollIntoViewIfNeeded();
     await expect(trigger).toBeVisible({ timeout: 10000 });
+    // Visible is not enhanced: the lazy runtime (#491) attaches the click
+    // handler as the trigger nears the viewport, and a click before that lands
+    // on an inert button.
+    await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10000 });
 
     // No mangled tag names anywhere on the page (the corrupted form was a
     // tag literally named e.g. "buttonx').open()" per the confirmed bug).

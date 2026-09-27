@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { elementReady } from '../base';
 
 /**
  * Card Spacing Standard §13 Compliance (#469)
@@ -122,6 +123,12 @@ test.describe('Card Spacing — Standard §13 Compliance', () => {
       { timeout: 10000 }
     );
 
+    // Measured once the card is BUILT. `WB.behaviors` being populated says the
+    // runtime loaded, not that this card was injected: read before that, the
+    // first <article> is still one line of raw text (19px) with none of
+    // card.css's header/main/padding -- which failed this under load while
+    // the built card is well over 40px. elementReady waits for its x-ready.
+    await elementReady(page.locator(CARD));
     // Get the height of a card's content area
     const cardHeight = await page.locator(CARD).first().evaluate((el) => {
       return {

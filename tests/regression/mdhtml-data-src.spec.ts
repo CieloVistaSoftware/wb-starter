@@ -43,7 +43,11 @@ test.describe('mdhtml() config.src reads data-src (regression for the 8afed94 de
       return {
         loaded: el.classList.contains('x-mdhtml--loaded'),
         hasPlaceholderText: el.textContent.includes('Loading documentation'),
-        h1: el.querySelector('h1')?.textContent || null,
+        // mdhtml's protectHyphenatedTokens (#295) deliberately swaps prose
+        // "-" for U+2011 (non-breaking hyphen) so "WB-Starter" can never wrap
+        // at its hyphen. That is intended rendering, not a failed load, so
+        // compare with hyphens normalized back (same as mdhtml-prose-flow).
+        h1: (el.querySelector('h1')?.textContent || '').replace(/\u2011/g, '-') || null,
       };
     });
 

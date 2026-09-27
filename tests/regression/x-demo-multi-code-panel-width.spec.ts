@@ -13,6 +13,8 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * panel fit. Fixed by measuring ALL `.x-demo__code` panels via
  * querySelectorAll and taking the max, in both the plain-element and
  * fluid-media measurement paths.
+ *
+ * Widest-one still holds, up to the 50vw cap -- see the loop below.
  */
 test.describe('[x-demo] with multiple code panels (events attribute) sizes to the widest one', () => {
   test.beforeEach(async ({ page }) => {
@@ -33,13 +35,33 @@ test.describe('[x-demo] with multiple code panels (events attribute) sizes to th
     // that NONE of however many panels overflow.
     expect(count).toBeGreaterThanOrEqual(2);
 
+    // Width is committed once, when the measurement settles (#985).
+    await expect(page.locator('[x-demo]').first()).toHaveClass(/x-demo--measured/, { timeout: 10000 });
+
+    // "Show all the code up to 50% vw" (owner, 2026-08-07; the contract
+    // demo-code-panel-50vw.spec.ts pins): a panel shows every line in full
+    // unless that would take it past 50vw, where it sits at the cap and
+    // scrolls (#390: x-demo code scrolls, never wraps). The JS sample's
+    // `el.addEventListener(...)` line needs ~700px on a 1280px viewport, so a
+    // flat "never overflows" was asking for a panel wider than the cap.
+    const vw = await page.evaluate(() => window.innerWidth);
     for (let i = 0; i < count; i++) {
       const panel = codePanels.nth(i);
-      const { scrollWidth, clientWidth } = await panel.evaluate(el => ({
+      const { scrollWidth, clientWidth, width } = await panel.evaluate(el => ({
         scrollWidth: el.scrollWidth,
         clientWidth: el.clientWidth,
+        width: el.getBoundingClientRect().width,
       }));
-      expect(scrollWidth, `code panel ${i} must not overflow its own box`).toBeLessThanOrEqual(clientWidth + 2);
+      if (width >= vw * 0.5 - 2) continue; // at the cap: scrolling is the contract
+      expect(scrollWidth, `code panel ${i} must not overflow its own box while below the 50vw cap`).toBeLessThanOrEqual(clientWidth + 2);
+    }
+    // Neither panel is starved: each is as wide as its code, or at the cap.
+    for (let i = 0; i < count; i++) {
+      const { scrollWidth, width } = await codePanels.nth(i).evaluate(el => ({
+        scrollWidth: el.scrollWidth,
+        width: el.getBoundingClientRect().width,
+      }));
+      expect(width, `code panel ${i} narrower than both its code and the cap`).toBeGreaterThanOrEqual(Math.min(scrollWidth, vw * 0.5) - 2);
     }
   });
 });

@@ -856,6 +856,14 @@ function bindSchemaMethodsToElement(element, schema, data) {
   for (const [methodName, config] of Object.entries(methods)) {
     if (typeof viewModel[methodName] === 'function') {
       element[methodName] = viewModel[methodName].bind(viewModel);
+    } else if (typeof element[methodName] === 'function') {
+      // The platform already implements it. button.schema.json documents
+      // click()/focus()/blur(), and the stub below used to REPLACE the native
+      // HTMLElement methods with a warning -- so `button.click()` stopped
+      // clicking: no click event, no href navigation, nothing but
+      // "[WB] Method "click" called but not implemented". A documented method
+      // the element natively has is implemented; leave it alone.
+      continue;
     } else {
       // Create a stub that warns if method not implemented
       element[methodName] = (...args) => {

@@ -66,9 +66,16 @@ test.describe('[x-cardhorizontal] image and content never overlap, content is no
       '<div x-demo columns="1"><div x-cardhorizontal image="https://placehold.co/400x300/0f172a/e2e8f0?text=Web+Components" title="Featured Article" subtitle="The Future of Web Components" content="Web components are evolving rapidly with native browser APIs."></div></div>'
     );
 
-    const title = page.locator('.x-card__horizontal-title, .x-card__title');
-    const subtitle = page.locator('.x-card__subtitle');
-    const body = page.locator('.x-card__horiz-body');
+    // Scoped to the card under test, and by tag: cardhorizontal() names its
+    // title and subtitle as the content column's <h3> and <p> (card.css
+    // selects them that way) rather than stamping .x-card__title/__subtitle,
+    // which cards stopped emitting in a8a7362e. The unscoped class selector
+    // that stood here matched index.html's own page cards instead ("Build
+    // stunning UIs") and never reached this one.
+    const card = page.locator('#test-container [x-cardhorizontal]');
+    const title = card.locator('.x-card__horizontal-content > h3');
+    const subtitle = card.locator('.x-card__horizontal-content > p');
+    const body = card.locator('.x-card__horiz-body');
 
     await expect(title).toBeVisible();
     await expect(title).toHaveText('Featured Article');
