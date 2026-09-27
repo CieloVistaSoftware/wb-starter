@@ -160,8 +160,9 @@
 </head>
 <body>
   <h1>🧪 Playground</h1>
-  <p class="pg-sub">Paste any HTML on the left — see it rendered live on the right. <code>&lt;wb-*&gt;</code>
-    behaviors and <code>x-*</code> behaviors are upgraded automatically.</p>
+  <p class="pg-sub">Paste any HTML on the left — see it rendered live on the right. Native elements
+    (<code>&lt;code&gt;</code>, <code>&lt;details&gt;</code>, <code>&lt;dialog&gt;</code>…) and <code>x-*</code>
+    behaviors are upgraded automatically.</p>
 
   <div class="pg-grid">
     <div class="pg-panel">
@@ -235,6 +236,7 @@
 
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
+    import { getConfig, setConfig } from '../src/core/config.js';
     import { formatHtml } from '../src/wb-viewmodels/demo.js';
     // Shared clipboard-write core (#291) — same helper x-copy/x-copybutton
     // use (src/wb-viewmodels/copy.js), so the Playground's copy actions
@@ -305,8 +307,9 @@
     }
 
     // Init WB WITHOUT global autoInject so it never enhances the playground's own
-    // UI (the input textarea was being autosized/shrunk). We only ever scan the
-    // preview subtree, so pasted <wb-*>/native elements still upgrade there.
+    // UI (the input textarea was being autosized/shrunk). Native elements in the
+    // PREVIEW still have to upgrade -- see render(), which turns autoInject on
+    // for that one scan.
     let wbReady;
     const ensureWB = () => (wbReady = wbReady || WB.init({ autoInject: false }));
 
@@ -325,7 +328,20 @@
         // is right for a long real content page, but wrong here — a user
         // can click a control before it's ever scrolled near enough to
         // enhance, and nothing happens, which reads as broken.
-        await WB.scan(preview, { eager: true });
+        //
+        // autoInject is on for THIS scan only. With it off (see ensureWB), a
+        // pasted native element -- a multi-line <code>, a <details>, a checkbox
+        // -- was never enhanced: <code> stayed inline with white-space: normal
+        // and a whole listing collapsed onto a few wrapped lines (John: "why
+        // doesn't this preview show the correct format?"). Scoped to the scan so
+        // the editor UI around the preview stays untouched.
+        const autoInjectBefore = getConfig('autoInject');
+        setConfig('autoInject', true);
+        try {
+          await WB.scan(preview, { eager: true });
+        } finally {
+          setConfig('autoInject', autoInjectBefore);
+        }
       } catch (e) {
         errorBox.hidden = false;
         errorBox.textContent = 'Render error: ' + (e && e.message ? e.message : e);
