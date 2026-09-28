@@ -2615,8 +2615,9 @@
     function showInScrollBox(token, prop, variant, isBool) {
       const sc = schemaByName.get(extensionMap[token] || token.replace(/^x-/, '')) || {};
       const propDef = (prop && sc.properties && sc.properties[prop]) || {};
-      const on = sc.demo === 'scroll'
-        || (propDef.demo === 'scroll' && !(isBool && variant === 'false'));
+      // A sticky option switched OFF has nothing to show while scrolling.
+      const on = !(isBool && variant === 'false')
+        && (sc.demo === 'scroll' || propDef.demo === 'scroll');
       liveExample.classList.toggle('behaviors-live__example--scroll', on);
       if (on) liveNote.textContent = 'Scroll this box — the element stays pinned while the page moves past it.';
       return on;

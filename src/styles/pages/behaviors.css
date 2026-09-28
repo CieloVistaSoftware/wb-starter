@@ -543,6 +543,9 @@ footer a:hover {
   display: block;
   height: 14rem;
   overflow: auto;
+  /* §13: the dashed border makes this box a container, so its text keeps 1rem
+     clear of it. Inline only -- sticking is vertical. */
+  padding-inline: 1rem;
   border: 1px dashed var(--border-color, #374151);
   border-radius: var(--radius-md, 6px);
   background-image: repeating-linear-gradient(
