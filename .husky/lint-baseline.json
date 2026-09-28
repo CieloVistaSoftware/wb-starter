@@ -5,10 +5,10 @@
     "Pre-commit fails only if a STAGED file exceeds its number here.",
     "Numbers fall automatically when you fix things; they never rise on their own.",
     "To raise a number you must run `npm run lint:baseline` deliberately and say why.",
-    "Auto-lowered by 4 on 2026-09-27."
+    "Auto-lowered by 1 on 2026-09-28."
   ],
-  "generated": "2026-09-27",
-  "totalProblems": 413,
+  "generated": "2026-09-28",
+  "totalProblems": 412,
   "filesWithProblems": 162,
   "files": {
     "scripts/add-matrices.mjs": 3,
@@ -101,7 +101,7 @@
     "src/wb-viewmodels/enhancements.js": 6,
     "src/wb-viewmodels/error.js": 1,
     "src/wb-viewmodels/file.js": 1,
-    "src/wb-viewmodels/form.js": 2,
+    "src/wb-viewmodels/form.js": 1,
     "src/wb-viewmodels/globe.js": 1,
     "src/wb-viewmodels/help.js": 1,
     "src/wb-viewmodels/helpers.js": 10,

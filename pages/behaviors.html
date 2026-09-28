@@ -1656,6 +1656,7 @@
      * the x- token). Real content -- a toast message, a card body -- never
      * matches, so nothing else is rewritten.
      */
+    const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
     function refreshDescriptorLine(src) {
       const open = src.match(/^\s*<[a-zA-Z][\w-]*([^>]*)>/);
       if (!open) return src;
@@ -1674,9 +1675,19 @@
       const SEP = ' · ';
       const rebuilt = (token ? token + SEP : '') + pairs.join(SEP);
 
+      // Only the ROOT's own text restates the root's attributes. A nested
+      // element's descriptor line is about that element: form · ajax had its
+      // submit button's label overwritten with the <form>'s action and
+      // successMessage. Depth is counted per line from the tags on it.
+      let depth = 0;
       return src.split('\n').map((line) => {
         const t = line.trim();
-        if (!t || t.startsWith('<')) return line;
+        const here = depth;
+        for (const tag of t.matchAll(/<(\/?)([a-zA-Z][\w-]*)[^>]*?(\/?)>/g)) {
+          if (VOID_TAGS.has(tag[2].toLowerCase()) || tag[3]) continue;
+          depth += tag[1] ? -1 : 1;
+        }
+        if (!t || t.startsWith('<') || here !== 1) return line;
         const body = t.replace(/^x-[a-z0-9-]+\s*·\s*/, '');
         const looksLikeDescriptor = body.split('·')
           .every((part) => /^\s*[a-zA-Z-]+:\s*\S/.test(part));
@@ -2419,11 +2430,16 @@
     // calls through, never swallows, and it ignores anything dispatched outside
     // the stage, so nothing about how the page or the behaviors run changes.
     const CUSTOM_EVENT_RE = /^(wb|x):/;
+    const LIFECYCLE_EVENTS = new Set(['wb:ready']);
     const nativeDispatch = EventTarget.prototype.dispatchEvent;
     EventTarget.prototype.dispatchEvent = function (event) {
       const result = nativeDispatch.call(this, event);
       try {
-        if (event && CUSTOM_EVENT_RE.test(event.type) && this instanceof Node && liveStage.contains(this)) {
+        // wb:ready is lifecycle, not interaction: every element of an example
+        // fires it while being built, so the log filled before the reader did
+        // anything (form · ajax showed six, from its labels and button).
+        if (event && CUSTOM_EVENT_RE.test(event.type) && !LIFECYCLE_EVENTS.has(event.type)
+            && this instanceof Node && liveStage.contains(this)) {
           logEvent({ type: event.type, target: this });
         }
       } catch { /* logging must never break the event it is watching */ }

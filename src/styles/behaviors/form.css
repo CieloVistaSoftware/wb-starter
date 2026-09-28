@@ -1,0 +1,20 @@
+/**
+ * Form Behavior Styles -- src/wb-viewmodels/form.js
+ *
+ * #751: the outcome of an ajax send is shown in the form itself. These were
+ * inline cssText in the orphaned template copy of form.js; classes here so a
+ * theme can restyle them (#779).
+ */
+.x-form__message {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-md, 6px);
+  color: var(--text-on-accent, #fff);
+}
+.x-form__message--success { background: var(--success-color, #22c55e); }
+.x-form__message--error { background: var(--danger-color, #ef4444); }
+
+/* Set on blur and on submit, never per keystroke (#751). */
+.x-form__field--invalid { border-color: var(--danger-color, #ef4444); }
+
+.x-form--loading { cursor: progress; }

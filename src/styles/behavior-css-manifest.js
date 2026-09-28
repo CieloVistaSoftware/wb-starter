@@ -88,6 +88,7 @@ export const BEHAVIOR_CSS_MAP = {
   details: ['details.css'],
   navbar: ['navbar.css'],
   tabs: ['tabs.css'],
+  form: ['form.css'], // #751: the ajax success/error message
   dialog: ['dialog.css'], // also covers x-modal (tag-map.js maps it to 'dialog')
   drawer: ['drawer.css'],
   dropdown: ['dropdown.css'],

@@ -454,9 +454,9 @@
       "alternates": []
     },
     "x-form": {
-      "source": "<form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">\n  type: submit\n</button>\n</form>",
+      "source": "<form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Send</button>\n</form>",
       "alternates": [
-        "<div x-form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">\n  type: submit\n</button>\n</div>"
+        "<div x-form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Send</button>\n</div>"
       ]
     },
     "x-formrow": {
