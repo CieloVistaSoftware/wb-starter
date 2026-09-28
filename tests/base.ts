@@ -630,12 +630,31 @@ export async function elementReady(locator: Locator, timeoutMs = 15000): Promise
  * scrollIntoView() rather than safeScrollIntoView(): that helper waits for the
  * element to be VISIBLE, and an unbuilt host can legitimately have no size yet
  * -- building it is what this is waiting for.
+ *
+ * Re-scrolled EVERY FRAME until it is built. One scroll was a race: the
+ * content above the element keeps growing as it builds (demos, images), and
+ * can push the element thousands of pixels back out of the observer's 1200px
+ * margin before the observer ever looks. Measured on cards.html: an element
+ * scrolled to the centre was 16,600px below the viewport five seconds later,
+ * never built, and the wait ran out its 15s -- the intermittent timeouts in
+ * every spec that walks that page.
  */
 export async function buildInView(locator: Locator, timeoutMs = 15000): Promise<void> {
   const el = locator.first();
   await el.waitFor({ state: 'attached', timeout: timeoutMs });
-  await el.evaluate((node: Element) => node.scrollIntoView({ block: 'center' }));
-  await elementReady(el, timeoutMs);
+  await el.evaluate(async (node: Element, ms: number) => {
+    const end = performance.now() + ms;
+    while (!node.hasAttribute('x-ready')) {
+      if (performance.now() > end) {
+        throw new Error(
+          `buildInView: <${node.tagName.toLowerCase()}${node.id ? ` id="${node.id}"` : ''}> ` +
+          `never became x-ready within ${ms}ms of being kept in view.`
+        );
+      }
+      node.scrollIntoView({ block: 'center' });
+      await new Promise<void>((r) => requestAnimationFrame(() => r()));
+    }
+  }, timeoutMs);
 }
 
 /**
