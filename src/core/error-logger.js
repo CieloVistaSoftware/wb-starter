@@ -10,41 +10,107 @@ let errorContainer = null;
 let errors = [];
 
 /**
+ * The panel's stylesheet (#779: every declaration here used to be written onto
+ * the panel's elements through style.cssText and style="" templates).
+ *
+ * A <style> this module owns rather than a behavior stylesheet: the error
+ * logger is core, installed before any behavior and on pages that load no
+ * behavior CSS at all, and it has to be able to show the error that stopped
+ * everything else from loading. The panel's own id prefixes each rule, so the
+ * (1,x,y) specificity keeps the precedence the inline declarations had over
+ * the button and theme rules its <button>s would otherwise pick up.
+ */
+const ERROR_DISPLAY_CSS = `
+#x-error-display {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 420px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(20, 20, 20, 0.95);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  border: 1px solid #ef4444;
+  z-index: 99999;
+}
+#x-error-display[hidden] { display: none; }
+#x-error-display .x-error-display__bar {
+  padding: 10px 12px; background: #1a1a1a; border-bottom: 1px solid #333;
+  display: flex; justify-content: space-between; align-items: center;
+  border-radius: 8px 8px 0 0; position: sticky; top: 0;
+}
+#x-error-display .x-error-display__heading { font-weight: bold; color: #ef4444; }
+#x-error-display .x-error-display__btn {
+  border: none; color: #fff; padding: 4px 10px; border-radius: 4px;
+  cursor: pointer; font-size: 0.6875rem; margin-right: 4px;
+}
+#x-error-display .x-error-display__btn--copy { background: #3b82f6; }
+#x-error-display .x-error-display__btn--clear { background: #333; }
+#x-error-display .x-error-display__btn--close { background: #ef4444; margin-right: 0; }
+#x-error-display .x-error-display__btn--ok { background: #22c55e; }
+#x-error-display .x-error-display__btn--blocked { background: #ef4444; }
+#x-error-display .x-error-display__list { padding: 8px; }
+#x-error-display .x-error-display__item {
+  padding: 8px 10px; margin-bottom: 6px; background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444; border-radius: 0 4px 4px 0; word-break: break-word;
+}
+#x-error-display .x-error-display__item-head { display: flex; justify-content: space-between; margin-bottom: 4px; }
+#x-error-display .x-error-display__item-title { color: #ef4444; }
+#x-error-display .x-error-display__source { color: #888; font-weight: normal; }
+#x-error-display .x-error-display__time { color: #666; font-size: 0.625rem; }
+#x-error-display .x-error-display__message { color: #fff; }
+#x-error-display .x-error-display__meta { font-size: 0.6875rem; }
+#x-error-display .x-error-display__meta--file { color: #888; }
+#x-error-display .x-error-display__meta--to { color: #3b82f6; }
+#x-error-display .x-error-display__meta--response { color: #f59e0b; }
+#x-error-display .x-error-display__meta--src { color: #a78bfa; }
+#x-error-display .x-error-display__stack {
+  color: #666; font-size: 0.625rem; margin-top: 4px; max-height: 60px; overflow: auto;
+}
+#x-error-display .x-error-display__fallback {
+  width: 100%; height: 8rem; margin-top: 6px; font: 0.6875rem/1.4 monospace;
+  background: #111827; color: #e5e7eb; border: 1px solid #ef4444; border-radius: 4px; padding: 6px;
+}
+.x-error-display__copybuf { position: fixed; top: 0; left: -9999px; opacity: 0; }
+`;
+
+function ensureErrorDisplayStyles() {
+  // Re-added if something rewrote <head> (page.setContent() does) since.
+  if (document.getElementById('x-error-display-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'x-error-display-styles';
+  style.textContent = ERROR_DISPLAY_CSS;
+  (document.head || document.documentElement).appendChild(style);
+}
+
+/**
  * Initialize the error display container
  */
 function initErrorDisplay() {
   if (errorContainer) return;
   
+  ensureErrorDisplayStyles();
   errorContainer = document.createElement('div');
   errorContainer.id = 'x-error-display';
-  errorContainer.style.cssText = `
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    width: 420px;
-    max-height: 300px;
-    overflow-y: auto;
-    background: rgba(20, 20, 20, 0.95);
-    color: #fff;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    border: 1px solid #ef4444;
-    z-index: 99999;
-    display: none;
-  `;
+  // Hidden until the first error. The `hidden` attribute, not
+  // style.display (#779) -- and it holds even before the stylesheet below
+  // has applied.
+  errorContainer.hidden = true;
   
   errorContainer.innerHTML = `
-    <div style="padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;">
-      <span style="font-weight:bold;color:#ef4444;">❌ Errors (<span id="x-error-count">0</span>)</span>
+    <div class="x-error-display__bar">
+      <span class="x-error-display__heading">❌ Errors (<span id="x-error-count">0</span>)</span>
       <div>
-        <button id="x-error-copy" style="background:#3b82f6;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">📋 Copy</button>
-        <button id="x-error-clear" style="background:#333;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">Clear</button>
-        <button id="x-error-close" style="background:#ef4444;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">✕</button>
+        <button id="x-error-copy" class="x-error-display__btn x-error-display__btn--copy">📋 Copy</button>
+        <button id="x-error-clear" class="x-error-display__btn x-error-display__btn--clear">Clear</button>
+        <button id="x-error-close" class="x-error-display__btn x-error-display__btn--close">✕</button>
       </div>
     </div>
-    <div id="x-error-list" style="padding:8px;"></div>
+    <div id="x-error-list" class="x-error-display__list"></div>
   `;
   
   document.body.appendChild(errorContainer);
@@ -100,7 +166,7 @@ function initErrorDisplay() {
       const ta = document.createElement('textarea');
       ta.value = payload;
       ta.setAttribute('readonly', '');
-      ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+      ta.className = 'x-error-display__copybuf';
       document.body.appendChild(ta);
       ta.select();
       let ok = false;
@@ -113,12 +179,14 @@ function initErrorDisplay() {
       return ok;
     };
 
-    const done = (label, bg) => {
+    // The outcome colours the button through a state class, not
+    // style.background (#779).
+    const done = (label, state) => {
       copyBtn.textContent = label;
-      copyBtn.style.background = bg;
+      copyBtn.classList.add(`x-error-display__btn--${state}`);
       setTimeout(() => {
         copyBtn.textContent = '📋 Copy';
-        copyBtn.style.background = '#3b82f6';
+        copyBtn.classList.remove(`x-error-display__btn--${state}`);
       }, 2500);
     };
 
@@ -131,22 +199,20 @@ function initErrorDisplay() {
     }
 
     if (copied) {
-      done('✅ Copied!', '#22c55e');
+      done('✅ Copied!', 'ok');
       return;
     }
 
     // Both routes refused. Say so, and still get the text to the reader --
     // selected in a visible box they can copy by hand beats a shrug.
-    done('❌ Blocked — text selected below', '#ef4444');
+    done('❌ Blocked — text selected below', 'blocked');
     const esc = document.getElementById('x-error-copy-fallback');
     if (esc) esc.remove();
     const box = document.createElement('textarea');
     box.id = 'x-error-copy-fallback';
     box.value = payload;
     box.readOnly = true;
-    box.style.cssText =
-      'width:100%;height:8rem;margin-top:6px;font:0.6875rem/1.4 monospace;' +
-      'background:#111827;color:#e5e7eb;border:1px solid #ef4444;border-radius:4px;padding:6px;';
+    box.className = 'x-error-display__fallback';
     copyBtn.parentElement?.parentElement?.appendChild(box);
     box.focus();
     box.select();
@@ -162,7 +228,7 @@ function initErrorDisplay() {
   
   // Close button
   document.getElementById('x-error-close').onclick = () => {
-    errorContainer.style.display = 'none';
+    errorContainer.hidden = true;
   };
 }
 
@@ -331,29 +397,22 @@ export async function logError(message, details = {}) {
   // Show in UI
   const list = document.getElementById('x-error-list');
   const item = document.createElement('div');
-  item.style.cssText = `
-    padding: 8px 10px;
-    margin-bottom: 6px;
-    background: rgba(239, 68, 68, 0.1);
-    border-left: 3px solid #ef4444;
-    border-radius: 0 4px 4px 0;
-    word-break: break-word;
-  `;
+  item.className = 'x-error-display__item';
   
   const time = new Date(error.timestamp).toLocaleTimeString();
   let detailsHtml = '';
-  if (error.module || details.file) detailsHtml += `<div style="color:#888;font-size:0.6875rem;">📁 ${error.module || details.file}:${error.line || '?'}</div>`;
-  if (error.to) detailsHtml += `<div style="color:#3b82f6;font-size:0.6875rem;">➡️ To: ${escapeHtml(error.to)}</div>`;
-  if (details.response) detailsHtml += `<div style="color:#f59e0b;font-size:0.6875rem;">📡 Response: ${escapeHtml(details.response)}</div>`;
-  if (details.src) detailsHtml += `<div style="color:#a78bfa;font-size:0.6875rem;">📄 Src: ${escapeHtml(details.src)}</div>`;
-  if (details.stack) detailsHtml += `<div style="color:#666;font-size:0.625rem;margin-top:4px;max-height:60px;overflow:auto;">${escapeHtml(details.stack)}</div>`;
+  if (error.module || details.file) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--file">📁 ${error.module || details.file}:${error.line || '?'}</div>`;
+  if (error.to) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--to">➡️ To: ${escapeHtml(error.to)}</div>`;
+  if (details.response) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--response">📡 Response: ${escapeHtml(details.response)}</div>`;
+  if (details.src) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--src">📄 Src: ${escapeHtml(details.src)}</div>`;
+  if (details.stack) detailsHtml += `<div class="x-error-display__stack">${escapeHtml(details.stack)}</div>`;
   
   item.innerHTML = `
-    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-      <span style="color:#ef4444;">❌ Error${error.source ? ` <span style="color:#888;font-weight:normal;">[${escapeHtml(error.source)}]</span>` : ''}</span>
-      <span style="color:#666;font-size:0.625rem;">${time}</span>
+    <div class="x-error-display__item-head">
+      <span class="x-error-display__item-title">❌ Error${error.source ? ` <span class="x-error-display__source">[${escapeHtml(error.source)}]</span>` : ''}</span>
+      <span class="x-error-display__time">${time}</span>
     </div>
-    <div style="color:#fff;">${escapeHtml(error.message)}</div>
+    <div class="x-error-display__message">${escapeHtml(error.message)}</div>
     ${detailsHtml}
   `;
   
@@ -361,7 +420,8 @@ export async function logError(message, details = {}) {
   list.scrollTop = list.scrollHeight;
   
   // Show container
-  errorContainer.style.display = 'block';
+  ensureErrorDisplayStyles();
+  errorContainer.hidden = false;
   
   // Save to file
   if (!document.documentElement.hasAttribute('data-x-expected-errors')) {

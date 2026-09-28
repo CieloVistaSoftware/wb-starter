@@ -65,6 +65,18 @@
 .x-checkbox__input:checked ~ .x-checkbox__box .x-checkbox__check {
   opacity: 1;
 }
+/* INDETERMINATE -- filled like ON, with a dash in place of the tick. It is a
+   DOM property checkbox.js sets from the `indeterminate` attribute; with no
+   rule here it rendered as a blank, unchecked box. */
+.x-checkbox__input:indeterminate ~ .x-checkbox__box {
+  background: var(--x-checkbox-checked-bg, var(--primary));
+  border-color: var(--x-checkbox-checked-border, var(--primary));
+}
+.x-checkbox__input:indeterminate ~ .x-checkbox__box .x-checkbox__check {
+  opacity: 1;
+  -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3crect x='3' y='7' width='10' height='2' rx='1'/%3e%3c/svg%3e") center / 100% no-repeat;
+  mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3crect x='3' y='7' width='10' height='2' rx='1'/%3e%3c/svg%3e") center / 100% no-repeat;
+}
 .x-checkbox__input:focus-visible ~ .x-checkbox__box {
   box-shadow: var(--x-checkbox-focus-ring, 0 0 0 3px rgba(99, 102, 241, 0.2));
 }
@@ -76,3 +88,16 @@
 .x-checkbox__label {
   font-size: var(--x-checkbox-label-size, 0.875rem);
 }
+
+/* size -- checkbox.schema.json `size` (appliesClass x-checkbox--{{value}}) */
+.x-checkbox--sm { --x-checkbox-size: 14px; --x-checkbox-label-size: 0.75rem; }
+.x-checkbox--lg { --x-checkbox-size: 22px; --x-checkbox-label-size: 1rem; }
+
+/* variant -- checkbox.schema.json `variant` (appliesClass x-checkbox--{{value}}) */
+/* default is NEUTRAL, like x-switch's (switch.css): a checked default box
+   used to borrow var(--primary) and was indistinguishable from
+   variant="primary" (#773). The tick takes the page background so it stays
+   legible on the grey in both themes. */
+.x-checkbox--default { --x-checkbox-checked-bg: var(--text-secondary); --x-checkbox-checked-border: var(--text-secondary); --x-checkbox-check-color: var(--bg-primary); }
+.x-checkbox--primary { --x-checkbox-checked-bg: var(--primary); --x-checkbox-checked-border: var(--primary); }
+.x-checkbox--success { --x-checkbox-checked-bg: var(--success-color, #22c55e); --x-checkbox-checked-border: var(--success-color, #22c55e); }

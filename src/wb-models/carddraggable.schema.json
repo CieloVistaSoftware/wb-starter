@@ -33,7 +33,9 @@
         "parent",
         "viewport"
       ],
-      "default": "none"
+      "default": "none",
+      "visual": false,
+      "visualReason": "Limits where a drag may take the card. Only a drag shows it (#773)."
     },
     "axis": {
       "type": "string",
@@ -43,7 +45,9 @@
         "x",
         "y"
       ],
-      "default": "both"
+      "default": "both",
+      "visual": false,
+      "visualReason": "Limits which way a drag may move the card. Only a drag shows it (#773)."
     },
     "snapToGrid": {
       "type": "number",

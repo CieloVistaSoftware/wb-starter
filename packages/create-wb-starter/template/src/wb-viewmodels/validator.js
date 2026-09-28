@@ -17,7 +17,7 @@ export function validator(element, options = {}) {
   const config = {
     validateOn: options.validateOn || element.dataset.validateOn || 'blur', // blur, change, input, submit
     showErrors: options.showErrors ?? (element.dataset.showErrors !== 'false'),
-    errorClass: options.errorClass || element.dataset.errorClass || 'x-error',
+    errorClass: options.errorClass || element.dataset.errorClass || '[x-error]',
     successClass: options.successClass || element.dataset.successClass || 'x-success',
     ...options
   };
@@ -81,12 +81,7 @@ export function validator(element, options = {}) {
         const errorSpanEl = document.createElement('span');
         errorSpanEl.className = 'x-validator__error';
         errorSpanEl.textContent = showErrorsArr[0];
-        errorSpanEl.style.cssText = `
-          display: block;
-          color: var(--x-color-error, #dc3545);
-          font-size: 0.875rem;
-          margin-top: 0.25rem;
-        `;
+        // Styled by .x-validator__error in validator.css (#779).
         input.parentNode.insertBefore(errorSpanEl, input.nextSibling);
       }
       return false;

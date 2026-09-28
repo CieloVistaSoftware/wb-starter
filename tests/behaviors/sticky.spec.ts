@@ -116,9 +116,10 @@ test.describe('Sticky Behavior', () => {
     await page.evaluate(() => window.scrollTo(0, 200));
     await page.waitForTimeout(100);
     
-    // Check top position is 50px
+    // Check top position is 50px. Computed, not el.style: #779 moved the
+    // stuck geometry off the style attribute into a generated rule.
     const nav = page.locator('#stickyNav');
-    const top = await nav.evaluate(el => el.style.top);
+    const top = await nav.evaluate(el => getComputedStyle(el).top);
     expect(top).toBe('50px');
   });
 

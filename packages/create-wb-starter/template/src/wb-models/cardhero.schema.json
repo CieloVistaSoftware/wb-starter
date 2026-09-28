@@ -19,33 +19,33 @@
       "type": "string",
       "description": "Background image URL",
       "required": true,
-      "default": ""
+      "default": "this is the background"
     },
     "title": {
       "type": "string",
       "description": "Hero headline",
       "required": true,
-      "default": ""
+      "default": "this is the title"
     },
     "pretitle": {
       "type": "string",
       "description": "Small label or count shown above the title (e.g. '100 Behaviors')",
-      "default": ""
+      "default": "this is the pretitle"
     },
     "subtitle": {
       "type": "string",
       "description": "Hero tagline/subheadline",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "content": {
       "type": "string",
       "description": "HTML content rendered in the hero content area (allows attribute-only usage instead of slots)",
-      "default": ""
+      "default": "this is the content"
     },
     "cta": {
       "type": "string",
       "description": "Call-to-action button text",
-      "default": ""
+      "default": "this is the cta"
     },
     "ctaHref": {
       "type": "string",
@@ -55,7 +55,7 @@
     "ctaSecondary": {
       "type": "string",
       "description": "Secondary CTA text",
-      "default": ""
+      "default": "this is the cta secondary"
     },
     "ctaSecondaryHref": {
       "type": "string",
@@ -97,6 +97,19 @@
       "description": "Make hero full viewport height",
       "default": false,
       "appliesClass": "x-hero--full"
+    },
+    "headingLevel": {
+      "type": "string",
+      "description": "Heading level for the hero title (1-6). A page hero is usually the page's h1; a hero inside a section is not. Default 3.",
+      "default": "3",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
     }
   },
   "$view": [
@@ -274,45 +287,45 @@
       "<div x-cardhero xalign=\"right\">xalign=right</div>",
       "<div x-cardhero overlay>with overlay</div>",
       "<div x-cardhero title=\"Test Title\">With title attribute</div>",
-      "<div x-cardhero pretitle='100 Behaviors' title='Build <span class=\"x-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Behaviors'></div>",
-      "<div x-cardhero background=\"hero.jpg\" title=\"Welcome\"></div>",
-      "<div x-cardhero background=\"hero.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></div>"
+      "<div x-cardhero pretitle='100 Components' title='Build <span class=\"x-gradient-text\">stunning UIs</span>' subtitle='just HTML' cta='Explore Components'></div>",
+      "<div x-cardhero background=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Welcome\"></div>",
+      "<div x-cardhero background=\"/images/dachshund-puppy-image-960x540.jpg\" title=\"Explore\" subtitle=\"Your journey\" cta=\"Get Started\"></div>"
     ],
     "matrix": {
       "combinations": [
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "subtitle": "Subtitle"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "cta": "Click Me"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "subtitle": "Sub",
           "cta": "Go",
           "variant": "cosmic"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "xalign": "left"
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "overlay": false
         },
         {
-          "background": "hero.jpg",
+          "background": "/images/dachshund-puppy-image-960x540.jpg",
           "title": "Welcome",
           "fullHeight": true
         }

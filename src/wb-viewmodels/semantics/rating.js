@@ -1,4 +1,5 @@
 import { readAttr, readFlag } from '../../core/read-attr.js';
+import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 /**
  * Rating Behavior
  * ===============
@@ -42,8 +43,11 @@ export function rating(element, options = {}) {
     icon: options.icon || attr('icon') || readAttr(element, 'icon') || '★',
     // Filled colour: theme's rating colour by default; override via color="…"
     // (e.g. color="var(--primary)" for blue). Empty colour from the theme too.
-    color: options.color || attr('color') || readAttr(element, 'color') || 'var(--rating-active-color, #fbbf24)',
-    emptyColor: options.emptyColor || attr('empty-color') || 'var(--border-color, #e5e7eb)',
+    // #779: the defaults are rating.css's; only an author colour travels (as a
+    // generated rule setting --x-rating-color / --x-rating-empty-color), so a
+    // theme's --rating-active-color still reaches every unconfigured rating.
+    color: options.color || attr('color') || readAttr(element, 'color') || '',
+    emptyColor: options.emptyColor || attr('empty-color') || '',
     // rating.schema.json declares size (sm/md/lg, appliesClass:
     // "x-rating--{{value}}"), but that's schema-builder's mechanism (never
     // runs on a wb-lazy.js-only page) AND this function never read the
@@ -70,9 +74,16 @@ export function rating(element, options = {}) {
   if (config.disabled) element.setAttribute('aria-disabled', 'true');
   // Disabled is readonly plus the disabled presentation (rating.css).
   const interactive = !config.readonly && !config.disabled;
-  element.style.display = 'inline-flex';
-  element.style.gap = '0.25rem';
-  element.style.cursor = config.disabled ? 'not-allowed' : (interactive ? 'pointer' : 'default');
+  // #779: layout and the per-state cursor are rating.css, keyed on the
+  // x-rating base class (the schema's compliance.baseClass) and --readonly /
+  // --disabled. Skipped on a literal <x-rating> tag, where it would only
+  // repeat the tag name (#448); rating.css selects the tag too.
+  if (element.tagName !== 'X-RATING') element.classList.add('x-rating');
+  element.classList.toggle('x-rating--readonly', !config.disabled && !!config.readonly);
+  setRule(element, 'colors', onlyChanged({
+    '--x-rating-color': config.color,
+    '--x-rating-empty-color': config.emptyColor,
+  }));
 
   // Create stars
   const stars = [];
@@ -83,10 +94,8 @@ export function rating(element, options = {}) {
     star.innerHTML = config.icon; // honour custom icon (★ default, ❤️/👍/…)
     // font-size now comes from CSS (.x-rating__star / .x-rating--{size} .x-rating__star,
     // rating.css) so the size attribute actually has an effect -- not hardcoded here.
-    star.style.lineHeight = '1';
-    star.style.transition = 'color 0.2s ease, transform 0.1s ease';
-    star.style.color = config.emptyColor; // empty
-    
+    // #779: so do line-height, the transition and the empty/full colours.
+
     if (interactive) {
       // With `half`, the left half of a star means i - 0.5.
       const valueAt = (e) => {
@@ -112,9 +121,9 @@ export function rating(element, options = {}) {
           detail: { value: currentValue }
         }));
         
-        // Animation
-        star.style.transform = 'scale(1.2)';
-        setTimeout(() => star.style.transform = 'scale(1)', 150);
+        // Animation: .x-rating__star--pop scales it up for 150ms (#779).
+        star.classList.add('x-rating__star--pop');
+        setTimeout(() => star.classList.remove('x-rating__star--pop'), 150);
       });
     }
     
@@ -139,17 +148,10 @@ export function rating(element, options = {}) {
       const isFull = value <= targetValue;
       const isHalf = !isFull && config.half && value - 0.5 === targetValue;
       
+      // Full / half / empty colours, including the half star's two-stop
+      // gradient clipped to the glyph, are these classes in rating.css (#779).
       star.classList.toggle('x-rating__star--full', isFull);
       star.classList.toggle('x-rating__star--half', isHalf);
-      if (isHalf) {
-        // Left half filled, right half empty: rating.css clips this gradient
-        // to the glyph (.x-rating__star--half).
-        star.style.color = '';
-        star.style.backgroundImage = `linear-gradient(90deg, ${config.color} 50%, ${config.emptyColor} 50%)`;
-      } else {
-        star.style.backgroundImage = '';
-        star.style.color = isFull ? config.color : config.emptyColor;
-      }
     });
   }
 
@@ -168,6 +170,8 @@ export function rating(element, options = {}) {
   return () => {
     // Cleanup
     element.innerHTML = '';
+    clearRules(element);
+    element.classList.remove('x-rating', 'x-rating--readonly');
     delete element.wbRating;
   };
 }

@@ -34,7 +34,7 @@ const moduleImportRetries = 2;
  */
 const exportAliases = {
   switch: 'switchInput',
-  image: 'img',
+  img: 'img',
   figure: 'figure',
   ratio: 'ratio',
   'drawer-layout': 'drawerLayout',
@@ -52,13 +52,17 @@ const exportAliases = {
  * Maps behavior names to their module paths
  */
 const behaviorModules = {
-  // Article / Articles List → article.js
-  article: 'article', articles: 'article',
+  // An <article> IS a card in this system: tag-map.js routes <article>
+  // straight to `card`, so there is no `article` behavior to register here.
+  // (It used to be `article: 'card'`, a redirect from a name nothing needs.)
+  // The plural is a different thing: articles() is the grid/list WRAPPER that
+  // lays out article children, and it lives in article.js.
+  articles: 'article',
 
   // Hero → hero.js
   hero: 'hero',
   
-  // Cards (19) → card.js
+  // Cards (19) → card.js. Auto-injection makes a bare <article> a card.
   card: 'card', cardimage: 'card', cardvideo: 'card', cardbutton: 'card',
   cardhero: 'card', cardprofile: 'card', cardpricing: 'card', cardstats: 'card',
   cardtestimonial: 'card', cardproduct: 'card', cardnotification: 'card',
@@ -70,14 +74,13 @@ const behaviorModules = {
   // customElements.define(). Was never wired into this lazy-load registry
   // (nor tag-map.js's elementMap), so <div x-fix-card> never upgraded to the
   // real class and .data= silently did nothing. This entry + the matching
-  // 'x-fix-card' elementMap entry (tag-map.js) makes WB.scan() actually
+  // '[x-fix-card]' elementMap entry (tag-map.js) makes WB.scan() actually
   // import fix-card.js on first encounter, which is what runs the
   // customElements.define() side effect.
   'fix-card': 'fix-card',
 
   // UI Core
   demo: 'demo',
-  progressbar: 'progressbar',
   modal: 'semantics/dialog',
   dialog: 'semantics/dialog',
   tooltip: 'tooltip',
@@ -122,7 +125,7 @@ const behaviorModules = {
   diff: 'semantics/diff',
   
   // Media — each in its own semantics/*.js file (media.js grab-bag retired)
-  image: 'semantics/img', gallery: 'semantics/gallery', video: 'semantics/video',
+  img: 'semantics/img', gallery: 'semantics/gallery', video: 'semantics/video',
   audio: 'semantics/audio', youtube: 'semantics/youtube', vimeo: 'semantics/vimeo',
   figure: 'semantics/figure', ratio: 'semantics/ratio',
   // embed/carousel deliberately NOT carried over — media.js never had a real
@@ -203,6 +206,11 @@ const behaviorModules = {
   // Utility → helpers.js + standalone
   stagelight: 'stagelight',
   span: 'span',
+  // These two are the only behaviors whose module file is x-prefixed. The
+  // values carried literal square brackets, so loadModule()'s
+  // `./${moduleName}.js` asked for "./[x-control].js" -- a path that cannot
+  // exist. Both behaviors failed every load, and the module-failure cooldown
+  // re-armed forever, so each retry was a fresh 404 (#882).
   control: 'x-control',
   repeater: 'x-repeater',
   copy: 'copy',
@@ -211,7 +219,7 @@ const behaviorModules = {
   copybutton: 'copy',
   // #344: 'move' itself (the <div x-move>/[x-move] container entry point) was
   // missing here entirely -- tag-map.js's elementMap/extensionMap already
-  // mapped 'x-move'/'x-move' to behavior name 'move', but with no key in
+  // mapped '[x-move]'/'x-move' to behavior name 'move', but with no key in
   // this table, getBehavior('move') threw "Unknown behavior: move" the
   // moment anything actually used the tag/attribute.
   move: 'move', moveup: 'move', movedown: 'move', moveleft: 'move', moveright: 'move', moveall: 'move',

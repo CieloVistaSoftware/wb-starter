@@ -35,22 +35,30 @@
         "full"
       ],
       "default": "md",
-      "appliesClass": "x-dialog--{{value}}"
+      "appliesClass": "x-dialog--{{value}}",
+      "visibleWhen": "open",
+      "visualReason": "Styles the dialog, which is on screen only once opened (#773)."
     },
     "closeOnBackdrop": {
       "type": "boolean",
       "description": "Close on backdrop click",
-      "default": true
+      "default": true,
+      "visual": false,
+      "visualReason": "Whether a click on the backdrop closes the dialog. Only that click shows it (#773)."
     },
     "closeOnEscape": {
       "type": "boolean",
       "description": "Close on Escape key",
-      "default": true
+      "default": true,
+      "visual": false,
+      "visualReason": "Whether Escape closes the dialog. Only the key shows it (#773)."
     },
     "showClose": {
       "type": "boolean",
       "description": "Show close button",
-      "default": true
+      "default": true,
+      "visibleWhen": "open",
+      "visualReason": "The close button is part of the dialog, which is on screen only once opened (#773)."
     },
     "variant": {
       "type": "string",
@@ -60,7 +68,9 @@
         "fullscreen"
       ],
       "default": "default",
-      "appliesClass": "x-dialog--{{value}}"
+      "appliesClass": "x-dialog--{{value}}",
+      "visibleWhen": "open",
+      "visualReason": "Styles the dialog, which is on screen only once opened (#773)."
     }
   },
   "$view": [

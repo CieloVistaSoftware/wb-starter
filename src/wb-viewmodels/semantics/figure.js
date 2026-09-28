@@ -30,22 +30,10 @@ export function figure(element, options = {}) {
 
   if (config.captionPosition === 'overlay') {
     element.classList.add('x-figure--overlay');
-    element.style.position = 'relative';
+    // position:relative and the caption bar are .x-figure--overlay rules in
+    // image.css (#779: they were written onto element.style). #545's 1rem
+    // padding went with them.
     if (caption) {
-      Object.assign(caption.style, {
-        position: 'absolute',
-        bottom: '0',
-        left: '0',
-        right: '0',
-        background: 'rgba(0,0,0,0.7)',
-        color: '#fff',
-        // #545: was '0.5rem 1rem' (8px vertical) -- below the site's 1rem
-        // content-panel-edge minimum once the overlay bar is wide/tall
-        // enough to read as a panel (confirmed live: a "Technology and
-        // Nature" overlay caption flagged at 8px on its tightest side).
-        padding: '1rem',
-        margin: '0'
-      });
       // #556: caption-position="overlay" means EXACTLY what it says -- the
       // caption is deliberately painted on top of the image's bottom edge
       // (a photo-caption bar, not a layout bug). no-element-overlap.spec.ts
@@ -63,13 +51,13 @@ export function figure(element, options = {}) {
 
   const img = element.querySelector('img');
   if (img && (config.zoom || config.lightbox)) {
-    img.style.cursor = 'zoom-in';
+    img.classList.add('x-figure__zoomable');   // zoom-in cursor, image.css (#779)
     img.onclick = () => openLightbox(img.src, img.alt);
   }
 
   return () => {
     element.classList.remove('x-figure', 'x-figure--overlay');
-    if (img) img.onclick = null;
+    if (img) { img.onclick = null; img.classList.remove('x-figure__zoomable'); }
   };
 }
 

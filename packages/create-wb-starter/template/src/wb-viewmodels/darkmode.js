@@ -33,6 +33,12 @@ export function darkmode(element, options = {}) {
   targetEl.setAttribute('data-theme', config.theme);
   // #448: no classList.add('x-darkmode') -- no CSS selector anywhere
   // depends on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-darkmode> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-darkmode> tag does not get a redundant class.
+  element.classList.add('x-darkmode');
 
   // If element is a button, make it toggle
   if (element.tagName === 'BUTTON') {
@@ -61,7 +67,7 @@ export function darkmode(element, options = {}) {
     if (originalTheme) {
       targetEl.setAttribute('data-theme', originalTheme);
     } else {
-      delete targetEl.getAttribute('data-theme');
+      targetEl.removeAttribute('data-theme');
     }
   };
 }

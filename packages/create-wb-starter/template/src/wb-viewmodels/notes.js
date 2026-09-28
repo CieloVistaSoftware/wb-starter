@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { setRule, onlyChanged } from '../core/dynamic-style.js';
 /**
  * Notes Behavior
  * -----------------------------------------------------------------------------
@@ -57,6 +58,17 @@ export function notes(element, options = {}) {
   let notesContent = '';
   let lastPickedElement = null; // { selector, tag, text } of the last picked element, attached to the next save
 
+  // The drawer's runtime geometry. Generated rules, never element.style
+  // (#779); weight 2 because notes.css positions the drawer through compound
+  // selectors (`.x-notes--modal .x-notes__drawer`, 0,2,0) that the dragged
+  // value must still beat, as the inline style it replaces always did.
+  // drawerWidth mirrors the width slot so saveToLocal can persist it.
+  let drawerWidth = '';
+  const setDrawerWidth = (w) => {
+    drawerWidth = w || '';
+    setRule(drawer, 'width', drawerWidth ? { width: drawerWidth } : null, { weight: 2 });
+  };
+
   // Modal drag/resize state
   let modalPos = { x: 0, y: 0 };
   let modalSize = { width: 500, height: 400 };
@@ -66,9 +78,13 @@ export function notes(element, options = {}) {
   // #448: no bare 'x-notes' token -- notes.css/site.css select the
   // `x-notes` TAG directly now, so it just duplicated the tag name.
   element.classList.add(`x-notes--${config.position}`);
-  element.style.setProperty('--notes-max-width', config.maxWidth);
-  element.style.setProperty('--notes-min-width', config.minWidth);
-  element.style.width = config.defaultWidth;
+  // The 50vw / 200px / 320px defaults are the `x-notes, [x-notes]` rule in
+  // notes.css; only an author's own values travel, as a generated rule (#779).
+  setRule(element, 'config', onlyChanged({
+    '--notes-max-width': config.maxWidth,
+    '--notes-min-width': config.minWidth,
+    width: config.defaultWidth,
+  }, { '--notes-max-width': '50vw', '--notes-min-width': '200px', width: '320px' }));
 
   // Header holds ONLY the title + a corner close button (close pinned to the
   // header's own top-right corner) -- the position/pick/lookup controls live
@@ -128,7 +144,7 @@ export function notes(element, options = {}) {
 
         if (config.restoreState) {
           if (loadedData.position) setPosition(loadedData.position);
-          if (loadedData.width) drawer.style.width = loadedData.width;
+          if (loadedData.width) setDrawerWidth(loadedData.width);
           if (loadedData.modalPos) modalPos = loadedData.modalPos;
           if (loadedData.modalSize) modalSize = loadedData.modalSize;
           if (loadedData.isOpen) open();
@@ -147,7 +163,7 @@ export function notes(element, options = {}) {
       const saveData = {
         content: notesContent,
         position: currentPosition,
-        width: drawer.style.width,
+        width: drawerWidth,
         modalPos: modalPos,
         modalSize: modalSize,
         isOpen: isOpen,
@@ -224,10 +240,12 @@ export function notes(element, options = {}) {
   // Apply modal position and size
   const applyModalTransform = () => {
     if (currentPosition === 'modal') {
-      drawer.style.left = `calc(50% + ${modalPos.x}px)`;
-      drawer.style.top = `calc(50% + ${modalPos.y}px)`;
-      drawer.style.width = modalSize.width + 'px';
-      drawer.style.height = modalSize.height + 'px';
+      setRule(drawer, 'modal', {
+        left: `calc(50% + ${modalPos.x}px)`,
+        top: `calc(50% + ${modalPos.y}px)`,
+        height: modalSize.height + 'px',
+      }, { weight: 2 });
+      setDrawerWidth(modalSize.width + 'px');
     }
   };
 
@@ -290,9 +308,8 @@ export function notes(element, options = {}) {
       applyModalTransform();
     } else {
       backdrop.classList.remove('visible');
-      drawer.style.left = '';
-      drawer.style.top = '';
-      drawer.style.height = '';
+      // Leaving modal drops its left/top/height; the width stays, as it did.
+      setRule(drawer, 'modal', null);
     }
 
     saveToLocal();
@@ -322,10 +339,13 @@ export function notes(element, options = {}) {
   };
 
   let pickerHighlight = null;
+  // The hover outline and the crosshair are .x-notes-pick-target and
+  // body.x-notes-picking in notes.css (#779) -- classes, not style writes on
+  // someone else's element.
   const onPickerMouseOver = (e) => {
-    if (pickerHighlight) pickerHighlight.style.outline = '';
+    if (pickerHighlight) pickerHighlight.classList.remove('x-notes-pick-target');
     pickerHighlight = e.target;
-    pickerHighlight.style.outline = '2px solid var(--primary, #6366f1)';
+    pickerHighlight.classList.add('x-notes-pick-target');
   };
   const onPickerClick = (e) => {
     e.preventDefault();
@@ -341,10 +361,10 @@ export function notes(element, options = {}) {
   const stopPicking = () => {
     if (!isPicking) return;
     isPicking = false;
-    if (pickerHighlight) { pickerHighlight.style.outline = ''; pickerHighlight = null; }
+    if (pickerHighlight) { pickerHighlight.classList.remove('x-notes-pick-target'); pickerHighlight = null; }
     document.removeEventListener('mouseover', onPickerMouseOver, true);
     document.removeEventListener('click', onPickerClick, true);
-    document.body.style.cursor = '';
+    document.body.classList.remove('x-notes-picking');
     element.querySelector('[data-action="pick"]')?.classList.remove('active');
   };
   const startPicking = () => {
@@ -352,7 +372,7 @@ export function notes(element, options = {}) {
     isPicking = true;
     document.addEventListener('mouseover', onPickerMouseOver, true);
     document.addEventListener('click', onPickerClick, true);
-    document.body.style.cursor = 'crosshair';
+    document.body.classList.add('x-notes-picking');
     element.querySelector('[data-action="pick"]')?.classList.add('active');
     showStatus('Click any element on the page to pick it...', 'info');
   };
@@ -388,24 +408,27 @@ export function notes(element, options = {}) {
     }
     const allNotes = [...(savedData.notes || [])].reverse(); // newest first
 
+    // The lookup overlay is styled by the .x-notes__lookup* classes in
+    // notes.css (#779) -- it used to be six cssText blocks and five inline
+    // style="" attributes in the markup below.
     const viewer = document.createElement('div');
-    viewer.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:10000;display:flex;align-items:center;justify-content:center;padding:2rem;';
+    viewer.className = 'x-notes__lookup';
 
     const viewerContent = document.createElement('div');
-    viewerContent.style.cssText = 'background:var(--bg-secondary,#1f2937);width:100%;max-width:800px;max-height:80vh;border-radius:8px;display:flex;flex-direction:column;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);border:1px solid var(--border-color,#374151);';
+    viewerContent.className = 'x-notes__lookup-content';
 
     const viewerHeader = document.createElement('div');
-    viewerHeader.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);display:flex;flex-direction:column;gap:0.5rem;background:var(--bg-tertiary,#111827);border-radius:8px 8px 0 0;';
+    viewerHeader.className = 'x-notes__lookup-header';
     viewerHeader.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <h3 style="margin:0;color:var(--text-primary,#f9fafb);">Saved Notes (${allNotes.length})</h3>
-        <button class="x-notes__lookup-close" style="background:none;border:none;color:var(--text-secondary,#9ca3af);cursor:pointer;font-size:1.5rem;line-height:1;">×</button>
+      <div class="x-notes__lookup-title-row">
+        <h3 class="x-notes__lookup-title">Saved Notes (${allNotes.length})</h3>
+        <button class="x-notes__lookup-close">×</button>
       </div>
-      <input type="search" class="x-notes__lookup-search" placeholder="Search notes by content or page..." style="width:100%;padding:0.5rem 0.75rem;border-radius:6px;border:1px solid var(--border-color,#374151);background:var(--bg-primary,#0f172a);color:var(--text-primary,#f9fafb);font-size:0.875rem;">
+      <input type="search" class="x-notes__lookup-search" placeholder="Search notes by content or page...">
     `;
 
     const body = document.createElement('div');
-    body.style.cssText = 'padding:0.5rem;overflow:auto;flex:1;background:var(--bg-code,#1e1e1e);';
+    body.className = 'x-notes__lookup-body';
 
     const renderList = (filterTerm) => {
       body.innerHTML = '';
@@ -414,16 +437,16 @@ export function notes(element, options = {}) {
         !term || n.content.toLowerCase().includes(term) || (n.page || '').toLowerCase().includes(term)
       );
       if (!matches.length) {
-        body.innerHTML = '<p style="color:var(--text-secondary,#9ca3af);padding:1rem;text-align:center;">No matching notes.</p>';
+        body.innerHTML = '<p class="x-notes__lookup-empty">No matching notes.</p>';
         return;
       }
       matches.forEach(note => {
         const item = document.createElement('button');
         item.type = 'button';
-        item.style.cssText = 'display:block;width:100%;text-align:left;background:var(--bg-secondary,#1f2937);border:1px solid var(--border-color,#374151);border-radius:6px;padding:0.6rem 0.75rem;margin-bottom:0.4rem;cursor:pointer;color:var(--text-primary,#f9fafb);font-family:inherit;';
+        item.className = 'x-notes__lookup-item';
         const preview = note.content.replace(/\s+/g, ' ').trim().slice(0, 100);
         const meta = [note.page ? `page: ${note.page}` : null, new Date(note.createdAt).toLocaleString()].filter(Boolean).join(' · ');
-        item.innerHTML = `<div style="font-size:0.7rem;color:var(--text-secondary,#9ca3af);margin-bottom:0.25rem;">${meta}</div><div style="font-size:0.85rem;">${preview}${note.content.length > 100 ? '…' : ''}</div>`;
+        item.innerHTML = `<div class="x-notes__lookup-meta">${meta}</div><div class="x-notes__lookup-preview">${preview}${note.content.length > 100 ? '…' : ''}</div>`;
         item.onclick = () => {
           textarea.value = note.content;
           notesContent = note.content;
@@ -482,7 +505,7 @@ export function notes(element, options = {}) {
     const maxPx = window.innerWidth * 0.5;
     const minPx = parseInt(config.minWidth);
     newWidth = Math.max(minPx, Math.min(maxPx, newWidth));
-    drawer.style.width = newWidth + 'px';
+    setDrawerWidth(newWidth + 'px');
   };
 
   const onResizeEnd = () => {

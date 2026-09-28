@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "stack.schema.json",
-  "title": "Stack Layout Behavior",
+  "title": "Stack Layout",
   "description": "Vertical stack layout behavior. Renders children in a column with configurable gap, background color, padding, and border radius.",
   "schemaFor": "stack",
   "baseClass": "x-stack",
@@ -20,19 +20,19 @@
     "bg": {
       "type": "string",
       "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
-      "default": "",
+      "default": "this is the bg",
       "example": "#1a2f4e"
     },
     "pad": {
       "type": "string",
       "description": "CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges).",
-      "default": "",
+      "default": "this is the pad",
       "example": "0 0 0.75rem"
     },
     "radius": {
       "type": "string",
       "description": "CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value.",
-      "default": "",
+      "default": "this is the radius",
       "example": "8px"
     }
   },

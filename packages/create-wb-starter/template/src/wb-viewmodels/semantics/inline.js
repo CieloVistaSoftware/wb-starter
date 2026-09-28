@@ -1,3 +1,4 @@
+import { setRule, clearRules } from '../../core/dynamic-style.js';
 /**
  * Inline Semantic Behaviors
  * =========================
@@ -11,22 +12,9 @@
 export function kbd(element, options = {}) {
   element.classList.add('x-kbd');
   
-  // Basic styling if not in CSS
-  if (!getComputedStyle(element).getPropertyValue('--x-kbd-styled')) {
-    Object.assign(element.style, {
-      display: 'inline-block',
-      padding: '0.15em 0.4em',
-      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-      fontSize: '0.85em',
-      lineHeight: '1',
-      color: 'var(--text-primary, #374151)',
-      verticalAlign: 'middle',
-      backgroundColor: 'var(--bg-secondary, #f3f4f6)',
-      border: '1px solid var(--border-color, #d1d5db)',
-      borderRadius: '4px',
-      boxShadow: '0 1px 0 rgba(0,0,0,0.1)',
-    });
-  }
+  // #779: the styling is .x-kbd in ui-utils.css (always loaded). This used
+  // to write it onto element.style behind a --x-kbd-styled check that no
+  // stylesheet ever defined, so it always ran.
 
   return () => element.classList.remove('x-kbd');
 }
@@ -44,11 +32,14 @@ export function kbd(element, options = {}) {
 const MARK_VARIANTS = ['success', 'warning', 'danger', 'info'];
 
 function contrastTextColor(color) {
+  // The probe resolves any CSS color syntax to rgb(); it gets the color
+  // through a generated rule rather than its style attribute (#779).
   const probe = document.createElement('span');
-  probe.style.color = color;
+  setRule(probe, 'probe', { color });
   document.body.appendChild(probe);
   const match = getComputedStyle(probe).color.match(/\d+/g);
   document.body.removeChild(probe);
+  clearRules(probe);
   if (!match) return 'inherit';
   const [r, g, b] = match.map(Number);
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
@@ -63,18 +54,18 @@ export function mark(element, options = {}) {
   MARK_VARIANTS.forEach((v) => element.classList.remove(`x-mark--${v}`));
 
   if (color) {
-    element.style.backgroundColor = color;
-    element.style.color = contrastTextColor(color);
+    // An author-supplied color is a runtime value: a generated rule, not the
+    // style attribute (#779). Weight 2 outranks the (0,1,1) highlight rules
+    // card.css gives `header > mark`, which the inline value used to beat.
+    setRule(element, 'color', { backgroundColor: color, color: contrastTextColor(color) }, { weight: 2 });
   } else {
-    element.style.backgroundColor = '';
-    element.style.color = '';
+    setRule(element, 'color', null);
     if (variant && MARK_VARIANTS.includes(variant)) element.classList.add(`x-mark--${variant}`);
   }
 
   return () => {
     element.classList.remove('x-mark', ...MARK_VARIANTS.map((v) => `x-mark--${v}`));
-    element.style.backgroundColor = '';
-    element.style.color = '';
+    setRule(element, 'color', null);
   };
 }
 

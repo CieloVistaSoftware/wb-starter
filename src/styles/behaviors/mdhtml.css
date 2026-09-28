@@ -349,3 +349,19 @@ x-mdhtml .code-caption, [x-mdhtml] .code-caption,
   color: var(--danger-color);
   padding: 1rem;
 }
+
+/* #779: mdhtml.js wrote these onto the element once the document rendered.
+   Two classes, as the inline style they replace outranked any single-class
+   page rule that set a different font-size. */
+.x-mdhtml.x-mdhtml--loaded,
+[x-mdhtml].x-mdhtml--loaded {
+  font-size: var(--md-font-size, 1rem);
+  max-width: 100%;
+}
+
+/* The load-failure message mdhtml.js puts in place of the document. */
+.x-mdhtml__message {
+  color: var(--text-secondary);
+  padding: 1rem;
+  text-align: center;
+}

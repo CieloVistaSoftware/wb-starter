@@ -37,7 +37,8 @@ export async function writeToClipboard(text) {
 
     const textarea = document.createElement('textarea');
     textarea.value = text;
-    textarea.style.cssText = 'position:fixed;left:-9999px';
+    // Off-screen via .x-copy-buffer (ui-utils.css), not element.style (#779).
+    textarea.className = 'x-copy-buffer';
     document.body.appendChild(textarea);
     textarea.select();
 
@@ -155,8 +156,7 @@ export function copy(element, options = {}) {
 
   element.addEventListener('click', onClick);
   
-  // Style as clickable
-  element.style.cursor = 'pointer';
+  // Clickable: .x-copy { cursor: pointer } in ui-utils.css (#779).
 
   // Mark as ready
   // Cleanup
@@ -164,7 +164,6 @@ export function copy(element, options = {}) {
     clearTimeout(timeout);
     element.classList.remove('x-copy', 'x-copy--copied');
     element.innerHTML = originalContent;
-    element.style.cursor = '';
     element.removeEventListener('click', onClick);
   };
 }

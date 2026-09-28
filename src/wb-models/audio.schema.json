@@ -28,12 +28,16 @@
     "loop": {
       "type": "boolean",
       "description": "Loop playback",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Restarts playback at the end. Nothing on the player is drawn for it (#773)."
     },
     "autoplay": {
       "type": "boolean",
       "description": "Auto-play (requires muted)",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Starts playback on load. A paused and a playing player look alike until time passes (#773)."
     },
     "muted": {
       "type": "boolean",

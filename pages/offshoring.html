@@ -1,3 +1,20 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
+<!-- Page styles: src/styles/pages/offshoring.css -->
+<link rel="stylesheet" href="src/styles/pages/offshoring.css?v=4.0.5">
+
 <div class="page__hero">
   <h1>Offshoring</h1>
   <p></p>
@@ -13,7 +30,7 @@
     title="Offshoring Example" 
     description="A simple demonstration of offshoring a task." 
    >
-    <div class="demo-content" style="padding: 2rem;">
+    <div class="demo-content offshoring-demo">
         <p> Offshoring refers to the practice of relocating business processes
         or services to another country, typically
             to leverage cost advantages, access specialized skills, or improve
@@ -21,7 +38,7 @@
     </div>
 </div>
 </code></pre>
-    <footer style="padding: 0; background: transparent;">
+    <footer class="offshoring-footer">
     </footer>
 </article>
 </div>

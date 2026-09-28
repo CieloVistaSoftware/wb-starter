@@ -3,8 +3,19 @@
   "$id": "pulse.schema.json",
   "title": "Pulse",
   "description": "On click, plays the pulse animation for 0.5s.",
-  "schemaFor": "x-pulse",
+  "schemaFor": "pulse",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-pulse"
+  },
+  "test": {
+    "setup": [
+      "<div x-pulse>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

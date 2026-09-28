@@ -1,20 +1,51 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
 <!-- ═══════════════════════════════════════════════════════════════════════════
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=3.0.91">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=4.0.5">
 
 <div id="behaviors-hero" class="page__hero">
-  <header id="header" x-ignore><div id="autogen-behaviors-html-0"><h1>⚡ WB Behaviors Showcase</h1>
-  <p class="header-subtitle">170+ behaviors • Interactive demos • Copy-ready code</p>
-  </div>
-  </header>
+  <!-- #774 -- John: "remove these ... We already know where we are."
+       The page title and its "170+ behaviors" strapline used to sit here. The
+       left nav already highlights Behaviors, so the heading only repeated it
+       and pushed the search box and the results list further down every
+       screen. The strapline was also wrong: the list counts 167.
+
+       #behaviors-hero is kept as the wrapper -- it is what the fullscreen
+       target (#744) positions against, and the search row lives inside it. -->
   <!-- #744 -- John: "when full screen show both navigator and the rendered side
        plus the search elements." The workspace is the fullscreen target: search,
        navigator and rendered side together. It deliberately starts BELOW the
        hero title, so going fullscreen spends the screen on the three things
        being used rather than on the page heading. -->
+  <!-- #820 -- these headings are .sr-only, and that is the point.
+       #774 removed the visible title and strapline on John's instruction
+       ("remove these ... We already know where we are") because the left nav
+       already says where you are and the heading pushed the search box down
+       every screen. That was about what the page LOOKS like.
+       With no <h1> at all, though, the page had no accessible name and no
+       landmark for a screen-reader user to jump to -- and the fragment
+       compliance gate failed on it, blocking every commit repo-wide.
+       Hidden headings satisfy both: nothing appears on screen, the document
+       regains its outline. -->
+  <h1 class="sr-only">Behaviors</h1>
+
   <div id="behaviors-workspace" class="behaviors-workspace">
+    <h2 class="sr-only">Search behaviors</h2>
   <div class="behaviors-search">
     <input type="search" id="behaviors-search" placeholder="Search behaviors — e.g. x-tooltip, x-toast — or just x- to see everything" aria-label="Search behaviors">
     <span id="behaviors-search-count" aria-live="polite"></span>
@@ -42,7 +73,62 @@
     <div id="behaviors-live" class="behaviors-live" hidden aria-live="polite">
       <header class="behaviors-live__head">
         <span id="behaviors-live-token" class="behaviors-live__token"></span>
+        <!-- The code-theme picker used to sit here (#1012). Moved down to sit
+             directly above the code it recolours -- #1018. -->
         <span id="behaviors-live-note" class="behaviors-live__note"></span>
+        <!-- #774 -- John: "not here, up here...", pointing at the header row.
+             First pass put these under the header; they belong IN it, beside
+             Fullscreen, so the whole control row reads as one strip and the
+             running example starts immediately below it.
+
+             Collapsed they are two chips in the row. Open, flex-wrap gives
+             the panel the full header width and its content drops below the
+             chips -- the header grows rather than the example being pushed
+             off screen. -->
+        <div class="behaviors-live__panels">
+          <!-- John: "clicking on api or docs should open in this element. It
+               must cover this element", pointing at the preview pane.
+
+               The bodies deliberately do NOT live inside their <details>. Inside,
+               they render in the header's flow, so opening one GREW the header and
+               pushed the example down -- a taller box, never a cover. An earlier
+               pass tried to satisfy the same ask with max-height: calc(100vh -
+               14rem), which made the box tall but left it in the header.
+
+               The <details> stay as the toggle and keep their open/closed state;
+               the panels are positioned over .behaviors-live__body below, matched
+               with :has(). -->
+          <details id="behaviors-live-api" class="behaviors-live__api" summary="API">
+            <summary class="behaviors-live__api-summary">API</summary>
+          </details>
+
+          <details id="behaviors-live-doc" class="behaviors-live__doc" summary="Documentation">
+            <summary class="behaviors-live__doc-summary">Documentation</summary>
+          </details>
+        </div>
+        <!-- #776 -- John: "Add theme control here." A behavior is being judged
+             on how it LOOKS, and how it looks is a function of the theme. The
+             site header has a theme switcher, but it is at the top of the page
+             and scrolls away -- so comparing a variant across themes meant
+             scrolling up, switching, and scrolling back to find your place.
+
+             show-label="false": the strip is already tight enough to wrap
+             Fullscreen onto a second row on a narrow pane, and the control is
+             self-evident beside the example it recolours.
+
+             This is the framework's own themecontrol behavior, in attribute
+             form -- not a hand-rolled <select>, which would drift from the
+             real theme list the moment a theme was added. -->
+        <!-- Hidden by default; .behaviors-live__theme is `display: none` and only
+             shown under :fullscreen, where the site header (and its Theme
+             dropdown) is off screen and this is the ONLY way to change theme.
+             It is not a duplicate in normal view -- checked when #1018 asked for
+             no two theme controls side by side, and very nearly removed. -->
+        <div
+          id="behaviors-live-theme"
+          class="behaviors-live__theme"
+          x-themecontrol
+          show-label="false"></div>
         <!-- #720 -- John, on `table . bordered`: "put this element into a parent
              container that will show this content when the fullscreen button is
              pressed... otherwise it will keep this same location and size".
@@ -60,11 +146,18 @@
           target="#behaviors-workspace"
           label="&#9974; Fullscreen"></button>
       </header>
+
+
       <!-- #722 -- John: "When clicking fullscreen all of these elements go
            fullscreen." The STAGE is the panel-sized surface the example is
            centred in (#710/#711), so expanding it expanded the empty space too.
            This wrapper is the parent container the original ask asked for: it
            hugs the rendered example, and it is what goes fullscreen. -->
+      <!-- The region API/Docs must cover: the rendered example, its HTML and its
+           events. Positioned, so the panels can sit over exactly this and
+           nothing else -- the header strip stays usable, which is what closes
+           them again. -->
+      <div class="behaviors-live__body">
       <div id="behaviors-live-stage" class="behaviors-live__stage">
         <div id="behaviors-live-example" class="behaviors-live__example"></div>
       </div>
@@ -77,6 +170,18 @@
              3. the events it fires, as you interact
              4. the handler you would write, last -- it is reference material,
                 not something to watch. -->
+      <!-- #1018 -- John: "move the code style selector to just above the code".
+           It began in the site header strip, then the preview header. Both put
+           it far from the thing it changes: a reader looking at the listing had
+           to find a control in a different region and connect the two. Directly
+           above the panel, the relationship needs no explaining. -->
+      <div class="behaviors-live__codebar">
+        <div x-codecontrol
+             size="xs"
+             show-label="false"
+             class="behaviors-live__codetheme"
+             title="Code theme — syntax colours for the examples on this page"></div>
+      </div>
       <div id="behaviors-live-code" class="behaviors-live__code"></div>
 
       <div id="behaviors-live-events" class="behaviors-live__events">
@@ -95,15 +200,13 @@
         <div id="behaviors-live-events-snippet" class="behaviors-live__events-code"></div>
       </div>
 
-      <!-- x-ignore: this <details> is page chrome, not a demo. Without it WB
-           auto-injects the `details` behavior (nativeMap maps details ->
-           details), which sets inline border/radius styles and restructures the
-           summary -- that is the "edge" John spotted, and no stylesheet rule
-           could win against an inline style. -->
-      <details id="behaviors-live-doc" class="behaviors-live__doc" x-ignore open hidden>
-        <summary class="behaviors-live__doc-summary">Documentation</summary>
-        <div id="behaviors-live-doc-body" class="behaviors-live__doc-body"></div>
-      </details>
+      <!-- Overlays, last so they paint above the preview. Shown only while their
+           <details> in the header is open (CSS :has()). Same ids and classes as
+           before, so every renderer that fills them is untouched. -->
+      <div id="behaviors-live-api-body" class="behaviors-live__api-body behaviors-live__overlay"></div>
+      <div id="behaviors-live-doc-body" class="behaviors-live__doc-body behaviors-live__overlay"></div>
+      </div><!-- /.behaviors-live__body -->
+
     </div>
   </div>
   </div><!-- /#behaviors-workspace (#744) -->
@@ -116,18 +219,14 @@
      past to reach one. The jump-nav went with them: there is nothing below to
      jump to, and the selector reaches every behavior directly. -->
 
-  <!-- FOOTER -->
-  <footer id="footer">
-    <!-- x-release, not {{WB_VERSION}}: that token is substituted only by
-         site-engine.js for SPA page fragments, so a direct visit to
-         /pages/behaviors.html rendered the literal "v{{WB_VERSION}}".
-         release.js exists to replace exactly that -- it "works identically
-         everywhere -- SPA fragment or standalone page". The behavior count is
-         filled in from the same registry the selector uses, so it cannot drift
-         the way the hardcoded 71 did. -->
-    <p>wb-starter <span x-release></span> • <span id="footer-behavior-count">…</span> behaviors • 50 themes</p>
-    <p><a href="?page=docs">Documentation</a> • <a href="?page=themes">Themes</a> • <a href="?page=home">Home</a></p>
-  </footer>
+  <!-- #1018 -- John: "remove this", pointing at the page footer.
+       This page is a workspace, not a document. The list and the live preview
+       are what the reader came for and both want vertical room; a footer
+       repeating the version and a behavior count the header already shows was
+       taking a strip of every screen to say nothing new. Documentation/Themes/
+       Home remain in the site chrome.
+       The fill for #footer-behavior-count further down is guarded by
+       `if (footerCount)`, so it simply no-ops now rather than throwing. -->
 
   <script>
   // #635: John, screenshot on this page: "Add a search here that allows
@@ -164,6 +263,138 @@
       const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
       return stripped.replace(/[^/]*$/, '');
     }
+    /**
+     * Re-root asset paths that were authored root-absolute.
+     *
+     * John, from the deployed error log: "Image failed to load after 5
+     * attempt(s): https://cielovistasoftware.github.io/images/placeholder.svg".
+     *
+     * The site lives under /wb-starter/, so a `src="/images/…"` in an example
+     * resolves to the ORG root and 404s. siteRoot() already solves this for
+     * everything this page fetches — but the markup INSIDE the examples carries
+     * its own absolute paths and bypassed it. 29 of them in
+     * data/behavior-examples.json alone.
+     *
+     * Rewritten here rather than in the 39 source files: the same markup is
+     * authored for local dev (where '/' is correct) and for the sub-path deploy,
+     * so the path has to be resolved where the base is known, not where it is
+     * written. Only asset-ish attributes are touched — not hrefs, which have
+     * their own handling.
+     */
+    // Attributes that name an asset by convention. Kept because some assets
+    // have no file extension to recognise them by (a route, an endpoint).
+    const ASSET_ATTRS = new Set([
+      'src', 'poster', 'image', 'avatar', 'thumbnail', 'icon', 'cover',
+      'background', 'logo', 'data', 'srcset',
+    ]);
+    // ...and anything that simply LOOKS like a file, whatever it is called.
+    const ASSET_FILE = /\.(?:svg|png|jpe?g|gif|webp|avif|ico|mp4|webm|ogv|ogg|mp3|wav|m4a|pdf|woff2?)$/i;
+
+    function rootRelativeAssets(value) {
+      const base = siteRoot();
+      if (base === '/') return value;
+      // The regex consumes the leading '/', so `base` supplies its own -- it is
+      // already '/wb-starter/'. Stripping it here produced a RELATIVE
+      // 'wb-starter/images/...', which under /wb-starter/ resolves to
+      // /wb-starter/wb-starter/images/... -- broken in a new way.
+      //
+      // #1047, second pass. This started as a fixed list of attribute NAMES,
+      // and `cover` was not on it -- so every x-cardportfolio row on the
+      // deployed site still requested /images/placeholder.svg and 404'd, while
+      // the fix looked complete because avatar and image were covered. A list
+      // of names can only ever be as complete as whoever last remembered to
+      // extend it, and behaviours invent attribute names freely.
+      //
+      // So the value gets a vote: an attribute whose value ends in a media
+      // extension is an asset reference no matter what it is called. One pass,
+      // deciding per match, so an already-rewritten path is never rewritten
+      // twice.
+      const fix = (s) => s.replace(
+        /(\s)([a-zA-Z][\w-]*)(\s*=\s*")\/(?!\/)([^"]*)(")/g,
+        (whole, ws, name, eq, path, close) => {
+          const isAsset = ASSET_ATTRS.has(name.toLowerCase()) || ASSET_FILE.test(path.split(/[?#]/)[0]);
+          if (!isAsset) return whole;
+          // Already rooted: applying twice would yield /wb-starter/wb-starter/…,
+          // which is broken in a way that looks like the fix ran. Only the
+          // catalogue fetch calls this today, but "called exactly once" is an
+          // assumption about the callers, and it is cheaper to make the
+          // function safe than to keep that assumption true forever.
+          if (('/' + path).startsWith(base)) return whole;
+          return `${ws}${name}${eq}${base}${path}${close}`;
+        },
+      );
+      const walk = (v) => {
+        if (typeof v === 'string') return fix(v);
+        if (Array.isArray(v)) return v.map(walk);
+        if (v && typeof v === 'object') {
+          const out = {};
+          for (const [k, val] of Object.entries(v)) out[k] = walk(val);
+          return out;
+        }
+        return v;
+      };
+      return walk(value);
+    }
+
+    /**
+     * The same re-rooting for a DOC, where half the file must not be touched.
+     *
+     * #1047, third pass. The catalogue was re-rooted and the deployed page still
+     * 404'd, because the doc panel renders docs/behaviors/<name>.md straight into
+     * the DOM -- and blockquote.md carries a live `<div x-demo>` whose
+     * avatar="/images/placeholder.svg" is markup, not prose. It renders, it
+     * requests, it 404s, and no amount of fixing the catalogue reaches it.
+     *
+     * Fenced code is the part that must NOT be rewritten: it is displayed as
+     * text for a reader to copy into their own project, where '/images/...' is
+     * the correct thing to copy. So the split is by fence, not by file: live
+     * markup gets re-rooted, sample code is left exactly as authored.
+     */
+    function rootRelativeAssetsInMarkdown(md) {
+      // A doc's RELATIVE asset paths are relative to the DOC, not this page.
+      //
+      // docs/behaviors/avatar.md writes src="../../images/placeholder.svg" --
+      // correct from docs/behaviors/ on disk, on GitHub and in doc-viewer.html
+      // (whose rebaseDocResources() resolves against the doc's directory). This
+      // panel renders that markup into a page served at the SITE root, so the
+      // browser resolved it against /wb-starter/?page=behaviors: '../..' climbs
+      // past the deploy base to the ORIGIN root, and every image-bearing doc
+      // (avatar, figure, frame, gallery, img, masonry, ratio, video, ...)
+      // requested /images/placeholder.svg and 404'd under /wb-starter/.
+      //
+      // So each relative asset path is resolved against the doc's directory
+      // BEFORE render (an <img> requests the instant it is inserted) and written
+      // back site-rooted. Root-absolute values are rootRelativeAssets()'s job;
+      // scheme URLs, anchors and plain words (icon="check") are left alone.
+      // Nested, not top-level, so it travels with this function wherever it is
+      // lifted out and exercised on its own.
+      const docDir = 'http://doc.invalid' + siteRoot() + 'docs/behaviors/';
+      const docRelative = (text) => text.replace(
+        /(\s)([a-zA-Z][\w-]*)(\s*=\s*")([^"]*)(")/g,
+        (whole, ws, name, eq, value, close) => {
+          if (!value || value.startsWith('/') || value.startsWith('#')
+            || /^[a-z][a-z0-9+.-]*:/i.test(value) || /[{}\s]/.test(value)) return whole;
+          const file = value.split(/[?#]/)[0];
+          const isPath = /^\.\.?\//.test(value) || ASSET_FILE.test(file);
+          if (!isPath || !(ASSET_ATTRS.has(name.toLowerCase()) || ASSET_FILE.test(file))) return whole;
+          const url = new URL(value, docDir);
+          return `${ws}${name}${eq}${url.pathname}${url.search}${url.hash}${close}`;
+        },
+      );
+
+      // The fence lines are captured so they survive the join and can flip the
+      // state as they pass -- a split that dropped them would silently delete
+      // every code block from the rendered doc.
+      let inFence = false;
+      return String(md)
+        .split(/(^[ \t]*```[^\n]*$)/m)
+        .map((part) => {
+          if (/^[ \t]*```/.test(part)) { inFence = !inFence; return part; }
+          return inFence ? part : rootRelativeAssets(docRelative(part));
+        })
+        .join('');
+    }
+
     let allEntries = [];
     let extensionMap = {};
     let nativeMap = {};
@@ -207,10 +438,19 @@
       }
       // Sorted so `variant` leads -- it is the axis most readers look for --
       // and the rest follow alphabetically rather than in schema-key order.
-      out.sort((a, b) =>
-        (a.prop === 'variant' ? -1 : b.prop === 'variant' ? 1 : a.prop.localeCompare(b.prop)) ||
-        0
-      );
+      //
+      // Two rows of the SAME property must compare equal, or the enum order is
+      // lost. This used to read `a.prop === 'variant' ? -1 : ...`, which returns
+      // -1 even when BOTH are variant -- an inconsistent comparator that told
+      // the sort every variant row was smaller than every other variant row, and
+      // reversed them: x-alert listed error, warning, success, info, with its
+      // declared default (info) last. Same for every other enum.
+      out.sort((a, b) => {
+        if (a.prop === b.prop) return 0;             // keep the schema's enum order
+        if (a.prop === 'variant') return -1;
+        if (b.prop === 'variant') return 1;
+        return a.prop.localeCompare(b.prop);
+      });
       return out.length ? out : [{ prop: '', value: '' }];
     }
 
@@ -222,8 +462,31 @@
       if (opt.boolean) return opt.value === 'false' ? `${opt.prop}=false` : opt.prop;
       return opt.prop === 'variant' ? opt.value : `${opt.prop}=${opt.value}`;
     }
-    import(siteRoot() + 'src/core/tag-map.js')
-      .then(async (mod) => {
+    // #1056: the behaviour registry lives in TWO places, and this page read one.
+    // wb-lazy.js's WB_LAZY_ONLY_ATTRIBUTES holds behaviours that resolve at
+    // runtime but appear nowhere in tag-map, so 39 working behaviours --
+    // lightbox, masonry, popover, pagination, breadcrumb, share, print,
+    // countdown, and every animation effect -- had no row on the page whose
+    // whole job is to list behaviours.
+    //
+    // wb-lazy.js's own comment predicted this by name: "34 x-* attributes used
+    // by real demos on pages/behaviors.html live only here, so anything reading
+    // tag-map alone reports an incomplete behavior list." It was exported "so
+    // tooling can enumerate the FULL x-* surface"; this is the page that most
+    // needed to, and did not.
+    //
+    // The second import is allowed to fail on its own: an incomplete list is
+    // bad, but an EMPTY one -- which is what an unhandled rejection here would
+    // leave -- is worse.
+    Promise.all([
+      import(siteRoot() + 'src/core/tag-map.js'),
+      import(siteRoot() + 'src/core/wb-lazy.js').catch(() => ({})),
+    ])
+      .then(async ([tagMod, lazyMod]) => {
+        const mod = {
+          ...tagMod,
+          extensionMap: { ...(lazyMod.WB_LAZY_ONLY_ATTRIBUTES || {}), ...tagMod.extensionMap },
+        };
         // #665: extensionMap, NOT elementMap. elementMap maps wb-* BEHAVIOR
         // TAGS to behavior names (x-card, x-button, x-badge, ...), so
         // prefixing its values with "x-" produced a list of behaviors wearing
@@ -238,17 +501,18 @@
         // values would silently collapse them.
         extensionMap = mod.extensionMap;
         nativeMap = mod.nativeMap || {};
-        // John: "do not include any as- behaviors" -- x-as-{name} is the
-        // MORPHING form (x-as-card), which re-renders an element AS another
-        // behavior rather than adding behavior to it.
-        //
-        // And: "in cases where we fully inject into a semantic element like
-        // audio we do not need to list the x-audio as it's autoinjected" --
-        // writing <audio> already applies the behavior, so x-audio is pure
-        // duplication. Those 19 entries are listed under their SEMANTIC
-        // ELEMENT instead of dropped outright, because the element is the
-        // real authoring form (<button variant="primary">) and its variants
-        // still need to be visible.
+        // semanticHostFor() caches a behavior->tag index built from nativeMap.
+        // Anything that ran the generator before this import resolved built it
+        // from the EMPTY placeholder map and kept it forever, so every
+        // auto-injected behavior afterwards rendered as <figure x-figure>,
+        // <details x-details>, ... (#753's defect, via a stale cache). Drop it
+        // so the next call indexes the real map.
+        nativeByBehavior = null;
+        // #783: morphing (x-as-{name}) was removed from the framework, so
+        // there is nothing left to filter out here. The guard that kept it
+        // off this list lives on as a regression test —
+        // tests/regression/behaviors-live-selector.spec.ts asserts no x-as-*
+        // form ever appears again.
         const autoHost = {};
         for (const [selector, beh] of Object.entries(mod.nativeMap)) {
           if (!autoHost[beh]) autoHost[beh] = selector;
@@ -270,12 +534,11 @@
         const seen = new Set();
         allEntries = [];
         Object.keys(extensionMap)
-          .filter((a) => !a.startsWith('x-as-'))
           .forEach((attr) => {
             const beh = extensionMap[attr];
             const host = autoHost[beh];
-            // Key on the BEHAVIOR for auto-injected ones, so x-progress and
-            // x-progressbar (same behavior) collapse to a single <progress> row
+            // Key on the BEHAVIOR for auto-injected ones, so two attributes
+            // that name the same behavior collapse to a single semantic row
             // instead of duplicating it.
             const key = host ? 'native:' + beh : attr;
             if (seen.has(key)) return;
@@ -333,8 +596,14 @@
             const at = src.indexOf('<' + e.host);
             const after = at === -1 ? '' : src.charAt(at + e.host.length + 1);
             const usesHost = at !== -1 && (after === '' || /[\s>/]/.test(after));
-            if (!usesHost) { e.label = e.attr; e.native = false; }
+            if (!usesHost) e.dropSemantic = true;
           });
+          // The attribute row for the same behavior already says e.attr, so
+          // relabelling the semantic row to it listed the behavior TWICE --
+          // John: "why are there 2 x-checkbox groups with 10?" A semantic row
+          // whose example never writes its host has nothing semantic to show:
+          // drop it and keep the one attribute row.
+          allEntries = allEntries.filter((e) => !e.dropSemantic);
           allEntries.sort((a, b) => a.label.localeCompare(b.label));
           // The catalogue fetch can resolve AFTER the list has rendered, in
           // which case relabelling the data alone changes nothing on screen.
@@ -355,7 +624,7 @@
         // sections no longer have to stay on the page purely as a data source.
         fetch(siteRoot() + 'data/behavior-examples.json')
           .then((r) => (r.ok ? r.json() : null))
-          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = cat.examples; try { relabelByExample(); } catch { /* list still renders */ } } })
+          .then((cat) => { if (cat && cat.examples) { exampleCatalogue = rootRelativeAssets(cat.examples); try { relabelByExample(); } catch { /* list still renders */ } } })
           .catch(() => {});
 
         return fetch(siteRoot() + 'data/schema-index.json')
@@ -452,6 +721,15 @@
       const frag = document.createDocumentFragment();
       let rendered = 0;
       allEntries.forEach((entry) => {
+        // #995 — John: "put same named links into dropdown, the use must
+        // expand it first to view the items in the list." A behavior with
+        // several options repeated its own name on every row: x-avatar alone
+        // filled twelve of 603 rows, so scrolling was dominated by repetition
+        // rather than by distinct behaviors.
+        //
+        // Build this entry's rows first, then choose the shape: one option
+        // stays a plain row (nothing to collapse), several become a <details>.
+        const built = [];
         variantsFor(entry.attr).forEach((opt) => {
           const variant = opt.value;
           const shownOption = optionLabel(opt);
@@ -461,7 +739,6 @@
           if (!offersForm(entry, form)) return;
           if (q && ![entry.label, entry.attr, shownOption].join(' ').toLowerCase().includes(q)) return;
           rendered++;
-          const li = document.createElement('li');
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'behaviors-search-results__row';
@@ -489,9 +766,41 @@
           v.className = 'behaviors-search-results__variant';
           v.textContent = shownOption;
           btn.append(t, v);
-          li.appendChild(btn);
-          frag.appendChild(li);
+          built.push(btn);
         });
+
+        if (!built.length) return;
+
+        if (built.length === 1) {
+          const li = document.createElement('li');
+          li.appendChild(built[0]);
+          frag.appendChild(li);
+          return;
+        }
+
+        const li = document.createElement('li');
+        li.className = 'behaviors-search-results__group';
+        const details = document.createElement('details');
+        // The label goes through the `summary` ATTRIBUTE, which is x-details's
+        // own API (the form #behaviors-live-api already uses). A hand-built
+        // <summary> does not survive: the behavior rewrites its internals into
+        // one .x-details__label plus its own icon, so two spans arrived
+        // concatenated — "audio6" — and its flex layout overrode the grid.
+        // Law 4b: the tag IS the behavior; work with it, not around it.
+        details.setAttribute('summary', `${entry.label} (${built.length})`);
+        // Collapsed by default — "the user must expand it first". A query must
+        // still show its matches, or search reports hits it then hides.
+        if (q) details.open = true;
+        const inner = document.createElement('ul');
+        inner.className = 'behaviors-search-results__options';
+        built.forEach((b) => {
+          const row = document.createElement('li');
+          row.appendChild(b);
+          inner.appendChild(row);
+        });
+        details.appendChild(inner);
+        li.appendChild(details);
+        frag.appendChild(li);
       });
       if (!q) totalRowCount = rendered;
       resultsEl.appendChild(frag);
@@ -564,6 +873,61 @@
     const liveExample = document.getElementById('behaviors-live-example');
     const liveCode = document.getElementById('behaviors-live-code');
     const liveDoc = document.getElementById('behaviors-live-doc');
+    const liveApi = document.getElementById('behaviors-live-api');
+    let liveApiBody = document.getElementById('behaviors-live-api-body');
+
+    /**
+     * #774 -- John: "Should be toggles, show/hide only one at a time."
+     *
+     * Both panels open at once pushed the running example far down the panel,
+     * which is the problem that moved them into the header in the first place.
+     * Opening one now closes the other.
+     *
+     * Driven by the 'toggle' event rather than by a click handler, so it holds
+     * however the panel was opened -- keyboard, find-in-page revealing a closed
+     * <details>, or code setting .open directly.
+     *
+     * The guard matters: closing the sibling fires ITS toggle event, which
+     * would re-enter this handler. Without `panel.open` gating the work, the
+     * two would ping-pong.
+     */
+    function exclusivePanels(panels) {
+      /**
+       * John: "When clicking api or docs, this panel should fill to the bottom."
+       *
+       * The open body is absolutely positioned against #behaviors-live so it
+       * can escape the header strip it is anchored in. Its `top` has to clear
+       * the real header -- a constant breaks the moment the control row wraps
+       * to two lines, which it does on a narrow panel -- so publish the header's
+       * measured height and let CSS position against that.
+       */
+      const publishHeadHeight = () => {
+        const panelEl = document.getElementById('behaviors-live');
+        const head = panelEl && panelEl.querySelector('.behaviors-live__head');
+        if (!panelEl || !head) return;
+        // The open body is absolute at top:100% of the HEADER, so the space
+        // left for it is the panel minus that header. Measured, not assumed:
+        // the control row wraps to two lines on a narrow panel.
+        const avail = Math.max(0, Math.round(panelEl.getBoundingClientRect().height - head.getBoundingClientRect().height));
+        panelEl.style.setProperty('--x-live-body-h', avail + 'px');
+      };
+
+      panels.forEach((panel) => {
+        if (!panel) return;
+        panel.addEventListener('toggle', () => {
+          if (!panel.open) return;
+          panels.forEach((other) => { if (other && other !== panel) other.open = false; });
+          // Measure AFTER the exclusive close, so a closing sibling is not
+          // still contributing its own height to the row.
+          requestAnimationFrame(publishHeadHeight);
+        });
+      });
+
+      // The row wraps at narrow widths, which changes the header height with
+      // no toggle involved.
+      window.addEventListener('resize', publishHeadHeight);
+    }
+    exclusivePanels([liveApi, liveDoc]);
 
     // #762 -- John: "Allow the document element to be dragged all the way to
     // the top."
@@ -632,7 +996,20 @@
     // ended at 321px and the code panel started there, so the menu rendered
     // straight over the code. Standard 15: an overlay must not overflow its
     // parent. Grow the stage to whatever the example actually put on screen.
-    const STAGE_MIN_PX = 96;   // 6rem, matching .behaviors-live__stage in behaviors.css
+    // The floor is whatever behaviors.css says the stage's min-height is, read
+    // live rather than copied. It used to be a hard-coded 96 ("6rem, matching
+    // .behaviors-live__stage"), and #774 then set that rule to `min-height: 0`
+    // so the stage hugs its example 1rem from the strip. The copy did not
+    // follow: every fit re-imposed 96px, so a one-line example (a single
+    // x-button) sat with 16px above it and 28px below -- the #711 imbalance,
+    // brought back by a constant that had stopped matching its source.
+    function stageMinPx() {
+      const inline = liveStage.style.minHeight;
+      liveStage.style.minHeight = '';
+      const px = parseFloat(getComputedStyle(liveStage).minHeight) || 0;
+      liveStage.style.minHeight = inline;
+      return px;
+    }
     let fitQueued = false;
     function fitStageToOverlays() {
       if (fitQueued) return;
@@ -642,12 +1019,19 @@
         const stageTop = liveStage.getBoundingClientRect().top;
         let deepest = 0;
         for (const el of liveStage.querySelectorAll('*')) {
+          // The body of a CLOSED <details> is not display:none -- Chromium
+          // hides it with content-visibility, and getBoundingClientRect() still
+          // reports its full laid-out box. The x-details example's collapsed
+          // image and text measured 551px that nobody could see, and the stage
+          // grew to 635px around a 52px summary (#769, again). checkVisibility()
+          // is false for exactly that skipped content, and for display:none.
+          if (typeof el.checkVisibility === 'function' && !el.checkVisibility()) continue;
           const r = el.getBoundingClientRect();
           if (r.width === 0 && r.height === 0) continue;   // display:none, not open
           deepest = Math.max(deepest, r.bottom - stageTop);
         }
         const padding = parseFloat(getComputedStyle(liveStage).paddingBottom) || 0;
-        const wanted = Math.max(STAGE_MIN_PX, Math.ceil(deepest + padding));
+        const wanted = Math.max(stageMinPx(), Math.ceil(deepest + padding));
         // #760 -- John, on a collapsed <details>: "Why blank space?"
         //
         // This used to only ever GROW. Opening the details grew the stage to
@@ -677,6 +1061,12 @@
     liveStage.addEventListener('click', fitStageToOverlays);
     liveStage.addEventListener('mouseover', fitStageToOverlays);
     liveStage.addEventListener('focusin', fitStageToOverlays);
+    // An opened menu can grow AFTER that fit: its avatars only start loading
+    // once the menu is displayed, and each one that lands makes the menu
+    // taller than the box just measured for it -- under load the menu ended
+    // ~300px below the stage (#703). `load` does not bubble, so listen in the
+    // capture phase to hear every image inside the stage.
+    liveStage.addEventListener('load', fitStageToOverlays, true);
 
     // #710 -- John: "Make the height of the left element same as right element."
     // CSS alone cannot express it: with align-items:stretch the LIST's own 585
@@ -685,28 +1075,98 @@
     // So the panel is measured and the list is capped to it; the list keeps
     // scrolling inside itself. Stacked, the cap is dropped and behaviors.css's
     // fixed max-height applies again -- there is no second column to match.
+    // #992 — the SCROLLER, not the window. #app is viewport-sized and
+    // overflow:hidden; #siteBody inside it is the element that actually
+    // scrolls. Sizing against window.innerHeight and a viewport-relative top
+    // was wrong: that top moves as #siteBody scrolls, so the answer was only
+    // valid for the scroll offset it was computed at (measured: cap 650px
+    // written while the panel's top read -118). Distances measured BETWEEN two
+    // elements in the same scroller are scroll-invariant.
+    const scrollerEl = document.getElementById('siteBody');
+    const wsEl = document.getElementById('behaviors-workspace') || resultsEl;
     const TWO_COL = matchMedia('(min-width: 60.0625rem)');
     let syncQueued = false;
+    let pendingScrollReset = false;   // set by a selection, honoured once settled
+    // #992 — John: "just make a container that always contains the selected
+    // content, always rerender that container on all selections."
+    //
+    // That inverts the dependency, and the inversion is the fix. It used to run
+    // content -> panel height -> list height, which is circular: rendering an
+    // example changed the panel's height, which changed the cap, which was
+    // measured from the panel again. behaviors.css already documents the
+    // symptom ("ResizeObserver loop completed with undelivered notifications"
+    // x3), and it is why the panel sat a constant 61px past the scroller in
+    // roughly half of runs: the size was computed before the example finished
+    // rendering, then the content pushed past it.
+    //
+    // Now: scroller -> container size, full stop. The container is a FIXED
+    // height taken from the scroller, so no example can grow it; content
+    // scrolls inside it. Selections re-render into a box whose size was already
+    // settled, so there is nothing left to race.
+    // GUTTER/MIN removed with the pixel maths above (#1018): the gutter is now
+    // the 10rem in .behaviors-browse's calc(), and the floor is unnecessary --
+    // a viewport-relative height cannot collapse to a sliver the way a
+    // measured one could on a short window.
+
+    // #1018 -- John: "both of these elements must be 100vh", twice, pointing at
+    // the results list and the live panel sitting short with dead space below.
+    //
+    // This used to compute a pixel height (scroller height minus the panel's
+    // offset) and write it INLINE on both elements. Inline styles beat every
+    // stylesheet, so behaviors.css could not size these panels at all -- the
+    // CSS said 100vh and the panels stayed at the 569px this function wrote.
+    // Same shape as code.js vs mdhtml.css and fix-card.js's 49 !important:
+    // something imperative quietly winning an argument the cascade should own.
+    //
+    // #710's requirement is unchanged and still met: the box must be FIXED, so
+    // that rendering an example cannot grow it and feed a resize loop
+    // ("ResizeObserver loop completed with undelivered notifications"). A CSS
+    // height sized from the viewport is exactly as fixed as one written here --
+    // no example can change the viewport -- so the guarantee survives while the
+    // sizing moves to where sizing belongs. See .behaviors-browse in
+    // src/styles/pages/behaviors.css.
+    //
+    // All this does now is clear anything a previous build left behind, so a
+    // cached page cannot keep an inline height that outranks the stylesheet.
+    function sizeContainers() {
+      if (liveEl.style.height) liveEl.style.height = '';
+      if (liveEl.style.overflowY) liveEl.style.overflowY = '';
+      if (resultsEl.style.maxHeight) resultsEl.style.maxHeight = '';
+    }
+
+    /**
+     * Called after every selection. Sizing depends only on the scroller, so
+     * this is cheap and idempotent -- it is re-asserted rather than
+     * recalculated from whatever was just rendered.
+     */
     function syncListHeight() {
-      // Write on the next frame, never inside the observer callback: mutating
-      // layout during delivery is what produces "ResizeObserver loop completed
-      // with undelivered notifications".
-      if (syncQueued) return;
-      syncQueued = true;
-      requestAnimationFrame(() => {
-        syncQueued = false;
-        if (!TWO_COL.matches) {
-          if (resultsEl.style.maxHeight) resultsEl.style.maxHeight = '';
-          return;
-        }
-        const h = liveEl.getBoundingClientRect().height;
-        // Panel hidden (nothing picked yet) -> fall back to the stylesheet.
-        const next = h > 0 ? Math.round(h) + 'px' : '';
-        // Only write on a real change -- an unconditional write re-triggers the
-        // observer every frame for no reason.
-        if (resultsEl.style.maxHeight !== next) resultsEl.style.maxHeight = next;
-        keepSelectionVisible();
-      });
+      wsEl.removeAttribute('x-ready');   // Law 18: never let a stale signal be read
+      sizeContainers();
+      keepSelectionVisible();
+
+      // A new selection starts where content starts. AFTER
+      // keepSelectionVisible(), not before: that keeps the selected LIST row on
+      // screen and does so by scrolling, which put #siteBody back to 497 and
+      // undid the reset entirely -- measured, the reset ran and the scroller
+      // ended up scrolled anyway. Only on selection; a plain resize must not
+      // yank the reader back to the top.
+      // A new selection starts where content starts. AFTER
+      // keepSelectionVisible(), not before: that keeps the selected LIST row on
+      // screen and does so by scrolling, which would undo the reset.
+      //
+      // Requested by selectRow rather than done there, because showLive()
+      // injects the example, its doc and its code panel asynchronously and that
+      // later insertion scrolls the container after a synchronous reset has run.
+      // Only on selection; a plain resize must not yank the reader to the top.
+      if (pendingScrollReset) {
+        pendingScrollReset = false;
+        liveEl.scrollTop = 0;
+        if (scrollerEl) scrollerEl.scrollTop = 0;
+      }
+      // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
+      // so it says so. Waiters listen instead of sleeping.
+      wsEl.setAttribute('x-ready', '');
+      wsEl.dispatchEvent(new CustomEvent('wb:layout-settled', { bubbles: true }));
     }
     // #717 -- John: "When using the down or up button the current selection must
     // be the first one." selectRow() sets scrollTop = rowTop and the browser
@@ -728,11 +1188,26 @@
     // list to a row the reader had deliberately scrolled away from.
     let selectedByKeyboard = false;
 
+    /**
+     * A row's top within the list's scrolled content. NOT offsetTop: a row in a
+     * group sits inside a <details>, and the details behavior (auto-injected on
+     * every <details>) wraps the group's content in a positioned
+     * .x-details__content. Once it has run, that wrapper is the row's
+     * offsetParent and `row.offsetTop - resultsEl.offsetTop` is off by the
+     * group's own offset -- measured 514 vs a true 567, so arrowing left the
+     * selection a row or more below the fold. Whether the wrapper existed yet
+     * depended on timing, which is why it failed only some of the time.
+     * Rect-based, it is right whatever the row's offsetParent is.
+     */
+    function rowTopInList(row) {
+      return row.getBoundingClientRect().top - resultsEl.getBoundingClientRect().top + resultsEl.scrollTop;
+    }
+
     function keepSelectionVisible() {
       if (!selectedByKeyboard) return;
       const cur = resultsEl.querySelector('[aria-current="true"]');
       if (!cur) return;
-      const top = cur.offsetTop - resultsEl.offsetTop;
+      const top = rowTopInList(cur);
       const bottom = top + cur.offsetHeight;
       if (top < resultsEl.scrollTop) resultsEl.scrollTop = top;
       else if (bottom > resultsEl.scrollTop + resultsEl.clientHeight) {
@@ -740,19 +1215,199 @@
       }
     }
 
-    // The panel's height drives the list's; the list never drives the panel's,
-    // so this cannot feed back on itself.
-    new ResizeObserver(syncListHeight).observe(liveEl);
+    // #992 — observe the SCROLLER, never the panel. Observing liveEl was the
+    // feedback loop: the sync sets the panel's height, which resizes the panel,
+    // which re-runs the sync. The comment here used to claim it "cannot feed
+    // back on itself" — it could, and behaviors.css records the browser saying
+    // so ("ResizeObserver loop completed with undelivered notifications" x3).
+    // The scroller's size is an input the page does not control, so watching it
+    // is safe by construction.
+    if (scrollerEl) new ResizeObserver(sizeContainers).observe(scrollerEl);
+    window.addEventListener('resize', sizeContainers);
     TWO_COL.addEventListener('change', syncListHeight);
+    sizeContainers();   // size the box before anything is selected
 
     // Cache: the same doc is re-requested every time a reader arrows back over
     // a behavior, and a 404 is worth remembering too (49 docs, 143 entries --
     // most misses are permanent).
     const docCache = new Map();
 
+    /**
+     * #679 -- render a behavior's attributes: type, allowed values, default.
+     *
+     * The data was already here. The page loads data/schema-index.json to build
+     * its variant rows, so every property, enum and default was in memory and
+     * simply never shown: a reader could see THAT variant=primary exists,
+     * because it is a row in the list, but not that variant is a string with a
+     * fixed set of values, or that pageSize is a number defaulting to 10.
+     *
+     * Not async and not fetched -- schemaByName is populated at load.
+     */
+    /**
+     * #679 -- John: "each attribute should be shown to help users."
+     *
+     * The doc pages carry a Usage block, but most show the bare element
+     * (`<article> ... </article>`) with none of its attributes -- and only 27
+     * of 143 behaviors have a doc page at all. A reader could see a table of
+     * attributes and still have nothing to copy.
+     *
+     * This builds the snippet from the schema instead, so it exists for every
+     * behavior and cannot drift from the attribute list directly above it.
+     *
+     * Values are REPRESENTATIVE, not invented: the declared default where
+     * there is one, otherwise the first allowed enum value, otherwise a
+     * type-named placeholder. Nothing here implies a value the schema does
+     * not actually permit.
+     */
+    function buildUsageSnippet(behavior, props) {
+      const names = Object.keys(props);
+
+      // Prefer the semantic host: <article> auto-injects card, so that is what
+      // a reader should copy. Only fall back to the x- attribute form when no
+      // tag carries the behavior on its own.
+      let host = null;
+      for (const [selector, beh] of Object.entries(nativeMap || {})) {
+        if (beh === behavior && !selector.includes('[')) { host = selector; break; }
+      }
+      const tag = host || 'div';
+      const marker = host ? '' : ' x-' + behavior;
+
+      const attrs = names.map((n) => {
+        const d = props[n] || {};
+        // Booleans FIRST. A boolean with `default: false` was being caught by
+        // the default branch below and printed as elevated="false" — which in
+        // HTML is TRUE, because a boolean attribute is true by its presence.
+        // The snippet was teaching the exact opposite of what it said.
+        //
+        // Shown bare, which is the form a reader would actually copy; the
+        // table underneath states the default.
+        let value;
+        if (d.type === 'boolean') value = null;
+        else if (d.default !== undefined && d.default !== '') value = d.default;
+        else if (Array.isArray(d.enum) && d.enum.length) value = d.enum[0];
+        else if (d.type === 'number') value = '0';
+        else value = d.type || 'value';
+        // A boolean attribute is written bare; `muted="true"` is not how HTML
+        // booleans work and would teach the wrong thing.
+        return value === null ? '  ' + n : '  ' + n + '="' + value + '"';
+      });
+
+      const open = attrs.length
+        ? '<' + tag + marker + '\n' + attrs.join('\n') + '>'
+        : '<' + tag + marker + '>';
+      return open + '\n  ...' + '\n</' + tag + '>';
+    }
+
+    function showApi(behavior) {
+      liveApi.hidden = false;
+
+      const sc = schemaByName.get(behavior);
+      const props = (sc && sc.properties) || {};
+      const names = Object.keys(props);
+
+      // #993 — John, on `article` showing a single row: "This isn't right only
+      // one Article example".
+      //
+      // The list is a list of OPTIONS: it emits a row per enum value and per
+      // boolean, so a behavior whose attributes are plain strings shows one
+      // bare row. `article` has nine attributes and eight of them are strings,
+      // so it looked like the framework's flagship element had a single knob.
+      // Systemic, not an article problem: 650 option rows across 156 schemas
+      // versus 1032 declared attributes.
+      //
+      // The full set was never missing -- this panel already listed all nine,
+      // via Object.keys(props) with no filtering. What was missing was any way
+      // to KNOW that. The chip said "API" whether it held nine attributes or
+      // none, so there was nothing to suggest looking. John chose this panel as
+      // the home for the full attribute set, so it now says how much it holds.
+      const summary = liveApi.querySelector('.behaviors-live__api-summary');
+      if (summary) {
+        summary.textContent = names.length ? 'API (' + names.length + ')' : 'API';
+      }
+
+      if (!names.length) {
+        // Same reasoning as the doc panel (#673): say the thing is absent
+        // rather than vanishing, so "no schema" cannot be mistaken for
+        // "the panel is broken".
+        liveApiBody.className = 'behaviors-live__api-body behaviors-live__api-body--empty';
+        liveApiBody.textContent = 'No schema for ' + behavior + ' yet.';
+        return;
+      }
+
+      liveApiBody.className = 'behaviors-live__api-body';
+
+      const esc = (v) => String(v).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+
+      const rows = names.map((name) => {
+        const d = props[name] || {};
+        // An enum IS the allowed-values list; without one, the type is all we
+        // can honestly say. Long enums are shown in full rather than truncated
+        // -- a cut-off list of allowed values is worse than none, because the
+        // reader cannot tell it is cut off.
+        const values = Array.isArray(d.enum) && d.enum.length
+          ? d.enum.map((v) => '<code>' + esc(v) + '</code>').join(' ')
+          : '<span class="behaviors-live__api-any">any ' + esc(d.type || 'value') + '</span>';
+        // Distinguish "defaults to empty string" from "has no default": both
+        // would otherwise render as an empty cell and mean different things.
+        const dflt = d.default === undefined
+          ? '<span class="behaviors-live__api-none">—</span>'
+          : '<code>' + esc(d.default === '' ? '""' : d.default) + '</code>';
+        const req = d.required ? ' <span class="behaviors-live__api-req">required</span>' : '';
+        return '<tr id="behaviors-api-row-' + esc(name) + '">' +
+          '<td class="behaviors-live__api-name"><code>' + esc(name) + '</code>' + req + '</td>' +
+          '<td class="behaviors-live__api-type">' + esc(d.type || '') + '</td>' +
+          '<td class="behaviors-live__api-values">' + values + '</td>' +
+          '<td class="behaviors-live__api-default">' + dflt + '</td>' +
+          '<td class="behaviors-live__api-desc">' + esc(d.description || '') + '</td>' +
+        '</tr>';
+      }).join('');
+
+      const usage = buildUsageSnippet(behavior, props);
+
+      liveApiBody.innerHTML =
+        '<pre class="behaviors-live__api-usage"><code language="html">' + esc(usage) + '</code></pre>' +
+        '<div class="behaviors-live__api-scroll">' +
+        '<table id="behaviors-live-api-table" class="behaviors-live__api-table">' +
+        '<thead><tr>' +
+          '<th scope="col">Attribute</th><th scope="col">Type</th>' +
+          '<th scope="col">Values</th><th scope="col">Default</th>' +
+          '<th scope="col">Description</th>' +
+        '</tr></thead><tbody>' + rows + '</tbody></table></div>' +
+        '<p class="behaviors-live__api-note">' + names.length +
+        ' attribute' + (names.length === 1 ? '' : 's') +
+        ' · from <code>src/wb-models/' + esc(behavior) + '.schema.json</code></p>';
+
+      // #993 follow-up — John: "on api, when clicked format the content in this
+      // case HTML". The usage snippet was plain unhighlighted text, while the
+      // demo panel's own view-source block a few pixels below it is syntax
+      // highlighted: the same content, two treatments, on one screen. It is
+      // marked language="html" above and scanned here so the `code` behavior
+      // treats it exactly as demo.js treats its panel. Eager, because a lazily
+      // deferred snippet sits unstyled for an indeterminate time inside a panel
+      // the reader has just opened on purpose.
+      const usageEl = liveApiBody.querySelector('.behaviors-live__api-usage');
+      if (usageEl && window.WB && typeof window.WB.scan === 'function') {
+        try {
+          window.WB.scan(usageEl, { eager: true });
+        } catch (err) {
+          /* highlighting is a nicety; never let it break the panel */
+        }
+      }
+    }
+
     async function showDoc(behavior) {
-      liveDoc.hidden = true;
-      if (!behavior) return;
+      // Hidden only when there is nothing to document. It used to be hidden
+      // for every selection and unhidden after the .md fetch, so for the
+      // length of that fetch the Docs chip had no box: the header strip
+      // reflowed (Fullscreen and AutoScroll jumped left, then back), and
+      // anything measuring the strip in that window read Docs as top=0 h=0
+      // (behaviors-header-controls-aligned). The initial selection runs after
+      // the runtime reports idle, and a fetch is not an injection, so idle
+      // cannot cover it. The body below is replaced with an empty host first,
+      // so a stale doc is never shown under the new behavior's name.
+      if (!behavior) { liveDoc.hidden = true; return; }
 
       // A FRESH host element per behavior. WB.inject() will not re-apply a
       // behavior to an element that already carries it, so reusing one div
@@ -776,6 +1431,12 @@
         docCache.set(behavior, md);
       }
       liveDoc.hidden = false;
+      // #774: the qualified label ("Button Documentation") was right when
+      // this panel sat alone at the BOTTOM of the column, far from anything
+      // naming the behavior. It now sits in the header, immediately beside
+      // the token that already says `x-accordion` -- so the long form only
+      // repeated it, and at that width the control row overflowed and wrapped
+      // Fullscreen onto a second line. Short label, same information.
       // #746 -- John: "Don't just say Documentation say Button Documentation."
       // The panel sits under a rendered example that changes with the
       // selection; an unqualified "Documentation" gives the reader nothing to
@@ -784,7 +1445,7 @@
       const docSummary = liveDoc.querySelector('.behaviors-live__doc-summary');
       if (docSummary) {
         docSummary.textContent =
-          behavior.charAt(0).toUpperCase() + behavior.slice(1) + ' Documentation';
+          'Docs';
       }
       if (!md) {
         // #673 -- John, on `article`: "Where is the docs element below this?"
@@ -792,7 +1453,6 @@
         // 116 of 143 behaviors with no .md the whole panel silently vanished --
         // indistinguishable from the feature being broken. Say so instead,
         // matching how the Events panel states its own empty case.
-        liveDoc.open = true;
         liveDocBody.className = 'behaviors-live__doc-body behaviors-live__doc-body--empty';
         liveDocBody.textContent = 'No doc yet for ' + behavior + '.';
         return;
@@ -801,12 +1461,11 @@
       // Open by default: John asked for an element that SHOWS the doc, and a
       // collapsed 40px strip below the fold reads as "there is no doc". Still a
       // <details> so it can be folded away once read.
-      liveDoc.open = true;
       // textContent, not innerHTML: mdhtml.js decodes-then-parses and expects
       // the browser to have HTML-escaped the raw markdown first. Assigning raw
       // markdown via innerHTML double-escapes it (the pattern pages/issues.html
       // documents for the same reason).
-      liveDocBody.textContent = md;
+      liveDocBody.textContent = rootRelativeAssetsInMarkdown(md);
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
@@ -838,7 +1497,12 @@
         // only one form working unchanged.
         if (form === 'attribute') {
           const bare = token.replace(/^x-/, '');
-          const carries = new RegExp(`\sx-${bare}(?=[\s/>=]|$)`, 'i');
+          // Doubled backslashes -- see the note 12 lines below, which gets this
+          // right. In a template literal a lone `\s` collapses to a bare "s",
+          // so this compiled to /sx-badge(?=[s\/>=]|$)/ and matched the literal
+          // text "sx-badge". Every attribute-form row silently fell back to the
+          // semantic example instead of the x- one it asked for.
+          const carries = new RegExp(`\\sx-${bare}(?=[\\s/>=]|$)`, 'i');
           if (!carries.test(fromCatalogue.source)) {
             const alt = (fromCatalogue.alternates || []).find((a) => carries.test(a));
             if (alt) return alt;
@@ -917,6 +1581,42 @@
       // a behavior demo that ejects you from the gallery reads as broken even
       // when the navigation itself succeeds.
       'button:variant:link': ` href="${siteRoot()}pages/docs.html" target="_blank"`,
+      // #773: a checkbox's and a switch's variant colours only the CHECKED
+      // state (checkbox.css, switch.css) -- unchecked, every variant is the
+      // same empty box by design. So the variant rows are shown checked. The
+      // curated example itself is left unchecked, so the `checked` row is the
+      // one that shows what checking does.
+      'checkbox:variant:default': ' checked',
+      'checkbox:variant:primary': ' checked',
+      'checkbox:variant:success': ' checked',
+      'switch:variant:default': ' checked',
+      'switch:variant:primary': ' checked',
+      'switch:variant:success': ' checked',
+    };
+
+    /**
+     * #1114 / #1117 -- two attributes that are ONE fact must move together.
+     *
+     * cardfile's icon now derives from the filename's extension (card.js,
+     * cardFileTypeFromName). Permuting the fileType axis while leaving
+     * `filename` alone produced exactly what John photographed: an example
+     * labelled fileType=image rendering "quarterly-report.pdf" -- teaching the
+     * contradiction the derivation was added to remove. Six of seven cardfile
+     * permutations contradicted themselves.
+     *
+     * Unlike COMPANIONS, which only ADDS an absent partner, this REWRITES an
+     * existing one, because the stale value is the whole problem. Filenames
+     * match src/wb-models/cardfile.schema.json and data/behavior-examples.json
+     * so the page, the schema and the catalogue tell one story.
+     */
+    const PAIRED_VALUE = {
+      'cardfile:fileType:pdf':   { attr: 'filename', value: 'quarterly-report.pdf' },
+      'cardfile:fileType:doc':   { attr: 'filename', value: 'meeting-notes.docx' },
+      'cardfile:fileType:image': { attr: 'filename', value: 'architecture-diagram.png' },
+      'cardfile:fileType:video': { attr: 'filename', value: 'product-walkthrough.mp4' },
+      'cardfile:fileType:audio': { attr: 'filename', value: 'interview-recording.m4a' },
+      'cardfile:fileType:zip':   { attr: 'filename', value: 'release-assets.zip' },
+      'cardfile:fileType:file':  { attr: 'filename', value: 'sensor-capture.bin' },
     };
 
     function companionFor(attr, prop, value) {
@@ -934,8 +1634,151 @@
       return seedValue ? ` ${partner}="${seedValue}"` : '';
     }
 
+
+    /**
+     * #675 -- put the id into the SOURCE, not just the rendered DOM.
+     *
+     * John, for the fifth time: "all elements must have an id".
+     *
+     * assignExampleIds() has been giving the rendered elements ids for a while,
+     * and the event-handler panel below already writes
+     * `document.querySelector('#card-clickable')`. But the source panel showed
+     * the raw catalogue markup, which carries no id at all -- so the snippet
+     * pointed at something that existed only in this page's live DOM, and
+     * anyone copying the example got markup the handler could not find.
+     *
+     * The id belongs in the thing the reader copies.
+     *
+     * Only the ROOT element is given one here. Behavior-injected children get
+     * theirs from assignExampleIds() after the upgrade, and they are not in the
+     * authored source -- writing them in would show the reader markup they did
+     * not write and do not need to.
+     */
+    function withRootId(src, rootId) {
+      if (!src || !rootId) return src;
+      // Already carries an id (a curated example may set its own) -- leave it.
+      if (/^\s*<[a-zA-Z][\w-]*[^>]*\sid=/.test(src)) return src;
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, '$1 id="' + rootId + '"');
+    }
+
+
+    /**
+     * #777 -- keep an example's own label honest.
+     *
+     * John, on `button · icon=heart`: "What? Icon is not download it's heart."
+     *
+     * The catalogue stores ONE canned example per behavior, and 39 of those
+     * examples restate their attributes as body text:
+     *
+     *     <button variant="primary" icon="download" size="md">
+     *       variant: primary · icon: download · size: md
+     *     </button>
+     *
+     * withOption() rewrites the ATTRIBUTE for the selected variant and leaves
+     * the text alone, so every variant showed the canned example's label -- a
+     * line contradicting the markup three lines above it.
+     *
+     * Rebuilding the line from the element's FINAL attributes fixes all 39 at
+     * once and cannot drift again. Editing the data instead would have been
+     * undone the next time the catalogue generator ran.
+     *
+     * Only a line that IS such a descriptor is touched: it must be the whole
+     * line and made entirely of `key: value` pairs (optionally prefixed with
+     * the x- token). Real content -- a toast message, a card body -- never
+     * matches, so nothing else is rewritten.
+     */
+    const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+    function refreshDescriptorLine(src) {
+      const open = src.match(/^\s*<[a-zA-Z][\w-]*([^>]*)>/);
+      if (!open) return src;
+
+      // Attributes as authored on the (already substituted) opening tag.
+      const pairs = [];
+      for (const m of open[1].matchAll(/([a-zA-Z-]+)="([^"]*)"/g)) {
+        // Plumbing, not settings worth restating back to the reader.
+        if (/^(id|class|style)$/i.test(m[1])) continue;
+        if (/^x-/i.test(m[1])) continue;
+        pairs.push(m[1] + ': ' + m[2]);
+      }
+      if (!pairs.length) return src;
+
+      const token = (open[1].match(/\s(x-[a-z0-9-]+)/) || [])[1];
+      const SEP = ' · ';
+      const rebuilt = (token ? token + SEP : '') + pairs.join(SEP);
+
+      // Only the ROOT's own text restates the root's attributes. A nested
+      // element's descriptor line is about that element: form · ajax had its
+      // submit button's label overwritten with the <form>'s action and
+      // successMessage. Depth is counted per line from the tags on it.
+      let depth = 0;
+      return src.split('\n').map((line) => {
+        const t = line.trim();
+        const here = depth;
+        for (const tag of t.matchAll(/<(\/?)([a-zA-Z][\w-]*)[^>]*?(\/?)>/g)) {
+          if (VOID_TAGS.has(tag[2].toLowerCase()) || tag[3]) continue;
+          depth += tag[1] ? -1 : 1;
+        }
+        if (!t || t.startsWith('<') || here !== 1) return line;
+        const body = t.replace(/^x-[a-z0-9-]+\s*·\s*/, '');
+        const looksLikeDescriptor = body.split('·')
+          .every((part) => /^\s*[a-zA-Z-]+:\s*\S/.test(part));
+        if (!looksLikeDescriptor) return line;
+        return line.match(/^\s*/)[0] + rebuilt;
+      }).join('\n');
+    }
+
+
+    // An option is written as the ATTRIBUTE a reader types: kebab-case.
+    // Schemas name properties in camelCase (imagePosition, showCount), and
+    // writing that verbatim fails twice over: HTML lowercases attribute names,
+    // so imagePosition="right" arrives as `imageposition`, which most
+    // behaviors never read; and the example's own image-position="…" is left
+    // in place and wins. Both spellings are cleared before the kebab one is
+    // written.
+    const kebab = (name) => String(name).replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+    const escapeRe = (name) => String(name).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    /** Every spelling of `name` an example might carry, for a RegExp alternation. */
+    const spellings = (name) => [...new Set([name, kebab(name), name.toLowerCase()])].map(escapeRe).join('|');
+
+    /**
+     * #773: where in an example the behavior actually LIVES -- the opening tag
+     * an option belongs on. It is usually the first tag, and withOption used
+     * to assume it always was. The <dialog> example is a <button> that opens
+     * the <dialog> after it, so every dialog row (centered, fullscreen, size,
+     * showClose...) was written onto the BUTTON, and all eleven rendered the
+     * same dialog. In order: the first tag carrying the x-* attribute, then
+     * the first of the behavior's native host tag (nativeMap), then the first
+     * tag, which is the old behavior.
+     *
+     * @returns {{start: number, end: number}} the host's opening tag, src.slice(start, end)
+     */
+    const OPEN_TAG_RE = /<([a-zA-Z][\w-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*\/?>/g;
+    function hostTagSpan(src, attr) {
+      const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
+      semanticHostFor(behavior);   // fills nativeByBehavior
+      const nativeTag = nativeByBehavior && nativeByBehavior[behavior];
+      const carriesAttr = new RegExp('\\s' + escapeRe(attr) + '(?=[\\s=/]|$)', 'i');
+      let first = null;
+      let native = null;
+      for (const m of src.matchAll(OPEN_TAG_RE)) {
+        const span = { start: m.index, end: m.index + m[0].length };
+        if (!first) first = span;
+        if (carriesAttr.test(m[2] || '')) return span;
+        if (!native && nativeTag && m[1].toLowerCase() === nativeTag) native = span;
+      }
+      return native || first || { start: 0, end: src.length };
+    }
+
     function withOption(src, attr, prop, value, isBoolean) {
       if (!value) return src;
+      // Rewrite only the host's own opening tag, so an option can neither land
+      // on a sibling (the dialog's trigger) nor strip a same-named attribute
+      // from a nested element.
+      const { start, end } = hostTagSpan(src, attr);
+      return src.slice(0, start) + withOptionOnTag(src.slice(start, end), attr, prop, value, isBoolean) + src.slice(end);
+    }
+
+    function withOptionOnTag(src, attr, prop, value, isBoolean) {
 
       // Standard §20: booleans are authored as BARE attributes. Writing
       // striped="true" would both misrepresent the API and, for flags the
@@ -943,14 +1786,13 @@
       if (isBoolean) {
         // "false" must be written explicitly -- a bare attribute is TRUE in
         // HTML, so omitting it could never express "off".
-        if (value === 'false') {
-          const existing = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
-          const cleaned = src.replace(existing, '');
-          return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}="false"`);
-        }
-        const bare = new RegExp('\s' + prop + '(="[^"]*")?', 'i');
-        const cleaned = src.replace(bare, '');
-        return cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}`);
+        // \\s, not '\s': in a plain string '\s' is just "s", so these never
+        // matched and the example's own attribute survived beside the new one.
+        const existing = new RegExp('\\s(?:' + spellings(prop) + ')(?:="[^"]*")?(?=[\\s>/])', 'gi');
+        const cleaned = src.replace(existing, '');
+        return value === 'false'
+          ? cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(prop)}="false"`)
+          : cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(prop)}`);
       }
 
       // Rewrite whichever attribute the example actually used. Several schemas
@@ -967,18 +1809,48 @@
       const propDef = (sc && sc.properties && sc.properties[target]) || {};
       const aliases = propDef.aliases || [];
       // Ensure the companion is present on a curated example too.
+      // A value companion names its own attribute (its first word) -- it was
+      // assumed to be href, which is only true of button:variant:link. The
+      // presence test accepts a bare attribute too, or a bare companion
+      // (` checked`) already in the example would be written a second time.
+      const valueCompanion = VALUE_COMPANIONS[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`];
       const partner = COMPANIONS[prop] ||
-        (VALUE_COMPANIONS[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`] ? 'href' : null);
-      if (partner && !new RegExp('\s' + partner + '\s*=').test(src)) {
+        (valueCompanion ? (valueCompanion.match(/^\s*([\w-]+)/) || [])[1] : null);
+      if (partner && !new RegExp('\\s' + partner + '(?=[\\s=>/])').test(src)) {
         const add = companionFor(attr, prop, value);
         if (add) src = src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1${add}`);
       }
 
-      for (const name of [target, ...aliases]) {
-        const re = new RegExp('\\s' + name + '\\s*=\\s*"[^"]*"', 'i');
-        if (re.test(src)) return src.replace(re, ` ${name}="${value}"`);
+      // Move the paired attribute with the axis -- see PAIRED_VALUE above.
+      const paired = PAIRED_VALUE[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`];
+      if (paired) {
+        const pairRe = new RegExp('\\s' + paired.attr + '\\s*=\\s*"[^"]*"', 'i');
+        src = pairRe.test(src)
+          ? src.replace(pairRe, ` ${paired.attr}="${paired.value}"`)
+          : src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${paired.attr}="${paired.value}"`);
       }
-      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${target}="${value}"`);
+
+      // A property namespaced with the behavior's own name -- toast-variant on
+      // <button variant="primary" x-toast> -- is spelled that way because the
+      // HOST owns the plain name: `variant` there is the button's colour, and
+      // feedback.js reads toast-variant first for exactly that reason. Writing
+      // the row's value to `variant` recoloured the button and left
+      // toast-variant="success" in charge, so the info/warning/error rows all
+      // fired the same green success toast. The namespaced spelling, when the
+      // example carries it, is the one this row is about.
+      const behaviorName = extensionMap[attr] || attr.replace(/^x-/, '');
+      const namespaced = new RegExp('\\s' + escapeRe(`${behaviorName}-${kebab(target)}`) + '\\s*=\\s*"[^"]*"', 'i');
+      if (namespaced.test(src)) return src.replace(namespaced, ` ${behaviorName}-${kebab(target)}="${value}"`);
+
+      // An alias the example already uses is rewritten in place (alert's
+      // `type`); the property itself is always written kebab-case.
+      for (const name of aliases) {
+        const re = new RegExp('\\s(?:' + spellings(name) + ')\\s*=\\s*"[^"]*"', 'i');
+        if (re.test(src)) return src.replace(re, ` ${kebab(name)}="${value}"`);
+      }
+      const own = new RegExp('\\s(?:' + spellings(target) + ')\\s*=\\s*"[^"]*"', 'i');
+      if (own.test(src)) return src.replace(own, ` ${kebab(target)}="${value}"`);
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(target)}="${value}"`);
     }
 
     // Which element should host a generated example? An x-* behavior can sit on
@@ -990,7 +1862,9 @@
     //   3. otherwise <div>, the neutral fallback
     let nativeByBehavior = null;
     function semanticHostFor(behavior) {
-      if (!nativeByBehavior) {
+      // Only cache once nativeMap has arrived; an index of the empty
+      // placeholder would answer "no native host" for everything.
+      if (!nativeByBehavior && Object.keys(nativeMap || {}).length) {
         nativeByBehavior = {};
         for (const [selector, beh] of Object.entries(nativeMap || {})) {
           // nativeMap keys are selectors ('input[type="checkbox"]'); only the
@@ -1000,7 +1874,7 @@
           }
         }
       }
-      if (nativeByBehavior[behavior]) return nativeByBehavior[behavior];
+      if (nativeByBehavior && nativeByBehavior[behavior]) return nativeByBehavior[behavior];
       // A real HTML element with this name? createElement returns
       // HTMLUnknownElement for anything the parser does not recognise.
       const probe = document.createElement(behavior);
@@ -1039,7 +1913,7 @@
       tr: `
   <td>Cell</td>`,
       figure: `
-  <img src="/images/placeholder-mountain.svg" alt="Sample">
+  <img src="https://picsum.photos/seed/x-figure/600/400" alt="Sample">
   <figcaption>Example caption</figcaption>`,
       details: `
   <summary>Example summary</summary>
@@ -1073,7 +1947,13 @@
         // A schema default may be written relative to a demo page rather than
         // to this one -- prefer the known-good absolute source when we have it.
         if (fallback) src = fallback;
-        if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^\.{1,2}\//, '');
+        // The leading slash has to come off before the join, not after:
+        // siteRoot() already ends in one, so a ROOT-absolute default such as
+        // cardimage's `/images/placeholder.svg` produced `//images/...`, which a
+        // browser reads as PROTOCOL-relative and fetches from a host called
+        // "images" -- broken locally as well as deployed, and in a way that
+        // looks like a network fault rather than a path bug.
+        if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^(?:\.{1,2}\/|\/)/, '');
         if (src) out.push(` src="${src}"`);
       }
       return out.join('');
@@ -1208,7 +2088,26 @@
      * Existing ids are left alone -- some examples carry a meaningful one
      * already (#x-demo-file, which its own wiring and snippet both reference).
      */
+    // #675/#748: a behavior can build parts well after both
+    // assignExampleIds() calls below have run -- a lazily-loaded module, an
+    // icon <svg> the button behavior adds once its sprite resolves, the audio
+    // player's controls. Those parts shipped without ids (109 of 331 in the
+    // sweep). Watching the stage names each one as it arrives, with the same
+    // token/option the example was opened with. Setting an id is an attribute
+    // change, which this observer does not watch, so it cannot feed itself.
+    let lastIdArgs = null;
+    let idPassQueued = false;
+    new MutationObserver(() => {
+      if (!lastIdArgs || idPassQueued) return;
+      idPassQueued = true;
+      queueMicrotask(() => {
+        idPassQueued = false;
+        assignExampleIds(...lastIdArgs);
+      });
+    }).observe(liveStage, { childList: true, subtree: true });
+
     function assignExampleIds(token, optionText) {
+      lastIdArgs = [token, optionText];
       // John: "i didn't mean to make them all super long nonsense they need to
       // be short describing the element they came from and where they are
       // going the target".
@@ -1320,7 +2219,28 @@
 
     // Shared by the real-demo and generated-example paths: pretty-print the
     // source and hand it to the project's own pre/code highlighting pair.
-    async function renderSource(src) {
+    // WHY A GENERATION COUNTER
+    // ========================
+    // showLive() writes the header synchronously and the code panel four awaits
+    // later (a dynamic import of demo.js, then one of wb-lazy.js, then an eager
+    // WB.scan -- ~1000ms behind the header, measured in #950). Two selections in
+    // flight at once therefore finish in whatever order their imports resolve,
+    // NOT the order they were asked for, and the slower one wins the panel.
+    //
+    // That is not hypothetical: selectFirstOnLoad() renders the first row the
+    // instant the list fills (#771), and its render pays the uncached
+    // demo.js fetch. A reader who clicks a row while that is still in flight
+    // gets the header of the row they clicked above the SOURCE OF THE FIRST ROW
+    // -- one pane describing two different behaviors. Caught by
+    // behaviors-live-selector.spec.ts, which failed on the first permutation it
+    // clicked (x-alert - error, table - bordered) and passed on every one after.
+    //
+    // Each render takes a ticket; after every await it checks whether a newer
+    // render has been asked for and, if so, drops what it was about to paint.
+    let renderSeq = 0;
+    const stale = (seq) => seq !== renderSeq;
+
+    async function renderSource(src, seq) {
       let pretty = src;
       try {
         const demoMod = await import(siteRoot() + 'src/wb-viewmodels/demo.js');
@@ -1328,6 +2248,7 @@
       } catch (err) {
         console.warn('[behaviors] could not format source', err);
       }
+      if (seq !== undefined && stale(seq)) return;   // a newer selection owns the panel
       liveCode.innerHTML = '';
 
       // Copy button. It copies `pretty` -- the exact source we just formatted --
@@ -1380,7 +2301,19 @@
         copy.textContent = ok ? 'Copied' : 'Copy failed';
         setTimeout(() => { copy.textContent = 'Copy'; }, 1600);
       });
-      liveCode.appendChild(copy);
+      // #1020: the button used to be appended to the code panel and pinned
+      // over its top-right corner with position:absolute. Overlap detection
+      // caught what that means once the panel filled the window -- "Copy"
+      // covering the first line of the listing by 70x13px, measured on
+      // pages/behaviors.html. It now sits in the code bar beside the theme
+      // picker: the two controls that act on this panel, in one strip above it,
+      // where neither can cover the code they act on.
+      // The bar outlives the panel (the panel is rebuilt on every selection),
+      // so a stale button has to go before a new one is added.
+      const codebar = document.querySelector('.behaviors-live__codebar');
+      const staleCopy = codebar && codebar.querySelector('.behaviors-live__copy');
+      if (staleCopy) staleCopy.remove();
+      (codebar || liveCode).appendChild(copy);
 
       const pre = document.createElement('pre');
       pre.setAttribute('x-behavior', 'pre');
@@ -1394,6 +2327,7 @@
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
+        if (seq !== undefined && stale(seq)) return;
         if (WB && WB.scan) {
           await WB.scan(liveStage, { eager: true });
           await WB.scan(liveCode, { eager: true });
@@ -1465,20 +2399,49 @@
       return (def && def.description) ? def.description : '';
     }
 
+    // #994 — articleFor / shows / occludingChild / describeCover live in
+    // src/wb-viewmodels/live-note.js. They were inline, and the first
+    // regression test written for this fix PASSED with the bug reintroduced:
+    // the only way to reach them was through the page, and the page rebuilds
+    // its example on every selection, resetting any geometry a test set up. A
+    // guard that cannot fail is not a guard. In a module they are testable
+    // directly. Safe fallbacks below keep the page working if the import 404s.
+    let articleFor = (w) => /^[aeiou]/i.test(String(w || '')) ? 'an' : 'a';
+    let shows = (n, t) => `shows ${articleFor(n)} ${n}${t ? ' ' + t : ''}`;
+    let occludingChild = () => null;
+    let describeCover = () => null;
+    import(siteRoot() + 'src/wb-viewmodels/live-note.js')
+      .then((m) => { articleFor = m.articleFor; shows = m.shows; occludingChild = m.occludingChild; describeCover = m.describeCover; })
+      .catch(() => { /* keep the fallbacks above */ });
+
+    /** Opaque enough that nothing behind it is visible. */
+    function isOpaqueColour(value) {
+      const c = parseRgb(value);
+      return !!(c && c.a > 0.85);
+    }
+
     function summarise(el) {
       if (!el) return '';
       const cs = getComputedStyle(el);
       const bg = parseRgb(cs.backgroundColor);
       if (cs.backgroundImage && cs.backgroundImage !== 'none') return 'shows a gradient background';
-      if (bg && bg.a > 0.85) return `shows a ${colourName(bg.r, bg.g, bg.b)} background`;
-      if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+
+      // Describe the background only when it is what is actually on screen.
+      const covered = occludingChild(el, isOpaqueColour);
+      const coverText = describeCover(covered);
+      if (coverText) return coverText;
+      if (!covered) {
+        if (bg && bg.a > 0.85) return shows(colourName(bg.r, bg.g, bg.b), 'background');
+        if (bg && bg.a > 0.05) return `shows a translucent ${colourName(bg.r, bg.g, bg.b)} background`;
+      }
+
       const bw = parseFloat(cs.borderTopWidth) || 0;
       if (bw > 0) {
         const bc = parseRgb(cs.borderTopColor);
-        return bc ? `shows a ${colourName(bc.r, bc.g, bc.b)} border` : 'shows a border';
+        return bc ? shows(colourName(bc.r, bc.g, bc.b), 'border') : 'shows a border';
       }
       if (cs.boxShadow && cs.boxShadow !== 'none') return 'shows a raised shadow';
-      return 'no background or border — plain';
+      return covered ? 'shows its own content' : 'no background or border — plain';
     }
 
     const eventsLog = document.getElementById('behaviors-live-events-log');
@@ -1561,11 +2524,16 @@
     // calls through, never swallows, and it ignores anything dispatched outside
     // the stage, so nothing about how the page or the behaviors run changes.
     const CUSTOM_EVENT_RE = /^(wb|x):/;
+    const LIFECYCLE_EVENTS = new Set(['wb:ready']);
     const nativeDispatch = EventTarget.prototype.dispatchEvent;
     EventTarget.prototype.dispatchEvent = function (event) {
       const result = nativeDispatch.call(this, event);
       try {
-        if (event && CUSTOM_EVENT_RE.test(event.type) && this instanceof Node && liveStage.contains(this)) {
+        // wb:ready is lifecycle, not interaction: every element of an example
+        // fires it while being built, so the log filled before the reader did
+        // anything (form · ajax showed six, from its labels and button).
+        if (event && CUSTOM_EVENT_RE.test(event.type) && !LIFECYCLE_EVENTS.has(event.type)
+            && this instanceof Node && liveStage.contains(this)) {
           logEvent({ type: event.type, target: this });
         }
       } catch { /* logging must never break the event it is watching */ }
@@ -1670,7 +2638,58 @@
       }
     }
 
-    async function showLive(token, variant, label, prop, isBool, form) {
+    // #701 -- WHEN IS A RENDER FINISHED?
+    //
+    // renderLive() paints the stage in stages across several awaits (demo.js,
+    // wb-lazy.js, then an eager WB.scan). Nothing said when the last of them had
+    // landed, so the only way to read the result was to guess: the dropdown
+    // specs clicked a row and slept 350-400ms. That held alone and lost under
+    // three workers, where the imports and scan took longer -- the stage still
+    // held the un-upgraded markup (no .x-dropdown yet) and the code panel was
+    // still empty, and the specs failed on a null querySelector.
+    //
+    // aria-busy on the live region is the signal. It is also what the region
+    // should say anyway: it is aria-live="polite", and busy asks assistive tech
+    // to wait for the finished example instead of announcing each stage. It is
+    // cleared only by the NEWEST render (see renderSeq) -- a superseded render
+    // returning early must not report "done" while the one that replaced it is
+    // still painting.
+    /**
+     * #750 -- John, on header · sticky: "I can't find any sticky behavior, how
+     * do i see that?" Sticky only shows while something scrolls, and this stage
+     * never scrolls, so the option was applied and invisible. An option whose
+     * schema marks it `"demo": "scroll"` (or a behavior marked so as a whole,
+     * x-sticky) renders in a scroll box instead: the example box itself gets a
+     * fixed height, room above and below, and ruled lines that move with the
+     * content -- so scrolling shows the page passing under an element that
+     * stays put. The box, not a wrapper: every render path treats the example's
+     * first child as the element under demonstration.
+     */
+    function showInScrollBox(token, prop, variant, isBool) {
+      const sc = schemaByName.get(extensionMap[token] || token.replace(/^x-/, '')) || {};
+      const propDef = (prop && sc.properties && sc.properties[prop]) || {};
+      // A sticky option switched OFF has nothing to show while scrolling.
+      const on = !(isBool && variant === 'false')
+        && (sc.demo === 'scroll' || propDef.demo === 'scroll');
+      liveExample.classList.toggle('behaviors-live__example--scroll', on);
+      if (on) liveNote.textContent = 'Scroll this box — the element stays pinned while the page moves past it.';
+      return on;
+    }
+
+    async function showLive(...args) {
+      liveEl.setAttribute('aria-busy', 'true');
+      const done = renderLive(...args);
+      // renderLive() takes its ticket synchronously, before its first await,
+      // so renderSeq already names this render here.
+      const mine = renderSeq;
+      try {
+        await done;
+      } finally {
+        if (!stale(mine)) liveEl.removeAttribute('aria-busy');
+      }
+    }
+
+    async function renderLive(token, variant, label, prop, isBool, form) {
       // #769 -- John, 4th report: "get rid of all this dead space!"
       //
       // fitStageToOverlays() grows the stage so an open dropdown or a
@@ -1685,15 +2704,22 @@
       // branch render. Reset here instead, before either branch runs, so a
       // path cannot be missed again.
       liveStage.style.minHeight = '';
+      // This render's ticket. Everything below the first await is only painted
+      // while this is still the newest selection -- see renderSeq above.
+      const seq = ++renderSeq;
       const raw = sourceFor(token, form);
       const src = raw ? withOption(raw, token, prop, variant, isBool) : raw;
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
       const shown = label || token;
-      showDoc(extensionMap[token] || token.replace(/^x-/, ''));
-      const optionText = variant
-        ? (isBool ? prop : (prop && prop !== 'variant' ? `${prop}=${variant}` : variant))
-        : '';
+      const behaviorName = extensionMap[token] || token.replace(/^x-/, '');
+      showApi(behaviorName);
+      showDoc(behaviorName);
+      // The row's own optionLabel(), not a second copy of it: the copy here
+      // lacked the default-true case, so a row listed as `hoverable=false`
+      // rendered under a header reading plain `hoverable` -- the opposite of
+      // what the stage was showing.
+      const optionText = optionLabel({ prop, value: variant, boolean: isBool });
       liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
 
       if (!src) {
@@ -1705,11 +2731,18 @@
         const generated = generatedExample(token, variant, label, prop, isBool);
         liveNote.textContent = 'generated example — no demo on this page';
         liveCode.innerHTML = '';
-        liveExample.innerHTML = generated;
+        // #777: the DOM is built from the REFRESHED markup, not the raw
+        // catalogue string. Refreshing only the displayed source left the
+        // rendered element still carrying the canned example's label, so the
+        // button read "icon: download" while its own source said heart.
+        const generatedShown = refreshDescriptorLine(generated);
+        showInScrollBox(token, prop, variant, isBool);
+        liveExample.innerHTML = generatedShown;
         maybeWarnServerRequired(generated);
         const genRootId = assignExampleIds(token, optionText);
         resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, genRootId);
-        await renderSource(generated);
+        await renderSource(withRootId(generatedShown, genRootId), seq);
+        if (stale(seq)) return;
         assignExampleIds(token, optionText); // #675: catch behavior-injected children
         const genDescribed = optionDescription(token, prop);
         const genSummary = genDescribed || summarise(liveExample.firstElementChild);
@@ -1729,7 +2762,7 @@
       function maybeWarnServerRequired(source) {
         const prev = liveExample.parentNode.querySelector('.behaviors-live__server-note');
         if (prev) prev.remove();
-        if (!/action=("|')\/api\//.test(source)) return;
+        if (!/\baction=("|')\/api\//.test(source)) return;
         // A static host serves files, not routes. Probing would cost a request
         // per example and still race the render, so key off the one thing that
         // is knowable synchronously: server.js is what serves this page during
@@ -1749,13 +2782,17 @@
       }
 
       liveNote.textContent = optionDescription(token, prop) || 'running live';
+      showInScrollBox(token, prop, variant, isBool);
       // #703: drop the previous example's grown height before measuring this one.
       liveStage.style.minHeight = '';
-      liveExample.innerHTML = src;
+      // #777: DOM built from the refreshed markup — see the generated path.
+      const srcShown = refreshDescriptorLine(src);
+      liveExample.innerHTML = srcShown;
       maybeWarnServerRequired(src);
       const rootId = assignExampleIds(token, optionText);
       resetEvents(liveExample.firstElementChild && liveExample.firstElementChild.tagName.toLowerCase(), token, rootId);
-      await renderSource(src);
+      await renderSource(withRootId(srcShown, rootId), seq);
+      if (stale(seq)) return;
       assignExampleIds(token, optionText); // #675: catch behavior-injected children
       // After the upgrade, so the summary describes the UPGRADED element rather
       // than the bare markup it was built from.
@@ -1781,11 +2818,24 @@
     // navigates, and without it a screen-reader user has no way to tell which
     // of 228 rows the panel is showing.
     function rowsInOrder() {
-      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')];
+      // #995 — rows inside a collapsed <details> are still in the DOM but not
+      // on screen. Arrowing must not step onto something invisible, so the
+      // navigable set is the VISIBLE rows. offsetParent is null for anything
+      // inside a closed <details>, which is exactly the test needed.
+      return [...resultsEl.querySelectorAll('.behaviors-search-results__row')]
+        .filter((r) => r.offsetParent !== null);
+    }
+
+    /** Open the group holding this row, so a selection is never hidden. */
+    function revealRow(row) {
+      if (!row) return;
+      const d = row.closest('details');
+      if (d && !d.open) d.open = true;
     }
 
     function selectRow(row, { focus = true, reveal = false } = {}) {
       if (!row) return;
+      revealRow(row);   // #995: selecting inside a collapsed group opens it
       rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
       row.setAttribute('aria-current', 'true');
       // Scroll the LIST only, by hand. scrollIntoView({block:'nearest'}) still
@@ -1799,7 +2849,7 @@
       // out of view, by the minimum needed. A row already on screen leaves the
       // list where it is. This replaces #687/#717.
       const listTop = resultsEl.scrollTop;
-      const rowTop = row.offsetTop - resultsEl.offsetTop;
+      const rowTop = rowTopInList(row);
       const rowBottom = rowTop + row.offsetHeight;
       if (rowTop < listTop) resultsEl.scrollTop = rowTop;
       else if (rowBottom > listTop + resultsEl.clientHeight) {
@@ -1808,6 +2858,30 @@
       if (focus) row.focus({ preventScroll: true });
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+      // #1003 follow-up -- John: "click this first, page down in this element,
+      // click the link again: page does not reset to top."
+      //
+      // It did not, because a merge folded two versions of this fix together and
+      // left `pendingScrollReset = true` INSIDE its own guard. The flag starts
+      // false, so nothing ever set it and the guard never ran -- shipped that
+      // way. Setting it here, which is the one place that knows a selection
+      // happened.
+      pendingScrollReset = true;   // requested here, honoured once layout settles
+      // John, several times: "when clicking the left, (nav), the content must
+      // show in exact same position as shown here."
+      //
+      // #992 gave the panel a fixed height and its own scrollbar. That fixed
+      // the overflow and introduced this: the scroll position PERSISTED across
+      // selections, so a new example rendered wherever the last one was left.
+      // Measured -- scroll to 200, then pick three behaviors: scrollTop stayed
+      // 207 and the header sat at -206, above the visible area, every time.
+      //
+      // Set BEFORE the settled signal, so anything waiting on
+      // wb:layout-settled measures the position the reader actually sees.
+      liveEl.scrollTop = 0;
+
+      // #992 / Law 18 -- every selection must produce a settled signal.
+      syncListHeight();
       // #686 -- John, on a phone: "doesn't show the sample code and result".
       // Stacked, the panel starts ~300px past the bottom of #siteBody (measured
       // at 375x812: list ends at 841, panel stage at 920, scroller is 627 tall),
@@ -1834,6 +2908,196 @@
       if (i < 0) i = 0;
       if (i > rows.length - 1) i = rows.length - 1;
       selectRow(rows[i]);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // #1004 — AUTOSCROLL
+    // John: "every element in the navigator is systematically displayed",
+    // "expand all groups", a right-click delay of 0-2000 ms, and then
+    // "move autoscroll here", pointing at the SITE HEADER.
+    //
+    // The header is shared shell, not this page, so the control is created
+    // here and torn down when this page is left. A Behaviors-only button left
+    // sitting in the header of every other page would be the same class of
+    // surprise as a menu item appearing from nowhere (#1002).
+    //
+    // Law 18: each step waits for the page's own `wb:layout-settled` signal,
+    // never a timer. A timer cannot know when an example has finished
+    // rendering, and at 0 ms it would race the renderer instead of exercising
+    // it.
+    // ═══════════════════════════════════════════════════════════════════
+    // John: "move all these button to header only when on this page" --
+    // API, Docs, Fullscreen and AutoScroll.
+    //
+    // They are MOVED, not rebuilt: #behaviors-live-api and -doc are <details>
+    // whose bodies the panel code writes into by id, and x-fullscreen is bound
+    // to its element. Cloning them would leave the originals wired up and the
+    // copies inert -- the same trap as the duplicated fieldset toggle (#999).
+    //
+    // One container, so "only when on this page" is a single removal: when the
+    // workspace leaves the DOM the whole strip goes with it, and no other
+    // page inherits Behaviors-only controls (#1002's no-surprises rule).
+    const headerRight = document.getElementById('headerRight');
+    let tools = document.getElementById('behaviors-header-tools');
+    let autoBtn = document.getElementById('behaviors-autoscroll');
+    if (!tools && headerRight) {
+      tools = document.createElement('div');
+      tools.id = 'behaviors-header-tools';
+      tools.className = 'behaviors-header-tools';
+      headerRight.insertBefore(tools, headerRight.firstChild);
+
+      for (const id of ['behaviors-live-api', 'behaviors-live-doc', 'behaviors-live-fullscreen']) {
+        const el = document.getElementById(id);
+        if (el) tools.appendChild(el);
+      }
+
+
+      autoBtn = document.createElement('button');
+      autoBtn.id = 'behaviors-autoscroll';
+      autoBtn.className = 'behaviors-live__autoscroll';
+      autoBtn.type = 'button';
+      autoBtn.setAttribute('aria-pressed', 'false');
+      autoBtn.title = 'AutoScroll — walk every entry. Right-click to set the delay.';
+      tools.appendChild(autoBtn);
+
+      const ws = document.getElementById('behaviors-workspace');
+      if (ws) {
+        const gone = new MutationObserver(() => {
+          if (!ws.isConnected) { tools.remove(); gone.disconnect(); }
+        });
+        gone.observe(document.body, { childList: true, subtree: true });
+      }
+    }
+
+    if (autoBtn) {
+      const DELAY_KEY = 'wb:autoscroll-delay';
+      const readDelay = () => {
+        try {
+          const v = parseInt(localStorage.getItem(DELAY_KEY) ?? '', 10);
+          return Number.isFinite(v) ? Math.min(2000, Math.max(0, v)) : 400;
+        } catch { return 400; }
+      };
+      let delayMs = readDelay();
+      let running = false;
+
+      const setLabel = () => {
+        autoBtn.innerHTML = running ? '&#9632; Stop (' + delayMs + 'ms)' : '&#9654; AutoScroll';
+        autoBtn.setAttribute('aria-pressed', running ? 'true' : 'false');
+        autoBtn.classList.toggle('is-running', running);
+      };
+
+      // Advance on the page's own signal, with a ceiling so one behavior that
+      // never settles cannot hang the tour. The timeout is a backstop, not the
+      // clock.
+      const settled = () => new Promise((resolve) => {
+        const done = () => { clearTimeout(t); resolve(); };
+        const t = setTimeout(done, 4000);
+        document.addEventListener('wb:layout-settled', done, { once: true });
+      });
+
+      const stop = (why) => {
+        if (!running) return;
+        running = false;
+        setLabel();
+        if (why) autoBtn.title = 'AutoScroll stopped: ' + why;
+      };
+
+      // John: "allow the action to be stopped". Stopping is DELIBERATE — the
+      // button, Escape, or picking a row yourself. An earlier version stopped
+      // on any wheel or keypress, which meant scrolling to WATCH the tour
+      // cancelled it: the one thing a viewer would naturally do.
+      document.addEventListener('keydown', (e) => {
+        if (running && e.key === 'Escape') stop('Escape');
+      }, { capture: true });
+      resultsEl.addEventListener('pointerdown', (e) => {
+        if (running && e.target.closest('.behaviors-search-results__row')) stop('you picked a row');
+      }, { capture: true });
+
+      async function runAutoScroll() {
+        running = true;
+        setLabel();
+
+        // John: "if autoscroll is pressed after a details control is expanded
+        // only show those items expanded."
+        //
+        // An expanded group is a statement of intent -- you opened `dialog` and
+        // `button` because those are what you want to look at. Forcing all 70
+        // open would throw that away and start a 767-entry tour instead of the
+        // handful asked for.
+        //
+        // Expanding all is still right when NOTHING is open: without it the
+        // tour would visit ~156 collapsed group headers and show none of the
+        // options underneath them (#995), which is what "expand all groups"
+        // originally asked for. So the rule is: honour a selection if one
+        // exists, otherwise fall back to everything.
+        const groups = [...resultsEl.querySelectorAll('details')];
+        const chosen = groups.filter((d) => d.open);
+        if (!chosen.length) { for (const d of groups) d.open = true; }
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+        const rows = rowsInOrder();
+        const current = resultsEl.querySelector('[aria-current="true"]');
+        let i = current ? Math.max(0, rows.indexOf(current)) : 0;
+
+        for (; running && i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || !row.isConnected) continue;
+          const wait = settled();
+          selectRow(row, { focus: false });
+          await wait;
+          if (!running) break;
+          if (delayMs) await new Promise((r) => setTimeout(r, delayMs));
+        }
+        if (running) stop('reached the end (' + rows.length + ' entries)');
+      }
+
+      autoBtn.addEventListener('click', () => {
+        if (running) stop('stopped'); else runAutoScroll();
+      });
+
+      // Right-click sets the delay. NOT window.prompt(): it throws
+      // "prompt() is not supported" in some embedders (seen live here), cannot
+      // enforce 0-2000, and blocks the page.
+      let popover = null;
+      const closePopover = () => { if (popover) { popover.remove(); popover = null; } };
+
+      autoBtn.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        if (popover) { closePopover(); return; }
+        popover = document.createElement('div');
+        popover.className = 'behaviors-live__autoscroll-config';
+        popover.innerHTML =
+          '<label for="autoscroll-delay">Delay between examples</label>' +
+          '<div class="behaviors-live__autoscroll-row">' +
+            '<input id="autoscroll-delay" type="range" min="0" max="2000" step="50" value="' + delayMs + '">' +
+            '<output id="autoscroll-delay-out">' + delayMs + ' ms</output>' +
+          '</div>' +
+          '<p class="behaviors-live__autoscroll-hint">0 advances as soon as each example reports it has rendered.</p>';
+        autoBtn.parentElement.appendChild(popover);
+
+        const range = popover.querySelector('#autoscroll-delay');
+        const out = popover.querySelector('#autoscroll-delay-out');
+        range.addEventListener('input', () => {
+          delayMs = Math.min(2000, Math.max(0, parseInt(range.value, 10) || 0));
+          out.textContent = delayMs + ' ms';
+          try { localStorage.setItem(DELAY_KEY, String(delayMs)); } catch { /* not fatal */ }
+          setLabel();
+        });
+        range.focus();
+
+        setTimeout(() => {
+          const away = (ev) => {
+            if (popover && !popover.contains(ev.target) && ev.target !== autoBtn) {
+              closePopover();
+              document.removeEventListener('pointerdown', away, true);
+            }
+          };
+          document.addEventListener('pointerdown', away, true);
+          popover.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closePopover(); });
+        }, 0);
+      });
+
+      setLabel();
     }
 
     resultsEl.addEventListener('keydown', (e) => {
@@ -1879,7 +3143,7 @@
     liveStage.addEventListener('click', () => {
       const current = resultsEl.querySelector('[aria-current="true"]');
       if (!current) return;
-      resultsEl.scrollTop = current.offsetTop - resultsEl.offsetTop;
+      resultsEl.scrollTop = rowTopInList(current);
     }, true);
 
     resultsEl.addEventListener('click', (e) => {
@@ -1908,6 +3172,41 @@
     });
 
     input.addEventListener('input', () => applyFilter(input.value));
+
+    /**
+     * Type-to-search.
+     *
+     * John, pointing at the browse list: "typing keys here should filter eg
+     * prog should show all with that string etc."
+     *
+     * Making the bar sticky keeps it on screen, but a reader scrolling the
+     * list still has focus nowhere, so the first keystrokes were dropped until
+     * they thought to click the box first. Route a printable key straight to
+     * the search input, the way a file browser or a long <select> does.
+     *
+     * Deliberately narrow, so it cannot hijack anything:
+     *   - only printable single characters, so Tab/Escape/arrows still work
+     *   - no Ctrl/Meta/Alt, so Ctrl+F, Cmd+R and friends are untouched
+     *   - never while the reader is already in a field, which is what would
+     *     otherwise make the theme picker and every future input untypable
+     */
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key.length !== 1) return;
+      if (document.activeElement === input) return;
+
+      const el = document.activeElement;
+      const tag = el && el.tagName ? el.tagName.toLowerCase() : '';
+      if (tag === 'input' || tag === 'textarea' || tag === 'select' || (el && el.isContentEditable)) return;
+
+      // Focus AND append the character: letting the keystroke through on its
+      // own is unreliable across browsers, and swallowing it loses the first
+      // letter the reader typed, which is its own small bug.
+      e.preventDefault();
+      input.focus();
+      input.value += e.key;
+      applyFilter(input.value);
+    });
 
     // #766: changing the filter re-runs the same query, so the search text and
     // the form choice compose instead of overriding each other.

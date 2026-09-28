@@ -1,4 +1,5 @@
-import { readFlag } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
+import { readFlag, readAttr, readNumber } from '../core/read-attr.js';
 /**
  * Ripple Behavior
  * -----------------------------------------------------------------------------
@@ -8,21 +9,23 @@ import { readFlag } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  */
 export function ripple(element, options = {}) {
+  // The schema declares plain `color` / `duration` / `centered`; the older
+  // `ripple-*` spellings are still honoured as a fallback.
   const config = {
-    color: options.color || element.getAttribute('ripple-color') || element.getAttribute('ripple-color') || 'rgba(255, 255, 255, 0.4)',
-    duration: parseInt(options.duration || element.getAttribute('ripple-duration') || element.getAttribute('ripple-duration') || '600', 10),
-    centered: options.centered ?? (readFlag(element, 'ripple-centered') || element.hasAttribute('ripple-centered')),
+    color: options.color || readAttr(element, 'color') || readAttr(element, 'ripple-color') || 'rgba(255, 255, 255, 0.4)',
+    duration: parseInt(options.duration || readNumber(element, 'duration', 0) || readNumber(element, 'ripple-duration', 600), 10),
+    centered: options.centered ?? (readFlag(element, 'centered') || readFlag(element, 'ripple-centered')),
     ...options
   };
 
   // .x-ripple in effects.css supplies position:relative + overflow:hidden —
   // no need to set them inline here.
-  // #448: skip the class on a literal <div x-ripple> host -- effects.css
+  // #448: skip the class on a literal <span x-ripple> host -- effects.css
   // selects the `x-ripple` TAG directly for that case now. Still added for
   // every OTHER host (x-ripple on <button>/<button>/<input>/<div>, the
   // overwhelmingly common usage across every demo page), since effects.css's
   // `.x-ripple` rule still selects those by class.
-  if (element.tagName.toLowerCase() !== 'x-ripple') element.classList.add('x-ripple');
+  element.classList.add('x-ripple');
 
   const createRipple = (e) => {
     const rect = element.getBoundingClientRect();
@@ -43,23 +46,23 @@ export function ripple(element, options = {}) {
     // Create ripple element
     const rippleEl = document.createElement('span');
     rippleEl.className = 'x-ripple__wave';
-    rippleEl.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: ${config.color};
-      pointer-events: none;
-      transform: scale(0);
-      animation: x-ripple-animation ${config.duration}ms ease-out forwards;
-      width: ${size}px;
-      height: ${size}px;
-      left: ${x - size / 2}px;
-      top: ${y - size / 2}px;
-    `;
+    // The wave's fixed look is .x-ripple__wave in effects.css; its colour,
+    // duration, size and spot are per click, so a generated rule rather than
+    // the style attribute (#779). Released with the wave below.
+    setRule(rippleEl, 'wave', {
+      background: config.color,
+      animationDuration: `${config.duration}ms`,
+      width: `${size}px`,
+      height: `${size}px`,
+      left: `${x - size / 2}px`,
+      top: `${y - size / 2}px`,
+    });
 
     element.appendChild(rippleEl);
 
     // Remove after animation
     setTimeout(() => {
+      clearRules(rippleEl);
       rippleEl.remove();
     }, config.duration);
   };

@@ -160,23 +160,71 @@ function getErrorContainer() {
         font-family: monospace;
         font-size: 0.6875rem;
       }
+      /* #779: everything below was style.cssText / style="" on the toast
+         parts. Prefixed with the container's id so the toast's <button>s keep
+         the precedence over button.css and theme rules the inline values
+         had. The level colours are modifier classes rather than values
+         interpolated into a style attribute. */
+      #x-events-container {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-width: 500px;
+        pointer-events: none;
+      }
+      #x-events-container .x-error-toast {
+        border-left: 4px solid;
+        color: white;
+        padding: 0.875rem 1rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        pointer-events: auto;
+        max-width: 100%;
+      }
+      #x-events-container .x-error-toast--error { background: rgba(220, 38, 38, 0.97); border-left-color: #b91c1c; }
+      #x-events-container .x-error-toast--warn { background: rgba(217, 119, 6, 0.97); border-left-color: #b45309; }
+      #x-events-container .x-error-toast--info { background: rgba(37, 99, 235, 0.97); border-left-color: #1d4ed8; }
+      #x-events-container .x-error-toast--success { background: rgba(22, 163, 74, 0.97); border-left-color: #15803d; }
+      #x-events-container .x-error-toast__head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+      #x-events-container .x-error-toast__icon { font-size: 1.2rem; }
+      #x-events-container .x-error-toast__label { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.5px; }
+      #x-events-container .x-error-toast__line { opacity: 0.7; font-size: 0.6875rem; }
+      #x-events-container .x-error-copy-btn {
+        margin-left: auto; margin-right: 8px; background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.4); color: white; cursor: pointer;
+        font-size: 0.6875rem; padding: 2px 8px; border-radius: 4px;
+      }
+      #x-events-container .x-error-copy-btn--copied { background: rgba(34, 197, 94, 0.4); }
+      #x-events-container .x-error-toast__close {
+        background: none; border: none; color: white; cursor: pointer;
+        opacity: 0.7; font-size: 1.2rem; padding: 0;
+      }
+      #x-events-container .x-error-toast__name { font-size: 0.6875rem; color: #fca5a5; margin-bottom: 0.25rem; font-family: monospace; }
+      #x-events-container .x-error-toast__message { font-size: 0.8125rem; font-weight: 500; margin-bottom: 0.5rem; word-break: break-word; }
+      #x-events-container .x-error-toast__file { font-size: 0.6875rem; opacity: 0.8; margin-bottom: 0.5rem; }
+      #x-events-container .x-error-toast__hint { font-size: 0.625rem; opacity: 0.6; margin-top: 0.5rem; font-style: italic; }
+      #x-events-container .x-error-toast__stack { margin-top: 0.5rem; }
+      #x-events-container .x-error-toast__stack > summary { cursor: pointer; font-size: 0.6875rem; opacity: 0.8; user-select: none; }
+      #x-events-container .x-stack-frame {
+        margin-top: 0.5rem;
+        background: rgba(0,0,0,0.2);
+        border-radius: 4px;
+        overflow-x: auto;
+        white-space: pre;
+        max-height: 150px;
+        overflow-y: auto;
+      }
     `;
     document.head.appendChild(style);
   }
   
   errorContainer = document.createElement('div');
+  // Laid out by #x-events-container in the x-events-styles sheet above (#779).
   errorContainer.id = 'x-events-container';
-  errorContainer.style.cssText = `
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    z-index: 99999;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    max-width: 500px;
-    pointer-events: none;
-  `;
   document.body.appendChild(errorContainer);
   return errorContainer;
 }
@@ -187,34 +235,26 @@ function getErrorContainer() {
 function showToast(level, message, data = {}) {
   const container = getErrorContainer();
   
+  // Background/border per level are .x-error-toast--{level} rules (#779).
   const colors = {
-    error: { bg: 'rgba(220, 38, 38, 0.97)', border: '#b91c1c', icon: '❌', label: 'ERROR' },
-    warn: { bg: 'rgba(217, 119, 6, 0.97)', border: '#b45309', icon: '⚠️', label: 'WARN' },
-    info: { bg: 'rgba(37, 99, 235, 0.97)', border: '#1d4ed8', icon: 'ℹ️', label: 'INFO' },
-    success: { bg: 'rgba(22, 163, 74, 0.97)', border: '#15803d', icon: '✅', label: 'OK' }
+    error: { icon: '❌', label: 'ERROR' },
+    warn: { icon: '⚠️', label: 'WARN' },
+    info: { icon: 'ℹ️', label: 'INFO' },
+    success: { icon: '✅', label: 'OK' }
   };
   
-  const c = colors[level] || colors.info;
+  const levelKey = colors[level] ? level : 'info';
+  const c = colors[levelKey];
   const stackInfo = parseStack(data.stack);
   
   const toast = document.createElement('div');
-  toast.className = 'x-error-toast';
-  toast.style.cssText = `
-    background: ${c.bg};
-    border-left: 4px solid ${c.border};
-    color: white;
-    padding: 0.875rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    pointer-events: auto;
-    max-width: 100%;
-  `;
+  toast.className = `x-error-toast x-error-toast--${levelKey}`;
   
   // Build header with module info
   let headerHTML = `
-    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
-      <span style="font-size:1.2rem;">${c.icon}</span>
-      <span style="font-weight:700;font-size:0.75rem;letter-spacing:0.5px;">${c.label}</span>
+    <div class="x-error-toast__head">
+      <span class="x-error-toast__icon">${c.icon}</span>
+      <span class="x-error-toast__label">${c.label}</span>
   `;
   
   // Add module badge
@@ -226,16 +266,14 @@ function showToast(level, message, data = {}) {
   // Add line number
   if (data.line || stackInfo.line !== '?') {
     const lineNum = data.line || stackInfo.line;
-    headerHTML += `<span style="opacity:0.7;font-size:0.6875rem;">Line ${lineNum}</span>`;
+    headerHTML += `<span class="x-error-toast__line">Line ${lineNum}</span>`;
   }
   
   headerHTML += `
-      <button class="x-error-copy-btn" 
-              style="margin-left:auto;margin-right:8px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:white;cursor:pointer;font-size:0.6875rem;padding:2px 8px;border-radius:4px;">
+      <button class="x-error-copy-btn">
         📋 Copy
       </button>
-      <button onclick="this.closest('.x-error-toast').remove()" 
-              style="background:none;border:none;color:white;cursor:pointer;opacity:0.7;font-size:1.2rem;padding:0;">×</button>
+      <button class="x-error-toast__close" onclick="this.closest('.x-error-toast').remove()">×</button>
     </div>
   `;
   
@@ -243,7 +281,7 @@ function showToast(level, message, data = {}) {
   let messageHTML = '';
   if (data.name) {
     messageHTML += `
-      <div style="font-size:0.6875rem;color:#fca5a5;margin-bottom:0.25rem;font-family:monospace;">
+      <div class="x-error-toast__name">
         ${escapeHtml(data.name)}
       </div>
     `;
@@ -251,7 +289,7 @@ function showToast(level, message, data = {}) {
   
   // Message
   messageHTML += `
-    <div style="font-size:0.8125rem;font-weight:500;margin-bottom:0.5rem;word-break:break-word;">
+    <div class="x-error-toast__message">
       ${escapeHtml(String(message))}
     </div>
   `;
@@ -260,7 +298,7 @@ function showToast(level, message, data = {}) {
   if (data.file || data.fullPath) {
     const filePath = data.file || data.fullPath;
     messageHTML += `
-      <div style="font-size:0.6875rem;opacity:0.8;margin-bottom:0.5rem;">
+      <div class="x-error-toast__file">
         <strong>File:</strong> ${escapeHtml(filePath)}${data.line ? ':' + data.line : ''}${data.column ? ':' + data.column : ''}
       </div>
     `;
@@ -269,7 +307,7 @@ function showToast(level, message, data = {}) {
   // Error log location hint
   if (level === 'error') {
     messageHTML += `
-      <div style="font-size:0.625rem;opacity:0.6;margin-top:0.5rem;font-style:italic;">
+      <div class="x-error-toast__hint">
         📁 Error log saved to: data/errors.json
       </div>
     `;
@@ -279,38 +317,22 @@ function showToast(level, message, data = {}) {
   let stackHTML = '';
   if (level === 'error' && stackInfo.frames.length > 0) {
     stackHTML = `
-      <details style="margin-top:0.5rem;">
-        <summary style="cursor:pointer;font-size:0.6875rem;opacity:0.8;user-select:none;">
+      <details class="x-error-toast__stack">
+        <summary>
           Stack Trace (${stackInfo.frames.length} frames)
         </summary>
-        <div class="x-stack-frame" style="
-          margin-top:0.5rem;
-          background:rgba(0,0,0,0.2);
-          border-radius:4px;
-          overflow-x:auto;
-          white-space:pre;
-          max-height:150px;
-          overflow-y:auto;
-        ">${escapeHtml(formatStackTrace(stackInfo.frames, 10))}</div>
+        <div class="x-stack-frame">${escapeHtml(formatStackTrace(stackInfo.frames, 10))}</div>
       </details>
     `;
   } else if (data.stack && level === 'error') {
     // Fallback to raw stack if parsing failed
     const shortStack = data.stack.split('\n').slice(0, 6).join('\n');
     stackHTML = `
-      <details style="margin-top:0.5rem;">
-        <summary style="cursor:pointer;font-size:0.6875rem;opacity:0.8;user-select:none;">
+      <details class="x-error-toast__stack">
+        <summary>
           Stack Trace
         </summary>
-        <div class="x-stack-frame" style="
-          margin-top:0.5rem;
-          background:rgba(0,0,0,0.2);
-          border-radius:4px;
-          overflow-x:auto;
-          white-space:pre;
-          max-height:150px;
-          overflow-y:auto;
-        ">${escapeHtml(shortStack)}</div>
+        <div class="x-stack-frame">${escapeHtml(shortStack)}</div>
       </details>
     `;
   }
@@ -327,10 +349,10 @@ function showToast(level, message, data = {}) {
       
       navigator.clipboard.writeText(textToCopy).then(() => {
         copyBtn.textContent = '✔️ Copied';
-        copyBtn.style.background = 'rgba(34, 197, 94, 0.4)';
+        copyBtn.classList.add('x-error-copy-btn--copied');
         setTimeout(() => {
            copyBtn.textContent = '📋 Copy';
-           copyBtn.style.background = 'rgba(255,255,255,0.2)';
+           copyBtn.classList.remove('x-error-copy-btn--copied');
         }, 2000);
       }).catch(err => console.error('Copy failed', err));
     };

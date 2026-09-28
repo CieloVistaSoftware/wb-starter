@@ -18,22 +18,22 @@
     "copyright": {
       "type": "string",
       "description": "Copyright text",
-      "default": ""
+      "default": "this is the copyright"
     },
     "brand": {
       "type": "string",
       "description": "Brand name",
-      "default": ""
+      "default": "this is the brand"
     },
     "links": {
       "type": "string",
       "description": "Navigation links as JSON [{label, href}]",
-      "default": ""
+      "default": "this is the links"
     },
     "social": {
       "type": "string",
       "description": "Social links as JSON [{platform, href}]",
-      "default": ""
+      "default": "this is the social"
     },
     "sticky": {
       "type": "boolean",

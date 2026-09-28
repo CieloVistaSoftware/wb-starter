@@ -19,12 +19,12 @@
       "type": "string",
       "description": "Card title",
       "required": true,
-      "default": ""
+      "default": "this is the title"
     },
     "content": {
       "type": "string",
       "description": "Expandable content",
-      "default": ""
+      "default": "this is the content"
     },
     "expanded": {
       "type": "boolean",

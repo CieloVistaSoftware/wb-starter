@@ -12,6 +12,9 @@
  * The real API is stubbed here on purpose. Whether a given browser or embedder
  * grants fullscreen is not what is being tested — the contract is: nothing
  * changes unless it is granted, and a refusal says why.
+ *
+ * #779: the sizing is the .x-fullscreen-target class now, not an inline
+ * style, so the target's COMPUTED height/overflow are what is compared.
  */
 import { test, expect, Page } from '../fixtures/offline';
 
@@ -41,8 +44,8 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       const target = document.querySelector(btn.getAttribute('target')!) as HTMLElement;
 
       const before = {
-        height: target!.style.height,
-        overflow: target!.style.overflow,
+        height: getComputedStyle(target!).height,
+        overflow: getComputedStyle(target!).overflow,
         label: btn.textContent!.trim(),
         rect: Math.round(target!.getBoundingClientRect().height),
       };
@@ -65,8 +68,8 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       return {
         before,
         after: {
-          height: target!.style.height,
-          overflow: target!.style.overflow,
+          height: getComputedStyle(target!).height,
+          overflow: getComputedStyle(target!).overflow,
           label: btn.textContent!.trim(),
           rect: Math.round(target!.getBoundingClientRect().height),
         },
@@ -93,6 +96,7 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       // the granted case read styles off an element nothing had touched.
       const target = document.querySelector(btn.getAttribute('target')!) as HTMLElement;
       const labelBefore = btn.textContent!.trim();
+      const original = { height: getComputedStyle(target!).height, overflow: getComputedStyle(target!).overflow };
 
       const origRequest = Element.prototype.requestFullscreen;
       Element.prototype.requestFullscreen = function () { return Promise.resolve(); };
@@ -101,9 +105,22 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       await sleep(400);
       Element.prototype.requestFullscreen = origRequest;
 
+      // requestFullscreen is mocked, so the browser's own :fullscreen rules
+      // (which force a real fullscreen element to fill the screen) never
+      // apply, and a flex parent still squeezes the target -- the rendered
+      // height was 639px with the old inline style too. What the behavior
+      // owns is the sizing class; measure what that class does on a probe
+      // no layout constrains.
+      const probe = document.createElement('div');
+      probe.className = 'x-fullscreen-target';
+      document.body.appendChild(probe);
+      const classSize = { height: getComputedStyle(probe).height, overflow: getComputedStyle(probe).overflow };
+      probe.remove();
       const applied = {
-        height: target!.style.height,
-        overflow: target!.style.overflow,
+        hasClass: target!.classList.contains('x-fullscreen-target'),
+        classSize,
+        overflow: getComputedStyle(target!).overflow,
+        viewport: `${window.innerHeight}px`,
         label: btn.textContent!.trim(),
       };
 
@@ -113,17 +130,20 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
 
       return {
         labelBefore,
+        original,
         applied,
         afterExit: {
-          height: target!.style.height,
-          overflow: target!.style.overflow,
+          height: getComputedStyle(target!).height,
+          overflow: getComputedStyle(target!).overflow,
         },
       };
     });
 
-    expect(result.applied.height, 'granted: the target fills the viewport').toBe('100vh');
+    expect(result.applied.hasClass, 'granted: the target carries the fullscreen sizing').toBe(true);
+    expect(result.applied.classSize.height, 'and that sizing fills the viewport').toBe(result.applied.viewport);
+    expect(result.applied.overflow, 'granted: the target scrolls its own content').toBe('auto');
     expect(result.applied.label, 'granted: the button offers the way out').toContain('Exit');
-    expect(result.afterExit.height, 'and leaving restores the original height').toBe('');
-    expect(result.afterExit.overflow, 'and the original overflow').toBe('');
+    expect(result.afterExit.height, 'and leaving restores the original height').toBe(result.original.height);
+    expect(result.afterExit.overflow, 'and the original overflow').toBe(result.original.overflow);
   });
 });

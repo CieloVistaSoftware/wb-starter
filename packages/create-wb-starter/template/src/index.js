@@ -34,15 +34,16 @@ window.WB = WB;
   function showError(message) {
     const loadingEl = document.querySelector('.site__loading');
     if (loadingEl) {
-      const spinner = loadingEl.querySelector('x-spinner');
       const text = loadingEl.querySelector('p');
-      if (spinner) spinner.style.display = 'none';
+      // #779: the spinner is hidden and the message styled by
+      // .site__loading.loading--error rules in site.css (added below), not by
+      // style.display and style="" attributes.
       if (text) {
         text.innerHTML = `
-          <span style=\"color: #ef4444; font-size: 1.5rem;\">❌</span><br>
-          <strong style=\"color: #ef4444;\">Error loading</strong><br>
-          <small style=\"opacity: 0.7; display: block; margin-top: 0.5rem;\">${message}</small><br>
-          <small style=\"opacity: 0.5;\">This has been logged to our database.</small>
+          <span class="site__loading-icon">❌</span><br>
+          <strong class="site__loading-title">Error loading</strong><br>
+          <small class="site__loading-message">${message}</small><br>
+          <small class="site__loading-note">This has been logged to our database.</small>
         `;
       }
       loadingEl.classList.add('loading--error');

@@ -19,23 +19,23 @@
       "type": "string",
       "description": "Testimonial quote text",
       "required": true,
-      "default": ""
+      "default": "this is the quote"
     },
     "author": {
       "type": "string",
       "description": "Author name",
       "required": true,
-      "default": ""
+      "default": "this is the author"
     },
     "role": {
       "type": "string",
       "description": "Author role/title/company",
-      "default": ""
+      "default": "this is the role"
     },
     "avatar": {
       "type": "string",
       "description": "Author avatar image URL",
-      "default": ""
+      "default": "this is the avatar"
     },
     "rating": {
       "type": "number",

@@ -167,3 +167,9 @@
   border: 1px solid transparent;   /* differs from default's 0 width */
   border-radius: var(--radius-md, 4px);
 }
+
+/* #779: the collapsed arrow, formerly icon.style.transform. Only toggled by
+   the toggle event, exactly as the inline write was. */
+.x-details .x-details__icon.x-details__icon--collapsed {
+  transform: rotate(-90deg);
+}

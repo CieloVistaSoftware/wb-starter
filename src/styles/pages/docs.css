@@ -4,7 +4,7 @@
 /* Search wrapper */
 .docs-search-wrapper {
   margin-top: 1.5rem;
-  max-width: 500px;
+  max-width: 31.25rem;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -141,4 +141,76 @@
 
 .behavior-chip--undocumented .behavior-chip__name {
   color: var(--text-muted);
+}
+
+/* ── Documentation index (#779) ───────────────────────────────────────────
+   The markup renderDocs() generates used to carry every one of these as a
+   style="..." attribute, plus a hover lift written onto card.style from JS.
+   Each rule is scoped two classes deep so site.css's `.page h2/h3/p/a`
+   (0-1-1) type rules cannot out-rank it, which the attribute never had to
+   worry about. */
+
+.docs-container .docs-category,
+.page__section .docs-category {
+  margin-bottom: 2.5rem;
+}
+
+.docs-category .docs-category__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.docs-category .docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.docs-grid .docs-card {
+  display: block;
+  padding: 1.25rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.625rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+}
+
+.docs-grid .docs-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.docs-card .docs-card__title {
+  margin: 0 0 0.5rem;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.docs-card .docs-card__desc {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Empty / no-results / error states */
+.page__section .docs-empty {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.page__section .docs-empty--search { padding: 3rem; }
+.page__section .docs-empty--error { padding: 2rem; }
+
+.docs-empty .docs-empty__icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.docs-empty .docs-empty__detail {
+  font-size: 0.875rem;
 }

@@ -11,12 +11,40 @@
   z-index: 1000;
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: 0.75rem;
-  min-width: 180px;
+  min-width: 11.25rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .x-popover.open {
   display: block;
+}
+
+/* =============================================================================
+   #779 — the floating panel overlay.js's popover() builds
+   -----------------------------------------------------------------------------
+   overlay.js used to write all of this onto the panel's style attribute, which
+   is why its position:fixed beat the position:absolute above. The compound
+   selector (0,2,0) keeps that precedence without the inline declaration. The
+   computed top/left (and a viewport-capped max-width) are runtime values and
+   arrive through src/core/dynamic-style.js.
+============================================================================= */
+.x-popover.x-popover--floating {
+  position: fixed;
+  background: var(--bg-primary, #1f2937);
+  border: 1px solid var(--border-color, #374151);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  z-index: 10000;
+  animation: x-fade-in 0.15s ease;
+  color: var(--text-primary, #f9fafb);
+  max-width: 18.75rem;
+}
+
+.x-popover--floating > .x-popover__title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary, #6366f1);
 }

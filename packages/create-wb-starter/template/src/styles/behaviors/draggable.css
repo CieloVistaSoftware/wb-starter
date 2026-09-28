@@ -1,0 +1,22 @@
+/**
+ * x-draggable (#779)
+ * -----------------------------------------------------------------------------
+ * Moved out of draggable.js, which wrote these onto element.style. The drag
+ * position itself is a runtime value and arrives as a generated rule from
+ * src/core/dynamic-style.js.
+ */
+
+/* Only added when the host computed `position: static` -- left/top need a
+   positioned box to act on. */
+.x-draggable.x-draggable--positioned {
+  position: relative;
+}
+
+.x-draggable__handle {
+  cursor: grab;
+}
+
+.x-draggable--dragging.x-draggable__handle,
+.x-draggable--dragging .x-draggable__handle {
+  cursor: grabbing;
+}

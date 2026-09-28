@@ -19,7 +19,26 @@ import { readAttr } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  */
 import { logError } from '../core/error-logger.js';
-import { getPageSource, extractTagBlock } from './page-source-cache.js';
+import { getPageSource, extractAttrBlock } from './page-source-cache.js';
+
+/**
+ * Is the page going away?
+ *
+ * A fetch that rejects because the document is unloading did not fail to find a
+ * document -- the browser simply stopped caring, and reports it as the same
+ * `TypeError: Failed to fetch` a real network failure gives. Logging those put
+ * entries in data/errors.json that compliance/error-log-empty.spec.ts then
+ * failed on, while the same spec passed with ZERO errors run on its own. A
+ * verdict that only appears under load is #961's shape and is worth nothing.
+ *
+ * Narrow on purpose: a genuine 404 during ordinary use still reports, because
+ * the page is not unloading then. Paired with the `element.isConnected` check
+ * below, which covers the other abandonment -- a panel replaced mid-fetch.
+ */
+let pageIsUnloading = false;
+if (typeof window !== 'undefined') {
+  window.addEventListener('pagehide', () => { pageIsUnloading = true; }, { once: true });
+}
 
 // Check if marked is available, if not load it
 let markedLoaded = false;
@@ -159,7 +178,7 @@ export async function mdhtml(element, options = {}) {
   // calls mdhtml() directly on a plain <div id="content">, not a
   // <div x-mdhtml> tag, and mdhtml.css's `.x-mdhtml` class rules still need to
   // select that div.
-  if (element.tagName.toLowerCase() !== 'x-mdhtml') element.classList.add('x-mdhtml');
+  element.classList.add('x-mdhtml');
   element.classList.add('x-mdhtml--loading');
 
   try {
@@ -171,6 +190,13 @@ export async function mdhtml(element, options = {}) {
     // heading(text, level). Reading `level` off the v5+ call yields undefined —
     // which produced `<hundefined>` tags. Support both signatures.
     const renderer = new marked.Renderer();
+    // Slugs already issued in THIS render. Two headings with the same text are
+    // ordinary markdown (card.md has an H3 "Variants" demo section under Usage
+    // and an H2 "Variants" list of variant behaviors), but two identical slugs
+    // are two identical ids -- getElementById then silently returns the first
+    // and #730 reports it as a runtime error. Suffix repeats `-1`, `-2`, the
+    // same scheme GitHub uses, so the first heading keeps its natural anchor.
+    const issuedSlugs = new Map();
     renderer.heading = function(arg, level) {
       let depth, html, plain;
       if (arg && typeof arg === 'object') {
@@ -191,16 +217,24 @@ export async function mdhtml(element, options = {}) {
         .replace(/\s+/g, '-')              // Replace spaces with hyphens
         .replace(/-+/g, '-')               // Collapse multiple hyphens
         .replace(/^-|-$/g, '');            // Trim hyphens from ends
+      const seen = issuedSlugs.get(slug) || 0;
+      issuedSlugs.set(slug, seen + 1);
+      const id = seen ? `${slug}-${seen}` : slug;
 
-      return `<h${depth} id="${slug}">${html}</h${depth}>\n`;
+      return `<h${depth} id="${id}">${html}</h${depth}>\n`;
     };
     
-    // Configure marked
-    marked.setOptions({
+    // #773: THIS element's options, passed to its own parse() below -- not
+    // marked.setOptions(), which sets them for every caller of the shared
+    // module. The fetch between the two awaits, so another mdhtml() rendering
+    // meanwhile (the docs panel beside the showcase renders one for every
+    // selection) reset gfm/breaks/renderer for this one: gfm="false" was
+    // parsed as GFM whenever the other render landed in that window.
+    const markedOptions = {
       breaks: config.breaks,
       gfm: config.gfm,
       renderer: renderer
-    });
+    };
 
     let markdown = '';
 
@@ -239,9 +273,31 @@ export async function mdhtml(element, options = {}) {
       } catch (err) {
         element.classList.remove('x-mdhtml--loading');
         element.classList.add('x-mdhtml--error');
-        
+
+        // A PANEL NOBODY IS SHOWING ANY MORE DID NOT FAIL TO LOAD ANYTHING.
+        //
+        // If the host was taken out of the DOM while the fetch was in flight,
+        // the rejection is the discard, not a broken document. The behaviors
+        // page is where this shows: its live example for x-mdhtml is the curated
+        // `<div x-mdhtml src="/docs/behaviors/dropdown.md">`, and every click on
+        // another behavior replaces that panel — so the abandoned element's
+        // fetch rejects with "TypeError: Failed to fetch" a moment later.
+        //
+        // It logged five of those into data/errors.json under the full suite,
+        // failing compliance/error-log-empty.spec.ts, while passing on its own
+        // with zero errors — the #961 shape, a verdict that only appears under
+        // load. Console still says it, because a developer watching a panel
+        // vanish mid-load should be able to see why.
+        if (!element.isConnected || pageIsUnloading) {
+          console.warn('[mdhtml] load abandoned (host removed or page unloading): ' + config.src);
+          return;
+        }
+
         console.warn('[mdhtml] Failed to load file: ' + config.src);
         logError('Unable to Load Documentation', {
+          // #1010: stable identity -- the message quotes the failing path, which
+          // differs every time; the fault does not.
+          code: 'doc-load-failed',
           file: 'src/wb-viewmodels/mdhtml.js',
           to: 'x-mdhtml',
           reason: err.message,
@@ -250,7 +306,7 @@ export async function mdhtml(element, options = {}) {
           stack: err.stack
         });
         
-        element.innerHTML = '<p style="color:var(--text-secondary);padding:1rem;text-align:center;">Failed to load <code>' + config.src + '</code>. See error log below for details.</p>';
+        element.innerHTML = '<p class="x-mdhtml__message">Failed to load <code>' + config.src + '</code>. See error log below for details.</p>';
         console.error('[mdhtml] Error loading file:', err);
         
         // Dispatch error event
@@ -262,9 +318,12 @@ export async function mdhtml(element, options = {}) {
         return () => {};
       }
     } else {
-      // Use inline content. `<div x-mdhtml>` isn't a real custom element (no
-      // connectedCallback to capture pristine markup before upgrade, unlike
-      // <div x-demo> — see x-demo.js), so its raw content sits in the DOM as
+      // Use inline content. `<div x-mdhtml>` isn't a real custom element, so
+      // there's no connectedCallback to capture pristine markup before an
+      // upgrade. (This used to say "unlike <div x-demo>". <div x-demo> is not
+      // one either -- its class was never registered and is now deleted,
+      // #1063 -- so the contrast was never real; the rest of this note is,
+      // and is what matters here.) Its raw content sits in the DOM as
       // real, live, browser-parsed elements from initial page load until
       // THIS async behavior runs. When that content includes an example like
       // `<div x-gallery columns="4">`, WB's own async scan can independently
@@ -276,10 +335,14 @@ export async function mdhtml(element, options = {}) {
       // as-authored text, unaffected by any DOM mutation since parse time).
       let raw = null;
       try {
-        const allMdHtml = document.querySelectorAll('x-mdhtml');
+        // #934: same defect as demo.js -- this looked for an <x-mdhtml> TAG
+        // while the docstring below correctly describes the markup as
+        // `<div x-mdhtml>`. Both counts were 0, so the guard passed vacuously
+        // and the as-authored text was never recovered.
+        const allMdHtml = document.querySelectorAll('[x-mdhtml]');
         const idx = Array.from(allMdHtml).indexOf(element);
         const pageSource = await getPageSource();
-        const block = extractTagBlock(pageSource, 'x-mdhtml', idx, allMdHtml.length);
+        const block = extractAttrBlock(pageSource, 'x-mdhtml', idx, allMdHtml.length);
         if (block && block.trim()) raw = block;
       } catch (e) {
         // ignore — fall through to the live-DOM read below
@@ -297,7 +360,7 @@ export async function mdhtml(element, options = {}) {
     }
 
     // Parse markdown to HTML
-    const html = await marked.parse(markdown);
+    const html = await marked.parse(markdown, markedOptions);
 
     // Basic XSS protection if sanitize is enabled
     let safeHtml = html;
@@ -335,6 +398,28 @@ export async function mdhtml(element, options = {}) {
 
     // Render HTML
     element.innerHTML = safeHtml;
+
+    // Capture each demo's AUTHORED markup now, while it is still pristine.
+    //
+    // demo.js builds its code panel from `_rawSource`, then a page-source
+    // fetch, then `element.innerHTML`. In a doc none of the first two apply:
+    // `_rawSource` was set by the old custom element's connectedCallback, and
+    // the page-source fetch reads doc-viewer.html, which never contains markup
+    // that only exists in the fetched markdown. So it fell through to
+    // innerHTML -- read AFTER the behaviors inside had already built themselves.
+    //
+    // The panel therefore showed the GENERATED DOM instead of the source. For
+    // `<div x-codecontrol></div>` -- one authored line -- it printed several
+    // hundred lines of every <optgroup> and <option> the behavior had just
+    // produced, so a reader could not tell what to type. John: "this does not
+    // show how the code was 'interpreted' what code was used?"
+    //
+    // This runs between "HTML exists" and "anything has scanned it", the only
+    // moment the authored text is still in the DOM.
+    element.querySelectorAll('[x-demo]').forEach((demo) => {
+      if (!demo._rawSource) demo._rawSource = demo.innerHTML;
+    });
+
     element.classList.remove('x-mdhtml--loading');
     element.classList.add('x-mdhtml--loaded');
     // Runtime/test hook: mark hydrated so tests can wait deterministically
@@ -405,9 +490,9 @@ export async function mdhtml(element, options = {}) {
     // 0. Auto-live-render eligible ```html fenced blocks. John: "all of
     // these examples must use x-demo" -- a doc's usage examples were
     // read-only syntax-highlighted TEXT (the x-pre/x-code marking below
-    // makes them look nice but never actually renders the behavior), so
+    // makes them look nice but never actually renders the component), so
     // a reader had to take the markup on faith instead of seeing it work.
-    // Only convert a block that's UNAMBIGUOUSLY real, renderable behavior
+    // Only convert a block that's UNAMBIGUOUSLY real, renderable component
     // markup -- language must be html, and it must contain at least one
     // element that's either a <wb-*> tag or carries an x-* attribute (the
     // two conventions WB.scan() actually dispatches on). A plain <div>/
@@ -423,7 +508,7 @@ export async function mdhtml(element, options = {}) {
     // panel still shows the exact source correctly without any extra work.
     if (config.autoLiveRender) element.querySelectorAll('pre > code').forEach(code => {
         const pre = code.parentElement;
-        if (pre.closest('x-demo')) return; // already inside a real x-demo block
+        if (pre.closest('x-demo, [x-demo]')) return; // already inside a real x-demo block
         const isHtmlLang = /\blanguage-html\b/.test(code.className) || (!code.className && /^\s*</.test(code.textContent || ''));
         if (!isHtmlLang) return;
 
@@ -441,7 +526,7 @@ export async function mdhtml(element, options = {}) {
         // V3-GUIDE.md's boilerplate <link href="src/styles/themes.css">
         // 404'd at /public/src/styles/themes.css. Document-level tags are
         // the unambiguous signal this is a whole-file illustration, not a
-        // behavior snippet.
+        // component snippet.
         if (/<\s*(!doctype|html|head|body)\b/i.test(raw)) return;
         let tpl;
         try {
@@ -455,10 +540,94 @@ export async function mdhtml(element, options = {}) {
         );
         if (!isRenderable) return;
 
-        const wbDemo = document.createElement('x-demo');
+        // A content-free example still renders: the behavior fills itself in from
+        // its schema and teaches what to set (teachByExample in wb-lazy). This
+        // used to bail out here, leaving <div x-cardhero>…</div> as a code block
+        // — which is exactly the "three dots" John was looking at.
+
+        // A FENCE THAT IS ALREADY A DEMO DOES NOT GET WRAPPED IN ANOTHER ONE.
+        //
+        // Two docs author `<div x-demo>` INSIDE a ```html fence: demo.md (the
+        // doc for x-demo itself) and DEMOS-AND-DOCS-STANDARDS.md. Wrapping those
+        // produced a demo inside a demo, and the reader saw the consequences:
+        //
+        //   - the example rendered twice, once per nesting level;
+        //   - the INNER demo has no `_rawSource` (only the wrapper this function
+        //     creates gets one) and its markup never existed in doc-viewer.html's
+        //     page source either, so its panel printed "<!-- source unavailable"
+        //     directly beneath the wrapper's panel showing the very same code;
+        //   - every nesting level costs 34px (demo.css's 1rem padding + 1px
+        //     border, twice), so the inner panel was cramped 34px narrower than
+        //     the space it had — the #560/#563 shape that
+        //     tests/compliance/doc-viewer-code-panel-audit.spec.ts check (a)
+        //     exists to catch, and did.
+        //
+        // The authored markup is already exactly what the wrapper was there to
+        // provide, so promote it as itself. Each authored demo gets its OWN
+        // pristine `outerHTML` as `_rawSource`, read off the inert <template>
+        // before anything has upgraded it — which is also what makes the nested
+        // case correct: a panel shows the block it belongs to, not an ancestor's.
+        const authored = Array.from(tpl.content.querySelectorAll('[x-demo]'));
+        if (authored.length) {
+            for (const el of authored) el._rawSource = el.outerHTML;
+            // replaceWith(DocumentFragment) ADOPTS these exact nodes, so the
+            // expandos set above survive the move into the live document.
+            pre.replaceWith(tpl.content);
+            return;
+        }
+
+        // A DIV CARRYING THE ATTRIBUTE, not an <x-demo> TAG.
+        //
+        // This created document.createElement('x-demo'). WB dispatches x-demo on
+        // the ATTRIBUTE, so the tag matched nothing, the demo behavior never ran,
+        // and no code panel was ever generated. The fence was replaced by a bare
+        // live element and the markup the reader came for VANISHED -- 127 of 178
+        // behavior docs showed a rendering with no source. The 42 that were right
+        // are the ones that hand-write `<div x-demo>` (accordion.md and friends).
+        //
+        // #1063 removed the x-demo class registration, so nothing has upgraded the
+        // tag since; this was silent because a rendered example still looks like a
+        // working doc until you notice the code is gone.
+        //
+        // John: "all of our .md doc must have a markup example and rendering."
+        // The attribute form gives both -- x-demo renders the example AND emits a
+        // numbered, copyable source panel beneath it.
+        const wbDemo = document.createElement('div');
+        wbDemo.setAttribute('x-demo', '');
+        // Hand demo.js the authored fence text directly (the `_rawSource` hook it
+        // already reads, demo.js:489). Its normal path recovers source by finding
+        // the block in the PAGE source -- but this markup only ever existed in the
+        // fetched markdown, never in doc-viewer.html, so that lookup always misses
+        // and the panel printed "source unavailable" instead of the example. `raw`
+        // is the exact fence text, before any behavior has touched the DOM.
+        wbDemo._rawSource = raw;
         wbDemo.innerHTML = raw;
         pre.replaceWith(wbDemo);
     });
+
+    // NOT DONE HERE: <div x-demo> written as RAW HTML in the markdown — i.e. not
+    // inside a ```html fence, so marked passes it through and it is already live
+    // DOM by the time this function runs. (A fenced one IS handled, above.)
+    //
+    // They have the same underlying problem — demo.js recovers source from the
+    // PAGE source, which never contains markup that only ever existed in a
+    // fetched .md file, so they render "source unavailable" (docs/standards/
+    // DEMOS-AND-DOCS-STANDARDS.md is full of them). It is tempting to hand them
+    // _rawSource the same way, and an attempt to do so is why this note exists.
+    //
+    // It is not the same case. Those docs NEST demos — <div x-demo> wrapping
+    // <figure x-demo> — so a flat querySelectorAll('[x-demo]') captures an outer
+    // wrapper whose innerHTML is not the example any given panel is showing, and
+    // the result was empty panels: worse than a message that at least explains
+    // itself. Fixing it properly means resolving per-panel, which belongs with
+    // demo.js's own nesting logic rather than being guessed at from here.
+    //
+    // Note that giving them a source would not make those docs pass the code
+    // panel audit anyway: a demo nested inside a demo is 34px narrower than the
+    // space it has (demo.css padding + border), which is the audit's check (a).
+    // That is a property of the AUTHORED nesting, and only the doc can fix it.
+    //
+    // Left as-is deliberately. The pre-existing behaviour is unchanged.
 
     // 1. Pre-process Pre blocks (configure them before scanning)
     element.querySelectorAll('pre').forEach(el => {
@@ -500,11 +669,8 @@ export async function mdhtml(element, options = {}) {
     // Markdown font size comes from ONE configuration setting: --md-font-size
     // (themes.css, 1rem). The old size map (0.55–0.85rem) made every .md doc too
     // small to read on mobile; the legacy size option is ignored on purpose so
-    // there is a single knob.
-    element.style.fontSize = 'var(--md-font-size, 1rem)';
-    
-    // Ensure no overflow
-    element.style.maxWidth = '100%';
+    // there is a single knob. #779: that and max-width: 100% are the
+    // .x-mdhtml--loaded rule in mdhtml.css -- they were written inline here.
 
     // Dispatch event
     element.dispatchEvent(new CustomEvent('wb:mdhtml:loaded', {
@@ -523,7 +689,7 @@ export async function mdhtml(element, options = {}) {
       src: config.src,
       stack: err.stack
     });
-    element.innerHTML = '<p style="color:var(--text-secondary);padding:1rem;text-align:center;">Error loading content. See error log below.</p>';
+    element.innerHTML = '<p class="x-mdhtml__message">Error loading content. See error log below.</p>';
     console.error('[mdhtml] Unexpected error:', err);
   }
 

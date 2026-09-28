@@ -13,12 +13,12 @@
     "text": {
       "type": "string",
       "description": "Text to copy",
-      "default": ""
+      "default": "this is the text"
     },
     "target": {
       "type": "string",
       "description": "Selector of element to copy from",
-      "default": ""
+      "default": "this is the target"
     }
   },
   "$view": [],

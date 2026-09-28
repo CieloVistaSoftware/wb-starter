@@ -293,8 +293,32 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     await page.goto(HOME_URL, { waitUntil: 'networkidle' });
     const overflows = await page.evaluate(() => {
       const vw = document.documentElement.clientWidth;
+      // Measure what is VISIBLE, not an element's layout box. The home page's
+      // setup snippet is a <pre><code> whose longest line is ~690px, and code
+      // never wraps -- it scrolls inside its own panel (#199, #826; pre.css
+      // `.x-pre { overflow-x: auto }`). The <code> box is therefore wider than
+      // a phone by design while nothing reaches past the viewport. Clipping
+      // the rect by every ancestor that SCROLLS horizontally keeps what this
+      // asserts ("overflows the viewport") and still flags the scroller
+      // itself if IT is too wide.
+      //
+      // Only auto/scroll, and never <body>/<html>: body.site is
+      // overflow-x:hidden, and content cut off by a `hidden` ancestor is lost,
+      // not scrollable -- exactly the defect this test exists to catch.
+      const visibleWidth = (el: Element) => {
+        const r = el.getBoundingClientRect();
+        let left = r.left, right = r.right;
+        for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+          const ox = getComputedStyle(a).overflowX;
+          if (ox !== 'auto' && ox !== 'scroll') continue;
+          const ar = a.getBoundingClientRect();
+          left = Math.max(left, ar.left);
+          right = Math.min(right, ar.right);
+        }
+        return right - left;
+      };
       return Array.from(document.querySelectorAll('*')).filter(el => {
-        return el.getBoundingClientRect().width > vw + 2;
+        return visibleWidth(el) > vw + 2;
       }).map(el => el.tagName.toLowerCase());
     });
     expect(overflows).toEqual([]);

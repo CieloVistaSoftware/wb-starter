@@ -1,6 +1,6 @@
 import { readAttr } from '../core/read-attr.js';
 /**
- * Search Behavior
+ * Search Component
  * Complete search input with icon, clear button, and debounced events
  */
 export function search(element, options = {}) {
@@ -76,13 +76,15 @@ export function search(element, options = {}) {
     clearBtn.className = 'x-search__clear';
     clearBtn.textContent = '✕';
     clearBtn.title = 'Clear search';
-    clearBtn.style.display = config.value ? 'block' : 'none';
+    // Shown/hidden by .x-search__clear--visible in search.css (#779) -- it
+    // used to be display:block/none written onto the style attribute.
+    clearBtn.classList.toggle('x-search__clear--visible', !!(config.value));
     wrapper.appendChild(clearBtn);
 
     clearBtn.onclick = () => {
       element.value = '';
       element.focus();
-      clearBtn.style.display = 'none';
+      clearBtn.classList.remove('x-search__clear--visible');
       element.dispatchEvent(new CustomEvent('wb:search:clear', { bubbles: true }));
       element.dispatchEvent(new CustomEvent('wb:search', {
         bubbles: true,
@@ -113,7 +115,7 @@ export function search(element, options = {}) {
   const triggerSearch = (instant = false, dispatchInputEvent = true) => {
     const query = element.value;
     if (clearBtn) {
-      clearBtn.style.display = query ? 'block' : 'none';
+      clearBtn.classList.toggle('x-search__clear--visible', !!(query));
     }
 
     if (dispatchInputEvent) {
@@ -180,7 +182,7 @@ export function search(element, options = {}) {
 
   // Handle initial value
   if (config.value && clearBtn) {
-    clearBtn.style.display = 'block';
+    clearBtn.classList.add('x-search__clear--visible');
   }
 
   // Public API
@@ -189,14 +191,14 @@ export function search(element, options = {}) {
     setValue: (value) => {
       element.value = value;
       if (clearBtn) {
-        clearBtn.style.display = value ? 'block' : 'none';
+        clearBtn.classList.toggle('x-search__clear--visible', !!(value));
       }
       triggerSearch(true);
     },
     clear: () => {
       element.value = '';
       if (clearBtn) {
-        clearBtn.style.display = 'none';
+        clearBtn.classList.remove('x-search__clear--visible');
       }
       element.dispatchEvent(new CustomEvent('wb:search:clear', { bubbles: true }));
       element.dispatchEvent(new CustomEvent('wb:search', {
@@ -211,7 +213,8 @@ export function search(element, options = {}) {
       config.loading = loading;
       element.classList.toggle('x-search--loading', loading);
       if (loadingSpan) {
-        loadingSpan.style.display = loading ? 'block' : 'none';
+        loadingSpan.classList.toggle('x-search__loading--shown', !!loading);
+        loadingSpan.classList.toggle('x-search__loading--hidden', !loading);
       }
     },
     destroy: () => {
@@ -229,7 +232,7 @@ export function search(element, options = {}) {
 /**
  * Search Field (container form)
  * -----------------------------------------------------------------------------
- * Custom Tag: <div x-searchfield> — a CONTAINER, not an input itself. Finds (or
+ * Custom Tag: <div> — a CONTAINER, not an input itself. Finds (or
  * creates) a child <input>, applies search() to that input, and exposes the
  * imperative API on the container as `element.wbSearch` (mirrors the pattern
  * collapse() uses for `element.wbCollapse`) so external code can still call
@@ -252,7 +255,7 @@ export function searchField(element, options = {}) {
     element.appendChild(input);
   }
 
-  // search() only classes whatever element IT was given -- for a <div x-searchfield>
+  // search() only classes whatever element IT was given -- for a <div>
   // host with no pre-existing <input> child, that's this freshly-created
   // inner input, not the host itself. CSS selectors targeting the variant
   // directly on the host (.x-search--<variant>, not the
@@ -261,7 +264,7 @@ export function searchField(element, options = {}) {
   const size = element.getAttribute('size') || 'md';
   const variant = element.getAttribute('variant') || 'default';
   // #448: no bare 'x-search' token on this CONTAINER host -- it just
-  // duplicated the <div x-searchfield> tag name. search.css's `.x-search` class
+  // duplicated the <div> tag name. search.css's `.x-search` class
   // rule stays fully intact and unconverted: it's still legitimately
   // needed below, since search(input, ...) (the child <input> this
   // container wraps) independently adds that same class to itself, and

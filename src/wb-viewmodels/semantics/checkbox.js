@@ -183,8 +183,12 @@ export function checkbox(element, options = {}) {
     // have a rule -- an unknown value would mint a class no CSS matches (#885).
     const hostSize = element.getAttribute('size');
     if (hostSize === 'sm' || hostSize === 'lg') element.classList.add(`x-checkbox--${hostSize}`);
+    // #773: with no variant a checked box is the brand colour (the bare
+    // :checked rule), so the schema declares `primary` as the default --
+    // what a reader actually gets. `default` stays an explicit, neutral style.
+    // John, 2026-09-28: keep plain checkboxes brand-coloured.
     const hostVariant = element.getAttribute('variant');
-    if (hostVariant === 'primary' || hostVariant === 'success') element.classList.add(`x-checkbox--${hostVariant}`);
+    if (['default', 'primary', 'success'].includes(hostVariant)) element.classList.add(`x-checkbox--${hostVariant}`);
 
     // The host is a <div>, not a <label>, and the real input is visually
     // hidden with pointer-events:none -- so a click on the box or its text

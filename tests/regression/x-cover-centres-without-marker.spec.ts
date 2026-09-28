@@ -17,8 +17,12 @@ async function render(page: Page, html: string) {
     host.id = 'cover-test';
     host.style.width = '600px';
     // Margins zeroed: site headings carry asymmetric margins, which would
-    // measure as off-centre when the layout is exactly right.
-    host.innerHTML = '<style>#cover-test [x-cover] > * { margin-block: 0; }</style>' + markup;
+    // measure as off-centre when the layout is exactly right. The auto
+    // margins x-cover itself gives the first/last middle child are left
+    // alone: they are a stylesheet rule now (#779), not an inline style, and
+    // this id-scoped reset would otherwise out-rank them -- zeroing the very
+    // centring under test.
+    host.innerHTML = '<style>#cover-test [x-cover] > :not(.x-cover__middle-start):not(.x-cover__middle-end) { margin-block: 0; }</style>' + markup;
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
   }, html);

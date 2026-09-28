@@ -18,3 +18,12 @@
   color: var(--primary);
   text-decoration: underline;
 }
+
+/* #1002 — a tree behind its remote is not "the latest code", and the badge is
+   the only place that can say so before the reader trusts what they see.
+   Amber, not red: it is a warning about provenance, not an error in the page. */
+.x-release--stale {
+  border-color: var(--warning-color, #f59e0b);
+  color: var(--warning-color, #f59e0b);
+  font-weight: 600;
+}

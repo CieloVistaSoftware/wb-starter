@@ -6,6 +6,11 @@
   "properties": {},
   "required": [],
   "schemaFor": "floatinglabel",
+  "semanticElement": {
+    "tagName": "input",
+    "type": "text",
+    "implicitRole": "textbox"
+  },
   "$view": [],
   "$methods": {},
   "$cssAPI": {},

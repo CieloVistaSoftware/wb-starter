@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * Stage Light Component
  * -----------------------------------------------------------------------------
@@ -194,6 +195,10 @@ function injectStyles() {
       opacity: var(--x-stagelight-intensity);
     }
     
+    .x-stagelight--fixture .x-stagelight__housing {
+      cursor: pointer;
+    }
+
     .x-stagelight__housing:hover {
        transform: rotateX(-20deg);
     }
@@ -265,11 +270,18 @@ export default function stagelight(element, options = {}) {
     element.appendChild(spot);
   }
 
-  // Apply CSS Variables
-  element.style.setProperty('--x-stagelight-color', config.color);
-  element.style.setProperty('--x-stagelight-size', config.size);
-  element.style.setProperty('--x-stagelight-intensity', config.intensity);
-  element.style.setProperty('--speed', config.speed);
+  // Apply CSS Variables -- as generated rules, never element.style (#779),
+  // and only where the value differs from the .x-stagelight default above:
+  // a default pinned onto the element is exactly what stops a theme from
+  // supplying its own.
+  const vars = {};
+  if (config.color !== '#ffffff') vars['--x-stagelight-color'] = config.color;
+  if (config.size !== '300px') vars['--x-stagelight-size'] = config.size;
+  if (config.speed !== '3s') vars['--speed'] = config.speed;
+  setRule(element, 'vars', vars);
+  const setIntensity = (i) => setRule(element, 'intensity',
+    String(i) === '0.5' ? null : { '--x-stagelight-intensity': i });
+  setIntensity(config.intensity);
 
   // Apply Variant Class
   element.classList.add(`x-stagelight--${config.variant}`);
@@ -301,7 +313,7 @@ export default function stagelight(element, options = {}) {
       const r = overlay.getBoundingClientRect();
       const limit = Math.min(r.width, r.height) * 0.35;
       const effective = limit > 0 ? Math.min(configuredPx, limit) : configuredPx;
-      element.style.setProperty('--x-stagelight-radius', `${Math.round(effective)}px`);
+      setRule(element, 'radius', { '--x-stagelight-radius': `${Math.round(effective)}px` });
     };
     syncRadius();
     let ro = null;
@@ -312,8 +324,7 @@ export default function stagelight(element, options = {}) {
 
     const onMove = (e) => {
       const rect = overlay.getBoundingClientRect();
-      element.style.setProperty('--x', `${e.clientX - rect.left}px`);
-      element.style.setProperty('--y', `${e.clientY - rect.top}px`);
+      setRule(element, 'pointer', { '--x': `${e.clientX - rect.left}px`, '--y': `${e.clientY - rect.top}px` });
     };
 
     if (config.target === 'mouse') {
@@ -371,20 +382,22 @@ export default function stagelight(element, options = {}) {
     
     const toggle = () => {
       isOn = !isOn;
-      element.style.setProperty('--x-stagelight-intensity', isOn ? config.intensity : '0.1');
+      setIntensity(isOn ? config.intensity : '0.1');
     };
-    
+
+    // cursor: pointer is `.x-stagelight--fixture .x-stagelight__housing` above.
     housing.addEventListener('click', toggle);
-    housing.style.cursor = 'pointer';
     
     cleanup = () => housing.removeEventListener('click', toggle);
   }
 
   // Expose API
   element.wbStageLight = {
-    setColor: (c) => element.style.setProperty('--x-stagelight-color', c),
-    setIntensity: (i) => element.style.setProperty('--x-stagelight-intensity', i),
-    setSize: (s) => element.style.setProperty('--x-stagelight-size', s)
+    // One 'vars' slot, updated in place: two rules setting the same property
+    // on one element would be decided by insertion order, not by the call.
+    setColor: (c) => { vars['--x-stagelight-color'] = c; setRule(element, 'vars', { ...vars }); },
+    setIntensity,
+    setSize: (sz) => { vars['--x-stagelight-size'] = sz; setRule(element, 'vars', { ...vars }); }
   };
 
   // #658: spotlight-only controls. Assigned explicitly rather than spread --
@@ -403,6 +416,7 @@ export default function stagelight(element, options = {}) {
   // Return cleanup function
   return () => {
     cleanup();
+    clearRules(element);
     element.classList.remove('x-stagelight', `x-stagelight--${config.variant}`);
   };
 }

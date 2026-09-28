@@ -28,8 +28,9 @@ export function range(element, options = {}) {
   // Wrap in container for value display and labels
   if (config.showValue || config.showLabels) {
     wrapper = document.createElement('div');
+    // Layout for the wrapper, value and labels is in input.css (#779: it was
+    // written onto each element's style attribute).
     wrapper.className = 'x-range-wrapper';
-    wrapper.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;';
 
     element.parentNode.insertBefore(wrapper, element);
     wrapper.appendChild(element);
@@ -38,7 +39,6 @@ export function range(element, options = {}) {
     if (config.showValue) {
       valueDisplay = document.createElement('output');
       valueDisplay.className = 'x-range-value';
-      valueDisplay.style.cssText = 'text-align:center;font-weight:500;color:var(--text-primary,#f9fafb);';
       valueDisplay.textContent = `${config.valuePrefix}${element.value}${config.valueSuffix}`;
       wrapper.insertBefore(valueDisplay, element);
     }
@@ -46,7 +46,7 @@ export function range(element, options = {}) {
     // Min/Max labels
     if (config.showLabels) {
       const labelsContainer = document.createElement('div');
-      labelsContainer.style.cssText = 'display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-secondary,#9ca3af);';
+      labelsContainer.className = 'x-range-labels';
 
       minLabel = document.createElement('span');
       minLabel.textContent = element.min || '0';

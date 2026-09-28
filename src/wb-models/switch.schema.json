@@ -65,7 +65,7 @@
         "primary",
         "success"
       ],
-      "default": "default",
+      "default": "primary",
       "appliesClass": "x-switch--{{value}}"
     }
   },

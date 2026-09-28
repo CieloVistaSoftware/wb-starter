@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "articles.schema.json",
-  "title": "Articles List Behavior",
+  "title": "Articles List",
   "description": "A wrapper behavior to display a list or grid of articles.",
   "schemaFor": "articles",
   "baseClass": "x-articles",
@@ -38,7 +38,7 @@
     "source": {
       "type": "string",
       "description": "Data source URL for fetching articles dynamically",
-      "default": ""
+      "default": "this is the source"
     },
     "pagination": {
       "type": "boolean",
@@ -78,7 +78,7 @@
       "<div x-articles columns=\"3\">columns=3</div>",
       "<div x-articles limit=\"10\">limit=10</div>",
       "<div x-articles source=\"Sample source\">source=\"Sample source\"</div>",
-      "<div x-articles layout=\"grid\"><div x-article title=\"1\"></div><div x-article title=\"2\"></div></div>"
+      "<div x-articles layout=\"grid\"><article title=\"1\"></article><article title=\"2\"></article></div>"
     ],
     "matrix": {
       "combinations": [

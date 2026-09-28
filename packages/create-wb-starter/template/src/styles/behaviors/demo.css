@@ -4,8 +4,8 @@
  * Colored code sample below via <div x-mdhtml>.
  */
 
-x-demo,
-x-code-card {
+x-demo, [x-demo],
+x-code-card, [x-code-card]{
   display: block;
   margin-bottom: 1rem;
   max-width: 100vw;
@@ -14,7 +14,7 @@ x-code-card {
   overflow: hidden;
   /* Standard §13: >= 1rem padding inside example/demo containers. Was
      missing entirely (0 -- rendered content sat flush against the demo
-     box edge, relying only on whatever padding the rendered behavior
+     box edge, relying only on whatever padding the rendered component
      itself happened to have). demo-container-spacing.spec.ts's CSS-source
      check didn't catch this: it only flags padding that's PRESENT but
      under 1rem, not padding that's missing/0 -- fixed alongside this. */
@@ -33,8 +33,8 @@ x-code-card {
    to that specific host, only to non-<div x-dropdown> hosts (e.g. x-dropdown
    on a <button>), which the `.x-dropdown.open` half of this selector still
    covers. */
-x-demo:has(x-dropdown.open),
-x-demo:has(.x-dropdown.open) {
+x-demo:has(x-dropdown.open), [x-demo]:has(x-dropdown.open),
+x-demo:has(.x-dropdown.open), [x-demo]:has(.x-dropdown.open){
   overflow: visible;
 }
 
@@ -115,7 +115,7 @@ x-demo:has(.x-dropdown.open) {
      labels measure under 100px, well inside "genuinely tiny" territory
      too).
      --demo-code-min-width stays a variable (not now-unused) because
-     x-demo[data-code-width="50vw"] below still explicitly OPTS IN to a
+     [x-demo][data-code-width="50vw"] below still explicitly OPTS IN to a
      50vw floor for pages that want a wider code panel on purpose --
      unaffected by this change, since it sets the variable itself rather
      than relying on the fallback. */
@@ -126,23 +126,23 @@ x-demo:has(.x-dropdown.open) {
 /* Per-demo code width control: use data-code-width or --demo-code-max-width
    Example: <div x-demo style="--demo-code-max-width: 600px;">
    Presets: narrow (400px), normal (600px), wide (800px), full (100%) */
-x-demo[data-code-width="narrow"] .x-demo__code {
+x-demo[data-code-width="narrow"] .x-demo__code, [x-demo][data-code-width="narrow"] .x-demo__code{
   max-width: 400px;
 }
 
-x-demo[data-code-width="normal"] .x-demo__code {
+x-demo[data-code-width="normal"] .x-demo__code, [x-demo][data-code-width="normal"] .x-demo__code{
   max-width: 600px;
 }
 
-x-demo[data-code-width="wide"] .x-demo__code {
+x-demo[data-code-width="wide"] .x-demo__code, [x-demo][data-code-width="wide"] .x-demo__code{
   max-width: 800px;
 }
 
-x-demo[data-code-width="full"] .x-demo__code {
+x-demo[data-code-width="full"] .x-demo__code, [x-demo][data-code-width="full"] .x-demo__code{
   max-width: 100%;
 }
 
-x-demo[data-code-width="50vw"] .x-demo__code {
+x-demo[data-code-width="50vw"] .x-demo__code, [x-demo][data-code-width="50vw"] .x-demo__code{
   max-width: 50vw;
 }
 
@@ -157,10 +157,10 @@ x-demo[data-code-width="50vw"] .x-demo__code {
    requested width: min-width always wins over the JS-set `width` in the
    box model, so the demo (and everything width:100% inside it) grows to
    50vw regardless of how narrow the control's own shrink-measurement was.
-   Confirmed live: pages/behaviors.html's "This is the title" card demo
+   Confirmed live: pages/components.html's "This is the title" card demo
    was rendering source at ~250px with a horizontal scrollbar cutting off
    every attribute value mid-word. */
-x-demo[data-code-width="50vw"] {
+x-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
   --demo-code-min-width: 50vw;
   min-width: 50vw;
 }
@@ -201,6 +201,34 @@ x-demo[data-code-width="50vw"] {
   max-width: 100%;
 }
 
+/* ...unless that only child declares its own full width.
+ *
+ * `fit-content` sizes the track from the child, and a child asking for
+ * `width: 100%` resolves that against the very track it is sizing -- both
+ * collapse to 0. Measured on demos/site/feedback.html: #progress-progress's
+ * grid computed `grid-template-columns: 0px` and the demo rendered 0px wide
+ * and therefore invisible, while every neighbouring demo (alert 102px, badge
+ * 214px, chip 46px) was fine because each has intrinsic content width.
+ *
+ * `.x-progress` is `width: 100%` (progress.css:240). Hugging the content is
+ * meaningless for an element that has explicitly asked to fill its container,
+ * so those opt back into a real track. Scoped to the demo grid: no effect on
+ * how these behaviors lay out anywhere else.
+ */
+.x-demo__grid--cols-1:has(> :only-child):has(> .x-progress),
+.x-demo__grid--cols-1:has(> :only-child):has(> [x-progress]),
+.x-demo__grid--cols-1:has(> :only-child):has(> .x-skeleton),
+.x-demo__grid--cols-1:has(> :only-child):has(> [x-skeleton]) {
+  width: 100%;
+  grid-template-columns: 1fr;
+  /* The track alone is not enough for a skeleton: it is display:block with
+     NO width of its own (progress at least says 100%), so under the
+     `justify-items: start` inherited from the rule above it shrank to its
+     content -- and <div x-skeleton lines="3"> has none, only empty line
+     <span>s. It measured 0px wide on feedback.html. Stretch it into the track. */
+  justify-items: stretch;
+}
+
 /* Standard §7 (default / desktop): a single-item demo hugs its content as
    ONE unit -- rendered control AND its code panel below -- instead of
    stretching to fill the page. #563 follow-up, John's live correction ("do
@@ -215,10 +243,39 @@ x-demo[data-code-width="50vw"] {
    so the box is exactly as wide as it needs to be to show every code line
    in full, without ever going wider than that (still hugs content, never
    stretches to the page). */
-x-demo:has(> .x-demo__grid--cols-1 > :only-child) {
+x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
   width: var(--x-demo-shrink-width, fit-content);
   max-width: 100%;
   min-width: min(var(--demo-code-min-width, 0px), 90vw);
+}
+
+/* "All x-demo code must show all the code up to 50% vw" (owner, 2026-08-07),
+   for the stretch BEFORE demo.js commits --x-demo-shrink-width. Until then the
+   rule above falls back to `fit-content`, i.e. the code panel's full unwrapped
+   width: one long features="..." line painted a single-item pricing demo 757px
+   wide on a 1280px screen and then snapped it back when the measurement landed
+   (demo-single-item-card-shrink / demo-code-panel-50vw measured exactly that
+   frame). Capping the panel here makes fit-content resolve to what demo.js will
+   commit anyway -- max(control, min(code, 50vw)) -- so the first paint is the
+   final width. demo.js sets .x-demo--measuring for exactly as long as it is
+   measuring and swaps it for .x-demo--measured when it commits, which lifts
+   the cap: from then on the panel is width:100% of a demo sized to hold it,
+   and a control wider than 50vw keeps a panel as wide as the demo (never
+   cramped inside it). Keyed on demo.js's own class, not on a :has()
+   single-child shape: blocks demo.js never measures (built with two children,
+   one of which later leaves) matched the shape and kept the cap forever.
+   The block's OWN panels only (child combinators), never a nested demo's.
+   Desktop only: below 700px the panel is full width (§26). */
+@media (min-width: 701px) {
+  /* :not([data-code-width]) -- an authored width (§28 narrow/normal/wide) is
+     the author's answer already; this provisional cap outranked it for the
+     whole measurement, so a narrow panel painted at 50vw (640px at 1280). */
+  x-demo.x-demo--measuring:not([data-code-width]) > .x-pre-wrapper > .x-demo__code,
+  [x-demo].x-demo--measuring:not([data-code-width]) > .x-pre-wrapper > .x-demo__code,
+  x-demo.x-demo--measuring:not([data-code-width]) > .x-demo__code,
+  [x-demo].x-demo--measuring:not([data-code-width]) > .x-demo__code {
+    max-width: 50vw;
+  }
 }
 
 /* Escape hatch for §7: a `full-width` demo (e.g. a page hero) is a single
@@ -228,7 +285,7 @@ x-demo:has(> .x-demo__grid--cols-1 > :only-child) {
    source order alone can't win this -- !important is the deliberate,
    intended override for this specific opt-out, not a specificity workaround
    for something accidental. */
-x-demo.x-demo--full-width {
+x-demo.x-demo--full-width, [x-demo].x-demo--full-width{
   width: 100% !important;
   max-width: 100% !important;
 }
@@ -244,14 +301,14 @@ x-demo.x-demo--full-width {
    content's intrinsic width, creating the 11.44x height:width problem --
    confirmed live: cardhero in full-width single-item demo collapsed to 33px
    wide with 487px height = 14.7x aspect ratio). */
-x-demo.x-demo--full-width .x-demo__grid {
+x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__grid{
   width: 100% !important;
   max-width: 100% !important;
   justify-items: stretch;
 }
 
 /* Standard §26 (#390), MOBILE ONLY: below 700px a page like
-   pages/behaviors.html is a long vertical scroll past dozens of demos --
+   pages/components.html is a long vertical scroll past dozens of demos --
    there, letting each single-item demo's outer footprint shrink to its own
    content width (the §7 rule above) makes the page's horizontal edge jump
    left/right as you scroll past narrow vs. wide demos ("window slop"),
@@ -267,13 +324,13 @@ x-demo.x-demo--full-width .x-demo__grid {
      base rule's 1rem vertical spacing (between stacked demos) stays, this
      just narrows the horizontal breathing room to match mobile's tighter
      available width. */
-  x-demo,
-  x-code-card {
+  x-demo, [x-demo],
+  x-code-card, [x-code-card]{
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 
-  x-demo:has(> .x-demo__grid--cols-1 > :only-child) {
+  x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
     width: 100%;
     max-width: 100%;
   }
@@ -283,7 +340,7 @@ x-demo.x-demo--full-width .x-demo__grid {
     max-width: 100%;
   }
 
-  x-demo.x-demo--full-width .x-demo__grid {
+  x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__grid{
     width: 100% !important;
     max-width: 100% !important;
   }
@@ -299,13 +356,20 @@ x-demo.x-demo--full-width .x-demo__grid {
 .x-demo__grid--cols-5 { grid-template-columns: repeat(5, 1fr); }
 .x-demo__grid--cols-6 { grid-template-columns: repeat(6, 1fr); }
 
-.x-demo__grid > * {
+/* :where(), so this reset carries ZERO specificity.
+   As a plain `.x-demo__grid > *` (0,0,1,0) it tied with every card's own
+   deliberate min-width and won on source order, silently flattening them
+   back to 0 -- card.css documents that trap twice (#390, and again for the
+   size variants) and worked around it locally each time by compounding
+   selectors. The reset is a floor for items that have no opinion, so it
+   should lose to any item that does. */
+:where(.x-demo__grid) > * {
   min-width: 0;
 }
 
-x-demo > x-mdhtml,
-x-code-card > x-mdhtml,
-x-demo > .x-pre-wrapper {
+x-demo > x-mdhtml, [x-demo] > x-mdhtml,
+x-code-card > x-mdhtml, [x-code-card] > x-mdhtml,
+x-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
   display: block;
   margin-top: 0.5rem;
 }
@@ -363,7 +427,7 @@ x-demo > .x-pre-wrapper {
    As they are now they are in the way." -- this used to sit AT the corner,
    slightly overlapping the border (top/right: -0.5rem), which worked fine
    for large cards but covered a meaningful chunk of small elements (e.g.
-   x-badge, ~1.5-2rem tall) -- the icon and the thing it labels were
+   x-badge, [x-badge], ~1.5-2rem tall) -- the icon and the thing it labels were
    nearly the same size. Moved fully above the element with real clearance
    instead of overlapping it (later moved again, see below).
 
@@ -373,13 +437,13 @@ x-demo > .x-pre-wrapper {
    the top edge, offset OUTSIDE the right edge (top:0; right:-2rem) -- but
    `.x-card`'s own `overflow:hidden` (needed for its rounded corners)
    clips anything positioned past its own bounds, making the badge
-   completely invisible on every x-card* behavior (confirmed live on
+   completely invisible on every x-card* component (confirmed live on
    demos/site/cards.html: 293 links existed in the DOM, Playwright reported
    every sampled one "visible", but a real screenshot showed zero of them
    -- clipped, not hidden by opacity/display). Settled on an INSET
    (top/right: 0.5rem) instead -- still at the top, still toward the right,
    but never past either edge, so no ancestor's overflow:hidden could clip
-   it regardless of behavior type.
+   it regardless of component type.
 
    John: "move it to be all the way on the upper right side of that
    element." -- flush with the corner (top:0; right:0), not inset by
@@ -428,11 +492,11 @@ x-demo > .x-pre-wrapper {
    starts 5rem lower, leaving the icon a full 5rem of genuinely clear space
    above every rendered example, regardless of how small any individual
    instance is. */
-x-demo:has(> .x-demo__card-doc-link) {
+x-demo:has(> .x-demo__card-doc-link), [x-demo]:has(> .x-demo__card-doc-link){
   padding-top: 5rem;
 }
 
-/* A grid mixing genuinely different behaviors/behaviors (rare -- most
+/* A grid mixing genuinely different components/behaviors (rare -- most
    demo blocks are one file's own instances) gets one icon per distinct
    doc file instead of silently dropping the second (see the href-based
    dedup in attachInstanceDocLink). Offset a later icon left so it doesn't
@@ -486,4 +550,17 @@ x-demo:has(> .x-demo__card-doc-link) {
 
 .x-demo__events-log-entry:last-child {
   border-bottom: none;
+}
+
+/* #779: demo.js used to write these onto element.style. */
+
+/* The doc-link badge's anchor, only when it had no positioning context. */
+.x-demo__anchor--positioned {
+  position: relative;
+}
+
+/* The code panel stays laid out (so it can be measured) but unseen until its
+   highlighting has landed -- see the #985/#986 notes in demo.js. */
+.x-demo__code--pending {
+  visibility: hidden;
 }

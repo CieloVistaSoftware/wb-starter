@@ -1,4 +1,5 @@
 import { readFlag, readAttr } from '../core/read-attr.js';
+import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
 /**
  * Layout Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -11,6 +12,13 @@ import { readFlag, readAttr } from '../core/read-attr.js';
  * Usage:
  *   <div x-grid data-columns="3">...</div>
  *   <div data-justify="between">...</div>
+ *
+ * #779 -- no inline styles. Every declaration these primitives used to write
+ * onto element.style now has a default in src/styles/behaviors/layout.css,
+ * keyed on the class each one adds. What an author sets through an attribute
+ * (gap="2rem", min-width="300px", ...) is a runtime value, so it travels as a
+ * generated stylesheet rule (src/core/dynamic-style.js) holding ONLY the
+ * values that differ from those defaults.
  */
 
 /**
@@ -41,34 +49,37 @@ export function grid(element, options = {}) {
   // like <div x-grid> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-grid> tag does not get a redundant class.
   element.classList.add('x-grid');
-  element.style.display = 'grid';
-  element.style.gap = config.gap;
 
+  let gridTemplateColumns;
   if (config.minWidth) {
     // Explicit min-width: use auto-fit with minmax
-    element.style.gridTemplateColumns = `repeat(auto-fit, minmax(${config.minWidth}, 1fr))`;
+    gridTemplateColumns = `repeat(auto-fit, minmax(${config.minWidth}, 1fr))`;
   } else {
     // Smart default: auto-fit with sensible min-width based on column count
     // This is mobile-first — columns collapse naturally on small screens
     const defaultMins = { '2': '280px', '3': '250px', '4': '200px', '5': '180px', '6': '150px' };
     const autoMin = defaultMins[config.columns] || '250px';
-    element.style.gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
-  }
-
-  if (config.rows) {
-    element.style.gridTemplateRows = `repeat(${config.rows}, auto)`;
+    gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
   }
 
   // `center` is a shorthand for aligning + centering item content in one step.
   const alignItems = config.center ? 'center' : config.align;
   const justifyItems = config.center ? 'center' : config.justify;
-  if (alignItems) element.style.alignItems = alignItems;
-  if (justifyItems) element.style.justifyItems = justifyItems;
-  if (config.center) element.style.textAlign = 'center';
 
-  if (config.background) {
-    element.style.background = config.background;
-  }
+  // display:grid, the 1rem gap and the 3-column template are layout.css's
+  // .x-grid defaults; only what differs travels (#779).
+  setRule(element, 'layout', onlyChanged({
+    gap: config.gap,
+    gridTemplateColumns,
+    gridTemplateRows: config.rows ? `repeat(${config.rows}, auto)` : '',
+    alignItems,
+    justifyItems,
+    textAlign: config.center ? 'center' : '',
+    background: config.background,
+  }, {
+    gap: '1rem',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))',
+  }));
 
   if (config.altRows) {
     element.classList.add('x-grid--alt-rows');
@@ -88,7 +99,10 @@ export function grid(element, options = {}) {
     element.insertBefore(frag, element.firstChild);
   }
 
-  return () => element.classList.remove('x-grid--alt-rows');
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-grid--alt-rows');
+  };
 }
 
 /**
@@ -106,14 +120,16 @@ export function flex(element, options = {}) {
   };
 
   element.classList.add('x-flex');
-  element.style.display = 'flex';
-  element.style.flexDirection = config.direction;
-  element.style.flexWrap = config.wrap;
-  element.style.justifyContent = config.justify;
-  element.style.alignItems = config.align;
-  element.style.gap = config.gap;
+  // Defaults are layout.css's .x-flex; only author changes travel (#779).
+  setRule(element, 'layout', onlyChanged({
+    flexDirection: config.direction,
+    flexWrap: config.wrap,
+    justifyContent: config.justify,
+    alignItems: config.align,
+    gap: config.gap,
+  }, { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', alignItems: 'stretch', gap: '1rem' }));
 
-  return () => element.classList.remove('x-flex');
+  return () => { clearRules(element); element.classList.remove('x-flex'); };
 }
 
 /**
@@ -148,38 +164,39 @@ export function container(element, options = {}) {
   const alignMap = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch' };
   const justifyMap = { start: 'flex-start', center: 'center', end: 'flex-end', 'space-between': 'space-between', 'space-around': 'space-around', 'space-evenly': 'space-evenly' };
   
-  // Determine layout mode
+  // Determine layout mode. layout.css's .x-container is the flex-mode
+  // default and .x-container--grid the grid-mode one (#779); only what the
+  // author changed from those travels as a generated rule.
+  const decls = {
+    alignItems: alignMap[config.align] || config.align,
+    justifyContent: justifyMap[config.justify] || config.justify,
+    gap: config.gap,
+    padding: config.padding,
+  };
+  const defaults = { alignItems: 'stretch', justifyContent: 'flex-start', gap: '1rem', padding: '1rem' };
   if (config.columns === 1) {
     // FLEX MODE: Stack (column) or Row (row)
-    element.style.display = 'flex';
-    element.style.flexDirection = config.direction;
-    element.style.flexWrap = config.wrap ? 'wrap' : 'nowrap';
-    element.style.alignItems = alignMap[config.align] || config.align;
-    element.style.justifyContent = justifyMap[config.justify] || config.justify;
-    element.style.gap = config.gap;
+    decls.flexDirection = config.direction;
+    decls.flexWrap = config.wrap ? 'wrap' : 'nowrap';
+    Object.assign(defaults, { flexDirection: 'column', flexWrap: 'wrap' });
   } else {
     // GRID MODE: Multiple columns (mobile-first with auto-fit)
-    element.style.display = 'grid';
+    element.classList.add('x-container--grid');
     const defaultMins = { 2: '280px', 3: '250px', 4: '200px', 5: '180px', 6: '150px' };
     const autoMin = defaultMins[config.columns] || '250px';
-    element.style.gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
-    element.style.alignItems = alignMap[config.align] || config.align;
-    element.style.justifyContent = justifyMap[config.justify] || config.justify;
-    element.style.gap = config.gap;
+    decls.gridTemplateColumns = `repeat(auto-fit, minmax(min(${autoMin}, 100%), 1fr))`;
+    defaults.gridTemplateColumns = 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))';
   }
-  
-  // Apply padding
-  element.style.padding = config.padding;
-  
+
   // Apply max-width if set
   if (config.maxWidth) {
-    element.style.maxWidth = config.maxWidth;
-    element.style.marginLeft = 'auto';
-    element.style.marginRight = 'auto';
+    Object.assign(decls, { maxWidth: config.maxWidth, marginLeft: 'auto', marginRight: 'auto' });
   }
-  
+  setRule(element, 'layout', onlyChanged(decls, defaults));
+
   return () => {
-    element.style.cssText = '';
+    clearRules(element);
+    element.classList.remove('x-container--grid');
   };
 }
 
@@ -214,17 +231,18 @@ export function stack(element, options = {}) {
   // like <div x-stack> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-stack> tag does not get a redundant class.
   element.classList.add('x-stack');
-  element.style.display = 'flex';
-  element.style.flexDirection = 'column';
-  element.style.gap = config.gap;
-  if (config.justify) element.style.justifyContent = config.justify;
-  if (config.align) element.style.alignItems = config.align;
-  if (config.wrap) element.style.flexWrap = config.wrap;
-  if (config.bg) element.style.background = config.bg;
-  if (config.pad) element.style.padding = config.pad;
-  if (config.radius) element.style.borderRadius = config.radius;
+  // display/direction/1rem gap: layout.css's .x-stack (#779).
+  setRule(element, 'layout', onlyChanged({
+    gap: config.gap,
+    justifyContent: config.justify,
+    alignItems: config.align,
+    flexWrap: config.wrap,
+    background: config.bg,
+    padding: config.pad,
+    borderRadius: config.radius,
+  }, { gap: '1rem' }));
 
-  return () => {};
+  return () => clearRules(element);
 }
 
 /**
@@ -247,13 +265,14 @@ export function cluster(element, options = {}) {
   // like <div x-cluster> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-cluster> tag does not get a redundant class.
   element.classList.add('x-cluster');
-  element.style.display = 'flex';
-  element.style.flexWrap = 'wrap';
-  element.style.gap = config.gap;
-  element.style.justifyContent = config.justify;
-  element.style.alignItems = config.align;
+  // Defaults: layout.css's .x-cluster (#779).
+  setRule(element, 'layout', onlyChanged({
+    gap: config.gap,
+    justifyContent: config.justify,
+    alignItems: config.align,
+  }, { gap: '1rem', justifyContent: 'flex-start', alignItems: 'center' }));
 
-  return () => {};
+  return () => clearRules(element);
 }
 
 /**
@@ -269,21 +288,23 @@ export function center(element, options = {}) {
   };
 
   element.classList.add('x-center');
-  
+
+  // .x-center / .x-center--intrinsic in layout.css (#779); max-width and
+  // non-default gutters travel as a generated rule.
   if (config.intrinsic) {
-    element.style.display = 'flex';
-    element.style.flexDirection = 'column';
-    element.style.alignItems = 'center';
+    element.classList.add('x-center--intrinsic');
   } else {
-    element.style.boxSizing = 'content-box';
-    element.style.marginLeft = 'auto';
-    element.style.marginRight = 'auto';
-    if (config.maxWidth) element.style.maxWidth = config.maxWidth;
-    element.style.paddingLeft = config.gutters;
-    element.style.paddingRight = config.gutters;
+    setRule(element, 'layout', onlyChanged({
+      maxWidth: config.maxWidth,
+      paddingLeft: config.gutters,
+      paddingRight: config.gutters,
+    }, { paddingLeft: '1rem', paddingRight: '1rem' }));
   }
 
-  return () => element.classList.remove('x-center');
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-center', 'x-center--intrinsic');
+  };
 }
 
 /**
@@ -300,22 +321,33 @@ export function sidebarlayout(element, options = {}) {
   };
 
   element.classList.add('x-sidebar-layout');
-  element.style.display = 'flex';
-  element.style.flexWrap = 'wrap';
-  element.style.gap = config.gap;
+  // The side/main split is .x-sidebar-layout__side / __main in layout.css,
+  // sized by custom properties that travel on the host as a generated rule
+  // only when the author changed them (#779).
+  setRule(element, 'layout', onlyChanged({
+    gap: config.gap,
+    '--x-sidebar-width': config.sideWidth,
+    '--x-sidebar-content-min': config.contentMin,
+  }, { gap: '1rem', '--x-sidebar-width': '300px', '--x-sidebar-content-min': '50%' }));
 
   const children = Array.from(element.children);
+  let side = null;
+  let main = null;
   if (children.length >= 2) {
     const sideIndex = config.side === 'left' ? 0 : 1;
     const mainIndex = config.side === 'left' ? 1 : 0;
-    children[sideIndex].style.flexBasis = config.sideWidth;
-    children[sideIndex].style.flexGrow = '1';
-    children[mainIndex].style.flexBasis = '0';
-    children[mainIndex].style.flexGrow = '999';
-    children[mainIndex].style.minWidth = config.contentMin;
+    side = children[sideIndex];
+    main = children[mainIndex];
+    side.classList.add('x-sidebar-layout__side');
+    main.classList.add('x-sidebar-layout__main');
   }
 
-  return () => element.classList.remove('x-sidebar-layout');
+  return () => {
+    clearRules(element);
+    if (side) side.classList.remove('x-sidebar-layout__side');
+    if (main) main.classList.remove('x-sidebar-layout__main');
+    element.classList.remove('x-sidebar-layout');
+  };
 }
 
 /**
@@ -336,17 +368,21 @@ export function switcher(element, options = {}) {
   // (demos/layout-test.html). Same guard pattern as article()/articles()
   // (src/wb-viewmodels/article.js, #523/#528) and chip() (feedback.js, #521).
   element.classList.add('x-switcher');
-  element.style.display = 'flex';
-  element.style.flexWrap = 'wrap';
-  element.style.gap = config.gap;
+  // The flex host and each child's grow/basis are layout.css's .x-switcher
+  // and .x-switcher__item, reading --x-switcher-threshold (#779).
+  setRule(element, 'layout', onlyChanged({
+    gap: config.gap,
+    '--x-switcher-threshold': config.threshold,
+  }, { gap: '1rem', '--x-switcher-threshold': '30rem' }));
 
   const children = Array.from(element.children);
-  children.forEach(child => {
-    child.style.flexGrow = '1';
-    child.style.flexBasis = `calc((${config.threshold} - 100%) * 999)`;
-  });
+  children.forEach(child => child.classList.add('x-switcher__item'));
 
-  return () => element.classList.remove('x-switcher');
+  return () => {
+    clearRules(element);
+    children.forEach(child => child.classList.remove('x-switcher__item'));
+    element.classList.remove('x-switcher');
+  };
 }
 
 /**
@@ -361,16 +397,20 @@ export function masonry(element, options = {}) {
   };
 
   element.classList.add('x-masonry');
-  element.style.columnCount = config.columns;
-  element.style.columnGap = config.gap;
+  // .x-masonry / .x-masonry__item in layout.css read --x-masonry-gap (#779).
+  setRule(element, 'layout', onlyChanged({
+    columnCount: config.columns,
+    '--x-masonry-gap': config.gap,
+  }, { columnCount: 3, '--x-masonry-gap': '1rem' }));
 
-  const items = element.children;
-  for (let item of items) {
-    item.style.breakInside = 'avoid';
-    item.style.marginBottom = config.gap;
-  }
+  const items = Array.from(element.children);
+  items.forEach(item => item.classList.add('x-masonry__item'));
 
-  return () => element.classList.remove('x-masonry');
+  return () => {
+    clearRules(element);
+    items.forEach(item => item.classList.remove('x-masonry__item'));
+    element.classList.remove('x-masonry');
+  };
 }
 
 /**
@@ -385,13 +425,15 @@ export function sticky(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-sticky');
-  element.style.position = 'sticky';
-  if (config.top) element.style.top = config.top;
-  if (config.bottom) element.style.bottom = config.bottom;
-  element.style.zIndex = config.zIndex;
+  element.classList.add('x-sticky', 'x-sticky--layout');
+  // .x-sticky--layout in layout.css; author offsets travel as a rule (#779).
+  setRule(element, 'layout', onlyChanged({
+    top: config.top,
+    bottom: config.bottom,
+    zIndex: config.zIndex,
+  }, { top: '0', zIndex: '100' }));
 
-  return () => element.classList.remove('x-sticky');
+  return () => { clearRules(element); element.classList.remove('x-sticky', 'x-sticky--layout'); };
 }
 
 /**
@@ -405,23 +447,17 @@ export function fixed(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-fixed');
-  element.style.position = 'fixed';
-  element.style.zIndex = config.zIndex;
+  // Placement per position is an .x-fixed--{position} class in layout.css,
+  // reading --x-fixed-offset; only a changed offset/z-index travels (#779).
+  const positions = ['top-left', 'top-right', 'top-center', 'bottom-left', 'bottom-right', 'bottom-center', 'center'];
+  const position = positions.includes(config.position) ? config.position : 'bottom-right';
+  element.classList.add('x-fixed', `x-fixed--${position}`);
+  setRule(element, 'layout', onlyChanged({
+    zIndex: config.zIndex,
+    '--x-fixed-offset': config.offset,
+  }, { zIndex: '1000', '--x-fixed-offset': '1rem' }));
 
-  const positions = {
-    'top-left': { top: config.offset, left: config.offset },
-    'top-right': { top: config.offset, right: config.offset },
-    'top-center': { top: config.offset, left: '50%', transform: 'translateX(-50%)' },
-    'bottom-left': { bottom: config.offset, left: config.offset },
-    'bottom-right': { bottom: config.offset, right: config.offset },
-    'bottom-center': { bottom: config.offset, left: '50%', transform: 'translateX(-50%)' },
-    'center': { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
-  };
-
-  Object.assign(element.style, positions[config.position] || positions['bottom-right']);
-
-  return () => element.classList.remove('x-fixed');
+  return () => { clearRules(element); element.classList.remove('x-fixed', `x-fixed--${position}`); };
 }
 
 /**
@@ -436,17 +472,23 @@ export function scrollable(element, options = {}) {
   };
 
   element.classList.add('x-scrollable');
-  
+
+  // .x-scrollable--y / --x in layout.css; max sizes travel as a rule (#779).
+  const decls = {};
   if (config.direction === 'vertical' || config.direction === 'both') {
-    element.style.overflowY = 'auto';
-    if (config.maxHeight) element.style.maxHeight = config.maxHeight;
+    element.classList.add('x-scrollable--y');
+    decls.maxHeight = config.maxHeight;
   }
   if (config.direction === 'horizontal' || config.direction === 'both') {
-    element.style.overflowX = 'auto';
-    if (config.maxWidth) element.style.maxWidth = config.maxWidth;
+    element.classList.add('x-scrollable--x');
+    decls.maxWidth = config.maxWidth;
   }
+  setRule(element, 'layout', onlyChanged(decls));
 
-  return () => element.classList.remove('x-scrollable');
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-scrollable', 'x-scrollable--x', 'x-scrollable--y');
+  };
 }
 
 /**
@@ -461,10 +503,11 @@ export function cover(element, options = {}) {
   };
 
   element.classList.add('x-cover');
-  element.style.display = 'flex';
-  element.style.flexDirection = 'column';
-  element.style.minHeight = config.minHeight;
-  element.style.padding = config.padding;
+  // .x-cover in layout.css; changed min-height/padding travel as a rule (#779).
+  setRule(element, 'layout', onlyChanged({
+    minHeight: config.minHeight,
+    padding: config.padding,
+  }, { minHeight: '100vh', padding: '1rem' }));
 
   // What gets centred is read from the markup itself, not from a marker
   // attribute (John: "what is data-principal? remove it"). A <header> and a
@@ -475,13 +518,17 @@ export function cover(element, options = {}) {
   const isEdge = (el) => el.tagName === 'HEADER' || el.tagName === 'FOOTER';
   const middle = children.filter((el) => !isEdge(el));
   if (middle.length && middle.length < children.length) {
-    middle[0].style.marginTop = 'auto';
-    middle[middle.length - 1].style.marginBottom = 'auto';
+    middle[0].classList.add('x-cover__middle-start');
+    middle[middle.length - 1].classList.add('x-cover__middle-end');
   } else {
-    element.style.justifyContent = 'center';
+    element.classList.add('x-cover--centered');
   }
 
-  return () => element.classList.remove('x-cover');
+  return () => {
+    clearRules(element);
+    middle.forEach((el) => el.classList.remove('x-cover__middle-start', 'x-cover__middle-end'));
+    element.classList.remove('x-cover', 'x-cover--centered');
+  };
 }
 
 /**
@@ -496,15 +543,15 @@ export function frame(element, options = {}) {
 
   element.classList.add('x-frame');
   // #1003 -- only the ratio varies, so it travels as a custom property; the
-  // rest is constant and lives in the stylesheet. Inline styles beat every
-  // stylesheet, so setting them here made a framed image unthemeable except
-  // via !important, which the laws also forbid.
-  element.style.setProperty('--x-frame-ratio', config.ratio);
+  // rest is constant and lives in the stylesheet. #779: and that property is
+  // a generated rule, not element.style, and only when it is not the 16/9
+  // default the stylesheet already falls back to.
+  setRule(element, 'layout', onlyChanged({ '--x-frame-ratio': config.ratio }, { '--x-frame-ratio': '16/9' }));
 
   const child = element.firstElementChild;
   if (child) child.classList.add('x-frame__content');
 
-  return () => element.classList.remove('x-frame');
+  return () => { clearRules(element); element.classList.remove('x-frame'); };
 }
 
 /**
@@ -519,19 +566,23 @@ export function reel(element, options = {}) {
   };
 
   element.classList.add('x-reel');
-  element.style.display = 'flex';
-  element.style.overflowX = 'auto';
-  element.style.gap = config.gap;
-  element.style.scrollSnapType = 'x mandatory';
+  // .x-reel / .x-reel__item in layout.css (#779). An item-width is a
+  // custom property the items read, and only under --sized, so an item's own
+  // width is untouched unless the author asked for one.
+  if (config.itemWidth !== 'auto') element.classList.add('x-reel--sized');
+  setRule(element, 'layout', onlyChanged({
+    gap: config.gap,
+    '--x-reel-item-width': config.itemWidth,
+  }, { gap: '1rem', '--x-reel-item-width': 'auto' }));
 
-  const children = element.children;
-  for (let child of children) {
-    child.style.flexShrink = '0';
-    child.style.scrollSnapAlign = 'start';
-    if (config.itemWidth !== 'auto') child.style.width = config.itemWidth;
-  }
+  const children = Array.from(element.children);
+  children.forEach(child => child.classList.add('x-reel__item'));
 
-  return () => element.classList.remove('x-reel');
+  return () => {
+    clearRules(element);
+    children.forEach(child => child.classList.remove('x-reel__item'));
+    element.classList.remove('x-reel', 'x-reel--sized');
+  };
 }
 
 /**
@@ -545,17 +596,18 @@ export function imposter(element, options = {}) {
   };
 
   element.classList.add('x-imposter');
-  element.style.position = config.breakout ? 'fixed' : 'absolute';
-  element.style.top = '50%';
-  element.style.left = '50%';
-  element.style.transform = 'translate(-50%, -50%)';
+  // .x-imposter / --breakout / --contained in layout.css (#779); the margin
+  // is an author value and travels as --x-imposter-margin.
+  if (config.breakout) element.classList.add('x-imposter--breakout');
   if (config.margin !== '0') {
-    element.style.maxWidth = `calc(100% - ${config.margin} * 2)`;
-    element.style.maxHeight = `calc(100% - ${config.margin} * 2)`;
-    element.style.overflow = 'auto';
+    element.classList.add('x-imposter--contained');
+    setRule(element, 'layout', { '--x-imposter-margin': config.margin });
   }
 
-  return () => element.classList.remove('x-imposter');
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-imposter', 'x-imposter--breakout', 'x-imposter--contained');
+  };
 }
 
 /**
@@ -570,17 +622,20 @@ export function icon(element, options = {}) {
   };
 
   element.classList.add('x-icon');
-  element.style.display = 'inline-flex';
-  element.style.alignItems = 'center';
-  element.style.gap = config.space;
+  // .x-icon / .x-icon__svg in layout.css read --x-icon-size (#779).
+  setRule(element, 'layout', onlyChanged({
+    gap: config.space,
+    '--x-icon-size': config.size,
+  }, { gap: '0.5em', '--x-icon-size': '1em' }));
 
   const svg = element.querySelector('svg');
-  if (svg) {
-    svg.style.width = config.size;
-    svg.style.height = config.size;
-  }
+  if (svg) svg.classList.add('x-icon__svg');
 
-  return () => element.classList.remove('x-icon');
+  return () => {
+    clearRules(element);
+    if (svg) svg.classList.remove('x-icon__svg');
+    element.classList.remove('x-icon');
+  };
 }
 
 /**
@@ -598,6 +653,13 @@ export function drawerLayout(element, options = {}) {
     maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '50vh',
     resizable: options.resizable ?? (element.dataset.resizable === 'true' || element.getAttribute('resizable') === 'true'),
     saveState: options.saveState ?? (element.dataset.saveState === 'true' || element.getAttribute('save-state') === 'true'),
+    // Declared in drawerLayout.schema.json ("Initial collapsed state") and
+    // read by nothing: every-declared-attribute.spec.ts only ever passed it
+    // because the old inline style attribute serialised in a different
+    // position on the probe than on its baseline, a difference in outerHTML
+    // that had nothing to do with `collapsed`. With the inline styles gone
+    // (#779) that accident went too, and the attribute was plainly inert.
+    collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
     id: options.id || element.id || 'drawer',
     toggleSelector: options.toggleSelector || element.dataset.toggleSelector || element.getAttribute('toggle-selector'),
     handleSelector: options.handleSelector || element.dataset.handleSelector || element.getAttribute('handle-selector'),
@@ -625,39 +687,43 @@ export function drawerLayout(element, options = {}) {
   
   // Restore state
   let savedWidth = config.saveState ? localStorage.getItem(storageKeyWidth) : null;
-  let isCollapsed = config.saveState ? localStorage.getItem(storageKeyCollapsed) === 'true' : false;
+  // A saved state wins over the authored initial one, as a saved width does.
+  const savedCollapsed = config.saveState ? localStorage.getItem(storageKeyCollapsed) : null;
+  let isCollapsed = savedCollapsed !== null ? savedCollapsed === 'true' : !!config.collapsed;
 
-  // Base styles
-  element.style.position = 'relative';
-  element.style.display = 'flex';
-  element.style.flexDirection = 'column';
-  
+  // Base styles: position/display/direction/transition are layout.css's
+  // .x-drawer-layout (and --vertical); overflow/border while collapsed are
+  // .x-drawer-layout.collapsed (#779). The size is the author's width/height
+  // or a dragged one, so it travels as a generated rule -- one slot holding
+  // size, min-size and flex-basis together, as the three always move as one.
+  const setSize = (size) => setRule(element, 'size', isVertical
+    ? { height: size, minHeight: size, flexBasis: size }
+    : { width: size, minWidth: size, flexBasis: size });
+
+  // The toggle button and handle are sized from the collapsed size; they read
+  // it from these properties rather than having it written onto them.
+  setRule(element, 'layout', onlyChanged({
+    maxWidth: isVertical ? '' : config.maxWidth,
+    maxHeight: isVertical ? config.maxHeight : '',
+    '--x-drawer-min-width': config.minWidth,
+    '--x-drawer-min-height': config.minHeight,
+  }, { '--x-drawer-min-width': '1.5rem', '--x-drawer-min-height': '1.5rem' }));
+
   if (isVertical) {
-     element.style.transition = 'height 0.3s ease, min-height 0.3s ease, flex-basis 0.3s ease';
-     element.style.width = '100%';
+     element.classList.add('x-drawer-layout--vertical');
      // Initial state
      const initialHeight = savedWidth || config.height;
-     element.style.height = isCollapsed ? config.minHeight : initialHeight;
-     element.style.minHeight = isCollapsed ? config.minHeight : initialHeight;
-     element.style.flexBasis = isCollapsed ? config.minHeight : initialHeight;
-     if (config.maxHeight) element.style.maxHeight = config.maxHeight;
+     setSize(isCollapsed ? config.minHeight : initialHeight);
      element.dataset.originalSize = initialHeight;
   } else {
-     element.style.transition = 'width 0.3s ease, min-width 0.3s ease, flex-basis 0.3s ease';
      // Initial state
      const initialWidth = savedWidth || config.width;
-     element.style.width = isCollapsed ? config.minWidth : initialWidth;
-     element.style.minWidth = isCollapsed ? config.minWidth : initialWidth;
-     element.style.flexBasis = isCollapsed ? config.minWidth : initialWidth;
-     if (config.maxWidth) element.style.maxWidth = config.maxWidth;
+     setSize(isCollapsed ? config.minWidth : initialWidth);
      element.dataset.originalSize = initialWidth;
   }
-  
+
   if (isCollapsed) {
     element.classList.add('collapsed');
-    element.style.overflow = 'hidden';
-    element.dataset.prevBorder = element.style.border;
-    element.style.border = 'none';
   }
   
   // Arrow logic -- must live in this outer scope (not nested inside the
@@ -683,36 +749,16 @@ export function drawerLayout(element, options = {}) {
       toggleBtn.innerHTML = getArrow(isCollapsed);
     }
     
+    // The collapsed class hides overflow and the border (layout.css); taking
+    // it off restores whatever border the stylesheet gives the drawer, so
+    // nothing has to be remembered and written back.
     if (isCollapsed) {
       element.classList.add('collapsed');
-      element.style.overflow = 'hidden'; // Hide content
-      element.dataset.prevBorder = element.style.border;
-      element.style.border = 'none';
-      
-      if (isVertical) {
-          element.style.height = config.minHeight;
-          element.style.minHeight = config.minHeight;
-          element.style.flexBasis = config.minHeight;
-      } else {
-          element.style.width = config.minWidth;
-          element.style.minWidth = config.minWidth;
-          element.style.flexBasis = config.minWidth;
-      }
+      setSize(isVertical ? config.minHeight : config.minWidth);
     } else {
       element.classList.remove('collapsed');
-      element.style.overflow = '';
-      element.style.border = element.dataset.prevBorder || '';
-      
       const restoredSize = element.dataset.originalSize || (isVertical ? config.height : config.width);
-      if (isVertical) {
-          element.style.height = restoredSize;
-          element.style.minHeight = restoredSize;
-          element.style.flexBasis = restoredSize;
-      } else {
-          element.style.width = restoredSize;
-          element.style.minWidth = restoredSize;
-          element.style.flexBasis = restoredSize;
-      }
+      setSize(restoredSize);
     }
   };
 
@@ -731,49 +777,9 @@ export function drawerLayout(element, options = {}) {
     
     toggleBtn.innerHTML = getArrow(isCollapsed);
     
-    // Button Styles
-    let btnStyles = `
-      position: absolute;
-      background: var(--bg-secondary, #1f2937);
-      border: 1px solid var(--border-color, #374151);
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.625rem;
-      color: var(--text-secondary, #9ca3af);
-      padding: 0;
-      outline: none;
-    `;
-    
-    if (config.position === 'left') {
-        btnStyles += `
-          top: 50%; transform: translateY(-50%); right: -${config.minWidth};
-          width: ${config.minWidth}; height: 3rem;
-          border-left: none; border-radius: 0 4px 4px 0;
-        `;
-    } else if (config.position === 'right') {
-        btnStyles += `
-          top: 50%; transform: translateY(-50%); left: 0;
-          width: ${config.minWidth}; height: 3rem;
-          border-right: none; border-radius: 4px 0 0 4px;
-        `;
-    } else if (config.position === 'top') {
-        btnStyles += `
-          left: 50%; transform: translateX(-50%); bottom: 0;
-          height: ${config.minHeight}; width: 3rem;
-          border-top: none; border-radius: 0 0 4px 4px;
-        `;
-    } else if (config.position === 'bottom') {
-        btnStyles += `
-          left: 50%; transform: translateX(-50%); top: 0;
-          height: ${config.minHeight}; width: 3rem;
-          border-bottom: none; border-radius: 4px 4px 0 0;
-        `;
-    }
-    
-    toggleBtn.style.cssText = btnStyles;
+    // Chrome and per-position placement: .x-drawer-toggle and
+    // .x-drawer-toggle--{position} in layout.css (#779).
+    toggleBtn.classList.add(`x-drawer-toggle--${config.position}`);
     toggleBtn.onclick = (e) => {
       e.stopPropagation();
       toggle();
@@ -789,21 +795,8 @@ export function drawerLayout(element, options = {}) {
       handle = document.querySelector(config.handleSelector);
     } else {
       handle = document.createElement('div');
-      handle.className = 'x-drawer-handle';
-      // Style based on position
-      const size = '8px';
-      const styles = { position: 'absolute', zIndex: '20', background: 'transparent' };
-      
-      if (config.position === 'left') {
-        styles.right = '0'; styles.top = '0'; styles.bottom = '0'; styles.width = size; styles.cursor = 'col-resize';
-      } else if (config.position === 'right') {
-        styles.left = '0'; styles.top = '0'; styles.bottom = '0'; styles.width = size; styles.cursor = 'col-resize';
-      } else if (config.position === 'top') {
-        styles.bottom = '0'; styles.left = '0'; styles.right = '0'; styles.height = size; styles.cursor = 'row-resize';
-      } else if (config.position === 'bottom') {
-        styles.top = '0'; styles.left = '0'; styles.right = '0'; styles.height = size; styles.cursor = 'row-resize';
-      }
-      Object.assign(handle.style, styles);
+      // Placement per position: .x-drawer-handle--{position} in layout.css (#779).
+      handle.className = `x-drawer-handle x-drawer-handle--${config.position}`;
       element.appendChild(handle);
     }
 
@@ -827,11 +820,8 @@ export function drawerLayout(element, options = {}) {
         // Create overlay for cursor handling (Compliance: No body.style modification)
         const overlay = document.createElement('div');
         overlay.id = 'x-resize-overlay';
-        overlay.style.cssText = `
-          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-          z-index: 9999; cursor: ${isVertical ? 'row-resize' : 'col-resize'};
-          user-select: none;
-        `;
+        // .x-drawer-resize-overlay in layout.css (#779).
+        overlay.className = `x-drawer-resize-overlay x-drawer-resize-overlay--${isVertical ? 'row' : 'col'}`;
         document.body.appendChild(overlay);
         
         element.classList.add('resizing');
@@ -895,15 +885,7 @@ export function drawerLayout(element, options = {}) {
           
           newSize = Math.max(min, Math.min(max, newSize));
           
-          if (isVertical) {
-            element.style.height = newSize + 'px';
-            element.style.minHeight = newSize + 'px';
-            element.style.flexBasis = newSize + 'px';
-          } else {
-            element.style.width = newSize + 'px';
-            element.style.minWidth = newSize + 'px';
-            element.style.flexBasis = newSize + 'px';
-          }
+          setSize(newSize + 'px');
           rAF = null;
         });
       };
@@ -948,16 +930,8 @@ export function drawerLayout(element, options = {}) {
     if (config.toggleSelector && toggleBtn) toggleBtn.removeEventListener('click', toggle);
     if (resizeCleanup) resizeCleanup();
     
-    element.style.width = '';
-    element.style.minWidth = '';
-    element.style.height = '';
-    element.style.minHeight = '';
-    element.style.position = '';
-    element.style.transition = '';
-    element.style.display = '';
-    element.style.flexDirection = '';
-    element.style.border = '';
-    element.style.overflow = '';
+    clearRules(element);
+    element.classList.remove('x-drawer-layout--vertical');
     delete element.wbToggle;
   };
 }

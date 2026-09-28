@@ -1,4 +1,5 @@
 import { readFlag } from '../core/read-attr.js';
+import { setRule } from '../core/dynamic-style.js';
 /**
  * Move Behaviors
  * -----------------------------------------------------------------------------
@@ -67,9 +68,11 @@ function getGridInfo(container) {
 function swapElements(el1, el2, animate = true) {
   if (!el1 || !el2 || el1 === el2) return false;
   
+  // The transition is .x-move__item--animated in move.css (#779: it was
+  // written onto both elements' style attributes).
   if (animate) {
-    el1.style.transition = 'transform 0.2s ease';
-    el2.style.transition = 'transform 0.2s ease';
+    el1.classList.add('x-move__item--animated');
+    el2.classList.add('x-move__item--animated');
   }
   
   const parent = el1.parentElement;
@@ -211,13 +214,20 @@ export function moveright(button) {
 /**
  * Move All - Legacy pixel-based movement (kept for backwards compatibility)
  */
+// Accumulated offset per element. It used to be read back from the style
+// attribute it was written to; since #779 it lives here and reaches the page
+// through a generated rule.
+const moveallOffsets = new WeakMap();
+
 export function moveall(element, x = 0, y = 0) {
   if (!element) return;
-  element.style.position = element.style.position || 'relative';
-  const left = parseFloat(element.style.left || 0);
-  const top = parseFloat(element.style.top || 0);
-  element.style.left = (left + x) + 'px';
-  element.style.top = (top + y) + 'px';
+  // position:relative only where nothing positions the element already --
+  // the old `style.position || 'relative'` kept an authored position.
+  if (getComputedStyle(element).position === 'static') element.classList.add('x-move--offset');
+  const prev = moveallOffsets.get(element) || { left: 0, top: 0 };
+  const next = { left: prev.left + x, top: prev.top + y };
+  moveallOffsets.set(element, next);
+  setRule(element, 'offset', { left: `${next.left}px`, top: `${next.top}px` });
 }
 
 /**

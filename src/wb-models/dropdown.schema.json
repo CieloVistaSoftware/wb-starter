@@ -24,7 +24,9 @@
         "top-end"
       ],
       "default": "bottom-start",
-      "appliesClass": "x-dropdown--{{value}}"
+      "appliesClass": "x-dropdown--{{value}}",
+      "visibleWhen": "open",
+      "visualReason": "Places the menu, which is on screen only once opened (#773)."
     },
     "trigger": {
       "type": "string",
@@ -32,17 +34,23 @@
         "click",
         "hover"
       ],
-      "default": "click"
+      "default": "click",
+      "visual": false,
+      "visualReason": "Which gesture (click or hover) opens the menu. The closed dropdown looks the same (#773)."
     },
     "closeOnSelect": {
       "type": "boolean",
       "description": "Close on item select",
-      "default": true
+      "default": true,
+      "visual": false,
+      "visualReason": "Whether choosing an item closes the menu. Only choosing shows it (#773)."
     },
     "closeOnOutside": {
       "type": "boolean",
       "description": "Close on outside click",
-      "default": true
+      "default": true,
+      "visual": false,
+      "visualReason": "Whether a click elsewhere closes the menu. Only that click shows it (#773)."
     },
     "offset": {
       "type": "number",

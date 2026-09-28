@@ -44,6 +44,16 @@ export function select(element, options = {}) {
 
   const clearable = options.clearable ?? element.hasAttribute('clearable');
 
+  // #773: `searchable` was read only by buildWbSelect(), so on the showcase's
+  // own <select searchable> it did nothing -- the row rendered exactly like
+  // the plain select. The native host gets the same filter box, placed where
+  // the attribute form puts it: immediately before the field. Guarded so a
+  // re-scan does not add a second box.
+  const searchable = options.searchable ?? readFlag(element, 'searchable');
+  if (searchable && !element.previousElementSibling?.classList.contains('x-select__search') && element.parentNode) {
+    element.parentNode.insertBefore(searchBoxFor(element, element.getAttribute('aria-label') || ''), element);
+  }
+
   if (clearable && !element.parentElement?.classList.contains('x-select-clearable')) {
     const wrapper = document.createElement('div');
     wrapper.className = 'x-select-clearable';
@@ -82,6 +92,32 @@ export function select(element, options = {}) {
   };
 
   return () => {};
+}
+
+/**
+ * The filter box `searchable` adds: typing hides the options of `sel` that do
+ * not contain the text. One builder for both hosts, so <select searchable>
+ * and <div x-select searchable> cannot drift apart.
+ *
+ * @param {HTMLSelectElement} sel
+ * @param {string} label the field's label, for the box's accessible name
+ * @returns {HTMLInputElement}
+ */
+function searchBoxFor(sel, label) {
+  const search = document.createElement('input');
+  search.type = 'search';
+  search.className = 'x-select__search';
+  search.placeholder = 'Search...';
+  search.setAttribute('aria-label', label ? `Search ${label}` : 'Search options');
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    Array.from(sel.options).forEach((o) => {
+      // The placeholder option (value "") is never filtered away.
+      if (o.value === '' && o.disabled) return;
+      o.hidden = !!q && !o.textContent.toLowerCase().includes(q);
+    });
+  });
+  return search;
 }
 
 /**
@@ -219,22 +255,7 @@ function buildWbSelect(element, options) {
     sel.setAttribute('aria-labelledby', labelId);
   }
 
-  if (searchable) {
-    const search = document.createElement('input');
-    search.type = 'search';
-    search.className = 'x-select__search';
-    search.placeholder = 'Search...';
-    search.setAttribute('aria-label', label ? `Search ${label}` : 'Search options');
-    search.addEventListener('input', () => {
-      const q = search.value.trim().toLowerCase();
-      Array.from(sel.options).forEach((o) => {
-        // The placeholder option (value "") is never filtered away.
-        if (o.value === '' && o.disabled) return;
-        o.hidden = !!q && !o.textContent.toLowerCase().includes(q);
-      });
-    });
-    element.appendChild(search);
-  }
+  if (searchable) element.appendChild(searchBoxFor(sel, label));
 
   element.appendChild(sel);
 

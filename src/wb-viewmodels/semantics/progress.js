@@ -1,3 +1,4 @@
+import { setRule, clearRulesIn } from '../../core/dynamic-style.js';
 import { readFlag } from '../../core/read-attr.js';
 /**
  * Progress - a labeled, variant-colored fill bar
@@ -127,12 +128,16 @@ export function progress(element, options = {}) {
     host.setAttribute('aria-valuemin', '0');
     host.setAttribute('aria-valuemax', String(state.max));
 
+    // Release the previous bar's generated width rule before it is discarded.
+    clearRulesIn(host);
     host.innerHTML = '';
 
     const bar = document.createElement('div');
     bar.className = `${BLOCK}__bar` + (state.striped ? ` ${BLOCK}__bar--striped` : '');
     // Indeterminate leaves the width to the sweep keyframes (progress.css).
-    bar.style.width = state.indeterminate ? '' : `${pct}%`;
+    // The fill percentage is a runtime value, so it travels as a generated
+    // stylesheet rule, never the style attribute (#779).
+    if (!state.indeterminate) setRule(bar, 'fill', { width: `${pct}%` });
     host.appendChild(bar);
 
     if (state.showLabel && !state.indeterminate) {
@@ -167,6 +172,7 @@ export function progress(element, options = {}) {
   };
 
   return () => {
+    clearRulesIn(host);
     host.innerHTML = '';
     delete host.wbProgress;
     host.classList.remove(

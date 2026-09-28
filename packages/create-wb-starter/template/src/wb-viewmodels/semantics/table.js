@@ -6,6 +6,85 @@ import { createToast } from '../feedback.js';
  * Adds sorting, striping, hover effects, and more
  * Helper Attribute: [x-behavior="table"]
  */
+/**
+ * Compare two cell values by what they ARE, not by what parseFloat makes of them.
+ *
+ * #1011. The previous comparator was one line:
+ *
+ *   const aNum = parseFloat(aVal.replace(/[^0-9.-]/g, ''));
+ *
+ * `parseFloat("2026-09-03")` is 2026, so every date in a year compared EQUAL and
+ * a date column never moved -- while the header arrow still updated, so the
+ * control looked like it worked. `parseFloat("4.0.1")` is 4, so every 4.x
+ * version tied with every other and the order collapsed to whatever the stable
+ * sort happened to leave.
+ *
+ * Stripping characters before deciding the type is the root mistake: it turns
+ * "9/3/2026" into the number 932026 and "3 items" into 3. The type has to be
+ * decided from the WHOLE value.
+ */
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}(?:[T\s].*)?$/;
+/** A date as a PAGE renders it: "Sep 5, 2026", "5 Sep 2026", "9/5/2026". */
+const LOCALE_DATE = /^(?:[A-Za-z]{3,9}\.? \d{1,2}, ?\d{4}|\d{1,2} [A-Za-z]{3,9}\.? \d{4}|\d{1,2}\/\d{1,2}\/\d{4})$/;
+const DOTTED_VERSION = /^\d+(?:\.\d+){1,3}$/;
+const PURE_NUMBER = /^-?\d+(?:\.\d+)?$/;
+
+function compareCells(a, b) {
+  // Empty values sort last in both directions -- a blank is not "smallest",
+  // it is missing, and burying it under real data is what a reader expects.
+  if (!a && !b) return 0;
+  if (!a) return 1;
+  if (!b) return -1;
+
+  if (ISO_DATE.test(a) && ISO_DATE.test(b)) {
+    return new Date(a).getTime() - new Date(b).getTime();
+  }
+
+  // #1011, second pass. Handling ISO dates fixed the format the DATA is in and
+  // missed the format the PAGE renders. `pages/issues.html:329` prints
+  // `toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'})`
+  // — "Sep 5, 2026" — straight into a <table sortable>, and a rendered date
+  // matches none of the rules above, so it fell through to localeCompare and
+  // sorted ALPHABETICALLY BY MONTH NAME. Measured against the real comparator:
+  //
+  //   compare("Apr 1, 2025", "Mar 1, 2020") = -1   (chronologically +1: wrong by 5 years)
+  //   compare("Jan 2, 2026", "Feb 1, 2026") = +1   (chronologically -1)
+  //
+  // Some pairs come out right by luck — "Sep 5, 2026" vs "Dec 1, 2025" happens
+  // to agree — which is why a spot check of the Updated column looks fine.
+  //
+  // The shape is matched strictly before Date.parse is trusted, because
+  // Date.parse is famously willing: it accepts "March 2020" and other prose, and
+  // a Title column must never be reordered as though it held dates.
+  //
+  // Slash form is ambiguous across locales ("9/5/2026"); V8 reads it US-style.
+  // That is a consistent ordering rather than a correct one, and still strictly
+  // better than sorting by first digit. Anything genuinely order-critical should
+  // be rendered ISO, which the branch above handles exactly.
+  if (LOCALE_DATE.test(a) && LOCALE_DATE.test(b)) {
+    const ta = Date.parse(a);
+    const tb = Date.parse(b);
+    if (!Number.isNaN(ta) && !Number.isNaN(tb)) return ta - tb;
+  }
+
+  if (DOTTED_VERSION.test(a) && DOTTED_VERSION.test(b)) {
+    const as = a.split('.').map(Number);
+    const bs = b.split('.').map(Number);
+    for (let i = 0; i < Math.max(as.length, bs.length); i++) {
+      const d = (as[i] ?? 0) - (bs[i] ?? 0);
+      if (d) return d;
+    }
+    return 0;
+  }
+
+  if (PURE_NUMBER.test(a) && PURE_NUMBER.test(b)) {
+    return Number(a) - Number(b);
+  }
+
+  // numeric: true so "item 2" precedes "item 10" instead of following it.
+  return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+}
+
 export function table(element, options = {}) {
   const config = {
     striped: options.striped ?? (element.hasAttribute('striped') || readFlag(element, 'striped')),
@@ -87,7 +166,7 @@ export function table(element, options = {}) {
   // schema-builder.js's own comment). table.js never opted in: the comment
   // it used to have here ("Logic removed... assume the table structure
   // exists") assumed something else would populate rows, but nothing ever
-  // did. Confirmed live: every <table> on docs/behaviors/semantics/
+  // did. Confirmed live: every <table> on docs/components/semantics/
   // table.md rendered a completely empty table (0 <tr> elements) regardless
   // of whether rows were authored as slotted <thead>/<tbody> markup,
   // headers/rows attributes, or the schema's own data/columns properties.
@@ -95,8 +174,32 @@ export function table(element, options = {}) {
   // same "read back the pre-wipe original content" pattern overlay.js's
   // drawer() already uses for its own title text.
   const tableElForBuild = element.querySelector('table') || element;
-  const theadForBuild = tableElForBuild.querySelector('thead');
-  const tbodyForBuild = tableElForBuild.querySelector('tbody');
+  let theadForBuild = tableElForBuild.querySelector('thead');
+  let tbodyForBuild = tableElForBuild.querySelector('tbody');
+
+  // Create the sections when they are missing.
+  //
+  // This used to REQUIRE thead and tbody to already exist, so it only ever
+  // filled a table someone had half-built by hand. The form every doc shows --
+  //
+  //     <table headers="A,B" rows='[["1","2"]]'></table>
+  //
+  // has neither, so the block below was skipped entirely and the table
+  // rendered empty: behavior attached, classed x-table--striped, containing
+  // nothing at all. Requiring the author to hand-write the sections that the
+  // attributes exist to fill defeats the point of the attributes.
+  const wantsAttributeBuild =
+    (element.getAttribute('headers') && element.getAttribute('rows')) ||
+    (element.getAttribute('data') && element.getAttribute('columns'));
+  if (wantsAttributeBuild && !theadForBuild) {
+    theadForBuild = document.createElement('thead');
+    tableElForBuild.appendChild(theadForBuild);
+  }
+  if (wantsAttributeBuild && !tbodyForBuild) {
+    tbodyForBuild = document.createElement('tbody');
+    tableElForBuild.appendChild(tbodyForBuild);
+  }
+
   if (theadForBuild && tbodyForBuild && !tbodyForBuild.querySelector('tr')) {
     const headersAttr = element.getAttribute('headers');
     const rowsAttr = element.getAttribute('rows');
@@ -149,12 +252,12 @@ export function table(element, options = {}) {
 
   // #448: skip the class specifically when tableEl IS the <table> HOST
   // itself (a <table> used with no nested <table> child) -- data.css
-  // selects the `x-table` TAG directly for that case now. Still added when
+  // selects the `.x-table` TAG directly for that case now. Still added when
   // tableEl is a native <table> (either autoInject's native.table entry, or
   // the child <table> a <table> wraps), since data.css's `table.x-table`/
   // `.x-table > table` rules still need the class there (a native `table`
-  // tag can never match a `x-table` tag selector).
-  if (tableEl.tagName.toLowerCase() !== 'x-table') tableEl.classList.add('x-table');
+  // tag can never match a `.x-table` tag selector).
+  tableEl.classList.add('x-table');
   if (config.striped) tableEl.classList.add('x-table--striped');
   if (config.hover) tableEl.classList.add('x-table--hover');
   if (config.bordered) tableEl.classList.add('x-table--bordered');
@@ -169,7 +272,9 @@ export function table(element, options = {}) {
       rows.forEach((row, i) => {
         const text = row.textContent.toLowerCase();
         const match = !term || text.includes(term);
-        row.style.display = match ? '' : 'none';
+        // A class, not style.display (#779) -- and not `hidden`, which the
+        // pager below owns: a row can be off-page and filtered out at once.
+        row.classList.toggle('x-table__row--filtered', !match);
       });
     };
   }
@@ -178,7 +283,7 @@ export function table(element, options = {}) {
   if (config.sortable) {
     const headers = tableEl.querySelectorAll('th');
     headers.forEach((th, colIndex) => {
-      th.style.cursor = 'pointer';
+      th.classList.add('x-table__sortable');   // pointer cursor, data.css (#779)
       th.onclick = () => {
         if (sortCol === colIndex) {
           sortDir = sortDir === 'asc' ? 'desc' : 'asc';
@@ -193,17 +298,30 @@ export function table(element, options = {}) {
         
         // Sort Rows
         const dataRows = Array.from(tbody.querySelectorAll('tr'));
+
+        // #1036: a cell may declare its own sort key. What a column DISPLAYS and
+        // what it should be ORDERED by are not always the same value -- a
+        // priority column showing '—' for unrated, a date shown as "Sep 5, 2026",
+        // a size shown as "1.2 MB". Without this the display text is the only
+        // key available, and the Priority column sorted every unrated row above
+        // priority 1: the least urgent first, in the column that exists to
+        // express urgency.
+        // Falls back to textContent, so every existing table sorts exactly as
+        // it did.
+        //
+        // Law 11: a PLAIN attribute, read with getAttribute -- not `data-` and
+        // not `.dataset`. The first version of this used `data-sort-value` and
+        // `cell.dataset.sortValue`, which is the exact pattern the law forbids
+        // on behavior elements.
+        const keyOf = (row) => {
+          const cell = row.children[colIndex];
+          if (!cell) return '';
+          return (cell.getAttribute('sort-value') ?? cell.textContent ?? '').trim();
+        };
+
         dataRows.sort((a, b) => {
-          const aVal = a.children[colIndex].textContent.trim();
-          const bVal = b.children[colIndex].textContent.trim();
-          
-          const aNum = parseFloat(aVal.replace(/[^0-9.-]/g, ''));
-          const bNum = parseFloat(bVal.replace(/[^0-9.-]/g, ''));
-          
-          if (!isNaN(aNum) && !isNaN(bNum)) {
-            return sortDir === 'asc' ? aNum - bNum : bNum - aNum;
-          }
-          return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+          const cmp = compareCells(keyOf(a), keyOf(b));
+          return sortDir === 'asc' ? cmp : -cmp;
         });
         
         dataRows.forEach(row => tbody.appendChild(row));
@@ -225,7 +343,7 @@ export function table(element, options = {}) {
   if (config.selectable) {
     const tableRows = tableEl.querySelectorAll('tbody tr');
     tableRows.forEach((tr, index) => {
-      tr.style.cursor = 'pointer';
+      tr.classList.add('x-table__selectable');   // pointer cursor, data.css (#779)
       tr.onclick = (e) => {
         if (e.target.closest('a, button, input')) return;
         // #592: the demo hint text ("Hold Ctrl/Cmd to multi-select") was
@@ -259,7 +377,7 @@ export function table(element, options = {}) {
         });
       }
     });
-    tableEl.style.cursor = 'pointer';
+    tableEl.classList.add('x-table--copyable');   // pointer cursor, data.css (#779)
   }
 
   // #669: pagination. Built after sorting and search wiring so it sees the final row

@@ -3,9 +3,89 @@
  * Logs errors to data/errors.json and displays them on screen
  */
 
+import { computeSignature, firstMeaningfulFrame, isTestOrigin } from './error-signature.js';
+
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
 let errors = [];
+
+/**
+ * The panel's stylesheet (#779: every declaration here used to be written onto
+ * the panel's elements through style.cssText and style="" templates).
+ *
+ * A <style> this module owns rather than a behavior stylesheet: the error
+ * logger is core, installed before any behavior and on pages that load no
+ * behavior CSS at all, and it has to be able to show the error that stopped
+ * everything else from loading. The panel's own id prefixes each rule, so the
+ * (1,x,y) specificity keeps the precedence the inline declarations had over
+ * the button and theme rules its <button>s would otherwise pick up.
+ */
+const ERROR_DISPLAY_CSS = `
+#x-error-display {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 420px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(20, 20, 20, 0.95);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  border: 1px solid #ef4444;
+  z-index: 99999;
+}
+#x-error-display[hidden] { display: none; }
+#x-error-display .x-error-display__bar {
+  padding: 10px 12px; background: #1a1a1a; border-bottom: 1px solid #333;
+  display: flex; justify-content: space-between; align-items: center;
+  border-radius: 8px 8px 0 0; position: sticky; top: 0;
+}
+#x-error-display .x-error-display__heading { font-weight: bold; color: #ef4444; }
+#x-error-display .x-error-display__btn {
+  border: none; color: #fff; padding: 4px 10px; border-radius: 4px;
+  cursor: pointer; font-size: 0.6875rem; margin-right: 4px;
+}
+#x-error-display .x-error-display__btn--copy { background: #3b82f6; }
+#x-error-display .x-error-display__btn--clear { background: #333; }
+#x-error-display .x-error-display__btn--close { background: #ef4444; margin-right: 0; }
+#x-error-display .x-error-display__btn--ok { background: #22c55e; }
+#x-error-display .x-error-display__btn--blocked { background: #ef4444; }
+#x-error-display .x-error-display__list { padding: 8px; }
+#x-error-display .x-error-display__item {
+  padding: 8px 10px; margin-bottom: 6px; background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444; border-radius: 0 4px 4px 0; word-break: break-word;
+}
+#x-error-display .x-error-display__item-head { display: flex; justify-content: space-between; margin-bottom: 4px; }
+#x-error-display .x-error-display__item-title { color: #ef4444; }
+#x-error-display .x-error-display__source { color: #888; font-weight: normal; }
+#x-error-display .x-error-display__time { color: #666; font-size: 0.625rem; }
+#x-error-display .x-error-display__message { color: #fff; }
+#x-error-display .x-error-display__meta { font-size: 0.6875rem; }
+#x-error-display .x-error-display__meta--file { color: #888; }
+#x-error-display .x-error-display__meta--to { color: #3b82f6; }
+#x-error-display .x-error-display__meta--response { color: #f59e0b; }
+#x-error-display .x-error-display__meta--src { color: #a78bfa; }
+#x-error-display .x-error-display__stack {
+  color: #666; font-size: 0.625rem; margin-top: 4px; max-height: 60px; overflow: auto;
+}
+#x-error-display .x-error-display__fallback {
+  width: 100%; height: 8rem; margin-top: 6px; font: 0.6875rem/1.4 monospace;
+  background: #111827; color: #e5e7eb; border: 1px solid #ef4444; border-radius: 4px; padding: 6px;
+}
+.x-error-display__copybuf { position: fixed; top: 0; left: -9999px; opacity: 0; }
+`;
+
+function ensureErrorDisplayStyles() {
+  // Re-added if something rewrote <head> (page.setContent() does) since.
+  if (document.getElementById('x-error-display-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'x-error-display-styles';
+  style.textContent = ERROR_DISPLAY_CSS;
+  (document.head || document.documentElement).appendChild(style);
+}
 
 /**
  * Initialize the error display container
@@ -13,36 +93,24 @@ let errors = [];
 function initErrorDisplay() {
   if (errorContainer) return;
   
+  ensureErrorDisplayStyles();
   errorContainer = document.createElement('div');
   errorContainer.id = 'x-error-display';
-  errorContainer.style.cssText = `
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    width: 420px;
-    max-height: 300px;
-    overflow-y: auto;
-    background: rgba(20, 20, 20, 0.95);
-    color: #fff;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    border: 1px solid #ef4444;
-    z-index: 99999;
-    display: none;
-  `;
+  // Hidden until the first error. The `hidden` attribute, not
+  // style.display (#779) -- and it holds even before the stylesheet below
+  // has applied.
+  errorContainer.hidden = true;
   
   errorContainer.innerHTML = `
-    <div style="padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;">
-      <span style="font-weight:bold;color:#ef4444;">❌ Errors (<span id="x-error-count">0</span>)</span>
+    <div class="x-error-display__bar">
+      <span class="x-error-display__heading">❌ Errors (<span id="x-error-count">0</span>)</span>
       <div>
-        <button id="x-error-copy" style="background:#3b82f6;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">📋 Copy</button>
-        <button id="x-error-clear" style="background:#333;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;margin-right:4px;">Clear</button>
-        <button id="x-error-close" style="background:#ef4444;border:none;color:#fff;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">✕</button>
+        <button id="x-error-copy" class="x-error-display__btn x-error-display__btn--copy">📋 Copy</button>
+        <button id="x-error-clear" class="x-error-display__btn x-error-display__btn--clear">Clear</button>
+        <button id="x-error-close" class="x-error-display__btn x-error-display__btn--close">✕</button>
       </div>
     </div>
-    <div id="x-error-list" style="padding:8px;"></div>
+    <div id="x-error-list" class="x-error-display__list"></div>
   `;
   
   document.body.appendChild(errorContainer);
@@ -52,7 +120,24 @@ function initErrorDisplay() {
     const copyBtn = document.getElementById('x-error-copy');
     const errorText = errors.map((e, i) => {
       let text = `[${i + 1}] ${e.message}`;
-      if (e.details?.file) text += `\n    File: ${e.details.file}:${e.details.line || '?'}`;
+      // Read the RESOLVED location, not the raw details. `details.line` is only
+      // set by callers routed through events.js; every direct caller left it
+      // undefined, so a pasted report said "mdhtml.js:?" while the record held
+      // line 244, parsed from the stack. The paste is what a person files a bug
+      // with -- the last place that should be missing the line number.
+      const where = e.module || e.details?.file;
+      if (where) text += `
+    File: ${where}:${e.line || '?'}${e.column ? ':' + e.column : ''}`;
+      if (e.function) text += `
+    In: ${e.function}()`;
+      if (e.count > 1) text += `
+    Seen: ${e.count}x (first ${e.firstSeen}, last ${e.lastSeen})`;
+      if (e.signature) text += `
+    Signature: ${e.signature}`;
+      if (e.testOrigin) text += `
+    Origin: test fixture, not the app`;
+      if (e.solution) text += `
+    Solution: ${e.solution}`;
       if (e.to) text += `\n    To: ${e.to}`;
       if (e.details?.reason) text += `\n    Reason: ${e.details.reason}`;
       if (e.details?.response) text += `\n    Response: ${e.details.response}`;
@@ -81,7 +166,7 @@ function initErrorDisplay() {
       const ta = document.createElement('textarea');
       ta.value = payload;
       ta.setAttribute('readonly', '');
-      ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+      ta.className = 'x-error-display__copybuf';
       document.body.appendChild(ta);
       ta.select();
       let ok = false;
@@ -94,12 +179,14 @@ function initErrorDisplay() {
       return ok;
     };
 
-    const done = (label, bg) => {
+    // The outcome colours the button through a state class, not
+    // style.background (#779).
+    const done = (label, state) => {
       copyBtn.textContent = label;
-      copyBtn.style.background = bg;
+      copyBtn.classList.add(`x-error-display__btn--${state}`);
       setTimeout(() => {
         copyBtn.textContent = '📋 Copy';
-        copyBtn.style.background = '#3b82f6';
+        copyBtn.classList.remove(`x-error-display__btn--${state}`);
       }, 2500);
     };
 
@@ -112,22 +199,20 @@ function initErrorDisplay() {
     }
 
     if (copied) {
-      done('✅ Copied!', '#22c55e');
+      done('✅ Copied!', 'ok');
       return;
     }
 
     // Both routes refused. Say so, and still get the text to the reader --
     // selected in a visible box they can copy by hand beats a shrug.
-    done('❌ Blocked — text selected below', '#ef4444');
+    done('❌ Blocked — text selected below', 'blocked');
     const esc = document.getElementById('x-error-copy-fallback');
     if (esc) esc.remove();
     const box = document.createElement('textarea');
     box.id = 'x-error-copy-fallback';
     box.value = payload;
     box.readOnly = true;
-    box.style.cssText =
-      'width:100%;height:8rem;margin-top:6px;font:0.6875rem/1.4 monospace;' +
-      'background:#111827;color:#e5e7eb;border:1px solid #ef4444;border-radius:4px;padding:6px;';
+    box.className = 'x-error-display__fallback';
     copyBtn.parentElement?.parentElement?.appendChild(box);
     box.focus();
     box.select();
@@ -143,19 +228,121 @@ function initErrorDisplay() {
   
   // Close button
   document.getElementById('x-error-close').onclick = () => {
-    errorContainer.style.display = 'none';
+    errorContainer.hidden = true;
   };
 }
 
 /**
  * Show an error in the UI and log it
  */
+/**
+ * The analysis/solution/remedy recorded for a signature, or null if this fault
+ * has never been analysed.
+ *
+ * Loaded once, lazily, and cached. A miss is not an error: an unknown signature
+ * is exactly the thing that needs a person, and returning null is what marks it
+ * `fixable: false` so it surfaces rather than being quietly retried.
+ */
+let fixRegistry = null;
+let fixRegistryLoading = null;
+
+function lookupFix(signature) {
+  if (!fixRegistry) {
+    if (!fixRegistryLoading) {
+      // Fire and forget: the first few errors on a page may miss the registry,
+      // and that is the right trade -- blocking error logging on a fetch would
+      // mean an error during startup never gets recorded at all.
+      fixRegistryLoading = fetch(new URL('../../data/fix-registry.json', import.meta.url))
+        .then((r) => (r.ok ? r.json() : null))
+        .then((j) => { fixRegistry = (j && j.entries) || {}; })
+        .catch(() => { fixRegistry = {}; });
+    }
+    return null;
+  }
+  return fixRegistry[signature] || null;
+}
+
+/**
+ * Two entries are the SAME OCCURRENCE, not just the same fault.
+ *
+ * John: "I don't think the error log should log duplicates, rather just add a
+ * counter to show how many times. But this is only true if everything is the
+ * same."
+ *
+ * That last clause is the whole rule, and it is why this is deliberately NOT
+ * keyed on the signature. The signature is intentionally loose -- it masks paths
+ * and numbers so one fault has one identity -- so two documents failing to load
+ * share a signature while being two different problems. Collapsing those would
+ * hide the second document entirely.
+ *
+ * This compares everything a reader would use to tell two rows apart: the exact
+ * message, where it came from, and what it was pointing at. Anything different,
+ * anywhere, and it is a separate row.
+ */
+function isSameOccurrence(a, b) {
+  if (!a || !b) return false;
+  return (
+    a.message === b.message &&
+    a.level === b.level &&
+    a.source === b.source &&
+    a.module === b.module &&
+    a.line === b.line &&
+    a.column === b.column &&
+    a.function === b.function &&
+    a.to === b.to &&
+    a.url === b.url &&
+    (a.details && a.details.src) === (b.details && b.details.src) &&
+    (a.details && a.details.reason) === (b.details && b.details.reason) &&
+    a.stack === b.stack
+  );
+}
+
 export async function logError(message, details = {}) {
   initErrorDisplay();
+
+  // #1010 -- provenance, signature, and the fixable verdict.
+  //
+  // John: "our error log for each error 1) requires analysis 2) must get a
+  // solution on what to do 3) set the fixable flag and then 4) fix the error."
+  //
+  // Steps 1 and 2 belong to the SIGNATURE, not to the occurrence: five identical
+  // "Unable to Load Documentation" rows are one analysis and one solution. So the
+  // signature is computed here, and the analysis/solution/fixable come from
+  // data/fix-registry.json keyed by it.
+  //
+  // The frame is parsed from the stack because `source`/`line` were only ever set
+  // by callers routed through events.js -- direct callers (mdhtml.js, wb.js's
+  // schema catch) left them undefined and the viewer printed "Unknown" and "?:?"
+  // over a record that already held the module, the target and the stack.
+  const frame = firstMeaningfulFrame(details.stack);
+  const signature = computeSignature({
+    message,
+    // `source` counts as the owner: emitters like replacement-guard identify
+    // themselves that way and carry no file, and without this they all collapse
+    // to the single owner "unknown" -- which would put unrelated faults from
+    // different subsystems under one key, the exact over-collapsing the
+    // normaliser is supposed to avoid.
+    module: details.module || details.file || details.source,
+    level: details.level,
+    stack: details.stack,
+    code: details.code,
+  });
+  const known = lookupFix(signature);
 
   const error = {
     id: Date.now(),
     timestamp: new Date().toISOString(),
+    signature,
+    analysis: known ? known.analysis : null,
+    solution: known ? known.solution : null,
+    // Derived, never hand-set: an error is fixable when its signature has a
+    // remedy that is mechanical AND verifiable. Unknown signatures are not
+    // fixable -- that is the honest default, and it is what puts them in front
+    // of a person to be analysed.
+    fixable: !!(known && known.fixable && known.remedy),
+    remedy: known ? known.remedy || null : null,
+    verify: known ? known.verify || null : null,
+    testOrigin: isTestOrigin({ message, url: window.location.href, details }),
     // #442: optional fields below are only ever populated by callers routed
     // through events.js's Events.error()/log() (source/level/module/line/
     // etc., extracted from a parsed stack trace) -- direct logError() callers
@@ -166,14 +353,15 @@ export async function logError(message, details = {}) {
     // line/stack/interaction), so this one persisted shape now serves both
     // previously-separate systems instead of each needing its own schema.
     level: details.level || 'error',
-    source: details.source,
+    // "Unknown" was this field being undefined, not the information being absent.
+    source: details.source || details.to || (frame && frame.file) || undefined,
     message: String(message),
     details: details,
     to: details.to || '',
-    module: details.module || details.file,
-    line: details.line,
-    column: details.column,
-    function: details.function,
+    module: details.module || details.file || (frame && frame.file) || undefined,
+    line: details.line ?? (frame && frame.line),
+    column: details.column ?? (frame && frame.column),
+    function: details.function || (frame && frame.function),
     stack: details.stack,
     frames: details.frames,
     interaction: details.interaction,
@@ -181,35 +369,50 @@ export async function logError(message, details = {}) {
     userAgent: navigator.userAgent
   };
   
+  // Repeats are counted, not re-listed (#1010). `count`, `firstSeen` and
+  // `lastSeen` say more than N identical rows ever did: five copies of one line
+  // tell you nothing about whether it happened five times in a burst or once an
+  // hour all day.
+  const existing = errors.find((e) => isSameOccurrence(e, error));
+  if (existing) {
+    existing.count = (existing.count || 1) + 1;
+    existing.lastSeen = error.timestamp;
+    updateErrorCount();
+    // Persisted through the same path a new error takes, so the stored copy
+    // carries the updated count rather than the count living only in memory and
+    // resetting on reload.
+    if (!document.documentElement.hasAttribute('data-x-expected-errors')) {
+      await appendErrorToLog(existing);
+    }
+    console.error('[ErrorLogger]', message, '(x' + existing.count + ')');
+    return existing;
+  }
+
+  error.count = 1;
+  error.firstSeen = error.timestamp;
+  error.lastSeen = error.timestamp;
   errors.push(error);
   updateErrorCount();
   
   // Show in UI
   const list = document.getElementById('x-error-list');
   const item = document.createElement('div');
-  item.style.cssText = `
-    padding: 8px 10px;
-    margin-bottom: 6px;
-    background: rgba(239, 68, 68, 0.1);
-    border-left: 3px solid #ef4444;
-    border-radius: 0 4px 4px 0;
-    word-break: break-word;
-  `;
+  item.className = 'x-error-display__item';
   
   const time = new Date(error.timestamp).toLocaleTimeString();
   let detailsHtml = '';
-  if (details.file) detailsHtml += `<div style="color:#888;font-size:0.6875rem;">📁 ${details.file}:${details.line || '?'}</div>`;
-  if (error.to) detailsHtml += `<div style="color:#3b82f6;font-size:0.6875rem;">➡️ To: ${escapeHtml(error.to)}</div>`;
-  if (details.response) detailsHtml += `<div style="color:#f59e0b;font-size:0.6875rem;">📡 Response: ${escapeHtml(details.response)}</div>`;
-  if (details.src) detailsHtml += `<div style="color:#a78bfa;font-size:0.6875rem;">📄 Src: ${escapeHtml(details.src)}</div>`;
-  if (details.stack) detailsHtml += `<div style="color:#666;font-size:0.625rem;margin-top:4px;max-height:60px;overflow:auto;">${escapeHtml(details.stack)}</div>`;
+  if (error.module || details.file) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--file">📁 ${error.module || details.file}:${error.line || '?'}</div>`;
+  if (error.to) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--to">➡️ To: ${escapeHtml(error.to)}</div>`;
+  if (details.response) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--response">📡 Response: ${escapeHtml(details.response)}</div>`;
+  if (details.src) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--src">📄 Src: ${escapeHtml(details.src)}</div>`;
+  if (details.stack) detailsHtml += `<div class="x-error-display__stack">${escapeHtml(details.stack)}</div>`;
   
   item.innerHTML = `
-    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-      <span style="color:#ef4444;">❌ Error${error.source ? ` <span style="color:#888;font-weight:normal;">[${escapeHtml(error.source)}]</span>` : ''}</span>
-      <span style="color:#666;font-size:0.625rem;">${time}</span>
+    <div class="x-error-display__item-head">
+      <span class="x-error-display__item-title">❌ Error${error.source ? ` <span class="x-error-display__source">[${escapeHtml(error.source)}]</span>` : ''}</span>
+      <span class="x-error-display__time">${time}</span>
     </div>
-    <div style="color:#fff;">${escapeHtml(error.message)}</div>
+    <div class="x-error-display__message">${escapeHtml(error.message)}</div>
     ${detailsHtml}
   `;
   
@@ -217,7 +420,8 @@ export async function logError(message, details = {}) {
   list.scrollTop = list.scrollHeight;
   
   // Show container
-  errorContainer.style.display = 'block';
+  ensureErrorDisplayStyles();
+  errorContainer.hidden = false;
   
   // Save to file
   if (!document.documentElement.hasAttribute('data-x-expected-errors')) {
@@ -250,6 +454,28 @@ export async function logError(message, details = {}) {
 const LOCAL_KEY = 'wb:error-log';
 let serverLogging = true;   // flipped off the first time the API refuses
 
+/**
+ * #1000, second pass. John: "run autoscroll to see all the errors but they are
+ * not being logged to error log?"
+ *
+ * The endpoint was addressed as '/api/error-log/append' — ROOT-absolute. The
+ * deployed site lives under /wb-starter/, so that posts to the ORGANISATION
+ * root, which has no such route. Measured:
+ *
+ *   POST https://cielovistasoftware.github.io/api/error-log/append -> 405
+ *
+ * Exactly the defect the images had (#1047) and the viewer's own read had, one
+ * layer further in.
+ *
+ * Resolved against THIS MODULE's url, not against the page. The page is the
+ * wrong base: errors-viewer.html sits in public/, so document.baseURI there
+ * would ask for /wb-starter/public/api/... instead. This file is always at
+ * src/core/error-logger.js, so two levels up is the site root wherever the
+ * site is mounted — the same trick DEFAULT_SCHEMA_BASE uses in
+ * mvvm/schema-builder.js:76.
+ */
+const apiUrl = (route) => new URL(`../../${route}`, import.meta.url).href;
+
 function localLog() {
   try {
     return JSON.parse(localStorage.getItem(LOCAL_KEY) || '{"errors":[]}');
@@ -261,6 +487,16 @@ function localLog() {
 function appendLocally(error) {
   try {
     const log = localLog();
+    // A counted repeat updates its stored row rather than adding another one --
+    // otherwise the count would be correct in memory and the storage would still
+    // grow by one entry per occurrence, which is the duplication this was meant
+    // to remove.
+    const at = log.errors.findIndex((e) => e.id === error.id);
+    if (at !== -1) {
+      log.errors[at] = error;
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(log));
+      return true;
+    }
     log.errors.push(error);
     // A page throwing in a loop must not fill the quota.
     if (log.errors.length > 200) log.errors = log.errors.slice(-200);
@@ -279,17 +515,30 @@ export function isLocalOnly() {
 async function appendErrorToLog(error) {
   if (serverLogging) {
     try {
-      const response = await fetch('/api/error-log/append', {
+      const response = await fetch(apiUrl('api/error-log/append'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ error })
       });
       if (response.ok) return;
-      // 405 on a static host, 404 behind a different mount. Either way there is
-      // no endpoint here: stop asking, keep the log locally.
-      serverLogging = false;
+
+      // #1000: only a verdict about the ENDPOINT may disable server logging.
+      //
+      // This used to switch off on ANY non-ok response, permanently, for the
+      // rest of the page's life. One 500 from a busy server, or one dropped
+      // request, and every error after it was invisible to the log — the
+      // failure could not be diagnosed precisely when the server was having
+      // trouble, which is when errors matter most.
+      //
+      // 404/405 mean there is genuinely no route here (a static host); that is
+      // a fact about the deployment and worth remembering. Anything else is a
+      // transient the next error should retry, so it keeps a local copy and
+      // leaves server logging armed.
+      if (response.status === 404 || response.status === 405) serverLogging = false;
     } catch {
-      serverLogging = false;
+      // A network error is not proof the endpoint is absent — offline, a
+      // reloading dev server, a blocked request. Fall through to local, stay
+      // armed, try again on the next error.
     }
   }
 
@@ -305,10 +554,11 @@ async function appendErrorToLog(error) {
  */
 async function clearErrorLogFile() {
   try {
-    const response = await fetch('/api/error-log/clear', { method: 'POST' });
-    if (!response.ok) serverLogging = false;
-  } catch (e) {
-    serverLogging = false;
+    const response = await fetch(apiUrl('api/error-log/clear'), { method: 'POST' });
+    if (response.status === 404 || response.status === 405) serverLogging = false;
+  } catch {
+    // Same reasoning as the append path: a transient failure is not evidence
+    // that the endpoint does not exist.
   }
   // Clear the local copy too, or "Clear" leaves entries the viewer still shows
   // -- the same silent mismatch #1000 is about.
@@ -330,7 +580,7 @@ export async function loadErrorLog() {
         return data;
       }
     }
-  } catch (e) {
+  } catch {
     /* fall through to the local log */
   }
   // #1000: on a static host the file is absent or empty and the real log lives
@@ -391,15 +641,80 @@ export function setupGlobalErrorHandler() {
   if (globalHandlerInstalled) return;
   globalHandlerInstalled = true;
 
-  // Catch uncaught errors
+  // Catch uncaught errors.
+  //
+  // #1000: `capture: true` is not decoration. A failed <img>/<script>/<link>
+  // fires an `error` event on the ELEMENT, and that event does not bubble — so
+  // a listener on window without capture never sees it. Every broken asset on
+  // the page was therefore invisible here, and the only ones that reached the
+  // log did so because media-load-retry.js happens to call logError() itself.
+  // Anything without its own reporting simply failed in silence.
   window.addEventListener('error', (event) => {
+    const el = event.target;
+    if (el && el !== window && el.tagName) {
+      // A resource failure: the event carries no message, only the element.
+      const raw = el.currentSrc || el.src || el.href || '';
+
+      // The QUERY STRING is stripped before this becomes an identity.
+      // media-load-retry.js retries with a fresh `?_retry=<timestamp>`, so the
+      // same missing file arrives with a different URL every attempt — five
+      // retries would be five separate rows the dedupe could never collapse,
+      // and one broken image on a page of many would bury everything else.
+      // The file is the fault; the attempt number is the occasion.
+      const src = raw.split('?')[0];
+
+      // No URL at all: nothing failed to LOAD, so there is nothing to report.
+      // An empty src resolves against location.href, which passes the
+      // same-origin test below and produced rows reading
+      // "script failed to load: (no src)" — three of them in one suite run,
+      // which is how this handler turned the error log from empty into noisy
+      // and failed compliance/error-log-empty.spec.ts. A resource error
+      // without a resource is not a resource error.
+      if (!src) return;
+
+      // A missing favicon is a browser default request, not a fault in the
+      // page, and it is already excluded from every other check for that
+      // reason.
+      if (/favicon/i.test(src)) return;
+
+      // SAME-ORIGIN ONLY, and the reason matters.
+      //
+      // The first version of this reported every resource failure, which
+      // immediately failed six demo pages. The culprits were not broken site
+      // assets at all — they were w3schools videos the demos embed, failing
+      // because a third-party host was unreachable from the test environment.
+      // Two things were wrong with that:
+      //
+      //   1. It blamed the site for someone else's outage. A page cannot fix
+      //      an external host, and a gate that fails for that reason teaches
+      //      people to ignore it.
+      //   2. It was a DUPLICATE. media-load-retry.js already reports failed
+      //      media through logError(), with retry counts and its own registry
+      //      entries — a better-informed reporter than this one.
+      //
+      // What this handler uniquely catches is the site's OWN assets failing:
+      // /images/placeholder.svg resolving to the wrong root (#1047), a path
+      // that moved, a file that never shipped. That is the gap it exists for.
+      try {
+        if (new URL(src, location.href).origin !== location.origin) return;
+      } catch {
+        return;   // not a resolvable URL; nothing useful to record
+      }
+
+      logError(`${el.tagName.toLowerCase()} failed to load: ${src || '(no src)'}`, {
+        module: 'resource-load',
+        source: src,
+        details: { src },
+      });
+      return;
+    }
     logError(event.message, {
       file: event.filename,
       line: event.lineno,
       column: event.colno,
       stack: event.error?.stack
     });
-  });
+  }, true);
   
   // Catch unhandled promise rejections
   window.addEventListener('unhandledrejection', (event) => {

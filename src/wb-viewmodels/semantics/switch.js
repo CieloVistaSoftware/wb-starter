@@ -107,6 +107,9 @@ export function switchInput(element, options = {}) {
     // carry these, and size/variant are as meaningful there as anywhere.
     const size = host.getAttribute('size');
     if (size) container.classList.add(`x-switch--${size}`);
+    // #773: with no variant the ON track is the brand colour (the bare
+    // :checked rule), so the schema declares `primary` as the default -- what
+    // a reader actually gets. An explicit variant="default" stays neutral.
     const variant = host.getAttribute('variant');
     if (variant) container.classList.add(`x-switch--${variant}`);
   }

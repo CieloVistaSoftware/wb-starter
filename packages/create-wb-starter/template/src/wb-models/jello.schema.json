@@ -3,8 +3,19 @@
   "$id": "jello.schema.json",
   "title": "Jello",
   "description": "On click, plays the jello animation for 1s.",
-  "schemaFor": "x-jello",
+  "schemaFor": "jello",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-jello"
+  },
+  "test": {
+    "setup": [
+      "<div x-jello>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

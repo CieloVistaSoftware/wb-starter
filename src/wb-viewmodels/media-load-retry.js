@@ -73,7 +73,7 @@ function attachLoadRetry(el, config) {
     // way to show something. Hide the failed element itself so its native
     // "broken" chrome (video controls with nothing to play, browken-image
     // icon) doesn't sit next to the message looking doubly broken.
-    el.style.display = 'none';
+    // Hidden by its failedClass (ui-utils.css), not style.display (#779).
     if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('x-media-load-failed')) {
       const msg = document.createElement('div');
       msg.className = 'x-media-load-failed';

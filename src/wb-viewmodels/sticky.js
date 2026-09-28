@@ -1,4 +1,5 @@
 import { readAttr, readNumber } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * Sticky Behavior
  * -----------------------------------------------------------------------------
@@ -54,16 +55,9 @@ export function sticky(element, options = {}) {
     animate: options.animate !== false && (element.getAttribute('animate') !== 'false') && (element.dataset.animate !== 'false')
   };
 
-  // Store original styles
-  const originalStyles = {
-    position: element.style.position,
-    top: element.style.top,
-    left: element.style.left,
-    right: element.style.right,
-    width: element.style.width,
-    zIndex: element.style.zIndex,
-    transition: element.style.transition
-  };
+  // #779: nothing is written to element.style any more, so there are no
+  // authored inline values to save and restore -- unstick() just drops the
+  // class and the generated rule, and whatever the author had is untouched.
 
   // Get initial position
   let triggerPoint = config.threshold ? parseInt(config.threshold, 10) : null;
@@ -103,12 +97,9 @@ export function sticky(element, options = {}) {
     
     placeholder = document.createElement('div');
     placeholder.className = 'sticky-placeholder';
-    placeholder.style.cssText = `
-      width: ${elementRect.width}px;
-      height: ${elementRect.height}px;
-      visibility: hidden;
-      pointer-events: none;
-    `;
+    // visibility/pointer-events are .sticky-placeholder's (effects.css); the
+    // measured size is a generated rule, not a style attribute (#779).
+    setRule(placeholder, 'size', { width: `${elementRect.width}px`, height: `${elementRect.height}px` });
     element.parentNode.insertBefore(placeholder, element);
   }
 
@@ -130,6 +121,7 @@ export function sticky(element, options = {}) {
   // Remove placeholder
   function removePlaceholder() {
     if (placeholder) {
+      clearRules(placeholder);
       placeholder.remove();
       placeholder = null;
     }
@@ -143,15 +135,20 @@ export function sticky(element, options = {}) {
     elementRect = element.getBoundingClientRect();
     createPlaceholder();
     
-    element.style.position = 'fixed';
-    element.style.top = `${config.offset}px`;
-    element.style.left = `${elementRect.left}px`;
-    element.style.width = `${elementRect.width}px`;
-    element.style.zIndex = config.zIndex;
-    
-    if (config.animate) {
-      element.style.transition = 'box-shadow 0.2s ease';
-    }
+    // position:fixed is .x-sticky--fixed (effects.css); the measured spot and
+    // the configured z-index are runtime values, so a generated rule (#779).
+    // Weight 3 matches that class's (0,3,0): these used to be inline, above
+    // any rule the host's own page styles it with, and a sticky header that
+    // a (0,2,0) page rule pins back to position:relative does not stick.
+    // The box-shadow transition config.animate asked for is .x-sticky's own
+    // rule in effects.css, which every host carries.
+    element.classList.add('x-sticky--fixed');
+    setRule(element, 'stuck', {
+      top: `${config.offset}px`,
+      left: `${elementRect.left}px`,
+      width: `${elementRect.width}px`,
+      zIndex: config.zIndex,
+    }, { weight: 3 });
     
     element.classList.add(config.stuckClass);
     isStuck = true;
@@ -167,13 +164,8 @@ export function sticky(element, options = {}) {
   function unstick() {
     if (!isStuck) return;
     
-    // Restore original styles
-    element.style.position = originalStyles.position;
-    element.style.top = originalStyles.top;
-    element.style.left = originalStyles.left;
-    element.style.width = originalStyles.width;
-    element.style.zIndex = originalStyles.zIndex;
-    element.style.transition = originalStyles.transition;
+    element.classList.remove('x-sticky--fixed');
+    setRule(element, 'stuck', null);
     
     element.classList.remove(config.stuckClass);
     removePlaceholder();

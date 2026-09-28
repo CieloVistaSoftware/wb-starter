@@ -86,11 +86,14 @@ x-dialog[open], [x-dialog][open],
    <dialog size="xl"> opened at its content's width like every other size.
    `width`, not just max-width: a <dialog> shrinks to its content, so a cap
    alone leaves a short dialog the same width at every size. min() keeps each
-   inside a narrow viewport. Declared after the base rule, same specificity. */
-.x-dialog--sm   { width: min(90vw, 320px); }
-.x-dialog--md   { width: min(90vw, 480px); }
-.x-dialog--lg   { width: min(90vw, 640px); }
-.x-dialog--xl   { width: min(90vw, 800px); }
+   inside a narrow viewport. Declared after the base rule, same specificity.
+   rem, not px (#294): a reader who raises their browser font size gets a
+   dialog that grows with its text instead of a fixed box that wraps it
+   harder. At the default 16px root these are the same 320/480/640/800. */
+.x-dialog--sm   { width: min(90vw, 20rem); }
+.x-dialog--md   { width: min(90vw, 30rem); }
+.x-dialog--lg   { width: min(90vw, 40rem); }
+.x-dialog--xl   { width: min(90vw, 50rem); }
 .x-dialog--full { width: 95vw; max-width: 95vw; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -157,4 +160,14 @@ x-dialog[open], [x-dialog][open],
 @keyframes x-scale-in {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* #779: dialog.js used to write these onto element.style. */
+
+/* (The trigger's cursor: pointer is .x-dialog-trigger above.) */
+
+/* DEFINITION mode: the element only holds the modal's content, which is
+   cloned into a real dialog on open() -- the element itself never shows. */
+.x-modal-definition {
+  display: none;
 }

@@ -67,25 +67,86 @@ export function release(element, options = {}) {
   };
 
   element.classList.add('x-release');
+
+  // #1002 -- John: "the version number is supposed to represent a specific code
+  // set", and "everything running on 3000 is the latest code".
+  //
+  // A bare number cannot promise that. `v4.0.1` was shown while serving a tree
+  // 24 commits behind main with 377 uncommitted files: the same string named
+  // the release AND something that was not the release, and nothing
+  // distinguished them. That cost a whole session of mysteries -- a stale
+  // badge, a missing Error Log menu item, "fixed" things that were not.
+  //
+  // So when the served tree is not its remote, the badge says so. Silence now
+  // means "this IS the code set the number names", which is the only way the
+  // number is worth reading.
+  const behind = Number(VERSION.behind || 0);
+  const ahead = Number(VERSION.ahead || 0);
+
+  // #1139 -- John, 2026-09-28: "i can't figure out what's going on" with
+  // v4.0.5.23. A fourth segment reads as a release that does not exist -- no
+  // 4.0.5.23 was ever cut -- so the badge names the real release and counts
+  // the commits past it: "v4.0.5 +23". The tooltip says it in words.
+  //
+  // BEHIND is not expressed this way on purpose. Being behind does not make a
+  // newer build; it makes a STALE one, and rolling it into the number would
+  // read as progress. It stays a warning.
+  const versionText = ahead ? `${VERSION.version} +${ahead}` : VERSION.version;
+
+  // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
+  // origin/main · dirty" -- made the badge wide enough to wrap the whole site
+  // header onto a second line, pushing the control strip over the sidebar. A
+  // badge is a glance, not a sentence: the marks are symbols, the sentence
+  // lives in the tooltip below.
+  const marks = [];
+  if (behind) marks.push('⚠');
+  if (VERSION.dirty) marks.push('*');
+  const drift = marks.length ? ' ' + marks.join('') : '';
+
   element.textContent = config.format
-    .replace('{version}', VERSION.version)
+    .replace('{version}', versionText)
     .replace('{commit}', VERSION.commit)
-    .replace('{built}', formatBuiltAtCentral(VERSION.builtAt));
+    .replace('{built}', formatBuiltAtCentral(VERSION.builtAt)) + drift;
+
+  // Behind is the one that misleads, so make it impossible to read past.
+  element.classList.toggle('x-release--stale', behind > 0);
+
   element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
+    + (ahead ? ` · ${ahead} unreleased commit${ahead === 1 ? '' : 's'} past release ${VERSION.version}` : '')
+    + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
+    + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
+    + (VERSION.dirty ? ' · uncommitted changes' : '')
     + (config.reload ? ' — tap to clear cache and reload' : '');
 
   let onClick = null;
+  let onContext = null;
+  // John: "When clicking here show the What's new element", pointing at the
+  // version badge.
+  //
+  // The badge names a code set; What's New says what is IN that code set. That
+  // is the question a version number provokes, so a click answers it. The
+  // previous action -- clear cache and reload -- was a developer convenience
+  // nobody would guess from a version number; it moves to right-click so it is
+  // still there without occupying the obvious gesture.
+  element.classList.add('x-release--clickable');
+  onClick = (e) => {
+    e.preventDefault();
+    const root = location.pathname.replace(/[^/]*$/, '');
+    location.href = root + '?page=whats-new';
+  };
+  element.addEventListener('click', onClick);
+
   if (config.reload) {
-    element.classList.add('x-release--clickable');
-    onClick = async (e) => {
+    onContext = async (e) => {
       e.preventDefault();
       element.textContent = '⏳';
       await clearCacheAndReload();
     };
-    element.addEventListener('click', onClick);
+    element.addEventListener('contextmenu', onContext);
   }
 
   return () => {
     if (onClick) element.removeEventListener('click', onClick);
+    if (onContext) element.removeEventListener('contextmenu', onContext);
   };
 }

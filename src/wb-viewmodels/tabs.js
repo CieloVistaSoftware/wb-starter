@@ -109,9 +109,10 @@ export function tabs(element, options = {}) {
       panelWrapper.setAttribute('index', i);
       panelWrapper.id = `${uid}-panel-${i}`;
       panelWrapper.setAttribute('aria-labelledby', `${uid}-tab-${i}`);
-      // Appearance is in tabs.css (#902). Only visibility stays here: which
-      // panel is showing is state, not style.
-      panelWrapper.style.display = isActive ? 'block' : 'none';
+      // Appearance is in tabs.css (#902). Which panel is showing is state, and
+      // state is a class: .x-tabs__panel--active (tabs.css) shows it, every
+      // other panel is display:none -- no longer written inline (#779).
+      panelWrapper.classList.toggle('x-tabs__panel--active', isActive);
       
       // Move all children of the original panel to the new wrapper
       while (panel.firstChild) {
@@ -147,7 +148,7 @@ export function tabs(element, options = {}) {
     // Update panels
     const panels = panelsContainer ? panelsContainer.querySelectorAll('.x-tabs__panel') : element.querySelectorAll('.x-tabs__panel');
     panels.forEach((p, i) => {
-      p.style.display = i === index ? 'block' : 'none';
+      p.classList.toggle('x-tabs__panel--active', i === index);
     });
 
     element.dispatchEvent(new CustomEvent('wb:tabs:change', { 

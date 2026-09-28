@@ -1,15 +1,15 @@
 /* Layout custom elements extracted from site.css */
-x-flex, x-stack, x-cluster, x-container,
-x-row, x-column,
-x-sidebar, x-center, x-cover, x-masonry, x-switcher,
-x-reel, x-frame, x-sticky, x-drawer, x-icon {
+x-flex, [x-flex], x-stack, [x-stack], x-cluster, [x-cluster], x-container, [x-container],
+x-row, [x-row], x-column, [x-column],
+x-sidebar, [x-sidebar], x-center, [x-center], x-cover, [x-cover], x-masonry, [x-masonry], x-switcher, [x-switcher],
+x-reel, [x-reel], x-frame, [x-frame], x-sticky, [x-sticky], x-drawer, [x-drawer], x-icon, [x-icon]{
   display: block;
 }
 
 /* x-grid gets its own grid-shaped default here (not lumped in with the
    block-display group above) matching layouts.js's grid() 3-column
    default (defaultMins['3'] = '250px'). grid() itself only runs once
-   x-grid.js's module has loaded/executed and the custom element upgrades
+   WB has dispatched the 'grid' behavior for this element
    -- setting display:grid/grid-template-columns purely via JS inline
    styles left a real gap: this tag painted as block (single column) on
    first paint, then reflowed into a multi-column grid once JS caught up.
@@ -21,13 +21,13 @@ x-reel, x-frame, x-sticky, x-drawer, x-icon {
    rule, so custom columns/gap/minWidth configs still apply correctly --
    for the common default case they now just match what's already
    painted, so there's nothing left to shift. */
-x-grid {
+x-grid, [x-grid]{
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
 }
 
-x-drawer {
+x-drawer, [x-drawer]{
   visibility: hidden;
 }
 /* .x-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
@@ -38,8 +38,8 @@ x-drawer {
    because this base rule hides every <div x-drawer> that isn't a
    .x-drawer-layout). Same specificity as the rule above by design -- this
    just extends its selector list, not a new override. */
-x-drawer.x-drawer-layout,
-x-drawer.x-drawer-trigger {
+x-drawer.x-drawer-layout, [x-drawer].x-drawer-layout,
+x-drawer.x-drawer-trigger, [x-drawer].x-drawer-trigger{
   visibility: visible;
 }
 
@@ -74,7 +74,7 @@ x-drawer.x-drawer-trigger {
 }
 
 .page {
-  max-width: 1200px;
+  max-width: 75rem;
   margin: 0 auto;
   animation: fadeIn 0.3s ease;
 }
@@ -94,3 +94,264 @@ x-drawer.x-drawer-trigger {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* =============================================================================
+   #779 — the declarations layouts.js used to write onto element.style
+   -----------------------------------------------------------------------------
+   Each primitive's defaults, keyed on the class it adds. What an author sets
+   through an attribute (gap, min-width, side-width, ...) differs per element
+   and arrives as a generated rule from src/core/dynamic-style.js carrying only
+   the changed values, so these are the values every unconfigured element gets.
+   They sit below the display:block group at the top of this file on purpose:
+   `[x-flex]` and `.x-flex` tie at (0,1,0), and the later rule wins.
+
+   Every rule whose value an attribute can change stays at ONE class (0,1,0),
+   with :where() carrying any extra condition: a generated rule is also
+   (0,1,0) and wins by coming later in the cascade, so a default written any
+   more specifically would silently beat the author's own value.
+============================================================================= */
+
+.x-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+}
+
+.x-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.x-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Flex mode only: grid mode never set a direction or wrap. */
+.x-container:where(:not(.x-container--grid)) {
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.x-container--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+}
+
+.x-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.x-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* The two modes set disjoint properties, as center() always did: the
+   intrinsic mode never touched the box model, so neither does its rule. */
+.x-center:where(:not(.x-center--intrinsic)) {
+  box-sizing: content-box;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.x-center--intrinsic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.x-sidebar-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.x-sidebar-layout > .x-sidebar-layout__side {
+  flex-basis: var(--x-sidebar-width, 18.75rem);
+  flex-grow: 1;
+}
+
+.x-sidebar-layout > .x-sidebar-layout__main {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: var(--x-sidebar-content-min, 50%);
+}
+
+.x-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.x-switcher > .x-switcher__item {
+  flex-grow: 1;
+  flex-basis: calc((var(--x-switcher-threshold, 30rem) - 100%) * 999);
+}
+
+.x-masonry {
+  column-count: 3;
+  column-gap: var(--x-masonry-gap, 1rem);
+}
+
+.x-masonry > .x-masonry__item {
+  break-inside: avoid;
+  margin-bottom: var(--x-masonry-gap, 1rem);
+}
+
+.x-sticky--layout {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.x-fixed {
+  position: fixed;
+  z-index: 1000;
+}
+.x-fixed--top-left      { top: var(--x-fixed-offset, 1rem); left: var(--x-fixed-offset, 1rem); }
+.x-fixed--top-right     { top: var(--x-fixed-offset, 1rem); right: var(--x-fixed-offset, 1rem); }
+.x-fixed--top-center    { top: var(--x-fixed-offset, 1rem); left: 50%; transform: translateX(-50%); }
+.x-fixed--bottom-left   { bottom: var(--x-fixed-offset, 1rem); left: var(--x-fixed-offset, 1rem); }
+.x-fixed--bottom-right  { bottom: var(--x-fixed-offset, 1rem); right: var(--x-fixed-offset, 1rem); }
+.x-fixed--bottom-center { bottom: var(--x-fixed-offset, 1rem); left: 50%; transform: translateX(-50%); }
+.x-fixed--center        { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+.x-scrollable.x-scrollable--y { overflow-y: auto; }
+.x-scrollable.x-scrollable--x { overflow-x: auto; }
+
+.x-cover {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem;
+}
+.x-cover.x-cover--centered { justify-content: center; }
+.x-cover > .x-cover__middle-start { margin-top: auto; }
+.x-cover > .x-cover__middle-end { margin-bottom: auto; }
+
+.x-reel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+}
+.x-reel > .x-reel__item {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+.x-reel.x-reel--sized > .x-reel__item {
+  width: var(--x-reel-item-width);
+}
+
+.x-imposter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.x-imposter.x-imposter--breakout { position: fixed; }
+.x-imposter.x-imposter--contained {
+  max-width: calc(100% - var(--x-imposter-margin, 0px) * 2);
+  max-height: calc(100% - var(--x-imposter-margin, 0px) * 2);
+  overflow: auto;
+}
+
+.x-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.x-icon .x-icon__svg {
+  width: var(--x-icon-size, 1em);
+  height: var(--x-icon-size, 1em);
+}
+
+/* x-drawer-layout: the page-shell panel. Its size is a generated rule. */
+.x-drawer-layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease, min-width 0.3s ease, flex-basis 0.3s ease;
+}
+.x-drawer-layout.x-drawer-layout--vertical {
+  width: 100%;
+  transition: height 0.3s ease, min-height 0.3s ease, flex-basis 0.3s ease;
+}
+.x-drawer-layout.collapsed {
+  overflow: hidden;
+  border: none;
+}
+
+/* Scoped under the host: themes.css's `[data-theme] button` (0,1,1) would
+   otherwise beat a single class and put its own padding/background back. */
+.x-drawer-layout .x-drawer-toggle {
+  position: absolute;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+  padding: 0;
+  outline: none;
+}
+.x-drawer-layout .x-drawer-toggle--left {
+  top: 50%; transform: translateY(-50%); right: calc(-1 * var(--x-drawer-min-width, 1.5rem));
+  width: var(--x-drawer-min-width, 1.5rem); height: 3rem;
+  border-left: none; border-radius: 0 0.25rem 0.25rem 0;
+}
+.x-drawer-layout .x-drawer-toggle--right {
+  top: 50%; transform: translateY(-50%); left: 0;
+  width: var(--x-drawer-min-width, 1.5rem); height: 3rem;
+  border-right: none; border-radius: 0.25rem 0 0 0.25rem;
+}
+.x-drawer-layout .x-drawer-toggle--top {
+  left: 50%; transform: translateX(-50%); bottom: 0;
+  height: var(--x-drawer-min-height, 1.5rem); width: 3rem;
+  border-top: none; border-radius: 0 0 0.25rem 0.25rem;
+}
+.x-drawer-layout .x-drawer-toggle--bottom {
+  left: 50%; transform: translateX(-50%); top: 0;
+  height: var(--x-drawer-min-height, 1.5rem); width: 3rem;
+  border-bottom: none; border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.x-drawer-handle {
+  position: absolute;
+  z-index: 20;
+  background: transparent;
+}
+.x-drawer-handle--left   { right: 0; top: 0; bottom: 0; width: 0.5rem; cursor: col-resize; }
+.x-drawer-handle--right  { left: 0; top: 0; bottom: 0; width: 0.5rem; cursor: col-resize; }
+.x-drawer-handle--top    { bottom: 0; left: 0; right: 0; height: 0.5rem; cursor: row-resize; }
+.x-drawer-handle--bottom { top: 0; left: 0; right: 0; height: 0.5rem; cursor: row-resize; }
+
+.x-drawer-resize-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  user-select: none;
+}
+.x-drawer-resize-overlay--row { cursor: row-resize; }
+.x-drawer-resize-overlay--col { cursor: col-resize; }

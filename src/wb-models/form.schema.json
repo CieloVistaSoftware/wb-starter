@@ -4,8 +4,8 @@
   "type": "object",
   "description": "A plain <form> gets validation on submit, and with ajax it sends its fields to action with fetch instead of reloading the page, firing wb:form:submit, then wb:form:success or wb:form:error.",
   "properties": {
-    "ajax": { "type": "boolean", "description": "Enable AJAX form submission", "default": false },
-    "validate": { "type": "boolean", "description": "Enable validation on submit", "default": false }
+    "ajax": { "type": "boolean", "description": "Enable AJAX form submission", "default": false, "visual": false, "visualReason": "Submits in the background instead of navigating. Only submitting shows it (#773)." },
+    "validate": { "type": "boolean", "description": "Enable validation on submit", "default": false, "visual": false, "visualReason": "Checks the fields when the form is submitted. Only submitting shows it (#773)." }
   },
   "required": [],
   "schemaFor": "form",

@@ -8,6 +8,7 @@
  * no wrapper element ever needed. Retained for back-compat (self-builds
  * the real textarea now, see below); emits a one-time console warning.
  */
+import { setRule, clearRules } from '../../core/dynamic-style.js';
 import { readAttr, readFlag } from '../../core/read-attr.js';
 
 let _textareaHostDeprecationWarned = false;
@@ -163,22 +164,14 @@ export function textarea(element, options = {}) {
   // hardcoded #374151/#1f2937/#f9fafb fallbacks go with them, which had no
   // business living outside themes.css.
   //
-  // What stays inline is what genuinely cannot be a static rule: both depend
-  // on runtime config.
-  Object.assign(element.style, {
-    resize: config.autosize ? 'none' : (RESIZE_VALUES.includes(config.resize) ? config.resize : 'vertical'),
-    minHeight: `${config.minRows * 1.5}rem`
-  });
-
-  // Apply size
-  const paddings = {
-    xs: '0.125rem 0.5rem',
-    sm: '0.25rem 0.75rem',
-    md: '0.5rem 0.75rem',
-    lg: '0.75rem 1rem',
-    xl: '1rem 1.25rem'
-  };
-  element.style.padding = paddings[config.size] || paddings.md;
+  // #779: what used to stay inline is gone too. `resize` is one of the four
+  // .x-textarea--resize-* classes; the 2-row min-height is textarea.x-textarea
+  // in input.css, and only a different min-rows travels, as a generated rule.
+  // The per-size padding was already .x-textarea / .x-textarea--{size} with
+  // identical values, so that write is simply deleted.
+  const resizeMode = config.autosize ? 'none' : (RESIZE_VALUES.includes(config.resize) ? config.resize : 'vertical');
+  RESIZE_VALUES.forEach((r) => element.classList.toggle(`x-textarea--resize-${r}`, r === resizeMode));
+  if (config.minRows !== 2) setRule(element, 'min-height', { minHeight: `${config.minRows * 1.5}rem` });
 
   if (config.size !== 'md') {
     element.classList.add(`x-textarea--${config.size}`);
@@ -186,13 +179,18 @@ export function textarea(element, options = {}) {
 
   if (config.autosize) {
     element.classList.add('x-textarea--autosize');
+    // The measured height is a runtime value: a generated rule, never
+    // element.style (#779). Reset to auto first so scrollHeight reports the
+    // content's own height rather than the height last applied.
     const resize = () => {
-      element.style.height = 'auto';
+      setRule(element, 'autosize', { height: 'auto' });
       const lineHeight = parseFloat(getComputedStyle(element).lineHeight) || 24;
       const maxHeight = config.maxRows * lineHeight;
       const newHeight = Math.min(element.scrollHeight, maxHeight);
-      element.style.height = newHeight + 'px';
-      element.style.overflowY = element.scrollHeight > maxHeight ? 'auto' : 'hidden';
+      setRule(element, 'autosize', {
+        height: newHeight + 'px',
+        overflowY: element.scrollHeight > maxHeight ? 'auto' : 'hidden',
+      });
     };
     element.addEventListener('input', resize);
     resize();
@@ -205,7 +203,6 @@ export function textarea(element, options = {}) {
     // Create wrapper to hold counter
     const counterWrapper = document.createElement('div');
     counterWrapper.className = 'x-textarea-wrapper';
-    counterWrapper.style.cssText = 'position:relative;width:100%;';
     
     if (element.parentNode) {
       element.parentNode.insertBefore(counterWrapper, element);
@@ -213,23 +210,14 @@ export function textarea(element, options = {}) {
     counterWrapper.appendChild(element);
 
     counter = document.createElement('div');
+    // Styled by .x-textarea__counter (and --over) in input.css (#779).
     counter.className = 'x-textarea__counter';
-    Object.assign(counter.style, {
-      fontSize: '0.75rem',
-      color: 'var(--text-secondary, #9ca3af)',
-      textAlign: 'right',
-      marginTop: '0.25rem'
-    });
-    
+
     const update = () => {
       const len = (element.value || '').length;
       counter.textContent = config.maxLength ? `${len}/${config.maxLength}` : `${len}`;
       
-      if (config.maxLength && len > config.maxLength) {
-        counter.style.color = 'var(--danger-color, #ef4444)';
-      } else {
-        counter.style.color = 'var(--text-secondary, #9ca3af)';
-      }
+      counter.classList.toggle('x-textarea__counter--over', !!(config.maxLength && len > config.maxLength));
     };
     element.addEventListener('input', update);
     counterWrapper.appendChild(counter);
@@ -238,6 +226,7 @@ export function textarea(element, options = {}) {
 
   return () => {
     enhanced.delete(element);
+    clearRules(element);
     element.classList.remove('x-textarea');
     if (config.size !== 'md') {
       element.classList.remove(`x-textarea--${config.size}`);

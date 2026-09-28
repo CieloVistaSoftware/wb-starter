@@ -27,12 +27,8 @@ export function vimeo(element, options = {}) {
     return;
   }
 
+  // The host's frame (16:9, black, rounded) is .x-vimeo in embed.css (#779).
   element.classList.add('x-vimeo');
-  element.style.aspectRatio = '16/9';
-  element.style.width = '100%';
-  element.style.background = '#000';
-  element.style.borderRadius = '8px';
-  element.style.overflow = 'hidden';
 
   const params = new URLSearchParams({
     autoplay: config.autoplay ? '1' : '0',
@@ -44,7 +40,7 @@ export function vimeo(element, options = {}) {
   iframe.src = `https://player.vimeo.com/video/${config.id}?${params}`;
   iframe.allow = 'autoplay; fullscreen; picture-in-picture';
   iframe.allowFullscreen = true;
-  iframe.style.cssText = 'width:100%;height:100%;border:none;';
+  // Sized by `.x-vimeo > iframe` in embed.css (#779).
 
   element.innerHTML = '';
   element.appendChild(iframe);

@@ -22,7 +22,9 @@
         "modal"
       ],
       "default": "left",
-      "appliesClass": "x-notes--{{value}}"
+      "appliesClass": "x-notes--{{value}}",
+      "visibleWhen": "open",
+      "visualReason": "Places the notes drawer, which is on screen only once opened (#773)."
     },
     "maxWidth": {
       "type": "string",
@@ -42,7 +44,9 @@
     "autoSave": {
       "type": "boolean",
       "description": "Auto-save to localStorage",
-      "default": true
+      "default": true,
+      "visual": false,
+      "visualReason": "Saves the notes to localStorage as they are typed. Nothing is drawn for it (#773)."
     },
     "placeholder": {
       "type": "string",

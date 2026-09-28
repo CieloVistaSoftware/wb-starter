@@ -22,6 +22,11 @@ const CODE_THEMES = [
   // Grayscale / Minimal
   { id: 'x-grayscale-dark', name: 'WB Grayscale (Dark)', category: 'Minimal', description: 'High contrast dark grayscale', path: new URL('../styles/code-themes/x-grayscale-dark.css', import.meta.url).href },
   { id: 'ascetic', name: 'Ascetic', category: 'Minimal', description: 'Ultra minimal' },
+  // grayscale / mono-blue / lightfair: the Themes page and its docs promise 49
+  // themes; the list had fallen to 46. All three are stock highlight.js 11
+  // stylesheets, so they resolve on the same URL as every other entry.
+  { id: 'grayscale', name: 'Grayscale', category: 'Minimal', description: 'Light grayscale, no hue' },
+  { id: 'mono-blue', name: 'Mono Blue', category: 'Minimal', description: 'Single-hue blue' },
   
   // Dark Themes
   { id: 'atom-one-dark', name: 'Atom One Dark', category: 'Dark', description: 'Default - popular dark theme' },
@@ -31,7 +36,10 @@ const CODE_THEMES = [
   { id: 'monokai-sublime', name: 'Monokai Sublime', category: 'Dark', description: 'Monokai variant' },
   { id: 'vs2015', name: 'VS 2015', category: 'Dark', description: 'Visual Studio dark' },
   { id: 'nord', name: 'Nord', category: 'Dark', description: 'Arctic, north-bluish' },
-  { id: 'dracula', name: 'Obsidian', category: 'Dark', description: 'Dark with purple hints' },
+  // Was { id: 'dracula', name: 'Obsidian' } -- highlight.js ships no
+  // `dracula` stylesheet, so picking it loaded a 404 and left code unstyled,
+  // under a label that duplicated the real Obsidian entry below.
+  { id: 'tomorrow-night-bright', name: 'Tomorrow Night Bright', category: 'Dark', description: 'High-contrast Tomorrow' },
   { id: 'night-owl', name: 'Night Owl', category: 'Dark', description: 'Accessibility-focused dark' },
   { id: 'tokyo-night-dark', name: 'Tokyo Night', category: 'Dark', description: 'Inspired by Tokyo nights' },
   { id: 'panda-syntax-dark', name: 'Panda Dark', category: 'Dark', description: 'Minimal dark syntax' },
@@ -63,6 +71,7 @@ const CODE_THEMES = [
   { id: 'foundation', name: 'Foundation', category: 'Light', description: 'Zurb Foundation' },
   { id: 'arduino-light', name: 'Arduino Light', category: 'Light', description: 'Arduino IDE' },
   { id: 'qtcreator-light', name: 'Qt Creator Light', category: 'Light', description: 'Qt IDE light' },
+  { id: 'lightfair', name: 'Lightfair', category: 'Light', description: 'Soft light pastel' },
   
   // Special / Colorful
   { id: 'rainbow', name: 'Rainbow', category: 'Special', description: 'Colorful rainbow theme' },
@@ -86,6 +95,19 @@ const SIZES = {
 const SYNC_EVENT = 'x:codetheme:sync';
 
 export function codecontrol(element, options = {}) {
+  // #1022 -- confirmed live on the behaviors code bar: two full dropdowns, each
+  // with its own full option list, inside the SAME <div x-codecontrol>. The function
+  // ends in an unconditional element.appendChild(wrapper) and had no re-init
+  // guard, so a second WB pass over an already-initialised element appended a
+  // second control instead of skipping. A second pass is routine, not
+  // exceptional: wb.js injects from the route render, from wb.js:1111 and 1133,
+  // and from its MutationObserver, and the live panel re-renders on every
+  // selection.
+  // The identical bug was already found and fixed in themecontrol.js -- see the
+  // comment there and element._wbThemeControlInit. This is the same guard; the
+  // two files were simply fixed at different times.
+  if (element._wbCodeControlInit) return () => {};
+  element._wbCodeControlInit = true;
   const config = {
     default: options.default || element.getAttribute('default') || element.dataset.default || 'atom-one-dark',
     showLabel: options.showLabel ?? (
@@ -107,50 +129,28 @@ export function codecontrol(element, options = {}) {
     ...options
   };
 
-  // Get size config
-  const sizeConfig = SIZES[config.size] || SIZES.md;
+  // #779 / #1021: the size is a class; its font-size, padding, min-width and
+  // arrow live in codecontrol.css. An unknown size falls back to md, as the
+  // SIZES lookup always did.
+  const sizeKey = SIZES[config.size] ? config.size : 'md';
 
-  element.classList.add('x-codecontrol');
+  element.classList.add('x-codecontrol', `x-codecontrol--size-${sizeKey}`);
 
   // Create the control UI
   const wrapper = document.createElement('div');
   wrapper.className = 'x-codecontrol__wrapper';
-  wrapper.style.cssText = `
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  `;
 
   // Label
   if (config.showLabel) {
     const label = document.createElement('label');
     label.className = 'x-codecontrol__label';
     label.textContent = 'Code:';
-    label.style.cssText = `
-      font-weight: 500;
-      font-size: ${sizeConfig.fontSize};
-      color: var(--text-primary, inherit);
-    `;
     wrapper.appendChild(label);
   }
 
   // Dropdown select
   const select = document.createElement('select');
   select.className = 'x-codecontrol__select';
-  select.style.cssText = `
-    padding: ${sizeConfig.padding};
-    font-size: ${sizeConfig.fontSize};
-    border: 1px solid var(--border-color, #374151);
-    border-radius: var(--radius-sm, 4px);
-    background: var(--bg-primary, #1f2937);
-    color: var(--text-primary, #f3f4f6);
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${sizeConfig.arrowSize}' height='${sizeConfig.arrowSize}' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.35rem center;
-    min-width: ${sizeConfig.minWidth};
-  `;
 
   // Group themes by category
   if (config.showCategory) {
@@ -274,7 +274,7 @@ export function codecontrol(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('x-codecontrol');
+    element.classList.remove('x-codecontrol', `x-codecontrol--size-${sizeKey}`);
     select.removeEventListener('change', onChange);
     document.removeEventListener(SYNC_EVENT, onSync);
     wrapper.remove();

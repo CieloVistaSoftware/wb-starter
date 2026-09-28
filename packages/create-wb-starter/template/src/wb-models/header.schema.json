@@ -18,22 +18,22 @@
     "icon": {
       "type": "string",
       "description": "Logo icon (emoji or text)",
-      "default": ""
+      "default": "this is the icon"
     },
     "title": {
       "type": "string",
       "description": "Header title",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Subtitle text",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "badge": {
       "type": "string",
       "description": "Badge text (e.g., version)",
-      "default": ""
+      "default": "this is the badge"
     },
     "logoHref": {
       "type": "string",
@@ -58,6 +58,9 @@
     {
       "name": "logo",
       "tag": "a",
+      "attributes": {
+        "href": "{{logoHref}}"
+      },
       "parent": "left",
       "public": true,
       "createdWhen": "icon OR title",
@@ -93,18 +96,23 @@
     {
       "name": "center",
       "tag": "div",
+      "content": "{{center}}",
+      "required": true,
       "public": true,
       "description": "Center section slot"
     },
     {
       "name": "right",
       "tag": "div",
+      "content": "{{right}}",
+      "required": true,
       "public": true,
       "description": "Right section"
     },
     {
       "name": "badge",
       "tag": "span",
+      "class": "x-tag-glass",
       "parent": "right",
       "public": true,
       "content": "{{badge}}",

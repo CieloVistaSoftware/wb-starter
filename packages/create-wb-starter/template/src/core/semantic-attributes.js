@@ -22,7 +22,7 @@ export const SEMANTIC_PROPERTY_ATTRIBUTES = {
   badge: 'badge',
 };
 
-// Every x-card* family tag treats `badge` AND `tooltip` as its own behavior
+// Every x-card* family tag treats `badge` AND `tooltip` as its own component
 // props (composeCard renders `badge` as an internal .x-card__badge span, and
 // wires `tooltip`/`hoverText` straight to the same themed tooltip.js behavior
 // itself -- #283). The bare [badge]/[tooltip] selectors below would
@@ -38,7 +38,7 @@ export const SEMANTIC_PROPERTY_ATTRIBUTES = {
 // already-stripped `title` attribute and silently drop the card's heading
 // (confirmed live: <article title="…" tooltip="…"> intermittently rendered
 // with no header at all, depending on import timing). Excluded explicitly so
-// card behaviors keep sole ownership of their own `badge`/`tooltip`
+// card components keep sole ownership of their own `badge`/`tooltip`
 // attributes.
 export const CARD_TAGS = [
   'x-card', 'x-cardbutton', 'x-carddraggable', 'x-cardexpandable', 'x-cardfile',
@@ -51,7 +51,7 @@ export const CARD_TAGS = [
 // CUSTOM TAGS -- it has no way to recognize a semantic
 // <article x-behavior="card">/<article x-card> (the now-preferred,
 // semantic-HTML-first way to author a card per John's "pull away from our
-// wb tags" directive). Confirmed live: docs/behaviors/cards/card.md's own
+// wb tags" directive). Confirmed live: docs/components/cards/card.md's own
 // "Card anatomy" example, rewritten to <article x-behavior="card"
 // badge="LIVE">, picked up x-badge/x-badge--live classes on the ROOT
 // element -- the exact double-application bug this file's own CARD_TAGS
@@ -62,7 +62,15 @@ export const CARD_TAGS = [
 // always-available generic fallback -- either can be used, so both must be
 // excluded here).
 const CARD_BEHAVIOR_NAMES = ['card']; // extend as more card variants migrate to semantic HTML + x-behavior
+// <article> is the third form, and the one the docs now use. It IS a card by
+// auto-injection (tag-map's nativeMap), so it owns its own `badge` exactly as
+// <x-card> and [x-card] do -- but it is not a card TAG and carries no x-card
+// attribute, so neither existing exclusion caught it. The result was
+// `<article badge="NEW">` getting x-badge and x-badge--glass painted onto the
+// CARD, which is the same double-application this file already documents
+// twice, surfacing a third time now that the plain semantic form is primary.
 const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('')
+  + ':not(article)'
   + CARD_BEHAVIOR_NAMES.map(b => `:not([x-behavior~="${b}"])`).join('')
   + CARD_BEHAVIOR_NAMES.map(b => `:not([x-${b}])`).join('');
 
@@ -72,7 +80,17 @@ const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('')
  */
 const CARD_OWNED_ATTRIBUTES = ['badge', 'tooltip'];
 
+// <header> renders its OWN `badge` (header.js builds .x-header__badge in
+// .x-header__right), so the generic badge() must not also run on it: it
+// re-read the header's `icon` and prepended a second .x-badge__icon, and
+// used badge="v1.0" as a variant name (x-badge--v1.0 on the header root).
+// Badge-only: header has no tooltip handling of its own, so it keeps the
+// generic themed [tooltip].
+const BADGE_ONLY_EXCLUSIONS = ':not(header)';
+
 export const semanticPropertyMappings = Object.entries(SEMANTIC_PROPERTY_ATTRIBUTES).map(([attr, behavior]) => ({
-  selector: CARD_OWNED_ATTRIBUTES.includes(attr) ? `[${attr}]${CARD_TAG_EXCLUSIONS}` : `[${attr}]`,
+  selector: CARD_OWNED_ATTRIBUTES.includes(attr)
+    ? `[${attr}]${CARD_TAG_EXCLUSIONS}${attr === 'badge' ? BADGE_ONLY_EXCLUSIONS : ''}`
+    : `[${attr}]`,
   behavior,
 }));

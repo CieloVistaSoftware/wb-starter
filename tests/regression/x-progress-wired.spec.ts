@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settledWidthPercent } from '../helpers/settled-style';
 
 /**
  * x-progress applies the progress behavior to any host that is not a
@@ -36,10 +37,10 @@ test('x-progress on a plain div actually renders a fill matching its value/varia
   await expect(p1Bar).toBeVisible();
   await expect(p2Bar).toBeVisible();
 
-  const p1Width = await p1Bar.evaluate((el) => el.style.width);
-  const p2Width = await p2Bar.evaluate((el) => el.style.width);
-  expect(p1Width).toBe('40%');
-  expect(p2Width).toBe('80%');
+  // #779: the fill width is a generated rule, not a style attribute --
+  // measure the rendered fill instead.
+  expect(await settledWidthPercent(p1Bar)).toBeCloseTo(40, 0);
+  expect(await settledWidthPercent(p2Bar)).toBeCloseTo(80, 0);
 
   const p2Bg = await p2Bar.evaluate((el) => getComputedStyle(el).backgroundColor);
   const p1Bg = await p1Bar.evaluate((el) => getComputedStyle(el).backgroundColor);

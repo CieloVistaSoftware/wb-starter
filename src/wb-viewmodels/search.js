@@ -76,13 +76,15 @@ export function search(element, options = {}) {
     clearBtn.className = 'x-search__clear';
     clearBtn.textContent = '✕';
     clearBtn.title = 'Clear search';
-    clearBtn.style.display = config.value ? 'block' : 'none';
+    // Shown/hidden by .x-search__clear--visible in search.css (#779) -- it
+    // used to be display:block/none written onto the style attribute.
+    clearBtn.classList.toggle('x-search__clear--visible', !!(config.value));
     wrapper.appendChild(clearBtn);
 
     clearBtn.onclick = () => {
       element.value = '';
       element.focus();
-      clearBtn.style.display = 'none';
+      clearBtn.classList.remove('x-search__clear--visible');
       element.dispatchEvent(new CustomEvent('wb:search:clear', { bubbles: true }));
       element.dispatchEvent(new CustomEvent('wb:search', {
         bubbles: true,
@@ -113,7 +115,7 @@ export function search(element, options = {}) {
   const triggerSearch = (instant = false, dispatchInputEvent = true) => {
     const query = element.value;
     if (clearBtn) {
-      clearBtn.style.display = query ? 'block' : 'none';
+      clearBtn.classList.toggle('x-search__clear--visible', !!(query));
     }
 
     if (dispatchInputEvent) {
@@ -180,7 +182,7 @@ export function search(element, options = {}) {
 
   // Handle initial value
   if (config.value && clearBtn) {
-    clearBtn.style.display = 'block';
+    clearBtn.classList.add('x-search__clear--visible');
   }
 
   // Public API
@@ -189,14 +191,14 @@ export function search(element, options = {}) {
     setValue: (value) => {
       element.value = value;
       if (clearBtn) {
-        clearBtn.style.display = value ? 'block' : 'none';
+        clearBtn.classList.toggle('x-search__clear--visible', !!(value));
       }
       triggerSearch(true);
     },
     clear: () => {
       element.value = '';
       if (clearBtn) {
-        clearBtn.style.display = 'none';
+        clearBtn.classList.remove('x-search__clear--visible');
       }
       element.dispatchEvent(new CustomEvent('wb:search:clear', { bubbles: true }));
       element.dispatchEvent(new CustomEvent('wb:search', {
@@ -211,7 +213,8 @@ export function search(element, options = {}) {
       config.loading = loading;
       element.classList.toggle('x-search--loading', loading);
       if (loadingSpan) {
-        loadingSpan.style.display = loading ? 'block' : 'none';
+        loadingSpan.classList.toggle('x-search__loading--shown', !!loading);
+        loadingSpan.classList.toggle('x-search__loading--hidden', !loading);
       }
     },
     destroy: () => {

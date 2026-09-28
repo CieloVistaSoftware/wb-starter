@@ -60,7 +60,9 @@
       "type": "boolean",
       "description": "Make card clickable",
       "default": false,
-      "appliesClass": "x-card--clickable"
+      "appliesClass": "x-card--clickable",
+      "visual": false,
+      "visualReason": "Makes the card an activatable button (role, keyboard, pointer cursor, press feedback). All of it is interaction; a card at rest looks the same (#773)."
     },
     "variant": {
       "type": "string",

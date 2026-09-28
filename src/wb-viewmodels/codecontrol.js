@@ -129,50 +129,28 @@ export function codecontrol(element, options = {}) {
     ...options
   };
 
-  // Get size config
-  const sizeConfig = SIZES[config.size] || SIZES.md;
+  // #779 / #1021: the size is a class; its font-size, padding, min-width and
+  // arrow live in codecontrol.css. An unknown size falls back to md, as the
+  // SIZES lookup always did.
+  const sizeKey = SIZES[config.size] ? config.size : 'md';
 
-  element.classList.add('x-codecontrol');
+  element.classList.add('x-codecontrol', `x-codecontrol--size-${sizeKey}`);
 
   // Create the control UI
   const wrapper = document.createElement('div');
   wrapper.className = 'x-codecontrol__wrapper';
-  wrapper.style.cssText = `
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  `;
 
   // Label
   if (config.showLabel) {
     const label = document.createElement('label');
     label.className = 'x-codecontrol__label';
     label.textContent = 'Code:';
-    label.style.cssText = `
-      font-weight: 500;
-      font-size: ${sizeConfig.fontSize};
-      color: var(--text-primary, inherit);
-    `;
     wrapper.appendChild(label);
   }
 
   // Dropdown select
   const select = document.createElement('select');
   select.className = 'x-codecontrol__select';
-  select.style.cssText = `
-    padding: ${sizeConfig.padding};
-    font-size: ${sizeConfig.fontSize};
-    border: 1px solid var(--border-color, #374151);
-    border-radius: var(--radius-sm, 4px);
-    background: var(--bg-primary, #1f2937);
-    color: var(--text-primary, #f3f4f6);
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${sizeConfig.arrowSize}' height='${sizeConfig.arrowSize}' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.35rem center;
-    min-width: ${sizeConfig.minWidth};
-  `;
 
   // Group themes by category
   if (config.showCategory) {
@@ -296,7 +274,7 @@ export function codecontrol(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('x-codecontrol');
+    element.classList.remove('x-codecontrol', `x-codecontrol--size-${sizeKey}`);
     select.removeEventListener('change', onChange);
     document.removeEventListener(SYNC_EVENT, onSync);
     wrapper.remove();

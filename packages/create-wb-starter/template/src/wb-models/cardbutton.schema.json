@@ -18,33 +18,33 @@
     "title": {
       "type": "string",
       "description": "Card title",
-      "default": ""
+      "default": "this is the title"
     },
     "content": {
       "type": "string",
       "description": "Card content/description",
-      "default": ""
+      "default": "this is the content"
     },
     "primary": {
       "type": "string",
       "description": "Primary button text",
       "required": true,
-      "default": ""
+      "default": "this is the primary"
     },
     "primaryHref": {
       "type": "string",
       "description": "Primary button link URL",
-      "default": ""
+      "default": "#"
     },
     "secondary": {
       "type": "string",
       "description": "Secondary button text",
-      "default": ""
+      "default": "this is the secondary"
     },
     "secondaryHref": {
       "type": "string",
       "description": "Secondary button link URL",
-      "default": ""
+      "default": "#"
     },
     "variant": {
       "type": "string",

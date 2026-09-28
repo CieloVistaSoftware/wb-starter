@@ -1581,6 +1581,17 @@
       // a behavior demo that ejects you from the gallery reads as broken even
       // when the navigation itself succeeds.
       'button:variant:link': ` href="${siteRoot()}pages/docs.html" target="_blank"`,
+      // #773: a checkbox's and a switch's variant colours only the CHECKED
+      // state (checkbox.css, switch.css) -- unchecked, every variant is the
+      // same empty box by design. So the variant rows are shown checked. The
+      // curated example itself is left unchecked, so the `checked` row is the
+      // one that shows what checking does.
+      'checkbox:variant:default': ' checked',
+      'checkbox:variant:primary': ' checked',
+      'checkbox:variant:success': ' checked',
+      'switch:variant:default': ' checked',
+      'switch:variant:primary': ' checked',
+      'switch:variant:success': ' checked',
     };
 
     /**
@@ -1729,8 +1740,45 @@
     /** Every spelling of `name` an example might carry, for a RegExp alternation. */
     const spellings = (name) => [...new Set([name, kebab(name), name.toLowerCase()])].map(escapeRe).join('|');
 
+    /**
+     * #773: where in an example the behavior actually LIVES -- the opening tag
+     * an option belongs on. It is usually the first tag, and withOption used
+     * to assume it always was. The <dialog> example is a <button> that opens
+     * the <dialog> after it, so every dialog row (centered, fullscreen, size,
+     * showClose...) was written onto the BUTTON, and all eleven rendered the
+     * same dialog. In order: the first tag carrying the x-* attribute, then
+     * the first of the behavior's native host tag (nativeMap), then the first
+     * tag, which is the old behavior.
+     *
+     * @returns {{start: number, end: number}} the host's opening tag, src.slice(start, end)
+     */
+    const OPEN_TAG_RE = /<([a-zA-Z][\w-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*\/?>/g;
+    function hostTagSpan(src, attr) {
+      const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
+      semanticHostFor(behavior);   // fills nativeByBehavior
+      const nativeTag = nativeByBehavior && nativeByBehavior[behavior];
+      const carriesAttr = new RegExp('\\s' + escapeRe(attr) + '(?=[\\s=/]|$)', 'i');
+      let first = null;
+      let native = null;
+      for (const m of src.matchAll(OPEN_TAG_RE)) {
+        const span = { start: m.index, end: m.index + m[0].length };
+        if (!first) first = span;
+        if (carriesAttr.test(m[2] || '')) return span;
+        if (!native && nativeTag && m[1].toLowerCase() === nativeTag) native = span;
+      }
+      return native || first || { start: 0, end: src.length };
+    }
+
     function withOption(src, attr, prop, value, isBoolean) {
       if (!value) return src;
+      // Rewrite only the host's own opening tag, so an option can neither land
+      // on a sibling (the dialog's trigger) nor strip a same-named attribute
+      // from a nested element.
+      const { start, end } = hostTagSpan(src, attr);
+      return src.slice(0, start) + withOptionOnTag(src.slice(start, end), attr, prop, value, isBoolean) + src.slice(end);
+    }
+
+    function withOptionOnTag(src, attr, prop, value, isBoolean) {
 
       // Standard §20: booleans are authored as BARE attributes. Writing
       // striped="true" would both misrepresent the API and, for flags the
@@ -1761,9 +1809,14 @@
       const propDef = (sc && sc.properties && sc.properties[target]) || {};
       const aliases = propDef.aliases || [];
       // Ensure the companion is present on a curated example too.
+      // A value companion names its own attribute (its first word) -- it was
+      // assumed to be href, which is only true of button:variant:link. The
+      // presence test accepts a bare attribute too, or a bare companion
+      // (` checked`) already in the example would be written a second time.
+      const valueCompanion = VALUE_COMPANIONS[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`];
       const partner = COMPANIONS[prop] ||
-        (VALUE_COMPANIONS[`${extensionMap[attr] || attr.replace(/^x-/, '')}:${prop}:${value}`] ? 'href' : null);
-      if (partner && !new RegExp('\\s' + partner + '\\s*=').test(src)) {
+        (valueCompanion ? (valueCompanion.match(/^\s*([\w-]+)/) || [])[1] : null);
+      if (partner && !new RegExp('\\s' + partner + '(?=[\\s=>/])').test(src)) {
         const add = companionFor(attr, prop, value);
         if (add) src = src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1${add}`);
       }

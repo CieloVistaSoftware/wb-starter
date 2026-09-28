@@ -7,7 +7,7 @@
 
 /* #448: tag selector + class selector for both <div x-alert> tags and
    <div x-alert> elements that get the .x-alert class added by alert() */
-x-alert,
+x-alert, [x-alert],
 .x-alert {
   position: relative;
   display: flex;
@@ -26,9 +26,9 @@ x-alert,
    happened to provide, under the 1rem/16px minimum). Adjacent-sibling
    margin, not a parent `gap`, so it's correct regardless of what container
    (grid, flex, plain block flow) the alerts happen to be stacked in. */
-x-alert + x-alert,
+x-alert + x-alert, [x-alert] + x-alert,
 .x-alert + .x-alert,
-x-alert + .x-alert,
+x-alert + .x-alert, [x-alert] + .x-alert,
 .x-alert + x-alert {
   margin-top: 1rem;
 }

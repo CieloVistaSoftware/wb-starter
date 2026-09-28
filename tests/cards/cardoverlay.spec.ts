@@ -47,8 +47,10 @@ test.describe('Card Overlay (integration)', () => {
     
     const overlayContent = page.locator('#test-overlay-gradient .x-card__overlay-content');
     await expect(overlayContent).toBeVisible();
-    const style = await overlayContent.getAttribute('style');
-    expect(style).toContain('gradient');
+    // Computed, not the style attribute: #779 moved the gradient into
+    // card.css's .x-card__overlay-content--gradient-* rules.
+    const bg = await overlayContent.evaluate((el) => getComputedStyle(el).backgroundImage);
+    expect(bg).toContain('gradient');
   });
 
   test('should position overlay at bottom by default', async ({ page }: { page: Page }) => {
@@ -88,9 +90,10 @@ test.describe('Card Overlay (integration)', () => {
     });
     
     const card = page.locator('#test-overlay-image');
-    // Check for background-image in style attribute
-    const style = await card.getAttribute('style');
-    expect(style).toContain('background-image');
-    expect(style).toContain('url');
+    // Computed background-image: since #779 the image URL reaches the card
+    // through a generated stylesheet rule, not its style attribute.
+    const bg = await card.evaluate((el) => getComputedStyle(el).backgroundImage);
+    expect(bg).toContain('url');
+    expect(bg).toContain('picsum.photos');
   });
 });

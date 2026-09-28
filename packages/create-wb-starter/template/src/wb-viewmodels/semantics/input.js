@@ -5,7 +5,17 @@ import { logError } from '../../core/error-logger.js';
  * Adds clearable, prefix/suffix, validation variants
  * Helper Attribute: [x-behavior="input"]
  */
+/**
+ * Fields the container branch below built itself. The runtime ALSO dispatches
+ * input() on every native <input> it sees, including the one this function
+ * just appended, and the native branch then wrapped it a second time: a
+ * nested x-input__wrapper inside the one already built, with its own padding
+ * and flex styles stacked on the field.
+ */
+const builtFields = new WeakSet();
+
 export function input(element, options = {}) {
+  if (builtFields.has(element)) return () => {};
   // #439: <div x-input> is declared as a schema-driven host in
   // input.schema.json's $view (label, wrapper, icon spans, clear button,
   // the real <input>) -- but that $view is only ever interpreted by
@@ -38,7 +48,16 @@ export function input(element, options = {}) {
   const FORM_CONTROLS = ['INPUT', 'SELECT', 'TEXTAREA'];
   const isContainerHost = !FORM_CONTROLS.includes(element.tagName);
   if (isContainerHost) {
-    if (element.querySelector('input')) return () => {}; // already built (eager runtime already ran)
+    // #954: must match only what THIS function builds. A bare
+    // `querySelector('input')` also matched the schema builder's own $view
+    // field (`input.schema.json` declares a wrapper + input, rendered as
+    // `.x-input__wrapper > input.x-input__input`), so on the schema-driven
+    // path input() concluded "already built" and returned before the branch
+    // below -- the one that puts x-input--{variant}/{size} on the host and
+    // required/disabled/readOnly on the real field. The result was a bare
+    // field that silently ignored all five attributes, while the native
+    // <input x-behavior="input"> host honoured them (#754).
+    if (element.querySelector('input.x-input__field')) return () => {}; // already built by us (eager runtime already ran)
 
     const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
     const label = element.getAttribute('label') || '';
@@ -84,8 +103,8 @@ export function input(element, options = {}) {
     }
 
     const wrapper = document.createElement('div');
+    // Layout: .x-input__wrapper in input.css (#779).
     wrapper.className = 'x-input__wrapper';
-    wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
 
     if (icon && iconPosition === 'start') {
       const iconEl = document.createElement('span');
@@ -102,17 +121,13 @@ export function input(element, options = {}) {
     if (readonly) realInput.readOnly = true;
     if (required) realInput.required = true;
     realInput.classList.add('x-input__field');
+    builtFields.add(realInput);
     // Border/radius/padding/background/color already come from input.css's
     // generic bare-<input> rule (line 28) -- setting them again here as
     // inline styles just stacked a second, redundant border on top of it
     // (and a THIRD from the host <div x-input> tag incorrectly also getting
-    // the .x-input class below, now removed). Only set what CSS can't:
-    // flex sizing within the wrapper.
-    Object.assign(realInput.style, {
-      width: 'auto',
-      flex: '1',
-      minWidth: '0'
-    });
+    // the .x-input class below, now removed). What remains is flex sizing
+    // within the wrapper: `.x-input__wrapper > .x-input__field` (#779).
     wrapper.appendChild(realInput);
 
     if (icon && iconPosition === 'end') {
@@ -123,6 +138,9 @@ export function input(element, options = {}) {
 
     if (clearable) {
       const clearBtn = document.createElement('button');
+      // Same class the native-input path gives its clear button (below), so
+      // one selector finds it on either host shape and input.css styles both.
+      clearBtn.className = 'x-input__clear';
       clearBtn.type = 'button';
       clearBtn.textContent = '✕';
       clearBtn.addEventListener('click', () => { realInput.value = ''; realInput.focus(); });
@@ -164,6 +182,21 @@ export function input(element, options = {}) {
   if (element.closest('.x-search__wrapper, .x-password')) {
     return () => {};
   }
+  // floatinglabel() owns its field's wrapper and positions its label against
+  // it: a second x-input__wrapper around the field (in either authoring form,
+  // on the field or on a container around it) moved the field out from under
+  // the label. Checked by attribute too, since input() may run first.
+  if (element.closest('[x-floatinglabel], .x-floating-label')) {
+    return () => {};
+  }
+  // A PART another behavior built for itself -- table.js's x-table__search,
+  // say -- is already that behavior's field, styled by its own CSS. Wrapping
+  // it moved it out from beside the table, so table.js no longer found its
+  // own search box as the table's previous sibling. A BEM element class of
+  // another x- block is what says "this input belongs to that component".
+  if ([...element.classList].some((c) => /^x-[a-z0-9-]+__/.test(c) && !c.startsWith('x-input__'))) {
+    return () => {};
+  }
 
   // Types with their own native rendering/behavior (checkbox/radio via
   // tag-map.js's nativeMap, range/color/file/submit/button/reset/image via
@@ -189,7 +222,7 @@ export function input(element, options = {}) {
   // with attributes that only the field builder can honour is different --
   // it means the author asked for a label/helper/error/input-type and this
   // path cannot produce any of them. Silently returning is what made
-  // `<div x-input label="Repository">` look like a broken behavior instead
+  // `<div x-input label="Repository">` look like a broken component instead
   // of an unsupported host, and cost a bug report to discover.
   // #777: a native <input> IS the field. It has nothing to build, so telling
   // the author it "cannot build a field" is wrong -- and `input-type` on one
@@ -219,8 +252,14 @@ export function input(element, options = {}) {
     // gap as #752.
     size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     clearable: options.clearable ?? element.hasAttribute('clearable'),
-    prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix || readAttr(element, 'icon') || '',
-    suffix: options.suffix || element.getAttribute('suffix') || element.dataset.suffix || '',
+    // #773: `icon` always became the PREFIX, so icon-position="end" -- which
+    // the <div x-input> builder above honours -- did nothing on a native
+    // <input>: the showcase's start and end rows rendered the same field.
+    // An explicit prefix/suffix still wins over the icon.
+    prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix
+      || (readAttr(element, 'iconPosition', 'start') === 'end' ? '' : readAttr(element, 'icon')) || '',
+    suffix: options.suffix || element.getAttribute('suffix') || element.dataset.suffix
+      || (readAttr(element, 'iconPosition', 'start') === 'end' ? readAttr(element, 'icon') : '') || '',
     ...options
   };
 
@@ -231,11 +270,11 @@ export function input(element, options = {}) {
   // border ("two lines" on the Success/Error variant demos). Same bug, same
   // fix as the <div x-input> custom-tag branch above: the wrapper gets the
   // purely structural x-input__wrapper class (no CSS targets it visually)
-  // and carries only layout via inline styles; border/background stay
-  // exclusively on the real input.
-  wrapper.className = 'x-input__wrapper';
-  // Wrapper takes full width to mimic the input's behavior
-  wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
+  // and carries only layout; border/background stay exclusively on the real
+  // input. #779: that layout is .x-input__wrapper in input.css, and
+  // --native scopes the field padding/outline and clear-button chrome that
+  // only this path ever applied.
+  wrapper.className = 'x-input__wrapper x-input__wrapper--native';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
   element.classList.add('x-input__field');
@@ -248,25 +287,10 @@ export function input(element, options = {}) {
   // field), so removing them changes nothing visually except letting the
   // variant classes through.
   //
-  // The three that remain are layout, tied to the flex wrapper created just
-  // above -- they describe this element's role inside that wrapper, not its
-  // appearance.
-  Object.assign(element.style, {
-    width: 'auto', // Let flex handle width
-    flex: '1',     // Take remaining space
-    minWidth: '0', // Prevent overflow
-    outline: 'none'
-  });
-
-  // Apply size
-  const paddings = {
-    xs: '0.125rem 0.5rem',
-    sm: '0.25rem 0.75rem',
-    md: '0.5rem 0.75rem',
-    lg: '0.75rem 1rem',
-    xl: '1rem 1.25rem'
-  };
-  element.style.padding = paddings[config.size] || paddings.md;
+  // The layout that remains (flex sizing inside the wrapper, no outline) and
+  // the per-size padding are input.css rules scoped to
+  // .x-input__wrapper--native (#779). An unrecognised size falls back to md's
+  // padding there too, as the old paddings lookup did.
   
   // #485: size/variant modifier classes go on the real input, not the
   // wrapper -- .x-input--{size} adds padding/font-size and
@@ -289,21 +313,18 @@ export function input(element, options = {}) {
     element.classList.add(`x-input--${config.variant}`);
   }
 
+  // Border colour per state is .x-input--{variant} in input.css (#779).
   if (config.variant === 'success') {
-    element.style.borderColor = 'var(--success-color, #22c55e)';
     element.classList.add('x-input--success');
   } else if (config.variant === 'warning') {
-    element.style.borderColor = 'var(--warning-color, #f59e0b)';
     element.classList.add('x-input--warning');
   } else if (config.variant === 'error') {
-    element.style.borderColor = 'var(--danger-color, #ef4444)';
     element.classList.add('x-input--error');
   }
 
   if (config.prefix) {
     const pre = document.createElement('span');
     pre.className = 'x-input__prefix';
-    pre.style.cssText = 'padding:0 0.5rem;color:var(--text-secondary,#9ca3af);';
     pre.textContent = config.prefix;
     wrapper.insertBefore(pre, element);
   }
@@ -311,7 +332,6 @@ export function input(element, options = {}) {
   if (config.suffix) {
     const suf = document.createElement('span');
     suf.className = 'x-input__suffix';
-    suf.style.cssText = 'padding:0 0.5rem;color:var(--text-secondary,#9ca3af);';
     suf.textContent = config.suffix;
     wrapper.appendChild(suf);
   }
@@ -321,7 +341,6 @@ export function input(element, options = {}) {
     clear.className = 'x-input__clear';
     clear.type = 'button';
     clear.textContent = '×';
-    clear.style.cssText = 'background:none;border:none;cursor:pointer;padding:0 0.5rem;font-size:1.25rem;color:var(--text-secondary,#9ca3af);';
     clear.onclick = () => { 
       element.value = ''; 
       element.focus(); 

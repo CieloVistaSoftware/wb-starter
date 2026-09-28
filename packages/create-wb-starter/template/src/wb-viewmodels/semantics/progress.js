@@ -1,251 +1,189 @@
-import { readFlag, readAttr } from '../../core/read-attr.js';
+import { setRule, clearRulesIn } from '../../core/dynamic-style.js';
+import { readFlag } from '../../core/read-attr.js';
 /**
- * Progress - Enhanced <progress> element
- * Adds animations, colors, labels, indeterminate state
+ * Progress - a labeled, variant-colored fill bar
  * Helper Attribute: [x-behavior="progress"]
+ *
+ * Authoring forms: <progress value="60">, <div x-progress value="60">,
+ * <div x-progress value="60"> (src/core/tag-map.js).
  */
+
+/**
+ * #848: 4.0.0 removed the <wb-progress> component tag and
+ * scripts/migrate-wb-tags.mjs rewrote every occurrence into a native
+ * <progress> (src/core/tag-map.js:90 maps `progress` -> the `progress`
+ * behavior, and the migration inverts that map to pick the host tag).
+ *
+ * That host cannot work. A native <progress> is a REPLACED element: its
+ * light-DOM children are never slotted into the UA shadow root, so they sit
+ * outside the flat tree entirely -- laid out at 0x0, and the cascade does not
+ * even reach them (confirmed live: a .x-progress__bar placed inside a
+ * <progress> computes to width 0, animationName "none", backgroundImage
+ * "none", height "auto"). Every fill div, % label and stripe this behavior
+ * renders was therefore invisible, and no stylesheet change could have fixed
+ * it. Before 4.0.0 the renderer below was only ever reached by <wb-progress>,
+ * which is why nothing noticed.
+ *
+ * So swap the host for a neutral <div> and carry the authored identity across.
+ * The result is the same DOM <wb-progress> produced before 4.0.0 -- a host
+ * with role="progressbar" + aria-valuenow/min/max -- which is exactly the
+ * "complete, documented ARIA-widget reimplementation" that
+ * tests/regression/semantic-element-fidelity.spec.ts records this component as
+ * shipping in place of the native tag. Same pattern as semantics/details.js,
+ * semantics/audio.js and form.js, all of which replace a host they cannot
+ * render into.
+ *
+ * @param {Element} element
+ * @returns {Element} the element to render into -- the original unless it was
+ *   a native <progress>, in which case its <div> replacement.
+ */
+function hostFor(element) {
+  if (element.tagName !== 'PROGRESS') return element;
+
+  const host = document.createElement('div');
+  // Every authored attribute, not a hand-picked list: id, class and style
+  // carry the page's own layout decisions, and value/max/variant/size/
+  // striped/animated/indeterminate/label/show-value/show-label are the
+  // component's whole API. A list here would silently drop whatever
+  // progress.schema.json adds next.
+  for (const { name, value } of Array.from(element.attributes)) {
+    host.setAttribute(name, value);
+  }
+  // Slot content is read below as the authored-value fallback; schema-builder
+  // stashes it on _wbOriginalSlot before wiping innerHTML, so carry both.
+  if (element._wbOriginalSlot) host._wbOriginalSlot = element._wbOriginalSlot;
+  host.innerHTML = element.innerHTML;
+
+  element.replaceWith(host);
+  return host;
+}
+
 export function progress(element, options = {}) {
-  // Anything that ISN'T a literal native <progress> tag (custom <progress>,
-  // or a plain <div x-progress>) can't paint a fill via
-  // ::-webkit-progress-value -- there's no such pseudo-element on a
-  // non-native element. Render an explicit fill child instead. (issue #127;
-  // gate widened from tagName==='WB-PROGRESS' so x-progress on any element
-  // gets the same rich rendering, not just the <progress> tag form — #279.)
-  if (element.tagName !== 'PROGRESS') {
-    const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
-    const value = parseFloat(options.value ?? element.getAttribute('value') ?? authoredValue ?? 0);
-    const max = parseFloat(options.max ?? element.getAttribute('max') ?? 100);
-    const variant = options.variant || element.getAttribute('variant') || 'primary';
-    const size = options.size || element.getAttribute('size') || 'md';
-    const striped = options.striped ?? element.hasAttribute('striped');
-    // Schema declares animated/indeterminate (progress.schema.json) but this
-    // branch never read either — only the native <progress>+x-progress path
-    // below did, via .x-progress::-webkit-progress-value pseudo-elements
-    // that don't exist on this custom tag at all. Result: <progress> —
-    // the tag every demo/showcase actually uses — had zero animation
-    // capability. CSS for both already existed on .x-progress__bar
-    // (progress.css) and was simply unreachable.
-    const animated = options.animated ?? (element.getAttribute('animated') !== 'false');
-    const indeterminate = options.indeterminate ?? element.hasAttribute('indeterminate');
-    const pct = Math.max(0, Math.min(100, (value / max) * 100));
-    // The % label is built in by default (#280) — no external .progress-label
-    // span needed. `label="…"` overrides the text; `show-label="false"` hides it.
-    const showLabel = options.showLabel ?? (element.getAttribute('show-label') !== 'false');
-    // showValue (schema default false) — declared but never read here either.
-    // Distinct from the default percent fallback below: it appends the
-    // percentage alongside a CUSTOM label instead of being silently dropped
-    // in favor of the label text.
-    const showValue = options.showValue ?? element.hasAttribute('show-value');
-    const customLabel = options.label ?? element.getAttribute('label');
-    const labelText = customLabel
-      ? (showValue ? `${customLabel} ${Math.round(pct)}%` : customLabel)
+  // Options are read off the AUTHORED element, before hostFor() swaps a
+  // native <progress> for its <div> replacement. hostFor copies every
+  // attribute, so the values are identical -- but reading them afterwards
+  // meant the authored node's options were never consulted at all, only a
+  // clone of them, and show-value/animated were invisible to anything
+  // checking what the behavior reads off the element it was applied to.
+  const src = element;
+  const authoredValue = (src._wbOriginalSlot || src.textContent || '').trim();
+  const size = options.size || src.getAttribute('size') || 'md';
+  const variant = options.variant || src.getAttribute('variant') || 'primary';
+
+  // An absent value reached parseFloat('') (authoredValue is '' for an empty
+  // element, and '' is not nullish, so `?? 0` never applied) -- NaN, which
+  // wrote `width: NaN%`, an invalid declaration the browser drops, and a
+  // `NaN%` label. No value means an empty bar.
+  const parsedValue = parseFloat(options.value ?? src.getAttribute('value') ?? authoredValue);
+  const state = {
+    value: Number.isFinite(parsedValue) ? parsedValue : 0,
+    max: parseFloat(options.max ?? src.getAttribute('max') ?? 100),
+    // readFlag, not hasAttribute: a bare `striped` must switch stripes ON and
+    // striped="false" must switch them OFF (#747). hasAttribute() got the
+    // first half right and the second backwards -- it sees the STRING "false"
+    // as presence, so striped="false" painted stripes.
+    striped: options.striped ?? readFlag(src, 'striped'),
+    // Schema declares animated/indeterminate/showValue (progress.schema.json);
+    // all three are read here, on the only path that renders.
+    // animated's schema default is true, so an absent attribute stays on --
+    // but "false"/"0" now switch it off via the same shared helper.
+    animated: options.animated ?? readFlag(src, 'animated', true),
+    indeterminate: options.indeterminate ?? readFlag(src, 'indeterminate'),
+    // The % label is built in by default (#280) -- no external .progress-label
+    // span needed. `label="..."` overrides the text; `show-label="false"` hides
+    // it. showValue appends the percentage alongside a CUSTOM label instead of
+    // dropping it in favor of the label text.
+    showLabel: options.showLabel ?? (src.getAttribute('show-label') !== 'false'),
+    // readFlag, not hasAttribute: show-value="false" must mean off (#747).
+    showValue: options.showValue ?? readFlag(src, 'show-value'),
+    label: options.label ?? src.getAttribute('label'),
+  };
+
+  const host = hostFor(element);
+
+  // #848: `x-progress`, not a bare `progress`. The 4.0.0 class rename turned
+  // `wb-progress` into `progress` here rather than `x-progress`, so the BEM
+  // block and its elements stopped sharing a prefix with the stylesheet --
+  // .x-progress / .x-progress__bar / .x-progress__label in
+  // src/styles/behaviors/progress.css matched nothing, and the fill rendered
+  // at height 0 with no error anywhere.
+  const BLOCK = 'x-progress';
+
+  function render() {
+    const pct = Math.max(0, Math.min(100, (state.value / state.max) * 100));
+    const labelText = state.label
+      ? (state.showValue ? `${state.label} ${Math.round(pct)}%` : state.label)
       : `${Math.round(pct)}%`;
 
-    // #448: skip the bare 'x-progress' token on a literal <progress>
-    // host -- progress.css selects the `x-progress` TAG directly for that
-    // case now. Still added for every OTHER host (x-progress/x-progressbar
-    // on a plain <div>, per this file's own docs), since progress.css's
-    // `.x-progress` rules still select those by class. The size/variant
-    // modifier classes are never redundant either way and always apply.
-    if (element.tagName.toLowerCase() !== 'x-progress') element.classList.add('x-progress');
-    element.classList.add(`x-progress--${size}`, `x-progress--${variant}`);
-    if (showLabel) element.classList.add('x-progress--labeled');
-    if (indeterminate) element.classList.add('x-progress--indeterminate');
+    host.classList.add(BLOCK, `${BLOCK}--${size}`, `${BLOCK}--${variant}`);
+    host.classList.toggle(`${BLOCK}--labeled`, !!state.showLabel);
+    host.classList.toggle(`${BLOCK}--indeterminate`, !!state.indeterminate);
     // .x-progress--animated is a DESCENDANT selector in progress.css
-    // (`.x-progress--animated .x-progress__bar { ... }`) — it must live on
-    // the host, same as the size/variant classes above, not on the bar div.
-    if (animated && !indeterminate) element.classList.add('x-progress--animated');
-    element.setAttribute('role', 'progressbar');
-    element.setAttribute('aria-valuenow', String(value));
-    element.setAttribute('aria-valuemin', '0');
-    element.setAttribute('aria-valuemax', String(max));
+    // (`.x-progress--animated .x-progress__bar { ... }`) -- it must live on the
+    // host, same as the size/variant classes above, not on the bar div.
+    host.classList.toggle(`${BLOCK}--animated`, !!state.animated && !state.indeterminate);
 
-    element.innerHTML = '';
+    host.setAttribute('role', 'progressbar');
+    host.setAttribute('aria-valuenow', String(state.value));
+    host.setAttribute('aria-valuemin', '0');
+    host.setAttribute('aria-valuemax', String(state.max));
+
+    // Release the previous bar's generated width rule before it is discarded.
+    clearRulesIn(host);
+    host.innerHTML = '';
+
     const bar = document.createElement('div');
-    bar.className = 'x-progress__bar' + (striped ? ' x-progress__bar--striped' : '');
-    bar.style.width = indeterminate ? '' : `${pct}%`;
-    element.appendChild(bar);
+    bar.className = `${BLOCK}__bar` + (state.striped ? ` ${BLOCK}__bar--striped` : '');
+    // Indeterminate leaves the width to the sweep keyframes (progress.css).
+    // The fill percentage is a runtime value, so it travels as a generated
+    // stylesheet rule, never the style attribute (#779).
+    if (!state.indeterminate) setRule(bar, 'fill', { width: `${pct}%` });
+    host.appendChild(bar);
 
-    if (showLabel && !indeterminate) {
+    if (state.showLabel && !state.indeterminate) {
       const label = document.createElement('span');
-      label.className = 'x-progress__label';
+      label.className = `${BLOCK}__label`;
       label.textContent = labelText;
-      element.appendChild(label);
-    }
-
-    return () => {
-      element.innerHTML = '';
-      element.classList.remove('x-progress', `x-progress--${size}`, `x-progress--${variant}`, 'x-progress--labeled', 'x-progress--indeterminate', 'x-progress--animated');
-    };
-  }
-
-  const config = {
-    value: parseFloat(options.value || element.value || readAttr(element, 'value') || 0),
-    max: parseFloat(options.max || element.max || readAttr(element, 'max') || 100),
-    showLabel: options.showLabel ?? readFlag(element, 'show-label'),
-    animated: options.animated ?? readAttr(element, 'animated') !== 'false',
-    variant: options.variant || readAttr(element, 'variant') || 'primary',
-    size: options.size || readAttr(element, 'size') || 'md',
-    indeterminate: options.indeterminate ?? readFlag(element, 'indeterminate'),
-    ...options
-  };
-
-  element.classList.add('x-progress');
-  element.classList.add(`x-progress--${config.size}`);
-  element.classList.add(`x-progress--${config.variant}`);
-  
-  if (config.indeterminate) {
-    element.removeAttribute('value');
-    element.classList.add('x-progress--indeterminate');
-  } else {
-    element.value = config.value;
-    element.max = config.max;
-  }
-
-  // Size mappings
-  const sizes = { sm: '4px', md: '8px', lg: '12px', xl: '16px' };
-  const height = sizes[config.size] || sizes.md;
-
-  // Color mappings
-  const colors = {
-    primary: 'var(--primary, #6366f1)',
-    success: 'var(--success, #22c55e)',
-    warning: 'var(--warning, #f59e0b)',
-    danger: 'var(--danger, #ef4444)',
-    info: 'var(--info, #3b82f6)'
-  };
-  const color = colors[config.variant] || colors.primary;
-
-  // Style the progress element
-  Object.assign(element.style, {
-    width: '100%',
-    height: height,
-    borderRadius: '8px',
-    overflow: 'hidden',
-    background: 'var(--bg-tertiary, #374151)',
-    appearance: 'none',
-    border: 'none'
-  });
-
-  // Inject styles for webkit/moz
-  injectProgressStyles();
-
-  // Create wrapper for label
-  let wrapper = element.parentNode;
-  let label = null;
-  
-  if (config.showLabel) {
-    if (!wrapper.classList.contains('x-progress__wrapper')) {
-      wrapper = document.createElement('div');
-      wrapper.className = 'x-progress__wrapper';
-      Object.assign(wrapper.style, {
-        position: 'relative',
-        width: '100%'
-      });
-      element.parentNode.insertBefore(wrapper, element);
-      wrapper.appendChild(element);
-    }
-    
-    label = document.createElement('span');
-    label.className = 'x-progress__label';
-    Object.assign(label.style, {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      fontSize: '0.75rem',
-      fontWeight: '600',
-      color: 'var(--text-primary, #fff)',
-      textShadow: '0 1px 2px rgba(0,0,0,0.5)'
-    });
-    updateLabel();
-    wrapper.appendChild(label);
-  }
-
-  function updateLabel() {
-    if (label && !config.indeterminate) {
-      const percent = Math.round((element.value / element.max) * 100);
-      label.textContent = `${percent}%`;
+      host.appendChild(label);
     }
   }
 
-  // Animation class
-  if (config.animated && !config.indeterminate) {
-    element.classList.add('x-progress--animated');
-  }
+  render();
 
-  // API
-  element.wbProgress = {
+  // Imperative API. Previously only the native-<progress> branch defined this;
+  // that branch is gone (its ::-webkit-progress-bar/-value selectors could
+  // only ever match a host this behavior no longer keeps), so the documented
+  // API lives on the renderer that survives.
+  host.wbProgress = {
     setValue: (v) => {
-      element.value = Math.max(0, Math.min(v, element.max));
-      updateLabel();
+      state.value = Math.max(0, Math.min(parseFloat(v), state.max));
+      render();
     },
-    getValue: () => element.value,
+    getValue: () => state.value,
     setMax: (m) => {
-      element.max = m;
-      updateLabel();
+      state.max = parseFloat(m);
+      render();
     },
-    getPercent: () => (element.value / element.max) * 100,
+    getPercent: () => (state.value / state.max) * 100,
     setIndeterminate: (indeterminate) => {
-      config.indeterminate = indeterminate;
-      if (indeterminate) {
-        element.removeAttribute('value');
-        element.classList.add('x-progress--indeterminate');
-      } else {
-        element.value = config.value;
-        element.classList.remove('x-progress--indeterminate');
-      }
-    }
+      state.indeterminate = !!indeterminate;
+      render();
+    },
   };
 
   return () => {
-    element.classList.remove('x-progress', `x-progress--${config.size}`, `x-progress--${config.variant}`);
-    if (label) label.remove();
+    clearRulesIn(host);
+    host.innerHTML = '';
+    delete host.wbProgress;
+    host.classList.remove(
+      BLOCK,
+      `${BLOCK}--${size}`,
+      `${BLOCK}--${variant}`,
+      `${BLOCK}--labeled`,
+      `${BLOCK}--indeterminate`,
+      `${BLOCK}--animated`
+    );
   };
-}
-
-function injectProgressStyles() {
-  if (document.getElementById('x-progress-css')) return;
-  
-  const style = document.createElement('style');
-  style.id = 'x-progress-css';
-  style.textContent = `
-    .x-progress::-webkit-progress-bar {
-      background: transparent;
-      border-radius: inherit;
-    }
-    .x-progress::-webkit-progress-value {
-      background: var(--primary, #6366f1);
-      border-radius: inherit;
-      transition: width 0.3s ease;
-    }
-    .x-progress::-moz-progress-bar {
-      background: var(--primary, #6366f1);
-      border-radius: inherit;
-    }
-    .x-progress--primary::-webkit-progress-value { background: var(--primary, #6366f1); }
-    .x-progress--success::-webkit-progress-value { background: var(--success, #22c55e); }
-    .x-progress--warning::-webkit-progress-value { background: var(--warning, #f59e0b); }
-    .x-progress--danger::-webkit-progress-value { background: var(--danger, #ef4444); }
-    .x-progress--info::-webkit-progress-value { background: var(--info, #3b82f6); }
-    
-    .x-progress--indeterminate::-webkit-progress-value {
-      background: linear-gradient(90deg, transparent, var(--primary, #6366f1), transparent);
-      animation: x-progress-indeterminate 1.5s ease-in-out infinite;
-    }
-    
-    @keyframes x-progress-stripes {
-      from { background-position: 1rem 0; }
-      to { background-position: 0 0; }
-    }
-    
-    @keyframes x-progress-indeterminate {
-      0% { margin-left: -100%; width: 100%; }
-      50% { margin-left: 0%; width: 100%; }
-      100% { margin-left: 100%; width: 100%; }
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 export default { progress };

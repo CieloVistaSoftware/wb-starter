@@ -30,7 +30,9 @@
     "readonly": {
       "type": "boolean",
       "description": "Display only, not interactive",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "The stars stop responding to pointer and keys; they are drawn the same (disabled is the option that dims them) (#773)."
     },
     "disabled": {
       "type": "boolean",

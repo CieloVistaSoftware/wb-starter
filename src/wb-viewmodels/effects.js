@@ -1,4 +1,5 @@
 import { readFlag } from '../core/read-attr.js';
+import { setRule, clearRules, clearRulesIn } from '../core/dynamic-style.js';
 /**
  * Effects Behavior
  * -----------------------------------------------------------------------------
@@ -67,10 +68,13 @@ export function animate(element, options = {}) {
 
   const keyframe = keyframeFor(config.animation);
 
+  // duration/easing are author values, so the animation travels as a
+  // generated rule (#779). Clearing it, forcing a reflow, then setting it again
+  // is what restarts a CSS animation that already ran once.
   const play = () => {
-    element.style.animation = 'none';
+    setRule(element, 'anim', null);
     void element.offsetWidth;
-    element.style.animation = `${keyframe} ${config.duration} ${config.easing}`;
+    setRule(element, 'anim', { animation: `${keyframe} ${config.duration} ${config.easing}` });
   };
 
   // All buttons trigger on click
@@ -79,21 +83,26 @@ export function animate(element, options = {}) {
   } else if (config.trigger === 'load') {
     play();
   } else if (config.trigger === 'click') {
-    element.style.cursor = 'pointer';
+    element.classList.add('x-animate--clickable');
     element.onclick = play;
   }
 
   element.wbAnimate = { play };
-  return () => element.classList.remove('x-animate');
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-animate', 'x-animate--clickable');
+  };
 }
 
 // Helper for click-triggered animations
 function clickAnim(element, animName, duration = '0.5s') {
   element.classList.add(`x-${animName}`);
+  // A generated rule, not element.style (#779): cleared, reflowed and set
+  // again so a second click replays the animation.
   const playAnimation = () => {
-    element.style.animation = 'none';
+    setRule(element, 'anim', null);
     void element.offsetWidth;
-    element.style.animation = `x-${animName} ${duration} ease`;
+    setRule(element, 'anim', { animation: `x-${animName} ${duration} ease` });
   };
   if (element.tagName === 'BUTTON') {
     element.onclick = playAnimation;
@@ -101,7 +110,10 @@ function clickAnim(element, animName, duration = '0.5s') {
     element.onclick = playAnimation;
   }
   element.wbAnim = { play: playAnimation };
-  return () => element.classList.remove(`x-${animName}`);
+  return () => {
+    clearRules(element);
+    element.classList.remove(`x-${animName}`);
+  };
 }
 
 // Entrances - work on click for buttons
@@ -254,38 +266,11 @@ export function confetti(element, options = {}) {
     element.innerHTML = `<span>🎉</span><span>${config.label}</span>`;
   }
 
-  // Style it as an attractive button
-  if (config.showButton) element.style.cssText = `
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-    background-size: 300% 300%;
-    animation: x-confetti-gradient 3s ease infinite;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    border: none;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
-  `;
-  
-  // Add hover effect
-  if (config.showButton) {
-    element.onmouseenter = () => {
-      element.style.transform = 'scale(1.05)';
-      element.style.boxShadow = '0 6px 20px rgba(255, 107, 107, 0.6)';
-    };
-    element.onmouseleave = () => {
-      element.style.transform = 'scale(1)';
-      element.style.boxShadow = '0 4px 15px rgba(255, 107, 107, 0.4)';
-    };
-  }
-  
+  // The button chrome and its hover lift live in effects.css under
+  // .x-confetti-trigger--button (#779) -- a stylesheet rule a theme can reach,
+  // and a :hover the browser tracks, instead of cssText plus two handlers.
+  if (config.showButton) element.classList.add('x-confetti-trigger--button');
+
   // Inject CSS keyframes if not present
   if (!document.getElementById('x-confetti-styles')) {
     const style = document.createElement('style');
@@ -308,7 +293,6 @@ export function confetti(element, options = {}) {
     // Create container
     const container = document.createElement('div');
     container.className = 'x-confetti-container';
-    container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
     
     // Create particles
     const colors = parseColorList(
@@ -324,31 +308,32 @@ export function confetti(element, options = {}) {
       const rotation = Math.random() * 720;
       const duration = 2 + Math.random() * 2;
       
-      particle.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: ${color};
-        left: ${startX}%;
-        top: -20px;
-        border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
-        animation: x-confetti-fall ${duration}s ease-out forwards;
-        --end-x: ${endX - startX}vw;
-        --rotation: ${rotation}deg;
-        animation-delay: ${Math.random() * 0.3}s;
-      `;
+      // Shared declarations are .x-confetti-piece in effects.css; only the
+      // random per-piece values travel, as a generated rule (#779).
+      particle.className = 'x-confetti-piece';
+      setRule(particle, 'piece', {
+        width: `${size}px`,
+        height: `${size}px`,
+        background: color,
+        left: `${startX}%`,
+        borderRadius: Math.random() > 0.5 ? '50%' : '0',
+        animationDuration: `${duration}s`,
+        animationDelay: `${Math.random() * 0.3}s`,
+        '--end-x': `${endX - startX}vw`,
+        '--rotation': `${rotation}deg`,
+      });
       container.appendChild(particle);
     }
     
     document.body.appendChild(container);
-    setTimeout(() => container.remove(), 5000);
+    setTimeout(() => { clearRulesIn(container); container.remove(); }, 5000);
   };
   
   element.onclick = fire;
 
   element.wbConfetti = { fire };
   return () => {
-    element.classList.remove('x-confetti-trigger');
+    element.classList.remove('x-confetti-trigger', 'x-confetti-trigger--button');
   };
 }
 
@@ -367,7 +352,8 @@ export function typewriter(element, options = {}) {
   
   const type = () => {
     element.textContent = '';
-    element.style.borderRight = config.cursor ? '2px solid var(--primary, #6366f1)' : 'none';
+    // The caret is .x-typewriter--cursor in effects.css (#779).
+    element.classList.toggle('x-typewriter--cursor', !!config.cursor);
     let i = 0;
     
     const typeChar = () => {
@@ -391,12 +377,12 @@ export function typewriter(element, options = {}) {
   if (element.tagName !== 'BUTTON') {
     type();
   }
-  element.style.cursor = 'pointer';
+  // cursor: pointer comes from .x-typewriter in effects.css (#779).
   element.addEventListener('click', type);
 
   element.wbTypewriter = { type };
   return () => {
-    element.classList.remove('x-typewriter');
+    element.classList.remove('x-typewriter', 'x-typewriter--cursor');
     element.removeEventListener('click', type);
   };
 }
@@ -457,7 +443,9 @@ export function parallax(element, options = {}) {
   const updateFn = () => {
     const rect = element.getBoundingClientRect();
     const offset = (window.innerHeight - rect.top) * speed * 0.1;
-    element.style.transform = `translateY(${offset}px)`;
+    // Measured on every scroll, so a generated rule rather than a static
+    // class -- never element.style (#779).
+    setRule(element, 'parallax', { transform: `translateY(${offset}px)` });
     ticking = false;
   };
 
@@ -473,6 +461,7 @@ export function parallax(element, options = {}) {
   
   return () => {
     window.removeEventListener('scroll', onScroll);
+    clearRules(element);
     element.classList.remove('x-parallax');
   };
 }
@@ -486,23 +475,21 @@ export function reveal(element, options = {}) {
     once: options.once ?? element.getAttribute('once') !== 'false',
   };
   
+  // Hidden start state and the transition are .x-reveal in effects.css; the
+  // revealed state is .x-reveal--visible (#779).
   element.classList.add('x-reveal');
-  element.style.opacity = '0';
-  element.style.transform = 'translateY(20px)';
-  element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        element.style.opacity = '1';
-        element.style.transform = 'translateY(0)';
+        element.classList.add('x-reveal--visible');
         if (config.once) observer.disconnect();
       }
     });
   }, { threshold: config.threshold });
   
   observer.observe(element);
-  return () => { observer.disconnect(); element.classList.remove('x-reveal'); };
+  return () => { observer.disconnect(); element.classList.remove('x-reveal', 'x-reveal--visible'); };
 }
 
 /**
@@ -514,16 +501,18 @@ export function marquee(element, options = {}) {
   
   const content = element.innerHTML;
   element.innerHTML = '';
-  element.style.cssText = 'overflow:hidden;white-space:nowrap;display:flex;';
-  
+  // Layout is .x-marquee / .x-marquee__track in effects.css; only the
+  // author's speed travels, as a generated rule the track reads (#779).
+  setRule(element, 'speed', { '--x-marquee-speed': `${speed}s` });
+
   for (let i = 0; i < 2; i++) {
     const span = document.createElement('span');
+    span.className = 'x-marquee__track';
     span.innerHTML = content + '&nbsp;&nbsp;&nbsp;';
-    span.style.cssText = `display:inline-block;animation:x-marquee ${speed}s linear infinite;padding-right:2rem;`;
     element.appendChild(span);
   }
-  
-  return () => element.classList.remove('x-marquee');
+
+  return () => { clearRules(element); element.classList.remove('x-marquee'); };
 }
 
 /**
@@ -533,8 +522,7 @@ export function sparkle(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '15');
   element.classList.add('x-sparkle-trigger');
   element.classList.add('x-sparkle');
-  element.style.position = 'relative';
-  element.style.overflow = 'visible';
+  // position/overflow: .x-sparkle-trigger in effects.css (#779).
   
   // Inject sparkle keyframes
   if (!document.getElementById('x-sparkle-styles')) {
@@ -561,14 +549,17 @@ export function sparkle(element, options = {}) {
           
           const sparkles = ['✨', '⭐', '🌟'];
           spark.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
-          spark.style.cssText = `
-            position:absolute;top:50%;left:50%;font-size:${size / 16}rem;pointer-events:none;
-            animation:x-sparkle ${duration}s ease-out forwards;
-            --end-x:${Math.cos(angle) * distance}px;--end-y:${Math.sin(angle) * distance}px;
-            z-index:1000;filter:drop-shadow(0 0 4px gold);
-          `;
+          // Static part: .x-sparkle__spark in effects.css. The random
+          // per-spark values travel as a generated rule (#779).
+          spark.className = 'x-sparkle__spark';
+          setRule(spark, 'spark', {
+            fontSize: `${size / 16}rem`,
+            animationDuration: `${duration}s`,
+            '--end-x': `${Math.cos(angle) * distance}px`,
+            '--end-y': `${Math.sin(angle) * distance}px`,
+          });
           element.appendChild(spark);
-          setTimeout(() => spark.remove(), duration * 1000);
+          setTimeout(() => { clearRules(spark); spark.remove(); }, duration * 1000);
         }
       }, wave * 150);
     }
@@ -640,22 +631,25 @@ function addPressFeedback(element) {
  * Glow - Pulsing glow effect
  */
 export function glow(element, options = {}) {
-  const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
+  // The animation and the three-ring shadow are .x-glow in effects.css,
+  // reading --glow-color (#779, #906). With no color the element writes
+  // NOTHING, so a theme's --glow-color reaches it; only an author-supplied
+  // colour travels, as a generated rule. Teardown removes both, so a
+  // destroyed glow actually stops glowing.
+  const color = options.color || element.getAttribute('color');
   element.classList.add('x-glow');
-  element.style.setProperty('--glow-color', color);
-  element.style.animation = 'x-glow 1.5s ease-in-out infinite';
-  element.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}`;
+  if (color) setRule(element, 'glow', { '--glow-color': color });
 
   const releasePress = addPressFeedback(element);
 
-  return () => { releasePress(); element.classList.remove('x-glow'); };
+  return () => { releasePress(); clearRules(element); element.classList.remove('x-glow'); };
 }
 
 /**
  * Rainbow - Cycling rainbow text
  */
 export function rainbow(element, options = {}) {
-  const duration = options.duration || element.getAttribute('duration') || '3s';
+  const duration = options.duration || element.getAttribute('duration');
   element.classList.add('x-rainbow');
   
   // Inject rainbow keyframes
@@ -672,17 +666,14 @@ export function rainbow(element, options = {}) {
     document.head.appendChild(style);
   }
   
-  element.style.backgroundImage = 'linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)';
-  element.style.backgroundSize = '400% 400%';
-  element.style.backgroundClip = 'text';
-  element.style.webkitBackgroundClip = 'text';
-  element.style.color = 'transparent';
-  element.style.animation = `x-rainbow ${duration} linear infinite`;
-  
+  // Gradient text and its animation are .x-rainbow in effects.css (#779);
+  // only an author-supplied duration travels, as a generated rule.
+  if (duration) setRule(element, 'rainbow', { '--x-rainbow-duration': duration });
 
   const releasePress = addPressFeedback(element);
   return () => {
     releasePress();
+    clearRules(element);
     element.classList.remove('x-rainbow');
   };
 }
@@ -722,10 +713,10 @@ export function fireworks(element, options = {}) {
   // #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
   // >=1rem padding on every side of a button's text; 0.75rem (12px) failed
   // demo-layout-standards.spec.ts on pages/behaviors.html's "🎆 Fireworks"
-  // trigger. Inline style (not a stylesheet rule) because it always wins
-  // regardless of specificity, matching this function's existing approach.
-  if (config.showButton) element.style.cssText = 'cursor:pointer;padding:1rem 1.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
-  
+  // trigger. The chrome is .x-fireworks-trigger--button in effects.css
+  // (#779): a rule a theme can reach, not a cssText that beats every rule.
+  if (config.showButton) element.classList.add('x-fireworks-trigger--button');
+
   // Inject keyframes
   if (!document.getElementById('x-firework-styles')) {
     const style = document.createElement('style');
@@ -746,7 +737,7 @@ export function fireworks(element, options = {}) {
     
     // Fix: create container
     const animContainer = document.createElement('div');
-    animContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+    animContainer.className = 'x-fireworks-container';
     
     const colors = parseColorList(colorSpec, ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f', '#fff']);
     
@@ -757,17 +748,25 @@ export function fireworks(element, options = {}) {
       const size = 3 + Math.random() * 5;
       const color = colors[Math.floor(Math.random() * colors.length)];
       
-      particle.style.cssText = `
-        position:absolute;width:${size}px;height:${size}px;background:${color};border-radius:50%;
-        left:${centerX}px;top:${centerY}px;box-shadow:0 0 ${size * 2}px ${color};
-        animation:x-firework-particle ${(burstMs * 2) / 3}ms ease-out forwards;
-        --end-x:${Math.cos(angle) * velocity}px;--end-y:${Math.sin(angle) * velocity}px;
-      `;
+      // Static part: .x-fireworks__particle in effects.css. The random
+      // per-particle values travel as a generated rule (#779).
+      particle.className = 'x-fireworks__particle';
+      setRule(particle, 'particle', {
+        width: `${size}px`,
+        height: `${size}px`,
+        background: color,
+        left: `${centerX}px`,
+        top: `${centerY}px`,
+        boxShadow: `0 0 ${size * 2}px ${color}`,
+        animationDuration: `${(burstMs * 2) / 3}ms`,
+        '--end-x': `${Math.cos(angle) * velocity}px`,
+        '--end-y': `${Math.sin(angle) * velocity}px`,
+      });
       animContainer.appendChild(particle);
     }
     
     document.body.appendChild(animContainer);
-    setTimeout(() => animContainer.remove(), burstMs);
+    setTimeout(() => { clearRulesIn(animContainer); animContainer.remove(); }, burstMs);
   };
 
   element.onclick = fire;
@@ -776,7 +775,7 @@ export function fireworks(element, options = {}) {
   element.wbFireworks = { fire, startRepeat, stopRepeat };
   return () => {
     stopRepeat();
-    element.classList.remove('x-fireworks-trigger');
+    element.classList.remove('x-fireworks-trigger', 'x-fireworks-trigger--button');
   };
 }
 
@@ -812,7 +811,8 @@ export function snow(element, options = {}) {
   if (config.showButton && !element.textContent.trim()) {
     element.innerHTML = '❄️ <span>Let it Snow!</span>';
   }
-  if (config.showButton) element.style.cssText = 'cursor:pointer;padding:0.75rem 1.5rem;background:linear-gradient(135deg,#a8edea,#fed6e3);color:#333;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
+  // Chrome: .x-snow-trigger--button in effects.css (#779).
+  if (config.showButton) element.classList.add('x-snow-trigger--button');
   
   // Inject keyframes
   if (!document.getElementById('x-snow-styles')) {
@@ -830,7 +830,7 @@ export function snow(element, options = {}) {
   const fire = () => {
     // Fix: create container
     const container = document.createElement('div');
-    container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
+    container.className = 'x-snow-container';
     
     for (let i = 0; i < count; i++) {
       const flake = document.createElement('span');
@@ -840,15 +840,20 @@ export function snow(element, options = {}) {
       const delay = Math.random() * 2;
 
       flake.textContent = '❄️';
-      flake.style.cssText = `
-        position:absolute;font-size:${size / 16}rem;left:${startX}%;top:-30px;
-        animation:x-snow-fall ${duration}s linear ${delay}s forwards;opacity:0.8;
-      `;
+      // Static part: .x-snow__flake in effects.css; random values travel as
+      // a generated rule (#779).
+      flake.className = 'x-snow__flake';
+      setRule(flake, 'flake', {
+        fontSize: `${size / 16}rem`,
+        left: `${startX}%`,
+        animationDuration: `${duration}s`,
+        animationDelay: `${delay}s`,
+      });
       container.appendChild(flake);
     }
     
     document.body.appendChild(container);
-    setTimeout(() => container.remove(), fallMs);
+    setTimeout(() => { clearRulesIn(container); container.remove(); }, fallMs);
   };
 
   element.onclick = fire;
@@ -857,7 +862,7 @@ export function snow(element, options = {}) {
   element.wbSnow = { fire, startRepeat, stopRepeat };
   return () => {
     stopRepeat();
-    element.classList.remove('x-snow-trigger');
+    element.classList.remove('x-snow-trigger', 'x-snow-trigger--button');
   };
 }
 
@@ -866,10 +871,11 @@ export function snow(element, options = {}) {
  */
 export function particle(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '20');
-  const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
+  const color = options.color || element.getAttribute('color');
   element.classList.add('x-particle');
-  element.style.position = 'relative';
-  element.style.overflow = 'hidden';
+  // position/overflow and the dot colour default are .x-particle in
+  // effects.css; only an author colour travels, as a generated rule (#779).
+  if (color) setRule(element, 'color', { '--x-particle-color': color });
   
   // Inject keyframes
   if (!document.getElementById('x-particle-styles')) {
@@ -895,11 +901,14 @@ export function particle(element, options = {}) {
     const delay = Math.random() * 5;
     const duration = 3 + Math.random() * 4;
     
-    p.style.cssText = `
-      position:absolute;width:${size}px;height:${size}px;background:${color};border-radius:50%;
-      left:${x}%;bottom:-10px;opacity:0.6;
-      animation:x-particle-float ${duration}s ease-in-out ${delay}s infinite;pointer-events:none;
-    `;
+    p.className = 'x-particle__dot';
+    setRule(p, 'dot', {
+      width: `${size}px`,
+      height: `${size}px`,
+      left: `${x}%`,
+      animationDuration: `${duration}s`,
+      animationDelay: `${delay}s`,
+    });
     element.appendChild(p);
     particles.push(p);
   }
@@ -908,7 +917,8 @@ export function particle(element, options = {}) {
   const releasePress = addPressFeedback(element);
   return () => {
     releasePress();
-    particles.forEach(p => p.remove());
+    particles.forEach(p => { clearRules(p); p.remove(); });
+    clearRules(element);
     element.classList.remove('x-particle');
   };
 }

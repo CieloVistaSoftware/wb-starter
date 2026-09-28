@@ -1,8 +1,9 @@
 import { readFlag } from '../core/read-attr.js';
+import { setRule, clearRulesIn } from '../core/dynamic-style.js';
 /**
  * Navigation Behaviors
  * -----------------------------------------------------------------------------
- * Provides responsive navigation behaviors including navbars, sidebars,
+ * Provides responsive navigation components including navbars, sidebars,
  * menus, breadcrumbs, and pagination steps.
  * 
  * Custom Tag: <div>
@@ -14,9 +15,9 @@ import { readFlag } from '../core/read-attr.js';
  * -----------------------------------------------------------------------------
  * 
  * FIXED: v2.0
- * - Menu behavior: Proper flex layout with correct spacing
- * - Navbar behavior: Better responsive design
- * - Sidebar behavior: Fixed item layout and hover states
+ * - Menu component: Proper flex layout with correct spacing
+ * - Navbar component: Better responsive design
+ * - Sidebar component: Fixed item layout and hover states
  */
 
 /**
@@ -45,81 +46,77 @@ export function navbar(element, options = {}) {
 
   // #448: no classList.add('x-navbar') -- no CSS selector anywhere depends
   // on the bare class.
-  element.style.display = 'flex';
-  element.style.alignItems = 'center';
-  element.style.justifyContent = 'space-between';
-  element.style.padding = '0.5rem 1rem';
-  element.style.background = 'var(--bg-secondary, #1f2937)';
-  element.style.borderRadius = '6px';
-  element.style.gap = '1rem';
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-navbar> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-navbar> tag does not get a redundant class.
+  element.classList.add('x-navbar');
+  // Appearance lives in src/styles/behaviors/navbar.css (#903). Writing it
+  // inline here beat every stylesheet rule, which is why the declared
+  // variant=dark|transparent rendered identically to default.
 
-  if (config.sticky) {
-    element.style.position = 'sticky';
-    element.style.top = '0';
-    element.style.zIndex = '100';
-  }
+  // #779: sticky / brand / logo / tagline / menu / item styling are all
+  // navbar.css rules keyed on the classes below -- every one of them used to
+  // be an inline style or an onmouseenter handler writing element.style.
+  if (config.sticky) element.classList.add('x-navbar--sticky');
 
-  // Build brand element with optional logo
+  // Build brand element with optional logo. The logo's 32px default is
+  // navbar.css's; another logo-size is applied as a generated rule once the
+  // markup exists (sizeLogo below).
   const buildBrandHTML = () => {
-    const logoHTML = config.logo ? 
-      `<img src="${config.logo}" alt="" style="
-        width: ${config.logoSize}px;
-        height: ${config.logoSize}px;
-        object-fit: contain;
-        border-radius: 4px;
-      ">` : '';
-    
-    const brandTextHTML = config.brand ? 
+    const logoHTML = config.logo ?
+      `<img class="x-navbar__logo" src="${config.logo}" alt="">` : '';
+
+    const brandTextHTML = config.brand ?
       `<span class="x-navbar__brand-text">${config.brand}</span>` : '';
-    
+
     const taglineHTML = config.tagline ?
-      `<span class="x-navbar__tagline" style="font-size: 0.75rem; opacity: 0.7; font-weight: 400;">${config.tagline}</span>` : '';
-    
+      `<span class="x-navbar__tagline">${config.tagline}</span>` : '';
+
     // Brand is always a link
     const hasTextContent = config.brand || config.tagline;
     const textWrapperHTML = hasTextContent ? `
-      <div class="x-navbar__brand-wrap" style="display: flex; flex-direction: column; line-height: 1.2;">
+      <div class="x-navbar__brand-wrap">
         ${brandTextHTML}
         ${taglineHTML}
       </div>` : '';
-    
+
     return `
-      <a class="x-navbar__brand" href="${config.brandHref}" style="
-        font-weight: 700;
-        white-space: nowrap;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        text-decoration: none;
-        color: inherit;
-        transition: opacity 0.15s ease;
-      " onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='1'">
+      <a class="x-navbar__brand" href="${config.brandHref}">
         ${logoHTML}
         ${textWrapperHTML}
       </a>
     `;
   };
 
-  // Helper to apply navbar item styling to any link element
-  const styleNavbarItem = (link) => {
-    link.classList.add('x-navbar__item');
-    link.style.opacity = '0.8';
-    link.style.textDecoration = 'none';
-    link.style.color = 'inherit';
-    link.style.transition = 'opacity 0.15s ease';
-    link.style.whiteSpace = 'nowrap';
-    
-    // Add hover effects if not already added
-    if (!link._navbarHover) {
-      link._navbarHover = true;
-      link.addEventListener('mouseenter', () => link.style.opacity = '1');
-      link.addEventListener('mouseleave', () => link.style.opacity = '0.8');
+  // Weight 4: navbar.css sizes `[x-navbar] a:first-of-type img` at 40px and
+  // the default 32px rule has to outrank that, so an author's size must too.
+  const sizeLogo = () => {
+    const logo = element.querySelector(':scope > .x-navbar__brand > .x-navbar__logo');
+    if (logo && String(config.logoSize) !== '32') {
+      setRule(logo, 'size', { width: `${config.logoSize}px`, height: `${config.logoSize}px` }, { weight: 4 });
     }
   };
 
+  // Helper to apply navbar item styling to any link element: the class is
+  // the styling, including its :hover (navbar.css, #779).
+  const styleNavbarItem = (link) => {
+    link.classList.add('x-navbar__item');
+  };
+
   // Check for existing custom children (links dropped by user in builder)
+  // On the lazy runtime navbar.schema.json's $view is built FIRST: it adds
+  // its own a.x-navbar__brand, div.x-navbar__nav and button.x-navbar__toggle.
+  // Those are this behavior's parts, not links the author dropped in -- but
+  // the schema brand is an <a>, so it was taken for a custom child: moved into
+  // .x-navbar__menu while a second brand was prepended, and the long brand
+  // text overflowed the menu onto the empty toggle button (overlap on
+  // demos/site/layout.html). Schema-built parts are excluded here, so this
+  // falls through to the brand/items build below like any unbuilt navbar.
+  const SCHEMA_PARTS = ['x-navbar__brand', 'x-navbar__nav', 'x-navbar__toggle'];
   const existingChildren = Array.from(element.children).filter(child => {
+    if (SCHEMA_PARTS.some(cls => child.classList.contains(cls))) return false;
     // Direct child is a link/x-link, OR a link/x-link sits nested inside
     // it (e.g. a wrapper <div><a>...</a></div>) -- was querySelector('a,
     // []'), an invalid selector ('[]' has no attribute name) that threw on
@@ -133,13 +130,7 @@ export function navbar(element, options = {}) {
   if ((config.items.length > 0 || config.brand || config.logo) && existingChildren.length === 0) {
     element.innerHTML = `
       ${buildBrandHTML()}
-      <div class="x-navbar__menu" style="
-        display: flex;
-        gap: 1.5rem;
-        flex: 1;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      ">
+      <div class="x-navbar__menu">
         ${config.items.map(item => {
           let label = item.trim();
           let href = '#';
@@ -151,33 +142,23 @@ export function navbar(element, options = {}) {
           }
           
           return `
-          <a class="x-navbar__item" href="${href}" style="
-            opacity: 0.8;
-            text-decoration: none;
-            color: inherit;
-            transition: opacity 0.15s ease;
-            white-space: nowrap;
-          " onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.8'">
+          <a class="x-navbar__item" href="${href}">
             ${label}
           </a>
         `}).join('')}
       </div>
     `;
+    sizeLogo();
   } else if (existingChildren.length > 0) {
     // Has custom children - style them to match navbar items
     // First, ensure we have a brand if configured
     let menu = element.querySelector('.x-navbar__menu');
     if (!menu) {
       // Create menu container for the items
+      // (align-items: center is --custom's addition to .x-navbar__menu.)
       menu = document.createElement('div');
-      menu.className = 'x-navbar__menu';
-      menu.style.display = 'flex';
-      menu.style.gap = '1.5rem';
-      menu.style.flex = '1';
-      menu.style.flexWrap = 'wrap';
-      menu.style.justifyContent = 'flex-end';
-      menu.style.alignItems = 'center';
-      
+      menu.className = 'x-navbar__menu x-navbar__menu--custom';
+
       // Move custom children into menu
       existingChildren.forEach(child => {
         menu.appendChild(child);
@@ -186,6 +167,7 @@ export function navbar(element, options = {}) {
       // Add brand if configured
       if (config.brand || config.logo) {
         element.insertAdjacentHTML('afterbegin', buildBrandHTML());
+        sizeLogo();
       }
       element.appendChild(menu);
     }
@@ -202,47 +184,28 @@ export function navbar(element, options = {}) {
   } else {
     // Semantic Mode: Enhance existing content
     // 1. Find or style the list
+    // The list, its links and a heading-as-brand get classes navbar.css
+    // styles (#779); the links share .x-navbar__item's look and hover.
     const list = element.querySelector('ul, ol');
     if (list) {
-      list.style.display = 'flex';
-      list.style.gap = '1.5rem';
-      list.style.listStyle = 'none';
-      list.style.margin = '0';
-      list.style.padding = '0';
-      list.style.flex = '1';
-      list.style.flexWrap = 'wrap';
-      
-      // Style links within the list
-      const links = list.querySelectorAll('a');
-      links.forEach(link => {
-        link.style.opacity = '0.8';
-        link.style.textDecoration = 'none';
-        link.style.color = 'inherit';
-        link.style.transition = 'opacity 0.15s ease';
-        link.style.whiteSpace = 'nowrap';
-        
-        link.addEventListener('mouseenter', () => link.style.opacity = '1');
-        link.addEventListener('mouseleave', () => link.style.opacity = '0.8');
-      });
+      list.classList.add('x-navbar__list');
+      list.querySelectorAll('a').forEach(link => link.classList.add('x-navbar__item'));
     }
-    
+
     // 2. Style any headings as brand
     const brand = element.querySelector('h1, h2, h3, h4, h5, h6, .brand');
-    if (brand) {
-      brand.style.fontWeight = '700';
-      brand.style.whiteSpace = 'nowrap';
-      brand.style.flexShrink = '0';
-      brand.style.margin = '0';
-      brand.style.fontSize = '1.25rem';
-    }
+    if (brand) brand.classList.add('x-navbar__heading-brand');
   }
 
-  return () => element.classList.remove('x-navbar');
+  return () => {
+    clearRulesIn(element);
+    element.classList.remove('x-navbar', 'x-navbar--sticky');
+  };
 }
 
 /**
  * Sidebar - Vertical navigation from data-items
- * Custom Tag: <div x-sidebarlayout>
+ * Custom Tag: <div>
  */
 export function sidebar(element, options = {}) {
   // Initial config
@@ -253,19 +216,13 @@ export function sidebar(element, options = {}) {
     ...options
   };
 
+  // #779: the panel, its collapsed width and the items (with their active
+  // and :hover states) are .x-sidebar* rules in navigation.css -- they were
+  // inline styles and onmouseenter/onmouseleave attribute handlers.
   element.classList.add('x-sidebar');
-  element.style.display = 'flex';
-  element.style.flexDirection = 'column';
-  element.style.gap = '0.5rem';
-  element.style.padding = '0.75rem';
-  element.style.background = 'var(--bg-secondary, #1f2937)';
-  element.style.borderRadius = '6px';
-  element.style.transition = 'width 0.2s ease, min-width 0.2s ease';
-  
+
   const render = () => {
-    element.style.minWidth = config.collapsed ? '48px' : '160px';
-    element.style.width = config.collapsed ? '48px' : '100%';
-    element.style.maxWidth = '100%';
+    element.classList.toggle('x-sidebar--collapsed', !!config.collapsed);
 
     element.innerHTML = config.items.map(item => {
       let label = item.trim();
@@ -281,20 +238,7 @@ export function sidebar(element, options = {}) {
       const tooltipAttrs = config.collapsed ? `x-tooltip data-tooltip="${label}" data-tooltip-position="right"` : `title="${label}"`;
       
       return `
-        <a class="x-sidebar__item" href="${href}" ${tooltipAttrs} style="
-          padding: 0.6rem 0.75rem;
-          border-radius: 4px;
-          text-decoration: none;
-          color: inherit;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          transition: all 0.15s ease;
-          white-space: nowrap;
-          overflow: hidden;
-          ${isActive ? 'background: var(--primary, #6366f1); color: white; font-weight: 500;' : 'opacity: 0.8;'}
-        " onmouseenter="this.style.background='var(--bg-tertiary,#374151)';this.style.opacity='1'" 
-           onmouseleave="${isActive ? 'this.style.background=\"var(--primary, #6366f1)\";' : 'this.style.background=\"\";this.style.opacity=\"0.8\";'}">
+        <a class="x-sidebar__item${isActive ? ' x-sidebar__item--active' : ''}" href="${href}" ${tooltipAttrs}>
           ${label}
         </a>
       `;
@@ -338,7 +282,7 @@ export function sidebar(element, options = {}) {
 
 /**
  * Menu - Clickable menu from data-items
- * Custom Tag: <menu>
+ * Custom Tag: <div>
  * FIXED: Proper flex layout, correct spacing, better hover states
  */
 export function menu(element, options = {}) {
@@ -347,16 +291,10 @@ export function menu(element, options = {}) {
     ...options
   };
 
+  // #779: the panel and its items (and their :hover) are .x-menu* rules in
+  // navigation.css, not inline styles and attribute handlers.
   element.classList.add('x-menu');
   element.setAttribute('role', 'menu');
-  element.style.display = 'flex';
-  element.style.flexDirection = 'column';
-  element.style.gap = '0.25rem';
-  element.style.padding = '0.5rem';
-  element.style.background = 'var(--bg-secondary, #1f2937)';
-  element.style.borderRadius = '6px';
-  element.style.minWidth = '140px';
-  element.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
 
   element.innerHTML = config.items.map((item, idx) => {
     let label = item.trim();
@@ -369,19 +307,7 @@ export function menu(element, options = {}) {
     }
 
     return `
-    <div class="x-menu__item" role="menuitem" tabindex="0" data-index="${idx}" data-value="${value}" style="
-      padding: 0.6rem 0.75rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      color: inherit;
-      font-size: 0.9rem;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    " onmouseenter="this.style.background='var(--bg-tertiary,#374151)';this.style.opacity='1'" 
-       onmouseleave="this.style.background='';this.style.opacity='0.9'">
+    <div class="x-menu__item" role="menuitem" tabindex="0" data-index="${idx}" data-value="${value}">
       <span>${label}</span>
     </div>
   `}).join('');
@@ -389,6 +315,9 @@ export function menu(element, options = {}) {
   // Add keyboard navigation
   const items = element.querySelectorAll('.x-menu__item');
   items.forEach((item, idx) => {
+    // The old onmouseleave left an item at opacity 0.9 once it had been
+    // hovered (it started at 1). Kept as a class so the look is unchanged.
+    item.addEventListener('mouseleave', () => item.classList.add('x-menu__item--visited'), { once: true });
     item.addEventListener('click', (e) => {
       element.dispatchEvent(new CustomEvent('wb:menu:select', {
         bubbles: true,
@@ -419,13 +348,13 @@ export function menu(element, options = {}) {
 
 /**
  * Pagination - Page navigation from data-pages
- * Custom Tag: <div x-pagination>
+ * Custom Tag: <div>
  */
 /**
  * Pagination
  * CSS: src/styles/behaviors/pagination.css
  * Uses <span role="button"> to avoid button auto-inject collision.
- * No x-ready, no behavior classes added by JS.
+ * No x-ready, no component classes added by JS.
  */
 export function pagination(element, options = {}) {
   const total = parseInt(options.total || element.getAttribute('total') || '0');
@@ -487,7 +416,7 @@ export function pagination(element, options = {}) {
 
 /**
  * Steps - Step indicator from data-items
- * Custom Tag: <div x-steps>
+ * Custom Tag: <div>
  */
 export function steps(element, options = {}) {
   const config = {
@@ -496,35 +425,22 @@ export function steps(element, options = {}) {
     ...options
   };
 
+  // #779: the row, each step's marker (complete / active / pending), its
+  // label and the connector are .x-steps* rules in steps.css -- they were
+  // inline style="" blocks in this template.
   element.classList.add('x-steps');
-  element.style.display = 'flex';
-  element.style.alignItems = 'center';
-  element.style.gap = '1rem';
-  element.style.flexWrap = 'wrap';
 
   element.innerHTML = config.items.map((item, i) => {
     const step = i + 1;
     const isComplete = step < config.current;
     const isActive = step === config.current;
-    
+    const state = isComplete ? 'complete' : isActive ? 'active' : 'pending';
+
     return `
-      <div class="x-steps__item" style="display: flex; align-items: center; gap: 0.5rem;">
-        <div style="
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.75rem;
-          font-weight: 600;
-          flex-shrink: 0;
-          ${isComplete ? 'background: var(--success, #22c55e); color: white;' : ''}
-          ${isActive ? 'background: var(--primary, #6366f1); color: white;' : ''}
-          ${!isComplete && !isActive ? 'background: var(--bg-tertiary, #374151); opacity: 0.5;' : ''}
-        ">${isComplete ? '✓' : step}</div>
-        <span style="font-size: 0.875rem; white-space: nowrap; ${!isActive ? 'opacity: 0.7;' : 'font-weight: 500;'}">${item.trim()}</span>
-        ${i < config.items.length - 1 ? '<div style="width: 32px; height: 2px; background: var(--border-color, #374151); flex-shrink: 0;"></div>' : ''}
+      <div class="x-steps__item">
+        <div class="x-steps__marker x-steps__marker--${state}">${isComplete ? '✓' : step}</div>
+        <span class="x-steps__label${isActive ? ' x-steps__label--active' : ''}">${item.trim()}</span>
+        ${i < config.items.length - 1 ? '<div class="x-steps__connector"></div>' : ''}
       </div>
     `;
   }).join('');
@@ -542,36 +458,31 @@ export function treeview(element, options = {}) {
     ...options
   };
 
+  // #779: node, toggle and collapsed-children styling are .x-treeview* rules
+  // in navigation.css; open/closed is a class. Only each node's indent
+  // (1.5rem per level) is computed, so it travels as a generated rule.
   element.classList.add('x-treeview');
   element.setAttribute('role', 'tree');
-  element.style.fontSize = '0.875rem';
-  element.style.padding = '0.5rem';
 
   const renderNode = (node, depth = 0) => {
     const hasChildren = node.children && node.children.length > 0;
-    const padding = depth * 1.5;
-    
+
     return `
-      <div class="x-treeview__item" role="treeitem" style="margin-bottom: 0.25rem;">
-        <div style="
-          display: flex;
-          align-items: center;
-          gap: 0.25rem;
-          padding: 0.35rem 0;
-          cursor: ${hasChildren ? 'pointer' : 'default'};
-          padding-left: ${padding}rem;
-          border-radius: 3px;
-          transition: background 0.15s ease;
-        " class="x-treeview__node" onmouseenter="this.style.background='var(--bg-tertiary,#374151)'" onmouseleave="this.style.background=''">
-          ${hasChildren ? '<span class="x-treeview__toggle" style="width: 16px; font-size: 0.7rem; transition: transform 0.15s ease;">▶</span>' : '<span style="width: 16px;"></span>'}
+      <div class="x-treeview__item" role="treeitem">
+        <div class="x-treeview__node${hasChildren ? ' x-treeview__node--branch' : ''}" data-depth="${depth}">
+          ${hasChildren ? '<span class="x-treeview__toggle">▶</span>' : '<span class="x-treeview__spacer"></span>'}
           <span class="x-treeview__label">${node.name}</span>
         </div>
-        ${hasChildren ? `<div class="x-treeview__children" style="display: none;">${node.children.map(c => renderNode(c, depth + 1)).join('')}</div>` : ''}
+        ${hasChildren ? `<div class="x-treeview__children">${node.children.map(c => renderNode(c, depth + 1)).join('')}</div>` : ''}
       </div>
     `;
   };
 
   element.innerHTML = config.items.map(item => renderNode(item)).join('');
+  element.querySelectorAll('.x-treeview__node').forEach((nodeEl) => {
+    const depth = parseInt(nodeEl.getAttribute('data-depth'), 10) || 0;
+    if (depth) setRule(nodeEl, 'indent', { paddingLeft: `${depth * 1.5}rem` }, { weight: 2 });
+  });
 
   // Toggle children visibility
   element.addEventListener('click', (e) => {
@@ -582,13 +493,16 @@ export function treeview(element, options = {}) {
     const children = item?.querySelector('.x-treeview__children');
     
     if (children) {
-      const isOpen = children.style.display !== 'none';
-      children.style.display = isOpen ? 'none' : 'block';
-      toggle.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+      const isOpen = children.classList.contains('x-treeview__children--open');
+      children.classList.toggle('x-treeview__children--open', !isOpen);
+      toggle.classList.toggle('x-treeview__toggle--open', !isOpen);
     }
   });
 
-  return () => element.classList.remove('x-treeview');
+  return () => {
+    clearRulesIn(element);
+    element.classList.remove('x-treeview');
+  };
 }
 
 /**
@@ -601,13 +515,11 @@ export function backtotop(element, options = {}) {
     ...options
   };
 
+  // #779: hidden/shown is .x-backtotop / --visible in navigation.css.
   element.classList.add('x-backtotop');
-  element.style.cursor = 'pointer';
-  element.style.transition = 'opacity 0.3s ease';
 
   const updateVisibility = () => {
-    element.style.opacity = window.scrollY > config.threshold ? '1' : '0';
-    element.style.pointerEvents = window.scrollY > config.threshold ? 'auto' : 'none';
+    element.classList.toggle('x-backtotop--visible', window.scrollY > config.threshold);
   };
 
   window.addEventListener('scroll', updateVisibility);
@@ -618,7 +530,7 @@ export function backtotop(element, options = {}) {
   };
 
   return () => {
-    element.classList.remove('x-backtotop');
+    element.classList.remove('x-backtotop', 'x-backtotop--visible');
     window.removeEventListener('scroll', updateVisibility);
   };
 }
@@ -636,11 +548,9 @@ export function link(element, options = {}) {
     ...options
   };
 
+  // #779: colour, underline and the red invalid state are .x-link and
+  // .x-link--invalid in navigation.css.
   element.classList.add('x-link');
-  element.style.cursor = 'pointer';
-  element.style.color = 'var(--primary, #6366f1)';
-  element.style.textDecoration = 'underline';
-  element.style.transition = 'color 0.2s ease';
   
   // Set href attribute and text content
   if (element.tagName === 'A') {
@@ -660,7 +570,6 @@ export function link(element, options = {}) {
 
   // Mark link as invalid (red)
   const markInvalid = (reason) => {
-    element.style.color = 'var(--danger-color, #ef4444)';
     element.classList.add('x-link--invalid');
     element.title = reason;
     
@@ -674,7 +583,6 @@ export function link(element, options = {}) {
   
   // Mark link as valid (restore color)
   const markValid = () => {
-    element.style.color = 'var(--primary, #6366f1)';
     element.classList.remove('x-link--invalid');
     element.title = '';
   };
@@ -726,7 +634,7 @@ export function link(element, options = {}) {
       const targetId = href.slice(1);
       
       // Check if it's a page reference or element ID
-      const validPages = ['home', 'about', 'behaviors', 'contact', 'docs', 'features', 'newpage'];
+      const validPages = ['home', 'about', 'components', 'contact', 'docs', 'features', 'newpage'];
       const target = document.querySelector(href);
       
       if (target) {
@@ -766,35 +674,14 @@ export function statusbar(element, options = {}) {
     ...options
   };
 
+  // #779: the bar, its fixed top/bottom placement and the message area's
+  // states are .x-statusbar* rules in navigation.css. (Compliance: body
+  // padding is still never modified -- the author handles layout spacing.)
   element.classList.add('x-statusbar');
-  element.style.display = 'flex';
-  element.style.alignItems = 'center';
-  element.style.justifyContent = 'space-between';
-  element.style.padding = '0 1rem';
-  element.style.height = '1.5rem';
-  element.style.background = 'var(--bg-secondary, #1f2937)';
-  element.style.borderTop = '1px solid var(--border-color, #374151)';
-  element.style.fontSize = '0.75rem';
-  element.style.color = 'var(--text-secondary, #9ca3af)';
-  element.style.width = '100%';
-  element.style.boxSizing = 'border-box';
-
   if (config.position === 'bottom' || config.position === 'fixed') {
-    element.style.position = 'fixed';
-    element.style.bottom = '0';
-    element.style.left = '0';
-    element.style.zIndex = '100';
-    // Compliance: Do not modify body padding. User must handle layout spacing.
-    // document.body.style.paddingBottom = '1.5rem';
+    element.classList.add('x-statusbar--bottom');
   } else if (config.position === 'top') {
-    element.style.position = 'fixed';
-    element.style.top = '0';
-    element.style.left = '0';
-    element.style.zIndex = '100';
-    element.style.borderTop = 'none';
-    element.style.borderBottom = '1px solid var(--border-color, #374151)';
-    // Compliance: Do not modify body padding.
-    // document.body.style.paddingTop = '1.5rem';
+    element.classList.add('x-statusbar--top');
   }
 
   // Create message area
@@ -802,13 +689,7 @@ export function statusbar(element, options = {}) {
   if (!messageArea) {
     messageArea = document.createElement('span');
     messageArea.className = 'x-statusbar__message';
-    messageArea.style.flex = '1';
-    messageArea.style.textAlign = 'center';
-    messageArea.style.fontWeight = '500';
-    messageArea.style.color = 'var(--text-primary, #e5e7eb)';
-    messageArea.style.transition = 'opacity 0.3s ease';
-    messageArea.style.opacity = '0';
-    
+
     // If items exist, insert in middle, otherwise append
     if (element.children.length > 0) {
       const mid = Math.floor(element.children.length / 2);
@@ -848,16 +729,14 @@ export function statusbar(element, options = {}) {
   const handleStatusMessage = (e) => {
     const { message, type, duration = 3000 } = e.detail;
     messageArea.textContent = message;
-    messageArea.style.opacity = '1';
-    
-    if (type === 'error') messageArea.style.color = 'var(--danger-color, #ef4444)';
-    else if (type === 'success') messageArea.style.color = 'var(--success-color, #10b981)';
-    else messageArea.style.color = 'var(--text-primary, #e5e7eb)';
+    messageArea.classList.add('x-statusbar__message--visible');
+    messageArea.classList.toggle('x-statusbar__message--error', type === 'error');
+    messageArea.classList.toggle('x-statusbar__message--success', type === 'success');
 
     if (element._statusTimeout) clearTimeout(element._statusTimeout);
-    
+
     element._statusTimeout = setTimeout(() => {
-      messageArea.style.opacity = '0';
+      messageArea.classList.remove('x-statusbar__message--visible');
     }, duration);
   };
 

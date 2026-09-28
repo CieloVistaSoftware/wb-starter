@@ -47,7 +47,7 @@
     "landmarkRole": "main",
     "requirements": [
       "Only one main element per document (at page level)",
-      "Can have multiple main elements in behaviors (card main, article main)"
+      "Can have multiple main elements in components (card main, article main)"
     ]
   },
   "canContain": [

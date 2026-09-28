@@ -389,7 +389,12 @@ test.describe('Behaviors page — the demo sections stay removed', () => {
         await new Promise((res) => setTimeout(res, 100));
       }
       return {
-        demoBlocks: document.querySelectorAll('[x-demo]').length,
+        // The page's own sections, not the docs panel: a behavior's .md may
+        // carry a live <div x-demo> (confirm.md does), rendered there on
+        // purpose. This counted it only once #1219 made the doc render finish
+        // before the page reported ready; before that it was read half-built.
+        demoBlocks: [...document.querySelectorAll('[x-demo]')]
+          .filter((d) => !d.closest('#behaviors-live-doc-body')).length,
         code: document.querySelector('#behaviors-live-code code')?.textContent ?? '',
       };
     });

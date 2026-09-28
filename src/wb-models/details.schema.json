@@ -34,7 +34,9 @@
     "animated": {
       "type": "boolean",
       "description": "Animate open/close",
-      "default": true
+      "default": true,
+      "visual": false,
+      "visualReason": "Animates opening and closing. A panel at rest looks the same either way (#773)."
     },
     "variant": {
       "type": "string",

@@ -1,3 +1,5 @@
+import { readFlag } from '../core/read-attr.js';
+import { setRule, clearRules, clearRulesIn } from '../core/dynamic-style.js';
 /**
  * Effects Behavior
  * -----------------------------------------------------------------------------
@@ -11,12 +13,50 @@
  */
 
 /**
+ * Every @keyframes shipped in src/styles/ is kebab-cased and x-prefixed
+ * (x-fade-in, x-slide-in-left, x-zoom-in). An animation-name that matches no
+ * @keyframes is NOT a CSS error -- the property holds the value, getComputedStyle
+ * reports it, and nothing whatsoever animates. So a single wrong character here
+ * is invisible in the browser and invisible to any test that only asks whether
+ * animation-name is set (#860, and #847 before it, which shipped the whole
+ * `wb-` prefix against `x-*` keyframes and went unnoticed).
+ *
+ * `animation="fadeIn"` and `animation="slideInLeft"` are the spellings an author
+ * naturally reaches for -- they are the names every other animation library uses
+ * -- so accept them and normalise, rather than silently producing x-fadeIn and
+ * animating nothing. (#849)
+ */
+function kebab(name) {
+  return String(name).trim().replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+/**
+ * Kebab-casing covers the whole declared enum except one: `rubberBand`'s
+ * keyframe is `x-rubberband`, a single word. Listed rather than special-cased
+ * so the next mismatch is one line, not another branch.
+ *
+ * `slideOut` needs no alias: the four x-slide-out-{dir} keyframes it builds
+ * now exist in styles/behaviors/effects.css. They did not when this note was
+ * written, which made slideout() a dead control (#866) -- it set an
+ * animation-name matching nothing and rendered nothing, silently.
+ */
+const KEYFRAME_ALIASES = { 'rubber-band': 'rubberband' };
+
+function keyframeFor(name) {
+  const k = kebab(name);
+  return `x-${KEYFRAME_ALIASES[k] || k}`;
+}
+
+/**
  * Animate - General animation trigger
  * Helper Attribute: [x-animate]
  */
 export function animate(element, options = {}) {
   const config = {
-    animation: options.animation || element.getAttribute('animation') || 'fadeIn',
+    // #849: was 'fadeIn', which concatenated to `x-fadeIn` below -- no such
+    // keyframe exists, so <div x-animate> with no `animation` attribute has
+    // never animated. The keyframe is `x-fade-in`.
+    animation: options.animation || element.getAttribute('animation') || 'fade-in',
     duration: options.duration || element.getAttribute('duration') || '0.5s',
     delay: options.delay || element.getAttribute('delay') || '0s',
     easing: options.easing || element.getAttribute('easing') || 'ease',
@@ -25,11 +65,16 @@ export function animate(element, options = {}) {
   };
 
   element.classList.add('x-animate');
-  
+
+  const keyframe = keyframeFor(config.animation);
+
+  // duration/easing are author values, so the animation travels as a
+  // generated rule (#779). Clearing it, forcing a reflow, then setting it again
+  // is what restarts a CSS animation that already ran once.
   const play = () => {
-    element.style.animation = 'none';
+    setRule(element, 'anim', null);
     void element.offsetWidth;
-    element.style.animation = `wb-${config.animation} ${config.duration} ${config.easing}`;
+    setRule(element, 'anim', { animation: `${keyframe} ${config.duration} ${config.easing}` });
   };
 
   // All buttons trigger on click
@@ -38,21 +83,26 @@ export function animate(element, options = {}) {
   } else if (config.trigger === 'load') {
     play();
   } else if (config.trigger === 'click') {
-    element.style.cursor = 'pointer';
+    element.classList.add('x-animate--clickable');
     element.onclick = play;
   }
 
   element.wbAnimate = { play };
-  return () => element.classList.remove('x-animate');
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-animate', 'x-animate--clickable');
+  };
 }
 
 // Helper for click-triggered animations
 function clickAnim(element, animName, duration = '0.5s') {
-  element.classList.add(`wb-${animName}`);
+  element.classList.add(`x-${animName}`);
+  // A generated rule, not element.style (#779): cleared, reflowed and set
+  // again so a second click replays the animation.
   const playAnimation = () => {
-    element.style.animation = 'none';
+    setRule(element, 'anim', null);
     void element.offsetWidth;
-    element.style.animation = `wb-${animName} ${duration} ease`;
+    setRule(element, 'anim', { animation: `x-${animName} ${duration} ease` });
   };
   if (element.tagName === 'BUTTON') {
     element.onclick = playAnimation;
@@ -60,7 +110,10 @@ function clickAnim(element, animName, duration = '0.5s') {
     element.onclick = playAnimation;
   }
   element.wbAnim = { play: playAnimation };
-  return () => element.classList.remove(`wb-${animName}`);
+  return () => {
+    clearRules(element);
+    element.classList.remove(`x-${animName}`);
+  };
 }
 
 // Entrances - work on click for buttons
@@ -104,6 +157,78 @@ export function rubberband(element) { return clickAnim(element, 'rubberband', '1
 export function heartbeat(element) { return clickAnim(element, 'heartbeat', '1.3s'); }
 
 /**
+ * Particle colours from a declared `colors` attribute.
+ *
+ * confetti.schema.json and fireworks.schema.json both declare `colors` as
+ * "Particle colors as JSON array" with a JSON-array default -- and both
+ * hard-coded their palettes instead, so the attribute was documented and
+ * inert (#861). One parser, used by both: a second copy is how the two
+ * palettes would drift apart.
+ *
+ * Tolerant by design. A palette is decoration, so a malformed value falls back
+ * to the built-in rather than throwing and killing the whole effect. Accepts
+ * a JSON array (as the schema says) or a plain comma-separated list, because
+ * `colors="red, blue"` is what people actually type.
+ *
+ * @param {string} raw attribute value
+ * @param {string[]} fallback palette to use when raw is absent or unusable
+ * @returns {string[]}
+ */
+export function parseColorList(raw, fallback) {
+  if (!raw || typeof raw !== 'string') return fallback;
+  const text = raw.trim();
+  if (!text) return fallback;
+  if (text.startsWith('[')) {
+    try {
+      const parsed = JSON.parse(text);
+      const list = Array.isArray(parsed) ? parsed.filter((c) => typeof c === 'string' && c.trim()) : [];
+      return list.length ? list : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+  const list = text.split(',').map((c) => c.trim()).filter(Boolean);
+  return list.length ? list : fallback;
+}
+
+/** "3s" / "250ms" / "3" -> milliseconds (0 when unparseable). */
+function toMs(v) {
+  if (typeof v === 'number') return v;
+  const m = String(v).trim().match(/^([\d.]+)\s*(ms|s)?$/);
+  if (!m) return 0;
+  return m[2] === 'ms' ? parseFloat(m[1]) : parseFloat(m[1]) * 1000;
+}
+
+/**
+ * The unattended-loop contract confetti, fireworks and snow all declare:
+ * `repeat` fires the burst on its own, first after `delay`, then once every
+ * `duration`. The timers are owned here and cleared by stop(), so a removed
+ * element cannot leave an interval appending containers to <body> forever
+ * (#655). One copy, so the three effects cannot drift apart.
+ *
+ * @param {() => void} fire
+ * @param {{ delay: string|number, duration: string|number }} config
+ * @param {number} fallbackMs interval when `duration` is unparseable
+ */
+function repeatLoop(fire, config, fallbackMs) {
+  let repeatTimer = null;
+  let startTimer = null;
+  const stop = () => {
+    if (repeatTimer !== null) { clearInterval(repeatTimer); repeatTimer = null; }
+    if (startTimer !== null) { clearTimeout(startTimer); startTimer = null; }
+  };
+  const start = () => {
+    stop();
+    const every = Math.max(toMs(config.duration) || fallbackMs, 500);
+    startTimer = setTimeout(() => {
+      fire();
+      repeatTimer = setInterval(fire, every);
+    }, toMs(config.delay));
+  };
+  return { start, stop };
+}
+
+/**
  * Confetti - Explosion of colorful particles (VISIBLE BUTTON)
  * Helper Attribute: [x-confetti]
  */
@@ -111,64 +236,41 @@ export function confetti(element, options = {}) {
   const config = {
     count: parseInt(options.count || element.getAttribute('count') || '50'),
     label: options.label || element.getAttribute('label') || 'Fire Confetti!',
-    // #655: `repeat` is declared in confetti.schema.json and shipped as an
-    // official example (`<div x-confetti repeat>with repeat</div>`), but
-    // nothing ever read it -- the attribute was silently inert.
-    repeat: options.repeat ?? element.hasAttribute('repeat'),
+    // No `repeat`. It looped a burst every few seconds, forever, with no
+    // control on the page to stop it -- John: "no way to stop it. remove
+    // x-confetti with repeat option." Confetti fires on click or fire().
     // Schema calls these strings ("3s"); accept a bare number of ms too.
     duration: options.duration || element.getAttribute('duration') || '3s',
     delay: options.delay || element.getAttribute('delay') || '0s',
+    // Declared in confetti.schema.json as a JSON array; see parseColorList.
+    colors: options.colors || element.getAttribute('colors') || '',
+    // Declared (default true) but never read: show-button="false" keeps the
+    // effect (click, wbConfetti.fire()) without the button chrome.
+    showButton: options.showButton ?? readFlag(element, 'show-button', true),
     ...options
   };
 
-  // "3s" / "250ms" / "3" -> milliseconds
-  const toMs = (v) => {
-    if (typeof v === 'number') return v;
-    const m = String(v).trim().match(/^([\d.]+)\s*(ms|s)?$/);
-    if (!m) return 0;
-    return m[2] === 'ms' ? parseFloat(m[1]) : parseFloat(m[1]) * 1000;
-  };
-  
   element.classList.add('x-confetti-trigger');
   // #448: no classList.add('x-confetti') -- it just duplicated
   // <div x-confetti>'s own tag name; no CSS selector depends on the bare class
   // (only .x-confetti-trigger/-piece, unaffected).
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-confetti> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-confetti> tag does not get a redundant class.
+  element.classList.add('x-confetti');
 
   // MAKE IT VISIBLE! Render as a button if empty
-  if (!element.textContent.trim()) {
+  if (config.showButton && !element.textContent.trim()) {
     element.innerHTML = `<span>🎉</span><span>${config.label}</span>`;
   }
-  
-  // Style it as an attractive button
-  element.style.cssText = `
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-    background-size: 300% 300%;
-    animation: x-confetti-gradient 3s ease infinite;
-    color: #fff;
-    font-weight: bold;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    border: none;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
-  `;
-  
-  // Add hover effect
-  element.onmouseenter = () => {
-    element.style.transform = 'scale(1.05)';
-    element.style.boxShadow = '0 6px 20px rgba(255, 107, 107, 0.6)';
-  };
-  element.onmouseleave = () => {
-    element.style.transform = 'scale(1)';
-    element.style.boxShadow = '0 4px 15px rgba(255, 107, 107, 0.4)';
-  };
-  
+
+  // The button chrome and its hover lift live in effects.css under
+  // .x-confetti-trigger--button (#779) -- a stylesheet rule a theme can reach,
+  // and a :hover the browser tracks, instead of cssText plus two handlers.
+  if (config.showButton) element.classList.add('x-confetti-trigger--button');
+
   // Inject CSS keyframes if not present
   if (!document.getElementById('x-confetti-styles')) {
     const style = document.createElement('style');
@@ -191,10 +293,12 @@ export function confetti(element, options = {}) {
     // Create container
     const container = document.createElement('div');
     container.className = 'x-confetti-container';
-    container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
     
     // Create particles
-    const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#95e1d3', '#f38181', '#aa96da', '#fcbad3', '#a8d8ea'];
+    const colors = parseColorList(
+      config.colors,
+      ['#ff6b6b', '#4ecdc4', '#ffe66d', '#95e1d3', '#f38181', '#aa96da', '#fcbad3', '#a8d8ea'],
+    );
     for (let i = 0; i < config.count; i++) {
       const particle = document.createElement('div');
       const size = Math.random() * 10 + 5;
@@ -204,52 +308,32 @@ export function confetti(element, options = {}) {
       const rotation = Math.random() * 720;
       const duration = 2 + Math.random() * 2;
       
-      particle.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: ${color};
-        left: ${startX}%;
-        top: -20px;
-        border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
-        animation: x-confetti-fall ${duration}s ease-out forwards;
-        --end-x: ${endX - startX}vw;
-        --rotation: ${rotation}deg;
-        animation-delay: ${Math.random() * 0.3}s;
-      `;
+      // Shared declarations are .x-confetti-piece in effects.css; only the
+      // random per-piece values travel, as a generated rule (#779).
+      particle.className = 'x-confetti-piece';
+      setRule(particle, 'piece', {
+        width: `${size}px`,
+        height: `${size}px`,
+        background: color,
+        left: `${startX}%`,
+        borderRadius: Math.random() > 0.5 ? '50%' : '0',
+        animationDuration: `${duration}s`,
+        animationDelay: `${Math.random() * 0.3}s`,
+        '--end-x': `${endX - startX}vw`,
+        '--rotation': `${rotation}deg`,
+      });
       container.appendChild(particle);
     }
     
     document.body.appendChild(container);
-    setTimeout(() => container.remove(), 5000);
+    setTimeout(() => { clearRulesIn(container); container.remove(); }, 5000);
   };
   
   element.onclick = fire;
 
-  // #655: `repeat` loops the burst unattended after an optional `delay`.
-  // Held in a variable and cleared by the returned teardown so the interval
-  // cannot outlive the element -- a leaked timer here would keep appending
-  // fixed-position containers to <body> forever.
-  let repeatTimer = null;
-  let startTimer = null;
-  const stopRepeat = () => {
-    if (repeatTimer !== null) { clearInterval(repeatTimer); repeatTimer = null; }
-    if (startTimer !== null) { clearTimeout(startTimer); startTimer = null; }
-  };
-  const startRepeat = () => {
-    stopRepeat();
-    const every = Math.max(toMs(config.duration) || 3000, 500);
-    startTimer = setTimeout(() => {
-      fire();
-      repeatTimer = setInterval(fire, every);
-    }, toMs(config.delay));
-  };
-  if (config.repeat) startRepeat();
-
-  element.wbConfetti = { fire, startRepeat, stopRepeat };
+  element.wbConfetti = { fire };
   return () => {
-    stopRepeat();
-    element.classList.remove('x-confetti-trigger');
+    element.classList.remove('x-confetti-trigger', 'x-confetti-trigger--button');
   };
 }
 
@@ -268,7 +352,8 @@ export function typewriter(element, options = {}) {
   
   const type = () => {
     element.textContent = '';
-    element.style.borderRight = config.cursor ? '2px solid var(--primary, #6366f1)' : 'none';
+    // The caret is .x-typewriter--cursor in effects.css (#779).
+    element.classList.toggle('x-typewriter--cursor', !!config.cursor);
     let i = 0;
     
     const typeChar = () => {
@@ -292,12 +377,12 @@ export function typewriter(element, options = {}) {
   if (element.tagName !== 'BUTTON') {
     type();
   }
-  element.style.cursor = 'pointer';
+  // cursor: pointer comes from .x-typewriter in effects.css (#779).
   element.addEventListener('click', type);
 
   element.wbTypewriter = { type };
   return () => {
-    element.classList.remove('x-typewriter');
+    element.classList.remove('x-typewriter', 'x-typewriter--cursor');
     element.removeEventListener('click', type);
   };
 }
@@ -358,7 +443,9 @@ export function parallax(element, options = {}) {
   const updateFn = () => {
     const rect = element.getBoundingClientRect();
     const offset = (window.innerHeight - rect.top) * speed * 0.1;
-    element.style.transform = `translateY(${offset}px)`;
+    // Measured on every scroll, so a generated rule rather than a static
+    // class -- never element.style (#779).
+    setRule(element, 'parallax', { transform: `translateY(${offset}px)` });
     ticking = false;
   };
 
@@ -374,6 +461,7 @@ export function parallax(element, options = {}) {
   
   return () => {
     window.removeEventListener('scroll', onScroll);
+    clearRules(element);
     element.classList.remove('x-parallax');
   };
 }
@@ -387,23 +475,21 @@ export function reveal(element, options = {}) {
     once: options.once ?? element.getAttribute('once') !== 'false',
   };
   
+  // Hidden start state and the transition are .x-reveal in effects.css; the
+  // revealed state is .x-reveal--visible (#779).
   element.classList.add('x-reveal');
-  element.style.opacity = '0';
-  element.style.transform = 'translateY(20px)';
-  element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        element.style.opacity = '1';
-        element.style.transform = 'translateY(0)';
+        element.classList.add('x-reveal--visible');
         if (config.once) observer.disconnect();
       }
     });
   }, { threshold: config.threshold });
   
   observer.observe(element);
-  return () => { observer.disconnect(); element.classList.remove('x-reveal'); };
+  return () => { observer.disconnect(); element.classList.remove('x-reveal', 'x-reveal--visible'); };
 }
 
 /**
@@ -415,16 +501,18 @@ export function marquee(element, options = {}) {
   
   const content = element.innerHTML;
   element.innerHTML = '';
-  element.style.cssText = 'overflow:hidden;white-space:nowrap;display:flex;';
-  
+  // Layout is .x-marquee / .x-marquee__track in effects.css; only the
+  // author's speed travels, as a generated rule the track reads (#779).
+  setRule(element, 'speed', { '--x-marquee-speed': `${speed}s` });
+
   for (let i = 0; i < 2; i++) {
     const span = document.createElement('span');
+    span.className = 'x-marquee__track';
     span.innerHTML = content + '&nbsp;&nbsp;&nbsp;';
-    span.style.cssText = `display:inline-block;animation:x-marquee ${speed}s linear infinite;padding-right:2rem;`;
     element.appendChild(span);
   }
-  
-  return () => element.classList.remove('x-marquee');
+
+  return () => { clearRules(element); element.classList.remove('x-marquee'); };
 }
 
 /**
@@ -434,8 +522,7 @@ export function sparkle(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '15');
   element.classList.add('x-sparkle-trigger');
   element.classList.add('x-sparkle');
-  element.style.position = 'relative';
-  element.style.overflow = 'visible';
+  // position/overflow: .x-sparkle-trigger in effects.css (#779).
   
   // Inject sparkle keyframes
   if (!document.getElementById('x-sparkle-styles')) {
@@ -462,14 +549,17 @@ export function sparkle(element, options = {}) {
           
           const sparkles = ['✨', '⭐', '🌟'];
           spark.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
-          spark.style.cssText = `
-            position:absolute;top:50%;left:50%;font-size:${size / 16}rem;pointer-events:none;
-            animation:x-sparkle ${duration}s ease-out forwards;
-            --end-x:${Math.cos(angle) * distance}px;--end-y:${Math.sin(angle) * distance}px;
-            z-index:1000;filter:drop-shadow(0 0 4px gold);
-          `;
+          // Static part: .x-sparkle__spark in effects.css. The random
+          // per-spark values travel as a generated rule (#779).
+          spark.className = 'x-sparkle__spark';
+          setRule(spark, 'spark', {
+            fontSize: `${size / 16}rem`,
+            animationDuration: `${duration}s`,
+            '--end-x': `${Math.cos(angle) * distance}px`,
+            '--end-y': `${Math.sin(angle) * distance}px`,
+          });
           element.appendChild(spark);
-          setTimeout(() => spark.remove(), duration * 1000);
+          setTimeout(() => { clearRules(spark); spark.remove(); }, duration * 1000);
         }
       }, wave * 150);
     }
@@ -541,22 +631,25 @@ function addPressFeedback(element) {
  * Glow - Pulsing glow effect
  */
 export function glow(element, options = {}) {
-  const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
+  // The animation and the three-ring shadow are .x-glow in effects.css,
+  // reading --glow-color (#779, #906). With no color the element writes
+  // NOTHING, so a theme's --glow-color reaches it; only an author-supplied
+  // colour travels, as a generated rule. Teardown removes both, so a
+  // destroyed glow actually stops glowing.
+  const color = options.color || element.getAttribute('color');
   element.classList.add('x-glow');
-  element.style.setProperty('--glow-color', color);
-  element.style.animation = 'x-glow 1.5s ease-in-out infinite';
-  element.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}`;
+  if (color) setRule(element, 'glow', { '--glow-color': color });
 
   const releasePress = addPressFeedback(element);
 
-  return () => { releasePress(); element.classList.remove('x-glow'); };
+  return () => { releasePress(); clearRules(element); element.classList.remove('x-glow'); };
 }
 
 /**
  * Rainbow - Cycling rainbow text
  */
 export function rainbow(element, options = {}) {
-  const duration = options.duration || element.getAttribute('duration') || '3s';
+  const duration = options.duration || element.getAttribute('duration');
   element.classList.add('x-rainbow');
   
   // Inject rainbow keyframes
@@ -573,17 +666,14 @@ export function rainbow(element, options = {}) {
     document.head.appendChild(style);
   }
   
-  element.style.backgroundImage = 'linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #5f27cd, #ff6b6b)';
-  element.style.backgroundSize = '400% 400%';
-  element.style.backgroundClip = 'text';
-  element.style.webkitBackgroundClip = 'text';
-  element.style.color = 'transparent';
-  element.style.animation = `x-rainbow ${duration} linear infinite`;
-  
+  // Gradient text and its animation are .x-rainbow in effects.css (#779);
+  // only an author-supplied duration travels, as a generated rule.
+  if (duration) setRule(element, 'rainbow', { '--x-rainbow-duration': duration });
 
   const releasePress = addPressFeedback(element);
   return () => {
     releasePress();
+    clearRules(element);
     element.classList.remove('x-rainbow');
   };
 }
@@ -593,21 +683,40 @@ export function rainbow(element, options = {}) {
  */
 export function fireworks(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '30');
+  // Declared in fireworks.schema.json as a JSON array; see parseColorList.
+  const colorSpec = options.colors || element.getAttribute('colors') || '';
+  // show-button/repeat/delay/duration are declared in fireworks.schema.json
+  // and were never read -- same contract as confetti (#655).
+  const config = {
+    showButton: options.showButton ?? readFlag(element, 'show-button', true),
+    repeat: options.repeat ?? readFlag(element, 'repeat'),
+    delay: options.delay || element.getAttribute('delay') || '0s',
+    duration: options.duration || element.getAttribute('duration') || '1.5s',
+  };
+  // The burst lasts `duration`; each particle flies for 2/3 of it, which is
+  // the 1s-of-1.5s split the default has always used.
+  const burstMs = toMs(config.duration) || 1500;
   element.classList.add('x-fireworks-trigger');
   // #448: no classList.add('x-fireworks') -- it just duplicated
   // <div x-fireworks>'s own tag name; no CSS selector depends on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-fireworks> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-fireworks> tag does not get a redundant class.
+  element.classList.add('x-fireworks');
 
   // Make visible
-  if (!element.textContent.trim()) {
+  if (config.showButton && !element.textContent.trim()) {
     element.innerHTML = '🎆 <span>Fireworks!</span>';
   }
   // #486: vertical padding floored at 1rem (16px) -- Standard §13 requires
   // >=1rem padding on every side of a button's text; 0.75rem (12px) failed
   // demo-layout-standards.spec.ts on pages/behaviors.html's "🎆 Fireworks"
-  // trigger. Inline style (not a stylesheet rule) because it always wins
-  // regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem 1.5rem;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
-  
+  // trigger. The chrome is .x-fireworks-trigger--button in effects.css
+  // (#779): a rule a theme can reach, not a cssText that beats every rule.
+  if (config.showButton) element.classList.add('x-fireworks-trigger--button');
+
   // Inject keyframes
   if (!document.getElementById('x-firework-styles')) {
     const style = document.createElement('style');
@@ -628,9 +737,9 @@ export function fireworks(element, options = {}) {
     
     // Fix: create container
     const animContainer = document.createElement('div');
-    animContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+    animContainer.className = 'x-fireworks-container';
     
-    const colors = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f', '#fff'];
+    const colors = parseColorList(colorSpec, ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#00f', '#fff']);
     
     for (let i = 0; i < count; i++) {
       const particle = document.createElement('div');
@@ -639,22 +748,35 @@ export function fireworks(element, options = {}) {
       const size = 3 + Math.random() * 5;
       const color = colors[Math.floor(Math.random() * colors.length)];
       
-      particle.style.cssText = `
-        position:absolute;width:${size}px;height:${size}px;background:${color};border-radius:50%;
-        left:${centerX}px;top:${centerY}px;box-shadow:0 0 ${size * 2}px ${color};
-        animation:x-firework-particle 1s ease-out forwards;
-        --end-x:${Math.cos(angle) * velocity}px;--end-y:${Math.sin(angle) * velocity}px;
-      `;
+      // Static part: .x-fireworks__particle in effects.css. The random
+      // per-particle values travel as a generated rule (#779).
+      particle.className = 'x-fireworks__particle';
+      setRule(particle, 'particle', {
+        width: `${size}px`,
+        height: `${size}px`,
+        background: color,
+        left: `${centerX}px`,
+        top: `${centerY}px`,
+        boxShadow: `0 0 ${size * 2}px ${color}`,
+        animationDuration: `${(burstMs * 2) / 3}ms`,
+        '--end-x': `${Math.cos(angle) * velocity}px`,
+        '--end-y': `${Math.sin(angle) * velocity}px`,
+      });
       animContainer.appendChild(particle);
     }
     
     document.body.appendChild(animContainer);
-    setTimeout(() => animContainer.remove(), 1500);
+    setTimeout(() => { clearRulesIn(animContainer); animContainer.remove(); }, burstMs);
   };
-  
+
   element.onclick = fire;
-  element.wbFireworks = { fire };
-  return () => element.classList.remove('x-fireworks-trigger');
+  const { start: startRepeat, stop: stopRepeat } = repeatLoop(fire, config, 1500);
+  if (config.repeat) startRepeat();
+  element.wbFireworks = { fire, startRepeat, stopRepeat };
+  return () => {
+    stopRepeat();
+    element.classList.remove('x-fireworks-trigger', 'x-fireworks-trigger--button');
+  };
 }
 
 /**
@@ -662,15 +784,35 @@ export function fireworks(element, options = {}) {
  */
 export function snow(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '30');
+  // show-button/repeat/delay/duration are declared in snow.schema.json and
+  // were never read -- same contract as confetti (#655). `repeat` stays
+  // opt-in here like the other two: turning it on by default would start
+  // every existing <div x-snow> snowing unattended on page load.
+  const config = {
+    showButton: options.showButton ?? readFlag(element, 'show-button', true),
+    repeat: options.repeat ?? readFlag(element, 'repeat'),
+    delay: options.delay || element.getAttribute('delay') || '0s',
+    duration: options.duration || element.getAttribute('duration') || '8s',
+  };
+  // Each flake falls for 3/8..7/8 of `duration` and starts up to 2s late --
+  // the 3-7s spread the 8s default has always produced.
+  const fallMs = toMs(config.duration) || 8000;
   element.classList.add('x-snow-trigger');
   // #448: no classList.add('x-snow') -- it just duplicated <div x-snow>'s own
   // tag name; no CSS selector depends on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-snow> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-snow> tag does not get a redundant class.
+  element.classList.add('x-snow');
 
   // Make visible
-  if (!element.textContent.trim()) {
+  if (config.showButton && !element.textContent.trim()) {
     element.innerHTML = '❄️ <span>Let it Snow!</span>';
   }
-  element.style.cssText = 'cursor:pointer;padding:0.75rem 1.5rem;background:linear-gradient(135deg,#a8edea,#fed6e3);color:#333;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:0.5rem;';
+  // Chrome: .x-snow-trigger--button in effects.css (#779).
+  if (config.showButton) element.classList.add('x-snow-trigger--button');
   
   // Inject keyframes
   if (!document.getElementById('x-snow-styles')) {
@@ -688,30 +830,40 @@ export function snow(element, options = {}) {
   const fire = () => {
     // Fix: create container
     const container = document.createElement('div');
-    container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;';
+    container.className = 'x-snow-container';
     
     for (let i = 0; i < count; i++) {
       const flake = document.createElement('span');
       const size = 10 + Math.random() * 20;
       const startX = Math.random() * 100;
-      const duration = 3 + Math.random() * 4;
+      const duration = (fallMs / 1000) * (3 + Math.random() * 4) / 8;
       const delay = Math.random() * 2;
-      
+
       flake.textContent = '❄️';
-      flake.style.cssText = `
-        position:absolute;font-size:${size / 16}rem;left:${startX}%;top:-30px;
-        animation:x-snow-fall ${duration}s linear ${delay}s forwards;opacity:0.8;
-      `;
+      // Static part: .x-snow__flake in effects.css; random values travel as
+      // a generated rule (#779).
+      flake.className = 'x-snow__flake';
+      setRule(flake, 'flake', {
+        fontSize: `${size / 16}rem`,
+        left: `${startX}%`,
+        animationDuration: `${duration}s`,
+        animationDelay: `${delay}s`,
+      });
       container.appendChild(flake);
     }
     
     document.body.appendChild(container);
-    setTimeout(() => container.remove(), 8000);
+    setTimeout(() => { clearRulesIn(container); container.remove(); }, fallMs);
   };
-  
+
   element.onclick = fire;
-  element.wbSnow = { fire };
-  return () => element.classList.remove('x-snow-trigger');
+  const { start: startRepeat, stop: stopRepeat } = repeatLoop(fire, config, 8000);
+  if (config.repeat) startRepeat();
+  element.wbSnow = { fire, startRepeat, stopRepeat };
+  return () => {
+    stopRepeat();
+    element.classList.remove('x-snow-trigger', 'x-snow-trigger--button');
+  };
 }
 
 /**
@@ -719,10 +871,11 @@ export function snow(element, options = {}) {
  */
 export function particle(element, options = {}) {
   const count = parseInt(options.count || element.getAttribute('count') || '20');
-  const color = options.color || element.getAttribute('color') || 'var(--primary, #6366f1)';
+  const color = options.color || element.getAttribute('color');
   element.classList.add('x-particle');
-  element.style.position = 'relative';
-  element.style.overflow = 'hidden';
+  // position/overflow and the dot colour default are .x-particle in
+  // effects.css; only an author colour travels, as a generated rule (#779).
+  if (color) setRule(element, 'color', { '--x-particle-color': color });
   
   // Inject keyframes
   if (!document.getElementById('x-particle-styles')) {
@@ -748,11 +901,14 @@ export function particle(element, options = {}) {
     const delay = Math.random() * 5;
     const duration = 3 + Math.random() * 4;
     
-    p.style.cssText = `
-      position:absolute;width:${size}px;height:${size}px;background:${color};border-radius:50%;
-      left:${x}%;bottom:-10px;opacity:0.6;
-      animation:x-particle-float ${duration}s ease-in-out ${delay}s infinite;pointer-events:none;
-    `;
+    p.className = 'x-particle__dot';
+    setRule(p, 'dot', {
+      width: `${size}px`,
+      height: `${size}px`,
+      left: `${x}%`,
+      animationDuration: `${duration}s`,
+      animationDelay: `${delay}s`,
+    });
     element.appendChild(p);
     particles.push(p);
   }
@@ -761,7 +917,8 @@ export function particle(element, options = {}) {
   const releasePress = addPressFeedback(element);
   return () => {
     releasePress();
-    particles.forEach(p => p.remove());
+    particles.forEach(p => { clearRules(p); p.remove(); });
+    clearRules(element);
     element.classList.remove('x-particle');
   };
 }

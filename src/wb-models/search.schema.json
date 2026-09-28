@@ -40,7 +40,9 @@
     "instant": {
       "type": "boolean",
       "description": "Search on every keystroke (no debounce)",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Searches on every keystroke instead of after a pause. Only typing shows it (#773)."
     },
     "disabled": {
       "type": "boolean",

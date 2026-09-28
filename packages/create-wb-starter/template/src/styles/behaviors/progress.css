@@ -1,7 +1,7 @@
 /**
  * Progress Behavior Styles
  * -----------------------------------------------------------------------------
- * Consolidated from demo.css + behaviors.css + site.css (Phase 2 migration)
+ * Consolidated from demo.css + components.css + site.css (Phase 2 migration)
  * Works with src/wb-viewmodels/semantics/progress.js
  * -----------------------------------------------------------------------------
  */
@@ -14,7 +14,7 @@
    class -- progress() skips the bare 'x-progress' token only for a literal
    <progress> host; a native <progress> (autoInject) or a plain
    <div x-progress> still gets the class, and still needs it selected here. */
-x-progress,
+x-progress, [x-progress],
 .x-progress {
   position: relative;
   height: 6px;
@@ -85,7 +85,7 @@ x-progress,
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ANIMATE-ON-LOAD (from behaviors.css)
+   ANIMATE-ON-LOAD (from components.css)
    `animated` (schema default: true) means the fill grows in on first paint —
    it previously drew the SAME scrolling diagonal-stripe texture as `striped`
    (below), so every default <progress> (animated=true unless explicitly
@@ -236,5 +236,5 @@ x-progress,
 }
 
 /* Custom <progress> must be block to honor height (issue #127) */
-x-progress,
+x-progress, [x-progress],
 .x-progress { display: block; width: 100%; }

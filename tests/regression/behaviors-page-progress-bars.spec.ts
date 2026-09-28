@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settledWidthPercent } from '../helpers/settled-style';
 
 /**
  * pages/behaviors.html's Progress Bars demo used `data-value="25"` /
@@ -31,7 +32,8 @@ test.describe('Behaviors page: Progress Bars demo actually reflects its labeled 
       await expect(bar, `expected the value="${value}" demo bar to be built`).toBeVisible({ timeout: 20000 });
       const fill = bar.locator('.x-progress__bar');
       await expect(fill).toHaveCount(1);
-      percents.push(await fill.evaluate((el) => parseFloat((el as HTMLElement).style.width || '0')));
+      // #779: rendered fill, not the style attribute nothing writes any more.
+      percents.push(await settledWidthPercent(fill));
     }
 
     // None should be stuck at 0 -- the exact bug: every bar silently read

@@ -13,7 +13,7 @@
     "target": {
       "type": "string",
       "description": "Selector of target element",
-      "default": ""
+      "default": "this is the target"
     }
   },
   "$view": [],

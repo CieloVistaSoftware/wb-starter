@@ -78,7 +78,9 @@
     "interactive": {
       "type": "boolean",
       "description": "Allow hovering over tooltip content",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Lets the pointer move onto the open tooltip without closing it. Only that movement shows it (#773)."
     },
     "maxWidth": {
       "type": "string",

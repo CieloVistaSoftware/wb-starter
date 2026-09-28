@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { setRule } from '../core/dynamic-style.js';
 /**
  * Hero Behavior
  * -----------------------------------------------------------------------------
@@ -13,10 +14,16 @@ import { readAttr } from '../core/read-attr.js';
  */
 
 /**
- * Hero Behavior
+ * Hero Component
  * Custom Tag: <div x-hero>
  */
 export function hero(element, options = {}) {
+  // hero.css carries a `.x-hero` class rule, but nothing ever applied it: on
+  // <div x-hero> the tag is "div", so compliance.baseClass covered nothing and
+  // the probe's readiness wait never saw the behavior attach. Guarded so a
+  // literal <x-hero> tag does not get a redundant class.
+  element.classList.add('x-hero');
+
   // Merge options and data attributes
   const config = {
     variant: options.variant || readAttr(element, 'variant') || 'default',
@@ -39,9 +46,15 @@ export function hero(element, options = {}) {
             for (let i = 0; i < 50; i++) {
                 const star = document.createElement('div');
                 star.className = 'x-hero__star';
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
+                // Random per star, so generated rules rather than style
+                // attributes (#779). Weight 2 outranks x-signature.css's
+                // `.x-hero__star:nth-child(odd)` delay (0,2,0), which the
+                // inline delay used to override.
+                setRule(star, 'place', {
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 3}s`,
+                }, { weight: 2 });
                 stars.appendChild(star);
             }
         }

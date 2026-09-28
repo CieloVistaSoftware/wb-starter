@@ -1,0 +1,199 @@
+/**
+ * NotesModal (src/core/notes-modal.js) (#779)
+ * -----------------------------------------------------------------------------
+ * The legacy notes dialog src/index.js creates. Every rule here was a style=""
+ * attribute in its markup or a style write in renderNotes(); the values are
+ * carried over as they were, colour literals included (#790 is that half).
+ * notes-modal.js loads this file itself with ensureBehaviorCss('notes-modal').
+ * Buttons are scoped under .x-notes-modal (0,2,0): themes.css's
+ * `[data-theme] button` (0,1,1) beats a single class.
+ */
+.x-notes-modal {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--notes-modal-bg, #222);
+  color: var(--notes-modal-fg, #fff);
+  z-index: 10000;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  min-width: 21.25rem;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px #000a;
+}
+.x-notes-modal.x-notes-modal--open {
+  display: block;
+}
+
+.x-notes-modal .x-notes-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--notes-modal__close-bg, #ef4444);
+  color: var(--notes-modal__close-fg, #fff);
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Also carries .x-notes__resize-handle-modal. No display here: the inline
+   style this replaces never set one either, so notes.css's rule for that
+   class (when loaded) still decides it exactly as before. */
+.x-notes-modal .x-notes-modal__resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: nwse-resize;
+}
+body.x-notes-modal-resizing {
+  cursor: nwse-resize;
+}
+
+.x-notes-modal .x-notes-modal__title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.x-notes-modal .x-notes-modal__form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+
+.x-notes-modal .x-notes-modal__input {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border: none;
+  background: var(--notes-modal__input-bg, #333);
+  color: var(--notes-modal__input-fg, #fff);
+  min-height: 4.5rem;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.x-notes-modal .x-notes-modal__btn {
+  color: var(--notes-modal__btn-fg, #fff);
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  height: 2.5rem;
+  align-self: flex-start;
+}
+.x-notes-modal .x-notes-modal__btn--add { background: var(--notes-modal__btn--add-bg, #6366f1); }
+.x-notes-modal .x-notes-modal__btn--read { background: var(--notes-modal__btn--read-bg, #10b981); margin-left: 0.5rem; }
+
+/* A saved note row and its edit / action buttons. */
+.x-notes-modal .x-notes-modal__note {
+  background: var(--notes-modal__note-bg, #333);
+  color: var(--notes-modal__note-fg, #fff);
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.x-notes-modal .x-notes-modal__note-text {
+  flex: 1;
+}
+.x-notes-modal .x-notes-modal__edit {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  background: var(--notes-modal__edit-bg, #222);
+  color: var(--notes-modal__edit-fg, #fff);
+}
+.x-notes-modal .x-notes-modal__action {
+  color: var(--notes-modal__action-fg, #fff);
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+}
+.x-notes-modal .x-notes-modal__action--save   { background: var(--notes-modal__action--save-bg, #10b981); }
+.x-notes-modal .x-notes-modal__action--cancel { background: var(--notes-modal__action--cancel-bg, #ef4444); }
+.x-notes-modal .x-notes-modal__action--edit   { background: var(--notes-modal__action--edit-bg, #6366f1); }
+.x-notes-modal .x-notes-modal__action--delete { background: var(--notes-modal__action--delete-bg, #ef4444); }
+.x-notes-modal .x-notes-modal__action--append { background: var(--notes-modal__action--append-bg, #f59e42); }
+
+/* "Read" -- the top-10 issues overlay. */
+.x-notes-modal .x-notes-modal__issues {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  z-index: 11000;
+  align-items: center;
+  justify-content: center;
+}
+.x-notes-modal .x-notes-modal__issues.x-notes-modal__issues--open {
+  display: flex;
+}
+.x-notes-modal .x-notes-modal__issues-panel {
+  background: var(--notes-modal__issues-panel-bg, #222);
+  color: var(--notes-modal__issues-panel-fg, #fff);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 8px 32px #000a;
+  position: relative;
+}
+.x-notes-modal .x-notes-modal__issues-title {
+  margin-top: 0;
+}
+.x-notes-modal .x-notes-modal__issues-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2.5rem;
+  background: var(--notes-modal__issues-close-bg, #ef4444);
+  color: var(--notes-modal__issues-close-fg, #fff);
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+.x-notes-modal .x-notes-modal__issues-msg {
+  padding: 1rem;
+}
+.x-notes-modal .x-notes-modal__issues-msg--error {
+  color: var(--notes-modal__issues-msg--error-fg, #ef4444);
+}
+.x-notes-modal .x-notes-modal__table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.98rem;
+}
+.x-notes-modal .x-notes-modal__table thead tr {
+  background: var(--notes-modal__table-bg-1, #333);
+}
+.x-notes-modal .x-notes-modal__table th {
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--notes-modal__table-border, #444);
+}
+.x-notes-modal .x-notes-modal__table td {
+  padding: 0.5rem 0.7rem;
+}
+.x-notes-modal .x-notes-modal__table td:first-child {
+  text-align: center;
+}
+.x-notes-modal .x-notes-modal__table td:last-child {
+  word-break: break-all;
+}
+.x-notes-modal .x-notes-modal__table tbody tr:nth-child(odd) { background: var(--notes-modal__table-bg-2, #282828); }
+.x-notes-modal .x-notes-modal__table tbody tr:nth-child(even) { background: var(--notes-modal__table-bg-3, #232323); }

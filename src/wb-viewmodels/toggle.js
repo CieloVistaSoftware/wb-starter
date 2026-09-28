@@ -31,10 +31,8 @@ export function toggle(element, options = {}) {
   // (classList.contains(cls) || tagName === cls), and on an attribute host
   // like <div x-toggle> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-toggle> tag does not get a redundant class.
+  // cursor / user-select / transition: .x-toggle in toggle.css (#779).
   element.classList.add('x-toggle');
-  element.style.cursor = 'pointer';
-  element.style.userSelect = 'none';
-  element.style.transition = 'all 0.1s ease';
 
   const getTargets = () => {
     const targets = [];
@@ -59,18 +57,10 @@ export function toggle(element, options = {}) {
     const isActive = element.classList.contains(classes[0]);
     element.setAttribute('aria-pressed', isActive ? 'true' : 'false');
 
-    // Immediate visual feedback
-    if (isActive) {
-      element.style.background = 'var(--primary, #6366f1)';
-      element.style.color = 'white';
-      element.style.borderColor = 'var(--primary, #6366f1)';
-      element.style.transform = 'scale(0.97)';
-    } else {
-      element.style.background = '';
-      element.style.color = '';
-      element.style.borderColor = '';
-      element.style.transform = 'scale(0.97)';
-    }
+    // Immediate visual feedback: the on-state colours and the pressed scale
+    // are .x-toggle--on / .x-toggle--pressed in toggle.css (#779).
+    element.classList.toggle('x-toggle--on', isActive);
+    element.classList.add('x-toggle--pressed');
 
     element.dispatchEvent(new CustomEvent('wb:toggle', {
       bubbles: true,
@@ -79,7 +69,7 @@ export function toggle(element, options = {}) {
   };
 
   const onMouseUp = () => {
-    element.style.transform = '';
+    element.classList.remove('x-toggle--pressed');
   };
 
   element.addEventListener('mousedown', onMouseDown);
@@ -110,11 +100,7 @@ export function toggle(element, options = {}) {
   };
 
   return () => {
-    element.classList.remove('x-toggle', ...classes);
-    element.style.background = '';
-    element.style.color = '';
-    element.style.borderColor = '';
-    element.style.transform = '';
+    element.classList.remove('x-toggle', 'x-toggle--on', 'x-toggle--pressed', ...classes);
     element.removeAttribute('role');
     element.removeAttribute('aria-pressed');
     element.removeEventListener('mousedown', onMouseDown);

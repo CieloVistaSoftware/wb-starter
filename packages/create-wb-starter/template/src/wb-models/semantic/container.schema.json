@@ -162,7 +162,7 @@
   "containerBehavior": {
     "acceptsChildren": true,
     "childTypes": "any",
-    "dropZoneSelector": "[data-wb='container'], .x-container",
+    "dropZoneSelector": "[x-container], .x-container",
     "visualIndicator": "Show grid lines when dragging over"
   },
   "builderConfig": {

@@ -80,6 +80,11 @@ li:last-child { margin-bottom: 0; }
   user-select: none;
 }
 
+/* The site nav's drag-to-resize (site-engine.js): was document.body.style.cursor (#779). */
+body.resizing {
+  cursor: col-resize;
+}
+
 .site {
   /* Fixed to the viewport + clip overflow so .site__body is the SINGLE scroll
      container (was min-height:100vh, which let the whole window scroll too — a
@@ -106,6 +111,26 @@ li:last-child { margin-bottom: 0; }
   min-height: 100vh;
   gap: 1rem;
   color: var(--text-muted);
+}
+
+/* src/index.js's showError() (#779: formerly style.display + style=""). */
+.site__loading.loading--error x-spinner {
+  display: none;
+}
+.site__loading-icon { color: #ef4444; font-size: 1.5rem; }
+.site__loading-title { color: #ef4444; }
+.site__loading-message { opacity: 0.7; display: block; margin-top: 0.5rem; }
+.site__loading-note { opacity: 0.5; }
+
+/* src/main.js: the stack of a failed site init (#779: was style.cssText). */
+.site__init-error {
+  margin: 1rem;
+  padding: 1rem;
+  background: #1e1e1e;
+  color: #f87171;
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 0.75rem;
 }
 
 .site__body {
@@ -310,7 +335,9 @@ x-spinner div,
 .header__logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  /* 0.75rem: the value site-engine.js's header markup carried in a style=""
+     attribute, which is what has always rendered (#779). */
+  gap: 0.75rem;
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 600;
@@ -842,8 +869,10 @@ h5, h6 {
   /* Keep the header right cluster inside the viewport on phones. The marketing
      "Get Started" CTA is redundant here (hamburger nav + in-page CTAs cover it)
      and is the widest item, so hide it; tighten the remaining controls. (#165) */
+  /* No gap here: site-engine.js's header carried gap:1rem in a style=""
+     attribute, so a phone-width 0.5rem never applied. Dropped with that
+     attribute (#779) rather than changing the header at this width. */
   .header__right {
-    gap: 0.5rem;
     min-width: 0;
   }
   /* (the marketing CTA is hidden on small phones below — see the #ctaButton
@@ -1309,6 +1338,12 @@ a.x-btn-glass {
 
 .x-input-glass::placeholder {
   color: var(--text-muted);
+}
+
+/* The header's search box (site-engine.js), formerly style="" (#779). */
+.header__search .x-input-glass.header__search-input {
+  padding: 0.4rem 0.8rem;
+  width: 200px;
 }
 
 /* =============================================================================
@@ -1910,6 +1945,14 @@ section[id] {
 
 /* Responsive images everywhere — scale to the column, never overflow. */
 img { max-width: 100%; height: auto; }
+
+/* Code blocks scroll inside their own box, never widen the page. pre.js gives
+   .x-pre this once it runs, but a <pre> it has not reached yet (lazy
+   hydration) or never will (x-ignore) had overflow:visible, so one long line
+   -- home.html's setup snippet is 563px -- pushed a 375px phone sideways.
+   Scroll, not wrap: code never wraps (#199, #826). Element specificity, so
+   every .x-pre / .x-pre--wrap rule still wins. */
+pre { max-width: 100%; overflow-x: auto; }
 
 @media (max-width: 640px) {
   /* Bump the base ~12.5% so EVERY rem-based size (body text, code, the

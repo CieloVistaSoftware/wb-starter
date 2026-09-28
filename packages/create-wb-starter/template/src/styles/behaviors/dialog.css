@@ -1,7 +1,7 @@
 /**
  * Dialog Behavior Styles
  * -----------------------------------------------------------------------------
- * Consolidated from behaviors.css + site.css (Phase 2 migration)
+ * Consolidated from components.css + site.css (Phase 2 migration)
  * Works with src/wb-viewmodels/semantics/dialog.js
  * -----------------------------------------------------------------------------
  */
@@ -15,7 +15,7 @@
    its own visible trigger (pre-click state); the class stays load-bearing
    for a dynamically-created native <dialog> popup and an in-place-enhanced
    pre-existing native <dialog>, neither of which is a `x-dialog` tag. */
-x-dialog,
+x-dialog, [x-dialog],
 .x-dialog {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -46,14 +46,14 @@ x-dialog,
   color: var(--text-primary);
 }
 
-x-dialog::backdrop,
+x-dialog::backdrop, [x-dialog]::backdrop,
 .x-dialog::backdrop {
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   animation: x-fade-in 0.3s ease;
 }
 
-x-dialog[open],
+x-dialog[open], [x-dialog][open],
 .x-dialog[open] {
   animation: x-scale-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -80,6 +80,21 @@ x-dialog[open],
 .x-dialog--fullscreen .x-dialog__body {
   height: calc(100vh - 8rem);
 }
+
+/* Sizes (schema: size -> appliesClass x-dialog--{{value}}, default md).
+   The schema declared the class and nothing styled it, so an authored
+   <dialog size="xl"> opened at its content's width like every other size.
+   `width`, not just max-width: a <dialog> shrinks to its content, so a cap
+   alone leaves a short dialog the same width at every size. min() keeps each
+   inside a narrow viewport. Declared after the base rule, same specificity.
+   rem, not px (#294): a reader who raises their browser font size gets a
+   dialog that grows with its text instead of a fixed box that wraps it
+   harder. At the default 16px root these are the same 320/480/640/800. */
+.x-dialog--sm   { width: min(90vw, 20rem); }
+.x-dialog--md   { width: min(90vw, 30rem); }
+.x-dialog--lg   { width: min(90vw, 40rem); }
+.x-dialog--xl   { width: min(90vw, 50rem); }
+.x-dialog--full { width: 95vw; max-width: 95vw; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DIALOG PARTS
@@ -145,4 +160,14 @@ x-dialog[open],
 @keyframes x-scale-in {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* #779: dialog.js used to write these onto element.style. */
+
+/* (The trigger's cursor: pointer is .x-dialog-trigger above.) */
+
+/* DEFINITION mode: the element only holds the modal's content, which is
+   cloned into a real dialog on open() -- the element itself never shows. */
+.x-modal-definition {
+  display: none;
 }

@@ -22,24 +22,24 @@
   <section id="dialog-dialog">
   <h2>🪟 Dialog</h2>
   <div x-demo columns="1">
-    <dialog title="Basic Dialog" class="demo-open">
-    title=Basic Dialog
-  </dialog>
+    <button x-dialog title="Basic Dialog">
+      title=Basic Dialog
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog title="Large" size="lg" class="demo-open">
-    title=Large, size=lg
-  </dialog>
+    <button x-dialog title="Large" size="lg">
+      title=Large, size=lg
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog title="No Close" class="demo-open">
-    title=No Close
-  </dialog>
+    <button x-dialog title="No Close">
+      title=No Close
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog title="Centered" variant="centered" class="demo-open">
-    title=Centered, variant=centered
-  </dialog>
+    <button x-dialog title="Centered" variant="centered">
+      title=Centered, variant=centered
+    </button>
   </div>
   </section>
 
@@ -47,29 +47,29 @@
   <section id="dialog-size-variants">
   <h2>size variants</h2>
   <div x-demo columns="1">
-    <dialog size="sm" class="demo-open">
-    Small dialog (size=sm)
-  </dialog>
+    <button x-dialog size="sm">
+      size=sm
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog size="md" class="demo-open">
-    Medium dialog (size=md)
-  </dialog>
+    <button x-dialog size="md">
+      size=md
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog size="lg" class="demo-open">
-    Large dialog (size=lg)
-  </dialog>
+    <button x-dialog size="lg">
+      size=lg
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog size="xl" class="demo-open">
-    Extra-large dialog (size=xl)
-  </dialog>
+    <button x-dialog size="xl">
+      size=xl
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog size="full" class="demo-open">
-    Fullscreen dialog (size=full)
-  </dialog>
+    <button x-dialog size="full">
+      size=full
+    </button>
   </div>
   </section>
 
@@ -77,19 +77,19 @@
   <section id="dialog-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <dialog variant="default" class="demo-open">
-    Default dialog (variant=default)
-  </dialog>
+    <button x-dialog variant="default">
+      variant=default
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog variant="centered" class="demo-open">
-    Centered dialog (variant=centered)
-  </dialog>
+    <button x-dialog variant="centered">
+      variant=centered
+    </button>
   </div>
   <div x-demo columns="1">
-    <dialog variant="fullscreen" class="demo-open">
-    Fullscreen dialog (variant=fullscreen)
-  </dialog>
+    <button x-dialog variant="fullscreen">
+      variant=fullscreen
+    </button>
   </div>
   </section>
 
@@ -97,19 +97,19 @@
   <section id="drawer-drawer">
   <h2>📜 Drawer</h2>
   <div x-demo columns="1">
-    <div x-drawer title="Right Drawer" position="right" class="demo-open">
-    <span x-badge variant="info">position=right</span>
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-drawer title="Left Drawer" position="left" class="demo-open">
-    <span x-badge variant="info">position=left</span>
-  </div>
+    <aside x-drawer title="Right Drawer" position="right">
+      title=Right Drawer, position=right
+    </aside>
   </div>
   <div x-demo columns="1">
-    <div x-drawer title="Wide" width="400px" class="demo-open">
-    <span x-badge variant="info">width=400px</span>
+    <aside x-drawer title="Left Drawer" position="left">
+      title=Left Drawer, position=left
+    </aside>
   </div>
+  <div x-demo columns="1">
+    <aside x-drawer title="Wide" width="400px">
+      title=Wide, width=400px
+    </aside>
   </div>
   </section>
 
@@ -117,24 +117,24 @@
   <section id="drawer-position-variants">
   <h2>position variants</h2>
   <div x-demo columns="1">
-    <div x-drawer position="left" class="demo-open">
-    <span x-badge variant="info">Left drawer (position=left)</span>
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-drawer position="right" class="demo-open">
-    <span x-badge variant="info">Right drawer (position=right)</span>
-  </div>
+    <aside x-drawer position="left">
+      position=left
+    </aside>
   </div>
   <div x-demo columns="1">
-    <div x-drawer position="top" class="demo-open">
-    <span x-badge variant="info">Top drawer (position=top)</span>
-  </div>
+    <aside x-drawer position="right">
+      position=right
+    </aside>
   </div>
   <div x-demo columns="1">
-    <div x-drawer position="bottom" class="demo-open">
-    <span x-badge variant="info">Bottom drawer (position=bottom)</span>
+    <aside x-drawer position="top">
+      position=top
+    </aside>
   </div>
+  <div x-demo columns="1">
+    <aside x-drawer position="bottom">
+      position=bottom
+    </aside>
   </div>
   </section>
 
@@ -142,19 +142,19 @@
   <section id="drawer-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-drawer class="demo-open">
-    <span x-badge variant="info">Default drawer (variant=default)</span>
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-drawer variant="overlay" class="demo-open">
-    <span x-badge variant="info">Overlay drawer (variant=overlay)</span>
-  </div>
+    <aside x-drawer variant="default">
+      variant=default
+    </aside>
   </div>
   <div x-demo columns="1">
-    <div x-drawer variant="push" class="demo-open">
-    <span x-badge variant="info">Push drawer (variant=push)</span>
+    <aside x-drawer variant="overlay">
+      variant=overlay
+    </aside>
   </div>
+  <div x-demo columns="1">
+    <aside x-drawer variant="push">
+      variant=push
+    </aside>
   </div>
   </section>
 
@@ -162,19 +162,19 @@
   <section id="dropdown-dropdown">
   <h2>📋 Dropdown</h2>
   <div x-demo columns="1">
-    <div x-dropdown items="Profile,Settings,Logout" position="bottom-start" label="position=bottom-start" class="demo-open">
-    Bottom-start menu (position=bottom-start)
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-dropdown items="Profile,Settings,Logout" position="bottom-end" label="position=bottom-end" class="demo-open">
-    Bottom-end menu (position=bottom-end)
-  </div>
+    <div x-dropdown items="Profile,Settings,Logout" position="bottom-start">
+      position=bottom-start
+    </div>
   </div>
   <div x-demo columns="1">
-    <div x-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
-    Hover menu (trigger=hover)
+    <div x-dropdown items="Profile,Settings,Logout" position="bottom-end">
+      position=bottom-end
+    </div>
   </div>
+  <div x-demo columns="1">
+    <div x-dropdown items="Profile,Settings,Logout" trigger="hover">
+      trigger=hover
+    </div>
   </div>
   </section>
 
@@ -182,29 +182,24 @@
   <section id="dropdown-position-variants">
   <h2>position variants</h2>
   <div x-demo columns="1">
-    <div x-dropdown items="Profile,Settings,Logout" position="top-start" label="position=top-start" class="demo-open">
-    Top-start menu (position=top-start)
-  </div>
+    <div x-dropdown items="Profile,Settings,Logout" position="top-start">
+      position=top-start
+    </div>
   </div>
   <div x-demo columns="1">
-    <div x-dropdown items="Profile,Settings,Logout" position="top-end" label="position=top-end" class="demo-open">
-    Top-end menu (position=top-end)
-  </div>
+    <div x-dropdown items="Profile,Settings,Logout" position="top-end">
+      position=top-end
+    </div>
   </div>
   </section>
 
   <!-- 9. trigger variants -->
   <section id="dropdown-trigger-variants">
   <h2>trigger variants</h2>
-  <div x-demo columns="1">
-    <div x-dropdown items="Profile,Settings,Logout" trigger="click" label="trigger=click" class="demo-open">
-    Click menu (trigger=click)
-  </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-dropdown items="Profile,Settings,Logout" trigger="hover" label="trigger=hover" class="demo-open">
-    Hover menu (trigger=hover)
-  </div>
+  <div x-demo columns="2">
+    <div x-dropdown items="Profile,Settings,Logout" trigger="click">
+      trigger=click
+    </div>
   </div>
   </section>
 
@@ -212,9 +207,8 @@
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
-
-    console.log('Overlays & Popups initialized with labeled demo variants');
+    await WB.scan(document.body);
+    console.log('Overlays & Popups initialized');
     window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>

@@ -266,7 +266,9 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       const stage = document.getElementById('behaviors-live-stage')!;
       // #744: the fullscreen target is the workspace, so that is the element
-      // whose inline styles are set and must be restored.
+      // whose fullscreen sizing is applied and must be removed again. Since
+      // #779 that is the x-fullscreen-target class, not inline styles, so it
+      // is measured as the computed result.
       const wrapper = document.getElementById('behaviors-workspace')!;
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
       const before = wrapper.getBoundingClientRect();
@@ -285,7 +287,11 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       await sleep(200);
       Element.prototype.requestFullscreen = original;
 
-      const during = { height: wrapper.style.height, overflow: wrapper.style.overflow };
+      const cs = getComputedStyle(wrapper);
+      const during = {
+        sized: wrapper.classList.contains('x-fullscreen-target'),
+        overflow: cs.overflowY,
+      };
       document.dispatchEvent(new Event('fullscreenchange'));   // fullscreenElement is null → exit path
       await sleep(300);
       const after = wrapper.getBoundingClientRect();
@@ -298,7 +304,7 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       return {
         requestedOn,
         during,
-        cleared: !wrapper.style.height && !wrapper.style.overflow,
+        cleared: !wrapper.classList.contains('x-fullscreen-target') && !wrapper.hasAttribute('style'),
         sameRect: same(before, after),
         stageSameRect: same(stageBefore, stageAfter),
         example: !!document.getElementById('behaviors-live-example')!.firstElementChild,
@@ -306,8 +312,13 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     });
 
     expect(trip.requestedOn, 'fullscreen must be requested on the workspace (#744)').toBe('behaviors-workspace');
-    expect(trip.during.height, 'the workspace fills the viewport while fullscreen').toBe('100vh');
-    expect(trip.cleared, 'the inline styles must be cleared on the way out').toBe(true);
+    // The 100vh sizing is the x-fullscreen-target class (trigger-buttons.css)
+    // since #779. Its computed height is not compared with the viewport: the
+    // workspace's own layout resolves it below that, and did so identically
+    // when the 100vh was an inline style.
+    expect(trip.during.sized, 'the workspace fills the viewport while fullscreen').toBe(true);
+    expect(trip.during.overflow, 'and scrolls inside itself').toBe('auto');
+    expect(trip.cleared, 'the fullscreen sizing must be removed on the way out').toBe(true);
     expect(trip.sameRect, 'the workspace must return to the same position and size').toBe(true);
     expect(trip.stageSameRect, 'and the stage around it must not move either').toBe(true);
     expect(trip.example, 'the example must survive the round trip').toBe(true);

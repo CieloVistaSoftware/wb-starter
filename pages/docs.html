@@ -75,7 +75,7 @@
 
     function renderDocs(manifestData) {
       if (!manifestData || !manifestData.categories) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No documentation found.</p>';
+        container.innerHTML = '<p class="docs-empty">No documentation found.</p>';
         return;
       }
 
@@ -90,12 +90,12 @@
         if (!hasDocs && !hasPages) continue;
         
         hasResults = true;
-        html += '<div class="docs-category" style="margin-bottom: 2.5rem;">';
-        html += '<h2 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">';
+        html += '<div class="docs-category">';
+        html += '<h2 class="docs-category__title">';
         html += '<span>' + category.icon + '</span>';
         html += '<span>' + category.name + '</span>';
         html += '</h2>';
-        html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">';
+        html += '<div class="docs-grid">';
         
         // Handle markdown docs
         // Manifest titles and descriptions are TEXT that often names a tag
@@ -116,10 +116,9 @@
               if (!/^docs\//.test(filePath)) filePath = 'docs/' + filePath;
             }
             html += '<a href="' + siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
-            html += 'class="docs-card" target="_blank" ';
-            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
-            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + escapeText(doc.title) + '</h3>';
-            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + escapeText(doc.description) + '</p>';
+            html += 'class="docs-card" target="_blank">';
+            html += '<h3 class="docs-card__title">' + escapeText(doc.title) + '</h3>';
+            html += '<p class="docs-card__desc">' + escapeText(doc.description) + '</p>';
             html += '</a>';
           }
         }
@@ -128,10 +127,9 @@
         if (category.pages) {
           for (const page of category.pages) {
             html += '<a href="' + siteRoot() + 'pages/' + page.page + '.html" ';
-            html += 'class="docs-card" target="_blank" ';
-            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
-            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + escapeText(page.title) + '</h3>';
-            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + escapeText(page.description) + '</p>';
+            html += 'class="docs-card" target="_blank">';
+            html += '<h3 class="docs-card__title">' + escapeText(page.title) + '</h3>';
+            html += '<p class="docs-card__desc">' + escapeText(page.description) + '</p>';
             html += '</a>';
           }
         }
@@ -140,26 +138,14 @@
       }
       
       if (!hasResults) {
-        container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">' +
-          '<p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔍</p>' +
+        container.innerHTML = '<div class="docs-empty docs-empty--search">' +
+          '<p class="docs-empty__icon">🔍</p>' +
           '<p>No results found matching your search.</p>' +
           '</div>';
       } else {
+        // Hover lift is `.docs-card:hover` in docs.css -- it used to be
+        // mouseenter/mouseleave handlers writing card.style (#779).
         container.innerHTML = html;
-        
-        // Add hover effects
-        container.querySelectorAll('.docs-card').forEach(function(card) {
-          card.addEventListener('mouseenter', function() {
-            card.style.transform = 'translateY(-2px)';
-            card.style.borderColor = 'var(--primary)';
-            card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-          });
-          card.addEventListener('mouseleave', function() {
-            card.style.transform = '';
-            card.style.borderColor = 'var(--border-color)';
-            card.style.boxShadow = '';
-          });
-        });
       }
     }
 
@@ -217,9 +203,9 @@
       
     } catch (err) {
       console.error('Failed to load docs manifest:', err);
-      container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">' +
+      container.innerHTML = '<div class="docs-empty docs-empty--error">' +
         '<p>⚠️ Could not load documentation index.</p>' +
-        '<p style="font-size: 0.875rem;">Error: ' + err.message + '</p>' +
+        '<p class="docs-empty__detail">Error: ' + err.message + '</p>' +
         '</div>';
     }
   })();

@@ -1,3 +1,5 @@
+import { readFlag, readNumber } from '../core/read-attr.js';
+import { setRule } from '../core/dynamic-style.js';
 /**
  * Dropdown Behavior
  * -----------------------------------------------------------------------------
@@ -32,6 +34,10 @@ export function dropdown(element, options = {}) {
     // (confirmed live: hovering never opened the menu, only clicking did,
     // identical to every other dropdown regardless of this attribute).
     trigger: options.trigger || element.getAttribute('trigger') || 'click',
+    // Both declared in dropdown.schema.json and read by nothing until now:
+    // outside-click-to-close was unconditional and the menu gap a fixed 4px.
+    closeOnOutside: options.closeOnOutside ?? readFlag(element, 'close-on-outside', true),
+    offset: options.offset ?? readNumber(element, 'offset', 4),
     ...options
   };
 
@@ -40,10 +46,11 @@ export function dropdown(element, options = {}) {
   // for every OTHER host (x-dropdown on a <button>, per demos/site/
   // interactive.html), since dropdown.css's `.x-dropdown`/`.x-dropdown.open`
   // rules still select those by class.
-  if (element.tagName.toLowerCase() !== 'x-dropdown') element.classList.add('x-dropdown');
+  element.classList.add('x-dropdown');
   element.classList.add('x-dropdown-trigger');
-  element.style.position = 'relative';
-  element.style.display = 'inline-block';
+  // position: relative / display: inline-block were already the
+  // `x-dropdown, [x-dropdown], .x-dropdown` rule in dropdown.css -- the inline
+  // copies are gone (#779).
 
   // Check if using child elements as menu items
   const childElements = Array.from(element.children).filter(
@@ -57,92 +64,47 @@ export function dropdown(element, options = {}) {
     trigger = document.createElement('button');
     trigger.className = 'x-dropdown__trigger';
     trigger.type = 'button';
-    trigger.innerHTML = `${config.label || 'Menu'} <span style="margin-left:0.5rem;font-size:0.7em;">▼</span>`;
-    trigger.style.cssText = `
-      background: var(--bg-secondary, #1f2937);
-      border: 1px solid var(--border-color, #374151);
-      border-radius: 6px;
-      padding: 0.5rem 1rem;
-      color: var(--text-primary, inherit);
-      cursor: pointer;
-      font-size: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    `;
+    // Styled by .x-dropdown__trigger / __chevron in dropdown.css (#779).
+    trigger.innerHTML = `${config.label || 'Menu'} <span class="x-dropdown__chevron">▼</span>`;
   }
 
   // Create menu
   const menu = document.createElement('div');
   menu.className = 'x-dropdown__menu';
   
-  // Position styles. Keys MUST match dropdown.schema.json's `position`
-  // enum (bottom-start/bottom-end/top-start/top-end) -- this used to be
-  // keyed left/right, which never matched any real attribute value, so
-  // every position silently fell through to the same default (confirmed
-  // live: all 4 position-variant demos rendered identically).
-  const posStyles = {
-    'bottom-start': 'top:100%;left:0;',
-    'bottom-end': 'top:100%;right:0;',
-    'top-start': 'bottom:100%;left:0;',
-    'top-end': 'bottom:100%;right:0;'
-  };
-
-  menu.style.cssText = `
-    position:absolute;${posStyles[config.position] || posStyles['bottom-start']}
-    background:var(--bg-secondary,#1f2937);
-    border:1px solid var(--border-color,#374151);
-    border-radius:8px;min-width:150px;
-    /* #707 -- John: "the rendered element must be fluid to what it's showing".
-       min-width alone let the menu take its width from the containing block, so
-       a two-word option ("Grace Hopper") wrapped onto two lines with room to
-       spare beside it. max-content sizes it to its widest item; max-width keeps
-       it from ever running past the viewport. */
-    width:max-content;max-width:min(90vw,32rem);
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-    display:none;z-index:1000;overflow:hidden;
-    margin-top:4px;
-  `;
+  // Placement is an x-dropdown__menu--{position} class in dropdown.css. Keys
+  // MUST match dropdown.schema.json's `position` enum (bottom-start/
+  // bottom-end/top-start/top-end) -- this used to be keyed left/right, which
+  // never matched any real attribute value, so every position silently fell
+  // through to the same default (confirmed live: all 4 position-variant
+  // demos rendered identically). An unknown value still falls back to
+  // bottom-start. #779: the whole menu box used to be one cssText block; it
+  // is .x-dropdown__menu now, including #707's fluid width. Only an offset
+  // other than the 4px default travels, as a generated rule.
+  const POSITIONS = ['bottom-start', 'bottom-end', 'top-start', 'top-end'];
+  const position = POSITIONS.includes(config.position) ? config.position : 'bottom-start';
+  menu.classList.add(`x-dropdown__menu--${position}`);
+  if (Number(config.offset) !== 4) {
+    setRule(menu, 'offset', { '--x-dropdown-offset': `${config.offset}px` });
+  }
 
   // Populate menu from items OR move child elements into menu
   if (hasChildItems) {
     // Move existing children into menu and style them
     childElements.forEach(child => {
-      child.classList.add('x-dropdown__item');
-      Object.assign(child.style, {
-        // #707: the menu is sized to its content, so an option never needs to
-        // wrap -- and a wrapped label misrepresents the behavior.
-        whiteSpace: 'nowrap',
-        // #701: flex, not block -- an item can carry an avatar or icon next to
-        // its label (the showcase example does), and block left the image and
-        // the text sitting on different baselines.
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        padding: '0.5rem 0.75rem',
-        cursor: 'pointer',
-        transition: 'background 0.15s',
-        textDecoration: 'none',
-        color: 'inherit'
-      });
-      child.addEventListener('mouseenter', () => child.style.background = 'var(--bg-tertiary,#374151)');
-      child.addEventListener('mouseleave', () => child.style.background = '');
+      // #707 (never wrap), #701 (flex, so an avatar or icon sits on the
+      // label's baseline) and the hover background are .x-dropdown__item and
+      // .x-dropdown__item--child in dropdown.css (#779) -- the hover is a
+      // :hover rule now, not a pair of listeners writing element.style.
+      child.classList.add('x-dropdown__item', 'x-dropdown__item--child');
       menu.appendChild(child);
     });
   } else if (config.items.length > 0) {
     // Create menu items from data-items
+    // Item box and hover: .x-dropdown__item in dropdown.css (#779).
     menu.innerHTML = config.items.map(item => `
-      <div class="x-dropdown__item" style="
-        padding:0.5rem 0.75rem;cursor:pointer;
-        transition:background 0.15s;white-space:nowrap;
-      ">${item.trim()}</div>
+      <div class="x-dropdown__item">${item.trim()}</div>
     `).join('');
-    
-    // Add hover events
-    menu.querySelectorAll('.x-dropdown__item').forEach(item => {
-      item.addEventListener('mouseenter', () => item.style.background = 'var(--bg-tertiary,#374151)');
-      item.addEventListener('mouseleave', () => item.style.background = '');
-    });
   }
 
   // Assemble: if using label/children, add trigger first
@@ -157,6 +119,16 @@ export function dropdown(element, options = {}) {
     // padding, or pointer cursor -- confirmed live, it just looked like
     // plain unstyled text with no clickable affordance. Style the host
     // itself the same way .x-dropdown__trigger styles a real button.
+    //
+    // It must also BE a button to anything that is not a mouse. With no role
+    // and no tabindex the host was unreachable by keyboard and announced as
+    // plain text, and page audits judged it a text panel rather than the
+    // control it is (demo-layout-standards flagged every bare-text trigger on
+    // demos/site/overlays.html for its button-scale padding).
+    if (!element.hasAttribute('role')) element.setAttribute('role', 'button');
+    if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
+    element.setAttribute('aria-haspopup', 'menu');
+    element.setAttribute('aria-expanded', 'false');
   }
   element.appendChild(menu);
 
@@ -165,23 +137,17 @@ export function dropdown(element, options = {}) {
   const toggle = () => {
     if (config.trigger === 'hover' && isOpen) return;
     isOpen = !isOpen;
-    menu.style.display = isOpen ? 'block' : 'none';
+    // Shown (with its fade-in) by .x-dropdown__menu--open (#779).
+    menu.classList.toggle('x-dropdown__menu--open', isOpen);
     element.classList.toggle('open', isOpen);
-    if (trigger) {
-      trigger.setAttribute('aria-expanded', isOpen);
-    }
-    if (isOpen) {
-      menu.style.animation = 'x-fade-in 0.15s ease';
-    }
+    (trigger || element).setAttribute('aria-expanded', String(isOpen));
   };
 
   const close = () => {
     isOpen = false;
-    menu.style.display = 'none';
+    menu.classList.remove('x-dropdown__menu--open');
     element.classList.remove('open');
-    if (trigger) {
-      trigger.setAttribute('aria-expanded', 'false');
-    }
+    (trigger || element).setAttribute('aria-expanded', 'false');
   };
 
   // Click handler
@@ -252,10 +218,17 @@ export function dropdown(element, options = {}) {
   const outsideClickHandler = (e) => {
     if (!element.contains(e.target)) close();
   };
-  document.addEventListener('click', outsideClickHandler);
+  if (config.closeOnOutside) document.addEventListener('click', outsideClickHandler);
 
   // Keyboard support
   const keyHandler = (e) => {
+    // A bare-text host is its own trigger (role="button" above), so it opens
+    // from the keyboard the way a real <button> would.
+    if (!trigger && e.target === element && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      toggle();
+      return;
+    }
     if (e.key === 'Escape' && isOpen) {
       close();
       (trigger || element).focus();

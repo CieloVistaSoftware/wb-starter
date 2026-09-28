@@ -13,154 +13,23 @@
 // Source: Each filename in src/wb-models/ without extension and .schema
 
 export const elementMap = {
-  // Layout — behaviors, not classes that extend HTMLElement (v3). The
-  // <div x-stack>/<div x-cluster>/<div x-stack>/<div x-flex> custom elements were removed
-  // (#279) — each was a thin connectedCallback wrapper that just called the
-  // already-existing pure behavior function from layouts.js directly.
-  'x-column': 'stack',
-  'x-cluster': 'cluster',
-  'x-stack': 'stack',
-  // flex()'s own default direction is 'row' (layouts.js), so no special
-  // options are needed to reproduce x-row.js's hardcoded direction:'row'.
-  'x-row': 'flex',
-  // Behaviors
-  'x-alert': 'alert',
-  'x-article': 'article',
-  'x-articles': 'articles',
-  // x-autocomplete/x-colorpicker/x-counter/x-error/x-fieldset/x-file/
-  // x-floatinglabel/x-formrow/x-help/x-inputgroup/x-label/x-masked/
-  // x-tags (#365 audit): each has its own real behavior function
-  // (src/wb-viewmodels/*.js, already registered in wb-viewmodels/index.js's
-  // behaviorModules) AND its own schema.json, but was missing here entirely
-  // -- getElementBehavior() (used by both wb.js's _detectSchemaName() and
-  // its own unconditional wb-* injection loop in scan()) returns null for
-  // any tag not in this map, so WB.scan() never dispatched ANY of these 13
-  // tags at all: no schema fetch, no behavior injection, no x-schema
-  // attribute, nothing -- a silent total no-op, confirmed live via a bare
-  // `<wb-X></wb-X>` producing zero classes/children/console output for each.
-  // Each behavior already handles being called on a plain non-input host
-  // element (autocomplete/colorpicker/file/tags/floatinglabel all build a
-  // real child <input> or wrapper when `element` isn't already one), so
-  // wiring the tag here restores the same real, functioning render these
-  // already get via their (working) x-{name} attribute form on native
-  // elements -- it does not change x-* behavior at all, only enables the
-  // <wb-X> custom-tag form to actually run.
-  'x-autocomplete': 'autocomplete',
-  'x-colorpicker': 'colorpicker',
-  'x-counter': 'counter',
-  'x-error': 'error',
-  'x-fieldset': 'fieldset',
-  'x-file': 'file',
-  'x-floatinglabel': 'floatinglabel',
-  'x-formrow': 'formrow',
-  'x-help': 'help',
-  'x-inputgroup': 'inputgroup',
-  'x-label': 'label',
-  'x-masked': 'masked',
-  'x-tags': 'tags',
-  'x-audio': 'audio',
-  'x-avatar': 'avatar',
-  'x-badge': 'badge',
-  'x-button': 'button',
-  'x-card': 'card',
-  'x-cardbutton': 'cardbutton',
-  'x-carddraggable': 'carddraggable',
-  'x-cardexpandable': 'cardexpandable',
-  'x-cardfile': 'cardfile',
-  'x-cardhero': 'cardhero',
-  'x-cardhorizontal': 'cardhorizontal',
-  'x-cardimage': 'cardimage',
-  'x-cardlink': 'cardlink',
-  'x-card-link': 'cardlink',
-  'x-cardminimizable': 'cardminimizable',
-  'x-cardnotification': 'cardnotification',
-  'x-cardoverlay': 'cardoverlay',
-  'x-cardportfolio': 'cardportfolio',
-  'x-cardpricing': 'cardpricing',
-  'x-cardproduct': 'cardproduct',
-  'x-cardprofile': 'cardprofile',
-  'x-cardstats': 'cardstats',
-  'x-cardtestimonial': 'cardtestimonial',
-  'x-cardvideo': 'cardvideo',
-  // x-fix-card (#365): own file (fix-card.js), not part of the x-card*
-  // family generated above -- was missing here entirely, so WB.scan() never
-  // dispatched the tag and fix-card.js's customElements.define() never ran.
-  'x-fix-card': 'fix-card',
-  'x-checkbox': 'checkbox',
-  'x-chip': 'chip',
-  'x-codecontrol': 'codecontrol',
-  'x-collapse': 'collapse',
-  'x-confetti': 'confetti',
-  'x-control': 'control',
-  'x-copy': 'copy',
-  'x-darkmode': 'darkmode',
-  'x-demo': 'demo',
-  'x-details': 'details',
-  'x-dialog': 'dialog',
-  // dialog.js's TRIGGER mode (modal-title/modal-content) was written for this
-  // exact tag but never mapped here, so WB never invoked it — the "Open Modal"
-  // click did nothing regardless of how many times dialog.js itself was fixed
-  // (#251, recurred).
-  'x-modal': 'dialog',
-  'x-draggable': 'draggable',
-  'x-drawer': 'drawer',
-  // #363: was 'x-drawerLayout' (mixed-case key) -- getElementBehavior()
-  // always looks up tagName.toLowerCase(), and the real tag is authored
-  // lowercase/hyphenated everywhere (confirmed live: demos/site/layout.html
-  // uses <div x-drawer-layout>), so the old mixed-case key could never match
-  // any real tag lookup. Renamed to the actual lowercase tag name.
-  'x-drawer-layout': 'drawerLayout',
-  'x-dropdown': 'dropdown',
-  'x-figure': 'figure',
-  'x-fireworks': 'fireworks',
-  'x-footer': 'footer',
-  'x-form': 'form',
-  'x-gallery': 'gallery',
-  'x-globe': 'globe',
-  'x-header': 'header',
-  'x-hero': 'hero',
-  'x-input': 'input',
-  'x-mdhtml': 'mdhtml',
-  'x-move': 'move',
-  'x-release': 'release',
-  'x-navbar': 'navbar',
-  'x-notes': 'notes',
-  'x-progress': 'progress',
-  'x-rating': 'rating',
-  'x-ratio': 'ratio',
-  'x-repeater': 'repeater',
-  'x-resizable': 'resizable',
-  'x-ripple': 'ripple',
-  'x-scrollalong': 'scrollalong',
-  // 'searchfield' (not the bare 'search' behavior) — search() operates
-  // directly on whatever element it's given (used as-is via x-search on a
-  // literal <input>). <div x-searchfield> is a CONTAINER tag, not an input itself;
-  // it needs the child-input-aware wrapper. See search.js's searchField().
-  'x-search': 'searchfield',
-  'x-select': 'select',
-  'x-skeleton': 'skeleton',
-  'x-slider': 'slider',
-  'x-snow': 'snow',
-  'x-span': 'span',
-  'x-spinner': 'spinner',
-  'x-stagelight': 'stagelight',
-  'x-sticky': 'sticky',
-  'x-switch': 'switch',
-  'x-table': 'table',
-  'x-tabs': 'tabs',
-  'x-textarea': 'textarea',
-  'x-themecontrol': 'themecontrol',
-  'x-toast': 'toast',
-  'x-toggle': 'toggle',
-  'x-tooltip': 'tooltip',
-  'x-timeline': 'timeline',
-  // x-accordion is DEPRECATED (prefer <details>/<summary> — see
-  // semantics/details.js) but still rendered/toggled via accordion()
-  // (collapse.js), retained for back-compat (#279).
-  'x-accordion': 'accordion',
-  'x-video': 'video',
-  'x-vimeo': 'vimeo',
-  'x-youtube': 'youtube'
+  // EMPTY ON PURPOSE.
+  //
+  // John: "we are not using components any more ... there should be nothing
+  // calling for x-tag." The 104 <wb-*> component tags that lived here are
+  // gone. Every one had a replacement, so no behavior was lost: 18 became the
+  // semantic element that already auto-injects them (<article> -> <article>),
+  // the rest became a host carrying the x- attribute
+  // (<div x-alert> -> <div x-alert>).
+  //
+  // Kept as an exported empty object rather than deleted: wb-lazy.js and
+  // style-loader.js both import it, so an empty map means "no component tags"
+  // everywhere at once instead of a missing-export crash.
+  //
+  // Eleven behaviors were reachable ONLY through their tag -- container, grid,
+  // center, cover, switcher, reel, frame, icon, stat, sidebarlayout, modal.
+  // Their x- forms were added to extensionMap below FIRST; deleting the tags
+  // without them would have deleted the behaviors with them.
 };
 
 // ============================================================================
@@ -197,10 +66,13 @@ export const nativeMap = {
   'form': 'form',
   'fieldset': 'fieldset',
   'label': 'label',
-  'article': 'card', // semantic <article> -> card (only when autoInject enabled)
+  // <article> IS a card in this system (John: "an article is a card in this
+  // system"). It names the card behavior directly: there is no separate
+  // article behavior, and x-card is the attribute form for any other host.
+  'article': 'card',
 
   // Media
-  'img': 'image',
+  'img': 'img',
   'video': 'video',
   'audio': 'audio',
   'figure': 'figure',
@@ -230,6 +102,13 @@ export const nativeMap = {
 export const extensionMap = {
   // Effects & Utilities
   'x-ripple': 'ripple',
+  // #816: glow, sparkle and rainbow are implemented in effects.js and styled
+  // in effects.css, and had no entry here — so those attributes dispatched to
+  // nothing while ripple, confetti and fireworks worked. Three of six
+  // registered, with nothing marking which three.
+  'x-glow': 'glow',
+  'x-sparkle': 'sparkle',
+  'x-rainbow': 'rainbow',
   'x-tooltip': 'tooltip',
   'x-draggable': 'draggable',
   'x-resizable': 'resizable',
@@ -242,19 +121,9 @@ export const extensionMap = {
   // width is a layout decision, not something an element IS.
   'x-fill': 'fill',
   'x-release': 'release',
-  // docs/behaviors/*.md documents x-progressbar ("attribute-based progress
-  // bar... apply directly to any element, no custom tag required") and
-  // semantics/progress.js's own code comment says it was "gate widened...
-  // to also cover x-progress on any element" -- but NEITHER attribute name
-  // was ever actually registered anywhere in this map or wb-lazy.js's own
-  // table. Every documented example was a fully inert, unstyled div
-  // (confirmed live: no class, no fill, no percent). Routes to the modern
-  // `progress` behavior (semantics/progress.js), not the @deprecated
-  // progressbar.js -- that older file only reads `variant`/`value` via
-  // element.dataset, not the plain attributes every doc example (and Law
-  // 11) uses, so it would reproduce the exact same silent-no-op bug under
-  // a different name.
-  'x-progressbar': 'progress',
+  // x-progress on any host; <progress> injects it on its own. x-progressbar
+  // was a second spelling of the same behavior and has been removed -- one
+  // behavior, one name (the same fix as x-article -> x-card).
   'x-progress': 'progress',
 
   // Animations & Effects
@@ -263,10 +132,10 @@ export const extensionMap = {
   'x-snow': 'snow',
   'x-stagelight': 'stagelight',
 
-  // Morphing (x-as-{name})
-  'x-as-card': 'card',
-  'x-as-timeline': 'timeline',
-  'x-as-article': 'article',
+  // #783 -- morphing (x-as-card / x-as-timeline / x-as-article) removed.
+  // It never ran under the lazy runtime: wb-lazy.js filtered x-as-* out of
+  // its dispatch table, and index.html loads that runtime -- so every
+  // documented morph example did nothing on a normal page.
 
   // John, screenshot on docs/behaviors-reference.md's cluster example:
   // "don't use class names when an x-cluster behavior works better...
@@ -281,13 +150,19 @@ export const extensionMap = {
 
   // #626: every other behavior in this table gets its own dedicated
   // x-{name} attribute (x-drawer, x-popover, x-confirm, ...) -- 'card' never
-  // did, so docs/behaviors/cards/card.md's semantic rewrite had to fall
+  // did, so docs/components/cards/card.md's semantic rewrite had to fall
   // back to the lower-level generic x-behavior="card" attribute instead of
   // the pattern every other doc uses. John: "shouldn't all of our behaviors
   // be addressable via x-behaviorname vs x-behavior=''" -- yes. Adding the
   // dedicated key for consistency; x-behavior="card" still works too (it's
   // the always-available generic fallback every registered behavior name
   // supports, not being removed here).
+  // 'card' says what you get, for a host that is not an <article>.
+  //
+  // Names the `card` behavior directly. It used to say 'article', which worked
+  // only because index.js routes `article` to card.js -- true, but indirect:
+  // it made <div x-card> depend on a mapping two files away that is about
+  // <article> auto-injection, not about this attribute.
   'x-card': 'card',
 
   // #631: an audit (John: "how many x-tags do we have and whether or not
@@ -385,17 +260,32 @@ export const extensionMap = {
   // Moving them here gives both runtimes the same source of truth and lets
   // the matching lines in wb-lazy.js be deleted instead of drifting.
   //
-  // x-article is the one genuine addition, not a relocation -- it had ZERO
-  // x-attribute coverage anywhere (absent from both this table and
-  // wb-lazy.js's), unlike the other 19 below, which were already fully
-  // functional via wb-lazy.js's table. Routes to the 'article' behavior
-  // (src/wb-viewmodels/article.js, already reachable via the <div x-article>
-  // tag in elementMap above). Distinct from 'x-articles' just above (plural
-  // LIST view, a different behavior) and from 'x-as-article' in the
-  // Morphing section above (morph-only form that rewrites an existing
-  // element's semantics) -- three different names for three different
-  // behaviors, not aliases of each other.
-  'x-article': 'article',
+  // x-article was added here once and is gone again: it routed to an
+  // 'article' behavior that index.js sent to card.js anyway, so it was a
+  // second spelling of x-card. <article> is a card; x-card is its attribute.
+
+  // #834 -- the three native mappings that had no x- form at all. A tag that
+  // auto-injects must have an attribute that applies the same behavior to
+  // another host; without it the behavior is reachable one way only.
+  // Layout and utility behaviors that were reachable ONLY through their
+  // <wb-*> tag. With components going away they needed an attribute form or
+  // the behavior would have gone with the tag. Registered here (not in
+  // wb-lazy.js) so both runtimes and every tooling path see them -- putting
+  // them in the second registry is what hid them in the first place.
+  'x-container': 'container',
+  'x-grid': 'grid',
+  'x-center': 'center',
+  'x-cover': 'cover',
+  'x-switcher': 'switcher',
+  'x-reel': 'reel',
+  'x-frame': 'frame',
+  'x-icon': 'icon',
+  'x-stat': 'stat',
+  'x-sidebarlayout': 'sidebarlayout',
+  'x-modal': 'modal',
+  'x-radio': 'radio',
+  'x-range': 'range',
+  'x-mark': 'mark',
   'x-autocomplete': 'autocomplete',
   'x-colorpicker': 'colorpicker',
   'x-counter': 'counter',
@@ -419,8 +309,8 @@ export const extensionMap = {
   'x-gallery': 'gallery',
   'x-toast': 'toast',
   'x-toggle': 'toggle',
-  // x-timeline renders a real timeline behavior -- adjacent to, but not a
-  // collision with, 'x-as-timeline' in the Morphing section above (a
+  // x-timeline renders a real timeline component -- adjacent to, but not a
+  // collision with, the former 'x-as-timeline' morph attribute (removed #783) (a
   // morph-only form that rewrites an existing element's semantics).
   'x-timeline': 'timeline',
   'x-youtube': 'youtube',
@@ -449,7 +339,7 @@ export const allBehaviors = {
 
 /**
  * Get behavior name from element tag
- * @param {string} tagName - Element tag name (e.g., 'x-card', 'x-cardhero')
+ * @param {string} tagName - Element tag name (e.g., '.x-card', '[x-cardhero]')
  * @returns {string|null} Behavior name or null if not found
  */
 export function getElementBehavior(tagName) {

@@ -66,7 +66,9 @@
     "required": {
       "type": "boolean",
       "description": "Required field",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A form-validation constraint: submitting with no choice is refused. Nothing is drawn for it (#773)."
     },
     "size": {
       "type": "string",

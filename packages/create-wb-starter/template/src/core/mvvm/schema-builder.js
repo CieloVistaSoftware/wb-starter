@@ -2,7 +2,7 @@
  * WB Schema Builder - MVVM Core
  * =============================
  * Builds DOM structure from JSON Schema definitions.
- * NO innerHTML in behavior classes. Schema IS the template.
+ * NO innerHTML in component classes. Schema IS the template.
  * 
  * @version 3.0.0 - $view format with $methods support
  * 
@@ -14,7 +14,7 @@
  * v3.0 Syntax Strategy:
  * =====================
  * PRIMARY (use in new code):
- *   1. x-card title="Hello"> - Web behavior tags for behaviors
+ *   1. x-card title="Hello"> - Web component tags for components
  *   2. <button x-ripple> - x- prefix for adding behaviors
  * 
  * DEPRECATED (legacy fallback):
@@ -41,6 +41,12 @@
  * Classes are AUTO-GENERATED: baseClass + "__" + name → "x-card__header"
  * Tags are lowercase per HTML5: "header", "main", "footer"
  */
+
+// The alias registry is ONE module by design (#879). Aliases used to be
+// declared inline across nine separate schemas, which made "these two
+// spellings mean the same option" a promise repeated nine times.
+import { aliasesFor } from '../attribute-aliases.js';
+import { styleSheetDefinesClass } from '../style-registry.js';
 
 // =============================================================================
 // SCHEMA REGISTRY
@@ -133,7 +139,7 @@ export function registerSchema(schema, filename) {
  * Load a single schema file and register it (fallback for runtime/hydration races)
  * Returns true if the schema was fetched & registered, false otherwise.
  */
-// A page with several instances of the same behavior (e.g. multiple
+// A page with several instances of the same component (e.g. multiple
 // <article>-family tags on one page) each independently discover, on scan,
 // that the shared schema isn't registered yet and race to fetch it — none
 // of them see it as registered until their own fetch resolves. Observed
@@ -142,9 +148,41 @@ export function registerSchema(schema, filename) {
 // concurrent caller awaits the SAME fetch instead of starting their own.
 const inFlightSchemaFetches = new Map();
 
+// #1048: the in-flight map only dedupes CONCURRENT callers — it is cleared in
+// `finally`, so a later scan re-fetches a name that already 404'd, and 13
+// CSS-only/JS-only behaviours (center, container, cover, frame, grid, icon,
+// modal, radio, range, reel, sidebarlayout, stat, switcher) produced 13 failed
+// requests and 13 console warnings on every page load, again on every rescan.
+//
+// WHY HERE AND NOT IN THE CALLER. wb-lazy.js already keeps its own
+// `schemaLoadFailed` set (search ensureSchemaRegistered), so pages driven by
+// that engine never repeat — which is why the repeat is invisible on, say,
+// demos/layout-test.html. wb.js's caller (processSchema, ~line 740) has no
+// equivalent: it checks getSchema() and calls straight through. So the guarantee
+// depended on which engine loaded the page, and public/doc-viewer.html is on the
+// unguarded one.
+//
+// One guard at the resolver covers both callers. Two caches for one fact is the
+// shape that produced #1056, where a behaviour registry lived in two places and
+// the two disagreed.
+//
+// A behaviour having no schema is a NORMAL state, not a failure: those files do
+// not exist and are not meant to. So the absence is remembered for the page's
+// lifetime and reported once, at debug level. Whether a behaviour that SHOULD
+// have a schema is missing one is a different question, and the place to answer
+// it is a gate over the source tree, not 13 warnings per load in every user's
+// console — noise there is what makes a real error invisible.
+//
+// Only a 404 is cached. A thrown fetch is a transient network condition, and
+// caching that would turn one dropped request into a permanently missing schema
+// for the rest of the session.
+const knownAbsentSchemas = new Set();
+
 export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
   // Accept both bare filenames (cardhero.schema.json) and schema names (cardhero)
   const filename = filePath.endsWith('.schema.json') ? filePath : `${filePath}.schema.json`;
+
+  if (knownAbsentSchemas.has(filename)) return false;
 
   const existing = inFlightSchemaFetches.get(filename);
   if (existing) return existing;
@@ -153,7 +191,14 @@ export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
     try {
       const resp = await fetch(`${basePath}/${filename}`);
       if (!resp.ok) {
-        console.warn(`[Schema Builder] loadSchemaFile: ${filename} not found (status ${resp.status})`);
+        if (resp.status === 404) {
+          knownAbsentSchemas.add(filename);
+          dlog(`[Schema Builder] ${filename} does not exist — this behavior has no schema. Not asking again.`);
+          return false;
+        }
+        // 500, 403 and friends are a server saying something is wrong, which is
+        // worth hearing about and is not evidence the file is absent.
+        console.warn(`[Schema Builder] loadSchemaFile: ${filename} returned status ${resp.status}`);
         return false;
       }
       const schema = await resp.json();
@@ -197,7 +242,8 @@ export function getSchema(identifier) {
  * Get base class from schema
  */
 function getBaseClass(schema) {
-  return schema.baseClass || schema.compliance?.baseClass || `wb-${schema.behavior}`;
+  // See wb.js's `base` -- same computed-prefix trap.
+  return schema.baseClass || schema.compliance?.baseClass || `x-${schema.behavior}`;
 }
 
 /**
@@ -230,23 +276,26 @@ function extractData(element, schema) {
       const key = attr.name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       data[key] = parseValue(attr.value);
     } else if (!['class', 'style', 'id', 'x-behavior'].includes(attr.name)) {
-      // Direct attributes (for behavior style)
+      // Direct attributes (for web component style)
       const key = attr.name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
       data[key] = parseValue(attr.value);
     }
   }
   
-  // Honor property aliases declared in the schema BEFORE defaults are applied,
-  // so an alias attribute beats the default. e.g. the alert schema declares
-  // `variant` with aliases ["type"] so <div x-alert type="success"> works (#176).
+  // Honor property aliases BEFORE defaults are applied, so an alias attribute
+  // beats the default: <div x-alert type="success"> sets variant (#176).
+  //
+  // The list comes from src/core/attribute-aliases.js, never from the schema.
+  // Only genuine SYNONYMS live there -- `data-` prefixes and camel/kebab pairs
+  // are already resolved above by extractData(), so registering those would
+  // document a duplicate instead of removing one.
   if (schema.properties) {
-    for (const [propName, propDef] of Object.entries(schema.properties)) {
-      const aliases = propDef && propDef.aliases;
-      if (Array.isArray(aliases) && data[propName] === undefined) {
-        for (const alias of aliases) {
-          const aliasKey = alias.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-          if (data[aliasKey] !== undefined) { data[propName] = data[aliasKey]; break; }
-        }
+    const behavior = schema.schemaFor || schema.$id?.replace('.schema.json', '') || '';
+    for (const propName of Object.keys(schema.properties)) {
+      if (data[propName] !== undefined) continue;
+      for (const alias of aliasesFor(behavior, propName)) {
+        const aliasKey = alias.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+        if (data[aliasKey] !== undefined) { data[propName] = data[aliasKey]; break; }
       }
     }
   }
@@ -315,10 +364,10 @@ function buildStructure(element, schema, data) {
   // Apply base class -- skip when the host tag already IS baseClass (e.g.
   // <div x-mdhtml> getting classList.add('x-mdhtml')); redundant, and flagged
   // by tests/compliance/no-redundant-tag-name-class.spec.ts (#478). Every
-  // per-behavior behavior fn's OWN identical guard (card.js, checkbox.js,
+  // per-component behavior fn's OWN identical guard (card.js, checkbox.js,
   // mdhtml.js, ...) only covers ITS OWN classList.add call -- this generic
   // schema-driven path adds the same class independently and needs the same
-  // guard, or a behavior's own correct guard gets silently bypassed here.
+  // guard, or a component's own correct guard gets silently bypassed here.
   if (element.tagName.toLowerCase() !== baseClass) element.classList.add(baseClass);
   
   // Apply additional classes (for variants like x-card--profile)
@@ -329,7 +378,7 @@ function buildStructure(element, schema, data) {
   // Apply variant/modifier classes from data
   applyVariantClasses(element, schema, data);
 
-  // Empty $view means the behavior's BEHAVIOR owns all DOM content, not
+  // Empty $view means the component's BEHAVIOR owns all DOM content, not
   // the schema (card #202, demo, alert, button). NEVER touch innerHTML in
   // that case. This used to always wipe element.innerHTML then restore it
   // from data.slot (element.innerHTML captured as a string BEFORE the
@@ -605,8 +654,14 @@ function applyVariantClasses(element, schema, data) {
     // emoji icon. Only emit the modifier class when the value is itself a
     // valid CSS identifier segment; free-text values that fall outside the
     // enum's known set are content, not a variant, and get no class.
+    // #885: and only when a stylesheet actually defines the resulting class.
+    // The identifier check above rejects an emoji icon but happily minted
+    // `x-button--star` and `x-button--_self`, which no CSS has ever matched --
+    // wb.js's applyDeclaredModifiers() had the identical gap, from an
+    // identical copy of this mapping. Both now ask the one shared registry.
     if (prop.enum && typeof value === 'string' && value !== 'default' && /^[a-zA-Z0-9_-]+$/.test(value)) {
-      element.classList.add(`${baseClass}--${value}`);
+      const cls = `${baseClass}--${value}`;
+      if (styleSheetDefinesClass(cls)) element.classList.add(cls);
     }
   }
 }
@@ -645,7 +700,7 @@ function interpolate(template, data) {
 /**
  * Bind $methods from schema to element
  * @param {HTMLElement} element - Target element
- * @param {Object} schema - Behavior schema
+ * @param {Object} schema - Component schema
  * @param {Object} viewModel - ViewModel instance with method implementations
  */
 export function bindMethods(element, schema, viewModel) {
@@ -761,7 +816,9 @@ function bindSchemaMethodsToElement(element, schema, data) {
     // Common methods - behaviors can override these
     show() {
       element.hidden = false;
-      element.style.display = '';
+      // Clears a display the page may still have authored inline; nothing in
+      // the framework writes one any more (#779), so this only removes.
+      element.style.removeProperty('display');
       element.dispatchEvent(new CustomEvent('wb:show', { bubbles: true }));
     },
     
@@ -801,6 +858,14 @@ function bindSchemaMethodsToElement(element, schema, data) {
   for (const [methodName, config] of Object.entries(methods)) {
     if (typeof viewModel[methodName] === 'function') {
       element[methodName] = viewModel[methodName].bind(viewModel);
+    } else if (typeof element[methodName] === 'function') {
+      // The platform already implements it. button.schema.json documents
+      // click()/focus()/blur(), and the stub below used to REPLACE the native
+      // HTMLElement methods with a warning -- so `button.click()` stopped
+      // clicking: no click event, no href navigation, nothing but
+      // "[WB] Method "click" called but not implemented". A documented method
+      // the element natively has is implemented; leave it alone.
+      continue;
     } else {
       // Create a stub that warns if method not implemented
       element[methodName] = (...args) => {
@@ -821,7 +886,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
  * Detect schema from element
  * 
  * v3.0 Priority:
- *   1. x-card> - Web behavior tag (PRIMARY)
+ *   1. x-card> - Web component tag (PRIMARY)
  *   2. - Data attribute (DEPRECATED - legacy fallback)
  * 
  * Note: Class detection was removed - classes are for CSS only
@@ -846,7 +911,9 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // SCHEMA_EXCLUDED_TAGS lists tags CONFIRMED (by reading the actual behavior
 // source, not assumed) to build their own complete DOM unconditionally:
 // x-demo (#312 -- pre.js's "view source" toggle silently stopped
-// responding whenever WB.scan()'s schema loop raced WBDemo.
+// responding when WB.scan()'s schema loop reached a demo before it was
+// built. (Not a race with WBDemo.connectedCallback: that class was never
+// registered and is now deleted -- #1063.)
 // connectedCallback(), because buildStructure()'s empty-$view fallback
 // re-parses element.innerHTML as a string, producing a listener-less
 // look-alike); x-details (#305/#336 -- schema's "content" node type
@@ -867,13 +934,10 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // the same async-schema-race. This was a LATENT, previously-unreported bug
 // (found auditing schemas while investigating #279, not from a live
 // complaint) -- <div x-skeleton> was never in this list before tonight.
-// x-article/x-articles: had a real $view but NO behavior implementation at
-// all (confirmed: no article.js existed anywhere) -- <div x-article> rendered
-// as bare unstyled text on any page not running the schema-builder engine
-// (e.g. wb-lazy.js-based demo pages, which have no MVVM layer whatsoever).
-// article.js now builds the full structure itself, unconditionally, the same
-// self-sufficient pattern as the card family -- so it's added here for the
-// same reason, not left to race with schema's $view build.
+// x-articles: articles() (article.js) builds the full list wrapper itself,
+// unconditionally, the same self-sufficient pattern as the card family -- so
+// it's here for the same reason, not left to race with schema's $view build.
+// (<article> itself is a card and is covered by the x-card entries below.)
 // x-select: select.schema.json's $view built a fake dropdown out of
 // <button>/<div>/<ul> -- no real <select> anywhere in it, so it had none of
 // a native <select>'s keyboard nav/mobile picker/form submission/screen
@@ -910,7 +974,7 @@ function bindSchemaMethodsToElement(element, schema, data) {
 // over the real "x-drawer-toggle" arrow.
 const SCHEMA_EXCLUDED_TAGS = new Set([
   'x-demo', 'x-details', 'x-stack', 'x-search', 'x-skeleton', 'x-select',
-  'x-article', 'x-articles', 'x-dialog', 'x-drawer-layout',
+  'x-articles', 'x-dialog', 'x-drawer-layout',
   'x-card', 'x-cardimage', 'x-cardvideo', 'x-cardbutton', 'x-carddraggable',
   'x-cardexpandable', 'x-cardfile', 'x-cardhero', 'x-cardhorizontal',
   'x-cardlink', 'x-card-link', 'x-cardminimizable', 'x-cardnotification',
@@ -920,7 +984,7 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   // description says "created on click" -- it documents a RUNTIME element, not
   // view content. Running it destroyed the author's children (processSchema
   // wipes before building) and replaced them with an empty, zero-size span, so
-  // `<div x-ripple>text</div>` rendered nothing at all and had no box to
+  // `<span x-ripple>text</span>` rendered nothing at all and had no box to
   // click. ripple() builds its own `span.x-ripple__wave` per click and never
   // reads `.x-ripple__effect`; it needs the host's content left alone.
   'x-ripple',
@@ -934,7 +998,17 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   // That is precisely the schema-vs-behavior race this list exists for
   // ("whichever finishes last wins via its own innerHTML = ''"), and it also
   // destroyed the host's authored text on every <div x-stagelight>.
-  'x-stagelight'
+  'x-stagelight',
+  // #701: dropdown() builds its own trigger and menu and MOVES the host's
+  // authored <a>/<button>/<div> children into that menu -- it never reads a
+  // pre-built `.x-dropdown__menu` or the `items` slot. dropdown.schema.json's
+  // $view (trigger button + menu div + slot) wiped those children before
+  // dropdown() ran, and dropdown() then took the schema's own empty trigger
+  // and menu as its "items": every showcase row rendered 2 blank options
+  // instead of the 4-5 people with avatars the example authors. The attribute
+  // form only reached this path once wb-lazy started building schemas for
+  // x-* attributes (#884).
+  'x-dropdown'
 ]);
 
 // x-{name} attribute matching a registered schema: <article x-card> resolves
@@ -957,38 +1031,36 @@ function detectXAttributeSchema(element) {
     // #678: SCHEMA_EXCLUDED_TAGS was consulted ONLY by the wb-* tag branch of
     // detectSchema(), so every entry on it -- 34 behaviors confirmed to build
     // their own DOM and to be destroyed by the schema wipe -- was bypassed
-    // entirely by the equivalent x-* attribute form. `<div x-ripple>text</div>`
+    // entirely by the equivalent x-* attribute form. `<span x-ripple>text</span>`
     // was protected; `<div x-ripple>text</div>` was not, and the two forms are
     // documented as equivalent authoring surfaces.
     //
     // That asymmetry is why <div x-cardstats>text</div> still lost its content
     // after the card behaviors were fixed to preserve it: processSchema() wiped
     // the element before cardstats() ever ran, so there was nothing left to
-    // preserve. The exclusion list is keyed by tag name, hence the wb- prefix.
-    if (SCHEMA_EXCLUDED_TAGS.has('wb-' + name)) continue;
+      // preserve. The list is keyed by the x- form (#850): the set literals were
+    // renamed by the 4.0.0 prefix pass, but this COMPUTED key was not -- a
+    // pattern matching literal names cannot see 'wb-' + name. The lookup then
+    // matched nothing and all 34 exclusions silently stopped applying.
+    if (SCHEMA_EXCLUDED_TAGS.has('x-' + name)) continue;
     if (schemaRegistry.has(name)) return name;
   }
   return null;
 }
 
 function detectSchema(element) {
-  const tagName = element.tagName.toLowerCase();
-
-  // 1. Web behavior tag: x-card>
-  if (tagName.startsWith('wb-')) {
-    if (SCHEMA_EXCLUDED_TAGS.has(tagName)) return null;
-    const mapped = tagToSchema.get(tagName);
-    if (mapped) return mapped;
-    // Only claim a derived name if a schema is actually registered for it.
-    // wb-* tags with no behavior AND no registered schema are owned by
-    // custom elements or CSS alone -- guessing a name and then warning
-    // "Schema not found" was pure console spam (#174). Return null so
-    // processElement skips silently and leaves the tag to its real owner.
-    const derived = tagName.replace('wb-', '').replace(/-/g, '');
-    return schemaRegistry.has(derived) ? derived : null;
-  }
-
-  // 2. x-{name} attribute on any other tag (see comment above).
+  // The `wb-*` TAG branch is gone (#850). It could never run: no element can
+  // have a tag name starting with `wb-` since 4.0.0 removed custom elements,
+  // and `no-unimplemented-elements.spec.ts` now enforces zero of them. Its own
+  // header comment had already decayed into "Web component tag: x-card>".
+  //
+  // It was also the last consumer of the wb-keyed lookup this issue is about.
+  // The live path, detectXAttributeSchema(), consults SCHEMA_EXCLUDED_TAGS with
+  // an `'x-' + name` key (line ~987), which is correct.
+  //
+  // Behaviour is unchanged for any reachable input: a stray `<wb-foo>` would
+  // have returned null from the dead branch (no schema registered under a
+  // derived name), and falls through to the attribute path returning null now.
   return detectXAttributeSchema(element);
 }
 

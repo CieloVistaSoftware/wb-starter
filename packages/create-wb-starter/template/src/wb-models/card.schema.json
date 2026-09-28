@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "card.schema.json",
-  "title": "Card Behavior",
+  "title": "Card",
   "description": "Card. Composes an article with a header, main and footer.",
   "schemaFor": "card",
   "baseClass": "x-card",
@@ -18,17 +18,37 @@
     "title": {
       "type": "string",
       "description": "Card title displayed in header",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Card subtitle displayed below title",
-      "default": ""
+      "default": "this is the subtitle"
+    },
+    "author": {
+      "type": "string",
+      "description": "Author name, rendered as the card's byline in an <address>",
+      "default": "this is the author"
+    },
+    "date": {
+      "type": "string",
+      "description": "Publication date, rendered in a <time> element",
+      "default": "this is the date"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category or tag shown above the title",
+      "default": "this is the category"
+    },
+    "readingTime": {
+      "type": "string",
+      "description": "Estimated reading time",
+      "default": "this is the reading time"
     },
     "footer": {
       "type": "string",
       "description": "Card footer text",
-      "default": ""
+      "default": "this is the footer"
     },
     "elevated": {
       "type": "boolean",
@@ -40,7 +60,9 @@
       "type": "boolean",
       "description": "Make card clickable",
       "default": false,
-      "appliesClass": "x-card--clickable"
+      "appliesClass": "x-card--clickable",
+      "visual": false,
+      "visualReason": "Makes the card an activatable button (role, keyboard, pointer cursor, press feedback). All of it is interaction; a card at rest looks the same (#773)."
     },
     "variant": {
       "type": "string",
@@ -71,14 +93,19 @@
     "tooltip": {
       "type": "string",
       "description": "Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283).",
-      "default": "",
+      "default": "this is the tooltip",
       "appliesAttribute": "x-tooltip"
     },
     "hoverText": {
       "type": "string",
       "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
-      "default": "",
+      "default": "this is the hover text",
       "appliesAttribute": "x-tooltip"
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "Promote this card over its siblings: a heavier border and a visible marker. Bare featured prints \"Featured\"; featured=\"Deal of the week\" prints that label instead",
+      "default": false
     }
   },
   "$view": [],
@@ -143,7 +170,9 @@
           "setup": "<article>Content</article>",
           "expect": {
             "visible": true,
-            "hasClass": "x-card"
+            "style": {
+              "display": "flex"
+            }
           }
         },
         {
@@ -172,7 +201,10 @@
           "action": "click",
           "expect": {
             "event": "click",
-            "hasClass": "x-card--clickable"
+            "attribute": {
+              "role": "button",
+              "tabindex": "0"
+            }
           }
         }
       ]

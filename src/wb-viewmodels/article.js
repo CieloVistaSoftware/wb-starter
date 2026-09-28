@@ -9,6 +9,7 @@
  *
  * CSS: src/styles/behaviors/article.css
  */
+import { setRule } from '../core/dynamic-style.js';
 
 // Move all live child nodes out of `element` into a DocumentFragment before
 // rebuilding -- innerHTML round-tripping would re-parse nested <article>
@@ -51,8 +52,10 @@ export function articles(element, options = {}) {
 
   const list = document.createElement('div');
   list.className = `x-articles__list x-articles--${layout}`;
-  if (layout === 'grid') {
-    list.style.setProperty('--x-articles-columns', columns);
+  // The column count is the author's: a generated rule (#779), and only when
+  // it is not the 3 article.css already defaults --x-articles-columns to.
+  if (layout === 'grid' && String(columns) !== '3') {
+    setRule(list, 'columns', { '--x-articles-columns': columns });
   }
   list.appendChild(body);
   element.appendChild(list);

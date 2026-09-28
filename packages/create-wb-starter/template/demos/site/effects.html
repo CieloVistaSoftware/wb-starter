@@ -23,18 +23,18 @@
   <h2>🎉 Confetti</h2>
   <div x-demo columns="1">
     <div x-confetti>
-    This is a div with x-confetti.
-  </div>
+      This is example confetti content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-confetti count="100">
-    This is a div with x-confetti and count 100.
-  </div>
+      This is example confetti content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-confetti repeat>
-    This is a div with x-confetti and repeat.
-  </div>
+      This is example confetti content.
+    </div>
   </div>
   </section>
 
@@ -43,18 +43,18 @@
   <h2>🎆 Fireworks</h2>
   <div x-demo columns="1">
     <div x-fireworks>
-    This is a div with x-fireworks.
-  </div>
+      This is example fireworks content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-fireworks count="50">
-    This is a div with x-fireworks and count 50.
-  </div>
+      This is example fireworks content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-fireworks repeat>
-    This is a div with x-fireworks and repeat.
-  </div>
+      This is example fireworks content.
+    </div>
   </div>
   </section>
 
@@ -63,18 +63,18 @@
   <h2>💧 Ripple</h2>
   <div x-demo columns="1">
     <div x-ripple>
-    This is a div with x-ripple.
-  </div>
+      This is example ripple content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-ripple color="rgba(0,0,0,0.2)">
-    This is a div with x-ripple and color rgba(0,0,0,0.2).2).
-  </div>
+      This is example ripple content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-ripple duration="300">
-    This is a div with x-ripple and duration 300.
-  </div>
+      This is example ripple content.
+    </div>
   </div>
   </section>
 
@@ -83,7 +83,7 @@
   <h2>Toggles</h2>
   <div x-demo columns="1">
     <div x-ripple centered>
-      This is a div with x-ripple and centered.
+      This is example ripple content.
     </div>
   </div>
   </section>
@@ -93,13 +93,13 @@
   <h2>❄️ Snow</h2>
   <div x-demo columns="1">
     <div x-snow>
-    This is a div with x-snow.
-  </div>
+      This is example snow content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-snow count="50">
-    This is a div with x-snow and count 50.
-  </div>
+      This is example snow content.
+    </div>
   </div>
   </section>
 
@@ -108,43 +108,43 @@
   <h2>📦 Stage Light</h2>
   <div x-demo columns="1">
     <div x-stagelight variant="beam" color="#6366f1" intensity="0.7">
-    This is a div with x-stagelight, variant beam, color #6366f1 and intensity 0.7.7.
-  </div>
+      This is example stage light content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-stagelight variant="spotlight" color="#f59e0b" intensity="0.5" size="400px">
-    This is a div with x-stagelight, variant spotlight, color #f59e0b, intensity 0.5 and size 400px.5 and size 400px.
-  </div>
+      This is example stage light content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-stagelight variant="fixture" color="#ef4444" label="Red Light">
-    This is a div with x-stagelight, variant fixture and color #ef4444.
-  </div>
+      This is example stage light content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-stagelight variant="beam" color="#22c55e" speed="5s">
-    This is a div with x-stagelight, variant beam, color #22c55e and speed 5s.
-  </div>
+      This is example stage light content.
+    </div>
   </div>
   </section>
 
   <!-- 7. Variants -->
-  <section id="stagelight-variants">
+  <section id="stagelight-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
     <div x-stagelight variant="beam">
-    This is a div with x-stagelight and variant beam.
-  </div>
+      This is example stage light content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-stagelight variant="spotlight">
-    This is a div with x-stagelight and variant spotlight.
-  </div>
+      This is example stage light content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-stagelight variant="fixture">
-    This is a div with x-stagelight and variant fixture.
-  </div>
+      This is example stage light content.
+    </div>
   </div>
   </section>
 
@@ -152,7 +152,7 @@
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
+    await WB.scan(document.body);
     console.log('Visual Effects initialized');
     window.__WB_DEMO_INITIALIZED__ = true;
   </script>

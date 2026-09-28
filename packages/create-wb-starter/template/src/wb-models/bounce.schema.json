@@ -3,8 +3,19 @@
   "$id": "bounce.schema.json",
   "title": "Bounce",
   "description": "On click, plays the bounce animation for 0.75s.",
-  "schemaFor": "x-bounce",
+  "schemaFor": "bounce",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-bounce"
+  },
+  "test": {
+    "setup": [
+      "<div x-bounce>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

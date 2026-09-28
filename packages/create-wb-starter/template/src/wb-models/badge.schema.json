@@ -18,7 +18,7 @@
     "label": {
       "type": "string",
       "description": "Badge text content",
-      "default": ""
+      "default": "this is the label"
     },
     "variant": {
       "type": "string",
@@ -81,7 +81,7 @@
     "icon": {
       "type": "string",
       "description": "Leading icon/emoji shown before the label",
-      "default": ""
+      "default": "this is the icon"
     }
   },
   "$view": [],

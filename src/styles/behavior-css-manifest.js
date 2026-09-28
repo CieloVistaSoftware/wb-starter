@@ -101,6 +101,9 @@ export const BEHAVIOR_CSS_MAP = {
   gallery: ['gallery.css'],
   header: ['header.css'],
   mark: ['inline.css'],
+  // #779: youtube.js/vimeo.js's host, iframe and poster, formerly inline.
+  youtube: ['embed.css'],
+  vimeo: ['embed.css'],
 
   // Native form controls + x-input/x-select/x-textarea all share
   // input.css, including its unscoped native-fallback rules.
@@ -112,11 +115,20 @@ export const BEHAVIOR_CSS_MAP = {
   range: ['input.css'],
 
   label: ['label.css'],
+  // #773: span()'s status variants (x-span--primary, --success...) had no
+  // stylesheet at all, so every one rendered as plain text.
+  span: ['span.css'],
   mdhtml: ['mdhtml.css'],
   notes: ['notes.css'],
   otp: ['otp.css'],
   pagination: ['pagination.css'],
   popover: ['popover.css'],
+  // #779: overlay.js's other panels, formerly built with style.cssText.
+  lightbox: ['overlays.css'],
+  offcanvas: ['overlays.css'],
+  sheet: ['overlays.css'],
+  confirm: ['overlays.css'],
+  prompt: ['overlays.css'],
   pre: ['pre.css'],
   progress: ['progress.css'],
   rating: ['rating.css'],
@@ -161,4 +173,59 @@ export const BEHAVIOR_CSS_MAP = {
   snow: ['effects.css'],
   stagelight: ['effects.css'],
   animate: ['effects.css'],
+  // #779: every other effects.js behavior. Their declarations moved from
+  // element.style into effects.css, so a behavior missing here would load
+  // with no styling at all -- the #999 failure, silently.
+  fadein: ['effects.css'], fadeout: ['effects.css'], slidein: ['effects.css'],
+  slideout: ['effects.css'], zoomin: ['effects.css'], zoomout: ['effects.css'],
+  flip: ['effects.css'], rotate: ['effects.css'], bounce: ['effects.css'],
+  shake: ['effects.css'], pulse: ['effects.css'], flash: ['effects.css'],
+  tada: ['effects.css'], wobble: ['effects.css'], jello: ['effects.css'],
+  swing: ['effects.css'], rubberband: ['effects.css'], heartbeat: ['effects.css'],
+  typewriter: ['effects.css'], countup: ['effects.css'], parallax: ['effects.css'],
+  reveal: ['effects.css'], marquee: ['effects.css'], sparkle: ['effects.css'],
+  glow: ['effects.css'], rainbow: ['effects.css'], particle: ['effects.css'],
+
+  // #779: stylesheets that exist because these behaviors stopped writing
+  // their declarations onto element.style.
+  draggable: ['draggable.css'],
+  resizable: ['resizable.css'],
+  scrollalong: ['scrollalong.css'],
+  codecontrol: ['codecontrol.css'],
+  ratio: ['ratio.css'],
+  video: ['video.css'],
+  toggle: ['toggle.css'],
+  sidebar: ['navigation.css'],
+  menu: ['navigation.css'],
+  treeview: ['navigation.css'],
+  backtotop: ['navigation.css'],
+  link: ['navigation.css'],
+  statusbar: ['navigation.css'],
+  lazy: ['helpers.css'],
+  hotkey: ['helpers.css'],
+  truncate: ['helpers.css'],
+  highlight: ['helpers.css'],
+  external: ['helpers.css'],
+  countdown: ['helpers.css'],
+  clock: ['helpers.css'],
+  offline: ['helpers.css'],
+  visible: ['helpers.css'],
+  debug: ['helpers.css'],
+  ul: ['lists.css'],
+  ol: ['lists.css'],
+  dl: ['lists.css'],
+  // Not a behavior: src/core/notes-modal.js's legacy dialog loads this itself
+  // through ensureBehaviorCss('notes-modal') (#779).
+  'notes-modal': ['notes-modal.css'],
+  password: ['password.css'],
+  move: ['move.css'],
+  moveup: ['move.css'],
+  movedown: ['move.css'],
+  moveleft: ['move.css'],
+  moveright: ['move.css'],
+  moveall: ['move.css'],
+  img: ['image.css'],
+  figure: ['image.css'],
+  json: ['json.css'],
+  validator: ['validator.css'],
 };

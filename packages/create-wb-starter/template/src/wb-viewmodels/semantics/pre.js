@@ -1,3 +1,4 @@
+import { setRule, clearRules, clearRulesIn } from '../../core/dynamic-style.js';
 import { readFlag, readAttr } from '../../core/read-attr.js';
 import { writeToClipboard } from '../copy.js';
 
@@ -17,9 +18,35 @@ import { writeToClipboard } from '../copy.js';
  * so that logic exists in exactly one place project-wide (#291).
  */
 export function pre(element, options = {}) {
+  // `x-pre` is an attribute behavior (wb-lazy.js maps 'x-pre' -> 'pre'), and
+  // pre.schema.json declares no semanticElement, so its host is a <div x-pre>
+  // as often as a <pre>. That host used to warn and return while WB still
+  // marked it x-ready -- none of its attributes did anything. Same fix as
+  // code.js's #1016 <div x-code> branch: move the content into a real inner
+  // <pre> and decorate that, carrying the host's options across (the inner
+  // element has none of them). Only options actually set are forwarded, so
+  // an explicit `undefined` never clobbers a default via `...options`.
   if (element.tagName !== 'PRE') {
-    console.warn('[pre] Element must be a <pre>');
-    return () => {};
+    let inner = element.querySelector(':scope > pre');
+    if (!inner) {
+      if (element.querySelector(':scope > .x-pre-wrapper')) return () => {};
+      inner = document.createElement('pre');
+      while (element.firstChild) inner.appendChild(element.firstChild);
+      element.appendChild(inner);
+    }
+    const hostOpts = {};
+    const lang = readAttr(element, 'language');
+    if (lang) hostOpts.language = lang;
+    if (readAttr(element, 'scrollable') === 'true') hostOpts.scrollable = true;
+    const lineNumbers = readAttr(element, 'show-line-numbers');
+    if (lineNumbers) hostOpts.showLineNumbers = lineNumbers !== 'false';
+    const maxHeight = readAttr(element, 'max-height');
+    if (maxHeight) hostOpts.maxHeight = maxHeight;
+    if (element.hasAttribute('wrap') || element.hasAttribute('data-wrap')) hostOpts.wrap = readFlag(element, 'wrap');
+    const hostSize = readAttr(element, 'size');
+    if (hostSize) hostOpts.size = hostSize;
+    if (readFlag(element, 'show-copy') || readFlag(element, 'copy')) hostOpts.showCopy = true;
+    return pre(inner, { ...hostOpts, ...options });
   }
 
   // Idempotency check
@@ -67,8 +94,9 @@ export function pre(element, options = {}) {
   if (config.maxHeight) {
     element.classList.add('x-pre--has-max-height');
     // The value itself (e.g. "400px") is arbitrary user input — genuinely
-    // per-instance, can't be a class.
-    element.style.maxHeight = config.maxHeight;
+    // per-instance, can't be a class. It travels as a generated stylesheet
+    // rule, never the style attribute (#779).
+    setRule(element, 'max-height', { maxHeight: config.maxHeight });
   }
 
   let wrapper = null;
@@ -107,7 +135,8 @@ export function pre(element, options = {}) {
     // right offset is genuinely per-instance — depends on which OTHER
     // controls are present and their real rendered widths (see comment
     // above); hover state is handled by .x-pre__copy:hover in pre.css now.
-    copyButton.style.right = `${nextControlRightPx}px`;
+    // (#779: as a generated rule, not element.style.)
+    setRule(copyButton, 'right', { right: `${nextControlRightPx}px` });
 
     copyButton.addEventListener('click', async () => {
       const ok = await writeToClipboard(element.textContent);
@@ -147,7 +176,7 @@ export function pre(element, options = {}) {
     languageBadge.textContent = displayText;
 
     // right offset is genuinely per-instance (see copy button comment above).
-    languageBadge.style.right = `${nextControlRightPx}px`;
+    setRule(languageBadge, 'right', { right: `${nextControlRightPx}px` });
 
     wrapper.appendChild(languageBadge);
     nextControlRightPx += languageBadge.getBoundingClientRect().width + GAP_PX;
@@ -175,11 +204,13 @@ export function pre(element, options = {}) {
     toggleButton.title = 'Hide code';
     // right offset is genuinely per-instance (see copy button comment above).
     // min-height for the collapsed state lives on .x-pre-wrapper in pre.css.
-    toggleButton.style.right = `${nextControlRightPx}px`;
+    setRule(toggleButton, 'right', { right: `${nextControlRightPx}px` });
     toggleButton.addEventListener('click', () => {
       collapsed = !collapsed;
-      element.style.display = collapsed ? 'none' : '';
-      if (lineNumbersEl) lineNumbersEl.style.display = collapsed ? 'none' : '';
+      // Hidden by .x-pre--collapsed / .x-pre__line-numbers--collapsed in
+      // pre.css rather than display:none on the style attribute (#779).
+      element.classList.toggle('x-pre--collapsed', collapsed);
+      if (lineNumbersEl) lineNumbersEl.classList.toggle('x-pre__line-numbers--collapsed', collapsed);
       toggleButton.textContent = collapsed ? '⏵' : '⏷';
       toggleButton.title = collapsed ? 'Show code' : 'Hide code';
     });
@@ -226,7 +257,10 @@ export function pre(element, options = {}) {
     // code line. Each number's real position is measured directly against
     // the rendered text instead — position/right come from the
     // `.x-pre__line-numbers > div` rule in pre.css, only `top` (below) is
-    // genuinely per-instance.
+    // genuinely per-instance. It travels as a generated rule (#779), and a
+    // number that has been measured carries .x-pre__line-number--placed --
+    // the signal x-demo (and specs) wait on, which used to be "has an inline
+    // top".
     const lineNumEls = lines.map((_, index) => {
       const lineNum = document.createElement('div');
       lineNum.textContent = index + 1;
@@ -241,6 +275,11 @@ export function pre(element, options = {}) {
     // this runs after the browser has laid out any wrapped text AND after
     // the child <code>'s own behavior (syntax highlighting) has run — both
     // can still be pending in the same tick this behavior runs in.
+    const placeLineNumber = (el, top) => {
+      setRule(el, 'top', { top: `${top}px` });
+      el.classList.add('x-pre__line-number--placed');
+    };
+
     const measureAndPosition = () => {
       const target = codeChild || element;
       // Container top is the <pre>'s OWN border-box edge, which INCLUDES its
@@ -300,7 +339,7 @@ export function pre(element, options = {}) {
       // Skip past leading spaces/tabs (never past a real newline -- an
       // all-whitespace/blank source line has nothing better to anchor to)
       // so the measured position always lands on real content when there
-      // is any. Confirmed live: without this, docs/behaviors/semantics/
+      // is any. Confirmed live: without this, docs/components/semantics/
       // audio.md's "With Bass/Treble Boost" sample (long src="https://…"
       // attribute) showed exactly this at a narrow effective row width.
       const firstContentOffset = (nodeIndex, offset) => {
@@ -321,7 +360,7 @@ export function pre(element, options = {}) {
       if (textNodes[0] && lineNumEls[0]) {
         const pos = firstContentOffset(0, 0);
         const rect = measureFrom(pos.nodeIndex, pos.offset);
-        if (rect) lineNumEls[0].style.top = (rect.top - containerTop) + 'px';
+        if (rect) placeLineNumber(lineNumEls[0], rect.top - containerTop);
       }
 
       let lineIndex = 0;
@@ -334,7 +373,7 @@ export function pre(element, options = {}) {
           if (lineIndex < lineNumEls.length) {
             const pos = firstContentOffset(i, nlAt + 1);
             const rect = measureFrom(pos.nodeIndex, pos.offset);
-            if (rect) lineNumEls[lineIndex].style.top = (rect.top - containerTop) + 'px';
+            if (rect) placeLineNumber(lineNumEls[lineIndex], rect.top - containerTop);
           }
           searchFrom = nlAt + 1;
         }
@@ -349,10 +388,25 @@ export function pre(element, options = {}) {
       const ro = new ResizeObserver(() => measureAndPosition());
       ro.observe(element);
     }
+
+    // Line positions also move when the page's web fonts swap in (they load
+    // with display=swap) or a just-in-time stylesheet lands -- neither
+    // necessarily resizes the <pre>, so the observer above can miss it. CI
+    // caught the gutter measured before either arrived: every number at the
+    // same `top`, all 8 stacked on line 1 (demos/frameworks.html). Measure
+    // again once both have settled.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => requestAnimationFrame(measureAndPosition));
+    }
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', () => requestAnimationFrame(measureAndPosition), { once: true });
+    }
   }
 
   return () => {
-    element.classList.remove('x-pre');
+    element.classList.remove('x-pre', 'x-pre--collapsed');
+    clearRules(element);
+    if (wrapper) clearRulesIn(wrapper);
     if (wrapper && wrapper.parentNode) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();

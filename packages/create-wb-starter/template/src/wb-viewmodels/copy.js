@@ -19,9 +19,26 @@ export async function writeToClipboard(text) {
     await navigator.clipboard.writeText(text);
     return true;
   } catch (err) {
+    // The fallback has to put the text in a real, selected field for
+    // execCommand('copy') to see it — and selecting a field focuses it. That
+    // takes focus away from whatever the user was in, and removing the element
+    // afterwards leaves document.activeElement as <body> rather than handing
+    // it back.
+    //
+    // Caught as a wrong-looking Playground: clicking an example jumped to its
+    // markup and selected it, but the textarea was no longer focused, so the
+    // next keystroke went nowhere. The selection survived — it is a property
+    // of the element, not of the focus — which is what made the jump look like
+    // it had worked.
+    //
+    // For a keyboard user that is the whole bug: copy anything and you are
+    // silently returned to the top of the document.
+    const previouslyFocused = document.activeElement;
+
     const textarea = document.createElement('textarea');
     textarea.value = text;
-    textarea.style.cssText = 'position:fixed;left:-9999px';
+    // Off-screen via .x-copy-buffer (ui-utils.css), not element.style (#779).
+    textarea.className = 'x-copy-buffer';
     document.body.appendChild(textarea);
     textarea.select();
 
@@ -33,6 +50,18 @@ export async function writeToClipboard(text) {
       return false;
     } finally {
       document.body.removeChild(textarea);
+
+      // Restore focus, but never *give* focus to something that did not have
+      // it: with nothing focused, activeElement is <body>, and calling focus()
+      // there would be a change rather than a restoration.
+      if (previouslyFocused
+          && previouslyFocused !== document.body
+          && previouslyFocused.isConnected
+          && typeof previouslyFocused.focus === 'function') {
+        // preventScroll: restoring focus must not yank the viewport back to
+        // wherever that element sits.
+        previouslyFocused.focus({ preventScroll: true });
+      }
     }
   }
 }
@@ -61,6 +90,12 @@ export function copy(element, options = {}) {
 
   // #448: no classList.add('x-copy') -- copybutton.css's own comment
   // confirms .x-copy has "no dedicated CSS"; nothing selects the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-copy> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-copy> tag does not get a redundant class.
+  element.classList.add('x-copy');
 
   // Store original content
   const originalContent = element.innerHTML;
@@ -121,8 +156,7 @@ export function copy(element, options = {}) {
 
   element.addEventListener('click', onClick);
   
-  // Style as clickable
-  element.style.cursor = 'pointer';
+  // Clickable: .x-copy { cursor: pointer } in ui-utils.css (#779).
 
   // Mark as ready
   // Cleanup
@@ -130,7 +164,6 @@ export function copy(element, options = {}) {
     clearTimeout(timeout);
     element.classList.remove('x-copy', 'x-copy--copied');
     element.innerHTML = originalContent;
-    element.style.cursor = '';
     element.removeEventListener('click', onClick);
   };
 }

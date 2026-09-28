@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { setRule } from '../core/dynamic-style.js';
 /**
  * Hero Behavior
  * -----------------------------------------------------------------------------
@@ -45,9 +46,15 @@ export function hero(element, options = {}) {
             for (let i = 0; i < 50; i++) {
                 const star = document.createElement('div');
                 star.className = 'x-hero__star';
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
+                // Random per star, so generated rules rather than style
+                // attributes (#779). Weight 2 outranks x-signature.css's
+                // `.x-hero__star:nth-child(odd)` delay (0,2,0), which the
+                // inline delay used to override.
+                setRule(star, 'place', {
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 3}s`,
+                }, { weight: 2 });
                 stars.appendChild(star);
             }
         }

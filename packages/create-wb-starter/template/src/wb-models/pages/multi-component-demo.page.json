@@ -17,10 +17,10 @@
     "title": "🧩 Multi-Behavior Demo"
   },
   "title": "🧩 Multi-Behavior Demo",
-  "schemaFor": "multi-behavior-demo",
+  "schemaFor": "multi-component-demo",
   "header": {
     "tag": "h1",
-    "content": "🧩 Multi-Behavior Demo",
+    "content": "🧩 Multi-Component Demo",
     "subtitle": {
       "tag": "p",
       "content": "Composed from multiple sources using $extends, $generate, $ref, and $include"
@@ -382,7 +382,7 @@
     }
   ],
   "_composed": {
-    "source": "src/wb-models/pages/multi-behavior-demo.page.json",
+    "source": "src/wb-models/pages/multi-component-demo.page.json",
     "composedAt": "2026-07-30T22:39:51.036Z",
     "stats": {
       "extendsResolved": false,

@@ -6,7 +6,7 @@
   "schemaFor": "search",
   "baseClass": "x-search",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "search",
     "implicitRole": "search"
   },
   "compliance": {
@@ -23,12 +23,12 @@
     "value": {
       "type": "string",
       "description": "Search value",
-      "default": ""
+      "default": "this is the value"
     },
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "debounce": {
       "type": "number",
@@ -40,7 +40,9 @@
     "instant": {
       "type": "boolean",
       "description": "Search on every keystroke (no debounce)",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Searches on every keystroke instead of after a pause. Only typing shows it (#773)."
     },
     "disabled": {
       "type": "boolean",

@@ -32,7 +32,10 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
   await page.waitForFunction(() => {
     const gutter = document.querySelector('.x-pre__line-numbers');
     if (!gutter || !gutter.children[0]) return false;
-    const readTop = () => gutter.children[0].style.top;
+    // #779: a measured number carries .x-pre__line-number--placed; its top is
+    // a generated rule, so it is read computed rather than off the attribute.
+    const n0 = gutter.children[0] as HTMLElement;
+    const readTop = () => (n0.classList.contains('x-pre__line-number--placed') ? getComputedStyle(n0).top : '');
     const first = readTop();
     if (!first) return false;
     return new Promise((resolve) => {
@@ -49,7 +52,7 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
     if (!pre) return { error: 'could not locate the <pre> sibling of the gutter' };
     const paddingTop = parseFloat(getComputedStyle(pre).paddingTop) || 0;
     const lineHeight = parseFloat(getComputedStyle(pre).lineHeight) || 0;
-    const gutterTops = [...gutter.children].map((el) => parseFloat(el.style.top));
+    const gutterTops = [...gutter.children].map((el) => parseFloat(getComputedStyle(el).top));
 
     // How many visual rows each SOURCE line occupies. This page's panel is
     // white-space: pre-wrap (the live preview on /?page=behaviors), and one of
@@ -152,7 +155,7 @@ test('pre.js line-number gutter: number tracks visible content, not leading whit
     await new Promise((resolve) => {
       const gutter = preEl.parentElement.querySelector('.x-pre__line-numbers');
       const settle = () => {
-        if (gutter.children[1] && gutter.children[1].style.top) {
+        if (gutter.children[1] && gutter.children[1].classList.contains('x-pre__line-number--placed')) {
           requestAnimationFrame(() => requestAnimationFrame(resolve));
         } else {
           requestAnimationFrame(settle);
@@ -162,7 +165,7 @@ test('pre.js line-number gutter: number tracks visible content, not leading whit
     });
 
     const gutter = preEl.parentElement.querySelector('.x-pre__line-numbers');
-    const line2Top = parseFloat(gutter.children[1].style.top);
+    const line2Top = parseFloat(getComputedStyle(gutter.children[1]).top);
 
     // Real rendered position of "BBBB"'s first character ('B') -- the
     // ground truth for where line 2's number SHOULD sit.

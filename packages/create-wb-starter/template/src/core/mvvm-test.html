@@ -148,6 +148,13 @@
       font-family: monospace;
       font-size: 0.8rem;
     }
+
+    /* Was an inline style attribute on the one note that uses it (#779). */
+    .test-box .test-note {
+      color: var(--text-tertiary);
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -225,14 +232,14 @@ Classes AUTO-GENERATED: baseClass + "__" + name
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>Behavior Tags</h3>
+      <h3>Web Component Tags</h3>
       <p>
         <span x-badge>Default</span>
         <span x-badge variant="success">Success</span>
         <span x-badge variant="warning">Warning</span>
         <span x-badge variant="error">Error</span>
       </p>
-      <p style="color: var(--text-tertiary); font-size: 0.8rem; margin-top: 1rem;">
+      <p class="test-note">
         CSS styles <code>x-badge</code> tag directly. No JavaScript, no schema processing.
       </p>
     </div>
@@ -252,7 +259,7 @@ x-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;x-card&gt; Tag</h3>
+      <h3>&lt;article&gt; card</h3>
       <article title="Hello World">
         <p>This content goes in the main slot.</p>
       </article>
@@ -268,7 +275,7 @@ x-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;x-card&gt; Tag</h3>
+      <h3>&lt;article&gt; card</h3>
       <article title="Card Title" subtitle="A helpful subtitle">
         <p>Content with both title and subtitle.</p>
       </article>
@@ -284,7 +291,7 @@ x-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;x-card&gt; Tag</h3>
+      <h3>&lt;article&gt; card</h3>
       <article title="With Footer" footer="Footer text here">
         <p>This card has a footer section.</p>
       </article>
@@ -300,7 +307,7 @@ x-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;x-card&gt; Tag</h3>
+      <h3>&lt;article&gt; card</h3>
       <article title="Full Example" subtitle="All the parts" footer="© 2025" elevated>
         <p>This card demonstrates all $view parts being created.</p>
       </article>
@@ -316,7 +323,7 @@ x-badge[variant="success"] {
   <!-- ============================================ -->
   <div class="test-section">
     <div class="test-box">
-      <h3>&lt;x-card&gt; Tag</h3>
+      <h3>&lt;article&gt; card</h3>
       <article>
         <p>Just content, no title means no header created.</p>
       </article>
@@ -407,11 +414,18 @@ element.toggle()</pre>
       
       // Show generated DOM for examples
       setTimeout(() => {
-        const card1 = document.querySelectorAll('x-card')[0];
-        const card2 = document.querySelectorAll('x-card')[1];
-        const card3 = document.querySelectorAll('x-card')[2];
-        const card5 = document.querySelectorAll('x-card')[3];
-        const card6 = document.querySelectorAll('x-card')[4];
+        // The examples are <article> cards now (4.0.0 removed the <x-card>
+        // tag), so querySelectorAll('x-card') found nothing and every
+        // "Generated DOM" box stayed at "Loading..." forever. Each example is
+        // the <article> in the first box of its .test-section.
+        const cards = [...document.querySelectorAll('.test-section > .test-box:first-child > article')];
+        // SchemaBuilder.scan() only picks up x-* attribute hosts; a bare
+        // <article> is a card through autoInject (tag-map nativeMap), which
+        // this page does not load -- it exercises the schema builder alone.
+        // Build each example against the card schema explicitly, so the boxes
+        // show what the schema actually generates.
+        cards.forEach((el) => SchemaBuilder.processElement(el, 'card'));
+        const [card1, card2, card3, card5, card6] = cards;
 
         if (card1) document.getElementById('dom-output-1').textContent = formatDom(card1);
         if (card2) document.getElementById('dom-output-2').textContent = formatDom(card2);

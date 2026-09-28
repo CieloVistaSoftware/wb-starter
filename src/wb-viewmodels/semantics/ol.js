@@ -1,4 +1,5 @@
 import { readAttr } from '../../core/read-attr.js';
+import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 /**
  * OL - Enhanced <ol> element (Ordered List)
  * Adds numbering styles, custom start, variants
@@ -25,84 +26,47 @@ export function ol(element, options = {}) {
   element.classList.add(`x-ol--${config.variant}`);
 
   // Base list styling
-  element.style.listStyleType = config.numberType;
-  element.style.paddingLeft = config.indentSize;
+  // #779: numbering, indent, item gap and the stepped / timeline variants
+  // are .x-ol* rules in lists.css. The author's number type / indent / gap
+  // (and the stepped counter's start) travel as generated rules.
+  const ownsMarker = ['stepped', 'timeline'].includes(config.variant);
+  setRule(element, 'list', onlyChanged({
+    listStyleType: ownsMarker ? '' : config.numberType,
+    paddingLeft: ownsMarker ? '' : config.indentSize,
+    counterReset: config.variant === 'stepped' ? `x-step ${config.start - 1}` : '',
+    '--x-ol-gap': config.gap,
+  }, { listStyleType: 'decimal', paddingLeft: '1.5rem', '--x-ol-gap': '0.5rem' }));
 
-  // Set start value
   if (config.start !== 1) {
     element.start = config.start;
   }
 
-  // Apply gap between items
   const items = element.querySelectorAll(':scope > li');
   items.forEach((li, index) => {
     li.classList.add('x-ol__item');
-    if (index < items.length - 1) {
-      li.style.marginBottom = config.gap;
-    }
+    if (index < items.length - 1) li.classList.add('x-ol__item--spaced');
   });
 
-  // Variant-specific styling
   if (config.variant === 'stepped') {
-    element.style.counterReset = `x-step ${config.start - 1}`;
-    element.style.listStyleType = 'none';
-    element.style.paddingLeft = '0';
-
-    items.forEach(li => {
-      li.style.counterIncrement = 'x-step';
-      li.style.display = 'flex';
-      li.style.alignItems = 'start';
-      li.style.gap = '1rem';
-
+    items.forEach((li, index) => {
       const stepNumber = document.createElement('span');
       stepNumber.className = 'x-ol__step-number';
-      stepNumber.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 2rem;
-        height: 2rem;
-        min-width: 2rem;
-        border-radius: 50%;
-        background: var(--primary, #6366f1);
-        color: white;
-        font-weight: 700;
-        font-size: 0.875rem;
-      `;
       stepNumber.textContent = `${parseInt(config.start) + index}`;
-
       li.insertBefore(stepNumber, li.firstChild);
     });
   } else if (config.variant === 'timeline') {
-    element.style.listStyleType = 'none';
-    element.style.paddingLeft = '2rem';
-    element.style.borderLeft = '2px solid var(--border-color, #374151)';
-
     items.forEach(li => {
-      li.style.position = 'relative';
-      li.style.paddingLeft = '1.5rem';
-
       const marker = document.createElement('span');
       marker.className = 'x-ol__timeline-marker';
-      marker.style.cssText = `
-        position: absolute;
-        left: -0.5rem;
-        top: 0.25rem;
-        width: 0.75rem;
-        height: 0.75rem;
-        border-radius: 50%;
-        background: var(--primary, #6366f1);
-        border: 2px solid var(--bg-primary, #111827);
-      `;
-
       li.insertBefore(marker, li.firstChild);
     });
   }
 
   return () => {
+    clearRules(element);
     element.classList.remove('x-ol', `x-ol--${config.variant}`);
     items.forEach(li => {
-      li.classList.remove('x-ol__item');
+      li.classList.remove('x-ol__item', 'x-ol__item--spaced');
       li.querySelector('.x-ol__step-number')?.remove();
       li.querySelector('.x-ol__timeline-marker')?.remove();
     });

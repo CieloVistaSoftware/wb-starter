@@ -81,12 +81,7 @@ export function validator(element, options = {}) {
         const errorSpanEl = document.createElement('span');
         errorSpanEl.className = 'x-validator__error';
         errorSpanEl.textContent = showErrorsArr[0];
-        errorSpanEl.style.cssText = `
-          display: block;
-          color: var(--x-color-error, #dc3545);
-          font-size: 0.875rem;
-          margin-top: 0.25rem;
-        `;
+        // Styled by .x-validator__error in validator.css (#779).
         input.parentNode.insertBefore(errorSpanEl, input.nextSibling);
       }
       return false;

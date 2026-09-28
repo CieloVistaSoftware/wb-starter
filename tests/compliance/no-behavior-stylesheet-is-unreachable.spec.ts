@@ -38,6 +38,7 @@ const SITE_CSS = 'src/styles/site.css';
 const INTENTIONALLY_UNREACHABLE: Record<string, string> = {
   'modal.css': 'dead/legacy CSS — dialog.js uses <dialog> + showModal(), not the .x-modal.open toggle this defines',
   'stock.css': 'confirmed orphaned — no behavior, tag or markup anywhere references .x-stock',
+  'enhancements.css': 'holds the inline styles of src/wb-viewmodels/enhancements.js, a legacy module nothing imports (#779) — its behaviors live in their own modules',
 };
 
 test('no behaviour stylesheet is loaded by nothing', () => {

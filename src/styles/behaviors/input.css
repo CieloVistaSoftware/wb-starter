@@ -70,7 +70,11 @@ x-select:focus, [x-select]:focus{
   opacity: 1;
 }
 
+/* #773: .x-input__field too. input() puts .x-input on the <div x-input> HOST
+   and .x-input__field on the real <input> -- the only element :disabled can
+   match -- so a disabled field in either authoring form looked enabled. */
 .x-input:disabled,
+.x-input__field:disabled,
 .x-textarea:disabled,
 x-select:disabled, [x-select]:disabled{
   background-color: var(--bg-secondary);
@@ -210,7 +214,7 @@ input[type="radio"] {
   margin-bottom: 0.25rem;
   padding: 0.375rem 0.625rem;
   border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border-radius: var(--radius-sm, 0.25rem); /* the shared token, in rem (#294) */
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font: inherit;
@@ -249,4 +253,99 @@ input[type="radio"] {
 .x-select__clear:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+ * #779 — layout input.js used to write onto element.style
+ * ------------------------------------------------------------------------- */
+
+/* The flex row both input paths wrap their field in. */
+.x-input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* The field takes the remaining width of that row. */
+.x-input__wrapper > .x-input__field {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Native <input x-input> path only: it always set outline and a per-size
+   padding (md unless a known size says otherwise), and styled its prefix,
+   suffix and clear button; the <div x-input> builder never did. Two classes,
+   so these beat `.x-input { padding }` and the single-class size rules. */
+.x-input__wrapper--native > .x-input__field {
+  outline: none;
+  padding: 0.5rem 0.75rem;
+}
+.x-input__wrapper--native > .x-input__field.x-input--xs { padding: 0.125rem 0.5rem; }
+.x-input__wrapper--native > .x-input__field.x-input--sm { padding: 0.25rem 0.75rem; }
+.x-input__wrapper--native > .x-input__field.x-input--lg { padding: 0.75rem 1rem; }
+.x-input__wrapper--native > .x-input__field.x-input--xl { padding: 1rem 1.25rem; }
+
+.x-input__wrapper--native > .x-input__prefix,
+.x-input__wrapper--native > .x-input__suffix {
+  padding: 0 0.5rem;
+  color: var(--text-secondary);
+}
+
+/* Scoped two classes deep: themes.css's `[data-theme] button` (0,1,1) would
+   otherwise put its own background, border and padding back. */
+.x-input__wrapper--native > .x-input__clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+/* textarea.js (#779): the 2-row default minimum (min-rows="2" x 1.5rem); a
+   different min-rows arrives as a generated rule. */
+:where(textarea).x-textarea {
+  /* (0,1,0) via :where(), so a generated min-rows rule -- also (0,1,0),
+     later in the cascade -- still wins. */
+  min-height: 3rem;
+}
+
+.x-textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.x-textarea__counter {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.x-textarea__counter.x-textarea__counter--over {
+  color: var(--danger-color);
+}
+
+/* =============================================================================
+   #779 — range(): the show-value / show-labels wrapper, formerly inline.
+============================================================================= */
+.x-range-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.x-range-wrapper > .x-range-value {
+  text-align: center;
+  font-weight: 500;
+  color: var(--text-primary, #f9fafb);
+}
+
+.x-range-wrapper > .x-range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-secondary, #9ca3af);
 }

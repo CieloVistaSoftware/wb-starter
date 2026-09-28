@@ -39,7 +39,9 @@
     "autoplay": {
       "type": "boolean",
       "description": "Auto-play video (requires muted)",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Starts playback on load. A paused and a playing video look alike until time passes; nothing on the card marks it (#773)."
     },
     "muted": {
       "type": "boolean",
@@ -49,7 +51,9 @@
     "loop": {
       "type": "boolean",
       "description": "Loop video playback",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Restarts playback at the end. Nothing is drawn for it (#773)."
     },
     "controls": {
       "type": "boolean",

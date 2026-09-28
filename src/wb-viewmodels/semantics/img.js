@@ -1,4 +1,5 @@
 import { readFlag } from '../../core/read-attr.js';
+import { setRule } from '../../core/dynamic-style.js';
 /**
  * Image - Enhanced <img> element
  * Adds lazy loading, zoom/lightbox, fallback, aspect ratio
@@ -32,8 +33,11 @@ export function img(element, options = {}) {
   }
 
   if (config.aspectRatio) {
-    element.style.aspectRatio = config.aspectRatio;
-    element.style.objectFit = 'cover';
+    // object-fit is .x-img--ratio (image.css); the authored ratio is a
+    // runtime value, so a generated rule rather than the style attribute
+    // (#779). Weight 2 matches that class rule's (0,2,0).
+    element.classList.add('x-img--ratio');
+    setRule(element, 'ratio', { aspectRatio: config.aspectRatio }, { weight: 2 });
   }
 
   let retryCleanup = null;
@@ -82,40 +86,23 @@ export function img(element, options = {}) {
   }
 
   if (config.zoomable) {
+    // The zoom-in cursor is .x-img--zoomable's (image.css, #779).
     element.classList.add('x-img--zoomable');
-    element.style.cursor = 'zoom-in';
     element.onclick = () => openLightbox(element.src, element.alt);
   }
 
-  return () => { element.classList.remove('x-img', 'x-img--zoomable'); if (retryCleanup) retryCleanup(); };
+  return () => { element.classList.remove('x-img', 'x-img--zoomable', 'x-img--ratio'); setRule(element, 'ratio', null); if (retryCleanup) retryCleanup(); };
 }
 
 export function openLightbox(src, alt = '') {
   const overlay = document.createElement('div');
-  overlay.className = 'x-lightbox';
-  Object.assign(overlay.style, {
-    position: 'fixed',
-    inset: '0',
-    background: 'rgba(0,0,0,0.9)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: '9999',
-    cursor: 'zoom-out',
-    padding: '2rem'
-  });
+  // .x-img-lightbox in image.css -- was Object.assign(overlay.style) (#779).
+  overlay.className = 'x-lightbox x-img-lightbox';
 
   const img = document.createElement('img');
   img.src = src;
   img.alt = alt;
   img.className = 'x-lightbox__img';
-  Object.assign(img.style, {
-    maxWidth: '90vw',
-    maxHeight: '90vh',
-    objectFit: 'contain',
-    borderRadius: '8px',
-    boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
-  });
 
   overlay.appendChild(img);
   overlay.onclick = () => overlay.remove();

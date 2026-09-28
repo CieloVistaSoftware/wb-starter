@@ -50,7 +50,16 @@
         "time",
         "datetime-local"
       ],
-      "default": "text"
+      "default": "text",
+      "nonVisualValues": [
+        "email",
+        "password",
+        "number",
+        "tel",
+        "url",
+        "search"
+      ],
+      "visualReason": "These types change the keyboard, validation and what a value may be, not the empty field: each is drawn as the same box as text (number's spin buttons appear only on hover). date, time and datetime-local draw their own picker and are compared (#773)."
     },
     "helper": {
       "type": "string",
@@ -92,12 +101,16 @@
     "readonly": {
       "type": "boolean",
       "description": "Read-only state",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "The field refuses edits but is drawn exactly like an editable one (#773)."
     },
     "required": {
       "type": "boolean",
       "description": "Required field",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A form-validation constraint: an empty field blocks submit. Nothing is drawn for it (#773)."
     },
     "icon": {
       "type": "string",

@@ -28,7 +28,12 @@ button-tooltip:focus-visible {
   outline-offset: 2px;
 }
 
+/* #773: [disabled] as well as :disabled. :disabled only matches a real form
+   control, so <div x-button disabled> -- the attribute form the showcase
+   renders -- was blocked by button.js yet looked exactly like an enabled
+   button. Presence alone, exactly as button.js decides it blocks a click. */
 .x-button:disabled,
+.x-button[disabled],
 button-tooltip[disabled] {
   opacity: 0.6;
   cursor: not-allowed;

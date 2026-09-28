@@ -49,7 +49,13 @@ test.describe('x-button href navigates from any host', () => {
       const host = document.createElement('div');
       host.id = 'href-probe';
       host.innerHTML = markup;
-      document.body.appendChild(host);
+      // At the TOP of the page, not the end: /?page=demos keeps growing as its
+      // demos build, and a probe at the bottom was pushed out of the viewport
+      // between the scroll and the click -- "Element is outside of the
+      // viewport" on the first Windows CI run (#1218). Growth below cannot
+      // move an element above it.
+      document.body.prepend(host);
+      window.scrollTo(0, 0);
       await (window as any).WB.scan(host);
     }, html);
     // The base class is what the behavior writes on completion — a real

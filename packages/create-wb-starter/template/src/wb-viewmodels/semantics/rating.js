@@ -1,9 +1,10 @@
-import { readAttr } from '../../core/read-attr.js';
+import { readAttr, readFlag } from '../../core/read-attr.js';
+import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 /**
  * Rating Behavior
  * ===============
  * 
- * Interactive star rating behavior.
+ * Interactive star rating component.
  * 
  * ATTRIBUTES:
  * - data-max: Number of stars (default: 5)
@@ -23,15 +24,30 @@ export function rating(element, options = {}) {
   // filled on first paint and the custom icon was dropped. (#177)
   const attr = (name) => element.getAttribute(name);
   const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
+  // Declared in rating.schema.json / docs/behaviors/rating.md and read by
+  // nothing until now: `half` (allow x.5 values) and `disabled` (no
+  // interaction, dimmed, aria-disabled). Read first because `half` decides
+  // how `value` parses -- parseInt dropped the .5 of value="3.5".
+  const half = options.half ?? readFlag(element, 'half');
+  const disabled = options.disabled ?? readFlag(element, 'disabled');
+  const parseValue = (raw) => {
+    const n = half ? Math.round(parseFloat(raw) * 2) / 2 : parseInt(raw, 10);
+    return Number.isFinite(n) ? n : 0;
+  };
   const config = {
     max: parseInt(options.max || attr('max') || readAttr(element, 'max') || '5', 10),
-    value: parseInt(options.value || attr('value') || readAttr(element, 'value') || authoredValue || '0', 10),
+    value: parseValue(options.value || attr('value') || readAttr(element, 'value') || authoredValue || '0'),
+    half,
+    disabled,
     readonly: options.readonly ?? (element.hasAttribute('readonly') || readAttr(element, 'readonly') === 'true'),
     icon: options.icon || attr('icon') || readAttr(element, 'icon') || '★',
     // Filled colour: theme's rating colour by default; override via color="…"
     // (e.g. color="var(--primary)" for blue). Empty colour from the theme too.
-    color: options.color || attr('color') || readAttr(element, 'color') || 'var(--rating-active-color, #fbbf24)',
-    emptyColor: options.emptyColor || attr('empty-color') || 'var(--border-color, #e5e7eb)',
+    // #779: the defaults are rating.css's; only an author colour travels (as a
+    // generated rule setting --x-rating-color / --x-rating-empty-color), so a
+    // theme's --rating-active-color still reaches every unconfigured rating.
+    color: options.color || attr('color') || readAttr(element, 'color') || '',
+    emptyColor: options.emptyColor || attr('empty-color') || '',
     // rating.schema.json declares size (sm/md/lg, appliesClass:
     // "x-rating--{{value}}"), but that's schema-builder's mechanism (never
     // runs on a wb-lazy.js-only page) AND this function never read the
@@ -48,14 +64,26 @@ export function rating(element, options = {}) {
 
   // Clear element
   element.innerHTML = '';
-  // #448: no bare 'x-rating' token -- it just duplicated <span x-rating>'s own
+  // #448: no bare '[x-rating]' token -- it just duplicated <span x-rating>'s own
   // tag name (no CSS selector depends on it; rating.css's `.x-rating span`
   // rule is already dead/unmatched per its own comment). The size modifier
   // class is real and stays.
   element.classList.add(`x-rating--${config.size}`);
-  element.style.display = 'inline-flex';
-  element.style.gap = '0.25rem';
-  element.style.cursor = config.readonly ? 'default' : 'pointer';
+  element.classList.toggle('x-rating--half', !!config.half);
+  element.classList.toggle('x-rating--disabled', !!config.disabled);
+  if (config.disabled) element.setAttribute('aria-disabled', 'true');
+  // Disabled is readonly plus the disabled presentation (rating.css).
+  const interactive = !config.readonly && !config.disabled;
+  // #779: layout and the per-state cursor are rating.css, keyed on the
+  // x-rating base class (the schema's compliance.baseClass) and --readonly /
+  // --disabled. Skipped on a literal <x-rating> tag, where it would only
+  // repeat the tag name (#448); rating.css selects the tag too.
+  if (element.tagName !== 'X-RATING') element.classList.add('x-rating');
+  element.classList.toggle('x-rating--readonly', !config.disabled && !!config.readonly);
+  setRule(element, 'colors', onlyChanged({
+    '--x-rating-color': config.color,
+    '--x-rating-empty-color': config.emptyColor,
+  }));
 
   // Create stars
   const stars = [];
@@ -66,20 +94,25 @@ export function rating(element, options = {}) {
     star.innerHTML = config.icon; // honour custom icon (★ default, ❤️/👍/…)
     // font-size now comes from CSS (.x-rating__star / .x-rating--{size} .x-rating__star,
     // rating.css) so the size attribute actually has an effect -- not hardcoded here.
-    star.style.lineHeight = '1';
-    star.style.transition = 'color 0.2s ease, transform 0.1s ease';
-    star.style.color = config.emptyColor; // empty
-    
-    if (!config.readonly) {
+    // #779: so do line-height, the transition and the empty/full colours.
+
+    if (interactive) {
+      // With `half`, the left half of a star means i - 0.5.
+      const valueAt = (e) => {
+        if (!config.half) return i;
+        const r = star.getBoundingClientRect();
+        return (e.clientX - r.left) < r.width / 2 ? i - 0.5 : i;
+      };
+
       // Hover effects
-      star.addEventListener('mouseenter', () => {
-        hoverValue = i;
+      star.addEventListener(config.half ? 'mousemove' : 'mouseenter', (e) => {
+        hoverValue = valueAt(e);
         updateStars();
       });
       
       // Click handler
-      star.addEventListener('click', () => {
-        currentValue = i;
+      star.addEventListener('click', (e) => {
+        currentValue = valueAt(e);
         updateStars();
         
         // Dispatch event
@@ -88,9 +121,9 @@ export function rating(element, options = {}) {
           detail: { value: currentValue }
         }));
         
-        // Animation
-        star.style.transform = 'scale(1.2)';
-        setTimeout(() => star.style.transform = 'scale(1)', 150);
+        // Animation: .x-rating__star--pop scales it up for 150ms (#779).
+        star.classList.add('x-rating__star--pop');
+        setTimeout(() => star.classList.remove('x-rating__star--pop'), 150);
       });
     }
     
@@ -99,7 +132,7 @@ export function rating(element, options = {}) {
   }
 
   // Reset hover on leave
-  if (!config.readonly) {
+  if (interactive) {
     element.addEventListener('mouseleave', () => {
       hoverValue = 0;
       updateStars();
@@ -113,14 +146,12 @@ export function rating(element, options = {}) {
     stars.forEach((star, index) => {
       const value = index + 1;
       const isFull = value <= targetValue;
+      const isHalf = !isFull && config.half && value - 0.5 === targetValue;
       
-      if (isFull) {
-        star.classList.add('x-rating__star--full');
-        star.style.color = config.color;
-      } else {
-        star.classList.remove('x-rating__star--full');
-        star.style.color = config.emptyColor;
-      }
+      // Full / half / empty colours, including the half star's two-stop
+      // gradient clipped to the glyph, are these classes in rating.css (#779).
+      star.classList.toggle('x-rating__star--full', isFull);
+      star.classList.toggle('x-rating__star--half', isHalf);
     });
   }
 
@@ -131,7 +162,7 @@ export function rating(element, options = {}) {
   element.wbRating = {
     getValue: () => currentValue,
     setValue: (val) => {
-      currentValue = Math.max(0, Math.min(val, config.max));
+      currentValue = Math.max(0, Math.min(parseValue(val), config.max));
       updateStars();
     }
   };
@@ -139,6 +170,8 @@ export function rating(element, options = {}) {
   return () => {
     // Cleanup
     element.innerHTML = '';
+    clearRules(element);
+    element.classList.remove('x-rating', 'x-rating--readonly');
     delete element.wbRating;
   };
 }

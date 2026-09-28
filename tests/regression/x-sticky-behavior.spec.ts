@@ -158,7 +158,9 @@ test.describe('[x-sticky]', () => {
     const el = page.locator('#sticky-sticky [x-sticky]').nth(2); // animated
     await scrollPastAndSettle(page, el);
     await expect(el).toHaveClass(/is-stuck/);
-    const transition = await el.evaluate((e) => e.style.transition);
+    // Computed: the transition is effects.css's .x-sticky rule since #779,
+    // not a declaration on the style attribute.
+    const transition = await el.evaluate((e) => getComputedStyle(e).transitionProperty);
     expect(transition).toContain('box-shadow');
   });
 

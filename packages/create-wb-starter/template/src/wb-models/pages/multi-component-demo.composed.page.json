@@ -1,9 +1,10 @@
 {
+  "$extends": "x-page-defaults",
   "title": "🧩 Multi-Behavior Demo",
-  "schemaFor": "multi-behavior-demo",
+  "schemaFor": "multi-component-demo",
   "header": {
     "tag": "h1",
-    "content": "🧩 Multi-Behavior Demo",
+    "content": "🧩 Multi-Component Demo",
     "subtitle": {
       "tag": "p",
       "content": "Composed from multiple sources using $extends, $generate, $ref, and $include"
@@ -12,7 +13,7 @@
   "sections": [
     {
       "$generate": {
-        "behavior": "badge",
+        "component": "badge",
         "source": "matrix",
         "baseAttrs": {
           "label": "Badge"
@@ -24,7 +25,7 @@
     },
     {
       "$generate": {
-        "behavior": "cardnotification",
+        "component": "cardnotification",
         "source": "matrix",
         "baseAttrs": {
           "message": "Notification message"
@@ -34,7 +35,7 @@
     },
     {
       "$generate": {
-        "behavior": "progress",
+        "component": "progress",
         "source": "enums"
       },
       "heading": "Progress — All Enum Variants"

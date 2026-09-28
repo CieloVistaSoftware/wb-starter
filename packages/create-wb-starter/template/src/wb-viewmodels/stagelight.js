@@ -1,6 +1,7 @@
 import { readAttr } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
- * Stage Light Behavior
+ * Stage Light Component
  * -----------------------------------------------------------------------------
  * Provides three stage lighting effects:
  * 1. Beam: Decorative sweeping beam (CSS animation)
@@ -29,24 +30,29 @@ function injectStyles() {
     }
 
     /* === VARIANT: BEAM === */
+    /* The HOST is the stage, in normal flow, keeping its own text -- the same
+       change #647 made for spotlight, for the same reason. The host used to BE
+       the beam's pivot: position absolute, width 0, height 0. Its authored
+       text sat in a zero-size box, it contributed nothing to layout, and in a
+       demo grid the whole example measured 0x0 and rendered as an empty box
+       (live-examples-render.spec.ts, demos/site/effects.html). The swing now
+       lives on the beam itself, pivoting from the fixture at the top centre,
+       and overflow is clipped to the stage: a 100vh beam used to sweep across
+       whatever sat below it, its own code sample included. */
     .x-stagelight--beam {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: 0;
-      height: 0;
-      z-index: 10;
-      /* Swing animation */
-      animation: x-beam-swing var(--speed, 3s) ease-in-out infinite alternate;
-      transform-origin: top center;
+      position: relative;
+      overflow: hidden;
+      /* A beam needs room to be seen -- the same canvas spotlight gets. */
+      min-width: 18rem;
+      min-height: 14rem;
     }
 
     .x-stagelight__beam {
       position: absolute;
       top: 0;
-      left: calc(var(--x-stagelight-size) / -2);
+      left: calc(50% - var(--x-stagelight-size) / 2);
       width: var(--x-stagelight-size);
-      height: 100vh; /* Long beam */
+      height: 100%;
       background: linear-gradient(
         to bottom, 
         rgba(255, 255, 255, var(--x-stagelight-intensity)) 0%, 
@@ -57,17 +63,21 @@ function injectStyles() {
       clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);
       filter: blur(10px);
       mix-blend-mode: screen;
+      /* Swing animation, pivoting where the cone meets the fixture */
+      animation: x-beam-swing var(--speed, 3s) ease-in-out infinite alternate;
+      transform-origin: top center;
     }
 
     .x-stagelight__source {
       position: absolute;
       top: -10px;
-      left: -20px;
+      left: calc(50% - 20px);
       width: 40px;
       height: 20px;
       background: #333;
       border-radius: 0 0 20px 20px;
       box-shadow: 0 0 10px var(--x-stagelight-color);
+      z-index: 1;
     }
 
     @keyframes x-beam-swing {
@@ -88,7 +98,7 @@ function injectStyles() {
     .x-stagelight--spotlight {
       position: relative;
       /* A spotlight with zero area is meaningless. The host is often empty
-         (the behavior consumes its text), and inside a single-item demo grid
+         (the component consumes its text), and inside a single-item demo grid
          "width: fit-content" then resolves to 0 -- the effect had nothing to
          paint on. It previously hid this by covering the whole viewport
          instead, which is the bug. Give it a real canvas by default. */
@@ -185,6 +195,10 @@ function injectStyles() {
       opacity: var(--x-stagelight-intensity);
     }
     
+    .x-stagelight--fixture .x-stagelight__housing {
+      cursor: pointer;
+    }
+
     .x-stagelight__housing:hover {
        transform: rotateX(-20deg);
     }
@@ -216,6 +230,12 @@ export default function stagelight(element, options = {}) {
   // #448: no classList.add('x-stagelight') -- no CSS selector anywhere
   // depends on the bare class; it just duplicated <div x-stagelight>'s own
   // tag name.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-stagelight> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-stagelight> tag does not get a redundant class.
+  element.classList.add('x-stagelight');
 
   // === STEP 2: CREATE DOM STRUCTURE BASED ON VARIANT ===
   if (config.variant === 'beam') {
@@ -250,11 +270,18 @@ export default function stagelight(element, options = {}) {
     element.appendChild(spot);
   }
 
-  // Apply CSS Variables
-  element.style.setProperty('--x-stagelight-color', config.color);
-  element.style.setProperty('--x-stagelight-size', config.size);
-  element.style.setProperty('--x-stagelight-intensity', config.intensity);
-  element.style.setProperty('--speed', config.speed);
+  // Apply CSS Variables -- as generated rules, never element.style (#779),
+  // and only where the value differs from the .x-stagelight default above:
+  // a default pinned onto the element is exactly what stops a theme from
+  // supplying its own.
+  const vars = {};
+  if (config.color !== '#ffffff') vars['--x-stagelight-color'] = config.color;
+  if (config.size !== '300px') vars['--x-stagelight-size'] = config.size;
+  if (config.speed !== '3s') vars['--speed'] = config.speed;
+  setRule(element, 'vars', vars);
+  const setIntensity = (i) => setRule(element, 'intensity',
+    String(i) === '0.5' ? null : { '--x-stagelight-intensity': i });
+  setIntensity(config.intensity);
 
   // Apply Variant Class
   element.classList.add(`x-stagelight--${config.variant}`);
@@ -286,7 +313,7 @@ export default function stagelight(element, options = {}) {
       const r = overlay.getBoundingClientRect();
       const limit = Math.min(r.width, r.height) * 0.35;
       const effective = limit > 0 ? Math.min(configuredPx, limit) : configuredPx;
-      element.style.setProperty('--x-stagelight-radius', `${Math.round(effective)}px`);
+      setRule(element, 'radius', { '--x-stagelight-radius': `${Math.round(effective)}px` });
     };
     syncRadius();
     let ro = null;
@@ -297,8 +324,7 @@ export default function stagelight(element, options = {}) {
 
     const onMove = (e) => {
       const rect = overlay.getBoundingClientRect();
-      element.style.setProperty('--x', `${e.clientX - rect.left}px`);
-      element.style.setProperty('--y', `${e.clientY - rect.top}px`);
+      setRule(element, 'pointer', { '--x': `${e.clientX - rect.left}px`, '--y': `${e.clientY - rect.top}px` });
     };
 
     if (config.target === 'mouse') {
@@ -307,7 +333,7 @@ export default function stagelight(element, options = {}) {
 
     // #658: let a viewer switch the effect off and read the content plainly.
     // The fixture variant already toggles (click its housing); spotlight had no
-    // way to stop, which is an inconsistency between variants of one behavior.
+    // way to stop, which is an inconsistency between variants of one component.
     let isOn = !element.hasAttribute('off');
     const applyState = () => {
       if (isOn) element.removeAttribute('data-x-stagelight-off');
@@ -356,20 +382,22 @@ export default function stagelight(element, options = {}) {
     
     const toggle = () => {
       isOn = !isOn;
-      element.style.setProperty('--x-stagelight-intensity', isOn ? config.intensity : '0.1');
+      setIntensity(isOn ? config.intensity : '0.1');
     };
-    
+
+    // cursor: pointer is `.x-stagelight--fixture .x-stagelight__housing` above.
     housing.addEventListener('click', toggle);
-    housing.style.cursor = 'pointer';
     
     cleanup = () => housing.removeEventListener('click', toggle);
   }
 
   // Expose API
   element.wbStageLight = {
-    setColor: (c) => element.style.setProperty('--x-stagelight-color', c),
-    setIntensity: (i) => element.style.setProperty('--x-stagelight-intensity', i),
-    setSize: (s) => element.style.setProperty('--x-stagelight-size', s)
+    // One 'vars' slot, updated in place: two rules setting the same property
+    // on one element would be decided by insertion order, not by the call.
+    setColor: (c) => { vars['--x-stagelight-color'] = c; setRule(element, 'vars', { ...vars }); },
+    setIntensity,
+    setSize: (sz) => { vars['--x-stagelight-size'] = sz; setRule(element, 'vars', { ...vars }); }
   };
 
   // #658: spotlight-only controls. Assigned explicitly rather than spread --
@@ -388,6 +416,7 @@ export default function stagelight(element, options = {}) {
   // Return cleanup function
   return () => {
     cleanup();
+    clearRules(element);
     element.classList.remove('x-stagelight', `x-stagelight--${config.variant}`);
   };
 }

@@ -19,7 +19,7 @@
       "type": "string",
       "description": "Tooltip text content",
       "required": true,
-      "default": ""
+      "default": "this is the content"
     },
     "position": {
       "type": "string",
@@ -57,7 +57,7 @@
     "hideDelay": {
       "type": "number",
       "description": "Delay before hiding (ms)",
-      "default": 0
+      "default": 100
     },
     "trigger": {
       "type": "string",
@@ -68,7 +68,7 @@
         "click",
         "hover-focus"
       ],
-      "default": "hover"
+      "default": "hover-focus"
     },
     "arrow": {
       "type": "boolean",
@@ -78,7 +78,9 @@
     "interactive": {
       "type": "boolean",
       "description": "Allow hovering over tooltip content",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Lets the pointer move onto the open tooltip without closing it. Only that movement shows it (#773)."
     },
     "maxWidth": {
       "type": "string",

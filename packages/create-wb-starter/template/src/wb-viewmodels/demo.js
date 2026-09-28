@@ -1,5 +1,8 @@
+import { setRule } from '../core/dynamic-style.js';
 import { WB_DOC_MAP } from './demo-docmap.js';
-import { getPageSource, extractTagBlock } from './page-source-cache.js';
+import { getPageSource, extractAttrBlock } from './page-source-cache.js';
+import { hasBehavior } from './index.js';
+import { getNativeBehavior } from '../core/tag-map.js';
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------
@@ -41,6 +44,41 @@ export function formatHtml(raw) {
         const pad = INDENT.repeat(depth);
         parent.childNodes.forEach((node) => {
             if (node.nodeType === 3) { // text
+                // #1015: collapsing ALL whitespace is right for prose and wrong
+                // for a code example. The body of
+                // <code language="javascript">...</code> is ONE text node
+                // holding ~20 lines, and collapsing it produced a single
+                // run-on line -- John, pointing at the source panel: "this
+                // didn't parse correct".
+                //
+                // Inside code/pre/textarea whitespace IS content. Keep the line
+                // structure, strip the shared leading indentation (an artefact
+                // of where the example sits in the HTML file), re-indent to
+                // this node's depth.
+                //
+                // Newline and tab come from String.fromCharCode rather than
+                // escape sequences: three earlier attempts at this edit had
+                // their escapes rewritten in transit and shipped a literal
+                // line break inside a regex, which broke the whole page.
+                const parentTag = parent.nodeName ? parent.nodeName.toLowerCase() : '';
+                if (parentTag === 'code' || parentTag === 'pre' || parentTag === 'textarea') {
+                    const NL = String.fromCharCode(10);
+                    const TAB = String.fromCharCode(9);
+                    let body = node.textContent;
+                    while (body.charAt(0) === NL) body = body.slice(1);
+                    body = body.trimEnd();
+                    if (!body) return;
+                    const leadWidth = (line) => {
+                        let n = 0;
+                        while (line.charAt(n) === ' ' || line.charAt(n) === TAB) n += 1;
+                        return n;
+                    };
+                    const lines = body.split(NL);
+                    const widths = lines.filter((l) => l.trim()).map(leadWidth);
+                    const common = widths.length ? Math.min.apply(null, widths) : 0;
+                    lines.forEach((l) => out.push(l.trim() ? pad + l.slice(common) : ''));
+                    return;
+                }
                 const t = node.textContent.replace(/\s+/g, ' ').trim();
                 if (t) out.push(pad + t);
                 return;
@@ -49,9 +87,19 @@ export function formatHtml(raw) {
             const tag = node.tagName.toLowerCase();
             const attrs = Array.from(node.attributes);
             const isVoid = VOID.has(tag);
+            // A bare leading x-* attribute NAMES the element -- `<div
+            // x-cardpricing>` is what `<wb-cardpricing>` was before 4.0
+            // removed custom tags -- so it stays on the tag's own line, where
+            // the reader looks for what the element is. Splitting it off left
+            // every behavior example opening with an anonymous `<div` and its
+            // identity one line down among the options.
+            const lead = attrs.length > 1 && attrs[0].name.startsWith('x-') && attrs[0].value === ''
+                ? attrs[0]
+                : null;
             if (attrs.length > 1) {
-                out.push(`${pad}<${tag}`);
+                out.push(`${pad}<${tag}${lead ? ' ' + lead.name : ''}`);
                 attrs.forEach((a, i) => {
+                    if (a === lead) return;
                     const last = i === attrs.length - 1;
                     out.push(`${pad}${INDENT}${attrStr(a)}${last ? (isVoid ? ' />' : '>') : ''}`);
                 });
@@ -80,7 +128,7 @@ function parseEventNames(raw) {
         .filter(Boolean);
 }
 
-// John, live on docs/behaviors/semantics/table.md's row-click example:
+// John, live on docs/components/semantics/table.md's row-click example:
 // x-table's `wb:table:select` event carries `{ row: <tr>, index }` --
 // `JSON.stringify(e.detail)` on that serializes the real DOM element to
 // `{}` (Element has no own enumerable properties), so the events-log entry
@@ -141,6 +189,28 @@ function siteRoot() {
     return stripped.replace(/[^/]*$/, '');
 }
 
+/**
+ * Serialises every per-`<pre>` scan this module performs (#970, race #2).
+ *
+ * Each x-demo block independently rAF-polls for `window.WB` and then calls
+ * `WB.scan(pre, { eager: true })`. On a page with 293 demo blocks that is 293
+ * scans beginning at 293 unpredictable moments, interleaving with the main
+ * scan's ongoing injection differently on every load.
+ *
+ * Measured on demos/site/cards.html: two loads produced traces of 9,032 and
+ * 9,010 entry points that first diverged at line 2,203 — one run building a
+ * card's internals (`inject(<header>, header)`) exactly where the other had
+ * begun a code block (`scan(<pre>, eager=true)`). Same page, same code. Tests
+ * asserting layout see whichever intermediate state they land on, which is
+ * #961's run-to-run instability.
+ *
+ * A queue makes the ORDER deterministic without costing anything real: these
+ * scans were never parallel work, merely unsequenced work. Each block still
+ * awaits its own scan, so the width measurement that depends on a fully
+ * highlighted `<pre>` is unaffected.
+ */
+let _scanQueue = Promise.resolve();
+
 // docs/manifest.json, fetched once and shared by every x-demo on the page.
 let _docsManifestPromise = null;
 function loadDocsManifest() {
@@ -152,11 +222,64 @@ function loadDocsManifest() {
     return _docsManifestPromise;
 }
 
-// Find the doc file (relative to docs/) for a behavior name, by basename match:
-// 'card' → …/card.md, 'column' → …/x-column.md. Returns null when no doc exists.
-function findDocFile(manifest, comp) {
+// #842: data/docs-manifest.json -- the GENERATED index of docs/, produced by a
+// straight filesystem walk (scripts/update-docs-manifest.js, re-run by
+// `npm start` before the server boots). docs/manifest.json above is the
+// HAND-CURATED "docs landing page" list and covers only a subset: after it was
+// pruned of 109 dead entries it holds 20 of the 177 files in docs/behaviors/,
+// so the lookup for e.g. 'button' MISSED and the demo silently fell back to the
+// generic behaviors-reference.md -- on EVERY demo on the site. Resolve against
+// the generated index first: it is by construction exactly what is on disk, so
+// "does this doc exist" is a Map hit rather than a guess, and no dead link can
+// come out of it.
+let _docsIndexPromise = null;
+function loadDocsIndex() {
+    if (!_docsIndexPromise) {
+        _docsIndexPromise = fetch(siteRoot() + 'data/docs-manifest.json')
+            .then((r) => (r.ok ? r.json() : null))
+            .then((json) => {
+                // key: docs-relative path lowercased (for lookup) -> value: the
+                // real path as it exists on disk (what we actually link to).
+                const index = new Map();
+                for (const f of (json && json.files) || []) {
+                    const p = String(f.path || '');
+                    if (!p.toLowerCase().startsWith('docs/')) continue;
+                    const rel = p.slice('docs/'.length);
+                    index.set(rel.toLowerCase(), rel);
+                }
+                return index;
+            })
+            .catch(() => null);
+    }
+    return _docsIndexPromise;
+}
+
+// #842: the per-behavior doc for `x-<name>` / `<wb-name>` is
+// docs/behaviors/<name>.md -- the schema-generated page that opens by stating
+// which of the two behavior types it is (decorates a semantic element vs. new
+// capability) and how to write it. A few hand-written pages keep the `x-`
+// prefix in the filename, so try both. Returns the docs-relative path, or null
+// when no such file exists.
+function findGeneratedBehaviorDoc(index, name) {
+    if (!index || !index.size) return null;
+    for (const candidate of [`behaviors/${name}.md`, `behaviors/x-${name}.md`]) {
+        const hit = index.get(candidate.toLowerCase());
+        if (hit) return hit;
+    }
+    return null;
+}
+
+// Find the doc file (relative to docs/) for a component name: the generated
+// per-behavior page first (docs/behaviors/<comp>.md), then a basename match in
+// the curated manifest. Returns null when no doc exists.
+//
+// #842: the `wb-${comp}.md` candidate here was stale -- the docs tree holds no
+// wb-*.md file at all any more, the filenames are `<name>.md` / `x-<name>.md`.
+function findDocFile(manifest, comp, index) {
+    const generated = findGeneratedBehaviorDoc(index, comp);
+    if (generated) return generated;
     if (!manifest || !Array.isArray(manifest.categories)) return null;
-    const names = [`${comp}.md`, `wb-${comp}.md`];
+    const names = [`${comp}.md`, `x-${comp}.md`];
     for (const cat of manifest.categories) {
         for (const d of cat.docs || []) {
             const base = String(d.file || '').split('/').pop().toLowerCase();
@@ -183,13 +306,13 @@ function findWbComponents(html) {
 // "Feedback" sections) never produced ANY doc link -- sharedComponents
 // stayed empty and the whole "Docs:" line was skipped. Matches both
 // documented behavior syntaxes from docs/behaviors-reference.md: decoration
-// (`x-ripple`) and morphing (`x-as-card`) -- the (?:as-)? group strips the
-// morph prefix so `x-as-card` still resolves to doc lookup name "card".
+// (`x-ripple`). Morphing (`x-as-card`) was removed in #783, so there is no
+// longer a prefix to strip -- the attribute name IS the behavior name.
 // Requires a preceding whitespace (not `<`) so it never matches a leading
 // slice of an `<x-foo>` CUSTOM ELEMENT TAG name, same anchoring approach as
 // no-redundant-x-attribute-on-native-tag.spec.ts's `(^|\s)x-${tag}` check.
 function findXBehaviors(html) {
-    const regex = /(?:^|\s)x-(?:as-)?([a-z][a-z0-9]*)(?=[\s=/>]|$)/gi;
+    const regex = /(?:^|\s)x-([a-z][a-z0-9]*)(?=[\s=/>]|$)/gi;
     const matches = [];
     let match;
     while ((match = regex.exec(html)) !== null) {
@@ -198,22 +321,58 @@ function findXBehaviors(html) {
     return [...new Set(matches)]; // unique
 }
 
-// Same basename-match strategy as findDocFile, plus a fallback: unlike
-// wb-* behaviors (one doc file per behavior), most x-* behaviors are
-// documented as a table ROW inside docs/behaviors-reference.md rather than
-// their own page (only a handful -- tooltip, autosize, x-collapse, etc. --
-// get a dedicated file). Falling back to that shared reference page keeps
-// "never a dead link" true for the majority (ripple, toast, masked,
-// stepper, ...) instead of silently dropping them from the Docs: line.
-function findBehaviorDocFile(manifest, name) {
+// The same x-* behavior names, read from the LIVE elements instead of the
+// authored text -- for a demo whose source could not be found (#1003 leaves
+// rawBlock empty then, e.g. a <div x-demo> injected by script, which the page
+// file never contained). Without this such a demo lost every doc-link badge,
+// not just its source panel. The live DOM also carries attributes the runtime
+// adds (x-ready, x-behavior), so only names that ARE registered behaviors count.
+function findLiveXBehaviors(root) {
+    const names = new Set();
+    for (const el of [root, ...root.querySelectorAll('*')]) {
+        for (const { name } of Array.from(el.attributes || [])) {
+            if (!name.startsWith('x-')) continue;
+            const behavior = name.slice(2);
+            if (/^[a-z][a-z0-9]*$/.test(behavior) && hasBehavior(behavior)) names.add(behavior);
+        }
+    }
+    return [...names];
+}
+
+// Resolve `x-<name>` to ITS OWN doc page.
+//
+// #842 (John, live): every 📖 badge on the site -- on a <button x-button>
+// demo, an x-ripple demo, all of them -- pointed at
+// docs/behaviors-reference.md. The label said "x-button docs" while the href
+// was the same generic reference every time. Root cause: this function only
+// looked in the CURATED docs/manifest.json, which lists 20 of the 177 files in
+// docs/behaviors/. `button.md` is not one of the 20, so the basename match
+// missed and control fell straight through to the behaviors-reference.md
+// catch-all below -- for practically every behavior on the site. (Before the
+// manifest was pruned of 109 dead entries the same miss was masked on some
+// names by matching a STALE entry, which is worse, not better: a link to a
+// file that no longer existed.)
+//
+// Order now: the generated per-behavior page (docs/behaviors/<name>.md, which
+// is what the reader actually wants and is regenerated from the schemas), then
+// a basename match anywhere in the curated manifest, and only then the shared
+// reference -- so the fallback is the exception it was always meant to be
+// rather than the universal answer. `wb-${name}.md` was dropped from the
+// candidate list: no such file exists in the tree any more.
+function findBehaviorDocFile(manifest, name, index) {
+    const generated = findGeneratedBehaviorDoc(index, name);
+    if (generated) return generated;
     if (!manifest || !Array.isArray(manifest.categories)) return null;
-    const names = [`${name}.md`, `x-${name}.md`, `wb-${name}.md`];
+    const names = [`${name}.md`, `x-${name}.md`];
     for (const cat of manifest.categories) {
         for (const d of cat.docs || []) {
             const base = String(d.file || '').split('/').pop().toLowerCase();
             if (names.includes(base)) return d.file;
         }
     }
+    // Last resort only: a behavior with no page of its own is still documented
+    // as a table row in the shared reference, so this keeps "never a dead
+    // link" true instead of silently dropping it from the Docs: line.
     for (const cat of manifest.categories) {
         for (const d of cat.docs || []) {
             if (String(d.file || '').toLowerCase().endsWith('behaviors-reference.md')) return d.file;
@@ -223,16 +382,16 @@ function findBehaviorDocFile(manifest, name) {
 }
 
 // #388/#390: attach a small top-right doc-link "badge" directly onto ONE
-// behavior instance, instead of relying on the single shared
+// component instance, instead of relying on the single shared
 // '.x-demo__links' line below the whole grid (which reads as detached from
 // any individual instance once a demo holds more than one). Originally
-// card-only (#388); generalized to every wb-* behavior (#390) after the
+// card-only (#388); generalized to every wb-* component (#390) after the
 // same "Docs: x-dialog" shared-line pattern read just as detached on
 // non-card demos (dialog/drawer/dropdown, demos/site/overlays.html) --
 // same problem, same fix, no reason to treat cards specially here.
 //
 // Why a self-healing MutationObserver instead of a single appendChild: a
-// behavior's own behavior (card.js, overlay.js, dropdown.js, etc.) is
+// component's own behavior (card.js, overlay.js, dropdown.js, etc.) is
 // applied lazily via WB's IntersectionObserver-driven injection (wb-lazy.js)
 // on its own schedule, independent of this demo's build order -- and many
 // behaviors rebuild via `element.innerHTML = ''` before laying out their
@@ -269,13 +428,14 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     // plain x-alert, ...) are position:static. With no positioned
     // ancestor at all, the badge's containing block falls back to the
     // *viewport* (the initial containing block), so it renders pinned near
-    // the top-right of the whole page instead of the small behavior it's
+    // the top-right of the whole page instead of the small component it's
     // meant to label -- confirmed live: overflowed the page by 9px at
     // 375px on docs/V3-GUIDE.md's embedded <div x-demo>. Force a positioning
     // context only when one doesn't already exist, so this is a no-op for
-    // every behavior (like x-card) that already provides one.
+    // every component (like x-card) that already provides one.
+    // #779: a class (demo.css), not element.style.
     if (getComputedStyle(anchor).position === 'static') {
-        anchor.style.position = 'relative';
+        anchor.classList.add('x-demo__anchor--positioned');
     }
 
     const build = () => {
@@ -283,7 +443,7 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
         // outer <div x-demo> now (see above), shared by every instance in the
         // grid, so a same-file dedup is what collapses e.g. six x-badge
         // variants pointing at the same badge.md down to ONE icon. A grid
-        // mixing genuinely different behaviors (rare) still gets one icon
+        // mixing genuinely different components (rare) still gets one icon
         // per distinct file -- see demo.css's `~` sibling offset for how a
         // second, different-file icon avoids stacking on top of the first.
         const existing = Array.from(anchor.querySelectorAll(':scope > a.x-demo__card-doc-link'));
@@ -331,10 +491,29 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     setTimeout(() => observer.disconnect(), 8000);
 }
 
+// Owner requirement (2026-08-07): "all x-demo code must show all the code up
+// to 50% vw". A single-item demo is sized to the wider of its control and its
+// code (#563), and nothing bounded the code side: one long attribute line --
+// a features="..." list, an image URL -- stretched the demo, control and all,
+// to 757px or 1018px on a 1280px screen (demo-code-panel-50vw.spec.ts). Code
+// wider than half the viewport now sizes the panel to exactly 50vw and scrolls
+// the rest, which #390 made the intended treatment for x-demo code (scroll,
+// never wrap). A control wider than that still widens the demo on its own.
+// innerWidth, not clientWidth: 50vw in CSS includes the scrollbar too.
+function capCodeWidth(codeWidth) {
+    return Math.min(codeWidth, window.innerWidth * 0.5);
+}
+
 export async function demo(element, options = {}) {
     // Guard against double initialization
     if (element._demoInitialized) return () => {};
     element._demoInitialized = true;
+
+    // demo.css styles both the <x-demo> tag and the .x-demo class, but only
+    // the tag form was ever covered: on <div x-demo> the tag is "div", so
+    // compliance.baseClass matched nothing and the readiness wait never saw
+    // this behavior attach. Guarded so a literal <x-demo> tag stays clean.
+    element.classList.add('x-demo');
 
     // Opt out of Standard §7's single-item shrink-to-fit (demo.css) for demos
     // whose one child is deliberately full-bleed (e.g. a page hero) rather
@@ -344,6 +523,7 @@ export async function demo(element, options = {}) {
     }
 
     let rawBlock = '';
+    let sourceUnavailable = false;   // #1003: never present the expansion as the API
     // Source priority: _rawSource FIRST. It's captured at connectedCallback,
     // before children upgrade — the pristine authored markup, correct on every
     // surface. Page-source extraction is only a fallback: its regex also matches
@@ -355,14 +535,48 @@ export async function demo(element, options = {}) {
     } else {
         try {
             const pageSource = await getPageSource();
-            const allDemos = document.querySelectorAll('x-demo');
-            const idx = Array.from(allDemos).indexOf(element);
-            rawBlock = extractTagBlock(pageSource, 'x-demo', idx, allDemos.length);
+            // #934: `[x-demo]`, not `x-demo`. This searched for a TAG that
+            // cannot exist since 4.0.0 removed custom elements, so BOTH the
+            // live count and the source count came out 0 -- #580's mismatch
+            // guard then compared 0 === 0, passed vacuously, and extraction
+            // returned ''. The panel fell through to element.innerHTML, i.e.
+            // the fully expanded runtime DOM, and taught readers they must
+            // hand-write the <figure>/<header>/inline styles a behavior builds
+            // for them.
+            // Count only the demos the PAGE FILE authored. A demo that
+            // mdhtml.js rendered out of fetched markdown is in the live DOM but
+            // not in this source, and mdhtml marks every one it renders with
+            // `_rawSource` before anything scans it. Counted, one such demo --
+            // demos/site/content.html's <div x-mdhtml src="../code.md"> holds
+            // one -- made the live total exceed the source total by one, so
+            // #580's guard below refused EVERY block built after the markdown
+            // arrived: "source unavailable" on 30 demos, the page's second half.
+            const allDemos = Array.from(document.querySelectorAll('[x-demo]'))
+                .filter((d) => d === element || !d._rawSource);
+            const idx = allDemos.indexOf(element);
+            rawBlock = extractAttrBlock(pageSource, 'x-demo', idx, allDemos.length);
         } catch (e) {
             // ignore fetch errors
         }
         if (!rawBlock || !rawBlock.trim()) {
-            rawBlock = (element.innerHTML && element.innerHTML.trim()) ? element.innerHTML : '';
+            // #1003 -- John, shown the expanded x-cardimage output: "this
+            // requires way too much internals knowledge which the user won't
+            // have".
+            //
+            // This used to fall back to element.innerHTML: the fully expanded
+            // runtime DOM, generated classes, generated <figure>/<img> and all
+            // the inline styles a behavior builds for you. Presented in the
+            // source panel it reads as the API, so a reader copies twenty lines
+            // of internals and concludes the framework demands them. The one
+            // line they actually write is
+            //
+            //     <div x-cardimage src="..." title="..."></div>
+            //
+            // A panel that is silently wrong is worse than one that is honestly
+            // empty, so when the authored markup cannot be found we say so
+            // rather than showing the expansion.
+            sourceUnavailable = true;
+            rawBlock = '';
         }
     }
 
@@ -425,15 +639,15 @@ export async function demo(element, options = {}) {
     // Add doc links. (#262: the old '?page=docs#wb-…' hrefs were
     // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
     // doc-viewer.html?page=docs, and pages/docs.html has no #wb-* anchors anyway.)
-    // Link each behavior to its REAL doc opened in the doc-viewer, resolved from
-    // docs/manifest.json. Behaviors with no doc get NO link — never a dead link.
+    // Link each component to its REAL doc opened in the doc-viewer, resolved from
+    // docs/manifest.json. Components with no doc get NO link — never a dead link.
     //
     // #388/#390: any wb-* child of the grid gets its OWN top-right link
     // (attachInstanceDocLink above) instead of being folded into the
     // generic shared line — a multi-instance demo used to read as one
     // detached caption under the whole group, not tied to any individual
     // element. Originally card-only (#388); generalized to every wb-*
-    // behavior (#390) so a page like demos/site/overlays.html
+    // component (#390) so a page like demos/site/overlays.html
     // (dialog/drawer/dropdown, no cards at all) gets the same per-instance
     // placement instead of falling back to the shared line. Only things
     // that never resolve to a real wb-* element in the grid (a plain
@@ -451,10 +665,10 @@ export async function demo(element, options = {}) {
     // confirmed live, both anchors reachable. Re-included per explicit
     // request: "put all links on the card itself, upper right hand
     // corner" -- no carve-outs, every card including cardlink gets one.
-    // #434: querySelectorAll('*'), not grid.children -- a wb-* behavior
+    // #434: querySelectorAll('*'), not grid.children -- a wb-* component
     // wrapped inside a plain <div> (e.g. bundled alongside a stylesheet
     // link/script as a self-contained "view source" example) is a real,
-    // documented behavior just as much as a direct grid child, but
+    // documented component just as much as a direct grid child, but
     // grid.children only sees the wrapping <div>, silently falling through
     // to the deprecated shared "Docs: x-x" line below the grid instead of
     // its own per-instance corner badge (confirmed live: pages/home.html's
@@ -464,16 +678,37 @@ export async function demo(element, options = {}) {
     );
     const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));
     const sharedComponents = allComponents.filter((comp) => !perInstanceComps.has(comp));
-    const xBehaviors = findXBehaviors(rawBlock);
-    if (perInstanceChildren.length > 0 || sharedComponents.length > 0 || xBehaviors.length > 0) {
+    const xBehaviors = sourceUnavailable ? findLiveXBehaviors(grid) : findXBehaviors(rawBlock);
+    // A demo's subject can also be a plain semantic element that tag-map
+    // decorates on its own -- `<article title="...">` IS a card (nativeMap
+    // 'article' -> 'card') with no x-* attribute and no <wb-*> tag. The two
+    // lookups above match only those, so every such demo got no 📖 at all even
+    // though docs/behaviors/card.md exists (cards-permutation-matrix.html: the
+    // four base-card blocks, #262/#388). Only DIRECT grid children count --
+    // they are what the block demonstrates, not incidental markup inside a
+    // card -- and only when the child carries no x-* behavior of its own,
+    // since `<article x-cardhero>` is documented by the cardhero badge.
+    const nativeSubjects = Array.from(grid.children)
+        .filter((child) => !Array.from(child.attributes).some(
+            ({ name }) => name.startsWith('x-') && hasBehavior(name.slice(2))
+        ))
+        .map((child) => ({ el: child, name: getNativeBehavior(child) }))
+        .filter(({ name }) => name);
+    if (perInstanceChildren.length > 0 || sharedComponents.length > 0 || xBehaviors.length > 0 || nativeSubjects.length > 0) {
         // Deterministic: await the (cached) manifest and build the links inline —
         // a floating .then() left empty divs when init raced page load.
-        const manifest = await loadDocsManifest().catch(() => null);
+        // #842: the generated docs index rides along in the same await — both
+        // promises are module-level singletons, so this is one fetch per page
+        // each no matter how many x-demo blocks the page holds.
+        const [manifest, docsIndex] = await Promise.all([
+            loadDocsManifest().catch(() => null),
+            loadDocsIndex().catch(() => null),
+        ]);
         const root = siteRoot();
 
         perInstanceChildren.forEach((hostEl) => {
             const comp = hostEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
-            const file = findDocFile(manifest, comp);
+            const file = findDocFile(manifest, comp, docsIndex);
             if (!file) return; // never a dead link
             attachInstanceDocLink(hostEl, file, `wb-${comp}`, root, element);
         });
@@ -485,25 +720,36 @@ export async function demo(element, options = {}) {
         // (WB-* tags), so every x-* behavior fell through to the shared
         // "Docs: x-toast" text line below the whole grid instead. Give each
         // ELEMENT THAT ACTUALLY CARRIES the attribute its own corner badge,
-        // the same as a wb-* behavior gets, instead of a second, different
-        // treatment for behaviors vs. behaviors. `x-as-{name}` (morphing
+        // the same as a wb-* component gets, instead of a second, different
+        // treatment for behaviors vs. components. (Morphing removed, #783.)
         // syntax) needs its own selector -- `[x-${name}]` alone won't match it.
         const resolvedXBehaviorNames = new Set();
         xBehaviors.forEach((name) => {
-            const file = findBehaviorDocFile(manifest, name);
+            const file = findBehaviorDocFile(manifest, name, docsIndex);
             if (!file) return; // never a dead link
-            const hosts = grid.querySelectorAll(`[x-${name}], [x-as-${name}]`);
+            const hosts = grid.querySelectorAll(`[x-${name}]`);
             if (!hosts.length) return; // name matched in source text but no live element carries it
             resolvedXBehaviorNames.add(name);
             hosts.forEach((hostEl) => attachInstanceDocLink(hostEl, file, `x-${name}`, root, element));
         });
 
+        // Exact per-behavior page only -- no behaviors-reference.md last
+        // resort: a native element with no page of its own is ordinary HTML,
+        // and a generic badge on every plain <button> would say nothing.
+        nativeSubjects.forEach(({ el, name }) => {
+            const behaviorDoc = findGeneratedBehaviorDoc(docsIndex, name);
+            if (!behaviorDoc) return; // never a dead link
+            // Labelled by the behavior, as every other badge is: the doc it
+            // opens is the behavior's page, which x-<name> also names.
+            attachInstanceDocLink(el, behaviorDoc, `x-${name}`, root, element);
+        });
+
         const linkedComponents = sharedComponents
-            .map((comp) => ({ label: `wb-${comp}`, file: findDocFile(manifest, comp) }))
+            .map((comp) => ({ label: `wb-${comp}`, file: findDocFile(manifest, comp, docsIndex) }))
             .filter((x) => x.file);
         const linkedBehaviors = xBehaviors
             .filter((name) => !resolvedXBehaviorNames.has(name))
-            .map((name) => ({ label: `x-${name}`, file: findBehaviorDocFile(manifest, name) }))
+            .map((name) => ({ label: `x-${name}`, file: findBehaviorDocFile(manifest, name, docsIndex) }))
             .filter((x) => x.file);
         const linked = [...linkedComponents, ...linkedBehaviors];
         if (linked.length) {
@@ -545,8 +791,44 @@ export async function demo(element, options = {}) {
     code.setAttribute('x-behavior', 'code');
     code.dataset.language = 'html';
     // Standard §5: source is pretty-printed VERTICAL (one attribute per line).
-    code.textContent = formatHtml(rawBlock);
+    if (sourceUnavailable) {
+        // #1003: name the gap. The live example above still renders; only its
+        // markup could not be recovered, and that is worth saying out loud
+        // rather than filling the panel with generated DOM.
+        code.textContent = [
+            '<!-- source unavailable.',
+            '     The authored markup for this example could not be found in the',
+            '     page source. The rendered DOM is deliberately NOT shown here:',
+            '     it is generated, and it is not what you would write. -->',
+        ].join(String.fromCharCode(10));
+        code.classList.add('x-demo__source--unavailable');
+    } else {
+        code.textContent = formatHtml(rawBlock);
+    }
     pre.appendChild(code);
+    // #986: hide the panel until it has been scanned (which applies the `code`
+    // behavior, and with it hljs highlighting) so the FIRST painted frame is
+    // already coloured and already the right width.
+    //
+    // Measured before this: code painted as plain text at 234ms, .hljs-* spans
+    // arrived at 741ms — 507ms of unstyled monospace — and the first width step
+    // followed 27ms later at 768ms, because injecting the spans changed the
+    // content width the shrink-to-fit poll was measuring. 983 resize events, ~2px
+    // apiece, across 44 panels (#985). One ordering bug, both symptoms.
+    //
+    // visibility (not display) so the box still lays out and can be measured;
+    // revealed unconditionally below, including when WB never arrives.
+    // #779: .x-demo__code--pending in demo.css, not element.style.
+    pre.classList.add('x-demo__code--pending');
+    // demo.css caps the code panel at 50vw while this is set, so every
+    // fit-content width painted before the single-item measurement below
+    // commits is already the width it will commit (see capCodeWidth). Set
+    // here, before the panel is in the document, so no frame lays the block
+    // out uncapped; and only on blocks that measurement will actually run for
+    // (same condition), since only its commit ever removes it.
+    if (cols === 1 && childCount === 1 && grid.children[0] && !element.classList.contains('x-demo--full-width')) {
+        element.classList.add('x-demo--measuring');
+    }
     element.appendChild(pre);
 
     // Syntax highlight the "view source" panel just created above — scoped to
@@ -594,10 +876,22 @@ export async function demo(element, options = {}) {
     // already-highlighted `<pre>` (real monospace font, real padding, real
     // syntax-highlighting markup) instead of racing it. See that block's
     // own comment for why this matters.
+    // #970 race #2: the scan is QUEUED, not fired the moment this block's own
+    // rAF poll happens to succeed. Unsequenced, 293 of these interleave with
+    // the main scan's injection differently on every load. Chained, they run in
+    // a fixed order and the workflow becomes reproducible.
+    //
+    // The rAF retry stays: it answers "has WB loaded yet", which the queue does
+    // not. Only the scan itself is sequenced.
     const scanWhenReady = (attemptsLeft = 20) => new Promise((resolve) => {
         const attempt = (left) => {
             if (window.WB) {
-                Promise.resolve(window.WB.scan(pre, { eager: true })).then(resolve, resolve);
+                _scanQueue = _scanQueue
+                    .then(() => window.WB.scan(pre, { eager: true }))
+                    // One block's failure must not stall every later block's
+                    // scan -- a rejected link would poison the whole chain.
+                    .catch(() => {});
+                _scanQueue.then(resolve, resolve);
             } else if (left > 0) {
                 requestAnimationFrame(() => attempt(left - 1));
             } else {
@@ -606,7 +900,14 @@ export async function demo(element, options = {}) {
         };
         attempt(attemptsLeft);
     });
-    await scanWhenReady();
+    try {
+        await scanWhenReady();
+    } finally {
+        // #986: reveal exactly once, whatever happened above. scanWhenReady()
+        // resolves even when WB never loads (rAF retries exhausted), but a
+        // throw must never leave a permanently invisible code panel.
+        pre.classList.remove('x-demo__code--pending');
+    }
 
     // #486: measure the GRID's own rendered width and hand it to demo.css as
     // --x-demo-shrink-width, for single-item demos only (desktop rule in
@@ -735,9 +1036,13 @@ export async function demo(element, options = {}) {
                     // comment below for why (a header/copy-button code panel's
                     // wrapper chrome isn't visible to a scrollWidth read).
                     const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + 4
+                        ? capCodeWidth(Math.max(...Array.from(codeEls, el => el.scrollWidth)) + 4) + hPad
                         : 0;
-                    element.style.setProperty('--x-demo-shrink-width', Math.max(naturalWidth + extra + hPad, codeWidth) + 'px');
+                    // A measured width: a generated rule, never element.style (#779).
+                    setRule(element, 'shrink', { '--x-demo-shrink-width': Math.max(naturalWidth + extra + hPad, codeWidth) + 'px' });
+                    // Lifts demo.css's pre-measure 50vw code cap -- see there.
+                    element.classList.remove('x-demo--measuring');
+                    element.classList.add('x-demo--measured');
                     return true;
                 };
                 if (applyNaturalWidth()) {
@@ -754,12 +1059,20 @@ export async function demo(element, options = {}) {
                     // (same MAX_MS budget as the poll path below).
                     const readyEvent = media.tagName === 'VIDEO' ? 'loadedmetadata' : 'load';
                     media.addEventListener(readyEvent, applyNaturalWidth, { once: true });
-                    setTimeout(applyNaturalWidth, 5000);
+                    setTimeout(() => {
+                        // Media that never loads never commits a width; drop
+                        // the pre-measure code cap anyway so the panel is
+                        // never left narrower than its block for good.
+                        if (!applyNaturalWidth()) element.classList.remove('x-demo--measuring');
+                    }, 5000);
                 }
             } else {
                 let lastControlWidth = null;
                 let lastCodeWidth = null;
                 let stableCount = 0;
+                // #985: the measurement is committed once, at the end, rather
+                // than on every poll -- see the two blocks below.
+                let pendingShrinkWidth = 0;
                 const POLL_MS = 200;
                 const MAX_MS = 5000;
                 const startedAt = Date.now();
@@ -804,12 +1117,19 @@ export async function demo(element, options = {}) {
                     // icon-button/loading-skeleton examples (2px short).
                     const CODE_WIDTH_SAFETY_PX = 4;
                     const codeWidth = codeEls.length
-                        ? Math.max(...Array.from(codeEls, el => el.scrollWidth)) + hPad + CODE_WIDTH_SAFETY_PX
+                        ? capCodeWidth(Math.max(...Array.from(codeEls, el => el.scrollWidth)) + CODE_WIDTH_SAFETY_PX) + hPad
                         : 0;
                     const shrinkWidth = Math.max(controlWidth, codeWidth);
-                    if (shrinkWidth > 0) {
-                        element.style.setProperty('--x-demo-shrink-width', shrinkWidth + 'px');
-                    }
+                    // #985: do NOT commit every tick. This used to write the
+                    // custom property on each of up to 25 polls, so every
+                    // intermediate measurement was painted and the panel
+                    // visibly stepped wider as its own content settled.
+                    // Measured on demos/site/layout.html while scrolling:
+                    // 46 steps per demo, 426px -> 935px, finishing ~978ms.
+                    // Hold the value and commit ONCE, when it stops moving
+                    // (or when the MAX_MS budget expires) -- one paint at the
+                    // final width instead of 46 at wrong ones.
+                    if (shrinkWidth > 0) pendingShrinkWidth = shrinkWidth;
                     // Track controlWidth and codeWidth for stability
                     // SEPARATELY, not just the derived max(). pre.js's
                     // syntax highlighting / line-number gutter populates
@@ -841,7 +1161,7 @@ export async function demo(element, options = {}) {
                     // the pre-gutter width is itself steady for several ticks
                     // it reads as "stable" and gets locked in -- the panel
                     // then reports scrollWidth > clientWidth forever after.
-                    // Confirmed live: docs/behaviors/semantic/address.md,
+                    // Confirmed live: docs/components/semantic/address.md,
                     // scrollWidth=474 against clientWidth=460 on a sample
                     // whose longest line is only 48 characters.
                     //
@@ -857,10 +1177,23 @@ export async function demo(element, options = {}) {
                         if (lines.length && lines[lines.length - 1] === '') lines.pop();
                         const nums = wrapper.querySelectorAll('.x-pre__line-numbers > div');
                         if (nums.length !== lines.length) return false;
-                        return Array.from(nums).every((n) => n.style.top !== '');
+                        // pre.js marks each number it has measured; the top
+                        // itself is a generated rule, not an inline style (#779).
+                        return Array.from(nums).every((n) => n.classList.contains('x-pre__line-number--placed'));
                     });
                     if (!guttersReady) stableCount = 0;
-                    if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) return;
+                    if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) {
+                        // #985: the single commit. Settled, or out of budget --
+                        // either way this is the best value available, and it is
+                        // the only one the reader ever sees.
+                        if (pendingShrinkWidth > 0) {
+                            setRule(element, 'shrink', { '--x-demo-shrink-width': pendingShrinkWidth + 'px' });
+                        }
+                        // Lifts demo.css's pre-measure 50vw code cap -- see there.
+                        element.classList.remove('x-demo--measuring');
+                        element.classList.add('x-demo--measured');
+                        return;
+                    }
                     setTimeout(measure, POLL_MS);
                 };
                 requestAnimationFrame(measure);

@@ -72,7 +72,8 @@ test.describe('media custom-tag mappings (were completely unmapped)', () => {
   test('<div x-ratio> gets enhanced with the configured aspect-ratio', async ({ page }) => {
     await setup(page, '<div x-ratio id="r1" ratio="16x9"><div>content</div></div>');
     await expect(page.locator('#r1')).toHaveClass(/x-ratio/);
-    const aspectRatio = await page.locator('#r1').evaluate((el) => (el as HTMLElement).style.aspectRatio);
+    // Computed, not el.style: #779 moved the ratio into a generated rule.
+    const aspectRatio = await page.locator('#r1').evaluate((el) => getComputedStyle(el).aspectRatio);
     expect(aspectRatio).toBe('16 / 9');
   });
 

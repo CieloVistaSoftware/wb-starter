@@ -1,4 +1,5 @@
 import { readFlag, readAttr } from '../core/read-attr.js';
+import { setRule } from '../core/dynamic-style.js';
 /**
  * Feedback Behaviors
  * -----------------------------------------------------------------------------
@@ -392,25 +393,27 @@ export function progress(element, options = {}) {
 
   element.innerHTML = '';
   const bar = document.createElement('div');
-  // Width is the ONE exception — it's dynamic data, not styling
-  bar.style.width = animated ? '0%' : `${pct}%`;
+  // Width is dynamic data, not styling -- so a generated rule rather than the
+  // bar's style attribute (#779), same as semantics/progress.js.
+  const fill = (el, p) => setRule(el, 'fill', { width: `${p}%` });
+  fill(bar, animated ? 0 : pct);
   element.appendChild(bar);
 
   if (animated) {
-    setTimeout(() => { bar.style.width = `${pct}%`; }, 50);
+    setTimeout(() => { fill(bar, pct); }, 50);
   }
 
   element.wbProgress = {
     setValue: (v) => {
       const b = element.querySelector('div');
-      if (b) b.style.width = `${(v / max) * 100}%`;
+      if (b) fill(b, (v / max) * 100);
       element.setAttribute('aria-valuenow', v);
     },
     refresh: () => {
       const b = element.querySelector('div');
       if (b) {
-        b.style.width = '0%';
-        setTimeout(() => { b.style.width = `${pct}%`; }, 50);
+        fill(b, 0);
+        setTimeout(() => { fill(b, pct); }, 50);
       }
     }
   };
@@ -693,8 +696,11 @@ export function skeleton(element) {
   if (!readFlag(element, 'animated', true)) element.classList.add('x-skeleton--static');
 
   element.setAttribute('variant', variant);
-  if (width) element.style.width = width;
-  if (height) element.style.height = height;
+  // Authored sizes are runtime values: a generated rule, not the style
+  // attribute (#779). Weight 3 outranks skeleton.css's own sizing --
+  // `[x-skeleton][variant="circle"]` sets height at (0,2,0) -- which the
+  // inline values used to beat.
+  setRule(element, 'size', { width, height }, { weight: 3 });
 
   if (variant === 'text' && lines > 1) {
     element.innerHTML = '';

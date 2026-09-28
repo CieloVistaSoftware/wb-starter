@@ -103,3 +103,85 @@ export function extractTagBlock(source, tagName, idx, liveCount) {
   }
   return '';
 }
+
+/**
+ * Attribute-host source extraction (#934).
+ *
+ * Every pattern here is a regex LITERAL and the dynamic parts are compared as
+ * STRINGS. Building these with `new RegExp('...\s...')` is what broke the
+ * first attempt: one escaping layer too many turned `\s` into a literal `s`,
+ * so ` x-demo columns="1"` did not match and every panel silently fell
+ * through to the generated DOM -- the exact failure being fixed.
+ */
+const OPEN_TAG = /<([a-zA-Z][\w-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g;
+const ANY_TAG = /<(\/?)([a-zA-Z][\w-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)(\/?)>/g;
+const ATTR = /([a-zA-Z_:][-\w:.]*)(?:\s*=\s*("[^"]*"|'[^']*'|[^\s>]*))?/g;
+
+/** Does this attribute text carry `attrName` as a whole attribute name? */
+function attrPresent(attrText, attrName) {
+  const re = new RegExp(ATTR.source, 'g');
+  let m;
+  while ((m = re.exec(attrText)) !== null) {
+    if (m[1] === attrName) return true;
+  }
+  return false;
+}
+
+/**
+ * Count elements carrying `attrName` in raw source text.
+ *
+ * The tag-based pair above cannot see them: authored markup is
+ * `<div x-demo>`, not `<x-demo>`, ever since 4.0.0 removed custom elements.
+ */
+function countAttrOccurrences(source, attrName) {
+  const open = new RegExp(OPEN_TAG.source, 'g');
+  let m, n = 0;
+  while ((m = open.exec(source)) !== null) {
+    if (attrPresent(m[2], attrName)) n++;
+  }
+  return n;
+}
+
+/**
+ * Extract the idx-th `<tag attrName ...>...</tag>` block's INNER content.
+ *
+ * A lazy `<tag ...>(.*?)</tag>` cannot do this: `<div x-demo>` contains
+ * further `<div>`s, so it stops at the FIRST `</div>` and returns a truncated
+ * fragment. Walk forward balancing opens and closes of the same tag name --
+ * the same reason a brace-matcher beats a character count.
+ *
+ * Returns '' when source and live counts disagree, matching extractTagBlock's
+ * #580 contract: an ordinal means nothing if the two sides are not counting
+ * the same set, and a wrong answer is worse than none.
+ */
+export function extractAttrBlock(source, attrName, idx, liveCount) {
+  if (idx < 0) return '';
+  if (liveCount !== undefined && countAttrOccurrences(source, attrName) !== liveCount) {
+    return '';
+  }
+
+  const open = new RegExp(OPEN_TAG.source, 'g');
+  let m, i = 0;
+  while ((m = open.exec(source)) !== null) {
+    if (!attrPresent(m[2], attrName)) continue;
+    if (i++ !== idx) continue;
+
+    if (m[2].trimEnd().endsWith('/')) return '';   // self-closing host
+
+    const tag = m[1].toLowerCase();
+    const start = m.index + m[0].length;
+    const scan = new RegExp(ANY_TAG.source, 'gi');
+    scan.lastIndex = start;
+    let depth = 1, t;
+    while ((t = scan.exec(source)) !== null) {
+      if (t[2].toLowerCase() !== tag) continue;
+      if (t[1] === '/') {
+        if (--depth === 0) return source.slice(start, t.index);
+      } else if (t[4] !== '/') {
+        depth++;
+      }
+    }
+    return '';   // unbalanced source -- say nothing rather than guess
+  }
+  return '';
+}

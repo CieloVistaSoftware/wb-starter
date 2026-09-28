@@ -32,7 +32,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // gate had been failing since the day it was set and could not tell creep
 // from its own miscount. HEAD measures 778 (2 below that commit). Keep
 // lowering it as files convert; never raise it to admit new px.
-const BASELINE = 778;
+// 777: b31bd387 set 778 but its own tree (and d3dedbf3) measured 783 -- the
+// dialog size widths, a form/select radius added since were px. Those six
+// now use rem (dialog.css, form.css, input.css), which is 777 in git.
+// 540: the #779 move of inline styles into stylesheets carried their px with
+// it (855 measured), and those declarations -- plus the rest of the files they
+// landed in -- were converted to rem rather than admitted. Measured, not guessed.
+const BASELINE = 540;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });

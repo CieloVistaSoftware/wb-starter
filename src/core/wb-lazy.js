@@ -15,6 +15,7 @@ import './click-confirm.js';
 import { Theme } from './theme.js';
 import { getConfig, setConfig } from './config.js';
 import { matchingElements } from './dom-query.js';
+import { setRule } from './dynamic-style.js';
 import { setupGlobalErrorHandler } from './error-logger.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
@@ -726,7 +727,12 @@ const WB = {
       await teachByExample(element, behaviorName);
 
       // Apply behavior
-      const cleanup = behaviorFn(element, options);
+      // Awaited: an async behavior (x-mdhtml loads marked, fetches, renders)
+      // returns a Promise at its first await. Unawaited, the finally below
+      // stamped x-ready and released whenIdle() while the element was still
+      // empty and loading, and the Promise was recorded as its "cleanup", so
+      // removal tore nothing down. wb.js already awaited; this had drifted (#1219).
+      const cleanup = await behaviorFn(element, options);
 
       // Track for cleanup
       // Re-fetch applied behaviors as they might have changed (though unlikely with pending lock)
@@ -1343,7 +1349,9 @@ const WB = {
     // 5. Apply ID and Classes
     if (data.id) el.id = data.id;
     if (data.classes) el.className = data.classes;
-    if (data.style) Object.assign(el.style, data.style);
+    // A style object in builder data becomes a generated rule, not the
+    // element's style attribute (#779).
+    if (data.style) setRule(el, 'data-style', data.style);
 
     // 6. Handle Content/Children
     if (data.content) {

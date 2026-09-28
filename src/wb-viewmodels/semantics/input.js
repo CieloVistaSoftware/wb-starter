@@ -103,8 +103,8 @@ export function input(element, options = {}) {
     }
 
     const wrapper = document.createElement('div');
+    // Layout: .x-input__wrapper in input.css (#779).
     wrapper.className = 'x-input__wrapper';
-    wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
 
     if (icon && iconPosition === 'start') {
       const iconEl = document.createElement('span');
@@ -126,13 +126,8 @@ export function input(element, options = {}) {
     // generic bare-<input> rule (line 28) -- setting them again here as
     // inline styles just stacked a second, redundant border on top of it
     // (and a THIRD from the host <div x-input> tag incorrectly also getting
-    // the .x-input class below, now removed). Only set what CSS can't:
-    // flex sizing within the wrapper.
-    Object.assign(realInput.style, {
-      width: 'auto',
-      flex: '1',
-      minWidth: '0'
-    });
+    // the .x-input class below, now removed). What remains is flex sizing
+    // within the wrapper: `.x-input__wrapper > .x-input__field` (#779).
     wrapper.appendChild(realInput);
 
     if (icon && iconPosition === 'end') {
@@ -257,8 +252,14 @@ export function input(element, options = {}) {
     // gap as #752.
     size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     clearable: options.clearable ?? element.hasAttribute('clearable'),
-    prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix || readAttr(element, 'icon') || '',
-    suffix: options.suffix || element.getAttribute('suffix') || element.dataset.suffix || '',
+    // #773: `icon` always became the PREFIX, so icon-position="end" -- which
+    // the <div x-input> builder above honours -- did nothing on a native
+    // <input>: the showcase's start and end rows rendered the same field.
+    // An explicit prefix/suffix still wins over the icon.
+    prefix: options.prefix || element.getAttribute('prefix') || element.dataset.prefix
+      || (readAttr(element, 'iconPosition', 'start') === 'end' ? '' : readAttr(element, 'icon')) || '',
+    suffix: options.suffix || element.getAttribute('suffix') || element.dataset.suffix
+      || (readAttr(element, 'iconPosition', 'start') === 'end' ? readAttr(element, 'icon') : '') || '',
     ...options
   };
 
@@ -269,11 +270,11 @@ export function input(element, options = {}) {
   // border ("two lines" on the Success/Error variant demos). Same bug, same
   // fix as the <div x-input> custom-tag branch above: the wrapper gets the
   // purely structural x-input__wrapper class (no CSS targets it visually)
-  // and carries only layout via inline styles; border/background stay
-  // exclusively on the real input.
-  wrapper.className = 'x-input__wrapper';
-  // Wrapper takes full width to mimic the input's behavior
-  wrapper.style.cssText = 'position:relative;display:flex;align-items:center;width:100%;';
+  // and carries only layout; border/background stay exclusively on the real
+  // input. #779: that layout is .x-input__wrapper in input.css, and
+  // --native scopes the field padding/outline and clear-button chrome that
+  // only this path ever applied.
+  wrapper.className = 'x-input__wrapper x-input__wrapper--native';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
   element.classList.add('x-input__field');
@@ -286,25 +287,10 @@ export function input(element, options = {}) {
   // field), so removing them changes nothing visually except letting the
   // variant classes through.
   //
-  // The three that remain are layout, tied to the flex wrapper created just
-  // above -- they describe this element's role inside that wrapper, not its
-  // appearance.
-  Object.assign(element.style, {
-    width: 'auto', // Let flex handle width
-    flex: '1',     // Take remaining space
-    minWidth: '0', // Prevent overflow
-    outline: 'none'
-  });
-
-  // Apply size
-  const paddings = {
-    xs: '0.125rem 0.5rem',
-    sm: '0.25rem 0.75rem',
-    md: '0.5rem 0.75rem',
-    lg: '0.75rem 1rem',
-    xl: '1rem 1.25rem'
-  };
-  element.style.padding = paddings[config.size] || paddings.md;
+  // The layout that remains (flex sizing inside the wrapper, no outline) and
+  // the per-size padding are input.css rules scoped to
+  // .x-input__wrapper--native (#779). An unrecognised size falls back to md's
+  // padding there too, as the old paddings lookup did.
   
   // #485: size/variant modifier classes go on the real input, not the
   // wrapper -- .x-input--{size} adds padding/font-size and
@@ -327,21 +313,18 @@ export function input(element, options = {}) {
     element.classList.add(`x-input--${config.variant}`);
   }
 
+  // Border colour per state is .x-input--{variant} in input.css (#779).
   if (config.variant === 'success') {
-    element.style.borderColor = 'var(--success-color, #22c55e)';
     element.classList.add('x-input--success');
   } else if (config.variant === 'warning') {
-    element.style.borderColor = 'var(--warning-color, #f59e0b)';
     element.classList.add('x-input--warning');
   } else if (config.variant === 'error') {
-    element.style.borderColor = 'var(--danger-color, #ef4444)';
     element.classList.add('x-input--error');
   }
 
   if (config.prefix) {
     const pre = document.createElement('span');
     pre.className = 'x-input__prefix';
-    pre.style.cssText = 'padding:0 0.5rem;color:var(--text-secondary,#9ca3af);';
     pre.textContent = config.prefix;
     wrapper.insertBefore(pre, element);
   }
@@ -349,7 +332,6 @@ export function input(element, options = {}) {
   if (config.suffix) {
     const suf = document.createElement('span');
     suf.className = 'x-input__suffix';
-    suf.style.cssText = 'padding:0 0.5rem;color:var(--text-secondary,#9ca3af);';
     suf.textContent = config.suffix;
     wrapper.appendChild(suf);
   }
@@ -359,7 +341,6 @@ export function input(element, options = {}) {
     clear.className = 'x-input__clear';
     clear.type = 'button';
     clear.textContent = '×';
-    clear.style.cssText = 'background:none;border:none;cursor:pointer;padding:0 0.5rem;font-size:1.25rem;color:var(--text-secondary,#9ca3af);';
     clear.onclick = () => { 
       element.value = ''; 
       element.focus(); 

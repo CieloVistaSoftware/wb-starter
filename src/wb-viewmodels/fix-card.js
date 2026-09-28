@@ -61,7 +61,7 @@ function renderFixCard(host, card, fix) {
   
   const causeHtml = hasCause 
     ? `<div class="detail-content ${isMissingBehavior ? 'glow-red' : ''}" ${redHoverText}>${escapeHtml(fix.cause)}</div>`
-    : `<div class="detail-content violation" style="color: var(--danger); border: 1px dashed var(--danger); background: rgba(239, 68, 68, 0.1);">VIOLATION: No cause specified. Fix requirements mandate a known cause.</div>`;
+    : `<div class="detail-content violation">VIOLATION: No cause specified. Fix requirements mandate a known cause.</div>`;
 
   const errorSignature = (() => {
     const sig = fix.errorSignature;
@@ -77,7 +77,7 @@ function renderFixCard(host, card, fix) {
         // docs/components/semantics/ does not exist -- the docs live in
         // docs/behaviors/ since the components removal, so every
         // enhancement link in the viewer 404'd (#911).
-        return `<a href="/docs/behaviors/${escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${escapeHtml(compName)}.md</a>`;
+        return `<a href="/docs/behaviors/${escapeHtml(compName)}.md" target="_blank" class="fix-enhancement-link">Enhancement: See ${escapeHtml(compName)}.md</a>`;
       }
       return escapeHtml(sig);
     }
@@ -97,52 +97,52 @@ function renderFixCard(host, card, fix) {
   const issueText = fix.issue == null ? '' : String(fix.issue).trim();
   const issueLabel = /^[0-9]+$/.test(issueText) ? `#${issueText}` : issueText;
   const headerContent = `
-    <div class="card-header" style="border:none;padding:0;margin:0;">
-      <div class="header-top" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-        <div class="fix-id" style="font-family:monospace;color:var(--text-secondary);background:rgba(0,0,0,0.3);padding:0.2rem 0.4rem;border-radius:4px;">${errorIdSafe || '—'}</div>
-        <span ${errorIdSafe ? `id="status-${errorIdSafe}"` : ''} class="fix-status ${statusClass}" style="padding:0.25rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:bold;text-transform:uppercase;">${escapeHtml(statusDisplay)}</span>
+    <div class="card-header">
+      <div class="header-top">
+        <div class="fix-id">${errorIdSafe || '—'}</div>
+        <span ${errorIdSafe ? `id="status-${errorIdSafe}"` : ''} class="fix-status ${statusClass}">${escapeHtml(statusDisplay)}</span>
       </div>
-      <h3 class="fix-title" style="margin:0;font-size:1.1rem;color:var(--text-primary);">${escapeHtml(fix.title || issueLabel || 'Untitled fix')}</h3>
+      <h3 class="fix-title">${escapeHtml(fix.title || issueLabel || 'Untitled fix')}</h3>
     </div>
   `;
 
   // Prepare Main Content
   const mainContent = `
-    <div class="fix-meta" style="display:flex;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color);">
-      <div class="meta-item" style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:var(--text-secondary);">
+    <div class="fix-meta">
+      <div class="meta-item">
         <span>📦</span> ${escapeHtml(fix.component || 'Global')}
       </div>
-      <div class="meta-item" style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:var(--text-secondary);">
+      <div class="meta-item">
         <span>📅</span> ${dateStr}
       </div>
     </div>
 
-    <div class="fix-details" style="display:flex;flex-direction:column;gap:1rem;">
+    <div class="fix-details">
       <div class="detail-row">
-        <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Error Signature</span>
+        <span class="detail-label">Error Signature</span>
         <div class="signature-block">${errorSignature}</div>
       </div>
 
       ${fix.stackTrace ? `
         <div class="detail-row">
-          <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Stack Trace</span>
+          <span class="detail-label">Stack Trace</span>
           <div class="stack-trace">${escapeHtml(fix.stackTrace)}</div>
         </div>
       ` : ''}
 
       <div class="detail-row">
-        <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Cause</span>
+        <span class="detail-label">Cause</span>
         ${causeHtml}
       </div>
 
       <div class="detail-row">
-        <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Action Taken</span>
+        <span class="detail-label">Action Taken</span>
         <div class="detail-content">${escapeHtml(fix.fix && fix.fix.action ? fix.fix.action : 'No action specified')}</div>
       </div>
 
       ${fix.fix && fix.fix.code ? `
         <div class="detail-row">
-          <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:1rem;">Code Change</span>
+          <span class="detail-label detail-label--spaced">Code Change</span>
           <div class="detail-content">
             <div class="fix-code-block">${escapeHtml("```" + getLanguage(fix) + "\n" + fix.fix.code + "\n```")}</div>
           </div>
@@ -150,22 +150,22 @@ function renderFixCard(host, card, fix) {
       ` : ''}
 
       <div class="detail-row">
-        <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">File</span>
+        <span class="detail-label">File</span>
         ${fix.fix && fix.fix.file ? `
-          <code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:3px;display:block;max-height:100px;overflow-y:auto;">${escapeHtml(fix.fix.file)}</code>
-        ` : '<span style="color: var(--text-muted); font-style: italic; font-size: 0.8rem;">None specified</span>'}
+          <code class="fix-file">${escapeHtml(fix.fix.file)}</code>
+        ` : '<span class="fix-none">None specified</span>'}
       </div>
 
       <div class="detail-row">
-        <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Test Status</span>
-        <div class="detail-content" style="display: flex; flex-direction: column; gap: 0.5rem;">
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="color: var(--text-muted); font-size: 0.8rem;">Test Run:</span>
-            <span class="${fix.testRun ? 'status-fixed' : 'status-pending'}" style="font-family: monospace; font-size: 0.8rem; color:${fix.testRun ? 'var(--success)' : 'var(--warning)'};">${fix.testRun === true ? 'TRUE' : 'FALSE'}</span>
+        <span class="detail-label">Test Status</span>
+        <div class="detail-content fix-test-status">
+          <div class="fix-test-row">
+            <span class="fix-test-key">Test Run:</span>
+            <span class="fix-test-run ${fix.testRun ? 'status-fixed fix-test-run--yes' : 'status-pending fix-test-run--no'}">${fix.testRun === true ? 'TRUE' : 'FALSE'}</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="color: var(--text-muted); font-size: 0.8rem; flex-shrink: 0;">Test Name:</span>
-            ${fix.testName ? `<code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:3px;display:block;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;flex:1;min-width:0;">${escapeHtml(fix.testName)}</code>` : '<span style="color: var(--text-muted); font-style: italic; font-size: 0.8rem;">None specified</span>'}
+          <div class="fix-test-row">
+            <span class="fix-test-key fix-test-key--fixed">Test Name:</span>
+            ${fix.testName ? `<code class="fix-test-name">${escapeHtml(fix.testName)}</code>` : '<span class="fix-none">None specified</span>'}
           </div>
         </div>
       </div>
@@ -191,8 +191,8 @@ function renderFixCard(host, card, fix) {
 
   // Ensure the main content area expands
   if (main) {
-    main.style.overflowY = 'visible';
-    main.style.flex = '1 1 auto';
+    // overflow/flex are .x-fix-card__main in fix-card.css (#779).
+    main.classList.add('x-fix-card__main');
     
     // Also ensure internal code blocks don't take up too much space individually
     // (Though the global card scroll handles the overflow, keeping these small helps UX)
@@ -200,10 +200,8 @@ function renderFixCard(host, card, fix) {
     internalBlocks.forEach(block => {
       // Only apply scroll container class to non-fix-code blocks (stack trace etc)
       if (!block.closest('.fix-code-block')) {
+          // max-height/overflow/display come with the class (fix-card.css, #779).
           block.classList.add('x-fix-card-scroll-container');
-          block.style.maxHeight = '100px';
-          block.style.overflowY = 'auto';
-          block.style.display = 'block';
       }
     });
   }

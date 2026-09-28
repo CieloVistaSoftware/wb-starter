@@ -29,6 +29,12 @@ export function collapse(element, options = {}) {
   // `x-collapse` TAG directly now, so the class just duplicated the tag
   // name. (No live demo/page usage of x-collapse on a non-<div x-collapse>
   // element was found.)
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-collapse> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-collapse> tag does not get a redundant class.
+  element.classList.add('x-collapse');
 
   // If target is specified, act as a remote trigger
   if (config.target) {
@@ -295,6 +301,23 @@ export function accordion(element, options = {}) {
       element.innerHTML = '';
       element.classList.add('x-accordion');
       element.appendChild(buildAccordionItem(element, title, content, element.hasAttribute('open')));
+      element.dataset.wbHydrated = '1';
+      return () => element.classList.remove('x-accordion');
+    }
+
+    // The host itself carries the panel title — single form without the
+    // <wb-accordion> tag: <div x-accordion accordion-title="Q">answer</div>.
+    // Same spellings (and precedence) the child form accepts above; before
+    // this, a titled host silently fell through to a plain collapse and the
+    // title was dropped.
+    const ownTitleAttr = ['accordion-title', 'data-accordion-title', 'data-title']
+      .find((n) => element.hasAttribute(n));
+    if (ownTitleAttr) {
+      const hostTitle = element.getAttribute(ownTitleAttr) || 'Accordion Item';
+      const hostContent = element.innerHTML;
+      element.innerHTML = '';
+      element.classList.add('x-accordion');
+      element.appendChild(buildAccordionItem(element, hostTitle, hostContent, element.hasAttribute('open')));
       element.dataset.wbHydrated = '1';
       return () => element.classList.remove('x-accordion');
     }

@@ -1,4 +1,5 @@
-import { readAttr } from '../core/read-attr.js';
+import { readAttr, readNumber } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * Sticky Behavior
  * -----------------------------------------------------------------------------
@@ -20,35 +21,43 @@ import { readAttr } from '../core/read-attr.js';
  *   animate   - Add smooth transition (default: true)
  */
 
+/** Coerce an explicit option to a number, falling back when absent/unparseable (#946). */
+function num(value, fallback) {
+  if (value === undefined || value === null || value === '') return fallback;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : fallback;
+}
+
 export function sticky(element, options = {}) {
   // #448: skip the class on a literal <div x-sticky> host -- effects.css
-  // selects the `x-sticky` TAG directly for that case now. The class is
+  // selects the `[x-sticky]` TAG directly for that case now. The class is
   // still added for every OTHER host (this docstring's own <nav x-sticky>/
-  // <header x-sticky> examples), since those tags aren't `x-sticky` and
+  // <header x-sticky> examples), since those tags aren't `[x-sticky]` and
   // effects.css's `.x-sticky`/`.x-sticky.is-stuck` rules still select them
   // by class.
-  if (element.tagName.toLowerCase() !== 'x-sticky') element.classList.add('x-sticky');
+  element.classList.add('x-sticky');
 
   // Config: plain attributes are canonical (Law 11); data-* kept as a
   // back-compat fallback only.
   const config = {
-    offset: parseInt(options.offset ?? element.getAttribute('offset') ?? readAttr(element, 'offset') ?? '0', 10),
-    zIndex: parseInt(options.zIndex ?? element.getAttribute('z-index') ?? readAttr(element, 'zIndex') ?? '100', 10),
+    // #946: readAttr() returns '' (not null) when the attribute is absent, so a
+    // trailing `?? '0'` is dead code and parseInt('') yields NaN -- which made
+    // `scrollY >= triggerPoint - config.offset` always false and stopped a plain
+    // <nav x-sticky> from EVER sticking on scroll. readNumber() is the helper
+    // written for this: it returns the fallback instead of poisoning arithmetic.
+    offset: readNumber(element, 'offset', num(options.offset, 0)),
+    zIndex: readNumber(element, 'zIndex', num(options.zIndex, 100)),
     threshold: options.threshold ?? element.getAttribute('threshold') ?? readAttr(element, 'threshold') ?? null,
-    stuckClass: options.class ?? element.getAttribute('class-name') ?? element.dataset.class ?? 'is-stuck',
+    // `stuck-class` first: sticky.schema.json declares stuckClass, which the
+    // docs render as stuck-class -- the one spelling not read here (#861).
+    // `class-name` and dataset.class stay as back-compat.
+    stuckClass: options.class ?? element.getAttribute('stuck-class') ?? element.getAttribute('class-name') ?? element.dataset.class ?? 'is-stuck',
     animate: options.animate !== false && (element.getAttribute('animate') !== 'false') && (element.dataset.animate !== 'false')
   };
 
-  // Store original styles
-  const originalStyles = {
-    position: element.style.position,
-    top: element.style.top,
-    left: element.style.left,
-    right: element.style.right,
-    width: element.style.width,
-    zIndex: element.style.zIndex,
-    transition: element.style.transition
-  };
+  // #779: nothing is written to element.style any more, so there are no
+  // authored inline values to save and restore -- unstick() just drops the
+  // class and the generated rule, and whatever the author had is untouched.
 
   // Get initial position
   let triggerPoint = config.threshold ? parseInt(config.threshold, 10) : null;
@@ -70,21 +79,49 @@ export function sticky(element, options = {}) {
   // Create placeholder to prevent layout shift
   function createPlaceholder() {
     if (placeholder) return;
+
+    // #1031: `element.parentNode.insertBefore(...)` two lines down assumed the
+    // host still had a parent. It is reached from the SCROLL handler, and a host
+    // can be removed between the event firing and the handler running — routine
+    // on a page that re-renders demos, and routine in a test that navigates
+    // while scrolled. Measured: "Uncaught TypeError: Cannot read properties of
+    // null (reading 'insertBefore')" twice per suite run on /demos/autoinject.html.
+    //
+    // The throw mattered beyond the log line: it aborted the scroll handler, so
+    // everything after it in that pass never ran and the behavior stayed
+    // half-applied on every subsequent scroll.
+    if (!element.parentNode) {
+      detach();               // nothing to stick to; stop tracking it
+      return;
+    }
     
     placeholder = document.createElement('div');
     placeholder.className = 'sticky-placeholder';
-    placeholder.style.cssText = `
-      width: ${elementRect.width}px;
-      height: ${elementRect.height}px;
-      visibility: hidden;
-      pointer-events: none;
-    `;
+    // visibility/pointer-events are .sticky-placeholder's (effects.css); the
+    // measured size is a generated rule, not a style attribute (#779).
+    setRule(placeholder, 'size', { width: `${elementRect.width}px`, height: `${elementRect.height}px` });
     element.parentNode.insertBefore(placeholder, element);
+  }
+
+  /**
+   * #1031: stop tracking a host that has left the document.
+   *
+   * A listener still firing for a detached element is why the TypeError repeated
+   * rather than happening once — every subsequent scroll re-entered the same
+   * dead path. Removing the listeners here makes the failure terminal instead of
+   * recurring, and the teardown below stays the normal exit.
+   */
+  function detach() {
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', handleResize);
+    removePlaceholder();
+    isStuck = false;
   }
 
   // Remove placeholder
   function removePlaceholder() {
     if (placeholder) {
+      clearRules(placeholder);
       placeholder.remove();
       placeholder = null;
     }
@@ -98,15 +135,20 @@ export function sticky(element, options = {}) {
     elementRect = element.getBoundingClientRect();
     createPlaceholder();
     
-    element.style.position = 'fixed';
-    element.style.top = `${config.offset}px`;
-    element.style.left = `${elementRect.left}px`;
-    element.style.width = `${elementRect.width}px`;
-    element.style.zIndex = config.zIndex;
-    
-    if (config.animate) {
-      element.style.transition = 'box-shadow 0.2s ease';
-    }
+    // position:fixed is .x-sticky--fixed (effects.css); the measured spot and
+    // the configured z-index are runtime values, so a generated rule (#779).
+    // Weight 3 matches that class's (0,3,0): these used to be inline, above
+    // any rule the host's own page styles it with, and a sticky header that
+    // a (0,2,0) page rule pins back to position:relative does not stick.
+    // The box-shadow transition config.animate asked for is .x-sticky's own
+    // rule in effects.css, which every host carries.
+    element.classList.add('x-sticky--fixed');
+    setRule(element, 'stuck', {
+      top: `${config.offset}px`,
+      left: `${elementRect.left}px`,
+      width: `${elementRect.width}px`,
+      zIndex: config.zIndex,
+    }, { weight: 3 });
     
     element.classList.add(config.stuckClass);
     isStuck = true;
@@ -122,13 +164,8 @@ export function sticky(element, options = {}) {
   function unstick() {
     if (!isStuck) return;
     
-    // Restore original styles
-    element.style.position = originalStyles.position;
-    element.style.top = originalStyles.top;
-    element.style.left = originalStyles.left;
-    element.style.width = originalStyles.width;
-    element.style.zIndex = originalStyles.zIndex;
-    element.style.transition = originalStyles.transition;
+    element.classList.remove('x-sticky--fixed');
+    setRule(element, 'stuck', null);
     
     element.classList.remove(config.stuckClass);
     removePlaceholder();
@@ -140,11 +177,23 @@ export function sticky(element, options = {}) {
     }));
   }
 
-  // Scroll handler
+  // Scroll handler.
+  //
+  // Measured LIVE, not from a trigger point cached at init: content above the
+  // host (lazy injection, images, a demo rendering late) moves it after init,
+  // and a stale point made it stick late or never -- 'wb:sticky:stuck never
+  // fired' in x-sticky-behavior.spec.ts under load. While stuck the host is
+  // fixed, so its in-flow stand-in, the placeholder, is what is measured.
   function handleScroll() {
-    const scrollY = window.scrollY;
-    
-    if (scrollY >= triggerPoint - config.offset) {
+    let past;
+    if (config.threshold) {
+      past = window.scrollY >= triggerPoint - config.offset;
+    } else {
+      const ref = isStuck && placeholder ? placeholder : element;
+      past = ref.getBoundingClientRect().top <= config.offset;
+    }
+
+    if (past) {
       stick();
     } else {
       unstick();

@@ -13,7 +13,7 @@
    border/padding/etc.), not just inline-flex/width sizing. The class rule
    is kept for the `badge="..."` semantic attribute on a plain element
    (badge() still adds `.x-badge` there, per semantic-attributes.js). */
-x-badge,
+x-badge, [x-badge],
 .x-badge {
   display: inline-flex;
   align-items: center;

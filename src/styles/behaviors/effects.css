@@ -16,8 +16,8 @@
    name (no live demo/page usage of x-spinner on a non-<span x-spinner> element
    was found). */
 x-spinner, [x-spinner]{
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   border: 2px solid var(--border-color);
   border-top-color: var(--primary);
   border-radius: 50%;
@@ -322,6 +322,14 @@ x-sticky.is-stuck, [x-sticky].is-stuck,
   visibility: hidden;
 }
 
+/* #779: sticky.js wrote position:fixed onto the host's style attribute while
+   stuck. (0,3,0) stands in for the inline precedence it had over whatever
+   rule the page styles its header with; top/left/width/z-index follow from
+   src/core/dynamic-style.js at the same weight. */
+.x-sticky.x-sticky--fixed.x-sticky--fixed {
+  position: fixed;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
    #760 — press feedback for continuous effects
 
@@ -362,4 +370,212 @@ x-sticky.is-stuck, [x-sticky].is-stuck,
   .x-pressed {
     transform: none;
   }
+}
+
+/* =============================================================================
+   #779 — declarations effects.js used to write onto element.style
+   -----------------------------------------------------------------------------
+   Moved here verbatim so a theme or page rule can reach them. Values that are
+   only known at runtime (random particle sizes, an author's color/duration, a
+   scroll offset) travel as generated rules from src/core/dynamic-style.js and
+   are read here through custom properties or override these defaults.
+   Button hosts use a compound selector: themes.css's `[data-theme] button`
+   reset (0,1,1) beats a single class on the specificity tie-break.
+============================================================================= */
+
+/* x-animate with trigger="click": say it is clickable */
+.x-animate.x-animate--clickable { cursor: pointer; }
+
+/* x-typewriter: clickable to replay, with an optional caret */
+.x-typewriter { cursor: pointer; }
+.x-typewriter.x-typewriter--cursor { border-right: 2px solid var(--primary); }
+
+/* x-reveal: hidden until scrolled into view */
+.x-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.x-reveal.x-reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* x-marquee */
+.x-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+}
+.x-marquee__track {
+  display: inline-block;
+  animation: x-marquee var(--x-marquee-speed, 30s) linear infinite;
+  padding-right: 2rem;
+}
+
+/* x-confetti */
+.x-confetti-trigger.x-confetti-trigger--button {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--confetti-trigger--button-bg-1, #ff6b6b), var(--confetti-trigger--button-bg-2, #feca57), var(--confetti-trigger--button-bg-3, #48dbfb), var(--confetti-trigger--button-bg-4, #ff9ff3));
+  background-size: 300% 300%;
+  animation: x-confetti-gradient 3s ease infinite;
+  color: var(--confetti-trigger--button-fg, #fff);
+  font-weight: bold;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.x-confetti-trigger.x-confetti-trigger--button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+.x-confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.x-confetti-piece {
+  position: absolute;
+  top: -1.25rem;
+  animation-name: x-confetti-fall;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+/* x-sparkle */
+.x-sparkle-trigger {
+  position: relative;
+  overflow: visible;
+}
+.x-sparkle__spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  animation-name: x-sparkle;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  z-index: 1000;
+  filter: drop-shadow(0 0 4px gold);
+}
+
+/* x-glow (#906): no colour default on the element, so a theme's --glow-color
+   reaches it; an author color="…" arrives as a generated rule. */
+.x-glow {
+  animation: x-glow 1.5s ease-in-out infinite;
+  box-shadow:
+    0 0 10px var(--glow-color, var(--primary)),
+    0 0 20px var(--glow-color, var(--primary)),
+    0 0 30px var(--glow-color, var(--primary));
+}
+
+/* x-rainbow -- doubled class: on a <button> host, themes.css's
+   `[data-theme] button` (0,1,1) sets `color` and would beat a single class,
+   putting solid text back over the gradient. */
+.x-rainbow.x-rainbow {
+  background-image: linear-gradient(45deg, var(--rainbow-bg-1, #ff6b6b), var(--rainbow-bg-2, #feca57), var(--rainbow-bg-3, #48dbfb), var(--rainbow-bg-4, #ff9ff3), var(--rainbow-bg-5, #54a0ff), var(--rainbow-bg-6, #5f27cd), var(--rainbow-bg-7, #ff6b6b));
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: x-rainbow var(--x-rainbow-duration, 3s) linear infinite;
+}
+
+/* x-fireworks */
+.x-fireworks-trigger.x-fireworks-trigger--button {
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, var(--fireworks-trigger--button-bg-1, #1a1a2e), var(--fireworks-trigger--button-bg-2, #16213e));
+  color: var(--fireworks-trigger--button-fg, #fff);
+  border-radius: 0.5rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.x-fireworks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+.x-fireworks__particle {
+  position: absolute;
+  border-radius: 50%;
+  animation-name: x-firework-particle;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+/* x-snow */
+.x-snow-trigger.x-snow-trigger--button {
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--snow-trigger--button-bg-1, #a8edea), var(--snow-trigger--button-bg-2, #fed6e3));
+  color: var(--snow-trigger--button-fg, #333);
+  border-radius: 0.5rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.x-snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.x-snow__flake {
+  position: absolute;
+  top: -1.875rem;
+  animation-name: x-snow-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  opacity: 0.8;
+}
+
+/* x-particle */
+.x-particle {
+  position: relative;
+  overflow: hidden;
+}
+.x-particle__dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--x-particle-color, var(--primary));
+  bottom: -0.625rem;
+  opacity: 0.6;
+  animation-name: x-particle-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+}
+
+/* #779: ripple.js's wave, formerly style.cssText. Colour, duration, size and
+   position are per click and arrive through src/core/dynamic-style.js. */
+.x-ripple__wave {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0);
+  animation: x-ripple-animation 600ms ease-out forwards;
 }

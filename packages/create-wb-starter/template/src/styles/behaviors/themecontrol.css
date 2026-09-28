@@ -1,7 +1,7 @@
 /**
  * Theme Control Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from behaviors.css (Post-Phase 3 cleanup)
+ * Extracted from components.css (Post-Phase 3 cleanup)
  * Works with src/wb-viewmodels/semantics/themecontrol.js
  * -----------------------------------------------------------------------------
  */
@@ -9,7 +9,7 @@
 /* #448: tag selector -- themecontrol() no longer adds a redundant
    classList.add('x-themecontrol') that just duplicated the
    <div x-themecontrol> tag name. */
-x-themecontrol {
+x-themecontrol, [x-themecontrol]{
   display: inline-block;
 }
 

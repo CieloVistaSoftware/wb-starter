@@ -255,9 +255,9 @@
       ]
     },
     "x-card": {
-      "source": "<article title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
+      "source": "<article title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
       "alternates": [
-        "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\" elevated>\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
+        "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
       ]
     },
     "x-cardbutton": {
@@ -352,11 +352,11 @@
       ]
     },
     "x-badge": {
-      "source": "<span x-badge label=\"Beta\" variant=\"warning\" pill></span>",
+      "source": "<span x-badge label=\"Beta\" variant=\"warning\"></span>",
       "alternates": []
     },
     "x-chip": {
-      "source": "<span x-chip label=\"typescript\" icon=\"check\" dismissible></span>",
+      "source": "<span x-chip label=\"typescript\" icon=\"check\"></span>",
       "alternates": []
     },
     "x-avatar": {
@@ -372,13 +372,13 @@
       "alternates": []
     },
     "x-progress": {
-      "source": "<progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></progress>",
+      "source": "<progress value=\"72\" max=\"100\" label=\"Uploading footage\"></progress>",
       "alternates": [
-        "<div x-progress value=\"72\" max=\"100\" label=\"Uploading footage\" show-value></div>"
+        "<div x-progress value=\"72\" max=\"100\" label=\"Uploading footage\"></div>"
       ]
     },
     "x-rating": {
-      "source": "<div x-rating value=\"4\" max=\"5\" half></div>",
+      "source": "<div x-rating value=\"3.5\" max=\"5\"></div>",
       "alternates": []
     },
     "x-tabs": {
@@ -438,11 +438,11 @@
       ]
     },
     "x-checkbox": {
-      "source": "<div x-checkbox label=\"Run the full suite before pushing\" name=\"full-suite\" checked></div>",
+      "source": "<div x-checkbox label=\"Run the full suite before pushing\" name=\"full-suite\"></div>",
       "alternates": []
     },
     "x-switch": {
-      "source": "<div x-switch label=\"Publish to staging on merge\" name=\"auto-deploy\" checked></div>",
+      "source": "<div x-switch label=\"Publish to staging on merge\" name=\"auto-deploy\"></div>",
       "alternates": []
     },
     "x-otp": {
@@ -490,9 +490,9 @@
       "alternates": []
     },
     "x-label": {
-      "source": "<label required label-position=\"top\">Deploy key</label>",
+      "source": "<label>Deploy key <input name=\"deploy-key\" placeholder=\"ssh-ed25519 AAAA…\"></label>",
       "alternates": [
-        "<div x-label required label-position=\"top\">Deploy key</div>"
+        "<div x-label>Deploy key <input name=\"deploy-key\" placeholder=\"ssh-ed25519 AAAA…\"></div>"
       ]
     },
     "x-autocomplete": {

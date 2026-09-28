@@ -11,6 +11,13 @@ import { readFlag } from '../../core/read-attr.js';
  * The <dialog> element provides native accessibility features.
  * Helper Attribute: [x-behavior="dialog"]
  */
+const SIZES = ['sm', 'md', 'lg', 'xl', 'full'];
+
+/** dialog.schema.json: size appliesClass x-dialog--{{value}}; unknown -> md. */
+function sizeClass(size) {
+  return `x-dialog--${SIZES.includes(size) ? size : 'md'}`;
+}
+
 export function dialog(element, options = {}) {
   const config = {
     title: options.title || element.getAttribute('title') || element.getAttribute('modal-title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
@@ -22,6 +29,12 @@ export function dialog(element, options = {}) {
     // "Fullscreen" demo triggers opened the exact same default-positioned,
     // default-sized dialog).
     variant: options.variant || element.getAttribute('variant') || 'default',
+    // Declared in dialog.schema.json and documented in docs/behaviors/dialog.md
+    // (all default true) but read by no code (#1005). readFlag so that
+    // `close-on-backdrop="false"` really means off -- the #747 trap.
+    closeOnBackdrop: options.closeOnBackdrop ?? readFlag(element, 'close-on-backdrop', true),
+    closeOnEscape: options.closeOnEscape ?? readFlag(element, 'close-on-escape', true),
+    showClose: options.showClose ?? readFlag(element, 'show-close', true),
     ...options
   };
 
@@ -40,9 +53,15 @@ export function dialog(element, options = {}) {
     dialogEl.setAttribute('aria-labelledby', titleId);
     dialogEl.setAttribute('aria-modal', 'true');
 
-    const sizes = { sm: '320px', md: '480px', lg: '640px', xl: '800px' };
-    dialogEl.style.maxWidth = sizes[sizeVal] || sizes.md;
-    dialogEl.style.width = '90%';
+    // The width comes from dialog.css's x-dialog--{size} (the schema's
+    // appliesClass), shared with the authored-<dialog> path below. This used
+    // to be an inline max-width table with no `full` entry, which only this
+    // path ever read -- so an authored <dialog size="xl"> stayed default-sized.
+    dialogEl.classList.add(sizeClass(sizeVal));
+    // The attribute too: this <dialog> is itself upgraded by the authored path
+    // once it is in the document, and with no size there that pass added
+    // x-dialog--md beside --sm and the later rule won.
+    dialogEl.setAttribute('size', sizeVal);
 
     // HEADER (<header>)
     const header = document.createElement('header');
@@ -54,12 +73,15 @@ export function dialog(element, options = {}) {
     title.textContent = titleText;
     header.appendChild(title);
     
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'x-dialog__close';
-    closeBtn.type = 'button';
-    closeBtn.setAttribute('aria-label', 'Close dialog');
-    closeBtn.innerHTML = '&times;';
-    header.appendChild(closeBtn);
+    let closeBtn = null;
+    if (config.showClose) {
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'x-dialog__close';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close dialog');
+      closeBtn.innerHTML = '&times;';
+      header.appendChild(closeBtn);
+    }
     
     dialogEl.appendChild(header);
 
@@ -99,7 +121,7 @@ export function dialog(element, options = {}) {
       dialogEl.remove();
     };
 
-    closeBtn.onclick = close;
+    if (closeBtn) closeBtn.onclick = close;
     cancelBtn.onclick = close;
     okBtn.onclick = () => {
       element.dispatchEvent(new CustomEvent('wb:dialog:ok', { bubbles: true }));
@@ -107,11 +129,17 @@ export function dialog(element, options = {}) {
     };
     
     // Click outside to close (on backdrop)
-    dialogEl.addEventListener('click', (e) => {
-      if (e.target === dialogEl) close();
-    });
+    if (config.closeOnBackdrop) {
+      dialogEl.addEventListener('click', (e) => {
+        if (e.target === dialogEl) close();
+      });
+    }
     
-    // ESC key handled automatically by <dialog>
+    // ESC key handled automatically by <dialog>; `close-on-escape="false"`
+    // cancels the native 'cancel' event so Escape leaves it open.
+    if (!config.closeOnEscape) {
+      dialogEl.addEventListener('cancel', (e) => e.preventDefault());
+    }
     dialogEl.addEventListener('close', () => {
       dialogEl.remove();
     });
@@ -141,8 +169,8 @@ export function dialog(element, options = {}) {
     // built from the attributes. (Previously x-modal was always hidden with only a
     // showModal() method and no click handler, so "Open Modal" did nothing. #251)
     if (hasTriggerAttrs) {
+      // cursor: pointer is .x-dialog-trigger in dialog.css (#779).
       element.classList.add('x-modal-trigger', 'x-dialog-trigger');
-      element.style.cursor = 'pointer';
       const open = () => createAndShowDialog(config.title, config.content, config.size, config.variant);
       // .open() alongside .showModal(): the docs teach an external trigger
       // calling document.getElementById(id).open() (matching the native
@@ -159,7 +187,8 @@ export function dialog(element, options = {}) {
 
     // DEFINITION mode: no trigger attributes — the children are the modal content,
     // the element is hidden, and a caller invokes element.open() (or .showModal()).
-    element.style.display = 'none';
+    // Hidden by .x-modal-definition in dialog.css, not element.style (#779).
+    element.classList.add('x-modal-definition');
     const slots = {};
     const titleSlot = element.querySelector('[slot="title"]');
     slots.title = titleSlot ? titleSlot.textContent : config.title;
@@ -175,17 +204,112 @@ export function dialog(element, options = {}) {
     return;
   }
 
-  // If element is already a <dialog>, just enhance it with classes
+  // An authored <dialog>, enhanced IN PLACE (#1005).
+  //
+  // This branch used to add two classes and stop -- "we just want to style the
+  // existing one". Two things were wrong with that, both visible the moment a
+  // sample was opened:
+  //
+  //   1. NO WAY OUT YOU CAN SEE. John: "all dialog samples must have a close
+  //      button showing." Escape and the backdrop are not visible affordances.
+  //      The other dialog path (createAndShowDialog, for `x-dialog` on a
+  //      trigger) has always built a .x-dialog__close; an authored <dialog>
+  //      got nothing, so half the samples on the Behaviors page opened as
+  //      traps.
+  //   2. TEXT FLUSH AGAINST THE EDGE. `.x-dialog` is `padding: 0` on purpose --
+  //      the padding lives on `.x-dialog__body` -- so raw children sat at 0px
+  //      from the frame, breaking DEMOS-AND-DOCS-STANDARDS.md 13 (>=1rem of
+  //      breathing room). Adding the class without adding the structure the
+  //      class assumes is what produced that.
+  //
+  // The authored markup is the source of truth, so nothing here is rebuilt from
+  // attributes: the heading is MOVED into the header (keeping its id, its text
+  // and any listeners on it) and the remaining children are MOVED into the
+  // body. Moving, not cloning -- cloning would leave every id duplicated and
+  // every handler bound to a node no longer in the document, the same trap that
+  // made the fieldset toggle dead in #999.
   if (element.tagName === 'DIALOG') {
     element.classList.add('x-dialog');
     element.classList.add('x-modal');
-    
-    // Optional: Add size class if needed, or handle via CSS
-    // The existing logic creates a new dialog, but for auto-injection on <dialog>,
-    // we just want to style the existing one.
-    
+    // size and variant were read into config and then dropped on this path:
+    // every size=… sample on the behaviors page opened at the same width.
+    const sizeCls = sizeClass(config.size);
+    const variantCls = config.variant && config.variant !== 'default' ? `x-dialog--${config.variant}` : null;
+    element.classList.add(sizeCls);
+    if (variantCls) element.classList.add(variantCls);
+
+    // Idempotent: behaviors can be re-run over the same DOM, and a second pass
+    // must not nest a header inside a header.
+    if (element.querySelector(':scope > .x-dialog__header')) {
+      return () => {
+        element.classList.remove('x-dialog', 'x-modal', sizeCls);
+        if (variantCls) element.classList.remove(variantCls);
+      };
+    }
+
+    const authored = Array.from(element.childNodes);
+    const heading = authored.find(
+      (n) => n.nodeType === 1 && /^H[1-6]$/.test(n.tagName)
+    );
+
+    const header = document.createElement('header');
+    header.className = 'x-dialog__header';
+
+    if (heading) {
+      heading.classList.add('x-dialog__title');
+      if (!heading.id) {
+        heading.id = `x-dialog-title-${Math.random().toString(36).slice(2, 9)}`;
+      }
+      element.setAttribute('aria-labelledby', heading.id);
+      header.appendChild(heading);
+    }
+
+    let closeBtn = null;
+    if (config.showClose) {
+      closeBtn = document.createElement('button');
+      closeBtn.className = 'x-dialog__close';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close dialog');
+      closeBtn.innerHTML = '&times;';
+      header.appendChild(closeBtn);
+    }
+
+    const body = document.createElement('main');
+    body.className = 'x-dialog__body';
+    for (const node of authored) {
+      if (node === heading) continue;
+      body.appendChild(node);
+    }
+
+    element.prepend(body);
+    element.prepend(header);
+
+    const closeDialog = () => element.close();
+    if (closeBtn) closeBtn.addEventListener('click', closeDialog);
+
+    // #1005: close-on-backdrop / close-on-escape / show-close are now read
+    // (config above), so the `close-on-backdrop="false"` sample stays inert
+    // while the default gets the documented backdrop-close. A click whose
+    // target is the <dialog> itself landed on the ::backdrop, since every
+    // child sits inside header/body.
+    const onBackdrop = (e) => { if (e.target === element) element.close(); };
+    if (config.closeOnBackdrop) element.addEventListener('click', onBackdrop);
+    const onCancel = (e) => e.preventDefault();
+    if (!config.closeOnEscape) element.addEventListener('cancel', onCancel);
+
     return () => {
-      element.classList.remove('x-dialog', 'x-modal');
+      if (closeBtn) closeBtn.removeEventListener('click', closeDialog);
+      element.removeEventListener('click', onBackdrop);
+      element.removeEventListener('cancel', onCancel);
+      if (heading) {
+        heading.classList.remove('x-dialog__title');
+        element.prepend(heading);
+      }
+      while (body.firstChild) element.appendChild(body.firstChild);
+      header.remove();
+      body.remove();
+      element.classList.remove('x-dialog', 'x-modal', sizeCls);
+      if (variantCls) element.classList.remove(variantCls);
     };
   }
 
@@ -193,13 +317,12 @@ export function dialog(element, options = {}) {
   // #448: no classList.add('x-dialog') here -- it just duplicated this
   // element's own <dialog> tag name (the "Marker for test compliance"
   // comment predates #448's compliance test, which now flags exactly this
-  // pattern). dialog.css's `x-dialog`/`::backdrop`/`[open]` rules select
+  // pattern). dialog.css's `.x-dialog`/`::backdrop`/`[open]` rules select
   // the tag directly; the class stays load-bearing for the OTHER two
   // branches above (a dynamically-created native <dialog> popup, and an
   // in-place-enhanced pre-existing native <dialog>), neither of which is
   // this <dialog>-as-its-own-trigger case.
   element.classList.add('x-modal');
-  element.style.cursor = 'pointer';
 
   // config.content only ever reads a `content`/`modal-content` attribute --
   // this element's real content is its light-DOM children (e.g.
@@ -219,7 +342,7 @@ export function dialog(element, options = {}) {
   // A bare <dialog id="x"> with no trigger attributes previously only
   // ever opened itself on click -- no method was assigned at all, so an
   // external `document.getElementById('x').open()` (the pattern this
-  // behavior's own docs teach) threw "open is not a function". Both names
+  // component's own docs teach) threw "open is not a function". Both names
   // are exposed for the same reason the other two branches expose them.
   // (#531)
   element.open = showDialog;

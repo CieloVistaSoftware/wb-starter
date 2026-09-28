@@ -3,8 +3,19 @@
   "$id": "tada.schema.json",
   "title": "Tada",
   "description": "On click, plays the tada animation for 1s.",
-  "schemaFor": "x-tada",
+  "schemaFor": "tada",
   "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "compliance": {
+    "baseClass": "x-tada"
+  },
+  "test": {
+    "setup": [
+      "<div x-tada>Test Content</div>"
+    ]
+  },
   "_metadata": {
     "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",

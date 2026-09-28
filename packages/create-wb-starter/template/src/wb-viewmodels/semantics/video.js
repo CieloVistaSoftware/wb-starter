@@ -34,7 +34,8 @@ export function video(element, options = {}) {
   if (element.tagName !== 'VIDEO') {
     element.innerHTML = '';
     videoEl = document.createElement('video');
-    videoEl.style.width = '100%';
+    // Full width: .x-video__media in video.css, not element.style (#779).
+    videoEl.classList.add('x-video__media');
     if (config.src) videoEl.src = config.src;
     element.appendChild(videoEl);
   }
@@ -57,7 +58,10 @@ export function video(element, options = {}) {
     getDuration: () => videoEl.duration,
     setVolume: (v) => { videoEl.volume = Math.max(0, Math.min(1, v)); },
     getVolume: () => videoEl.volume,
-    // #782: one typed setter for one boolean, as in src/.
+    // #782: mute() / unmute() / toggleMute() were three members for one
+    // boolean. The canonical verb set has no `mute`, and a typed setter says
+    // the same thing once: setMuted(true), setMuted(false), or
+    // setMuted(!getMuted()) for the toggle.
     setMuted: (muted) => { videoEl.muted = !!muted; },
     getMuted: () => videoEl.muted
   };

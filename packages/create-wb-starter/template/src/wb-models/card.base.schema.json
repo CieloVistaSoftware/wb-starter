@@ -46,19 +46,19 @@
       "type": "string",
       "description": "Title text displayed in card header",
       "mapsTo": "header",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Subtitle text displayed below title",
       "mapsTo": "header",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "footer": {
       "type": "string",
       "description": "Footer text displayed at bottom of card",
       "mapsTo": "footer",
-      "default": ""
+      "default": "this is the footer"
     },
     "variant": {
       "type": "string",
@@ -104,13 +104,13 @@
     "tooltip": {
       "type": "string",
       "description": "Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. WB-standard attribute name; `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283).",
-      "default": "",
+      "default": "this is the tooltip",
       "appliesAttribute": "x-tooltip"
     },
     "hoverText": {
       "type": "string",
       "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip, not the native browser title tooltip.",
-      "default": "",
+      "default": "this is the hover text",
       "appliesAttribute": "x-tooltip"
     }
   },

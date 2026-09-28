@@ -44,9 +44,10 @@ test.describe('Hero Variants Page', () => {
     await expect(aurora).toBeVisible();
     const video = aurora.locator('video');
     await expect(video).toBeVisible();
-    // Check for the animation style we added
-    const style = await video.getAttribute('style');
-    expect(style).toContain('animation: aurora-expand');
+    // The expand animation now comes from hero-variants.css (#779: no inline
+    // styles), so assert what the browser applies rather than the attribute.
+    const animationName = await video.evaluate((el) => getComputedStyle(el).animationName);
+    expect(animationName).toBe('aurora-expand');
   });
 
   test('quick reference table exists', async ({ page }) => {

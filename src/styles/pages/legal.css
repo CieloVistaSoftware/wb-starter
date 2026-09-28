@@ -1,0 +1,15 @@
+/* legal.css — page layout shared by pages/terms.html and pages/privacy.html.
+   Both pages carried these as style="..." attributes (#779: no inline
+   styles anywhere); one file because the two pages share one layout. */
+
+.legal-page {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Two classes: site.css's `.page p` type rules (0-1-1) would otherwise win. */
+.legal-page .legal-page__updated {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}

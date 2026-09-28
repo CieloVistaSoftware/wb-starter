@@ -206,12 +206,16 @@
         "loop": {
           "type": "boolean",
           "description": "Loop playback",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Restarts playback at the end. Nothing on the player is drawn for it (#773)."
         },
         "autoplay": {
           "type": "boolean",
           "description": "Auto-play (requires muted)",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Starts playback on load. A paused and a playing player look alike until time passes (#773)."
         },
         "muted": {
           "type": "boolean",
@@ -1135,7 +1139,9 @@
           "type": "boolean",
           "description": "Make card clickable",
           "default": false,
-          "appliesClass": "x-card--clickable"
+          "appliesClass": "x-card--clickable",
+          "visual": false,
+          "visualReason": "Makes the card an activatable button (role, keyboard, pointer cursor, press feedback). All of it is interaction; a card at rest looks the same (#773)."
         },
         "variant": {
           "type": "string",
@@ -1398,7 +1404,9 @@
         "required": {
           "type": "boolean",
           "description": "Required field",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "A form-validation constraint: submitting without it checked is refused. Nothing is drawn for it (#773)."
         },
         "size": {
           "type": "string",
@@ -1417,7 +1425,7 @@
             "primary",
             "success"
           ],
-          "default": "default",
+          "default": "primary",
           "appliesClass": "x-checkbox--{{value}}"
         }
       },
@@ -2021,7 +2029,9 @@
         "animated": {
           "type": "boolean",
           "description": "Animate open/close",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Animates opening and closing. A panel at rest looks the same either way (#773)."
         },
         "variant": {
           "type": "string",
@@ -2082,22 +2092,30 @@
             "full"
           ],
           "default": "md",
-          "appliesClass": "x-dialog--{{value}}"
+          "appliesClass": "x-dialog--{{value}}",
+          "visualReason": "Styles the dialog, which is on screen only once opened (#773).",
+          "visibleWhen": "open"
         },
         "closeOnBackdrop": {
           "type": "boolean",
           "description": "Close on backdrop click",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Whether a click on the backdrop closes the dialog. Only that click shows it (#773)."
         },
         "closeOnEscape": {
           "type": "boolean",
           "description": "Close on Escape key",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Whether Escape closes the dialog. Only the key shows it (#773)."
         },
         "showClose": {
           "type": "boolean",
           "description": "Show close button",
-          "default": true
+          "default": true,
+          "visualReason": "The close button is part of the dialog, which is on screen only once opened (#773).",
+          "visibleWhen": "open"
         },
         "variant": {
           "type": "string",
@@ -2107,7 +2125,9 @@
             "fullscreen"
           ],
           "default": "default",
-          "appliesClass": "x-dialog--{{value}}"
+          "appliesClass": "x-dialog--{{value}}",
+          "visualReason": "Styles the dialog, which is on screen only once opened (#773).",
+          "visibleWhen": "open"
         }
       },
       "matrix": [
@@ -2149,7 +2169,9 @@
             "y",
             "both"
           ],
-          "default": "both"
+          "default": "both",
+          "visual": false,
+          "visualReason": "Limits which way a drag may move the element. Only a drag shows it (#773)."
         },
         "handle": {
           "type": "string",
@@ -2196,7 +2218,9 @@
             "parent",
             "viewport"
           ],
-          "default": "none"
+          "default": "none",
+          "visual": false,
+          "visualReason": "Limits where a drag may take the card. Only a drag shows it (#773)."
         },
         "axis": {
           "type": "string",
@@ -2206,7 +2230,9 @@
             "x",
             "y"
           ],
-          "default": "both"
+          "default": "both",
+          "visual": false,
+          "visualReason": "Limits which way a drag may move the card. Only a drag shows it (#773)."
         },
         "snapToGrid": {
           "type": "number",
@@ -2400,7 +2426,9 @@
             "top-end"
           ],
           "default": "bottom-start",
-          "appliesClass": "x-dropdown--{{value}}"
+          "appliesClass": "x-dropdown--{{value}}",
+          "visualReason": "Places the menu, which is on screen only once opened (#773).",
+          "visibleWhen": "open"
         },
         "trigger": {
           "type": "string",
@@ -2408,17 +2436,23 @@
             "click",
             "hover"
           ],
-          "default": "click"
+          "default": "click",
+          "visual": false,
+          "visualReason": "Which gesture (click or hover) opens the menu. The closed dropdown looks the same (#773)."
         },
         "closeOnSelect": {
           "type": "boolean",
           "description": "Close on item select",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Whether choosing an item closes the menu. Only choosing shows it (#773)."
         },
         "closeOnOutside": {
           "type": "boolean",
           "description": "Close on outside click",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Whether a click elsewhere closes the menu. Only that click shows it (#773)."
         },
         "offset": {
           "type": "number",
@@ -2943,12 +2977,16 @@
         "ajax": {
           "type": "boolean",
           "description": "Enable AJAX form submission",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Submits in the background instead of navigating. Only submitting shows it (#773)."
         },
         "validate": {
           "type": "boolean",
           "description": "Enable validation on submit",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Checks the fields when the form is submitted. Only submitting shows it (#773)."
         }
       },
       "matrix": [],
@@ -3945,7 +3983,16 @@
             "time",
             "datetime-local"
           ],
-          "default": "text"
+          "default": "text",
+          "visualReason": "These types change the keyboard, validation and what a value may be, not the empty field: each is drawn as the same box as text (number's spin buttons appear only on hover). date, time and datetime-local draw their own picker and are compared (#773).",
+          "nonVisualValues": [
+            "email",
+            "password",
+            "number",
+            "tel",
+            "url",
+            "search"
+          ]
         },
         "helper": {
           "type": "string",
@@ -3987,12 +4034,16 @@
         "readonly": {
           "type": "boolean",
           "description": "Read-only state",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "The field refuses edits but is drawn exactly like an editable one (#773)."
         },
         "required": {
           "type": "boolean",
           "description": "Required field",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "A form-validation constraint: an empty field blocks submit. Nothing is drawn for it (#773)."
         },
         "icon": {
           "type": "string",
@@ -4531,7 +4582,9 @@
             "modal"
           ],
           "default": "left",
-          "appliesClass": "x-notes--{{value}}"
+          "appliesClass": "x-notes--{{value}}",
+          "visualReason": "Places the notes drawer, which is on screen only once opened (#773).",
+          "visibleWhen": "open"
         },
         "maxWidth": {
           "type": "string",
@@ -4551,7 +4604,9 @@
         "autoSave": {
           "type": "boolean",
           "description": "Auto-save to localStorage",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Saves the notes to localStorage as they are typed. Nothing is drawn for it (#773)."
         },
         "placeholder": {
           "type": "string",
@@ -5654,7 +5709,9 @@
         "readonly": {
           "type": "boolean",
           "description": "Display only, not interactive",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "The stars stop responding to pointer and keys; they are drawn the same (disabled is the option that dims them) (#773)."
         },
         "disabled": {
           "type": "boolean",
@@ -5924,7 +5981,9 @@
         "instant": {
           "type": "boolean",
           "description": "Search on every keystroke (no debounce)",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Searches on every keystroke instead of after a pause. Only typing shows it (#773)."
         },
         "disabled": {
           "type": "boolean",
@@ -6121,7 +6180,9 @@
         "required": {
           "type": "boolean",
           "description": "Required field",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "A form-validation constraint: submitting with no choice is refused. Nothing is drawn for it (#773)."
         },
         "size": {
           "type": "string",
@@ -6882,7 +6943,7 @@
             "primary",
             "success"
           ],
-          "default": "default",
+          "default": "primary",
           "appliesClass": "x-switch--{{value}}"
         }
       },
@@ -6931,7 +6992,9 @@
         "sortable": {
           "type": "boolean",
           "description": "Enable column sorting",
-          "default": true
+          "default": true,
+          "visual": false,
+          "visualReason": "Clicking a header sorts by it. Headers are drawn the same until one is clicked (#773)."
         },
         "filterable": {
           "type": "boolean",
@@ -6958,7 +7021,9 @@
           "type": "boolean",
           "description": "Hover effect on rows",
           "default": true,
-          "appliesClass": "x-table--hoverable"
+          "appliesClass": "x-table--hoverable",
+          "visual": false,
+          "visualReason": "Highlights the row under the pointer. Only hovering shows it (#773)."
         },
         "compact": {
           "type": "boolean",
@@ -6985,17 +7050,22 @@
         "searchable": {
           "type": "boolean",
           "default": false,
-          "description": "Show a filter input above the table. Alias of filterable."
+          "description": "Show a filter input above the table. Alias of filterable.",
+          "aliasOf": "filterable"
         },
         "copyable": {
           "type": "boolean",
           "default": false,
-          "description": "Add a control that copies the table as text."
+          "description": "Add a control that copies the table as text.",
+          "visual": false,
+          "visualReason": "Clicking a cell copies its text. Nothing is drawn for it (#773)."
         },
         "selectable": {
           "type": "boolean",
           "default": false,
-          "description": "Let a row be clicked to become the active row."
+          "description": "Let a row be clicked to become the active row.",
+          "visual": false,
+          "visualReason": "Clicking a row makes it the active row. Only the click shows it (#773)."
         }
       },
       "matrix": [
@@ -7284,12 +7354,16 @@
         "readonly": {
           "type": "boolean",
           "description": "Read-only state",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "The field refuses edits but is drawn exactly like an editable one (#773)."
         },
         "required": {
           "type": "boolean",
           "description": "Required field",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "A form-validation constraint: an empty field blocks submit. Nothing is drawn for it (#773)."
         },
         "resize": {
           "type": "string",
@@ -7590,7 +7664,9 @@
         "interactive": {
           "type": "boolean",
           "description": "Allow hovering over tooltip content",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Lets the pointer move onto the open tooltip without closing it. Only that movement shows it (#773)."
         },
         "maxWidth": {
           "type": "string",
@@ -7777,7 +7853,9 @@
         "autoplay": {
           "type": "boolean",
           "description": "Auto-play video (requires muted)",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Starts playback on load. A paused and a playing video look alike until time passes; nothing on the card marks it (#773)."
         },
         "muted": {
           "type": "boolean",
@@ -7787,7 +7865,9 @@
         "loop": {
           "type": "boolean",
           "description": "Loop video playback",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Restarts playback at the end. Nothing is drawn for it (#773)."
         },
         "controls": {
           "type": "boolean",

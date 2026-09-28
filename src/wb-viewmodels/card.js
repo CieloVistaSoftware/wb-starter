@@ -1,4 +1,5 @@
 import { readFlag, readAttr } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * Card Behavior + Variants
  * -----------------------------------------------------------------------------
@@ -91,13 +92,10 @@ const getAttr = (element, options, name) => {
   return options[name] || element.dataset[name] || element.getAttribute(name) || '';
 };
 
-// Common CSS Variables. Only the ones still read from JS survive -- every
-// other constant here described styling that card.css now owns by selector,
-// and a dead style constant is a second, silently-diverging definition of a
-// rule that already lives in one place.
-const VAR_TEXT_PRIMARY = 'var(--text-primary,#f9fafb)';
-const VAR_TEXT_SECONDARY = 'var(--text-secondary,#9ca3af)';
-const VAR_BG_TERTIARY = 'var(--bg-tertiary,#1e293b)';
+// (The VAR_* colour constants that stood here were only ever written into
+// inline styles. #779 moved the last of those into card.css, so they went
+// with them: a dead style constant is a second, silently-diverging definition
+// of a rule that already lives in one place.)
 
 
 function validateSemanticContainer(element, behaviorName) {
@@ -289,13 +287,12 @@ export function composeCard(element, options = {}) {
   // that used to sit here explained that setting it inline would block
   // `.x-product.x-card--horizontal { flex-direction: row }`. That reasoning
   // applies to every property in the object, not just that one.
-  const baseStyles = {};
-
-  // The single value no stylesheet can know: a background the AUTHOR passed in.
-  // Still an inline write and still counted by no-inline-styles.spec.ts -- it
-  // wants a generated rule rather than the element, which is a separate change.
+  // The single value no stylesheet can know: a background the AUTHOR passed
+  // in. #779: a generated stylesheet rule, not the style attribute. Weight 3
+  // (0,3,0) so it still outranks the compound variant rules in card.css
+  // (`[variant="glass"][elevated]`, 0,2,0) the way the inline write did.
   if (config.background) {
-    baseStyles.background = config.background;
+    setRule(element, 'card-background', { background: config.background }, { weight: 3 });
   }
 
   // The default surface and the rack treatment were written here inline and
@@ -303,8 +300,6 @@ export function composeCard(element, options = {}) {
   // classes are applied a few lines below, so each variant's own rules now
   // reach the element instead of losing to an inline declaration. Nothing to
   // set here for any of them.
-
-  Object.assign(element.style, baseStyles);
   
   // Variant class
   if (config.variant !== 'default') {
@@ -702,12 +697,10 @@ export function composeCard(element, options = {}) {
           if (!main.innerHTML.trim()) {
             main.remove();
             main = null;
-          } else if (!gatheredMains.has(main)) {
-            // Already a <main> inside the card -- card.css matches the tag.
-            main.style.padding = main.style.padding || '1rem';
-            main.style.flex = main.style.flex || '1';
-            main.style.color = main.style.color || VAR_TEXT_PRIMARY;
           }
+          // Already a <main> inside the card -- card.css matches the tag. The
+          // padding/flex/colour fallbacks written onto an AUTHORED <main> here
+          // were card.css's `article > main` values; deleted (#779).
         }
       }
       
@@ -722,11 +715,11 @@ export function composeCard(element, options = {}) {
           footer = footerEl;
           element.appendChild(footerEl);
         } else {
-          // Enhance existing footer
-          footer.classList.add('x-card__footer');
-          footer.style.padding = footer.style.padding || '0.75rem 1rem';
-          footer.style.borderTop = footer.style.borderTop || '1px solid var(--border-color,#374151)';
-          footer.style.background = footer.style.background || VAR_BG_TERTIARY;
+          // Enhance existing footer. Its border-top / background come from
+          // .x-card__footer in card.css; the tighter 0.75rem padding an
+          // authored footer always got is .x-card__footer--authored (#779 --
+          // all three used to be inline fallbacks written here).
+          footer.classList.add('x-card__footer', 'x-card__footer--authored');
         }
       }
       
@@ -917,14 +910,15 @@ export function cardimage(element, options = {}) {
   // matched neither branch, so those cards rendered with no image at all.
   const buildFigure = () => {
     const figure = base.createFigure();
-    figure.style.setProperty('--card-image-aspect', config.aspect);   // #1003: the property card.css already reads
+    // #1003: the property card.css already reads. #779: a generated rule.
+    setRule(figure, 'aspect', { '--card-image-aspect': config.aspect });
     const img = document.createElement('img');
     img.src = config.src;
     img.alt = config.alt;
     img.loading = config.loading;
     // #1003: only `fit` varies; card.css reads it from --card-image-fit. An
     // inline object-fit/width/height here would make the image unthemeable.
-    if (config.fit) img.style.setProperty('--card-image-fit', config.fit);
+    if (config.fit) setRule(img, 'fit', { '--card-image-fit': config.fit });
     retryCleanups.push(attachImageLoadRetry(img));
     traceCardMedia('cardimage', element, img, config.src);
     figure.appendChild(img);
@@ -1006,10 +1000,12 @@ export function cardvideo(element, options = {}) {
   let retryCleanup = null;
   if (config.src) {
     const coverFigure = base.createFigure();
-    coverFigure.style.setProperty('--card-image-aspect', config.aspect);   // #1003: the property card.css already reads
+    // #1003: the property card.css already reads. #779: a generated rule.
+    setRule(coverFigure, 'aspect', { '--card-image-aspect': config.aspect });
     const video = document.createElement('video');
     video.src = config.src;
-    video.style.cssText = 'width:100%;height:100%;display:block;';
+    // Fills the figure: `.x-card__figure video` in card.css already says
+    // width/height 100% and display:block -- the inline copy is gone (#779).
     if (config.poster) video.poster = config.poster;
     if (config.autoplay) video.autoplay = true;
     if (config.muted) video.muted = true;
@@ -1026,8 +1022,9 @@ export function cardvideo(element, options = {}) {
       element.setAttribute('data-captions-missing', 'true');
       // Add accessibility warning
       const warning = document.createElement('div');
+      // Hidden but present for tests/SR: `.x-card__video-warning { display:
+      // none }` in card.css (#779 -- was also written inline).
       warning.className = 'x-card__video-warning';
-      warning.style.cssText = 'display:none;'; // Hidden but present for tests/SR
       warning.textContent = 'Video missing captions';
       coverFigure.appendChild(warning);
     }
@@ -1152,12 +1149,12 @@ export function cardhero(element, options = {}) {
   if (config.variant && config.variant !== 'default') {
     element.classList.add(`x-cardhero--${config.variant}`);
   }
-  // composeCard applies the default card surface (inline background:var(--bg-secondary)
-  // + border). A hero owns its own full-bleed background, so clear those inline
-  // props and let hero.css provide the rich default gradient (or the user's bg).
-  element.style.removeProperty('background');
-  element.style.removeProperty('background-color');
-  element.style.removeProperty('border');
+  // composeCard turns an author background= into a generated `background`
+  // rule. A hero owns its own full-bleed background (set below from the same
+  // attribute, as background-image), so drop that shorthand and let hero.css
+  // provide the rich default gradient (or the user's bg). #779: this used to
+  // be removeProperty() calls on the style attribute.
+  setRule(element, 'card-background', null);
 
   // CHECK FOR SLOTS/CHILDREN BEFORE CLEARING
   // ----------------------------------------
@@ -1180,20 +1177,25 @@ export function cardhero(element, options = {}) {
   });
 
   element.innerHTML = '';
-  // full-height: the viewport-height rule lives in hero.css; the inline
-  // default min-height would beat it, so it is only set otherwise.
+  // full-height: the viewport-height rule lives in hero.css; the height
+  // default would beat it, so it is only set otherwise. #779: height and a
+  // user background are author values, so they travel as generated rules --
+  // weight 3, since hero.css/card.css set both through compound selectors
+  // that the inline style they replace always outranked.
   if (config.fullHeight) element.classList.add('x-cardhero--full-height');
-  else element.style.minHeight = config.height;
+  else setRule(element, 'hero-height', { minHeight: config.height }, { weight: 3 });
   element.classList.add(`x-card--xalign-${config.xalign}`);
 
-  // Background: a user-provided image/gradient is applied inline; the default
-  // rich theme gradient + all colors live in hero.css (x-cardhero…), so there
-  // are NO hardcoded colors here.
+  // Background: a user-provided image/gradient; the default rich theme
+  // gradient + all colors live in hero.css (x-cardhero…), so there are NO
+  // hardcoded colors here.
   if (config.background) {
     const isCssValue = config.background.includes('gradient') || config.background.startsWith('var(');
-    element.style.backgroundImage = isCssValue ? config.background : `url(${config.background})`;
-    element.style.backgroundSize = 'cover';
-    element.style.backgroundPosition = 'center';
+    setRule(element, 'hero-background', {
+      backgroundImage: isCssValue ? config.background : `url(${config.background})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }, { weight: 3 });
 
     // A broken image src previously failed completely silently: CSS
     // background-image has no failure signal of its own, hero.css's default
@@ -1215,7 +1217,9 @@ export function cardhero(element, options = {}) {
       probe.addEventListener('error', () => {
         if (!document.contains(element)) return;
         element.removeAttribute('background');
-        element.style.removeProperty('background-image');
+        // Only the image goes; the cover/center sizing stays, as it did when
+        // this was a removeProperty('background-image') on the style attribute.
+        setRule(element, 'hero-background', { backgroundSize: 'cover', backgroundPosition: 'center' }, { weight: 3 });
         // #1115: gradient fallback above still applies; an unreachable
         // third-party host is reported on the card, not thrown.
         if (reportIfThirdPartyMedia(element, config.background, 'x-cardhero')) return;
@@ -1351,8 +1355,9 @@ export function cardprofile(element, options = {}) {
     // Only the cover photo is per-instance. The strip's height, positioning
     // and background sizing are `.x-card__cover` in card.css (Law 9, #370);
     // writing them inline here too pinned the strip at 36px while card.css
-    // said 44px, and the inline value always won.
-    coverFig.style.backgroundImage = `url(${config.cover})`;
+    // said 44px, and the inline value always won. #779: the photo itself now
+    // travels as a generated rule, not the style attribute.
+    setRule(coverFig, 'cover', { backgroundImage: `url(${config.cover})` }, { weight: 2 });
 
     // Role sits on the cover (the card's top half) instead of below the
     // avatar/name, so it reads immediately alongside the cover photo.
@@ -1382,27 +1387,26 @@ export function cardprofile(element, options = {}) {
   // No overlap with the cover -- a fixed -40px pull-up was calibrated for the
   // old 100px cover; against the current thin cover strip it dragged the
   // avatar up into the cover image instead of sitting cleanly below it.
-  const textAlign = config.align === 'left' ? 'left' : 'center';
+  // #779: padding and alignment are `.x-card__profile-content` and its
+  // `--left` modifier in card.css, and the avatar's box is `.x-card__avatar`
+  // plus `--sm/--md/--lg` -- the cssText copies of those rules are gone.
   const content = document.createElement('div');
   content.className = 'x-card__profile-content';
-  content.style.cssText = `text-align:${textAlign};padding:1rem;`;
+  if (config.align === 'left') content.classList.add('x-card__profile-content--left');
 
-  const avatarSizes = { sm: '56px', md: '80px', lg: '104px' };
-  const avatarSize = avatarSizes[config.size] || avatarSizes.md;
+  const avatarSize = ['sm', 'md', 'lg'].includes(config.size) ? config.size : 'md';
 
   if (config.avatar) {
     const avatarImg = document.createElement('img');
-    avatarImg.className = 'x-card__avatar';
+    avatarImg.className = `x-card__avatar x-card__avatar--${avatarSize}`;
     avatarImg.src = config.avatar;
     avatarImg.alt = config.name || 'Avatar';
-    avatarImg.style.cssText = `width:${avatarSize};height:${avatarSize};border-radius:50%;border:4px solid var(--bg-secondary,#1f2937);object-fit:cover;`;
     content.appendChild(avatarImg);
   }
 
   if (config.name) {
     const nameEl = document.createElement('h3');
     nameEl.className = 'x-card__title x-card__name';
-    nameEl.style.cssText = 'margin:0.75rem 0 0;font-size:1.25rem;color:var(--text-primary,#f9fafb);';
     nameEl.textContent = config.name;
     content.appendChild(nameEl);
   }
@@ -1410,7 +1414,6 @@ export function cardprofile(element, options = {}) {
   if (config.role && !config.cover) {
     const roleEl = document.createElement('div');
     roleEl.className = 'x-card__subtitle x-card__role';
-    roleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--primary,#6366f1);font-size:0.9rem;';
     roleEl.textContent = config.role;
     content.appendChild(roleEl);
   }
@@ -1418,7 +1421,6 @@ export function cardprofile(element, options = {}) {
   if (config.bio) {
     const bioEl = document.createElement('div');
     bioEl.className = 'x-card__bio';
-    bioEl.style.cssText = 'margin:1rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.875rem;line-height:1.5;';
     bioEl.textContent = config.bio;
     content.appendChild(bioEl);
   }
@@ -1456,32 +1458,27 @@ export function cardpricing(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardpricing' });
+  // #779: text-align / container-type / padding:0 (and background-size/
+  // position) are the `.x-pricing` rule in card.css, and `featured` is its
+  // `.x-pricing--featured` modifier -- every one of these used to be written
+  // inline as well. Only the author's background image travels, as a
+  // generated rule (weight 3: card.css sets the card surface through
+  // compound selectors the inline style always outranked).
   element.classList.add('x-pricing');
   element.innerHTML = '';
-  element.style.textAlign = 'center';
-  element.style.containerType = 'inline-size'; // Enable container queries for responsive text
-  element.style.padding = '0'; // Reset padding as we use header/main
 
-  if (config.featured) {
-    element.style.border = '2px solid var(--primary, #6366f1)';
-    element.style.transform = 'scale(1.05)';
-  }
+  if (config.featured) element.classList.add('x-pricing--featured');
 
-  // Apply background image if provided
   if (config.background) {
-    element.style.backgroundImage = `url(${config.background})`;
-    element.style.backgroundSize = 'cover';
-    element.style.backgroundPosition = 'center';
+    setRule(element, 'pricing-background', { backgroundImage: `url(${config.background})` }, { weight: 3 });
   }
 
-  // Header with Plan Name
+  // Header with Plan Name (centred by .x-pricing, #779)
   const header = base.createHeader();
   header.innerHTML = ''; // Clear default
-  header.style.textAlign = 'center';
-  
+
   const planEl = document.createElement('h3');
   planEl.className = 'x-card__title x-card__plan';
-  planEl.style.cssText = 'margin:0;font-size:1.25rem;color:var(--text-primary,#f9fafb);';
   planEl.textContent = config.plan;
   header.appendChild(planEl);
   // Plan description under the name; .x-card__description is styled in card.css.
@@ -1494,24 +1491,23 @@ export function cardpricing(element, options = {}) {
   element.appendChild(header);
 
   // Main content with Price and Features
+  // #779: every element below is styled by its class in card.css
+  // (.x-card__price-wrap, .x-card__amount with its cqi scaling,
+  // .x-card__period, .x-card__features, .x-card__feature,
+  // .x-card__feature-check) -- the cssText duplicates are gone.
   const main = base.createMain();
-  main.style.textAlign = 'center';
 
   // Price
   const priceWrap = document.createElement('div');
   priceWrap.className = 'x-card__price-wrap';
-  priceWrap.style.cssText = 'margin:1rem 0;';
 
   const priceEl = document.createElement('span');
   priceEl.className = 'x-card__amount';
-  // Use container query units (cqi) to scale text relative to card width
-  priceEl.style.cssText = 'font-size:clamp(1.5rem, 18cqi, 3rem);font-weight:700;color:var(--text-primary,#f9fafb);white-space:nowrap;';
   priceEl.textContent = config.price;
   priceWrap.appendChild(priceEl);
 
   const periodEl = document.createElement('span');
   periodEl.className = 'x-card__period';
-  periodEl.style.cssText = 'color:var(--text-secondary,#9ca3af);';
   periodEl.textContent = config.period;
   priceWrap.appendChild(periodEl);
 
@@ -1520,13 +1516,11 @@ export function cardpricing(element, options = {}) {
   // Features
   const featuresList = document.createElement('ul');
   featuresList.className = 'x-card__features';
-  featuresList.style.cssText = 'list-style:none;padding:0;margin:1.5rem 0;text-align:left;';
 
   config.features.forEach(f => {
     const li = document.createElement('li');
     li.className = 'x-card__feature';
-    li.style.cssText = 'padding:0.5rem 0;color:var(--text-primary,#f9fafb);border-bottom:1px solid var(--border-color,#374151);';
-    li.innerHTML = `<span style="color:var(--success,#22c55e);margin-right:0.5rem;">✓</span> ${f.trim()}`;
+    li.innerHTML = `<span class="x-card__feature-check">✓</span> ${f.trim()}`;
     featuresList.appendChild(li);
   });
 
@@ -1534,11 +1528,10 @@ export function cardpricing(element, options = {}) {
   element.appendChild(main);
 
   // Footer with CTA
+  // Transparent, borderless: `.x-pricing .x-card__footer` in card.css (#779).
   const footer = base.createFooter();
   footer.innerHTML = ''; // Clear default
-  footer.style.background = 'transparent';
-  footer.style.borderTop = 'none';
-  
+
   const ctaBtn = document.createElement('a');
   ctaBtn.href = config.ctaHref;
   ctaBtn.className = 'x-card__cta';
@@ -1581,10 +1574,11 @@ export function cardstats(element, options = {}) {
     element.innerHTML = '';
     // Accent color: an author-supplied, per-instance value, so it travels as a
     // custom property (same convention as --card-image-aspect); what it
-    // colors is card.css's .x-stats--accent rule.
+    // colors is card.css's .x-stats--accent rule. #779: set by a generated
+    // rule, not written onto the style attribute.
     if (config.color) {
       element.classList.add('x-stats--accent');
-      element.style.setProperty('--x-stats-accent', config.color);
+      setRule(element, 'accent', { '--x-stats-accent': config.color });
     }
     // Layout, container-query sizing, and default padding all live in
     // card.css's `.x-stats` rule now (Law 9, #370 -- was unconditional
@@ -1608,9 +1602,8 @@ export function cardstats(element, options = {}) {
     iconEl.className = 'x-card__icon';
     // #946: the inline copy of .x-card__icon is gone. It duplicated the rule
     // exactly, which made the stylesheet unable to fix the centring bug.
-    // A per-instance SIZE still belongs on the element, so it travels as a
-    // custom property the rule consumes.
-    iconEl.style.setProperty('--x-card-icon-size', '2rem');
+    // #779: its 2rem size is the rule's own --x-card-icon-size default, so
+    // nothing is written here at all.
     iconEl.textContent = config.icon;
 
     header.appendChild(iconEl);
@@ -1624,8 +1617,10 @@ export function cardstats(element, options = {}) {
   if (config.value) {
     const valueEl = document.createElement('data');
     valueEl.value = config.value.replace(/[^0-9.-]/g, '') || config.value;
+    // #779: value / label / trend are .x-card__stats-* in card.css; the
+    // cssText copies of those rules are gone, and the trend colour is the
+    // --up / --down / --neutral modifier card.css already defines.
     valueEl.className = 'x-card__stats-value';
-    valueEl.style.cssText = 'font-size:clamp(1.25rem, 15cqi, 1.75rem);font-weight:700;color:var(--text-primary,#f9fafb);line-height:1.2;display:block;white-space:nowrap;';
     valueEl.textContent = config.value;
     content.appendChild(valueEl);
   }
@@ -1633,17 +1628,15 @@ export function cardstats(element, options = {}) {
   if (config.label) {
     const labelEl = document.createElement('div');
     labelEl.className = 'x-card__stats-label';
-    labelEl.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin:0.25rem 0 0 0;';
     labelEl.textContent = config.label;
     content.appendChild(labelEl);
   }
 
   if (config.trend && config.trendValue) {
     const trendEl = document.createElement('div');
-    trendEl.className = 'x-card__stats-trend';
-    const trendColor = config.trend === 'up' ? 'var(--success, #22c55e)' : config.trend === 'down' ? 'var(--error, #ef4444)' : 'var(--text-secondary, #6b7280)';
+    const trendKind = config.trend === 'up' ? 'up' : config.trend === 'down' ? 'down' : 'neutral';
+    trendEl.className = `x-card__stats-trend x-card__stats-trend--${trendKind}`;
     const trendIcon = config.trend === 'up' ? '↑' : config.trend === 'down' ? '↓' : '→';
-    trendEl.style.cssText = `color:${trendColor};font-size:0.8rem;margin:0.25rem 0 0 0;font-weight:500;`;
     trendEl.textContent = `${trendIcon} ${config.trendValue}`;
     content.appendChild(trendEl);
   }
@@ -1680,7 +1673,8 @@ export function cardtestimonial(element, options = {}) {
   const base = composeCard(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
   element.classList.add('x-testimonial');
   element.innerHTML = '';
-  element.style.padding = CARD_PADDING;
+  // #779: the 1rem padding is `.x-card--testimonial` in card.css, and every
+  // part below is styled by its class there -- the cssText copies are gone.
 
   // Quote icon -- decorative only (#941).
   //
@@ -1702,7 +1696,6 @@ export function cardtestimonial(element, options = {}) {
   if (config.quote) {
     const quoteEl = document.createElement('blockquote');
     quoteEl.className = 'x-card__quote';
-    quoteEl.style.cssText = 'margin:0.5rem 0 1rem;font-size:1rem;line-height:1.6;color:var(--text-primary,#f9fafb);font-style:italic;';
     quoteEl.textContent = config.quote;
     element.appendChild(quoteEl);
   }
@@ -1711,7 +1704,6 @@ export function cardtestimonial(element, options = {}) {
   if (config.rating) {
     const ratingEl = document.createElement('div');
     ratingEl.className = 'x-card__rating';
-    ratingEl.style.cssText = 'color:#f59e0b;margin-bottom:1rem;';
     ratingEl.textContent = '★'.repeat(parseInt(config.rating)) + '☆'.repeat(5 - parseInt(config.rating));
     element.appendChild(ratingEl);
   }
@@ -1719,14 +1711,12 @@ export function cardtestimonial(element, options = {}) {
   // Author
   const authorWrap = document.createElement('footer');
   authorWrap.className = 'x-card__footer';
-  authorWrap.style.cssText = 'display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;';
 
   if (config.avatar) {
     const avatarImg = document.createElement('img');
-    avatarImg.className = 'x-card__avatar';
+    avatarImg.className = 'x-card__avatar x-card__avatar--testimonial';
     avatarImg.src = config.avatar;
     avatarImg.alt = config.author || '';
-    avatarImg.style.cssText = 'width:48px;height:48px;border-radius:50%;object-fit:cover;';
     authorWrap.appendChild(avatarImg);
   }
 
@@ -1734,7 +1724,6 @@ export function cardtestimonial(element, options = {}) {
   if (config.author) {
     const authorName = document.createElement('cite');
     authorName.className = 'x-card__author';
-    authorName.style.cssText = 'font-style:normal;font-weight:600;color:var(--text-primary,#f9fafb);display:block;';
     authorName.textContent = config.author;
     authorInfo.appendChild(authorName);
   }
@@ -1742,7 +1731,6 @@ export function cardtestimonial(element, options = {}) {
   if (config.role) {
     const roleEl = document.createElement('span');
     roleEl.className = 'x-card__author-role';
-    roleEl.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     roleEl.textContent = config.role;
     authorInfo.appendChild(roleEl);
   }
@@ -1804,13 +1792,14 @@ export function cardproduct(element, options = {}) {
 
   // Product info
   const info = document.createElement('div');
+  // #779: every part below is styled by its class in card.css (product-info,
+  // product-title/-desc/-rating, price-wrap/-current/-original under
+  // .x-product); the cssText copies are gone.
   info.className = 'x-card__product-info';
-  info.style.cssText = 'padding:1rem;';
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
     titleEl.className = 'x-card__title x-card__product-title';
-    titleEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     info.appendChild(titleEl);
   }
@@ -1818,7 +1807,6 @@ export function cardproduct(element, options = {}) {
   if (base.config.subtitle) {
     const descEl = document.createElement('div');
     descEl.className = 'x-card__subtitle x-card__product-desc';
-    descEl.style.cssText = 'margin:0.25rem 0 0.5rem;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     descEl.textContent = base.config.subtitle;
     info.appendChild(descEl);
   }
@@ -1827,15 +1815,14 @@ export function cardproduct(element, options = {}) {
   if (config.rating) {
     const ratingWrap = document.createElement('div');
     ratingWrap.className = 'x-card__product-rating';
-    ratingWrap.style.cssText = 'margin:0.5rem 0;display:flex;align-items:center;gap:0.5rem;';
-    
+
     const stars = document.createElement('span');
-    stars.style.color = '#f59e0b';
+    stars.className = 'x-card__product-stars';
     stars.textContent = '★'.repeat(Math.floor(parseFloat(config.rating)));
     ratingWrap.appendChild(stars);
 
     const ratingText = document.createElement('span');
-    ratingText.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+    ratingText.className = 'x-card__product-rating-text';
     ratingText.textContent = config.rating + (config.reviews ? ` (${config.reviews})` : '');
     ratingWrap.appendChild(ratingText);
 
@@ -1845,12 +1832,10 @@ export function cardproduct(element, options = {}) {
   // Price
   const priceWrap = document.createElement('div');
   priceWrap.className = 'x-card__price-wrap';
-  priceWrap.style.cssText = 'margin:0.75rem 0;display:flex;align-items:center;gap:0.5rem;';
 
   if (config.price) {
     const priceEl = document.createElement('span');
     priceEl.className = 'x-card__price-current';
-    priceEl.style.cssText = 'font-size:1.25rem;font-weight:700;color:var(--text-primary,#f9fafb);';
     priceEl.textContent = config.price;
     priceWrap.appendChild(priceEl);
   }
@@ -1858,7 +1843,6 @@ export function cardproduct(element, options = {}) {
   if (config.originalPrice) {
     const origEl = document.createElement('span');
     origEl.className = 'x-card__price-original';
-    origEl.style.cssText = 'text-decoration:line-through;color:var(--text-secondary,#6b7280);font-size:0.9rem;';
     origEl.textContent = config.originalPrice;
     priceWrap.appendChild(origEl);
   }
@@ -2115,14 +2099,14 @@ export function cardfile(element, options = {}) {
   const base = composeCard(element, { ...config, behavior: 'cardfile', hoverable: false });
   element.classList.add('x-card-file');
   element.innerHTML = '';
-  element.style.padding = CARD_PADDING;
-  element.style.flexDirection = 'row';
-  element.style.alignItems = 'center';
-  element.style.gap = '1rem';
+  // #779: the row layout is `.x-card--file`, and each part below is styled by
+  // its class in card.css (file-icon, filename, file-meta, file-download) --
+  // the cssText copies are gone. #773: the inline copies had also outranked
+  // card.css, which is why variant="compact" could never be styled.
 
   // Icon
   const iconEl = document.createElement('span');
-  iconEl.style.cssText = 'font-size:2.5rem;';
+  iconEl.className = 'x-card__file-icon';
   iconEl.textContent = icons[config.type] || icons.file;
   element.appendChild(iconEl);
 
@@ -2133,7 +2117,6 @@ export function cardfile(element, options = {}) {
   if (config.filename) {
     const nameEl = document.createElement('h3');
     nameEl.className = 'x-card__filename';
-    nameEl.style.cssText = 'margin:0;font-size:1rem;color:var(--text-primary,#f9fafb);white-space:normal;word-break:break-word;';
     nameEl.textContent = config.filename;
     info.appendChild(nameEl);
   }
@@ -2145,7 +2128,6 @@ export function cardfile(element, options = {}) {
   if (meta.length) {
     const metaEl = document.createElement('div');
     metaEl.className = 'x-card__file-meta';
-    metaEl.style.cssText = 'margin:0.25rem 0 0;font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
     metaEl.textContent = meta.join(' • ');
     info.appendChild(metaEl);
   }
@@ -2162,11 +2144,11 @@ export function cardfile(element, options = {}) {
   if (config.downloadable && downloadUrl) {
     const dlIcon = document.createElement('span');
     dlIcon.className = 'x-card__file-download';
-    dlIcon.style.cssText = 'font-size:1.5rem;line-height:1;';
     dlIcon.textContent = '⬇️';
     element.appendChild(dlIcon);
 
-    element.style.cursor = 'pointer';
+    // The whole card is the click target: .x-card-file--downloadable (#779).
+    element.classList.add('x-card-file--downloadable');
     element.setAttribute('role', 'button');
     element.setAttribute('tabindex', '0');
     element.setAttribute('aria-label', `Download ${config.filename || 'file'}`);
@@ -2243,26 +2225,28 @@ export function cardlink(element, options = {}) {
   element.classList.add('x-card-link');
   
   element.innerHTML = '';
-  element.style.cursor = 'pointer';
-  element.style.position = 'relative';
-  element.style.padding = '1.25rem';
+  // #779: the host (cursor/position/1.25rem padding) and every part below
+  // are the "Link card parts" rules in card.css, which #370 moved there from
+  // this function's cssText -- the cssText stayed and always won. The parts
+  // now carry the classes those rules were written for.
 
   // Header row with icon and external indicator
   const headerRow = document.createElement('div');
-  headerRow.style.cssText = 'display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;';
+  headerRow.className = 'x-card__link-header';
 
   const titleGroup = document.createElement('div');
-  titleGroup.style.cssText = 'flex:1;';
+  titleGroup.className = 'x-card__link-title-group';
 
   // Icon + Title row
   if (config.icon || base.config.title) {
     const titleRow = document.createElement('div');
-    titleRow.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
-    
+    titleRow.className = 'x-card__link-title-row';
+
     if (config.icon) {
       const iconEl = document.createElement('span');
-      iconEl.className = 'x-card__icon';
-      iconEl.style.setProperty('--x-card-icon-size', '1.25rem');
+      // .x-card__link-icon sets the 1.25rem size .x-card__icon would
+      // otherwise take from --x-card-icon-size.
+      iconEl.className = 'x-card__icon x-card__link-icon';
       iconEl.textContent = config.icon;
       titleRow.appendChild(iconEl);
     }
@@ -2282,7 +2266,6 @@ export function cardlink(element, options = {}) {
   if (desc) {
     const descEl = document.createElement('div');
     descEl.className = 'x-card__description';
-    descEl.style.cssText = 'margin:0.5rem 0 0;font-size:0.875rem;color:var(--text-secondary,#9ca3af);line-height:1.5;';
     descEl.textContent = desc;
     titleGroup.appendChild(descEl);
   }
@@ -2290,8 +2273,7 @@ export function cardlink(element, options = {}) {
   // Badge
   if (config.badge) {
     const badgeEl = document.createElement('span');
-    badgeEl.className = config.badgeVariant === 'gradient' ? 'x-badge-gradient' : 'x-tag-glass';
-    badgeEl.style.cssText = 'margin-top:0.75rem;display:inline-block;';
+    badgeEl.className = `${config.badgeVariant === 'gradient' ? 'x-badge-gradient' : 'x-tag-glass'} x-card__link-badge`;
     badgeEl.textContent = config.badge;
     titleGroup.appendChild(badgeEl);
   }
@@ -2301,7 +2283,7 @@ export function cardlink(element, options = {}) {
   // External indicator
   if (config.target === '_blank') {
     const extIcon = document.createElement('span');
-    extIcon.style.cssText = 'opacity:0.5;font-size:1rem;flex-shrink:0;';
+    extIcon.className = 'x-card__link-external';
     extIcon.textContent = '↗';
     headerRow.appendChild(extIcon);
   }
@@ -2327,7 +2309,7 @@ export function cardlink(element, options = {}) {
       stretchedLink.rel = 'noopener';
     }
     stretchedLink.setAttribute('aria-label', base.config.title || config.href);
-    stretchedLink.style.cssText = 'position:absolute;inset:0;';
+    stretchedLink.className = 'x-card__link-overlay';
     element.appendChild(stretchedLink);
   }
 
@@ -2393,7 +2375,11 @@ export function cardhorizontal(element, options = {}) {
   if (config.image) {
     const figure = base.createFigure();
     figure.classList.add('x-card__horizontal-figure');
-    figure.style.setProperty('--horizontal-image-width', config.imageWidth);
+    // #779: a generated rule, not the style attribute; only a width other
+    // than the 40% card.css already falls back to.
+    if (config.imageWidth !== '40%') {
+      setRule(figure, 'image-width', { '--horizontal-image-width': config.imageWidth });
+    }
 
     const img = document.createElement('img');
     img.className = 'x-card__horizontal-image';
@@ -2482,27 +2468,21 @@ export function cardoverlay(element, options = {}) {
   element.classList.add(`x-card--overlay-${config.position}`);
   element.innerHTML = '';
   
-  element.style.height = config.height;
-  element.style.position = 'relative';
-  element.style.backgroundImage = config.image ? `url(${config.image})` : 'linear-gradient(135deg, #667eea, #764ba2)';
-  element.style.backgroundSize = 'cover';
-  element.style.backgroundPosition = 'center';
-  // #635: John, screenshot -- "Is this correct, the edges have a gap" (a
-  // thin sliver visible along the left/bottom edges). composeCard() (above,
-  // ~line 273) sets the SHORTHAND `element.style.background = 'var(--bg-
-  // secondary...)'` for any card that doesn't "own its own surface" -- a
-  // default-variant cardoverlay doesn't -- and a shorthand assignment
-  // implicitly resets every background-* sub-property NOT included in the
-  // shorthand value to its initial value, i.e. background-repeat: repeat.
-  // This function then only ever overrides backgroundImage/backgroundSize/
-  // backgroundPosition (longhand), leaving that repeat behind. With
-  // background-size:cover, a fractional/sub-pixel rounding gap at the
-  // scaled edge has nothing to fall back to but tiling a sliver of the
-  // image's own edge pixels into it -- confirmed live: the visible seam
-  // tracked the image's own content, not a solid color, exactly what
-  // repeat-into-a-rounding-gap produces. Force no-repeat explicitly rather
-  // than relying on whatever composeCard()'s shorthand happened to leave.
-  element.style.backgroundRepeat = 'no-repeat';
+  // #779: the card's box (position, cover sizing, the default gradient, the
+  // row direction and the per-position alignment) is `.x-card--overlay-card`
+  // and its `--overlay-top/-center` modifiers in card.css, which #370 wrote
+  // for exactly these declarations -- the inline copies that kept beating
+  // them are gone. What varies per card travels as generated rules: the
+  // height (as the --overlay-height that rule reads) and the image.
+  //
+  // #635 still holds: the shorthand `background` composeCard used to write
+  // reset background-repeat to `repeat`, and a sub-pixel gap at a cover-
+  // scaled edge then tiled a sliver of the image into it. No-repeat is part
+  // of the overlay rule now (card.css, #779 section).
+  if (config.height !== '300px') setRule(element, 'overlay-height', { '--overlay-height': config.height });
+  if (config.image) {
+    setRule(element, 'overlay-image', { backgroundImage: `url(${config.image})` }, { weight: 3 });
+  }
 
   // John: "Card Overlay have no images" -- a broken `image` src rendered as
   // nothing (CSS background-image has no native failure signal the way an
@@ -2516,7 +2496,8 @@ export function cardoverlay(element, options = {}) {
     const probe = new Image();
     probe.addEventListener('error', () => {
       if (!document.contains(element)) return;
-      element.style.backgroundImage = 'linear-gradient(135deg, #667eea, #764ba2)';
+      // Dropping the image lets card.css's default gradient show (#779).
+      setRule(element, 'overlay-image', null);
       // #1115: gradient fallback above still applies; an unreachable
       // third-party host is reported on the card, not thrown.
       if (reportIfThirdPartyMedia(element, config.image, 'x-cardoverlay')) return;
@@ -2525,45 +2506,23 @@ export function cardoverlay(element, options = {}) {
     probe.src = config.image;
   }
   
-  // Use row direction so align-items controls vertical position (as expected by tests)
-  element.style.flexDirection = 'row';
-  
-  if (config.position === 'top') {
-    element.style.alignItems = 'flex-start';
-  } else if (config.position === 'center') {
-    element.style.alignItems = 'center';
-  } else {
-    element.style.alignItems = 'flex-end';
-  }
-
-  // Content
+  // Content. Its box, the gradient (`--gradient-top/-bottom`) and the
+  // variant tints (`--dark/-light/-blur`, declared after the gradients so a
+  // tint wins, as the old write order did) are card.css classes (#779).
   const content = document.createElement('div');
   content.className = 'x-card__overlay-content';
-  content.style.cssText = `padding:1.5rem;color:white;width:100%;text-align:${config.xalign};`;
-
   if (config.gradient) {
-    content.style.background = config.position === 'top'
-      ? 'linear-gradient(to bottom, rgba(0,0,0,0.7), transparent)'
-      : 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)';
+    content.classList.add(`x-card__overlay-content--gradient-${config.position === 'top' ? 'top' : 'bottom'}`);
   }
-
-  // Variant tint -- applied after the gradient so a non-default variant's
-  // tint (or backdrop-filter, for blur) always wins over the plain gradient.
-  if (config.variant === 'dark') {
-    content.style.background = 'rgba(0,0,0,0.65)';
-  } else if (config.variant === 'light') {
-    content.style.background = 'rgba(255,255,255,0.85)';
-    content.style.color = '#111827';
-  } else if (config.variant === 'blur') {
-    content.style.background = 'rgba(0,0,0,0.35)';
-    content.style.backdropFilter = 'blur(8px)';
-    content.style.webkitBackdropFilter = 'blur(8px)';
+  if (['dark', 'light', 'blur'].includes(config.variant)) {
+    content.classList.add(`x-card__overlay-content--${config.variant}`);
   }
+  // The author's xalign: the --overlay-xalign card.css reads (left default).
+  if (config.xalign !== 'left') setRule(content, 'xalign', { '--overlay-xalign': config.xalign });
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
     titleEl.className = 'x-card__title x-card__overlay-title';
-    titleEl.style.cssText = 'margin:0;font-size:1.5rem;text-shadow:0 2px 4px rgba(0,0,0,0.5);';
     titleEl.textContent = base.config.title;
     content.appendChild(titleEl);
   }
@@ -2571,7 +2530,6 @@ export function cardoverlay(element, options = {}) {
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
     subtitleEl.className = 'x-card__subtitle x-card__overlay-subtitle';
-    subtitleEl.style.cssText = 'margin:0.5rem 0;opacity:0.9;text-shadow:0 1px 2px rgba(0,0,0,0.5);';
     subtitleEl.textContent = base.config.subtitle;
     content.appendChild(subtitleEl);
   }
@@ -2617,20 +2575,18 @@ export function cardexpandable(element, options = {}) {
     element.appendChild(base.createHeader());
   }
 
-  // Applies/removes a line-clamp on `el` -- shared by initial render and toggle().
+  // Applies/removes a line-clamp on `el` -- shared by initial render and
+  // toggle(). #779: the clamp is `.x-card__expandable-content--clamped` in
+  // card.css, reading the author's line count from --x-card-expandable-lines
+  // (a generated rule); the released state is `--unclamped`.
   const applyLineClamp = (el, lineCount) => {
-    if (lineCount) {
-      el.style.display = '-webkit-box';
-      el.style.webkitBoxOrient = 'vertical';
-      el.style.webkitLineClamp = String(lineCount);
-      el.style.overflow = 'hidden';
-    } else {
-      el.style.display = 'block';
-      el.style.webkitBoxOrient = '';
-      el.style.webkitLineClamp = '';
-      el.style.overflow = 'visible';
-    }
+    el.classList.toggle('x-card__expandable-content--clamped', !!lineCount);
+    el.classList.toggle('x-card__expandable-content--unclamped', !lineCount);
+    setRule(el, 'lines', lineCount ? { '--x-card-expandable-lines': String(lineCount) } : null);
   };
+  // The collapsed/expanded height travels the same way: a generated rule
+  // setting the --x-card-expandable-max-height card.css consumes (#779).
+  const applyMaxHeight = (el, value) => setRule(el, 'max-height', { '--x-card-expandable-max-height': value });
 
   // Content
   const contentWrap = document.createElement('main');
@@ -2643,10 +2599,7 @@ export function cardexpandable(element, options = {}) {
   if (config.lines) {
     applyLineClamp(contentWrap, config.expanded ? null : config.lines);
   } else {
-    contentWrap.style.setProperty(
-      '--x-card-expandable-max-height',
-      config.expanded ? '1000px' : config.maxHeight,
-    );
+    applyMaxHeight(contentWrap, config.expanded ? '1000px' : config.maxHeight);
   }
   contentWrap.innerHTML = base.config.content || rawContent
     // card.css already defines .x-card__expandable-placeholder with exactly
@@ -2690,7 +2643,7 @@ export function cardexpandable(element, options = {}) {
     if (config.lines) {
       applyLineClamp(contentWrap, isExpanded ? null : config.lines);
     } else {
-      contentWrap.style.setProperty('--x-card-expandable-max-height', isExpanded ? '1000px' : config.maxHeight);
+      applyMaxHeight(contentWrap, isExpanded ? '1000px' : config.maxHeight);
     }
     icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
     icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
@@ -2755,26 +2708,22 @@ export function cardminimizable(element, options = {}) {
   element.classList.add('x-card--minimizable'); // Explicitly add for compliance
   element.innerHTML = '';
 
-  // Header with minimize button
+  // Header with minimize button. card.css targets the tag, not a class; the
+  // header's row layout, the title/subtitle and the button are the
+  // minimizable-card rules there (#779 -- all of it was cssText here).
   const header = document.createElement('header');
-  // card.css targets the tag, not a class.
-  header.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);display:flex;align-items:center;gap:0.75rem;';
 
   const titleWrap = document.createElement('div');
   titleWrap.className = 'x-card__title-wrap';
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    
-    titleEl.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);';
     titleEl.textContent = base.config.title;
     titleWrap.appendChild(titleEl);
   }
 
   if (base.config.subtitle) {
     const subtitleEl = document.createElement('div');
-    
-    subtitleEl.style.cssText = 'margin:0.25rem 0 0.5rem;color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
     subtitleEl.textContent = base.config.subtitle;
     titleWrap.appendChild(subtitleEl);
   }
@@ -2784,7 +2733,6 @@ export function cardminimizable(element, options = {}) {
   // Minimize button
   const minBtn = document.createElement('button');
   minBtn.className = 'x-card__minimize-btn';
-  minBtn.style.cssText = 'width:32px;height:32px;background:var(--bg-secondary,#1f2937);border:1px solid var(--border-color,#374151);border-radius:6px;color:var(--text-primary,#f9fafb);font-size:1.25rem;cursor:pointer;display:flex;align-items:center;justify-content:center;';
   minBtn.textContent = config.minimized ? '+' : '−';
   header.appendChild(minBtn);
 
@@ -2792,9 +2740,10 @@ export function cardminimizable(element, options = {}) {
 
   // Content
   const content = document.createElement('main');
+  // Box and the collapsed state (`.x-card--minimized ...`) are card.css.
   content.className = 'x-card__minimizable-content';
-  content.style.cssText = `padding:1rem;overflow:hidden;transition:all 0.3s ease;${config.minimized ? 'max-height:0;padding:0 1rem;opacity:0;' : ''}`;
-  content.innerHTML = base.config.content || rawContent || '<div style="margin:0;color:var(--text-secondary);">Add content here...</div>';
+  // Same placeholder, same two declarations, as cardexpandable's -- reuse it.
+  content.innerHTML = base.config.content || rawContent || '<div class="x-card__expandable-placeholder">Add content here...</div>';
   element.appendChild(content);
 
   // Toggle
@@ -2803,19 +2752,17 @@ export function cardminimizable(element, options = {}) {
 
   const toggle = () => {
     isMinimized = !isMinimized;
-    content.style.maxHeight = isMinimized ? '0' : '1000px';
-    content.style.padding = isMinimized ? '0 1rem' : '1rem';
-    content.style.opacity = isMinimized ? '0' : '1';
+    // The collapsed max-height/padding/opacity follow the x-card--minimized
+    // class toggled below. Once toggled, an open body is capped at 1000px so
+    // the height transition has an end value to animate to (#779: this was
+    // three inline writes).
+    content.classList.add('x-card__minimizable-content--toggled');
     minBtn.textContent = isMinimized ? '+' : '−';
     minBtn.setAttribute('aria-expanded', !isMinimized);
     minBtn.setAttribute('aria-label', isMinimized ? 'Expand' : 'Minimize');
     element.classList.toggle('x-card--minimized', isMinimized);
     
-    // Update footer visibility if it exists
-    const footerEl = element.querySelector('.x-card__footer');
-    if (footerEl) {
-      footerEl.style.display = isMinimized ? 'none' : '';
-    }
+    // Footer visibility follows `.x-card--minimized .x-card__footer` (#779).
 
     element.dispatchEvent(new CustomEvent('wb:cardminimizable:toggle', { 
       bubbles: true, 
@@ -2838,7 +2785,6 @@ export function cardminimizable(element, options = {}) {
   // Footer
   if (base.config.footer) {
     const minimizableFooterEl = base.createFooter();
-    minimizableFooterEl.style.display = isMinimized ? 'none' : '';
     element.appendChild(minimizableFooterEl);
   }
 
@@ -2879,29 +2825,30 @@ export function carddraggable(element, options = {}) {
   element.classList.add('x-card-draggable');
   
   element.innerHTML = '';
-  // Only set position if not already positioned (absolute/fixed)
+  // Only set position if not already positioned (absolute/fixed) -- a class
+  // (card.css), not element.style (#779).
   const computed = window.getComputedStyle(element);
   if (computed.position === 'static') {
-    element.style.position = 'relative';
+    element.classList.add('x-card--draggable-positioned');
   }
   element.classList.add('x-card--draggable');
 
-  // Header with drag handle
+  // Header with drag handle. Its look, the grip icon and the title are the
+  // `.x-card__drag-handle*` / `.x-card__drag-title` rules card.css has had
+  // since #370; the cssText that shadowed them is gone (#779).
   const headerEl = document.createElement('header');
   headerEl.className = 'x-card__header x-card__drag-handle';
-  headerEl.style.cssText = 'padding:1rem;border-bottom:1px solid var(--border-color,#374151);background:var(--bg-tertiary,#1e293b);cursor:grab;display:flex;align-items:center;gap:0.5rem;';
   headerEl.setAttribute('aria-label', 'Drag to move card');
   headerEl.setAttribute('role', 'button');
 
   const handleIcon = document.createElement('span');
-  handleIcon.style.cssText = 'opacity:0.5;';
+  handleIcon.className = 'x-card__drag-handle-icon';
   handleIcon.textContent = '⋮⋮';
   headerEl.appendChild(handleIcon);
 
   if (base.config.title) {
     const titleEl = document.createElement('h3');
-    
-    titleEl.style.cssText = 'margin:0;flex:1;color:var(--text-primary,#f9fafb);';
+    titleEl.className = 'x-card__drag-title';
     titleEl.textContent = base.config.title;
     headerEl.appendChild(titleEl);
   }
@@ -2921,9 +2868,18 @@ export function carddraggable(element, options = {}) {
   let isDragging = false;
   let startX, startY, initialLeft, initialTop;
 
-  // Read current CSS left/top (works for both relative and absolute positioning)
-  const getCurrentLeft = () => parseInt(element.style.left, 10) || 0;
-  const getCurrentTop = () => parseInt(element.style.top, 10) || 0;
+  // The applied left/top. #779: the position is a generated stylesheet rule
+  // now, not element.style, so it is tracked here rather than read back off
+  // the style attribute; place() is the one writer.
+  let posX = 0;
+  let posY = 0;
+  const getCurrentLeft = () => posX;
+  const getCurrentTop = () => posY;
+  const place = (x, y) => {
+    posX = x;
+    posY = y;
+    setRule(element, 'drag-position', { left: x + 'px', top: y + 'px' });
+  };
 
   const onMouseDown = (e) => {
     if (e.button !== 0) return; // Left click only
@@ -2937,10 +2893,8 @@ export function carddraggable(element, options = {}) {
     initialLeft = getCurrentLeft();
     initialTop = getCurrentTop();
     
-    headerEl.style.cursor = 'grabbing';
+    // Cursor, opacity and z-index while dragging: `.x-card--dragging` (#779).
     element.classList.add('x-card--dragging');
-    element.style.opacity = '0.8';
-    element.style.zIndex = '1000';
     
     element.dispatchEvent(new CustomEvent('wb:carddraggable:dragstart', {
       bubbles: true,
@@ -3006,9 +2960,8 @@ export function carddraggable(element, options = {}) {
       newY = Math.max(vpMinY, Math.min(vpMaxY, newY));
     }
     
-    element.style.left = newX + 'px';
-    element.style.top = newY + 'px';
-    
+    place(newX, newY);
+
     element.dispatchEvent(new CustomEvent('wb:carddraggable:drag', {
       bubbles: true,
       detail: { 
@@ -3030,10 +2983,7 @@ export function carddraggable(element, options = {}) {
   const onMouseUp = () => {
     if (isDragging) {
       isDragging = false;
-      headerEl.style.cursor = 'grab';
       element.classList.remove('x-card--dragging');
-      element.style.opacity = '';
-      element.style.zIndex = '';
       
       element.dispatchEvent(new CustomEvent('wb:carddraggable:dragend', {
         bubbles: true,
@@ -3052,17 +3002,12 @@ export function carddraggable(element, options = {}) {
 
   // API
   element.wbCardDraggable = {
-    setPosition: (x, y) => {
-      element.style.left = x + 'px';
-      element.style.top = y + 'px';
-    },
-    getPosition: () => ({
-      x: parseInt(element.style.left || 0),
-      y: parseInt(element.style.top || 0)
-    }),
+    setPosition: (x, y) => place(x, y),
+    getPosition: () => ({ x: posX, y: posY }),
     reset: () => {
-      element.style.left = '';
-      element.style.top = '';
+      posX = 0;
+      posY = 0;
+      setRule(element, 'drag-position', null);
     }
   };
 
@@ -3070,6 +3015,8 @@ export function carddraggable(element, options = {}) {
   const originalCleanup = base.cleanup;
   return () => {
     originalCleanup();
+    clearRules(element);
+    element.classList.remove('x-card--draggable-positioned');
     headerEl.removeEventListener('mousedown', onMouseDown);
     headerEl.removeEventListener('touchstart', onTouchStart);
     document.removeEventListener('mousemove', onMouseMove);
@@ -3320,10 +3267,9 @@ export function cardportfolio(element, options = {}) {
   if (config.bio) {
     const bioSection = document.createElement('section');
     bioSection.className = 'x-portfolio__bio';
-    bioSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const bioText = document.createElement('div');
-    bioText.style.cssText = 'margin:0;color:var(--text-primary,#f9fafb);font-size:0.95rem;line-height:1.7;';
+    bioText.classList.add('x-portfolio__bio-text');
     bioText.textContent = config.bio;
     bioSection.appendChild(bioText);
     main.appendChild(bioSection);
@@ -3333,19 +3279,18 @@ export function cardportfolio(element, options = {}) {
   if (config.stats && config.stats.length > 0) {
     const statsSection = document.createElement('section');
     statsSection.className = 'x-portfolio__stats';
-    statsSection.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:8px;margin-bottom:1.5rem;';
     
     config.stats.forEach(stat => {
       const statItem = document.createElement('div');
-      statItem.style.cssText = 'display:flex;align-items:baseline;gap:0.5rem;';
+      statItem.classList.add('x-portfolio__stat');
       
       const valueEl = document.createElement('span');
-      valueEl.style.cssText = 'font-size:1.25rem;font-weight:700;color:var(--primary,#6366f1);';
+      valueEl.classList.add('x-portfolio__stat-value');
       valueEl.textContent = stat.value;
       statItem.appendChild(valueEl);
       
       const labelEl = document.createElement('span');
-      labelEl.style.cssText = 'font-size:0.85rem;color:var(--text-secondary,#9ca3af);';
+      labelEl.classList.add('x-portfolio__stat-label');
       labelEl.textContent = stat.label;
       statItem.appendChild(labelEl);
       
@@ -3358,21 +3303,20 @@ export function cardportfolio(element, options = {}) {
   if (config.skills || config.skillLevels) {
     const skillsSection = document.createElement('section');
     skillsSection.className = 'x-portfolio__skills';
-    skillsSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const skillsTitle = document.createElement('h3');
-    skillsTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    skillsTitle.classList.add('x-portfolio__section-title');
     skillsTitle.textContent = '🛠️ Skills';
     skillsSection.appendChild(skillsTitle);
 
     // Skill pills (from comma-separated string)
     if (config.skills) {
       const skillPills = document.createElement('div');
-      skillPills.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;';
+      skillPills.classList.add('x-portfolio__pills');
       
       config.skills.split(',').forEach(skill => {
         const pill = document.createElement('span');
-        pill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
+        pill.classList.add('x-portfolio__pill');
         pill.textContent = skill.trim();
         skillPills.appendChild(pill);
       });
@@ -3382,22 +3326,24 @@ export function cardportfolio(element, options = {}) {
     // Skill bars (from JSON array)
     if (config.skillLevels && config.skillLevels.length > 0) {
       const skillBars = document.createElement('div');
-      skillBars.style.cssText = 'margin-top:0.75rem;';
+      skillBars.classList.add('x-portfolio__skill-bars');
       
       config.skillLevels.forEach(skill => {
         const skillRow = document.createElement('div');
-        skillRow.style.cssText = 'margin-bottom:0.5rem;';
+        skillRow.classList.add('x-portfolio__skill-row');
         
         const skillHeader = document.createElement('div');
-        skillHeader.style.cssText = 'display:flex;justify-content:space-between;margin-bottom:0.25rem;font-size:0.85rem;';
-        skillHeader.innerHTML = `<span style="color:var(--text-primary,#f9fafb);">${skill.name}</span><span style="color:var(--text-secondary,#9ca3af);">${skill.level}%</span>`;
+        skillHeader.classList.add('x-portfolio__skill-header');
+        skillHeader.innerHTML = `<span class="x-portfolio__skill-name">${skill.name}</span><span class="x-portfolio__skill-level">${skill.level}%</span>`;
         skillRow.appendChild(skillHeader);
         
         const barBg = document.createElement('div');
-        barBg.style.cssText = 'height:6px;background:var(--bg-tertiary,#374151);border-radius:3px;overflow:hidden;';
+        barBg.classList.add('x-portfolio__skill-bar');
         
         const barFill = document.createElement('div');
-        barFill.style.cssText = `width:${skill.level}%;height:100%;background:var(--primary,#6366f1);border-radius:3px;transition:width 0.5s ease;`;
+        barFill.classList.add('x-portfolio__skill-fill');
+        // The level is per-skill data: a generated rule, not the style attribute.
+        setRule(barFill, 'level', { width: `${skill.level}%` });
         barBg.appendChild(barFill);
         skillRow.appendChild(barBg);
         
@@ -3413,28 +3359,29 @@ export function cardportfolio(element, options = {}) {
   if (config.experience && config.experience.length > 0) {
     const expSection = document.createElement('section');
     expSection.className = 'x-portfolio__experience';
-    expSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const expTitle = document.createElement('h3');
-    expTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    expTitle.classList.add('x-portfolio__section-title');
     expTitle.textContent = '💼 Experience';
     expSection.appendChild(expTitle);
 
     config.experience.forEach((exp, i) => {
       const expItem = document.createElement('div');
-      expItem.style.cssText = `padding:0.75rem 0;${i > 0 ? 'border-top:1px solid var(--border-color,#374151);' : ''}`;
+      expItem.classList.add('x-portfolio__exp-item');
+      // Every entry after the first is divided from the one above it.
+      if (i > 0) expItem.classList.add('x-portfolio__exp-item--divided');
       
       const expHeader = document.createElement('div');
-      expHeader.style.cssText = 'display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;';
+      expHeader.classList.add('x-portfolio__exp-header');
       
       const expRole = document.createElement('strong');
-      expRole.style.cssText = 'color:var(--text-primary,#f9fafb);';
+      expRole.classList.add('x-portfolio__exp-role');
       expRole.textContent = exp.role || exp.title;
       expHeader.appendChild(expRole);
       
       if (exp.period) {
         const expPeriod = document.createElement('span');
-        expPeriod.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.85rem;';
+        expPeriod.classList.add('x-portfolio__exp-period');
         expPeriod.textContent = exp.period;
         expHeader.appendChild(expPeriod);
       }
@@ -3442,14 +3389,14 @@ export function cardportfolio(element, options = {}) {
       
       if (exp.company) {
         const expCompany = document.createElement('div');
-        expCompany.style.cssText = 'color:var(--primary,#6366f1);font-size:0.9rem;margin-top:0.25rem;';
+        expCompany.classList.add('x-portfolio__exp-company');
         expCompany.textContent = exp.company;
         expItem.appendChild(expCompany);
       }
       
       if (exp.description) {
         const expDesc = document.createElement('div');
-        expDesc.style.cssText = 'margin:0.5rem 0 0;color:var(--text-secondary,#9ca3af);font-size:0.9rem;line-height:1.5;';
+        expDesc.classList.add('x-portfolio__exp-desc');
         expDesc.textContent = exp.description;
         expItem.appendChild(expDesc);
       }
@@ -3463,24 +3410,23 @@ export function cardportfolio(element, options = {}) {
   if (config.education && config.education.length > 0) {
     const eduSection = document.createElement('section');
     eduSection.className = 'x-portfolio__education';
-    eduSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const eduTitle = document.createElement('h3');
-    eduTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    eduTitle.classList.add('x-portfolio__section-title');
     eduTitle.textContent = '🎓 Education';
     eduSection.appendChild(eduTitle);
 
     config.education.forEach(edu => {
       const eduItem = document.createElement('div');
-      eduItem.style.cssText = 'padding:0.5rem 0;';
+      eduItem.classList.add('x-portfolio__edu-item');
       
       const eduDegree = document.createElement('strong');
-      eduDegree.style.cssText = 'color:var(--text-primary,#f9fafb);display:block;';
+      eduDegree.classList.add('x-portfolio__edu-degree');
       eduDegree.textContent = edu.degree;
       eduItem.appendChild(eduDegree);
       
       const eduSchool = document.createElement('span');
-      eduSchool.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.9rem;';
+      eduSchool.classList.add('x-portfolio__edu-school');
       eduSchool.textContent = edu.school + (edu.year ? ` • ${edu.year}` : '');
       eduItem.appendChild(eduSchool);
       
@@ -3493,43 +3439,41 @@ export function cardportfolio(element, options = {}) {
   if (config.projects && config.projects.length > 0) {
     const projSection = document.createElement('section');
     projSection.className = 'x-portfolio__projects';
-    projSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const projTitle = document.createElement('h3');
-    projTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    projTitle.classList.add('x-portfolio__section-title');
     projTitle.textContent = '🚀 Projects';
     projSection.appendChild(projTitle);
 
     const projGrid = document.createElement('div');
-    projGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;';
+    projGrid.classList.add('x-portfolio__project-grid');
 
     config.projects.forEach(proj => {
       const projCard = document.createElement('a');
       projCard.href = proj.url || '#';
       projCard.target = proj.url ? '_blank' : '_self';
-      projCard.style.cssText = 'display:block;background:var(--bg-tertiary,#374151);border-radius:8px;overflow:hidden;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;';
-      projCard.onmouseenter = () => { projCard.style.transform = 'translateY(-2px)'; projCard.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)'; };
-      projCard.onmouseleave = () => { projCard.style.transform = ''; projCard.style.boxShadow = ''; };
+      projCard.classList.add('x-portfolio__project');
+      // Hover lift: `.x-portfolio__project:hover` in card.css (#779).
       
       if (proj.image) {
         const projImg = document.createElement('img');
         projImg.src = proj.image;
         projImg.alt = proj.name;
-        projImg.style.cssText = 'width:100%;height:100px;object-fit:cover;';
+        projImg.classList.add('x-portfolio__project-image');
         projCard.appendChild(projImg);
       }
       
       const projInfo = document.createElement('div');
-      projInfo.style.cssText = 'padding:0.75rem;';
+      projInfo.classList.add('x-portfolio__project-info');
       
       const projName = document.createElement('strong');
-      projName.style.cssText = 'color:var(--text-primary,#f9fafb);display:block;margin-bottom:0.25rem;';
+      projName.classList.add('x-portfolio__project-name');
       projName.textContent = proj.name;
       projInfo.appendChild(projName);
       
       if (proj.description) {
         const projDesc = document.createElement('span');
-        projDesc.style.cssText = 'color:var(--text-secondary,#9ca3af);font-size:0.8rem;';
+        projDesc.classList.add('x-portfolio__project-desc');
         projDesc.textContent = proj.description;
         projInfo.appendChild(projDesc);
       }
@@ -3546,19 +3490,18 @@ export function cardportfolio(element, options = {}) {
   if (config.certifications) {
     const certSection = document.createElement('section');
     certSection.className = 'x-portfolio__certifications';
-    certSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const certTitle = document.createElement('h3');
-    certTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    certTitle.classList.add('x-portfolio__section-title');
     certTitle.textContent = '🏆 Certifications';
     certSection.appendChild(certTitle);
     
     const certList = document.createElement('ul');
-    certList.style.cssText = 'margin:0;padding-left:1.25rem;color:var(--text-primary,#f9fafb);font-size:0.9rem;';
+    certList.classList.add('x-portfolio__cert-list');
     
     config.certifications.split(',').forEach(cert => {
       const li = document.createElement('li');
-      li.style.cssText = 'margin-bottom:0.25rem;';
+      li.classList.add('x-portfolio__cert');
       li.textContent = cert.trim();
       certList.appendChild(li);
     });
@@ -3570,19 +3513,18 @@ export function cardportfolio(element, options = {}) {
   if (config.languages) {
     const langSection = document.createElement('section');
     langSection.className = 'x-portfolio__languages';
-    langSection.style.cssText = 'margin-bottom:1.5rem;';
     
     const langTitle = document.createElement('h3');
-    langTitle.style.cssText = 'margin:0 0 0.75rem;font-size:0.9rem;font-weight:600;color:var(--text-secondary,#9ca3af);text-transform:uppercase;letter-spacing:0.05em;';
+    langTitle.classList.add('x-portfolio__section-title');
     langTitle.textContent = '🌐 Languages';
     langSection.appendChild(langTitle);
     
     const langPills = document.createElement('div');
-    langPills.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;';
+    langPills.classList.add('x-portfolio__pills');
     
     config.languages.split(',').forEach(lang => {
       const langPill = document.createElement('span');
-      langPill.style.cssText = 'padding:0.35rem 0.75rem;background:var(--bg-tertiary,#374151);color:var(--text-primary,#f9fafb);border-radius:999px;font-size:0.85rem;';
+      langPill.classList.add('x-portfolio__pill');
       langPill.textContent = lang.trim();
       langPills.appendChild(langPill);
     });
@@ -3596,7 +3538,6 @@ export function cardportfolio(element, options = {}) {
   if (config.email || config.phone || config.website) {
     const contact = document.createElement('address');
     contact.className = 'x-portfolio__contact';
-    contact.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);font-style:normal;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;';
 
     const contactItems = [
       { value: config.email, href: `mailto:${config.email}`, icon: '📧' },
@@ -3609,7 +3550,7 @@ export function cardportfolio(element, options = {}) {
         const contactLink = document.createElement('a');
         contactLink.href = item.href;
         if (item.external) contactLink.target = '_blank';
-        contactLink.style.cssText = 'color:var(--text-primary,#f9fafb);text-decoration:none;font-size:0.9rem;display:flex;align-items:center;gap:0.25rem;';
+        contactLink.classList.add('x-portfolio__contact-link');
         contactLink.innerHTML = `${item.icon} <span>${item.value}</span>`;
         contact.appendChild(contactLink);
       }
@@ -3630,7 +3571,6 @@ export function cardportfolio(element, options = {}) {
     const social = document.createElement('nav');
     social.className = 'x-portfolio__social';
     social.setAttribute('aria-label', 'Social links');
-    social.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);display:flex;justify-content:center;gap:0.75rem;';
 
     socialLinks.forEach(({ url, icon, label }) => {
       const socialLink = document.createElement('a');
@@ -3638,9 +3578,8 @@ export function cardportfolio(element, options = {}) {
       socialLink.target = '_blank';
       socialLink.title = label;
       socialLink.setAttribute('aria-label', label);
-      socialLink.style.cssText = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--bg-tertiary,#374151);border-radius:50%;text-decoration:none;font-size:1.25rem;transition:transform 0.2s,background 0.2s;';
-      socialLink.onmouseenter = () => { socialLink.style.transform = 'scale(1.1)'; socialLink.style.background = 'var(--primary,#6366f1)'; };
-      socialLink.onmouseleave = () => { socialLink.style.transform = ''; socialLink.style.background = 'var(--bg-tertiary,#374151)'; };
+      socialLink.classList.add('x-portfolio__social-link');
+      // Hover: `.x-portfolio__social-link:hover` in card.css (#779).
       socialLink.textContent = icon;
       social.appendChild(socialLink);
     });
@@ -3652,17 +3591,14 @@ export function cardportfolio(element, options = {}) {
   if (config.cta) {
     const footer = document.createElement('footer');
     footer.className = 'x-portfolio__footer';
-    footer.style.cssText = 'padding:1rem 1.5rem;border-top:1px solid var(--border-color,#374151);';
     
     const ctaBtn = document.createElement('a');
     ctaBtn.href = config.ctaHref || '#';
     ctaBtn.className = 'x-portfolio__cta';
-    // #561: static layout/padding now lives in card.css's `.x-portfolio__cta`
+    // #561: static layout/padding lives in card.css's `.x-portfolio__cta`
     // rule (padding:1rem, was inline at 0.875rem/14px -- below the §13
-    // minimum). Only the genuinely dynamic hover-state background/transform
-    // stay inline, since those are set by JS pointer handlers, not CSS.
-    ctaBtn.onmouseenter = () => { ctaBtn.style.background = 'var(--primary-hover,#4f46e5)'; ctaBtn.style.transform = 'translateY(-1px)'; };
-    ctaBtn.onmouseleave = () => { ctaBtn.style.background = 'var(--primary,#6366f1)'; ctaBtn.style.transform = ''; };
+    // minimum). #779: the hover state is a :hover rule there too, not a pair
+    // of pointer handlers writing element.style.
     ctaBtn.textContent = config.cta;
     footer.appendChild(ctaBtn);
     

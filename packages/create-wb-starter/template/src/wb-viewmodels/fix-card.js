@@ -1,14 +1,212 @@
 import { WBCard } from './x-card.js';
+import { composeCard } from './card.js';
+import { readAttr } from '../core/read-attr.js';
 import { mdhtml } from './mdhtml.js';
+import { ensureBehaviorCss } from '../core/style-loader.js';
 
 /**
- * Fix Card Behavior
+ * Fix Card Component
  * -----------------------------------------------------------------------------
  * Special card for displaying fix details.
  * 
  * Custom Tag: <div x-fix-card>
  * -----------------------------------------------------------------------------
  */
+function escapeHtml(unsafe) {
+  if (typeof unsafe !== 'string') return unsafe;
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function getLanguage(fix) {
+  if (fix.fix && fix.fix.file) {
+    if (fix.fix.file.endsWith('.css')) return 'css';
+    if (fix.fix.file.endsWith('.html')) return 'html';
+    if (fix.fix.file.endsWith('.json')) return 'json';
+  }
+  return 'js';
+}
+
+/**
+ * Render one fix record into `host`, using `card` (the composeCard() base the
+ * host was composed with) to build the header/main structure.
+ *
+ * A module function rather than a WBFixCard method so the SAME renderer
+ * serves both authoring forms: the <x-fix-card> tag (the class below) and
+ * <div x-fix-card> (fixCard() at the bottom). While it lived only on the
+ * class, the attribute form -- the one 4.0.0 made canonical -- had no way to
+ * reach it at all.
+ */
+function renderFixCard(host, card, fix) {
+  if (!fix || !card) return;
+  
+  let statusDisplay = fix.status || 'INCOMPLETE';
+  let statusClass = `status-${(statusDisplay).toLowerCase().replace(/\s+/g, '-')}`;
+
+  // Enforce test requirement: No test = Failed (unless Pending)
+  if (!fix.testRun && statusDisplay.toUpperCase() !== 'PENDING') {
+    statusDisplay = 'TEST MISSING';
+    statusClass = 'status-failed'; // Or status-test-missing if preferred, but CSS uses status-failed
+  }
+
+  const dateStr = new Date(fix.date).toLocaleDateString();
+  
+  const hasCause = fix.cause && fix.cause.trim().length > 0;
+  const isMissingBehavior = fix.errorSignature && fix.errorSignature.includes('Unknown behavior');
+  const redHoverText = isMissingBehavior ? 'title="CRITICAL: This error indicates a missing behavior file or registration issue, which prevents the component from functioning entirely."' : '';
+  
+  const causeHtml = hasCause 
+    ? `<div class="detail-content ${isMissingBehavior ? 'glow-red' : ''}" ${redHoverText}>${escapeHtml(fix.cause)}</div>`
+    : `<div class="detail-content violation">VIOLATION: No cause specified. Fix requirements mandate a known cause.</div>`;
+
+  const errorSignature = (() => {
+    const sig = fix.errorSignature;
+    if (!sig) return '';   // no signature recorded for this shape of fix — say nothing rather than something wrong
+    if (sig.includes('Enhancement')) {
+      // Try to find a component doc link - use direct path for simplicity
+      // `behavior` is canonical since the components removal -- fix-viewer.html
+      // already groups on fix.behavior (line 431). This read still said
+      // fix.component, so the two halves of the same page disagreed about
+      // what the field is called (#911).
+      const compName = (fix.behavior || fix.component || '').split('/').pop().replace('.js', '');
+      if (compName) {
+        // docs/components/semantics/ does not exist -- the docs live in
+        // docs/behaviors/ since the components removal, so every
+        // enhancement link in the viewer 404'd (#911).
+        return `<a href="/docs/behaviors/${escapeHtml(compName)}.md" target="_blank" class="fix-enhancement-link">Enhancement: See ${escapeHtml(compName)}.md</a>`;
+      }
+      return escapeHtml(sig);
+    }
+    return escapeHtml(sig);
+  })();
+
+  // Prepare Header Content.
+  // Only emit a status id when errorId is present — otherwise multiple cards
+  // collapse to a duplicate id="status-undefined" (compliance: unique IDs).
+  const errorIdSafe = (fix.errorId != null && String(fix.errorId).length > 0)
+    ? escapeHtml(String(fix.errorId))
+    : '';
+  // `issue` is an issue NUMBER on some records and free text on others --
+  // fix-viewer.html falls back to title + problem when a record has none, and
+  // tests it with /^[0-9]+$/ before treating it as a number. Prefixing '#'
+  // unconditionally turned a text issue into "#Regression check".
+  const issueText = fix.issue == null ? '' : String(fix.issue).trim();
+  const issueLabel = /^[0-9]+$/.test(issueText) ? `#${issueText}` : issueText;
+  const headerContent = `
+    <div class="card-header">
+      <div class="header-top">
+        <div class="fix-id">${errorIdSafe || '—'}</div>
+        <span ${errorIdSafe ? `id="status-${errorIdSafe}"` : ''} class="fix-status ${statusClass}">${escapeHtml(statusDisplay)}</span>
+      </div>
+      <h3 class="fix-title">${escapeHtml(fix.title || issueLabel || 'Untitled fix')}</h3>
+    </div>
+  `;
+
+  // Prepare Main Content
+  const mainContent = `
+    <div class="fix-meta">
+      <div class="meta-item">
+        <span>📦</span> ${escapeHtml(fix.component || 'Global')}
+      </div>
+      <div class="meta-item">
+        <span>📅</span> ${dateStr}
+      </div>
+    </div>
+
+    <div class="fix-details">
+      <div class="detail-row">
+        <span class="detail-label">Error Signature</span>
+        <div class="signature-block">${errorSignature}</div>
+      </div>
+
+      ${fix.stackTrace ? `
+        <div class="detail-row">
+          <span class="detail-label">Stack Trace</span>
+          <div class="stack-trace">${escapeHtml(fix.stackTrace)}</div>
+        </div>
+      ` : ''}
+
+      <div class="detail-row">
+        <span class="detail-label">Cause</span>
+        ${causeHtml}
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Action Taken</span>
+        <div class="detail-content">${escapeHtml(fix.fix && fix.fix.action ? fix.fix.action : 'No action specified')}</div>
+      </div>
+
+      ${fix.fix && fix.fix.code ? `
+        <div class="detail-row">
+          <span class="detail-label detail-label--spaced">Code Change</span>
+          <div class="detail-content">
+            <div class="fix-code-block">${escapeHtml("```" + getLanguage(fix) + "\n" + fix.fix.code + "\n```")}</div>
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="detail-row">
+        <span class="detail-label">File</span>
+        ${fix.fix && fix.fix.file ? `
+          <code class="fix-file">${escapeHtml(fix.fix.file)}</code>
+        ` : '<span class="fix-none">None specified</span>'}
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Test Status</span>
+        <div class="detail-content fix-test-status">
+          <div class="fix-test-row">
+            <span class="fix-test-key">Test Run:</span>
+            <span class="fix-test-run ${fix.testRun ? 'status-fixed fix-test-run--yes' : 'status-pending fix-test-run--no'}">${fix.testRun === true ? 'TRUE' : 'FALSE'}</span>
+          </div>
+          <div class="fix-test-row">
+            <span class="fix-test-key fix-test-key--fixed">Test Name:</span>
+            ${fix.testName ? `<code class="fix-test-name">${escapeHtml(fix.testName)}</code>` : '<span class="fix-none">None specified</span>'}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Use the base card to build the structure
+  // We pass showHeader: true explicitly, and provide content
+  const { main } = card.buildStructure({
+    headerContent: headerContent,
+    mainContent: mainContent,
+    showHeader: true,
+    showMain: true,
+    showFooter: false // No footer for now
+  });
+
+  // Initialize mdhtml on code blocks
+  const codeBlocks = host.querySelectorAll('.fix-code-block');
+  codeBlocks.forEach(block => mdhtml(block));
+
+  // Let CSS handle max-height constraints (750px in injected styles)
+  // this.style.maxHeight is NOT overridden here to respect the CSS limit
+
+  // Ensure the main content area expands
+  if (main) {
+    // overflow/flex are .x-fix-card__main in fix-card.css (#779).
+    main.classList.add('x-fix-card__main');
+    
+    // Also ensure internal code blocks don't take up too much space individually
+    // (Though the global card scroll handles the overflow, keeping these small helps UX)
+    const internalBlocks = main.querySelectorAll('code, .stack-trace, .signature-block');
+    internalBlocks.forEach(block => {
+      // Only apply scroll container class to non-fix-code blocks (stack trace etc)
+      if (!block.closest('.fix-code-block')) {
+          // max-height/overflow/display come with the class (fix-card.css, #779).
+          block.classList.add('x-fix-card-scroll-container');
+      }
+    });
+  }
+}
+
 export class WBFixCard extends WBCard {
   constructor() {
     super();
@@ -20,140 +218,21 @@ export class WBFixCard extends WBCard {
     this.render();
   }
 
+  get data() {
+    return this.fixData;
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this.classList.add('fix-card');
     
-    // Inject styles for hiding scrollbars if not present
-    if (!document.getElementById('x-fix-card-styles')) {
-      const style = document.createElement('style');
-      style.id = 'x-fix-card-styles';
-      style.textContent = `
-        .x-fix-card-scroll-container::-webkit-scrollbar {
-          display: none;
-        }
-        .x-fix-card-scroll-container {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-        }
-        /* Ensure text wraps nicely */
-        .fix-card .detail-content, 
-        .fix-card .fix-title,
-        .fix-card .fix-id,
-        .fix-card .detail-label {
-          white-space: pre-wrap !important;
-          word-break: break-word !important;
-          overflow-wrap: anywhere !important;
-        }
-        
-        /* MDHTML / Code Block Overrides - NO SCROLLBARS, NO GAPS, FIT PARENT */
-        .fix-card .fix-code-block,
-        .fix-card .fix-code-block * {
-            scrollbar-width: none !important;
-            -ms-overflow-style: none !important;
-        }
-        .fix-card .fix-code-block *::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
-        }
-
-        .fix-card .fix-code-block pre {
-          margin: 0 !important;
-          padding: 0.5rem !important;
-          background: rgba(0,0,0,0.2) !important;
-          border-radius: 4px !important;
-          white-space: pre-wrap !important;
-          word-break: break-word !important;
-          overflow-wrap: anywhere !important;
-          overflow-x: hidden !important;
-          overflow-y: hidden !important;
-          max-height: none !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          box-sizing: border-box !important;
-        }
-        
-        .fix-card .fix-code-block code {
-          padding: 0 !important;
-          margin: 0 !important;
-          background: transparent !important;
-          white-space: pre-wrap !important;
-          overflow: visible !important;
-          max-height: none !important;
-          border: none !important;
-          width: 100% !important;
-          box-sizing: border-box !important;
-          display: block !important;
-        }
-
-        .fix-card .x-code {
-            white-space: pre-wrap !important;
-            word-break: break-word !important;
-            overflow-wrap: anywhere !important;
-            display: block !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            overflow: visible !important;
-        }
-
-        /* Hide the WB Code Behavior chrome (language badge, copy button) */
-        .fix-card .x-code__header,
-        .fix-card .x-code__language,
-        .fix-card .x-code__copy,
-        .fix-card .x-pre__copy,
-        .fix-card .x-pre__language,
-        .fix-card .x-pre__line-numbers {
-          display: none !important;
-        }
-        
-        /* Reset the wrapper injected by code/pre behavior */
-        .fix-card .x-code-wrapper,
-        .fix-card .x-pre-wrapper {
-          margin: 0 !important;
-          padding: 0 !important;
-          background: transparent !important;
-          border: none !important;
-          box-shadow: none !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          overflow: visible !important;
-          max-height: none !important;
-        }
-        
-        .fix-card .signature-block,
-        .fix-card .stack-trace {
-          font-family: monospace;
-          background: rgba(0,0,0,0.2);
-          padding: 0.5rem;
-          border-radius: 4px;
-          overflow-x: auto;
-          overflow-y: auto;
-          max-height: 150px;
-          white-space: pre-wrap;
-          word-break: break-word;
-        }
-        
-        /* Constrain overall card height to prevent massive cards */
-        .fix-card {
-          max-height: 750px;
-          overflow-y: auto;
-        }
-        
-        .glow-red {
-          color: #ff4444 !important;
-          text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
-          font-weight: 600;
-          animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-          0% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
-          50% { text-shadow: 0 0 12px rgba(255, 0, 0, 0.7); }
-          100% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.4); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
+    // #1014: a 125-line <style> block carrying 49 `!important` declarations
+    // used to be injected here. It now lives in src/styles/behaviors/fix-card.css,
+    // loaded through the behavior CSS manifest like every other behavior's
+    // styles. The !important was compensating for a specificity tie with
+    // card.css (both 0-2-0); the stylesheet uses .x-card.fix-card (0-3-0) and
+    // wins on merit instead.
+    ensureBehaviorCss('fix-card');
 
     // If data was set before connection, render now
     if (this.fixData) {
@@ -161,195 +240,97 @@ export class WBFixCard extends WBCard {
     }
   }
 
-  escapeHtml(unsafe) {
-    if (typeof unsafe !== 'string') return unsafe;
-    return unsafe
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  getLanguage(fix) {
-    if (fix.fix && fix.fix.file) {
-      if (fix.fix.file.endsWith('.css')) return 'css';
-      if (fix.fix.file.endsWith('.html')) return 'html';
-      if (fix.fix.file.endsWith('.json')) return 'json';
-    }
-    return 'js';
-  }
-
   render() {
-    if (!this.fixData || !this.card) return;
-    const fix = this.fixData;
-    
-    let statusDisplay = fix.status || 'INCOMPLETE';
-    let statusClass = `status-${(statusDisplay).toLowerCase().replace(/\s+/g, '-')}`;
-
-    // Enforce test requirement: No test = Failed (unless Pending)
-    if (!fix.testRun && statusDisplay.toUpperCase() !== 'PENDING') {
-      statusDisplay = 'TEST MISSING';
-      statusClass = 'status-failed'; // Or status-test-missing if preferred, but CSS uses status-failed
-    }
-
-    const dateStr = new Date(fix.date).toLocaleDateString();
-    
-    const hasCause = fix.cause && fix.cause.trim().length > 0;
-    const isMissingBehavior = fix.errorSignature && fix.errorSignature.includes('Unknown behavior');
-    const redHoverText = isMissingBehavior ? 'title="CRITICAL: This error indicates a missing behavior file or registration issue, which prevents the behavior from functioning entirely."' : '';
-    
-    const causeHtml = hasCause 
-      ? `<div class="detail-content ${isMissingBehavior ? 'glow-red' : ''}" ${redHoverText}>${this.escapeHtml(fix.cause)}</div>`
-      : `<div class="detail-content violation" style="color: var(--danger); border: 1px dashed var(--danger); background: rgba(239, 68, 68, 0.1);">VIOLATION: No cause specified. Fix requirements mandate a known cause.</div>`;
-
-    const errorSignature = (() => {
-      const sig = fix.errorSignature || 'No signature provided';
-      if (sig.includes('Enhancement')) {
-        // Try to find a behavior doc link - use direct path for simplicity
-        const compName = (fix.behavior || '').split('/').pop().replace('.js', '');
-        if (compName) {
-          return `<a href="/docs/behaviors/semantics/${this.escapeHtml(compName)}.md" target="_blank" style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Enhancement: See ${this.escapeHtml(compName)}.md</a>`;
-        }
-        return this.escapeHtml(sig);
-      }
-      return this.escapeHtml(sig);
-    })();
-
-    // Prepare Header Content.
-    // Only emit a status id when errorId is present — otherwise multiple cards
-    // collapse to a duplicate id="status-undefined" (compliance: unique IDs).
-    const errorIdSafe = (fix.errorId != null && String(fix.errorId).length > 0)
-      ? this.escapeHtml(String(fix.errorId))
-      : '';
-    const headerContent = `
-      <div class="card-header" style="border:none;padding:0;margin:0;">
-        <div class="header-top" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-          <div class="fix-id" style="font-family:monospace;color:var(--text-secondary);background:rgba(0,0,0,0.3);padding:0.2rem 0.4rem;border-radius:4px;">${errorIdSafe || '—'}</div>
-          <span ${errorIdSafe ? `id="status-${errorIdSafe}"` : ''} class="fix-status ${statusClass}" style="padding:0.25rem 0.5rem;border-radius:4px;font-size:0.75rem;font-weight:bold;text-transform:uppercase;">${this.escapeHtml(statusDisplay)}</span>
-        </div>
-        <h3 class="fix-title" style="margin:0;font-size:1.1rem;color:var(--text-primary);">${this.escapeHtml(fix.issue || 'Unknown Issue')}</h3>
-      </div>
-    `;
-
-    // Prepare Main Content
-    const mainContent = `
-      <div class="fix-meta" style="display:flex;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border-color);">
-        <div class="meta-item" style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:var(--text-secondary);">
-          <span>📦</span> ${this.escapeHtml(fix.behavior || 'Global')}
-        </div>
-        <div class="meta-item" style="display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:var(--text-secondary);">
-          <span>📅</span> ${dateStr}
-        </div>
-      </div>
-
-      <div class="fix-details" style="display:flex;flex-direction:column;gap:1rem;">
-        <div class="detail-row">
-          <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Error Signature</span>
-          <div class="signature-block">${errorSignature}</div>
-        </div>
-
-        ${fix.stackTrace ? `
-          <div class="detail-row">
-            <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Stack Trace</span>
-            <div class="stack-trace">${this.escapeHtml(fix.stackTrace)}</div>
-          </div>
-        ` : ''}
-
-        <div class="detail-row">
-          <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Cause</span>
-          ${causeHtml}
-        </div>
-
-        <div class="detail-row">
-          <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Action Taken</span>
-          <div class="detail-content">${this.escapeHtml(fix.fix && fix.fix.action ? fix.fix.action : 'No action specified')}</div>
-        </div>
-
-        ${fix.fix && fix.fix.code ? `
-          <div class="detail-row">
-            <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:1rem;">Code Change</span>
-            <div class="detail-content">
-              <div class="fix-code-block">${this.escapeHtml("```" + this.getLanguage(fix) + "\n" + fix.fix.code + "\n```")}</div>
-            </div>
-          </div>
-        ` : ''}
-
-        <div class="detail-row">
-          <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">File</span>
-          ${fix.fix && fix.fix.file ? `
-            <code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:3px;display:block;max-height:100px;overflow-y:auto;">${this.escapeHtml(fix.fix.file)}</code>
-          ` : '<span style="color: var(--text-muted); font-style: italic; font-size: 0.8rem;">None specified</span>'}
-        </div>
-
-        <div class="detail-row">
-          <span class="detail-label" style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);margin-bottom:0.25rem;">Test Status</span>
-          <div class="detail-content" style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="color: var(--text-muted); font-size: 0.8rem;">Test Run:</span>
-              <span class="${fix.testRun ? 'status-fixed' : 'status-pending'}" style="font-family: monospace; font-size: 0.8rem; color:${fix.testRun ? 'var(--success)' : 'var(--warning)'};">${fix.testRun === true ? 'TRUE' : 'FALSE'}</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="color: var(--text-muted); font-size: 0.8rem; flex-shrink: 0;">Test Name:</span>
-              ${fix.testName ? `<code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:3px;display:block;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;flex:1;min-width:0;">${this.escapeHtml(fix.testName)}</code>` : '<span style="color: var(--text-muted); font-style: italic; font-size: 0.8rem;">None specified</span>'}
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Use the base card to build the structure
-    // We pass showHeader: true explicitly, and provide content
-    const { main } = this.card.buildStructure({
-      headerContent: headerContent,
-      mainContent: mainContent,
-      showHeader: true,
-      showMain: true,
-      showFooter: false // No footer for now
-    });
-
-    // Initialize mdhtml on code blocks
-    const codeBlocks = this.querySelectorAll('.fix-code-block');
-    codeBlocks.forEach(block => mdhtml(block));
-
-    // Let CSS handle max-height constraints (750px in injected styles)
-    // this.style.maxHeight is NOT overridden here to respect the CSS limit
-
-    // Ensure the main content area expands
-    if (main) {
-      main.style.overflowY = 'visible';
-      main.style.flex = '1 1 auto';
-      
-      // Also ensure internal code blocks don't take up too much space individually
-      // (Though the global card scroll handles the overflow, keeping these small helps UX)
-      const internalBlocks = main.querySelectorAll('code, .stack-trace, .signature-block');
-      internalBlocks.forEach(block => {
-        // Only apply scroll container class to non-fix-code blocks (stack trace etc)
-        if (!block.closest('.fix-code-block')) {
-            block.classList.add('x-fix-card-scroll-container');
-            block.style.maxHeight = '100px';
-            block.style.overflowY = 'auto';
-            block.style.display = 'block';
-        }
-      });
-    }
+    renderFixCard(this, this.card, this.fixData);
   }
 }
 
-if (!customElements.get('x-fix-card')) {
-  customElements.define('x-fix-card', WBFixCard);
-}
-
-// #365: exported so wb-viewmodels/index.js's lazy-loader can resolve a
-// 'fix-card' behavior for this module (getBehavior() falls back to
-// module.default when no named export matches). The real work happens in
-// WBFixCard's own connectedCallback/`data` setter above via the native
-// custom-element upgrade that importing this module triggers -- this
-// function is only the compliance-signaling touch other self-registering
-// custom elements use (see x-control.js's `control()`), so schema/tag-map
-// dispatch has something to call without fighting the class for DOM
-// ownership.
+// #365 / #660: the behavior for the attribute form, <div x-fix-card>.
+//
+// This used to add one class and return, on the claim that "the real work
+// happens in WBFixCard's connectedCallback via the native custom-element
+// upgrade that importing this module triggers". That upgrade only ever
+// happens to an element whose TAG is x-fix-card. A <div> cannot be upgraded
+// to a custom element class, so on the canonical 4.0.0 form -- the one the
+// schema's examples and tests/regression/schema-tags-render-audit.spec.ts use --
+// nothing added .fix-card, no card was composed, and `.data = fix` created a
+// plain property that rendered nothing. The behavior was inert while its
+// comments said it was live.
+//
+// Composition instead of the class (Tier 1: capability is applied by a
+// behavior function, never acquired by subclassing): compose the card base on
+// the element, then give the element the same `data` accessor the class has,
+// wired to the same renderer.
 export default function fixCard(element) {
   element.classList.add('x-fix-card');
-  return () => {};
+  // The <x-fix-card> tag is still upgraded by the shim below and owns its own
+  // card and accessor; composing a second card on it would build twice.
+  if (element instanceof WBFixCard) return () => {};
+
+  element.classList.add('fix-card');
+  ensureBehaviorCss('fix-card');
+  // Same options WBCard.connectedCallback composes the tag form with, so both
+  // forms render an identical card.
+  const base = composeCard(element, {
+    ...element.dataset,
+    behavior: element.getAttribute('behavior') || 'card',
+    variant: element.getAttribute('variant') || 'default',
+    title: element.getAttribute('title') || readAttr(element, 'title'),
+    subtitle: element.getAttribute('subtitle') || readAttr(element, 'subtitle'),
+    footer: element.getAttribute('footer') || readAttr(element, 'footer'),
+  });
+
+  // A value assigned before the behavior attached (the element existed, the
+  // lazy-loader had not reached it yet) is a plain own property; honour it
+  // rather than shadow it with an accessor that starts empty.
+  let fixData = Object.prototype.hasOwnProperty.call(element, 'data') ? element.data : null;
+  Object.defineProperty(element, 'data', {
+    configurable: true,
+    enumerable: true,
+    get: () => fixData,
+    set: (fix) => { fixData = fix; renderFixCard(element, base, fixData); },
+  });
+  if (fixData) renderFixCard(element, base, fixData);
+
+  return () => {
+    delete element.data;
+    if (base && typeof base.cleanup === 'function') base.cleanup();
+    element.classList.remove('fix-card');
+  };
+}
+
+// Registration shim (#911).
+//
+// f624fcc9 (4.0.0 — components removed) deleted
+//   customElements.define('wb-fix-card', WBFixCard);
+// and without this the Custom Elements API leaves every <x-fix-card> inert:
+// connectedCallback never fires, .fix-card is never applied, and the matching
+// stylesheet has nothing to style.
+//
+// #1061 — WHAT CHANGED, AND WHAT DID NOT.
+//
+// This comment used to justify itself with "public/fix-viewer.html still does
+// createElement('x-fix-card') and assigns card.data". It does not any more:
+// that page now renders a table on both of its render paths, because John
+// asked to track a fix back to its issue and forward to its release, which a
+// card grid could not show. `grep -c "x-fix-card" public/fix-viewer.html` is 0.
+//
+// That makes the page a former CONSUMER, not the reason this exists. The
+// behavior itself is fully registered and reachable by anyone writing
+// <div x-fix-card>: tag-map.js:212, wb-viewmodels/index.js:95,
+// behavior-css-manifest.js:87, wb-lazy.js:378's eager selector list,
+// schema-builder.js:973, and its own src/wb-models/fix-card.schema.json with
+// documented examples. Removing it would delete a working behavior from the
+// framework, which is a different and much larger decision than dropping the
+// dead code it superficially resembles.
+//
+// So the shim stays and the claim about fix-viewer.html is corrected. Whether
+// the framework should keep a fix-card behavior at all is a product question,
+// left on #1061 rather than answered by whoever happened to change the page.
+//
+// TIER1-LAWS §2 permits this shape: a registration shim the Custom Elements API
+// requires, holding no shared behavior logic. Converting fix-card to a behavior
+// is the right end state and is tracked in #660 / #789.
+if (typeof customElements !== 'undefined' && !customElements.get('x-fix-card')) {
+  customElements.define('x-fix-card', WBFixCard);
 }

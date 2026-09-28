@@ -107,8 +107,11 @@ test.describe('#986: the ordering that makes it possible is still in place', () 
       .join(NL);
 
   test('the panel is hidden until it has been scanned, then revealed', () => {
+    // #779 moved the hide from pre.style into a class (.x-demo__code--pending
+    // in demo.css). The requirement is unchanged: hidden BEFORE it is appended,
+    // and hidden with visibility, never display.
     const src = stripComments(readFileSync(DEMO_SRC, 'utf8'));
-    const hideAt = src.indexOf("pre.style.visibility = 'hidden'");
+    const hideAt = src.indexOf("pre.classList.add('x-demo__code--pending')");
     const appendAt = src.indexOf('element.appendChild(pre)');
 
     expect(
@@ -125,8 +128,10 @@ test.describe('#986: the ordering that makes it possible is still in place', () 
 
     // visibility, deliberately, not display: the box must still lay out so its
     // width can be measured while hidden.
+    const css = readFileSync(DEMO_SRC.replace(/wb-viewmodels[\\/]demo\.js$/, 'styles/behaviors/demo.css'), 'utf8');
+    const rule = (css.match(/\.x-demo__code--pending\s*\{([^}]*)\}/) || [])[1] || '';
     expect(
-      /pre\.style\.visibility\s*=\s*'hidden'/.test(src) && !/pre\.style\.display\s*=\s*'none'/.test(src),
+      /visibility\s*:\s*hidden/.test(rule) && !/display\s*:\s*none/.test(rule),
       'the panel is hidden with display:none rather than visibility:hidden, so it does not lay\n' +
       'out and cannot be measured while hidden — which reintroduces the width snap.',
     ).toBe(true);

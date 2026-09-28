@@ -72,7 +72,7 @@ test.describe('Inline styles across all behaviors (#779)', () => {
     await page.goto('/');
     await page.waitForFunction(() => Boolean((window as any).WB), { timeout: 30_000 });
 
-    const reports: BehaviorReport[] = await page.evaluate(async () => {
+    const { reports, attached, probed } = await page.evaluate(async () => {
       const WB = (window as any).WB;
       const mod = await import('/src/core/tag-map.js');
       const attrs: string[] = Object.keys(mod.extensionMap);
@@ -111,6 +111,11 @@ test.describe('Inline styles across all behaviors (#779)', () => {
       };
 
       const out: any[] = [];
+      // How many behaviors visibly attached (a class or new children). It is
+      // what makes an empty report meaningful: zero inline styles from
+      // behaviors that ran is the #779 target; zero from behaviors that never
+      // ran would be a broken probe.
+      let attachedCount = 0;
 
       for (const attr of attrs) {
         let host: HTMLElement;
@@ -119,6 +124,7 @@ test.describe('Inline styles across all behaviors (#779)', () => {
         } catch {
           continue;
         }
+        if (host.className || host.children.length !== 1) attachedCount++;
 
         const styled = [host, ...Array.from(host.querySelectorAll('[style]'))]
           .filter((el) => el instanceof HTMLElement && el.getAttribute('style')) as HTMLElement[];
@@ -169,7 +175,7 @@ test.describe('Inline styles across all behaviors (#779)', () => {
       }
 
       box.remove();
-      return out;
+      return { reports: out as BehaviorReport[], attached: attachedCount, probed: attrs.length };
     });
 
     // ── Second pass: which UNCOVERED values are DYNAMIC? ────────────────────
@@ -318,10 +324,15 @@ test.describe('Inline styles across all behaviors (#779)', () => {
         '  written to data/inline-style-audit.json\n\n  worst offenders:\n' + top + '\n',
     );
 
+    // The audit is only vacuous if it never ran the behaviors. It used to
+    // demand at least one inline style for that reason, which stopped being a
+    // sanity check once #779 took the count to zero -- the target, not a fault.
+    // What it guards is whether the behaviors attached at all.
+    expect(probed, 'the audit found no x- attributes to probe').toBeGreaterThan(0);
     expect(
-      reports.length,
-      'no behavior produced any inline style — the audit would be vacuously clean, which contradicts the known count',
-    ).toBeGreaterThan(0);
+      attached,
+      'no behavior attached to its probe host — the audit would be vacuously clean because nothing ran',
+    ).toBeGreaterThan(probed / 2);
 
     if (BASELINE_DECLARATIONS >= 0) {
       expect(

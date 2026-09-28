@@ -26,6 +26,7 @@
 // "still retrying" from "silently broken" without instrumenting by hand
 // each time. [WB:media-retry] is a fixed, greppable prefix.
 import { logError } from '../core/error-logger.js';
+import { reportIfThirdPartyMedia } from './media-unreachable.js';
 
 function traceLabel(el) {
   const tag = el.tagName.toLowerCase();
@@ -72,7 +73,7 @@ function attachLoadRetry(el, config) {
     // way to show something. Hide the failed element itself so its native
     // "broken" chrome (video controls with nothing to play, browken-image
     // icon) doesn't sit next to the message looking doubly broken.
-    el.style.display = 'none';
+    // Hidden by its failedClass (ui-utils.css), not style.display (#779).
     if (!el.nextElementSibling || !el.nextElementSibling.classList.contains('x-media-load-failed')) {
       const msg = document.createElement('div');
       msg.className = 'x-media-load-failed';
@@ -98,6 +99,13 @@ function attachLoadRetry(el, config) {
     // callers depend on. Same convention cardoverlay/cardhero/audio already
     // use for their own load failures.
     const failedSrc = config.currentSrc(el);
+
+    // #1115: someone else's server being unreachable is not a defect in this
+    // page. The fallback, class and failed event above still applied; the
+    // report goes to the element (warning + error="unreachable" + event)
+    // instead of the error log. A same-origin failure falls through and stays
+    // loud, which is what #763 and "put in runtime errors on image fails" need.
+    if (reportIfThirdPartyMedia(el, failedSrc, config.label)) return;
 
     // #763 -- John, at a "Video unavailable" placeholder: "Where's the runtime
     // error?"

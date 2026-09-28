@@ -12,6 +12,7 @@
  */
 
 import { readAttr, readFlag } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 
 // tooltip.schema.json declares 8 positions and 4 trigger modes. This file used
 // to accept 4 positions and no trigger at all, so the other spellings were
@@ -281,9 +282,10 @@ export async function tooltip(element, options = {}) {
   }
 
   // The declared CSS API variable is how maxWidth reaches the element -- see
-  // the max-width rule in injectStyles (#1107).
+  // the max-width rule in injectStyles (#1107). Through a generated rule, not
+  // the style attribute (#779).
   if (config.maxWidth) {
-    tip.style.setProperty('--x-tooltip-max-width', config.maxWidth);
+    setRule(tip, 'max-width', { '--x-tooltip-max-width': config.maxWidth });
   }
 
   const contentDiv = document.createElement('div');
@@ -349,8 +351,8 @@ export async function tooltip(element, options = {}) {
     left = Math.max(8, Math.min(left, window.innerWidth + scrollX - tipRect.width - 8));
     top = Math.max(8, top);
 
-    tip.style.top = `${top}px`;
-    tip.style.left = `${left}px`;
+    // A computed spot: generated rule, not the style attribute (#779).
+    setRule(tip, 'position', { top: `${top}px`, left: `${left}px` });
   };
 
   // Show / Hide
@@ -457,6 +459,7 @@ export async function tooltip(element, options = {}) {
     bindings.length = 0;
 
     if (tip.parentNode) tip.remove();
+    clearRules(tip);
     if (originalTitle) element.setAttribute('title', originalTitle);
     element.removeAttribute('aria-describedby');
 

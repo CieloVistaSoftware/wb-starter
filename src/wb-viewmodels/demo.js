@@ -1,3 +1,4 @@
+import { setRule } from '../core/dynamic-style.js';
 import { WB_DOC_MAP } from './demo-docmap.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 import { hasBehavior } from './index.js';
@@ -432,8 +433,9 @@ function attachInstanceDocLink(hostEl, file, label, root, anchorEl) {
     // 375px on docs/V3-GUIDE.md's embedded <div x-demo>. Force a positioning
     // context only when one doesn't already exist, so this is a no-op for
     // every component (like x-card) that already provides one.
+    // #779: a class (demo.css), not element.style.
     if (getComputedStyle(anchor).position === 'static') {
-        anchor.style.position = 'relative';
+        anchor.classList.add('x-demo__anchor--positioned');
     }
 
     const build = () => {
@@ -816,7 +818,8 @@ export async function demo(element, options = {}) {
     //
     // visibility (not display) so the box still lays out and can be measured;
     // revealed unconditionally below, including when WB never arrives.
-    pre.style.visibility = 'hidden';
+    // #779: .x-demo__code--pending in demo.css, not element.style.
+    pre.classList.add('x-demo__code--pending');
     // demo.css caps the code panel at 50vw while this is set, so every
     // fit-content width painted before the single-item measurement below
     // commits is already the width it will commit (see capCodeWidth). Set
@@ -903,7 +906,7 @@ export async function demo(element, options = {}) {
         // #986: reveal exactly once, whatever happened above. scanWhenReady()
         // resolves even when WB never loads (rAF retries exhausted), but a
         // throw must never leave a permanently invisible code panel.
-        pre.style.visibility = '';
+        pre.classList.remove('x-demo__code--pending');
     }
 
     // #486: measure the GRID's own rendered width and hand it to demo.css as
@@ -1035,7 +1038,8 @@ export async function demo(element, options = {}) {
                     const codeWidth = codeEls.length
                         ? capCodeWidth(Math.max(...Array.from(codeEls, el => el.scrollWidth)) + 4) + hPad
                         : 0;
-                    element.style.setProperty('--x-demo-shrink-width', Math.max(naturalWidth + extra + hPad, codeWidth) + 'px');
+                    // A measured width: a generated rule, never element.style (#779).
+                    setRule(element, 'shrink', { '--x-demo-shrink-width': Math.max(naturalWidth + extra + hPad, codeWidth) + 'px' });
                     // Lifts demo.css's pre-measure 50vw code cap -- see there.
                     element.classList.remove('x-demo--measuring');
                     element.classList.add('x-demo--measured');
@@ -1173,7 +1177,9 @@ export async function demo(element, options = {}) {
                         if (lines.length && lines[lines.length - 1] === '') lines.pop();
                         const nums = wrapper.querySelectorAll('.x-pre__line-numbers > div');
                         if (nums.length !== lines.length) return false;
-                        return Array.from(nums).every((n) => n.style.top !== '');
+                        // pre.js marks each number it has measured; the top
+                        // itself is a generated rule, not an inline style (#779).
+                        return Array.from(nums).every((n) => n.classList.contains('x-pre__line-number--placed'));
                     });
                     if (!guttersReady) stableCount = 0;
                     if (stableCount >= 2 || Date.now() - startedAt > MAX_MS) {
@@ -1181,7 +1187,7 @@ export async function demo(element, options = {}) {
                         // either way this is the best value available, and it is
                         // the only one the reader ever sees.
                         if (pendingShrinkWidth > 0) {
-                            element.style.setProperty('--x-demo-shrink-width', pendingShrinkWidth + 'px');
+                            setRule(element, 'shrink', { '--x-demo-shrink-width': pendingShrinkWidth + 'px' });
                         }
                         // Lifts demo.css's pre-measure 50vw code cap -- see there.
                         element.classList.remove('x-demo--measuring');

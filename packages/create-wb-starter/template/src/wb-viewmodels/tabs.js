@@ -6,9 +6,36 @@
  * Custom Tag: <div x-tabs>
  * -----------------------------------------------------------------------------
  */
+import { readAttr, readFlag } from '../core/read-attr.js';
+
 export function tabs(element, options = {}) {
   // #448: no classList.add('x-tabs') -- no CSS selector anywhere depends
   // on the bare class.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-tabs> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-tabs> tag does not get a redundant class.
+  element.classList.add('x-tabs');
+
+  // Config is read once, up front, before any early return below. `variant`,
+  // `size`, `fullWidth` and `vertical` are declared with appliesClass
+  // "x-tabs--{{value}}", but that is schema-builder's mechanism and it never
+  // runs on a wb-lazy-only page (same gap switch.js documents), so the host
+  // never got the modifier classes tabs.css is written against.
+  const config = {
+    activeTab: options.activeTab ?? readAttr(element, 'active-tab', '0'),
+    variant: options.variant || readAttr(element, 'variant', 'default'),
+    size: options.size || readAttr(element, 'size', 'md'),
+    fullWidth: options.fullWidth ?? readFlag(element, 'full-width'),
+    vertical: options.vertical ?? readFlag(element, 'vertical'),
+  };
+  const modifiers = [];
+  if (config.variant !== 'default') modifiers.push(`x-tabs--${config.variant}`);
+  if (config.size !== 'md') modifiers.push(`x-tabs--${config.size}`);
+  if (config.fullWidth) modifiers.push('x-tabs--full-width');
+  if (config.vertical) modifiers.push('x-tabs--vertical');
+  if (modifiers.length) element.classList.add(...modifiers);
 
   // 1. Check if structure exists (Pre-rendered from Template)
   let nav = element.querySelector('.x-tabs__nav');
@@ -16,6 +43,10 @@ export function tabs(element, options = {}) {
 
   // 2. If not, build it from children (Behavior Mode)
   if (!nav) {
+    // Law 14: ids must be unique per instance. tab-${i}/panel-${i} collided
+    // across every tab group on a page, so aria-controls/aria-labelledby
+    // pointed screen readers at the first group's panels for all of them.
+    const uid = `x-tabs-${Math.random().toString(36).slice(2, 9)}`;
     const originalPanels = Array.from(element.children);
     if (originalPanels.length === 0) return () => {};
 
@@ -23,19 +54,23 @@ export function tabs(element, options = {}) {
     nav = document.createElement('nav');
     nav.className = 'x-tabs__nav';
     nav.setAttribute('role', 'tablist');
-    Object.assign(nav.style, {
-      display: 'flex',
-      gap: '0',
-      borderBottom: '1px solid var(--border-color, #374151)',
-      marginBottom: '0.5rem'
-    });
+    // Appearance lives in src/styles/behaviors/tabs.css (#902). Writing it
+    // inline here beat every stylesheet rule, which is why variant/size/
+    // vertical/full-width could never be implemented.
 
     panelsContainer = document.createElement('div');
     panelsContainer.className = 'x-tabs__panels';
-    Object.assign(panelsContainer.style, {
-      width: '100%',
-      marginTop: '0.5rem'
-    });
+
+
+    // tabs.schema.json declares activeTab ("Initially active tab index",
+    // default 0), which the docs render as `active-tab`. The opening tab was
+    // hard-coded to index 0, so the attribute did nothing (#861). Clamped
+    // deliberately: an out-of-range index would open no panel at all, which
+    // reads as a broken control rather than a bad attribute value.
+    const requestedActive = parseInt(config.activeTab, 10);
+    const activeIndex = Number.isFinite(requestedActive)
+      ? Math.min(Math.max(requestedActive, 0), originalPanels.length - 1)
+      : 0;
 
     // Process Panels
     originalPanels.forEach((panel, i) => {
@@ -43,30 +78,23 @@ export function tabs(element, options = {}) {
       // for back-compat (matches the accordion-title dual-read in collapse.js).
       const title = panel.getAttribute('tab-title') || panel.getAttribute('tab') ||
         panel.getAttribute('data-tab-title') || `Tab ${i + 1}`;
-      const isActive = i === 0;
+      const isActive = i === activeIndex;
 
       // Create Tab Button
       const button = document.createElement('button');
+      // #859: the prefix rename rewrote this class name into an ATTRIBUTE
+      // SELECTOR inside a template literal. `[x-tabs]__tab--active` is not
+      // a valid CSS identifier, so the active tab matched no rule and
+      // rendered identically to an inactive one -- silently, no error.
       button.className = `x-tabs__tab ${isActive ? 'x-tabs__tab--active' : ''}`;
       button.setAttribute('role', 'tab');
       button.setAttribute('index', i);
       button.setAttribute('aria-selected', isActive);
-      button.setAttribute('aria-controls', `panel-${i}`);
-      button.id = `tab-${i}`;
+      button.setAttribute('aria-controls', `${uid}-panel-${i}`);
+      button.id = `${uid}-tab-${i}`;
       button.textContent = title;
       
-      Object.assign(button.style, {
-        padding: '0.25rem 0.75rem',
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        color: 'inherit',
-        fontSize: '0.8rem',
-        borderBottom: `2px solid ${isActive ? 'var(--primary, #6366f1)' : 'transparent'}`,
-        marginBottom: '-1px',
-        fontWeight: isActive ? '600' : '400',
-        opacity: isActive ? '1' : '0.7'
-      });
+
 
       nav.appendChild(button);
 
@@ -79,15 +107,12 @@ export function tabs(element, options = {}) {
       panelWrapper.className = 'x-tabs__panel';
       panelWrapper.setAttribute('role', 'tabpanel');
       panelWrapper.setAttribute('index', i);
-      panelWrapper.id = `panel-${i}`;
-      panelWrapper.setAttribute('aria-labelledby', `tab-${i}`);
-      Object.assign(panelWrapper.style, {
-        padding: '1rem',
-        border: '1px solid var(--border-color, #e0e0e0)',
-        borderRadius: '4px',
-        background: 'var(--bg-primary, #fff)',
-        display: isActive ? 'block' : 'none'
-      });
+      panelWrapper.id = `${uid}-panel-${i}`;
+      panelWrapper.setAttribute('aria-labelledby', `${uid}-tab-${i}`);
+      // Appearance is in tabs.css (#902). Which panel is showing is state, and
+      // state is a class: .x-tabs__panel--active (tabs.css) shows it, every
+      // other panel is display:none -- no longer written inline (#779).
+      panelWrapper.classList.toggle('x-tabs__panel--active', isActive);
       
       // Move all children of the original panel to the new wrapper
       while (panel.firstChild) {
@@ -113,17 +138,17 @@ export function tabs(element, options = {}) {
     // Update tabs
     nav.querySelectorAll('.x-tabs__tab').forEach((t, i) => {
       const active = i === index;
+      // The class carries the whole active look now (tabs.css). Writing it
+      // inline as well beat every variant rule -- variant="pills" could never
+      // colour its active tab while these three lines existed (#902).
       t.classList.toggle('x-tabs__tab--active', active);
-      t.style.borderBottomColor = active ? 'var(--primary, #6366f1)' : 'transparent';
-      t.style.fontWeight = active ? '600' : '400';
-      t.style.opacity = active ? '1' : '0.7';
       t.setAttribute('aria-selected', active);
     });
 
     // Update panels
     const panels = panelsContainer ? panelsContainer.querySelectorAll('.x-tabs__panel') : element.querySelectorAll('.x-tabs__panel');
     panels.forEach((p, i) => {
-      p.style.display = i === index ? 'block' : 'none';
+      p.classList.toggle('x-tabs__panel--active', i === index);
     });
 
     element.dispatchEvent(new CustomEvent('wb:tabs:change', { 
@@ -135,7 +160,7 @@ export function tabs(element, options = {}) {
   nav.addEventListener('click', clickHandler);
 
   return () => {
-    element.classList.remove('x-tabs');
+    element.classList.remove('x-tabs', ...modifiers);
     nav.removeEventListener('click', clickHandler);
   };
 }

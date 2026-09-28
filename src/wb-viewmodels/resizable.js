@@ -1,4 +1,5 @@
 import { readFlag, readAttr } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * Resizable Behavior
  * -----------------------------------------------------------------------------
@@ -34,8 +35,9 @@ export function resizable(element, options = {}) {
 
   // Ensure element is positioned
   const computedStyle = window.getComputedStyle(element);
+  // A class, not element.style (#779) -- see resizable.css.
   if (computedStyle.position === 'static') {
-    element.style.position = 'relative';
+    element.classList.add('x-resizable--positioned');
   }
 
   // Parse directions
@@ -50,40 +52,8 @@ export function resizable(element, options = {}) {
     handle.className = `x-resizable__handle x-resizable__handle--${dir}`;
     handle.dataset.direction = dir;
     
-    // Position and style handles
-    const styles = {
-      position: 'absolute',
-      zIndex: '10'
-    };
-
-    switch (dir) {
-      case 'n':
-        Object.assign(styles, { top: '-4px', left: '0', right: '0', height: '8px', cursor: 'n-resize' });
-        break;
-      case 's':
-        Object.assign(styles, { bottom: '-4px', left: '0', right: '0', height: '8px', cursor: 's-resize' });
-        break;
-      case 'e':
-        Object.assign(styles, { top: '0', right: '-4px', bottom: '0', width: '8px', cursor: 'e-resize' });
-        break;
-      case 'w':
-        Object.assign(styles, { top: '0', left: '-4px', bottom: '0', width: '8px', cursor: 'w-resize' });
-        break;
-      case 'ne':
-        Object.assign(styles, { top: '-4px', right: '-4px', width: '12px', height: '12px', cursor: 'ne-resize' });
-        break;
-      case 'nw':
-        Object.assign(styles, { top: '-4px', left: '-4px', width: '12px', height: '12px', cursor: 'nw-resize' });
-        break;
-      case 'se':
-        Object.assign(styles, { bottom: '-4px', right: '-4px', width: '12px', height: '12px', cursor: 'se-resize' });
-        break;
-      case 'sw':
-        Object.assign(styles, { bottom: '-4px', left: '-4px', width: '12px', height: '12px', cursor: 'sw-resize' });
-        break;
-    }
-
-    Object.assign(handle.style, styles);
+    // Placement and cursor per direction are resizable.css, keyed on the
+    // x-resizable__handle--{dir} modifier this handle already carries (#779).
     element.appendChild(handle);
     handles[dir] = handle;
   });
@@ -167,15 +137,16 @@ export function resizable(element, options = {}) {
     newWidth = Math.max(config.minWidth, Math.min(config.maxWidth, newWidth));
     newHeight = Math.max(config.minHeight, Math.min(config.maxHeight, newHeight));
     
-    // Apply changes
-    element.style.width = `${newWidth}px`;
-    element.style.height = `${newHeight}px`;
-    
+    // Apply changes -- measured sizes, so generated rules rather than
+    // element.style (#779). Each axis keeps its own slot so a later
+    // east-only resize does not drop an earlier west-side `left`.
+    setRule(element, 'size', { width: `${newWidth}px`, height: `${newHeight}px` });
+
     if (currentDir.includes('w')) {
-      element.style.left = `${startLeft + (startWidth - newWidth)}px`;
+      setRule(element, 'left', { left: `${startLeft + (startWidth - newWidth)}px` });
     }
     if (currentDir.includes('n')) {
-      element.style.top = `${startTop + (startHeight - newHeight)}px`;
+      setRule(element, 'top', { top: `${startTop + (startHeight - newHeight)}px` });
     }
     
     element.dispatchEvent(new CustomEvent('wb:resize:move', {
@@ -205,8 +176,10 @@ export function resizable(element, options = {}) {
   // Expose methods
   element.wbResizable = {
     setSize: (width, height) => {
-      element.style.width = `${Math.max(config.minWidth, Math.min(config.maxWidth, width))}px`;
-      element.style.height = `${Math.max(config.minHeight, Math.min(config.maxHeight, height))}px`;
+      setRule(element, 'size', {
+        width: `${Math.max(config.minWidth, Math.min(config.maxWidth, width))}px`,
+        height: `${Math.max(config.minHeight, Math.min(config.maxHeight, height))}px`,
+      });
     },
     getSize: () => ({ width: element.offsetWidth, height: element.offsetHeight })
   };
@@ -214,7 +187,8 @@ export function resizable(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('x-resizable', 'x-resizable--resizing');
+    element.classList.remove('x-resizable', 'x-resizable--resizing', 'x-resizable--positioned');
+    clearRules(element);
     element.removeEventListener('mousedown', onMouseDown);
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);

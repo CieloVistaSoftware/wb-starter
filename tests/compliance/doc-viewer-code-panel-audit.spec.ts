@@ -215,7 +215,9 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
           if (!wrapper) return false;
           const nums = Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[];
           if (nums.length !== lines.length) return false; // gutter still being built
-          return nums.every((n) => n.style.top !== ''); // every number actually positioned
+          // every number actually positioned -- pre.js marks each one it has
+          // measured; the top itself is a generated rule, not inline (#779)
+          return nums.every((n) => n.classList.contains('x-pre__line-number--placed'));
         });
       });
     },
@@ -262,7 +264,7 @@ function readPanels(page: import('@playwright/test').Page): Promise<PanelReport[
           ? (Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[])
           : [];
         const gaps: number[] = [];
-        const tops = gutterEls.map((el) => parseFloat(el.style.top || getComputedStyle(el).top) || 0);
+        const tops = gutterEls.map((el) => parseFloat(getComputedStyle(el).top) || 0);
         for (let i = 1; i < tops.length; i++) gaps.push(tops[i] - tops[i - 1]);
 
         const cs = getComputedStyle(panel);

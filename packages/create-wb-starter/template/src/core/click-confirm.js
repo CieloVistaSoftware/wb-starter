@@ -6,7 +6,7 @@
  *
  * A single delegated document-level listener, not per-element auto-inject
  * registration -- card CTAs render as real <button>/<a> elements inside
- * dozens of different x-card-family behaviors (card.js builds them
+ * dozens of different x-card-family components (card.js builds them
  * internally), so matching the resulting DOM shape at click time (a
  * button, or an element marked clickable) covers every card type without
  * enumerating each one by name.
@@ -20,7 +20,29 @@
 import { createToast } from '../wb-viewmodels/feedback.js';
 import { getConfig } from './config.js';
 
-const CLICKABLE_SELECTOR = 'button, x-button, x-switch, .x-card--clickable, [clickable]';
+const CLICKABLE_SELECTOR = [
+  'button',
+  '.x-card--clickable',
+  '[clickable]',
+  // #939 -- John: "user needs feedback on all button clicks on this page."
+  //
+  // Card CTAs are rendered as <a>, not <button>: cardhero builds
+  // `<a class="x-hero-cta" href="#">Shop Now</a>` and cardpricing builds
+  // `<a class="x-card__cta" href="#">Get Started</a>`. The selector only
+  // matched `button`, so those clicked and did nothing observable -- the
+  // demo CTA points at "#", so there is not even a navigation to see.
+  //
+  // Scoped to CTAs and to anchors that go nowhere. A real link
+  // (cardlink -> https://…, cardportfolio -> mailto:) navigates, and the
+  // navigation IS the feedback -- toasting it would be noise.
+  'a.x-hero-cta',
+  'a.x-card__cta',
+  'a[href="#"]',
+  'a:not([href])',
+].join(', ');
+// `x-button, x-switch` were dropped: TAG selectors for custom elements that
+// cannot exist since 4.0.0 (#919, #921, #925). They matched nothing, so the
+// two behaviors they were meant to cover were relying on `button` anyway.
 
 // John: "make the toast message same as variant" -- every click-confirm
 // toast used a flat, always-blue 'info' style regardless of what was
@@ -53,6 +75,12 @@ function labelFor(el) {
   // CHILD rather than a sibling (a x-demo "Docs:" badge, in the confirmed
   // live case) -- el.textContent would fold that in too ("×📖" instead of
   // "×"). Strip known overlay/badge children before reading text.
+  // #788 -- John: the toast should say WHICH element was clicked. #755 made
+  // the Events panel print the id alone for the same reason: every element in
+  // the stage carries a stable id (#675), so the id identifies the source
+  // exactly, and the text of a card is a paragraph, not a label.
+  if (el.id) return el.id;
+
   const clone = el.cloneNode(true);
   clone.querySelectorAll('.x-demo__card-doc-link, .x-demo__links').forEach((n) => n.remove());
   const text = (clone.textContent || '').trim().replace(/\s+/g, ' ');
@@ -82,7 +110,7 @@ if (typeof document !== 'undefined') {
     // meaningful for.
     if (target.closest('.x-demo__links, .x-demo__card-doc-link, x-themecontrol')) return;
 
-    // Most x-card-family behaviors (cardbutton, cardproduct, cardfile,
+    // Most x-card-family components (cardbutton, cardproduct, cardfile,
     // cardexpandable, cardminimizable, a plain clickable card, ...) already
     // call createToast() directly inside their own click handling
     // (card.js) -- NOT via the x-toast attribute, so the check above never
@@ -97,7 +125,7 @@ if (typeof document !== 'undefined') {
     // synchronous, so a toast it just created already exists in the DOM
     // RIGHT NOW too. Defer one tick (setTimeout 0) and re-check: if the
     // toast count grew since this click started, something else already
-    // confirmed it -- skip, rather than maintain a brittle per-behavior
+    // confirmed it -- skip, rather than maintain a brittle per-component
     // exclusion list that has to be updated every time a new card variant
     // adds its own toast.
     const toastCountBefore = document.querySelectorAll('.x-toast').length;

@@ -1,4 +1,5 @@
 import { readFlag, readAttr } from '../../core/read-attr.js';
+import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
 /**
  * UL - Enhanced <ul> element (Unordered List)
  * Adds styling variants, custom markers, spacing
@@ -23,66 +24,47 @@ export function ul(element, options = {}) {
   // Apply variant
   element.classList.add(`x-ul--${config.variant}`);
 
-  // Base list styling
-  element.style.listStyleType = config.marker;
-  element.style.paddingLeft = config.indentSize;
+  // #779: marker, indent, item gap and the checklist / icon-list / none
+  // variants are .x-ul* rules in lists.css; the author's marker / indent /
+  // gap travel as a generated rule (only when they differ from the defaults,
+  // and never for the three variants that replace the marker and indent).
+  const ownsMarker = ['checklist', 'icon-list', 'none'].includes(config.variant);
+  setRule(element, 'list', onlyChanged({
+    listStyleType: ownsMarker ? '' : config.marker,
+    paddingLeft: ownsMarker ? '' : config.indentSize,
+    '--x-ul-gap': config.gap,
+  }, { listStyleType: 'disc', paddingLeft: '1.5rem', '--x-ul-gap': '0.5rem' }));
 
-  // Apply gap between items
+  // Gap between items: every item but the last (lists.css).
   const items = element.querySelectorAll(':scope > li');
   items.forEach((li, index) => {
     li.classList.add('x-ul__item');
-    if (index < items.length - 1) {
-      li.style.marginBottom = config.gap;
-    }
+    if (index < items.length - 1) li.classList.add('x-ul__item--spaced');
   });
 
-  // Variant-specific styling
+  // Variant-specific markup
   if (config.variant === 'checklist') {
-    element.style.listStyleType = 'none';
-    element.style.paddingLeft = '0';
-
     items.forEach(li => {
-      li.style.display = 'flex';
-      li.style.alignItems = 'start';
-      li.style.gap = '0.5rem';
-
+      const checked = readFlag(li, 'checked');
       const checkbox = document.createElement('span');
-      checkbox.className = 'x-ul__checkbox';
-      checkbox.textContent = readFlag(li, 'checked') ? '✓' : '○';
-      checkbox.style.color = readFlag(li, 'checked')
-        ? 'var(--success, #22c55e)'
-        : 'var(--text-secondary, #9ca3af)';
-      checkbox.style.fontWeight = '700';
-      checkbox.style.minWidth = '1rem';
-
+      checkbox.className = `x-ul__checkbox${checked ? ' x-ul__checkbox--checked' : ''}`;
+      checkbox.textContent = checked ? '✓' : '○';
       li.insertBefore(checkbox, li.firstChild);
     });
   } else if (config.variant === 'icon-list') {
-    element.style.listStyleType = 'none';
-    element.style.paddingLeft = '0';
-
     items.forEach(li => {
-      li.style.display = 'flex';
-      li.style.alignItems = 'start';
-      li.style.gap = '0.5rem';
-
       const icon = document.createElement('span');
       icon.className = 'x-ul__icon';
       icon.textContent = readAttr(li, 'icon') || '▸';
-      icon.style.color = 'var(--primary, #6366f1)';
-      icon.style.minWidth = '1rem';
-
       li.insertBefore(icon, li.firstChild);
     });
-  } else if (config.variant === 'none') {
-    element.style.listStyleType = 'none';
-    element.style.paddingLeft = '0';
   }
 
   return () => {
+    clearRules(element);
     element.classList.remove('x-ul', `x-ul--${config.variant}`);
     items.forEach(li => {
-      li.classList.remove('x-ul__item');
+      li.classList.remove('x-ul__item', 'x-ul__item--spaced');
       li.querySelector('.x-ul__checkbox')?.remove();
       li.querySelector('.x-ul__icon')?.remove();
     });

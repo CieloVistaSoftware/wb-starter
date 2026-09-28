@@ -1,3 +1,4 @@
+import { setRule } from './dynamic-style.js';
 /**
  * WB Theme - Theme management
  */
@@ -10,7 +11,7 @@ export const Theme = {
       document.documentElement.dataset.theme = theme;
       localStorage.setItem('x-theme', theme);
 
-      // Ensure critical CSS custom-property aliases exist so tests and behaviors relying on
+      // Ensure critical CSS custom-property aliases exist so tests and components relying on
       // shorthand tokens (--text-primary, --primary, --accent, etc.) never observe an empty value.
       try {
         const cs = getComputedStyle(document.documentElement);
@@ -21,12 +22,14 @@ export const Theme = {
           '--secondary': cs.getPropertyValue('--color-secondary') || '#6366f1',
           '--accent': cs.getPropertyValue('--color-secondary') || '#6366f1'
         };
+        // Only the tokens the page left undefined; they reach :root through
+        // a generated rule, not <html>'s style attribute (#779).
+        const missing = {};
         for (const [k, v] of Object.entries(fallbacks)) {
           const cur = cs.getPropertyValue(k).trim();
-          if (!cur) {
-            document.documentElement.style.setProperty(k, v);
-          }
+          if (!cur) missing[k] = v;
         }
+        if (Object.keys(missing).length) setRule(document.documentElement, 'theme-fallbacks', missing);
       } catch (err) {
         // best-effort; do not throw in production
         console.warn('[Theme] failed to apply fallbacks', err && err.message);

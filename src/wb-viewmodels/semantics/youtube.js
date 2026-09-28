@@ -1,3 +1,4 @@
+import { setRule } from '../../core/dynamic-style.js';
 /**
  * YouTube - YouTube embed
  * Custom Tag: <div x-youtube>
@@ -85,13 +86,8 @@ export function youtube(element, options = {}) {
     return;
   }
 
+  // The host's frame (16:9, black, rounded) is .x-youtube in embed.css (#779).
   element.classList.add('x-youtube');
-  element.style.position = 'relative';
-  element.style.aspectRatio = '16/9';
-  element.style.width = '100%';
-  element.style.background = '#000';
-  element.style.borderRadius = '8px';
-  element.style.overflow = 'hidden';
 
   // Builds and inserts the real iframe (called either immediately, for
   // autoplay="", or on click of the poster below).
@@ -111,7 +107,7 @@ export function youtube(element, options = {}) {
     iframe.src = `https://www.youtube.com/embed/${config.id}?${params}`;
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
-    iframe.style.cssText = 'width:100%;height:100%;border:none;';
+    // Sized by `.x-youtube > iframe` in embed.css (#779).
 
     // The embedded player never broadcasts infoDelivery/onStateChange messages
     // until it's received a "listening" handshake from the parent — enablejsapi=1
@@ -150,11 +146,11 @@ export function youtube(element, options = {}) {
     poster.type = 'button';
     poster.className = 'x-youtube__poster';
     poster.setAttribute('aria-label', 'Play video');
-    poster.style.cssText = 'all:unset;position:absolute;inset:0;cursor:pointer;display:flex;' +
-      `align-items:center;justify-content:center;background:center/cover no-repeat url(https://img.youtube.com/vi/${config.id}/hqdefault.jpg);`;
+    // Look in embed.css (#779); the thumbnail depends on the video id, so it
+    // is a generated rule's custom property rather than a style attribute.
+    setRule(poster, 'thumb', { '--x-youtube-poster': `url(https://img.youtube.com/vi/${config.id}/hqdefault.jpg)` });
     poster.innerHTML =
-      '<div style="width:68px;height:48px;background:hsl(0 0% 0% / 0.8);border-radius:14px;' +
-      'display:flex;align-items:center;justify-content:center;">' +
+      '<div class="x-youtube__play">' +
       '<svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>';
     poster.addEventListener('click', () => embedNow(true));
     element.innerHTML = '';

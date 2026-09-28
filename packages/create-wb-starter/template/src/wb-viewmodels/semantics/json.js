@@ -24,29 +24,16 @@ export function json(element, options = {}) {
       hljs.highlightElement(codeEl);
     }
     
-    // Style
-    Object.assign(element.style, {
-      display: 'block',
-      background: 'var(--bg-code, #1e1e1e)',
-      padding: '1rem',
-      borderRadius: '6px',
-      overflow: 'auto',
-      fontFamily: 'monospace',
-      fontSize: '0.875rem'
-    });
-    
-    Object.assign(codeEl.style, {
-      background: 'transparent',
-      padding: '0'
-    });
+    // The panel look is .x-json in json.css (#779: it was written onto the
+    // host's and the <code>'s style attributes).
 
   } catch (e) {
     console.error('[WB JSON] Invalid JSON', e);
     element.textContent = 'Invalid JSON';
-    element.style.color = 'var(--error, #ef4444)';
+    element.classList.add('x-json--invalid');
   }
 
-  return () => element.classList.remove('x-json');
+  return () => element.classList.remove('x-json', 'x-json--invalid');
 }
 
 export default json;

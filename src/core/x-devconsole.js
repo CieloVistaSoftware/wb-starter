@@ -41,7 +41,12 @@
   });
 
   var style = document.createElement('style');
-  style.textContent = '#wbdc-fab{position:fixed;bottom:1.25rem;right:1.25rem;width:42px;height:42px;border-radius:50%;background:#238636;border:none;color:#fff;font-size:1.1rem;cursor:pointer;z-index:99998;box-shadow:0 4px 14px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;transition:transform .15s}#wbdc-fab:hover{transform:scale(1.1)}#wbdc-panel{position:fixed;bottom:1.25rem;right:1.25rem;width:740px;max-width:calc(100vw - 2rem);height:460px;display:none;flex-direction:column;background:#0d1117;border:1px solid #30363d;border-radius:10px;box-shadow:0 24px 64px rgba(0,0,0,.8);z-index:99999;font-family:monospace;font-size:.78rem;overflow:hidden;resize:both}#wbdc-panel.open{display:flex}#wbdc-bar{display:flex;align-items:center;gap:.4rem;padding:.4rem .75rem;background:#161b22;border-bottom:1px solid #30363d;cursor:move;user-select:none;flex-shrink:0}#wbdc-bar-label{flex:1;font-size:.65rem;font-weight:700;color:#8b949e;text-transform:uppercase;letter-spacing:.08em}.wbdc-btn{padding:.2rem .55rem;border:1px solid #30363d;border-radius:4px;background:#21262d;color:#c9d1d9;font-family:inherit;font-size:.7rem;cursor:pointer;line-height:1.4}.wbdc-btn:hover{background:#30363d}.wbdc-run{background:#238636;border-color:#2ea043;color:#fff}.wbdc-run:hover{background:#2ea043}.wbdc-cls:hover{background:#da3633;border-color:#da3633;color:#fff}.wbdc-copied{background:#1f6feb!important;border-color:#388bfd!important;color:#fff!important}#wbdc-body{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden}#wbdc-editor{border:none;border-right:1px solid #30363d;outline:none;resize:none;background:#0d1117;color:#e6edf3;padding:.75rem;font-family:inherit;font-size:.78rem;line-height:1.7;tab-size:2;white-space:pre;overflow:auto}#wbdc-editor::placeholder{color:#484f58}#wbdc-output{background:#0d1117;overflow-y:auto;padding:.5rem .75rem}.wbdc-line{display:flex;gap:.4rem;padding:.15rem 0;border-bottom:1px solid rgba(255,255,255,.03);word-break:break-all;line-height:1.5}.wbdc-log{color:#e6edf3}.wbdc-info{color:#58a6ff}.wbdc-warn{color:#d29922}.wbdc-error{color:#f85149}.wbdc-result{color:#3fb950}.wbdc-icon{flex-shrink:0;width:1rem;opacity:.5}.wbdc-empty{color:#484f58;padding:.25rem 0}';
+  style.textContent = '#wbdc-fab{position:fixed;bottom:1.25rem;right:1.25rem;width:42px;height:42px;border-radius:50%;background:#238636;border:none;color:#fff;font-size:1.1rem;cursor:pointer;z-index:99998;box-shadow:0 4px 14px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;transition:transform .15s}#wbdc-fab:hover{transform:scale(1.1)}#wbdc-panel{position:fixed;bottom:1.25rem;right:1.25rem;width:740px;max-width:calc(100vw - 2rem);height:460px;display:none;flex-direction:column;background:#0d1117;border:1px solid #30363d;border-radius:10px;box-shadow:0 24px 64px rgba(0,0,0,.8);z-index:99999;font-family:monospace;font-size:.78rem;overflow:hidden;resize:both}#wbdc-panel.open{display:flex}#wbdc-bar{display:flex;align-items:center;gap:.4rem;padding:.4rem .75rem;background:#161b22;border-bottom:1px solid #30363d;cursor:move;user-select:none;flex-shrink:0}#wbdc-bar-label{flex:1;font-size:.65rem;font-weight:700;color:#8b949e;text-transform:uppercase;letter-spacing:.08em}.wbdc-btn{padding:.2rem .55rem;border:1px solid #30363d;border-radius:4px;background:#21262d;color:#c9d1d9;font-family:inherit;font-size:.7rem;cursor:pointer;line-height:1.4}.wbdc-btn:hover{background:#30363d}.wbdc-run{background:#238636;border-color:#2ea043;color:#fff}.wbdc-run:hover{background:#2ea043}.wbdc-cls:hover{background:#da3633;border-color:#da3633;color:#fff}.wbdc-copied{background:#1f6feb!important;border-color:#388bfd!important;color:#fff!important}#wbdc-body{display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden}#wbdc-editor{border:none;border-right:1px solid #30363d;outline:none;resize:none;background:#0d1117;color:#e6edf3;padding:.75rem;font-family:inherit;font-size:.78rem;line-height:1.7;tab-size:2;white-space:pre;overflow:auto}#wbdc-editor::placeholder{color:#484f58}#wbdc-output{background:#0d1117;overflow-y:auto;padding:.5rem .75rem}.wbdc-line{display:flex;gap:.4rem;padding:.15rem 0;border-bottom:1px solid rgba(255,255,255,.03);word-break:break-all;line-height:1.5}.wbdc-log{color:#e6edf3}.wbdc-info{color:#58a6ff}.wbdc-warn{color:#d29922}.wbdc-error{color:#f85149}.wbdc-result{color:#3fb950}.wbdc-icon{flex-shrink:0;width:1rem;opacity:.5}.wbdc-empty{color:#484f58;padding:.25rem 0}'
+    // #779: the states below used to be written onto element.style.
+    + '#wbdc-fab.wbdc-fab--hidden{display:none}'
+    + '.wbdc-copybuf{position:fixed;top:-9999px;left:-9999px;opacity:0}'
+    + '.wbdc-toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#238636;color:#fff;padding:.4rem 1rem;border-radius:6px;font-family:monospace;font-size:.78rem;z-index:999999;pointer-events:none;transition:opacity .4s}'
+    + '.wbdc-toast--fading{opacity:0}';
   document.head.appendChild(style);
 
   // FAB button
@@ -124,10 +129,10 @@
     var isOpen = panel.classList.contains('open');
     if (isOpen) {
       panel.classList.remove('open');
-      fab.style.display = 'flex';
+      fab.classList.remove('wbdc-fab--hidden');
     } else {
       panel.classList.add('open');
-      fab.style.display = 'none';
+      fab.classList.add('wbdc-fab--hidden');
       editor.focus();
     }
   }
@@ -168,7 +173,7 @@
   function fallback(text) {
     var ta = document.createElement('textarea');
     ta.value = text;
-    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    ta.className = 'wbdc-copybuf';
     document.body.appendChild(ta);
     ta.focus(); ta.select();
     try { document.execCommand('copy'); flashCopy(); } catch(e) {}
@@ -178,9 +183,9 @@
   function flashCopy() {
     var toast = document.createElement('div');
     toast.textContent = '\u2713 Output Copied';
-    toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#238636;color:#fff;padding:.4rem 1rem;border-radius:6px;font-family:monospace;font-size:.78rem;z-index:999999;pointer-events:none;transition:opacity .4s';
+    toast.className = 'wbdc-toast';
     document.body.appendChild(toast);
-    setTimeout(function() { toast.style.opacity = '0'; }, 1200);
+    setTimeout(function() { toast.classList.add('wbdc-toast--fading'); }, 1200);
     setTimeout(function() { document.body.removeChild(toast); }, 1600);
   }
 
@@ -232,7 +237,7 @@
     if (sessionStorage.getItem('wbdc_open')) {
       sessionStorage.removeItem('wbdc_open');
       panel.classList.add('open');
-      fab.style.display = 'none';
+      fab.classList.add('wbdc-fab--hidden');
       addLine('info', 'i', ['[Console] Page refreshed — watching for errors...']);
     }
   } catch(e) {}
@@ -284,17 +289,28 @@
     if ((e.ctrlKey || e.metaKey) && e.key === '`') { e.preventDefault(); toggle(); }
   });
 
-  // Draggable
+  // Draggable. The dragged-to position is a generated stylesheet rule, not
+  // the panel's style attribute (#779). This file is a classic script that
+  // any page can inject, so it cannot import src/core/dynamic-style.js; one
+  // <style> whose single rule is rewritten per move does the same job.
   var drag = false, ox = 0, oy = 0;
+  var posStyle = document.createElement('style');
+  document.head.appendChild(posStyle);
+  function placePanel(left, top) {
+    posStyle.textContent = '#wbdc-panel{right:auto;bottom:auto' +
+      (left === null ? '' : ';left:' + left + 'px;top:' + top + 'px') + '}';
+  }
   bar.addEventListener('mousedown', function(e) {
     if (e.target.tagName === 'BUTTON') return;
     drag = true;
     var r = panel.getBoundingClientRect();
     ox = e.clientX - r.left; oy = e.clientY - r.top;
-    panel.style.right = 'auto'; panel.style.bottom = 'auto';
+    // right/bottom released before the first move, as before; left/top stay
+    // as they were until the pointer actually moves.
+    if (!posStyle.textContent) placePanel(null, null);
   });
   document.addEventListener('mousemove', function(e) {
-    if (drag) { panel.style.left = (e.clientX - ox) + 'px'; panel.style.top = (e.clientY - oy) + 'px'; }
+    if (drag) placePanel(e.clientX - ox, e.clientY - oy);
   });
   document.addEventListener('mouseup', function() { drag = false; });
 

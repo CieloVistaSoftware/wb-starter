@@ -9,7 +9,9 @@
 .x-gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.3rem;
+  /* 1rem: the gap gallery.js always wrote inline, which is what rendered --
+     0.3rem here never reached the page (#779). */
+  gap: 1rem;
 }
 
 .x-gallery img {

@@ -45,3 +45,48 @@
       gap: 0.5rem !important;
     }
   }
+
+/* ── Link rows (#779) ──────────────────────────────────────────────────────
+   renderLinks() used to write these onto each row with item.style.* and
+   style="..." attributes. Scoped under .links-list so site.css's
+   `.page h3/p/a` (0-1-1) type rules do not out-rank them. */
+
+.links-list .links-item {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.links-item .links-item__body { flex: 1; }
+
+.links-item .links-item__title { margin: 0 0 0.5rem 0; }
+
+.links-item .links-item__title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.links-item .links-item__desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.links-item .links-item__url {
+  font-size: 0.8rem;
+  color: var(--primary);
+  text-decoration: none;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.links-item .links-item__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.links-item .links-item__action { padding: 0.5rem; }
+
+.links-item .links-item__action--delete { color: var(--danger-color, #ef4444); }

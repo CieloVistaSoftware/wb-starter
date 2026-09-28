@@ -1,7 +1,7 @@
 /**
  * Button Behavior Styles
  * -----------------------------------------------------------------------------
- * Extracted from behaviors.css (Post-Phase 3 cleanup)
+ * Extracted from components.css (Post-Phase 3 cleanup)
  * Works with src/wb-viewmodels/semantics/button.js
  * -----------------------------------------------------------------------------
  */
@@ -28,7 +28,12 @@ button-tooltip:focus-visible {
   outline-offset: 2px;
 }
 
+/* #773: [disabled] as well as :disabled. :disabled only matches a real form
+   control, so <div x-button disabled> -- the attribute form the showcase
+   renders -- was blocked by button.js yet looked exactly like an enabled
+   button. Presence alone, exactly as button.js decides it blocks a click. */
 .x-button:disabled,
+.x-button[disabled],
 button-tooltip[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
@@ -136,6 +141,29 @@ button-tooltip[disabled] {
   border-color: var(--text-secondary);
 }
 
+/* #875: `outline` is in button.schema.json's variant enum and was the only one
+   of the eight with NO rule at all, so it silently fell back to the default
+   surface -- measured `background: rgb(41,48,61)`, i.e. a normal button wearing
+   a name that promises a border.
+
+   Distinct from `ghost`, which is the neutral transparent one: outline is the
+   ACCENTED transparent one, so it carries the primary colour on both the border
+   and the label. That is the difference the two names are for.
+
+   Compound `.x-button.x-button--outline` (0,2,0) to match every other variant
+   here -- themes.css's `[data-theme] button` reset (0,1,1) otherwise wins the
+   specificity tie-break against a single class. */
+.x-button.x-button--outline {
+  background-color: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.x-button.x-button--outline:hover {
+  background-color: var(--primary);
+  color: var(--text-on-accent, #fff);
+  border-color: var(--primary);
+}
+
 .x-button.x-button--link {
   background-color: transparent;
   color: var(--primary);
@@ -169,9 +197,9 @@ button-tooltip[disabled] {
 /* Defensive base rule (audit, #button-audit-bare-wb-btn) — an element with ONLY
    `class="x-btn"` and no `.x-btn--*` modifier previously got ZERO styling from
    this file: every rule below is a compound `.x-btn.x-btn--*` selector, so a
-   bare `.x-btn` rendered invisible (confirmed live on <dialog class="x-btn">
+   bare `.x-btn` rendered invisible (confirmed live on <div x-modal class="x-btn">
    and <div x-drawer class="x-btn"> trigger elements in pages/behaviors.html and
-   pages/behaviors.html — neither is a <button> or <button>, so button.js's
+   pages/components.html — neither is a <button> or <button>, so button.js's
    variant/size attribute wiring never touches them; and every `.x-btn` on a
    native <button> paired with an x-* behavior (x-toast, x-drawer, x-confirm,
    x-prompt, x-lightbox, x-popover, x-copy, x-share, x-print, x-fullscreen,

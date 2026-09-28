@@ -816,7 +816,9 @@ function bindSchemaMethodsToElement(element, schema, data) {
     // Common methods - behaviors can override these
     show() {
       element.hidden = false;
-      element.style.display = '';
+      // Clears a display the page may still have authored inline; nothing in
+      // the framework writes one any more (#779), so this only removes.
+      element.style.removeProperty('display');
       element.dispatchEvent(new CustomEvent('wb:show', { bubbles: true }));
     },
     

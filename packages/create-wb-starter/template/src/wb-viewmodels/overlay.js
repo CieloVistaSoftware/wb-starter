@@ -1,4 +1,5 @@
-import { readAttr } from '../core/read-attr.js';
+import { readAttr, readFlag } from '../core/read-attr.js';
+import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
 /**
  * Overlay Behaviors
  * -----------------------------------------------------------------------------
@@ -15,37 +16,13 @@ import { readAttr } from '../core/read-attr.js';
  * All overlays show visual feedback when their trigger is clicked
  */
 
-// Shared overlay styles
-const OVERLAY_STYLES = `
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  animation: x-fade-in 0.2s ease;
-`;
-
-const DIALOG_STYLES = `
-  background: var(--bg-primary, #1f2937);
-  border-radius: 12px;
-  padding: 1.5rem;
-  min-width: 300px;
-  max-width: 90vw;
-  max-height: 80vh;
-  overflow: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  color: var(--text-primary, #f9fafb);
-  border: 1px solid var(--border-color, #374151);
-`;
+// #779: the backdrop/dialog declarations confirm() and prompt() shared used to
+// live here as cssText strings; they are .x-overlay-dialog and
+// .x-overlay-dialog__box in src/styles/behaviors/overlays.css now.
 
 /**
  * Popover - Click-triggered popup
- * Custom Tag: <div x-popover>
+ * Custom Tag: <div>
  */
 export function popover(element, options = {}) {
   const config = {
@@ -76,24 +53,14 @@ export function popover(element, options = {}) {
   const show = () => {
     if (popoverEl) return;
     popoverEl = document.createElement('div');
-    popoverEl.className = `x-popover x-popover--${config.position}`;
+    // x-popover--floating: popover.css's fixed, themed panel (#779 -- was
+    // a style.cssText block here).
+    popoverEl.className = `x-popover x-popover--floating x-popover--${config.position}`;
     popoverEl.id = popoverId;
     popoverEl.setAttribute('role', 'dialog');
     popoverEl.setAttribute('aria-label', config.title || config.content);
-    popoverEl.style.cssText = `
-      position: fixed;
-      background: var(--bg-primary, #1f2937);
-      border: 1px solid var(--border-color, #374151);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-      z-index: 10000;
-      animation: x-fade-in 0.15s ease;
-      color: var(--text-primary, #f9fafb);
-      max-width: 300px;
-    `;
     popoverEl.innerHTML = `
-      ${config.title ? `<div style="font-weight:600;margin-bottom:0.5rem;color:var(--primary,#6366f1);">${config.title}</div>` : ''}
+      ${config.title ? `<div class="x-popover__title">${config.title}</div>` : ''}
       <div>${config.content}</div>
     `;
     document.body.appendChild(popoverEl);
@@ -104,6 +71,7 @@ export function popover(element, options = {}) {
 
   const hide = () => {
     if (popoverEl) {
+      clearRules(popoverEl);
       popoverEl.remove();
       popoverEl = null;
       element.setAttribute('aria-expanded', 'false');
@@ -164,15 +132,72 @@ function positionPopover(trigger, popover, position) {
   const vh = document.documentElement.clientHeight;
   const maxW = vw - margin * 2;
   if (popRect.width > maxW) {
-    popover.style.maxWidth = `${maxW}px`;
+    // Weight 2: outranks popover.css's own max-width on
+    // .x-popover.x-popover--floating (0,2,0). A measured value, so a
+    // generated rule rather than the style attribute (#779).
+    setRule(popover, 'max-width', { maxWidth: `${maxW}px` }, { weight: 2 });
     popRect = popover.getBoundingClientRect();
   }
   left = Math.max(margin, Math.min(left, vw - popRect.width - margin));
   top = Math.max(margin, Math.min(top, vh - popRect.height - margin));
 
-  popover.style.position = 'fixed';
-  popover.style.top = `${top}px`;
-  popover.style.left = `${left}px`;
+  // position:fixed is the --floating class's; only the computed spot is
+  // runtime (#779).
+  setRule(popover, 'position', { top: `${top}px`, left: `${left}px` });
+}
+
+/**
+ * variant="push": translate the page's content aside by the panel's measured
+ * size instead of dimming it. Returns what was pushed, for releasePushedPage().
+ *
+ * The target is the page's `body > .page` wrapper when it has one. Pages
+ * without that wrapper (demos/site/*.html render straight into
+ * <body class="demo-page">) used to get NO push at all -- the lookup came
+ * back null and the variant silently behaved like a backdrop-less overlay.
+ * There, every in-flow child of body is pushed instead. Never body or html
+ * themselves: the panel is a position:fixed child of body, and a transform on
+ * an ancestor becomes the containing block for fixed descendants, so the panel
+ * would ride along with the page it is meant to push. Siblings are safe.
+ */
+function pushPageAside(panel, position, overlayParts) {
+  const wrapper = document.querySelector('body > .page');
+  const targets = wrapper
+    ? [wrapper]
+    : Array.from(document.body.children).filter((el) =>
+        !overlayParts.includes(el) &&
+        !/^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(el.tagName) &&
+        getComputedStyle(el).position !== 'fixed');
+  const vertical = position === 'top' || position === 'bottom';
+  const rect = panel.getBoundingClientRect();
+  const amount = vertical ? rect.height : rect.width;
+  const sign = (position === 'right' || position === 'bottom') ? -1 : 1;
+  for (const el of targets) {
+    // A measured amount, so a generated rule rather than a custom property
+    // on the element's style attribute (#779).
+    setRule(el, 'drawer-push', { [vertical ? '--x-drawer-push-y' : '--x-drawer-push-x']: `${sign * amount}px` });
+    el.classList.add('x-drawer-push-target', 'x-drawer-push-target--open');
+  }
+  return targets;
+}
+
+function releasePushedPage(targets) {
+  for (const el of targets) {
+    el.classList.remove('x-drawer-push-target--open');
+    setRule(el, 'drawer-push', null);
+  }
+}
+
+/**
+ * The drawer's size custom property: height for a top/bottom edge, width for
+ * left/right -- whichever the author set away from drawer.css's own default
+ * (its var() fallbacks are 320px and auto), so a default is never pinned in a
+ * generated rule (#779).
+ */
+function drawerSize(config) {
+  const vertical = config.position === 'top' || config.position === 'bottom';
+  return vertical
+    ? onlyChanged({ '--x-drawer-height': config.height }, { '--x-drawer-height': 'auto' })
+    : onlyChanged({ '--x-drawer-width': config.width }, { '--x-drawer-width': '320px' });
 }
 
 /**
@@ -219,13 +244,24 @@ export function drawer(element, options = {}) {
   // PATH B never touches `element` at all, it only appends its own
   // drawerEl/backdropEl to document.body) -- confirmed by reading both
   // branches below, so it's safe to read once, up front.
-  const originalText = (element.textContent || '').trim();
+  //
+  // Except when the schema has ALREADY run: then the host's textContent is
+  // the schema-built panel's own text (title + close glyph + the schema's
+  // "this is the content" default), not anything the author wrote. The
+  // pre-wipe authored content is what schema-builder.js stashed on
+  // _wbOriginalSlot, so read that instead -- otherwise PATH A's content
+  // fallback below is the panel describing itself.
+  const originalText = schemaProcessed && element._wbOriginalSlot !== undefined
+    ? String(element._wbOriginalSlot).trim()
+    : (element.textContent || '').trim();
+
+  const authoredContent = options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || originalText;
 
   const config = {
     // Plain title/content match drawer.schema.json's actual property names.
     // drawer-title/drawer-content stay as a fallback for the legacy
     // [x-drawer] attribute usage (plain <button x-drawer drawer-title="…">,
-    // e.g. pages/behaviors.html) which predates the schema and never used
+    // e.g. pages/components.html) which predates the schema and never used
     // the schema's naming.
     //
     // No more hardcoded 'Drawer'/'Drawer content' placeholders (#overlays.html
@@ -241,7 +277,7 @@ export function drawer(element, options = {}) {
     // text before falling back to the old hardcoded string, so a bare-text
     // demo shows its own words instead of a generic placeholder.
     title: options.title || element.getAttribute('title') || element.getAttribute('drawer-title') || element.getAttribute('heading') || '',
-    content: options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || originalText || 'Drawer content',
+    content: authoredContent || 'Drawer content',
     position: options.position || element.getAttribute('position') || 'right',
     width: options.width || element.getAttribute('width') || '320px',
     // height backs top/bottom positions (drawer.schema.json's `height`
@@ -254,8 +290,18 @@ export function drawer(element, options = {}) {
     // variants are all the same?" because nothing ever looked at the
     // attribute. Default matches the schema's own `"default": "overlay"`.
     variant: options.variant || element.getAttribute('variant') || 'overlay',
+    // Declared in drawer.schema.json / docs/behaviors/drawer.md (all default
+    // true) and read by nothing until now. readFlag: `show-close="false"`
+    // must mean off, not "present, so on" (#747).
+    closeOnBackdrop: options.closeOnBackdrop ?? readFlag(element, 'close-on-backdrop', true),
+    closeOnEscape: options.closeOnEscape ?? readFlag(element, 'close-on-escape', true),
+    showClose: options.showClose ?? readFlag(element, 'show-close', true),
     ...options
   };
+  // Read once for both paths: PATH A (schema-built panel) and PATH B (built
+  // here) each decide backdrop-vs-push from it, and config never changes after
+  // this point, so two copies could only ever drift.
+  const isPush = config.variant === 'push';
 
   element.classList.add('x-drawer-trigger');
   // #448: no classList.add('x-drawer') here -- it just duplicated this
@@ -264,6 +310,12 @@ export function drawer(element, options = {}) {
   // pattern). No CSS selector depends on the bare class -- layout.css's
   // visibility rule already selects the x-drawer TAG plus the OTHER real
   // classes here (x-drawer.x-drawer-trigger, x-drawer.x-drawer-layout).
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-drawer> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-drawer> tag does not get a redundant class.
+  element.classList.add('x-drawer');
 
   // ═══════════════════════════════════════════════════════
   // PATH A: Schema already built the panel/backdrop — enhance, don't rebuild
@@ -291,33 +343,73 @@ export function drawer(element, options = {}) {
       }
 
       builtPanel.classList.add(`x-drawer--${config.position}`);
+      // variant and width/height were PATH B-only: the schema build is the path
+      // every page takes now (wb-lazy.js builds schemas for attribute hosts
+      // since #884), so on demos/site/overlays.html all three variants opened
+      // identically and `width="400px"` was ignored. Same classes and $cssAPI
+      // custom properties PATH B applies, so drawer.css styles both alike.
+      builtPanel.classList.add(`x-drawer--${config.variant}`);
+      // Through a generated rule, not the style attribute (#779); only a
+      // non-default size travels, drawer.css's var() fallbacks carry the rest.
+      setRule(builtPanel, 'size', drawerSize(config));
+
+      // The schema fills title/body from attributes (and their registered
+      // synonyms, attribute-aliases.js) or, failing those, from its own
+      // "this is the title"/"this is the content" defaults. It never sees the
+      // host's own text on the wb.js runtime, which has no keepAuthoredText
+      // step, so a bare `<aside x-drawer>position=left</aside>` opened on the
+      // placeholder body there. Write what the author actually supplied (an
+      // option passed to drawer() included) over the schema's output; an
+      // empty invocation keeps the schema's self-describing defaults.
+      if (config.title) {
+        let builtTitle = builtPanel.querySelector('.x-drawer__title');
+        if (!builtTitle) {
+          const header = builtPanel.querySelector('.x-drawer__header');
+          if (header) {
+            builtTitle = document.createElement('h2');
+            builtTitle.className = 'x-drawer__title';
+            header.insertBefore(builtTitle, header.firstChild);
+          }
+        }
+        if (builtTitle) builtTitle.textContent = config.title;
+      }
+      const builtBody = builtPanel.querySelector('.x-drawer__body');
+      if (builtBody && authoredContent) {
+        builtBody.innerHTML = config.content;
+      }
 
       // $view's "close" part has no default content (drawer.schema.json
       // never gives it a label) -- give it one only if still empty, so an
       // author-supplied close label (via a future schema change) isn't
       // clobbered.
-      const closeBtn = builtPanel.querySelector('.x-drawer__close');
-      if (closeBtn && !closeBtn.textContent.trim()) closeBtn.innerHTML = '&times;';
+      const builtCloseBtn = builtPanel.querySelector('.x-drawer__close');
+      if (builtCloseBtn && !builtCloseBtn.textContent.trim()) builtCloseBtn.innerHTML = '&times;';
+      if (builtCloseBtn && !config.showClose) builtCloseBtn.hidden = true;
 
+      let pushed = null;
       const isOpen = () => builtPanel.classList.contains('x-drawer__panel--open');
       const show = () => {
         builtPanel.classList.add('x-drawer__panel--open');
-        if (builtBackdrop) builtBackdrop.classList.add('x-drawer__backdrop--open');
+        // push has no dimming backdrop -- see PATH B's show() for the pattern.
+        if (builtBackdrop && !isPush) builtBackdrop.classList.add('x-drawer__backdrop--open');
+        if (isPush) pushed = pushPageAside(builtPanel, config.position, [builtPanel, builtBackdrop]);
         document.body.classList.add('x-scroll-lock');
       };
       const hide = () => {
         builtPanel.classList.remove('x-drawer__panel--open');
         if (builtBackdrop) builtBackdrop.classList.remove('x-drawer__backdrop--open');
+        if (pushed) { releasePushedPage(pushed); pushed = null; }
         document.body.classList.remove('x-scroll-lock');
       };
       const toggle = () => (isOpen() ? hide() : show());
 
-      const onEscape = (e) => { if (e.key === 'Escape' && isOpen()) hide(); };
+      const onBuiltEscape = (e) => { if (config.closeOnEscape && e.key === 'Escape' && isOpen()) hide(); };
+      const onBackdrop = () => { if (config.closeOnBackdrop) hide(); };
 
       element.addEventListener('click', toggle);
-      if (closeBtn) closeBtn.addEventListener('click', hide);
-      if (builtBackdrop) builtBackdrop.addEventListener('click', hide);
-      document.addEventListener('keydown', onEscape);
+      if (builtCloseBtn) builtCloseBtn.addEventListener('click', hide);
+      if (builtBackdrop) builtBackdrop.addEventListener('click', onBackdrop);
+      document.addEventListener('keydown', onBuiltEscape);
 
       // Matches the wbPopover/wbOffcanvas/wbSheet naming convention already
       // used by this file's sibling overlay functions -- not element.open/
@@ -331,9 +423,10 @@ export function drawer(element, options = {}) {
       return () => {
         hide();
         element.removeEventListener('click', toggle);
-        if (closeBtn) closeBtn.removeEventListener('click', hide);
-        if (builtBackdrop) builtBackdrop.removeEventListener('click', hide);
-        document.removeEventListener('keydown', onEscape);
+        if (builtCloseBtn) builtCloseBtn.removeEventListener('click', hide);
+        if (builtBackdrop) builtBackdrop.removeEventListener('click', onBackdrop);
+        document.removeEventListener('keydown', onBuiltEscape);
+        clearRules(builtPanel);
         builtPanel.remove();
         if (builtBackdrop) builtBackdrop.remove();
         element.classList.remove('x-drawer-trigger');
@@ -366,26 +459,22 @@ export function drawer(element, options = {}) {
   let backdropEl = null;
   let pushTarget = null;
 
-  const isHorizontalEdge = () => config.position === 'top' || config.position === 'bottom';
-
   const show = () => {
     if (panelEl) return;
-
-    const isPush = config.variant === 'push';
 
     // 'push' has no dimming backdrop -- it shoves the page's own content
     // aside instead of overlaying it (Material Design's "push" navigation
     // drawer is the reference pattern; drawerLayout() in layouts.js is a
     // different, persistent sidebar primitive with no page-push behavior to
     // borrow from, confirmed by reading it). 'default' and 'overlay' both
-    // use the dimming backdrop -- docs/behaviors/drawer.md documents no
+    // use the dimming backdrop -- docs/components/drawer.md documents no
     // distinct treatment for 'default', and the schema's own declared
     // default IS 'overlay', so 'default' is treated as an explicit alias
     // for 'overlay' rather than inventing a third undocumented interaction.
     if (!isPush) {
       backdropEl = document.createElement('div');
       backdropEl.className = 'x-drawer__backdrop';
-      backdropEl.onclick = hide;
+      if (config.closeOnBackdrop) backdropEl.onclick = hide;
       document.body.appendChild(backdropEl);
     }
 
@@ -393,36 +482,21 @@ export function drawer(element, options = {}) {
     panelEl.className = `x-drawer__panel x-drawer--${config.position} x-drawer--${config.variant}`;
     // --x-drawer-width/--x-drawer-height are drawer.schema.json's own
     // declared $cssAPI custom properties (drawer.css already reads them) --
-    // setting them per-instance is the documented override mechanism, not a
-    // one-off inline style (Law 9).
-    if (isHorizontalEdge()) {
-      panelEl.style.setProperty('--x-drawer-height', config.height);
-    } else {
-      panelEl.style.setProperty('--x-drawer-width', config.width);
-    }
+    // setting them per-instance is the documented override mechanism. They
+    // go through a generated rule, not the style attribute (#779).
+    setRule(panelEl, 'size', drawerSize(config));
     panelEl.innerHTML = `
       <div class="x-drawer__header">
         ${config.title ? `<h2 class="x-drawer__title">${config.title}</h2>` : ''}
-        <button type="button" class="x-drawer__close" aria-label="Close">&times;</button>
+        ${config.showClose ? '<button type="button" class="x-drawer__close" aria-label="Close">&times;</button>' : ''}
       </div>
       <div class="x-drawer__body">${config.content}</div>
     `;
-    panelEl.querySelector('.x-drawer__close').onclick = hide;
+    const closeBtn = panelEl.querySelector('.x-drawer__close');
+    if (closeBtn) closeBtn.onclick = hide;
     document.body.appendChild(panelEl);
+    if (config.closeOnEscape) document.addEventListener('keydown', onEscape);
     document.body.classList.add('x-scroll-lock');
-
-    if (isPush) {
-      // Push the page's own content wrapper (`body > .page`, the standard
-      // top-level wrapper every demos/site/*.html page renders into) --
-      // NEVER document.body itself: panelEl is `position: fixed` and is
-      // also a direct child of body, so a transform on body would make body
-      // the fixed-position containing block for its own panel child,
-      // breaking the panel's fixed-to-viewport positioning the instant the
-      // push page-content animates. Measuring after append (not using
-      // config.width/height directly) so an 'auto' height still produces a
-      // real pixel push amount for top/bottom.
-      pushTarget = document.querySelector('body > .page');
-    }
 
     // Panel/backdrop must exist in the DOM with their CLOSED transform for
     // at least one frame before `--open` is added, or the browser paints
@@ -430,26 +504,21 @@ export function drawer(element, options = {}) {
     requestAnimationFrame(() => {
       if (backdropEl) backdropEl.classList.add('x-drawer__backdrop--open');
       panelEl.classList.add('x-drawer__panel--open');
-      if (pushTarget) {
-        const rect = panelEl.getBoundingClientRect();
-        const amount = isHorizontalEdge() ? rect.height : rect.width;
-        const sign = (config.position === 'right' || config.position === 'bottom') ? -1 : 1;
-        pushTarget.style.setProperty(isHorizontalEdge() ? '--x-drawer-push-y' : '--x-drawer-push-x', `${sign * amount}px`);
-        pushTarget.classList.add('x-drawer-push-target');
-        pushTarget.classList.add('x-drawer-push-target--open');
-      }
+      // Measured after append (not config.width/height) so an 'auto' height
+      // still yields a real pixel push amount for top/bottom.
+      if (isPush) pushTarget = pushPageAside(panelEl, config.position, [panelEl, backdropEl]);
     });
   };
 
+  // PATH B had no Escape handling at all; close-on-escape (default true)
+  // gives it the documented one, attached only while the panel is open.
+  const onEscape = (e) => { if (e.key === 'Escape') hide(); };
+
   const hide = () => {
+    document.removeEventListener('keydown', onEscape);
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
-    if (panelEl) { panelEl.remove(); panelEl = null; }
-    if (pushTarget) {
-      pushTarget.classList.remove('x-drawer-push-target--open');
-      pushTarget.style.removeProperty('--x-drawer-push-x');
-      pushTarget.style.removeProperty('--x-drawer-push-y');
-      pushTarget = null;
-    }
+    if (panelEl) { clearRules(panelEl); panelEl.remove(); panelEl = null; }
+    if (pushTarget) { releasePushedPage(pushTarget); pushTarget = null; }
     document.body.classList.remove('x-scroll-lock');
   };
 
@@ -482,58 +551,29 @@ export function lightbox(element, options = {}) {
 
   element.classList.add('x-lightbox-trigger');
   element.classList.add('x-lightbox');
-  element.style.cursor = 'pointer';
+  // cursor: pointer comes from .x-lightbox-trigger in overlays.css (#779).
 
   element.onclick = (e) => {
     e.preventDefault();
     
     const overlay = document.createElement('div');
-    overlay.className = 'x-lightbox';
-    overlay.style.cssText = `
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: x-fade-in 0.2s ease;
-      cursor: zoom-out;
-    `;
-    
+    // x-lightbox stays for anything that already selects the open viewer;
+    // x-lightbox__overlay carries the look, which was a style.cssText block
+    // here (#779). Not .x-lightbox alone: the trigger carries that class too.
+    overlay.className = 'x-lightbox x-lightbox__overlay';
+
     const img = document.createElement('img');
+    img.className = 'x-lightbox__image';
     img.src = config.src;
-    img.style.cssText = `
-      max-width: 90vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 4px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      animation: x-zoom-in 0.3s ease;
-    `;
-    
+
     const closeBtn = document.createElement('button');
+    closeBtn.className = 'x-lightbox__close';
     closeBtn.innerHTML = '×';
-    closeBtn.style.cssText = `
-      position: absolute;
-      top: 1rem; right: 1rem;
-      background: rgba(255,255,255,0.1);
-      border: none;
-      color: white;
-      font-size: 2rem;
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    `;
-    closeBtn.onmouseenter = () => closeBtn.style.background = 'rgba(255,255,255,0.2)';
-    closeBtn.onmouseleave = () => closeBtn.style.background = 'rgba(255,255,255,0.1)';
-    
+    // The hover background is a :hover rule now, not a mouseenter/mouseleave
+    // pair writing style.background.
+
     const close = () => {
-      overlay.style.animation = 'x-fade-out 0.2s ease';
+      overlay.classList.add('x-lightbox__overlay--closing');
       setTimeout(() => overlay.remove(), 200);
     };
     
@@ -571,31 +611,22 @@ export function offcanvas(element, options = {}) {
   const show = () => {
     if (panelEl) return;
     
+    // #779: every declaration below used to be style.cssText / style="" --
+    // they are the .x-offcanvas__* rules in overlays.css.
     backdropEl = document.createElement('div');
-    backdropEl.style.cssText = `
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5); z-index: 9999;
-      animation: x-fade-in 0.2s ease;
-    `;
+    backdropEl.className = 'x-offcanvas__backdrop';
     backdropEl.onclick = hide;
     document.body.appendChild(backdropEl);
     
     panelEl = document.createElement('div');
     const isLeft = config.position === 'left' || config.position === 'start';
-    panelEl.style.cssText = `
-      position: fixed; top: 0; ${isLeft ? 'left' : 'right'}: 0; bottom: 0;
-      width: 280px; background: var(--bg-primary, #1f2937);
-      border-${isLeft ? 'right' : 'left'}: 1px solid var(--border-color, #374151);
-      z-index: 10000; display: flex; flex-direction: column;
-      animation: x-slide-in 0.3s ease;
-      box-shadow: ${isLeft ? '' : '-'}10px 0 30px rgba(0,0,0,0.3);
-    `;
+    panelEl.className = `x-offcanvas__panel x-offcanvas__panel--${isLeft ? 'left' : 'right'}`;
     panelEl.innerHTML = `
-      <div style="padding:1rem;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;background:var(--bg-secondary,#1e293b);">
-        <h3 style="margin:0;color:var(--primary,#6366f1);">${config.title}</h3>
-        <button style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-secondary);">&times;</button>
+      <div class="x-offcanvas__header">
+        <h3 class="x-offcanvas__title">${config.title}</h3>
+        <button class="x-offcanvas__close">&times;</button>
       </div>
-      <div style="padding:1rem;flex:1;overflow:auto;color:var(--text-primary);">${config.content}</div>
+      <div class="x-offcanvas__body">${config.content}</div>
     `;
     panelEl.querySelector('button').onclick = hide;
     document.body.appendChild(panelEl);
@@ -629,6 +660,12 @@ export function sheet(element, options = {}) {
   };
 
   element.classList.add('x-sheet-trigger');
+  // Only what differs from overlays.css's .x-sheet defaults travels in the
+  // generated rule, plus a width the user dragged to.
+  const sheetSize = (width = config.width) => onlyChanged(
+    { width, minWidth: config.minWidth, maxWidth: config.maxWidth },
+    { width: '320px', minWidth: '200px', maxWidth: '600px' },
+  );
   let sheetEl = null;
   let backdropEl = null;
   let isResizing = false;
@@ -636,37 +673,30 @@ export function sheet(element, options = {}) {
   const show = () => {
     if (sheetEl) return;
     
+    // #779: the declarations below used to be style.cssText / style="" --
+    // they are the .x-sheet* rules in overlays.css.
     backdropEl = document.createElement('div');
-    backdropEl.style.cssText = `
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5); z-index: 9999;
-      animation: x-fade-in 0.2s ease;
-    `;
+    backdropEl.className = 'x-sheet__backdrop';
     backdropEl.onclick = hide;
     document.body.appendChild(backdropEl);
     
     sheetEl = document.createElement('div');
-    sheetEl.style.cssText = `
-      position: fixed; top: 0; left: 0; bottom: 0;
-      width: ${config.width}; min-width: ${config.minWidth}; max-width: ${config.maxWidth};
-      background: var(--bg-primary, #1f2937);
-      border-right: 1px solid var(--border-color, #374151);
-      z-index: 10000; display: flex; flex-direction: column;
-      animation: x-slide-in 0.3s ease;
-      box-shadow: 10px 0 30px rgba(0,0,0,0.3);
-    `;
+    sheetEl.className = 'x-sheet';
+    // overlays.css holds the default 320/200/600px; an authored width,
+    // min-width or max-width is a runtime value (#779).
+    setRule(sheetEl, 'size', sheetSize());
     
     sheetEl.innerHTML = `
-      <div style="padding:1rem;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;background:var(--bg-secondary,#1e293b);">
-        <h3 style="margin:0;color:var(--primary,#6366f1);display:flex;align-items:center;gap:0.5rem;">
-          <span style="font-size:1.25rem;">📝</span> ${config.title}
+      <div class="x-sheet__header">
+        <h3 class="x-sheet__title">
+          <span class="x-sheet__icon">📝</span> ${config.title}
         </h3>
-        <button style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-secondary);">&times;</button>
+        <button class="x-sheet__close">&times;</button>
       </div>
-      <div class="x-sheet__content" style="padding:1rem;flex:1;overflow:auto;color:var(--text-primary);">
-        ${config.content || '<textarea style="width:100%;height:100%;background:transparent;border:none;color:inherit;resize:none;font-family:inherit;font-size:0.875rem;outline:none;" placeholder="Type your notes here..."></textarea>'}
+      <div class="x-sheet__content">
+        ${config.content || '<textarea class="x-sheet__notes" placeholder="Type your notes here..."></textarea>'}
       </div>
-      <div class="x-sheet__resize" style="position:absolute;top:0;right:0;bottom:0;width:6px;cursor:ew-resize;background:transparent;"></div>
+      <div class="x-sheet__resize"></div>
     `;
     
     sheetEl.querySelector('button').onclick = hide;
@@ -684,7 +714,7 @@ export function sheet(element, options = {}) {
       const min = parseInt(config.minWidth);
       const max = parseInt(config.maxWidth);
       if (newWidth >= min && newWidth <= max) {
-        sheetEl.style.width = newWidth + 'px';
+        setRule(sheetEl, 'size', sheetSize(`${newWidth}px`));
       }
     });
     
@@ -703,7 +733,7 @@ export function sheet(element, options = {}) {
 
   const hide = () => {
     if (backdropEl) { backdropEl.remove(); backdropEl = null; }
-    if (sheetEl) { sheetEl.remove(); sheetEl = null; }
+    if (sheetEl) { clearRules(sheetEl); sheetEl.remove(); sheetEl = null; }
     document.body.classList.remove('x-scroll-lock');
   };
 
@@ -737,14 +767,15 @@ export function confirm(element, options = {}) {
     e.preventDefault();
     
     const overlay = document.createElement('div');
-    overlay.style.cssText = OVERLAY_STYLES;
+    // .x-overlay-dialog* in overlays.css -- formerly cssText + style="" (#779).
+    overlay.className = 'x-overlay-dialog';
     overlay.innerHTML = `
-      <div style="${DIALOG_STYLES}">
-        <h3 style="margin:0 0 0.5rem;font-size:1.1rem;color:var(--primary,#6366f1);">${config.title}</h3>
-        <div style="margin:0 0 1.5rem;color:var(--text-secondary);">${config.message}</div>
-        <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
-          <button class="cancel" style="padding:0.5rem 1rem;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-primary);border-radius:6px;cursor:pointer;">${config.cancelText}</button>
-          <button class="ok" style="padding:0.5rem 1rem;border:none;background:var(--primary,#6366f1);color:white;border-radius:6px;cursor:pointer;">${config.confirmText}</button>
+      <div class="x-overlay-dialog__box">
+        <h3 class="x-overlay-dialog__title">${config.title}</h3>
+        <div class="x-overlay-dialog__message">${config.message}</div>
+        <div class="x-overlay-dialog__actions">
+          <button class="cancel x-overlay-dialog__cancel">${config.cancelText}</button>
+          <button class="ok x-overlay-dialog__ok">${config.confirmText}</button>
         </div>
       </div>
     `;
@@ -785,15 +816,16 @@ export function prompt(element, options = {}) {
     e.preventDefault();
     
     const overlay = document.createElement('div');
-    overlay.style.cssText = OVERLAY_STYLES;
+    // .x-overlay-dialog* in overlays.css -- formerly cssText + style="" (#779).
+    overlay.className = 'x-overlay-dialog';
     overlay.innerHTML = `
-      <div style="${DIALOG_STYLES}">
-        <h3 style="margin:0 0 0.5rem;font-size:1.1rem;color:var(--primary,#6366f1);">${config.title}</h3>
-        ${config.message ? `<div style="margin:0 0 1rem;color:var(--text-secondary);">${config.message}</div>` : ''}
-        <input type="text" style="width:100%;padding:0.75rem;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-primary);border-radius:6px;margin-bottom:1rem;box-sizing:border-box;" placeholder="${config.placeholder}" value="${config.defaultValue}">
-        <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
-          <button class="cancel" style="padding:0.5rem 1rem;border:1px solid var(--border-color);background:var(--bg-tertiary);color:var(--text-primary);border-radius:6px;cursor:pointer;">Cancel</button>
-          <button class="ok" style="padding:0.5rem 1rem;border:none;background:var(--primary,#6366f1);color:white;border-radius:6px;cursor:pointer;">OK</button>
+      <div class="x-overlay-dialog__box">
+        <h3 class="x-overlay-dialog__title">${config.title}</h3>
+        ${config.message ? `<div class="x-overlay-dialog__message x-overlay-dialog__message--prompt">${config.message}</div>` : ''}
+        <input type="text" class="x-overlay-dialog-input" placeholder="${config.placeholder}" value="${config.defaultValue}">
+        <div class="x-overlay-dialog__actions">
+          <button class="cancel x-overlay-dialog__cancel">Cancel</button>
+          <button class="ok x-overlay-dialog__ok">OK</button>
         </div>
       </div>
     `;

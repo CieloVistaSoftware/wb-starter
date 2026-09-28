@@ -1,0 +1,353 @@
+/* Issues page.
+ *
+ * Lifted out of a <style> block inside pages/issues.html (#820). Page
+ * fragments must not carry one: the fragment is injected into the shell, so a
+ * <style> here is a global rule with no scoping and no cache, applied and
+ * reapplied on every navigation to this page.
+ *
+ * Colours are theme tokens, not literals. The block arrived with #fff on the
+ * active tab and three hardcoded status colours -- tolerable while it was
+ * inline and invisible to the CSS gates, wrong the moment it became a real
+ * stylesheet. open/in-progress/closed map onto the success/warning/info
+ * tokens, so they follow all 50 themes instead of one.
+ */
+
+  .issues-toolbar { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between; margin: 1.5rem 0 1rem; }
+  .issues-tabs { display: flex; gap: 0.5rem; }
+  .issues-tab { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.9rem; cursor: pointer; font-size: 0.875rem; }
+  .issues-tab--active { background: var(--primary); color: var(--text-on-accent); border-color: var(--primary); }
+  .issues-search { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.4rem 0.75rem; min-width: 240px; }
+  .issues-summary { color: var(--text-secondary); font-size: 0.8rem; }
+  .issues-status { color: var(--text-secondary); }
+  .issues-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .issue-row { border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); overflow: hidden; }
+  .issue-row__summary { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; cursor: pointer; }
+  .issue-row__state { font-size: 0.75rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 999px; white-space: nowrap; }
+  .issue-row__state--open { background: color-mix(in srgb, var(--success-color) 25%, transparent); color: var(--success-color); }
+  .issue-row__state--in-progress { background: color-mix(in srgb, var(--warning-color) 25%, transparent); color: var(--warning-color); }
+  .issue-row__state--closed { background: color-mix(in srgb, var(--info-color) 25%, transparent); color: var(--info-color); }
+  .issue-row__number { color: var(--text-secondary); font-family: monospace; }
+  .issue-row__title { flex: 1; font-weight: 600; }
+  .issue-row__labels { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .issue-row__label { font-size: 0.7rem; padding: 0.1em 0.5em; border-radius: 999px; background: var(--bg-tertiary); color: var(--text-secondary); }
+  .issue-row__body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+  /* Rendered markdown (x-mdhtml) needs normal HTML flow, not the raw-text
+     pre-wrap this div used before -- headings/lists/code blocks would
+     otherwise inherit literal whitespace preservation meant for plain text. */
+  .issue-row__body .issue-row__mdhtml { display: block; }
+  .issue-row--expanded .issue-row__body { display: block; padding-top: 1rem; }
+
+/* =============================================================================
+   #1036 — the issues table
+   John: "list the items by priority, make it a table, add columns for fields in
+   the issue, all sortable... when issue viewer fills in data it should all be
+   listed in severity order."
+   Colours come from the theme; the priority chips are the one place a severity
+   scale needs its own ramp, and they take it from the semantic tokens rather
+   than literals.
+   ============================================================================= */
+.issues-table {
+  width: 100%;
+  margin-top: var(--space-md, 1rem);
+}
+
+.issues-row {
+  cursor: pointer;
+}
+
+.issues-row:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.issues-row--open {
+  background: var(--bg-tertiary);
+}
+
+.issues-cell--title {
+  /* The column that earns the width: everything else is short and fixed. */
+  width: 45%;
+}
+
+.issues-cell--priority,
+.issues-cell--state {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.issue-priority {
+  display: inline-block;
+  min-width: 1.75rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm, 4px);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--bg-primary);
+  background: var(--text-muted);
+}
+
+/* 1 is the one that should be visible from across the room. */
+.issue-priority--1 { background: var(--danger-color, var(--error-color)); }
+.issue-priority--2 { background: var(--warning-color); }
+.issue-priority--3 { background: var(--info-color, var(--primary)); }
+.issue-priority--4 { background: var(--success-color); }
+.issue-priority--5 { background: var(--text-muted); }
+.issue-priority--9 { background: transparent; color: var(--text-muted); }
+
+.issue-state {
+  font-size: 0.75rem;
+  text-transform: lowercase;
+  color: var(--text-secondary);
+}
+
+.issue-state--open { color: var(--success-color); }
+.issue-state--closed { color: var(--text-muted); }
+.issue-state--in-progress { color: var(--warning-color); }
+
+.issue-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  padding: 0.05rem 0.35rem;
+  margin: 0 0.15rem 0.15rem 0;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.issue-detail {
+  margin-top: var(--space-md, 1rem);
+  padding: var(--space-md, 1rem);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-secondary);
+}
+
+.issue-detail__title {
+  margin: 0 0 var(--space-sm, 0.5rem);
+  color: var(--text-primary);
+}
+
+/* The verification state, written onto the issue by
+   scripts/mark-issue-verification.mjs and shown here so "is this committable?"
+   is answerable at a glance rather than by opening each issue. */
+.issue-verify {
+  font-size: 0.72rem;
+  white-space: nowrap;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.issue-verify--preliminary-pass { color: var(--success-color); }
+.issue-verify--failing          { color: var(--danger-color, var(--error-color)); }
+.issue-verify--unproven         { color: var(--warning-color); }
+.issue-verify--no-test          { color: var(--text-muted); }
+
+/* The inline expander: the issue body opens in a row directly under the one
+   clicked, so it reads in the context of its own priority and state. */
+.issues-expander > td {
+  padding: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--primary);
+}
+
+.issues-expander__body {
+  padding: var(--space-md, 1rem);
+  max-height: 32rem;
+  overflow-y: auto;
+  /* Same rule as .activity__list: an expanded row is a scroll box the reader is
+     inside, and reaching its end should not throw the page. */
+  overscroll-behavior: contain;
+}
+
+.issues-row--open {
+  background: var(--bg-tertiary);
+}
+
+.issues-row--open td {
+  border-bottom: 0;
+}
+
+/* Thirteen states, grouped by what a reader does about them: green = the fix
+   exists and is moving, red = the tests disagree, amber = nothing can prove it,
+   muted = not started or already closed. */
+.issue-verify--ready,
+.issue-verify--closed-verified   { color: var(--success-color); }
+.issue-verify--committed,
+.issue-verify--pushed            { color: var(--info-color, var(--primary)); }
+.issue-verify--stale             { color: var(--warning-color); }
+.issue-verify--failing,
+.issue-verify--regressed,
+.issue-verify--needs-test        { color: var(--danger-color, var(--error-color)); }
+.issue-verify--test-missing,
+.issue-verify--unproven          { color: var(--warning-color); }
+.issue-verify--triaged,
+.issue-verify--no-signature,
+.issue-verify--closed-unverified { color: var(--text-muted); }
+
+/* =============================================================================
+   #1046 — "Work done" panel
+   John: "I want an account of all work done within last 24hrs with links."
+   Every colour is a theme token; no literals, no inline styles.
+   ============================================================================= */
+.activity {
+  margin-block-end: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--bg-secondary);
+}
+
+.activity__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.activity__title { font-weight: 600; }
+
+.activity__counts {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.activity__body { padding: 0 1rem 1rem; }
+
+.activity__empty {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* Three columns on a wide screen, one on a narrow one — mobile-first, so the
+   single-column stack is the default and the grid is the enhancement. */
+.activity__cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 60rem) {
+  .activity__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.activity__heading {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.activity__n { color: var(--text-muted); }
+
+.activity__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 22rem;
+  overflow-y: auto;
+  /* John: "if [the] use[r] clicks inside, and then scrolls down, the whole page
+     should remain statically placed until they get to the bottom of that"
+     column.
+
+     Without this the browser CHAINS the scroll: the column reaches its end and
+     the same gesture keeps going into the page, so reading one column drags the
+     other two out of view. `contain` stops the scroll at this box's boundary —
+     the page only moves once the pointer is somewhere that is not a column. */
+  overscroll-behavior: contain;
+}
+
+.activity__item {
+  padding: 0.375rem 0;
+  border-block-end: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.activity__item:last-child { border-block-end: 0; }
+
+.activity__num,
+.activity__sha {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.activity__num:hover,
+.activity__sha:hover { text-decoration: underline; }
+
+.activity__sha { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.activity__pri {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.activity__text { color: var(--text-primary); }
+
+.activity__meta {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* The "Work completed" trigger (#1046). Styled as a peer of the filter tabs so
+   it reads as part of the same control strip, but distinguished by the accent
+   border — it opens a different KIND of thing (an account of work) rather than
+   filtering the list. Theme tokens only. */
+.issues-workdone {
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--primary);
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.issues-workdone:hover {
+  background: var(--primary);
+  color: var(--text-on-accent);
+}
+
+.issues-workdone[aria-expanded="true"] {
+  background: var(--primary);
+  color: var(--text-on-accent);
+}
+
+/* The summary stays operable on its own, but the button is the advertised
+   control, so the summary marker is enough — no second prominent affordance. */
+.activity__summary { list-style-position: inside; }
+
+/* Per-severity counts in the toolbar (#1046 follow-up).
+   John: "add a count in header of the numbers of each severity."
+   Colour comes from the same tokens the priority pills use, so a P1 reads as a
+   P1 wherever it appears on the page. */
+.issues-severity {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.issues-severity .sev {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.issues-severity .sev b {
+  font-weight: 700;
+  margin-inline-end: 0.15rem;
+}
+
+.issues-severity .sev--1 b { color: var(--error-color); }
+.issues-severity .sev--2 b { color: var(--warning-color); }
+.issues-severity .sev--3 b { color: var(--info-color); }
+.issues-severity .sev--4 b,
+.issues-severity .sev--5 b { color: var(--text-muted); }
+.issues-severity .sev--none b { color: var(--text-muted); font-style: italic; }

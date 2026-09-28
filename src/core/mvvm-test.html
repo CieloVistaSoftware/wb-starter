@@ -148,6 +148,13 @@
       font-family: monospace;
       font-size: 0.8rem;
     }
+
+    /* Was an inline style attribute on the one note that uses it (#779). */
+    .test-box .test-note {
+      color: var(--text-tertiary);
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -232,7 +239,7 @@ Classes AUTO-GENERATED: baseClass + "__" + name
         <span x-badge variant="warning">Warning</span>
         <span x-badge variant="error">Error</span>
       </p>
-      <p style="color: var(--text-tertiary); font-size: 0.8rem; margin-top: 1rem;">
+      <p class="test-note">
         CSS styles <code>x-badge</code> tag directly. No JavaScript, no schema processing.
       </p>
     </div>

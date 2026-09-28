@@ -510,21 +510,21 @@
   },
   "behaviorProperties": {
     "description": "Common properties shared across behaviors",
-    "commonDataAttributes": {
-      "data-wb": {
+    "commonAttributes": {
+      "x-behavior": {
         "type": "string",
-        "required": true,
-        "description": "The behavior name"
+        "required": false,
+        "description": "Space-separated behavior names (or use the x-{name} attribute directly)"
       },
       "x-ready": {
         "type": "boolean",
         "description": "Class added by WB when behavior is initialized"
       },
-      "data-variant": {
+      "variant": {
         "type": "string",
         "description": "Visual variant (e.g., primary, secondary, success, warning, error, info)"
       },
-      "data-size": {
+      "size": {
         "type": "string",
         "enum": [
           "xs",
@@ -535,11 +535,11 @@
         ],
         "description": "Size variant"
       },
-      "data-disabled": {
+      "disabled": {
         "type": "boolean",
         "description": "Disabled state"
       },
-      "data-loading": {
+      "loading": {
         "type": "boolean",
         "description": "Loading state"
       }
@@ -905,7 +905,9 @@
   "test": {
     "setup": [],
     "matrix": {
-      "combinations": [{}]
+      "combinations": [
+        {}
+      ]
     }
   },
   "$view": [],

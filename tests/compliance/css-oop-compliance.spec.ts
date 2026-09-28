@@ -16,7 +16,12 @@ import {
 // Demo/showcase/test pages that intentionally display raw color values as
 // content (e.g. a hue-spectrum color wheel, permutation test harness) — not
 // product UI subject to theming. Same convention as demo.css.
-const COLOR_EXCEPTION_FILES = ['themes.css', 'x-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'x-grayscale.css', 'x-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css', 'frameworks.css'];
+const COLOR_EXCEPTION_FILES = ['themes.css', 'x-signature.css', 'variables.css', 'demo.css', 'components.css', 'site.css', 'transitions.css', 'x-grayscale.css', 'x-grayscale-dark.css', 'hero.css', 'navbar.css', 'wizard.css', 'themes-showcase.css', 'ai-permutation-test.css', 'frameworks.css',
+  // hero-variants.css holds the hero showcase's fixed artwork (the green
+  // Matrix grid, the starfield, the animated gradient) moved out of inline
+  // style="" by #779. Like hero.css and themes-showcase.css it must look the
+  // same in every theme, so theme tokens are the wrong home for its colours.
+  'hero-variants.css'];
 
 // Patterns that violate OOP
 const FORBIDDEN_PATTERNS = {

@@ -1,3 +1,4 @@
+import { setRule, clearRules } from '../core/dynamic-style.js';
 import { readFlag, readAttr, readNumber } from '../core/read-attr.js';
 /**
  * Ripple Behavior
@@ -45,23 +46,23 @@ export function ripple(element, options = {}) {
     // Create ripple element
     const rippleEl = document.createElement('span');
     rippleEl.className = 'x-ripple__wave';
-    rippleEl.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: ${config.color};
-      pointer-events: none;
-      transform: scale(0);
-      animation: x-ripple-animation ${config.duration}ms ease-out forwards;
-      width: ${size}px;
-      height: ${size}px;
-      left: ${x - size / 2}px;
-      top: ${y - size / 2}px;
-    `;
+    // The wave's fixed look is .x-ripple__wave in effects.css; its colour,
+    // duration, size and spot are per click, so a generated rule rather than
+    // the style attribute (#779). Released with the wave below.
+    setRule(rippleEl, 'wave', {
+      background: config.color,
+      animationDuration: `${config.duration}ms`,
+      width: `${size}px`,
+      height: `${size}px`,
+      left: `${x - size / 2}px`,
+      top: `${y - size / 2}px`,
+    });
 
     element.appendChild(rippleEl);
 
     // Remove after animation
     setTimeout(() => {
+      clearRules(rippleEl);
       rippleEl.remove();
     }, config.duration);
   };

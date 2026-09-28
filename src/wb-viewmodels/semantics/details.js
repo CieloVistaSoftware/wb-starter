@@ -37,9 +37,19 @@ export function details(element, options = {}) {
       <div class="x-details__content">${contentHtml}</div>
     `;
     
-    Object.keys(element.dataset).forEach(key => {
-      detailsEl.dataset[key] = element.dataset[key];
-    });
+    // #773: every other authored attribute travels too. Only name and data-*
+    // used to, so <div x-details variant="bordered"> rebuilt as a bare
+    // <details> and details.css's [variant] rules had nothing to match: the
+    // attribute form's default, bordered and filled rendered identically while
+    // the <details> form (which keeps its own attributes) worked. x-* markers
+    // stay behind -- they record what ran on the OLD element -- summary has
+    // already become the <summary> above, and open is config.open's to decide
+    // (a copied open="false" would OPEN a native <details>: presence is all
+    // it reads).
+    for (const { name, value } of Array.from(element.attributes)) {
+      if (/^x-/i.test(name) || ['summary', 'class', 'open'].includes(name) || detailsEl.hasAttribute(name)) continue;
+      detailsEl.setAttribute(name, value);
+    }
     
     // Add class to original element in case tests are checking it
     
@@ -120,7 +130,8 @@ export function details(element, options = {}) {
       //
       // The glyph is a down-pointing triangle, so open is its natural 0deg and
       // closed turns it -90deg to point right.
-      icon.style.transform = element.open ? '' : 'rotate(-90deg)';
+      // A state class, not style.transform (#779); details.css turns it.
+      icon.classList.toggle('x-details__icon--collapsed', !element.open);
     }
     element.dispatchEvent(new CustomEvent('wb:details:toggle', {
       bubbles: true,

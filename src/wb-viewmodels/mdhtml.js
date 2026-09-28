@@ -224,12 +224,17 @@ export async function mdhtml(element, options = {}) {
       return `<h${depth} id="${id}">${html}</h${depth}>\n`;
     };
     
-    // Configure marked
-    marked.setOptions({
+    // #773: THIS element's options, passed to its own parse() below -- not
+    // marked.setOptions(), which sets them for every caller of the shared
+    // module. The fetch between the two awaits, so another mdhtml() rendering
+    // meanwhile (the docs panel beside the showcase renders one for every
+    // selection) reset gfm/breaks/renderer for this one: gfm="false" was
+    // parsed as GFM whenever the other render landed in that window.
+    const markedOptions = {
       breaks: config.breaks,
       gfm: config.gfm,
       renderer: renderer
-    });
+    };
 
     let markdown = '';
 
@@ -301,7 +306,7 @@ export async function mdhtml(element, options = {}) {
           stack: err.stack
         });
         
-        element.innerHTML = '<p style="color:var(--text-secondary);padding:1rem;text-align:center;">Failed to load <code>' + config.src + '</code>. See error log below for details.</p>';
+        element.innerHTML = '<p class="x-mdhtml__message">Failed to load <code>' + config.src + '</code>. See error log below for details.</p>';
         console.error('[mdhtml] Error loading file:', err);
         
         // Dispatch error event
@@ -355,7 +360,7 @@ export async function mdhtml(element, options = {}) {
     }
 
     // Parse markdown to HTML
-    const html = await marked.parse(markdown);
+    const html = await marked.parse(markdown, markedOptions);
 
     // Basic XSS protection if sanitize is enabled
     let safeHtml = html;
@@ -664,11 +669,8 @@ export async function mdhtml(element, options = {}) {
     // Markdown font size comes from ONE configuration setting: --md-font-size
     // (themes.css, 1rem). The old size map (0.55–0.85rem) made every .md doc too
     // small to read on mobile; the legacy size option is ignored on purpose so
-    // there is a single knob.
-    element.style.fontSize = 'var(--md-font-size, 1rem)';
-    
-    // Ensure no overflow
-    element.style.maxWidth = '100%';
+    // there is a single knob. #779: that and max-width: 100% are the
+    // .x-mdhtml--loaded rule in mdhtml.css -- they were written inline here.
 
     // Dispatch event
     element.dispatchEvent(new CustomEvent('wb:mdhtml:loaded', {
@@ -687,7 +689,7 @@ export async function mdhtml(element, options = {}) {
       src: config.src,
       stack: err.stack
     });
-    element.innerHTML = '<p style="color:var(--text-secondary);padding:1rem;text-align:center;">Error loading content. See error log below.</p>';
+    element.innerHTML = '<p class="x-mdhtml__message">Error loading content. See error log below.</p>';
     console.error('[mdhtml] Unexpected error:', err);
   }
 

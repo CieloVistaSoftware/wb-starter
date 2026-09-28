@@ -1,3 +1,4 @@
+import { setRule, clearRules, clearRulesIn } from '../../core/dynamic-style.js';
 import { readFlag, readAttr } from '../../core/read-attr.js';
 import { writeToClipboard } from '../copy.js';
 
@@ -93,8 +94,9 @@ export function pre(element, options = {}) {
   if (config.maxHeight) {
     element.classList.add('x-pre--has-max-height');
     // The value itself (e.g. "400px") is arbitrary user input — genuinely
-    // per-instance, can't be a class.
-    element.style.maxHeight = config.maxHeight;
+    // per-instance, can't be a class. It travels as a generated stylesheet
+    // rule, never the style attribute (#779).
+    setRule(element, 'max-height', { maxHeight: config.maxHeight });
   }
 
   let wrapper = null;
@@ -133,7 +135,8 @@ export function pre(element, options = {}) {
     // right offset is genuinely per-instance — depends on which OTHER
     // controls are present and their real rendered widths (see comment
     // above); hover state is handled by .x-pre__copy:hover in pre.css now.
-    copyButton.style.right = `${nextControlRightPx}px`;
+    // (#779: as a generated rule, not element.style.)
+    setRule(copyButton, 'right', { right: `${nextControlRightPx}px` });
 
     copyButton.addEventListener('click', async () => {
       const ok = await writeToClipboard(element.textContent);
@@ -173,7 +176,7 @@ export function pre(element, options = {}) {
     languageBadge.textContent = displayText;
 
     // right offset is genuinely per-instance (see copy button comment above).
-    languageBadge.style.right = `${nextControlRightPx}px`;
+    setRule(languageBadge, 'right', { right: `${nextControlRightPx}px` });
 
     wrapper.appendChild(languageBadge);
     nextControlRightPx += languageBadge.getBoundingClientRect().width + GAP_PX;
@@ -201,11 +204,13 @@ export function pre(element, options = {}) {
     toggleButton.title = 'Hide code';
     // right offset is genuinely per-instance (see copy button comment above).
     // min-height for the collapsed state lives on .x-pre-wrapper in pre.css.
-    toggleButton.style.right = `${nextControlRightPx}px`;
+    setRule(toggleButton, 'right', { right: `${nextControlRightPx}px` });
     toggleButton.addEventListener('click', () => {
       collapsed = !collapsed;
-      element.style.display = collapsed ? 'none' : '';
-      if (lineNumbersEl) lineNumbersEl.style.display = collapsed ? 'none' : '';
+      // Hidden by .x-pre--collapsed / .x-pre__line-numbers--collapsed in
+      // pre.css rather than display:none on the style attribute (#779).
+      element.classList.toggle('x-pre--collapsed', collapsed);
+      if (lineNumbersEl) lineNumbersEl.classList.toggle('x-pre__line-numbers--collapsed', collapsed);
       toggleButton.textContent = collapsed ? '⏵' : '⏷';
       toggleButton.title = collapsed ? 'Show code' : 'Hide code';
     });
@@ -252,7 +257,10 @@ export function pre(element, options = {}) {
     // code line. Each number's real position is measured directly against
     // the rendered text instead — position/right come from the
     // `.x-pre__line-numbers > div` rule in pre.css, only `top` (below) is
-    // genuinely per-instance.
+    // genuinely per-instance. It travels as a generated rule (#779), and a
+    // number that has been measured carries .x-pre__line-number--placed --
+    // the signal x-demo (and specs) wait on, which used to be "has an inline
+    // top".
     const lineNumEls = lines.map((_, index) => {
       const lineNum = document.createElement('div');
       lineNum.textContent = index + 1;
@@ -267,6 +275,11 @@ export function pre(element, options = {}) {
     // this runs after the browser has laid out any wrapped text AND after
     // the child <code>'s own behavior (syntax highlighting) has run — both
     // can still be pending in the same tick this behavior runs in.
+    const placeLineNumber = (el, top) => {
+      setRule(el, 'top', { top: `${top}px` });
+      el.classList.add('x-pre__line-number--placed');
+    };
+
     const measureAndPosition = () => {
       const target = codeChild || element;
       // Container top is the <pre>'s OWN border-box edge, which INCLUDES its
@@ -347,7 +360,7 @@ export function pre(element, options = {}) {
       if (textNodes[0] && lineNumEls[0]) {
         const pos = firstContentOffset(0, 0);
         const rect = measureFrom(pos.nodeIndex, pos.offset);
-        if (rect) lineNumEls[0].style.top = (rect.top - containerTop) + 'px';
+        if (rect) placeLineNumber(lineNumEls[0], rect.top - containerTop);
       }
 
       let lineIndex = 0;
@@ -360,7 +373,7 @@ export function pre(element, options = {}) {
           if (lineIndex < lineNumEls.length) {
             const pos = firstContentOffset(i, nlAt + 1);
             const rect = measureFrom(pos.nodeIndex, pos.offset);
-            if (rect) lineNumEls[lineIndex].style.top = (rect.top - containerTop) + 'px';
+            if (rect) placeLineNumber(lineNumEls[lineIndex], rect.top - containerTop);
           }
           searchFrom = nlAt + 1;
         }
@@ -391,7 +404,9 @@ export function pre(element, options = {}) {
   }
 
   return () => {
-    element.classList.remove('x-pre');
+    element.classList.remove('x-pre', 'x-pre--collapsed');
+    clearRules(element);
+    if (wrapper) clearRulesIn(wrapper);
     if (wrapper && wrapper.parentNode) {
       wrapper.parentNode.insertBefore(element, wrapper);
       wrapper.remove();

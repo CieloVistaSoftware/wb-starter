@@ -304,7 +304,18 @@ export function button(element, options = {}) {
 
   // Native <button> — add .x-button class for styling
   // Skip if already styled by another system
-  const hasExistingStyle = element.className.match(/x-btn--|x-button--/);
+  // `x-btn--` only. `x-button--` is THIS behavior's own modifier naming, and
+  // by the time button() runs on a `<div x-button>` the schema builder has
+  // already applied those classes -- so the guard read its own output as
+  // evidence that a foreign system owned the element, and bailed before the
+  // icon was injected. Traced live: at the guard, className was
+  // "x-button x-button--star x-button--start x-button--primary x-button--md
+  // x-button--_self" and hasExistingStyle was true. The element still LOOKED
+  // styled, which is why this reads as "the icon broke" rather than "the
+  // behavior never ran". John: "you broke the icon".
+  // Same shape as #746, which fixed the sibling guard below for `x-button`:
+  // a behavior must not treat its own marks as somebody else's.
+  const hasExistingStyle = element.className.match(/x-btn--/);
   // #746: `x-button` is this behavior's OWN dispatch attribute, not evidence
   // that something else owns the element — counting it here made the button
   // bail on itself, so `<button x-button variant="outline" icon="download">`
@@ -312,7 +323,15 @@ export function button(element, options = {}) {
   // attribute rendered fully. Measured live at 3.0.68, and now pinned by
   // tests/behaviors/button-permutations.spec.ts, which asserts both authoring
   // forms produce identical classes across all variant x size pairs.
-  const OWN_ATTRS = new Set(['x-behavior', 'x-eager', 'x-hydrated', 'x-button']);
+  // `x-schema` belongs here for the same reason `x-button` does: the schema
+  // builder stamps it on a host IT processed for THIS behavior, so it is this
+  // behavior's own marker, not evidence that another system owns the element.
+  // Counting it as foreign made `<div x-button icon="star">` bail before the
+  // icon was injected -- the element still LOOKED styled because the schema
+  // builder had already mapped every attribute to a modifier class, including
+  // the nonsense `x-button--star` and `x-button--_self`. John: "you broke the
+  // icon". This is #746 a second time, on a different attribute.
+  const OWN_ATTRS = new Set(['x-behavior', 'x-eager', 'x-hydrated', 'x-button', 'x-schema']);
   const hasOtherBehaviors = Array.from(element.attributes).some(
     a => a.name.startsWith('x-') && !OWN_ATTRS.has(a.name)
   );
@@ -357,7 +376,31 @@ export function button(element, options = {}) {
   }
 
   const href = element.getAttribute('href');
-  if (href && element.tagName === 'BUTTON') {
+  // `target` only says WHERE an href opens. On its own it cannot do anything,
+  // and nothing used to say so: <button target="_blank">Docs</button> rendered
+  // as a normal button that silently did nothing when clicked -- the same
+  // "declared, documented, inert" shape #669 fixed for href itself. Name the
+  // missing half instead of failing quietly.
+  // Its own name: navigate() below re-reads `target` at click time on purpose,
+  // so a later setAttribute('target') takes effect without a re-inject.
+  const declaredTarget = element.getAttribute('target');
+  if (declaredTarget && !href && element.tagName !== 'A') {
+    console.warn(`[x-button] target="${declaredTarget}" has no effect without an href -- add href="..." for it to open anywhere.`);
+  }
+  // Any host, not just <button>. This guard read `element.tagName === 'BUTTON'`,
+  // which was correct when a native <button> was the only host — the #669 note
+  // above reasons entirely about <button>, and a <button> genuinely cannot
+  // navigate on its own.
+  //
+  // 4.0.0 made `<div x-button>` a first-class host, and every other feature in
+  // this file (variant, size, icon-only, full-width) already applies to both
+  // forms. href alone still checked the tag, so it silently stopped working on
+  // the form the behaviors page and docs now show: styled exactly like a link,
+  // does nothing when clicked. John: "does not navigate when clicked".
+  //
+  // A native <a> is excluded on purpose — it already navigates, and adding a
+  // handler would double-fire.
+  if (href && element.tagName !== 'A') {
     element.setAttribute('role', 'link');
     const navigate = (e) => {
       if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
@@ -367,8 +410,33 @@ export function button(element, options = {}) {
     };
     element.addEventListener('click', navigate);
     applied.push('__href');
-    // Enter already activates a native <button>; nothing extra is needed.
-    const cleanupHref = () => element.removeEventListener('click', navigate);
+
+    // Enter activates a native <button> for free. A <div role="link"> gets
+    // neither focus nor key activation, so the attribute form needs both or it
+    // is mouse-only — a control that announces itself as a link to a screen
+    // reader and then cannot be operated from the keyboard is worse than one
+    // that never claimed to be a link at all.
+    let onKey = null;
+    if (element.tagName !== 'BUTTON') {
+      if (!element.hasAttribute('tabindex')) {
+        element.setAttribute('tabindex', '0');
+        applied.push('__tabindex');
+      }
+      onKey = (e) => {
+        // Enter follows a link; Space does not. Matching <a> rather than
+        // <button> here, because role="link" is what this element claims.
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        navigate(e);
+      };
+      element.addEventListener('keydown', onKey);
+    }
+
+    const cleanupHref = () => {
+      element.removeEventListener('click', navigate);
+      if (onKey) element.removeEventListener('keydown', onKey);
+      if (applied.includes('__tabindex')) element.removeAttribute('tabindex');
+    };
     element.__wbButtonHrefCleanup = cleanupHref;
   }
 

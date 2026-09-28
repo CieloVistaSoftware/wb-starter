@@ -1,4 +1,5 @@
 import { logError } from '../../core/error-logger.js';
+import { readFlag } from '../../core/read-attr.js';
 /**
  * Select - Enhanced <select> element
  * CSS targets `select` tag directly — no classes, no inline styles.
@@ -10,10 +11,10 @@ import { logError } from '../../core/error-logger.js';
  *     <option value="1">Option 1</option>
  *   </select>
  *
- * <select> is a SUPERSET of <select>, not a replacement for it: given a
- * non-<select> host (the <select> custom tag), this builds a real
+ * <div x-select> is a SUPERSET of <select>, not a replacement for it: given a
+ * non-<select> host (an element carrying the x-select attribute), this builds a real
  * <select>/<option> tree from the host's attributes, then re-invokes itself
- * on that real element so every x-behavior and a bare <select> share
+ * on that real element so every x-component and a bare <select> share
  * IDENTICAL enhancement logic. This used to be schema-driven (select.schema.json's
  * $view built a fake dropdown out of <button>/<div>/<ul> -- no real <select>
  * anywhere in it, so keyboard nav/mobile picker/form submission/screen
@@ -42,6 +43,16 @@ export function select(element, options = {}) {
   if (appliedClasses.length) element.classList.add(...appliedClasses);
 
   const clearable = options.clearable ?? element.hasAttribute('clearable');
+
+  // #773: `searchable` was read only by buildWbSelect(), so on the showcase's
+  // own <select searchable> it did nothing -- the row rendered exactly like
+  // the plain select. The native host gets the same filter box, placed where
+  // the attribute form puts it: immediately before the field. Guarded so a
+  // re-scan does not add a second box.
+  const searchable = options.searchable ?? readFlag(element, 'searchable');
+  if (searchable && !element.previousElementSibling?.classList.contains('x-select__search') && element.parentNode) {
+    element.parentNode.insertBefore(searchBoxFor(element, element.getAttribute('aria-label') || ''), element);
+  }
 
   if (clearable && !element.parentElement?.classList.contains('x-select-clearable')) {
     const wrapper = document.createElement('div');
@@ -84,8 +95,34 @@ export function select(element, options = {}) {
 }
 
 /**
+ * The filter box `searchable` adds: typing hides the options of `sel` that do
+ * not contain the text. One builder for both hosts, so <select searchable>
+ * and <div x-select searchable> cannot drift apart.
+ *
+ * @param {HTMLSelectElement} sel
+ * @param {string} label the field's label, for the box's accessible name
+ * @returns {HTMLInputElement}
+ */
+function searchBoxFor(sel, label) {
+  const search = document.createElement('input');
+  search.type = 'search';
+  search.className = 'x-select__search';
+  search.placeholder = 'Search...';
+  search.setAttribute('aria-label', label ? `Search ${label}` : 'Search options');
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    Array.from(sel.options).forEach((o) => {
+      // The placeholder option (value "") is never filtered away.
+      if (o.value === '' && o.disabled) return;
+      o.hidden = !!q && !o.textContent.toLowerCase().includes(q);
+    });
+  });
+  return search;
+}
+
+/**
  * Builds a real <select> (+ <option>s) inside a non-<select> host element
- * (the <select> custom tag), then re-invokes select() on that real
+ * (an x-select host element), then re-invokes select() on that real
  * element so it gets the exact same clearable/API enhancement as a bare
  * <select> -- one code path, not a second implementation to drift from it.
  */
@@ -97,7 +134,7 @@ function buildWbSelect(element, options) {
   const label = options.label || element.getAttribute('label') || '';
   const placeholder = options.placeholder || element.getAttribute('placeholder') || 'Select...';
   // Real <option> children (the documented, HTML-native usage -- see this
-  // file's own header comment and docs/behaviors/forms/forms.readme.md)
+  // file's own header comment and docs/components/forms/forms.readme.md)
   // take priority over the options="[...]" JSON attribute. Must be read
   // BEFORE `element.innerHTML = ''` below wipes them -- that line used to
   // run first, silently destroying any authored <option> children with
@@ -152,18 +189,23 @@ function buildWbSelect(element, options) {
   const size = options.size || element.getAttribute('size') || 'md';
   const variant = options.variant || element.getAttribute('variant') || 'default';
   const clearable = options.clearable ?? element.hasAttribute('clearable');
+  // `searchable` was declared in select.schema.json and documented, but no
+  // code read it. It now builds a filter box above the real <select> that
+  // hides the options which do not match what was typed.
+  const searchable = options.searchable ?? readFlag(element, 'searchable');
 
   element.innerHTML = '';
-  // #448: no bare 'x-select' token -- input.css selects the `x-select`
-  // TAG directly now (this container is only ever the <select> custom
-  // tag itself; a native <select> takes the early-return branch above and
+  // #448: no bare '.x-select' token -- input.css selects the `.x-select`
+  // attribute-host directly now (this container is only ever an x-select
+  // host element; a native <select> takes the early-return branch above and
   // never reaches this function at all, so the class never mattered for it).
   if (size !== 'md') element.classList.add(`x-select--${size}`);
   if (variant !== 'default') element.classList.add(`x-select--${variant}`);
+  if (searchable) element.classList.add('x-select--searchable');
   // #497: the classes above only ever reached this HOST wrapper. The
   // actually-visible control is the real <select class="x-select__field">
   // built below -- input.css's `.x-select--*` size/variant rules are bare
-  // class selectors (not scoped to the `x-select` tag), so they never
+  // class selectors (not scoped to the `.x-select` tag), so they never
   // matched anything on the host's *child*. Result: every size/variant
   // combination rendered the field with the same constant padding/
   // font-size/border-color (confirmed live -- "almost zero variation"
@@ -213,6 +255,8 @@ function buildWbSelect(element, options) {
     sel.setAttribute('aria-labelledby', labelId);
   }
 
+  if (searchable) element.appendChild(searchBoxFor(sel, label));
+
   element.appendChild(sel);
 
   const cleanupField = select(sel, { clearable });
@@ -221,7 +265,7 @@ function buildWbSelect(element, options) {
   return () => {
     if (cleanupField) cleanupField();
     element.innerHTML = '';
-    element.classList.remove(`x-select--${size}`, `x-select--${variant}`);
+    element.classList.remove(`x-select--${size}`, `x-select--${variant}`, 'x-select--searchable');
     delete element.wbSelect;
   };
 }

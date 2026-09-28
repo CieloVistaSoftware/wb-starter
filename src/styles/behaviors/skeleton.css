@@ -68,6 +68,17 @@ x-skeleton[variant="circle"], [x-skeleton][variant="circle"]{
   aspect-ratio: 1 / 1;
   height: auto;
 }
+/* #773: rect and card had no shape of their own. rect was only a 4px radius,
+   which the base already has, so both rendered as one 1rem text line -- the
+   same bar as variant="text". A rectangle placeholder stands in for an image
+   or media block, and a card placeholder for a whole card, so each gets the
+   block height and corner of what it stands in for. An explicit height=""
+   (skeleton() writes it on the element) still wins over these. */
 x-skeleton[variant="rect"], [x-skeleton][variant="rect"]{
   border-radius: 4px;
+  height: 6rem;
+}
+x-skeleton[variant="card"], [x-skeleton][variant="card"]{
+  border-radius: var(--radius-lg, 0.5rem);
+  height: 12rem;
 }

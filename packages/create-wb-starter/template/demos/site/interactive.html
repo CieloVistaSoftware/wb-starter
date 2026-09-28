@@ -23,18 +23,18 @@
   <h2>📦 Draggable</h2>
   <div x-demo columns="1">
     <div x-draggable axis="both">
-    This is a div with x-draggable and axis both.
-  </div>
+      This is example draggable content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-draggable axis="x">
-    This is a div with x-draggable and axis x.
-  </div>
+      This is example draggable content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-draggable axis="y">
-    This is a div with x-draggable and axis y.
-  </div>
+      This is example draggable content.
+    </div>
   </div>
   </section>
 
@@ -43,7 +43,7 @@
   <h2>📦 Resizable</h2>
   <div x-demo columns="1">
     <div x-resizable handles="se">
-      This is a div with x-resizable and handles se.
+      This is example resizable content.
     </div>
   </div>
   </section>
@@ -53,13 +53,13 @@
   <h2>📦 Copy</h2>
   <div x-demo columns="1">
     <div x-copy text="Hello World">
-    This is a div with x-copy and text Hello World.
-  </div>
+      This is example copy content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-copy text="npm install wb-starter">
-    This is a div with x-copy and text npm install wb-starter.
-  </div>
+      This is example copy content.
+    </div>
   </div>
   </section>
 
@@ -68,7 +68,7 @@
   <h2>📦 Dark Mode Toggle</h2>
   <div x-demo columns="1">
     <div x-darkmode>
-      This is a div with x-darkmode.
+      This is example dark mode toggle content.
     </div>
   </div>
   </section>
@@ -78,7 +78,7 @@
   <h2>📦 Theme Control</h2>
   <div x-demo columns="1">
     <div x-themecontrol>
-      This is a div with x-themecontrol.
+      This is example theme control content.
     </div>
   </div>
   </section>
@@ -88,13 +88,13 @@
   <h2>📦 Collapse</h2>
   <div x-demo columns="1">
     <div x-collapse>
-    This is a div with x-collapse.
-  </div>
+      This is example collapse content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-collapse expanded>
-    This is a div with x-collapse and expanded.
-  </div>
+      This is example collapse content.
+    </div>
   </div>
   </section>
 
@@ -102,23 +102,23 @@
   <section id="hero-hero">
   <h2>📦 Hero</h2>
   <div x-demo columns="1">
-    <div x-hero>
-    This is a div with x-hero.
-  </div>
+    <div x-hero variant="default">
+      This is example hero content.
+    </div>
   </div>
   <div x-demo columns="1">
     <div x-hero variant="cosmic">
-    This is a div with x-hero and variant cosmic.
-  </div>
+      This is example hero content.
+    </div>
   </div>
   </section>
 
   <!-- 8. Variants -->
-  <section id="hero-variants">
+  <section id="hero-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="2">
     <div x-hero variant="">
-      This is a div with x-hero and variant.
+      This is example hero content.
     </div>
   </div>
   </section>
@@ -126,18 +126,24 @@
   <!-- 9. 📦 WB Views Registry Schema -->
   <section id="views-wb-views-registry-schema">
   <h2>📦 WB Views Registry Schema</h2>
-  <div x-demo columns="1">
-    <div>
-      This is a div.
-    </div>
-  </div>
+  <!-- #1101 found this: x-views matches no behavior and never did. The section
+       generator turned the doc heading "WB Views Registry Schema" into an
+       attribute as though every heading named a behavior, so this demoed a
+       registry SCHEMA as if it were something you add to an element. Nothing was
+       applied, and nothing said so. The schema is not a behavior, so there is no
+       attribute to show. -->
+  <p>
+    The views registry is a schema, not a behavior — there is no attribute to add
+    to an element. See the registry documentation for its shape and how views are
+    registered.
+  </p>
   </section>
 
   <!-- 10. 🧩 x-toggle — toggle a class on a target element -->
   <section id="x-toggle-toggle-a-class-on-a-target-element">
   <h2>🧩 x-toggle — toggle a class on a target element</h2>
   <p>Distinct from the <code>&lt;x-toggle&gt;</code> switch behavior under Form Controls — this toggles an arbitrary CSS class on any target.</p>
-  <div x-demo events="wb:toggle">
+  <div x-demo>
     <button x-toggle target="#toggle-box">Toggle Class</button>
     <div id="toggle-box" style="width: 50px; height: 50px; background: red; margin-top: 1rem; transition: all 0.3s;"></div>
   </div>
@@ -228,7 +234,7 @@
     import WB from '../../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
-    await WB.scan(document.body, { eager: true });
+    await WB.scan(document.body);
     console.log('Interactive & Utility initialized');
     window.__WB_DEMO_INITIALIZED__ = true;
   </script>

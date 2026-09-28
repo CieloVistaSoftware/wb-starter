@@ -1,6 +1,6 @@
 import { readAttr } from '../core/read-attr.js';
 /**
- * WBCard Behavior
+ * WBCard Component
  * -----------------------------------------------------------------------------
  * Custom Tag: <article>
  * -----------------------------------------------------------------------------
@@ -47,7 +47,5 @@ export class WBCard extends HTMLElement {
   }
 }
 
-// Only define if not already defined
-if (!customElements.get('x-card')) {
-  customElements.define('x-card', WBCard);
-}
+// Component tags are gone, so this element is no longer defined.
+// The class stays: other exports in this file are still imported.

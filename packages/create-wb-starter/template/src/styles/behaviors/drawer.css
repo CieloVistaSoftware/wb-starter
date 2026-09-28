@@ -149,11 +149,11 @@
 /* variant="push" (drawer.schema.json's variant enum) -- shoves the page's
    own content aside instead of dimming it with a `.x-drawer__backdrop`
    (Material Design's "push" navigation drawer is the reference pattern).
-   overlay.js's drawer() PATH B applies these classes to the page's
-   `body > .page` wrapper, never to document.body itself (see the comment
-   in overlay.js's show() for why: the panel is a position:fixed direct
-   child of body, so transforming body would break the panel's own
-   fixed-to-viewport positioning). --x-drawer-push-x/-y are set per-open by
+   overlay.js's pushPageAside() (both drawer() paths) applies these classes
+   to the page's `body > .page` wrapper, or to body's in-flow children on a
+   page without one -- never to document.body itself (see pushPageAside() for
+   why: the panel is a position:fixed direct child of body, so transforming
+   body would break the panel's own fixed-to-viewport positioning). --x-drawer-push-x/-y are set per-open by
    JS to the panel's actual measured width/height (signed by edge), not a
    fixed value, so this works for any configured width/height/position. */
 .x-drawer-push-target {
@@ -166,7 +166,7 @@
 
 /* variant="default" and variant="overlay" are intentionally identical
    interactively (both use the dimming .x-drawer__backdrop above) --
-   docs/behaviors/drawer.md documents no distinct treatment for "default",
+   docs/components/drawer.md documents no distinct treatment for "default",
    and drawer.schema.json's own declared property default IS "overlay", so
    "default" is treated as an explicit alias rather than inventing a third
    undocumented interaction. The x-drawer--default/x-drawer--overlay

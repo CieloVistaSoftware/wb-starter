@@ -58,29 +58,12 @@ export function form(element, options = {}) {
 /**
  * Fieldset - Form field group
  */
-export function fieldset(element, options = {}) {
-  const config = {
-    // #697: the plain attribute is the v3 form (TIER1-LAWS 11). data-collapsible
-    // is kept as a fallback so markup already authored against it keeps working.
-    collapsible: options.collapsible
-      ?? (element.hasAttribute('collapsible') || readFlag(element, 'collapsible')),
-    collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
-    ...options
-  };
-
+export function fieldset(element) {
+  // #999 — `collapsible`/`collapsed` deleted. A fieldset groups controls; it
+  // has no disclosure semantics, and this was the SECOND implementation of an
+  // inert toggle (see src/wb-viewmodels/fieldset.js). Both assigned
+  // legend.onclick, so one silently overwrote the other.
   element.classList.add('x-fieldset');
-
-  const legend = element.querySelector('legend');
-  if (legend && config.collapsible) {
-    legend.classList.add('x-fieldset__legend', 'x-fieldset__legend--collapsible');
-    
-    if (config.collapsed) element.classList.add('x-fieldset--collapsed');
-    
-    legend.onclick = () => {
-      element.classList.toggle('x-fieldset--collapsed');
-    };
-  }
-
   return () => element.classList.remove('x-fieldset');
 }
 
@@ -259,41 +242,19 @@ export function password(element, options = {}) {
   }
 
   const wrapper = document.createElement('div');
+  // #779: wrapper, field, toggle and strength meter are .x-password* rules
+  // in password.css -- they were cssText blocks here.
   wrapper.className = 'x-password';
-  wrapper.style.cssText = 'position:relative;display:flex;align-items:stretch;width:100%;';
   element.parentNode.insertBefore(wrapper, element);
   wrapper.appendChild(element);
+  // Room for the toggle button: .x-password__input in password.css.
   element.classList.add('x-password__input');
-  
-  // Style input to have room for toggle button
-  element.style.cssText = `
-    flex:1;
-    padding-right:2.5rem;
-    border:1px solid var(--border-color,#374151);
-    border-radius:6px;
-    background:var(--bg-secondary,#1f2937);
-    color:var(--text-primary,#f9fafb);
-    font-size:0.875rem;
-    height:2.5rem;
-    padding-left:0.75rem;
-    width:100%;
-  `;
 
   if (config.toggle) {
     const toggleBtn = document.createElement('button');
     toggleBtn.type = 'button';
     toggleBtn.className = 'x-password__toggle';
-    toggleBtn.style.cssText = `
-      position:absolute;
-      right:0;
-      top:0;
-      height:100%;
-      width:2.5rem;
-      border:none;
-      background:transparent;
-    `;
-    toggleBtn.addEventListener('mouseenter', () => toggleBtn.style.opacity = '1');
-    toggleBtn.addEventListener('mouseleave', () => toggleBtn.style.opacity = '0.6');
+    // Hover: `.x-password__toggle:hover` in password.css (#779).
     
     wrapper.appendChild(toggleBtn);
   }
@@ -301,33 +262,16 @@ export function password(element, options = {}) {
   if (config.strength) {
     const meter = document.createElement('div');
     meter.className = 'x-password__strength';
-    meter.style.cssText = `
-      position:absolute;
-      bottom:-4px;
-      left:0;
-      right:0;
-      height:3px;
-      background:var(--bg-tertiary,#374151);
-      border-radius:2px;
-      overflow:hidden;
-    `;
     
     const bar = document.createElement('div');
-    bar.style.cssText = `
-      height:100%;
-      width:0%;
-      transition:width 0.3s, background 0.3s;
-      border-radius:2px;
-    `;
+    // Width and colour follow the 0-4 score: x-password__strength-bar--s{n}.
+    bar.className = 'x-password__strength-bar x-password__strength-bar--s0';
     meter.appendChild(bar);
     wrapper.appendChild(meter);
     
-    const colors = ['#ef4444', '#f59e0b', '#eab308', '#22c55e'];
-    
     element.addEventListener('input', () => {
       const score = getPasswordStrength(element.value);
-      bar.style.width = `${score * 25}%`;
-      bar.style.background = colors[score - 1] || colors[0];
+      bar.className = `x-password__strength-bar x-password__strength-bar--s${score}`;
     });
   }
 
@@ -335,7 +279,6 @@ export function password(element, options = {}) {
     wrapper.parentNode.insertBefore(element, wrapper);
     wrapper.remove();
     element.classList.remove('x-password__input');
-    element.style.cssText = '';
   };
 }
 
@@ -524,10 +467,10 @@ export function otp(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-otp');
+  // #779: layout and cells are enhancements.css (see that file's header --
+  // nothing imports this module; the live behavior is otp.js).
+  element.classList.add('x-otp', 'x-otp--legacy');
   element.innerHTML = '';
-  element.style.display = 'flex';
-  element.style.gap = '0.5rem';
 
   const inputs = [];
   for (let i = 0; i < config.length; i++) {
@@ -535,8 +478,7 @@ export function otp(element, options = {}) {
     input.type = 'text';
     input.maxLength = 1;
     input.className = 'x-otp__input';
-    input.style.cssText = 'width:2.5rem;height:3rem;text-align:center;font-size:1.25rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);color:var(--text-primary,#f9fafb);';
-    
+
     input.oninput = (e) => {
       const val = e.target.value.replace(/\D/g, '');
       e.target.value = val;
@@ -598,8 +540,7 @@ export function colorpicker(element, options = {}) {
   }
   
   input.value = config.value;
-  input.classList.add('x-colorpicker');
-  input.style.cssText = 'width:3rem;height:3rem;padding:0;border:none;border-radius:6px;cursor:pointer;background:none;';
+  input.classList.add('x-colorpicker', 'x-colorpicker--legacy'); // enhancements.css (#779)
 
   return () => {
     input.classList.remove('x-colorpicker');
@@ -619,8 +560,7 @@ export function tags(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-tags');
-  element.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.5rem;border:1px solid var(--border-color,#374151);border-radius:6px;background:var(--bg-secondary,#1f2937);min-height:2.5rem;';
+  element.classList.add('x-tags', 'x-tags--legacy'); // enhancements.css (#779)
 
   const renderTags = () => {
     // Keep input if exists
@@ -630,13 +570,12 @@ export function tags(element, options = {}) {
     config.items.forEach((item, i) => {
       const tag = document.createElement('span');
       tag.className = 'x-tag';
-      tag.style.cssText = 'display:inline-flex;align-items:center;gap:0.25rem;padding:0.25rem 0.5rem;background:var(--primary,#6366f1);color:white;border-radius:4px;font-size:0.875rem;';
       tag.innerHTML = `<span>${item}</span>`;
       
       if (config.editable) {
         const remove = document.createElement('button');
         remove.textContent = '×';
-        remove.style.cssText = 'background:none;border:none;color:white;cursor:pointer;padding:0;font-size:1rem;line-height:1;opacity:0.8;';
+        remove.className = 'x-tag__remove';
         remove.onclick = () => {
           config.items.splice(i, 1);
           renderTags();
@@ -653,7 +592,7 @@ export function tags(element, options = {}) {
       } else {
         const newInput = document.createElement('input');
         newInput.placeholder = config.placeholder;
-        newInput.style.cssText = 'border:none;background:transparent;color:var(--text-primary,#f9fafb);outline:none;flex:1;min-width:60px;font-size:0.875rem;';
+        newInput.className = 'x-tags__new';
         
         newInput.onkeydown = (e) => {
           if (e.key === 'Enter') {
@@ -718,44 +657,41 @@ export function file(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-file');
-  element.style.display = 'none'; // Hide original container if it's a div
+  // Hidden original container, hidden input, dropzone and its states are
+  // enhancements.css (#779); nothing imports this module -- file.js is live.
+  element.classList.add('x-file', 'x-file--legacy-hidden');
 
   // Create hidden input
   const input = document.createElement('input');
   input.type = 'file';
   if (config.multiple) input.multiple = true;
   if (config.accept) input.accept = config.accept;
-  input.style.display = 'none';
+  input.hidden = true;
   element.appendChild(input);
 
   // Create UI
   const dropzone = document.createElement('div');
   dropzone.className = 'x-file-dropzone';
-  dropzone.style.cssText = 'border:2px dashed var(--border-color,#374151);border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--bg-secondary,#1f2937);';
   dropzone.innerHTML = `
-    <div style="font-size:2rem;margin-bottom:0.5rem;">📁</div>
-    <div style="color:var(--text-primary,#f9fafb);font-weight:500;">Click or drag files here</div>
-    <div style="color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;">${config.accept || 'Any file'}</div>
+    <div class="x-file-dropzone__icon">📁</div>
+    <div class="x-file-dropzone__title">Click or drag files here</div>
+    <div class="x-file-dropzone__hint">${config.accept || 'Any file'}</div>
   `;
 
   dropzone.onclick = () => input.click();
 
   dropzone.ondragover = (e) => {
     e.preventDefault();
-    dropzone.style.borderColor = 'var(--primary,#6366f1)';
-    dropzone.style.background = 'rgba(99,102,241,0.1)';
+    dropzone.classList.add('x-file-dropzone--over');
   };
 
   dropzone.ondragleave = () => {
-    dropzone.style.borderColor = 'var(--border-color,#374151)';
-    dropzone.style.background = 'var(--bg-secondary,#1f2937)';
+    dropzone.classList.remove('x-file-dropzone--over');
   };
 
   dropzone.ondrop = (e) => {
     e.preventDefault();
-    dropzone.style.borderColor = 'var(--border-color,#374151)';
-    dropzone.style.background = 'var(--bg-secondary,#1f2937)';
+    dropzone.classList.remove('x-file-dropzone--over');
     if (e.dataTransfer.files.length) {
       input.files = e.dataTransfer.files;
       updateLabel();
@@ -770,24 +706,24 @@ export function file(element, options = {}) {
       
       // Show uploading state
       dropzone.innerHTML = `
-        <div style="font-size:2rem;margin-bottom:0.5rem;">⏳</div>
-        <div style="color:var(--text-primary,#f9fafb);font-weight:500;">Uploading...</div>
-        <div class="x-file-progress" style="width:100%;height:4px;background:var(--bg-tertiary,#374151);margin-top:1rem;border-radius:2px;overflow:hidden;">
-          <div style="width:0%;height:100%;background:var(--primary,#6366f1);transition:width 1.5s ease-out;"></div>
+        <div class="x-file-dropzone__icon">⏳</div>
+        <div class="x-file-dropzone__title">Uploading...</div>
+        <div class="x-file-progress">
+          <div class="x-file-progress__bar"></div>
         </div>
       `;
-      
+
       // Simulate upload
       setTimeout(() => {
-        const progressBar = dropzone.querySelector('.x-file-progress div');
-        if (progressBar) progressBar.style.width = '100%';
-        
+        const progressBar = dropzone.querySelector('.x-file-progress__bar');
+        if (progressBar) progressBar.classList.add('x-file-progress__bar--done');
+
         setTimeout(() => {
           dropzone.innerHTML = `
-            <div style="font-size:2rem;margin-bottom:0.5rem;color:var(--success,#22c55e);">✅</div>
-            <div style="color:var(--text-primary,#f9fafb);font-weight:500;">${input.files.length} file(s) uploaded</div>
-            <div style="color:var(--text-secondary,#9ca3af);font-size:0.875rem;margin-top:0.25rem;word-break:break-all;">
-              Location: <span style="color:var(--primary,#6366f1);cursor:pointer;">/uploads/${names}</span>
+            <div class="x-file-dropzone__icon x-file-dropzone__icon--done">✅</div>
+            <div class="x-file-dropzone__title">${input.files.length} file(s) uploaded</div>
+            <div class="x-file-dropzone__hint x-file-dropzone__hint--path">
+              Location: <span class="x-file-dropzone__path">/uploads/${names}</span>
             </div>
           `;
         }, 1500);
@@ -796,12 +732,12 @@ export function file(element, options = {}) {
   }
 
   element.parentNode.insertBefore(dropzone, element);
-  // We keep element in DOM but hidden to hold state/events if needed, or just use dropzone as replacement
-  element.style.display = 'none';
+  // We keep element in DOM but hidden (x-file--legacy-hidden, added above)
+  // to hold state/events if needed, or just use dropzone as replacement
 
   return () => {
     dropzone.remove();
-    element.style.display = '';
+    element.classList.remove('x-file--legacy-hidden');
   };
 }
 

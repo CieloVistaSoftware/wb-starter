@@ -30,6 +30,21 @@
   font-size: var(--text-sm);
 }
 
+/* label-position="right" on a label that WRAPS its control
+   (<label>Name <input></label>). label.js moves a GENERATED label (x-label="…"
+   on the control) to the control's right by DOM order, but a wrapping label
+   has only one element to reorder -- itself -- so the class was added and
+   nothing moved: left and right rendered identically (#773). Reversing the
+   row puts the text after the control, the same reading order the generated
+   form gets. */
+.x-label--right:has(input, select, textarea) {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .x-label--required::after {
   content: ' *';
   color: var(--danger-color);

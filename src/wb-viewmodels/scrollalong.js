@@ -1,4 +1,5 @@
 import { readAttr } from '../core/read-attr.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * ScrollAlong Behavior (Sticky Sidebar / Tag Along Menu)
  * -----------------------------------------------------------------------------
@@ -37,9 +38,13 @@ export function scrollalong(element, options = {}) {
     10
   );
 
-  // Apply Sticky Positioning
-  // We assume the element is already sized correctly by CSS
-  element.style.position = 'sticky';
-  element.style.top = `${Number.isFinite(offset) ? offset : 0}px`;
-  element.style.alignSelf = 'flex-start';
+  // Sticky positioning is .x-scrollalong in scrollalong.css (#779). Only an
+  // authored offset travels, as a generated rule -- never element.style.
+  const top = Number.isFinite(offset) ? offset : 0;
+  if (top) setRule(element, 'offset', { top: `${top}px` });
+
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-scrollalong');
+  };
 }

@@ -19,13 +19,12 @@
     "label": {
       "type": "string",
       "description": "Label text",
-      "default": ""
+      "default": "this is the label"
     },
     "checked": {
       "type": "boolean",
       "description": "Checked state",
-      "default": false,
-      "appliesClass": "x-checkbox--checked"
+      "default": false
     },
     "disabled": {
       "type": "boolean",
@@ -40,17 +39,19 @@
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "value": {
       "type": "string",
       "description": "Form field value",
-      "default": ""
+      "default": "this is the value"
     },
     "required": {
       "type": "boolean",
       "description": "Required field",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A form-validation constraint: submitting without it checked is refused. Nothing is drawn for it (#773)."
     },
     "size": {
       "type": "string",
@@ -69,7 +70,7 @@
         "primary",
         "success"
       ],
-      "default": "default",
+      "default": "primary",
       "appliesClass": "x-checkbox--{{value}}"
     }
   },
@@ -79,7 +80,9 @@
       "tag": "input",
       "public": false,
       "required": true,
-      "attributes": { "type": "checkbox" },
+      "attributes": {
+        "type": "checkbox"
+      },
       "description": "Hidden native checkbox"
     },
     {
@@ -205,8 +208,7 @@
           "action": "click",
           "expect": {
             "event": "wb:checkbox:change",
-            "checked": true,
-            "hasClass": "x-checkbox--checked"
+            "checked": true
           }
         }
       ],
@@ -215,8 +217,7 @@
           "name": "Checked State",
           "setup": "<div x-checkbox label='Checked' checked></div>",
           "expect": {
-            "checked": true,
-            "hasClass": "x-checkbox--checked"
+            "checked": true
           }
         }
       ],

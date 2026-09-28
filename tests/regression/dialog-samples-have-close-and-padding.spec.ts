@@ -238,11 +238,16 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
 
     // The show-close="false" sample must exist (otherwise the exemption below
     // is exempting nothing and could hide a regression) and must honour it.
+    // One per authoring form: the <dialog> group and the x-dialog group each
+    // list a showClose=false row. It used to be one, because the semantic
+    // row's option was written onto the example's TRIGGER <button> instead of
+    // its <dialog> (#773) -- so that row demonstrated nothing, and was not
+    // counted here.
     const optedOut = findings.filter((f: any) => f.rendered && f.closeOptedOut);
     expect(
       optedOut.length,
-      'expected exactly one dialog sample demonstrating show-close="false"',
-    ).toBe(1);
+      'expected one dialog sample per authoring form demonstrating show-close="false"',
+    ).toBe(2);
     expect(
       optedOut.filter((f: any) => f.closeVisible).map((f: any) => f.label),
       'show-close="false" was ignored -- these samples still show a close button',

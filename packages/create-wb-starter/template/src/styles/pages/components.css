@@ -1,6 +1,6 @@
 
 
-/* Extracted from pages/behaviors.html */
+/* Extracted from pages/components.html */
 /* Page Hero */
 .page__hero {
   text-align: center;
@@ -21,27 +21,27 @@
   color: var(--text-secondary);
 }
 
-/* Behavior Sections */
-.behavior-section {
+/* Component Sections */
+.component-section {
   margin-bottom: 3rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--border-color);
 }
 
-.behavior-section:last-of-type {
+.component-section:last-of-type {
   border-bottom: none;
 }
 
 /* Direct-child combinator (`>`), not a descendant selector -- these are meant
    for this page's OWN section headings only (`<h3>Basic Cards</h3>` etc.,
-   direct children of `.behavior-section`). A descendant selector also
-   matched a behavior's own internal heading nested several levels deep
+   direct children of `.component-section`). A descendant selector also
+   matched a component's own internal heading nested several levels deep
    (e.g. `<article><header><div><h3 class="x-card__title">`), and used to
-   win there too since `.behavior-section h3` (0,1,1) outranks
+   win there too since `.component-section h3` (0,1,1) outranks
    `.x-card__title` (0,1,0) -- invisible while card.js still set the title's
    margin/font-size inline (always beats any class), but a real regression
    once that inline style was migrated to card.css alone (Law 9, #370). */
-.behavior-section > h2 {
+.component-section > h2 {
   margin: 0 0 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 2px solid var(--primary);
@@ -49,17 +49,17 @@
   font-size: 1.5rem;
 }
 
-#main .behavior-section > h3 {
+#main .component-section > h3 {
   margin: 2rem 0 1rem;
   color: var(--text-secondary);
   font-size: 1rem;
   font-weight: 600;
 }
 
-/* MOBILE-FIRST: Responsive overrides for behaviors page */
+/* MOBILE-FIRST: Responsive overrides for components page */
 @media (max-width: 600px) {
   .page__hero,
-  .behavior-section {
+  .component-section {
     padding: 1rem !important;
     margin: 0 !important;
     border-radius: 8px !important;
@@ -70,7 +70,7 @@
     font-size: 1.2rem !important;
   }
 
-  /* #390: .behavior-section already gives its content 1rem of horizontal
+  /* #390: .component-section already gives its content 1rem of horizontal
      breathing room (its own padding, above) -- x-demo's own 1rem
      horizontal padding (Standard §13, demo.css) then stacked ON TOP of
      that, pushing the code panel ~2rem from the section edge instead of
@@ -81,7 +81,7 @@
      mobile sections only -- x-demo elsewhere (standalone demo pages, docs
      markdown with no padded ancestor) keeps its own full 1rem, still the
      only source of breathing room there. */
-  .behavior-section x-demo {
+  .component-section x-demo {
     padding-left: 0;
     padding-right: 0;
   }
@@ -163,12 +163,12 @@
   text-decoration: underline;
 }
 
-/* Behavior Index (sortable/searchable catalog, top of the behaviors page) */
-.behavior-index {
+/* Component Index (sortable/searchable catalog, top of the components page) */
+.component-index {
   margin-bottom: 2.5rem;
 }
 
-.behavior-index__toolbar {
+.component-index__toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -176,12 +176,12 @@
   margin-bottom: 0.75rem;
 }
 
-.behavior-index__label {
+.component-index__label {
   font-weight: 600;
   color: var(--text-primary);
 }
 
-.behavior-index__search {
+.component-index__search {
   flex: 1 1 240px;
   min-width: 200px;
   padding: 0.5rem 0.75rem;
@@ -192,23 +192,23 @@
   font-size: 0.9rem;
 }
 
-.behavior-index__summary {
+.component-index__summary {
   color: var(--text-secondary);
   font-size: 0.875rem;
   white-space: nowrap;
 }
 
-.behavior-index__status {
+.component-index__status {
   color: var(--text-secondary);
 }
 
-.behavior-index__table {
+.component-index__table {
   width: 100%;
   border-collapse: collapse;
   color: var(--text-primary);
 }
 
-.behavior-index__table th {
+.component-index__table th {
   text-align: left;
   padding: 1rem;
   background: var(--bg-tertiary);
@@ -217,34 +217,34 @@
   cursor: pointer;
 }
 
-.behavior-index__table th[sort]:hover {
+.component-index__table th[sort]:hover {
   color: var(--primary);
 }
 
-.behavior-index__table th[aria-sort="ascending"]::after {
+.component-index__table th[aria-sort="ascending"]::after {
   content: " \25B2";
 }
 
-.behavior-index__table th[aria-sort="descending"]::after {
+.component-index__table th[aria-sort="descending"]::after {
   content: " \25BC";
 }
 
-.behavior-index__table td {
+.component-index__table td {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border-color);
   vertical-align: top;
 }
 
-.behavior-index__table tbody tr:hover {
+.component-index__table tbody tr:hover {
   background: var(--bg-secondary);
 }
 
-.behavior-index__muted {
+.component-index__muted {
   color: var(--text-secondary);
 }
 
 @media (max-width: 600px) {
-  .behavior-index__table {
+  .component-index__table {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;

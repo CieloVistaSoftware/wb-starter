@@ -25,12 +25,12 @@
       "type": "string",
       "description": "Short biography",
       "inputType": "textarea",
-      "default": ""
+      "default": "this is the bio"
     },
     "cover": {
       "type": "string",
       "description": "Cover/banner image URL",
-      "default": ""
+      "default": "this is the cover"
     },
     "size": {
       "type": "string",
@@ -56,7 +56,7 @@
     "hoverText": {
       "type": "string",
       "description": "Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283).",
-      "default": "",
+      "default": "this is the hover text",
       "appliesAttribute": "x-tooltip"
     }
   },

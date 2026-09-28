@@ -272,7 +272,9 @@ export function table(element, options = {}) {
       rows.forEach((row, i) => {
         const text = row.textContent.toLowerCase();
         const match = !term || text.includes(term);
-        row.style.display = match ? '' : 'none';
+        // A class, not style.display (#779) -- and not `hidden`, which the
+        // pager below owns: a row can be off-page and filtered out at once.
+        row.classList.toggle('x-table__row--filtered', !match);
       });
     };
   }
@@ -281,7 +283,7 @@ export function table(element, options = {}) {
   if (config.sortable) {
     const headers = tableEl.querySelectorAll('th');
     headers.forEach((th, colIndex) => {
-      th.style.cursor = 'pointer';
+      th.classList.add('x-table__sortable');   // pointer cursor, data.css (#779)
       th.onclick = () => {
         if (sortCol === colIndex) {
           sortDir = sortDir === 'asc' ? 'desc' : 'asc';
@@ -341,7 +343,7 @@ export function table(element, options = {}) {
   if (config.selectable) {
     const tableRows = tableEl.querySelectorAll('tbody tr');
     tableRows.forEach((tr, index) => {
-      tr.style.cursor = 'pointer';
+      tr.classList.add('x-table__selectable');   // pointer cursor, data.css (#779)
       tr.onclick = (e) => {
         if (e.target.closest('a, button, input')) return;
         // #592: the demo hint text ("Hold Ctrl/Cmd to multi-select") was
@@ -375,7 +377,7 @@ export function table(element, options = {}) {
         });
       }
     });
-    tableEl.style.cursor = 'pointer';
+    tableEl.classList.add('x-table--copyable');   // pointer cursor, data.css (#779)
   }
 
   // #669: pagination. Built after sorting and search wiring so it sees the final row

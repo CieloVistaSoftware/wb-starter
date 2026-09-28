@@ -30,18 +30,18 @@
     "title": {
       "type": "string",
       "description": "Notification title",
-      "default": ""
+      "default": "this is the title"
     },
     "message": {
       "type": "string",
       "description": "Notification message",
       "required": true,
-      "default": ""
+      "default": "this is the message"
     },
     "icon": {
       "type": "string",
       "description": "Custom icon (overrides variant-based icon)",
-      "default": ""
+      "default": "this is the icon"
     },
     "dismissible": {
       "type": "boolean",

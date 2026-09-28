@@ -6,17 +6,19 @@
 
 /* #448: tag selectors -- notes() no longer adds a redundant classList.add
    ('x-notes') that just duplicated the <div x-notes> tag name. */
-x-notes {
+x-notes, [x-notes]{
   --notes-max-width: 50vw;
   --notes-min-width: 200px;
+  /* default-width="320px" -- notes.js used to write it inline (#779). */
+  width: 20rem;
 }
 
 /* Start hidden - only show when x-notes--open class is added */
-x-notes .x-notes__drawer {
+x-notes .x-notes__drawer, [x-notes] .x-notes__drawer{
   display: none !important;
 }
 
-x-notes.x-notes--open .x-notes__drawer {
+x-notes.x-notes--open .x-notes__drawer, [x-notes].x-notes--open .x-notes__drawer{
   display: flex !important;
 }
 
@@ -41,7 +43,7 @@ x-notes.x-notes--open .x-notes__drawer {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 320px;
+  width: 20rem;
   min-width: var(--notes-min-width);
   max-width: var(--notes-max-width);
   background: var(--bg-primary);
@@ -57,7 +59,7 @@ x-notes.x-notes--open .x-notes__drawer {
 .x-notes--left .x-notes__drawer {
   left: 0;
   transform: translateX(-100%);
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .x-notes--left.x-notes--open .x-notes__drawer {
@@ -68,7 +70,7 @@ x-notes.x-notes--open .x-notes__drawer {
   position: absolute;
   right: 0;
   top: 0;
-  width: 6px;
+  width: 0.375rem;
   height: 100%;
   cursor: ew-resize;
 }
@@ -78,7 +80,7 @@ x-notes.x-notes--open .x-notes__drawer {
   right: 0;
   left: auto;
   transform: translateX(100%);
-  border-radius: 8px 0 0 8px;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 
 .x-notes--right.x-notes--open .x-notes__drawer {
@@ -89,7 +91,7 @@ x-notes.x-notes--open .x-notes__drawer {
   position: absolute;
   left: 0;
   top: 0;
-  width: 6px;
+  width: 0.375rem;
   height: 100%;
   cursor: ew-resize;
 }
@@ -103,10 +105,10 @@ x-notes.x-notes--open .x-notes__drawer {
   transform: translate(-50%, -50%) scale(0.9);
   opacity: 0;
   pointer-events: none;
-  width: 500px;
+  width: 31.25rem;
   max-width: 90vw;
   max-height: 80vh;
-  border-radius: 12px;
+  border-radius: 0.75rem;
 }
 
 .x-notes--modal.x-notes--open .x-notes__drawer {
@@ -129,8 +131,8 @@ x-notes.x-notes--open .x-notes__drawer {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   cursor: nwse-resize;
   z-index: 10;
 }
@@ -138,10 +140,10 @@ x-notes.x-notes--open .x-notes__drawer {
 .x-notes--modal .x-notes__resize-handle-modal::before {
   content: '';
   position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
+  bottom: 0.25rem;
+  right: 0.25rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-right: 2px solid var(--text-muted);
   border-bottom: 2px solid var(--text-muted);
 }
@@ -163,7 +165,10 @@ x-notes.x-notes--open .x-notes__drawer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.375rem 0.5rem;
+  /* 0.5rem above the title: at 0.375rem the title sat visibly tighter to the
+     panel's top edge than to its sides (tests/components/notes.spec.ts pins
+     the 0.5rem gap). Bottom stays 0.375rem -- the border already separates it. */
+  padding: 0.5rem 0.5rem 0.375rem;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-secondary);
   flex-shrink: 0;
@@ -207,13 +212,13 @@ x-notes.x-notes--open .x-notes__drawer {
 
 .x-notes__wide-btn {
   flex: 0 1 auto;
-  min-width: 22px;
-  height: 22px;
+  min-width: 1.375rem;
+  height: 1.375rem;
   padding: 0 0.375rem;
   white-space: nowrap;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-color);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
   cursor: pointer;
   font-size: 0.7rem;
   color: var(--text-primary);
@@ -251,10 +256,10 @@ x-notes.x-notes--open .x-notes__drawer {
    the toolbar rows below. */
 .x-notes__close-corner {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
@@ -301,7 +306,7 @@ x-notes.x-notes--open .x-notes__drawer {
   padding: 0.375rem 0.5rem;
   border-top: 1px solid var(--border-color);
   background: var(--bg-secondary);
-  min-height: 32px;
+  min-height: 2rem;
   flex-shrink: 0;
   gap: 0.25rem;
 }
@@ -327,4 +332,120 @@ x-notes.x-notes--open .x-notes__drawer {
 
 .x-notes__status--info {
   color: var(--info-color);
+}
+
+/* ---------------------------------------------------------------------------
+   #779 — styles notes.js used to write onto element.style / style=""
+   --------------------------------------------------------------------------- */
+
+/* Element picker: the hovered candidate, and the crosshair while picking. */
+.x-notes-pick-target {
+  outline: 2px solid var(--primary);
+}
+
+body.x-notes-picking {
+  cursor: crosshair;
+}
+
+/* Lookup overlay (the searchable list of saved notes). */
+.x-notes__lookup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.x-notes__lookup-content {
+  background: var(--bg-secondary);
+  width: 100%;
+  max-width: 50rem;
+  max-height: 80vh;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-color);
+}
+
+.x-notes__lookup-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--bg-tertiary);
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.x-notes__lookup-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.x-notes__lookup-title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* Scoped under the overlay: themes.css's `[data-theme] button` (0,1,1) and
+   input.css's bare-control rules would otherwise win over a single class. */
+.x-notes__lookup .x-notes__lookup-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.x-notes__lookup .x-notes__lookup-search {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.x-notes__lookup-body {
+  padding: 0.5rem;
+  overflow: auto;
+  flex: 1;
+  background: var(--bg-code, #1e1e1e);
+}
+
+.x-notes__lookup-empty {
+  color: var(--text-secondary);
+  padding: 1rem;
+  text-align: center;
+}
+
+.x-notes__lookup .x-notes__lookup-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.x-notes__lookup-meta {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.x-notes__lookup-preview {
+  font-size: 0.85rem;
 }

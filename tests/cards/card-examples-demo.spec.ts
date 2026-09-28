@@ -397,7 +397,11 @@ test.describe('Interactivity', () => {
     // under load in the pre-commit gate.
     await buildInView(hero);
     const ctas = hero.locator('.x-hero-cta');
-    expect(await ctas.count()).toBeGreaterThanOrEqual(1);
+    // A retrying assertion, not a one-shot count(): loadPage() only waits for
+    // the gallery's FIRST demo, and the hero card sits in a later one, so a
+    // one-shot count raced its render and passed only while the page was slow
+    // enough to lose the race (it lost it once #779 took the style writes out).
+    await expect(ctas).not.toHaveCount(0);
     await expect(ctas.first()).toContainText('Shop Now');
   });
 

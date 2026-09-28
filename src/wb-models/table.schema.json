@@ -28,7 +28,9 @@
     "sortable": {
       "type": "boolean",
       "description": "Enable column sorting",
-      "default": true
+      "default": true,
+      "visual": false,
+      "visualReason": "Clicking a header sorts by it. Headers are drawn the same until one is clicked (#773)."
     },
     "filterable": {
       "type": "boolean",
@@ -55,7 +57,9 @@
       "type": "boolean",
       "description": "Hover effect on rows",
       "default": true,
-      "appliesClass": "x-table--hoverable"
+      "appliesClass": "x-table--hoverable",
+      "visual": false,
+      "visualReason": "Highlights the row under the pointer. Only hovering shows it (#773)."
     },
     "compact": {
       "type": "boolean",
@@ -82,17 +86,22 @@
     "searchable": {
       "type": "boolean",
       "default": false,
-      "description": "Show a filter input above the table. Alias of filterable."
+      "description": "Show a filter input above the table. Alias of filterable.",
+      "aliasOf": "filterable"
     },
     "copyable": {
       "type": "boolean",
       "default": false,
-      "description": "Add a control that copies the table as text."
+      "description": "Add a control that copies the table as text.",
+      "visual": false,
+      "visualReason": "Clicking a cell copies its text. Nothing is drawn for it (#773)."
     },
     "selectable": {
       "type": "boolean",
       "default": false,
-      "description": "Let a row be clicked to become the active row."
+      "description": "Let a row be clicked to become the active row.",
+      "visual": false,
+      "visualReason": "Clicking a row makes it the active row. Only the click shows it (#773)."
     }
   },
   "$view": [

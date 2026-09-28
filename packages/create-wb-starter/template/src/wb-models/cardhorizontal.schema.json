@@ -18,12 +18,12 @@
     "image": {
       "type": "string",
       "description": "Image URL",
-      "default": ""
+      "default": "this is the image"
     },
     "imageAlt": {
       "type": "string",
       "description": "Image alt text",
-      "default": ""
+      "default": "this is the image alt"
     },
     "imagePosition": {
       "type": "string",
@@ -43,12 +43,12 @@
     "title": {
       "type": "string",
       "description": "Card title",
-      "default": ""
+      "default": "this is the title"
     },
     "subtitle": {
       "type": "string",
       "description": "Card subtitle",
-      "default": ""
+      "default": "this is the subtitle"
     },
     "variant": {
       "type": "string",
@@ -193,7 +193,7 @@
       "<div x-cardhorizontal variant=\"default\">variant=default</div>",
       "<div x-cardhorizontal variant=\"elevated\">variant=elevated</div>",
       "<div x-cardhorizontal variant=\"bordered\">variant=bordered</div>",
-      "<div x-cardhorizontal image=\"Sample image\">image=\"Sample image\"</div>",
+      "<div x-cardhorizontal image=\"/images/dachshund-puppy-image-960x540.jpg\">image=\"/images/dachshund-puppy-image-960x540.jpg\"</div>",
       "<div x-cardhorizontal image-alt=\"Sample imageAlt\">imageAlt=\"Sample imageAlt\"</div>",
       "<div x-cardhorizontal title=\"Test Title\">With title attribute</div>",
       "<div x-cardhorizontal image=\"photo.jpg\" title=\"Title\"></div>"

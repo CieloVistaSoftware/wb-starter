@@ -217,16 +217,23 @@ test.describe('Source-Schema: Required Children', () => {
 
 test.describe('Source-Schema: Card Border Compliance', () => {
   
+  // #779: this used to demand `element.style.border =` in card.js -- an
+  // inline style, which the no-inline-styles rule forbids outright. It only
+  // ever passed on cardpricing's `featured` write, which had nothing to do
+  // with the shared composition it claimed to check. What it was guarding --
+  // every card gets a border -- is card.css's shared card rule, so that is
+  // what is asserted now.
   test('shared card composition sets border', () => {
-    const cardJsPath = path.join(PATHS.behaviorsJs, 'card.js');
-    if (!fileExists(cardJsPath)) {
+    const cardCssPath = path.join(ROOT, 'src', 'styles', 'behaviors', 'card.css');
+    if (!fileExists(cardCssPath)) {
       test.skip();
       return;
     }
-    
-    const cardJs = readFile(cardJsPath);
-    const hasBorder = cardJs.includes("element.style.border =") || cardJs.includes("element.style.border=");
-    expect(hasBorder, 'shared card composition MUST set element.style.border').toBe(true);
+
+    const cardCss = readFile(cardCssPath);
+    const sharedRule = cardCss.match(/\.x-card,\s*\narticle,[^{]*\{([^}]*)\}/);
+    expect(sharedRule, 'card.css must declare the shared `.x-card, article, …` rule').not.toBeNull();
+    expect(sharedRule![1], 'the shared card rule MUST set a border').toMatch(/\bborder:\s*1px solid/);
   });
 });
 

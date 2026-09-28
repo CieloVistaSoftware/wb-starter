@@ -1,3 +1,5 @@
+import { setRule, clearRules } from '../core/dynamic-style.js';
+
 /**
  * Draggable Behavior
  * Helper Attribute: [x-draggable]
@@ -34,19 +36,23 @@ export function draggable(element, options = {}) {
     return () => {};
   }
 
+  // grab / grabbing cursors are draggable.css, keyed on these classes (#779).
   handle.classList.add('x-draggable__handle');
-  handle.style.cursor = 'grab';
 
   // State
   let isDragging = false;
   let startX, startY;
   let initialLeft, initialTop;
 
-  // Ensure element is positioned
+  // Ensure element is positioned -- a class, not element.style (#779).
   const computedStyle = window.getComputedStyle(element);
   if (computedStyle.position === 'static') {
-    element.style.position = 'relative';
+    element.classList.add('x-draggable--positioned');
   }
+
+  // The drag position is a runtime value, so it travels as a generated
+  // stylesheet rule (src/core/dynamic-style.js), never the style attribute.
+  const place = (x, y) => setRule(element, 'position', { left: `${x}px`, top: `${y}px` });
 
   // Get bounds
   const getBounds = () => {
@@ -121,11 +127,14 @@ export function draggable(element, options = {}) {
     // space the drag writes back into -- confirmed live: the old
     // offsetLeft-based version moved the element several multiples of
     // the actual mouse delta, worse on every subsequent drag.
-    initialLeft = parseFloat(element.style.left) || 0;
-    initialTop = parseFloat(element.style.top) || 0;
-    
+    // #779: the applied left/top now live in a generated rule rather than
+    // element.style, so they are read back as the computed value -- which
+    // is that rule's px value, or an author's own left/top.
+    const applied = window.getComputedStyle(element);
+    initialLeft = parseFloat(applied.left) || 0;
+    initialTop = parseFloat(applied.top) || 0;
+
     element.classList.add('x-draggable--dragging');
-    handle.style.cursor = 'grabbing';
     
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
@@ -161,8 +170,7 @@ export function draggable(element, options = {}) {
     // Apply bounds
     const constrained = constrain(newLeft, newTop);
     
-    element.style.left = `${constrained.x}px`;
-    element.style.top = `${constrained.y}px`;
+    place(constrained.x, constrained.y);
     
     element.dispatchEvent(new CustomEvent('wb:drag:move', {
       bubbles: true,
@@ -175,7 +183,6 @@ export function draggable(element, options = {}) {
     
     isDragging = false;
     element.classList.remove('x-draggable--dragging');
-    handle.style.cursor = 'grab';
     
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
@@ -207,19 +214,16 @@ export function draggable(element, options = {}) {
 
   // Expose methods
   element.wbDraggable = {
-    setPosition: (x, y) => {
-      element.style.left = `${x}px`;
-      element.style.top = `${y}px`;
-    },
+    setPosition: (x, y) => place(x, y),
     getPosition: () => ({ x: element.offsetLeft, y: element.offsetTop })
   };
 
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('x-draggable', 'x-draggable--dragging');
+    element.classList.remove('x-draggable', 'x-draggable--dragging', 'x-draggable--positioned');
     handle.classList.remove('x-draggable__handle');
-    handle.style.cursor = '';
+    clearRules(element);
     handle.removeEventListener('mousedown', onMouseDown);
     handle.removeEventListener('touchstart', onTouchStart);
     document.removeEventListener('mousemove', onMouseMove);

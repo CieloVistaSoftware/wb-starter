@@ -4,7 +4,12 @@
  *
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...).
+ *
+ * #779: the 3-column / 1rem grid is .x-gallery in gallery.css; only an
+ * author's own columns, size or gap travels, as a generated stylesheet rule.
  */
+import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
+
 export function gallery(element, options = {}) {
   const config = {
     columns: parseInt(options.columns || element.getAttribute('columns') || '3'),
@@ -20,11 +25,12 @@ export function gallery(element, options = {}) {
   };
 
   element.classList.add('x-gallery');
-  element.style.display = 'grid';
-  element.style.gridTemplateColumns = config.size
-    ? `repeat(auto-fill, minmax(${config.size}, 1fr))`
-    : `repeat(${config.columns}, 1fr)`;
-  element.style.gap = config.gap;
+  setRule(element, 'layout', onlyChanged({
+    gridTemplateColumns: config.size
+      ? `repeat(auto-fill, minmax(${config.size}, 1fr))`
+      : `repeat(${config.columns}, 1fr)`,
+    gap: config.gap,
+  }, { gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }));
 
   if (config.lightbox) {
     const images = element.querySelectorAll('img');
@@ -34,7 +40,7 @@ export function gallery(element, options = {}) {
     });
   }
 
-  return () => element.classList.remove('x-gallery');
+  return () => { clearRules(element); element.classList.remove('x-gallery'); };
 }
 
 function openGalleryLightbox(images, index) {

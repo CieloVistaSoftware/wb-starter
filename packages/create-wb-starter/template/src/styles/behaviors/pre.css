@@ -152,3 +152,11 @@
   position: absolute;
   right: 0.25rem;
 }
+
+/* #779: the hide-code toggle used to write display:none onto the <pre> and
+   its gutter. Doubled class so it beats `.x-pre { display: block }` and any
+   single-class display rule regardless of file order. */
+.x-pre.x-pre--collapsed,
+.x-pre__line-numbers.x-pre__line-numbers--collapsed {
+  display: none;
+}

@@ -1,5 +1,6 @@
 import { readFlag, readAttr } from '../../core/read-attr.js';
 import { reportIfThirdPartyMedia } from '../media-unreachable.js';
+import { setRule } from '../../core/dynamic-style.js';
 /**
  * Audio - Enhanced <audio> element with 15-Band Graphic Equalizer
  * Premium audio player with Web Audio API EQ, presets, and master volume
@@ -239,10 +240,16 @@ export function audio(element, options = {}) {
   // #669: an explicitly requested display or play button is a request for the
   // custom transport. Without this a plain <audio showdisplay> fell straight
   // through to native controls and the flag was inert.
+  // #773: explicitly set EITHER way, as config's own comment says. Only `true`
+  // opted in, so <audio show-play-button="false"> kept the native controls --
+  // whose play button cannot be hidden -- and the option did nothing at all.
+  // triState() leaves an unset flag undefined, so plain <audio> is unchanged.
   const needsCustomUI = element.tagName !== 'AUDIO' || config.showEq ||
-    config.showDisplay === true || config.showPlayButton === true;
+    config.showDisplay !== undefined || config.showPlayButton !== undefined;
+  // Hidden behind the custom UI by a class (audio.css), not display:none on
+  // the style attribute (#779).
   if (needsCustomUI && audioEl.tagName === 'AUDIO') {
-    audioEl.style.display = 'none';
+    audioEl.classList.add('x-audio__native--hidden');
   }
 
   // Starting gain per EQ band: `bass` lifts/cuts the four lowest bands
@@ -472,7 +479,15 @@ function buildTransportUI(element, audioEl, config) {
   volArea.className = 'x-audio__transport-vol';
   const volIcon = document.createElement('span');
   volIcon.className = 'x-audio__vol-icon';
-  volIcon.textContent = '\uD83D\uDD0A'; // 🔊
+  // #773: the icon states the element's real sound state. It was always the
+  // speaker-on glyph, so a player built with `muted` showed sound on while
+  // playing silently -- and the showcase's muted row rendered like loop.
+  const showVolume = () => {
+    volIcon.textContent = audioEl.muted ? '\uD83D\uDD07' : '\uD83D\uDD0A'; // 🔇 / 🔊
+    volIcon.setAttribute('aria-label', audioEl.muted ? 'Muted' : 'Sound on');
+  };
+  showVolume();
+  audioEl.addEventListener('volumechange', showVolume);
   volArea.appendChild(volIcon);
   transport.appendChild(volArea);
 
@@ -483,47 +498,37 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
   const sliders = [];
   const sliderVisuals = [];
 
+  // #779: the fill height is the gain, a runtime value -- a generated rule.
+  // Its colour (boost / cut / flat) is a state class on the band (audio.css);
+  // both used to be written onto element.style.
   function updateSliderVisual(sl, val, activeTrack, dbDisplay) {
     const percent = ((parseFloat(val) + 12) / 24) * 100;
-    if (activeTrack) activeTrack.style.height = percent + '%';
+    if (activeTrack) setRule(activeTrack, 'level', { height: percent + '%' });
     if (activeTrack && dbDisplay) {
-      if (val > 0) {
-        activeTrack.style.background = 'linear-gradient(180deg, #22c55e 0%, #84cc16 100%)';
-        dbDisplay.style.color = '#22c55e';
-      } else if (val < 0) {
-        activeTrack.style.background = 'linear-gradient(180deg, #ef4444 0%, #f97316 100%)';
-        dbDisplay.style.color = '#ef4444';
-      } else {
-        activeTrack.style.background = 'linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%)';
-        dbDisplay.style.color = '#6366f1';
+      const band = activeTrack.closest('.x-audio__eq-band');
+      const state = val > 0 ? 'boost' : val < 0 ? 'cut' : 'flat';
+      if (band) {
+        band.classList.remove('x-audio__eq-band--boost', 'x-audio__eq-band--cut', 'x-audio__eq-band--flat');
+        band.classList.add(`x-audio__eq-band--${state}`);
       }
       dbDisplay.textContent = (val > 0 ? '+' : '') + val;
     }
   }
 
   const eqContainer = document.createElement('div');
+  // #779: every part of the EQ below is an .x-audio__eq-* rule in audio.css
+  // -- they were Object.assign(el.style, …) blocks and style="" markup.
   eqContainer.className = 'x-audio__eq-container';
-  Object.assign(eqContainer.style, {
-    background: 'linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%)',
-    borderRadius: '12px',
-    padding: '1rem',
-    marginTop: '0.75rem',
-    border: '1px solid rgba(255,255,255,0.05)',
-    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.4)'
-  });
 
   // Header
   const headerRow = document.createElement('div');
-  Object.assign(headerRow.style, { display: 'flex', alignItems: 'center', marginBottom: '0.25rem' });
-  headerRow.innerHTML = '<span style="font-size:1.25rem;margin-right:0.5rem;">🎛️</span><span style="font-weight:600;color:#fff;font-size:0.9rem;">15-BAND GRAPHIC EQUALIZER</span>';
+  headerRow.className = 'x-audio__eq-header';
+  headerRow.innerHTML = '<span class="x-audio__eq-header-icon">🎛️</span><span class="x-audio__eq-header-title">15-BAND GRAPHIC EQUALIZER</span>';
   eqContainer.appendChild(headerRow);
 
   // Presets
   const buttonRow = document.createElement('div');
-  Object.assign(buttonRow.style, {
-    display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem',
-    paddingBottom: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.1)'
-  });
+  buttonRow.className = 'x-audio__eq-presets';
 
   const presetData = {
     'Flat': [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -558,9 +563,7 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
 
   // EQ Panel
   const eqPanel = document.createElement('div');
-  Object.assign(eqPanel.style, {
-    display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '0.25rem', padding: '0.5rem 0'
-  });
+  eqPanel.className = 'x-audio__eq-panel';
 
   EQ_BANDS.forEach((band, index) => {
     const { bandContainer, slider, activeTrack, dbDisplay } = createBandSlider(band, index, initAudioContext, filters, updateSliderVisual);
@@ -585,50 +588,32 @@ function buildEqUI(element, audioEl, config, initAudioContext, filters) {
 function createPresetButton(text) {
   const btn = document.createElement('button');
   btn.textContent = text;
-  Object.assign(btn.style, {
-    padding: '0.35rem 0.75rem', fontSize: '0.7rem',
-    background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
-    borderRadius: '4px', color: '#fff', cursor: 'pointer', transition: 'all 0.15s'
-  });
-  btn.onmouseenter = () => { btn.style.background = 'rgba(99,102,241,0.3)'; };
-  btn.onmouseleave = () => { btn.style.background = 'rgba(255,255,255,0.1)'; };
+  // Look and hover: .x-audio__eq-preset in audio.css (#779).
+  btn.className = 'x-audio__eq-preset';
   return btn;
 }
 
 function createBandSlider(band, index, initAudioContext, filters, updateSliderVisual) {
+  // A band starts un-adjusted: no state class yet, so the initial fill
+  // gradient and readout colour are the base rules (audio.css), exactly as
+  // before the first updateSliderVisual().
   const bandContainer = document.createElement('div');
-  Object.assign(bandContainer.style, {
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', flex: '1', minWidth: '0'
-  });
+  bandContainer.className = 'x-audio__eq-band';
 
   const dbDisplay = document.createElement('div');
-  Object.assign(dbDisplay.style, {
-    fontSize: '0.6rem', fontFamily: "'JetBrains Mono', monospace",
-    color: '#6366f1', fontWeight: '600', height: '1rem', textShadow: '0 0 8px rgba(99,102,241,0.5)'
-  });
+  dbDisplay.className = 'x-audio__eq-db';
   dbDisplay.textContent = '0';
   bandContainer.appendChild(dbDisplay);
 
   const sliderWrap = document.createElement('div');
-  Object.assign(sliderWrap.style, {
-    position: 'relative', width: '100%', height: '120px',
-    display: 'flex', justifyContent: 'center', alignItems: 'center'
-  });
+  sliderWrap.className = 'x-audio__eq-slider-wrap';
 
   const track = document.createElement('div');
-  Object.assign(track.style, {
-    position: 'absolute', width: '8px', height: '100%',
-    background: 'linear-gradient(180deg, #22c55e 0%, #84cc16 20%, #eab308 40%, #f97316 60%, #ef4444 80%, #dc2626 100%)',
-    borderRadius: '4px', opacity: '0.3', boxShadow: 'inset 0 0 4px rgba(0,0,0,0.5)'
-  });
+  track.className = 'x-audio__eq-track';
   sliderWrap.appendChild(track);
 
   const activeTrack = document.createElement('div');
-  Object.assign(activeTrack.style, {
-    position: 'absolute', width: '8px', height: '50%', bottom: '0',
-    background: 'linear-gradient(180deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)',
-    borderRadius: '4px', boxShadow: '0 0 10px rgba(99,102,241,0.5)', transition: 'height 0.1s ease'
-  });
+  activeTrack.className = 'x-audio__eq-fill';
   sliderWrap.appendChild(activeTrack);
 
   const slider = document.createElement('input');
@@ -637,11 +622,6 @@ function createBandSlider(band, index, initAudioContext, filters, updateSliderVi
   slider.max = 12;
   slider.value = 0;
   slider.className = 'x-audio__eq-slider';
-  Object.assign(slider.style, {
-    width: '120px', height: '24px', transform: 'rotate(-90deg)',
-    transformOrigin: 'center center', position: 'absolute',
-    background: 'transparent', cursor: 'pointer', margin: '0'
-  });
 
   slider.oninput = (e) => {
     initAudioContext();
@@ -654,14 +634,12 @@ function createBandSlider(band, index, initAudioContext, filters, updateSliderVi
   bandContainer.appendChild(sliderWrap);
 
   const freqLabel = document.createElement('div');
-  Object.assign(freqLabel.style, {
-    fontSize: '0.55rem', color: 'rgba(255,255,255,0.5)', fontWeight: '500', marginTop: '0.25rem'
-  });
+  freqLabel.className = 'x-audio__eq-freq';
   freqLabel.textContent = band.label;
   bandContainer.appendChild(freqLabel);
 
   const hzLabel = document.createElement('div');
-  Object.assign(hzLabel.style, { fontSize: '0.45rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' });
+  hzLabel.className = 'x-audio__eq-hz';
   hzLabel.textContent = 'Hz';
   bandContainer.appendChild(hzLabel);
 
@@ -669,22 +647,19 @@ function createBandSlider(band, index, initAudioContext, filters, updateSliderVi
 }
 
 function createVolumeRow(audioEl, config) {
+  // #779: the master row, its play button, label, slider and readout are
+  // .x-audio__master-* rules in audio.css.
   const volumeRow = document.createElement('div');
-  Object.assign(volumeRow.style, {
-    display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem',
-    padding: '0.75rem', background: 'rgba(0,0,0,0.3)', borderRadius: '8px'
-  });
+  volumeRow.className = 'x-audio__master';
 
   // Play button
   const playBtn = document.createElement('button');
-  playBtn.innerHTML = '<span style="font-size:1.25rem;">🔊</span>';
-  Object.assign(playBtn.style, {
-    background: 'none', border: 'none', cursor: 'pointer', padding: '0 0.5rem 0 0'
-  });
-  
+  playBtn.className = 'x-audio__master-play';
+  playBtn.innerHTML = '<span class="x-audio__master-icon">🔊</span>';
+
   let isPlaying = false;
   const updateIcon = () => {
-    playBtn.innerHTML = isPlaying ? '<span style="font-size:1.25rem;">⏸️</span>' : '<span style="font-size:1.25rem;">🔊</span>';
+    playBtn.innerHTML = `<span class="x-audio__master-icon">${isPlaying ? '⏸️' : '🔊'}</span>`;
   };
   playBtn.onclick = () => {
     if (!audioEl.paused) { audioEl.pause(); return; }
@@ -706,7 +681,7 @@ function createVolumeRow(audioEl, config) {
 
   const label = document.createElement('span');
   label.textContent = 'MASTER';
-  Object.assign(label.style, { fontSize: '0.7rem', fontWeight: '600', color: 'rgba(255,255,255,0.7)' });
+  label.className = 'x-audio__master-label';
   volumeRow.appendChild(label);
 
   const volSlider = document.createElement('input');
@@ -715,14 +690,10 @@ function createVolumeRow(audioEl, config) {
   volSlider.max = 100;
   volSlider.value = config.volume * 100;
   volSlider.className = 'x-audio__master-vol';
-  Object.assign(volSlider.style, { flex: '1', height: '8px', cursor: 'pointer' });
   volumeRow.appendChild(volSlider);
 
   const volValue = document.createElement('span');
-  Object.assign(volValue.style, {
-    fontSize: '0.8rem', fontFamily: "'JetBrains Mono', monospace",
-    color: '#3b82f6', fontWeight: '600', minWidth: '3rem', textAlign: 'right'
-  });
+  volValue.className = 'x-audio__master-value';
   volValue.textContent = Math.round(config.volume * 100) + '%';
   volumeRow.appendChild(volValue);
 

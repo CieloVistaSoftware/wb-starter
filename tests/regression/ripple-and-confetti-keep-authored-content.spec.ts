@@ -48,8 +48,11 @@ test.describe('[x-ripple] keeps its authored content and ripples (#654)', () => 
         hasPlaceholder: !!rp.querySelector('.x-ripple__effect'),
         waveCount: rp.querySelectorAll('.x-ripple__wave').length,
         // Measure the wave's own declared size, not its animated rect --
-        // CSS animations are frozen in a backgrounded tab.
-        waveWidth: wave ? Math.round(parseFloat(wave.style.width)) : 0,
+        // CSS animations are frozen in a backgrounded tab. Computed width, not
+        // wave.style: #779 moved the size into a generated stylesheet rule,
+        // and the computed width ignores the scale() transform just as the
+        // declared one did.
+        waveWidth: wave ? Math.round(parseFloat(getComputedStyle(wave).width)) : 0,
       };
     });
 

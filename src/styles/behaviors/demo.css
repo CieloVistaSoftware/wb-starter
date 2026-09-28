@@ -551,3 +551,16 @@ x-demo:has(> .x-demo__card-doc-link), [x-demo]:has(> .x-demo__card-doc-link){
 .x-demo__events-log-entry:last-child {
   border-bottom: none;
 }
+
+/* #779: demo.js used to write these onto element.style. */
+
+/* The doc-link badge's anchor, only when it had no positioning context. */
+.x-demo__anchor--positioned {
+  position: relative;
+}
+
+/* The code panel stays laid out (so it can be measured) but unseen until its
+   highlighting has landed -- see the #985/#986 notes in demo.js. */
+.x-demo__code--pending {
+  visibility: hidden;
+}

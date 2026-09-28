@@ -19,22 +19,22 @@
     "label": {
       "type": "string",
       "description": "Field label",
-      "default": ""
+      "default": "this is the label"
     },
     "placeholder": {
       "type": "string",
       "description": "Placeholder text",
-      "default": ""
+      "default": "this is the placeholder"
     },
     "value": {
       "type": "string",
       "description": "Text value",
-      "default": ""
+      "default": "this is the value"
     },
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "rows": {
       "type": "number",
@@ -65,12 +65,16 @@
     "readonly": {
       "type": "boolean",
       "description": "Read-only state",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "The field refuses edits but is drawn exactly like an editable one (#773)."
     },
     "required": {
       "type": "boolean",
       "description": "Required field",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A form-validation constraint: an empty field blocks submit. Nothing is drawn for it (#773)."
     },
     "resize": {
       "type": "string",

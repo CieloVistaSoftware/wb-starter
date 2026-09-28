@@ -18,22 +18,22 @@
     "label": {
       "type": "string",
       "description": "Input label text",
-      "default": ""
+      "default": "this is the label"
     },
     "placeholder": {
       "type": "string",
       "description": "Placeholder text",
-      "default": ""
+      "default": "this is the placeholder"
     },
     "value": {
       "type": "string",
       "description": "Input value",
-      "default": ""
+      "default": "this is the value"
     },
     "name": {
       "type": "string",
       "description": "Form field name",
-      "default": ""
+      "default": "this is the name"
     },
     "inputType": {
       "type": "string",
@@ -50,17 +50,26 @@
         "time",
         "datetime-local"
       ],
-      "default": "text"
+      "default": "text",
+      "nonVisualValues": [
+        "email",
+        "password",
+        "number",
+        "tel",
+        "url",
+        "search"
+      ],
+      "visualReason": "These types change the keyboard, validation and what a value may be, not the empty field: each is drawn as the same box as text (number's spin buttons appear only on hover). date, time and datetime-local draw their own picker and are compared (#773)."
     },
     "helper": {
       "type": "string",
       "description": "Helper text below input",
-      "default": ""
+      "default": "this is the helper"
     },
     "error": {
       "type": "string",
       "description": "Error message (shows error state)",
-      "default": ""
+      "default": "this is the error"
     },
     "variant": {
       "type": "string",
@@ -92,17 +101,21 @@
     "readonly": {
       "type": "boolean",
       "description": "Read-only state",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "The field refuses edits but is drawn exactly like an editable one (#773)."
     },
     "required": {
       "type": "boolean",
       "description": "Required field",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A form-validation constraint: an empty field blocks submit. Nothing is drawn for it (#773)."
     },
     "icon": {
       "type": "string",
       "description": "Icon (emoji or icon name)",
-      "default": ""
+      "default": "this is the icon"
     },
     "iconPosition": {
       "type": "string",

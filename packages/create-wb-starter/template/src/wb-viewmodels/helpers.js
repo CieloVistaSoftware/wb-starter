@@ -1,4 +1,6 @@
 import { readFlag, readAttr } from '../core/read-attr.js';
+import { writeToClipboard } from './copy.js';
+import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * Utility Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -34,12 +36,10 @@ export function lazy(element, options = {}) {
     return () => element.classList.remove('x-lazy');
   }
   
-  // Show placeholder while loading
-  element.style.backgroundColor = 'var(--bg-tertiary, #e5e7eb)';
-  element.style.minHeight = '50px';
-  element.style.display = 'flex';
-  element.style.alignItems = 'center';
-  element.style.justifyContent = 'center';
+  // Show placeholder while loading. #779: .x-lazy--pending (centring, kept
+  // after load as before) and .x-lazy--placeholder (the grey box, dropped on
+  // load) in helpers.css -- both were inline styles.
+  element.classList.add('x-lazy--pending', 'x-lazy--placeholder');
   if (!element.src) {
     element.alt = '⏳ Loading...';
   }
@@ -58,9 +58,7 @@ export function lazy(element, options = {}) {
 
             element.onload = () => {
               element.classList.add('x-lazy--loaded');
-              element.classList.remove('x-lazy--loading');
-              element.style.backgroundColor = '';
-              element.style.minHeight = '';
+              element.classList.remove('x-lazy--loading', 'x-lazy--placeholder');
               element.dispatchEvent(new CustomEvent('wb:lazy:loaded', {
                 bubbles: true,
                 detail: { src: config.src }
@@ -91,7 +89,7 @@ export function lazy(element, options = {}) {
 
   return () => {
     try { observer.disconnect(); } catch (e) { /* best-effort */ }
-    element.classList.remove('x-lazy', 'x-lazy--loading', 'x-lazy--loaded');
+    element.classList.remove('x-lazy', 'x-lazy--loading', 'x-lazy--loaded', 'x-lazy--pending', 'x-lazy--placeholder');
   };
 }
 
@@ -112,12 +110,12 @@ export function print(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   element.onclick = () => {
     if (config.target) {
@@ -156,12 +154,12 @@ export function share(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   element.onclick = async () => {
     if (navigator.share) {
@@ -169,9 +167,15 @@ export function share(element, options = {}) {
         await navigator.share({ title: config.title, text: config.text, url: config.url });
       } catch (e) {}
     } else {
-      await navigator.clipboard.writeText(config.url);
+      // writeToClipboard (copy.js), not a bare navigator.clipboard.writeText:
+      // the bare call REJECTS whenever clipboard permission is denied or the
+      // context is insecure, and inside this async handler that rejection went
+      // unhandled -- pressing Share threw "Write permission denied" and the
+      // button claimed nothing either way. The shared writer falls back to
+      // execCommand('copy') and reports whether anything worked.
+      const copied = await writeToClipboard(config.url);
       const original = element.innerHTML;
-      element.innerHTML = '✓ Copied!';
+      element.innerHTML = copied ? '✓ Copied!' : '⚠️ Copy failed';
       setTimeout(() => { element.innerHTML = original; }, 2000);
     }
   };
@@ -196,12 +200,12 @@ export function fullscreen(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   let targetEl = config.target ? document.querySelector(config.target) : document.documentElement;
   
@@ -210,17 +214,17 @@ export function fullscreen(element, options = {}) {
     targetEl = document.body;
   }
   
-  let originalStyles = {};
-  
+  // #779: the fullscreen sizing (height:100vh, overflow:auto) is the
+  // .x-fullscreen-target class in trigger-buttons.css. It used to be written
+  // onto the target's style attribute, with the previous values saved and
+  // written back; removing a class restores whatever the target had.
+  const TARGET_CLASS = 'x-fullscreen-target';
+
   // Handle fullscreen change events to restore styles
   const handleFullscreenChange = () => {
     if (!document.fullscreenElement) {
       // Exiting fullscreen - restore original styles
-      if (targetEl) {
-        targetEl.style.overflow = originalStyles.overflow || '';
-        targetEl.style.overflowY = originalStyles.overflowY || '';
-        targetEl.style.height = originalStyles.height || '';
-      }
+      if (targetEl) targetEl.classList.remove(TARGET_CLASS);
       element.textContent = '⛶ Fullscreen';
     }
   };
@@ -247,12 +251,6 @@ export function fullscreen(element, options = {}) {
     // was rejected.
     //
     // Request first. Apply the styles and the label only once it resolves.
-    const saved = {
-      overflow: targetEl.style.overflow,
-      overflowY: targetEl.style.overflowY,
-      height: targetEl.style.height
-    };
-
     let request;
     try {
       request = targetEl.requestFullscreen();
@@ -263,10 +261,7 @@ export function fullscreen(element, options = {}) {
 
     Promise.resolve(request)
       .then(() => {
-        originalStyles = saved;
-        targetEl.style.overflow = 'auto';
-        targetEl.style.overflowY = 'auto';
-        targetEl.style.height = '100vh';
+        targetEl.classList.add(TARGET_CLASS);
         element.textContent = '✕ Exit Fullscreen';
       })
       .catch((err) => {
@@ -275,15 +270,14 @@ export function fullscreen(element, options = {}) {
         // permissions policy" and "this element cannot be fullscreened", and
         // swallowing it left the reader with no way to tell them apart.
         console.error(`[WB:fullscreen] request rejected: ${err && err.name}: ${err && err.message}`);
-        targetEl.style.overflow = saved.overflow;
-        targetEl.style.overflowY = saved.overflowY;
-        targetEl.style.height = saved.height;
+        targetEl.classList.remove(TARGET_CLASS);
         element.textContent = config.label;
       });
   };
 
   return () => {
     document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    if (targetEl) targetEl.classList.remove(TARGET_CLASS);
     element.classList.remove('x-fullscreen');
   };
 }
@@ -317,8 +311,8 @@ export function hotkey(element, options = {}) {
   const keyDisplay = config.key.toUpperCase().replace(/\+/g, ' + ');
   if (!element.querySelector('.x-hotkey__badge')) {
     const badge = document.createElement('span');
+    // Styled by .x-hotkey__badge in helpers.css (#779).
     badge.className = 'x-hotkey__badge';
-    badge.style.cssText = 'margin-left:0.5rem;padding:0.15rem 0.4rem;background:var(--bg-tertiary,#374151);border-radius:4px;font-size:0.75rem;font-family:monospace;';
     badge.textContent = keyDisplay;
     element.appendChild(badge);
   }
@@ -333,11 +327,7 @@ export function hotkey(element, options = {}) {
         e.metaKey === needsMeta) {
       e.preventDefault();
       
-      // Visual feedback - flash the element
-      element.style.outline = '3px solid var(--primary, #6366f1)';
-      element.style.outlineOffset = '2px';
-      element.style.background = 'var(--primary, #6366f1)';
-      element.style.color = 'white';
+      // Visual feedback - flash the element: .x-hotkey--triggered (#779).
       element.classList.add('x-hotkey--triggered');
       
       // Dispatch event
@@ -351,10 +341,6 @@ export function hotkey(element, options = {}) {
       
       // Remove feedback after delay
       setTimeout(() => {
-        element.style.outline = '';
-        element.style.outlineOffset = '';
-        element.style.background = '';
-        element.style.color = '';
         element.classList.remove('x-hotkey--triggered');
       }, 300);
     }
@@ -387,24 +373,30 @@ export function clipboard(element, options = {}) {
   if (!element.textContent.trim()) {
     element.innerHTML = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13, same as the other
-  // decorated trigger buttons above.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);transition:all 0.2s;';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
   
   const original = element.innerHTML;
 
   element.onclick = async () => {
     const text = config.text || (config.target ? document.querySelector(config.target)?.textContent : '');
     if (text) {
-      await navigator.clipboard.writeText(text);
+      // Same unhandled-rejection trap as share() above; the shared writer
+      // falls back instead of throwing when permission is denied.
+      if (!(await writeToClipboard(text))) {
+        element.innerHTML = '⚠️ Copy failed';
+        setTimeout(() => { element.innerHTML = original; }, 2000);
+        return;
+      }
+      // The success colours are .x-clipboard--copied in trigger-buttons.css (#779).
       element.innerHTML = config.feedback;
-      element.style.background = 'var(--success, #22c55e)';
-      element.style.color = 'white';
       element.classList.add('x-clipboard--copied');
-      setTimeout(() => { 
-        element.innerHTML = original; 
-        element.style.background = '';
-        element.style.color = '';
+      setTimeout(() => {
+        element.innerHTML = original;
         element.classList.remove('x-clipboard--copied');
       }, 2000);
     } else {
@@ -435,12 +427,12 @@ export function scroll(element, options = {}) {
   if (!element.textContent.trim()) {
     element.textContent = config.label;
   }
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of a button's text; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html's decorated
-  // trigger buttons. Inline style (not a stylesheet rule) because it always
-  // wins regardless of specificity, matching this function's existing approach.
-  element.style.cssText = 'cursor:pointer;padding:1rem;background:var(--bg-tertiary,#374151);border-radius:6px;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border-color,#4b5563);';
+  // #1003 -- these declarations were assigned here as `element.style.cssText`,
+  // justified inline as "always wins regardless of specificity". That is the
+  // defect: it also won against the page, so #1004 could not size this button
+  // when it moved into the site header. They now live, once, in
+  // styles/behaviors/trigger-buttons.css -- manifest-registered, or the file
+  // would never load at all (#999). The class is added above.
 
   element.onclick = (e) => {
     e.preventDefault();
@@ -474,27 +466,28 @@ export function truncate(element, options = {}) {
     ...options
   };
 
+  // #779: the clamp is .x-truncate in helpers.css reading
+  // --x-truncate-lines (a generated rule when not 1); expanded is its
+  // --expanded modifier; the toggle button is .x-truncate__toggle.
   element.classList.add('x-truncate');
-  element.style.overflow = 'hidden';
-  element.style.display = '-webkit-box';
-  element.style.webkitBoxOrient = 'vertical';
-  element.style.webkitLineClamp = config.lines;
-  element.style.wordBreak = 'break-word';
+  if (config.lines !== 1) setRule(element, 'lines', { '--x-truncate-lines': String(config.lines) });
 
+  let btn = null;
   if (config.expandable) {
-    const btn = document.createElement('button');
+    btn = document.createElement('button');
     btn.className = 'x-truncate__toggle';
     btn.textContent = 'Show more';
-    btn.style.cssText = 'margin-top:0.5rem;background:none;border:none;color:var(--primary,#6366f1);cursor:pointer;';
     btn.onclick = () => {
       const expanded = element.classList.toggle('x-truncate--expanded');
-      element.style.webkitLineClamp = expanded ? 'unset' : config.lines;
       btn.textContent = expanded ? 'Show less' : 'Show more';
     };
     element.parentNode.insertBefore(btn, element.nextSibling);
   }
 
-  return () => element.classList.remove('x-truncate', 'x-truncate--expanded');
+  return () => {
+    clearRules(element);
+    element.classList.remove('x-truncate', 'x-truncate--expanded');
+  };
 }
 
 /**
@@ -502,26 +495,20 @@ export function truncate(element, options = {}) {
  * Helper Attribute: [x-highlight]
  */
 export function highlight(element, options = {}) {
+  // #779: the yellow-on-dark default is .x-highlight in helpers.css; an
+  // author's color / text-color travels as a generated rule.
   const config = {
-    color: options.color || element.getAttribute('color') || '#fef08a', // Yellow
-    textColor: options.textColor || element.getAttribute('text-color') || '#1f2937', // Dark text
+    color: options.color || element.getAttribute('color') || '',
+    textColor: options.textColor || element.getAttribute('text-color') || '',
     ...options
   };
 
   element.classList.add('x-highlight');
-  element.style.backgroundColor = config.color;
-  element.style.color = config.textColor;
-  element.style.padding = '0.125rem 0.35rem';
-  element.style.borderRadius = '3px';
-  element.style.fontWeight = '500';
+  setRule(element, 'colors', { backgroundColor: config.color, color: config.textColor }, { weight: 2 });
 
   return () => {
+    clearRules(element);
     element.classList.remove('x-highlight');
-    element.style.backgroundColor = '';
-    element.style.color = '';
-    element.style.padding = '';
-    element.style.borderRadius = '';
-    element.style.fontWeight = '';
   };
 }
 
@@ -543,9 +530,8 @@ export function external(element, options = {}) {
   }
   if (config.icon && !element.querySelector('.x-external__icon')) {
     const icon = document.createElement('span');
-    icon.className = 'x-external__icon';
+    icon.className = 'x-external__icon'; // 0.8em: helpers.css (#779)
     icon.textContent = ' ↗';
-    icon.style.fontSize = '0.8em';
     element.appendChild(icon);
   }
 
@@ -569,17 +555,9 @@ export function countdown(element, options = {}) {
     ...options
   };
 
+  // #779: the panel is .x-countdown in helpers.css (with #486's 1rem padding
+  // floor), and the finished colour is .x-countdown--complete.
   element.classList.add('x-countdown');
-  element.style.fontFamily = 'monospace';
-  element.style.fontSize = '1.25rem';
-  element.style.fontWeight = 'bold';
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of text in a content panel; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html.
-  element.style.padding = '1rem';
-  element.style.background = 'var(--bg-tertiary, #374151)';
-  element.style.borderRadius = '6px';
-  element.style.display = 'inline-block';
 
   let remaining;
   
@@ -629,7 +607,6 @@ export function countdown(element, options = {}) {
     if (remaining === 0) {
       clearInterval(interval);
       element.classList.add('x-countdown--complete');
-      element.style.color = 'var(--success, #22c55e)';
       element.dispatchEvent(new CustomEvent('wb:countdown:complete', { bubbles: true }));
     } else {
       remaining--;
@@ -657,37 +634,10 @@ export function clock(element, options = {}) {
     ...options
   };
 
+  // #779: base (with #486's 1rem padding floor), led, analog and the
+  // digital default are .x-clock rules in helpers.css, keyed on the
+  // x-clock--{variant} class added here; any other variant renders digital.
   element.classList.add('x-clock', `x-clock--${config.variant}`);
-  
-  // Base styles
-  element.style.fontFamily = 'monospace';
-  element.style.display = 'inline-block';
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of text in a content panel; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html.
-  element.style.padding = '1rem';
-  element.style.borderRadius = '6px';
-  
-  // Variant-specific styles
-  if (config.variant === 'led') {
-    element.style.fontFamily = '"Segment7", "Digital-7", monospace';
-    element.style.background = '#111';
-    element.style.color = '#0f0';
-    element.style.padding = '1rem 1.5rem';
-    element.style.fontSize = '2rem';
-    element.style.letterSpacing = '0.15em';
-    element.style.textShadow = '0 0 10px #0f0, 0 0 20px #0f0';
-    element.style.border = '2px solid #333';
-  } else if (config.variant === 'analog') {
-    // For analog, we'd need SVG - for now show digital with note
-    element.style.background = 'var(--bg-tertiary, #374151)';
-    element.style.fontSize = '1.25rem';
-  } else {
-    // Digital (default)
-    element.style.background = 'var(--bg-tertiary, #374151)';
-    element.style.fontSize = '1.25rem';
-    element.style.fontWeight = 'bold';
-  }
 
   const update = () => {
     const now = new Date();
@@ -759,29 +709,14 @@ export function relativetime(element, options = {}) {
  * Helper Attribute: [x-offline]
  */
 export function offline(element, options = {}) {
+  // #779: the pill (with #486's 1rem padding floor) and its online/offline
+  // colours are .x-offline / --online / --offline in helpers.css.
   element.classList.add('x-offline');
-  // #486: padding floored at 1rem (16px) -- Standard §13 requires >=1rem
-  // padding on every side of text in a content panel; 0.5rem (8px) failed
-  // demo-layout-standards.spec.ts on pages/behaviors.html.
-  element.style.padding = '1rem';
-  element.style.borderRadius = '6px';
-  element.style.display = 'inline-flex';
-  element.style.alignItems = 'center';
-  element.style.gap = '0.5rem';
-  element.style.fontWeight = '500';
 
   const update = () => {
     element.classList.toggle('x-offline--online', navigator.onLine);
     element.classList.toggle('x-offline--offline', !navigator.onLine);
-    if (navigator.onLine) {
-      element.textContent = '🟢 Online';
-      element.style.background = 'var(--success-bg, #dcfce7)';
-      element.style.color = 'var(--success, #16a34a)';
-    } else {
-      element.textContent = '🔴 Offline';
-      element.style.background = 'var(--error-bg, #fee2e2)';
-      element.style.color = 'var(--error, #dc2626)';
-    }
+    element.textContent = navigator.onLine ? '🟢 Online' : '🔴 Offline';
   };
 
   window.addEventListener('online', update);
@@ -802,13 +737,15 @@ export function offline(element, options = {}) {
 export function visible(element, options = {}) {
   element.classList.add('x-visible');
 
+  // Hidden is .x-visible--hidden (helpers.css), not display:none on the
+  // style attribute (#779).
   element.wbVisible = {
-    show: () => { element.style.display = ''; },
-    hide: () => { element.style.display = 'none'; },
-    toggle: () => { element.style.display = element.style.display === 'none' ? '' : 'none'; }
+    show: () => { element.classList.remove('x-visible--hidden'); },
+    hide: () => { element.classList.add('x-visible--hidden'); },
+    toggle: () => { element.classList.toggle('x-visible--hidden'); }
   };
 
-  return () => { element.classList.remove('x-visible'); delete element.wbVisible; };
+  return () => { element.classList.remove('x-visible', 'x-visible--hidden'); delete element.wbVisible; };
 }
 
 /**
@@ -826,44 +763,26 @@ export function debug(element, options = {}) {
     ...options
   };
 
-  element.classList.add('x-debug');
-  
-  // Position styles
-  const positions = {
-    'bottom-right': 'bottom:1rem;right:1rem;',
-    'bottom-left': 'bottom:1rem;left:1rem;',
-    'top-right': 'top:1rem;right:1rem;',
-    'top-left': 'top:1rem;left:1rem;'
-  };
-  
-  element.style.cssText = `
-    position:fixed;
-    ${positions[config.position] || positions['bottom-right']}
-    width:400px;
-    max-height:300px;
-    overflow-y:auto;
-    background:rgba(0,0,0,0.9);
-    color:#fff;
-    font-family:monospace;
-    font-size:0.75rem;
-    border-radius:8px;
-    box-shadow:0 4px 20px rgba(0,0,0,0.5);
-    z-index:99999;
-  `;
-  
+  // #779: the panel, its corner (x-debug--{position}), header, clear button,
+  // message list and per-type message accent are .x-debug* rules in
+  // helpers.css -- all of it was cssText / style="" here.
+  const POSITIONS = ['bottom-right', 'bottom-left', 'top-right', 'top-left'];
+  const position = POSITIONS.includes(config.position) ? config.position : 'bottom-right';
+  element.classList.add('x-debug', `x-debug--${position}`);
+
   // Header
   const header = document.createElement('div');
-  header.style.cssText = 'padding:8px 12px;background:#1a1a1a;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;position:sticky;top:0;';
+  header.className = 'x-debug__header';
   header.innerHTML = `
-    <span style="font-weight:bold;">🐛 Console</span>
-    <button id="x-debug-clear" style="background:#333;border:none;color:#fff;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:0.6875rem;">Clear</button>
+    <span class="x-debug__title">🐛 Console</span>
+    <button id="x-debug-clear" class="x-debug__clear">Clear</button>
   `;
   element.appendChild(header);
-  
+
   // Messages container
   const messages = document.createElement('div');
   messages.id = 'x-debug-messages';
-  messages.style.cssText = 'padding:8px;';
+  messages.className = 'x-debug__messages';
   element.appendChild(messages);
   
   // Message count
@@ -875,13 +794,6 @@ export function debug(element, options = {}) {
       messages.firstChild?.remove();
     }
     
-    const colors = {
-      error: '#ef4444',
-      warn: '#f59e0b',
-      log: '#6b7280',
-      info: '#3b82f6'
-    };
-    
     const icons = {
       error: '❌',
       warn: '⚠️',
@@ -889,15 +801,9 @@ export function debug(element, options = {}) {
       info: 'ℹ️'
     };
     
+    // The per-type accent colour is .x-debug__msg--{type} (#779).
     const msg = document.createElement('div');
-    msg.style.cssText = `
-      padding:6px 8px;
-      margin-bottom:4px;
-      background:rgba(255,255,255,0.05);
-      border-left:3px solid ${colors[type]};
-      border-radius:0 4px 4px 0;
-      word-break:break-word;
-    `;
+    msg.className = `x-debug__msg x-debug__msg--${type}`;
     
     const text = args.map(arg => {
       if (typeof arg === 'object') {
@@ -907,7 +813,7 @@ export function debug(element, options = {}) {
       return String(arg);
     }).join(' ');
     
-    msg.innerHTML = `<span style="color:${colors[type]}">${icons[type]}</span> ${escapeHtml(text)}`;
+    msg.innerHTML = `<span class="x-debug__icon">${icons[type]}</span> ${escapeHtml(text)}`;
     messages.appendChild(msg);
     messages.scrollTop = messages.scrollHeight;
     count++;
@@ -976,7 +882,7 @@ export function debug(element, options = {}) {
     console.info = originalInfo;
     window.removeEventListener('error', errorHandler);
     window.removeEventListener('unhandledrejection', rejectionHandler);
-    element.classList.remove('x-debug');
+    element.classList.remove('x-debug', `x-debug--${position}`);
   };
 }
 

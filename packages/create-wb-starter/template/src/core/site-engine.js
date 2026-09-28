@@ -1,9 +1,9 @@
 // Site Engine Module
 // Contains WBSite class and site logic
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
-import { initViews } from './wb-views.js';
 import { preloadCssForHtml } from './style-loader.js';
 import { VERSION } from './version.js';
+import { setRule } from './dynamic-style.js';
 
 export default class WBSite {
   constructor() {
@@ -63,13 +63,9 @@ export default class WBSite {
       this.initStickyFooter();
       this.initWheelScrollFallback();
 
-      // Initialize Views System
-      await initViews({
-        registry: [
-          'src/wb-views/views-registry.json',
-          'src/wb-views/partials-registry.json'
-        ]
-      });
+      // The wb-views system was removed with the component tags: <div>
+      // was one. It ran here on every page load, fetching two registries and
+      // 47 partials, and no page in pages/ ever used it — only two demos did.
 
       await WB.init({
         debug: false,
@@ -101,7 +97,7 @@ export default class WBSite {
             this.navigateTo(page);
           } else if (href && href.length > 1 && href.startsWith('#')) {
             // In-page anchor (e.g. the behaviors-page section nav). Native anchor
-            // scrolling was unreliable in the SPA — lazy-injected behaviors reflow
+            // scrolling was unreliable in the SPA — lazy-injected components reflow
             // the page after the jump, leaving the link looking dead (#181). Drive
             // the scroll explicitly; scroll-margin-top on the target clears the
             // sticky header.
@@ -110,7 +106,7 @@ export default class WBSite {
               e.preventDefault();
               // #181's own fix (scrollIntoView instead of native anchor
               // jump) still isn't enough on a page as long/image-heavy as
-              // behaviors.html's: dozens of <div x-cardimage>/<div x-cardhero>
+              // components.html's: dozens of <div x-cardimage>/<div x-cardhero>
               // external images ABOVE a lower target keep loading and
               // growing the page's total height for SECONDS after this
               // fires (confirmed live on a 47,500px-tall render: a fixed
@@ -142,14 +138,14 @@ export default class WBSite {
                 setTimeout(poll, POLL_MS);
               };
               poll();
-              // pushState (not replaceState): a link like the behavior
+              // pushState (not replaceState): a link like the component
               // index's "View demo" jumps from a scroll position way up the
-              // page down to a specific behavior -- that jump must be a
+              // page down to a specific component -- that jump must be a
               // real, back-navigable step. replaceState overwrote the
               // CURRENT history entry instead of adding one, so Back skipped
               // straight past the click's origin to whatever page loaded
               // before this one entirely, not back to the pre-click scroll
-              // position. Confirmed live report: the behaviors page's own
+              // position. Confirmed live report: the components page's own
               // table of "View demo" links did exactly this.
               history.pushState(null, '', href);
             }
@@ -199,6 +195,11 @@ export default class WBSite {
       ${this.renderFooter()}
       <div x-notes id="siteNotes" x-eager position="right"></div>
     `;
+    // The nav's configured width reaches site.css's var(--nav-width) through a
+    // generated rule -- it used to be a style="" attribute in renderNav()'s
+    // markup (#779).
+    const navEl = app.querySelector('#siteNav');
+    if (navEl && this.navWidth) setRule(navEl, 'width', { '--nav-width': this.navWidth });
     const toggleBtn = app.querySelector('.nav__toggle');
     if (toggleBtn) {
       toggleBtn.onclick = () => this.toggleNav();
@@ -226,7 +227,7 @@ export default class WBSite {
     this.updateActiveNav();
 
     // === Runtime check for duplicate theme switchers ===
-    const themeSwitchers = document.querySelectorAll('x-themecontrol');
+    const themeSwitchers = document.querySelectorAll('[x-themecontrol]');
     if (themeSwitchers.length > 1) {
       console.warn(`⚠️ Found ${themeSwitchers.length} theme switchers on the page!`);
       themeSwitchers.forEach((el, i) => {
@@ -242,16 +243,20 @@ export default class WBSite {
       <header class="site__header ${headerSettings.keepHeaderAtTop ? 'site__header--sticky' : ''}" id="siteHeader">
         <div class="header__left" id="headerLeft">
           <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
-          <a href="?page=home" class="header__logo" id="headerLogo" style="gap: 0.75rem;">
+          <a href="?page=home" class="header__logo" id="headerLogo">
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
-          <a href="#" class="header__version" id="headerVersion" x-ripple x-release></a>
+          <!-- #821: a button, not a link. x-release clears caches and reloads;
+               it navigates nowhere, so href="#" was only there to make an
+               anchor clickable. An <a> announces as a link and promises
+               navigation, and Enter/Space differ between the two. -->
+          <button type="button" class="header__version" id="headerVersion" x-ripple x-release></button>
         </div>
-        <div class="header__right" id="headerRight" style="gap: 1rem;">
+        <div class="header__right" id="headerRight">
           ${headerSettings.displaySearchBar ? `
             <div class="header__search" id="headerSearch">
-              <input type="search" placeholder="Search..." aria-label="Search" class="x-input-glass" style="padding: 0.4rem 0.8rem; width: 200px;">
+              <input type="search" placeholder="Search..." aria-label="Search" class="x-input-glass header__search-input">
             </div>
           ` : ''}
           <div x-themecontrol id="headerThemeControl"></div>
@@ -301,10 +306,11 @@ export default class WBSite {
       </a>
     `}).join('');
 
-    const navWidthVar = navigationLayout && navigationLayout.navigationWidth ? navigationLayout.navigationWidth : 'fit-content';
+    // Applied by render() once the nav exists (#779: no style="" here).
+    this.navWidth = navigationLayout && navigationLayout.navigationWidth ? navigationLayout.navigationWidth : 'fit-content';
 
     return `
-      <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" style="--nav-width: ${navWidthVar}" id="siteNav">
+      <nav class="site__nav ${this.navCollapsed ? 'site__nav--collapsed' : ''}" id="siteNav">
         <div class="nav__items" id="navItems">
           ${items}
         </div>
@@ -322,7 +328,7 @@ export default class WBSite {
 
     resizer.addEventListener('mousedown', (e) => {
       isResizing = true;
-      document.body.style.cursor = 'col-resize';
+      // The col-resize cursor is site.css's body.resizing rule (#779).
       document.body.classList.add('resizing');
     });
 
@@ -330,14 +336,13 @@ export default class WBSite {
       if (!isResizing) return;
       const newWidth = e.clientX;
       if (newWidth > 60 && newWidth < 600) { // Min and max width
-        nav.style.setProperty('--nav-width', `${newWidth}px`);
+        setRule(nav, 'width', { '--nav-width': `${newWidth}px` });
       }
     });
 
     document.addEventListener('mouseup', () => {
       if (isResizing) {
         isResizing = false;
-        document.body.style.cursor = '';
         document.body.classList.remove('resizing');
       }
     });
@@ -417,7 +422,8 @@ export default class WBSite {
     // the same "real reclaim, not just a transform" fix #390 applied to the
     // header, just measured at runtime instead of hardcoded.
     const syncFooterHeight = () => {
-      footer.style.setProperty('--site-footer-collapse-height', `${footer.offsetHeight}px`);
+      // A measured value: a generated rule, not the style attribute (#779).
+      setRule(footer, 'collapse', { '--site-footer-collapse-height': `${footer.offsetHeight}px` });
     };
     syncFooterHeight();
 

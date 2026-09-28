@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { settledWidthPercent } from '../helpers/settled-style';
 
 test.describe('Progress Bar (integration)', () => {
   test('should render progress bar with progress class', async ({ page }: { page: Page }) => {
@@ -41,10 +42,9 @@ test.describe('Progress Bar (integration)', () => {
     const fill = page.locator('#test-progress-fill .x-progress__bar');
     await expect(fill).toBeVisible();
     
-    // Check the style attribute contains 50%
-    const style = await fill.getAttribute('style');
-    expect(style).toContain('width');
-    expect(style).toContain('50%');
+    // #779: the fill's width is a generated stylesheet rule, never a style
+    // attribute -- measure what renders.
+    expect(await settledWidthPercent(fill)).toBeCloseTo(50, 0);
   });
 
   test('should have appropriate height', async ({ page }: { page: Page }) => {
@@ -113,7 +113,7 @@ test.describe('Progress Bar (integration)', () => {
     });
 
     const fill = page.locator('#test-progress-anim .x-progress__bar');
-    await expect(fill).toHaveAttribute('style', /width:\s*80%/);
+    expect(await settledWidthPercent(fill)).toBeCloseTo(80, 0);
 
     // Should have transition for smooth animation. Read the COMPUTED style:
     // the transition moved out of an inline style into progress.css (Law 9,

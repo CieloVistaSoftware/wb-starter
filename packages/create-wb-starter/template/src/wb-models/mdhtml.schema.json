@@ -6,8 +6,8 @@
   "schemaFor": "mdhtml",
   "baseClass": "x-mdhtml",
   "semanticElement": {
-    "tagName": "div",
-    "implicitRole": "generic"
+    "tagName": "article",
+    "implicitRole": "article"
   },
   "compliance": {
     "baseClass": "x-mdhtml",
@@ -19,17 +19,17 @@
       "type": "string",
       "description": "Path to external markdown file",
       "attribute": "src",
-      "default": ""
+      "default": "#"
     },
     "sanitize": {
       "type": "boolean",
       "default": true,
-      "attribute": "data-sanitize"
+      "attribute": "sanitize"
     },
     "gfm": {
       "type": "boolean",
       "default": true,
-      "attribute": "data-gfm"
+      "attribute": "gfm"
     }
   },
   "_metadata": {

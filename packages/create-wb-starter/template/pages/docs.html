@@ -6,15 +6,31 @@
 <div id="docs-hero" class="page__hero">
   <h1>📖 Documentation</h1>
   <p>Browse all documentation, guides, and research papers.</p>
+  <!-- Owner decision: the docs hero carries a theme control, so a reader can
+       compare themes without leaving the text. It is the SAME behavior as the
+       header's #headerThemeControl, not a second implementation (#1018: no
+       duplicate controls) -- both read and write the one stored theme, and
+       themecontrol.js keeps every instance in sync live via wb:theme:change. -->
+  <div x-themecontrol id="docsThemeControl"></div>
   <div class="docs-search-wrapper">
     <input type="search" id="docs-search" placeholder="Search documentation...">
     <span class="docs-search-icon">🔍</span>
   </div>
 </div>
 
+<!-- #1098: every behavior, in two sections. Rendered from tag-map union
+     wb-lazy -- the same union pages/behaviors.html reads since #1056, because
+     tag-map ALONE omits 39 working behaviours (breadcrumb, notify, copybutton,
+     every animation effect). Neither the cross-reference (50 of 185) nor
+     docs/behaviors/*.md (6 missing, 14 phantoms) can be the source. -->
+<section id="behaviors-sections" class="page__section" hidden>
+  <div id="behaviors-semantic" class="behaviors-section"></div>
+  <div id="behaviors-extension" class="behaviors-section"></div>
+</section>
+
 <div id="docs-container" class="page__section">
   <div id="docs-loading" class="docs-loading">
-    <span x-spinner></div>
+    <span x-spinner></span>
     <p>Loading documentation...</p>
   </div>
 </div>
@@ -59,7 +75,7 @@
 
     function renderDocs(manifestData) {
       if (!manifestData || !manifestData.categories) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No documentation found.</p>';
+        container.innerHTML = '<p class="docs-empty">No documentation found.</p>';
         return;
       }
 
@@ -74,14 +90,21 @@
         if (!hasDocs && !hasPages) continue;
         
         hasResults = true;
-        html += '<div class="docs-category" style="margin-bottom: 2.5rem;">';
-        html += '<h2 style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">';
+        html += '<div class="docs-category">';
+        html += '<h2 class="docs-category__title">';
         html += '<span>' + category.icon + '</span>';
         html += '<span>' + category.name + '</span>';
         html += '</h2>';
-        html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">';
+        html += '<div class="docs-grid">';
         
         // Handle markdown docs
+        // Manifest titles and descriptions are TEXT that often names a tag
+        // ("A bare <audio> gets a styled player"). Concatenated raw into
+        // innerHTML, that became a real, src-less <audio> the audio behavior
+        // then rejected with a runtime error -- and "<article> renders a card"
+        // rendered an actual card. Escape them; they are never markup.
+        const escapeText = (value) => String(value ?? '')
+          .replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         if (category.docs) {
           for (const doc of category.docs) {
             // Site-root-relative path (no leading slash) so it survives the
@@ -93,10 +116,9 @@
               if (!/^docs\//.test(filePath)) filePath = 'docs/' + filePath;
             }
             html += '<a href="' + siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
-            html += 'class="docs-card" target="_blank" ';
-            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
-            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
-            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + doc.description + '</p>';
+            html += 'class="docs-card" target="_blank">';
+            html += '<h3 class="docs-card__title">' + escapeText(doc.title) + '</h3>';
+            html += '<p class="docs-card__desc">' + escapeText(doc.description) + '</p>';
             html += '</a>';
           }
         }
@@ -105,10 +127,9 @@
         if (category.pages) {
           for (const page of category.pages) {
             html += '<a href="' + siteRoot() + 'pages/' + page.page + '.html" ';
-            html += 'class="docs-card" target="_blank" ';
-            html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
-            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + page.title + '</h3>';
-            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + page.description + '</p>';
+            html += 'class="docs-card" target="_blank">';
+            html += '<h3 class="docs-card__title">' + escapeText(page.title) + '</h3>';
+            html += '<p class="docs-card__desc">' + escapeText(page.description) + '</p>';
             html += '</a>';
           }
         }
@@ -117,26 +138,14 @@
       }
       
       if (!hasResults) {
-        container.innerHTML = '<div style="text-align: center; padding: 3rem; color: var(--text-muted);">' +
-          '<p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔍</p>' +
+        container.innerHTML = '<div class="docs-empty docs-empty--search">' +
+          '<p class="docs-empty__icon">🔍</p>' +
           '<p>No results found matching your search.</p>' +
           '</div>';
       } else {
+        // Hover lift is `.docs-card:hover` in docs.css -- it used to be
+        // mouseenter/mouseleave handlers writing card.style (#779).
         container.innerHTML = html;
-        
-        // Add hover effects
-        container.querySelectorAll('.docs-card').forEach(function(card) {
-          card.addEventListener('mouseenter', function() {
-            card.style.transform = 'translateY(-2px)';
-            card.style.borderColor = 'var(--primary)';
-            card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-          });
-          card.addEventListener('mouseleave', function() {
-            card.style.transform = '';
-            card.style.borderColor = 'var(--border-color)';
-            card.style.boxShadow = '';
-          });
-        });
       }
     }
 
@@ -194,10 +203,183 @@
       
     } catch (err) {
       console.error('Failed to load docs manifest:', err);
-      container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">' +
+      container.innerHTML = '<div class="docs-empty docs-empty--error">' +
         '<p>⚠️ Could not load documentation index.</p>' +
-        '<p style="font-size: 0.875rem;">Error: ' + err.message + '</p>' +
+        '<p class="docs-empty__detail">Error: ' + err.message + '</p>' +
         '</div>';
+    }
+  })();
+</script>
+
+<script>
+  /**
+   * #1098 -- the behaviour sections.
+   *
+   * John: "I want to see every x-behavior -- we have many [that] don't have a
+   * x-prefix", and "move the semantic and x-behaviors into 2 sections".
+   *
+   * SOURCE. tag-map.js merged with wb-lazy.js, exactly as pages/behaviors.html
+   * does since #1056. tag-map ALONE reports 120 x- behaviours; the union
+   * reports 159, because WB_LAZY_ONLY_ATTRIBUTES holds 39 that resolve at
+   * runtime and appear nowhere in tag-map -- breadcrumb, notify, copybutton,
+   * typewriter, and every animation effect. wb-lazy.js says so itself:
+   * "anything reading tag-map alone reports an incomplete behavior list."
+   *
+   * NOT from docs/behavior-cross-reference.md (covers 50 of 185, #1099) and
+   * NOT from docs/behaviors/*.md (6 behaviours have no file, and 14 files --
+   * aside, blockquote, ol, ul, time ... -- describe nothing that is a
+   * behaviour, so a list built from the folder renders phantom rows).
+   *
+   * The lazy import may fail on its own: an incomplete list is bad, an empty
+   * one is worse.
+   */
+  (async function () {
+    const wrap = document.getElementById('behaviors-sections');
+    if (!wrap) return;
+
+    function siteRootFor() {
+      const stripped = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
+      return stripped.replace(/[^/]*$/, '');
+    }
+
+    const mods = await Promise.all([
+      import(siteRootFor() + 'src/core/tag-map.js'),
+      import(siteRootFor() + 'src/core/wb-lazy.js').catch(function () { return {}; }),
+    ]).catch(function () { return [null, null]; });
+
+    const tagMod = mods[0];
+    const lazyMod = mods[1] || {};
+    if (!tagMod) return;
+
+    // Keep the attribute -> BEHAVIOUR mapping, not just the attribute names.
+    // A doc is named after the behaviour, which need not match the attribute:
+    // x-drawer-layout maps to `drawerLayout`. Looking a doc up by ATTRIBUTE
+    // name reported it as undocumented when drawerLayout.md was right there.
+    const extMap = Object.assign(
+      {},
+      lazyMod.WB_LAZY_ONLY_ATTRIBUTES || {},
+      tagMod.extensionMap || {}
+    );
+    const natMap = tagMod.nativeMap || {};
+    const extension = Object.keys(extMap).sort();
+    const semantic = Object.keys(natMap).sort();
+    const behaviourOf = function (name) {
+      const v = Object.prototype.hasOwnProperty.call(extMap, name) ? extMap[name] : natMap[name];
+      return typeof v === 'string' ? v : null;
+    };
+
+    // Which behaviours have a doc. A miss is MARKED, never hidden -- absence
+    // used to be invisible, so a missing doc read as a missing behaviour.
+    const documented = new Set();
+    try {
+      const res = await fetch(siteRootFor() + 'data/docs-manifest.json');
+      if (res.ok) {
+        const man = await res.json();
+        for (const f of man.files || []) {
+          const m = String(f.path || f.file || '').match(/behaviors\/([^/]+)\.md$/);
+          if (m) { documented.add(m[1]); }
+        }
+      }
+    } catch (e) { /* no manifest -- chips simply render without a doc link */ }
+
+    function docHref(name) {
+      // Behaviour name first, then the attribute, then the attribute without its
+      // x- prefix. With behaviour-name resolution all 185 behaviours have a doc;
+      // attribute-name-only resolution wrongly reported 2 as missing.
+      const candidates = [behaviourOf(name), name, name.replace(/^x-/, '')];
+      for (const base of candidates) {
+        if (base && documented.has(base)) {
+          return siteRootFor() + 'public/doc-viewer.html?file='
+            + encodeURIComponent('docs/behaviors/' + base + '.md');
+        }
+      }
+      return null;
+    }
+
+    function chip(name) {
+      const href = docHref(name);
+      const li = document.createElement('li');
+      li.className = 'behaviors-grid__item';
+
+      const el = document.createElement(href ? 'a' : 'span');
+      el.className = 'behavior-chip' + (href ? '' : ' behavior-chip--undocumented');
+      if (href) { el.href = href; el.target = '_blank'; el.rel = 'noopener'; }
+
+      const n = document.createElement('span');
+      n.className = 'behavior-chip__name';
+      n.textContent = name;
+      el.appendChild(n);
+
+      if (!href) {
+        const note = document.createElement('span');
+        note.className = 'behavior-chip__note';
+        note.textContent = 'no doc yet';
+        el.appendChild(note);
+      }
+
+      li.appendChild(el);
+      li.dataset.search = name.toLowerCase();
+      return li;
+    }
+
+    function section(host, title, lede, names) {
+      host.textContent = '';
+
+      const head = document.createElement('div');
+      head.className = 'behaviors-section__head';
+      const h2 = document.createElement('h2');
+      h2.textContent = title;
+      const count = document.createElement('span');
+      count.className = 'behaviors-section__count';
+      count.textContent = names.length + ' behaviors';
+      head.appendChild(h2);
+      head.appendChild(count);
+
+      const p = document.createElement('p');
+      p.className = 'behaviors-section__lede';
+      p.textContent = lede;
+
+      const ul = document.createElement('ul');
+      ul.className = 'behaviors-grid';
+      for (const n of names) { ul.appendChild(chip(n)); }
+
+      host.appendChild(head);
+      host.appendChild(p);
+      host.appendChild(ul);
+      return ul;
+    }
+
+    const semanticList = section(
+      document.getElementById('behaviors-semantic'),
+      'Semantic behaviors',
+      'No prefix - the tag is the behavior. An <article> IS a card; you add nothing.',
+      semantic
+    );
+
+    const extensionList = section(
+      document.getElementById('behaviors-extension'),
+      'x- behaviors',
+      'Added as an attribute on any element.',
+      extension
+    );
+
+    wrap.hidden = false;
+
+    // Share the page's existing search box rather than adding a second one.
+    const search = document.getElementById('docs-search');
+    if (search) {
+      search.addEventListener('input', function () {
+        const term = search.value.trim().toLowerCase();
+        for (const list of [semanticList, extensionList]) {
+          let shown = 0;
+          for (const li of list.children) {
+            const hit = !term || li.dataset.search.indexOf(term) !== -1;
+            li.hidden = !hit;
+            if (hit) { shown++; }
+          }
+          list.closest('.behaviors-section').hidden = shown === 0;
+        }
+      });
     }
   })();
 </script>

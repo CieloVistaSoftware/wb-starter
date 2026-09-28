@@ -200,3 +200,17 @@ x-table tbody tr.active, [x-table] tbody tr.active,
 :where(th, td) {
   padding: 1rem;
 }
+
+/* =============================================================================
+   #779 — semantics/table.js wrote these onto element.style.
+============================================================================= */
+/* Filtered out by the search box. Separate from the pager's `hidden`. */
+tr.x-table__row--filtered {
+  display: none;
+}
+
+th.x-table__sortable,
+tr.x-table__selectable,
+table.x-table--copyable {
+  cursor: pointer;
+}

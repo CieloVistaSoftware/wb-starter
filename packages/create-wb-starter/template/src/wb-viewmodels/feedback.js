@@ -1,8 +1,9 @@
-import { readFlag } from '../core/read-attr.js';
+import { readFlag, readAttr } from '../core/read-attr.js';
+import { setRule } from '../core/dynamic-style.js';
 /**
  * Feedback Behaviors
  * -----------------------------------------------------------------------------
- * User feedback behaviors: toasts, badges, alerts, spinners,
+ * User feedback components: toasts, badges, alerts, spinners,
  * progress indicators, skeletons, dividers, breadcrumbs, notifications.
  *
  * RULE: Zero inline styles. CSS targets tags and attributes directly.
@@ -11,30 +12,183 @@ import { readFlag } from '../core/read-attr.js';
  */
 
 /**
+ * The six values toast.schema.json's `position` enum declares. #1109: the
+ * attribute was declared and never read -- every toast went into the ONE
+ * `.x-toast-container` whose CSS pins it top-right, so all six documented
+ * positions rendered in the same corner. Each position now gets its own
+ * container element carrying its own `x-toast-container--{position}`
+ * modifier (toast.css), because a container is a positioned stack: two
+ * toasts asking for opposite corners cannot share one box.
+ */
+const TOAST_POSITIONS = [
+  'top-right', 'top-left', 'top-center',
+  'bottom-right', 'bottom-left', 'bottom-center'
+];
+const DEFAULT_TOAST_POSITION = 'top-right';
+
+/**
+ * The stack for one position, created on first use.
+ *
+ * Keyed off the modifier CLASS, not a `data-position` attribute -- Law 11
+ * (no data-* on behavior DOM), and the class has to exist anyway for the
+ * CSS to place the box.
+ *
+ * @param {string} position one of TOAST_POSITIONS; anything else falls back
+ * @returns {HTMLElement}
+ */
+function toastContainer(position) {
+  const pos = TOAST_POSITIONS.includes(position) ? position : DEFAULT_TOAST_POSITION;
+  const modifier = `x-toast-container--${pos}`;
+  let container = document.querySelector(`.${modifier}`);
+  if (!container) {
+    // A container built before #1109 has no modifier class at all. Adopt it
+    // for the default position rather than stacking a second box on top of
+    // it -- click-confirm.js and the specs both reach for `.x-toast-container`
+    // unqualified and must keep finding exactly one for the default corner.
+    if (pos === DEFAULT_TOAST_POSITION) {
+      container = Array.from(document.querySelectorAll('.x-toast-container'))
+        .find((el) => !TOAST_POSITIONS.some((p) => el.classList.contains(`x-toast-container--${p}`))) || null;
+    }
+    if (!container) {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+    }
+    container.classList.add('x-toast-container', modifier);
+  }
+  return container;
+}
+
+/**
  * createToast - Programmatic toast creation
  * CSS: src/styles/behaviors/toast.css
+ *
+ * #1109: this used to build a flat `div.x-toast` whose entire body was
+ * `textContent = message`, while toast.schema.json's `$view` described
+ * container > icon + content(title, message) + actions(action, close). Both
+ * claimed to define "a toast" and they described different elements, so on
+ * the lazy runtime (which builds `$view` into the host BEFORE the behavior
+ * runs -- wb-lazy.js buildSchemaIfNeeded) an `<div x-toast>` trigger was
+ * repainted as a static look-alike toast with an ✕ wired to nothing, and
+ * `title`/`icon`/`dismissible` had nowhere to render in the real one.
+ *
+ * The structure below IS that `$view`, built where a toast actually lives
+ * (the popup, in the container) instead of inside the trigger. The schema's
+ * `$view` is now `[]` -- "the behavior owns all DOM" -- so there is one
+ * definition of a toast, and it is this function.
+ *
+ * @param {string} message
+ * @param {string} [variant='info']
+ * @param {number} [duration=3000] auto-dismiss ms; 0 = stay until dismissed
+ * @param {{title?:string, icon?:string, position?:string, dismissible?:boolean,
+ *          action?:string, actionHref?:string}} [opts]
+ * @returns {HTMLElement} the toast element
  */
-export function createToast(message, variant = 'info', duration = 3000) {
-  let container = document.querySelector('.x-toast-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.className = 'x-toast-container';
-    document.body.appendChild(container);
-  }
+export function createToast(message, variant = 'info', duration = 3000, opts = {}) {
+  const container = toastContainer(opts.position);
 
   const toast = document.createElement('div');
   toast.className = `x-toast x-toast--${variant}`;
   toast.setAttribute('role', 'status');
-  toast.textContent = message;
+
+  let autoTimer = null;
+  const dismiss = () => {
+    if (toast._wbToastDismissing) return;
+    toast._wbToastDismissing = true;
+    if (autoTimer) clearTimeout(autoTimer);
+    toast.classList.add('x-toast--exiting');
+    setTimeout(() => {
+      // Dispatched while still attached, or it bubbles to nothing. The schema
+      // has declared wb:toast:hide since it was written and nothing ever
+      // fired it -- a dismissible toast needs to be observable (#1109).
+      toast.dispatchEvent(new CustomEvent('wb:toast:hide', { bubbles: true, detail: { message } }));
+      toast.remove();
+    }, 300);
+  };
+
+  // icon → $view's `icon` span. aria-hidden: it is decoration next to the
+  // message, and a screen reader announcing "party popper" before the text
+  // of an error toast is noise, not information.
+  const icon = opts.icon || '';
+  if (icon) {
+    const iconEl = document.createElement('span');
+    iconEl.className = 'x-toast__icon';
+    iconEl.setAttribute('aria-hidden', 'true');
+    iconEl.textContent = icon;
+    toast.appendChild(iconEl);
+  }
+
+  // content → $view's `content` div wrapping `title` (<strong>) + `message`
+  // (<p>). The wrapper is what lets the icon and the actions sit beside a
+  // two-line title+message block instead of being pushed onto their own row.
+  const content = document.createElement('div');
+  content.className = 'x-toast__content';
+  const title = opts.title || '';
+  if (title) {
+    const titleEl = document.createElement('strong');
+    titleEl.className = 'x-toast__title';
+    titleEl.textContent = title;
+    content.appendChild(titleEl);
+  }
+  const messageEl = document.createElement('p');
+  messageEl.className = 'x-toast__message';
+  messageEl.textContent = message;
+  content.appendChild(messageEl);
+  toast.appendChild(content);
+
+  // toast.schema.json declares `action` (button text) and `actionHref` (link
+  // URL). createToast() had no action support at all, so both were documented
+  // and inert (#861). An action WITH an href is a link and must be an <a>: a
+  // button that navigates is not middle-clickable or open-in-new-tab-able,
+  // and the schema names this one "Action button link URL".
+  const actionText = opts.action || '';
+  // `dismissible` defaults TRUE, as the schema declares. `!== false` (not
+  // `|| true`) so an explicit false from a caller wins while an omitted
+  // option still takes the declared default.
+  const dismissible = opts.dismissible !== false;
+  if (actionText || dismissible) {
+    const actions = document.createElement('div');
+    actions.className = 'x-toast__actions';
+
+    if (actionText) {
+      const href = opts.actionHref || '';
+      const action = document.createElement(href ? 'a' : 'button');
+      action.className = 'x-toast__action';
+      action.textContent = actionText;
+      if (href) {
+        action.setAttribute('href', href);
+      } else {
+        action.setAttribute('type', 'button');
+        action.addEventListener('click', () => {
+          toast.dispatchEvent(new CustomEvent('wb:toast:action', { bubbles: true, detail: { message } }));
+        });
+      }
+      actions.appendChild(action);
+    }
+
+    if (dismissible) {
+      // toast.css has styled `.x-toast__close` since it was written and
+      // nothing ever built the element (#1109) -- dead style, dead flag.
+      const close = document.createElement('button');
+      close.className = 'x-toast__close';
+      close.setAttribute('type', 'button');
+      close.setAttribute('aria-label', 'Dismiss notification');
+      // The ✕ glyph is CSS (`.x-toast__close::before`), not a text node, for
+      // two reasons: a screen reader should hear the aria-label, not the
+      // character; and a toast's textContent must stay the MESSAGE. Baking
+      // the glyph into the element makes every `toast.textContent` read --
+      // in copy.js, in click-confirm.js, in the #458 spec -- come back as
+      // "Saved!✕".
+      close.addEventListener('click', dismiss);
+      actions.appendChild(close);
+    }
+
+    toast.appendChild(actions);
+  }
 
   container.appendChild(toast);
 
-  // Auto-dismiss — no close button needed
   if (duration > 0) {
-    setTimeout(() => {
-      toast.classList.add('x-toast--exiting');
-      setTimeout(() => toast.remove(), 300);
-    }, duration);
+    autoTimer = setTimeout(dismiss, duration);
   }
 
   return toast;
@@ -51,6 +205,14 @@ export function toast(element, options = {}) {
   if (element._wbToastInit) return () => {};
   element._wbToastInit = true;
 
+  // NOT `x-toast`. This behavior decorates the TRIGGER; `.x-toast` (toast.css
+  // line 21) is the popup itself, with its own background and positioning, so
+  // putting it on a button would paint the button as a toast. The trigger gets
+  // the `-trigger` suffix every other trigger behavior here already uses
+  // (x-tooltip-trigger, x-confetti-trigger, x-fireworks-trigger). toast.schema
+  // .json's compliance.baseClass was corrected to match (#883).
+  element.classList.add('x-toast-trigger');
+
   // #458: message/variant/duration are read INSIDE showToast (at click time),
   // not captured once here at bind time. A framework (React, etc.) that
   // re-renders and updates these attributes after the initial mount needs
@@ -65,10 +227,29 @@ export function toast(element, options = {}) {
     const message = options.message || element.getAttribute('message') || element.getAttribute('toast-message') || 'Notification';
     const variant = options.variant || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
     const duration = parseInt(options.duration || element.getAttribute('duration') || '3000');
-    createToast(message, variant, duration);
+    // Read at click time for the same #458 reason as message/variant/duration.
+    const action = options.action || element.getAttribute('action') || '';
+    const actionHref = options.actionHref || element.getAttribute('action-href') || '';
+    // #1109: position/title/icon/dismissible were declared in
+    // toast.schema.json and read by nobody, so the Behaviors page's six
+    // position permutations all rendered in the same corner and the other
+    // three attributes rendered nothing at all. Read at click time for the
+    // same #458 reason as everything above.
+    const position = options.position || element.getAttribute('position') || DEFAULT_TOAST_POSITION;
+    // `toast-title` FIRST, for the reason `toast-variant` exists: `title` is
+    // a native global attribute (the browser's own tooltip). A trigger that
+    // legitimately carries `<button title="Save your work">` must not have
+    // that tooltip silently promoted into the toast's heading -- but a
+    // trigger authored per the schema (`title="Saved"`) still works.
+    const title = options.title || element.getAttribute('toast-title') || element.getAttribute('title') || '';
+    const icon = options.icon || element.getAttribute('icon') || '';
+    // Schema default is true; readFlag also honors `dismissible="false"`,
+    // which a bare hasAttribute() check would read as ON (the #747 trap).
+    const dismissible = options.dismissible ?? readFlag(element, 'dismissible', true);
+    createToast(message, variant, duration, { action, actionHref, position, title, icon, dismissible });
     element.dispatchEvent(new CustomEvent('wb:toast:show', {
       bubbles: true,
-      detail: { message, variant }
+      detail: { message, variant, action, actionHref, position, title, icon, dismissible }
     }));
   };
 
@@ -100,7 +281,7 @@ export function badge(element, options = {}) {
   // Still added for every OTHER host (the `badge="..."` semantic attribute
   // on a plain element, per semantic-attributes.js), since badge.css's
   // `.x-badge` class rule still selects those.
-  if (element.tagName.toLowerCase() !== 'x-badge') element.classList.add('x-badge');
+  element.classList.add('x-badge');
   element.classList.add(`x-badge--${variant}`);
   if (size && ['xs', 'sm', 'md', 'lg'].includes(size)) element.classList.add(`x-badge--${size}`);
   if (pill) element.classList.add('x-badge--pill');
@@ -212,25 +393,27 @@ export function progress(element, options = {}) {
 
   element.innerHTML = '';
   const bar = document.createElement('div');
-  // Width is the ONE exception — it's dynamic data, not styling
-  bar.style.width = animated ? '0%' : `${pct}%`;
+  // Width is dynamic data, not styling -- so a generated rule rather than the
+  // bar's style attribute (#779), same as semantics/progress.js.
+  const fill = (el, p) => setRule(el, 'fill', { width: `${p}%` });
+  fill(bar, animated ? 0 : pct);
   element.appendChild(bar);
 
   if (animated) {
-    setTimeout(() => { bar.style.width = `${pct}%`; }, 50);
+    setTimeout(() => { fill(bar, pct); }, 50);
   }
 
   element.wbProgress = {
     setValue: (v) => {
       const b = element.querySelector('div');
-      if (b) b.style.width = `${(v / max) * 100}%`;
+      if (b) fill(b, (v / max) * 100);
       element.setAttribute('aria-valuenow', v);
     },
     refresh: () => {
       const b = element.querySelector('div');
       if (b) {
-        b.style.width = '0%';
-        setTimeout(() => { b.style.width = `${pct}%`; }, 50);
+        fill(b, 0);
+        setTimeout(() => { fill(b, pct); }, 50);
       }
     }
   };
@@ -248,7 +431,10 @@ export function spinner(element, options = {}) {
   element._wbSpinnerInit = true;
 
   element.setAttribute('role', 'status');
-  element.setAttribute('aria-label', 'Loading');
+  // spinner.schema.json declares `label` ("Accessible label", default
+  // "Loading") and the docs say the aria-label is taken from it; it used to
+  // be hard-coded to "Loading" whatever the author wrote.
+  element.setAttribute('aria-label', options.label || readAttr(element, 'label') || 'Loading');
   element.innerHTML = '';
 
   // spinner.schema.json declares size default:"md" -- that default used to
@@ -266,6 +452,12 @@ export function spinner(element, options = {}) {
   // .x-spinner selectors were converted to the `x-spinner` TAG (no live
   // demo/page usage of x-spinner on a non-<span x-spinner> element was found,
   // so there's nothing else the bare class needs to keep matching).
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-spinner> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-spinner> tag does not get a redundant class.
+  element.classList.add('x-spinner');
   if (size) element.classList.add(`x-spinner--${size}`);
   if (variant) element.classList.add(`x-spinner--${variant}`);
   if (speed) element.classList.add(`x-spinner--${speed}`);
@@ -286,10 +478,25 @@ export function spinner(element, options = {}) {
  * JS only creates child elements.
  */
 export function avatar(element, options = {}) {
+  // avatar.css targets the [x-avatar] ATTRIBUTE, so styling never needed this
+  // class -- but permutation-compliance requires compliance.baseClass to cover
+  // the host (classList.contains(cls) || tagName === cls), and on <div x-avatar>
+  // the tag is "div". Without it the probe's readiness wait never sees the
+  // behavior attach, which is why every avatar matrix combo also reported
+  // "Component did not initialize". Guarded so a literal <x-avatar> tag does
+  // not get a redundant class.
+  element.classList.add('x-avatar');
+
   const src = options.src || element.getAttribute('src') || '';
   const initials = options.initials || element.getAttribute('initials') || '';
   const name = options.name || element.getAttribute('name') || '';
   const status = options.status || element.getAttribute('status') || '';
+  // `alt` is declared in avatar.schema.json. It used to be read nowhere: the
+  // <img> below took `alt = name`, so a caller who wrote a considered alt got
+  // the person's name instead. They are not the same thing -- the name is WHO,
+  // alt describes what the image SHOWS -- and only one of them is what a
+  // screen reader should announce for a photo.
+  const alt = options.alt || element.getAttribute('alt') || '';
 
   const displayInitials = initials || (name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : '?');
 
@@ -298,7 +505,9 @@ export function avatar(element, options = {}) {
   if (src) {
     const img = document.createElement('img');
     img.src = src;
-    img.alt = name;
+    // Authored alt wins; fall back to the name only when none was given, which
+    // keeps the previous behavior for callers who never set one.
+    img.alt = alt || name;
     element.appendChild(img);
   } else {
     element.textContent = displayInitials;
@@ -345,7 +554,7 @@ export function chip(element, options = {}) {
   // (schema-builder.js) for the identical reason: skip only when the tag
   // itself already IS the base class, to avoid #478's redundant-class
   // violation on real <span x-chip> elements.
-  if (element.tagName.toLowerCase() !== 'x-chip') element.classList.add('x-chip');
+  element.classList.add('x-chip');
   element.classList.toggle(`x-chip--${variant}`, variant !== 'default');
   element.classList.toggle(`x-chip--${size}`, size !== 'md');
   element.classList.toggle('x-chip--outlined', outlined);
@@ -424,7 +633,7 @@ export function alert(element, options = {}) {
   // every side. Same pattern badge() already handles correctly (#448) --
   // skip the redundant class on a literal <div x-alert> host (its own tag
   // selector already covers it), add it for every other host.
-  if (element.tagName.toLowerCase() !== 'x-alert') element.classList.add('x-alert');
+  element.classList.add('x-alert');
   element.classList.add(`x-alert--${variant}`);
 
   const content = message || element.innerHTML || 'Alert message';
@@ -481,10 +690,17 @@ export function skeleton(element) {
   // is needed here -- #448 removed the redundant base token, which just
   // duplicated the tag name and was never itself selected by any rule.
   element.classList.add(`x-skeleton--${variant}`);
+  // skeleton.schema.json declares `animated` (default true) and nothing read
+  // it, so the shimmer could not be turned off. `animated="false"` now adds
+  // the static modifier, which skeleton.css uses to stop the animation.
+  if (!readFlag(element, 'animated', true)) element.classList.add('x-skeleton--static');
 
   element.setAttribute('variant', variant);
-  if (width) element.style.width = width;
-  if (height) element.style.height = height;
+  // Authored sizes are runtime values: a generated rule, not the style
+  // attribute (#779). Weight 3 outranks skeleton.css's own sizing --
+  // `[x-skeleton][variant="circle"]` sets height at (0,2,0) -- which the
+  // inline values used to beat.
+  setRule(element, 'size', { width, height }, { weight: 3 });
 
   if (variant === 'text' && lines > 1) {
     element.innerHTML = '';

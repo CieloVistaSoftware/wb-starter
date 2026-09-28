@@ -1,3 +1,17 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. These files are fetched and injected by index.html;
+     opened directly they are simply the wrong URL. Redirect to the route that
+     works. server.js wraps them automatically, so this only fires on a static
+     host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;                       // injected by the SPA: nothing to do
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
 <header id="page-hero" class="page__hero pt-hero--tight">
   <h1 class="x-gradient-text">AI Permutation Testing</h1>
   <p>Find &amp; test missing attribute combos in WB behaviors.</p>
@@ -76,6 +90,20 @@
         <p id="missing-summary" class="pt-summary"></p>
       </div>
 
+
+      <!-- Step 5 -- live results for the missing permutations, shown here
+           beside the engine as well as in the Test Results tab. -->
+      <div class="pt-panel pt-hidden" id="test-results-card">
+        <h3 class="pt-panel__title" id="test-results-card-title">Step 5 — Live Test Results</h3>
+        <div id="test-progress-wrap" class="pt-hidden">
+          <div id="test-progress-bar-main" class="pt-progress-bar">
+            <div class="pt-progress-bar__fill" id="test-progress-fill"></div>
+            <span class="pt-progress-bar__label" id="test-progress-label">0 / 0</span>
+          </div>
+        </div>
+        <div id="test-summary" class="pt-hidden"></div>
+        <div id="test-results"></div>
+      </div>
 
       <!-- Hidden sandbox for live element injection -->
       <div id="test-sandbox" class="pt-test-sandbox"></div>
@@ -194,4 +222,511 @@
 </div>
 
 
-<link rel="stylesheet" href="src/styles/pages/ai-permutation-test.css?v=3.0.91">
+<script>
+  /* The permutation engine. This page shipped its markup and stylesheet
+     (every .pt-* class below is already in ai-permutation-test.css) but no
+     script at all, so the schema picker never filled and every panel stayed
+     hidden -- a tool with a UI and no engine. What it does is what the page's
+     own "How to Use" tab documents:
+       1. list src/wb-models/index.json in the picker;
+       2. turn each enum / boolean property into a dimension;
+       3. read test.matrix.combinations as existing coverage;
+       4. compute what is missing -- pairwise (every value pair across every
+          pair of dimensions at least once) or full cartesian;
+       5. run each missing combination live: inject it, then check it exists,
+          carries its base class and every appliesClass, has a size, and is
+          not hidden.
+     Built with DOM calls rather than HTML strings: this fragment is re-run by
+     site-engine on every visit, and nothing here should parse as page markup. */
+  (function () {
+    const $ = (id) => document.getElementById(id);
+    const select = $('schema-select');
+    if (!select || select.options.length > 1) return;   // already wired
+
+    // Site root, so the same fetches work in the SPA (/?page=…), on a
+    // subpath deploy (/wb-starter/?page=…) and on the dev server's direct
+    // /pages/ai-permutation-test.html wrapper.
+    const ROOT = location.pathname.replace(/pages\/[^/]*$/, '').replace(/[^/]*$/, '');
+    const MODELS = ROOT + 'src/wb-models/';
+    const FULL_CAP = 1000;
+    const state = { file: '', name: '', schema: null, dims: [], existing: [], missing: [], results: [] };
+
+    function el(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+    const kebab = (k) => k.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+    const show = (id, on = true) => $(id) && $(id).classList.toggle('pt-hidden', !on);
+
+    function log(icon, msg, detail) {
+      show('log-panel');
+      const row = el('div', 'pt-log__entry');
+      row.append(el('span', 'pt-log__icon', icon), el('span', 'pt-log__time', new Date().toLocaleTimeString()),
+        el('span', 'pt-log__msg', msg));
+      if (detail) row.append(el('span', 'pt-log__detail', detail));
+      $('activity-log').append(row);
+      $('activity-log').scrollTop = $('activity-log').scrollHeight;
+    }
+
+    // ── 2. dimensions ────────────────────────────────────────────────────
+    function dimensionsOf(schema) {
+      return Object.entries(schema.properties || {}).flatMap(([key, def]) => {
+        if (Array.isArray(def.enum) && def.enum.length > 1) {
+          const dflt = def.enum.includes(def.default) ? def.default : def.enum[0];
+          return [{ key, attr: kebab(key), type: 'enum', values: def.enum, dflt, def }];
+        }
+        if (def.type === 'boolean') return [{ key, attr: kebab(key), type: 'boolean', values: [false, true], dflt: false, def }];
+        return [];
+      });
+    }
+
+    // A combo as one value per dimension (absent = that dimension's default).
+    function normalize(combo) {
+      return state.dims.map((d) => {
+        const v = combo[d.key] ?? combo[d.attr];
+        if (d.type === 'boolean') return v === true || v === 'true' || v === '';
+        return d.values.includes(v) ? v : d.dflt;
+      });
+    }
+    const keyOf = (vals) => JSON.stringify(vals);
+
+    // ── 4. missing ───────────────────────────────────────────────────────
+    function coverageUnits(vals) {
+      const units = [];
+      if (state.dims.length < 2) vals.forEach((v, i) => units.push(keyOf([i, v])));
+      else for (let i = 0; i < vals.length; i++) for (let j = i + 1; j < vals.length; j++) units.push(keyOf([i, vals[i], j, vals[j]]));
+      return units;
+    }
+
+    function pairwiseMissing(existingVals) {
+      const dims = state.dims;
+      const uncovered = new Set();
+      if (dims.length < 2) dims.forEach((d, i) => d.values.forEach((v) => uncovered.add(keyOf([i, v]))));
+      else for (let i = 0; i < dims.length; i++) for (let j = i + 1; j < dims.length; j++)
+        for (const a of dims[i].values) for (const b of dims[j].values) uncovered.add(keyOf([i, a, j, b]));
+      existingVals.forEach((vals) => coverageUnits(vals).forEach((u) => uncovered.delete(u)));
+
+      const out = [];
+      while (uncovered.size && out.length < 200) {
+        const seed = JSON.parse(uncovered.values().next().value);
+        const vals = dims.map((d) => undefined);
+        vals[seed[0]] = seed[1];
+        if (seed.length === 4) vals[seed[2]] = seed[3];
+        dims.forEach((d, k) => {
+          if (vals[k] !== undefined) return;
+          let best = d.dflt, bestGain = -1;
+          for (const v of d.values) {
+            let gain = 0;
+            vals.forEach((w, m) => {
+              if (w === undefined || m === k) return;
+              const [i, a, j, b] = m < k ? [m, w, k, v] : [k, v, m, w];
+              if (uncovered.has(keyOf([i, a, j, b]))) gain++;
+            });
+            if (gain > bestGain) { best = v; bestGain = gain; }
+          }
+          vals[k] = best;
+        });
+        coverageUnits(vals).forEach((u) => uncovered.delete(u));
+        out.push(vals);
+      }
+      return out;
+    }
+
+    function cartesianMissing(existingVals) {
+      const total = state.dims.reduce((n, d) => n * d.values.length, 1);
+      if (total > FULL_CAP) {
+        log('⚠️', `Full cartesian is ${total} combinations — over the ${FULL_CAP} cap, using pairwise instead`);
+        return pairwiseMissing(existingVals);
+      }
+      const have = new Set(existingVals.map(keyOf));
+      let all = [[]];
+      state.dims.forEach((d) => { all = all.flatMap((prefix) => d.values.map((v) => [...prefix, v])); });
+      return all.filter((vals) => !have.has(keyOf(vals)));
+    }
+
+    // Values -> attributes: only what differs from the default, on top of the
+    // non-dimension props (label, message ...) the schema's own first test
+    // combination uses, so a generated case has content like the real ones.
+    function toCombo(vals) {
+      const base = {};
+      const first = state.existing[0] || {};
+      const dimKeys = new Set(state.dims.flatMap((d) => [d.key, d.attr]));
+      Object.entries(first).forEach(([k, v]) => { if (!dimKeys.has(k)) base[k] = v; });
+      state.dims.forEach((d, i) => {
+        if (d.type === 'boolean' ? vals[i] : vals[i] !== d.dflt) base[d.key] = vals[i];
+      });
+      return base;
+    }
+
+    function hostTag() {
+      const se = state.schema.semanticElement;
+      return (typeof se === 'string' ? se : se && se.tagName) || 'div';
+    }
+
+    function markupOf(combo) {
+      const attrs = Object.entries(combo).map(([k, v]) => (v === true ? ` ${kebab(k)}` : ` ${kebab(k)}="${v}"`)).join('');
+      const tag = hostTag();
+      return '<' + tag + ' x-' + state.name + attrs + '></' + tag + '>';
+    }
+
+    function chips(combo) {
+      const wrap = el('div', 'pt-dim__values');
+      Object.entries(combo).forEach(([k, v]) => {
+        const cls = v === true ? 'pt-chip pt-chip--true' : v === false ? 'pt-chip pt-chip--false' : 'pt-chip';
+        wrap.append(el('span', cls, v === true ? k : `${k}=${v}`));
+      });
+      if (!wrap.childElementCount) wrap.append(el('span', 'pt-chip', '(defaults)'));
+      return wrap;
+    }
+
+    // ── render ───────────────────────────────────────────────────────────
+    function renderDimensions() {
+      const list = $('dimensions-list');
+      list.replaceChildren();
+      state.dims.forEach((d) => {
+        const row = el('div', 'pt-dim');
+        const head = el('div', 'pt-dim__header');
+        head.append(el('strong', null, d.attr), el('span', 'pt-dim__meta', `${d.type} · ${d.values.length} values · default ${d.dflt}`));
+        row.append(head);
+        if (d.def.description) row.append(el('p', 'pt-dim__desc', d.def.description));
+        const vals = el('div', 'pt-dim__values');
+        d.values.forEach((v) => vals.append(el('span', v === true ? 'pt-chip pt-chip--true' : v === false ? 'pt-chip pt-chip--false' : 'pt-chip', String(v))));
+        row.append(vals);
+        list.append(row);
+      });
+      const total = state.dims.reduce((n, d) => n * d.values.length, 1);
+      $('full-count').textContent = state.dims.length
+        ? `${state.dims.length} dimensions · ${total} combinations in the full cartesian product`
+        : 'No enum or boolean properties — nothing to permute.';
+      show('dimensions-card');
+    }
+
+    function comboTable(rows) {
+      const wrap = el('div', 'pt-table-wrap');
+      const table = el('table', 'pt-table pt-table--missing');
+      const head = el('tr');
+      ['#', 'Source', 'Attributes', 'Markup'].forEach((h) => head.append(el('th', null, h)));
+      table.append(el('thead'), el('tbody'));
+      table.tHead.append(head);
+      rows.forEach(({ combo, source }, i) => {
+        const tr = el('tr', source === 'missing' ? 'pt-row--new' : '');
+        const tag = el('span', `pt-source-tag pt-source-tag--${source}`, source);
+        const cells = [el('td', 'pt-th-num', String(i + 1)), el('td'), el('td'), el('td')];
+        cells[1].append(tag);
+        cells[2].append(chips(combo));
+        cells[3].append(el('code', null, markupOf(combo)));
+        tr.append(...cells);
+        table.tBodies[0].append(tr);
+      });
+      wrap.append(table);
+      return wrap;
+    }
+
+    function compute() {
+      if (!state.schema) return;
+      const pairwise = $('pairwise-toggle').checked;
+      const existingVals = state.existing.map(normalize);
+      const vals = state.dims.length ? (pairwise ? pairwiseMissing(existingVals) : cartesianMissing(existingVals)) : [];
+      state.missing = vals.map(toCombo);
+      log('🧮', `Computed ${state.missing.length} missing (${pairwise ? 'pairwise' : 'full cartesian'})`,
+        `${state.existing.length} existing combinations`);
+
+      $('existing-combos').replaceChildren(comboTable([
+        ...state.existing.map((combo) => ({ combo, source: 'existing' })),
+        ...state.missing.map((combo) => ({ combo, source: 'missing' })),
+      ]));
+      show('existing-card');
+
+      $('missing-explanation').textContent = pairwise
+        ? 'Each row covers at least one value pair no existing test combination exercises.'
+        : 'Every combination of the dimensions that no existing test combination matches exactly.';
+      $('missing-combos').replaceChildren(state.missing.length
+        ? comboTable(state.missing.map((combo) => ({ combo, source: 'missing' })))
+        : el('p', 'pt-pass-box', 'No gaps — the existing combinations already cover this mode.'));
+      $('missing-summary').textContent =
+        `Missing: ${state.missing.length} · Existing: ${state.existing.length} · Dimensions: ${state.dims.length}`;
+      show('missing-card');
+      $('run-tests-btn').disabled = state.missing.length === 0;
+      renderCoverage();
+    }
+
+    function renderCoverage() {
+      show('coverage-float');
+      $('coverage-title').textContent = `Coverage — ${state.name}`;
+      const passed = state.results.filter((r) => r.pass).length;
+      const stats = [
+        ['Dimensions', state.dims.length], ['Existing', state.existing.length],
+        ['Missing', state.missing.length], ['Passed live', passed], ['Failed live', state.results.length - passed],
+      ];
+      const box = $('coverage-stats');
+      box.replaceChildren();
+      stats.forEach(([label, val]) => {
+        const row = el('div', 'pt-stat-row');
+        row.append(el('span', 'pt-stat-label', label), el('span', 'pt-stat-val', String(val)));
+        box.append(row);
+      });
+      drawChart(stats.slice(1));
+    }
+
+    // Bars in the theme's own colours -- read from the custom properties at
+    // draw time, so the chart follows a theme switch like everything else.
+    function drawChart(stats) {
+      const canvas = $('coverageChart');
+      const ctx = canvas && canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
+      const css = getComputedStyle(document.documentElement);
+      const color = (name) => css.getPropertyValue(name).trim() || css.color;
+      const fills = [color('--primary'), color('--warning-color'), color('--success-color'), color('--danger-color')];
+      const max = Math.max(1, ...stats.map(([, v]) => v));
+      const w = canvas.width, h = canvas.height, gap = 12, bw = (w - gap * (stats.length + 1)) / stats.length;
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = '11px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      stats.forEach(([label, v], i) => {
+        const bh = Math.round((h - 36) * (v / max));
+        const x = gap + i * (bw + gap);
+        ctx.fillStyle = fills[i];
+        ctx.fillRect(x, h - 20 - bh, bw, bh);
+        ctx.fillStyle = color('--text-secondary');
+        ctx.fillText(String(v), x + bw / 2, h - 24 - bh);
+        ctx.fillText(label.split(' ')[0], x + bw / 2, h - 6);
+      });
+    }
+
+    // ── 1/3. load ────────────────────────────────────────────────────────
+    async function loadSchema(file) {
+      state.file = file;
+      state.name = file.replace(/\.schema\.json$/, '');
+      state.results = [];
+      $('test-results').replaceChildren();
+      $('test-results-tbody').replaceChildren();
+      show('test-results-card', false);
+      show('test-summary', false);
+      try {
+        const res = await fetch(MODELS + file, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        state.schema = await res.json();
+      } catch (err) {
+        log('❌', `Could not load ${file}`, String(err.message || err));
+        return;
+      }
+      state.dims = dimensionsOf(state.schema);
+      state.existing = (state.schema.test && state.schema.test.matrix && state.schema.test.matrix.combinations) || [];
+      log('📄', `Schema loaded: ${state.name}`, `${Object.keys(state.schema.properties || {}).length} properties`);
+
+      const info = $('schema-info');
+      info.replaceChildren();
+      const head = el('div', 'pt-schema-header');
+      head.append(el('strong', null, state.schema.title || state.name), el('span', 'pt-schema-tag', markupOf({})));
+      info.append(head);
+      if (state.schema.description) info.append(el('p', 'pt-hint', state.schema.description));
+
+      renderDimensions();
+      compute();
+    }
+
+    // ── 5. run live ──────────────────────────────────────────────────────
+    function checksFor(node, combo) {
+      const checks = [];
+      const base = state.schema.baseClass || (state.schema.compliance && state.schema.compliance.baseClass);
+      checks.push({ label: 'Element exists in DOM', pass: node.isConnected });
+      if (base) checks.push({ label: `Root class .${base}`, pass: node.classList.contains(base) || node.tagName.toLowerCase() === base,
+        fix: `src/wb-viewmodels/ — ${state.name}() should add "${base}"` });
+      state.dims.forEach((d, i) => {
+        const v = combo[d.key];
+        if (!d.def.appliesClass || v === undefined || v === false) return;
+        const cls = d.def.appliesClass.replace('{{value}}', v);
+        checks.push({ label: `${d.attr} applies .${cls}`, pass: node.classList.contains(cls),
+          fix: `read ${d.attr} in ${state.name}() and add "${cls}", or style [${d.attr}] in src/styles/behaviors/${state.name}.css` });
+      });
+      const r = node.getBoundingClientRect();
+      checks.push({ label: 'Has visible dimensions', pass: r.width > 0 && r.height > 0, actual: `${Math.round(r.width)}×${Math.round(r.height)}` });
+      const cs = getComputedStyle(node);
+      checks.push({ label: 'Not hidden by CSS', pass: cs.display !== 'none' && cs.visibility !== 'hidden', actual: `display:${cs.display}` });
+      return checks;
+    }
+
+    function resultRow(result, i) {
+      const box = el('div', `pt-test-result pt-test-result--${result.pass ? 'pass' : 'fail'}`);
+      const head = el('div', 'pt-test-result__header');
+      head.append(el('span', 'pt-test-result__icon', result.pass ? '✅' : '❌'), el('span', 'pt-test-result__num', `#${i + 1}`),
+        el('span', 'pt-test-result__label', markupOf(result.combo)),
+        el('span', result.pass ? 'pt-badge--pass' : 'pt-badge--fail', result.pass ? 'PASS' : 'FAIL'));
+      box.append(head);
+      const failed = result.checks.filter((c) => !c.pass);
+      if (failed.length || result.error) {
+        const details = el('div', 'pt-test-result__details');
+        if (result.error) details.append(el('div', 'pt-check-fail', `Threw: ${result.error}`));
+        failed.forEach((c) => {
+          const f = el('div', 'pt-check-fail');
+          f.append(el('strong', null, c.label));
+          if (c.actual) f.append(el('div', 'pt-check-row', `actual: ${c.actual}`));
+          if (c.fix) f.append(el('div', 'pt-fix', `fix: ${c.fix}`));
+          details.append(f);
+        });
+        box.append(details);
+      }
+      return box;
+    }
+
+    function tableRow(result, i) {
+      const tr = el('tr', result.pass ? 'pt-row--pass' : 'pt-row--fail');
+      const failed = result.checks.filter((c) => !c.pass);
+      [String(i + 1), result.pass ? 'PASS' : 'FAIL', 'missing', markupOf(result.combo),
+        String(result.checks.length), String(failed.length), failed.map((c) => c.label).join('; ') || result.error || '']
+        .forEach((t) => tr.append(el('td', null, t)));
+      return tr;
+    }
+
+    function progress(done, total) {
+      ['', '-tab'].forEach((sfx) => {
+        show('test-progress-wrap' + sfx);
+        $('test-progress-fill' + sfx).style.width = `${total ? (100 * done) / total : 0}%`;
+        $('test-progress-label' + sfx).textContent = `${done} / ${total}`;
+      });
+    }
+
+    function summary() {
+      const passed = state.results.filter((r) => r.pass).length;
+      const failed = state.results.length - passed;
+      const make = () => {
+        const s = el('div', 'pt-test-summary');
+        [['Passed', passed], ['Failed', failed], ['Total', state.results.length]].forEach(([label, n]) => {
+          const stat = el('div', 'pt-test-summary__stat');
+          stat.append(el('span', 'pt-test-summary__num', String(n)), el('span', null, label));
+          s.append(stat);
+        });
+        return s;
+      };
+      $('test-summary').replaceChildren(make());
+      $('test-summary-tab').replaceChildren(make());
+      show('test-summary');
+      show('test-summary-tab');
+      const badge = $('tab-results-badge');
+      badge.textContent = failed ? `${failed} ✗` : `${passed} ✓`;
+      show('tab-results-badge');
+    }
+
+    async function runAll() {
+      const WB = window.WB;
+      const btn = $('run-tests-btn');
+      if (!WB || !WB.inject) { log('❌', 'WB is not loaded on this page — cannot inject'); return; }
+      btn.disabled = true;
+      btn.textContent = '⏳ Running…';
+      state.results = [];
+      $('test-results').replaceChildren();
+      $('test-results-tbody').replaceChildren();
+      show('test-results-card');
+      $('results-tab-hint').textContent = `${state.name}: ${state.missing.length} missing permutations, injected live.`;
+      const sandbox = $('test-sandbox');
+      log('▶️', `Running ${state.missing.length} permutations live`, state.name);
+      for (let i = 0; i < state.missing.length; i++) {
+        const combo = state.missing[i];
+        const node = document.createElement(hostTag());
+        Object.entries(combo).forEach(([k, v]) => { if (v !== false) node.setAttribute(kebab(k), v === true ? '' : String(v)); });
+        sandbox.replaceChildren(node);
+        let error = '';
+        try {
+          await Promise.race([WB.inject(node, state.name), new Promise((r) => setTimeout(r, 3000))]);
+          await new Promise((r) => requestAnimationFrame(() => r()));
+        } catch (err) {
+          error = String((err && err.message) || err);
+        }
+        const checks = checksFor(node, combo);
+        const result = { combo, checks, error, pass: !error && checks.every((c) => c.pass) };
+        state.results.push(result);
+        $('test-results').append(resultRow(result, i));
+        $('test-results-tbody').append(tableRow(result, i));
+        progress(i + 1, state.missing.length);
+      }
+      sandbox.replaceChildren();
+      summary();
+      renderCoverage();
+      const failed = state.results.filter((r) => !r.pass).length;
+      log(failed ? '⚠️' : '✅', `Live run finished: ${state.results.length - failed} passed, ${failed} failed`);
+      btn.textContent = '▶ Run All Tests Live';
+      btn.disabled = false;
+    }
+
+    // ── toolbar ──────────────────────────────────────────────────────────
+    async function copy(text, what) {
+      try { await navigator.clipboard.writeText(text); log('📋', `Copied ${what}`); }
+      catch (err) { log('❌', `Copy failed: ${err.message || err}`); }
+    }
+
+    async function saveToSchema() {
+      if (!state.missing.length) return;
+      if (!window.confirm(`Append ${state.missing.length} combinations to src/wb-models/${state.file}?`)) return;
+      const schema = JSON.parse(JSON.stringify(state.schema));
+      schema.test = schema.test || {};
+      schema.test.matrix = schema.test.matrix || {};
+      schema.test.matrix.combinations = [...(schema.test.matrix.combinations || []), ...state.missing];
+      if (Array.isArray(schema.test.setup)) schema.test.setup.push(...state.missing.map(markupOf));
+      const res = await fetch(ROOT + 'api/save', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ location: 'src/wb-models/' + state.file, data: JSON.stringify(schema, null, 2) + '\n' }),
+      });
+      if (!res.ok) { log('❌', `Save failed: HTTP ${res.status} (needs the dev server's /api/save)`); return; }
+      log('💾', `Saved ${state.missing.length} combinations to ${state.file}`);
+      await loadSchema(state.file);
+    }
+
+    $('pairwise-toggle').addEventListener('change', compute);
+    $('copy-json-btn').addEventListener('click', () => copy(JSON.stringify(state.missing, null, 2), 'missing combinations as JSON'));
+    $('copy-html-btn').addEventListener('click', () => copy(state.missing.map(markupOf).join('\n'), 'missing combinations as HTML'));
+    $('save-to-schema-btn').addEventListener('click', saveToSchema);
+    $('run-tests-btn').addEventListener('click', runAll);
+    $('reset-btn').addEventListener('click', () => {
+      select.value = '';
+      Object.assign(state, { file: '', name: '', schema: null, dims: [], existing: [], missing: [], results: [] });
+      ['log-panel', 'dimensions-card', 'existing-card', 'missing-card', 'test-results-card', 'coverage-float'].forEach((id) => show(id, false));
+      $('activity-log').replaceChildren();
+      $('schema-info').replaceChildren();
+    });
+    select.addEventListener('change', () => { if (select.value) loadSchema(select.value + '.schema.json'); });
+
+    // Tabs
+    document.querySelectorAll('#main-tabs .pt-tabs__btn').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('#main-tabs .pt-tabs__btn').forEach((x) => x.classList.toggle('pt-tabs__btn--active', x === b));
+      document.querySelectorAll('.pt-tab-panel').forEach((p) => p.classList.toggle('pt-tab-panel--active', p.id === b.getAttribute('tab')));
+    }));
+
+    // Floating coverage panel: minimize + drag by its header.
+    $('coverage-float-minimize').addEventListener('click', () => $('coverage-float').classList.toggle('pt-float--minimized'));
+    $('coverage-float-header').addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button')) return;
+      const panel = $('coverage-float');
+      const start = panel.getBoundingClientRect();
+      const dx = e.clientX - start.left, dy = e.clientY - start.top;
+      const move = (ev) => { panel.style.left = `${ev.clientX - dx}px`; panel.style.top = `${ev.clientY - dy}px`; panel.style.right = 'auto'; };
+      const up = () => { removeEventListener('pointermove', move); removeEventListener('pointerup', up); };
+      addEventListener('pointermove', move);
+      addEventListener('pointerup', up);
+    });
+
+    // Project Pages tab, from the same config the site nav is built from.
+    fetch(ROOT + 'config/site.json').then((r) => r.json()).then((cfg) => {
+      const grid = $('page-links-grid');
+      (cfg.navigationMenu || []).forEach((m) => {
+        const id = m.pageToLoad || m.menuItemId;
+        const a = el('a', 'pt-page-link' + (id === 'ai-permutation-test' ? ' pt-page-link--current' : ''), `${m.menuItemEmoji || ''} ${m.menuItemText || id}`);
+        a.href = m.href || `?page=${id}`;
+        grid.append(a);
+      });
+    }).catch(() => {});
+
+    // 1. The picker.
+    fetch(MODELS + 'index.json').then((r) => r.json()).then((index) => {
+      (index.schemas || []).map((f) => f.replace(/\.schema\.json$/, '')).sort().forEach((name) => {
+        const opt = el('option', null, name);
+        opt.value = name;
+        select.append(opt);
+      });
+      log('📚', `${select.options.length - 1} schemas available`, 'src/wb-models/index.json');
+    }).catch((err) => log('❌', 'Could not read src/wb-models/index.json', String(err.message || err)));
+  })();
+</script>
+
+<link rel="stylesheet" href="src/styles/pages/ai-permutation-test.css?v=4.0.5">

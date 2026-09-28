@@ -1,0 +1,27 @@
+/**
+ * x-resizable (#779)
+ * -----------------------------------------------------------------------------
+ * Moved out of resizable.js, which wrote every handle's placement and cursor
+ * onto element.style. The size produced by a drag is a runtime value and
+ * arrives as a generated rule from src/core/dynamic-style.js.
+ */
+
+/* Only added when the host computed `position: static` -- the handles are
+   absolutely positioned against it. */
+.x-resizable.x-resizable--positioned {
+  position: relative;
+}
+
+.x-resizable__handle {
+  position: absolute;
+  z-index: 10;
+}
+
+.x-resizable__handle--n  { top: -0.25rem; left: 0; right: 0; height: 0.5rem; cursor: n-resize; }
+.x-resizable__handle--s  { bottom: -0.25rem; left: 0; right: 0; height: 0.5rem; cursor: s-resize; }
+.x-resizable__handle--e  { top: 0; right: -0.25rem; bottom: 0; width: 0.5rem; cursor: e-resize; }
+.x-resizable__handle--w  { top: 0; left: -0.25rem; bottom: 0; width: 0.5rem; cursor: w-resize; }
+.x-resizable__handle--ne { top: -0.25rem; right: -0.25rem; width: 0.75rem; height: 0.75rem; cursor: ne-resize; }
+.x-resizable__handle--nw { top: -0.25rem; left: -0.25rem; width: 0.75rem; height: 0.75rem; cursor: nw-resize; }
+.x-resizable__handle--se { bottom: -0.25rem; right: -0.25rem; width: 0.75rem; height: 0.75rem; cursor: se-resize; }
+.x-resizable__handle--sw { bottom: -0.25rem; left: -0.25rem; width: 0.75rem; height: 0.75rem; cursor: sw-resize; }

@@ -169,8 +169,8 @@ export function dialog(element, options = {}) {
     // built from the attributes. (Previously x-modal was always hidden with only a
     // showModal() method and no click handler, so "Open Modal" did nothing. #251)
     if (hasTriggerAttrs) {
+      // cursor: pointer is .x-dialog-trigger in dialog.css (#779).
       element.classList.add('x-modal-trigger', 'x-dialog-trigger');
-      element.style.cursor = 'pointer';
       const open = () => createAndShowDialog(config.title, config.content, config.size, config.variant);
       // .open() alongside .showModal(): the docs teach an external trigger
       // calling document.getElementById(id).open() (matching the native
@@ -187,7 +187,8 @@ export function dialog(element, options = {}) {
 
     // DEFINITION mode: no trigger attributes — the children are the modal content,
     // the element is hidden, and a caller invokes element.open() (or .showModal()).
-    element.style.display = 'none';
+    // Hidden by .x-modal-definition in dialog.css, not element.style (#779).
+    element.classList.add('x-modal-definition');
     const slots = {};
     const titleSlot = element.querySelector('[slot="title"]');
     slots.title = titleSlot ? titleSlot.textContent : config.title;
@@ -322,7 +323,6 @@ export function dialog(element, options = {}) {
   // in-place-enhanced pre-existing native <dialog>), neither of which is
   // this <dialog>-as-its-own-trigger case.
   element.classList.add('x-modal');
-  element.style.cursor = 'pointer';
 
   // config.content only ever reads a `content`/`modal-content` attribute --
   // this element's real content is its light-DOM children (e.g.

@@ -19,17 +19,17 @@
       "type": "string",
       "description": "The main statistic value (e.g., 1,234 or $50K)",
       "required": true,
-      "default": ""
+      "default": "this is the value"
     },
     "label": {
       "type": "string",
       "description": "Label describing what the value represents",
-      "default": ""
+      "default": "this is the label"
     },
     "icon": {
       "type": "string",
       "description": "Icon (emoji or icon name)",
-      "default": ""
+      "default": "this is the icon"
     },
     "trend": {
       "type": "string",
@@ -46,7 +46,7 @@
     "trendValue": {
       "type": "string",
       "description": "Trend amount (e.g., +12%, -5%)",
-      "default": ""
+      "default": "this is the trend value"
     },
     "variant": {
       "type": "string",
@@ -63,7 +63,7 @@
     "color": {
       "type": "string",
       "description": "Accent color (CSS color value)",
-      "default": ""
+      "default": "this is the color"
     }
   },
   "$view": [

@@ -97,8 +97,14 @@ export function themecontrol(element, options = {}) {
   }
 
   // #448: no classList.add('x-themecontrol') -- themecontrol.css selects
-  // the `x-themecontrol` TAG directly now, so it just duplicated the tag
+  // the `[x-themecontrol]` TAG directly now, so it just duplicated the tag
   // name.
+  // #448 removed this class outright; restored WITH the tag-name guard.
+  // permutation-compliance requires compliance.baseClass to cover the host
+  // (classList.contains(cls) || tagName === cls), and on an attribute host
+  // like <div x-themecontrol> the tag is "div" -- so without the class nothing covers
+  // it. Guarded so a literal <x-themecontrol> tag does not get a redundant class.
+  element.classList.add('x-themecontrol');
 
   // Create the control UI
   const wrapper = document.createElement('div');

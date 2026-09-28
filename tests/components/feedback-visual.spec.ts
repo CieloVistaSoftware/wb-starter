@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { settledWidthPercent } from '../helpers/settled-style';
 
 /**
  * FEEDBACK COMPONENT VISUAL TESTS
@@ -71,9 +72,8 @@ test.describe('Progress Bars', () => {
 
     // Check final width matches value
     const progressBar = page.locator('#test-progress-anim .x-progress__bar');
-    const barWidth = await progressBar.evaluate(el => el.style.width);
-    
-    expect(barWidth).toBe('75%');
+    // #779: rendered fill, not the style attribute nothing writes any more.
+    expect(await settledWidthPercent(progressBar)).toBeCloseTo(75, 0);
   });
 });
 

@@ -1,0 +1,189 @@
+/**
+ * Navigation behaviors (navigation.js): sidebar, menu, treeview, backtotop,
+ * link, statusbar (#779)
+ * -----------------------------------------------------------------------------
+ * Every rule here was an inline style, a style="" block in a template, or an
+ * onmouseenter/onmouseleave handler writing element.style. navbar() is in
+ * navbar.css and steps() in steps.css, next to their existing rules.
+ */
+
+/* ── sidebar ──────────────────────────────────────────────────────────── */
+.x-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: 0.375rem;
+  transition: width 0.2s ease, min-width 0.2s ease;
+  min-width: 10rem;
+  width: 100%;
+  max-width: 100%;
+}
+.x-sidebar.x-sidebar--collapsed {
+  min-width: 3rem;
+  width: 3rem;
+}
+
+.x-sidebar .x-sidebar__item {
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0.8;
+}
+.x-sidebar .x-sidebar__item.x-sidebar__item--active {
+  background: var(--primary);
+  color: white;
+  font-weight: 500;
+  opacity: 1;
+}
+.x-sidebar .x-sidebar__item:hover {
+  background: var(--bg-tertiary);
+  opacity: 1;
+}
+
+/* ── menu ─────────────────────────────────────────────────────────────── */
+.x-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: 0.375rem;
+  min-width: 8.75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.x-menu .x-menu__item {
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: inherit;
+  font-size: 0.9rem;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* After its first hover an item rests at 0.9 (the old onmouseleave did it). */
+.x-menu .x-menu__item.x-menu__item--visited {
+  opacity: 0.9;
+}
+.x-menu .x-menu__item:hover {
+  background: var(--bg-tertiary);
+  opacity: 1;
+}
+
+/* ── treeview ─────────────────────────────────────────────────────────── */
+.x-treeview {
+  font-size: 0.875rem;
+  padding: 0.5rem;
+}
+.x-treeview .x-treeview__item {
+  margin-bottom: 0.25rem;
+}
+/* padding-left for nested levels is a generated rule (1.5rem per depth). */
+.x-treeview .x-treeview__node {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0;
+  cursor: default;
+  border-radius: 0.1875rem;
+  transition: background 0.15s ease;
+}
+.x-treeview .x-treeview__node.x-treeview__node--branch {
+  cursor: pointer;
+}
+.x-treeview .x-treeview__node:hover {
+  background: var(--bg-tertiary);
+}
+.x-treeview .x-treeview__toggle {
+  width: 1rem;
+  font-size: 0.7rem;
+  transition: transform 0.15s ease;
+}
+.x-treeview .x-treeview__toggle.x-treeview__toggle--open {
+  transform: rotate(90deg);
+}
+.x-treeview .x-treeview__spacer {
+  width: 1rem;
+}
+.x-treeview .x-treeview__children {
+  display: none;
+}
+.x-treeview .x-treeview__children.x-treeview__children--open {
+  display: block;
+}
+
+/* ── backtotop ────────────────────────────────────────────────────────── */
+.x-backtotop {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.x-backtotop.x-backtotop--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── link ─────────────────────────────────────────────────────────────── */
+.x-link {
+  cursor: pointer;
+  color: var(--primary);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+.x-link.x-link--invalid {
+  color: var(--danger-color);
+}
+
+/* ── statusbar ────────────────────────────────────────────────────────── */
+.x-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  height: 1.5rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  width: 100%;
+  box-sizing: border-box;
+}
+.x-statusbar.x-statusbar--bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+}
+.x-statusbar.x-statusbar--top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  border-top: none;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.x-statusbar .x-statusbar__message {
+  flex: 1;
+  text-align: center;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+.x-statusbar .x-statusbar__message.x-statusbar__message--visible { opacity: 1; }
+.x-statusbar .x-statusbar__message.x-statusbar__message--error { color: var(--danger-color); }
+.x-statusbar .x-statusbar__message.x-statusbar__message--success { color: var(--success-color); }

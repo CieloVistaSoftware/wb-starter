@@ -34,7 +34,8 @@ export function video(element, options = {}) {
   if (element.tagName !== 'VIDEO') {
     element.innerHTML = '';
     videoEl = document.createElement('video');
-    videoEl.style.width = '100%';
+    // Full width: .x-video__media in video.css, not element.style (#779).
+    videoEl.classList.add('x-video__media');
     if (config.src) videoEl.src = config.src;
     element.appendChild(videoEl);
   }

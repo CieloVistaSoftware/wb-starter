@@ -59,9 +59,9 @@ x-navbar a:first-of-type, [x-navbar] a:first-of-type{
 
 x-navbar a[href="#home"] img, [x-navbar] a[href="#home"] img,
 x-navbar a:first-of-type img, [x-navbar] a:first-of-type img{
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
   transition: all 0.3s ease;
 }
 
@@ -149,7 +149,7 @@ x-navbar button, [x-navbar] button{
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
@@ -295,6 +295,103 @@ x-navbar [data-brand]::after, [x-navbar] [data-brand]::after{
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  border-radius: var(--radius-md, 6px);
+  border-radius: var(--radius-md, 0.375rem);
   gap: 1rem;
+}
+
+/* ============================================================================
+   #779 — styles navigation.js's navbar() used to write inline
+   ----------------------------------------------------------------------------
+   Every value here was an inline style (or an onmouseenter handler writing
+   one), so it beat the glassmorphism rules above. To keep rendering identical
+   these must still beat them: the brand/item link rules above are
+   `[x-navbar] a:first-of-type` / `a:not(:first-of-type)` / `a:nth-of-type(2)`
+   (0,2,1) and their :hover (0,3,1), so the rules here match that and win by
+   coming later in the file. Hover colour is restated because the inline
+   `color: inherit` used to beat the hover colour above too.
+   ============================================================================ */
+
+.x-navbar.x-navbar--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.x-navbar > a.x-navbar__brand {
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+.x-navbar > a.x-navbar__brand:hover {
+  opacity: 0.8;
+  color: inherit;
+}
+
+/* 32px unless logo-size="…" (a generated rule, weight 4). */
+.x-navbar > .x-navbar__brand > .x-navbar__logo {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  border-radius: 0.25rem;
+}
+
+.x-navbar .x-navbar__brand-wrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.x-navbar .x-navbar__tagline {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+/* div.x-navbar__menu (0,2,1): `[x-navbar] > div:last-of-type` above is
+   (0,2,1) too and sets its own gap. */
+.x-navbar > div.x-navbar__menu {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.x-navbar > div.x-navbar__menu.x-navbar__menu--custom {
+  align-items: center;
+}
+
+.x-navbar a.x-navbar__item {
+  opacity: 0.8;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+.x-navbar a.x-navbar__item:hover {
+  opacity: 1;
+  color: inherit;
+}
+
+/* Semantic mode: an authored list and heading inside the navbar. */
+.x-navbar .x-navbar__list {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.x-navbar .x-navbar__heading-brand {
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin: 0;
+  font-size: 1.25rem;
 }
