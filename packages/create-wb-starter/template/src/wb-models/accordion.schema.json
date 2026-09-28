@@ -5,12 +5,6 @@
   "description": "Turns titled child sections into independently expandable items. Deprecated: use <details>/<summary> instead.",
   "schemaFor": "accordion",
   "properties": {
-    "data-title": {
-      "type": "boolean",
-      "description": "Legacy fallback for `accordion-title`, read only when the canonical form is absent.",
-      "default": false,
-      "scope": "child"
-    },
     "accordion-title": {
       "type": "boolean",
       "description": "Marks a child as an accordion panel and supplies its header text. This is the canonical spelling; `data-accordion-title` is read as a fallback.",

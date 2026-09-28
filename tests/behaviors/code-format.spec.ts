@@ -11,7 +11,15 @@ const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 test('NO demo code block wraps/breaks tokens (editor style, horizontal scroll)', async ({ page }) => {
   await page.goto(URL, { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#mainPage-behaviors', { timeout: 25000 });
-  await page.waitForTimeout(3000);
+  // The page builds its code panels only once the preselected example (#771)
+  // has rendered. A fixed 3s sleep found "no code blocks" whenever the run was
+  // under load; wait for the panel's own finished state instead, then for the
+  // other panels to join it.
+  await page.waitForSelector('#behaviors-live-code pre code.hljs', { timeout: 30000 });
+  await expect.poll(
+    () => page.locator('pre.x-pre, .x-pre-wrapper pre, pre.x-demo__code').count(),
+    { timeout: 15000 },
+  ).toBeGreaterThan(3);
 
   const blocks = await page.evaluate(() => {
     const pres = [...document.querySelectorAll('pre.x-pre, .x-pre-wrapper pre, pre.x-demo__code')];

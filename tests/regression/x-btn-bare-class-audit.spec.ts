@@ -176,22 +176,26 @@ test.describe('Bare .x-btn (no modifier) renders with real visible styling', () 
     });
   });
 
-  test.describe('pages/behaviors.html', () => {
+  // This walked pages/behaviors.html, whose 16 audited bare triggers went
+  // away with the page's rewrite into a render-on-demand catalogue (#666), so
+  // its own vacuity guard failed. demos/landing-page-showcase.html is the one
+  // audited page that still ships authored bare markup
+  // (`<button class="x-btn" x-tooltip x-ripple>`), which is the case the
+  // defensive rule exists for.
+  test.describe('demos/landing-page-showcase.html', () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/?page=behaviors');
-      await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-      await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-      await page.waitForTimeout(1000);
+      await page.goto('/demos/landing-page-showcase.html');
+      await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, null, { timeout: 20000 });
+      await page.locator('button.x-btn[x-tooltip]').first().scrollIntoViewIfNeeded();
+      await expect(page.locator('button.x-btn[x-tooltip]').first()).toHaveAttribute('x-ready', '', { timeout: 15000 });
     });
 
     test('every bare .x-btn trigger on the page is visibly styled', async ({ page }) => {
       const bareCount = await bareWbBtnCount(page);
-      // The audit found 16 bare x-btn triggers on this page (toast alerts,
-      // modal, drawer, confirm, prompt, lightbox, popover, copy/share/print/
-      // fullscreen, dark-mode). Guard that the page still HAS bare instances
-      // to actually exercise -- if this drops to 0 the scenario no longer
-      // applies and the test below would pass vacuously.
-      expect(bareCount, 'expected bare (unmodified) .x-btn triggers on behaviors.html').toBeGreaterThan(0);
+      // Guard that the page still HAS bare instances to actually exercise --
+      // if this drops to 0 the scenario no longer applies and the check below
+      // would pass vacuously.
+      expect(bareCount, 'expected bare (unmodified) .x-btn triggers on landing-page-showcase.html').toBeGreaterThan(0);
 
       const results = await page.evaluate(() => {
         const els = Array.from(document.querySelectorAll('.x-btn')).filter(

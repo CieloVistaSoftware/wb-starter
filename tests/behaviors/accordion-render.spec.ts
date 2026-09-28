@@ -3,36 +3,41 @@
  * the body no longer duplicates the title (#145). (The original bug was malformed
  * nested markup that made each accordion's "content" echo the title.)
  */
-import { test, expect, Page } from '../fixtures/offline';
+import { test, expect } from '../fixtures/offline';
+import { openBehaviorsPanel, renderVariant, example } from '../utils/behaviors-panel';
 
-async function loadPage(page: Page) {
-  await page.goto('/?page=behaviors');
-  await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-  await page.waitForSelector('[x-accordion]', { timeout: 20000 });
-  await page.evaluate(async () => {
-    for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 50)); }
-    window.scrollTo(0, 0);
-  });
-  await page.waitForTimeout(800);
-}
-
+// The Behaviors page stopped hosting static `[x-accordion]` sections in #664;
+// it builds the x-accordion example on demand in #behaviors-live-example (from
+// data/behavior-examples.json). Waiting for a page-wide [x-accordion] timed
+// out, and the three answers it looked for were the retired section's copy.
+// The claim is unchanged: sibling panels, each with its own answer, and no
+// body that merely repeats its title.
 test('three sibling accordions, each with its distinct answer (not the title)', async ({ page }) => {
-  await loadPage(page);
-  await page.locator('[x-accordion]').first().scrollIntoViewIfNeeded();
-  // markup fix: three SIBLING accordions (the malformed version nested them)
-  expect(await page.locator('[x-accordion]').count()).toBeGreaterThanOrEqual(3);
+  await openBehaviorsPanel(page, 'x-accordion');
+  await renderVariant(page, 'x-accordion', null);
 
-  // each distinct answer renders on the page (proves bodies hold answers, not duplicated titles)
-  await expect(page.locator('body')).toContainText('zero-build web component library');
-  await expect(page.locator('body')).toContainText('No installation needed');
-  await expect(page.locator('body')).toContainText('enterprise hardened');
+  const accordion = example(page);
+  await expect(accordion).toHaveAttribute('x-accordion', '');
+  await expect(accordion).toHaveAttribute('x-ready', '');
 
-  // and no accordion's own content is just its title repeated
-  const dup = await page.locator('[x-accordion]').evaluateAll((els) => els.filter((e) => {
-    const title = (e.getAttribute('title') || '').trim();
-    const body = (e.querySelector('p')?.textContent || '').trim();
-    return title && body && title === body;
-  }).length);
-  expect(dup, 'no accordion body equals its title').toBe(0);
+  // markup fix: SIBLING panels (the malformed version nested them)
+  const panels = accordion.locator(':scope > details');
+  expect(await panels.count()).toBeGreaterThanOrEqual(3);
+  expect(await accordion.locator('details details').count(), 'panels must not nest').toBe(0);
+
+  // each distinct answer renders (proves bodies hold answers, not duplicated titles)
+  await expect(accordion).toContainText('calls the matching behavior function');
+  await expect(accordion).toContainText('Light DOM only');
+  await expect(accordion).toContainText('The browser loads the modules directly');
+
+  // and no panel's own content is just its title repeated
+  const rows = await panels.evaluateAll((els) => els.map((e) => ({
+    title: (e.querySelector('summary')?.textContent || '').trim(),
+    body: (e.querySelector('p')?.textContent || '').trim(),
+  })));
+  for (const r of rows) {
+    expect(r.body, `panel "${r.title}" has no answer`).not.toBe('');
+    expect(r.body, 'no accordion body equals its title').not.toBe(r.title);
+  }
+  expect(new Set(rows.map((r) => r.body)).size, 'each panel has its own answer').toBe(rows.length);
 });

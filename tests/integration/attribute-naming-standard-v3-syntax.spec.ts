@@ -52,8 +52,15 @@ test.describe('ATTRIBUTE-NAMING-STANDARD.md uses only wb-* custom tags (#255)', 
     await page.goto('/public/doc-viewer.html?file=docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md', {
       waitUntil: 'networkidle',
     });
-    await expect(page.locator('#content')).toContainText('WB-Starter Attribute Naming Standard');
-    await expect(page.locator('#content')).not.toContainText('404');
-    await expect(page.locator('#content')).toContainText('[x-cardpricing]');
+    // The doc-viewer renders every hyphen in prose as U+2011 (non-breaking
+    // hyphen) so a token like `x-toast` never splits across lines (#295) --
+    // "WB-Starter" arrives as "WB‑Starter", and a literal-hyphen substring
+    // match never matches. Compare the text with hyphens folded back.
+    const text = async () => ((await page.locator('#content').textContent()) || '').replace(/\u2011/g, '-');
+    await expect.poll(text).toContain('WB-Starter Attribute Naming Standard');
+    expect(await text()).not.toContain('404');
+    // The doc shows the attribute form on a neutral host (`<div x-cardpricing>`);
+    // it no longer writes the bare `[x-cardpricing]` selector form this looked for.
+    expect(await text()).toContain('<div x-cardpricing');
   });
 });

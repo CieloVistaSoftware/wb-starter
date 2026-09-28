@@ -284,7 +284,12 @@ test.describe('Behaviors selector — interaction', () => {
         const listBox = list.getBoundingClientRect();
         if (nowBox.top < listBox.top - 1 || nowBox.bottom > listBox.bottom + 1) strayed.push(i);
       }
-      const expected = rows().slice(1, steps + 1).map((r) => r.dataset.label + '·' + (r.dataset.variant || ''));
+      // The VISIBLE rows: #995 collapses a behavior's options into a closed
+      // <details> group, and arrowing deliberately steps over rows that are
+      // not on screen (rowsInOrder() in the page). Counting every row in the
+      // DOM expected the walk to land inside the collapsed audio group.
+      const expected = rows().filter((r) => r.offsetParent !== null)
+        .slice(1, steps + 1).map((r) => r.dataset.label + '·' + (r.dataset.variant || ''));
 
       return {
         walked, expected, strayed, steps,

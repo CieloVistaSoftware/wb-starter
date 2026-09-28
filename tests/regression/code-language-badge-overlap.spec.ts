@@ -23,10 +23,14 @@ test.describe('x-code language badge does not overlap the code text', () => {
   test('badge sits above the first line of code, not on top of it', async ({ page }) => {
     await ready(page);
 
-    const container = page.locator('[x-demo]', { has: page.locator('code[x-code]') }).first();
+    // Located by its `language`, not by `code[x-code]`: the doc now authors the
+    // example as a plain <code language="Python"> (autoInject decorates it),
+    // and an earlier demo's prose <code>x-</code> also matched code[x-code] --
+    // so .first() measured that inline span, which has no badge at all.
+    const container = page.locator('[x-demo]', { has: page.locator('code[language="Python"]') }).first();
     await container.scrollIntoViewIfNeeded();
 
-    const codeEl = container.locator('.x-demo__grid code[x-code]').first();
+    const codeEl = container.locator('.x-demo__grid code[language="Python"]').first();
     await expect(codeEl).toBeVisible({ timeout: 20000 });
 
     await expect

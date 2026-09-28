@@ -150,8 +150,16 @@ test.describe('No redundant x-{behavior} attribute', () => {
     await page.waitForFunction(
       () => typeof (window as any).__wbGeneratedExample === 'function'
         && Object.keys((window as any).WB?.behaviors ?? {}).length > 0,
+      null,
       { timeout: 30000 },
     );
+    // The generator is defined at parse time, but the tag->behavior map it
+    // consults arrives by a later dynamic import. Sweeping before then asks
+    // it about an empty map -- every native host looks attribute-driven. The
+    // browse list renders from that same import, so its rows mean the map is
+    // in. (The `null` above matters too: without it the options object was
+    // taken as the function ARGUMENT and the 30s timeout never applied.)
+    await expect(page.locator('#behaviors-search-results > *').first()).toBeAttached({ timeout: 30000 });
 
     const rendered: string[] = await page.evaluate(() => {
       // Call the generator directly rather than clicking every row: rows

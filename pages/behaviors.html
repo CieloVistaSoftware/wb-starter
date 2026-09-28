@@ -501,6 +501,13 @@
         // values would silently collapse them.
         extensionMap = mod.extensionMap;
         nativeMap = mod.nativeMap || {};
+        // semanticHostFor() caches a behavior->tag index built from nativeMap.
+        // Anything that ran the generator before this import resolved built it
+        // from the EMPTY placeholder map and kept it forever, so every
+        // auto-injected behavior afterwards rendered as <figure x-figure>,
+        // <details x-details>, ... (#753's defect, via a stale cache). Drop it
+        // so the next call indexes the real map.
+        nativeByBehavior = null;
         // #783: morphing (x-as-{name}) was removed from the framework, so
         // there is nothing left to filter out here. The guard that kept it
         // off this list lives on as a regression test —
@@ -1012,6 +1019,13 @@
         const stageTop = liveStage.getBoundingClientRect().top;
         let deepest = 0;
         for (const el of liveStage.querySelectorAll('*')) {
+          // The body of a CLOSED <details> is not display:none -- Chromium
+          // hides it with content-visibility, and getBoundingClientRect() still
+          // reports its full laid-out box. The x-details example's collapsed
+          // image and text measured 551px that nobody could see, and the stage
+          // grew to 635px around a 52px summary (#769, again). checkVisibility()
+          // is false for exactly that skipped content, and for display:none.
+          if (typeof el.checkVisibility === 'function' && !el.checkVisibility()) continue;
           const r = el.getBoundingClientRect();
           if (r.width === 0 && r.height === 0) continue;   // display:none, not open
           deepest = Math.max(deepest, r.bottom - stageTop);
@@ -1047,6 +1061,12 @@
     liveStage.addEventListener('click', fitStageToOverlays);
     liveStage.addEventListener('mouseover', fitStageToOverlays);
     liveStage.addEventListener('focusin', fitStageToOverlays);
+    // An opened menu can grow AFTER that fit: its avatars only start loading
+    // once the menu is displayed, and each one that lands makes the menu
+    // taller than the box just measured for it -- under load the menu ended
+    // ~300px below the stage (#703). `load` does not bubble, so listen in the
+    // capture phase to hear every image inside the stage.
+    liveStage.addEventListener('load', fitStageToOverlays, true);
 
     // #710 -- John: "Make the height of the left element same as right element."
     // CSS alone cannot express it: with align-items:stretch the LIST's own 585
@@ -1789,7 +1809,9 @@
     //   3. otherwise <div>, the neutral fallback
     let nativeByBehavior = null;
     function semanticHostFor(behavior) {
-      if (!nativeByBehavior) {
+      // Only cache once nativeMap has arrived; an index of the empty
+      // placeholder would answer "no native host" for everything.
+      if (!nativeByBehavior && Object.keys(nativeMap || {}).length) {
         nativeByBehavior = {};
         for (const [selector, beh] of Object.entries(nativeMap || {})) {
           // nativeMap keys are selectors ('input[type="checkbox"]'); only the
@@ -1799,7 +1821,7 @@
           }
         }
       }
-      if (nativeByBehavior[behavior]) return nativeByBehavior[behavior];
+      if (nativeByBehavior && nativeByBehavior[behavior]) return nativeByBehavior[behavior];
       // A real HTML element with this name? createElement returns
       // HTMLUnknownElement for anything the parser does not recognise.
       const probe = document.createElement(behavior);
@@ -2013,7 +2035,26 @@
      * Existing ids are left alone -- some examples carry a meaningful one
      * already (#x-demo-file, which its own wiring and snippet both reference).
      */
+    // #675/#748: a behavior can build parts well after both
+    // assignExampleIds() calls below have run -- a lazily-loaded module, an
+    // icon <svg> the button behavior adds once its sprite resolves, the audio
+    // player's controls. Those parts shipped without ids (109 of 331 in the
+    // sweep). Watching the stage names each one as it arrives, with the same
+    // token/option the example was opened with. Setting an id is an attribute
+    // change, which this observer does not watch, so it cannot feed itself.
+    let lastIdArgs = null;
+    let idPassQueued = false;
+    new MutationObserver(() => {
+      if (!lastIdArgs || idPassQueued) return;
+      idPassQueued = true;
+      queueMicrotask(() => {
+        idPassQueued = false;
+        assignExampleIds(...lastIdArgs);
+      });
+    }).observe(liveStage, { childList: true, subtree: true });
+
     function assignExampleIds(token, optionText) {
+      lastIdArgs = [token, optionText];
       // John: "i didn't mean to make them all super long nonsense they need to
       // be short describing the element they came from and where they are
       // going the target".
@@ -2599,9 +2640,11 @@
       const behaviorName = extensionMap[token] || token.replace(/^x-/, '');
       showApi(behaviorName);
       showDoc(behaviorName);
-      const optionText = variant
-        ? (isBool ? prop : (prop && prop !== 'variant' ? `${prop}=${variant}` : variant))
-        : '';
+      // The row's own optionLabel(), not a second copy of it: the copy here
+      // lacked the default-true case, so a row listed as `hoverable=false`
+      // rendered under a header reading plain `hoverable` -- the opposite of
+      // what the stage was showing.
+      const optionText = optionLabel({ prop, value: variant, boolean: isBool });
       liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
 
       if (!src) {

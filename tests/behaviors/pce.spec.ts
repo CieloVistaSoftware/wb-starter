@@ -160,23 +160,28 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
         </script>
       </head>
       <body>
-        <div x-cardstats data-label="Stat 1" data-value="100"></div>
-        <div x-cardstats data-label="Stat 2" data-value="200"></div>
-        <div x-cardstats data-label="Stat 3" data-value="300"></div>
+        <div x-cardstats label="Stat 1" value="100"></div>
+        <div x-cardstats label="Stat 2" value="200"></div>
+        <div x-cardstats label="Stat 3" value="300"></div>
       </body>
       </html>
     `);
 
-    await page.waitForFunction(() => window.WB !== undefined);
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-    await page.waitForTimeout(1000);
+    // No WBSite wait: this is a standalone document that only boots the WB
+    // runtime, never the SPA, so window.WBSite is never created and waiting on
+    // it timed out every run (same trap as #691). And the old assertions read
+    // back the authored data-* attributes -- true whether or not any behavior
+    // ran. Plain attributes (v3, #224), and proof each element was built.
+    await page.waitForFunction(() => (window as any).WB !== undefined, { timeout: 20000 });
 
     const stats = page.locator('[x-cardstats]');
     await expect(stats).toHaveCount(3);
-    
-    await expect(stats.nth(0)).toHaveAttribute('data-value', '100');
-    await expect(stats.nth(1)).toHaveAttribute('data-value', '200');
-    await expect(stats.nth(2)).toHaveAttribute('data-value', '300');
+
+    for (const [i, v] of ['100', '200', '300'].entries()) {
+      await expect(stats.nth(i)).toHaveAttribute('x-ready', '', { timeout: 20000 });
+      await expect(stats.nth(i)).toContainText(v);
+      await expect(stats.nth(i)).toContainText(`Stat ${i + 1}`);
+    }
   });
 
   test('PCE elements respond to lazy loading', async ({ page }) => {
@@ -197,25 +202,26 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
       </head>
       <body>
         <div class="spacer">Scroll down...</div>
-        <div x-cardprofile id="lazy-profile" data-name="Lazy User"></div>
+        <div x-cardprofile id="lazy-profile" name="Lazy User"></div>
       </body>
       </html>
     `);
 
-    await page.waitForFunction(() => window.WB !== undefined);
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-    
+    // Standalone document: WB boots, WBSite never does (see above).
+    await page.waitForFunction(() => (window as any).WB !== undefined, { timeout: 20000 });
+
     const profile = page.locator('#lazy-profile');
-    
+
     // Initially not visible
     await expect(profile).not.toBeInViewport();
-    
+
     // Scroll into view
     await safeScrollIntoView(profile);
-    await page.waitForTimeout(500);
-    
-    // Now visible and should have behavior applied
+
+    // Now visible and the behavior has been applied -- x-ready and the name it
+    // renders, not the authored attribute read back.
     await expect(profile).toBeVisible();
-    await expect(profile).toHaveAttribute('data-name', 'Lazy User');
+    await expect(profile).toHaveAttribute('x-ready', '', { timeout: 20000 });
+    await expect(profile).toContainText('Lazy User');
   });
 });

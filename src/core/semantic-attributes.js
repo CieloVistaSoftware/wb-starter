@@ -80,7 +80,17 @@ const CARD_TAG_EXCLUSIONS = CARD_TAGS.map(tag => `:not(${tag})`).join('')
  */
 const CARD_OWNED_ATTRIBUTES = ['badge', 'tooltip'];
 
+// <header> renders its OWN `badge` (header.js builds .x-header__badge in
+// .x-header__right), so the generic badge() must not also run on it: it
+// re-read the header's `icon` and prepended a second .x-badge__icon, and
+// used badge="v1.0" as a variant name (x-badge--v1.0 on the header root).
+// Badge-only: header has no tooltip handling of its own, so it keeps the
+// generic themed [tooltip].
+const BADGE_ONLY_EXCLUSIONS = ':not(header)';
+
 export const semanticPropertyMappings = Object.entries(SEMANTIC_PROPERTY_ATTRIBUTES).map(([attr, behavior]) => ({
-  selector: CARD_OWNED_ATTRIBUTES.includes(attr) ? `[${attr}]${CARD_TAG_EXCLUSIONS}` : `[${attr}]`,
+  selector: CARD_OWNED_ATTRIBUTES.includes(attr)
+    ? `[${attr}]${CARD_TAG_EXCLUSIONS}${attr === 'badge' ? BADGE_ONLY_EXCLUSIONS : ''}`
+    : `[${attr}]`,
   behavior,
 }));

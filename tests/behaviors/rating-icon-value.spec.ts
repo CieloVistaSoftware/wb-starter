@@ -7,18 +7,26 @@
  * reads plain attributes and honors icon + theme color (--rating-active-color).
  */
 import { test, expect } from '../fixtures/offline';
+import { setupBehaviorTest, setupTestContainer } from '../base';
 
+// These used to read whatever ratings /?page=behaviors rendered inline. That
+// page is a browser now that builds one example on selection (#666/#910), so
+// it has no hearts, no thumbs and not three ratings to count: every check
+// found nothing. The ratings under test are authored here instead, the same
+// markup the old showcase carried.
 test.describe('#177 — rating icon + value + color', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2000);
+    await setupBehaviorTest(page);
+    await setupTestContainer(page,
+      '<div x-rating value="3" icon="❤️"></div>' +
+      '<div x-rating value="4" icon="👍"></div>' +
+      '<div x-rating value="2"></div>');
   });
 
   test('custom icon= is honored (hearts / thumbs, not stars)', async ({ page }) => {
     const glyphs = await page.evaluate(() =>
       ['❤️', '👍'].map((ic) => {
-        const r = document.querySelector(`[x-rating][icon="${ic}"]`);
+        const r = document.querySelector(`#test-container [x-rating][icon="${ic}"]`);
         const first = r?.querySelector('.x-rating__star');
         return { icon: ic, glyph: first?.textContent || '' };
       })
@@ -30,7 +38,7 @@ test.describe('#177 — rating icon + value + color', () => {
 
   test('value is painted on first render (filled count == value)', async ({ page }) => {
     const r = await page.evaluate(() => {
-      return [...document.querySelectorAll('[x-rating]')].map((el) => {
+      return [...document.querySelectorAll('#test-container [x-rating]')].map((el) => {
         const value = parseInt(el.getAttribute('value') || '0', 10);
         const filled = el.querySelectorAll('.x-rating__star--full').length;
         return { value, filled };
@@ -44,7 +52,7 @@ test.describe('#177 — rating icon + value + color', () => {
 
   test('filled stars use the theme rating color, not a hardcoded gray', async ({ page }) => {
     const color = await page.evaluate(() => {
-      const star = document.querySelector('[x-rating] .x-rating__star--full') as HTMLElement;
+      const star = document.querySelector('#test-container [x-rating] .x-rating__star--full') as HTMLElement;
       return star ? getComputedStyle(star).color : 'NONE';
     });
     // --rating-active-color resolves to gold rgb(251, 197, 35)

@@ -11,40 +11,35 @@ import { test, expect } from '../fixtures/offline';
  * demo bars (labeled 25%/50%/75%/100%) as an empty 0% bar. Confirmed live via
  * screenshot (John, cards-permutation-matrix session).
  */
+// Where this is checked moved. #664 took the static demo sections off the
+// Behaviors page -- its examples are now built one at a time on demand, and
+// every x-progress variant there shares one value -- so the page-wide scan
+// found 0 bars. demos/site/feedback.html's Progress section is where the
+// 0/25/50/75/100 plain-`value` bars live now, and it is the same regression:
+// if progress() stopped reading plain `value` they would all read 0.
 test.describe('Behaviors page: Progress Bars demo actually reflects its labeled value', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-    await page.waitForTimeout(1000);
-  });
-
   test('25/50/75/100 bars each render their own distinct, non-zero fill percentage', async ({ page }) => {
-    const bars = page.locator('main').getByText(/^\d+%$/).locator('xpath=ancestor::x-progress[1]');
-    // Fall back to a direct selector if the label-based lookup above doesn't
-    // resolve (label text lives in a child .x-progress__label span).
-    const progressEls = page.locator('progress');
-    const count = await progressEls.count();
-    expect(count, 'expected the 4 demo <progress> elements to be present').toBeGreaterThanOrEqual(4);
+    await page.goto('/demos/site/feedback.html', { waitUntil: 'domcontentloaded' });
+    const section = page.locator('#progress-progress');
+    // The lazy runtime (#491) only builds near the viewport.
+    await section.scrollIntoViewIfNeeded();
 
     const percents: number[] = [];
-    for (let i = 0; i < count; i++) {
-      const pct = await progressEls.nth(i).evaluate((el) => {
-        const bar = el.querySelector('.x-progress__bar') as HTMLElement | null;
-        if (!bar) return null;
-        return parseFloat(bar.style.width || '0');
-      });
-      if (pct !== null) percents.push(pct);
+    for (const value of ['25', '50', '75', '100']) {
+      const bar = section.locator(`[role="progressbar"][value="${value}"]`).first();
+      await bar.scrollIntoViewIfNeeded();
+      await expect(bar, `expected the value="${value}" demo bar to be built`).toBeVisible({ timeout: 20000 });
+      const fill = bar.locator('.x-progress__bar');
+      await expect(fill).toHaveCount(1);
+      percents.push(await fill.evaluate((el) => parseFloat((el as HTMLElement).style.width || '0')));
     }
 
     // None should be stuck at 0 -- the exact bug: every bar silently read
     // value=0 because the markup used data-value instead of value.
     const zeroCount = percents.filter((p) => p === 0).length;
-    expect(zeroCount, `expected at most one legitimately-0% bar, got zeros in: ${JSON.stringify(percents)}`).toBeLessThanOrEqual(0);
+    expect(zeroCount, `expected no 0% bar, got zeros in: ${JSON.stringify(percents)}`).toBe(0);
 
-    // The four demo bars are labeled 25/50/75/100 -- each must differ from
-    // the others (not just "non-zero", but actually reflecting its own value).
-    const unique = new Set(percents.map((p) => Math.round(p)));
-    expect(unique.size, `expected 4 distinct fill percentages, got: ${JSON.stringify(percents)}`).toBeGreaterThanOrEqual(4);
+    // Each must reflect its own value, not just be non-zero.
+    expect(percents.map(Math.round), 'each bar fills to its own value').toEqual([25, 50, 75, 100]);
   });
 });

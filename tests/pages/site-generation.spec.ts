@@ -47,6 +47,14 @@ interface SiteResult {
 const resultPath = path.join(process.cwd(), 'data', 'site-generator-result.json');
 const siteResult = readJson<SiteResult>(resultPath);
 
+// The index <h1> is the site schema's own `title` -- read it from there
+// rather than hardcoding it. The literal 'WB Component Library' went stale
+// when the site was renamed to 'WB Behavior Library' (components are gone:
+// a behavior is an x- attribute on a neutral host), and failed against a
+// correctly generated page.
+const siteSchemaPath = path.join(process.cwd(), 'src', 'wb-models', 'pages', 'x-component-library.site.json');
+const SITE_TITLE: string = readJson<{ title: string }>(siteSchemaPath)?.title ?? 'WB Behavior Library';
+
 test.describe('Site Generation — Phase 4', () => {
 
   // #822: the guard used to be `!siteResult` alone, which only catches a
@@ -70,7 +78,7 @@ test.describe('Site Generation — Phase 4', () => {
 
     test('loads and displays site title', async ({ page }) => {
       await page.goto(`${SITE_DIR}/index.html`);
-      await expect(page.locator('h1')).toContainText('WB Component Library');
+      await expect(page.locator('h1')).toContainText(SITE_TITLE);
     });
 
     test('shows correct stats', async ({ page }) => {
@@ -256,7 +264,7 @@ test.describe('Site Generation — Phase 4', () => {
 
         // Click back link
         await page.locator('a[href="index.html"]').click();
-        await expect(page.locator('h1')).toContainText('WB Component Library');
+        await expect(page.locator('h1')).toContainText(SITE_TITLE);
       }
     });
   });

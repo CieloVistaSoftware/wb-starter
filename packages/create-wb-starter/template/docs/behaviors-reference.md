@@ -50,7 +50,7 @@ Enhances an element without changing its fundamental structure.
 | `<table>` | `table` | Table with sorting, striping, hover |
 | `<details>` | `details` | Details with smooth animation |
 | `<dialog>` | `dialog` | Dialog with backdrop, animations |
-| `<img>` | `image` | Lazy loading, fade-in, lightbox |
+| `<img>` | `img` | Lazy loading, fade-in, lightbox |
 
 ### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783)
 
@@ -87,12 +87,12 @@ WB.init({
 
 ## Auto Injection
 
-Behaviors can be configured to automatically attach to standard HTML5 semantic elements. This feature is **optional** and disabled by default.
+Behaviors can be configured to automatically attach to standard HTML5 semantic elements. It is **on by default** (`autoInject: true` in src/core/config.js).
 
-To enable, set `"autoInject": true` in your `config/site.json` or pass it to `WB.init()`.
+To opt a page out, pass `{ autoInject: false }` to `WB.init()`; to opt one element out, give it `x-ignore`.
 
 When enabled, plain semantic elements like `<dialog>` and `<img>` below get the
-`dialog`/`image` behaviors attached automatically, with no `x-` attribute needed:
+`dialog`/`img` behaviors attached automatically, with no `x-` attribute needed:
 
 <div x-demo columns="1">
 <p>Auto-decorated dialog (zero <code>x-</code> attributes):</p>
@@ -114,7 +114,7 @@ Enhances standard HTML elements with better styling and functionality.
 |----------|---------|------|-------------|
 | [`audio`](behaviors/audio.md) | `<audio>` | Decorate | Enhanced audio player styling |
 | [`video`](behaviors/video.md) | `<video>` | Decorate | Enhanced video player styling |
-| [`img`](behaviors/img.md) | `<img>` | **Morph** → `image` | Lazy loading, fade-in, lightbox |
+| [`img`](behaviors/img.md) | `<img>` | Decorate | Lazy loading, fade-in, lightbox |
 | [`figure`](behaviors/figure.md) | `<figure>` | Decorate | Figure with caption styling |
 | [`table`](behaviors/table.md) | `<table>` | Decorate | Sortable headers, striped rows |
 | [`code`](behaviors/code.md) | `<code>` | Decorate | Inline code styling |
@@ -131,6 +131,17 @@ Enhances standard HTML elements with better styling and functionality.
 | [`form`](behaviors/form.md) | `<form>` | Decorate | Validation UI, loading states |
 | [`details`](behaviors/details.md) | `<details>` | Decorate | Smooth expand/collapse animation |
 | [`dialog`](behaviors/dialog.md) | `<dialog>` | Decorate | Backdrop, close button, animations |
+| [`fieldset`](behaviors/fieldset.md) | `<fieldset>` | Decorate | Groups related form controls |
+| [`formrow`](behaviors/formrow.md) | `<div x-formrow>` | - | Form field wrapper laid out as a row |
+| [`inputgroup`](behaviors/inputgroup.md) | `<div x-inputgroup>` | - | Input joined with prepended/appended addons |
+| [`searchfield`](behaviors/searchfield.md) | `<input x-searchfield>` | - | Search input with icon, clear button and loading state |
+| [`counter`](behaviors/counter.md) | `<textarea x-counter>` | - | Live length/max character counter |
+| [`floatinglabel`](behaviors/floatinglabel.md) | `<input x-floatinglabel>` | - | Placeholder that floats up into a label |
+| [`masked`](behaviors/masked.md) | `<input x-masked>` | - | Formats input against a mask pattern as you type |
+| [`mark`](behaviors/mark.md) | `<mark>` | Decorate | Highlighted text with status colour variants |
+| [`error`](behaviors/error.md) | any | - | Marks an error message (`role="alert"`) |
+| [`help`](behaviors/help.md) | any | - | Help text for a field |
+| [`control`](behaviors/control.md) | any | - | Marks a form control wrapper |
 
 #### Live Examples
 
@@ -285,6 +296,14 @@ Rich interactive behaviors.
 | `menu` | `<menu>` | Decorate | Menu list styling |
 | `pagination` | `<nav>` | - | Pagination controls |
 | `steps` | `<div>` | - | Step wizard |
+| [`cardbutton`](behaviors/cardbutton.md) | `<article x-cardbutton>` | - | Card with one or two footer action buttons |
+| [`header`](behaviors/header.md) | `<header>` | Decorate | Page header built from its attributes |
+| [`stat`](behaviors/stat.md) | `<div x-stat>` | - | One figure: large value over a small label |
+| [`timeline`](behaviors/timeline.md) | `<div x-timeline>` | - | Vertical timeline, one marker per item |
+| [`span`](behaviors/span.md) | `<span>` | - | Status-coloured inline text |
+| [`globe`](behaviors/globe.md) | `<div x-globe>` | - | Globe placeholder (class only; nothing drawn yet) |
+| [`slider`](behaviors/slider.md) | `<div x-slider>` | - | Slider placeholder (class only; nothing built yet) |
+| [`fix-card`](behaviors/fix-card.md) | `<div x-fix-card>` | - | One entry from the project fix log |
 
 #### Live Examples
 
@@ -391,6 +410,10 @@ Tools for arranging content.
 | `icon` | `<span x-icon>` | - | Icon wrapper |
 | [`draggable`](behaviors/carddraggable.md) | any | - | Draggable element |
 | `resizable` | any | - | Resizable element |
+| [`ratio`](behaviors/ratio.md) | `<div x-ratio>` | - | Fixed aspect ratio box; media child covers it |
+| [`repeater`](behaviors/repeater.md) | `<div x-repeater>` | - | Stamps out copies of its `<template>` |
+| [`move`](behaviors/move.md) | any | - | Reorder grid/flex items with direction buttons |
+| [`scrollalong`](behaviors/scrollalong.md) | any | - | Sticky-sidebar positioning via CSS sticky |
 
 #### Live Examples
 
@@ -505,6 +528,8 @@ Functional utilities.
 | `notes` | `<div>` | - | Notes system |
 | [`mdhtml`](behaviors/mdhtml.md) | `<div>` | - | Markdown renderer |
 | `builder` | `<div>` | - | Page builder container |
+| [`release`](behaviors/release.md) | any | - | Displays the site's build/release number |
+| [`codecontrol`](behaviors/codecontrol.md) | `<select>` | - | Switches the highlight.js code theme site-wide |
 
 #### Live Examples
 
@@ -545,6 +570,9 @@ Apply animations to elements.
 | `typewriter` | any | - | Typewriter text effect |
 | `parallax` | any | - | Parallax scroll effect |
 | `reveal` | any | - | Scroll reveal effect |
+| [`fireworks`](behaviors/fireworks.md) | any | - | Firework burst on click |
+| [`snow`](behaviors/snow.md) | `<button>` | - | Starts/stops falling snow over the page |
+| [`stagelight`](behaviors/stagelight.md) | any | - | Beam, spotlight and fixture lighting effects |
 
 #### Live Examples
 
@@ -788,7 +816,7 @@ so you don't have to open a dozen files to see what's available across the whole
 
 | Element | Behavior | Type |
 |---------|----------|------|
-| `<img>` | [`image`](behaviors/img.md) | Decorate |
+| `<img>` | [`img`](behaviors/img.md) | Decorate |
 | `<audio>` | [`audio`](behaviors/audio.md) | Decorate |
 | `<video>` | [`video`](behaviors/video.md) | Decorate |
 | `<figure>` | [`figure`](behaviors/figure.md) | Decorate |

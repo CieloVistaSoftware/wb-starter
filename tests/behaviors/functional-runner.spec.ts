@@ -192,7 +192,15 @@ function getSchemaFiles(): string[] {
 function loadSchema(filename: string): Schema | null {
   try {
     const content = fs.readFileSync(path.join(SCHEMA_DIR, filename), 'utf-8');
-    return JSON.parse(content);
+    const schema = JSON.parse(content);
+    // Schemas name their behavior in `schemaFor` (schema.schema.json's field;
+    // no schema has carried a top-level `behavior` for a long time). Reading
+    // only `behavior` discovered 0 of the 12 schemas that define functional
+    // tests, so this runner executed nothing and its guard reported 0.
+    if (schema && !schema.behavior && typeof schema.schemaFor === 'string') {
+      schema.behavior = schema.schemaFor.replace(/^x-/, '');
+    }
+    return schema;
   } catch (e) {
     return null;
   }
@@ -248,6 +256,10 @@ async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
     const container = document.createElement('div');
     container.id = 'test-container';
     container.innerHTML = html;
+    // Mark the setup's own root before any behavior runs: a behavior may wrap
+    // or restructure it, but the element keeps its attributes. See
+    // resolveSelector() for why "element" needs this.
+    container.firstElementChild?.setAttribute('fr-root', '');
     document.body.appendChild(container);
     await (window as any).WB.scan(container);
   }, setupHtml);
@@ -259,21 +271,49 @@ async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
 /**
  * Resolve selector - handles "element" keyword
  */
-function resolveSelector(selector: string | undefined, behavior: string): string {
-  if (!selector || selector === 'element') {
-    return `[x-${behavior}]`;
+function resolveSelector(selector: string | undefined): string {
+  // "element" means the element the setup wrote. It used to become
+  // `[x-${behavior}]`, which stopped matching when 4.0.0 moved native
+  // elements to auto-injection: the button schema's own setup is a bare
+  // `<button>`, so every button test waited 30s for an `[x-button]` that
+  // nothing writes any more. The marker is the setup's root, whatever the
+  // authoring form.
+  //
+  // Any other selector is scoped to the test container: the fixture page is
+  // the real index.html, whose own search box is the first `input` in the
+  // document, so an unscoped `input` asserted focus on the site header.
+  if (!selector || selector === 'element' || (selector as unknown) === true) {
+    return FR_ROOT;
   }
-  return selector;
+  return `#test-container ${selector}`;
+}
+
+const FR_ROOT = '#test-container [fr-root]';
+
+/**
+ * The form control a value-level step or check means when it names no
+ * selector: the root itself if it is one, else the first control inside it.
+ * `<div x-input>` / `<div x-checkbox>` / `<div x-searchfield>` are containers
+ * that BUILD their <input>, so typing into, or reading `checked` off, the div
+ * itself can never work ("Not a checkbox", "Not an input element").
+ */
+async function controlSelector(page: Page, selector: string | undefined): Promise<string> {
+  if (selector && selector !== 'element') return resolveSelector(selector);
+  const own = `${FR_ROOT}:is(input, select, textarea)`;
+  if (await page.locator(own).count()) return own;
+  const inner = `${FR_ROOT} :is(input, select, textarea)`;
+  if (await page.locator(inner).count()) return inner;
+  return FR_ROOT;
 }
 
 /**
  * Execute a sequence of steps
  */
-async function runSteps(page: Page, steps: Step[], behavior: string): Promise<void> {
+async function runSteps(page: Page, steps: Step[]): Promise<void> {
   let lastMousePos = { x: 0, y: 0 };
 
   for (const step of steps) {
-    const selector = resolveSelector(step.selector, behavior);
+    const selector = resolveSelector(step.selector);
     
     switch (step.action) {
       case 'click':
@@ -342,10 +382,10 @@ async function runSteps(page: Page, steps: Step[], behavior: string): Promise<vo
         }
         break;
       case 'type':
-        await page.type(selector, step.value || '');
+        await page.type(await controlSelector(page, step.selector), step.value || '');
         break;
       case 'fill':
-        await page.fill(selector, step.value || '');
+        await page.fill(await controlSelector(page, step.selector), step.value || '');
         break;
     }
     await page.waitForTimeout(50);
@@ -361,7 +401,7 @@ async function assertExpectations(
   behavior: string,
   testName: string
 ): Promise<void> {
-  const selector = resolveSelector(expect_.selector, behavior);
+  const selector = resolveSelector(expect_.selector);
   
   // Merge nested checks into top level for easier processing
   const checks = expect_.checks || {};
@@ -444,7 +484,7 @@ async function assertExpectations(
   // Focus check
   if (merged.focused) {
     if (typeof merged.focused === 'string') {
-        const focusedSelector = resolveSelector(merged.focused, behavior);
+        const focusedSelector = resolveSelector(merged.focused);
         await expect(page.locator(focusedSelector).first(), `${testName}: ${focusedSelector} should be focused`).toBeFocused();
     } else if (merged.focused === true) {
         await expect(page.locator(selector).first(), `${testName}: should be focused`).toBeFocused();
@@ -453,16 +493,18 @@ async function assertExpectations(
   
   // Checked state
   if (merged.checked !== undefined) {
+    const control = await controlSelector(page, expect_.selector);
     if (merged.checked) {
-      await expect(page.locator(selector).first(), `${testName}: should be checked`).toBeChecked();
+      await expect(page.locator(control).first(), `${testName}: should be checked`).toBeChecked();
     } else {
-      await expect(page.locator(selector).first(), `${testName}: should not be checked`).not.toBeChecked();
+      await expect(page.locator(control).first(), `${testName}: should not be checked`).not.toBeChecked();
     }
   }
   
   // Value check
   if (merged.value !== undefined) {
-    await expect(page.locator(selector).first(), `${testName}: should have value`).toHaveValue(merged.value);
+    const control = await controlSelector(page, expect_.selector);
+    await expect(page.locator(control).first(), `${testName}: should have value`).toHaveValue(merged.value);
   }
 
   // Position checks (for drag)
@@ -517,7 +559,7 @@ for (const { file, schema } of schemasWithTests) {
           test(btn.name, async ({ page }) => {
             await setupTestPage(page, btn.setup);
             
-            const selector = resolveSelector(btn.selector, behavior);
+            const selector = resolveSelector(btn.selector);
             
             // Set up event listener if expecting event
             if (btn.expect.event || btn.expectEvent) {
@@ -536,8 +578,10 @@ for (const { file, schema } of schemasWithTests) {
             
             // Check event fired
             if (btn.expect.event) {
-              const eventFired = await page.evaluate(() => (window as any).__eventFired__);
-              expect(eventFired, `Event ${btn.expect.event} should fire`).toBe(true);
+              // Polled: search fires wb:search after its 300ms debounce, so a
+              // fixed 100ms wait read "never fired" for an event that was due.
+              await expect.poll(() => page.evaluate(() => (window as any).__eventFired__),
+                { message: `Event ${btn.expect.event} should fire`, timeout: 3000 }).toBe(true);
             }
             
             // Check other expectations
@@ -568,22 +612,24 @@ for (const { file, schema } of schemasWithTests) {
             
             // Execute steps
             if (interaction.steps) {
-              await runSteps(page, interaction.steps, behavior);
+              await runSteps(page, interaction.steps);
             } else if (interaction.action) {
                // Backwards compatibility for simple action
                await runSteps(page, [{
                  action: interaction.action,
                  selector: interaction.selector,
                  value: interaction.value
-               }], behavior);
+               }]);
             }
             
             await page.waitForTimeout(100);
             
             // Check event fired
             if (interaction.expect.event) {
-              const eventFired = await page.evaluate(() => (window as any).__eventFired__);
-              expect(eventFired, `Event ${interaction.expect.event} should fire`).toBe(true);
+              // Polled: search fires wb:search after its 300ms debounce, so a
+              // fixed 100ms wait read "never fired" for an event that was due.
+              await expect.poll(() => page.evaluate(() => (window as any).__eventFired__),
+                { message: `Event ${interaction.expect.event} should fire`, timeout: 3000 }).toBe(true);
             }
             
             await assertExpectations(page, interaction.expect, behavior, interaction.name);
@@ -603,15 +649,17 @@ for (const { file, schema } of schemasWithTests) {
             
             // Handle preconditions (e.g., focus first)
             if (kb.precondition?.focused) {
-              const focusSelector = resolveSelector(kb.precondition.focused, behavior);
+              const focusSelector = resolveSelector(kb.precondition.focused);
               await page.focus(focusSelector);
             } else if (kb.selector) {
               // Focus the target element first
-              const selector = resolveSelector(kb.selector, behavior);
+              const selector = resolveSelector(kb.selector);
               await page.focus(selector);
             } else {
-              // Focus the main element
-              await page.focus(`[x-${behavior}]`);
+              // Focus the main element -- or, for a container behavior, the
+              // control it built (`[x-${behavior}]` matched nothing once
+              // native hosts stopped carrying the attribute).
+              await page.focus(await controlSelector(page, undefined));
             }
             
             await page.waitForTimeout(50);
@@ -628,7 +676,7 @@ for (const { file, schema } of schemasWithTests) {
             
             // Execute steps if present, otherwise just press key
             if (kb.steps) {
-               await runSteps(page, kb.steps, behavior);
+               await runSteps(page, kb.steps);
             } else if (kb.key) {
                await page.keyboard.press(kb.key);
             }
@@ -637,8 +685,10 @@ for (const { file, schema } of schemasWithTests) {
             
             // Check event
             if (kb.expect.event) {
-              const eventFired = await page.evaluate(() => (window as any).__eventFired__);
-              expect(eventFired, `Event ${kb.expect.event} should fire on ${kb.key}`).toBe(true);
+              // Polled: search fires wb:search after its 300ms debounce, so a
+              // fixed 100ms wait read "never fired" for an event that was due.
+              await expect.poll(() => page.evaluate(() => (window as any).__eventFired__),
+                { message: `Event ${kb.expect.event} should fire on ${kb.key}`, timeout: 3000 }).toBe(true);
             }
             
             await assertExpectations(page, kb.expect, behavior, kb.name);
@@ -656,7 +706,7 @@ for (const { file, schema } of schemasWithTests) {
           test(hv.name, async ({ page }) => {
             await setupTestPage(page, hv.setup);
             
-            const selector = resolveSelector(hv.selector, behavior);
+            const selector = resolveSelector(hv.selector);
             
             // Hover over element
             await page.hover(selector);
@@ -688,7 +738,7 @@ for (const { file, schema } of schemasWithTests) {
             
             // Perform action if specified
             if (vis.action) {
-              const selector = resolveSelector(vis.selector, behavior);
+              const selector = resolveSelector(vis.selector);
               if (vis.action === 'click') {
                 await page.click(selector);
               } else if (vis.action === 'hover') {
@@ -702,7 +752,7 @@ for (const { file, schema } of schemasWithTests) {
             // Additional checks array
             if (vis.checks?.length) {
               for (const check of vis.checks) {
-                const checkSelector = resolveSelector(check.selector, behavior);
+                const checkSelector = resolveSelector(check.selector);
                 
                 if (check.style && check.notEmpty) {
                   const value = await page.locator(checkSelector).first().evaluate((el, prop) => {
@@ -730,7 +780,7 @@ for (const { file, schema } of schemasWithTests) {
           test(dismiss.name, async ({ page }) => {
             await setupTestPage(page, dismiss.setup);
             
-            const selector = resolveSelector(dismiss.selector, behavior);
+            const selector = resolveSelector(dismiss.selector);
             
             // Perform dismiss action
             if (dismiss.action === 'click') {
@@ -761,16 +811,26 @@ for (const { file, schema } of schemasWithTests) {
           test(focus.name, async ({ page }) => {
             await setupTestPage(page, focus.setup);
             
-            if (focus.action === 'click' && focus.selector) {
-              const selector = resolveSelector(focus.selector, behavior);
-              await page.click(selector);
+            if (focus.action === 'click') {
+              // No selector means the element itself: the checkbox, input and
+              // search focus tests name none, so nothing was ever clicked and
+              // "should be focused" was asserted on an untouched page.
+              const selector = focus.selector
+                ? resolveSelector(focus.selector)
+                : await controlSelector(page, undefined);
+              // x-checkbox's real <input> is visually hidden with
+              // pointer-events:none; a user clicks the drawn box, i.e. the
+              // host. Click the control where it can be clicked, else the host.
+              const clickable = await page.locator(selector).first()
+                .click({ trial: true, timeout: 1000 }).then(() => true, () => false);
+              await page.click(clickable ? selector : FR_ROOT);
             } else if (focus.action === 'tab') {
               await page.keyboard.press('Tab');
             }
             
             await page.waitForTimeout(50);
             
-            const focusSelector = resolveSelector(focus.expect.focused, behavior);
+            const focusSelector = resolveSelector(focus.expect.focused);
             await expect(page.locator(focusSelector).first()).toBeFocused();
           });
         }
@@ -786,16 +846,27 @@ for (const { file, schema } of schemasWithTests) {
           test(dis.name, async ({ page }) => {
             await setupTestPage(page, dis.setup);
             
-            const selector = resolveSelector(dis.selector, behavior);
+            const selector = resolveSelector(dis.selector);
             
             // Set up event listener to verify event does NOT fire
             if (dis.expect.event === null) {
-              await page.evaluate(() => {
+              // Only a click that reaches the element under test counts. A
+              // document-wide listener also heard the forced click land on
+              // whatever lies under a disabled control -- which is exactly
+              // what a disabled control is supposed to let happen.
+              //
+              // "The element" here is the control that would act: a disabled
+              // <button> itself, or the <input> an x-checkbox host forwards
+              // its clicks to. The host <div> receiving the click is not the
+              // checkbox acting.
+              const control = await controlSelector(page, undefined);
+              await page.evaluate((sel) => {
                 (window as any).__eventFired__ = false;
-                document.addEventListener('click', () => {
-                  (window as any).__eventFired__ = true;
+                const target = document.querySelector(sel);
+                document.addEventListener('click', (e) => {
+                  if (target && e.target === target) (window as any).__eventFired__ = true;
                 }, true);
-              });
+              }, control);
             }
             
             // Attempt action

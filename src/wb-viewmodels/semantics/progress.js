@@ -69,8 +69,13 @@ export function progress(element, options = {}) {
   const size = options.size || src.getAttribute('size') || 'md';
   const variant = options.variant || src.getAttribute('variant') || 'primary';
 
+  // An absent value reached parseFloat('') (authoredValue is '' for an empty
+  // element, and '' is not nullish, so `?? 0` never applied) -- NaN, which
+  // wrote `width: NaN%`, an invalid declaration the browser drops, and a
+  // `NaN%` label. No value means an empty bar.
+  const parsedValue = parseFloat(options.value ?? src.getAttribute('value') ?? authoredValue);
   const state = {
-    value: parseFloat(options.value ?? src.getAttribute('value') ?? authoredValue ?? 0),
+    value: Number.isFinite(parsedValue) ? parsedValue : 0,
     max: parseFloat(options.max ?? src.getAttribute('max') ?? 100),
     // readFlag, not hasAttribute: a bare `striped` must switch stripes ON and
     // striped="false" must switch them OFF (#747). hasAttribute() got the

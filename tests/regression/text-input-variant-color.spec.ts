@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
  * Regression: pages/behaviors.html's "Text Inputs" demo had bare
@@ -13,7 +14,14 @@ import { test, expect } from '../fixtures/offline';
  */
 test.describe('Text input variant coloring (Components page)', () => {
   test('success variant renders a green border, error a red border, distinct from the unvaried input', async ({ page }) => {
-    await page.goto('/?page=behaviors');
+    // The Behaviors page no longer renders a "Text Inputs" demo inline -- it is
+    // a browser that builds one example on selection (#666/#910) -- so the
+    // three inputs it had are authored here, exactly as the fix wrote them.
+    await setupBehaviorTest(page);
+    await setupTestContainer(page,
+      '<input type="text" x-input placeholder="Basic input">' +
+      '<input type="text" x-input variant="success" placeholder="Success">' +
+      '<input type="text" x-input variant="error" placeholder="Error">');
 
     const basic = page.locator('input[placeholder="Basic input"]');
     const success = page.locator('input[placeholder="Success"]');

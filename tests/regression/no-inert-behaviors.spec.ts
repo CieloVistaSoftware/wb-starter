@@ -56,6 +56,17 @@ const EXPECTED_INERT: Record<string, string> = {
 /** Content that gives a behavior something to work with. */
 const HOST_HTML = '<span>Example content</span>';
 
+/**
+ * The one attribute some behaviors cannot act without -- given, rather than
+ * excused in EXPECTED_INERT, because each is an ordinary authored value and
+ * the behavior is fully testable once it has it. An embed with no video id
+ * has nothing to embed (youtube.js/vimeo.js warn and return by design).
+ */
+const REQUIRED_ATTRS: Record<string, Record<string, string>> = {
+  'x-youtube': { 'video-id': 'dQw4w9WgXcQ' },
+  'x-vimeo': { 'video-id': '76979871' },
+};
+
 test.describe('Registered behaviors do something', () => {
   test('every x- attribute changes the element it is applied to', async ({ page }) => {
     test.setTimeout(900_000);
@@ -69,7 +80,7 @@ test.describe('Registered behaviors do something', () => {
     await page.goto('/');
     await page.waitForFunction(() => !!(window as any).WB, { timeout: 30_000 });
 
-    const result = await page.evaluate(async ({ hostHtml }) => {
+    const result = await page.evaluate(async ({ hostHtml, required }) => {
       const WB = (window as any).WB;
       const mod = await import('/src/core/tag-map.js');
       const extensionMap: Record<string, string> = mod.extensionMap;
@@ -101,14 +112,50 @@ test.describe('Registered behaviors do something', () => {
       const failed: string[] = [];
       let checked = 0;
 
+      /**
+       * The host the behavior's own schema names (semanticElement), else a div.
+       * x-radio / x-range decorate an <input type=radio|range>; on a <div> they
+       * have nothing to decorate, so the sweep reported a host it chose itself.
+       */
+      const hostFor = async (name: string) => {
+        try {
+          const res = await fetch(`/src/wb-models/${name}.schema.json`);
+          if (res.ok) {
+            const sem = (await res.json())?.semanticElement;
+            if (sem?.tagName) return { tag: String(sem.tagName), type: sem.type ? String(sem.type) : '' };
+          }
+        } catch { /* no schema: default host */ }
+        return { tag: 'div', type: '' };
+      };
+      const make = (host: { tag: string; type: string }) => {
+        const el = document.createElement(host.tag);
+        if (host.type) el.setAttribute('type', host.type);
+        else if (!['input', 'img', 'hr', 'br'].includes(host.tag)) el.innerHTML = hostHtml;
+        return el;
+      };
+
       for (const attr of Object.keys(extensionMap)) {
-        // Two identical hosts, same page, same styles — only one gets the attribute.
-        const control = document.createElement('div');
-        control.innerHTML = hostHtml;
-        const subject = document.createElement('div');
-        subject.innerHTML = hostHtml;
+        // Two identical hosts, same page, same styles — only one gets the
+        // attribute. Each sits in its own wrapper, so a behavior that builds
+        // BESIDE its host (x-counter inserts its readout as a sibling) is
+        // seen through the wrapper rather than reported as inert.
+        const host = await hostFor(extensionMap[attr]);
+        const control = make(host);
+        const subject = make(host);
+        // The control stays pristine. On a native host the page's own
+        // auto-inject would otherwise enhance it too (an <input type=radio>
+        // gets `radio` from its tag), and two enhanced hosts compare equal.
+        control.setAttribute('x-ignore', '');
         subject.setAttribute(attr, '');
-        box.append(control, subject);
+        for (const [k, v] of Object.entries(required[attr] || {})) {
+          control.setAttribute(k, v);
+          subject.setAttribute(k, v);
+        }
+        const controlWrap = document.createElement('div');
+        const subjectWrap = document.createElement('div');
+        controlWrap.append(control);
+        subjectWrap.append(subject);
+        box.append(controlWrap, subjectWrap);
 
         try {
           await WB.scan(subject, { eager: true });
@@ -129,14 +176,15 @@ test.describe('Registered behaviors do something', () => {
             for (let tick = 0; tick < 40; tick++) {
               await new Promise((r) => setTimeout(r, 25));
               if (subject.className || subject.children.length !== control.children.length
-                  || subject.attributes.length > 1) return;
+                  || subject.attributes.length > control.attributes.length + 1
+                  || subjectWrap.children.length !== controlWrap.children.length) return;
             }
           };
           await settled();
         } catch (err) {
           failed[failed.length] = `${attr}: threw during scan — ${(err as Error).message}`;
-          control.remove();
-          subject.remove();
+          controlWrap.remove();
+          subjectWrap.remove();
           continue;
         }
 
@@ -147,18 +195,19 @@ test.describe('Registered behaviors do something', () => {
           a.childCount !== b.childCount ||
           a.childTags !== b.childTags ||
           a.attrs !== b.attrs ||
-          a.style !== b.style;
+          a.style !== b.style ||
+          controlWrap.children.length !== subjectWrap.children.length;
 
         if (!changed) inert.push(attr);
         checked++;
 
-        control.remove();
-        subject.remove();
+        controlWrap.remove();
+        subjectWrap.remove();
       }
 
       box.remove();
       return { inert, failed, checked, total: Object.keys(extensionMap).length };
-    }, { hostHtml: HOST_HTML });
+    }, { hostHtml: HOST_HTML, required: REQUIRED_ATTRS });
 
     expect(result.checked, 'nothing was checked — the sweep would pass vacuously')
       .toBeGreaterThan(50);

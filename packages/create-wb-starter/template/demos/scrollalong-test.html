@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ScrollAlong Behavior Test</title>
-  <script type="module" src="/src/core/wb-lazy.js"></script>
-  <link rel="stylesheet" href="/src/styles/themes.css">
-  <link rel="stylesheet" href="/src/styles/site.css">
+  <script type="module" src="../src/core/wb-lazy.js?v=4.0.5"></script>
+  <link rel="stylesheet" href="../src/styles/themes.css?v=4.0.5">
+  <link rel="stylesheet" href="../src/styles/site.css?v=4.0.5">
   <style>
     body { margin: 0; padding: 0; }
     .spacer { height: 200px; background: #eee; padding: 1rem; }
@@ -29,7 +29,7 @@
   </div>
 </body>
   <script type="module">
-    import WB from '/src/core/wb-lazy.js';
+    import WB from '../src/core/wb-lazy.js';
     window.WB = WB;
     await WB.init({ autoInject: true });
   </script>

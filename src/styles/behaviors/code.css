@@ -242,3 +242,26 @@ pre > .x-code {
 .x-code--size-lg { font-size: 0.75em; }
 .x-code--size-xl { font-size: 0.85em; }
 .x-code--size-normal { font-size: 1em; }
+
+/* #295 at phone width: a nowrap inline span longer than its line has nowhere
+   to go. `display: inline` ignores max-width/overflow, so the token ran past
+   the viewport and the page's own overflow clipping cut it off mid-word --
+   measured on docs/V3-GUIDE.md at 375px: `src/wb-models/mything.schema.json`,
+   `{ selector: '[x-mything]', ... }` and five more, up to 544px wide in a
+   ~340px column. Still never split (§6); instead the span becomes its own
+   bounded box and scrolls sideways, exactly as a <pre> does. Phones only:
+   an inline-block adds a few px to the lines it sits on, which is not worth
+   paying where every token already fits. `middle` keeps the code text on
+   the surrounding baseline to within ~1px (bottom/text-bottom/baseline
+   measured 2-10px off, the last because a scroll container's baseline is its
+   bottom edge). Paired with .hljs for the same cascade reason as above. */
+@media (max-width: 640px) {
+  .x-code--inline.hljs,
+  .x-code--inline {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    vertical-align: middle;
+  }
+}

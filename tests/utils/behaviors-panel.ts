@@ -55,7 +55,10 @@ export async function variantsOf(page: Page, token: string): Promise<string[]> {
  * Throws if that behavior has no such variant row, rather than silently
  * measuring whatever happened to be on screen.
  */
-export async function renderVariant(page: Page, token: string, variant: string): Promise<void> {
+// `variant` is null for a behavior with a single, variant-less row (x-accordion,
+// x-timeline): its row carries no data-variant at all, and getAttribute() reads
+// that as null, so null is what matches it.
+export async function renderVariant(page: Page, token: string, variant: string | null): Promise<void> {
   // Wait for THIS row, not just any row for the token: openBehaviorsPanel
   // returns as soon as one match exists, and the list is still filling in.
   // Without this the first variant asked for could be missing purely because it

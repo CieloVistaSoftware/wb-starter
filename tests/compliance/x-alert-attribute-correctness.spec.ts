@@ -30,8 +30,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const SKIP_DIRS = new Set(['node_modules', '.git', '.claude', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
 
 // Files where `type=` on <div x-alert> is intentional (a documented BAD example).
+// The create-wb-starter template ships its own copy of that standard, with
+// the same deliberate BAD example -- the walk reaches it under packages/, so it
+// needs the same exemption or the audit flags the rule for defining itself.
 const ALLOWLIST = new Set([
   'docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md',
+  'packages/create-wb-starter/template/docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md',
 ]);
 
 function walk(dir: string, out: string[]): void {

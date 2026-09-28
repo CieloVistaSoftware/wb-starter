@@ -86,6 +86,10 @@ test.describe('[x-demo] code panel is syntax-highlighted on the eager (main SPA)
     // until a demo has been scrolled into view. The original test only passed
     // because a demo happened to sit near the top of the old, un-grouped
     // page — an ordering assumption that broke when the page changed.
+    // Wait for the groups to EXIST first. The page is fetched and injected
+    // after load, and a fixed 1s wait lost that race under load: .all() found
+    // no <details> yet, opened nothing, and the injected groups arrived closed.
+    await expect(page.locator('details.demos-category').first()).toBeAttached({ timeout: 15000 });
     for (const details of await page.locator('details.demos-category').all()) {
       await details.evaluate((el: HTMLDetailsElement) => { el.open = true; });
     }

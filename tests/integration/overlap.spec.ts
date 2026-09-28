@@ -126,6 +126,12 @@ async function detectOverlaps(page: Page): Promise<OverlapHit[]> {
       const cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity || '1') === 0) continue;
       if (cs.pointerEvents === 'none') continue;
+      // The body of a CLOSED <details> is never painted (its ::details-content
+      // slot is content-visibility: hidden), yet getClientRects() still forces
+      // layout for it and returns real boxes -- which "overlapped" the code
+      // sample under every collapsed details demo. checkVisibility() is the
+      // browser's own answer to "is this rendered at all?".
+      if (typeof el.checkVisibility === 'function' && !el.checkVisibility()) continue;
       if (cs.position !== 'static' && cs.position !== 'relative') continue;
       if (!hasOwnVisibleContent(el)) continue;
       if (isDecorative(el)) continue;

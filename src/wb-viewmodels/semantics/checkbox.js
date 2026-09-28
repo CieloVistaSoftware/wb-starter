@@ -192,8 +192,25 @@ export function checkbox(element, options = {}) {
     // Forward it: input.click() toggles and fires input/change natively, and
     // does nothing on a disabled input, so disabled needs no special case.
     if (input && !element._xCheckboxClick) {
-      element._xCheckboxClick = (e) => { if (e.target !== input) input.click(); };
+      // focus() too, as a native <label> does: after a mouse tick, Space
+      // should toggle this box, not whatever had focus before.
+      element._xCheckboxClick = (e) => {
+        if (e.target === input) return;
+        input.click();
+        if (!input.disabled) input.focus({ preventScroll: true });
+      };
       element.addEventListener('click', element._xCheckboxClick);
+
+      // checkbox.schema.json declares wb:checkbox:change ("Fired when state
+      // changes", detail.checked) and nothing ever dispatched it, so a page
+      // listening for the documented event heard nothing. Re-emitted from the
+      // native change, which already covers mouse, Space and label clicks.
+      input.addEventListener('change', () => {
+        element.dispatchEvent(new CustomEvent('wb:checkbox:change', {
+          bubbles: true,
+          detail: { checked: input.checked },
+        }));
+      });
     }
   }
 

@@ -41,8 +41,13 @@ test.describe('Fix Verification Tests', () => {
     await mount(page, `<article id="test-card-bool" clickable title="Boolean Test"></article>`);
 
     const card = page.locator('#test-card-bool');
-    await expect(card).toHaveClass(/x-card--clickable/);
+    // No x-card--clickable class: a8a7362e stopped stamping it -- card.css
+    // styles the [clickable] attribute directly. What proves the empty boolean
+    // was read as TRUE is the behavior card.js attaches for it: button role
+    // and keyboard focusability.
+    await expect(card).toHaveAttribute('x-ready', '');
     await expect(card).toHaveAttribute('role', 'button');
+    await expect(card).toHaveAttribute('tabindex', '0');
   });
 
   // WB_CARD_CLICKABLE_TOGGLE_025

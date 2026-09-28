@@ -162,6 +162,16 @@ export function dropdown(element, options = {}) {
     // padding, or pointer cursor -- confirmed live, it just looked like
     // plain unstyled text with no clickable affordance. Style the host
     // itself the same way .x-dropdown__trigger styles a real button.
+    //
+    // It must also BE a button to anything that is not a mouse. With no role
+    // and no tabindex the host was unreachable by keyboard and announced as
+    // plain text, and page audits judged it a text panel rather than the
+    // control it is (demo-layout-standards flagged every bare-text trigger on
+    // demos/site/overlays.html for its button-scale padding).
+    if (!element.hasAttribute('role')) element.setAttribute('role', 'button');
+    if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
+    element.setAttribute('aria-haspopup', 'menu');
+    element.setAttribute('aria-expanded', 'false');
   }
   element.appendChild(menu);
 
@@ -172,9 +182,7 @@ export function dropdown(element, options = {}) {
     isOpen = !isOpen;
     menu.style.display = isOpen ? 'block' : 'none';
     element.classList.toggle('open', isOpen);
-    if (trigger) {
-      trigger.setAttribute('aria-expanded', isOpen);
-    }
+    (trigger || element).setAttribute('aria-expanded', String(isOpen));
     if (isOpen) {
       menu.style.animation = 'x-fade-in 0.15s ease';
     }
@@ -184,9 +192,7 @@ export function dropdown(element, options = {}) {
     isOpen = false;
     menu.style.display = 'none';
     element.classList.remove('open');
-    if (trigger) {
-      trigger.setAttribute('aria-expanded', 'false');
-    }
+    (trigger || element).setAttribute('aria-expanded', 'false');
   };
 
   // Click handler
@@ -261,6 +267,13 @@ export function dropdown(element, options = {}) {
 
   // Keyboard support
   const keyHandler = (e) => {
+    // A bare-text host is its own trigger (role="button" above), so it opens
+    // from the keyboard the way a real <button> would.
+    if (!trigger && e.target === element && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      toggle();
+      return;
+    }
     if (e.key === 'Escape' && isOpen) {
       close();
       (trigger || element).focus();

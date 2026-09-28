@@ -3,19 +3,20 @@
  * ON = dark, OFF = light. (#210)
  */
 import { test, expect } from '../fixtures/offline';
+import { setupBehaviorTest, setupTestContainer } from '../base';
 
-const BASE = process.env.WB_BASE || '';
-const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
-
+// This used to wait for the Dark Mode switch on /?page=behaviors. That page is
+// a browser now that builds one example on selection (#666/#910) and has no
+// such switch, so the spec timed out in setup before testing anything. The
+// switch is authored here with the markup the showcase used.
 test('Dark Mode switch toggles data-theme between dark and light', async ({ page }) => {
-  await page.goto(URL, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('[x-switch][theme-control]', { timeout: 25000 });
-  await page.waitForTimeout(2000);
+  await setupBehaviorTest(page);
+  await setupTestContainer(page, '<div x-switch theme-control label="Dark Mode"></div>');
 
   const r = await page.evaluate(async () => {
     const root = document.documentElement;
     root.setAttribute('data-theme', 'dark');
-    const sw = document.querySelector('[x-switch][theme-control]') as HTMLElement;
+    const sw = document.querySelector('#test-container [x-switch][theme-control]') as HTMLElement;
     const inp = sw.querySelector('input') as HTMLInputElement;
     // re-sync initial state to current theme
     inp.checked = true;

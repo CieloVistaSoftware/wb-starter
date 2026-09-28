@@ -50,29 +50,8 @@
       "default": 4
     }
   },
-  "$view": [
-    {
-      "name": "trigger",
-      "tag": "button",
-      "public": true,
-      "required": true,
-      "description": "Dropdown trigger button"
-    },
-    {
-      "name": "menu",
-      "tag": "div",
-      "public": true,
-      "required": true,
-      "description": "Dropdown menu container"
-    },
-    {
-      "name": "items",
-      "tag": "slot",
-      "parent": "menu",
-      "public": true,
-      "description": "Menu items slot"
-    }
-  ],
+  "_view_note": "The dropdown BEHAVIOR (src/wb-viewmodels/dropdown.js, dropdown()) is the SOLE renderer of <div x-dropdown> -- it builds the trigger (only when label= or child items call for one) and the positioned, populated menu. This $view used to build a COMPETING empty <button> trigger and a second, empty .x-dropdown__menu with a <slot>: buildStructure() wiped the host's authored trigger text, then dropdown() appended its real menu beside the schema's, so every dropdown carried two menus (Playwright: 'resolved to 2 elements') and a blank trigger button. Emptied, same fix already applied to alert, button and card (#202).",
+  "$view": [],
   "$methods": {
     "open": {
       "description": "Opens the dropdown",

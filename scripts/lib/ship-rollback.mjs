@@ -17,10 +17,18 @@
  * new since then.
  */
 import { execFileSync } from 'child_process';
+import { suiteEnv } from './suite-env.mjs';
+
+// `root` must decide which repository these act on. An inherited GIT_DIR (set
+// whenever this runs under a git hook) silently overrides cwd: from a worktree
+// the rollback guard read the REAL repo's tags instead of its scratch repo's.
+// A function whose job is deleting tags must never be able to aim elsewhere.
+const git = (root, args, extra = {}) =>
+  execFileSync('git', args, { cwd: root, env: suiteEnv(process.env), ...extra });
 
 /** Every v* tag in the repo, as a Set. */
 export function releaseTags(root) {
-  const out = execFileSync('git', ['tag', '--list', 'v*'], { cwd: root, encoding: 'utf8' });
+  const out = git(root, ['tag', '--list', 'v*'], { encoding: 'utf8' });
   return new Set(out.split(/\r?\n/).map((t) => t.trim()).filter(Boolean));
 }
 
@@ -36,7 +44,7 @@ export function tagsCreatedSince(before, now) {
 export function deleteTagsCreatedSince(root, before) {
   const created = tagsCreatedSince(before, releaseTags(root));
   for (const tag of created) {
-    execFileSync('git', ['tag', '-d', tag], { cwd: root, stdio: 'inherit' });
+    git(root, ['tag', '-d', tag], { stdio: 'inherit' });
   }
   return created;
 }

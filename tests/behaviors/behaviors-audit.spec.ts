@@ -7,6 +7,7 @@
  * unstyled custom elements, working interactions, readable contrast.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { pickBehavior } from '../helpers/behaviors-page';
 
 const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
@@ -72,8 +73,11 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
   });
 
   test('AUDIT: switches actually toggle state on click', async ({ page }) => {
+    // The page builds one behavior's example on selection now (#666/#910);
+    // nothing is on the stage until x-switch is picked.
+    await pickBehavior(page, 'x-switch');
     const result = await page.evaluate(async () => {
-      const sw = document.querySelector('#mainPage-behaviors [x-switch]');
+      const sw = document.querySelector('#behaviors-live-example [x-switch]');
       if (!sw) return 'NO_SWITCH';
       const read = () => {
         const inp = sw.querySelector('input') as HTMLInputElement | null;

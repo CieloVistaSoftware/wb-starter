@@ -5,7 +5,17 @@ import { logError } from '../../core/error-logger.js';
  * Adds clearable, prefix/suffix, validation variants
  * Helper Attribute: [x-behavior="input"]
  */
+/**
+ * Fields the container branch below built itself. The runtime ALSO dispatches
+ * input() on every native <input> it sees, including the one this function
+ * just appended, and the native branch then wrapped it a second time: a
+ * nested x-input__wrapper inside the one already built, with its own padding
+ * and flex styles stacked on the field.
+ */
+const builtFields = new WeakSet();
+
 export function input(element, options = {}) {
+  if (builtFields.has(element)) return () => {};
   // #439: <div x-input> is declared as a schema-driven host in
   // input.schema.json's $view (label, wrapper, icon spans, clear button,
   // the real <input>) -- but that $view is only ever interpreted by
@@ -111,6 +121,7 @@ export function input(element, options = {}) {
     if (readonly) realInput.readOnly = true;
     if (required) realInput.required = true;
     realInput.classList.add('x-input__field');
+    builtFields.add(realInput);
     // Border/radius/padding/background/color already come from input.css's
     // generic bare-<input> rule (line 28) -- setting them again here as
     // inline styles just stacked a second, redundant border on top of it
@@ -132,6 +143,9 @@ export function input(element, options = {}) {
 
     if (clearable) {
       const clearBtn = document.createElement('button');
+      // Same class the native-input path gives its clear button (below), so
+      // one selector finds it on either host shape and input.css styles both.
+      clearBtn.className = 'x-input__clear';
       clearBtn.type = 'button';
       clearBtn.textContent = '✕';
       clearBtn.addEventListener('click', () => { realInput.value = ''; realInput.focus(); });
@@ -171,6 +185,21 @@ export function input(element, options = {}) {
     return () => {};
   }
   if (element.closest('.x-search__wrapper, .x-password')) {
+    return () => {};
+  }
+  // floatinglabel() owns its field's wrapper and positions its label against
+  // it: a second x-input__wrapper around the field (in either authoring form,
+  // on the field or on a container around it) moved the field out from under
+  // the label. Checked by attribute too, since input() may run first.
+  if (element.closest('[x-floatinglabel], .x-floating-label')) {
+    return () => {};
+  }
+  // A PART another behavior built for itself -- table.js's x-table__search,
+  // say -- is already that behavior's field, styled by its own CSS. Wrapping
+  // it moved it out from beside the table, so table.js no longer found its
+  // own search box as the table's previous sibling. A BEM element class of
+  // another x- block is what says "this input belongs to that component".
+  if ([...element.classList].some((c) => /^x-[a-z0-9-]+__/.test(c) && !c.startsWith('x-input__'))) {
     return () => {};
   }
 

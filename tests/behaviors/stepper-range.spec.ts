@@ -7,17 +7,23 @@
  * [−][value][+] inside the container and honors data-value/min/max.
  */
 import { test, expect } from '../fixtures/offline';
+import { setupBehaviorTest, setupTestContainer } from '../base';
 
+// These used to query whatever /?page=behaviors rendered inline. That page is
+// a browser now that builds one example on selection (#666/#910), so there was
+// no stepper or range on it to find. The controls are authored here instead,
+// with the showcase's own data-value/min/max markup.
 test.describe('#178 — stepper + range', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2000);
+    await setupBehaviorTest(page);
+    await setupTestContainer(page,
+      '<div x-stepper data-value="5" data-min="0" data-max="10"></div>' +
+      '<input type="range" x-slider min="0" max="100" value="35">');
   });
 
   test('stepper renders [-][value][+] with its data-value', async ({ page }) => {
     const r = await page.evaluate(() => {
-      const st = document.querySelector('[x-stepper]');
+      const st = document.querySelector('#test-container [x-stepper]');
       return st
         ? {
             buttons: st.querySelectorAll('button').length,
@@ -32,7 +38,7 @@ test.describe('#178 — stepper + range', () => {
 
   test('stepper + increments and clamps to data-max', async ({ page }) => {
     const result = await page.evaluate(async () => {
-      const st = document.querySelector('[x-stepper]') as HTMLElement;
+      const st = document.querySelector('#test-container [x-stepper]') as HTMLElement;
       const valEl = st.querySelector('.x-stepper__value') as HTMLElement;
       const inc = st.querySelector('.x-stepper__inc') as HTMLButtonElement;
       const dec = st.querySelector('.x-stepper__dec') as HTMLButtonElement;
@@ -54,7 +60,7 @@ test.describe('#178 — stepper + range', () => {
 
   test('range slider is present, themed, and accepts input', async ({ page }) => {
     const r = await page.evaluate(() => {
-      const rg = document.querySelector('#mainPage-behaviors input[type="range"]') as HTMLInputElement;
+      const rg = document.querySelector('#test-container input[type="range"]') as HTMLInputElement;
       if (!rg) return null;
       rg.value = '80';
       rg.dispatchEvent(new Event('input', { bubbles: true }));

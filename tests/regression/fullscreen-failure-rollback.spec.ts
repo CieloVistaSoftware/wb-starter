@@ -33,9 +33,12 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
 
     const result = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-      const target = document.getElementById('behaviors-live-stage')
-        || document.getElementById('behaviors-live-example');
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
+      // The element the button actually fullscreens, read from the button
+      // itself. This used to name #behaviors-live-stage directly; #720 moved
+      // the target to the whole workspace (target="#behaviors-workspace"), so
+      // the granted case read styles off an element nothing had touched.
+      const target = document.querySelector(btn.getAttribute('target')!) as HTMLElement;
 
       const before = {
         height: target!.style.height,
@@ -83,9 +86,12 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
 
     const result = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-      const target = document.getElementById('behaviors-live-stage')
-        || document.getElementById('behaviors-live-example');
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
+      // The element the button actually fullscreens, read from the button
+      // itself. This used to name #behaviors-live-stage directly; #720 moved
+      // the target to the whole workspace (target="#behaviors-workspace"), so
+      // the granted case read styles off an element nothing had touched.
+      const target = document.querySelector(btn.getAttribute('target')!) as HTMLElement;
       const labelBefore = btn.textContent!.trim();
 
       const origRequest = Element.prototype.requestFullscreen;

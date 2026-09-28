@@ -25,7 +25,9 @@ test('selecting the x-behaviors example set does not change the site theme', asy
   await page.selectOption('#pg-examples', 'xbehaviors');
   await page.waitForFunction(() => {
     const input = document.querySelector('#pg-preview input[x-counter]');
-    return !!input && !!input.nextElementSibling?.classList.contains('[x-counter]');
+    // 'x-counter', the readout's class. This read '[x-counter]' after a bulk
+    // tag-to-attribute rewrite, which no class can be -- the wait never ended.
+    return !!input && !!input.nextElementSibling?.classList.contains('x-counter');
   }, { timeout: 15000 });
 
   const theme = await page.evaluate(() => document.documentElement.getAttribute('data-theme'));

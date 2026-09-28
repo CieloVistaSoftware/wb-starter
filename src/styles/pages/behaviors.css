@@ -595,10 +595,9 @@ footer a:hover {
 
 /* The inner pre/code is produced by x-behavior="pre"/"code", so its font,
    padding and syntax colours all come from pre.css / code.css and the theme --
-   nothing is restated here, and no colour literal is introduced. Only the
-   wrapping needs overriding: the source is pretty-printed VERTICAL (one
-   attribute per line, Standard §5), so lines are short and should wrap rather
-   than open the panel already scrolled off to the right. */
+   nothing is restated here, and no colour literal is introduced. The source
+   is pretty-printed VERTICAL (one attribute per line, Standard §5), so lines
+   are short and rarely reach the edge at all. */
 .behaviors-live__code pre,
 .behaviors-live__code code {
   /* Source is ALWAYS left-aligned -- this panel sits inside #behaviors-hero,
@@ -612,8 +611,11 @@ footer a:hover {
   margin: 0;
   border: none;
   border-radius: 0;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  /* NOT wrapped. pre-wrap + overflow-wrap:anywhere broke tokens mid-word
+     ("x-btn--" / "sm") -- the exact failure #199 made code blocks editor-style
+     to end. A long line scrolls inside the block instead, never clipped. */
+  white-space: pre;
+  overflow-x: auto;
 }
 
 /* The live example itself is markup the reader is meant to read, not hero
@@ -870,8 +872,11 @@ footer a:hover {
   margin: 0;
   border: none;
   border-radius: 0;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  /* Scroll, never wrap mid-token (#199) -- see .behaviors-live__code pre. The
+     clipping this once fixed was the overflow having nowhere to go; overflow-x
+     gives it a scrollbar inside the block instead. */
+  white-space: pre;
+  overflow-x: auto;
   text-align: left;
 }
 

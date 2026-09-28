@@ -52,17 +52,29 @@ export function header(element) {
     const left = document.createElement('div');
     left.className = 'x-header__left';
 
-    if (icon) {
-      const i = document.createElement('span');
-      i.className = 'x-header__icon';
-      i.textContent = icon;
-      left.appendChild(i);
-    }
-    if (title) {
-      const t = document.createElement('span');
-      t.className = 'x-header__title';
-      t.textContent = title;
-      left.appendChild(t);
+    // The schema's $view nests icon + title inside a `logo` <a> (createdWhen
+    // "icon OR title") whose href is `logoHref`. It was skipped here, so
+    // logo-href was a declared, documented attribute that did nothing. The
+    // href is only set when the author actually gave one: a header that
+    // never asked to be a link must not silently start navigating to "/".
+    if (icon || title) {
+      const logo = document.createElement('a');
+      logo.className = 'x-header__logo';
+      const logoHref = element.getAttribute('logo-href') || element.getAttribute('logohref');
+      if (logoHref) logo.setAttribute('href', logoHref);
+      if (icon) {
+        const i = document.createElement('span');
+        i.className = 'x-header__icon';
+        i.textContent = icon;
+        logo.appendChild(i);
+      }
+      if (title) {
+        const t = document.createElement('span');
+        t.className = 'x-header__title';
+        t.textContent = title;
+        logo.appendChild(t);
+      }
+      left.appendChild(logo);
     }
     if (subtitle) {
       const st = document.createElement('span');

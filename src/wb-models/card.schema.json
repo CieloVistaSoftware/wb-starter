@@ -168,7 +168,9 @@
           "setup": "<article>Content</article>",
           "expect": {
             "visible": true,
-            "hasClass": "x-card"
+            "style": {
+              "display": "flex"
+            }
           }
         },
         {
@@ -197,7 +199,10 @@
           "action": "click",
           "expect": {
             "event": "click",
-            "hasClass": "x-card--clickable"
+            "attribute": {
+              "role": "button",
+              "tabindex": "0"
+            }
           }
         }
       ]

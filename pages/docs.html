@@ -6,6 +6,12 @@
 <div id="docs-hero" class="page__hero">
   <h1>📖 Documentation</h1>
   <p>Browse all documentation, guides, and research papers.</p>
+  <!-- Owner decision: the docs hero carries a theme control, so a reader can
+       compare themes without leaving the text. It is the SAME behavior as the
+       header's #headerThemeControl, not a second implementation (#1018: no
+       duplicate controls) -- both read and write the one stored theme, and
+       themecontrol.js keeps every instance in sync live via wb:theme:change. -->
+  <div x-themecontrol id="docsThemeControl"></div>
   <div class="docs-search-wrapper">
     <input type="search" id="docs-search" placeholder="Search documentation...">
     <span class="docs-search-icon">🔍</span>
@@ -92,6 +98,13 @@
         html += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">';
         
         // Handle markdown docs
+        // Manifest titles and descriptions are TEXT that often names a tag
+        // ("A bare <audio> gets a styled player"). Concatenated raw into
+        // innerHTML, that became a real, src-less <audio> the audio behavior
+        // then rejected with a runtime error -- and "<article> renders a card"
+        // rendered an actual card. Escape them; they are never markup.
+        const escapeText = (value) => String(value ?? '')
+          .replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         if (category.docs) {
           for (const doc of category.docs) {
             // Site-root-relative path (no leading slash) so it survives the
@@ -105,8 +118,8 @@
             html += '<a href="' + siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
-            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + doc.title + '</h3>';
-            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + doc.description + '</p>';
+            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + escapeText(doc.title) + '</h3>';
+            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + escapeText(doc.description) + '</p>';
             html += '</a>';
           }
         }
@@ -117,8 +130,8 @@
             html += '<a href="' + siteRoot() + 'pages/' + page.page + '.html" ';
             html += 'class="docs-card" target="_blank" ';
             html += 'style="display: block; padding: 1.25rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: inherit; transition: all 0.2s;">';
-            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + page.title + '</h3>';
-            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + page.description + '</p>';
+            html += '<h3 style="margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem;">' + escapeText(page.title) + '</h3>';
+            html += '<p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">' + escapeText(page.description) + '</p>';
             html += '</a>';
           }
         }

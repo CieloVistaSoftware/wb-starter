@@ -43,21 +43,27 @@ async function renderWithWB(page, coreModule: string, initOptions: string) {
   await page.waitForTimeout(800);
 }
 
+// "Was it enhanced?" used to be `toHaveClass(/x-card/)`. Cards stopped
+// stamping .x-card onto an <article> (a8a7362e -- card.css matches the tag),
+// so that assertion failed on every enhanced card AND passed vacuously on the
+// opt-out case, which proved nothing. The behavior's own completion signal is
+// x-ready (ready-signal.js stamps it under automation, both runtimes), and an
+// element nothing injected into never receives it.
 for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
   test.describe(`autoInject default (${core})`, () => {
     test('WB.init({}) — omitted entirely — still enhances native elements (default is true)', async ({ page }) => {
       await renderWithWB(page, core, '{}');
-      await expect(page.locator('#probe-card')).toHaveClass(/x-card/, { timeout: 10000 });
+      await expect(page.locator('#probe-card')).toHaveAttribute('x-ready', '', { timeout: 10000 });
     });
 
     test('WB.init({ autoInject: true }) — explicit true — enhances native elements', async ({ page }) => {
       await renderWithWB(page, core, '{ autoInject: true }');
-      await expect(page.locator('#probe-card')).toHaveClass(/x-card/, { timeout: 10000 });
+      await expect(page.locator('#probe-card')).toHaveAttribute('x-ready', '', { timeout: 10000 });
     });
 
     test('WB.init({ autoInject: false }) — explicit false — still lets a page opt out', async ({ page }) => {
       await renderWithWB(page, core, '{ autoInject: false }');
-      await expect(page.locator('#probe-card')).not.toHaveClass(/x-card/);
+      await expect(page.locator('#probe-card')).not.toHaveAttribute('x-ready');
     });
   });
 }

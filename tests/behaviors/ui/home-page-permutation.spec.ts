@@ -202,7 +202,9 @@ test.describe('Home Page — Schema Permutation Tests', () => {
 
   test('Features: cards contain expected text', async ({ page }) => {
     const featuresGrid = page.locator(FEATURES_GRID);
-    for (const text of ['Component Library', 'Behaviors System', 'Theme Engine', 'Data Viz', 'Accessible', 'Performance']) {
+    // 'Behavior Library', not 'Component Library': the card was renamed when
+    // components were removed from the product.
+    for (const text of ['Behavior Library', 'Behaviors System', 'Theme Engine', 'Data Viz', 'Accessible', 'Performance']) {
       await expect(featuresGrid).toContainText(text);
     }
   });

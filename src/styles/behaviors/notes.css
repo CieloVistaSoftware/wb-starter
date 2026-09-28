@@ -163,7 +163,10 @@ x-notes.x-notes--open .x-notes__drawer, [x-notes].x-notes--open .x-notes__drawer
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.375rem 0.5rem;
+  /* 0.5rem above the title: at 0.375rem the title sat visibly tighter to the
+     panel's top edge than to its sides (tests/components/notes.spec.ts pins
+     the 0.5rem gap). Bottom stays 0.375rem -- the border already separates it. */
+  padding: 0.5rem 0.5rem 0.375rem;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-secondary);
   flex-shrink: 0;

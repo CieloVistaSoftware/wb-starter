@@ -9,16 +9,26 @@
  * minimum 1rem gap regardless of label length.
  */
 import { test, expect } from '../fixtures/offline';
+import { setupBehaviorTest, setupTestContainer } from '../base';
+
+// The Behaviors page these specs used to read builds one example on selection
+// now (#666/#910), and its code panel is a plain source view: no max-height, so
+// no toggle, and no copy button. The block under test is authored here with
+// every header control pre.js offers -- copy, a language badge, and the
+// collapse toggle that only exists when there is a max-height to collapse.
+const BLOCK =
+  '<pre language="javascript" show-copy max-height="160px"><code>' +
+  Array.from({ length: 24 }, (_, i) => `const line${i} = ${i};`).join('\n') +
+  '</code></pre>';
 
 test.describe('pre.js header controls stay >=1rem apart', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2500);
+    await setupBehaviorTest(page);
+    await setupTestContainer(page, BLOCK);
   });
 
   test('copy button, language badge, and toggle never overlap and keep >=1rem gaps', async ({ page }) => {
-    const wrapper = page.locator('.x-pre-wrapper').filter({
+    const wrapper = page.locator('#test-container .x-pre-wrapper').filter({
       has: page.locator('.x-pre__copy, .x-pre__language, .x-pre__toggle'),
     }).first();
     await expect(wrapper).toBeVisible();

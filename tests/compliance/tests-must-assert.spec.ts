@@ -68,6 +68,13 @@ function testBodies(raw: string): { title: string; body: string }[] {
   const re = /\btest(?:\.only|\.fixme)?\s*\(\s*(['"`])([^'"`]*)\1/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(src))) {
+    // A `test(` that opens a string literal is test SOURCE held as data, not a
+    // test: tests/regression/issue-state-finds-an-unrecorded-test.spec.ts
+    // feeds `test('… (#1078)', async () => {});` strings to a parser. Read as
+    // calls, their empty `{}` bodies were reported as 7 tests with no expect().
+    // A real call never starts right after a quote.
+    const before = src.slice(0, m.index).trimEnd();
+    if (/['"`]$/.test(before)) continue;
     // The body brace, not the destructuring one. `test('x', async ({ page })
     // => {` has TWO braces after the title: `{ page }` comes first, and
     // matching on it captures the parameter list instead of the body -- which

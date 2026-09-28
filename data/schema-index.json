@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-24T19:56:23.714Z",
-  "count": 151,
+  "count": 150,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -3721,47 +3721,6 @@
       }
     },
     {
-      "file": "image.schema.json",
-      "name": "x-image",
-      "title": "Image",
-      "description": "Behavior applied with x-image.",
-      "tag": "wb-x-image",
-      "baseClass": "wb-x-image",
-      "properties": {
-        "placeholder": {
-          "type": "string",
-          "description": "Image shown while the real `src` loads. Replaced the moment the real image decodes.",
-          "default": "this is the placeholder"
-        },
-        "fallback": {
-          "type": "string",
-          "description": "Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty.",
-          "default": "this is the fallback"
-        },
-        "aspect-ratio": {
-          "type": "string",
-          "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
-          "default": "this is the aspect ratio"
-        },
-        "lazy": {
-          "type": "boolean",
-          "description": "Sets `loading=\"lazy\"`, so the browser defers fetching until the image nears the viewport. Bare attribute.",
-          "default": false
-        },
-        "zoomable": {
-          "type": "boolean",
-          "description": "Clicking the image opens it full-size in a lightbox. Bare attribute.",
-          "default": false
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
-        "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
-      }
-    },
-    {
       "file": "cardimage.schema.json",
       "name": "cardimage",
       "title": "Image Card",
@@ -4873,21 +4832,6 @@
           "type": "string",
           "description": "Active page, counting from **1**. Defaults to `1`.",
           "default": "1"
-        },
-        "aria-disabled": {
-          "type": "string",
-          "description": "Set to `\"true\"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author.",
-          "default": "this is the aria disabled"
-        },
-        "action": {
-          "type": "string",
-          "description": "Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand.",
-          "default": "this is the action"
-        },
-        "page": {
-          "type": "string",
-          "description": "Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current=\"page\"`.",
-          "default": "this is the page"
         }
       },
       "matrix": [],

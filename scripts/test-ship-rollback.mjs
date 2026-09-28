@@ -14,6 +14,7 @@ import { mkdtempSync, writeFileSync, rmSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import { releaseTags, tagsCreatedSince, deleteTagsCreatedSince } from './lib/ship-rollback.mjs';
+import { suiteEnv } from './lib/suite-env.mjs';
 
 let passed = 0;
 let failed = 0;
@@ -22,9 +23,11 @@ const check = (ok, name, detail = '') => {
   else { failed++; console.log(`  ❌ ${name}${detail ? `\n     ${detail}` : ''}`); }
 };
 
-// Hooks set these; a guard that runs inside one must not act on the real repo.
-const env = { ...process.env };
-for (const k of ['GIT_DIR', 'GIT_INDEX_FILE', 'GIT_WORK_TREE']) delete env[k];
+// Hooks set git's redirection variables; a guard that runs inside one must
+// not act on the real repo. suiteEnv() strips the whole set (#1161) -- the
+// three this used to strip by hand missed the ones git adds when the commit
+// is made from a worktree, and the scratch repo's tags went to the real one.
+const env = suiteEnv(process.env);
 
 function repo(version, tags) {
   const dir = mkdtempSync(join(tmpdir(), 'wb-ship-rollback-'));

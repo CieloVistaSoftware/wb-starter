@@ -9,7 +9,8 @@ A plain `<table>` gets sortable column headers, and can be filled from attribute
   ["badge", "inline", "9"],
   ["button", "control", "8"],
   ["card", "container", "4"],
-  ["tabs", "container", "3"]
+  ["tabs", "container", "3"],
+  ["alert", "feedback", "4"]
 ]'></table>
 </div>
 
@@ -22,7 +23,8 @@ On another element, write `x-table`:
   ["badge", "inline", "9"],
   ["button", "control", "8"],
   ["card", "container", "4"],
-  ["tabs", "container", "3"]
+  ["tabs", "container", "3"],
+  ["alert", "feedback", "4"]
 ]'></div>
 ```
 

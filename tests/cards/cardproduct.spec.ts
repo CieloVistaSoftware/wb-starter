@@ -39,8 +39,10 @@ test.describe('Product Card (integration)', () => {
     const originalPrice = card.locator('.x-card__price-original');
     await expect(originalPrice).toHaveText('$149.99');
     
-    // Check badge is rendered
-    const badge = card.locator('.x-card__badge');
+    // Check badge is rendered. It is the <span> over the product image --
+    // a8a7362e stopped stamping .x-card__badge; card.css styles
+    // `figure > span` by tag and position instead.
+    const badge = card.locator(':scope > figure > span');
     await expect(badge).toHaveText('SALE');
     
     // Check rating stars exist

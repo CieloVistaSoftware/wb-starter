@@ -14,50 +14,52 @@ import { test, expect } from '../fixtures/offline';
  * button-plus-separate-modal-by-id pattern).
  */
 test.describe('Playground: 20 signature heroes example set', () => {
+  // The "20 signature heroes" option was folded into "120 card heroes"
+  // (oneTwentyHeroes(): every other hero -- i odd -- is the signature style,
+  // wrapped in .pg-signature-hero with its x-fadein and companion x-modal), so
+  // selecting 'signature-heroes' waited out the timeout on an option that no
+  // longer exists. Same claims, against the set that carries them now.
   test('loads 20 real, enhanced [x-cardhero] + [x-modal] pairs, tooltip attribute wired', async ({ page }) => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
-    await page.selectOption('#pg-examples', 'signature-heroes');
+    await page.selectOption('#pg-examples', 'heroes-120');
 
     // Enhancement runs through WB's viewport-lazy IntersectionObserver path —
-    // give it real time in a real browser (not a race-prone fixed sleep).
-    await page.waitForFunction(() => {
-      const hero = document.querySelector('#pg-preview [x-cardhero]');
-      return !!hero && hero.classList.contains('x-card--hero');
-    }, { timeout: 20000 });
+    // wait on the hero's own settled signal rather than a fixed sleep.
+    const first = page.locator('#pg-preview .pg-signature-hero [x-cardhero]').first();
+    await first.scrollIntoViewIfNeeded();
+    await expect(first).toHaveAttribute('x-ready', '', { timeout: 20000 });
+    await expect(first).toHaveClass(/\bx-card--hero\b/);
 
-    const heroCount = await page.locator('#pg-preview [x-cardhero]').count();
-    expect(heroCount).toBe(20);
+    // 120 heroes, half of them signature pairs -- at least the 20 this set
+    // was named for, each hero with its own companion trigger.
+    await expect(page.locator('#pg-preview [x-cardhero]')).toHaveCount(120);
+    const pairs = page.locator('#pg-preview .pg-signature-hero');
+    await expect(pairs).toHaveCount(60);
+    await expect(page.locator('#pg-preview .pg-signature-hero > [x-modal]')).toHaveCount(60);
 
-    const modalCount = await page.locator('#pg-preview [x-modal]').count();
-    expect(modalCount).toBe(20);
-
-    const first = page.locator('#pg-preview [x-cardhero]').first();
-    await expect(first.locator('.x-card__hero-title')).toHaveText('Infinite Possibility.');
-    await expect(first.locator('.x-card__hero-pretitle')).toHaveText('Zero Build. #1');
+    await expect(first.locator('.x-card__hero-title')).toHaveText('Compose, don\'t configure');
+    await expect(first.locator('.x-card__hero-pretitle')).toHaveText('New #2');
 
     // The cta-tooltip attribute should have produced a real tooltip.js-driven
-    // x-tooltip element on the primary CTA — not just a dead attribute.
+    // x-tooltip on the primary CTA — not just a dead attribute.
     const primaryCta = first.locator('.x-hero-cta--primary');
-    await expect(primaryCta).toHaveAttribute('x-tooltip', /Native elements/);
+    await expect(primaryCta).toHaveAttribute('x-tooltip', /Stack x-\* behaviors/);
   });
 
   test('the primary CTA tooltip actually shows on hover (not just an inert attribute)', async ({ page }) => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
-    await page.selectOption('#pg-examples', 'signature-heroes');
-    await page.waitForFunction(() => {
-      const cta = document.querySelector('#pg-preview .x-hero-cta--primary');
-      return !!cta && cta.hasAttribute('x-tooltip') && document.querySelectorAll('.x-tooltip, [role="tooltip"]').length >= 0;
-    }, { timeout: 20000 });
-    // tooltip.js is confirmed lazy-loaded once the CTA element itself has been
-    // scanned (getAttribute('x-tooltip') check above) — hover it and expect
-    // a real tooltip surface to appear (selector kept broad: tooltip.js's own
-    // exact class name is an implementation detail, not asserted here).
-    const cta = page.locator('#pg-preview .x-hero-cta--primary').first();
+    await page.selectOption('#pg-examples', 'heroes-120');
+    const cta = page.locator('#pg-preview .pg-signature-hero .x-hero-cta--primary').first();
+    await cta.scrollIntoViewIfNeeded();
+    await expect(cta).toHaveAttribute('x-tooltip', /.+/, { timeout: 20000 });
+    // tooltip.js is lazy-loaded once the CTA itself has been scanned -- wait for
+    // it to be settled, then hover and expect a real tooltip surface to appear.
+    await expect(cta).toHaveAttribute('x-ready', '', { timeout: 20000 });
     await cta.hover();
-    await expect(async () => {
-      const found = await page.locator('.x-tooltip, [role="tooltip"], [class*="tooltip"]').count();
-      expect(found).toBeGreaterThan(0);
-    }).toPass({ timeout: 5000 });
+    // The tooltip carrying THIS CTA's text, visible -- a hidden tooltip left
+    // over from some other element must not satisfy it.
+    await expect(page.locator('.x-tooltip, [role="tooltip"]', { hasText: 'Stack x-* behaviors' }).first())
+      .toBeVisible({ timeout: 5000 });
   });
 
   test('a signature hero companion [x-modal] trigger actually opens a dialog', async ({ page }) => {

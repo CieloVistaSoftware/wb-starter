@@ -135,7 +135,12 @@ test.describe('Behavior Attribute Validation', () => {
   test('x-avatar size must be valid (xs, sm, md, lg, xl)', () => {
     const htmlFiles = getHtmlFiles();
     const violations: string[] = [];
-    const validSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+    // The valid set is avatar.schema.json's own enum, read rather than copied:
+    // the hard-coded xs..xl list went stale when 2xl joined the schema (and
+    // avatar.css styles it), so every legitimate size="2xl" read as invalid.
+    const schema = JSON.parse(fs.readFileSync(path.join(htmlDir, 'src/wb-models/avatar.schema.json'), 'utf-8'));
+    const validSizes: string[] = schema.properties.size.enum;
+    expect(validSizes, 'avatar.schema.json declares its sizes').toContain('md');
 
     htmlFiles.forEach(file => {
       const content = fs.readFileSync(file, 'utf-8');

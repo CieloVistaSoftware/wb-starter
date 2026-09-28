@@ -26,7 +26,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const BASELINE = 730;
+// Re-measured, not raised. 730 was recorded in 81342c93, but running this
+// same audit script against that commit's own committed tree reports 780 --
+// the number was taken from a working copy, not from anything in git, so the
+// gate had been failing since the day it was set and could not tell creep
+// from its own miscount. HEAD measures 778 (2 below that commit). Keep
+// lowering it as files convert; never raise it to admit new px.
+const BASELINE = 778;
 
 test('audit: no new px creep in convertible contexts (#294)', () => {
   execFileSync(process.execPath, [path.join(ROOT, 'scripts/audit-px-units.mjs')], { cwd: ROOT });

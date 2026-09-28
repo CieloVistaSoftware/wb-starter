@@ -75,8 +75,11 @@ async function loadBehaviors(page: Page): Promise<void> {
   await page.goto('/?page=behaviors');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-  // The list of every behavior — this is the page's content now.
-  await page.waitForSelector('.behaviors-search-results__row', { timeout: 20000 });
+  // The list of every behavior — this is the page's content now. Attached, not
+  // visible: the rows are grouped into collapsible <details>, so whichever row
+  // is first in the DOM can sit in a closed group, and a visibility wait on it
+  // timed out with 772 rows present.
+  await page.waitForSelector('.behaviors-search-results__row', { state: 'attached', timeout: 20000 });
 }
 
 /**
@@ -88,8 +91,13 @@ async function loadBehaviors(page: Page): Promise<void> {
  * assertion here can run before behavior attachment has finished.
  */
 async function showEffect(page: Page, token: string, cls: string): Promise<Locator> {
+  // Search first, as a reader does. The rows live in collapsed <details>
+  // groups; only the groups the filter matches are opened, so an unfiltered
+  // x-snow / x-fireworks row is zero-height and cannot be clicked.
+  await page.fill('#behaviors-search', token);
   const row = page.locator(`.behaviors-search-results__row[data-browse-token="${token}"]`).first();
   await expect(row, `${token} is offered by the behaviors browser`).toHaveCount(1);
+  await expect(row).toBeVisible();
   await row.click();
 
   await page.waitForFunction(

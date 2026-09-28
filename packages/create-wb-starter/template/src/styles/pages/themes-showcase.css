@@ -459,6 +459,15 @@
   margin-bottom: 0.75rem;
 }
 
+/* Code never wraps (DEMOS-AND-DOCS-STANDARDS §6), so a formula longer than
+   its card scrolls. code.css gives inline code `overflow: hidden`, which on
+   this block box cut the end off "(Primary+180°)±30°" -- text written past
+   its own edge with no way to read it. Tag+class so this outranks
+   .x-code--inline whatever order the two sheets load in. */
+code.harmony-formula {
+  overflow-x: auto;
+}
+
 .harmony-themes {
   font-size: 0.75rem;
   color: var(--text-muted);

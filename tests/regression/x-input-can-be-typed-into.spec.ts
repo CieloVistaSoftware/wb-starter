@@ -15,6 +15,9 @@
 import { test, expect } from '../fixtures/offline';
 
 test('every non-disabled, non-readonly [x-input] on forms.html has a real, typeable <input>', async ({ page }) => {
+  // 32 fields, each scrolled to, built and typed into: more than the default
+  // 30s budget whenever the machine is busy.
+  test.slow();
   await page.goto('/demos/site/forms.html');
   await page.waitForTimeout(1500);
 
@@ -27,6 +30,12 @@ test('every non-disabled, non-readonly [x-input] on forms.html has a real, typea
 
   for (let i = 0; i < count; i++) {
     const host = wbInputs.nth(i);
+    // The lazy runtime (#491) builds a host only once it nears the viewport;
+    // these demos sit far below the fold, so bring each one into view first,
+    // the way a reader reaches it.
+    // A plain scrollIntoView: scrollIntoViewIfNeeded() first waits for the
+    // host to be "stable", and an unbuilt host is still being laid out.
+    await host.evaluate((el) => el.scrollIntoView({ block: 'center' }));
     const isDisabled = await host.evaluate(el => el.hasAttribute('disabled'));
     const isReadonly = await host.evaluate(el => el.hasAttribute('readonly'));
 
@@ -38,9 +47,14 @@ test('every non-disabled, non-readonly [x-input] on forms.html has a real, typea
       continue;
     }
 
+    // number/date/time/datetime-local fields reject free text by design (the input-type
+    // demos include each), so every field is given a value its type accepts.
+    const type = (await realInput.getAttribute('type')) || 'text';
+    const typed = ({ number: String(100 + i), date: '2026-01-15', time: '13:45', 'datetime-local': '2026-01-15T13:45' } as Record<string, string>)[type]
+      ?? `test-${i}`;
     await realInput.click();
-    await realInput.fill(`test-${i}`);
-    await expect(realInput, `x-input #${i}'s <input> must actually accept typed text`).toHaveValue(`test-${i}`);
+    await realInput.fill(typed);
+    await expect(realInput, `x-input #${i}'s <input> must actually accept typed text`).toHaveValue(typed);
     checked++;
   }
 

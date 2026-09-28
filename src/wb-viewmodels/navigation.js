@@ -121,7 +121,17 @@ export function navbar(element, options = {}) {
   };
 
   // Check for existing custom children (links dropped by user in builder)
+  // On the lazy runtime navbar.schema.json's $view is built FIRST: it adds
+  // its own a.x-navbar__brand, div.x-navbar__nav and button.x-navbar__toggle.
+  // Those are this behavior's parts, not links the author dropped in -- but
+  // the schema brand is an <a>, so it was taken for a custom child: moved into
+  // .x-navbar__menu while a second brand was prepended, and the long brand
+  // text overflowed the menu onto the empty toggle button (overlap on
+  // demos/site/layout.html). Schema-built parts are excluded here, so this
+  // falls through to the brand/items build below like any unbuilt navbar.
+  const SCHEMA_PARTS = ['x-navbar__brand', 'x-navbar__nav', 'x-navbar__toggle'];
   const existingChildren = Array.from(element.children).filter(child => {
+    if (SCHEMA_PARTS.some(cls => child.classList.contains(cls))) return false;
     // Direct child is a link/x-link, OR a link/x-link sits nested inside
     // it (e.g. a wrapper <div><a>...</a></div>) -- was querySelector('a,
     // []'), an invalid selector ('[]' has no attribute name) that threw on

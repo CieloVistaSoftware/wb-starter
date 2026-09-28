@@ -11,7 +11,7 @@ test.describe('Progress Bar (integration)', () => {
       const el = document.createElement('div');
       el.id = 'test-progress';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '75');
+      el.setAttribute('value', '75');
       document.body.appendChild(el);
       await (window as any).WB.scan();
     });
@@ -30,8 +30,10 @@ test.describe('Progress Bar (integration)', () => {
       const el = document.createElement('div');
       el.id = 'test-progress-fill';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '50');
-      el.setAttribute('data-max', '100');
+      // Plain value/max (v3, #224): progress() reads only the plain
+      // attributes, so data-value left the bar with no width at all.
+      el.setAttribute('value', '50');
+      el.setAttribute('max', '100');
       document.body.appendChild(el);
       await (window as any).WB.scan();
     });
@@ -55,7 +57,11 @@ test.describe('Progress Bar (integration)', () => {
       const el = document.createElement('div');
       el.id = 'test-progress-height';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '75');
+      el.setAttribute('value', '75');
+      // The % label is built in by default (#280) and the labeled bar is
+      // deliberately taller (1.25rem) so the text fits. This measures the
+      // BAR's own height, so switch the label off.
+      el.setAttribute('show-label', 'false');
       document.body.appendChild(el);
       await (window as any).WB.scan();
     });
@@ -78,7 +84,7 @@ test.describe('Progress Bar (integration)', () => {
       const el = document.createElement('div');
       el.id = 'test-progress-radius';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '60');
+      el.setAttribute('value', '60');
       document.body.appendChild(el);
       await (window as any).WB.scan();
     });
@@ -100,19 +106,19 @@ test.describe('Progress Bar (integration)', () => {
       const el = document.createElement('div');
       el.id = 'test-progress-anim';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '80');
-      el.setAttribute('data-animated', 'true');
+      el.setAttribute('value', '80');
+      el.setAttribute('animated', '');
       document.body.appendChild(el);
       await (window as any).WB.scan();
     });
-    
-    // Wait for animation to complete
-    await page.waitForTimeout(200);
-    
+
     const fill = page.locator('#test-progress-anim .x-progress__bar');
-    const style = await fill.getAttribute('style');
-    
-    // Should have transition for smooth animation
-    expect(style).toContain('transition');
+    await expect(fill).toHaveAttribute('style', /width:\s*80%/);
+
+    // Should have transition for smooth animation. Read the COMPUTED style:
+    // the transition moved out of an inline style into progress.css (Law 9,
+    // #370), so the style attribute now carries only the per-instance width.
+    const transition = await fill.evaluate((el) => getComputedStyle(el).transitionProperty);
+    expect(transition).toMatch(/width|all/);
   });
 });

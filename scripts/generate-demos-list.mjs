@@ -151,8 +151,13 @@ const CATEGORY_EXAMPLES = {
 // useless as a real drift signal. Compare normalized text; write only when the
 // normalized content actually changed so a no-op run doesn't flip the working
 // copy's line endings and dirty the tree.
+// scripts/stamp-version.js appends ?v=<version> to every same-origin src/ and
+// config/ reference in demos/*.html and pages/*.html on each release, so the
+// ?v= token is release plumbing, not generated content. Comparing it made
+// --check report demos/index.html "stale" after every single release (the
+// generator writes the bare URL) -- a drift gate that fails on a correct tree.
 function norm(text) {
-  return text == null ? null : text.replace(/\r\n/g, '\n');
+  return text == null ? null : text.replace(/\r\n/g, '\n').replace(/(\/(?:src|config)\/[^"?]+)\?v=[^"]*/g, '$1');
 }
 
 function titleOf(file, fallback) {
@@ -189,10 +194,14 @@ if (uncategorized.length && !CHECK) {
   );
 }
 
+// `x-cardlink` is what makes these cards: the 4.0.0 sweep rewrote
+// <wb-cardlink ...> to a bare <div ...> and dropped the behavior with the tag,
+// so every card on ?page=demos was an empty, unclickable div (#264 all over
+// again -- "none of these links show").
 function cardFor(name) {
   const title = titleOf(path.join(DEMOS_DIR, name), niceFallback(name));
   const t = title.replace(/"/g, '&quot;');
-  return `      <div title="${t}" href="demos/${name}" target="_blank" icon="🎮"></div>`;
+  return `      <div x-cardlink title="${t}" href="demos/${name}" target="_blank" icon="🎮"></div>`;
 }
 
 // The 8 real component/behavior categories — one <details> per category,
@@ -208,10 +217,10 @@ function cardFor(name) {
 const siteCategorySections = SITE_CATEGORIES.map(({ title, icon, description, href, stats }) => {
   const desc = `${description}${stats ? ` — ${stats}` : ''}`.replace(/"/g, '&quot;');
   return (
-`  <details class="demos-category" data-category="${title}">
+`  <details class="demos-category" category="${title}">
     <summary class="demos-category__title">${icon} ${title}</summary>
     <div class="page__grid demos-card-grid">
-      <div title="${title}" description="${desc}" href="${href}" target="_blank" icon="${icon}"></div>
+      <div x-cardlink title="${title}" description="${desc}" href="${href}" target="_blank" icon="${icon}"></div>
     </div>
   </details>`
   );
@@ -227,7 +236,7 @@ const sections = CATEGORIES
       ? `    <div class="demos-inline-examples">\n${examples.map((e) => `      ${e}`).join('\n')}\n    </div>\n`
       : '';
     return (
-`  <details class="demos-category" data-category="${title}">
+`  <details class="demos-category" category="${title}">
     <summary class="demos-category__title">${icon} ${title}</summary>
 ${examplesBlock}    <div class="page__grid demos-card-grid">
 ${cards}

@@ -137,9 +137,19 @@ function placeholderChildren(schema, host) {
   // content.html rendered as a blank box with its sentence floating above.
   // Tables get rows instead, enough for sortable/filterable/paginated to act on.
   if (host === 'table') return TABLE_SAMPLE;
+  // tabs() builds one tab per CHILD ELEMENT and does nothing for bare text
+  // (no children -> early return), so the generic sentence left every tabs
+  // demo on layout.html unbuilt: no tab buttons, and active-tab/variant/size/
+  // vertical had nothing to act on. Several panels also make active-tab="1"
+  // demonstrable at all.
+  if (schema.schemaFor === 'tabs') return TABS_SAMPLE;
   const label = (schema.title || schema.schemaFor || 'component').toLowerCase();
   return `This is example ${label} content.`;
 }
+
+const TABS_SAMPLE = '<div tab-title="Overview">This is the overview panel.</div>'
+  + '<div tab-title="Details">This is the details panel.</div>'
+  + '<div tab-title="Settings">This is the settings panel.</div>';
 
 const TABLE_SAMPLE = '<thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead>'
   + '<tbody><tr><td>Ada Lovelace</td><td>Engineer</td><td>Active</td></tr>'
@@ -546,6 +556,10 @@ function generateIndexHtml(siteSchema, pageResults) {
   lines.push('    await WB.init({ autoInject: true });');
   lines.push('    await WB.scan(document.body, { eager: true });');
   lines.push(`    console.log('${siteSchema.title} index initialized');`);
+  // Same readiness flag every generated page sets (see the page template
+  // below): the index never had it, so demos-site-page-padding.spec.ts waited
+  // out its whole timeout on index.html alone.
+  lines.push('    window.__WB_DEMO_INITIALIZED__ = true;');
   lines.push('  </script>');
 
   lines.push('</body>');

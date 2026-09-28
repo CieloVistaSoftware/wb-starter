@@ -4,6 +4,10 @@
 **Scan Target:** `docs/**/*.md`
 **Total Detections:** 112
 
+† `docs/architecture/WBVIEWS.md` was deleted in 4.0.0 (components removed). Its rows
+are kept as the historical record of this scan, but no longer link to a file that
+does not exist.
+
 | Status | File | Line | Usage | Context |
 |--------|------|------|-------|---------|
 | ✅ Valid | [docs/_today/CURRENT-STATUS.md](../_today/CURRENT-STATUS.md) | 32 | `x-ripple` | `\| `&lt;button x-ripple&gt;` \| `&lt;button x-ripple&gt;` \|` |
@@ -53,44 +57,44 @@
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 921 | `x-resizable` | `&lt;div x-draggable x-resizable&gt;Drag and resize me&lt;/div&gt;` |
 | ✅ Valid | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 924 | `x-as-card` | `&lt;article x-as-card&gt;Becomes a card&lt;/article&gt;` |
 | ⚠️ Invalid Morph Target | [docs/architecture/ATTRIBUTE-NAMING-STANDARD.md](../architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) | 925 | `x-as-timeline` | `&lt;ul x-as-timeline&gt;Becomes a timeline&lt;/ul&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 36 | `x-ripple` | `While **Behaviors** (`x-ripple`, `x-draggable`) allow you to add functionality to *existing* element` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 36 | `x-draggable` | `While **Behaviors** (`x-ripple`, `x-draggable`) allow you to add functionality to *existing* element` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 97 | `x-ripple` | `│   │  - Structure         │            │  - x-ripple                  │   │` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 98 | `x-tooltip` | `│   │  - Styles            │            │  - x-tooltip                 │   │` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 99 | `x-draggable` | `│   │  - Data Bindings     │            │  - x-draggable               │   │` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 220 | `x-ripple` | `x-ripple` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 221 | `x-tooltip` | `x-tooltip="{{tooltip \|\| label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 295 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 295 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 303 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 303 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 324 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 324 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 345 | `x-ripple` | `// Behaviors (x-ripple, x-tooltip) are auto-applied by WB.scan()` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 345 | `x-tooltip` | `// Behaviors (x-ripple, x-tooltip) are auto-applied by WB.scan()` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 356 | `x-tooltip` | `\| Add tooltip to all tiles \| Add `x-tooltip="{{label}}"` \| All tiles \|` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 357 | `x-ripple` | `\| Add ripple effect \| Add `x-ripple` \| All tiles \|` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 362 | `x-animate` | `\| Add animation \| Add `x-animate="fadeIn"` \| All tiles \|` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 393 | `x-ripple` | `// Want to add x-ripple? Edit ALL THREE files!` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 405 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 405 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{label}}"&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 417 | `x-ripple` | `**Want to add `x-ripple`?** Add it to the template. Done. All tiles have it.` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 845 | `x-ripple` | `x-ripple` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 846 | `x-tooltip` | `x-tooltip="{{tooltip}}"&gt;` |
-| ❓ Unknown | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 858 | `x-as` | `### Using `x-as-*` Morphs` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 862 | `x-as-card` | `&lt;section x-as-card elevated hoverable&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 877 | `x-ripple` | `x-ripple` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 878 | `x-draggable` | `x-draggable` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 879 | `x-tooltip` | `x-tooltip="{{label}}"` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1087 | `x-as-card` | `&lt;article class="pricing-card" x-as-card elevated&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1229 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple&gt;` |
-| ❌ Invalid (AlpineJS?) | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1496 | `x-data` | `&lt;!-- Define: Reusable via x-data --&gt;` |
-| ❌ Invalid (AlpineJS?) | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1498 | `x-data` | `&lt;div class="card" x-data="{ name: '', avatar: '', role: '', verified: false }"&gt;` |
-| ❌ Invalid (AlpineJS?) | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1500 | `x-text` | `&lt;h3 x-text="name"&gt;&lt;/h3&gt;` |
-| ❌ Invalid (AlpineJS?) | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1501 | `x-text` | `&lt;p x-text="role"&gt;&lt;/p&gt;` |
-| ❌ Invalid (AlpineJS?) | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1502 | `x-show` | `&lt;span class="badge" x-show="verified"&gt;✓ Verified&lt;/span&gt;` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1563 | `x-ripple` | `4. **Behavior integration** — `x-ripple`, `x-tooltip` work after render` |
-| ✅ Valid | [docs/architecture/WBVIEWS.md](../architecture/WBVIEWS.md) | 1563 | `x-tooltip` | `4. **Behavior integration** — `x-ripple`, `x-tooltip` work after render` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 36 | `x-ripple` | `While **Behaviors** (`x-ripple`, `x-draggable`) allow you to add functionality to *existing* element` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 36 | `x-draggable` | `While **Behaviors** (`x-ripple`, `x-draggable`) allow you to add functionality to *existing* element` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 97 | `x-ripple` | `│   │  - Structure         │            │  - x-ripple                  │   │` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 98 | `x-tooltip` | `│   │  - Styles            │            │  - x-tooltip                 │   │` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 99 | `x-draggable` | `│   │  - Data Bindings     │            │  - x-draggable               │   │` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 220 | `x-ripple` | `x-ripple` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 221 | `x-tooltip` | `x-tooltip="{{tooltip \|\| label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 295 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 295 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 303 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 303 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 324 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 324 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{tooltip \|\| label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 345 | `x-ripple` | `// Behaviors (x-ripple, x-tooltip) are auto-applied by WB.scan()` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 345 | `x-tooltip` | `// Behaviors (x-ripple, x-tooltip) are auto-applied by WB.scan()` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 356 | `x-tooltip` | `\| Add tooltip to all tiles \| Add `x-tooltip="{{label}}"` \| All tiles \|` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 357 | `x-ripple` | `\| Add ripple effect \| Add `x-ripple` \| All tiles \|` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 362 | `x-animate` | `\| Add animation \| Add `x-animate="fadeIn"` \| All tiles \|` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 393 | `x-ripple` | `// Want to add x-ripple? Edit ALL THREE files!` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 405 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 405 | `x-tooltip` | `&lt;div class="tile" draggable="true" x-ripple x-tooltip="{{label}}"&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 417 | `x-ripple` | `**Want to add `x-ripple`?** Add it to the template. Done. All tiles have it.` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 845 | `x-ripple` | `x-ripple` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 846 | `x-tooltip` | `x-tooltip="{{tooltip}}"&gt;` |
+| ❓ Unknown | `docs/architecture/WBVIEWS.md` † | 858 | `x-as` | `### Using `x-as-*` Morphs` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 862 | `x-as-card` | `&lt;section x-as-card elevated hoverable&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 877 | `x-ripple` | `x-ripple` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 878 | `x-draggable` | `x-draggable` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 879 | `x-tooltip` | `x-tooltip="{{label}}"` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 1087 | `x-as-card` | `&lt;article class="pricing-card" x-as-card elevated&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 1229 | `x-ripple` | `&lt;div class="tile" draggable="true" x-ripple&gt;` |
+| ❌ Invalid (AlpineJS?) | `docs/architecture/WBVIEWS.md` † | 1496 | `x-data` | `&lt;!-- Define: Reusable via x-data --&gt;` |
+| ❌ Invalid (AlpineJS?) | `docs/architecture/WBVIEWS.md` † | 1498 | `x-data` | `&lt;div class="card" x-data="{ name: '', avatar: '', role: '', verified: false }"&gt;` |
+| ❌ Invalid (AlpineJS?) | `docs/architecture/WBVIEWS.md` † | 1500 | `x-text` | `&lt;h3 x-text="name"&gt;&lt;/h3&gt;` |
+| ❌ Invalid (AlpineJS?) | `docs/architecture/WBVIEWS.md` † | 1501 | `x-text` | `&lt;p x-text="role"&gt;&lt;/p&gt;` |
+| ❌ Invalid (AlpineJS?) | `docs/architecture/WBVIEWS.md` † | 1502 | `x-show` | `&lt;span class="badge" x-show="verified"&gt;✓ Verified&lt;/span&gt;` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 1563 | `x-ripple` | `4. **Behavior integration** — `x-ripple`, `x-tooltip` work after render` |
+| ✅ Valid | `docs/architecture/WBVIEWS.md` † | 1563 | `x-tooltip` | `4. **Behavior integration** — `x-ripple`, `x-tooltip` work after render` |
 | ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 21 | `x-ripple` | `It applies the default behavior for the element type. You can add *additional* behaviors using expli` |
 | ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 21 | `x-as-card` | `It applies the default behavior for the element type. You can add *additional* behaviors using expli` |
 | ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 27 | `x-ripple` | `&lt;button x-ripple&gt;Click Me&lt;/button&gt;` |

@@ -95,6 +95,7 @@
     await WB.init({ autoInject: true });
     await WB.scan(document.body);
     console.log('WB Behavior Library index initialized');
+    window.__WB_DEMO_INITIALIZED__ = true;
   </script>
 </body>
 

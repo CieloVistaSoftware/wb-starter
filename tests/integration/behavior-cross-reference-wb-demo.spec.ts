@@ -90,12 +90,13 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
       waitUntil: 'domcontentloaded',
     });
 
-    // The doc's trigger is now the semantic form, `<dialog modal-title
-    // modal-content>Show Welcome</dialog>` (tag-map's nativeMap routes
-    // <dialog> to the same dialog()/modal behavior), with no x-modal
-    // attribute, so `[x-modal]` matched nothing and the test timed out before
-    // asserting anything. Same trigger mode, same assertions.
-    const trigger = page.locator('dialog[modal-title]', { hasText: 'Show Welcome' }).first();
+    // The doc's trigger is `<button x-modal modal-title modal-content>Show
+    // Welcome</button>` (docs/behavior-cross-reference.md). This locator had
+    // been switched to `dialog[modal-title]` for an interim version of the doc
+    // that authored the trigger as a <dialog>; the doc went back to the
+    // <button x-modal> form (see the note above), so that locator matched
+    // nothing and timed out.
+    const trigger = page.locator('button[x-modal][modal-title]', { hasText: 'Show Welcome' }).first();
     await trigger.scrollIntoViewIfNeeded();
     await expect(trigger).toBeVisible({ timeout: 10000 });
     // Visible is not enhanced: the lazy runtime (#491) attaches the click

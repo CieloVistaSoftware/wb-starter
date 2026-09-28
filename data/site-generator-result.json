@@ -15,7 +15,7 @@
   "pages": [
     {
       "id": "cards",
-      "title": "Card Components",
+      "title": "Card Behaviors",
       "description": "18 card variants — from simple to portfolio, pricing to testimonials",
       "icon": "🃏",
       "status": "ok",

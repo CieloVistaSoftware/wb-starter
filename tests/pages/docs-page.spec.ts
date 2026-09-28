@@ -2,8 +2,10 @@
  * Docs Page Tests
  * Verifies the /pages/docs.html (?page=docs) showcase page, including the
  * <div x-themecontrol> added to the hero so John can switch themes while
- * browsing documentation, matching the pattern already used on
- * pages/themes.html and pages/behaviors.html.
+ * browsing documentation (owner decision). It is the same x-themecontrol
+ * behavior the site header uses (#headerThemeControl), not a second
+ * implementation -- #1018 rules out duplicate controls -- so the two must stay
+ * in sync: changing the hero's control changes the site theme AND the header's.
  */
 import { test, expect } from '../fixtures/offline';
 
@@ -47,5 +49,8 @@ test.describe('Docs Page', () => {
 
     await select.selectOption('ocean');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'ocean');
+
+    // One theme, two views of it: the header's control follows the hero's.
+    await expect(page.locator('#headerThemeControl select.x-themecontrol__select')).toHaveValue('ocean');
   });
 });

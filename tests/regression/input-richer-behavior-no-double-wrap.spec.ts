@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { showBehavior } from '../helpers/behaviors-page';
 
 /**
  * A bare <input> auto-injects the generic `input()` behavior (nativeMap
@@ -17,11 +18,15 @@ import { test, expect } from '../fixtures/offline';
  * into a thin bar. Fixed with defensive guards in input() (skip when a
  * richer x-{behavior} attribute is present) and search() (skip if already
  * wrapped).
+ *
+ * The Behaviors page no longer renders every demo inline: it is a browser that
+ * builds one behavior's example on selection (#666/#910), so each test picks
+ * its behavior first. `page.goto` alone found no input[x-search] to wait on.
  */
 test.describe('input() defers to richer explicit behaviors (Behaviors page)', () => {
   test('x-search input has exactly one wrapper, no [x-input] nesting', async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    const input = page.locator('input[x-search]').first();
+    await showBehavior(page, 'x-search');
+    const input = page.locator('#behaviors-live-example input[x-search]').first();
     // Wait for search()'s own marker class, not just element existence --
     // eager-scan behavior application is async, and a bare waitFor() can
     // resolve before it's actually finished (the source of the flakiness
@@ -44,22 +49,25 @@ test.describe('input() defers to richer explicit behaviors (Behaviors page)', ()
     // transient state. The end state must be stable at exactly one wrapper.
     await expect.poll(async () => {
       const chain = await readChain();
-      return chain.filter((c) => c.includes('[x-searchfield]__wrapper')).length;
+      return chain.filter((c) => c.split(/\s+/).includes('x-search__wrapper')).length;
     }, { timeout: 5_000 }).toBe(1);
 
+    // input()'s own wrapper and field classes. These read '[x-input] ' and
+    // '[x-input]__field' after a bulk tag-to-attribute rewrite -- strings no
+    // className can contain, so both checks passed whatever the DOM was.
     const chain = await readChain();
-    expect(chain.some((c) => c.includes('[x-input] '))).toBe(false);
-    expect(chain[0]).not.toContain('[x-input]__field');
+    expect(chain.some((c) => c.split(/\s+/).includes('x-input__wrapper'))).toBe(false);
+    expect(chain[0]).not.toContain('x-input__field');
   });
 
   test('x-colorpicker input keeps its native size, no text-field styling forced on it', async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    const picker = page.locator('input[x-colorpicker]').first();
+    await showBehavior(page, 'x-colorpicker');
+    const picker = page.locator('#behaviors-live-example input[x-colorpicker]').first();
     // Same rationale as above: wait for colorpicker()'s own marker class
     // before measuring, not just element presence.
     await expect(picker).toHaveClass(/x-colorpicker__input/, { timeout: 10_000 });
 
-    expect(await picker.evaluate((el) => el.className)).not.toContain('[x-input]__field');
+    expect(await picker.evaluate((el) => el.className)).not.toContain('x-input__field');
     expect(await picker.evaluate((el) => el.hasAttribute('style'))).toBe(false);
 
     // A text-field-styled color input stretches to fill its flex container

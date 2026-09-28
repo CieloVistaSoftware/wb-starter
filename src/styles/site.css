@@ -48,6 +48,15 @@ li:last-child { margin-bottom: 0; }
   max-width: 1100px;
   margin: 2rem auto;
   padding: 0 1.5rem;
+  /* The dev server wraps pages/*.html fragments as
+     <body class="site"><div class="demo-page">, and .site is a flex COLUMN.
+     A column flex item with `margin: auto` is not stretched -- it shrinks to
+     fit its content, and never below its min-content width. So the widest
+     unbreakable thing on the page set the width of the whole page: home.html's
+     15-band audio EQ made .demo-page 486px wide at a 375px viewport, and every
+     block on the page overflowed with it. An explicit width makes it fill the
+     body like a block would; max-width + auto margins still centre it. */
+  width: 100%;
 }
 
 /* #450's mobile pattern (body > .page, doc-viewer.html) applied here too --

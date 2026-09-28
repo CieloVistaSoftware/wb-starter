@@ -25,7 +25,10 @@ test.describe('.x-card tooltip -- themed hover text (#283)', () => {
     await card.waitFor();
 
     // The heading itself still renders from `title` (its normal job)...
-    await expect(card.locator('.x-card__title')).toHaveText('Card Heading');
+    // Found by tag: cards stopped carrying .x-card__title in a8a7362e -- the
+    // heading is the header's <h3>, which is what card.css styles.
+    await expect(card).toHaveAttribute('x-ready', '');
+    await expect(card.locator(':scope > header > h3')).toHaveText('Card Heading');
     // ...but the themed behavior takes over the hover experience -- the
     // literal `title` DOM attribute must not remain (tooltip.js strips it),
     // so there's no double native+themed tooltip on hover.

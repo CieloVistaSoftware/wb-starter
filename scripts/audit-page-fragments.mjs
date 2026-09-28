@@ -124,9 +124,15 @@ function stripComments(src) {
   // A path inside an HTML comment or a JS block comment is prose, not a
   // request the browser will make. Without this the audit reports its own
   // explanatory comments as violations.
+  //
+  // Same for a code SAMPLE: text inside <pre>/<code> is shown to the reader,
+  // HTML-escaped (&lt;link href="src/…"&gt;), and the browser never fetches
+  // it. home.html's "one script is the whole setup" listing was reported as
+  // two bare-relative stylesheet refs.
   return src
     .replace(/<!--[\s\S]*?-->/g, ' ')
-    .replace(/\/\*[\s\S]*?\*\//g, ' ');
+    .replace(/\/\*[\s\S]*?\*\//g, ' ')
+    .replace(/<(pre|code)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
 }
 
 function refsIn(src) {

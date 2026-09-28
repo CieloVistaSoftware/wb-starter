@@ -4,8 +4,11 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+// 'Component Library' became 'Behavior Library' when components were removed
+// (a behavior is an x- attribute on a neutral host) -- pages/home.html's card
+// was renamed with them; this list still named the old card.
 const EXPECTED = [
-  { title: 'Component Library', href: '?page=behaviors' },
+  { title: 'Behavior Library', href: '?page=behaviors' },
   { title: 'Behaviors System', href: '?page=behaviors' },
   { title: 'Theme Engine', href: '?page=themes' },
   { title: 'Data Viz', href: '?page=demos' },
@@ -25,7 +28,11 @@ test.describe('#184 — home feature cards are clickable', () => {
       [...document.querySelectorAll('.feature-card-link')].map((a) => ({
         href: a.getAttribute('href'),
         title: (a.querySelector('h3')?.textContent || '').replace(/^[^A-Za-z]+/, '').trim(),
-        hasCard: !!a.querySelector('.x-card'),
+        // The card is the semantic <article> (#854), and card.js no longer
+        // stamps an .x-card class on it (#448 -- card.css selects the element
+        // and its [variant] directly), so `.x-card` matched nothing. "Wraps a
+        // card" is an <article> the card behavior has settled on (x-ready).
+        hasCard: !!a.querySelector('article[x-ready]'),
         underline: getComputedStyle(a as HTMLElement).textDecorationLine,
       }))
     );
@@ -34,7 +41,7 @@ test.describe('#184 — home feature cards are clickable', () => {
       const found = links.find((l) => l.title.startsWith(exp.title));
       expect(found, `feature card "${exp.title}" not found`).toBeTruthy();
       expect(found!.href, `"${exp.title}" links to wrong route`).toBe(exp.href);
-      expect(found!.hasCard, `"${exp.title}" anchor does not wrap a x-card`).toBe(true);
+      expect(found!.hasCard, `"${exp.title}" anchor does not wrap a built <article> card`).toBe(true);
       expect(found!.underline, 'feature card link should not be underlined').toBe('none');
     }
   });
@@ -43,6 +50,6 @@ test.describe('#184 — home feature cards are clickable', () => {
     await page.click('.feature-card-link[href="?page=behaviors"]');
     await page.waitForTimeout(800);
     const url = await page.evaluate(() => location.search);
-    expect(url, 'clicking the Component Library card did not navigate').toContain('page=behaviors');
+    expect(url, 'clicking the Behavior Library card did not navigate').toContain('page=behaviors');
   });
 });

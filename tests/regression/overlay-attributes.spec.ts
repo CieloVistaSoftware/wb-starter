@@ -43,7 +43,27 @@ const ROOT  = process.cwd();
 // titles by aborting collection for the whole project. The regression suite
 // reported 'Total: 0 tests in 0 files' as a result, so none of it ran.
 // newbehaviors.html does not exist either and would throw on readFileSync.
-const PAGES = ['pages/behaviors.html'];
+//
+// pages/behaviors.html no longer carries its demos inline: all 88 <div x-demo>
+// blocks moved to data/behavior-examples.json (scripts/build-behavior-examples.mjs)
+// and the page renders them on demand, so reading the HTML found 0 overlay
+// triggers and failed on "found none". The examples file is what the page
+// actually shows, so it is what gets checked.
+const PAGES = ['data/behavior-examples.json'];
+
+/** The markup a file shows: HTML as-is; for the examples JSON, every source + alternate. */
+function markupOf(rel: string, raw: string): string {
+  if (!rel.endsWith('.json')) return raw;
+  const { examples } = JSON.parse(raw) as { examples: Record<string, { source?: string; alternates?: unknown[] }> };
+  const out: string[] = [];
+  for (const ex of Object.values(examples)) {
+    if (ex.source) out.push(ex.source);
+    for (const alt of ex.alternates ?? []) {
+      out.push(typeof alt === 'string' ? alt : JSON.stringify(alt));
+    }
+  }
+  return out.join('\n');
+}
 
 // Extract opening tags of overlay triggers (x-modal — legacy custom-element
 // tag form, still checked for any remaining archived pages — or any element
@@ -63,7 +83,7 @@ function overlayTriggerTags(html: string): string[] {
 test.describe('Overlay demo markup uses canonical plain attributes (#196/#200/#204/#205)', () => {
   for (const rel of PAGES) {
     test(`${rel}: overlay triggers avoid data-* attributes the components never read`, () => {
-      const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+      const html = markupOf(rel, fs.readFileSync(path.join(ROOT, rel), 'utf8'));
       const tags = overlayTriggerTags(html);
 
       expect(tags.length, `Expected overlay triggers in ${rel} but found none`).toBeGreaterThan(0);

@@ -1,6 +1,6 @@
 {
   "timestamp": "2026-02-14T19:35:39.769Z",
-  "totalBehaviors": 183,
+  "totalBehaviors": 181,
   "byType": {
     "element": [
       "card",
@@ -25,7 +25,6 @@
       "hero",
       "details",
       "collapse",
-      "progressbar",
       "progress",
       "badge",
       "avatar",
@@ -52,7 +51,6 @@
       "json",
       "diff",
       "kbd",
-      "image",
       "video",
       "audio",
       "youtube",

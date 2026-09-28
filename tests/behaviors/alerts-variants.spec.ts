@@ -26,9 +26,12 @@ test.describe('#176/#375 — alert variants', () => {
     for (const variant of VARIANTS) {
       await renderVariant(page, 'x-alert', variant);
       const el = example(page);
-      await expect(el, `${variant}: missing the base class`).toHaveClass(/\bwb-alert\b/);
+      // x-alert, not wb-alert: the wb- prefix was retired (x-prefix migration)
+      // and alert.css targets only .x-alert / .x-alert--<variant>, so the old
+      // wb-alert pattern asserted a class nothing styles.
+      await expect(el, `${variant}: missing the base class`).toHaveClass(/\bx-alert\b/);
       await expect(el, `${variant}: missing x-alert--${variant}`)
-        .toHaveClass(new RegExp(`\\bwb-alert--${variant}\\b`));
+        .toHaveClass(new RegExp(`\\bx-alert--${variant}\\b`));
     }
   });
 

@@ -267,10 +267,13 @@ x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid-
    The block's OWN panels only (child combinators), never a nested demo's.
    Desktop only: below 700px the panel is full width (§26). */
 @media (min-width: 701px) {
-  x-demo.x-demo--measuring > .x-pre-wrapper > .x-demo__code,
-  [x-demo].x-demo--measuring > .x-pre-wrapper > .x-demo__code,
-  x-demo.x-demo--measuring > .x-demo__code,
-  [x-demo].x-demo--measuring > .x-demo__code {
+  /* :not([data-code-width]) -- an authored width (§28 narrow/normal/wide) is
+     the author's answer already; this provisional cap outranked it for the
+     whole measurement, so a narrow panel painted at 50vw (640px at 1280). */
+  x-demo.x-demo--measuring:not([data-code-width]) > .x-pre-wrapper > .x-demo__code,
+  [x-demo].x-demo--measuring:not([data-code-width]) > .x-pre-wrapper > .x-demo__code,
+  x-demo.x-demo--measuring:not([data-code-width]) > .x-demo__code,
+  [x-demo].x-demo--measuring:not([data-code-width]) > .x-demo__code {
     max-width: 50vw;
   }
 }

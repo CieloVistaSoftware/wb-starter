@@ -23,16 +23,14 @@ test.describe('Strict Mode Runtime Compliance', () => {
       { message: 'Should log error for legacy syntax', timeout: 5000 }
     ).toBeTruthy();
 
-    // 2. Check that Modern component processed. card() (card.js) — the real
-    // behavior that owns <article>'s DOM — always adds the 'x-card' class;
-    // 'x-schema' was only ever set by schema-driven buildStructure(), which
-    // <article> (and the rest of the card family) no longer goes through at
-    // all now that a tag with a real behavior never gets schema-processed
-    // (#279 — the schema/behavior double-build race that broke cardimage/
-    // cardvideo). '.x-card' is the reliable "was this actually processed"
-    // signal regardless of which mechanism built it.
+    // 2. Check that Modern component processed. card() (card.js) is the real
+    // behavior that owns <article>'s DOM. It used to add an 'x-card' class
+    // and this asserted that; a8a7362e stopped stamping it (card.css matches
+    // the tag), so the class is gone by design. x-ready is the completion
+    // signal both runtimes emit per element (ready-signal.js, stamped under
+    // automation) -- "was this actually processed", whatever built it.
     const modernCard = page.locator('#modern-card');
-    await expect(modernCard).toHaveClass(/x-card/);
+    await expect(modernCard).toHaveAttribute('x-ready', '');
 
     // 3. Check that Legacy component is NOT processed/upgraded
     const legacyCard = page.locator('#legacy-card');
@@ -40,8 +38,14 @@ test.describe('Strict Mode Runtime Compliance', () => {
     // Should verify it has the error marker
     await expect(legacyCard).toHaveAttribute('x-error', 'legacy');
 
-    // Should NOT have been upgraded by card() — no '.x-card' class.
-    const legacyClass = await legacyCard.getAttribute('class');
-    expect(legacyClass || '').not.toMatch(/\bwb-card\b/);
+    // Should NOT have been upgraded by card(). This compared the class
+    // against /wb-card/, a name nothing has emitted since the x- prefix, so it
+    // could not fail. x-ready cannot answer it either: the x-error marker is
+    // itself the x-error behavior's attribute, so the element does settle.
+    // What card() leaves behind is structure -- it moves loose content into
+    // a <main> (the modern card below proves the probe can see it).
+    await expect(modernCard.locator(':scope > main')).toHaveText('Modern Content');
+    await expect(legacyCard.locator(':scope > main')).toHaveCount(0);
+    await expect(legacyCard).toHaveText('Legacy Content');
   });
 });

@@ -52,6 +52,7 @@ A standalone page needs the theme + base styles and one module script:
   title="Build resilient interfaces"
   subtitle="Separate structure from behavior"
   variant="elevated"
+  size="md"
   footer="Start with semantic HTML, then compose focused behaviors.">
   <p>Keep content readable and focused by giving each card one clear job.</p>
   <p>WB-Starter applies behavior directly to the element, so the markup stays easy to inspect and reuse.</p>
@@ -145,9 +146,9 @@ A semantic element maps to its behavior, and any other element takes the `x-*` a
 **Spinner** — `<div x-spinner>`:
 
 <div x-demo>
-<span x-spinner
+<div x-spinner
   size="lg"
-  color="success">
+  variant="success">
 </div>
 </div>
 

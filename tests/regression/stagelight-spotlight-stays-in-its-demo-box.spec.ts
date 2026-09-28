@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/offline';
+import { test, expect, Page } from '../fixtures/offline';
 import { elementReady } from '../base';
 
 /**
@@ -25,15 +25,36 @@ import { elementReady } from '../base';
  *     normal flow and the demo box keeps real dimensions).
  */
 
-const PAGES = [
-  { url: '/demos/playground.html', label: 'playground gallery' },
+// #780 removed the playground's static example gallery -- the demo this bug
+// was found in -- so the playground no longer carries any x-stagelight until
+// a reader pastes one, and waiting for a spot there timed out. The playground
+// half now does exactly that: it types the gallery's own spotlight demo block
+// into the editor, so the same markup renders in the same preview pane.
+const GALLERY_SPOTLIGHT =
+  '<div x-demo columns="1">\n' +
+  '  <div x-stagelight variant="spotlight" color="#f59e0b" intensity="0.5" size="400px">\n' +
+  '    Spotlight effect behind this text\n' +
+  '  </div>\n' +
+  '</div>';
+
+const PAGES: { url: string; label: string; prepare?: (page: Page) => Promise<void> }[] = [
+  {
+    url: '/demos/playground.html',
+    label: 'playground gallery',
+    prepare: async (page) => {
+      // fill() fires `input`, which is what the playground renders on.
+      await page.fill('#pg-input', GALLERY_SPOTLIGHT);
+      await page.waitForSelector('#pg-preview [x-stagelight]', { state: 'attached', timeout: 20000 });
+    },
+  },
   { url: '/demos/site/effects.html', label: 'effects page' },
 ];
 
-for (const { url, label } of PAGES) {
+for (const { url, label, prepare } of PAGES) {
   test.describe(`x-stagelight spotlight stays inside its demo box — ${label} (#647)`, () => {
     test(`${url}: no spotlight overlay covers the viewport`, async ({ page }) => {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
+      if (prepare) await prepare(page);
 
       // The gallery demos upgrade lazily; scroll them into view and wait.
       await page.evaluate(() => {
@@ -100,6 +121,7 @@ for (const { url, label } of PAGES) {
 
     test(`${url}: spotlight tracks the mouse relative to its own box`, async ({ page }) => {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
+      if (prepare) await prepare(page);
       await page.evaluate(() => {
         document.querySelectorAll('[x-stagelight]').forEach((e) => e.scrollIntoView());
       });

@@ -232,6 +232,7 @@
     // use (src/wb-viewmodels/copy.js), so the Playground's copy actions
     // below don't hand-roll their own navigator.clipboard try/catch.
     import { writeToClipboard } from '../src/wb-viewmodels/copy.js';
+    import { getExtensionBehavior } from '../src/core/tag-map.js';
 
     const input = document.getElementById('pg-input');
     const preview = document.getElementById('pg-preview');
@@ -528,11 +529,16 @@
     // instant they tried to actually use one. An x-* ATTRIBUTE name (not a
     // substring class match, which would false-positive on plenty of
     // unrelated classes) is the reliable signal for "this is a behavior".
+    //
+    // It has to name a BEHAVIOR, though, not merely start with x-: the runtime
+    // stamps its own x-ready (#970) on every element it finishes, x-schema on
+    // every schema build. Matching any x- prefix made every rendered card
+    // "interactive", and jump-to-source stopped working for all of them.
     function isInteractive(el) {
       let node = el;
       while (node && node !== preview) {
         if (node.matches?.('button, input, textarea, select, a')) return true;
-        if (node.getAttributeNames?.().some((n) => n.startsWith('x-'))) return true;
+        if (node.getAttributeNames?.().some((n) => getExtensionBehavior(n))) return true;
         node = node.parentElement;
       }
       return false;

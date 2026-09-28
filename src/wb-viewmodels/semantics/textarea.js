@@ -15,6 +15,9 @@ let _textareaHostDeprecationWarned = false;
 /** textarea.schema.json's `resize` enum. */
 const RESIZE_VALUES = ['none', 'vertical', 'horizontal', 'both'];
 
+/** Host attributes the enhancement below reads off the real <textarea>. */
+const ENHANCE_ATTRS = ['variant', 'size', 'autosize', 'max-length', 'show-count', 'min-rows', 'max-rows', 'resize'];
+
 /**
  * Copy the declared host attributes the schema $view does not bind onto the
  * real <textarea> inside a schema-built host. `rows` is bound by the $view
@@ -36,9 +39,30 @@ function reflectHostAttributes(host, inner) {
   if (readFlag(host, 'required')) inner.required = true;
   const resize = readAttr(host, 'resize');
   if (RESIZE_VALUES.includes(resize)) inner.classList.add(`x-textarea--resize-${resize}`);
+  // The $view binds {{name}}/{{placeholder}} even when the author wrote
+  // neither, and then fills them from the schema's documentation defaults:
+  // a form posted notes under the name "this is the name". Only an authored
+  // value belongs on the field.
+  for (const attr of ['name', 'placeholder']) {
+    if (!host.hasAttribute(attr)) inner.removeAttribute(attr);
+  }
+  // The enhancement runs on the real field, so it has to see what the author
+  // put on the host.
+  for (const attr of ENHANCE_ATTRS) {
+    if (host.hasAttribute(attr)) inner.setAttribute(attr, host.getAttribute(attr));
+  }
 }
 
+/**
+ * Real <textarea>s already enhanced. A self-built host child is enhanced by
+ * the recursive call below AND by the runtime's own native dispatch on the
+ * <textarea> it just saw appear -- running twice nested a second counter
+ * wrapper and bound autosize/count listeners twice.
+ */
+const enhanced = new WeakSet();
+
 export function textarea(element, options = {}) {
+  if (enhanced.has(element)) return () => {};
   if (!element || typeof element.classList === 'undefined') {
     console.warn('[textarea] Invalid element provided');
     return () => {};
@@ -49,21 +73,21 @@ export function textarea(element, options = {}) {
     console.warn('[x-textarea] is deprecated — use a bare <textarea> instead, it already gets this same enhancement with no wrapper element needed.');
   }
 
-  // <textarea> host with no real <textarea> child yet -- schema $view
-  // never ran (e.g. wb-lazy.js pages, which have no schema-processing
-  // support at all). Self-build a real, semantic <textarea>, the same way
-  // switch.js/checkbox.js already do for their own hosts, instead of
-  // leaving host.classList/style writes below as harmless no-ops on an
-  // element with no actual form control inside it.
-  // WB.schema is only exposed on wb.js (window.WB.schema = SchemaBuilder) --
-  // absent entirely on wb-lazy.js. When it IS present, wb.js's own schema
-  // processing already builds this correctly; racing it with a synchronous
-  // self-build here clobbers whichever one finishes last (confirmed live:
-  // pre-filled text content lost when both paths ran). Only self-build when
-  // schema support genuinely doesn't exist at all.
-  if (element.tagName.toLowerCase() === 'x-textarea' && !window.WB?.schema) {
-    const existing = element.querySelector(':scope > textarea');
-    if (existing) return textarea(existing, options);
+  // A container host (<div x-textarea>) with no real <textarea> child yet:
+  // self-build a real, semantic <textarea>, the same way switch.js/
+  // checkbox.js already do for their own hosts, instead of leaving the
+  // host.classList/style writes below as no-ops on an element with no form
+  // control inside it.
+  //
+  // This used to require tagName 'x-textarea' AND no window.WB.schema. 4.0.0
+  // removed component tags (the authoring form is <div x-textarea>), so the
+  // tag test never matched again; and wb.js -- the runtime that exposes
+  // WB.schema -- no longer calls processSchema() at all (_detectSchemaName()
+  // returns null for every element), so "schema will build it" was false
+  // there too. Every host on a wb.js page rendered as an empty div with
+  // nothing to type into (#362). wb-lazy still awaits its schema build
+  // before dispatching, so there the child exists and this branch skips.
+  if (element.tagName !== 'TEXTAREA' && !element.querySelector(':scope > textarea')) {
     const host = element;
     const built = document.createElement('textarea');
     const placeholder = host.getAttribute('placeholder');
@@ -77,7 +101,7 @@ export function textarea(element, options = {}) {
     if (readFlag(host, 'readonly')) built.readOnly = true;
     if (host.textContent && host.textContent.trim()) built.value = host.textContent.trim();
     else if (host.getAttribute('value')) built.value = host.getAttribute('value');
-    ['variant', 'size', 'autosize', 'max-length', 'show-count', 'min-rows', 'max-rows', 'resize'].forEach((attr) => {
+    ENHANCE_ATTRS.forEach((attr) => {
       if (host.hasAttribute(attr)) built.setAttribute(attr, host.getAttribute(attr));
     });
     host.textContent = '';
@@ -85,40 +109,23 @@ export function textarea(element, options = {}) {
     return textarea(built, options);
   }
 
-  // <textarea> is a schema-driven host whose $view builds a real
-  // <textarea> child (schemaFor: "textarea", baseClass: ".x-textarea").
-  // tag-map.js dispatches the 'textarea' behavior on BOTH the host (via
-  // elementMap['.x-textarea']) and that real child (via nativeMap['textarea']
-  // once it exists) -- but the host's own dispatch can race the schema
-  // build that creates the child: WB.observe()'s added-node handler calls
-  // WB.processSchema(el) WITHOUT awaiting it, then dispatches auto-inject
-  // behaviors on the same node a few lines later in the same synchronous
-  // pass, so a host-side "find my built child and reflect attributes onto
-  // it" branch here would sometimes run before the child exists at all
-  // (confirmed live: element.querySelector(':scope > textarea') was null).
-  // WB.scan()'s own main loop DOES await schema building first and would
-  // never hit this, but observe() is what actually fires for
-  // document.body.appendChild()-style insertion, which is the common case.
-  //
-  // Fixed at the source instead: placeholder/rows/name/variant are bound
-  // directly in textarea.schema.json's $view via {{...}} attribute
-  // interpolation, so they're already real attributes on the built
-  // <textarea> the instant schema-builder constructs it -- no dependency on
-  // a later, separately-timed behavior dispatch at all. This function no
-  // longer needs a host branch; it only ever meaningfully runs on the real
-  // <textarea> (whether that's .x-textarea's schema-built child, or a bare
-  // <textarea x-behavior="textarea">). If dispatched on the WB-TEXTAREA
-  // host itself, host.classList/host.style writes below are harmless no-ops
-  // visually (nothing targets them), consistent with how switch.js/select.js
-  // handle their own host-vs-child split. (#362)
   // A schema-built host (<div x-textarea>): wb-lazy's buildSchemaIfNeeded
   // has already built the $view into it before this runs, but the $view only
   // binds placeholder/rows/name/variant. value/disabled/readonly/required/
   // resize are declared in textarea.schema.json and had nowhere to land, so
-  // they were silently dropped. Reflect them onto the real <textarea> child.
+  // they were silently dropped. Reflect them onto the real <textarea> child,
+  // then enhance THAT child.
+  //
+  // This used to fall through and enhance the host instead, on the belief
+  // that host class/style writes were invisible. They were not: input.css's
+  // `.x-textarea` rule gave the <div> its own border, padding and min-height
+  // around the real field, while the field itself never got its variant
+  // class, autosize, counter or maxLength -- the runtime does not dispatch
+  // the native textarea behavior onto a schema-built child. (#362)
   if (element.tagName !== 'TEXTAREA') {
     const inner = element.querySelector(':scope > textarea');
-    if (inner) reflectHostAttributes(element, inner);
+    reflectHostAttributes(element, inner);
+    return textarea(inner, options);
   }
 
   const variant = options.variant || element.getAttribute('variant') || 'default';
@@ -136,6 +143,7 @@ export function textarea(element, options = {}) {
   };
 
   element.classList.add('x-textarea');
+  if (element.tagName === 'TEXTAREA') enhanced.add(element);
 
   // max-length used to be read only to colour the counter: typing past it
   // left the whole value in place and the counter just read "20/10". The
@@ -229,6 +237,7 @@ export function textarea(element, options = {}) {
   }
 
   return () => {
+    enhanced.delete(element);
     element.classList.remove('x-textarea');
     if (config.size !== 'md') {
       element.classList.remove(`x-textarea--${config.size}`);

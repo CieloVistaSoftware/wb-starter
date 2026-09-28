@@ -36,14 +36,26 @@ import path from 'path';
 
 const ROOT = process.cwd();
 
-interface NavItem { menuItemId?: string; pageToLoad?: string }
+interface NavItem { menuItemId?: string; pageToLoad?: string; href?: string }
 
-function sitePages(): string[] {
+/**
+ * id -> the URL the nav actually opens. An item with `href` is a plain link
+ * (site-engine.js renderNav: `if (item.href) href = item.href`), not an SPA
+ * page -- error-log opens errors-viewer.html. Loading it as ?page=error-log
+ * tested a URL no link on the site points at, and reported the missing-page
+ * placeholder for a nav entry that works. Each item is loaded where its link
+ * goes, so an href item is still covered, just at its real address.
+ */
+function sitePages(): Map<string, string> {
   const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'config/site.json'), 'utf8'));
   const menu: NavItem[] = config.navigationMenu || [];
-  return [...new Set(
-    menu.map((m) => m.pageToLoad || m.menuItemId).filter((p): p is string => Boolean(p)),
-  )];
+  const pages = new Map<string, string>();
+  for (const m of menu) {
+    const id = m.pageToLoad || m.menuItemId;
+    if (!id || pages.has(id)) continue;
+    pages.set(id, m.href && !m.pageToLoad ? `/${m.href.replace(/^\//, '')}` : `/?page=${id}`);
+  }
+  return pages;
 }
 
 /** Noise that is not a page defect: third-party embeds, blocked trackers, 404s for optional assets. */
@@ -62,10 +74,10 @@ test.describe('Every page loads without errors', () => {
 
   test('the page list is not empty', () => {
     // A silently-empty list would make every test below vacuously pass.
-    expect(pages.length, 'no pages found in config/site.json navigationMenu').toBeGreaterThan(3);
+    expect(pages.size, 'no pages found in config/site.json navigationMenu').toBeGreaterThan(3);
   });
 
-  for (const pageId of pages) {
+  for (const [pageId, url] of pages) {
     test(`${pageId} — no uncaught errors`, async ({ page }) => {
       const errors: string[] = [];
 
@@ -80,7 +92,8 @@ test.describe('Every page loads without errors', () => {
         if (!ignored(text)) errors.push(`console.error: ${text}`);
       });
 
-      await page.goto(`/?page=${pageId}`, { waitUntil: 'networkidle' });
+      const response = await page.goto(url, { waitUntil: 'networkidle' });
+      expect(response?.status(), `${pageId}: ${url} did not load`).toBeLessThan(400);
       // Behaviors attach after the fragment is injected, so an error thrown
       // during enhancement lands after load. Waiting only for `load` would
       // miss exactly the class of bug this exists for.
@@ -95,10 +108,17 @@ test.describe('Every page loads without errors', () => {
         body,
         `${pageId} rendered the missing-page placeholder — it is in the nav but has no pages/${pageId}.html`,
       ).not.toMatch(/Page not found/i);
-      expect(
-        body.length,
-        `${pageId} rendered almost nothing (${body.length} chars)`,
-      ).toBeGreaterThan(200);
+      // The length floor is for SPA fragments, where a near-empty body means
+      // the fragment never arrived. A standalone href page (errors-viewer.html)
+      // is its own document -- its existence is the status check above, and an
+      // EMPTY error log is legitimately short (161 chars): that is the page
+      // working, not missing.
+      if (url.startsWith('/?page=')) {
+        expect(
+          body.length,
+          `${pageId} rendered almost nothing (${body.length} chars)`,
+        ).toBeGreaterThan(200);
+      }
 
       expect(
         errors.filter((e) => !ignored(e)),

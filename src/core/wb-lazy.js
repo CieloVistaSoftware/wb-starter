@@ -383,10 +383,20 @@ function getAutoInjectBehaviors(element) {
 // x-skeleton, x-dialog, x-select, x-articles, x-fix-card),
 // or -- for x-cluster/x-stack/x-row/x-search/x-accordion, which have no
 // schema.json of their own at all -- a dead fetch that just 404s.
+//
+// The entries are ATTRIBUTE NAMES, compared against `attr.name` in
+// schemaNameFor(). They used to read '[x-demo]', '.x-details', '.x-select',
+// ... -- selector/class spellings left by the 4.0.0 tag-to-attribute rewrite
+// -- and an attribute name never equals '[x-demo]', so the set matched
+// nothing: every self-building behavior with a non-empty $view (details,
+// articles, select, skeleton, dialog, audio) got schema-built AND built by
+// its behavior. x-dropdown is the same kind of behavior (dropdown() builds
+// its trigger and menu) and was missing: its $view emptied the author's
+// trigger text and left a second, empty menu beside the real one.
 const SCHEMA_SKIP_TAGS = new Set([
-  '[x-demo]', '.x-details', '[x-cluster]', '[x-stack]', '[x-flex]', '[x-searchfield]',
-  '[x-accordion]', '[x-articles]', '.x-select', '[x-skeleton]',
-  '.x-dialog', '[x-fix-card]', 'x-view', '.x-audio',
+  'x-demo', 'x-details', 'x-cluster', 'x-stack', 'x-flex', 'x-searchfield',
+  'x-accordion', 'x-articles', 'x-select', 'x-skeleton',
+  'x-dialog', 'x-fix-card', 'x-view', 'x-audio', 'x-dropdown',
 ]);
 
 // One fetch attempt per derived schema NAME (not per element) -- avoids
@@ -465,7 +475,9 @@ async function buildSchemaIfNeeded(element) {
   // x-modal only self-builds a trigger when used with modal-title/
   // modal-content (dialog.js's TRIGGER mode) -- matches wb.js's
   // WB.processSchema exactly.
-  if (tag === '[x-modal]' && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) return;
+  // (Was `tag === '[x-modal]'`, which no tag name can equal -- same rewrite
+  // damage as SCHEMA_SKIP_TAGS above.)
+  if (element.hasAttribute('x-modal') && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) return;
   if (element.hasAttribute('x-schema')) return; // already schema-built
 
   const name = schemaNameFor(element);
@@ -1036,6 +1048,11 @@ const WB = {
               autoInjectMappings.forEach(({ selector, behavior }) => {
                 node.querySelectorAll?.(selector).forEach(el => {
                   if (!getConfig('autoInject') && !el.hasAttribute('variant')) return;
+                  // Same x-ignore opt-out as the scan path and
+                  // getAutoInjectBehaviors(). This third copy never had it, so a
+                  // content <header x-ignore> inside any node added after load
+                  // (every SPA page fragment) still got header() and .x-header.
+                  if (el.hasAttribute('x-ignore')) return;
                   // Same landmark rule as the scan path (component-landmark.js).
                   if (isComponentLandmark(el)) return;
                   // #923: same replacement guard as the scan path -- a node

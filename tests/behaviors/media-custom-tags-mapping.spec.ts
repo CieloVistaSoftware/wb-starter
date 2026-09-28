@@ -37,7 +37,10 @@ async function setup(page: Page, html: string): Promise<void> {
 
 test.describe('media custom-tag mappings (were completely unmapped)', () => {
   test('<video> gets enhanced and wraps a real <video>', async ({ page }) => {
-    await setup(page, '<video id="v1" src="https://example.com/x.mp4"></video>');
+    // The container form: a native <video> IS the player and has no <video>
+    // child to find -- that is what the 4.0.0 tag removal rewrote the old
+    // <wb-video> fixture into. <div x-video> is the host that builds one.
+    await setup(page, '<div x-video id="v1" src="https://example.com/x.mp4"></div>');
     await expect(page.locator('#v1')).toHaveClass(/x-video/);
     await expect(page.locator('#v1 video')).toHaveCount(1);
   });

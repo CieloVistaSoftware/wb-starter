@@ -92,6 +92,9 @@ test.describe('[x-grid] attribute effects (#281)', () => {
     await expect(headers.nth(2)).toHaveText('Email');
     // Headers are prepended — first child of the grid is a header, not the data.
     const firstChildClass = await grid.evaluate((el) => el.firstElementChild?.className);
-    expect(firstChildClass).toBe('[x-grid]__header');
+    // 'x-grid__header' -- the prefix rename had rewritten this class-name
+    // literal into an attribute selector, '[x-grid]__header', which is not a
+    // class anything can carry (same slip as #859 in tabs.js).
+    expect(firstChildClass).toBe('x-grid__header');
   });
 });

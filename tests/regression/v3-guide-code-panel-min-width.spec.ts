@@ -47,15 +47,27 @@ test.describe('[x-demo] code panels never collapse to unreadable vertical strips
     await page.waitForSelector('#content', { timeout: 15000 });
 
     const label = page.getByText('Spinner —', { exact: false });
-    await expect(label).toBeVisible({ timeout: 15000 });
-    await page.waitForTimeout(1500);
+    await expect(label.first()).toBeVisible({ timeout: 15000 });
 
-    const demo = label.locator('xpath=following-sibling::x-demo[1]');
+    // x-demo is an ATTRIBUTE (`<div x-demo>`), never a tag -- the old
+    // `following-sibling::x-demo` step looked for an <x-demo> element that
+    // does not exist, so boundingBox() waited out the test timeout. And the
+    // label matches the <strong>/<code> inside the paragraph, so climb to the
+    // paragraph before stepping to its sibling.
+    const demo = label.first().locator('xpath=ancestor-or-self::p[1]/following-sibling::*[@x-demo][1]');
+    await demo.scrollIntoViewIfNeeded();
+    // Measure the DEMO once it has settled, not the spinner: the spinner is
+    // ready first, while x-demo is still mid-build (measured 64px wide with no
+    // code panel yet, then 281px once its shrink-width pass had run).
+    await expect(demo).toHaveAttribute('x-ready', '', { timeout: 15000 });
+    await expect(demo.locator('.x-demo__code')).toBeVisible();
     const box = await demo.boundingBox();
     expect(box, 'the Spinner [x-demo] must have a measurable box').not.toBeNull();
     expect(box!.width).toBeGreaterThan(150);
 
     const codeText = await demo.locator('.x-demo__code').innerText();
-    expect(codeText, 'code panel text should read as normal wrapped lines, not one character per line').toContain('[x-spinner]');
+    // The panel shows the authored source, `<div x-spinner`, not a CSS-style
+    // `[x-spinner]` selector -- the text a reader can copy back out.
+    expect(codeText, 'code panel text should read as normal wrapped lines, not one character per line').toContain('x-spinner');
   });
 });

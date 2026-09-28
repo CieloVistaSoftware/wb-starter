@@ -57,9 +57,9 @@ export function video(element, options = {}) {
     getDuration: () => videoEl.duration,
     setVolume: (v) => { videoEl.volume = Math.max(0, Math.min(1, v)); },
     getVolume: () => videoEl.volume,
-    mute: () => { videoEl.muted = true; },
-    unmute: () => { videoEl.muted = false; },
-    toggleMute: () => { videoEl.muted = !videoEl.muted; }
+    // #782: one typed setter for one boolean, as in src/.
+    setMuted: (muted) => { videoEl.muted = !!muted; },
+    getMuted: () => videoEl.muted
   };
 
   return () => { element.classList.remove('x-video'); if (retryCleanup) retryCleanup(); };

@@ -127,8 +127,9 @@ export function details(element, options = {}) {
   // API
   element.wbDetails = {
     toggle: () => { element.open = !element.open; },
-    open: () => { element.open = true; },
-    close: () => { element.open = false; },
+    // #782: show/hide, as in src/ -- `open` is <details>' native accessor.
+    show: () => { element.open = true; },
+    hide: () => { element.open = false; },
     get isOpen() { return element.open; }
   };
 

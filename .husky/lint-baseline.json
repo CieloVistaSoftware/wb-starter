@@ -9,7 +9,7 @@
   ],
   "generated": "2026-09-28",
   "totalProblems": 412,
-  "filesWithProblems": 162,
+  "filesWithProblems": 161,
   "files": {
     "scripts/add-matrices.mjs": 3,
     "scripts/add-site-tests.mjs": 1,
@@ -159,7 +159,6 @@
     "tests/compliance/terminology-wb-starter.spec.ts": 1,
     "tests/compliance/terminology.spec.ts": 1,
     "tests/regression/article-code.spec.ts": 3,
-    "tests/regression/behaviors-page-progress-bars.spec.ts": 1,
     "tests/regression/bg-surface-undefined-variable.spec.ts": 1,
     "tests/regression/card-spacing-standard-13.spec.ts": 1,
     "tests/regression/code-panel-width-compliance.spec.ts": 1,

@@ -71,6 +71,10 @@ export const BEHAVIOR_CSS_MAP = {
   autocomplete: ['autocomplete.css'],
   avatar: ['avatar.css'],
   badge: ['badge.css'],
+  // pill() is badge() with pill:true -- it stamps the same .x-badge /
+  // .x-badge--pill classes, so it needs badge.css. Unmapped, an x-pill on a
+  // page with no other badge rendered as a square, unstyled div.
+  pill: ['badge.css'],
   breadcrumb: ['breadcrumb.css'],
   button: ['button.css'],
   chip: ['chip.css'],
@@ -82,6 +86,7 @@ export const BEHAVIOR_CSS_MAP = {
   // its own CSS file loaded.
   copybutton: ['copybutton.css'],
   counter: ['counter.css'],
+  floatinglabel: ['floatinglabel.css'],
   table: ['data.css'],
   demo: ['demo.css'],
   'fix-card': ['fix-card.css'],

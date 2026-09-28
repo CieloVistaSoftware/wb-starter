@@ -31,7 +31,17 @@ async function gotoDocAtNarrowWidth(page) {
   }, { timeout: 15000 });
   // Let syntax highlighting / linkify / rebasing settle (all run in the
   // wb:mdhtml:loaded handler, async, after the content text is already in).
-  await page.waitForTimeout(300);
+  // A fixed 300ms read the page mid-render: mdhtml.css is JIT-loaded (#342),
+  // so for a moment every fenced <pre> had no `overflow-x: auto` yet and its
+  // <code> measured as leaking past the viewport (7 "offenders", all bare
+  // code-in-pre, all contained once the stylesheet landed). Highlighting is
+  // the LAST step of that handler, so every block carrying .hljs means the
+  // render -- and the behavior CSS it pulled in -- has finished.
+  await page.waitForFunction(() => {
+    const blocks = Array.from(document.querySelectorAll('#content pre code'));
+    return blocks.length > 0 && blocks.every((b) => b.classList.contains('hljs'));
+  }, { timeout: 15000 });
+  await page.evaluate(() => document.fonts.ready);
 }
 
 test.describe('doc-viewer: narrow-viewport wrap (#295)', () => {

@@ -5,8 +5,11 @@ const pageSpecs = [
     url: '/',
     elements: [
       { selector: '[x-cardhero]', description: 'Hero section', required: true },
-      { selector: 'x-card[variant="float"]', description: 'Feature cards', minCount: 6 },
-      { selector: 'x-card[variant="glass"]', description: 'Live demo glass card', required: true },
+      // <x-card> tags were removed in 4.0.0 -- an <article> IS a card, and
+      // pages/home.html authors these as <article variant="...">. The old
+      // tag selectors matched nothing on any page.
+      { selector: 'article[variant="float"]', description: 'Feature cards', minCount: 6 },
+      { selector: 'article[variant="glass"]', description: 'Live demo glass card', required: true },
       { selector: 'h2:has-text("Ready to build something")', description: 'CTA heading', required: true },
       { selector: 'a:has-text("Get Started")', description: 'Get Started link', required: true },
       { selector: 'a:has-text("GitHub")', description: 'GitHub link', required: true }

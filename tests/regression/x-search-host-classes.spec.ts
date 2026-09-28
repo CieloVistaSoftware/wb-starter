@@ -26,8 +26,11 @@ test('<div x-searchfield variant> classes the host element, not just the inner i
   await page.waitForFunction(() => (window as any).__wbDone === true, { timeout: 30000 });
 
   const host = page.locator('#wbs');
-  await expect(host, 'host element must get the base [x-searchfield] class').toHaveClass(/(^|\s)x-search(\s|$)/, { timeout: 10000 });
-  await expect(host, 'host element must get the variant modifier class').toHaveClass(/x-search--glass/);
+  // No bare `x-search` base class is asserted on the host: #448 deliberately
+  // stopped emitting it on this CONTAINER (it only restated the x-searchfield
+  // attribute). #359 is about the MODIFIERS reaching the host, which is what
+  // the host-level CSS keys on.
+  await expect(host, 'host element must get the variant modifier class').toHaveClass(/x-search--glass/, { timeout: 10000 });
   await expect(host, 'host element must get the size modifier class').toHaveClass(/x-search--lg/);
 
   // The inner input should still get its own classes too -- this is an

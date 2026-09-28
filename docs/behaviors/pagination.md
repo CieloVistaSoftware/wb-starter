@@ -16,9 +16,16 @@
 | `per-page` | `string` | `10` | Items per page. Defaults to `10`. |
 | `pages` | `string` | `0` | Explicit page count. Overrides the count derived from `total`/`per-page`. |
 | `current` | `string` | `1` | Active page, counting from **1**. Defaults to `1`. |
-| `aria-disabled` | `string` | — | Set to `"true"` by the behavior on the Previous/Next control when there is no page in that direction; those controls also leave the tab order. Rendered output, not something you author. |
-| `action` | `string` | — | Set by the behavior on each control to say what it does (previous/next). Read on click; not authored by hand. |
-| `page` | `string` | — | Set by the behavior on each numbered control to carry its page number. The active one also gets `aria-current="page"`. |
+
+## Rendered markup
+
+These attributes are written BY the behavior onto the controls it builds, not
+authored on the `<nav>` (they used to be listed as attributes above, which
+advertised three options that do nothing when set by hand):
+
+- `aria-disabled="true"` on Previous/Next when there is no page in that direction; those controls also leave the tab order.
+- `action` on Previous/Next (`prev`/`next`), read on click.
+- `page` on each numbered control, carrying its page number; the active one also gets `aria-current="page"`.
 
 ## Events
 

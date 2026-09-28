@@ -147,7 +147,7 @@ test.describe('Card Rendering', () => {
   test('base card renders title and content', async ({ page }) => {
     const card = page.locator('#card-gallery article').first();
     await expect(card.locator('header h3')).toHaveText('Welcome');
-    // The authored body, verbatim from cards.html's #demo-base-1. It used to
+    // The authored body, verbatim from cards.html's #demo-card-1. It used to
     // expect the word "article", which that demo's text no longer contains --
     // the card was rendering its content correctly all along.
     await expect(card.locator('main')).toContainText('This is a basic card with default styling.');

@@ -56,8 +56,13 @@ test.describe('.x-textarea self-builds on wb-lazy.js pages (no schema support)',
     await page.goto('/demos/site/forms.html');
     await page.waitForTimeout(1500);
 
-    const host = page.locator('.x-textarea').first();
-    await expect(host, 'page must actually have a .x-textarea demo to test').toHaveCount(1);
+    // The host is found by its attribute: `.x-textarea` is the class the
+    // enhancement puts on the real <textarea> field (input.css styles it), not
+    // on the <div x-textarea> around it -- and nothing is classed at all until
+    // the lazy runtime (#491) builds the demo, ~10,000px down, near the viewport.
+    const host = page.locator('[x-textarea]').first();
+    await expect(host, 'page must actually have a [x-textarea] demo to test').toHaveCount(1);
+    await host.scrollIntoViewIfNeeded();
 
     const field = host.locator('textarea');
     await expect(field).toHaveCount(1);

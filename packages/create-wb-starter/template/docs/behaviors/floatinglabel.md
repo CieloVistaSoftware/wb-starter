@@ -21,6 +21,21 @@ once the label is built:
 <input type="text" x-floatinglabel label="Full name">
 </div>
 
+Or put it on a container that already holds the field and its own `<label>` —
+the container becomes the wrapper and that label is the one that floats:
+
+<div x-demo>
+<div x-floatinglabel>
+  <input type="text" id="fl-doc-project" placeholder=" ">
+  <label for="fl-doc-project">Project name</label>
+</div>
+</div>
+
+Works on `<input>`, `<textarea>` and `<select>`. At rest the label sits inside
+the field like a placeholder; focused or filled, it rises onto the top border
+and shrinks (styles: `src/styles/behaviors/floatinglabel.css`). A `<select>`
+always shows a value, so its label is always risen.
+
 ## Properties
 
 | Attribute | Type | Default | Description |
@@ -35,6 +50,7 @@ once the label is built:
 | `x-floating-label` | wrapper `<div>` | always |
 | `x-floating-label__label` | the generated `<label>` | always |
 | `x-floating-label--active` | wrapper `<div>` | the field has a value or is focused |
+| `x-floating-label--input` / `--textarea` / `--select` | wrapper `<div>` | always — which kind of field it holds |
 
 ## Events
 
