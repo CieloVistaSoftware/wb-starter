@@ -1,6 +1,6 @@
 # Web Behaviors (WB) Starter
 
-A zero-build website starter. **You write HTML5. That is the whole API.**
+A zero-build website framework. **You write HTML5. That is the whole API.**
 
 **Semantic elements first. Composition only. Light DOM only. No custom elements.**
 
@@ -9,6 +9,109 @@ No bundler, no JSX, no build step, no component vocabulary to learn.
 ## Try it out
 
 https://cielovistasoftware.github.io/wb-starter/
+
+---
+
+## Why WB beats the frameworks you know
+
+Every popular web framework makes the same trade: to get components, you give
+up HTML. React turns markup into JSX and a build pipeline. Vue and Angular add
+template languages and compilers. Web Components hide your markup behind custom
+tags and shadow roots your CSS cannot reach. Each one is a new vocabulary, a
+toolchain, and a dependency tree you now maintain -- and none of it is what the
+browser actually runs.
+
+WB makes the opposite trade. **The browser already has the components.**
+`<article>` is a card. `<dialog>` is a modal. `<details>` is an accordion.
+`<nav>`, `<table>`, `<form>`, `<progress>` -- the platform ships them, every
+browser understands them, and every author already knows them. WB adds the
+capability those elements are missing and gets out of the way:
+
+| | Typical framework | WB |
+|---|---|---|
+| What you write | JSX, templates or custom tags | Plain HTML5 |
+| Build step | Required | **None** -- the files you write are the files served |
+| Runtime dependency | The framework, plus its ecosystem | **None** -- no framework library ships to the browser |
+| Rendering model | Virtual DOM or shadow DOM | **The real DOM** -- light DOM only |
+| Styling | Scoped, CSS-in-JS, or blocked by shadow roots | **Your CSS reaches everything** |
+| Accessibility | Re-implemented with ARIA | **Native** -- a `<dialog>` is a dialog |
+| Works with JS off | Usually a blank page | **Yes** -- it is still an HTML document |
+| Upgrading | Breaking releases, migrations | Your markup is HTML; it does not go out of date |
+
+### Compositional JavaScript that sticks to HTML5
+
+WB is built on **composition, not inheritance**. A behavior is a plain function
+that takes an element and adds capability to it -- a class, some structure, an
+event, a keyboard handler -- and returns a cleanup. Nothing subclasses anything.
+Behaviors stack on one element because they are just functions applied to it:
+
+```html
+<article x-draggable x-ripple>
+  <h3>Hello</h3>
+  <p>A card you can drag, with a ripple on press.</p>
+</article>
+```
+
+The `<article>` is still an `<article>`. Inspect it and you see the element you
+wrote, with classes on it -- not a component wrapping a shadow root. That is the
+whole contract: **HTML5 in, HTML5 out.**
+
+---
+
+## Built by AI, with Claude
+
+This project -- the runtime, every behavior, the schemas, the stylesheets, the
+documentation and the entire test suite -- has been created by AI, using
+**Claude** from Anthropic, directed by John Peters of Cielo Vista Software.
+John sets the standards and reviews the result; Claude writes the code, writes
+the tests that prove it, files the issues that record each defect, and fixes
+them.
+
+It is also a demonstration of what that partnership can build when it is held to
+a hard standard: nothing ships on a claim, only on a passing test.
+
+---
+
+## Why it is strong: every claim is tested
+
+| Measure | Count |
+|---|---|
+| Automated tests (Playwright, 8 core projects) | **8,523** in 624 spec files |
+| Behavior schemas | **167**, declaring **676** properties |
+| Behavior modules | **106** |
+| Behavior stylesheets | **61**, loaded only when a behavior is used |
+| Behavior documentation pages | **177**, each with live, runnable examples |
+
+**Schema-first design.** Every behavior is described by a JSON schema in
+`src/wb-models/`: its properties, their types and allowed values, their
+defaults, the CSS class each option applies, and whether an option is visual at
+all. The schema is the single source of truth. The behaviors page, the
+documentation tables, the API panels and many of the tests are generated from
+it, so documentation cannot drift from what the code accepts.
+
+**Tests that check what a person sees, not what the code says.** The suite does
+not stop at "the class was applied". It measures rendered pixels: that a dialog
+`size="lg"` is wider than `size="md"`, that `imagePosition="right"` really puts
+the image on the right, that a sticky header stays pinned while its box
+scrolls, that every option of every behavior renders visibly differently from
+its siblings, that no text sits within 1rem of its container's edge, and that
+nothing overflows a 375px phone screen.
+
+**Gates that cannot be talked past.**
+
+- **Pre-commit gate.** Every commit runs the test ratchet, and a commit that
+  introduces a new failure is refused.
+- **Known-failures register.** Existing failures are tracked in a register
+  that is only allowed to shrink. It is being driven to zero.
+- **Lint ratchet.** The lint baseline can only go down.
+- **CI on Windows.** CI runs the same gate on Windows, the platform the site
+  is built and shipped from.
+- **Issue signatures.** Every defect is filed as an issue with a
+  machine-readable signature (what was observed, what was expected, a command
+  that detects it, the test that proves the fix), so a solved problem becomes
+  a permanent detector.
+
+The details of how the pieces fit together follow.
 
 ---
 
