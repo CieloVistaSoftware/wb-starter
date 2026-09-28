@@ -40,7 +40,19 @@ concurrency:
 jobs:
   test:
     name: Playwright Tests
-    runs-on: ubuntu-latest
+    # #1218 -- John: "the only reason Linux is a part is that it's what you
+    # use internally." The site is built, served and shipped from Windows, so
+    # the gate that decides whether a commit is good runs there too. On Linux
+    # a Windows-only failure could never block a push; it only surfaced later
+    # on John's machine, as a twin the register carried and CI could not clear
+    # (#1217).
+    runs-on: windows-latest
+    # The start/stop-server steps below are bash (&, $!, curl, kill). Windows
+    # runners ship Git Bash, so the scripts stay as they are rather than being
+    # rewritten in PowerShell.
+    defaults:
+      run:
+        shell: bash
     # #341 — the budget has to be bigger than the thing it is timing.
     #
     # #1044 made CI run the same ratchet the pre-commit hook runs. It did not
@@ -80,8 +92,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      # --with-deps installs Linux system packages; Windows needs none.
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Start server
         run: |

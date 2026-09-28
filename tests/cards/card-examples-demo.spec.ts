@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { safeScrollIntoView, elementReady } from '../base';
+import { safeScrollIntoView, elementReady, buildInView } from '../base';
 
 const DEMO_URL = '/demos/site/cards.html';
 
@@ -44,6 +44,14 @@ async function loadPage(page) {
   // #card-gallery directly — have something to wait on. Element-scoped and
   // bounded: NOT a page-wide readiness wait, which failed here twice before.
   await elementReady(page.locator('#card-gallery [x-demo]').first());
+  // ...and then EVERY gallery demo: the tests query the whole gallery, and
+  // under load the first one settling said nothing about the rest -- "image
+  // cards render with images" and "hero CTA links exist" counted 0 in the
+  // pre-commit gate. The gallery scans eagerly, so this needs no scrolling.
+  await page.waitForFunction(() => {
+    const demos = [...document.querySelectorAll('#card-gallery [x-demo]')];
+    return demos.length > 0 && demos.every((d) => d.hasAttribute('x-ready'));
+  }, undefined, { timeout: 15000 });
 }
 
 // Helper: scroll into view and wait for THAT element to settle.
@@ -385,6 +393,9 @@ test.describe('Interactivity', () => {
 
   test('hero CTA links exist with text', async ({ page }) => {
     const hero = page.locator('#card-gallery [x-cardhero]').first();
+    // Built only as it nears the viewport (#491); counting before that read 0
+    // under load in the pre-commit gate.
+    await buildInView(hero);
     const ctas = hero.locator('.x-hero-cta');
     expect(await ctas.count()).toBeGreaterThanOrEqual(1);
     await expect(ctas.first()).toContainText('Shop Now');

@@ -47,9 +47,18 @@ for (const [label, panelId, bodyId] of [
     const body = page.locator(bodyId);
     await expect(body, `${label} must be visible after its summary is clicked`).toBeVisible();
 
-    const [panelBox, paneBox] = await Promise.all([body.boundingBox(), pane.boundingBox()]);
-    expect(panelBox, 'the panel must have a box').not.toBeNull();
-    expect(paneBox, 'the pane must have a box').not.toBeNull();
+    // Both boxes from ONE frame, polled until the panel has finished opening:
+    // two boundingBox() round trips caught the pane mid-resize in the loaded
+    // pre-commit gate (height 13px apart). Covering the pane once open is the
+    // requirement; a frame of the open transition is not.
+    const read = () => page.evaluate(([b, p]) => {
+      const r = (q: string) => { const x = document.querySelector(q)!.getBoundingClientRect(); return { x: x.x, y: x.y, width: x.width, height: x.height }; };
+      return { panelBox: r(b), paneBox: r(p) };
+    }, [bodyId, PANE] as const);
+    const covers = (s: { panelBox: any; paneBox: any }) =>
+      ['x', 'y', 'width', 'height'].every((k) => Math.abs(s.panelBox[k] - s.paneBox[k]) <= TOL);
+    await expect.poll(async () => covers(await read())).toBe(true);
+    const { panelBox, paneBox } = await read();
 
     const delta = {
       left: Math.round(panelBox!.x - paneBox!.x),

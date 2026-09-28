@@ -89,6 +89,10 @@ async function isImageLoaded(img: Locator): Promise<boolean> {
 /** Standard §6: the demo's code panel(s) must never wrap and must show
  * their full source (no artificial narrowing forcing a scrollbar). */
 async function assertCodePanelStandards(demo: Locator, label: string): Promise<void> {
+  // Read only once demo.js has committed the block's width: while it holds
+  // .x-demo--measuring the panel is capped at 50vw (640px at 1280), and the
+  // loaded pre-commit gate read "649px of content in a 640px box" mid-measure.
+  await expect(demo).not.toHaveClass(/x-demo--measuring/);
   const panels = demo.locator('.x-demo__code');
   const count = await panels.count();
   expect(count, `${label}: expected a code panel`).toBeGreaterThan(0);
