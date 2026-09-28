@@ -56,7 +56,13 @@ test('no example label starts with an action verb it cannot perform', () => {
     else if (node && typeof node === 'object') {
       for (const [k, v] of Object.entries(node)) walk(v, k);
     } else if (typeof node === 'string' && node.includes('<')) {
+      // #751: an ajax <form> posting to /api/demo-form DOES send -- the demo
+      // endpoint answers, the form shows its success message and the Events
+      // panel logs wb:form:success. Its submit button is a working control,
+      // so "Send" is the honest label there, not a promise the demo breaks.
+      const performs = /<form\b[^>]*\bajax\b[^>]*\baction="\/api\/demo-form"/.test(node);
       for (const { tag, text } of labelsIn(node)) {
+        if (performs && tag === 'button') continue;
         if (ACTION_VERB.test(text)) {
           offenders.push(`${key}: <${tag}>${text}</${tag}> — promises an action the demo does not perform`);
         }

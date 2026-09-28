@@ -25,7 +25,11 @@ x-dropdown, [x-dropdown],
    padding, pointer cursor) instead of leaving it as plain unstyled text. */
 .x-dropdown-trigger {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  /* 1rem all round, not 0.5rem 1rem: this host's own text is the content,
+     so §13's 1rem minimum applies to it. It passed at 8px only while the
+     schema $view built an inner trigger over the authored text; with that
+     $view gone (it wiped authored menus, #701) the host is measured. */
+  padding: 1rem;
   border: 1px solid var(--border-color, #374151);
   border-radius: 6px;
   cursor: pointer;

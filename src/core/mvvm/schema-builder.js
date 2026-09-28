@@ -996,7 +996,17 @@ const SCHEMA_EXCLUDED_TAGS = new Set([
   // That is precisely the schema-vs-behavior race this list exists for
   // ("whichever finishes last wins via its own innerHTML = ''"), and it also
   // destroyed the host's authored text on every <div x-stagelight>.
-  'x-stagelight'
+  'x-stagelight',
+  // #701: dropdown() builds its own trigger and menu and MOVES the host's
+  // authored <a>/<button>/<div> children into that menu -- it never reads a
+  // pre-built `.x-dropdown__menu` or the `items` slot. dropdown.schema.json's
+  // $view (trigger button + menu div + slot) wiped those children before
+  // dropdown() ran, and dropdown() then took the schema's own empty trigger
+  // and menu as its "items": every showcase row rendered 2 blank options
+  // instead of the 4-5 people with avatars the example authors. The attribute
+  // form only reached this path once wb-lazy started building schemas for
+  // x-* attributes (#884).
+  'x-dropdown'
 ]);
 
 // x-{name} attribute matching a registered schema: <article x-card> resolves

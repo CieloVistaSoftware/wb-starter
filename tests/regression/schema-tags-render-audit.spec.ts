@@ -84,25 +84,39 @@ test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
     // never appeared because fix-card.js was never imported.
     await page.waitForFunction(
       () => document.getElementById('fc-upgrade')?.classList.contains('fix-card'),
+      // waitForFunction(fn, ARG, options): the options object used to sit in
+      // the ARG slot, so this 5s bound was never applied and a missing class
+      // hung until the 30s test timeout instead of failing here.
+      undefined,
       { timeout: 5000 }
     );
 
     const hasUpgraded = await page.locator('#fc-upgrade').evaluate((el) => {
-      // A real custom-element upgrade replaces the element's prototype --
-      // 'data' becomes an accessor (getter/setter) on WBFixCard.prototype,
-      // not a plain own property. On a never-upgraded HTMLElement, setting
-      // .data would just create a plain own property with no setter logic.
-      const proto = Object.getPrototypeOf(el);
-      const desc = Object.getOwnPropertyDescriptor(proto, 'data');
-      return typeof desc?.set === 'function';
+      // `data` must be a real ACCESSOR -- setter logic that renders. On an
+      // inert element, `.data = x` just creates a plain data property that
+      // does nothing, which is the #365 failure this guards.
+      //
+      // Where the accessor lives is not the contract. This used to look only
+      // at the prototype, i.e. demand a custom-element upgrade -- but a <div>
+      // can never be upgraded to a custom element class (only an element whose
+      // TAG is x-fix-card can), so on the 4.0.0 attribute form that check could
+      // not pass. fixCard() composes the capability onto the element itself
+      // (Tier 1: composition, not subclassing), so walk the chain from the
+      // element up and accept the first descriptor found.
+      for (let o: any = el; o; o = Object.getPrototypeOf(o)) {
+        const desc = Object.getOwnPropertyDescriptor(o, 'data');
+        if (desc) return typeof desc.set === 'function';
+      }
+      return false;
     });
-    expect(hasUpgraded, '[x-fix-card] must upgrade to WBFixCard (data must be a real accessor)').toBe(true);
+    expect(hasUpgraded, '<div x-fix-card> must carry a real `data` accessor that renders').toBe(true);
   });
 
   test('setting .data on an upgraded <div x-fix-card> actually renders content', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-render"></div>`);
     await page.waitForFunction(
       () => document.getElementById('fc-render')?.classList.contains('fix-card'),
+      undefined,   // see the note in the test above: options go third
       { timeout: 5000 }
     );
 

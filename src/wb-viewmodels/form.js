@@ -62,9 +62,9 @@ export function form(element, options = {}) {
 
   // Validate on blur and on submit, never per keystroke (#751 point 2).
   const onBlur = (e) => {
-    const field = e.target;
-    if (!field.matches || !field.matches('input, select, textarea')) return;
-    field.classList.toggle('x-form__field--invalid', !field.checkValidity());
+    const blurred = e.target;
+    if (!blurred.matches || !blurred.matches('input, select, textarea')) return;
+    blurred.classList.toggle('x-form__field--invalid', !blurred.checkValidity());
   };
   if (config.validate) host.addEventListener('focusout', onBlur);
 

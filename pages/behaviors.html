@@ -2544,7 +2544,36 @@
       }
     }
 
-    async function showLive(token, variant, label, prop, isBool, form) {
+    // #701 -- WHEN IS A RENDER FINISHED?
+    //
+    // renderLive() paints the stage in stages across several awaits (demo.js,
+    // wb-lazy.js, then an eager WB.scan). Nothing said when the last of them had
+    // landed, so the only way to read the result was to guess: the dropdown
+    // specs clicked a row and slept 350-400ms. That held alone and lost under
+    // three workers, where the imports and scan took longer -- the stage still
+    // held the un-upgraded markup (no .x-dropdown yet) and the code panel was
+    // still empty, and the specs failed on a null querySelector.
+    //
+    // aria-busy on the live region is the signal. It is also what the region
+    // should say anyway: it is aria-live="polite", and busy asks assistive tech
+    // to wait for the finished example instead of announcing each stage. It is
+    // cleared only by the NEWEST render (see renderSeq) -- a superseded render
+    // returning early must not report "done" while the one that replaced it is
+    // still painting.
+    async function showLive(...args) {
+      liveEl.setAttribute('aria-busy', 'true');
+      const done = renderLive(...args);
+      // renderLive() takes its ticket synchronously, before its first await,
+      // so renderSeq already names this render here.
+      const mine = renderSeq;
+      try {
+        await done;
+      } finally {
+        if (!stale(mine)) liveEl.removeAttribute('aria-busy');
+      }
+    }
+
+    async function renderLive(token, variant, label, prop, isBool, form) {
       // #769 -- John, 4th report: "get rid of all this dead space!"
       //
       // fitStageToOverlays() grows the stage so an open dropdown or a

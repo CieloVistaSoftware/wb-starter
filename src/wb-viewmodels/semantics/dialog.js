@@ -240,7 +240,10 @@ export function dialog(element, options = {}) {
     // Idempotent: behaviors can be re-run over the same DOM, and a second pass
     // must not nest a header inside a header.
     if (element.querySelector(':scope > .x-dialog__header')) {
-      return () => { element.classList.remove('x-dialog', 'x-modal', sizeCls, ...(variantCls ? [variantCls] : [])); };
+      return () => {
+        element.classList.remove('x-dialog', 'x-modal', sizeCls);
+        if (variantCls) element.classList.remove(variantCls);
+      };
     }
 
     const authored = Array.from(element.childNodes);
@@ -304,7 +307,8 @@ export function dialog(element, options = {}) {
       while (body.firstChild) element.appendChild(body.firstChild);
       header.remove();
       body.remove();
-      element.classList.remove('x-dialog', 'x-modal', sizeCls, ...(variantCls ? [variantCls] : []));
+      element.classList.remove('x-dialog', 'x-modal', sizeCls);
+      if (variantCls) element.classList.remove(variantCls);
     };
   }
 
