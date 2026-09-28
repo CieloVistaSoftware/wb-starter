@@ -21,9 +21,11 @@ import { globSync } from 'glob';
  * with almost no visible gap between them.
  */
 
+// posix: forward slashes on every OS -- the file becomes part of each test's
+// NAME, and a name must be the same test on Windows and on CI.
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 const MIN_GAP_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding

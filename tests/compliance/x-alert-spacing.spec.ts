@@ -14,8 +14,8 @@ import { globSync } from 'glob';
  */
 
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 const MIN_PADDING_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding

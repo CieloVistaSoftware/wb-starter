@@ -106,8 +106,8 @@ const DOCS = globSync('docs/**/*.md', { cwd: ROOT, ignore: ['docs/_today/**'] })
   .sort();
 
 const HTML_PAGES = [
-  ...globSync('demos/**/*.html', { cwd: ROOT }),
-  ...globSync('pages/**/*.html', { cwd: ROOT }),
+  ...globSync('demos/**/*.html', { cwd: ROOT, posix: true }),
+  ...globSync('pages/**/*.html', { cwd: ROOT, posix: true }),
 ]
   .map(toPosix)
   .filter((f) => hasWbDemo(path.join(ROOT, f)))

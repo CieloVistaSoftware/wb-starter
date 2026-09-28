@@ -22,7 +22,7 @@ import { globSync } from 'glob';
 
 test('no pages/**/*.html or scripts/generate-*.js hardcodes a literal build-version string', async () => {
   const FILES = [
-    ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+    ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
     ...globSync('scripts/generate-*.js', { cwd: process.cwd() }),
   ];
   const offenders: string[] = [];

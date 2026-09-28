@@ -12,8 +12,8 @@ import { globSync } from 'glob';
  */
 
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 for (const file of FILES) {

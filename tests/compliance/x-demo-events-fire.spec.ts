@@ -69,8 +69,8 @@ interface Target {
 }
 
 const TARGETS: Target[] = [
-  ...globSync('demos/**/*.html', { cwd: ROOT }).map((f) => ({ rel: toPosix(f), isMd: false })),
-  ...globSync('pages/**/*.html', { cwd: ROOT }).map((f) => ({ rel: toPosix(f), isMd: false })),
+  ...globSync('demos/**/*.html', { cwd: ROOT, posix: true }).map((f) => ({ rel: toPosix(f), isMd: false })),
+  ...globSync('pages/**/*.html', { cwd: ROOT, posix: true }).map((f) => ({ rel: toPosix(f), isMd: false })),
   ...globSync('docs/**/*.md', { cwd: ROOT, ignore: ['docs/_today/**'] }).map((f) => ({ rel: toPosix(f), isMd: true })),
 ]
   .filter((t) => usesLiveEventsDemo(path.join(ROOT, t.rel), t.isMd))

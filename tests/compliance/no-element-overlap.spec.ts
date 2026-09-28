@@ -45,9 +45,11 @@ import { globSync } from 'glob';
  *     "collide" with its own content, however that content is positioned.
  */
 
+// posix: forward slashes on every OS -- the file becomes part of each test's
+// NAME, and a name must be the same test on Windows and on CI.
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 // Minimum overlap width AND height (px) to count as a real visual collision,

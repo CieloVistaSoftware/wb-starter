@@ -26,9 +26,11 @@ const KNOWN_WARNING_STRINGS = [
   'No href given — nothing to download.',
 ];
 
+// posix: forward slashes on every OS -- the file becomes part of each test's
+// NAME, and a name must be the same test on Windows and on CI.
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 test.describe('no component authoring-warning strings leak into shipped pages', () => {

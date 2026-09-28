@@ -890,7 +890,11 @@ export async function safeScrollIntoView(
  * Get relative path from ROOT
  */
 export function relativePath(fullPath: string): string {
-  return path.relative(ROOT, fullPath);
+  // Forward slashes on every OS. Specs put this in test NAMES, and a name is a
+  // test's identity: on Windows `demos\\x.html` and on CI `demos/x.html` were
+  // two different tests, so the known-failures register carried 61 Windows-
+  // only twins that no Linux run could ever confirm or clear.
+  return path.relative(ROOT, fullPath).split(path.sep).join('/');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
