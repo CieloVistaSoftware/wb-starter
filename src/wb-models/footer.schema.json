@@ -39,7 +39,8 @@
       "type": "boolean",
       "description": "Sticky at bottom",
       "default": false,
-      "appliesClass": "x-footer--sticky"
+      "appliesClass": "x-footer--sticky",
+      "demo": "scroll"
     }
   },
   "$view": [

@@ -530,6 +530,45 @@ footer a:hover {
   width: 100%;
 }
 
+/* #750: an example whose option only shows while scrolling (sticky) renders in
+   a scroll box -- see showInScrollBox() in pages/behaviors.html. The ruled
+   lines use background-attachment: local so they scroll WITH the content: the
+   page visibly moves while a sticky element stays put.
+   The room above and below is ::before/::after CONTENT, not padding: a sticky
+   element cannot leave its containing block, and padding is outside it -- with
+   padding the block was exactly the header's own height and it scrolled away
+   with it. Pseudo-elements are content but not elements, so the example's
+   first child is still the element under demonstration. */
+.behaviors-live__example--scroll {
+  display: block;
+  height: 14rem;
+  overflow: auto;
+  border: 1px dashed var(--border-color, #374151);
+  border-radius: var(--radius-md, 6px);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 1.5rem,
+    var(--border-color, #374151) 1.5rem calc(1.5rem + 1px)
+  );
+  background-attachment: local;
+}
+
+.behaviors-live__example--scroll::before,
+.behaviors-live__example--scroll::after {
+  content: '';
+  display: block;
+}
+
+/* Top-sticky (header, nav, x-sticky): visible at once, then pins as the box
+   scrolls -- so little room above and plenty below. */
+.behaviors-live__example--scroll::before { height: 3rem; }
+.behaviors-live__example--scroll::after { height: 18rem; }
+
+/* Bottom-sticky (footer): it pins only when its natural place is below the
+   visible area, so it starts there -- plenty of room above, a little below. */
+.behaviors-live__example--scroll:has(> .x-footer--sticky)::before { height: 18rem; }
+.behaviors-live__example--scroll:has(> .x-footer--sticky)::after { height: 3rem; }
+
 .behaviors-live__example:fullscreen {
   background: var(--bg-secondary, #1f2937);
   padding: 2rem;

@@ -38,6 +38,9 @@ for (const file of files) {
       tag: `wb-${schema.schemaFor}`,
       baseClass: schema.baseClass || `wb-${schema.schemaFor}`,
       properties: schema.properties || {},
+      // "scroll": every option of this behavior only shows while its box scrolls
+      // (x-sticky); the behaviors page renders its examples in a scroll box (#750).
+      ...(schema.demo ? { demo: schema.demo } : {}),
       matrix: schema.test?.matrix?.combinations || [],
       _metadata: schema._metadata || {}
     });

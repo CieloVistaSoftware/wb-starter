@@ -2908,7 +2908,8 @@
           "type": "boolean",
           "description": "Sticky at bottom",
           "default": false,
-          "appliesClass": "x-footer--sticky"
+          "appliesClass": "x-footer--sticky",
+          "demo": "scroll"
         }
       },
       "matrix": [
@@ -3101,7 +3102,8 @@
           "type": "boolean",
           "description": "Sticky at top",
           "default": false,
-          "appliesClass": "x-header--sticky"
+          "appliesClass": "x-header--sticky",
+          "demo": "scroll"
         }
       },
       "matrix": [
@@ -4479,7 +4481,8 @@
           "type": "boolean",
           "description": "Sticky positioning",
           "default": false,
-          "appliesClass": "x-navbar--sticky"
+          "appliesClass": "x-navbar--sticky",
+          "demo": "scroll"
         },
         "variant": {
           "type": "string",
@@ -6818,7 +6821,8 @@
         "icon": "📌",
         "since": "1.0.0",
         "status": "stable"
-      }
+      },
+      "demo": "scroll"
     },
     {
       "file": "switch.schema.json",

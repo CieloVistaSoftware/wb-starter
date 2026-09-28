@@ -2601,6 +2601,27 @@
     // cleared only by the NEWEST render (see renderSeq) -- a superseded render
     // returning early must not report "done" while the one that replaced it is
     // still painting.
+    /**
+     * #750 -- John, on header · sticky: "I can't find any sticky behavior, how
+     * do i see that?" Sticky only shows while something scrolls, and this stage
+     * never scrolls, so the option was applied and invisible. An option whose
+     * schema marks it `"demo": "scroll"` (or a behavior marked so as a whole,
+     * x-sticky) renders in a scroll box instead: the example box itself gets a
+     * fixed height, room above and below, and ruled lines that move with the
+     * content -- so scrolling shows the page passing under an element that
+     * stays put. The box, not a wrapper: every render path treats the example's
+     * first child as the element under demonstration.
+     */
+    function showInScrollBox(token, prop, variant, isBool) {
+      const sc = schemaByName.get(extensionMap[token] || token.replace(/^x-/, '')) || {};
+      const propDef = (prop && sc.properties && sc.properties[prop]) || {};
+      const on = sc.demo === 'scroll'
+        || (propDef.demo === 'scroll' && !(isBool && variant === 'false'));
+      liveExample.classList.toggle('behaviors-live__example--scroll', on);
+      if (on) liveNote.textContent = 'Scroll this box — the element stays pinned while the page moves past it.';
+      return on;
+    }
+
     async function showLive(...args) {
       liveEl.setAttribute('aria-busy', 'true');
       const done = renderLive(...args);
@@ -2661,6 +2682,7 @@
         // rendered element still carrying the canned example's label, so the
         // button read "icon: download" while its own source said heart.
         const generatedShown = refreshDescriptorLine(generated);
+        showInScrollBox(token, prop, variant, isBool);
         liveExample.innerHTML = generatedShown;
         maybeWarnServerRequired(generated);
         const genRootId = assignExampleIds(token, optionText);
@@ -2706,6 +2728,7 @@
       }
 
       liveNote.textContent = optionDescription(token, prop) || 'running live';
+      showInScrollBox(token, prop, variant, isBool);
       // #703: drop the previous example's grown height before measuring this one.
       liveStage.style.minHeight = '';
       // #777: DOM built from the refreshed markup — see the generated path.
