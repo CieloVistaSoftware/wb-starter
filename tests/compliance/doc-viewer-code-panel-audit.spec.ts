@@ -222,7 +222,23 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
     { timeout: 15000 }
   );
 
+  // The wait above and the read below are two round trips. Under load a block
+  // can start a new measurement between them (code.md on CI: its panel read
+  // "640px inside 804px" -- exactly the provisional 50vw cap -- after the wait
+  // had seen it settled; 1 in 18 runs at 8 workers locally). So the read itself
+  // refuses a snapshot taken while any block is measuring, and tries again
+  // once they have all committed.
+  for (;;) {
+    const snapshot = await readPanels(page);
+    if (snapshot) return snapshot;
+    await page.waitForFunction(() => !document.querySelector('[x-demo].x-demo--measuring'));
+  }
+}
+
+/** One settled snapshot of every panel, or null if a block is mid-measure. */
+function readPanels(page: import('@playwright/test').Page): Promise<PanelReport[] | null> {
   return page.evaluate(() => {
+    if (document.querySelector('[x-demo].x-demo--measuring')) return null;
     const out: PanelReport[] = [];
     const demoEls = Array.from(document.querySelectorAll('[x-demo]'));
     demoEls.forEach((demo, demoIndex) => {
