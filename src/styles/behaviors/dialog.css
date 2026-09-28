@@ -81,6 +81,18 @@ x-dialog[open], [x-dialog][open],
   height: calc(100vh - 8rem);
 }
 
+/* Sizes (schema: size -> appliesClass x-dialog--{{value}}, default md).
+   The schema declared the class and nothing styled it, so an authored
+   <dialog size="xl"> opened at its content's width like every other size.
+   `width`, not just max-width: a <dialog> shrinks to its content, so a cap
+   alone leaves a short dialog the same width at every size. min() keeps each
+   inside a narrow viewport. Declared after the base rule, same specificity. */
+.x-dialog--sm   { width: min(90vw, 320px); }
+.x-dialog--md   { width: min(90vw, 480px); }
+.x-dialog--lg   { width: min(90vw, 640px); }
+.x-dialog--xl   { width: min(90vw, 800px); }
+.x-dialog--full { width: 95vw; max-width: 95vw; }
+
 /* ═══════════════════════════════════════════════════════════════════════════
    DIALOG PARTS
    ═══════════════════════════════════════════════════════════════════════════ */

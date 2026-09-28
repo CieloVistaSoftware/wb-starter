@@ -11,6 +11,13 @@ import { readFlag } from '../../core/read-attr.js';
  * The <dialog> element provides native accessibility features.
  * Helper Attribute: [x-behavior="dialog"]
  */
+const SIZES = ['sm', 'md', 'lg', 'xl', 'full'];
+
+/** dialog.schema.json: size appliesClass x-dialog--{{value}}; unknown -> md. */
+function sizeClass(size) {
+  return `x-dialog--${SIZES.includes(size) ? size : 'md'}`;
+}
+
 export function dialog(element, options = {}) {
   const config = {
     title: options.title || element.getAttribute('title') || element.getAttribute('modal-title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
@@ -46,9 +53,15 @@ export function dialog(element, options = {}) {
     dialogEl.setAttribute('aria-labelledby', titleId);
     dialogEl.setAttribute('aria-modal', 'true');
 
-    const sizes = { sm: '320px', md: '480px', lg: '640px', xl: '800px' };
-    dialogEl.style.maxWidth = sizes[sizeVal] || sizes.md;
-    dialogEl.style.width = '90%';
+    // The width comes from dialog.css's x-dialog--{size} (the schema's
+    // appliesClass), shared with the authored-<dialog> path below. This used
+    // to be an inline max-width table with no `full` entry, which only this
+    // path ever read -- so an authored <dialog size="xl"> stayed default-sized.
+    dialogEl.classList.add(sizeClass(sizeVal));
+    // The attribute too: this <dialog> is itself upgraded by the authored path
+    // once it is in the document, and with no size there that pass added
+    // x-dialog--md beside --sm and the later rule won.
+    dialogEl.setAttribute('size', sizeVal);
 
     // HEADER (<header>)
     const header = document.createElement('header');
@@ -217,11 +230,17 @@ export function dialog(element, options = {}) {
   if (element.tagName === 'DIALOG') {
     element.classList.add('x-dialog');
     element.classList.add('x-modal');
+    // size and variant were read into config and then dropped on this path:
+    // every size=… sample on the behaviors page opened at the same width.
+    const sizeCls = sizeClass(config.size);
+    const variantCls = config.variant && config.variant !== 'default' ? `x-dialog--${config.variant}` : null;
+    element.classList.add(sizeCls);
+    if (variantCls) element.classList.add(variantCls);
 
     // Idempotent: behaviors can be re-run over the same DOM, and a second pass
     // must not nest a header inside a header.
     if (element.querySelector(':scope > .x-dialog__header')) {
-      return () => { element.classList.remove('x-dialog', 'x-modal'); };
+      return () => { element.classList.remove('x-dialog', 'x-modal', sizeCls, ...(variantCls ? [variantCls] : [])); };
     }
 
     const authored = Array.from(element.childNodes);
@@ -285,7 +304,7 @@ export function dialog(element, options = {}) {
       while (body.firstChild) element.appendChild(body.firstChild);
       header.remove();
       body.remove();
-      element.classList.remove('x-dialog', 'x-modal');
+      element.classList.remove('x-dialog', 'x-modal', sizeCls, ...(variantCls ? [variantCls] : []));
     };
   }
 
