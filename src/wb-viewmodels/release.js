@@ -83,15 +83,15 @@ export function release(element, options = {}) {
   const behind = Number(VERSION.behind || 0);
   const ahead = Number(VERSION.ahead || 0);
 
-  // John: "wouldn't +4 = 4.0.1.5". Right — `+4` was an annotation bolted onto a
-  // version; a fourth segment IS a version. `4.0.1.4` reads as "four commits
-  // past 4.0.1" and sorts and compares like the number it is, which is the
-  // whole point of #1002: one string, one code set.
+  // #1139 -- John, 2026-09-28: "i can't figure out what's going on" with
+  // v4.0.5.23. A fourth segment reads as a release that does not exist -- no
+  // 4.0.5.23 was ever cut -- so the badge names the real release and counts
+  // the commits past it: "v4.0.5 +23". The tooltip says it in words.
   //
   // BEHIND is not expressed this way on purpose. Being behind does not make a
   // newer build; it makes a STALE one, and rolling it into the number would
   // read as progress. It stays a warning.
-  const versionText = ahead ? `${VERSION.version}.${ahead}` : VERSION.version;
+  const versionText = ahead ? `${VERSION.version} +${ahead}` : VERSION.version;
 
   // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
   // origin/main · dirty" -- made the badge wide enough to wrap the whole site
@@ -112,6 +112,7 @@ export function release(element, options = {}) {
   element.classList.toggle('x-release--stale', behind > 0);
 
   element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
+    + (ahead ? ` · ${ahead} unreleased commit${ahead === 1 ? '' : 's'} past release ${VERSION.version}` : '')
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
     + (VERSION.dirty ? ' · uncommitted changes' : '')

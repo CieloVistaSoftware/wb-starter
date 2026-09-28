@@ -12,6 +12,30 @@ No attribute needed on `<img>`. Don't add `x-img` to it (#746).
 
 `<img x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 
+## Controlling size
+
+An image has no `size` option. It is sized the way HTML already sizes images, which also stops the page jumping while it loads.
+
+**Set `width` and `height` to the size you want.** They also tell the browser the image's shape before it arrives, so its space is reserved and nothing below it moves when it loads.
+
+<div x-demo>
+<img src="../../images/dachshund-puppy-image-960x540.jpg" width="240" height="135" alt="Dachshund puppy, shown at 240 by 135 pixels">
+</div>
+
+**Let it fill its container.** Give it its natural size (here 960 by 540). The site never lets an image grow past its container (`max-width: 100%` with `height: auto`), so a narrower container shrinks it to fit and keeps its proportions.
+
+<div x-demo>
+<img src="../../images/dachshund-puppy-image-960x540.jpg" width="960" height="540" alt="Dachshund puppy, shrunk to fit its container">
+</div>
+
+**Change its shape with `aspect-ratio`.** The image is cropped to that shape rather than stretched (`object-fit: cover`). Here a 16:9 photo is shown square.
+
+<div x-demo>
+<img src="../../images/dachshund-puppy-image-960x540.jpg" width="200" aspect-ratio="1/1" alt="Dachshund puppy, cropped square">
+</div>
+
+Inside a card, let the card size the image: give the card a `size` and leave the image's `width` off.
+
 ## Attributes
 
 | Attribute | Values | Default | Description |

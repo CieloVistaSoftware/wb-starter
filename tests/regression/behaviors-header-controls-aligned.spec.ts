@@ -115,7 +115,9 @@ test.describe('behaviors header control strip alignment (#1004)', () => {
     await badge.waitFor({ state: 'visible', timeout: 15_000 });
 
     const text = ((await badge.textContent()) || '').trim();
-    expect(text, `badge reads "${text}"`).toMatch(/^v?\d+\.\d+\.\d+(\.\d+)?[\s\u26a0*!~+]*$/u);
+    // #1139: the release, then commits past it as "+N" -- never a fourth
+    // version segment, which reads as a release nobody cut.
+    expect(text, `badge reads "${text}"`).toMatch(/^v?\d+\.\d+\.\d+( \+\d+)?[\s\u26a0*!~]*$/u);
     expect(text.length, `badge is prose, not a badge: "${text}"`).toBeLessThanOrEqual(20);
     expect(/behind|ahead|dirty|origin/i.test(text), `badge still spells out drift: "${text}"`).toBe(false);
 
