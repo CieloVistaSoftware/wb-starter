@@ -702,7 +702,7 @@ export function composeCard(element, options = {}) {
           if (!main.innerHTML.trim()) {
             main.remove();
             main = null;
-          } else {
+          } else if (!gatheredMains.has(main)) {
             // Already a <main> inside the card -- card.css matches the tag.
             main.style.padding = main.style.padding || '1rem';
             main.style.flex = main.style.flex || '1';
@@ -772,6 +772,9 @@ function badgeAlreadyRendered(element, badge) {
   );
 }
 
+/** <main> elements card() built around loose body content (see card()). */
+const gatheredMains = new WeakSet();
+
 export function card(element, options = {}) {
   // #202: a legacy MVVM template (schema $view / views-registry / partial) may
   // have ALREADY wrapped our content in a competing `.card` structure
@@ -799,11 +802,35 @@ export function card(element, options = {}) {
 
   // Check for existing semantic structure (direct children)
   const hasHeader = element.querySelector(':scope > header');
-  const hasMain = element.querySelector(':scope > main');
+  let hasMain = element.querySelector(':scope > main');
   const hasFooter = element.querySelector(':scope > footer');
   
   // Determine if we are upgrading raw content
   const isSemantic = hasHeader || hasMain || hasFooter;
+
+  // A semantic card with no <main> but loose body content between its
+  // header/footer -- <article><div x-demo>…</div><footer></footer></article>
+  // (pages/offshoring.html). Nothing below captures that content (semantic
+  // mode passes content ''), so composeCard() fell back to the WHOLE
+  // innerHTML and buildStructure() pasted it, as a string, into a new <main>
+  // while the originals stayed put: the body rendered twice, and the copy was
+  // a frozen snapshot of whatever the behaviors inside had built so far -- a
+  // <div x-demo> copied mid-measurement kept `x-demo--measuring` forever.
+  // MOVE the loose nodes into the <main> instead: one body, live elements.
+  if (isSemantic && !hasMain) {
+    const loose = Array.from(element.childNodes).filter((n) => n !== hasHeader && n !== hasFooter
+      && n.nodeType !== Node.COMMENT_NODE
+      && !(n.nodeType === Node.ELEMENT_NODE && /^(HEADER|FOOTER)$/.test(n.tagName)));
+    if (loose.some((n) => n.nodeType === Node.ELEMENT_NODE || (n.textContent || '').trim())) {
+      const bodyEl = document.createElement('main');
+      loose.forEach((n) => bodyEl.appendChild(n));
+      // Styled by card.css like any <main> this file creates -- not given the
+      // inline fallbacks an AUTHORED <main> gets below.
+      gatheredMains.add(bodyEl);
+      element.insertBefore(bodyEl, hasFooter || null);
+      hasMain = bodyEl;
+    }
+  }
   const hasContent = options.content || readAttr(element, 'content');
   
   // Capture content:
@@ -828,8 +855,10 @@ export function card(element, options = {}) {
     element.innerHTML = '';
   }
   
-  // Build structure handles both creation and enhancement
-  base.buildStructure();
+  // Build structure handles both creation and enhancement. A semantic card
+  // with no body keeps none: its authored header/footer are not body content,
+  // and building a <main> from innerHTML would paste copies of them.
+  base.buildStructure({ showMain: !isSemantic || !!hasMain });
   
   return base.cleanup;
 }

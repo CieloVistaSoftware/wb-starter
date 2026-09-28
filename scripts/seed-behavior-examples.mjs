@@ -313,7 +313,9 @@ export const EXAMPLES = {
 
   'x-typewriter': `<p x-typewriter speed="45">Zero build. Real components. Light DOM only.</p>`,
 
-  'x-mdhtml': `<div x-mdhtml src="/docs/behaviors/dropdown.md"></div>`,
+  // Relative, not "/docs/...": the deployed site lives under /wb-starter/, where a
+  // root-absolute path 404s (assets-resolve-under-a-subpath, error-log-empty).
+  'x-mdhtml': `<div x-mdhtml src="docs/behaviors/dropdown.md"></div>`,
 
   'x-notes': `<aside x-notes position="end" default-width="280px">
   <p>Notes stay pinned beside the content while you scroll.</p>

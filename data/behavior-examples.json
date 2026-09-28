@@ -582,7 +582,7 @@
       "alternates": []
     },
     "x-mdhtml": {
-      "source": "<div x-mdhtml src=\"/docs/behaviors/dropdown.md\"></div>",
+      "source": "<div x-mdhtml src=\"docs/behaviors/dropdown.md\"></div>",
       "alternates": []
     },
     "x-notes": {
