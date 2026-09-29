@@ -606,14 +606,24 @@
         // caught by behaviors/doc-viewer.spec.ts, which exists for exactly that.
         if (!resp.ok) throw new Error(`${resp.status} for ${fileUrl}`);
         const raw = await resp.text();
+        // #1183: a RELATIVE media path is relative to the doc's own folder
+        // (docs/behaviors/x.md writes ../../images/x.svg), but the browser
+        // resolves it against THIS page, /…/public/doc-viewer.html -- which on
+        // the deployed sub-path walks up past /wb-starter/ to the origin root
+        // and 404s the moment the <img> is inserted. Resolve it against the
+        // doc's folder here, before rendering, like the root-absolute case.
+        const docDir = new URL('.', new URL(file, SITE_ROOT));
+        const MEDIA_ATTR = /(\s(?:src|poster|image|avatar|cover|background|thumbnail|logo)\s*=\s*")(?![a-z][a-z0-9+.-]*:|\/|#|\{)([^"]+)"/gi;
         let inFence = false;
         const rebased = raw.split('\n').map((line) => {
           if (/^[ \t]*```/.test(line)) { inFence = !inFence; return line; }
           if (inFence) return line;
-          return line.replace(
-            /(\s(?:src|poster|href|image|avatar|cover|background|thumbnail|logo)\s*=\s*")\/(?!\/)/gi,
-            (_m, attr) => attr + SITE_ROOT.pathname,
-          );
+          return line
+            .replace(
+              /(\s(?:src|poster|href|image|avatar|cover|background|thumbnail|logo)\s*=\s*")\/(?!\/)/gi,
+              (_m, attr) => attr + SITE_ROOT.pathname,
+            )
+            .replace(MEDIA_ATTR, (_m, attr, value) => attr + new URL(value, docDir).pathname + '"');
         }).join('\n');
         delete content.dataset.src;
         content.textContent = rebased;

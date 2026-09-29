@@ -21,51 +21,9 @@
  */
 
 import { test, expect } from '../fixtures/offline';
-import { createServer, request as httpRequest, type Server } from 'node:http';
 import { readFileSync } from 'node:fs';
 
-const PREFIX = '/wb-starter';
-
-/** Mounts `origin` under PREFIX, so the site loads exactly as it deploys. */
-function mountUnderSubPath(origin: string): Promise<{ base: string; close: () => Promise<void> }> {
-  const upstream = new URL(origin);
-  const proxy: Server = createServer((req, res) => {
-    const path = req.url || '/';
-    if (!path.startsWith(PREFIX)) {
-      // Anything asked for at the ORIGIN root is off-site as far as the
-      // deployed app is concerned — which is precisely the failure being
-      // caught. Answer honestly: 404, same as github.io does.
-      res.writeHead(404).end('not found');
-      return;
-    }
-    const forwarded = path.slice(PREFIX.length) || '/';
-    const up = httpRequest(
-      {
-        hostname: upstream.hostname,
-        port: upstream.port,
-        path: forwarded,
-        method: req.method,
-        headers: { ...req.headers, host: upstream.host },
-      },
-      (upRes) => {
-        res.writeHead(upRes.statusCode || 502, upRes.headers);
-        upRes.pipe(res);
-      },
-    );
-    up.on('error', () => res.writeHead(502).end('upstream error'));
-    req.pipe(up);
-  });
-
-  return new Promise((resolve) => {
-    proxy.listen(0, '127.0.0.1', () => {
-      const { port } = proxy.address() as { port: number };
-      resolve({
-        base: `http://127.0.0.1:${port}${PREFIX}/`,
-        close: () => new Promise<void>((done) => proxy.close(() => done())),
-      });
-    });
-  });
-}
+import { mountUnderSubPath, PREFIX } from '../helpers/sub-path';
 
 /** A root-absolute path ending in a media extension, wherever it appears. */
 const ROOT_ABSOLUTE_ASSET = /(?:^|["'\s=])\/(?!\/)[^"'\s]*\.(?:svg|png|jpe?g|gif|webp|avif|mp4|webm|mp3)/;

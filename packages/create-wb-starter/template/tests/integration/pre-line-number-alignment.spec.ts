@@ -25,6 +25,20 @@ test('pre.js line-number gutter: line 1 accounts for padding-top, all lines even
   // demos/behaviors-showcase.html was retired in favor of the SPA route.
   await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
 
+  // pre.js measures again once web fonts are ready and the window has loaded
+  // (#1215): a gutter placed with the fallback font can hold still for two
+  // frames and then move 4px when the real font lands, which is how 1 run in
+  // ~30 read line 1 at 28px against 24px of padding. Wait for the same two
+  // signals pre.js waits for, and for the runtime to be idle, first.
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    if (document.readyState !== 'complete') {
+      await new Promise((r) => window.addEventListener('load', r, { once: true }));
+    }
+    const wb = (window as unknown as { WB?: { whenIdle?: (o: object) => Promise<void> } }).WB;
+    if (wb?.whenIdle) await wb.whenIdle({ timeout: 10000 });
+  });
+
   // pre.js positions the gutter async (double-rAF, plus a ResizeObserver that
   // can re-fire). Wait until two consecutive animation frames report the same
   // top for the first gutter row before measuring, so this test isn't racing
