@@ -45,7 +45,7 @@ from the semver version.
 
 `data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what
 the site says is live, so it is the only thing anyone can test against. (Until 1.0 this
-was the hand-edited `pages/whats-new.html`, now in `archive/pages/`; `?page=whats-new`
+was the hand-edited What's New page, now in the `archive/` folder; `?page=whats-new`
 still forwards to `?page=releases`.)
 
 A release commit MUST contain, together, in one commit:
@@ -66,9 +66,18 @@ A date cannot be tested; a version can. Each entry is keyed by release number, w
 as secondary:
 
 ```json
-{ "version": "1.0.0", "date": "2026-09-29", "summary": "", "items": [
-  { "kind": "fixed", "html": "<strong>…</strong> <a href=\"…/issues/1182\">#1182</a>", "issues": [1182] }
-] }
+{
+  "version": "1.0.0",
+  "date": "2026-09-29",
+  "summary": "",
+  "items": [
+    {
+      "kind": "fixed",
+      "html": "<strong>Releases replace What's New</strong> #1182 (as a link)",
+      "issues": [1182]
+    }
+  ]
+}
 ```
 
 Work that is live but not yet in a numbered release may sit in an `unreleased` block; the

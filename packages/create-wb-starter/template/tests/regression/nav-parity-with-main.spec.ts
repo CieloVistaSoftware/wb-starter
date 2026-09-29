@@ -98,6 +98,7 @@ test.describe('navigation parity (#1002)', () => {
   const REMOVED_ON_PURPOSE: Record<string, string> = {
     demos: '#1083 — John: "remove the demos navigator item as well as the A.I. Docs"',
     'ai-docs': '#1083 — same request; the page stays reachable at ?page=ai-docs',
+    'whats-new': '#1182 — John: "redo our what\'s new to change to releases"; renamed to releases, and ?page=whats-new still forwards there',
   };
 
   test('no menu item present on main has gone missing here', () => {
