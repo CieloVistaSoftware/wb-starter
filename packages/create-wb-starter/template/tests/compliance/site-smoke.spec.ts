@@ -31,7 +31,7 @@ const ROUTES = [
   { name: 'home', path: '/' },
   { name: 'behaviors', path: '/?page=behaviors' },
   { name: 'demos', path: '/?page=demos' },
-  { name: "what's new", path: '/?page=whats-new' },
+  { name: 'releases', path: '/?page=releases' },
   { name: 'cards demo', path: '/demos/site/cards.html' },
 ];
 

@@ -76,7 +76,7 @@ something outside the issue tried to hold that truth and got it wrong.
 
 A third was drafted and **deliberately rejected**, which is worth recording
 because it is the trap this whole standard exists to avoid. `pages/whats-new.html`
-had claimed, in a hand-written heading, that three changes were *"on `main`"* when
+(now archived; the Releases page replaced it) had claimed, in a hand-written heading, that three changes were *"on `main`"* when
 two of them were uncommitted in a working tree — so the obvious repair looked like
 adding a `commit:` field naming the SHAs. It is the wrong repair. Git already
 knows which commits cite an issue, and `scripts/issue-state.mjs` already derives

@@ -40,10 +40,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { changedPaths } from './lib/git-status.mjs';
 import { releaseTags, deleteTagsCreatedSince } from './lib/ship-rollback.mjs';
+import { versionFlags } from './lib/next-version.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DRY = process.argv.includes('--dry');
-const MINOR = process.argv.includes('--minor');
 
 const run = (cmd) => execSync(cmd, { cwd: ROOT, stdio: 'inherit' });
 const capture = (cmd, fallback = '') => {
@@ -119,7 +119,9 @@ if (already) {
   );
 }
 
-const minorFlag = MINOR ? ' --minor' : '';
+// --minor or --as X.Y.Z, passed on unchanged: one rule for the number
+// (scripts/lib/next-version.mjs), so the entry, the bump and the tag agree.
+const minorFlag = versionFlags(process.argv) ? ' ' + versionFlags(process.argv) : '';
 
 // THE TAGS THAT EXISTED BEFORE THIS RUN (#1157). Recorded before anything is
 // written, so the rollback can tell a tag this run cut from a release that was
@@ -170,11 +172,11 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-console.log('\n📋 Writing the What\'s New entry for this batch\n');
-run(`node scripts/whats-new-entry.mjs${minorFlag}`);
+console.log('\n📋 Writing the Releases entry for this batch\n');
+run(`node scripts/release-entry.mjs${minorFlag}`);
 
 // release.mjs owns the version and runs its own two gates (#743): the ratchet
-// (no NEW failures vs the register) and What's New naming the version. Called,
+// (no NEW failures vs the register) and data/releases.json naming the version. Called,
 // not reimplemented — a second bumper is how surfaces come to disagree.
 console.log('\n🚀 Cutting the release\n');
 run(`node scripts/release.mjs${minorFlag}`);

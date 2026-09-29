@@ -41,35 +41,39 @@ bump, and it does not require the semver version.**
 `scripts/stamp-version.js` already writes both; it must stop taking the cache-bust value
 from the semver version.
 
-## 3. A release is not done until What's New names it
+## 3. A release is not done until the Releases page names it
 
-`pages/whats-new.html` is the changelog. It is what the site says is live, so it is the
-only thing anyone can test against.
+`data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what
+the site says is live, so it is the only thing anyone can test against. (Until 1.0 this
+was the hand-edited `pages/whats-new.html`, now in `archive/pages/`; `?page=whats-new`
+still forwards to `?page=releases`.)
 
 A release commit MUST contain, together, in one commit:
 
 1. the `version` bump in `package.json` and `package-lock.json`
 2. the stamped `src/core/version.js`
-3. a `pages/whats-new.html` section **headed by that exact version number**
+3. a `data/releases.json` entry **whose `version` is that exact version number**, listing
+   what it added, fixed and changed
 
 Shipping any one of those without the others is the defect this document exists to prevent.
+`npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits
+since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and
+`scripts/release.mjs` gate 2 refuses a release the file does not name.
 
-## 4. What's New entries are headed by version, not by date
+## 4. Releases are keyed by version, not by date
 
-A date cannot be tested; a version can. Entries are keyed by release number, with the date
+A date cannot be tested; a version can. Each entry is keyed by release number, with the date
 as secondary:
 
-```html
-<section id="whats-new-3-0-61">
-  <h2>3.0.61 — 2026-08-21</h2>
+```json
+{ "version": "1.0.0", "date": "2026-09-29", "summary": "", "items": [
+  { "kind": "fixed", "html": "<strong>…</strong> <a href=\"…/issues/1182\">#1182</a>", "issues": [1182] }
+] }
 ```
 
-Where a release consolidates several intermediate builds, each item carries the build it
-first shipped in, in brackets, so any change stays traceable:
-
-```html
-<li><strong>[3.0.54] Pages that exist are reachable by URL again.</strong> …</li>
-```
+Work that is live but not yet in a numbered release may sit in an `unreleased` block; the
+next release folds it in, so it can never be shown in place of a version (#1182). Work from
+before numbered releases is under `history`, by date, never as a version.
 
 If a number was consumed but never deployed, **say so explicitly** so nobody hunts for it.
 
@@ -88,7 +92,7 @@ single worst outcome here — it makes a bug report unanswerable.
 ## 7. Bypassing the hook requires a stated reason
 
 `--no-verify` is allowed only when running the hook would itself break a rule above (for
-example: an auto-bump would ship `3.0.62` while the What's New entry says `3.0.61`). When
+example: an auto-bump would ship `3.0.62` while the Releases entry says `3.0.61`). When
 used, the commit message says so and why.
 
 ---
@@ -99,10 +103,10 @@ used, the commit message says so and why.
 - [ ] Pick the next number — above every number any branch has consumed (rule 6)
 - [ ] Bump `package.json` + `package-lock.json`
 - [ ] Run `node scripts/stamp-version.js`
-- [ ] Write the `pages/whats-new.html` section headed by that version (rules 3, 4)
+- [ ] Write the `data/releases.json` entry for that version (rules 3, 4) — `npm run ship` does this
 - [ ] Every `#NNN` in it is a link (rule 5)
 - [ ] Confirm every version surface agrees: `package.json`, `package-lock.json`,
-      `src/core/version.js`, `index.html`, What's New heading
+      `src/core/version.js`, `index.html`, the `data/releases.json` entry
 - [ ] One commit, all of it together
 - [ ] Push; watch CI to green
 
@@ -110,9 +114,9 @@ used, the commit message says so and why.
 
 These are testable and MUST be enforced by the integration suite, not by memory:
 
-- the version in `package.json` has a matching `pages/whats-new.html` section heading
+- the version in `package.json` has a matching `data/releases.json` entry with items
 - no two commits on `main` carry the same `version`
-- no bare `#NNN` in `pages/whats-new.html`
+- no bare `#NNN` in `data/releases.json` (`scripts/release-entry.mjs` links every one)
 - every version surface agrees with `package.json`
 
 Tracking issue: [#743](https://github.com/CieloVistaSoftware/wb-starter/issues/743).

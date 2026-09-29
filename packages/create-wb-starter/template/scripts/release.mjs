@@ -15,7 +15,7 @@
  * THE RULE THIS ENFORCES
  *
  *   1. no NEW failures vs the register  — a release breaks nothing (#1044)
- *   2. What's New names the NEW version   — version and content match, always
+ *   2. data/releases.json names the NEW version — version and content match, always
  *   3. every version surface agrees       — no half-stamped release
  *
  * Any one of those failing aborts before the version moves. The bump is the
@@ -25,15 +25,16 @@
  *   node scripts/release.mjs            # validate, then bump patch
  *   node scripts/release.mjs --check    # report only, change nothing
  *   node scripts/release.mjs --minor    # bump minor instead of patch
+ *   node scripts/release.mjs --as 1.0.0 # an explicit version (the 1.0 renumber)
  */
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { nextVersion } from './lib/next-version.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK_ONLY = process.argv.includes('--check');
-const MINOR = process.argv.includes('--minor');
 
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const pkgPath = path.join(ROOT, 'package.json');
@@ -46,12 +47,7 @@ function die(msg, detail = '') {
   process.exit(1);
 }
 
-function nextVersion(current) {
-  const [maj, min, patch] = current.split('.').map(Number);
-  return MINOR ? `${maj}.${min + 1}.0` : `${maj}.${min}.${patch + 1}`;
-}
-
-const next = nextVersion(pkg.version);
+const next = nextVersion(pkg.version, process.argv);
 console.log(`\n📦 Release: ${pkg.version} → ${next}\n`);
 
 // ── 1. No NEW failures vs the register ───────────────────────────────────────
@@ -85,21 +81,21 @@ try {
   );
 }
 
-// ── 2. What's New must name the version being released ───────────────────────
+// ── 2. The Releases page must name the version being released ─────────────────
 // The rule John states directly: the version number and what it contains
 // always travel together. A release whose entry is written afterwards is a
-// release nobody can test when it lands.
-console.log('\n🔒 Gate 2 — What\'s New names the new version\n');
-const whatsNew = read('pages/whats-new.html');
-const idForm = `whats-new-${next.replace(/\./g, '-')}`;
-if (!whatsNew.includes(idForm) && !whatsNew.includes(`>${next}<`)) {
+// release nobody can test when it lands. data/releases.json is what
+// pages/releases.html renders (1.0; it replaced the hand-edited What's New).
+console.log('\n🔒 Gate 2 — Releases names the new version\n');
+const releases = JSON.parse(read('data/releases.json'));
+const entry = (releases.releases || []).find((r) => r.version === next);
+if (!entry || !(entry.items || []).length) {
   die(
-    `pages/whats-new.html has no entry for ${next}`,
-    `\n   Add a section for ${next} describing what it contains, THEN release.\n` +
-      `   Expected an id of "${idForm}" or the version as a heading.`
+    `data/releases.json has no entry for ${next}`,
+    `\n   Run node scripts/release-entry.mjs (ship does) so ${next} lists what it contains, THEN release.`
   );
 }
-console.log(`   ✓ entry present for ${next}`);
+console.log(`   ✓ entry present for ${next} (${entry.items.length} item(s))`);
 
 if (CHECK_ONLY) {
   console.log('\n✅ --check: both gates pass. Nothing was changed.\n');

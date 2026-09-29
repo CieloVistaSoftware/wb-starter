@@ -46,10 +46,10 @@
       "pageToLoad": "about"
     },
     {
-      "menuItemId": "whats-new",
-      "menuItemText": "What's New",
+      "menuItemId": "releases",
+      "menuItemText": "Releases",
       "menuItemEmoji": "🆕",
-      "pageToLoad": "whats-new"
+      "pageToLoad": "releases"
     },
     {
       "menuItemId": "issues",

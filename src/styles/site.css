@@ -31,7 +31,7 @@ body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
 /* #274: prose <li>s have zero margin by default, so a long item that wraps
    to 2+ lines sits flush against the next item -- their line boxes visually
    touch/overlap with no gap at all. Seen project-wide on any content page
-   with wrapped list text (about.html, whats-new.html, etc). */
+   with wrapped list text (about.html, releases.html, etc). */
 li { margin-bottom: 0.35em; }
 li:last-child { margin-bottom: 0; }
 
@@ -2077,84 +2077,4 @@ pre { max-width: 100%; overflow-x: auto; }
    to restore display alongside their own transform/position rules. */
 .site__nav.site__nav--mobile-open {
   display: flex !important;
-}
-
-/* ─────────────────────────────────────────────────────────────────────────
-   What's New — change-type colour coding
-
-   Three things a reader needs to tell apart before deciding what to test:
-   a capability that did not exist (New), a change John asked for (Request),
-   and something that was broken (Bug). The left rule plus the tag makes the
-   type readable at a glance without parsing the sentence.
-
-   Colours come from the semantic state tokens in themes.css — no literals
-   here, so the coding follows the theme (light/dark) like everything else.
-   pages/*.css does not load in the SPA (see the note at line ~1844), which
-   is why these live in site.css.
-   ───────────────────────────────────────────────────────────────────────── */
-.wn-item {
-  border-left: 3px solid transparent;
-  padding-left: 0.75rem;
-  margin-block: 0.4rem;
-  list-style-position: outside;
-}
-
-.wn-tag {
-  display: inline-block;
-  padding: 0.1rem 0.5rem;
-  margin-right: 0.4rem;
-  border-radius: 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  vertical-align: 0.05em;
-  white-space: nowrap;
-}
-
-.wn-new       { border-left-color: var(--info-color); }
-.wn-request   { border-left-color: var(--success-color); }
-.wn-bug       { border-left-color: var(--danger-color); }
-
-.wn-new  > .wn-tag,  .wn-tag.wn-new     { background: var(--alert-info-bg);    color: var(--info-color); }
-.wn-request > .wn-tag, .wn-tag.wn-request { background: var(--alert-success-bg); color: var(--success-color); }
-.wn-bug  > .wn-tag,  .wn-tag.wn-bug     { background: var(--alert-danger-bg);  color: var(--danger-color); }
-
-/* Legend row: the tags carry their own colour class, so they are not inside
-   a .wn-item and need no left rule. */
-.wn-legend {
-  margin-block: 0.5rem 1rem;
-  font-size: 0.875rem;
-  opacity: 0.9;
-}
-.wn-legend .wn-tag { border-left: 0; }
-
-/* References inside What's New must READ as links.
-   Site links inherit the body colour, so an issue ref rendered at
-   rgb(240,243,244) on a rgb(240,243,244) paragraph was distinguishable only
-   by its underline — measured live at 3.0.62 and reported as "these are not
-   links". --accent is redefined by every theme block in themes.css (dark,
-   light, cyberpunk, ocean, sunset, forest, midnight, twilight), so this
-   follows the active theme instead of pinning one colour. */
-[id^="whats-new-"] a {
-  /* --accent on its own is too dark to read on the dark themes: measured
-     rgb(51,51,204) against a near-black panel at 3.0.64. Blending it toward
-     the theme's OWN text colour keeps the accent hue while guaranteeing the
-     link stays legible against whatever background that theme paints — one
-     rule that holds for all eight themes, instead of a per-theme override
-     list that goes stale the next time a theme is added. */
-  color: color-mix(in srgb, var(--accent) 55%, var(--text-primary));
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-
-[id^="whats-new-"] a:hover,
-[id^="whats-new-"] a:focus-visible {
-  text-decoration-thickness: 2px;
-}
-
-/* The release heading is a link to its tag; keep it heading-coloured so the
-   version still reads as a title, with the underline carrying the affordance. */
-[id^="whats-new-"] h2 a {
-  color: inherit;
-  text-decoration-color: var(--accent);
 }

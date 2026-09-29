@@ -1,0 +1,2511 @@
+{
+  "note": [
+    "The Releases page (pages/releases.html) renders this file. scripts/release-entry.mjs",
+    "adds each new release from its commits when `npm run ship` cuts it. Hand edits are",
+    "fine; keep `kind` one of added | fixed | changed."
+  ],
+  "releases": [
+    {
+      "version": "4.0.6",
+      "date": "2026-09-29",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Card size minimums stay px; they overflowed phones as rem</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/294\" target=\"_blank\" rel=\"noopener\">#294</a>",
+          "issues": [
+            294
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>&lt;div x-input size&gt; sizes the real field, same as &lt;input size&gt;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/754\" target=\"_blank\" rel=\"noopener\">#754</a>",
+          "issues": [
+            754
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Progress bars and horizontal card read settled layout, not mid-flight</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The register may be empty; kebab-attribute rows wait for the code panel</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>No inline styles anywhere; the known-failure register reaches 0</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Why WB, built by AI with Claude, and the numbers behind it</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The test gate runs on Windows; three read-before-settle races fixed (#1218)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1218\" target=\"_blank\" rel=\"noopener\">#1218</a>",
+          "issues": [
+            1218
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>One test name on every OS; the register's 61 Windows twins go (#1217)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1217\" target=\"_blank\" rel=\"noopener\">#1217</a>",
+          "issues": [
+            1217
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>CI's 3 checks on the sticky demo and img doc (#750, #759)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/750\" target=\"_blank\" rel=\"noopener\">#750</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/759\" target=\"_blank\" rel=\"noopener\">#759</a>",
+          "issues": [
+            750,
+            759
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A sticky option shows itself sticking (#750)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/750\" target=\"_blank\" rel=\"noopener\">#750</a>",
+          "issues": [
+            750
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The version badge names the release; img.md shows how to size an image (#1139, #759)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1139\" target=\"_blank\" rel=\"noopener\">#1139</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/759\" target=\"_blank\" rel=\"noopener\">#759</a>",
+          "issues": [
+            1139,
+            759
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The known-failures register shrinks 214 -&gt; 69 (#1204, #1050)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1204\" target=\"_blank\" rel=\"noopener\">#1204</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1050\" target=\"_blank\" rel=\"noopener\">#1050</a>",
+          "issues": [
+            1204,
+            1050
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>BuildInView keeps the element in view until it is built</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The code-panel audit reads only a settled page</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The x-mdhtml example 404s on the deployed site; a card's body no longer renders twice</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The next batch -- forms, headers, demos, docs, template and a dozen behaviors</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>CI's 3 checks on tonight's fixes; dropdown examples real again; x-fix-card on a div (#1216, #751, #701, #708, #365)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1216\" target=\"_blank\" rel=\"noopener\">#1216</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/701\" target=\"_blank\" rel=\"noopener\">#701</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/708\" target=\"_blank\" rel=\"noopener\">#708</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/365\" target=\"_blank\" rel=\"noopener\">#365</a>",
+          "issues": [
+            1216,
+            751,
+            701,
+            708,
+            365
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Password examples lose the duplicate x-password (#1152)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1152\" target=\"_blank\" rel=\"noopener\">#1152</a>",
+          "issues": [
+            1152
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The rows a reader clicks change what they see (#754, #1211)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/754\" target=\"_blank\" rel=\"noopener\">#754</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1211\" target=\"_blank\" rel=\"noopener\">#1211</a>",
+          "issues": [
+            754,
+            1211
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The ajax example sends, says so, and logs the round trip (#751)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>",
+          "issues": [
+            751
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every size opens at its own width (#1216)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1216\" target=\"_blank\" rel=\"noopener\">#1216</a>",
+          "issues": [
+            1216
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The preview upgrades native elements, as the page promises</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Textarea max-length is enforced; no hardcoded colours; a vacuous gate</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>134 more failures -- cards, demo blocks, drawer/select/button/audio/toast/dialog</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Re-measure line numbers once fonts and stylesheets settle</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every x-checkbox option works; options, cards, docs and the gate stop drifting</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>CDNs back on the site; tests run offline from one fixture</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Content-html-audio-working-src needs archive.org -- move it to `deployed`</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The 2 unstable tests CI caught after the register shrank -- fixed, not re-recorded</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Drop 64 register entries CI saw pass on e69c744b (416 -&gt; 352)</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The 4 new gate failures CI found on d24478a6</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Behaviors page, card spacing, doc badges, layout standards -- 53 known failures</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Schema contract checks -- 51 generated schemas, 13 missing ones, stale probes</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>No CDN anywhere -- every dependency loads from src/lib/</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Details.js reads HTMLDetailsElement from window (no-undef in the lint ratchet)</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>28 behaviors now honour every attribute their schema declares</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Pre-commit and pre-push hooks are executable, so git runs them off Windows</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Fix the 2 new gate failures CI found -- both from an uncontrolled environment</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every result streams to data/test-results/results-live.jsonl</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The priority-1 gate never runs tests/deployed/</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Tests that need the internet get their own `deployed` project</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Card specs assert what a8a7362e made cards render</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Cards-showcase visits the cards it checks (62/62)</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Plain attributes instead of data-* in 2 pages and 5 schemas (#1058)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1058\" target=\"_blank\" rel=\"noopener\">#1058</a>",
+          "issues": [
+            1058
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Feedback-page coverage scrolls to each demo before checking it</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Three of the four tests that blocked the 4.0.6 ship</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The known-failures register only shrinks</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Stop remaining-coverage waiting out 90s on hidden rows</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Arrowing through a group keeps the selected row in view</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Record John's decision on the open group at load (#771 vs #995)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/771\" target=\"_blank\" rel=\"noopener\">#771</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/995\" target=\"_blank\" rel=\"noopener\">#995</a>",
+          "issues": [
+            771,
+            995
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Parking lot for PR #1210's last three commits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1210\" target=\"_blank\" rel=\"noopener\">#1210</a>",
+          "issues": [
+            1210
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-progressbar is gone; x-progress is the one name for progress</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Remove the custom-elements manifest; WB has no custom elements</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>CI failures the article -&gt; card change introduced</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>An &lt;article&gt; is a card, with one schema and one doc</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Every issue reference in CURRENT-STATUS.md is a clickable link</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Restore docs-manifest.json and version.js from a test run</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Session start no longer calls list_allowed_directories</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1166\" target=\"_blank\" rel=\"noopener\">#1166</a>",
+          "issues": [
+            1166
+          ]
+        }
+      ]
+    },
+    {
+      "version": "4.0.5",
+      "date": "2026-09-15",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Read the lazy runtime's trace after its injections, not at boot</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1167\" target=\"_blank\" rel=\"noopener\">#1167</a>",
+          "issues": [
+            1167
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Read a variant's color after its transition, not during it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1165\" target=\"_blank\" rel=\"noopener\">#1165</a>",
+          "issues": [
+            1165
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The commit gate no longer lets specs reach the real repo through the hook's GIT_DIR</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1161\" target=\"_blank\" rel=\"noopener\">#1161</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1157\" target=\"_blank\" rel=\"noopener\">#1157</a>",
+          "issues": [
+            1161,
+            1157
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Someone else's media outage is not a page error</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1115\" target=\"_blank\" rel=\"noopener\">#1115</a>",
+          "issues": [
+            1115
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The commit gate's watchdog stops killing healthy runs, and its bounds are guarded</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1106\" target=\"_blank\" rel=\"noopener\">#1106</a>",
+          "issues": [
+            1106
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A cancelled media range request is not a broken resource</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1116\" target=\"_blank\" rel=\"noopener\">#1116</a>",
+          "issues": [
+            1116
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The test server's output is kept, and its death is not scored as test failures</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1074\" target=\"_blank\" rel=\"noopener\">#1074</a>",
+          "issues": [
+            1074
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Wb:ready fires once per element</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1126\" target=\"_blank\" rel=\"noopener\">#1126</a>",
+          "issues": [
+            1126
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-cardhero headingLevel picks the title's heading for every value</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1124\" target=\"_blank\" rel=\"noopener\">#1124</a>",
+          "issues": [
+            1124
+          ]
+        }
+      ]
+    },
+    {
+      "version": "4.0.4",
+      "date": "2026-09-13",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Regenerate the manifest and the template doc 403e4509 left behind</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1123\" target=\"_blank\" rel=\"noopener\">#1123</a>",
+          "issues": [
+            1123
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Kind is swept repo-wide, and the check stops lying about CRLF</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1121\" target=\"_blank\" rel=\"noopener\">#1121</a>",
+          "issues": [
+            1121
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Eight issues, each with a guard that can fail</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1107\" target=\"_blank\" rel=\"noopener\">#1107</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1109\" target=\"_blank\" rel=\"noopener\">#1109</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1117\" target=\"_blank\" rel=\"noopener\">#1117</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1114\" target=\"_blank\" rel=\"noopener\">#1114</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/792\" target=\"_blank\" rel=\"noopener\">#792</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1070\" target=\"_blank\" rel=\"noopener\">#1070</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1078\" target=\"_blank\" rel=\"noopener\">#1078</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1034\" target=\"_blank\" rel=\"noopener\">#1034</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1107,
+            1109,
+            1117,
+            1114,
+            792,
+            1070,
+            1078,
+            1034,
+            1118
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>4.0.3's release notes describe 4.0.3</strong>"
+        }
+      ]
+    },
+    {
+      "version": "4.0.3",
+      "date": "2026-09-12",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>A push to main is a release, so no code reaches the site unnamed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1076\" target=\"_blank\" rel=\"noopener\">#1076</a>",
+          "issues": [
+            1076
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Release.mjs no longer corrupts the lockfile, and the IntelliSense manifest has a gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/991\" target=\"_blank\" rel=\"noopener\">#991</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1057\" target=\"_blank\" rel=\"noopener\">#1057</a>",
+          "issues": [
+            991,
+            1057
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>CI never reached a verdict - it was killed by the clock at 93.5%</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/341\" target=\"_blank\" rel=\"noopener\">#341</a>",
+          "issues": [
+            341
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The working tree can now actually be clean</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1071\" target=\"_blank\" rel=\"noopener\">#1071</a>",
+          "issues": [
+            1071
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Commit everything, so local and the deployed site actually match</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The Fix Viewer could not load its own data on the deployed site</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1067\" target=\"_blank\" rel=\"noopener\">#1067</a>",
+          "issues": [
+            1067
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Errors recorded where nobody could read them, assets that 404'd on the deployed site, and a commit gate that tested the wrong tree</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Example assets 404 on the deployed sub-path</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The version stamp names where the code lives, not where it was authored</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The deploy gate compared the deployed site to itself</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The commit gate could hang forever, and two test runs could collide on one machine</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1106\" target=\"_blank\" rel=\"noopener\">#1106</a>",
+          "issues": [
+            1106
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The commit gate could never pass: a test asked git about the repository but found it from its own file path</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1104\" target=\"_blank\" rel=\"noopener\">#1104</a>",
+          "issues": [
+            1104
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>An empty behavior taught its own field names instead of a real example</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1102\" target=\"_blank\" rel=\"noopener\">#1102</a>",
+          "issues": [
+            1102
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A schema was committed as an empty file and every gate passed it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1103\" target=\"_blank\" rel=\"noopener\">#1103</a>",
+          "issues": [
+            1103
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Building a page finished before the things on it were built</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1075\" target=\"_blank\" rel=\"noopener\">#1075</a>",
+          "issues": [
+            1075
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Card variants, footer links, collapsing panels and the behaviours workspace all render as their schemas describe</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every example image was broken on the published site.</strong> The site lives at two addresses. On your own machine it sits at the top level (<code>localhost:3000/</code>); published, it sits inside a folder (<code>…github.io/wb-starter/</code>). The examples asked for images starting from the top, <code>/images/placeholder.svg</code>, which finds the file on your machine but on the published site points outside the project entirely, to an address that does not exist. So every example image failed to load, and only ever for visitors. The page now adds the folder to those addresses before the examples render."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The first version of that fix missed every portfolio card.</strong> It re-rooted a fixed list of attribute names — <code>src</code>, <code>image</code>, <code>avatar</code> — and <code>cover</code> was not on it, so <code>x-cardportfolio</code> kept 404ing while the fix looked complete. A list of names is only as good as whoever last remembered to extend it, so the value now gets a vote: an attribute whose value ends in a media extension is an asset, whatever it is called."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Four checks were matching nothing at all.</strong> A <code>\\b</code> word boundary written through a tool that eats escapes becomes a literal backspace character, which no real source contains — so the check silently passes forever. The guard that exists to catch exactly this scanned <code>src</code>, <code>scripts</code> and <code>tests</code> for code extensions only, and so could not see <code>pages/behaviors.html</code>: 2,500 lines of inline JavaScript, the largest body of source in the project. One of the dead checks was the warning that tells readers of the static site which examples need the local dev server — present, styled, and unable to fire. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1049\" target=\"_blank\" rel=\"noopener\">#1049</a>",
+          "issues": [
+            1049
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The version badge had no styling at all.</strong> <code>release.css</code> existed, was correct, and was loaded by nothing. When site.css stopped importing every behaviour stylesheet and switched to loading them on demand, each one had to be named in a manifest — and this one never was, so its three classes had no rules behind them on every page. A stylesheet that never loads raises no error and the element still renders its text, which is why nobody caught it. A new check fails if any behaviour stylesheet is reachable from nothing. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1008\" target=\"_blank\" rel=\"noopener\">#1008</a>",
+          "issues": [
+            1008
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Unshipped work was reported as delivered.</strong> The tool that says how far a fix has travelled counted a commit on <em>any</em> remote branch as “pushed”, so work sitting on a feature branch — where most work starts — read as shipped. Travel is now measured by reachability from the branch the site actually ships from; a commit that is only on a working branch stays “committed”, which is what it is. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1043\" target=\"_blank\" rel=\"noopener\">#1043</a>",
+          "issues": [
+            1043
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The deployed error viewer reported “No errors found. Great job!” while it was reading the wrong address.</strong> It fetched the log from the organisation root rather than from this site, got a 404, and treated that as “nothing has gone wrong” — a false all-clear on a site that had errors, which is worse than an error message. It now reads the log relative to itself, and when there genuinely is no log it says which address it checked, so a wrong path can never again look like good news. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1000\" target=\"_blank\" rel=\"noopener\">#1000</a>",
+          "issues": [
+            1000
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Sorting a date column sorted it by month name.</strong> Table sorting understood dates written the way data stores them (<code>2026-09-03</code>) but not the way pages print them (<code>Sep 5, 2026</code>), so a rendered date fell through to plain text sorting: April before March, January after February. On the issues list that put “Apr 1, 2025” ahead of “Mar 1, 2020” — five years out. Enough pairs came out right by accident that the column looked fine at a glance. Rendered dates are now compared as dates, and a column of ordinary text is still sorted as text. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1011\" target=\"_blank\" rel=\"noopener\">#1011</a>",
+          "issues": [
+            1011
+          ]
+        }
+      ]
+    },
+    {
+      "version": "4.0.2",
+      "date": "2026-09-06",
+      "summary": "<strong>The queue could not report progress, so it looked like there was none.</strong> Four defects had compounded into one symptom: work that was finished, committed and pushed still showed as un-started. Three of them were in the tool that decides an issue’s state; the fourth was quietly deleting the evidence that tool reads. Also here: five interface fixes that had been waiting to land.",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Nine out of ten commits were invisible to the issue tracker.</strong> The tool that works out how far a fix has travelled reads the git log, and it split that log on a separator the format only produces when a commit message has <em>no body</em>. Any commit with a description got glued to its neighbours and silently thrown away — 937 of 1,056. A well-written commit was the most likely to vanish, so a fix that had shipped left no trace and its issue reported as never started. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1042\" target=\"_blank\" rel=\"noopener\">#1042</a>",
+          "issues": [
+            1042
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>An issue could not be marked pushed unless its test happened to run.</strong> Where a fix <em>is</em> — committed, pushed — is a fact about git, not about testing. But the check for “did its test run recently” sat above the check for “has this shipped”, and most runs are filtered to a handful of specs, so almost every issue fell back to <em>unproven</em> the moment it was committed. A failing test still outranks travel: shipping something does not make it work. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1042\" target=\"_blank\" rel=\"noopener\">#1042</a>",
+          "issues": [
+            1042
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Merely mentioning an issue counted as unfinished work on it.</strong> Any file containing <code>#1234</code> was treated as a pending fix for that issue, which suppressed its real state. Release notes, handoff docs and standards all name issues in passing. The sharpest case: the state tool reported the wrong state for three issues <em>because of its own comments explaining those three issues</em>. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1041\" target=\"_blank\" rel=\"noopener\">#1041</a>",
+          "issues": [
+            1041
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Running the tests erased the record of the tests.</strong> Playwright empties its output directory at the start of every run, and that directory had been pointed at the same place the test reporter keeps its results — the results every gate and every status query reads. A filtered run wiped all five projects and wrote back almost nothing. Measured across two runs: issues ready 3&nbsp;→&nbsp;0, failing 7&nbsp;→&nbsp;0, unproven 5&nbsp;→&nbsp;18, with no work done to any of them. Playwright now has its own scratch directory. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1038\" target=\"_blank\" rel=\"noopener\">#1038</a>",
+          "issues": [
+            1038
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Issue state now keeps itself current.</strong> It was only ever recalculated when someone remembered to ask for it, which is why the board could sit stale for a day. A commit is the event that changes an issue’s state, so every commit now refreshes the issues it names. It runs after the commit is written and never blocks it."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Dialog samples had no way to close them.</strong> The native <code>&lt;dialog&gt;</code> examples rendered without a close control and with no padding, because the dialog behaviour never ran on them. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1005\" target=\"_blank\" rel=\"noopener\">#1005</a>",
+          "issues": [
+            1005
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The behaviours workspace had two vertical scrollbars.</strong> One container too many was scrolling, there was no gap at the side, and the footer stayed stuck in the document instead of anchored to the viewport. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1020\" target=\"_blank\" rel=\"noopener\">#1020</a>",
+          "issues": [
+            1020
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The language badge sat on top of the first line of every code sample.</strong> On the themes page it overlapped the code it was labelling. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1023\" target=\"_blank\" rel=\"noopener\">#1023</a>",
+          "issues": [
+            1023
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Sorting a table sorted the text you could see, not the value underneath.</strong> A column declaring a sort key was ignored, so dates and versions ordered alphabetically. Rows now move as whole rows. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1036\" target=\"_blank\" rel=\"noopener\">#1036</a>",
+          "issues": [
+            1036
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The demos index linked to a page that no longer exists.</strong> The Views Registry Browser was removed because it imports a module deleted with the component tags — the page could not run at all — but the link to it stayed behind. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/980\" target=\"_blank\" rel=\"noopener\">#980</a>",
+          "issues": [
+            980
+          ]
+        }
+      ]
+    },
+    {
+      "version": "4.0.1",
+      "date": "2026-09-03",
+      "summary": "<strong>The first patch on 4.0.0.</strong> Nine changes: three that stop the demo pages freezing, two that repair what the 4.0.0 rename broke, and four that fix pages rendering wrong — or, in one case, a gate that had not been running at all.",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The cards page no longer freezes.</strong> <code>demos/site/cards.html</code> built all 293 demos before the page was interactive — measured at <strong>13,680ms of total main-thread blocking, including one unbroken 9,110ms task</strong>. The page painted in 112ms and then locked up. It now builds what is on screen and the rest as you reach them: <strong>952ms of blocking, longest task 346ms</strong>, 48 demos at load instead of 293. The same change is on eleven sibling demo pages."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Code renders coloured on the first frame.</strong> A code panel used to appear as plain text at 234ms and only get syntax highlighting at 741ms — half a second of unstyled monospace. The panel is now held back until it has been highlighted, so there is no uncoloured frame at all. Measured cost of the change: <strong>1ms</strong>."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Code panels stopped creeping wider.</strong> The shrink-to-fit measurement wrote its answer on every one of up to 25 polls, so each intermediate width was painted and the box visibly stepped outward while you read it. The value is now committed once, when it stops moving."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The site went down, and came back.</strong> The first performance push carried one renamed identifier whose other half stayed behind: a module asked for an export that no longer existed under that name. An unresolved import is not a small error — the module never runs, nothing that depends on it runs, and the whole page stops at <code>Loading…</code>. Every route, everyone, until it was fixed. The HTML, the CSS and every asset were served perfectly the entire time, which is exactly why nothing noticed."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Two tests now stand where nothing stood.</strong> One reads every module and checks that each thing imported is genuinely exported by the file it names — it fails on the exact change that caused the outage. The other opens five real pages and fails if any of them logs an error or is still showing <code>Loading…</code>. Both were verified by deliberately reintroducing the fault and confirming they go red, not merely by watching them pass."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Deploying now has a rule.</strong> A push is not finished when the files land; it is finished when the published site has been opened and proven to boot. Checking that the right content was uploaded is not a substitute — during the outage that check passed."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Compliance collected zero tests for twelve days.</strong> A spec built a regex containing <code>[x-demo]</code> at module scope. That is a character <em>class</em>, so <code>x-d</code> reads as a range from <code>x</code> (120) to <code>d</code> (100) — endpoints reversed — and constructing it threw <code>SyntaxError: Range out of order in character class</code> at load. Playwright treats a collection-time throw as fatal for the whole project, so <code>test:compliance</code> reported <strong>“Total: 0 tests”</strong> and exited having checked nothing. The gate looked green because it never ran. CI had been red on every <code>main</code> run since 2026-08-21 for this reason, and every branch cut from <code>main</code> in that window was effectively ungated. <em>(#975)</em>"
+        },
+        {
+          "kind": "added",
+          "html": "<strong>“Component” is gone from the vocabulary.</strong> 4.0.0 deleted every custom element; there is no Shadow DOM and no <code>&lt;wb-*&gt;</code> or <code>&lt;x-*&gt;</code> tag left, so the word described nothing that still exists — “Web Components” included. Reader-facing occurrences went <strong>2,068 → 168</strong> (92%), with 3,665 renames across 636 files."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Angular’s API name was renamed too, and the demo threw.</strong> That sweep reached executable code referencing a third-party API: <code>@angular/core</code> exports <code>Component</code> and has never exported <code>Behavior</code>, so the frameworks demo died on load with <code>Behavior is not a function</code>. Restored at all four sites in both copies. The template copy is the one that mattered — it ships, so every project scaffolded by <code>create-wb-starter</code> got a demo page that threw. <em>(#971)</em>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The behaviors reference hung the renderer.</strong> <code>docs/behaviors-reference.md</code> closed three <code>&lt;div&gt;</code> elements with <code>&lt;/input&gt;</code>. <code>input</code> is a void element with no closing tag, so the parser discarded each one, leaving the divs open and the document nesting wrong from that point down."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The table behavior rendered an empty table.</strong> The showcase decodes HTML entities for display and re-injects the result — and decoded, the JSON quotes in <code>rows=\"[[&amp;quot;alert&amp;quot;,…]]\"</code> collide with the attribute delimiter, so the value terminated at <code>[[</code> and the behavior received nothing. <em>(#861)</em>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Progress bars ignored <code>striped</code>.</strong> Two implementations existed: the tag map resolved <code>[x-progressbar]</code> to one module, while anything deriving the name by stripping <code>x-</code> loaded a second one with different classes, inline styles, and a <code>striped</code> that only answered to <code>striped=\"true\"</code>. The showcase derives it that way, so a bare <code>striped</code> rendered plain there while working everywhere else. Search typing now filters, and a permutation check that never actually permuted was repaired."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>API and Docs panels now fill the live panel and cover the example.</strong> Previously they opened at the right position but stopped short of the bottom, leaving the example visible underneath."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The site still said v3.0, and the home page had no <code>&lt;h1&gt;</code>.</strong> The title was declared in four places — three in <code>index.html</code> (<code>&lt;title&gt;</code>, <code>og:title</code>, <code>twitter:title</code>) and once in <code>config/site.json</code> — and <code>site-engine.js</code> overwrote <code>document.title</code> at runtime from the config, so fixing any one place did nothing."
+        }
+      ]
+    },
+    {
+      "version": "4.0.0",
+      "date": "2026-08-25",
+      "summary": "<strong>Breaking.</strong> Every <code>&lt;wb-*&gt;</code> component tag is gone. Nothing in this repo writes components any more — you write real HTML and add behavior with an <code>x-</code> attribute.",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>155 component tags removed.</strong> 104 lived in <code>tag-map.js</code>, 18 more in <code>wb-lazy.js</code> — a second registry that a search of the first would never have found — and 33 were unprefixed aliases (<code>basic-card</code>, <code>hero-card</code>, <code>profile-card</code>, <code>card-image</code>) that a search for <code>wb-</code> would have missed entirely.",
+          "breaking": true
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>No behavior was lost.</strong> Every tag had a replacement before it was deleted. 18 became the semantic element that already auto-injects them — <code>&lt;wb-card&gt;</code> is now <code>&lt;article&gt;</code>, <code>&lt;wb-dialog&gt;</code> is <code>&lt;dialog&gt;</code>, <code>&lt;wb-progress&gt;</code> is <code>&lt;progress&gt;</code>. The rest became a host element carrying the behavior as an attribute: <code>&lt;wb-alert&gt;</code> is <code>&lt;div x-alert&gt;</code>.",
+          "breaking": true
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Eleven behaviors were reachable only through their tag</strong> — container, grid, center, cover, switcher, reel, frame, icon, stat, sidebarlayout and modal. Deleting those tags would have deleted the behaviors with them, so <code>x-container</code>, <code>x-grid</code>, <code>x-center</code> and the rest were added first."
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The wb-views system is gone.</strong> <code>&lt;wb-view&gt;</code> was a component tag, and its 1,006-line implementation ran on every page load — fetching two registries and 47 partials — to serve a feature no page in <code>pages/</code> ever used.",
+          "breaking": true
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>94 tags in the markup were never implemented at all.</strong> <code>&lt;wb-btn&gt;</code>, <code>&lt;wb-code&gt;</code>, <code>&lt;wb-menu-item&gt;</code>, <code>&lt;wb-breadcrumb-item&gt;</code> and 90 others appeared in pages, docs and the project template while being registered nowhere. They rendered as unknown inline elements and always had — teaching a vocabulary that did not exist, including to every new project scaffolded from the template."
+        },
+        {
+          "kind": "changed",
+          "html": "<strong><code>docs/components/</code> is gone; there is one doc tree now.</strong> Of its 96 files, 65 duplicated a <code>docs/behaviors/</code> page and 12 were index files for the tree itself. The 19 with unique content moved across, and the component docs that said more than their behavior counterpart were merged rather than dropped — <code>x-card.md</code> alone carried 3.3KB of guidance that <code>card.md</code> did not have."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Attribute names follow the semantic element, with no exceptions.</strong> All 26 native mappings were audited: <code>&lt;table&gt;</code>→<code>table</code>→<code>x-table</code> reads straight down, and now every row does. <code>x-img</code> is registered at last — <code>docs/behaviors/img.md</code> had been teaching it in four places while only <code>x-image</code> existed, so following the documentation produced no behavior and no error. <code>x-radio</code>, <code>x-range</code> and <code>x-mark</code> were missing entirely and have been added."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A new audit checks all six selector registries at once.</strong> Behaviors are bound in six places across three files, and reading one of them is how a behavior comes to look missing when it is not. <code>npm run audit:behavior-registry</code> reports every disagreement and fails on the ones that matter. It found the second element registry that this very migration had missed."
+        }
+      ]
+    },
+    {
+      "version": "3.0.91",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>A glowing button responds when you press it.</strong> The continuous effects — glow, rainbow, particle — bind no click handler, so a button carrying one looked pressable, got pressed, and did not move. It now goes down on press and comes back on release, held long enough to be seen (a real click can start and finish inside one frame). Keyboard activation counts as a press too, and releasing off the element still lets it come back up."
+        }
+      ]
+    },
+    {
+      "version": "3.0.90",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Overlay cards left gaps either side.</strong> The card had an aspect ratio and no width, so it sized itself from its height and floated in the middle of its container. It fills the container now, with the height following from the ratio instead of the other way round."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The playground cannot be held by a browser.</strong> It is edited constantly, and a held copy is indistinguishable from a fix that did not work."
+        }
+      ]
+    },
+    {
+      "version": "3.0.89",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The playground was never cache-busted, so fixes to it looked like they never shipped.</strong> Only the two SPA shells were stamped, and the pattern matched <code>src/…</code> and <code>./src/…</code> but not <code>../src/…</code> — which is how every page under <code>demos/</code> and <code>pages/</code> reaches its CSS and modules. 18 files are stamped now, where it was 2."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The playground no longer hosts a component gallery.</strong> 289 lines and 53 examples in retired <code>wb-</code> tags, sitting under an editor meant for your own markup."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The x-behaviors example had no card behaviors at all</strong> — 19 of them, the largest family, absent from a set that claims to show the behaviors. They are pulled from the same data the showcase renders, so they cannot drift. The count in the label is generated now instead of written by hand."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A button labelled \"Glow\" invited a click and did nothing.</strong> It is a continuous effect, not a click-triggered one; the label now says so."
+        }
+      ]
+    },
+    {
+      "version": "3.0.88",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A false error on every native input.</strong> A warning added days ago told authors that <code>&lt;input input-type=\"text\"&gt;</code> \"cannot build a field\" — but an <code>&lt;input&gt;</code> IS the field, and <code>input-type</code> maps to its <code>type</code>. It fired on correct markup and filled the error log. The warning now only fires where a host genuinely cannot build one, and <code>input-type</code> is applied."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Copy did not copy.</strong> The clipboard API is refused for reasons unrelated to the page, and the fallback said \"Press Ctrl+C\" — impossible advice, since nothing was selected. It now falls back to a real copy and only reports failure when both paths fail."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong><code>collapsible</code> did nothing you could see.</strong> The behavior toggled two classes that existed in no stylesheet. The legend now looks clickable, collapsing hides the contents, and collapsed fields leave the tab order."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>A layout rule for ordinary media.</strong> The standards covered floating layers and padding but never said an image has to fit the box it renders in, so nothing was being violated — there was no rule. Added as §15a, with the constraint that also prevents upscaling."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Three tests.</strong> Every element in a rendered example carries a unique id; no example logs an error while rendering; and the stage leaves no dead space after a tall example."
+        }
+      ]
+    },
+    {
+      "version": "3.0.87",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The dialog example had no way to open it.</strong> It put <code>title</code> and <code>content</code> on the <code>&lt;dialog&gt;</code> itself — but in this framework an element carrying those IS the trigger, so the dialog had no trigger and nothing could reopen it once closed. The example now shows the pattern the behavior documents: a <code>&lt;dialog&gt;</code> whose children are its content, and a button that calls <code>.open()</code> on it."
+        }
+      ]
+    },
+    {
+      "version": "3.0.86",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong id=\"whats-new-3-0-86-list-item-1-lead\"><code>x-accordion</code> did nothing with <code>&lt;details&gt;</code> children.</strong> It collected its panels by looking for an <code>accordion-title</code> attribute, which a <code>&lt;details&gt;</code> does not carry — so it found none, built nothing, and three unrelated disclosures rendered. It now recognises them and adds the one thing that makes a set of disclosures an accordion: opening one closes the others. Native keyboard, screen-reader and find-in-page behaviour is untouched."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The first behavior is selected on arrival.</strong> The panel used to open empty, so the page arrived showing a list and a blank space."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Two tests that should have existed already.</strong> One measures the stage after a tall example then a short one — the sequence that produced four separate reports of dead space and survived three fixes because nobody measured the box. The other proves an accordion is exclusive, which \"does it open\" would not have caught."
+        }
+      ]
+    },
+    {
+      "version": "3.0.85",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Dead space above a short example, for real this time.</strong> The stage grows so an open dropdown or a fullscreen dialog has room, and that growth is dropped when a different example is shown — except the reset sat on only one of the two render paths. Generated examples took the other one and inherited the previous example's height, so a two-line details sat centred in a box sized for a fullscreen dialog. Reset once now, before either path runs."
+        }
+      ]
+    },
+    {
+      "version": "3.0.84",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Semantic listed <code>x-</code> tokens instead of element names.</strong> The check for \"does this example use its semantic tag\" built a word boundary as <code>'\\b'</code> inside a string — which is the backspace character, not a boundary — so it matched nothing and every row was relabelled to its <code>x-</code> token. Semantic now lists <code>article</code>, <code>button</code>, <code>dialog</code>, <code>progress</code>."
+        }
+      ]
+    },
+    {
+      "version": "3.0.83",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Filter radios did nothing.</strong> The list logic was right, but the change listener was bound with <code>querySelectorAll</code> while the page was still being wired, so it captured an empty list and never attached. Clicking Semantic left the list on Both — a filter that does not filter. Delegated now, so timing cannot break it."
+        }
+      ]
+    },
+    {
+      "version": "3.0.82",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>With autoInject on, <code>&lt;article x-ripple&gt;</code> gets both behaviors again.</strong> 3.0.81 stopped an element being built twice by two behaviors, but it stood autoInject down for <em>any</em> <code>x-</code> attribute — so asking for a card with a ripple gave only a ripple. A replacement is a member of the tag behavior's own family (card → cardportfolio, cardimage); anything else decorates and stacks."
+        }
+      ]
+    },
+    {
+      "version": "3.0.81",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Filter the list by authoring form.</strong> Semantic shows the 22 behaviors a tag carries on its own; x-attribute shows all 143 reached by attribute; Both shows everything. Each row renders its own form, so the two are actually different."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Every behavior with a semantic tag now demonstrates both forms.</strong> Was 6 of 22."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>67 card examples were built twice.</strong> The guard against two behaviors claiming one element required the second to be registered already — under lazy loading it usually is not, so both ran."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Collapsing a details example left the blank space behind.</strong> The stage only ever grew."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Button labels state their configuration</strong> — <code>variant: primary · icon: download · size: md</code> — instead of naming an action they do not perform."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Clicking any example resyncs the list to its row</strong>, and the documentation panel can be dragged to the top."
+        }
+      ]
+    },
+    {
+      "version": "3.0.80",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>A demo label no longer promises something the demo cannot do.</strong> The button example read \"Download report\" — it is a styling demo, it downloads nothing, and a reader who clicked it learned only that the example lied. It reads \"Button example of a primary button\" now, matching the rule the other examples already follow. A compliance test fails any example label starting with an action verb it cannot carry out, because the single edit is worthless without it — the next hand-written example would put it straight back (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/758\" target=\"_blank\" rel=\"noopener\">#758</a>).",
+          "issues": [
+            758
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.79",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Issue links in the last two releases pointed at issues that did not exist.</strong> Five fixes were shipped citing numbers that were never filed — the next ones in sequence, used as though the issues had been created. That put dead links in this page and in the source comments. The issues are filed now (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/753\" target=\"_blank\" rel=\"noopener\">#753</a>–<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/757\" target=\"_blank\" rel=\"noopener\">#757</a>) and all 37 references across 8 files corrected.",
+          "issues": [
+            753,
+            757
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.78",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A select's options never rendered.</strong> <code>options=\"main,develop,fix/706-dropdown\"</code> — the comma-separated form the examples use — was passed to <code>JSON.parse</code>, threw, and the error was swallowed, leaving an empty dropdown and nothing to explain it. Both spellings work now, and malformed JSON raises a real error instead of rendering nothing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/756\" target=\"_blank\" rel=\"noopener\">#756</a>).",
+          "issues": [
+            756
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The clear button dwarfed the select it belonged to.</strong> It was built as a full button component, so it took a button's padding, and no rule for it existed anywhere to constrain the size. It is now a plain compact control sized in <code>em</code>, so it tracks the select's own size, with an accessible name and a visible focus ring (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/757\" target=\"_blank\" rel=\"noopener\">#757</a>).",
+          "issues": [
+            757
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>No retired <code>wb-</code> tags left in the behavior demos.</strong> One example still rendered a <code>wb-</code> table, and its own row data taught <code>wb-</code> component names. It is plain <code>&lt;table&gt;</code> now, which auto-injects, and the data names behaviors instead."
+        }
+      ]
+    },
+    {
+      "version": "3.0.77",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Input variants and sizes were dead on every host.</strong> Three causes, found by a permutation suite rather than one at a time: the container host built a field and applied neither, the native host read only <code>data-size</code> and never the plain <code>size</code>, and <code>size=\"md\"</code> / <code>variant=\"default\"</code> were skipped on purpose — leaving the schema's own defaults with no trace, indistinguishable from being ignored (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/754\" target=\"_blank\" rel=\"noopener\">#754</a>).",
+          "issues": [
+            754
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong><code>&lt;div x-input&gt;</code> rendered nothing at all.</strong> The field builder was gated on the host being <code>&lt;x-input&gt;</code>, so the documented authoring form produced no label, no field and no variant. It now builds on any container host; a host that IS a form control keeps the wrap path, where the element already is the input (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/754\" target=\"_blank\" rel=\"noopener\">#754</a>).",
+          "issues": [
+            754
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>A behavior that cannot honour your attributes now says so.</strong> Asking for <code>label</code>, <code>helper</code>, <code>error</code> or <code>input-type</code> on a host that cannot build a field raises a real runtime error naming the ignored attributes, instead of rendering nothing and looking broken (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/754\" target=\"_blank\" rel=\"noopener\">#754</a>).",
+          "issues": [
+            754
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The events panel reports the element id, and only the id.</strong> It printed <code>tag#id.class</code>, burying the one token worth reading — and because the listener sits on the stage, a click on the stage's own padding was logged as if the example had fired it. Events outside the example are no longer reported at all (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/755\" target=\"_blank\" rel=\"noopener\">#755</a>).",
+          "issues": [
+            755
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Permutation suites for input, and every <code>x-*</code> checked for impropriety.</strong> Both read their value lists from the schema and the tag-to-behavior map, so new values are covered without touching the tests. The <code>x-*</code> test swept 29 doc files still teaching <code>&lt;figure x-figure&gt;</code>, <code>&lt;img x-image&gt;</code>, <code>&lt;pre x-pre&gt;</code> and the rest, and the generator that would have put them all back (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/753\" target=\"_blank\" rel=\"noopener\">#753</a>).",
+          "issues": [
+            753
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.76",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong id=\"whats-new-3-0-76-list-item-1-lead\"><code>package.json</code> and <code>package-lock.json</code> were empty on <code>main</code> for four releases.</strong> A version-bump script opened each file for writing before reading it — which truncates — so it wrote an empty string back. 3.0.71 through 3.0.75 shipped with both files blank, breaking every npm command against the repo. Restored from the last good copy and re-versioned; both parse."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>A test that finds every <code>x-*</code> attribute and rejects the improper ones.</strong> <code>&lt;figure x-figure&gt;</code> is redundant — a <code>&lt;figure&gt;</code> auto-injects the behavior from its tag — and #746 showed the redundant form can silently suppress the behavior entirely. The test sweeps authored pages, demos, docs and the seeded example data, <em>and</em> drives the showcase to check every generated example, which is the path that produced <code>&lt;figure x-figure&gt;</code> in the first place. Tag-to-behavior pairs are read from the map itself, so new mappings are covered without touching the test (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/753\" target=\"_blank\" rel=\"noopener\">#753</a>).",
+          "issues": [
+            753
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.75",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Generated examples stopped writing <code>&lt;figure x-figure&gt;</code>.</strong> 3.0.70 removed the redundant attributes from the seeded examples, but examples the showcase <em>generates</em> took a different decision: they asked whether a display label existed, and several behaviors have none — so <code>&lt;figure&gt;</code> fell through and got the attribute anyway. Whether a tag auto-injects a behavior is a fact about the tag-to-behavior map, not about whether someone wrote a label, so the generator now asks the map (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/753\" target=\"_blank\" rel=\"noopener\">#753</a>).",
+          "issues": [
+            753
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.74",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong><code>&lt;fieldset collapsible&gt;</code> did not collapse.</strong> The behavior read only <code>data-collapsible</code>, so the documented spelling was ignored and the demo rendered a plain fieldset — nothing told the reader the attribute was being dropped rather than broken. Plain attributes are now read alongside <code>data-*</code>, and <code>collapsible=\"false\"</code> counts as OFF (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/752\" target=\"_blank\" rel=\"noopener\">#752</a>).",
+          "issues": [
+            752
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The same defect is in 32 more places.</strong> Auditing it turned up <strong>69 attribute reads across 32 behavior files</strong> that only check <code>data-*</code> while every schema, doc and example teaches the plain form. Three separate reports this week were the same bug fixed one site at a time. Catalogued with the full file list and a proposed shared reader plus per-behavior tests, so the class gets closed instead of the next instance (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/752\" target=\"_blank\" rel=\"noopener\">#752</a>).",
+          "issues": [
+            752
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.73",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The dev-server notice was not appearing.</strong> 3.0.72 added it on one of the two paths that render an example, and the form demo happens to take the other, so the notice never showed on the very example it was written for — caught by checking the deployed page rather than the diff. Both paths now call it."
+        }
+      ]
+    },
+    {
+      "version": "3.0.72",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Examples that need the dev server say so on this site.</strong> The form demo posts to <code>/api/…</code>, a route a static host cannot serve — so on the published site it fails, and nothing told the reader the example is fine and the host is the limitation. Any example posting to <code>/api/…</code> now carries a notice, shown only off localhost, explaining that it needs the local dev server and linking the repo to clone and <code>npm start</code> (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>).",
+          "issues": [
+            751
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.71",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The form behavior never turned AJAX on.</strong> <code>&lt;form validate ajax&gt;</code> — the documented spelling — did nothing, because the behavior read only <code>data-ajax</code>. Submitting fell through to a plain form post, which is why nothing appeared to happen. Plain attributes are now read alongside their <code>data-*</code> equivalents for <code>ajax</code>, <code>validate</code>, <code>auto-save</code> and the three message strings, closing the same gap <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/697\" target=\"_blank\" rel=\"noopener\">#697</a> closed for fieldset and formrow. <code>ajax=\"false\"</code> is also honoured as OFF: a bare presence check reads the string \"false\" as ON, the opposite of what the markup says (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/747\" target=\"_blank\" rel=\"noopener\">#747</a>).",
+          "issues": [
+            697,
+            751,
+            747
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The form demo has a destination that answers.</strong> The example declared no <code>action</code>, so it posted to the page itself and the already-implemented success path was unreachable. It now targets a demo endpoint that accepts and discards, so the success message and the <code>wb:form:success</code> event actually fire. It deliberately sends no mail — a public endpoint that emails a user-supplied recipient is an open relay (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/751\" target=\"_blank\" rel=\"noopener\">#751</a>).",
+          "issues": [
+            751
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.70",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Examples no longer write an attribute autoInject makes unnecessary.</strong> <code>&lt;fieldset x-fieldset&gt;</code> and <code>&lt;figure x-figure&gt;</code> taught a duplication the framework exists to remove — a semantic host gets its behavior from the tag alone. 13 redundant attributes removed across the examples. An <code>x-</code> naming a <em>different</em> behavior stays, because <code>&lt;button x-dialog&gt;</code> is the point of that example, not duplication. A compliance test now reads the tag-to-behavior map from its own source and fails the build if a redundant attribute reappears — the same class of defect that let <code>x-button</code> silently suppress the button behavior for three releases (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/749\" target=\"_blank\" rel=\"noopener\">#749</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            749,
+            746
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.69",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The button behavior was bailing on its own attribute.</strong> 3.0.67 fixed one of two gates; this fixes the one that actually mattered. The behavior treated any <code>x-</code> attribute as proof that a different behavior owned the element — including <code>x-button</code> itself — so it returned without adding a single class. Variants, sizes, icons and <code>href</code> are now live in both authoring forms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>A permutation test suite for every button parameter.</strong> 26 tests reading their value lists from <code>button.schema.json</code> at runtime, so a value added to the schema is covered automatically: all 8 variants, all 5 sizes, all 40 variant×size pairs, all 20 icons, both icon positions, four booleans, <code>disabled</code> actually blocking activation, <code>href</code> with both targets, and an equivalence test asserting the bare and <code>x-button</code> forms produce identical classes. It caught the first fix being wrong before it could be called done (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Example labels name the variant too.</strong> \"Button example of a centered x-dialog\" rather than just the behavior — the variant is what distinguishes one row of the list from the next (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.68",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Every button example says which behavior it demonstrates.</strong> A button hosting <code>x-dialog</code> read \"Delete branch…\", a button hosting <code>x-ripple</code> read \"With Ripple\" — sample copy that told you nothing about what you were looking at. All 40 button-hosted examples now read \"Button example of x-dialog\", \"Button example of x-ripple\", and so on, matching the behavior named in the source beside them (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.67",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Writing <code>x-button</code> turned the button behavior OFF.</strong> Variants, icons and sizes were all dead on any button carrying the attribute the docs teach. Measured side by side: <code>&lt;button x-button variant=\"outline\" icon=\"download\" size=\"md\"&gt;</code> came out with <code>class=\"\"</code> and no icon, while the identical button <em>without</em> <code>x-button</code> came out <code>x-button x-button--md x-button--outline</code> with its icon rendered. The native auto-inject path bailed whenever <code>x-{behavior}</code> was present, assuming the explicit attribute path would handle it — it does not, because the core never reads the map that <code>x-button</code> lives in, so the element fell between the two and got nothing. A same-named attribute no longer disqualifies the element; a genuinely different one still does (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Fullscreen no longer centres the example in a screen of empty space.</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/711\" target=\"_blank\" rel=\"noopener\">#711</a> gave the stage <code>align-content: center</code> so a short example would not pile its slack underneath itself in a panel-height box. At full screen that rule centred a single element in a 100vh box with screens of nothing above and below. Fullscreen has the opposite problem to the panel — there is more than enough room — so content now starts at the top and the example takes the width it is given (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            711,
+            746
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The documentation panel names its behavior.</strong> It read a bare \"Documentation\" under an example that changes with the selection, giving nothing to tie it to. It now reads \"Button Documentation\", \"Details Documentation\", and so on (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The attribute table's Values column wraps at the viewport edge.</strong> An enum with 17 values ran off the right of the screen as one unbroken line, putting the last values out of reach. The column now wraps to the next row, and each value stays intact on its own line-box rather than being split down the middle (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Details examples say what they are.</strong> The rendered summary read \"Trail conditions\" with nothing identifying it as a sample; it now reads \"Details sample of Trail conditions\" (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/746\" target=\"_blank\" rel=\"noopener\">#746</a>).",
+          "issues": [
+            746
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.66",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Fullscreen now shows the navigator and the search, not just the rendered example.</strong> The button targeted <code>#behaviors-live-example</code> — the innermost wrapper around the rendered element — so going fullscreen left one example alone on a black screen with no way to reach another. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/720\" target=\"_blank\" rel=\"noopener\">#720</a> added fullscreen on the stage and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/722\" target=\"_blank\" rel=\"noopener\">#722</a> narrowed it to the example to kill the empty space around it; that removed the empty space and the navigation with it. The target is now the workspace: the search box and its count, the behaviors navigator, and the rendered side, all filling the screen with each column scrolling on its own, so a 170-entry list and a tall example stay usable at the same time. Exiting restores the previous layout unchanged (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/744\" target=\"_blank\" rel=\"noopener\">#744</a>).",
+          "issues": [
+            720,
+            722,
+            744
+          ]
+        }
+      ]
+    },
+    {
+      "version": "3.0.65",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Reference links were legible in name only.</strong> 3.0.64 made them a different colour from the prose, but on the dark themes that colour measured <code>rgb(51,51,204)</code> — a dark indigo on a near-black panel, distinct but hard to read. The link colour now blends the theme's accent toward the theme's own text colour, so it keeps the accent hue and stays legible against whatever background a theme paints. One rule for all eight themes, rather than a per-theme override list that goes stale the next time a theme is added."
+        }
+      ]
+    },
+    {
+      "version": "3.0.64",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The cache-bust token was always one commit behind the change it existed to bust.</strong> <code>stamp-version.js</code> read <code>git rev-parse --short HEAD</code>, which during a pre-commit run is the <em>parent</em> commit — the commit being made does not exist yet. So a release that changed only CSS shipped with an unchanged <code>?v=</code> and never reached any browser holding the old file. Measured: 3.0.63 deployed with <code>?v=80d6768</code>, which is the 3.0.62 commit. The token is now the release version (<code>?v=3.0.64</code>): known before the commit, changed exactly when a release ships, and named the same as the release it belongs to."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Page content was served from cache after every deploy.</strong> The site fetched <code>pages/&lt;id&gt;.html</code> with no cache-bust at all, so the browser re-served its stored copy while the raw URL served the new file. Measured on this page: the server had the 3.0.63 content and the site rendered 3.0.61. Fragment fetches now carry the release version too — which is why this entry is visible to you at all."
+        }
+      ]
+    },
+    {
+      "version": "3.0.63",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>References on this page did not look like links.</strong> Every GitHub reference was a correct anchor with a working href, but site links inherit the body colour — measured live, the refs rendered at <code>rgb(240,243,244)</code> inside a paragraph of <code>rgb(240,243,244)</code>, so an underline was the only thing marking them. They now take the theme's accent colour, which every theme redefines, so the treatment follows dark, light, cyberpunk, ocean, sunset, forest, midnight and twilight rather than pinning one colour."
+        }
+      ]
+    },
+    {
+      "version": "3.0.62",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Every change is colour-coded by type.</strong> A capability that did not exist (<em>New</em>, blue), a change you asked for (<em>Request</em>, green), and something that was broken (<em>Bug</em>, red) are three different things when deciding what to test. Each item carries a tag and a coloured left rule. Colours come from the theme's semantic state tokens, so they follow light/dark like everything else — no literal colours were added."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Every reference on this page is clickable.</strong> 128 issue references now link to the issue, and the 19 build tags plus each release heading link to the commit on <code>main</code> that actually shipped that version — resolved by reading <code>package.json</code> at each commit, not guessed. Numbers that were consumed by feature branches and never deployed stay plain text rather than becoming dead links."
+        }
+      ]
+    },
+    {
+      "version": "3.0.61",
+      "date": "2026-08-21",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6e67f4c\" target=\"_blank\" rel=\"noopener\" title=\"commit 6e67f4c\">3.0.57</a>] 121 tests that were never testing anything.</strong> 26 spec files loaded the standalone harness and then waited 20 seconds for <code>window.WBSite</code>, a global that page never defines; every one failed before a single assertion ran. And <code>permutation-compliance</code> failed 95 of 145 tests across 50 behaviors for doing the right thing — it asserted a base class on a host whose own tag selector already styles it. An attribute host missing its class still fails, which is the bug that check exists to catch (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/727\" target=\"_blank\" rel=\"noopener\">#727</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/735\" target=\"_blank\" rel=\"noopener\">#735</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/736\" target=\"_blank\" rel=\"noopener\">#736</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/737\" target=\"_blank\" rel=\"noopener\">#737</a>).",
+          "issues": [
+            727,
+            735,
+            736,
+            737
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/269d4e6\" target=\"_blank\" rel=\"noopener\" title=\"commit 269d4e6\">3.0.55</a>] fullscreen made real, twice over.</strong> It was expanding the panel-sized stage rather than the example inside it, so you got your element surrounded by a screen of empty space (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/722\" target=\"_blank\" rel=\"noopener\">#722</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/723\" target=\"_blank\" rel=\"noopener\">#723</a>). And the button committed every side effect <em>before</em> the browser's fullscreen request settled, discarding the rejection — so a refused request left the panel stretched to <code>100vh</code> with the button reading \"Exit Fullscreen\" while nothing had gone fullscreen at all. The request is now awaited, and a refusal restores the panel and logs its reason instead of failing mutely (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/733\" target=\"_blank\" rel=\"noopener\">#733</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/734\" target=\"_blank\" rel=\"noopener\">#734</a>).",
+          "issues": [
+            722,
+            723,
+            733,
+            734
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/659dd48\" target=\"_blank\" rel=\"noopener\" title=\"commit 659dd48\">3.0.54</a>] pages that exist are reachable by URL again.</strong> <code>?page=privacy</code> rendered HOME. So did <code>?page=terms</code> and 8 other pages — no error, no 404, the URL still saying <code>privacy</code>. The site's own footer links to both, on every page (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/725\" target=\"_blank\" rel=\"noopener\">#725</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/732\" target=\"_blank\" rel=\"noopener\">#732</a>).",
+          "issues": [
+            725,
+            732
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2050c0f\" target=\"_blank\" rel=\"noopener\" title=\"commit 2050c0f\">3.0.53</a>] the site boots once, and a duplicate id is a real runtime error.</strong> The page was rendering twice and saying nothing: everything worked, twice, and every <code>getElementById</code> found the first of two (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/724\" target=\"_blank\" rel=\"noopener\">#724</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/730\" target=\"_blank\" rel=\"noopener\">#730</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/731\" target=\"_blank\" rel=\"noopener\">#731</a>).",
+          "issues": [
+            724,
+            730,
+            731
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5b544d3\" target=\"_blank\" rel=\"noopener\" title=\"commit 5b544d3\">3.0.52</a>] arrow keys move the selection and the list stays put</strong>, reversing the always-scroll-to-top behavior from <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/687\" target=\"_blank\" rel=\"noopener\">#687</a> and <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/717\" target=\"_blank\" rel=\"noopener\">#717</a> (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/728\" target=\"_blank\" rel=\"noopener\">#728</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/729\" target=\"_blank\" rel=\"noopener\">#729</a>).",
+          "issues": [
+            687,
+            717,
+            728,
+            729
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/85a5df7\" target=\"_blank\" rel=\"noopener\" title=\"commit 85a5df7\">3.0.51</a>] the live stage can go fullscreen and come back unchanged.</strong> Any example in the behaviors panel expands to the full screen and restores to exactly the size and position it had before (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/720\" target=\"_blank\" rel=\"noopener\">#720</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/721\" target=\"_blank\" rel=\"noopener\">#721</a>).",
+          "issues": [
+            720,
+            721
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/95b455f\" target=\"_blank\" rel=\"noopener\" title=\"commit 95b455f\">3.0.50</a>] schemas for the 53 behaviors that had none.</strong> The thin docs were thin because there was no schema to build an attribute table from, and the showcase had nothing to read their options from either. Each was derived from the behavior's own source (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/716\" target=\"_blank\" rel=\"noopener\">#716</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/719\" target=\"_blank\" rel=\"noopener\">#719</a>).",
+          "issues": [
+            716,
+            719
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/14fb3f0\" target=\"_blank\" rel=\"noopener\" title=\"commit 14fb3f0\">3.0.49</a>] every showcase example is a real example.</strong> 83 of 143 behaviors rendered the placeholder <code>&lt;article variant=\"flat\"&gt;Example article content&lt;/article&gt;</code>. This was not the missing-schema gap it looked like — <code>x-card</code> has a 9-property schema — so both causes are fixed, and the selected behavior is always shown first (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/715\" target=\"_blank\" rel=\"noopener\">#715</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/717\" target=\"_blank\" rel=\"noopener\">#717</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/718\" target=\"_blank\" rel=\"noopener\">#718</a>).",
+          "issues": [
+            715,
+            717,
+            718
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/794116a\" target=\"_blank\" rel=\"noopener\" title=\"commit 794116a\">3.0.48</a>] documentation for 118 behaviors that had none.</strong> The panel read \"No doc yet\" for 116 of 143. There is now a test that drives the real page and reads what the panel actually renders, so an undocumented behavior fails the build instead of quietly showing an empty panel (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/713\" target=\"_blank\" rel=\"noopener\">#713</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/714\" target=\"_blank\" rel=\"noopener\">#714</a>).",
+          "issues": [
+            713,
+            714
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/644df89\" target=\"_blank\" rel=\"noopener\" title=\"commit 644df89\">3.0.47</a>] columns match height and the example is centred in the stage.</strong> The list had been pinned at a fixed 24rem beside a panel as tall as its content (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/710\" target=\"_blank\" rel=\"noopener\">#710</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/711\" target=\"_blank\" rel=\"noopener\">#711</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/712\" target=\"_blank\" rel=\"noopener\">#712</a>).",
+          "issues": [
+            710,
+            711,
+            712
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0770d53\" target=\"_blank\" rel=\"noopener\" title=\"commit 0770d53\">3.0.46</a>] the menu sizes to its content, and select says WHICH option.</strong> The menu had no width, so it took one from the containing block and wrapped its own labels (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/707\" target=\"_blank\" rel=\"noopener\">#707</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/708\" target=\"_blank\" rel=\"noopener\">#708</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/709\" target=\"_blank\" rel=\"noopener\">#709</a>).",
+          "issues": [
+            707,
+            708,
+            709
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong id=\"whats-new-3-0-61-list-item-12-lead\">[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/48479aa\" target=\"_blank\" rel=\"noopener\" title=\"commit 48479aa\">3.0.45</a>] <code>x-dropdown</code> examples are real dropdowns.</strong> All 8 rows rendered a trigger with an empty menu, so nothing opened and none of the positioning, sizing or image support could be seen at all (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/701\" target=\"_blank\" rel=\"noopener\">#701</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/703\" target=\"_blank\" rel=\"noopener\">#703</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/704\" target=\"_blank\" rel=\"noopener\">#704</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/705\" target=\"_blank\" rel=\"noopener\">#705</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/706\" target=\"_blank\" rel=\"noopener\">#706</a>).",
+          "issues": [
+            701,
+            703,
+            704,
+            705,
+            706
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3a7eff8\" target=\"_blank\" rel=\"noopener\" title=\"commit 3a7eff8\">3.0.44</a>]</strong> the token column stays on one line and stops at its own edge; rows were painting the name straight over the variant, because <code>input[type=\"checkbox\"]</code> is one unbroken string (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/699\" target=\"_blank\" rel=\"noopener\">#699</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/700\" target=\"_blank\" rel=\"noopener\">#700</a>). <code>x-fieldset</code> and <code>x-formrow</code> accept the plain attribute, not only the <code>data-*</code> form (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/697\" target=\"_blank\" rel=\"noopener\">#697</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/698\" target=\"_blank\" rel=\"noopener\">#698</a>). The demos list is regenerated from its generator rather than hand-drifted — <code>--check</code> had been reporting it stale outright (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/694\" target=\"_blank\" rel=\"noopener\">#694</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/695\" target=\"_blank\" rel=\"noopener\">#695</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/696\" target=\"_blank\" rel=\"noopener\">#696</a>).",
+          "issues": [
+            699,
+            700,
+            697,
+            698,
+            694,
+            695,
+            696
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ff8af6e\" target=\"_blank\" rel=\"noopener\" title=\"commit ff8af6e\">3.0.43</a>]</strong> <code>&lt;details&gt;</code> gets a real summary and demos no longer inherit hero typography; three different insets had been stacked in one box (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/689\" target=\"_blank\" rel=\"noopener\">#689</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/690\" target=\"_blank\" rel=\"noopener\">#690</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/691\" target=\"_blank\" rel=\"noopener\">#691</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/692\" target=\"_blank\" rel=\"noopener\">#692</a>). The behaviors browse panel is usable on a phone — at 375×812 the live example started 18px below the end of a scroller only 627px tall, so it was never visible (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/686\" target=\"_blank\" rel=\"noopener\">#686</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/687\" target=\"_blank\" rel=\"noopener\">#687</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/688\" target=\"_blank\" rel=\"noopener\">#688</a>).",
+          "issues": [
+            689,
+            690,
+            691,
+            692,
+            686,
+            687,
+            688
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fbbfc33\" target=\"_blank\" rel=\"noopener\" title=\"commit fbbfc33\">3.0.42</a>]</strong> block <code>&lt;code&gt;</code>, summaries and plain table cells carry the 1rem content-panel padding the §13 edge rule requires (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/685\" target=\"_blank\" rel=\"noopener\">#685</a>).",
+          "issues": [
+            685
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/28fee16\" target=\"_blank\" rel=\"noopener\" title=\"commit 28fee16\">3.0.41</a>]</strong> reverted a whitespace reformatting of <code>demos/playground.html</code> that corrupted the page: it threw <code>SyntaxError</code> on load, so its module never ran, WB never initialised, and none of the 50 <code>&lt;x-demo&gt;</code> examples upgraded."
+        },
+        {
+          "kind": "added",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/888a219\" target=\"_blank\" rel=\"noopener\" title=\"commit 888a219\">3.0.40</a>] image load failures raise real errors.</strong> The retry logic did everything except report — five retries, a <code>--load-failed</code> class, a custom event, then silence. A broken image now surfaces as a loggable runtime error."
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>[<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/963a0b9\" target=\"_blank\" rel=\"noopener\" title=\"commit 963a0b9\">3.0.39</a>]</strong> two CI-only failures: a descriptive string sitting in an <code>image=</code> attribute on ten elements, and the error viewer itself erroring."
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "label": "2026-08-19",
+      "date": "2026-08-19",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Behaviors showcase rebuilt around a live selector.</strong> Pick any behavior or variant from the list and it renders immediately beside the list, with its formatted source, its live events, the handler you would copy, and its docs — replacing the 88 hand-written demo sections that used to run down the page (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/664\" target=\"_blank\" rel=\"noopener\">#664</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/666\" target=\"_blank\" rel=\"noopener\">#666</a>).",
+          "issues": [
+            664,
+            666
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong><code>&lt;x-table paginated&gt;</code> now paginates.</strong> <code>paginated</code> and <code>pageSize</code> were declared in the schema and read nowhere, so the attribute rendered every row and no controls. Rows are hidden rather than removed, so sorting, searching and row listeners keep working on the same nodes. <code>hoverable</code> and <code>filterable</code> — the documented spellings — did nothing either, because the behavior only ever read <code>hover</code> and <code>searchable</code>; both are accepted now (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/669\" target=\"_blank\" rel=\"noopener\">#669</a>).",
+          "issues": [
+            669
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Form control variants are visible again.</strong> <code>&lt;textarea variant=\"error\"&gt;</code> applied the right class and the CSS rule was correct, yet every variant looked identical to plain. Two causes, both fixed: the behaviors set <code>border</code>/<code>background</code>/<code>color</code> <em>inline</em>, which beats any stylesheet rule, so each one overrode its own variant classes; and the bare-native rules in <code>input.css</code> stacked up to nine <code>:not([type=…])</code> selectors, outranking a modifier class on specificity. <code>x-input--warning</code> was applied by the behavior but no rule ever defined it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/671\" target=\"_blank\" rel=\"noopener\">#671</a>).",
+          "issues": [
+            671
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong id=\"whats-new-2026-08-19-list-item-4-lead\">Native <code>&lt;select&gt;</code> honours <code>variant</code> and <code>size</code>.</strong> The behavior early-returned for a native <code>&lt;select&gt;</code>, handling only <code>clearable</code>, so <code>&lt;select variant=\"error\"&gt;</code> came out with no class at all. A numeric <code>size=\"4\"</code> deliberately keeps its native \"show 4 rows\" meaning instead of becoming a style class (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/681\" target=\"_blank\" rel=\"noopener\">#681</a>).",
+          "issues": [
+            681
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Behaviors no longer destroy your content.</strong> <code>&lt;div x-cardbutton&gt;Example content&lt;/div&gt;</code> rendered an empty card — the text was wiped before the body was built. A sweep of all 105 <code>x-*</code> behaviors found 21 doing this; it is now 10, and all 19 card behaviors keep their content in both the <code>&lt;wb-*&gt;</code> tag and <code>x-*</code> attribute forms. Also closed a broader gap: the schema exclusion list that protects behaviors from being wiped was consulted only for <code>&lt;wb-*&gt;</code> tags, so every entry on it was bypassed by the equivalent <code>x-*</code> attribute (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/678\" target=\"_blank\" rel=\"noopener\">#678</a>).",
+          "issues": [
+            678
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The upload demo actually uploads.</strong> Nothing in the codebase could send a file — the \"Upload a file\" control was a picker. It now does a real round trip with progress and reports what the server received. Uploads are accepted and discarded, never stored (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/676\" target=\"_blank\" rel=\"noopener\">#676</a>).",
+          "issues": [
+            676
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "The documentation panel no longer vanishes for the 116 of 143 behaviors that have no <code>.md</code> — it says so instead of disappearing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/673\" target=\"_blank\" rel=\"noopener\">#673</a>).",
+          "issues": [
+            673
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Every element in the showcase carries a stable id, and the event log names the element an event actually came from, so two events from different elements are no longer identical lines (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/675\" target=\"_blank\" rel=\"noopener\">#675</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/677\" target=\"_blank\" rel=\"noopener\">#677</a>).",
+          "issues": [
+            675,
+            677
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Striped table rows have real contrast — only the odd rows were painted, leaving the even ones transparent, so the stripe depended on whatever surface the table happened to sit on rather than on the theme (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/672\" target=\"_blank\" rel=\"noopener\">#672</a>).",
+          "issues": [
+            672
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Generated samples emit real children for elements that require them — <code>&lt;select&gt;</code> was being handed bare text, which is not selectable, so it rendered an empty control (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/681\" target=\"_blank\" rel=\"noopener\">#681</a>).",
+          "issues": [
+            681
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed 24 dead documentation links: wrong directory depth, behaviors referenced under names they never had (<code>column</code>/<code>row</code>/<code>stack</code> all live in <code>layouts.js</code>), and paths still pointing at the retired <code>src/styles/components/</code> tree."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-16",
+      "date": "2026-08-16",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>docs/components/feedback/badge.md</code>'s \"Color Variants\" section rendering as a single stacked column with a huge empty gap — an auto-promoted fenced code block with several children and no way to declare <code>columns</code> in markdown source always collapsed to <code>cols-1</code>, regardless of how many children it actually had (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/617\" target=\"_blank\" rel=\"noopener\">#617</a>).",
+          "issues": [
+            617
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed every badge shown inside a <code>&lt;x-demo&gt;</code> losing its <code>label</code> text entirely, rendering only the 📖 doc-link icon — the \"children win over label\" check was fooled by the doc-link icon itself, appended as a DOM child before the badge behavior ran (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/618\" target=\"_blank\" rel=\"noopener\">#618</a>).",
+          "issues": [
+            618
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the doc-link icon overlapping badge label text on short hosts like <code>&lt;x-badge&gt;</code> — its inset top-right position works for a card-sized host with a free corner, but a badge is shorter than the icon's own footprint (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/619\" target=\"_blank\" rel=\"noopener\">#619</a>).",
+          "issues": [
+            619
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "All badges now have a 5rem minimum width."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;button icon=\"...\" loading&gt;</code> silently rendering no icon and no spinner on a native <code>&lt;button&gt;</code> — that logic was previously exclusive to <code>&lt;x-button&gt;</code> (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/622\" target=\"_blank\" rel=\"noopener\">#622</a>). Rewrote <code>docs/components/forms/button.md</code> to use only semantic <code>&lt;button&gt;</code>, no <code>&lt;x-button&gt;</code>, relying on <code>autoInject</code>.",
+          "issues": [
+            622
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>docs/components/drawer.md</code>'s \"With Data Attributes\" example using <code>x-drawerLayout</code> (camelCase) — HTML lowercases it to a form that matches neither the registered <code>x-drawer-layout</code> dispatch key nor the unrelated <code>x-drawer</code> behavior, so the div silently never got enhanced (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/620\" target=\"_blank\" rel=\"noopener\">#620</a>). Also removed a redundant \"Usage\" section that duplicated the exact same live example shown just above it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/621\" target=\"_blank\" rel=\"noopener\">#621</a>).",
+          "issues": [
+            620,
+            621
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Rewrote <code>docs/components/cards/card.md</code> entirely to use semantic <code>&lt;article x-card&gt;</code> instead of <code>&lt;x-card&gt;</code> — no wb-* custom tags remain on the page. Fixed a real regression this surfaced: the generic badge/tooltip attribute dispatcher (a separate, intentional feature for things like <code>&lt;span badge=\"success\"&gt;</code>) only ever excluded <code>x-card*</code> custom TAG names from double-applying to card elements — a semantic <code>&lt;article&gt;</code> wasn't covered, so it picked up stray badge classes on the card root until the exclusion was extended to cover both the attribute-decorated forms too (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/625\" target=\"_blank\" rel=\"noopener\">#625</a>).",
+          "issues": [
+            625
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "Added <code>x-card</code> as a proper dedicated dispatch attribute, matching every other behavior's own <code>x-{name}</code> convention (<code>x-drawer</code>, <code>x-popover</code>, <code>x-confirm</code>, ...) — card was the one behavior still missing its dedicated attribute, so <code>card.md</code> had been using the lower-level generic <code>x-behavior=\"card\"</code> fallback instead (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/626\" target=\"_blank\" rel=\"noopener\">#626</a>).",
+          "issues": [
+            626
+          ]
+        }
+      ]
+    },
+    {
+      "label": "2026-08-15",
+      "date": "2026-08-15",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong id=\"whats-new-2026-08-15-list-item-1-lead\"><code>autoInject</code> now defaults to <code>true</code> site-wide</strong> — a plain semantic element (<code>&lt;article&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;table&gt;</code>, ...) gets real component behavior automatically, zero extra markup required. A page can still opt out via <code>WB.init({ autoInject: false })</code>. This is the core architectural shift behind moving away from <code>wb-*</code> custom tags toward semantic HTML across the docs."
+        },
+        {
+          "kind": "changed",
+          "html": "Published a retrospective on the week's most common error patterns (layout/CSS violations, placeholder assets, compliance-test process gaps, x-demo source-extraction bugs, attribute-reading gaps) and codified 4 new standards rules from it, including a ban on placeholder asset paths and a requirement that broken media throw a real, loggable error instead of failing silently."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-14",
+      "date": "2026-08-14",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "Rewrote <code>docs/components/semantics/table.md</code> to cover all 12 attribute permutations with real 5+ row examples, retired the old slotted <code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code> authoring method entirely (it silently rendered 0 rows), and fixed <code>searchable</code> so it actually renders a working search input for the first time (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/433\" target=\"_blank\" rel=\"noopener\">#433</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/588\" target=\"_blank\" rel=\"noopener\">#588</a>).",
+          "issues": [
+            433,
+            588
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "Added Ctrl/Cmd multi-select to <code>&lt;x-table selectable&gt;</code> — clicking a row used to always clear every other selected row; holding Ctrl (Cmd on Mac) now adds/removes just that row instead (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/592\" target=\"_blank\" rel=\"noopener\">#592</a>).",
+          "issues": [
+            592
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Wrote all 15 previously-unwritten stub component docs (alert, badge, progress, spinner, button, card, checkbox, input, select, switch, textarea, cluster, container, flex, grid, header) with real content sourced from their actual behavior code and schemas, plus a new test covering doc completeness across all 74 components (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/581\" target=\"_blank\" rel=\"noopener\">#581</a>).",
+          "issues": [
+            581
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a literal, unrendered <code>{{code}}</code> placeholder and neighbor-swapped code panels on <code>wb-views-demo.html</code> — two compounding bugs in how a live element gets matched to its own source text in the raw page HTML (one involving inert <code>&lt;template&gt;</code> content, one an escaping bug that let code samples render as live markup instead of text) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/580\" target=\"_blank\" rel=\"noopener\">#580</a>).",
+          "issues": [
+            580
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the same source-matching bug's HTML-comment blind spot on <code>frameworks.html</code>: the HTMX demo's code panel was swallowing all of React/Vue/Svelte/Angular/Solid's markup because an explanatory comment elsewhere on the page happened to contain the literal text <code>&lt;x-demo&gt;</code>."
+        },
+        {
+          "kind": "changed",
+          "html": "Code text no longer wraps anywhere on the site — this reverses an earlier \"wrap in prose docs\" rule; every code panel now scrolls horizontally instead, matching what <code>&lt;x-demo&gt;</code> panels already did."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-audio&gt;</code> throwing \"no src provided\" for players using the standard <code>&lt;source src=\"...\"&gt;</code> child pattern instead of a <code>src</code> attribute directly — valid markup that was being rejected. New compliance test catches any audio element with neither going forward."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-alert&gt;</code>'s padding (was 4px under the 1rem minimum) and pinned its dismiss (×) button to the top-right corner instead of wherever content length happened to leave it."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a schema-builder bug that generated invalid CSS classes (e.g. <code>x-button--💾</code>) from free-text attribute values like custom icon emoji."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the doc-link (📖) badge on <code>behaviors.html</code>'s Popover/Confirm/Prompt/Lightbox demos doing nothing on click — a click was bubbling into the demo's own overlay-opening handler and getting swallowed before the link could navigate (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/593\" target=\"_blank\" rel=\"noopener\">#593</a>).",
+          "issues": [
+            593
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Reordered <code>&lt;x-demo events=\"...\"&gt;</code>'s live event log to appear directly under the source code panel, before the \"how to wire it up\" section — see the result first, then learn how it was built."
+        },
+        {
+          "kind": "changed",
+          "html": "<code>demos/site/forms.html</code> now leads with the <code>&lt;form&gt;</code> section instead of burying it near the bottom after every individual control."
+        },
+        {
+          "kind": "added",
+          "html": "Added a step-by-step \"Define → Reuse → Render\" walkthrough to every real x-view example on <code>wb-views-demo.html</code>, with the actual template source, matching CSS rules, and inline explanatory comments — and removed two sections that weren't wb-views at all (a plain <code>x-button</code> component, a nested-card example)."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-13",
+      "date": "2026-08-13",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "Enforced <code>DEMOS-AND-DOCS-STANDARDS.md</code> §3 (\"demos are vertical — never side-by-side\"): removed the <code>demo-section__grid</code> side-by-side wrapper across the site generators and 9 hand-authored demo files (187 instances) — every <code>&lt;x-demo&gt;</code> now stacks vertically instead of sharing a grid row with its siblings (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/563\" target=\"_blank\" rel=\"noopener\">#563</a>).",
+          "issues": [
+            563
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed code samples getting cut off with a horizontal scrollbar on normal-length lines — the demo box's shrink-to-fit measurement only ever sized itself to the rendered CONTROL, capping the code panel to the control's own width even when the code needed more room. It now sizes to whichever is wider, control or code. A follow-up timing bug (locking in a stale width before syntax-highlighting/line-numbers finished rendering) and a second bug (only ever measuring the FIRST of a demo's code panels, missing a second JS-interaction sample) are both fixed too (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/563\" target=\"_blank\" rel=\"noopener\">#563</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/569\" target=\"_blank\" rel=\"noopener\">#569</a>).",
+          "issues": [
+            563,
+            569
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-checkbox checked&gt;</code> and <code>&lt;x-checkbox disabled&gt;</code> rendering as a plain unchecked, enabled box regardless of the attribute — the schema-built internal <code>&lt;input&gt;</code> never actually had those DOM properties reflected onto it. Now matches the same reflection <code>&lt;x-switch&gt;</code> already had (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/564\" target=\"_blank\" rel=\"noopener\">#564</a>).",
+          "issues": [
+            564
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-cardhero&gt;</code> and <code>&lt;x-alert&gt;</code> collapsing to a narrow, unreadable sliver in every demo except the first one on a page — both are full-bleed-by-design components missing the <code>full-width</code> demo opt-out (the same fix already applied once to a single Components-page hero card on 2026-08-08, this time across all 29 remaining instances) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/568\" target=\"_blank\" rel=\"noopener\">#568</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/572\" target=\"_blank\" rel=\"noopener\">#572</a>).",
+          "issues": [
+            568,
+            572
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-cardoverlay&gt;</code>'s background image cropping down to a narrow sliver and cutting off its own baked-in title text — the card had a fixed height but no width of its own, so it inherited whatever a shrink-to-fit ancestor happened to measure. Given a landscape aspect-ratio and a minimum width (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/566\" target=\"_blank\" rel=\"noopener\">#566</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/571\" target=\"_blank\" rel=\"noopener\">#571</a>).",
+          "issues": [
+            566,
+            571
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-carddraggable&gt;</code> silently dropping plain inner text — same root cause as <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/455\" target=\"_blank\" rel=\"noopener\">#455</a> (cardhorizontal): the shared <code>composeCard()</code> content resolution only ever reads a <code>content=\"...\"</code> attribute, never <code>element.innerHTML</code> (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/570\" target=\"_blank\" rel=\"noopener\">#570</a>).",
+          "issues": [
+            455,
+            570
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<code>&lt;x-card size=\"lg\"&gt;</code>/<code>size=\"xl\"&gt;</code> rendered at the same width as every other size instead of their own declared minimum — a generic grid reset (<code>min-width: 0</code>, needed elsewhere to stop long content overflowing) tied the size classes on CSS specificity and won on source order. Fixed with the same compound-selector pattern already used for <code>x-card--overlay-card</code> (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/571\" target=\"_blank\" rel=\"noopener\">#571</a>).",
+          "issues": [
+            571
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-cardexpandable&gt;</code>'s Show More/Show Less doing nothing visible on 7 of its 8 demo instances — their placeholder body text was short enough to never exceed the collapsed height at any reasonable box width, so there was nothing to reveal on expand regardless of whether the click handler ran correctly (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/567\" target=\"_blank\" rel=\"noopener\">#567</a>).",
+          "issues": [
+            567
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Replaced <code>placehold.co</code>'s baked-in-text placeholder images with real photos across <code>demos/site/cards.html</code> (34 images) — text baked directly into a raster image has no way to respond to CSS layout, so any cropping (a narrow card, an odd aspect ratio) cut it off outright. A real photo just crops like a normal photo."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-12",
+      "date": "2026-08-12",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed the site failing to load at all in some contexts: <code>card.js</code>'s internal helper was renamed from <code>cardBase</code> to <code>composeCard</code> as part of the composition-over-inheritance cleanup, but <code>x-card.js</code>'s import was never updated — a syntax error that broke module loading for every page pulling in the Fix Viewer. Also fixed <code>&lt;x-audio&gt;</code> (and every other <code>&lt;wb-*&gt;</code> component with a media <code>src</code>) 404ing when a page under <code>pages/</code> is opened directly instead of through the site's normal navigation — the server's own path-rewriting for that case only recognized native <code>&lt;audio&gt;</code>/<code>&lt;video&gt;</code>/<code>&lt;img&gt;</code> tags, not this project's own custom elements (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/542\" target=\"_blank\" rel=\"noopener\">#542</a>).",
+          "issues": [
+            542
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Increased the theme count from 23 to 50, removing one (<code>charcoal-light-text</code>) that failed contrast requirements (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/470\" target=\"_blank\" rel=\"noopener\">#470</a>).",
+          "issues": [
+            470
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<code>demos/frameworks.html</code> now has a real, live Angular demo — a standalone component JIT-bootstrapped straight from Angular's browser ESM packages, no build step, alongside the existing React/Vue/Svelte/SolidJS/HTMX examples (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/460\" target=\"_blank\" rel=\"noopener\">#460</a>).",
+          "issues": [
+            460
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>x-dialog</code>'s documented <code>.open()</code> method throwing (it only ever worked via <code>.showModal()</code>), a broken example image and undocumented <code>variant</code> property on the cardhero docs page, a race that could leave production code panels unhighlighted, and <code>x-cardhero</code> showing a silent dark scrim instead of a real error when its background image fails to load (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/531\" target=\"_blank\" rel=\"noopener\">#531</a>–<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/535\" target=\"_blank\" rel=\"noopener\">#535</a>).",
+          "issues": [
+            531,
+            535
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the cosmic starfield hero background rendering as a tiled plaid/weave pattern instead of scattered stars (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/536\" target=\"_blank\" rel=\"noopener\">#536</a>), and <code>x-typewriter</code>'s click-to-restart only working when the trigger happened to be a <code>&lt;button&gt;</code> (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/537\" target=\"_blank\" rel=\"noopener\">#537</a>).",
+          "issues": [
+            536,
+            537
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Extracted <code>demos/frameworks.html</code>'s inline styles and page-level <code>&lt;style&gt;</code> block into a proper stylesheet — no visual change, just brings the page in line with the rest of the site's styling convention."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed 13 doc pages and demo galleries referencing images/video that never existed (fake placeholder filenames like <code>hero.jpg</code>, <code>avatar.jpg</code>, <code>movie.mp4</code>) — replaced with real working assets across <code>docs/behavior-cross-reference.md</code>, the img/video component docs, and <code>demos/site/cards.html</code>'s hero/overlay/product card galleries (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/519\" target=\"_blank\" rel=\"noopener\">#519</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/529\" target=\"_blank\" rel=\"noopener\">#529</a>).",
+          "issues": [
+            519,
+            529
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-article&gt;</code> never getting its base CSS class when used as a bare tag, guarded the same way the sibling <code>x-articles</code> case already is so a real <code>&lt;x-article&gt;</code> tag doesn't end up with a redundant duplicate class (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/528\" target=\"_blank\" rel=\"noopener\">#528</a>).",
+          "issues": [
+            528
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Split every \"show N variants side by side\" demo gallery across 8 pages (buttons, cards, badges, and more) into one example per configuration, per the site's own demo-authoring standard — was previously several unrelated component variants crammed into a single shared example block (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/538\" target=\"_blank\" rel=\"noopener\">#538</a>).",
+          "issues": [
+            538
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed most single-item component demos rendering in a fixed, often too-wide box instead of shrinking to fit their actual content — a width floor meant to rescue a few genuinely tiny controls (like a bare progress spinner) was accidentally being applied to every single-item demo on the site (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/539\" target=\"_blank\" rel=\"noopener\">#539</a>).",
+          "issues": [
+            539
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a compliance check that was flagging normal, intentional layering (a hero card's background scrim sitting behind its own text, a demo's small \"docs\" badge sitting on a card's corner) as a visual bug — it was missing those patterns from its existing allowlist for exactly this kind of decorative layering."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a CSS audit that had drifted to counting comments describing past fixes as if they were live violations, and double-counting an auto-generated template copy of the whole stylesheet directory (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/543\" target=\"_blank\" rel=\"noopener\">#543</a>).",
+          "issues": [
+            543
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Restored a demo container's padding to the site's minimum spacing standard after it regressed below the required 1rem (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/544\" target=\"_blank\" rel=\"noopener\">#544</a>).",
+          "issues": [
+            544
+          ]
+        }
+      ]
+    },
+    {
+      "label": "2026-08-09",
+      "date": "2026-08-09",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>pages/behaviors.html</code>'s missing <code>x-alert</code> demo section (3 broken tests), and a matching gap in <code>alert()</code> that only ever read a literal <code>variant</code> attribute even though the schema declares <code>type</code> as an alias (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/522\" target=\"_blank\" rel=\"noopener\">#522</a>).",
+          "issues": [
+            522
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "Added regression coverage confirming <code>demos/frameworks.html</code>'s legacy code-panel duplication stays fixed, and that <code>wb-lazy.js</code>'s IntersectionObserver preload still enhances off-screen elements before they scroll into view — both behaviors were already correct in production but untested (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/449\" target=\"_blank\" rel=\"noopener\">#449</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/491\" target=\"_blank\" rel=\"noopener\">#491</a>).",
+          "issues": [
+            449,
+            491
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>x-articles</code> never getting its base class on a schema-built host, then fixed the fix: an unconditional class-add broke the no-redundant-tag-name-class rule on a real <code>&lt;x-articles&gt;</code> tag — now guarded the same way <code>chip()</code> already guards this exact case (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/523\" target=\"_blank\" rel=\"noopener\">#523</a>).",
+          "issues": [
+            523
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>.x-card__cta</code>/<code>.x-card__product-cta</code> buttons crowding their own text against the edge — the real culprit was inline <code>style.cssText</code> in <code>cardpricing()</code>/<code>cardproduct()</code> silently overriding the CSS class's padding (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/520\" target=\"_blank\" rel=\"noopener\">#520</a>).",
+          "issues": [
+            520
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed every <code>x-cardfile</code> example in the \"fileType variants\"/\"Variants\" sections of <code>demos/site/cards.html</code> showing a visible red \"No href given\" warning and collapsing its filename text to one character per line — the warning renders as a third flex sibling next to the icon and info column, squeezing info's <code>flex:1;min-width:0</code> down to nothing. Gave every example a real href. Separately fixed <code>cardfile()</code> reading a bare <code>type</code> attribute that no real markup ever sets (the schema declares <code>file-type</code>) — every file card showed the same generic folder icon regardless of its declared type."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a false-positive <code>x-audio</code> runtime error: re-running <code>audio()</code> on the same host (a lazy rebuild) replaces the inner <code>&lt;audio&gt;</code> element without detaching the old one's error listener first, so a late error on that now-detached, nobody's-looking-at-it element used to throw for a source that's actually intact."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed GitHub issue bodies rendered on the Issues page auto-promoting embedded <code>&lt;wb-*&gt;</code>/<code>x-*</code> code examples into real, live, fetching elements — a feature built for curated docs content, not arbitrary issue text. An issue merely illustrating a bug (like <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/527\" target=\"_blank\" rel=\"noopener\">#527</a>'s own <code>&lt;x-mdhtml src=\"/docs/guide.md\"&gt;</code> example) would reproduce that exact bug live on the Issues page.",
+          "issues": [
+            527
+          ]
+        }
+      ]
+    },
+    {
+      "label": "2026-08-08",
+      "date": "2026-08-08",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "Reconciled overlapping fixes from two parallel work streams that had independently patched the same 7 issues in different ways — reviewed each pair, kept the better-rooted fix (or merged the best of both), and verified the result against the full compliance suite before shipping."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the home page's \"Live Demos\" section heading to read \"Notification Card Examples\" (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/507\" target=\"_blank\" rel=\"noopener\">#507</a>).",
+          "issues": [
+            507
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed generated progress-bar demos rendering an empty track — the demo generator never filled a value for ranged-number props that aren't required, and a schema-rebuild race could separately wipe an already-painted bar (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/510\" target=\"_blank\" rel=\"noopener\">#510</a>).",
+          "issues": [
+            510
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>navigateTo()</code> throwing on standalone demo pages with no site shell — <code>init()</code> now reports whether it actually initialized, and callers only navigate when it did (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/511\" target=\"_blank\" rel=\"noopener\">#511</a>).",
+          "issues": [
+            511
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a failed module import (e.g. a blocked/slow network request) causing one root failure to log dozens of duplicate errors, and re-triggering a fresh failing request for every later caller. Failures now retry once with a cache-busting request, then are memoized for a short cooldown so every caller in that window shares one error and one log entry, and a module killed by a transient blip can recover instead of staying dead for the page's life (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/512\" target=\"_blank\" rel=\"noopener\">#512</a>, <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/513\" target=\"_blank\" rel=\"noopener\">#513</a>).",
+          "issues": [
+            512,
+            513
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>docs/behaviors-reference.md</code>'s live x-audio/img/video examples pointing at nonexistent placeholder files; added a compliance gate that audits every doc for this. Also added x-stack/x-cluster attribute-decoration examples to the layout table (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/514\" target=\"_blank\" rel=\"noopener\">#514</a>).",
+          "issues": [
+            514
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>/errors-viewer</code> (no extension) 404ing — added the missing route alongside the existing <code>/errors-viewer.html</code> one. Also fixed a latent bug this surfaced: any page served via <code>res.sendFile()</code> 404s when the server's own checkout path contains a dot-prefixed folder (like this repo's own <code>.claude/worktrees/&lt;name&gt;/</code> agent-worktree convention) — now scoped correctly regardless of checkout location (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/516\" target=\"_blank\" rel=\"noopener\">#516</a>).",
+          "issues": [
+            516
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the standalone <code>&lt;x-cardhero&gt;</code> demo on the Components page collapsing to a narrow, unreadable sliver — it was missing the same <code>full-width</code> opt-out every other standalone hero-card demo on the site already uses."
+        },
+        {
+          "kind": "changed",
+          "html": "Issues page: expanded issue bodies now render as real formatted markdown (headings, code blocks) instead of raw text with visible <code>##</code>/<code>```</code> markers. Added an \"In Progress\" filter tab, and click feedback on the toolbar buttons."
+        },
+        {
+          "kind": "changed",
+          "html": "Removed an unnecessary <code>!important</code> that was forcing every inline <code>&lt;code&gt;</code> snippet into an oversized box regardless of content length (even a 2-character snippet got a 58×60px box) — the correct, smaller sizing was already defined elsewhere with normal CSS specificity."
+        },
+        {
+          "kind": "added",
+          "html": "Added a sortable, searchable component index at the top of the Components page — search by name/category/description, sort any column, jump straight to a component's live demo or docs."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the GitHub Pages build serving a stale purple lightning-bolt <code>favicon.png</code> instead of the site's real blue star — the two icon files had silently drifted apart."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the Components page's \"View demo\" links: every one produced a literal broken <code>href=\"#null\"</code> (a generator bug reset the anchor on every regeneration), duplicate anchor IDs collided across several components, clicking never created a back-navigable history entry, and the scroll landed thousands of pixels short on a page long enough for its images to still be loading. Anchor IDs are now readable (<code>pricingCardDemo</code>) instead of generic."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>x-ignore</code> silently doing nothing for several injection paths — it now actually opts an element out everywhere. Added dual authoring support so <code>&lt;span x-chip&gt;</code> resolves the same component as <code>&lt;x-chip&gt;</code>."
+        },
+        {
+          "kind": "changed",
+          "html": "Moved the Themes page's code-syntax-theme picker (49 real highlight.js themes) onto the page itself — it existed but was only ever placed on an internal demo page nobody visits."
+        },
+        {
+          "kind": "changed",
+          "html": "Doc pages now render their usage examples as real, live, working components instead of read-only syntax-highlighted text — affects 61 component doc files. Root-caused (not patched per-instance) the shrink-to-fit collapse this exposed for async-loading widgets, and fixed a full-document boilerplate example that was incorrectly live-rendering its own illustrative <code>&lt;link&gt;</code> tags as real page resources. Every doc's code panel also now has a minimum readable width, regardless of how small the component it's demonstrating is."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-07",
+      "date": "2026-08-07",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>UI Standards Audit + 20-Fix Batch:</strong> Comprehensive audit of deployed site found 4 critical bugs affecting media loading, template syntax, and component rendering. All fixed and covered by new regression tests."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed audio files not loading on pages/components.html and pages/home.html — relative paths (<code>demos/sample.wav</code>) weren't resolving from different base URLs. Now absolute (<code>/demos/sample.wav</code>)."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed template literal syntax error in public/schema-viewer.html — unescaped backticks inside template string were causing <code>SyntaxError: Unexpected identifier 'html'</code>. Backticks now properly escaped."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed cardhero component height inconsistency in demos/site/cards.html — height was suspiciously small (360px when standard is 400–600px). Corrected to 450px for consistency."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed WBSite.init() null-reference crash on standalone demo pages (like intellisense-check.html) that don't have the full site layout (#app container). Now checks if #app exists before initializing site features."
+        },
+        {
+          "kind": "changed",
+          "html": "Corrected marketing article metrics in docs/linkedin-update-article.md — component count was 70 (should be 72), demo count was 709 (should be 513). Updated with verified grep counts."
+        },
+        {
+          "kind": "added",
+          "html": "Added x-demo code-width preset for 50% viewport width — new <code>data-code-width=\"50vw\"</code> attribute on demo blocks."
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Regression Test Coverage Added (4 new test files):</strong> <ul id=\"whats-new-2026-08-07-list-item-2-list\"> <li><code>media-path-validation.spec.ts</code> — validates all src/href attributes use absolute paths, catches media loading failures before deployment</li> <li><code>template-literal-escaping.spec.ts</code> — detects unescaped backticks in template literals that cause SyntaxError at runtime</li> <li><code>component-attribute-validation.spec.ts</code> — validates component attributes (cardhero height 400–600px, x-progress 0–100, etc.) against expected ranges</li> <li><code>demo-page-safety.spec.ts</code> — ensures standalone demo pages load without null-reference crashes</li> </ul>"
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed x-behavior attribute scanning on lazy-loaded pages (doc-viewer.html, standalone demos) — <code>WB.scan()</code> now checks if root itself matches [x-behavior] before querying descendants (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/322\" target=\"_blank\" rel=\"noopener\">#322</a>).",
+          "issues": [
+            322
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed behaviors.html compliance gaps — added CSS shrink-to-fit rules for single-item demos, proper text padding for buttons, and root-relative resource paths (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/486\" target=\"_blank\" rel=\"noopener\">#486</a>).",
+          "issues": [
+            486
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed flaky regression tests under parallel load — ENOENT race condition when concurrent tests create/delete temporary files. Wrapped file reads in try-catch (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/382\" target=\"_blank\" rel=\"noopener\">#382</a>).",
+          "issues": [
+            382
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Verified x-cardvideo aspect-ratio parity with cardimage — both now default to 16/9, preventing inconsistent box heights on load failure (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/482\" target=\"_blank\" rel=\"noopener\">#482</a>).",
+          "issues": [
+            482
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed card footer text alignment — removed flexbox centering from card footers that collided with auto-injected site footer class. Now properly left-aligned at all viewport sizes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/350\" target=\"_blank\" rel=\"noopener\">#350</a>).",
+          "issues": [
+            350
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed card size variants to have visually distinct widths — increased max-widths: xs/sm/md/lg/xl now 200/300/400/520/650px with consistent 100–130px progression."
+        },
+        {
+          "kind": "changed",
+          "html": "Verified x-cardportfolio variant and size support — compact/horizontal/full variants and xs/sm/md/lg/xl sizes all render visually distinct, availability dot colors working correctly."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed audio src path on content.html — replaced external soundhelix.com URL with local <code>/demos/audio.mp3</code> to avoid CORS issues and ensure reliable playback."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed home page load time bottleneck — removed redundant 1500ms re-render that was forcing users to wait 1.5+ seconds for dashboard to fully load. Now loads under 2000ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/390\" target=\"_blank\" rel=\"noopener\">#390</a>).",
+          "issues": [
+            390
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "All regression tests passing (250+), all compliance tests green (8/8). Ready for .io deployment."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-05",
+      "date": "2026-08-05",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed several pages/list items sitting flush against neighboring content with no gap at all (list items wrapping onto a new line touched the item below; several code snippets sitting close together visually overlapped) — added real minimum spacing project-wide."
+        },
+        {
+          "kind": "changed",
+          "html": "8 of the standalone component-showcase pages (Cards, Content, Effects, Feedback, Forms, Interactive, Layout, Overlays) rendered with their content flush against the browser edge, no page margin at all — now match every other page's breathing room."
+        },
+        {
+          "kind": "changed",
+          "html": "The homepage's \"Get Started\" and \"See the Components\" buttons didn't go anywhere when clicked — now open the real setup guide and the Components page, respectively."
+        },
+        {
+          "kind": "changed",
+          "html": "Replaced the homepage's animated \"typing\" code sample with a plain static one — it looked like a live, clickable control when it was only ever meant to be an illustration."
+        },
+        {
+          "kind": "changed",
+          "html": "<code>&lt;input type=\"password\"&gt;</code> now gets the show/hide toggle automatically (closes a carry-over from yesterday's fix that had been silently lost)."
+        },
+        {
+          "kind": "added",
+          "html": "New <strong>Issues</strong> page in the main menu — browse every open/closed GitHub issue, full body included, with a live count and date range for whichever filter you're on."
+        },
+        {
+          "kind": "added",
+          "html": "New <strong>Error Log</strong> button at the bottom of the main menu, linking straight to the error viewer."
+        },
+        {
+          "kind": "changed",
+          "html": "Real runtime errors were only ever showing up in your browser's own devtools console — the site's own error log and error viewer never actually received them. Fixed the wiring; errors now land in both places."
+        },
+        {
+          "kind": "changed",
+          "html": "The notes drawer now automatically files a real GitHub issue for every note you save, instead of just sitting in a local file nobody reviews."
+        },
+        {
+          "kind": "changed",
+          "html": "On the Behaviors page (and everywhere else), examples decorated with an <code>x-*</code> attribute (like <code>x-toast</code>, <code>x-ripple</code>) now get the same clickable \"docs\" icon in the corner that components already had, instead of a plain text link easy to miss."
+        },
+        {
+          "kind": "changed",
+          "html": "Every size and color variant of the dropdown/select control now actually looks different — they used to render almost identically regardless of which size or variant you picked."
+        },
+        {
+          "kind": "changed",
+          "html": "Changing the theme in one place (like the header) now instantly updates every other theme picker on the page — they used to fall out of sync until you reloaded."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a drawer/sidebar toggle button that threw an error on every click after the first."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a navigation bar crash that could happen when it contained custom link markup."
+        },
+        {
+          "kind": "changed",
+          "html": "x-audio's documentation examples pointed at audio files that never existed — replaced with real, working audio."
+        },
+        {
+          "kind": "changed",
+          "html": "Demos page: each category is now one clickable card (title + description together), instead of a description sitting above a separate, smaller \"view\" link."
+        },
+        {
+          "kind": "added",
+          "html": "Added documentation for 9 previously-undocumented layout behaviors (center, masonry, sticky, scrollable, sidebarlayout, switcher, cover, reel, icon)."
+        },
+        {
+          "kind": "changed",
+          "html": "Demo blocks can now show you how to listen for the events a control fires — add it to a demo and see a live log update as you interact with the control above it."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed several component bugs: card glass+elevated variants losing their glass look, video cards with no fixed aspect ratio, a heading-margin rule losing to a more specific unrelated rule on the Components page, and a stale page generator that would have undone several of these fixes if it had been re-run."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-04",
+      "date": "2026-08-04",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<code>&lt;input type=\"password\"&gt;</code> now gets the show/hide toggle automatically, just like <code>type=\"checkbox\"</code>/<code>type=\"radio\"</code>/<code>type=\"range\"</code> already did — no more redundant <code>x-password</code> attribute needed."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a real double-border on styled inputs (Success/Error variants showed two concentric rings) — a wrapper div was reusing the same CSS class as the input it wrapped."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the Components page's section headings sitting too close to their content — a page-specific spacing rule was silently losing to a more specific rule elsewhere and never actually applying."
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Notes drawer, rebuilt:</strong> notes now save to a real file (not just this browser's local storage), support pasting a screenshot directly into a note, can capture a reference to any element on the page you click, and got a cleaner layout (Save/New at the bottom, Close pinned to the corner, a searchable Lookup for past notes)."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the Content page's searchable table — the search box never actually appeared."
+        },
+        {
+          "kind": "changed",
+          "html": "Product cards with a broken image now retry and show a clear failed state instead of a silent empty box forever, matching image/video cards."
+        },
+        {
+          "kind": "changed",
+          "html": "45+ components no longer carry a redundant CSS class that just repeats their own tag name (this rule is now enforced project-wide, not just for the components caught so far)."
+        },
+        {
+          "kind": "changed",
+          "html": "The \"Forced Dark/Light/Cyberpunk Mode\" theme demos now render as real, properly-styled cards instead of a plain unstyled box."
+        },
+        {
+          "kind": "changed",
+          "html": "Stats cards' Compact/Large variants, and Product cards' Horizontal variant, now actually look different from the default — previously the variant class was added but no CSS ever consumed it."
+        },
+        {
+          "kind": "changed",
+          "html": "Expandable cards gained a <code>lines</code> option to clamp collapsed text to an exact number of lines, instead of an arbitrary pixel height that could cut off mid-word."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the Copy button demo silently copying the wrong text (it read an attribute name the component doesn't actually use), and the Dark Mode Toggle demo doing nothing at all when clicked — both now also look like real buttons instead of bare text."
+        },
+        {
+          "kind": "changed",
+          "html": "The footer now auto-hides on scroll in mobile landscape mode, same as the header already did, to reclaim screen space."
+        },
+        {
+          "kind": "changed",
+          "html": "<code>&lt;x-demo&gt;</code> blocks with no explicit column count now default to a single column instead of three."
+        },
+        {
+          "kind": "changed",
+          "html": "Card Components demo: several images/avatars didn't match their card's stated topic or person, and some links went nowhere real — fixed across the gallery."
+        },
+        {
+          "kind": "changed",
+          "html": "Documentation: split V3-GUIDE §3 from a cramped 6-component <code>&lt;x-demo&gt;</code> into 6 separate ones per standard <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/2\" target=\"_blank\" rel=\"noopener\">#2</a>/<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/17\" target=\"_blank\" rel=\"noopener\">#17</a>/<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/18\" target=\"_blank\" rel=\"noopener\">#18</a> — improved readability and component isolation (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/483\" target=\"_blank\" rel=\"noopener\">#483</a>).",
+          "issues": [
+            2,
+            17,
+            18,
+            483
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "Performance: widened <code>wb-lazy.js</code> lazy-injection <code>rootMargin</code> from 200px to 1200px — components now begin loading sooner and feel more responsive on scroll (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/491\" target=\"_blank\" rel=\"noopener\">#491</a>).",
+          "issues": [
+            491
+          ]
+        }
+      ]
+    },
+    {
+      "label": "2026-08-03",
+      "date": "2026-08-03",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>docs/manifest.json</code> 404ing on the root SPA (<code>/index.html</code>) — every component's \"Docs:\" link on the main site was silently dead."
+        },
+        {
+          "kind": "changed",
+          "html": "45 components (<code>&lt;x-card&gt;</code>, <code>&lt;x-button&gt;</code>, <code>&lt;x-badge&gt;</code>, and more) no longer carry a redundant CSS class that just repeated their own tag name."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>WB.scan()</code> never processing the exact element passed to it (only its descendants) — this was silently breaking syntax highlighting, line numbers, and the copy button on every dynamically-injected code panel site-wide."
+        },
+        {
+          "kind": "changed",
+          "html": "Framework Integration Demo: removed a legacy, duplicate code-highlighting system that was clipping the left edge of every code sample; Svelte and SolidJS examples now compile and render live in the browser (Angular can't without a real build step — explained why, on the page)."
+        },
+        {
+          "kind": "changed",
+          "html": "Playground: the 20-video YouTube example now grids 3-per-row instead of one huge column; sample form labels now sit above their field instead of beside it."
+        },
+        {
+          "kind": "changed",
+          "html": "The site's browser-tab title and social-share preview card showed generic placeholder text (\"My Awesome Site\") instead of real branding — fixed, with proper preview images added."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed flat, non-responsive page padding eating up to 38% of small phone screens across 11 pages — a full-width hero image was reading as a narrow strip because of it."
+        },
+        {
+          "kind": "changed",
+          "html": "Every clickable button, card, and switch across the demo pages now shows a quick confirmation toast when clicked."
+        },
+        {
+          "kind": "changed",
+          "html": "Card Components demo: added a theme picker, and replaced placeholder links/identity (generic <code>example.com</code> URLs, a stock \"Jane Doe\") with real destinations."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the profile card's role badge sitting visibly off-center on its cover photo (a repeat of an earlier \"fix\" that didn't actually center it)."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the theme picker silently duplicating itself into two out-of-sync dropdowns over a long browsing session."
+        },
+        {
+          "kind": "changed",
+          "html": "Removed several redundant <code>x-fieldset</code>/<code>x-form</code> attributes that were already automatic — added a test that catches this pattern going forward."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-02",
+      "date": "2026-08-02",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-input&gt;</code> rendering no real <code>&lt;input&gt;</code> element at all on any standalone demo page (32 broken instances on the Form Controls page alone) — the schema-driven markup it depends on was never built under this site's lazy-loading runtime. It's now constructed directly, matching how other components already handle this."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the theme picker breaking syntax-highlighting colors site-wide on any page that includes it — it was resolving to a dev-only file path that doesn't exist in production."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed silent failures across the site being swallowed instead of shown — component errors now surface in the visible error log instead of vanishing into the console."
+        },
+        {
+          "kind": "changed",
+          "html": "<code>&lt;x-button icon=\"...\"&gt;</code> now throws a clear error (with a link to the icon list) if set but left empty, instead of silently rendering no icon."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-audio&gt;</code> silently doing nothing on a missing/empty file — it now throws a clear error, and 8 broken audio examples on the Content page were pointed at a real audio file."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the Shop Now / Learn More buttons on the Card Components hero demo, and the pricing/portfolio CTA buttons on Card Components and the main Components page — all had no destination before today."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the theme picker showing up twice (unsynced) on some pages — consolidated to one, in the site header."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the doc-link icon disappearing on the home page hero card, a role badge sitting too low on profile cards, the avatar status dot being too small, a dropdown menu getting clipped when it opened upward, an input field showing three stacked borders instead of one, and the date/time picker icon being invisible in dark mode."
+        }
+      ]
+    },
+    {
+      "label": "2026-08-01",
+      "date": "2026-08-01",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-select&gt;</code> silently discarding real <code>&lt;option&gt;</code> children — every documented example (<code>&lt;x-select&gt;&lt;option&gt;...&lt;/option&gt;&lt;/x-select&gt;</code>) rendered an empty dropdown with only the placeholder."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-draggable&gt;</code>/<code>x-draggable</code> jumping to a wildly wrong position on every drag instead of tracking the mouse — and getting worse with each subsequent drag. Also fixed <code>axis=\"x\"</code>/<code>axis=\"y\"</code>, which never actually constrained movement."
+        },
+        {
+          "kind": "changed",
+          "html": "The Behaviors page no longer mixes in 15 full <code>wb-*</code> component demos (alerts, badges, progress bars, spinners, modals, drawers, tabs, accordion, audio player, switch, rating) — it's scoped back to genuine <code>x-*</code> attribute behaviors, with links to the Components page for the rest."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the deprecated <code>&lt;x-checkbox&gt;</code>/<code>&lt;x-textarea&gt;</code> wrapper elements on the Form Controls demo page — converted to native <code>&lt;input type=\"checkbox\"&gt;</code>/<code>&lt;textarea&gt;</code>, which already get the same styling with no wrapper needed."
+        },
+        {
+          "kind": "changed",
+          "html": "The home page no longer eagerly fetches the entire page-builder partial library (20+ files) on load — those now load lazily, only when a page actually uses one."
+        },
+        {
+          "kind": "changed",
+          "html": "<code>&lt;x-demo&gt;</code>'s code sample panel now scrolls horizontally instead of wrapping, and spans full width on mobile (≤700px) so scrolling past a page of demos doesn't jitter the page width — desktop still hugs each demo's own content."
+        },
+        {
+          "kind": "added",
+          "html": "Added a <code>size</code> attribute to <code>x-gallery</code> for fixed-size thumbnails (e.g. <code>size=\"150px\"</code>), independent of the <code>columns</code> count."
+        }
+      ]
+    },
+    {
+      "label": "2026-07-30",
+      "date": "2026-07-30",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed a sanitizer bug in the markdown renderer that silently ate any attribute whose name contained \"on\" followed by more letters before its own <code>=</code> (e.g. <code>options='...'</code>) — this was corrupting JSON-in-attribute examples site-wide, including live <code>&lt;x-select&gt;</code> dropdowns that quietly lost all their options."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-cardportfolio&gt;</code>'s variant, size, and availability-status indicator — none of them had any visible effect before today."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-timeline&gt;</code> not rendering at all (missing a base <code>display: block</code>)."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-drawer&gt;</code> on standalone demo pages: it showed generic placeholder text instead of its real content, \"top\"/\"bottom\" positions rendered identically to \"left\", and the <code>variant</code> attribute (default/overlay/push) had no effect at all."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-dropdown&gt;</code>: position values didn't match the real attribute names so every position looked the same, menus opened empty when using plain text content, and <code>trigger=\"hover\"</code> never actually worked."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed progress bars and other enum-variant showcase pages rendering at 0%/invisible because the demo generator never filled in a representative value."
+        },
+        {
+          "kind": "added",
+          "html": "Added a real button-like appearance (background, border, cursor) to dialog/drawer/dropdown triggers that previously looked like plain unstyled text."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed inline code chips and code blocks wrapping mid-word instead of scrolling or breaking at real word boundaries, on the Components page and the frameworks demo."
+        },
+        {
+          "kind": "changed",
+          "html": "Every demo's \"read the docs\" link now sits as a small badge in the component's own top-right corner instead of a detached line below the whole group."
+        },
+        {
+          "kind": "changed",
+          "html": "Converted every remaining static code example on the Select doc page and the full Behavior Cross-Reference doc (159 examples) into live, rendered demos."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed 8 standalone demo pages that had zero padding, so headings and text sat flush against the browser edge."
+        },
+        {
+          "kind": "changed",
+          "html": "Closed out a large batch of compliance-gate debt: reduced excess <code>!important</code> CSS usage back under the project's own limit, fixed a broken page-fragment generator that was shipping full HTML documents where the app expected bare fragments, fixed 10 pages' stylesheet links that 404'd under this site's actual deployed URL, and cleared out stale px-to-rem and data-attribute audit failures."
+        }
+      ]
+    },
+    {
+      "label": "2026-07-29",
+      "date": "2026-07-29",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "Fixed a Playwright-suite-wide \"app ready\" race: dozens of tests waited on the WB object existing, which is true before the app actually finishes initializing — now they wait for the real ready signal."
+        },
+        {
+          "kind": "changed",
+          "html": "Restored the Behaviors page's missing content (spinner, and more) by regenerating it from its own schema, and fixed two stale button/alert markup patterns flagged by the compliance gate."
+        },
+        {
+          "kind": "changed",
+          "html": "Rewrote a large batch of stale, pre-broken tests (dead entry points, renamed files, old CSS class names) so they test what the code actually does today."
+        },
+        {
+          "kind": "added",
+          "html": "Added margins/padding to the Card Components demo page and restored a missing closing <code>&lt;/html&gt;</code> tag."
+        },
+        {
+          "kind": "added",
+          "html": "Added this \"What's New\" page."
+        }
+      ]
+    },
+    {
+      "label": "2026-07-28",
+      "date": "2026-07-28",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "Split the Card Components demo page apart from its 56-card permutation test matrix — the demo page loads faster and the matrix now has its own dedicated test fixture."
+        },
+        {
+          "kind": "changed",
+          "html": "Deprecated <code>&lt;x-checkbox&gt;</code>/<code>&lt;x-textarea&gt;</code> in favor of native <code>&lt;input type=\"checkbox\"&gt;</code>/<code>&lt;textarea&gt;</code> with attributes — no more reinventing what the browser already does."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed the Playground's \"Endpoint sees\" panel showing unconditionally instead of respecting its hidden state."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a 404 in the code-highlighting fallback loader."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed <code>&lt;x-search&gt;</code> never getting its variant/size CSS classes."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed cardhero variants, cardproduct badges, a lazy-demo scanning bug, an error-log race condition, and button-transition test flakiness."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed lightbox, alert variants, countdown, YouTube embeds, and a cardimage race condition that made valid images falsely show \"unavailable.\""
+        }
+      ]
+    },
+    {
+      "label": "Week of 2026-07-14 – 18",
+      "date": "2026-07-14",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "Consolidated demo pages into 8 clear categories, up from a sprawling flat index."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed dispatch collisions where multiple behaviors fought over the same host element (switch, checkbox, select, textarea, input, button)."
+        },
+        {
+          "kind": "added",
+          "html": "Added just-in-time CSS loading for behaviors — no more shipping every behavior's stylesheet on every page."
+        },
+        {
+          "kind": "fixed",
+          "html": "Fixed a CLS (layout shift) regression in the grid layout."
+        },
+        {
+          "kind": "added",
+          "html": "Added a selectable debug-trace category filter for easier troubleshooting."
+        }
+      ]
+    }
+  ]
+}

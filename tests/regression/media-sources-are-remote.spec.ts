@@ -38,7 +38,7 @@ const SCAN_EXT = new Set(['.html', '.js', '.json', '.md']);
 
 /** Historical prose is a record of what happened; it is not an example. */
 const EXEMPT_FILES = [
-  /whats-new\.html$/,
+  /releases\.html$/,
   /CHANGELOG/i,
   /[\/]data[\/]/,          // generated indexes, rebuilt from the sources above
   /node_modules/,

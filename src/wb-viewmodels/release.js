@@ -132,7 +132,8 @@ export function release(element, options = {}) {
   onClick = (e) => {
     e.preventDefault();
     const root = location.pathname.replace(/[^/]*$/, '');
-    location.href = root + '?page=whats-new';
+    // What's New became Releases for 1.0; open the entry for this version.
+    location.href = root + '?page=releases#release-' + String(VERSION.version || '').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
   };
   element.addEventListener('click', onClick);
 

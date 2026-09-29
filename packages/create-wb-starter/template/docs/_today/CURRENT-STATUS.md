@@ -2,6 +2,25 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-09-29.** On branch `claude/fervent-noether-ydmxea` (PR #1221).
+
+**Task:** P1 issues, in order. Fixed on the branch: [#1185](https://github.com/CieloVistaSoftware/wb-starter/issues/1185), [#1184](https://github.com/CieloVistaSoftware/wb-starter/issues/1184), [#1183](https://github.com/CieloVistaSoftware/wb-starter/issues/1183),
+[#1146](https://github.com/CieloVistaSoftware/wb-starter/issues/1146)/[#1147](https://github.com/CieloVistaSoftware/wb-starter/issues/1147)/[#1150](https://github.com/CieloVistaSoftware/wb-starter/issues/1150), and [#1182](https://github.com/CieloVistaSoftware/wb-starter/issues/1182) (What's New became Releases).
+
+**Releases (1.0):** `data/releases.json` is the changelog, rendered by
+`pages/releases.html`; `?page=whats-new` forwards there. `npm run ship` writes the
+entry with `scripts/release-entry.mjs`, and release.mjs gate 2 requires it.
+`npm run ship -- --as 1.0.0` cuts 1.0. The old page and script are in `archive/`.
+
+**Next step:**
+1. Ship 1.0.0 once PR #1221 CI is green. John pushes tag `v1.0.0` (and `v4.0.6` at 5203cd24).
+2. After 1.0 ships, change today's closing comments to "Fixed in 1.0.0".
+3. The gate-reliability P1s are next: #1158, #1163, #1162, #1201, #1203.
+
+**Open questions:** #1122 (remote vs local images) and #998 (badge colour) need John.
+
+---
+
 **Updated 2026-09-24.** The release batch below shipped as **4.0.5** (482b940,
 2026-09-14). Every issue it unblocked is closed: [#1070](https://github.com/CieloVistaSoftware/wb-starter/issues/1070), [#1075](https://github.com/CieloVistaSoftware/wb-starter/issues/1075), [#1078](https://github.com/CieloVistaSoftware/wb-starter/issues/1078), [#1102](https://github.com/CieloVistaSoftware/wb-starter/issues/1102),
 [#1103](https://github.com/CieloVistaSoftware/wb-starter/issues/1103), [#1104](https://github.com/CieloVistaSoftware/wb-starter/issues/1104), [#1106](https://github.com/CieloVistaSoftware/wb-starter/issues/1106), [#792](https://github.com/CieloVistaSoftware/wb-starter/issues/792).

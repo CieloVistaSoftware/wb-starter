@@ -60,7 +60,7 @@ PUSH REFUSED - this batch has no version.
   several different published states, so "is this fix in 4.0.2?" stops having
   an answer.
 
-  Ship it instead, which writes What's New from these commits, runs the release
+  Ship it instead, which writes the Releases entry (data/releases.json) from these commits, runs the release
   gates, bumps, tags, and pushes:
 
       npm run ship

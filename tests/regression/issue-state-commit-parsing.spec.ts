@@ -129,14 +129,15 @@ test.describe('#1041: narrative files are not mistaken for work', () => {
       'scripts/commit-batch.mjs',
       'docs/_today/CURRENT-STATUS.md',
       'docs/standards/ISSUE-SIGNATURE-BLOCK.md',
-      'pages/whats-new.html',
+      'data/releases.json',
+      'archive/pages/whats-new.html',
       'data/test-results/regression.json',
     ]) {
       const covered =
         path.startsWith('docs/_today/') ||
         path.startsWith('data/') ||
         path.startsWith('docs/standards/') ||
-        path === 'pages/whats-new.html' ||
+        path.startsWith('archive/') ||
         /^CHANGELOG/i.test(path) ||
         /^scripts\/(issue-|commit-|check-issue|apply-issue|mark-issue|priority-gate|signature-field|build-priority)/.test(path);
 

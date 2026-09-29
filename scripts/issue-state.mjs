@@ -100,7 +100,8 @@ function isNarrative(file) {
   return f.startsWith('docs/_today/')          // handoff logs cite everything
     || f.startsWith('data/')                   // generated reports cite everything
     || f.startsWith('docs/standards/')         // standards quote issues as examples
-    || f === 'pages/whats-new.html'            // release notes cite what shipped
+    || f === 'data/releases.json'              // release notes cite what shipped
+    || f.startsWith('archive/')                // retired files, including the old What's New
     || /^CHANGELOG/i.test(f)
     || /^scripts\/(issue-|commit-|check-issue|apply-issue|mark-issue|priority-gate|signature-field|build-priority)/.test(f);
 }

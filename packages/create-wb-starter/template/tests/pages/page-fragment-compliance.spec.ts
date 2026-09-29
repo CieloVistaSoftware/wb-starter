@@ -40,7 +40,7 @@ for (const file of pageFiles) {
       // real tag/script this fragment is loading. Strip <pre> blocks before
       // scanning for real violations, same rationale as stripping <script>
       // blocks below for the inline-style check.
-      // #820: also strip a standalone <code>. whats-new.html describes the
+      // #820: also strip a standalone <code>. whats-new.html (now archived) described the
       // autoInject default in prose and names `WB.init({ autoInject: false })`
       // inside a bare <code> -- documentation text, not a call this fragment
       // makes. The rationale above already covers it; only the <pre> case was

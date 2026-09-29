@@ -5,6 +5,9 @@ import { preloadCssForHtml } from './style-loader.js';
 import { VERSION } from './version.js';
 import { setRule } from './dynamic-style.js';
 
+/** Old page ids that now render another page (URL is rewritten to the new id). */
+const PAGE_ALIASES = { 'whats-new': 'releases' };
+
 export default class WBSite {
   constructor() {
     this.config = null;
@@ -534,6 +537,18 @@ export default class WBSite {
   }
 
   async navigateTo(pageId) {
+    // Renamed pages keep their old URLs working: What's New became Releases
+    // for 1.0, and ?page=whats-new is in bookmarks and old issue links.
+    if (PAGE_ALIASES[pageId]) {
+      pageId = PAGE_ALIASES[pageId];
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('page') !== pageId) {
+          url.searchParams.set('page', pageId);
+          history.replaceState(history.state, '', url);
+        }
+      } catch { /* no URL API: the page still renders */ }
+    }
     // Defense in depth (#511). The real fix is in the callers: init() now
     // reports whether it actually initialized, and src/index.js / src/main.js
     // only navigate when it did. But navigateTo() is public API — it hangs off

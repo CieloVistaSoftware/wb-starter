@@ -154,19 +154,17 @@ test.describe('#1076 — a push to main must carry a version', () => {
     const pkg = JSON.parse(fs.readFileSync(path.join(REPO, 'package.json'), 'utf8'));
     expect(pkg.scripts.ship, 'the hook names a command that does not exist').toBeTruthy();
     expect(fs.existsSync(path.join(REPO, 'scripts', 'ship.mjs'))).toBe(true);
-    expect(fs.existsSync(path.join(REPO, 'scripts', 'whats-new-entry.mjs'))).toBe(true);
+    expect(fs.existsSync(path.join(REPO, 'scripts', 'release-entry.mjs'))).toBe(true);
   });
 
-  test('the shipped version is described on the What\'s New page', () => {
+  test('the shipped version is described on the Releases page', () => {
     // release.mjs gate 2 enforces this at release time; asserted here so a
-    // hand-edit that removes the section is caught too. This is the whole point
+    // hand-edit that removes the entry is caught too. This is the whole point
     // of a batch having a name: you can look up what is in it.
     const version = JSON.parse(fs.readFileSync(path.join(REPO, 'package.json'), 'utf8')).version;
-    const page = fs.readFileSync(path.join(REPO, 'pages', 'whats-new.html'), 'utf8');
-    const id = `whats-new-${version.replace(/\./g, '-')}`;
-    expect(
-      page.includes(`id="${id}"`) || page.includes(`>${version}<`),
-      `pages/whats-new.html does not say what is in ${version}`,
-    ).toBe(true);
+    const data = JSON.parse(fs.readFileSync(path.join(REPO, 'data', 'releases.json'), 'utf8'));
+    const entry = data.releases.find((r: { version: string }) => r.version === version);
+    expect(entry, `data/releases.json does not say what is in ${version}`).toBeTruthy();
+    expect(entry.items.length, `the ${version} entry lists nothing`).toBeGreaterThan(0);
   });
 });

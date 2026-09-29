@@ -20,14 +20,14 @@ import { test, expect } from '../fixtures/offline';
 test.describe('footer anchors to viewport bottom (site.css)', () => {
   // #1020: the second case used to be `/?page=behaviors`, picked for being long
   // and full of code blocks. That page no longer has a footer at all — John,
-  // arrow drawn on it: "remove this" — so the case moved to What's New, which is
-  // longer (11091px of content) and carries more code (481 elements) than the
+  // arrow drawn on it: "remove this" — so the case moved to What's New (now Releases,
+  // 1.0), which is longer (11091px of content) and carries more code (481 elements) than the
   // behaviors page ever did, and therefore tests the same two original bugs
   // better. The exemption is asserted below rather than merely tolerated, so a
   // footer going missing from any OTHER page still fails.
   const PAGES = [
     { url: '/', label: 'home (short content)' },
-    { url: '/?page=whats-new', label: "what's new (long content, code blocks)" },
+    { url: '/?page=releases', label: 'releases (long content, code blocks)' },
   ];
 
   for (const { url, label } of PAGES) {
@@ -66,7 +66,7 @@ test.describe('footer anchors to viewport bottom (site.css)', () => {
   test('mobile width (375px): footer still anchors, no page-level horizontal scroll', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     // #1020: was `/?page=behaviors` — see the note on PAGES above.
-    await page.goto('/?page=whats-new', { waitUntil: 'networkidle' });
+    await page.goto('/?page=releases', { waitUntil: 'networkidle' });
     await page.waitForSelector('.site__footer', { timeout: 15000 });
 
     const result = await page.evaluate(() => {

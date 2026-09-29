@@ -76,25 +76,26 @@ function fixtureLock() {
 
 /**
  * A throwaway project containing the real script and just enough around it for
- * its two gates to pass: a ratchet that exits 0, a What's New naming the next
+ * its two gates to pass: a ratchet that exits 0, a data/releases.json entry naming the next
  * version, and a version stamper that regenerates src/core/version.js.
  */
 function buildFakeProject(): string {
   const dir = mkdtempSync(join(tmpdir(), 'wb-release-991-'));
-  for (const sub of ['scripts', 'pages', '.husky', 'src/core']) {
+  for (const sub of ['scripts/lib', 'data', '.husky', 'src/core']) {
     mkdirSync(join(dir, sub), { recursive: true });
   }
 
   // The script under test — the real one, not a copy of its logic.
   copyFileSync(join(ROOT, 'scripts/release.mjs'), join(dir, 'scripts/release.mjs'));
+  copyFileSync(join(ROOT, 'scripts/lib/next-version.mjs'), join(dir, 'scripts/lib/next-version.mjs'));
 
   // Gate 1: the ratchet. Nothing to ratchet here, so it passes.
   writeFileSync(join(dir, '.husky/test-ratchet.mjs'), 'process.exit(0);\n');
 
-  // Gate 2: What's New must name the version being released.
+  // Gate 2: data/releases.json must name the version being released.
   writeFileSync(
-    join(dir, 'pages/whats-new.html'),
-    `<section id="whats-new-${NEXT.split('.').join('-')}"><h2>${NEXT}</h2></section>\n`
+    join(dir, 'data/releases.json'),
+    JSON.stringify({ releases: [{ version: NEXT, date: '', summary: '', items: [{ kind: 'fixed', html: 'x' }] }] }) + '\n'
   );
 
   // The stamper, reduced to the one surface release.mjs verifies afterwards.

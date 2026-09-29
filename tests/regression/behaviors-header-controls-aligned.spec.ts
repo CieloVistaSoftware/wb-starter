@@ -105,12 +105,13 @@ test.describe('behaviors header control strip alignment (#1004)', () => {
     expect(spread, `the strip wrapped — tops span ${Math.round(spread)}px`).toBeLessThan(16);
   });
 
-  test('the version badge stays a badge: short, and it opens What\'s New', async ({ page }) => {
+  test('the version badge stays a badge: short, and it opens Releases', async ({ page }) => {
     // John: "Shrink to just version, release-modification format, and remove
     // text." Spelling the drift out — "v4.0.1.7 ⚠ 1 behind origin/main · dirty"
     // — made the badge wide enough to wrap the whole header, which is what
     // pushed the strip over the sidebar in the first place. And: "I already
-    // told you when clicking it will open What's New."
+    // told you when clicking it will open What's New." What's New became
+    // Releases for 1.0, and the click lands on this version's entry.
     const badge = page.locator('.x-release, [x-release]').first();
     await badge.waitFor({ state: 'visible', timeout: 15_000 });
 
@@ -122,6 +123,6 @@ test.describe('behaviors header control strip alignment (#1004)', () => {
     expect(/behind|ahead|dirty|origin/i.test(text), `badge still spells out drift: "${text}"`).toBe(false);
 
     await badge.click();
-    await expect.poll(() => page.url(), { timeout: 10_000 }).toContain('whats-new');
+    await expect.poll(() => page.url(), { timeout: 10_000 }).toContain('page=releases');
   });
 });

@@ -1,0 +1,111 @@
+<script>
+  /* A page fragment opened on its own resolves its CSS and modules relative to
+     /pages/ instead of the site root, so it renders unstyled and never
+     finishes loading. Redirect to the route that works. server.js wraps them
+     automatically, so this only fires on a static host. */
+  (function () {
+    var m = location.pathname.match(/\/pages\/([a-z0-9-]+)\.html$/i);
+    if (!m) return;
+    var root = location.pathname.slice(0, m.index + 1);
+    location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
+  })();
+</script>
+<!-- Page styles: src/styles/pages/releases.css -->
+<link rel="stylesheet" href="src/styles/pages/releases.css?v=4.0.6">
+
+<div id="releases-hero" class="page__hero">
+  <h1>Releases</h1>
+  <p id="releases-hero-note">What each release added, fixed and changed. Every push to <code>main</code> is a release and
+  deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>,
+  so the newest release below is what this site is running.</p>
+  <input type="search" id="releases-search" class="releases-search" placeholder="Search releases…" aria-label="Search releases">
+</div>
+
+<!-- John, 2026-09-29: "redo our what's new to change to releases and tell for
+     each release what was fixed or added." One source, data/releases.json
+     (written by scripts/release-entry.mjs as each release is cut); this page
+     only renders it. #1182: only real versions are shown as versions. Work
+     from before numbered releases sits under its own heading, by date. -->
+<div id="releases-list" class="releases" aria-live="polite">
+  <p id="releases-loading" class="releases__loading">Loading releases…</p>
+</div>
+
+<script>
+(function () {
+  const host = document.getElementById('releases-list');
+  const search = document.getElementById('releases-search');
+  if (!host) return;
+
+  const GROUPS = [
+    ['added', 'Added'],
+    ['fixed', 'Fixed'],
+    ['changed', 'Changed'],
+  ];
+  const slug = (s) => String(s).replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+
+  function itemsHtml(items, prefix) {
+    let out = '';
+    for (const [kind, label] of GROUPS) {
+      const group = items.filter((i) => i.kind === kind);
+      if (!group.length) continue;
+      out += `<div class="releases__group releases__group--${kind}" id="${prefix}-${kind}">`;
+      out += `<h3 class="releases__group-title">${label} <span class="releases__count">${group.length}</span></h3><ul id="${prefix}-${kind}-list">`;
+      group.forEach((i, n) => {
+        const breaking = i.breaking ? '<span class="releases__breaking">Breaking</span> ' : '';
+        out += `<li id="${prefix}-${kind}-${n + 1}" class="releases__item">${breaking}${i.html}</li>`;
+      });
+      out += '</ul></div>';
+    }
+    return out;
+  }
+
+  function render(data) {
+    let html = '';
+    (data.releases || []).forEach((r, index) => {
+      const id = `release-${slug(r.version)}`;
+      const latest = index === 0 ? '<span class="releases__latest">Live now</span>' : '';
+      html += `<section id="${id}" class="releases__release" version="${r.version}">`;
+      html += `<h2 class="releases__version">${r.version} <span class="releases__date">${r.date || ''}</span> ${latest}</h2>`;
+      if (r.summary) html += `<p id="${id}-summary" class="releases__summary">${r.summary}</p>`;
+      html += itemsHtml(r.items || [], id) + '</section>';
+    });
+    if ((data.history || []).length) {
+      html += '<section id="releases-history" class="releases__history"><h2 class="releases__version">Before numbered releases</h2>';
+      html += '<p id="releases-history-note" class="releases__summary">Work from before every push was a numbered release, by the date it went live.</p>';
+      data.history.forEach((h) => {
+        const id = `history-${slug(h.date || h.label)}`;
+        html += `<div id="${id}" class="releases__dated"><h3 class="releases__dated-title">${h.label}</h3>${itemsHtml(h.items || [], id)}</div>`;
+      });
+      html += '</section>';
+    }
+    // A project scaffolded from create-wb-starter has not cut a release yet.
+    host.innerHTML = html || '<p id="releases-empty" class="releases__loading">No releases yet.</p>';
+    applySearch();
+    host.setAttribute('rendered', '1');
+  }
+
+  function applySearch() {
+    const term = (search && search.value || '').trim().toLowerCase();
+    for (const li of host.querySelectorAll('.releases__item')) {
+      li.hidden = !!term && !li.textContent.toLowerCase().includes(term);
+    }
+    for (const block of host.querySelectorAll('.releases__group, .releases__release, .releases__dated, .releases__history')) {
+      block.hidden = !!term && !block.querySelector('.releases__item:not([hidden])');
+    }
+  }
+  if (search) search.addEventListener('input', applySearch);
+
+  fetch('data/releases.json')
+    .then((r) => {
+      // No file yet is a project with no releases, not a broken page.
+      if (r.status === 404) return { releases: [], history: [] };
+      if (!r.ok) throw new Error(`${r.status} for data/releases.json`);
+      return r.json();
+    })
+    .then(render)
+    .catch((err) => {
+      host.innerHTML = `<p id="releases-error" class="releases__loading">Could not load releases: ${err.message}</p>`;
+      host.setAttribute('rendered', 'error');
+    });
+})();
+</script>
