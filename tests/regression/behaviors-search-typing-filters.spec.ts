@@ -24,7 +24,14 @@ test.describe('behaviors page: typing filters', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/?page=behaviors');
-    await expect(page.locator(ROW).first()).toBeVisible({ timeout: 25000 });
+    // A VISIBLE row, not the first one: groups start collapsed except the one
+    // holding the preselected row (#995), so the first row in the DOM is hidden
+    // whenever the first group is not the preselected one. In the 1.0 release
+    // gate `article (14)` sat first and closed, and this waited 25s on a row
+    // that was correctly hidden. The page is live once the preselected row's
+    // source is highlighted (#771), which follows the stage scan.
+    await expect(page.locator('#behaviors-live-code pre code.hljs')).toBeAttached({ timeout: 25000 });
+    await expect(page.locator(`${ROW}:visible`).first()).toBeVisible();
   });
 
   test('the search box stays on screen while the list is scrolled', async ({ page }) => {
