@@ -7,12 +7,12 @@
  * this would dirty the working tree for no reason.
  */
 export const VERSION = {
-  "version": "4.0.5",
-  "commit": "9855fed1",
-  "builtAt": "2026-09-29T02:23:19.359Z",
-  "branch": "claude/fervent-noether-ydmxea",
+  "version": "4.0.6",
+  "commit": "0353b4c0",
+  "builtAt": "2026-09-29T02:55:13.736Z",
+  "branch": "main",
   "dirty": true,
-  "ahead": 0,
+  "ahead": 58,
   "behind": 0,
-  "upstream": "origin/claude/fervent-noether-ydmxea"
+  "upstream": "origin/main"
 };
