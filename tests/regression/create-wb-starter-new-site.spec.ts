@@ -52,9 +52,15 @@ test.beforeAll(() => {
   execFileSync(NPM, ['install', '--no-audit', '--no-fund', '--ignore-scripts'], { cwd: site, stdio: 'pipe', shell: process.platform === 'win32' });
 });
 
-test.afterAll(() => {
-  server?.kill();
-  staticServer?.close();
+test.afterAll(async () => {
+  // Wait for the server to EXIT before deleting its folder: on Windows a
+  // running process keeps its working directory locked (EBUSY, seen on CI).
+  if (server && server.exitCode === null) {
+    const exited = new Promise((resolve) => server!.once('exit', resolve));
+    server.kill();
+    await exited;
+  }
+  await new Promise((resolve) => (staticServer ? staticServer.close(resolve) : resolve(null)));
   fs.rmSync(work, { recursive: true, force: true });
 });
 
@@ -72,9 +78,13 @@ test('the new site holds only its own files, and depends on wb-starter', () => {
   }
 });
 
-test('npm start serves the site on the wb-starter runtime', async ({ page }) => {
+test('npm start (wb-starter serve) serves the site on the wb-starter runtime', async ({ page }) => {
   const port = await freePort();
-  server = spawn(NPM, ['start'], { cwd: site, env: { ...process.env, PORT: String(port) }, stdio: 'ignore', shell: process.platform === 'win32' });
+  // What `npm start` runs (the script is asserted above), started with node
+  // directly: through npm and a shell, kill() stops only the wrapper and the
+  // server outlives the test on Windows.
+  const bin = path.join(site, 'node_modules', 'wb-starter', 'scripts', 'wb-starter.mjs');
+  server = spawn(process.execPath, [bin, 'serve'], { cwd: site, env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
   const base = `http://localhost:${port}/`;
   await answering(base);
 

@@ -43,9 +43,13 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 // landed here while expand()/close()/reanimate()/reload()/clearErrors() kept
 // shipping to every new project -- and this gate passed the whole time.
 // A gate's scope must cover every copy of the thing it governs.
+//
+// #813/#771: there is only one copy now. A new site depends on the wb-starter
+// package instead of carrying the behaviors, so the template has no src/ --
+// create-wb-starter-new-site.spec.ts pins its exact file list, which is what
+// keeps a second copy from coming back.
 const SRC_DIRS = [
   join(ROOT, 'src', 'wb-viewmodels'),
-  join(ROOT, 'packages', 'create-wb-starter', 'template', 'src', 'wb-viewmodels'),
 ];
 
 /**
