@@ -97,13 +97,11 @@ test.describe('Live stage sizing', () => {
     // #771 -- John: "always pick the first element on the left when this page
     // is shown for the first time."
     await openPanel(page);
-    await page.waitForTimeout(1200);
-    const state = await page.evaluate(() => {
-      const current = document.querySelector('[aria-current="true"]');
-      const child = document.getElementById('behaviors-live-example')?.firstElementChild;
-      return { hasSelection: !!current, hasRenderedExample: !!child };
-    });
-    expect(state.hasSelection, 'no row was selected on load').toBe(true);
-    expect(state.hasRenderedExample, 'the stage was empty on load').toBe(true);
+    // Waited for, not slept on: a flat 1.2s held on an idle machine and failed
+    // in the 1.0 release gate under full-suite load, before the preselection
+    // had run. The selection and the rendered example are the page's own
+    // signals; a page that never selects still fails, just not by the clock.
+    await expect(page.locator('[aria-current="true"]'), 'no row was selected on load').toBeAttached();
+    await expect(page.locator('#behaviors-live-example > *').first(), 'the stage was empty on load').toBeAttached();
   });
 });

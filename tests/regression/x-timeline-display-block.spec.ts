@@ -21,9 +21,14 @@ test.describe('[x-timeline] renders as a real block with a visible connecting li
     await page.goto('/demos/site/layout.html', { waitUntil: 'domcontentloaded' });
 
     const timeline = page.locator('[x-timeline][items^="Project Kickoff"]').first();
-    await timeline.scrollIntoViewIfNeeded();
-    await expect(timeline).toBeVisible({ timeout: 20000 });
-    await expect(timeline).toHaveAttribute('x-ready', '', { timeout: 20000 });
+    // Kept in view until it is built, not scrolled to once. The lazy runtime
+    // builds an element when it intersects; the demos ABOVE this one build
+    // after domcontentloaded and grow, pushing the timeline back out of view,
+    // so a single early scroll left it unbuilt (1 run in 3, even alone).
+    await expect.poll(async () => {
+      await timeline.scrollIntoViewIfNeeded();
+      return timeline.getAttribute('x-ready');
+    }, { timeout: 20000, message: 'the timeline was never built' }).toBe('');
 
     await expect(timeline).toHaveCSS('display', 'block');
 

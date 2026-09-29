@@ -1473,9 +1473,32 @@
         // not have that example promoted into a live, fetching element inside
         // this panel; the running example above is the live one.
         if (WB && WB.inject) await WB.inject(liveDocBody, 'mdhtml', { autoLiveRender: false });
+        namespaceDocIds(liveDocBody);
       } catch (err) {
         console.warn('[behaviors] could not render doc for ' + behavior, err);
       }
+    }
+
+    // The rendered doc shares the page with the running example, and markdown
+    // names headings from their text: card.md's `# Card` became id="card", the
+    // same id the example root can get. Whichever rendered second duplicated
+    // the first ("[WB:DUPLICATE-ID] ... #card x2", the 1.0 release gate). The
+    // HEADING ids -- the text-derived ones -- are prefixed so they cannot
+    // collide in either order, and the doc's in-page links follow them. Other
+    // ids are left alone: behaviors in the doc generate unique ones and point
+    // aria-controls/for at them, which a rename would break.
+    function namespaceDocIds(body) {
+      const PREFIX = 'behaviors-doc-';
+      const renamed = new Map();
+      body.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]').forEach((el) => {
+        if (el.id.startsWith(PREFIX)) return;
+        renamed.set(el.id, PREFIX + el.id);
+        el.id = PREFIX + el.id;
+      });
+      body.querySelectorAll('a[href^="#"]').forEach((a) => {
+        const to = renamed.get(a.getAttribute('href').slice(1));
+        if (to) a.setAttribute('href', '#' + to);
+      });
     }
 
     // The markup for most behaviors is already on this page, inside the
