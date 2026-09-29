@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { logPerfResult } from './perf-logger';
 
 test.describe('Performance Tests', () => {
   
   const pages = [
     { name: 'Home', path: '/' },
-    { name: 'Behaviors', path: '/?page=behaviors' },
+    { name: 'Components', path: '/?page=behaviors' },
     { name: 'Docs', path: '/?page=docs' }
   ];
 

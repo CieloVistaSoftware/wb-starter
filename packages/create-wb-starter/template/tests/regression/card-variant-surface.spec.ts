@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 /**
  * card.schema.json's `variant` enum is default/glass/bordered/flat.
@@ -14,43 +15,35 @@ import { test, expect } from '@playwright/test';
  * `default` variant, letting every other variant's own CSS class own its
  * background/border.
  */
-test.describe('x-card variant surface (cards demo page)', () => {
+// Cards stopped stamping .x-card / .x-card--{variant} (a8a7362e): card.css
+// reads [variant] straight off the <article>. The fixture's "variant variants"
+// section holds one card per variant side by side, so each is found by its
+// attribute there, scrolled in (lazy runtime, #491) and allowed to build.
+const SECTION = '#card-variant-variants';
+const cardFor = (page: Page, v: string) => page.locator(`${SECTION} article[variant="${v}"]`).first();
+
+test.describe('.x-card variant surface (cards demo page)', () => {
   test('bordered and flat variants render visually distinct from default', async ({ page }) => {
     // bordered/flat variant examples live in the permutation-matrix test
     // fixture, not the curated demos/site/cards.html showcase page (split
     // apart because the matrix content -- 56+ cards sharing 4 duplicate
     // placeholder images -- made the demo page slow and noisy; see the
     // commit that added tests/fixtures/cards-permutation-matrix.html).
-    await page.goto('http://localhost:3000/tests/fixtures/cards-permutation-matrix.html');
-    await page.waitForSelector('x-card.x-card--bordered');
-    await page.waitForSelector('x-card.x-card--flat');
+    await page.goto('/tests/fixtures/cards-permutation-matrix.html');
 
-    const styles = await page.evaluate(() => {
-      const byVariant = (v: string) =>
-        Array.from(document.querySelectorAll('x-card')).find((c) => c.classList.contains(`x-card--${v}`));
-      const byDefault = () =>
-        Array.from(document.querySelectorAll('x-card')).find(
-          (c) => !['glass', 'bordered', 'flat', 'elevated', 'rack'].some((v) => c.classList.contains(`x-card--${v}`)),
-        );
-      const read = (el: Element | undefined) => {
-        if (!el) return null;
+    const read = async (v: string) => {
+      const card = cardFor(page, v);
+      await buildInView(card);
+      return card.evaluate((el) => {
         const cs = getComputedStyle(el);
         return { border: cs.border, background: cs.backgroundColor };
-      };
-      return {
-        bordered: read(byVariant('bordered')),
-        flat: read(byVariant('flat')),
-        default: read(byDefault()),
-      };
-    });
+      });
+    };
+    const styles = { bordered: await read('bordered'), flat: await read('flat'), default: await read('default') };
 
-    expect(styles.bordered).not.toBeNull();
-    expect(styles.flat).not.toBeNull();
-    expect(styles.default).not.toBeNull();
-
-    expect(styles.bordered!.border).not.toBe(styles.default!.border);
-    expect(styles.flat!.border).not.toBe(styles.default!.border);
-    expect(styles.flat!.background).not.toBe(styles.default!.background);
+    expect(styles.bordered.border).not.toBe(styles.default.border);
+    expect(styles.flat.border).not.toBe(styles.default.border);
+    expect(styles.flat.background).not.toBe(styles.default.background);
   });
 
   test('bordered variant stays visually distinct after a hover interaction', async ({ page }) => {
@@ -59,14 +52,16 @@ test.describe('x-card variant surface (cards demo page)', () => {
     // apart because the matrix content -- 56+ cards sharing 4 duplicate
     // placeholder images -- made the demo page slow and noisy; see the
     // commit that added tests/fixtures/cards-permutation-matrix.html).
-    await page.goto('http://localhost:3000/tests/fixtures/cards-permutation-matrix.html');
-    const bordered = page.locator('x-card.x-card--bordered').first();
-    await bordered.waitFor();
+    await page.goto('/tests/fixtures/cards-permutation-matrix.html');
+    const bordered = cardFor(page, 'bordered');
+    await buildInView(bordered);
 
     const before = await bordered.evaluate((el) => getComputedStyle(el).border);
     await bordered.hover();
     await page.mouse.move(0, 0); // move away to fire mouseleave
-    await page.waitForTimeout(100);
+    // Wait out the card's own 0.2s transition (card.css) rather than read
+    // mid-animation.
+    await page.waitForTimeout(300);
     const after = await bordered.evaluate((el) => getComputedStyle(el).border);
 
     expect(after).toBe(before);

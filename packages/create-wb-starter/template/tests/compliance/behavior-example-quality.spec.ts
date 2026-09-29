@@ -10,7 +10,7 @@
  * Reads the code panel the reader reads, so it cannot pass on a catalogue entry
  * that fails to render.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const PLACEHOLDER = /Example [\w-]+ content/;
 

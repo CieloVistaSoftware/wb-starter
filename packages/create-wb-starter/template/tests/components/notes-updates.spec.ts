@@ -1,9 +1,9 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 // This file previously drove the notes drawer via a stale selector
 // (`buttonwb-sheet[data-title="My Notes"]`) that never matched anything real
 // on pages/behaviors.html -- rewritten against the same self-contained
-// injectNotes() pattern tests/behaviors/notes.spec.ts uses, and against the
+// injectNotes() pattern tests/components/notes.spec.ts uses, and against the
 // current UI (searchable Lookup list, not a raw <pre> JSON dump).
 const BASE_URL = '/demos/test-harness.html';
 
@@ -22,10 +22,10 @@ async function injectNotes(page: Page) {
     container.innerHTML = '<div x-notes></div>';
     document.body.appendChild(container);
   });
-  await page.evaluate(() => (window as any).WB.scan(document.getElementById('test-container'), { eager: true }));
+  await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('test-container'), { eager: true }));
   await page.waitForTimeout(50);
   await page.evaluate(() => {
-    (document.querySelector('#test-container x-notes') as any).wbNotes.open();
+    (document.querySelector('#test-container [x-notes]') as any).wbNotes.open();
   });
 }
 

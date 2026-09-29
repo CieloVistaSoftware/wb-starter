@@ -14,7 +14,7 @@
  *     produces a glyph.
  *   - precision= is not read anywhere in rating.js — it must have zero effect.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -38,10 +38,10 @@ async function setup(page: Page, html: string): Promise<void> {
 }
 
 test.describe('<div x-slider> is currently a minimal stub (src/wb-viewmodels/slider.js)', () => {
-  test('adds the x-slider class but does not build a range control or alter content', async ({ page }) => {
+  test('adds the [x-slider] class but does not build a range control or alter content', async ({ page }) => {
     await setup(page, '<div x-slider id="s1">Slider</div>');
     const el = page.locator('#s1');
-    // Real effect per slider.js: element.classList.add('x-slider') and nothing else —
+    // Real effect per slider.js: element.classList.add('[x-slider]') and nothing else —
     // no innerHTML replacement, no child controls created.
     await expect(el).toHaveClass(/x-slider/);
     await expect(el).toHaveText('Slider');
@@ -107,7 +107,7 @@ test.describe('<span x-rating> precision= is a confirmed no-op (never read by ra
     const snapshot = (id: string) =>
       page.locator(`#${id} .x-rating__star`).evaluateAll((stars) =>
         stars.map((s) => ({
-          full: s.classList.contains('x-rating__star--full'),
+          full: s.classList.contains('[x-rating]__star--full'),
           color: getComputedStyle(s).color,
           glyph: s.textContent,
         }))

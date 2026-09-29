@@ -24,9 +24,9 @@
  * page's actual content, so any of them works (demos/kitchen-sink.html,
  * the original target, was deleted as part of the demos/ consolidation).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 
 test('WB.inject() does not crash when its element is removed mid-import', async ({ page }) => {
   // The crash is caught internally by inject()'s own try/catch (which logs

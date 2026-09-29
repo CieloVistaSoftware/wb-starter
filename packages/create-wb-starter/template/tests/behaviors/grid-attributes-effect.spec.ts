@@ -1,5 +1,6 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
+import { elementReady } from '../base';
 /**
  * x-grid new attributes have real effect (#281, §19): rows, align/justify/
  * center, background, alt-rows, headers. columns/gap/min-width were already
@@ -23,17 +24,23 @@ async function injectAndScan(page: Page, html: string) {
   // wb-lazy.js's scan() is IntersectionObserver-based — behaviors only
   // activate once the element is actually in view, not just appended.
   await page.locator('#grid-test-container').scrollIntoViewIfNeeded();
-  await page.evaluate(() => (window as any).WB.scan(document.getElementById('grid-test-container')));
-  await page.waitForTimeout(500);
+  await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('grid-test-container')));
+  // #983: the 500ms here was a guess unrelated to what it waited for.
+  // Settle the injected element instead. x-ready means SETTLED, not
+  // succeeded, so the assertions still do the verifying.
+  const injected = page.locator('#test-container > *').first();
+  if (await injected.count()) {
+    await elementReady(injected).catch(() => {});
+  }
 }
 
-test.describe('x-grid attribute effects (#281)', () => {
+test.describe('[x-grid] attribute effects (#281)', () => {
   test('rows sets an explicit grid-template-rows track count', async ({ page }) => {
     await injectAndScan(
       page,
       '<div x-grid columns="2" rows="2"><div>A</div><div>B</div><div>C</div><div>D</div></div>'
     );
-    const rows = await page.locator('#grid-test-container x-grid').evaluate(
+    const rows = await page.locator('#grid-test-container [x-grid]').evaluate(
       (el) => getComputedStyle(el).gridTemplateRows.trim().split(/\s+/).length
     );
     expect(rows).toBe(2);
@@ -41,7 +48,7 @@ test.describe('x-grid attribute effects (#281)', () => {
 
   test('center aligns items and centers text', async ({ page }) => {
     await injectAndScan(page, '<div x-grid center><div>X</div></div>');
-    const el = page.locator('#grid-test-container x-grid');
+    const el = page.locator('#grid-test-container [x-grid]');
     await expect(el).toHaveCSS('align-items', 'center');
     await expect(el).toHaveCSS('justify-items', 'center');
     await expect(el).toHaveCSS('text-align', 'center');
@@ -49,14 +56,14 @@ test.describe('x-grid attribute effects (#281)', () => {
 
   test('align/justify set independently without center', async ({ page }) => {
     await injectAndScan(page, '<div x-grid align="end" justify="start"><div>X</div></div>');
-    const el = page.locator('#grid-test-container x-grid');
+    const el = page.locator('#grid-test-container [x-grid]');
     await expect(el).toHaveCSS('align-items', 'end');
     await expect(el).toHaveCSS('justify-items', 'start');
   });
 
   test('background applies a real background', async ({ page }) => {
     await injectAndScan(page, '<div x-grid background="var(--bg-tertiary)"><div>X</div></div>');
-    const bg = await page.locator('#grid-test-container x-grid').evaluate((el) => getComputedStyle(el).backgroundColor);
+    const bg = await page.locator('#grid-test-container [x-grid]').evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(bg).not.toBe('rgba(0, 0, 0, 0)');
   });
 
@@ -65,7 +72,7 @@ test.describe('x-grid attribute effects (#281)', () => {
       page,
       '<div x-grid alt-rows><div>1</div><div>2</div><div>3</div><div>4</div></div>'
     );
-    const items = page.locator('#grid-test-container x-grid > div');
+    const items = page.locator('#grid-test-container [x-grid] > div');
     const evenBg = await items.nth(1).evaluate((el) => getComputedStyle(el).backgroundColor);
     const oddBg = await items.nth(0).evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(evenBg).not.toBe('rgba(0, 0, 0, 0)');
@@ -77,7 +84,7 @@ test.describe('x-grid attribute effects (#281)', () => {
       page,
       '<div x-grid headers="Name,Age,Email" columns="3"><div>Alice</div><div>30</div><div>alice@x.com</div></div>'
     );
-    const grid = page.locator('#grid-test-container x-grid');
+    const grid = page.locator('#grid-test-container [x-grid]');
     const headers = grid.locator('.x-grid__header');
     await expect(headers).toHaveCount(3);
     await expect(headers.nth(0)).toHaveText('Name');
@@ -85,6 +92,9 @@ test.describe('x-grid attribute effects (#281)', () => {
     await expect(headers.nth(2)).toHaveText('Email');
     // Headers are prepended — first child of the grid is a header, not the data.
     const firstChildClass = await grid.evaluate((el) => el.firstElementChild?.className);
+    // 'x-grid__header' -- the prefix rename had rewritten this class-name
+    // literal into an attribute selector, '[x-grid]__header', which is not a
+    // class anything can carry (same slip as #859 in tabs.js).
     expect(firstChildClass).toBe('x-grid__header');
   });
 });

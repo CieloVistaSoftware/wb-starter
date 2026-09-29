@@ -12,7 +12,7 @@
  * "create unit test for all x-dropdown examples". So this walks EVERY
  * x-dropdown row in the browse list, not just the first.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const MIN_OPTIONS = 4;
 const MAX_OPTIONS = 5;
@@ -30,6 +30,25 @@ async function openShowcase(page: Page) {
                 && r.getAttribute('data-variant') === 'click'),
     { timeout: 30000 },
   );
+  // A row click starts an async render (demo.js import, wb-lazy import, an
+  // eager WB.scan) that the page marks with aria-busy on #behaviors-live until
+  // the newest render has painted. Every row click below awaits that instead of
+  // sleeping: a fixed 350-400ms held with one worker and lost with three, when
+  // the stage still held un-upgraded markup and the code panel was empty.
+  // Event-driven, so it waits exactly as long as the render takes; the test
+  // timeout is the only bound.
+  await page.evaluate(() => {
+    (window as any).__liveRendered = () => new Promise<void>((resolve) => {
+      const live = document.getElementById('behaviors-live')!;
+      if (!live.hasAttribute('aria-busy')) return resolve();
+      const mo = new MutationObserver(() => {
+        if (live.hasAttribute('aria-busy')) return;
+        mo.disconnect();
+        resolve();
+      });
+      mo.observe(live, { attributes: true, attributeFilter: ['aria-busy'] });
+    });
+  });
 }
 
 /** Every x-dropdown row's variant label, in list order. */
@@ -48,7 +67,7 @@ async function renderNth(page: Page, index: number) {
     const rows = [...document.querySelectorAll('.behaviors-search-results__row')]
       .filter((r) => r.getAttribute('data-browse-token') === 'x-dropdown') as HTMLElement[];
     rows[i].click();
-    await sleep(350);
+    await (window as any).__liveRendered();
 
     const root = document.querySelector('#behaviors-live-stage .x-dropdown') as HTMLElement | null;
     if (!root) return null;
@@ -165,7 +184,7 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
         // bottom-* opens downward, toward the code panel — the failing direction.
         const row = rows.find((r) => (r.getAttribute('data-variant') || '').startsWith('bottom')) || rows[0];
         row.click();
-        await sleep(400);
+        await (window as any).__liveRendered();
 
         const stage = document.getElementById('behaviors-live-stage')!;
         const code = document.getElementById('behaviors-live-code')!;
@@ -173,16 +192,33 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
         const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
         const trigger = (root.querySelector('.x-dropdown__trigger') || root) as HTMLElement;
 
-        const closedHeight = Math.round(stage.getBoundingClientRect().height);
+        const closedRect = stage.getBoundingClientRect();
+        const closedHeight = Math.round(closedRect.height);
+        const closedBottom = Math.round(closedRect.bottom);
         trigger.click();
         for (let i = 0; i < 30 && getComputedStyle(menu).display === 'none'; i++) await sleep(50);
-        await sleep(200);   // let the stage's rAF fit run
+        // Wait for the stage's fit to have RUN, not a fixed 200ms: on a loaded
+        // Windows runner that sleep ended before the rAF fit (4.0.6 CI). The fit
+        // is done when the open menu ends inside the stage and two frames agree.
+        const frame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
+        let last = -1;
+        for (let i = 0; i < 120; i++) {
+          await frame();
+          const h = Math.round(stage.getBoundingClientRect().height);
+          const inside = menu.getBoundingClientRect().bottom <= stage.getBoundingClientRect().bottom + 1;
+          if (inside && h === last) break;
+          last = h;
+        }
 
         const sb = stage.getBoundingClientRect();
         const mb = menu.getBoundingClientRect();
         const cb = code.getBoundingClientRect();
         return {
           closedHeight,
+          // Whether the open menu, left alone, would have run past the closed
+          // stage. Only then must the stage grow: at 375px the closed stage was
+          // already 637px on Windows CI and the menu fit inside it.
+          needsGrowth: Math.round(mb.bottom) > closedBottom,
           openHeight: Math.round(sb.height),
           menuBottom: Math.round(mb.bottom),
           stageBottom: Math.round(sb.bottom),
@@ -190,7 +226,9 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
         };
       });
 
-      expect(geo.openHeight, 'the stage must grow to hold the open menu').toBeGreaterThan(geo.closedHeight);
+      if (geo.needsGrowth) {
+        expect(geo.openHeight, 'the stage must grow to hold the open menu').toBeGreaterThan(geo.closedHeight);
+      }
       expect(geo.menuBottom, 'the menu must end inside the stage (Standard §15)')
         .toBeLessThanOrEqual(geo.stageBottom + 1);
       expect(geo.menuBottom, 'the menu must not reach the code panel')
@@ -209,7 +247,7 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
         .filter((r) => r.getAttribute('data-browse-token') === 'x-dropdown') as HTMLElement[];
 
       rows[0].click();
-      await sleep(400);
+      await (window as any).__liveRendered();
       const root = stage.querySelector('.x-dropdown') as HTMLElement;
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
       (root.querySelector('.x-dropdown__trigger') as HTMLElement).click();
@@ -218,7 +256,7 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
       const opened = Math.round(stage.getBoundingClientRect().height);
 
       rows[1].click();          // a different example
-      await sleep(500);
+      await (window as any).__liveRendered();
       const afterSwitch = Math.round(stage.getBoundingClientRect().height);
       return { opened, afterSwitch };
     });
@@ -239,7 +277,7 @@ test.describe('#704 — a hover dropdown closes again', () => {
         .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
                   && r.getAttribute('data-variant') === 'hover') as HTMLElement;
       row.click();
-      await sleep(400);
+      await (window as any).__liveRendered();
       const root = document.querySelector('#behaviors-live-stage .x-dropdown') as HTMLElement;
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
 
@@ -270,7 +308,7 @@ test.describe('#705 — selecting leaves the example alone and gets logged', () 
         .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
                   && r.getAttribute('data-variant') === 'click') as HTMLElement;
       row.click();
-      await sleep(400);
+      await (window as any).__liveRendered();
 
       const urlBefore = location.href;
       const root = document.querySelector('#behaviors-live-stage .x-dropdown') as HTMLElement;
@@ -311,7 +349,7 @@ test.describe('#707 — the menu is sized to what it shows', () => {
         .find((r) => r.getAttribute('data-browse-token') === 'x-dropdown'
                   && r.getAttribute('data-variant') === 'click') as HTMLElement;
       row.click();
-      await sleep(400);
+      await (window as any).__liveRendered();
       const stage = document.getElementById('behaviors-live-stage')!;
       const root = stage.querySelector('.x-dropdown') as HTMLElement;
       const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
@@ -363,7 +401,7 @@ test.describe('#708 — the select event says WHICH option', () => {
       const seen: any[] = [];
       for (const index of [0, 2, 4]) {
         row.click();                       // re-render, so each pick starts clean
-        await sleep(400);
+        await (window as any).__liveRendered();
         const root = document.querySelector('#behaviors-live-stage .x-dropdown') as HTMLElement;
         const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
         (root.querySelector('.x-dropdown__trigger') as HTMLElement).click();

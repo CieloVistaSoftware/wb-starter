@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -27,7 +27,7 @@ function walk(dir: string, out: string[]): void {
 function mdFiles(): string[] {
   const out: string[] = [];
   for (const d of ['docs', 'demos']) walk(path.join(ROOT, d), out);
-  for (const f of ['README.md', 'CONTRIBUTING.md']) if (fs.existsSync(path.join(ROOT, f))) out.push(f);
+  for (const f of ['README.md', '.github/CONTRIBUTING.md']) if (fs.existsSync(path.join(ROOT, f))) out.push(f);
   return [...new Set(out)];
 }
 

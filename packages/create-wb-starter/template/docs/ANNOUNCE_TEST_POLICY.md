@@ -10,7 +10,7 @@ What changed
 - `npm run test:ci` runs the full-suite (CI / explicit local)
 - A fast **Tier‑1** GitHub Actions job has been added to run on PRs
 - A PR labeler will mark PRs with failing Tier‑1 as `needs-tests` and comment remediation steps
-- CONTRIBUTING.md and CommittingFixes.md updated with the new gate and exception workflow
+- CONTRIBUTING.md and committing-fixes.md updated with the new gate and exception workflow
 
 Who this affects
 -----------------

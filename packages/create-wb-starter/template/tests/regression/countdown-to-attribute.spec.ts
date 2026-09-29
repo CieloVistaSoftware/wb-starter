@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#376 / BUG-2026-07-27-003): <div x-countdown to="2027-12-31">
@@ -15,12 +15,23 @@ import { test, expect } from '@playwright/test';
  */
 test.describe('x-countdown honors to="..." as the target date (#376)', () => {
   test('counts down to a real future date instead of showing a stuck 00:00', async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2500); // lazy injection + schema build, matches alerts-variants.spec.ts
+    // Its own fixture, not the behaviors showcase: that page renders examples
+    // on demand now (#666/#910), so a fixed `[x-countdown][to]` demo is no
+    // longer on it at load and this failed on the page, not the behavior.
+    // The markup is the one data/behavior-examples.json ships, with a target
+    // always two years out so the test cannot age into "complete".
+    const future = `${new Date().getFullYear() + 2}-12-31`;
+    await page.goto('/tests/fixtures/blank.html');
+    await page.setContent(`
+      <div id="cd" x-countdown to="${future}" class="time-display"></div>
+      <script type="module">
+        import WB from '/src/core/wb.js';
+        WB.init({ autoInject: true }).then(() => WB.scan(document.body, { eager: true }));
+      </script>
+    `);
 
     const el = page.locator('[x-countdown][to]').first();
-    await expect(el, 'Behaviors showcase should have an x-countdown[to] demo').toHaveCount(1);
+    await expect(el).toHaveAttribute('x-ready', '', { timeout: 10000 });
 
     const toAttr = await el.getAttribute('to');
     expect(toAttr, 'demo must target a real future date').toBeTruthy();

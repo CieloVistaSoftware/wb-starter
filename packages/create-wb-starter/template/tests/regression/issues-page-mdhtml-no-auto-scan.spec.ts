@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * pages/issues.html renders GitHub issue bodies through mdhtml() and never
- * explicitly calls WB.scan()/WB.inject() on its freshly-built issue-row
+ * explicitly calls await WB.scan()/WB.inject() on its freshly-built issue-row
  * list -- it relied entirely on the { autoLiveRender: false } option passed
  * inside its own click-to-expand handler. That option never had a chance to
- * matter: tag-map.js registers `x-mdhtml` for WB's own generic auto-scan,
+ * matter: tag-map.js registers `[x-mdhtml]` for WB's own generic auto-scan,
  * which called mdhtml() with DEFAULT options (autoLiveRender left at its
  * true default) the moment `listEl.innerHTML = ...` inserted the
  * `<div x-mdhtml>` tags -- racing ahead of any click, and ahead of the
@@ -23,19 +23,58 @@ import { test, expect } from '@playwright/test';
  * correctly-configured WB.inject(el, 'mdhtml', { autoLiveRender: false })
  * call, triggered on expand.
  */
+/*
+ * Updated: the test used to read issue #527 from the LIVE list -- the server's
+ * /api/issues (an authenticated `gh`) or api.github.com -- so it could only
+ * pass on a machine with gh installed and the network up; offline (every test
+ * run, tests/fixtures/offline.ts) no row ever appeared and it timed out before
+ * asserting anything. #527's body is now served from the test itself, the
+ * shape /api/issues returns. The page also moved to a table since: rows are
+ * `tr.issues-row[number]`, and clicking the row opens its expander.
+ */
+const ISSUE_527 = {
+  number: 527,
+  title: 'mdhtml auto-scan promotes illustrative examples in issue bodies',
+  state: 'open',
+  labels: [],
+  created_at: '2026-08-10T12:00:00Z',
+  updated_at: '2026-08-10T12:00:00Z',
+  body: [
+    'An issue body that ILLUSTRATES the bug with a fenced example:',
+    '',
+    '```html',
+    '<div x-mdhtml src="/docs/guide.md"></div>',
+    '```',
+    '',
+    'Rendering it must never fetch that path.',
+  ].join('\n'),
+};
+
 test('pages/issues.html never fetches the fake illustrative path embedded in issue #527\'s own body', async ({ page }) => {
   const fetched: string[] = [];
-  page.on('request', (req) => {
+  // On the context, so a fetch the service worker makes is counted too.
+  page.context().on('request', (req) => {
     if (req.url().includes('/docs/guide.md')) fetched.push(req.url());
   });
+  // context.route, not page.route: with sw.js registered the fetch can be made
+  // by the service worker, and only context routes see a worker's requests.
+  await page.context().route('**/api/issues', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ issues: [ISSUE_527], source: 'live' }) })
+  );
 
   await page.goto('/?page=issues');
-  await page.waitForSelector('.issue-row[data-number="527"]', { timeout: 15000 });
+  const row = page.locator('.issues-row[number="527"]');
+  await row.waitFor({ timeout: 15000 });
 
   // The original bug fired on a fresh, un-interacted load -- but also verify
   // expanding the row (which renders the body, embedded example included)
   // stays inert too.
-  await page.locator('.issue-row[data-number="527"] .issue-row__summary').click();
+  await row.click();
+  const expander = page.locator('.issues-expander__body');
+  // Proof the body really rendered through mdhtml: the example is shown as
+  // code, not promoted into a live element.
+  await expect(expander).toContainText('x-mdhtml', { timeout: 10000 });
+  await expect(expander.locator('[x-mdhtml]')).toHaveCount(0);
   await page.waitForTimeout(1000);
 
   expect(fetched, 'the fake illustrative /docs/guide.md path embedded in #527\'s own body must never actually be fetched').toEqual([]);

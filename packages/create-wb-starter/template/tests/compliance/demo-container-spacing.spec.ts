@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
  *
  * Scans src/styles/**\/*.css for rules whose selector names a demo/example
  * container (class names containing "demo", "example", or naming a known
- * container like behavior-box/code-example) and asserts any `gap`/
+ * container like component-box/code-example) and asserts any `gap`/
  * `padding` value on those rules is >= 1rem (16px) — not a live-DOM sweep of
  * every rendered page, but the CSS-source-level equivalent: catches the
  * class of bug found in #249 (`.demo-stack { gap: 0.75rem }`) and prevents
@@ -26,7 +26,7 @@ import { fileURLToPath } from 'url';
  * version only flagged padding that was PRESENT but under 1rem
  * (`rem > 0 && rem < MIN_REM`) — a container with NO padding rule at all
  * (or an explicit `padding: 0`) silently passed, since there was nothing
- * to compare. `x-demo` had exactly this gap undetected (0 padding,
+ * to compare. `[x-demo]` had exactly this gap undetected (0 padding,
  * confirmed live) until found by hand. Scoped to *base* container
  * selectors only (bare tag/class name, no `__part`/`:pseudo`/`>` combinator)
  * — BEM sub-parts legitimately may not need their own padding if the
@@ -39,11 +39,11 @@ const SKIP_DIRS = new Set(['node_modules', '.git']);
 
 // A REAL, second bug found while adding the missing-padding check below:
 // this regex required a leading "." (class selector), so it never matched
-// bare custom-element TAG selectors like "x-demo" or "x-code-card" at
+// bare custom-element TAG selectors like "[x-demo]" or "[x-demo]" at
 // all -- the entire test (not just the new check) silently skipped
 // x-demo.css's own top-level rule since day one. "." is now optional.
-const CONTAINER_NAME_RE = /\.?(?:[\w-]*demo[\w-]*|[\w-]*example[\w-]*|behavior-box|code-example)\b/i;
-const BASE_CONTAINER_RE = /^(?:x-demo|x-code-card|\.behavior-box|\.code-example)$/i;
+const CONTAINER_NAME_RE = /\.?(?:[\w-]*demo[\w-]*|[\w-]*example[\w-]*|component-box|code-example)\b/i;
+const BASE_CONTAINER_RE = /^(?:x-demo|x-code-card|\.component-box|\.code-example)$/i;
 const MIN_REM = 1;
 
 // Standard §13 targets "example/demo containers" (the box), not every
@@ -98,7 +98,7 @@ test('demo/example container CSS rules have >= 1rem gap/padding (Standard §13, 
     // "example" in prose (e.g. "Extracted from demo.css"), it was matching
     // CONTAINER_NAME_RE and misattributing an unrelated rule's gap/padding
     // as a Standard §13 offender -- found live once CONTAINER_NAME_RE was
-    // widened below to also catch bare tag selectors like "x-demo".
+    // widened below to also catch bare tag selectors like "[x-demo]".
     const text = fs.readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
     const rel = path.relative(ROOT, file).replace(/\\/g, '/');
     // Match `selector { ...body... }` blocks (non-greedy, no nested braces —
@@ -111,7 +111,7 @@ test('demo/example container CSS rules have >= 1rem gap/padding (Standard §13, 
       if (!CONTAINER_NAME_RE.test(selector)) continue;
 
       // A selector can be a comma-separated list sharing one rule body
-      // (e.g. "x-demo,\nwb-code-card { ... }") — used below both to skip
+      // (e.g. "[x-demo],\nwb-code-card { ... }") — used below both to skip
       // SELECTOR_EXCEPTIONS and for the missing-padding base-container check.
       const tokens = selector.split(',').map(s => s.trim());
       if (tokens.every(t => SELECTOR_EXCEPTIONS.has(t))) continue;

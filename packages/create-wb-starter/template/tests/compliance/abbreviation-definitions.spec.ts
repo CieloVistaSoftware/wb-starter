@@ -4,7 +4,7 @@
  * Ensures all abbreviations are properly defined on first use.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ROOT, readFile, fileExists } from '../base';

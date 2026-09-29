@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * The "50 x-* behaviors" example set used to include
@@ -25,6 +25,8 @@ test('selecting the x-behaviors example set does not change the site theme', asy
   await page.selectOption('#pg-examples', 'xbehaviors');
   await page.waitForFunction(() => {
     const input = document.querySelector('#pg-preview input[x-counter]');
+    // 'x-counter', the readout's class. This read '[x-counter]' after a bulk
+    // tag-to-attribute rewrite, which no class can be -- the wait never ended.
     return !!input && !!input.nextElementSibling?.classList.contains('x-counter');
   }, { timeout: 15000 });
 

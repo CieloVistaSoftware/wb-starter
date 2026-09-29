@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #585: table.md's x-table examples rendered 0 rows. Root cause was in
@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
  * <thead>/<tbody> pair, since the schema declares no row-building logic),
  * and nothing ever populated real rows into that empty pair. Fixed by
  * having table.js read the documented headers/rows or data/columns
- * attributes (see docs/behaviors/semantics/table.md's "Authoring note")
+ * attributes (see docs/behaviors/table.md's "Authoring note")
  * and build real <tr>/<th>/<td> rows at render time via
  * populateTableRows().
  *
@@ -18,13 +18,13 @@ import { test, expect } from '@playwright/test';
  * documented per-example requirement (see #585's consolidated
  * requirements list), and specifically NOT the 0-rows regression.
  */
-test.describe('table.md: every x-table example renders real rows (#585)', () => {
-  test('docs/behaviors/semantics/table.md: no x-table example has 0 rows', async ({ page }) => {
-    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/semantics/table.md'), {
+test.describe('table.md: every .x-table example renders real rows (#585)', () => {
+  test('docs/behaviors/table.md: no .x-table example has 0 rows', async ({ page }) => {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/table.md'), {
       waitUntil: 'domcontentloaded',
     });
 
-    const tables = page.locator('x-table');
+    const tables = page.locator('.x-table');
     await expect(tables.first()).toBeVisible({ timeout: 20000 });
 
     const count = await tables.count();

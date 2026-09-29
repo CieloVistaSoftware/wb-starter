@@ -3,19 +3,17 @@
     "companyName": "wb-starter",
     "headerSubtitle": "Modern Native Web",
     "headerLogoImage": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
-    "browserTabIcon": "favicon.svg",
+    "browserTabIcon": "assets/icons/favicon.svg",
     "colorTheme": "dark",
     "autoInjectComponents": true,
     "adminEditMode": true
   },
-
   "headerSettings": {
     "displayHeaderLogo": true,
     "displayThemeSwitcher": true,
     "displaySearchBar": false,
     "keepHeaderAtTop": true
   },
-
   "navigationMenu": [
     {
       "menuItemId": "home",
@@ -26,20 +24,8 @@
     {
       "menuItemId": "behaviors",
       "menuItemText": "Behaviors",
-      "menuItemEmoji": "🧩",
-      "pageToLoad": "behaviors"
-    },
-    {
-      "menuItemId": "behaviors",
-      "menuItemText": "Behaviors",
       "menuItemEmoji": "⚡",
       "pageToLoad": "behaviors"
-    },
-    {
-      "menuItemId": "demos",
-      "menuItemText": "Demos",
-      "menuItemEmoji": "🎮",
-      "pageToLoad": "demos"
     },
     {
       "menuItemId": "themes",
@@ -52,12 +38,6 @@
       "menuItemText": "Docs",
       "menuItemEmoji": "📖",
       "pageToLoad": "docs"
-    },
-    {
-      "menuItemId": "ai-docs",
-      "menuItemText": "A.I. Docs",
-      "menuItemEmoji": "🤖",
-      "pageToLoad": "ai-docs"
     },
     {
       "menuItemId": "about",
@@ -81,22 +61,19 @@
       "menuItemId": "error-log",
       "menuItemText": "Error Log",
       "menuItemEmoji": "🚨",
-      "href": "errors-viewer.html"
+      "href": "public/errors-viewer.html"
     }
   ],
-
   "navigationLayout": {
     "navigationPosition": "left",
     "navigationWidth": "fit-content",
     "navigationCanCollapse": true,
     "navigationStartCollapsed": false
   },
-
   "footerSettings": {
     "footerCopyrightText": "© 2025 Cielo Vista Software",
     "displaySocialMediaLinks": true
   },
-
   "socialMediaLinks": [
     {
       "platform": "GitHub",
@@ -114,7 +91,6 @@
       "profileUrl": "https://linkedin.com"
     }
   ],
-
   "additionalFooterLinks": [
     {
       "linkText": "Privacy Policy",
@@ -125,21 +101,18 @@
       "pageToLoad": "terms"
     }
   ],
-
   "companyInfo": {
     "businessName": "Cielo Vista Software",
     "businessTagline": "Zero-build behaviors",
     "businessDescription": "Cielo Vista Software builds wb-starter, a zero-build, schema-first web-behavior framework. Compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no lock-in.",
     "valueProposition": "Zero build, composition over inheritance, Light DOM, schema-first, fully themeable"
   },
-
   "contactInfo": {
     "businessEmail": "hello@acmeco.com",
     "phoneNumber": "+1 (234) 567-890",
     "businessAddress": "123 Business Street, Suite 100, City, State 12345",
     "businessHours": "Monday - Friday: 9am - 6pm EST"
   },
-
   "servicesList": [
     {
       "serviceIcon": "🎨",
@@ -162,7 +135,6 @@
       "serviceDescription": "Comprehensive support and maintenance to keep your platform running smoothly."
     }
   ],
-
   "teamMembers": [
     {
       "memberAvatar": "👩‍💼",
@@ -177,7 +149,6 @@
       "memberBio": "Full-stack expert and architecture wizard building tomorrow's solutions."
     }
   ],
-
   "customerTestimonials": [
     {
       "testimonialQuote": "Working with this team has been a game-changer for our business. Highly professional and results-driven.",
@@ -190,7 +161,6 @@
       "authorCompany": "Director, Digital First Co"
     }
   ],
-
   "frequentlyAskedQuestions": [
     {
       "questionText": "What is your pricing?",
@@ -205,10 +175,15 @@
       "answerText": "Yes! We provide 24/7 support to all our clients. Your success is our success, and we're here to help whenever you need us."
     }
   ],
-
   "searchEngineOptimization": {
     "pageTitle": "wb-starter - Zero Build Behaviors",
     "pageDescription": "170+ behaviors, 50 themes, zero build process. The professional behavior library.",
-    "seoKeywords": ["behaviors", "framework", "behaviors", "themes", "no-build"]
+    "seoKeywords": [
+      "behaviors",
+      "framework",
+      "behaviors",
+      "themes",
+      "no-build"
+    ]
   }
 }

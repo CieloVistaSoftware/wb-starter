@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/isPromise */
+import{isFunction as o}from"./isFunction.mjs";function r(i){return o(i?.then)}export{r as isPromise};
+//# sourceMappingURL=isPromise.mjs.map

@@ -12,7 +12,7 @@
  * Run: npm run test:lock-guards
  */
 
-import { mkdtemp, rm, writeFile, readdir } from "fs/promises";
+import { mkdtemp, rm, writeFile, readdir, readFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { createGuards } from "./lib/test-lock.mjs";
@@ -210,6 +210,169 @@ async function testSlotsLiveOutsideTheWorktree() {
   });
 }
 
+// ─── CROSS-KIND: the pair nobody put together (#1106) ──────────────
+// Every test above holds ONE kind of run against its own kind: suite vs suite,
+// single vs single. None puts a suite and a single run on the machine at the
+// same time -- the exact mistake scripts/lib/pairwise.mjs's header describes
+// ("ONE attribute at a time -- so no two attributes were ever set together").
+// That missing pair is the collision that hung a commit gate for five hours on
+// 2026-09-10: a single-spec run launched while the gate's suite was running,
+// and nothing refused it, because acquireSingleSlot never reads the suite lock
+// and acquireSuiteLock never reads the slots.
+// Step 2 of the method: one simple case that must work before any permutation
+// is worth generating. If this fails, every generated case below is noise.
+async function testSimpleWorkingCase() {
+  console.log("\nSimple working case -- an idle machine admits a suite:");
+
+  await withTempDir(async (dir) => {
+    const [a] = twoWorktrees(dir);
+    const denied = await a.acquireSuiteLock(new Date().toISOString(), "suite");
+    check("a suite acquires an idle machine", denied === null, denied);
+    await a.removeLock();
+    const again = await a.acquireSuiteLock(new Date().toISOString(), "suite");
+    check("and can acquire it again once released", again === null, again);
+  });
+}
+
+// Steps 3-4: every case comes from scripts/lock-permutations.schema.json. The
+// cases are not chosen here -- the schema declares every value, including the
+// min, max and edges, and this only sets each one up and asks the oracle.
+const LOCK_SCHEMA = JSON.parse(
+  await readFile(new URL("./lock-permutations.schema.json", import.meta.url), "utf8")
+);
+
+/** Put the machine into one declared `existing` state. */
+async function arrange(state, holder) {
+  const iso = (msAgo) => new Date(Date.now() - msAgo).toISOString();
+  const lockFile = holder.lockFile;
+  switch (state.id) {
+    case "idle":
+      return;
+    case "suite-live":
+      await holder.acquireSuiteLock(iso(0), "holder");
+      await holder.bindSuiteLock(process.pid, {});
+      return;
+    case "suite-dead":
+      await holder.acquireSuiteLock(iso(0), "holder");
+      await holder.bindSuiteLock(DEAD_PID, {});
+      return;
+    case "suite-unbound-fresh":
+      await writeFile(lockFile, JSON.stringify({ pid: null, root: "C:/other", startedAt: iso(0), command: "x" }));
+      return;
+    case "suite-unbound-expired":
+      await writeFile(lockFile, JSON.stringify({ pid: null, root: "C:/other", startedAt: iso(10 * 60 * 1000), command: "x" }));
+      return;
+    case "lock-corrupt":
+      await writeFile(lockFile, "{ this is not json");
+      return;
+    case "single-one":
+      await holder.acquireSingleSlot("tests/held.spec.ts");
+      return;
+    case "single-cap":
+      for (let i = 0; i < LOCK_SCHEMA.maxParallelSingle; i++) {
+        await holder.acquireSingleSlot(`tests/held-${i}.spec.ts`);
+      }
+      return;
+    case "single-dead": {
+      const slot = await holder.acquireSingleSlot("tests/held.spec.ts");
+      await holder.bindSlot(slot, DEAD_PID, "tests/held.spec.ts", iso(0));
+      return;
+    }
+    default:
+      throw new Error(`schema declares an existing state with no arrangement: ${state.id}`);
+  }
+}
+
+async function testEveryPermutationFromTheSchema() {
+  const { existing, arriving } = LOCK_SCHEMA.parameters;
+  const total = existing.values.length * arriving.values.length;
+  console.log(`\nEvery permutation from lock-permutations.schema.json (${total} cases):`);
+
+  for (const state of existing.values) {
+    for (const who of arriving.values) {
+      await withTempDir(async (dir) => {
+        const [holder, arriver] = twoWorktrees(dir, {
+          maxParallelSingle: LOCK_SCHEMA.maxParallelSingle,
+        });
+        await arrange(state, holder);
+
+        const blocks = who.id === "suite" ? state.blocksSuite : state.blocksSingle;
+        const expectProceed = !blocks;
+
+        let proceeded;
+        if (who.id === "suite") {
+          proceeded = (await arriver.acquireSuiteLock(new Date().toISOString(), "arriving")) === null;
+        } else {
+          proceeded = (await arriver.acquireSingleSlot("tests/arriving.spec.ts")) !== null;
+        }
+
+        const edge = state.edge ? ` [${state.edge}]` : "";
+        check(
+          `${who.id} arriving on ${state.id}${edge} -> ${expectProceed ? "proceeds" : "notified on release"}`,
+          proceeded === expectProceed,
+          `expected ${expectProceed ? "to proceed" : "to be held for the release notification"}, but it ${proceeded ? "proceeded" : "was held"}`
+        );
+      });
+    }
+  }
+}
+
+async function testSubscriberIsNotifiedOnRelease() {
+  console.log("\nA blocked run SUBSCRIBES to the release and is notified -- no polling:");
+
+  await withTempDir(async (dir) => {
+    const [holder, subscriber] = twoWorktrees(dir, { staleCheckMs: 60_000 });
+    await holder.acquireSuiteLock(new Date().toISOString(), "holder");
+    await holder.bindSuiteLock(process.pid, {});
+
+    if (typeof subscriber.acquireSuiteLockOnRelease !== "function") {
+      check("acquireSuiteLockOnRelease exists", false, "no release notification API -- a blocked run can only be refused");
+      return;
+    }
+
+    let notified = false;
+    const subscribed = subscriber
+      .acquireSuiteLockOnRelease(new Date().toISOString(), "subscriber")
+      .then(() => { notified = true; });
+
+    await new Promise((r) => setTimeout(r, 300));
+    check("subscriber is held while the holder runs", notified === false);
+
+    // The backstop is 60s, so anything that wakes it inside 3s was the
+    // filesystem notification of the release, not a timer.
+    await holder.removeLock();
+    const wasNotified = await Promise.race([
+      subscribed.then(() => true),
+      new Promise((r) => setTimeout(() => r(false), 3000)),
+    ]);
+    check("subscriber is notified by the release, not by a timer", wasNotified === true);
+  });
+}
+
+async function testSubscriberIsNotStrandedByADeadHolder() {
+  console.log("\nA subscriber behind a holder that died is not stranded:");
+
+  await withTempDir(async (dir) => {
+    const [dead, subscriber] = twoWorktrees(dir, { staleCheckMs: 200 });
+    await dead.acquireSuiteLock(new Date().toISOString(), "dead");
+    await dead.bindSuiteLock(DEAD_PID, {});
+
+    if (typeof subscriber.acquireSuiteLockOnRelease !== "function") {
+      check("acquireSuiteLockOnRelease exists", false, "no release notification API");
+      return;
+    }
+
+    // A holder that dies without removing its lock produces no filesystem
+    // event. The backstop re-check is what lets acquireSuiteLock's stale-lock
+    // clearing run -- nothing dies silently, and nothing waits forever.
+    const got = await Promise.race([
+      subscriber.acquireSuiteLockOnRelease(new Date().toISOString(), "subscriber").then(() => true),
+      new Promise((r) => setTimeout(() => r(false), 3000)),
+    ]);
+    check("subscriber acquires once the dead holder's lock is found stale", got === true);
+  });
+}
+
 // ─── MEMORY FLOOR ──────────────────────────────────────────────────
 async function testMemoryFloor() {
   console.log("\nMemory floor refuses to launch on a starved machine:");
@@ -257,6 +420,10 @@ await testCorruptLockIsCleared();
 await testSingleRunsAreCapped();
 await testDeadSingleHolderIsReaped();
 await testSlotsLiveOutsideTheWorktree();
+await testSimpleWorkingCase();
+await testEveryPermutationFromTheSchema();
+await testSubscriberIsNotifiedOnRelease();
+await testSubscriberIsNotStrandedByADeadHolder();
 await testMemoryFloor();
 
 console.log(`\n${failed === 0 ? "✅" : "❌"} ${passed} passed, ${failed} failed`);

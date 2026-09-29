@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/sample */
+import{innerFrom as n}from"../observable/innerFrom.mjs";import{operate as p}from"../util/lift.mjs";import{noop as u}from"../util/noop.mjs";import{createOperatorSubscriber as l}from"./OperatorSubscriber.mjs";function b(a){return p((m,e)=>{let r=!1,o=null;m.subscribe(l(e,t=>{r=!0,o=t})),n(a).subscribe(l(e,()=>{if(r){r=!1;let t=o;o=null,e.next(t)}},u))})}export{b as sample};
+//# sourceMappingURL=sample.mjs.map

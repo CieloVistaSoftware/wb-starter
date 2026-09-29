@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Auto-injection compliance. (#277)
@@ -46,17 +46,29 @@ async function renderWithWB(page, bodyHtml: string, initOptions = '{ autoInject:
 test.describe('Auto-Injection Compliance', () => {
   test('Explicit <article> IS a Card', async ({ page }) => {
     await renderWithWB(page, `<article id="explicit-card"><header><h1>Title</h1></header><p>Content</p></article>`);
-    await expect(page.locator('#explicit-card')).toHaveClass(/x-card/, { timeout: 10000 });
+    // Cards stopped stamping .x-card onto an <article> (a8a7362e: card.css
+    // matches the tag). "Became a card" is the behavior settling (x-ready)
+    // and owning its header: the page-level header behavior must NOT claim it
+    // (component-landmark.js).
+    const card = page.locator('#explicit-card');
+    await expect(card).toHaveAttribute('x-ready', '', { timeout: 10000 });
+    await expect(card.locator(':scope > header')).not.toHaveClass(/x-header/);
   });
 
-  test('Native <dialog> is auto-injected with x-dialog (nativeMap: dialog -> dialog)', async ({ page }) => {
+  test('Native <dialog> is auto-injected with .x-dialog (nativeMap: dialog -> dialog)', async ({ page }) => {
     await renderWithWB(page, `<dialog id="auto-dialog">Content</dialog>`);
     await expect(page.locator('#auto-dialog')).toHaveClass(/x-dialog/, { timeout: 10000 });
   });
 
   test('Native <article> IS auto-injected as Card (nativeMap: article -> card)', async ({ page }) => {
     await renderWithWB(page, `<article id="auto-article"><header><h1>Title</h1></header><p>Content</p></article>`);
-    await expect(page.locator('#auto-article')).toHaveClass(/x-card/, { timeout: 10000 });
+    // Cards stopped stamping .x-card onto an <article> (a8a7362e: card.css
+    // matches the tag). "Became a card" is the behavior settling (x-ready)
+    // and owning its header: the page-level header behavior must NOT claim it
+    // (component-landmark.js).
+    const card = page.locator('#auto-article');
+    await expect(card).toHaveAttribute('x-ready', '', { timeout: 10000 });
+    await expect(card.locator(':scope > header')).not.toHaveClass(/x-header/);
   });
 
   // Contract decision (#277): <nav> does NOT auto-inject as navbar, even with

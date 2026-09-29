@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Live-reported: docs/V3-GUIDE.md:74-100 shows a full-document boilerplate
  * example (```html <!DOCTYPE html><html>...<head><link href="src/styles/
  * themes.css">...<body><article>...) illustrating "here's how to wire up
  * your own index.html". mdhtml.js's auto-live-render conversion (John:
- * "all of these examples must use x-demo") matched it because the block
+ * "all of these examples must use [x-demo]") matched it because the block
  * contains a real <article> tag nested deep inside -- but wrapping the
  * WHOLE boilerplate (including its <link> tags) in a live <div x-demo> made
  * the browser actually parse and fetch those <link href> values as real

@@ -24,7 +24,7 @@ const scripts = pkg.scripts || {};
 const missing = REQUIRED.filter(s => !Object.prototype.hasOwnProperty.call(scripts, s));
 if (missing.length) {
   console.error('Critical npm script(s) missing: ' + missing.join(', '));
-  console.error('These scripts are required for developer workflows and CI. See CONTRIBUTING.md for the policy.');
+  console.error('These scripts are required for developer workflows and CI. See .github/CONTRIBUTING.md for the policy.');
   process.exit(2);
 }
 console.log('All critical scripts present');

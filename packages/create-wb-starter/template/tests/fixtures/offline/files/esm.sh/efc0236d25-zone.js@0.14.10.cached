@@ -1,0 +1,3 @@
+/* esm.sh - zone.js@0.14.10 */
+export * from "/zone.js@0.14.10/es2022/zone.mjs";
+export { default } from "/zone.js@0.14.10/es2022/zone.mjs";

@@ -5,20 +5,31 @@
  * (toggle/badge/copy) stay reachable in both states since they're
  * absolutely-positioned siblings of <pre>, not children of it.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { setupBehaviorTest, setupTestContainer } from '../base';
+
+// The Behaviors page these specs used to read builds one example on selection
+// now (#666/#910), and its code panel is a plain source view: no max-height, so
+// no toggle, and no copy button. The block under test is authored here with
+// every header control pre.js offers -- copy, a language badge, and the
+// collapse toggle that only exists when there is a max-height to collapse.
+const BLOCK =
+  '<pre language="javascript" show-copy max-height="160px"><code>' +
+  Array.from({ length: 24 }, (_, i) => `const line${i} = ${i};`).join('\n') +
+  '</code></pre>';
 
 test.describe('#299 — pre.js collapse/expand toggle', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
-    await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2500);
+    await setupBehaviorTest(page);
+    await setupTestContainer(page, BLOCK);
+    await page.locator('#test-container .x-pre__toggle').scrollIntoViewIfNeeded();
   });
 
   test('clicking the toggle hides the code and restores it on a second click', async ({ page }) => {
-    const toggle = page.locator('.x-pre__toggle').first();
+    const toggle = page.locator('#test-container .x-pre__toggle').first();
     await expect(toggle).toBeVisible();
 
-    const wrapper = page.locator('.x-pre-wrapper').first();
+    const wrapper = page.locator('#test-container .x-pre-wrapper').first();
     const pre = wrapper.locator('pre.x-pre').first();
 
     const openHeight = await wrapper.evaluate((el) => el.getBoundingClientRect().height);
@@ -38,7 +49,7 @@ test.describe('#299 — pre.js collapse/expand toggle', () => {
   });
 
   test('toggle button never leaves the DOM/visible area in either state', async ({ page }) => {
-    const toggle = page.locator('.x-pre__toggle').first();
+    const toggle = page.locator('#test-container .x-pre__toggle').first();
     for (let i = 0; i < 3; i++) {
       await toggle.click();
       await expect(toggle).toBeVisible();

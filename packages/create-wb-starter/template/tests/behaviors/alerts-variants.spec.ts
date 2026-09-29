@@ -14,21 +14,24 @@
  * This drives the panel instead, and reads the rendered example, never a
  * browse-list row (#727).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { openBehaviorsPanel, renderVariant, example, exampleStyle } from '../utils/behaviors-panel';
 
 const VARIANTS = ['info', 'success', 'warning', 'error'] as const;
 
 test.describe('#176/#375 — alert variants', () => {
-  test('each variant carries x-alert and its own modifier class', async ({ page }) => {
+  test('each variant carries [x-alert] and its own modifier class', async ({ page }) => {
     await openBehaviorsPanel(page, 'x-alert');
 
     for (const variant of VARIANTS) {
       await renderVariant(page, 'x-alert', variant);
       const el = example(page);
-      await expect(el, `${variant}: missing the base class`).toHaveClass(/\bwb-alert\b/);
+      // x-alert, not wb-alert: the wb- prefix was retired (x-prefix migration)
+      // and alert.css targets only .x-alert / .x-alert--<variant>, so the old
+      // wb-alert pattern asserted a class nothing styles.
+      await expect(el, `${variant}: missing the base class`).toHaveClass(/\bx-alert\b/);
       await expect(el, `${variant}: missing x-alert--${variant}`)
-        .toHaveClass(new RegExp(`\\bwb-alert--${variant}\\b`));
+        .toHaveClass(new RegExp(`\\bx-alert--${variant}\\b`));
     }
   });
 

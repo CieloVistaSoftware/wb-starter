@@ -4,12 +4,12 @@
  * Validates test coverage for schemas, bugs, and regressions.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ROOT, PATHS, getSchemaFiles, loadSchema, readFile, fileExists, readJson } from '../base';
 
-const TEST_DIR = path.join(ROOT, 'tests/behaviors');
+const TEST_DIR = path.join(ROOT, 'tests/components');
 const REGRESSION_DIR = path.join(ROOT, 'tests/regression');
 const COMPLIANCE_DIR = path.join(ROOT, 'tests/compliance');
 const PERM_TEST_FILE = path.join(ROOT, 'tests/behaviors/permutation-compliance.spec.ts');
@@ -98,24 +98,24 @@ test.describe('Bug Registry Compliance', () => {
     expect(missing, `Missing regression test files:\n${missing.join('\n')}`).toEqual([]);
   });
 
-  test('affected behaviors have test coverage', () => {
+  test('affected components have test coverage', () => {
     const registry = loadBugRegistry();
     if (!registry) { test.skip(); return; }
     
     const uncovered: string[] = [];
     for (const bug of registry.bugs) {
-      for (const behavior of bug.affectedComponents || []) {
-        const hasTest = testFileExistsForBehavior(behavior) !== null;
-        const inPermTests = isInPermutationTests(behavior);
-        const inRegressionTests = isInRegressionTests(behavior);
+      for (const component of bug.affectedComponents || []) {
+        const hasTest = testFileExistsForBehavior(component) !== null;
+        const inPermTests = isInPermutationTests(component);
+        const inRegressionTests = isInRegressionTests(component);
         
         if (!hasTest && !inPermTests && !inRegressionTests) {
-          uncovered.push(`${bug.id} affects "${behavior}" which has no test coverage`);
+          uncovered.push(`${bug.id} affects "${component}" which has no test coverage`);
         }
       }
     }
     
-    expect(uncovered.length, 'All affected behaviors should have tests').toBe(0);
+    expect(uncovered.length, 'All affected components should have tests').toBe(0);
   });
 
   test('zero untested bugs allowed', () => {
@@ -136,8 +136,15 @@ test.describe('Schema Test Coverage', () => {
       
       const hasTestFile = testFileExistsForBehavior(schema.behavior) !== null;
       const inPermTests = isInPermutationTests(schema.behavior);
-      
-      if (!hasTestFile && !inPermTests) missing.push(`${schema.behavior} (from ${file})`);
+      // permutation-compliance.spec.ts does not list behaviors by name: it
+      // loads every component schema from disk and runs its test.setup
+      // (loadSchemas() there -- a behavior, and schemaType absent or
+      // 'component'). A name search of its source never saw that, so a schema
+      // gaining a test.setup looked LESS covered, not more.
+      const sweptByPermutations = Array.isArray(schema.test.setup) && schema.test.setup.length > 0
+        && (!schema.schemaType || schema.schemaType === 'component');
+
+      if (!hasTestFile && !inPermTests && !sweptByPermutations) missing.push(`${schema.behavior} (from ${file})`);
     }
     
     expect(missing.length, 'Schemas without tests').toBeLessThan(80);
@@ -225,7 +232,10 @@ test.describe('Test File Quality', () => {
     for (const dir of allTestDirs) {
       for (const file of getTestFiles(dir)) {
         const content = readFile(path.join(dir, file));
-        if (!content.includes("from '@playwright/test'")) issues.push(`${file}: missing playwright import`);
+        // Intent: the spec uses Playwright's test API. That is either
+        // @playwright/test itself or tests/fixtures/offline.ts, which
+        // re-exports all of it with the offline network route installed.
+        if (!/from '@playwright\/test'|from '(?:\.\.?\/)+fixtures\/offline'/.test(content)) issues.push(`${file}: missing playwright import`);
       }
     }
     

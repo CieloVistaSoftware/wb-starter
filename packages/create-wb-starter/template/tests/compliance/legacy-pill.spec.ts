@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Legacy Pill Migration', () => {
   test('no legacy data-wb="pill" or legacy error markers on important pages', async ({ page }) => {

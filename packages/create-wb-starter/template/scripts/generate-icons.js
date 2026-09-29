@@ -67,12 +67,12 @@ async function generateIcons() {
   // was still a purple lightning bolt). Reading favicon.svg directly makes
   // this the single source of truth going forward -- can't drift again.
   try {
-    const faviconSvgPath = path.join(__dirname, '..', 'favicon.svg');
+    const faviconSvgPath = path.join(OUTPUT_DIR, 'favicon.svg');
     const faviconSvg = fs.readFileSync(faviconSvgPath, 'utf8');
     await sharp(Buffer.from(faviconSvg))
       .resize(32, 32)
       .png()
-      .toFile(path.join(OUTPUT_DIR, '..', '..', 'favicon.png'));
+      .toFile(path.join(OUTPUT_DIR, 'favicon.png'));
     console.log('  ✓ Generated favicon.png (from favicon.svg)');
   } catch (error) {
     console.error('  ✗ Failed to generate favicon:', error.message);

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#455): two separate reports on the same page --
@@ -12,7 +12,7 @@ import { test, expect } from '@playwright/test';
  *    config.image is truthy, so these two cards rendered as empty gray
  *    boxes -- confirmed live via screenshot, zero <img> elements present.
  *    Root cause: fixture-authoring gap (every other section in this file
- *    passes a real image= attribute), not a behavior defect.
+ *    passes a real image= attribute), not a component defect.
  *
  * 2. "none of this text is shwoing" -- the variant-variants markup relies
  *    on plain inner text ("variant=default" etc.) as the card body, but
@@ -21,7 +21,7 @@ import { test, expect } from '@playwright/test';
  *    as a `content` fallback the way card()/cardimage()/cardvideo() all
  *    do, so `element.innerHTML = ''` (cardhorizontal(), right after config
  *    is built) permanently wiped that text before it was ever captured.
- *    This is a real behavior bug: ANY x-cardhorizontal relying on plain
+ *    This is a real component bug: ANY x-cardhorizontal relying on plain
  *    inner text for its body loses it, not just this fixture.
  *
  * Both are fixed together: cardhorizontal() now captures innerHTML as a
@@ -29,7 +29,7 @@ import { test, expect } from '@playwright/test';
  * a real image= attribute on the imagePosition-variants cards plus
  * descriptive body copy on the variant-variants cards.
  */
-test.describe('x-cardhorizontal permutation-matrix examples actually render (#455)', () => {
+test.describe('[x-cardhorizontal] permutation-matrix examples actually render (#455)', () => {
   test('imagePosition variants render a real, visible <img>', async ({ page }) => {
     await page.goto('/tests/fixtures/cards-permutation-matrix.html');
 
@@ -37,7 +37,7 @@ test.describe('x-cardhorizontal permutation-matrix examples actually render (#45
     await expect(section, 'the matrix fixture should still have the imagePosition variants section').toHaveCount(1);
     await section.scrollIntoViewIfNeeded();
 
-    const cards = section.locator('x-cardhorizontal');
+    const cards = section.locator('[x-cardhorizontal]');
     await expect(cards).toHaveCount(2);
 
     for (let i = 0; i < 2; i++) {
@@ -57,7 +57,7 @@ test.describe('x-cardhorizontal permutation-matrix examples actually render (#45
     await expect(section, 'the matrix fixture should still have the variant variants section').toHaveCount(1);
     await section.scrollIntoViewIfNeeded();
 
-    const cards = section.locator('x-cardhorizontal');
+    const cards = section.locator('[x-cardhorizontal]');
     await expect(cards).toHaveCount(4);
 
     const seenTexts = new Set<string>();

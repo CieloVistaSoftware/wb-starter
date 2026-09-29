@@ -3,7 +3,7 @@
  * Auto-generated baseline — verifies render + no console errors
  * Source: src/wb-viewmodels/mdhtml.js
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -31,8 +31,8 @@ async function injectAndScan(page: Page, html: string) {
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -68,7 +68,7 @@ test.describe('mdhtml Behavior', () => {
     const html = "<div x-mdhtml>Basic mdhtml content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container x-mdhtml, #test-container x-mdhtml').first();
+    const el = page.locator('#test-container [x-mdhtml]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

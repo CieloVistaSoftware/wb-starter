@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { safeScrollIntoView } from '../base';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
@@ -7,7 +7,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await setupBehaviorTest(page);
   });
 
-  test('x-cardprofile is recognized as PCE', async ({ page }) => {
+  test('[x-cardprofile] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
       `<div x-cardprofile 
@@ -26,14 +26,19 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-name', 'John Doe');
     await expect(element).toHaveAttribute('data-role', 'Developer');
     
-    // Check if behavior was applied (may add .x-ready class)
-    const wbReady = await element.classList.contains('x-ready');
-    // Behavior either adds .x-ready class or adds content
-    const hasContent = (await element.textContent())?.trim().length > 0;
-    expect(wbReady !== null || hasContent).toBeTruthy();
+    // Check the behavior was applied. This used to call
+    // `element.classList.contains(...)` -- but `element` is a Playwright
+    // Locator, which has no classList, so the test threw a TypeError before
+    // asserting anything. And `wbReady !== null || ...` was true for any
+    // boolean, so even a working call could never have failed.
+    //
+    // x-ready is an ATTRIBUTE (#970), and cardprofile builds its name from
+    // data-name, so both are real, falsifiable signs the behavior ran.
+    await expect(element).toHaveAttribute('x-ready', '');
+    await expect(element).toContainText('John Doe');
   });
 
-  test('profile-card alias also works', async ({ page }) => {
+  test('[x-cardprofile] alias also works', async ({ page }) => {
     const element = await setupTestContainer(
       page,
       `<div x-cardprofile 
@@ -50,7 +55,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-role', 'Designer');
   });
 
-  test('x-cardhero is recognized as PCE', async ({ page }) => {
+  test('[x-cardhero] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
       `<div x-cardhero 
@@ -67,7 +72,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-subtitle', 'Hero Subtitle');
   });
 
-  test('x-cardstats is recognized as PCE', async ({ page }) => {
+  test('[x-cardstats] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
       `<div x-cardstats 
@@ -88,7 +93,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     await expect(element).toHaveAttribute('data-trend', 'up');
   });
 
-  test('x-cardnotification is recognized as PCE', async ({ page }) => {
+  test('[x-cardnotification] is recognized as PCE', async ({ page }) => {
     const element = await setupTestContainer(
       page,
       `<div x-cardnotification 
@@ -128,7 +133,7 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
     expect(tooltipCount >= 0).toBeTruthy();
   });
 
-  test('x-card basic element works', async ({ page }) => {
+  test('.x-card basic element works', async ({ page }) => {
     const element = await setupTestContainer(
       page,
       `<article data-title="Test Card">
@@ -155,23 +160,28 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
         </script>
       </head>
       <body>
-        <div x-cardstats data-label="Stat 1" data-value="100"></div>
-        <div x-cardstats data-label="Stat 2" data-value="200"></div>
-        <div x-cardstats data-label="Stat 3" data-value="300"></div>
+        <div x-cardstats label="Stat 1" value="100"></div>
+        <div x-cardstats label="Stat 2" value="200"></div>
+        <div x-cardstats label="Stat 3" value="300"></div>
       </body>
       </html>
     `);
 
-    await page.waitForFunction(() => window.WB !== undefined);
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-    await page.waitForTimeout(1000);
+    // No WBSite wait: this is a standalone document that only boots the WB
+    // runtime, never the SPA, so window.WBSite is never created and waiting on
+    // it timed out every run (same trap as #691). And the old assertions read
+    // back the authored data-* attributes -- true whether or not any behavior
+    // ran. Plain attributes (v3, #224), and proof each element was built.
+    await page.waitForFunction(() => (window as any).WB !== undefined, { timeout: 20000 });
 
-    const stats = page.locator('x-cardstats');
+    const stats = page.locator('[x-cardstats]');
     await expect(stats).toHaveCount(3);
-    
-    await expect(stats.nth(0)).toHaveAttribute('data-value', '100');
-    await expect(stats.nth(1)).toHaveAttribute('data-value', '200');
-    await expect(stats.nth(2)).toHaveAttribute('data-value', '300');
+
+    for (const [i, v] of ['100', '200', '300'].entries()) {
+      await expect(stats.nth(i)).toHaveAttribute('x-ready', '', { timeout: 20000 });
+      await expect(stats.nth(i)).toContainText(v);
+      await expect(stats.nth(i)).toContainText(`Stat ${i + 1}`);
+    }
   });
 
   test('PCE elements respond to lazy loading', async ({ page }) => {
@@ -192,25 +202,26 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
       </head>
       <body>
         <div class="spacer">Scroll down...</div>
-        <div x-cardprofile id="lazy-profile" data-name="Lazy User"></div>
+        <div x-cardprofile id="lazy-profile" name="Lazy User"></div>
       </body>
       </html>
     `);
 
-    await page.waitForFunction(() => window.WB !== undefined);
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-    
+    // Standalone document: WB boots, WBSite never does (see above).
+    await page.waitForFunction(() => (window as any).WB !== undefined, { timeout: 20000 });
+
     const profile = page.locator('#lazy-profile');
-    
+
     // Initially not visible
     await expect(profile).not.toBeInViewport();
-    
+
     // Scroll into view
     await safeScrollIntoView(profile);
-    await page.waitForTimeout(500);
-    
-    // Now visible and should have behavior applied
+
+    // Now visible and the behavior has been applied -- x-ready and the name it
+    // renders, not the authored attribute read back.
     await expect(profile).toBeVisible();
-    await expect(profile).toHaveAttribute('data-name', 'Lazy User');
+    await expect(profile).toHaveAttribute('x-ready', '', { timeout: 20000 });
+    await expect(profile).toContainText('Lazy User');
   });
 });

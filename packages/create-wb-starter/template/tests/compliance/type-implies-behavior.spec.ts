@@ -14,7 +14,7 @@
  * value must be explicitly classified below — an unclassified match fails loudly instead of
  * silently reproducing the #481 bug under a new name.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // Behaviors whose name exactly matches a native <input type="…"> value, and that DO get
 // auto-inferred from nativeMap alone — no x-{name} attribute should ever be required.
@@ -32,7 +32,9 @@ function isEnhanced(behaviorName) {
   if (behaviorName === 'password') {
     return !!el.parentElement && el.parentElement.classList.contains('x-password');
   }
-  return el.classList.contains(`wb-${behaviorName}`);
+  // 4.0.0 renamed every wb-* class to x-* (radio.js/range.js add `x-radio`/`x-range`);
+  // probing the old `wb-` class reported working behaviors as never having run.
+  return el.classList.contains(`x-${behaviorName}`);
 }
 
 // Behaviors whose name exactly matches a native <input type="…"> value, but that
@@ -43,8 +45,8 @@ function isEnhanced(behaviorName) {
 // wrapper (x-input__field) for free like any other text-like type, so absence of ALL classes
 // isn't the right check; absence of search()'s own marker is.
 const OPT_IN_BY_DESIGN = {
-  search: { marker: 'x-search__input' },
-  file: { marker: 'x-file__input' },
+  search: { marker: '[x-searchfield]__input' },
+  file: { marker: '[x-file]__input' },
   // 'image'/'button' behaviors (card.js's image()/button()) enhance <img>/<button> TAGS
   // (already correctly native-mapped via their own tag selectors) and only coincidentally
   // share a name with the rare/deprecated <input type="image">/<input type="button">) values

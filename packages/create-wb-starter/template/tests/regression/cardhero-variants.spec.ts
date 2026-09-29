@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#383): <div x-cardhero variant="cosmic|split|minimal|gradient">
@@ -14,18 +14,20 @@ test.describe('cardhero variant= produces genuinely distinct visuals (#383)', ()
       { timeout: 10000 }
     );
 
+    // 800px: below 40rem split deliberately collapses to one full-width
+    // column (hero.css @container), so a 400px hero could never show it.
     const variants = ['default', 'cosmic', 'split', 'minimal', 'gradient'];
     await page.evaluate((vs) => {
       const container = document.createElement('div');
       container.id = 'cardhero-variant-test';
       container.innerHTML = vs
-        .map((v) => `<div x-cardhero variant="${v}" title="Title" style="width:400px;height:200px;"></div>`)
+        .map((v) => `<div x-cardhero variant="${v}" title="Title" style="width:800px;height:200px;"></div>`)
         .join('');
       document.body.appendChild(container);
     }, variants);
-    await page.evaluate(() => (window as any).WB.scan(document.getElementById('cardhero-variant-test'), { eager: true }));
+    await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('cardhero-variant-test'), { eager: true }));
 
-    const heroes = page.locator('#cardhero-variant-test x-cardhero');
+    const heroes = page.locator('#cardhero-variant-test [x-cardhero]');
     await expect(heroes).toHaveCount(5);
 
     const backgrounds: string[] = [];

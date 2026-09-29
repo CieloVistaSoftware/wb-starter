@@ -43,7 +43,7 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'architecture/standards/ATTRIBUTE-NAMING-STANDARD.md',
   'architecture/standards/SCHEMA-SPECIFICATION.md',
   'architecture/WBVIEWS.md',
-  'Auto-Injection.md',
+  'auto-injection.md',
   'behaviors/autosize.md',
   'behaviors/label.md',
   'behaviors/x-card.md',

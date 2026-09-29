@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #586: demos/site/cards.html's <div x-demo> code panels didn't show all the
@@ -9,13 +9,13 @@ import { test, expect } from '@playwright/test';
  *
  * Root cause (two layered races, both in demo()):
  *  1. The measurement block used to run IMMEDIATELY after the grid was
- *     built -- BEFORE `<pre class="x-demo__code">` existed (pre creation
+ *     built -- BEFORE `<pre class="[x-demo]__code">` existed (pre creation
  *     was gated behind `await loadDocsManifest()`, further down). With no
  *     `<pre>` in the DOM, codeWidth read a stable `0` and could lock in
  *     alongside controlWidth before the real code panel ever existed.
  *  2. Even after moving the block below `<pre>`'s creation, `<pre>`
  *     EXISTING is not the same as `<pre>` being STYLED --
- *     `WB.scan(pre, {eager:true})` is itself async (applies the real
+ *     `await WB.scan(pre, {eager:true})` is itself async (applies the real
  *     `.x-pre` class/font/padding/highlighting on a later tick), so the
  *     first poll(s) could still read the bare, unstyled element's smaller
  *     width and lock in on that.
@@ -34,8 +34,21 @@ import { test, expect } from '@playwright/test';
  * Standard §27's own "scrolling available for unavoidable long lines"
  * carve-out for x-demo code panels, not a bug to eliminate).
  */
-test.describe('demos/site/cards.html: single-item x-demo code panels are never clipped', () => {
+test.describe('demos/site/cards.html: single-item [x-demo] code panels are never clipped', () => {
   test('cardexpandable and cardvideo code panels show all their code, no horizontal overflow', async ({ page }) => {
+    // This test's DECLARED work cannot fit Playwright's default 30s: a 20s
+    // budget waiting for __WB_DEMO_INITIALIZED__, scrolling five sections of
+    // the heaviest page in the repo (34 demos / 265 articles), then a 6s
+    // settle for demo.js's own poll-until-stable width measurement
+    // (POLL_MS=200, MAX_MS=5000 per demo). Under 8 workers it ran out of
+    // budget and reported a timeout, which read as a product failure.
+    //
+    // This is raising a budget to match work that is real and BOUNDED — not
+    // padding a race. The waits above are all capped; nothing here spins.
+    // Same precedent as cardvideo-aspect-ratio (60s), dropdown-examples
+    // (120s) and every-documented-example-works (300s).
+    test.setTimeout(90_000);
+
     const pageErrors: string[] = [];
     page.on('pageerror', (err) => pageErrors.push(String(err)));
 
@@ -46,7 +59,7 @@ test.describe('demos/site/cards.html: single-item x-demo code panels are never c
     // its x-cardexpandable/x-cardvideo demos are among the eagerly-built
     // ones (EAGER_BUILD_COUNT=5) and reproduced on nearly every load without
     // any scrolling. Scroll each relevant section into view anyway (cheap,
-    // and also exercises the lazy-build path for the same behaviors
+    // and also exercises the lazy-build path for the same components
     // further down the page) and give the width-measurement poll (up to 5s
     // per demo.js's own MAX_MS) time to fully settle.
     const sectionIds = [
@@ -85,14 +98,25 @@ test.describe('demos/site/cards.html: single-item x-demo code panels are never c
 
     for (let i = 0; i < count; i++) {
       const panel = codePanels.nth(i);
-      const { scrollWidth, clientWidth, snippet } = await panel.evaluate((el) => ({
+      const { scrollWidth, clientWidth, snippet, atCap } = await panel.evaluate((el) => ({
         scrollWidth: el.scrollWidth,
         clientWidth: el.clientWidth,
         snippet: el.textContent?.slice(0, 40) ?? '',
+        atCap: el.getBoundingClientRect().width >= window.innerWidth * 0.5 - 2,
       }));
       if (scrollWidth > pageMaxWidth) {
         // Content is unavoidably wider than the entire page -- horizontal
         // scroll is the documented, accepted behavior here, not a bug.
+        continue;
+      }
+      if (atCap) {
+        // The page width is no longer the ceiling: "all x-demo code must show
+        // all the code up to 50% vw" (owner, 2026-08-07; demo-code-panel-
+        // 50vw.spec.ts). Code wider than that sits at the cap and scrolls --
+        // the card-gallery Pro pricing demo's features="..." line is 755px of
+        // code that used to stretch the whole demo to 757px, and now stops at
+        // 640px by design. Below the cap, a scroll is still the #586
+        // locked-in-too-early bug and fails.
         continue;
       }
       expect(

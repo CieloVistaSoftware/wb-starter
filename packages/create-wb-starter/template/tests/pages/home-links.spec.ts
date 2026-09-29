@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * Home page link integrity.
@@ -7,19 +7,19 @@ import { test, expect, Page } from '@playwright/test';
  * must actually navigate. Runs every time so a regressed CTA fails CI.
  */
 
-const BASE = 'http://localhost:3000/';
+const BASE = '/';
 
 async function loadHome(page: Page) {
   await page.goto(BASE);
   // Site engine fetches pages/home.html into #app; wait for the hero CTA.
-  await page.locator('x-cardhero a, .hero a, #app a').first().waitFor({ state: 'visible', timeout: 10000 });
+  await page.locator('[x-cardhero] a, .hero a, #app a').first().waitFor({ state: 'visible', timeout: 10000 });
 }
 
 test.describe('Home page — link integrity', () => {
   test('no dead links (no #, empty, or javascript: hrefs)', async ({ page }) => {
     await loadHome(page);
 
-    const dead = await page.$$eval('#app a[href], main a[href], x-cardhero a[href]', (as) =>
+    const dead = await page.$$eval('#app a[href], main a[href], [x-cardhero] a[href]', (as) =>
       as
         .map((a) => ({ text: (a.textContent || '').trim().slice(0, 40), href: a.getAttribute('href') || '' }))
         .filter((l) => {
@@ -34,6 +34,10 @@ test.describe('Home page — link integrity', () => {
   test('hero CTAs point to real routes and navigate', async ({ page }) => {
     await loadHome(page);
 
+    // 4.0.0: the hero CTA is "Explore Behaviors". It read "Explore
+    // Components" until components were removed -- the href never moved,
+    // only the label, so this matched nothing rather than pointing
+    // somewhere wrong. See pages/home.html's x-cardhero cta attribute.
     const explore = page.getByRole('link', { name: /explore behaviors/i });
     const docs = page.getByRole('link', { name: /documentation/i });
 

@@ -280,6 +280,59 @@
       font-size: 0.8125rem;
       color: var(--text);
     }
+    /* The reason, which this page recorded on every run and never showed. */
+    .failure-error {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text);
+      background: var(--bg-card-alt);
+      border-left: 2px solid var(--red);
+      padding: 0.5rem 0.625rem;
+      margin: 0.375rem 0 0;
+      white-space: pre-wrap;      /* an assertion diff is many short lines */
+      overflow-x: auto;
+      max-height: 16rem;
+      overflow-y: auto;
+    }
+    .failure-snippet {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      background: var(--bg-card);
+      padding: 0.375rem 0.625rem;
+      margin: 0.25rem 0 0;
+      white-space: pre;           /* source keeps its own shape */
+      overflow-x: auto;
+    }
+    .failure-stack summary {
+      font-size: 0.6875rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      margin-top: 0.25rem;
+    }
+    .failure-stack pre {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      color: var(--text-dim);
+      white-space: pre;
+      overflow-x: auto;
+      margin: 0.25rem 0 0;
+    }
+    .failure-nodetail {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-style: italic;
+      margin-top: 0.375rem;
+    }
+    /* How old the data is. Silence here is what let a five-hour-old status file
+       read as current. */
+    .source-freshness {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      color: var(--text-dim);
+      padding: 0.25rem 1rem 0.5rem;
+    }
+    .source-freshness[data-stale="true"] { color: var(--red); }
 
     /* ─── RESULTS TABLE ─── */
     .results-table {
@@ -434,6 +487,11 @@
     <code id="commandText"></code>
   </div>
 
+  <!-- How old each source file is. Every one is rewritten by every run,
+       including a single-spec one, so what is on screen and what the last FULL
+       run found are routinely different. Turns red past 10 minutes. -->
+  <div class="source-freshness" id="sourceFreshness" data-stale="false"></div>
+
   <!-- TABS -->
   <div class="tabs">
     <div class="tab active" tab="failures" onclick="switchTab('failures')">
@@ -492,12 +550,32 @@
   let allResults = [];
   let pollTimer = null;
 
+  // file -> when the server last wrote it, so a stale read is visible instead of
+  // silently wrong. This page showed 13:46 numbers as current for five hours
+  // today and nothing on screen said so.
+  const sourceAges = {};
+  // "file › title" -> { error, stack, snippet } from the reporter's failures.json.
+  let failureDetail = {};
+
   async function poll() {
     try {
-      const [statusRes, resultsRes] = await Promise.all([
+      const [statusRes, resultsRes, detailRes] = await Promise.all([
         fetch('/data/test-status.json?' + Date.now()),
         fetch('/data/test-results.json?' + Date.now()),
+        // The RICH one. summary/status carry file+name only; this carries the
+        // error text, and since #963 the stack frames and the failing source
+        // line as well. It was written on every run and read by nothing.
+        fetch('/data/test-results/failures.json?' + Date.now()),
       ]);
+
+      const note = (res, key) => {
+        const lm = res && res.headers && res.headers.get('Last-Modified');
+        if (lm) sourceAges[key] = Date.parse(lm);
+      };
+      note(statusRes, 'status');
+      note(resultsRes, 'results');
+      note(detailRes, 'failures');
+
       if (statusRes.ok) {
         const status = await statusRes.json();
         if (status.state) updateStatus(status);
@@ -510,7 +588,37 @@
           if (currentTab === 'results') renderResults();
         }
       }
+      if (detailRes.ok) {
+        const detail = await detailRes.json();
+        const next = {};
+        for (const f of (detail.failures || [])) {
+          next[`${String(f.file).replace(/\\/g, '/')} › ${f.title}`] = f;
+        }
+        failureDetail = next;
+      }
+      renderFreshness();
     } catch (e) { /* server down */ }
+  }
+
+  /**
+   * Say how old the data is. Every one of these files is rewritten by EVERY
+   * run, including a single-spec one, so "what is on screen" and "what the last
+   * full run found" are routinely different things — and were indistinguishable
+   * until this line existed.
+   */
+  function renderFreshness() {
+    const el = document.getElementById('sourceFreshness');
+    if (!el) return;
+    const now = Date.now();
+    const parts = [];
+    let stale = false;
+    for (const [key, at] of Object.entries(sourceAges)) {
+      const mins = Math.round((now - at) / 60000);
+      if (mins >= 10) stale = true;
+      parts.push(`${key} ${mins < 1 ? 'just now' : mins + 'm ago'}`);
+    }
+    el.textContent = parts.length ? parts.join('  ·  ') : '';
+    el.dataset.stale = String(stale);
   }
 
   function startPolling() {
@@ -591,15 +699,33 @@
       return;
     }
     empty.style.display = 'none';
-    list.innerHTML = failures.map(f =>
-      '<div class="failure-item">' +
+    list.innerHTML = failures.map(f => {
+      const file = String(f.file || '').replace(/\\/g, '/');
+      // The reporter records the leaf title; status.json records `name`. Try the
+      // composed key first, then fall back to matching on the file alone so a
+      // renamed describe block degrades to "some detail" rather than none.
+      const detail = failureDetail[`${file} › ${f.name}`]
+        || Object.values(failureDetail).find(d => String(d.file).replace(/\\/g, '/') === file && d.title === f.name);
+
+      // A failure with no recorded reason is worth SAYING so, rather than
+      // rendering an identical-looking row: it means failures.json is from a
+      // different run than the status file, which is exactly the mismatch the
+      // freshness line above exists to expose.
+      const body = detail
+        ? '<pre class="failure-error">' + esc(detail.error || '') + '</pre>'
+          + (detail.snippet ? '<pre class="failure-snippet">' + esc(detail.snippet) + '</pre>' : '')
+          + (detail.stack ? '<details class="failure-stack"><summary>stack</summary><pre>' + esc(detail.stack) + '</pre></details>' : '')
+        : '<div class="failure-nodetail">no recorded error — failures.json is from a different run than the status file</div>';
+
+      return '<div class="failure-item">' +
         '<div class="failure-icon fail">✗</div>' +
-        '<div>' +
-          '<div class="failure-file">' + esc(f.file || '').replace(/\\/g, '/') + '</div>' +
+        '<div style="min-width:0">' +
+          '<div class="failure-file">' + esc(file) + (detail && detail.line ? ':' + detail.line : '') + '</div>' +
           '<div class="failure-name">' + esc(f.name || '') + '</div>' +
+          body +
         '</div>' +
-      '</div>'
-    ).join('');
+      '</div>';
+    }).join('');
   }
 
   function renderResults() {

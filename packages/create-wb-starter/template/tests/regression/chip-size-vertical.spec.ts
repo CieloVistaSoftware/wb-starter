@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * .x-chip--sm/--lg only differed from the base by ~2px of vertical padding

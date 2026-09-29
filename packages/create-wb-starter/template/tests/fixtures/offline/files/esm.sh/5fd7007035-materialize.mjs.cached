@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/materialize */
+import{Notification as o}from"../Notification.mjs";import{operate as m}from"../util/lift.mjs";import{createOperatorSubscriber as a}from"./OperatorSubscriber.mjs";function c(){return m((r,e)=>{r.subscribe(a(e,t=>{e.next(o.createNext(t))},()=>{e.next(o.createComplete()),e.complete()},t=>{e.next(o.createError(t)),e.complete()}))})}export{c as materialize};
+//# sourceMappingURL=materialize.mjs.map

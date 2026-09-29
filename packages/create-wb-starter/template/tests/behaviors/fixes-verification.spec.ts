@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 // Historically this suite used page.setContent() with its own <script
 // src="/src/index.js"> to bootstrap WB from scratch per test. That's dead
@@ -10,7 +10,7 @@ import { test, expect } from '@playwright/test';
 // content -- some behaviors happened to get picked up by leftover global
 // state, others (rating/list/desclist) silently never did. Loading the
 // real app once and injecting test elements into its live document.body,
-// then explicitly awaiting WB.scan() on them, is the same reliable
+// then explicitly awaiting await WB.scan() on them, is the same reliable
 // pattern already used by tests/behaviors/permutation-compliance.spec.ts.
 test.describe('Fix Verification Tests', () => {
   test.beforeEach(async ({ page }) => {
@@ -33,7 +33,7 @@ test.describe('Fix Verification Tests', () => {
   // WB_CARD_BOOLEAN_PARSING_030
   test('Card handles empty boolean attributes correctly', async ({ page }) => {
     // data-behavior="X" is a dead attribute -- nothing in the current
-    // runtime reads it (WB.scan()/WB.observe() dispatch off the <wb-X> tag
+    // runtime reads it (await WB.scan()/WB.observe() dispatch off the <wb-X> tag
     // itself, x-X attributes, or {prefix}-X shorthand, never data-behavior).
     // <article> is schema-excluded (card.js builds its own DOM) and reads
     // bare attribute names, matching every real usage elsewhere (e.g.
@@ -41,8 +41,13 @@ test.describe('Fix Verification Tests', () => {
     await mount(page, `<article id="test-card-bool" clickable title="Boolean Test"></article>`);
 
     const card = page.locator('#test-card-bool');
-    await expect(card).toHaveClass(/x-card--clickable/);
+    // No x-card--clickable class: a8a7362e stopped stamping it -- card.css
+    // styles the [clickable] attribute directly. What proves the empty boolean
+    // was read as TRUE is the behavior card.js attaches for it: button role
+    // and keyboard focusability.
+    await expect(card).toHaveAttribute('x-ready', '');
     await expect(card).toHaveAttribute('role', 'button');
+    await expect(card).toHaveAttribute('tabindex', '0');
   });
 
   // WB_CARD_CLICKABLE_TOGGLE_025
@@ -60,7 +65,7 @@ test.describe('Fix Verification Tests', () => {
   });
 
   // WB_FIGURE_CAPTION_021
-  test('Figure behavior renders caption from caption attribute', async ({ page }) => {
+  test('Figure component renders caption from caption attribute', async ({ page }) => {
     // x-media doesn't exist -- media.js was split into per-tag
     // semantics/img.js, video.js, audio.js, figure.js (behaviorModules,
     // src/wb-viewmodels/index.js); figure.js reads a bare `caption`
@@ -208,7 +213,7 @@ test.describe('Fix Verification Tests', () => {
     await expect(card).toHaveClass(/x-card/);
 
     // 024: Product event
-    const eventFired = await page.evaluate(() => {
+    const eventFired = await page.evaluate(async () => {
       return new Promise(resolve => {
         const card = document.querySelector('#test-card');
         let fired = false;

@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { globSync } from 'glob';
 
 /**
- * Release gate: some behaviors (e.g. x-cardfile) intentionally surface a
+ * Release gate: some components (e.g. x-cardfile) intentionally surface a
  * visible in-DOM warning when authored with missing/invalid config, so the
  * problem isn't a silent dead end during development (card.js:
- * "confusing for anyone authoring/testing this behavior -- surface it
+ * "confusing for anyone authoring/testing this component -- surface it
  * visibly instead of leaving it a silent dead end"). That's the right call
  * for catching authoring mistakes early -- but it means a demo/doc page
  * that forgets a required attribute ships a scary red runtime-error string
@@ -13,31 +13,33 @@ import { globSync } from 'glob';
  * Card examples had no `href`, so every one rendered
  * "No href given — nothing to download." in place of real content.
  *
- * This scans every real page/demo for any known behavior-warning string
+ * This scans every real page/demo for any known component-warning string
  * leaking into shipped content. Run before every release (part of the
  * `compliance` project / pre-push-to-.io gate) so a forgotten attribute on
  * a new demo never ships silently.
  */
 
-// Known in-DOM warning strings behaviors intentionally render for
+// Known in-DOM warning strings components intentionally render for
 // authoring mistakes. Add to this list as new self-surfacing warnings are
 // introduced elsewhere in the codebase.
 const KNOWN_WARNING_STRINGS = [
   'No href given — nothing to download.',
 ];
 
+// posix: forward slashes on every OS -- the file becomes part of each test's
+// NAME, and a name must be the same test on Windows and on CI.
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
-test.describe('no behavior authoring-warning strings leak into shipped pages', () => {
+test.describe('no component authoring-warning strings leak into shipped pages', () => {
   for (const file of FILES) {
     test(`${file}: no visible runtime-warning text`, async ({ page }) => {
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
       // A warning string this test looks for is either static markup or
-      // injected by behavior JS during initial build -- neither depends
+      // injected by component JS during initial build -- neither depends
       // on window.WB specifically existing, so there's no need to wait on
       // it (demos/index.html, a plain static links page with no WB at
       // all, reproducibly hit "Target page ... has been closed" when this
@@ -55,7 +57,7 @@ test.describe('no behavior authoring-warning strings leak into shipped pages', (
 
       const bodyText = await page.evaluate(() => document.body?.innerText || '');
       const offenders = KNOWN_WARNING_STRINGS.filter((w) => bodyText.includes(w));
-      expect(offenders, `${file} shows behavior warning text meant for authors, not visitors:\n${offenders.join('\n')}`).toEqual([]);
+      expect(offenders, `${file} shows component warning text meant for authors, not visitors:\n${offenders.join('\n')}`).toEqual([]);
     });
   }
 });

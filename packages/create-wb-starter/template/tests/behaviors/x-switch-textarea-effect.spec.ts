@@ -19,7 +19,7 @@
  *    switch.js) has a self-build fallback (#279) that constructs the
  *    input/track/thumb itself whenever no schema-built structure is
  *    present — confirmed live: <div x-switch> DOES render and toggle
- *    correctly on demos/test-harness.html via `WB.scan(area, { eager: true
+ *    correctly on demos/test-harness.html via `await WB.scan(area, { eager: true
  *    })`. So x-switch's checked/disabled behavior IS testable here, and is
  *    covered below using the real `<div x-switch>` tag.
  *
@@ -46,7 +46,7 @@
  *    "unexpected pass" that flags for follow-up), without turning the whole
  *    suite red for an already-traced, reported defect.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -77,7 +77,10 @@ async function setup(page: Page, html: string): Promise<void> {
 async function setupNative(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 15000 });
-  await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
+  // #949: NOT WBSite -- same fix setup() already carries for #735. This page is
+  // a standalone harness, not an SPA route, so window.WBSite is never created
+  // here; the wait burned its full 20s and the test died before asserting
+  // anything. setupNative() was copied from setup() before that fix landed.
   await page.evaluate((h: string) => {
     (window as any).WB.config.set('autoInject', true);
     const c = document.createElement('div');
@@ -121,8 +124,10 @@ test.describe('<div x-switch> — real effects (self-build path, #279)', () => {
     expect(await host.getAttribute('aria-checked'), 'a disabled switch must never report checked').toBe('false');
   });
 
-  test('SUSPECTED BUG: label-position start/end has no effect on real DOM order', async ({ page }) => {
-    test.fail(true, 'switchInput() (semantics/switch.js) never reads the label-position attribute in its self-build fallback — it always appends a x-switch__label-end span regardless of the declared position. Also broken via the schema-driven engine (main site): switch.schema.json\'s label-start/label-end createdWhen conditions use "labelPosition == \'start\'" equality syntax, but schema-builder.js\'s evaluateCondition() only supports truthy-field lookups, not "==" comparisons, so neither $view part is ever created there either — same root cause, both engines.');
+  test('label-position start/end sets the real DOM order', async ({ page }) => {
+    // Was a pinned test.fail(): switchInput() never read label-position and
+    // always appended an x-switch__label-end span. It now reads it and puts a
+    // label-start span before the track (#768 sweep).
     await setup(
       page,
       '<div x-switch id="sw-start" label="Start" label-position="start"></div>' +
@@ -143,8 +148,12 @@ test.describe('<div x-switch> — real effects (self-build path, #279)', () => {
     expect(order.endLabelAfterTrack, 'label-position="end" should place the label after the track in DOM order').toBe(true);
   });
 
-  test('SUSPECTED BUG: size produces no computed style difference', async ({ page }) => {
-    test.fail(true, 'switchInput() never reads the size attribute at all on this runtime (no schema pipeline to apply switch.schema.json\'s appliesClass) — <div x-switch size="sm"> and size="lg"> render identically. This DOES work on the schema-driven main site (?page=behaviors), confirmed live: <div x-switch size="lg"> there gets class x-switch--lg. So this is a wb-lazy.js-runtime-specific gap, not a universal one.');
+  test('size: sm and lg render tracks of visibly different widths', async ({ page }) => {
+    // #949: was marked test.fail() with 'switchInput() never reads the size
+    // attribute at all on this runtime'. That gap is closed -- verified live on
+    // demos/test-harness.html: size="sm" gets class x-switch--sm (track 36px),
+    // size="lg" gets x-switch--lg (track 60px), and switch.css keys its track
+    // sizing off exactly those classes.
     await setup(
       page,
       '<div x-switch id="sw-sm" label="A" size="sm"></div>' +
@@ -157,22 +166,42 @@ test.describe('<div x-switch> — real effects (self-build path, #279)', () => {
     expect(sm, 'size="sm" vs size="lg" tracks should differ in computed width').not.toBe(lg);
   });
 
-  test('SUSPECTED BUG: variant produces no computed style difference', async ({ page }) => {
-    test.fail(true, 'Same root cause as size: switchInput() never reads the variant attribute on this runtime. <div x-switch variant="primary"> gets no x-switch--primary class here (confirmed live), though it does on the schema-driven main site.');
+  test('variant: a non-default variant colors the CHECKED track differently', async ({ page }) => {
+    // #949: was marked test.fail() with 'switchInput() never reads the variant
+    // attribute on this runtime ... gets no x-switch--primary class here'. All
+    // of that is false -- verified live: variant="primary" gets
+    // x-switch--primary and variant="success" gets x-switch--success.
+    //
+    // The old test failed for two other reasons, both fixed here:
+    //   1. It read the UNCHECKED track. switch.css defines variant colors only
+    //      on the checked track (`.x-switch--* .x-switch__input:checked ~
+    //      .x-switch__track`); an unchecked switch is grey for every variant by
+    //      design, so no variant rule could ever apply.
+    //   2. It compared default against variant="primary" -- but the default
+    //      checked track already uses var(--primary), so that variant is a
+    //      synonym for the default and can never differ. Measured live:
+    //      default rgb(40, 41, 200), primary the same, success rgb(36, 181, 91).
     await setup(
       page,
       '<div x-switch id="sw-default" label="A"></div>' +
-      '<div x-switch id="sw-primary" label="B" variant="primary"></div>'
+      '<div x-switch id="sw-success" label="B" variant="success"></div>'
     );
-    const trackBg = async (id: string) =>
-      page.locator(`#${id} .x-switch__track`).evaluate((el) => getComputedStyle(el).backgroundColor);
-    const def = await trackBg('sw-default');
-    const primary = await trackBg('sw-primary');
-    expect(def, 'variant="primary" should visibly differ from the default variant').not.toBe(primary);
+    // Click the HOST, not the input: the real <input> is visually hidden behind
+    // the track, so Playwright's check() refuses it. This is the same gesture
+    // the 'clicking flips the real state' test above uses.
+    const check = async (id: string) => {
+      await page.locator(`#${id}`).click();
+      await expect(page.locator(`#${id} input`)).toBeChecked();
+      await page.waitForTimeout(400); // let the track's color transition settle
+      return page.locator(`#${id} .x-switch__track`).evaluate((el) => getComputedStyle(el).backgroundColor);
+    };
+    const def = await check('sw-default');
+    const success = await check('sw-success');
+    expect(success, 'variant="success" should color the checked track differently than the default').not.toBe(def);
   });
 });
 
-test.describe('x-textarea\'s textarea() behavior — real effects (native <textarea x-behavior="textarea"> path; see file header re: <textarea> gap)', () => {
+test.describe('.x-textarea\'s textarea() behavior — real effects (native <textarea x-behavior="textarea"> path; see file header re: <textarea> gap)', () => {
   test('rows: real rendered row count differs, backed by the actual DOM property', async ({ page }) => {
     await setup(
       page,
@@ -202,8 +231,10 @@ test.describe('x-textarea\'s textarea() behavior — real effects (native <texta
     await expect(counter).toHaveText('11/20');
   });
 
-  test('SUSPECTED BUG: max-length does not actually enforce the character limit', async ({ page }) => {
-    test.fail(true, 'textarea.js reads config.maxLength only to color/format the counter text — it never sets the native maxLength property or a maxlength attribute on the element, and never truncates config.value on input. Confirmed live: typing 20 characters past a max-length="10" textarea leaves the full 20-character value in place; the counter just shows "20/10" (and turns red) instead of blocking further input.');
+  // Was a test.fail "SUSPECTED BUG": textarea.js only coloured the counter
+  // and never set the native maxLength, so 20 typed characters stayed in a
+  // max-length="10" field. It sets element.maxLength now.
+  test('max-length enforces the character limit', async ({ page }) => {
     await setup(page, '<textarea id="ta-limit" x-behavior="textarea" show-count max-length="10"></textarea>');
     const ta = page.locator('#ta-limit');
     await ta.pressSequentially('12345678901234567890'); // 20 chars typed, limit is 10
@@ -227,14 +258,25 @@ test.describe('x-textarea\'s textarea() behavior — real effects (native <texta
     const ta = page.locator('#ta-disabled');
     await expect(ta).toBeDisabled();
 
-    // A genuinely disabled native control refuses Playwright's own typing
-    // action (real browser-level enforcement) -- that rejection IS the effect.
-    await expect(ta.pressSequentially('hello', { timeout: 1000 })).rejects.toThrow();
+    // #949: this used to expect pressSequentially() to REJECT on a disabled
+    // control. It doesn't -- only fill() runs an "editable" actionability
+    // check; pressSequentially() just waits for visibility, focuses, and
+    // dispatches keys, which a disabled control ignores. So assert the effect
+    // this test is actually named for: the value does not change.
+    await ta.pressSequentially('hello', { timeout: 1000 });
     expect(await ta.inputValue()).toBe('');
+
+    // ...and prove that assertion isn't vacuous: the same markup WITHOUT
+    // `disabled` must accept the very same typing and end up with the text.
+    await setup(page, '<textarea id="ta-enabled" x-behavior="textarea"></textarea>');
+    const enabled = page.locator('#ta-enabled');
+    await enabled.pressSequentially('hello', { timeout: 1000 });
+    expect(await enabled.inputValue()).toBe('hello');
   });
 
-  test('SUSPECTED BUG: resize has no effect on the computed CSS resize property', async ({ page }) => {
-    test.fail(true, 'textarea.js never reads the resize attribute/property at all -- it only ever sets style.resize based on autosize (none if autosize is set, vertical otherwise), completely ignoring the declared resize value. Confirmed live: resize="none"/"horizontal"/"both" all compute to resize:"vertical" (the autosize-less default), identical to resize="vertical" itself.');
+  test('resize sets the computed CSS resize property', async ({ page }) => {
+    // Was a pinned test.fail(): textarea.js ignored the declared resize value
+    // and always set vertical (or none under autosize). It now reads it (#768 sweep).
     await setup(
       page,
       '<textarea id="ta-resize-none" x-behavior="textarea" resize="none"></textarea>' +
@@ -260,8 +302,13 @@ test.describe('x-textarea\'s textarea() behavior — real effects (native <texta
     await expect(page.locator('#ta-variant-error')).toHaveClass(/x-textarea--error/);
   });
 
-  test('SUSPECTED BUG: variant produces no real visual (border-color) difference', async ({ page }) => {
-    test.fail(true, 'The x-textarea--success/--error classes ARE applied (see previous test), and input.css DOES define distinct border-color rules for them (.x-textarea--success / .x-textarea--error), but textarea.js unconditionally sets an inline `element.style.border = \'1px solid var(--border-color, ...)\'` shorthand in its "Basic styling" block BEFORE the variant class is ever considered. An inline style always outranks an external class selector in the cascade, so the class-based border-color is silently masked. Confirmed live: default/success/error computed border-color is identical.');
+  test('variant: success/error render visibly different border colors than default', async ({ page }) => {
+    // #949 / #671: was marked test.fail() because textarea.js unconditionally
+    // set an inline `element.style.border` shorthand that outranked the
+    // variant class. That inline style is gone (Law 9); the rendered inline
+    // style is now only `resize/min-height/padding`, and the computed
+    // border-color is rgba(...)/0.22 for default vs rgb(33, 196, 93) for
+    // variant="success" -- confirmed live before unmarking.
     await setup(
       page,
       '<textarea id="ta-border-default" x-behavior="textarea"></textarea>' +

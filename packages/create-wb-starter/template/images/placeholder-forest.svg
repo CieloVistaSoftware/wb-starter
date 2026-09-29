@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="forest placeholder">
+  <!-- Local placeholder "forest" (#946). Replaces a remote picsum.photos fetch.
+       The art carries a SUBJECT: a card titled "Mountain Vista" should not show
+       water. Cards are matched to art by their own title, not by a hash.
+       Composed in the lower band so a short cover crop keeps the subject, and
+       kept muted so it sits behind the text rather than competing with it.
+       Colours are baked in because an img src renders in its own document and
+       cannot read the page theme tokens. -->
+  <defs>
+    <linearGradient id="w-forest" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#364d43"/><stop offset="100%" stop-color="#1f2e29"/>
+    </linearGradient>
+    <pattern id="h-forest" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#8fb8a4" stroke-width="1" opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#w-forest)"/>
+  <rect width="800" height="500" fill="url(#h-forest)"/>
+  <path d="M120 470 L180 300 L240 470 Z M180 380 L180 470" fill="#8fb8a4" opacity="0.6"/><path d="M300 470 L370 250 L440 470 Z" fill="#8fb8a4" opacity="0.7"/><path d="M480 470 L540 320 L600 470 Z" fill="#8fb8a4" opacity="0.55"/><rect x="0" y="470" width="800" height="30" fill="#8fb8a4" opacity="0.8"/>
+</svg>

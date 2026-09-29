@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#374 / BUG-2026-07-27-001): x-lightbox triggers that carry
@@ -29,14 +29,25 @@ const ONE_PX_PNG = Buffer.from(
 
 test.describe('Lightbox reads data-src on non-<img> triggers (#374)', () => {
   test('clicking a <button x-lightbox data-src="..."> shows the image, not a blank lightbox', async ({ page }) => {
-    await page.route('/images/placeholder.svg', route =>
+    await page.route('https://picsum.photos/**', route =>
       route.fulfill({ status: 200, body: ONE_PX_PNG, contentType: 'image/png' })
     );
 
-    await page.goto('/pages/behaviors.html');
+    // Its own fixture, not pages/behaviors.html. That page stopped shipping
+    // hand-written demos when the showcase became generated-on-demand
+    // (#666/#910), so the trigger this looked for no longer exists there and
+    // the test could only fail on the page, never on the behavior.
+    await page.goto('/tests/fixtures/blank.html');
+    await page.setContent(`
+      <button id="lb-trigger" x-lightbox data-src="https://picsum.photos/seed/wb/400/300">Open</button>
+      <script type="module">
+        import WB from '/src/core/wb.js';
+        WB.init({ autoInject: true }).then(() => WB.scan(document.body, { eager: true }));
+      </script>
+    `);
 
     const trigger = page.locator('button[x-lightbox][data-src]').first();
-    await expect(trigger, 'pages/behaviors.html should still have a button[x-lightbox][data-src] demo').toHaveCount(1);
+    await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10000 });
 
     const expectedSrc = await trigger.getAttribute('data-src');
     await trigger.click();
@@ -50,7 +61,7 @@ test.describe('Lightbox reads data-src on non-<img> triggers (#374)', () => {
   });
 
   test('<img x-lightbox src="..."> (existing convention) still works', async ({ page }) => {
-    await page.route('/images/placeholder.svg', route =>
+    await page.route('https://picsum.photos/**', route =>
       route.fulfill({ status: 200, body: ONE_PX_PNG, contentType: 'image/png' })
     );
 

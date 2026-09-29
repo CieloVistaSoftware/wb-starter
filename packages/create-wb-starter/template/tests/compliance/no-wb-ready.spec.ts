@@ -10,7 +10,7 @@
  * and fails if any are found.
  * -----------------------------------------------------------------------------
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 

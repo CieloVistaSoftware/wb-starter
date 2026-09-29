@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * #390: <select> silently discarded real <option> children.
@@ -6,12 +6,18 @@ import { test, expect, Page } from '@playwright/test';
  * `element.innerHTML = ''` before anything ever read the authored
  * <option> children, and only ever populated options from a JSON-string
  * `options="[...]"` attribute -- never from children. Every documented
- * example (docs/behaviors/forms/forms.readme.md, demos/site/forms.html)
+ * example (docs/behaviors/forms.readme.md, demos/site/forms.html)
  * used real <option> children, so every one of them rendered an empty
  * dropdown (just the placeholder) despite being "correct" per the docs.
  *
  * Fixed: real <option> children are read BEFORE the innerHTML wipe and
  * take priority over the options="[...]" attribute.
+ *
+ * The hosts here are `<div x-select>`: this spec was written against
+ * `<wb-select>`, and the tag-to-attribute migration rewrote that as a bare
+ * `<select>` -- a native select takes select()'s early-return branch and
+ * never reaches buildWbSelect(), so `#s1 select option` (a <select> INSIDE
+ * the host) could never match and the spec stopped testing #390 at all.
  */
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -29,11 +35,11 @@ async function setup(page: Page, html: string): Promise<void> {
 test.describe('<select> real <option> children (#390)', () => {
   test('option children render in the built <select>, not just the placeholder', async ({ page }) => {
     await setup(page, `
-      <select id="s1">
+      <div x-select id="s1">
         <option value="us">United States</option>
         <option value="ca">Canada</option>
         <option value="uk">United Kingdom</option>
-      </select>
+      </div>
     `);
     const texts = await page.locator('#s1 select option').allTextContents();
     expect(texts.map((t) => t.trim())).toEqual(['Select...', 'United States', 'Canada', 'United Kingdom']);
@@ -41,17 +47,17 @@ test.describe('<select> real <option> children (#390)', () => {
 
   test('option value attribute is preserved', async ({ page }) => {
     await setup(page, `
-      <select id="s2">
+      <div x-select id="s2">
         <option value="js">JavaScript</option>
         <option value="py">Python</option>
-      </select>
+      </div>
     `);
     const values = await page.locator('#s2 select option').evaluateAll((opts) => opts.map((o) => (o as HTMLOptionElement).value));
     expect(values).toEqual(['', 'js', 'py']);
   });
 
   test('options="[...]" attribute still works when there are no <option> children (backward compat)', async ({ page }) => {
-    await setup(page, `<select id="s3" options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'></select>`);
+    await setup(page, `<div x-select id="s3" options='[{"value":"a","label":"Alpha"},{"value":"b","label":"Beta"}]'></div>`);
     const texts = await page.locator('#s3 select option').allTextContents();
     expect(texts.map((t) => t.trim())).toEqual(['Select...', 'Alpha', 'Beta']);
   });

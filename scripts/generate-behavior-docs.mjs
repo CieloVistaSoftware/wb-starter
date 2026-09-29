@@ -327,7 +327,7 @@ export function buildDoc({ token, docName }) {
 
   if (auto) {
     // Kept short on purpose: the full explanation lives once, in
-    // Auto-Injection.md and escape-hatches.md, not pasted into every doc.
+    // auto-injection.md and escape-hatches.md, not pasted into every doc.
     out.push(
       `No attribute needed on \`<${tag}>\`. Don't add \`${token}\` to it (#746).`,
       '',

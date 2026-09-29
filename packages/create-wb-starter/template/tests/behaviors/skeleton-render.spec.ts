@@ -1,7 +1,7 @@
 /**
  * x-skeleton — renders text lines / circle / rect (issue #129)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -21,7 +21,7 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-test.describe('x-skeleton', () => {
+test.describe('[x-skeleton]', () => {
   test('text variant renders the requested number of visible lines', async ({ page }) => {
     await setup(page, '<div x-skeleton id="sk-text" variant="text" lines="3" style="width:200px;"></div>');
     const spans = page.locator('#sk-text > span');

@@ -18,7 +18,7 @@
  *   6. Have at least one <h2> tag (section heading — from $layout rows)
  *   7. Have no more than 3 significant inline styles
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 
@@ -40,7 +40,15 @@ for (const file of pageFiles) {
       // real tag/script this fragment is loading. Strip <pre> blocks before
       // scanning for real violations, same rationale as stripping <script>
       // blocks below for the inline-style check.
-      htmlWithoutCodeExamples = html.replace(/<pre[\s\S]*?<\/pre>/gi, '');
+      // #820: also strip a standalone <code>. whats-new.html describes the
+      // autoInject default in prose and names `WB.init({ autoInject: false })`
+      // inside a bare <code> -- documentation text, not a call this fragment
+      // makes. The rationale above already covers it; only the <pre> case was
+      // implemented. Same shape as #555, where this same file was flagged by a
+      // different gate for an illustrative code sample.
+      htmlWithoutCodeExamples = html
+        .replace(/<pre[\s\S]*?<\/pre>/gi, '')
+        .replace(/<code[\s\S]*?<\/code>/gi, '');
     });
 
     test('must not contain <!DOCTYPE>', () => {

@@ -32,7 +32,7 @@ export const PATHS = {
 
 export const DATA_FILES = {
   fixes: path.join(PATHS.data, 'fixes.json'),
-  behaviors: path.join(PATHS.data, 'behaviors.json'),
+  components: path.join(PATHS.data, 'components.json'),
   propertyConfig: path.join(PATHS.data, 'propertyconfig.json'),
   behaviorInventory: path.join(PATHS.data, 'behavior-inventory.json'),
 } as const;
@@ -46,10 +46,10 @@ export const DATA_FILES = {
 //
 // x-overlay-ext is a wholly separate, untracked Chrome extension (its own
 // manifest.json, .crx/.pem signing files) that happens to live under src/ --
-// not part of the wb-starter behavior library, so its CSS/HTML isn't
+// not part of the wb-starter component library, so its CSS/HTML isn't
 // subject to this project's theming/OOP conventions. Confirmed live:
 // css-oop-compliance flagged its popup CSS for hardcoded colors that are
-// legitimate there (a browser-extension UI, not a themed behavior).
+// legitimate there (a browser-extension UI, not a themed component).
 //
 // packages/create-wb-starter/template (#543) is a machine-generated,
 // byte-for-byte copy of src/ (and pages/, demos/, etc.) produced by
@@ -237,15 +237,15 @@ export function loadSchema(filename: string): Schema | null {
 }
 
 /**
- * Get all behavior schemas as a Map
+ * Get all component schemas as a Map
  */
 export function getComponentSchemas(): Map<string, Schema> {
   const schemas = new Map<string, Schema>();
   for (const file of getSchemaFiles()) {
     const schema = loadSchema(file) as any;
-    // Only true behavior schemas. Non-behavior tiers (behavior, page, base,
-    // definition) carry a schemaFor but must not be held to behavior-grade rules.
-    if (schema?.schemaFor && (!schema.schemaType || schema.schemaType === 'behavior')) {
+    // Only true component schemas. Non-component tiers (behavior, page, base,
+    // definition) carry a schemaFor but must not be held to component-grade rules.
+    if (schema?.schemaFor && (!schema.schemaType || schema.schemaType === 'component')) {
       schemas.set(file, schema);
     }
   }
@@ -296,7 +296,7 @@ export function stripDynamicContent(html: string): string {
   let result = html;
   // Remove <script>...</script> blocks
   result = result.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
-  // Remove content inside x-mdhtml elements or x-mdhtml behaviors
+  // Remove content inside x-mdhtml elements or x-mdhtml components
   result = result.replace(/x-mdhtml[^>]*>[\s\S]*?<\/div>/gi, '');
   result = result.replace(/<div x-mdhtml[^>]*>[\s\S]*?<\/x-mdhtml>/gi, '');
   // Remove markdown code blocks
@@ -367,6 +367,45 @@ export function isBlackWhiteTransparency(match: string, content: string, matchIn
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// NATIVE HOSTS (auto-injection)
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * The bare native tags that auto-inject `behavior` through tag-map.js's
+ * nativeMap -- `<audio>` for audio, `<article>` for card, `<dialog>` for
+ * dialog. Read from the source table itself, so this list cannot drift from
+ * what the runtime actually does.
+ *
+ * A setup example written as `<audio loop>` IS the behavior: the element
+ * implies it, and for a type-1 behavior on its own element an added x-audio is
+ * redundant (#746). Checks that demand an `x-{name}`/`<wb-*>` marker in every
+ * setup string predate auto-injection and reported that correct form as a
+ * mismatch. Only plain tag selectors are returned; `input[type="radio"]`-style
+ * keys are not a tag a setup string can start with.
+ */
+let NATIVE_HOSTS: Map<string, string[]> | null = null;
+export function nativeHostsFor(behavior: string): string[] {
+  if (!NATIVE_HOSTS) {
+    NATIVE_HOSTS = new Map();
+    const src = fs.readFileSync(path.join(ROOT, 'src/core/tag-map.js'), 'utf-8');
+    const block = src.match(/export const nativeMap = \{([\s\S]*?)\n\};/);
+    if (!block) throw new Error('nativeMap not found in src/core/tag-map.js');
+    for (const m of block[1].matchAll(/^\s*'([a-z][a-z0-9]*)'\s*:\s*'([a-z0-9-]+)'/gm)) {
+      const list = NATIVE_HOSTS.get(m[2]) || [];
+      list.push(m[1]);
+      NATIVE_HOSTS.set(m[2], list);
+    }
+  }
+  return NATIVE_HOSTS.get(behavior) || [];
+}
+
+/** True when `html`'s root element is a native tag that auto-injects `behavior`. */
+export function usesNativeHost(html: string, behavior: string): boolean {
+  const root = /^\s*<([a-z][a-z0-9]*)[\s>/]/i.exec(html);
+  return !!root && nativeHostsFor(behavior).includes(root[1].toLowerCase());
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // SOURCE CODE ANALYSIS
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -385,7 +424,13 @@ export function extractFunction(source: string, funcName: string): string | null
   const startIdx = match.index;
   let braceCount = 0;
   let endIdx = startIdx;
-  let i = startIdx;
+  // Count braces from the BODY's opening brace (the `{` the pattern ends on),
+  // not from `export`. Starting at `export` counted the `{}` of a default
+  // parameter -- `function code(element, options = {})` -- as the whole body:
+  // the count returned to zero inside the parameter list, so every behavior
+  // written that way came back as its bare signature, and the event, baseClass
+  // and requiredChildren checks were run against an empty function.
+  let i = match.index + match[0].length - 1;
   
   while (i < source.length) {
     const char = source[i];
@@ -484,11 +529,242 @@ export function setsStyle(funcBody: string, styleProp: string): boolean {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Wait for WB Behaviors to initialize
+ * Wait for WB to finish its boot scan.
+ *
+ * #962: this used to wait only for `WB.behaviors` — the registry object
+ * existing, which proves the module loaded and that NOTHING has run yet. Tests
+ * then bridged the real gap with `waitForTimeout`, and a sleep is a guess about
+ * DURATION: it fails whenever the machine is slower than the guess. On a
+ * 4-core box running 8 workers that is often, which is #961's instability
+ * (19 tests each failing exactly 1 of 3 identical runs, none 2 of 3, none 3).
+ *
+ * `WB.ready` is the boot scan's promise — which both runtimes previously
+ * created inside a DOMContentLoaded callback and discarded. Playwright awaits a
+ * promise returned from page.evaluate, so this is a genuine wait-all across the
+ * process boundary: on a loaded machine it takes longer instead of failing.
+ *
+ * SCOPE: resolves when the INITIAL pass is done, not when every element on the
+ * page is injected — wb-lazy.js defers below-the-fold elements to an
+ * IntersectionObserver deliberately. For those, scroll first and then assert
+ * with a retrying matcher (`expect(locator).toHaveClass(...)`), so the wait is
+ * for that element rather than for a global condition.
  */
 export async function waitForWB(page: Page): Promise<void> {
   await page.waitForFunction(() => (window as any).WB?.behaviors);
 }
+
+/**
+ * Wait for ONE element to finish being built (#970).
+ *
+ * Both runtimes stamp `x-ready` on an element the moment it has no injections
+ * left in flight, so this waits for the thing you are about to assert on rather
+ * than for a clock.
+ *
+ *     const card = page.locator('#card-gallery article').first();
+ *     await elementReady(card);
+ *     await expect(card.locator('header h3')).toHaveText('Welcome');
+ *
+ * WHY PER-ELEMENT, measured rather than assumed:
+ *
+ * Two loads of demos/site/cards.html build the DOM in a DIFFERENT ORDER but
+ * reach a byte-for-byte IDENTICAL end state — 1,435 elements, same signature.
+ * So the instability behind #961 was never wrong rendering. It was tests
+ * sampling mid-construction and landing at different points, because a
+ * `waitForTimeout(4000)` guesses when building is done and guesses wrong
+ * whenever the machine is busy.
+ *
+ * A page-wide wait cannot fix it here: that page takes longer to finish than
+ * the 30s test timeout, which is how awaiting `WB.ready` killed 31 tests in
+ * beforeEach. Waiting for one element is both correct and cheap.
+ *
+ * For a below-the-fold element on the lazy runtime, scroll first — nothing is
+ * injected until it intersects, so `x-ready` will never arrive on its own:
+ *
+ *     await safeScrollIntoView(card);
+ *     await elementReady(card);
+ *
+ * NOTE: `x-ready` means SETTLED, not SUCCEEDED. A behavior that threw stamps it
+ * too; failure is reported separately as `x-error`. Assert on the outcome you
+ * actually care about after this resolves.
+ */
+export async function elementReady(locator: Locator, timeoutMs = 15000): Promise<void> {
+  await locator.first().waitFor({ state: 'attached', timeout: timeoutMs });
+  await locator.first().evaluate(
+    (el, ms) => new Promise<void>((resolve, reject) => {
+      if (el.hasAttribute('x-ready')) return resolve();
+      const timer = setTimeout(() => {
+        obs.disconnect();
+        // Say which element and what it was still waiting for — "timed out" on
+        // its own has cost enough time in this suite already.
+        reject(new Error(
+          `elementReady: <${el.tagName.toLowerCase()}${el.id ? ` id="${el.id}"` : ''}> ` +
+          `never became x-ready within ${ms}ms. On the lazy runtime an element ` +
+          `below the fold is not injected until it intersects — scroll to it first.`
+        ));
+      }, ms);
+      const obs = new MutationObserver(() => {
+        if (el.hasAttribute('x-ready')) { clearTimeout(timer); obs.disconnect(); resolve(); }
+      });
+      obs.observe(el, { attributes: true, attributeFilter: ['x-ready'] });
+      // It may have been stamped between the check above and observe() starting.
+      if (el.hasAttribute('x-ready')) { clearTimeout(timer); obs.disconnect(); resolve(); }
+    }),
+    timeoutMs
+  );
+}
+
+/**
+ * Bring ONE element into the viewport and wait for it to finish building.
+ *
+ *     for (const card of await page.locator('[x-cardimage]').all()) {
+ *       await buildInView(card);
+ *       expect(await card.locator('img').count()).toBeGreaterThan(0);
+ *     }
+ *
+ * The lazy runtime (#491) injects nothing until an element nears the viewport,
+ * and CSS is JIT (#342), so a spec that counts or measures every card on a long
+ * page read the first screenful as built and the rest as broken -- 26 of 30
+ * cardimage demos on cards.html "had no <figure>" for exactly that reason, and
+ * every one of them rendered the moment it was scrolled to.
+ *
+ * scrollIntoView() rather than safeScrollIntoView(): that helper waits for the
+ * element to be VISIBLE, and an unbuilt host can legitimately have no size yet
+ * -- building it is what this is waiting for.
+ *
+ * Re-scrolled EVERY FRAME until it is built. One scroll was a race: the
+ * content above the element keeps growing as it builds (demos, images), and
+ * can push the element thousands of pixels back out of the observer's 1200px
+ * margin before the observer ever looks. Measured on cards.html: an element
+ * scrolled to the centre was 16,600px below the viewport five seconds later,
+ * never built, and the wait ran out its 15s -- the intermittent timeouts in
+ * every spec that walks that page.
+ */
+export async function buildInView(locator: Locator, timeoutMs = 15000): Promise<void> {
+  const el = locator.first();
+  await el.waitFor({ state: 'attached', timeout: timeoutMs });
+  await el.evaluate(async (node: Element, ms: number) => {
+    const end = performance.now() + ms;
+    while (!node.hasAttribute('x-ready')) {
+      if (performance.now() > end) {
+        throw new Error(
+          `buildInView: <${node.tagName.toLowerCase()}${node.id ? ` id="${node.id}"` : ''}> ` +
+          `never became x-ready within ${ms}ms of being kept in view.`
+        );
+      }
+      node.scrollIntoView({ block: 'center' });
+      await new Promise<void>((r) => requestAnimationFrame(() => r()));
+    }
+  }, timeoutMs);
+}
+
+/**
+ * Wait until no BUILT <div x-demo> is still measuring its single-item width.
+ *
+ * demo.js marks a block `.x-demo--measuring` from the moment its code panel
+ * exists until it commits --x-demo-shrink-width, and demo.css caps the code
+ * panel at 50vw for exactly that window. A demo whose control is wider than
+ * that (a horizontal card with a photo) is therefore mid-measure at 640px and
+ * committed at 800px; a demo waiting on an image to decode stays mid-measure
+ * until it loads. A fixed "let the rAF settle" sleep read whichever of those
+ * it landed on. The class is the product's own "measured yet?" answer, and it
+ * is always cleared (media that never loads drops it after 5s). Unbuilt demos
+ * (#491: the lazy runtime builds only near the viewport) never carry it.
+ */
+export async function demoWidthsSettled(page: Page, timeoutMs = 15000): Promise<void> {
+  await page.waitForFunction(
+    () => Array.from(document.querySelectorAll('[x-demo], x-demo')).every((d) => {
+      if (d.classList.contains('x-demo--measuring')) return false;
+      // Started but not yet measuring: demo.js lays out the grid, then awaits
+      // the docs manifest before it appends the code panel and sets the class.
+      // A block in that gap is not finished; one with no grid is unbuilt.
+      const grid = Array.from(d.children).some((c) => c.classList.contains('x-demo__grid'));
+      const panel = Array.from(d.querySelectorAll('.x-demo__code')).some((p) => p.closest('[x-demo], x-demo') === d);
+      return !grid || panel;
+    }),
+    undefined,
+    { timeout: timeoutMs }
+  );
+}
+
+/**
+ * Wait until the runtime has no injection in flight (#961/#962).
+ *
+ *     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
+ *     await wbIdle(page);
+ *     await expect(page.locator('#counter')).toHaveText('0');
+ *
+ * This is the replacement for `await page.waitForTimeout(500)` at the point
+ * where the sleep is standing in for "injection finished". A sleep guesses at a
+ * DURATION and is wrong whenever the machine is slower than the guess — which
+ * is #961, ~20 tests changing state between identical runs.
+ *
+ * WAITS FOR `WB.whenIdle` TO EXIST FIRST, on purpose. Several specs wait for
+ * `window.WB` instead, which proves only that the module object was created —
+ * not that init() ran, not that anything was injected. `whenIdle` is defined on
+ * the runtime object itself, so its presence is the same weak signal; the real
+ * wait is the call, which resolves only once the counter has held at zero.
+ *
+ * IDLE IS NOT "FINISHED". The lazy runtime defers below-the-fold elements to an
+ * IntersectionObserver deliberately, so scroll to the thing first
+ * (`safeScrollIntoView`) and then await idle — or use `elementReady`, which is
+ * cheaper and scoped to the one element you are about to assert on.
+ *
+ * NOT SUITABLE FOR EVERY PAGE. demos/site/cards.html builds for longer than the
+ * 30s test timeout; a page-wide wait there fails no matter how it is spelled.
+ * That page uses per-element waits, and this helper is for pages that settle.
+ *
+ * It REJECTS on timeout rather than resolving. A readiness signal that gives up
+ * quietly turns a hung build into a green test.
+ */
+export async function wbIdle(
+  page: Page,
+  opts: { timeout?: number; quiet?: number } = {}
+): Promise<void> {
+  const timeout = opts.timeout ?? 15000;
+  const quiet = opts.quiet ?? 50;
+  await page.waitForFunction(
+    () => typeof (window as any).WB?.whenIdle === 'function',
+    undefined,
+    { timeout }
+  );
+  await page.evaluate(
+    ([t, q]) => (window as any).WB.whenIdle({ timeout: t, quiet: q }),
+    [timeout, quiet]
+  );
+}
+
+// #962 NOTE — `WB.ready` is still NOT adopted in this file's shared helpers.
+//
+// The runtime exposes `WB.ready` (the boot scan's promise, which both
+// runtimes previously created inside a DOMContentLoaded callback and threw
+// away). Awaiting it is the correct replacement for the 492 `waitForTimeout`
+// calls in this suite, because a sleep guesses at DURATION and fails whenever
+// the machine is slower than the guess.
+//
+// 2026-09-08 — and until today it was ALSO not true. wb.js's scan() collected
+// every injection it started into `promises` and awaited them, except the
+// auto-inject loop, which dropped its promise on the floor. Auto-inject is the
+// default path for a semantic-first page, so most of a page's injections were
+// not awaited and `await WB.scan()` — hence `WB.ready` — resolved on a
+// half-built page. Measured inside the page in scan()'s own .then(): a plain
+// <button> had className "" and no x-ready at that instant. Fixed, with
+// tests/regression/scan-awaits-auto-injected-behaviors.spec.ts pinning it.
+//
+// But adopting it HERE, in the helper 38 spec files call, was measured and it
+// made things worse twice:
+//
+//   - unbounded: all 31 tests in card-examples-demo died in beforeEach.
+//     demos/site/cards.html has 34 demo blocks and 265 articles, so under 8
+//     workers its boot scan does not finish inside the 30s test timeout.
+//   - bounded to 15s: 38 of 50 failed. The budget stacks on top of
+//     goto(networkidle) + waitForFunction, so the setup became more expensive
+//     than the timeout containing it.
+//
+// The lesson is about where the wait belongs, not whether it is right: a
+// PAGE-WIDE readiness wait is the wrong tool for a page this large. The sound
+// adoption is per-element — scroll to the thing, then assert on it with a
+// retrying matcher — which needs doing spec by spec with measurement, not by
+// changing one shared helper and hoping. Tracked in #962.
 
 /**
  * Setup a test container with HTML and scan for behaviors
@@ -502,23 +778,65 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
     const c = document.createElement('div');
     c.id = 'test-container';
     c.innerHTML = h;
+
+    // Mark the AUTHORED roots before scanning.
+    //
+    // This used to return `#test-container > *` .first(), which silently
+    // aliases the moment a behavior inserts a SIBLING ahead of its host --
+    // and several do. sticky's createPlaceholder() runs
+    // `parentNode.insertBefore(placeholder, element)`, so as soon as sticky
+    // engages, .first() is the placeholder: an empty, class-less div. Every
+    // assertion then ran against the wrong node and reported a working
+    // behavior as "did not initialize" (permutation-compliance failed
+    // exactly the two threshold:0 sticky combos -- the only ones that stick
+    // on load -- and passed every combo that never sticks).
+    //
+    // Marking BEFORE the scan is the point: after the scan there is no way
+    // left to tell an authored element from one a behavior injected.
+    for (const el of Array.from(c.children)) el.setAttribute('test-host', '');
+
     document.body.appendChild(c);
-    
+
     if ((window as any).WB?.scan) {
       await (window as any).WB.scan(c);
     }
   }, html);
   
-  // Wait for lazy-loaded behavior modules to initialize
-  // Behaviors add .x-ready class after init completes
+  // Wait for the injected host to actually be finished.
+  //
+  // #961: this used to wait for `#test-container > .x-ready` — a CLASS that has
+  // never existed. Both runtimes stamp x-ready as an ATTRIBUTE (#970), and
+  // tests/compliance/no-wb-ready.spec.ts explicitly FORBIDS behaviors adding it
+  // as a class ("x-ready is DOM pollution"). So the selector matched nothing on
+  // every call, every call fell into the catch, and the readiness this helper
+  // gave its 38 caller files was a 300ms sleep — a guess at a duration, which
+  // is wrong exactly when the machine is busy. Silence is not success
+  // (docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md): a wait that never matches
+  // and a wait that is instantly satisfied look identical from outside.
+  //
+  // The `await WB.scan(c)` above is now the primary signal — it became truthful
+  // once scan() stopped dropping its auto-inject promises (#1075). This is the
+  // backstop for work observe() starts afterwards.
   try {
-    await page.waitForSelector('#test-container > .x-ready', { timeout: 3000 });
+    await page.waitForSelector('#test-container > [x-ready]', { timeout: 3000 });
   } catch {
-    // Some elements (native inputs) may not get .x-ready — fall through
-    await page.waitForTimeout(300);
+    // Legitimately unstamped hosts exist: an element whose behavior REPLACES it
+    // (autocomplete, x-copybutton, details) is gone before it can be stamped,
+    // and a native input with no behavior is never injected at all. Falling
+    // through is right for those — but it is now a real fallback instead of the
+    // only path this helper ever took.
   }
   
-  return page.locator('#test-container > *').first();
+  // Prefer the AUTHORED host; fall back to child 0 if it did not survive.
+  //
+  // The marker alone is not enough: a few behaviors REPLACE their host
+  // (autocomplete, x-copybutton, details), and the marked node is gone by the
+  // time we look -- every subsequent lookup then waited out its full timeout
+  // and the test died at 90s. Resolving once, here, gets both cases right:
+  // the marker when it survives (which is what stops sticky's placeholder
+  // from being mistaken for the host), and the old behavior when it doesn't.
+  const marked = page.locator('#test-container > [test-host]');
+  return (await marked.count()) > 0 ? marked.first() : page.locator('#test-container > *').first();
 }
 
 /**
@@ -527,6 +845,10 @@ export async function setupTestContainer(page: Page, html: string): Promise<Loca
 export async function setupBehaviorTest(page: Page): Promise<void> {
   await page.goto('index.html');
   await waitForWB(page);
+  // The site's web fonts load with display=swap, so the page reflows when they
+  // land. A hover made before that can end up over nothing once the text
+  // reflows -- the tooltip test measured 5/5 failures under 4 workers that way.
+  await page.evaluate(() => document.fonts.ready.then(() => undefined));
 }
 
 /**
@@ -568,7 +890,11 @@ export async function safeScrollIntoView(
  * Get relative path from ROOT
  */
 export function relativePath(fullPath: string): string {
-  return path.relative(ROOT, fullPath);
+  // Forward slashes on every OS. Specs put this in test NAMES, and a name is a
+  // test's identity: on Windows `demos\\x.html` and on CI `demos/x.html` were
+  // two different tests, so the known-failures register carried 61 Windows-
+  // only twins that no Linux run could ever confirm or clear.
+  return path.relative(ROOT, fullPath).split(path.sep).join('/');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

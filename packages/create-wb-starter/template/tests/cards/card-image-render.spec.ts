@@ -2,27 +2,31 @@
  * Card Image Rendering Test
  * Tests that x-cardimage actually displays images
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 test.describe('Card Image Rendering', () => {
-  test('x-cardimage should display images on cards-showcase', async ({ page }) => {
-    await page.goto('/demos/cards-showcase.html');
-    await page.waitForTimeout(2000);
+  test('[x-cardimage] should display images on cards-showcase', async ({ page }) => {
+    // Lazy runtime (#491): each card is built only once scrolled to, which the
+    // loop below does per card -- ~30 of them, hence the longer budget.
+    test.setTimeout(120_000);
+    await page.goto('/demos/site/cards.html');
     
     // Find the cardimage section
-    const cardimageSection = page.locator('#cardimage');
+    const cardimageSection = page.locator('#demo-image');
     await expect(cardimageSection).toBeVisible();
     
     // Find all x-cardimage elements
-    const cardImages = page.locator('x-cardimage');
+    const cardImages = page.locator('[x-cardimage]');
     const count = await cardImages.count();
-    console.log(`Found ${count} x-cardimage elements`);
+    console.log(`Found ${count} [x-cardimage] elements`);
     
     expect(count).toBeGreaterThan(0);
     
     // Check each cardimage has an actual <img> inside
     for (let i = 0; i < count; i++) {
       const card = cardImages.nth(i);
+      await buildInView(card);
       const img = card.locator('img');
       
       // Should have an img element
@@ -35,20 +39,20 @@ test.describe('Card Image Rendering', () => {
         console.log(`Card ${i} innerHTML:`, html.substring(0, 500));
       }
       
-      expect(imgCount, `x-cardimage ${i} should contain an <img> element`).toBeGreaterThan(0);
+      expect(imgCount, `[x-cardimage] ${i} should contain an <img> element`).toBeGreaterThan(0);
       
       // Check img has a src
       const src = await img.first().getAttribute('src');
       console.log(`Card ${i} img src:`, src);
-      expect(src, `x-cardimage ${i} img should have a src`).toBeTruthy();
+      expect(src, `[x-cardimage] ${i} img should have a src`).toBeTruthy();
     }
   });
 
-  test('x-cardimage should have 1rem padding', async ({ page }) => {
-    await page.goto('/demos/cards-showcase.html');
+  test('[x-cardimage] should have 1rem padding', async ({ page }) => {
+    await page.goto('/demos/site/cards.html');
     await page.waitForTimeout(2000);
     
-    const cardImages = page.locator('x-cardimage');
+    const cardImages = page.locator('[x-cardimage]');
     const count = await cardImages.count();
     
     for (let i = 0; i < Math.min(count, 3); i++) {
@@ -79,7 +83,7 @@ test.describe('Card Image Rendering', () => {
         return false;
       });
       
-      expect(hasPadding, `x-cardimage ${i} should have proper padding`).toBe(true);
+      expect(hasPadding, `[x-cardimage] ${i} should have proper padding`).toBe(true);
     }
   });
 });

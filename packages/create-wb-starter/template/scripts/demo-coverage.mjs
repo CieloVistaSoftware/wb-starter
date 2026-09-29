@@ -15,6 +15,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { demoInnerBlocks, stripDemoBlocks } from './lib/demo-blocks.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -39,8 +40,8 @@ const seen = (name) => (coverage[name] = coverage[name] || { inWbDemo: [], bare:
 for (const rel of demoFiles) {
   const src = fs.readFileSync(path.join(ROOT, rel), 'utf8');
   // Split into x-demo blocks vs the rest.
-  const wbDemoBlocks = [...src.matchAll(/<div x-demo[^>]*>([\s\S]*?)<\/x-demo>/gi)].map((m) => m[1]).join('\n');
-  const stripped = src.replace(/<div x-demo[^>]*>[\s\S]*?<\/x-demo>/gi, '');
+  const wbDemoBlocks = demoInnerBlocks(src).join('\n');
+  const stripped = stripDemoBlocks(src);
 
   for (const tag of TAGS) {
     const re = new RegExp('<' + tag + '(?![a-z0-9-])', 'i');

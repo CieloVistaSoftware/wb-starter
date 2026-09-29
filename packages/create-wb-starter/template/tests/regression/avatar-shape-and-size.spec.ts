@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * avatar.schema.json declares `shape` (circle/square/rounded) and `size`
@@ -13,21 +13,30 @@ import { test, expect } from '@playwright/test';
  * default 40px. Confirmed live (screenshot) before the fix: three
  * "shape variants" avatars, all circles.
  */
-test.describe('x-avatar shape and size (feedback demo page)', () => {
+test.describe('[x-avatar] shape and size (feedback demo page)', () => {
   test('shape="circle"/"square"/"rounded" render visibly distinct border-radius', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/feedback.html');
-    await page.waitForSelector('x-avatar[shape="circle"]');
+    await page.goto('/demos/site/feedback.html');
+    await page.waitForSelector('[x-avatar][shape="circle"]');
 
-    const circle = page.locator('x-avatar[shape="circle"]').first();
-    const square = page.locator('x-avatar[shape="square"]').first();
-    const rounded = page.locator('x-avatar[shape="rounded"]').first();
+    const circle = page.locator('[x-avatar][shape="circle"]').first();
+    const square = page.locator('[x-avatar][shape="square"]').first();
+    const rounded = page.locator('[x-avatar][shape="rounded"]').first();
 
-    const [circleRadius, squareRadius, roundedRadius] = await Promise.all([
-      circle.evaluate((el) => getComputedStyle(el).borderRadius),
-      square.evaluate((el) => getComputedStyle(el).borderRadius),
-      rounded.evaluate((el) => getComputedStyle(el).borderRadius),
-    ]);
+    // Lazy runtime (#491) + just-in-time CSS (#342): an avatar is only built
+    // and styled once it nears the viewport; before that every one of them is
+    // an unstyled box with border-radius 0px, so "circle" measured the same as
+    // "square". Bring each into view and wait for it to be built first.
+    for (const el of [circle, square, rounded]) {
+      await el.scrollIntoViewIfNeeded();
+      await expect(el).toHaveAttribute('x-ready', '');
+    }
+    const radii = () => Promise.all([circle, square, rounded].map((el) => el.evaluate((e) => getComputedStyle(e).borderRadius)));
+    await expect.poll(async () => {
+      const [circleRadius, squareRadius, roundedRadius] = await radii();
+      return squareRadius === '0px' && new Set([circleRadius, squareRadius, roundedRadius]).size === 3;
+    }, { message: 'square must be 0px and circle/square/rounded three different radii', timeout: 10_000 }).toBe(true);
 
+    const [circleRadius, squareRadius, roundedRadius] = await radii();
     expect(squareRadius).toBe('0px');
     expect(circleRadius).not.toBe(squareRadius);
     expect(roundedRadius).not.toBe(squareRadius);
@@ -35,21 +44,25 @@ test.describe('x-avatar shape and size (feedback demo page)', () => {
   });
 
   test('size="xs" and size="2xl" render visibly distinct dimensions from the default', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/feedback.html');
-    await page.waitForSelector('x-avatar[size="xs"]');
+    await page.goto('/demos/site/feedback.html');
+    await page.waitForSelector('[x-avatar][size="xs"]');
 
-    const xs = page.locator('x-avatar[size="xs"]').first();
-    const md = page.locator('x-avatar[size="md"]').first();
-    const xxl = page.locator('x-avatar[size="2xl"]').first();
+    const xs = page.locator('[x-avatar][size="xs"]').first();
+    const md = page.locator('[x-avatar][size="md"]').first();
+    const xxl = page.locator('[x-avatar][size="2xl"]').first();
 
-    const [xsWidth, mdWidth, xxlWidth] = await Promise.all([
-      xs.evaluate((el) => getComputedStyle(el).width),
-      md.evaluate((el) => getComputedStyle(el).width),
-      xxl.evaluate((el) => getComputedStyle(el).width),
-    ]);
-
-    expect(xsWidth).not.toBe(mdWidth);
-    expect(xxlWidth).not.toBe(mdWidth);
-    expect(xxlWidth).not.toBe(xsWidth);
+    // Lazy runtime (#491) + just-in-time CSS (#342): an avatar is only built
+    // and styled once it nears the viewport, and before that it is a plain
+    // block the page's width (measured 1052px). Bring each into view and wait
+    // for it to be built before measuring.
+    for (const el of [xs, md, xxl]) {
+      await el.scrollIntoViewIfNeeded();
+      await expect(el).toHaveAttribute('x-ready', '');
+    }
+    const widths = () => Promise.all([xs, md, xxl].map((el) => el.evaluate((e) => getComputedStyle(e).width)));
+    await expect.poll(async () => {
+      const [xsWidth, mdWidth, xxlWidth] = await widths();
+      return new Set([xsWidth, mdWidth, xxlWidth]).size;
+    }, { message: 'xs, md and 2xl must be three different widths', timeout: 10_000 }).toBe(3);
   });
 });

@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/ignoreElements */
+import{operate as e}from"../util/lift.mjs";import{createOperatorSubscriber as t}from"./OperatorSubscriber.mjs";import{noop as i}from"../util/noop.mjs";function b(){return e((r,o)=>{r.subscribe(t(o,i))})}export{b as ignoreElements};
+//# sourceMappingURL=ignoreElements.mjs.map

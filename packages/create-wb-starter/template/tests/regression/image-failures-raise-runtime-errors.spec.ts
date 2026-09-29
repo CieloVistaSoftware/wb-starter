@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * A media file that never loads must raise a real, loggable runtime error.
@@ -78,7 +78,7 @@ test.describe('image load failures raise runtime errors', () => {
     // image would be worse than the silence this replaced.
     const { caught } = await renderAndCollect(
       page,
-      '<img id="ok" src="/images/placeholder.svg" alt="ok">',
+      '<img id="ok" src="https://picsum.photos/seed/x-load-ok/120/80" alt="ok">',
       3000
     );
     expect(caught.filter((m) => /failed to load/i.test(m)), 'a working image must stay silent')

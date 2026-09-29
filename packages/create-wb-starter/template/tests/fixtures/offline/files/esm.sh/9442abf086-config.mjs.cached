@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/config */
+var e={onUnhandledError:null,onStoppedNotification:null,Promise:void 0,useDeprecatedSynchronousErrorHandling:!1,useDeprecatedNextContext:!1};export{e as config};
+//# sourceMappingURL=config.mjs.map

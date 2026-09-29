@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Card Button (integration)', () => {
   test('should render button with primary action', async ({ page }: { page: Page }) => {
@@ -7,7 +7,7 @@ test.describe('Card Button (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-cardbutton';
       el.setAttribute('x-cardbutton', '');
@@ -15,7 +15,7 @@ test.describe('Card Button (integration)', () => {
       el.setAttribute('data-primary', 'Click Me');
       el.textContent = 'Card content here';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-cardbutton');
@@ -33,7 +33,7 @@ test.describe('Card Button (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-cardbutton-2';
       el.setAttribute('x-cardbutton', '');
@@ -41,7 +41,7 @@ test.describe('Card Button (integration)', () => {
       el.setAttribute('data-primary', 'Save');
       el.setAttribute('data-secondary', 'Cancel');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-cardbutton-2');
@@ -58,13 +58,13 @@ test.describe('Card Button (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-cardbutton-border';
       el.setAttribute('x-cardbutton', '');
       el.setAttribute('data-primary', 'Action');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-cardbutton-border');

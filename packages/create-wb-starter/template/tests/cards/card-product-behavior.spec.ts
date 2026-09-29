@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Card Product Behavior
@@ -8,6 +8,12 @@ import { test, expect } from '@playwright/test';
 test.describe('Card Product Behavior', () => {
 
   test('should dispatch wb:cardproduct:addtocart event on CTA click', async ({ page }) => {
+    // setContent() on a fresh page runs at about:blank, where the root-relative
+    // `/src/core/wb-lazy.js` import below resolves to nothing -- the module
+    // never loaded, wbReady never flipped, and the test spent its whole
+    // timeout waiting. A real same-origin page first, with no WB bootstrap of
+    // its own (tests/fixtures/blank.html, the fixture made for exactly this).
+    await page.goto('/tests/fixtures/blank.html');
     await page.setContent(`
       <!DOCTYPE html>
       <html lang="en" data-theme="dark">
@@ -33,11 +39,15 @@ test.describe('Card Product Behavior', () => {
     `, { waitUntil: 'networkidle' });
 
     await page.waitForFunction(() => (window as any).wbReady === true, { timeout: 10000 });
-    await page.waitForTimeout(300);
 
+    // Built = settled (x-ready), not a 300ms guess. And the card behavior marks
+    // a variant host with its own modifier (x-card--product) -- the bare
+    // .x-card class the old /x-card/ pattern was written for is gone (a8a7362e),
+    // so name the class that is actually emitted.
     const card = page.locator('#test-product');
+    await expect(card).toHaveAttribute('x-ready', '');
     await expect(card).toBeVisible();
-    await expect(card).toHaveClass(/x-card/);
+    await expect(card).toHaveClass(/\bx-card--product\b/);
 
     // Setup event listener
     const eventPromise = page.evaluate(() => {

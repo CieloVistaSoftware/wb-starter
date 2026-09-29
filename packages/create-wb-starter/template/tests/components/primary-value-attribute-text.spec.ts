@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function inject(page: Page, html: string) {
   await page.goto('/demos/test-harness.html');
@@ -6,12 +6,12 @@ async function inject(page: Page, html: string) {
     () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
     { timeout: 10000 }
   );
-  await page.evaluate((markup) => {
+  await page.evaluate(async (markup) => {
     const container = document.createElement('main');
     container.id = 'test-container';
     container.innerHTML = markup;
     document.body.appendChild(container);
-    (window as any).WB.scan(container);
+    await (window as any).WB.scan(container);
   }, html);
   await page.waitForTimeout(500);
 }

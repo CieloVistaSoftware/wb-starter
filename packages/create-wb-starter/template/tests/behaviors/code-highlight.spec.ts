@@ -6,11 +6,11 @@
  * tore down rendering, plus the missing highlight theme. This regression test locks
  * the working state: every demo code block is highlighted.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#183 — code blocks highlight', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     await page.waitForTimeout(2500); // demo build + highlight.js
   });

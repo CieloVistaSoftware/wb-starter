@@ -14,11 +14,11 @@
  * no wrapper (no spacing, no </div>/<div x-demo> match).
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { scanHtml } from '../../scripts/test-wb-demo-integrity.mjs';
 
 test.describe('<div x-demo> markup integrity — example fixtures', () => {
-  test('a single x-demo wrapping multiple inputs is valid (the correct pattern)', () => {
+  test('a single [x-demo] wrapping multiple inputs is valid (the correct pattern)', () => {
     const html = `
       <h3>Special Input Types</h3>
       <div x-demo>
@@ -30,7 +30,7 @@ test.describe('<div x-demo> markup integrity — example fixtures', () => {
     expect(scanHtml(html)).toEqual([]);
   });
 
-  test('a x-demo with attributes (e.g. a title) is still recognized', () => {
+  test('a [x-demo] with attributes (e.g. a title) is still recognized', () => {
     const html = `<div x-demo title="Copy functionality"><button x-copy>Copy</button></div>`;
     expect(scanHtml(html)).toEqual([]);
   });
@@ -56,7 +56,7 @@ test.describe('<div x-demo> markup integrity — example fixtures', () => {
     expect(issues.some((i) => i.includes('empty'))).toBe(true);
   });
 
-  test('catches a x-demo missing its closing tag entirely', () => {
+  test('catches a [x-demo] missing its closing tag entirely', () => {
     const html = `<div x-demo><input type="text"></section>`;
     const issues = scanHtml(html);
     expect(issues.some((i) => i.includes('unbalanced'))).toBe(true);
@@ -78,7 +78,7 @@ test.describe('<div x-demo> markup integrity — example fixtures', () => {
       <div x-demo><button>real demo</button></div>
       <script type="module">
         // This page's single <div x-demo> (the HTMX section) sits far below the fold.
-        const soleDemo = document.querySelector('x-demo');
+        const soleDemo = document.querySelector('[x-demo]');
       </script>
     `;
     expect(scanHtml(html)).toEqual([]);

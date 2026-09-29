@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Standard §15 (#252): a popover must not overflow its bounds. `x-popover` is

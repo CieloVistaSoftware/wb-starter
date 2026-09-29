@@ -56,8 +56,20 @@ function generateManifest() {
     byCategory[file.category].push(file);
   }
   
+  // #1071: NO `generated` timestamp.
+  //
+  // This file is tracked, because src/wb-viewmodels/demo.js reads it from the
+  // deployed site. It is also rewritten on every `npm start`. With a timestamp
+  // in it, every start produced a diff even when not one document had changed,
+  // so the working tree was permanently dirty and the version badge's "*"
+  // (uncommitted changes) could never clear.
+  //
+  // A manifest describes what the docs ARE. When it was built is a fact about
+  // the build, not about the contents, and it is already recoverable from git.
+  // Dropping it makes the file change only when the docs actually change, which
+  // is also what makes a stale-manifest check possible: regenerate, and a diff
+  // now MEANS something.
   const manifest = {
-    generated: new Date().toISOString(),
     totalFiles: files.length,
     categories: Object.keys(byCategory).sort(),
     byCategory,

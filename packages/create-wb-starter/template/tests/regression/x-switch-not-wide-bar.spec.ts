@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
@@ -9,7 +9,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * (position:absolute; opacity:0; width:1px; height:1px), matching the
  * classic visually-hidden-native-input + custom-visual-track pattern.
  */
-test.describe('x-switch does not render a stray wide bar', () => {
+test.describe('[x-switch] does not render a stray wide bar', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });

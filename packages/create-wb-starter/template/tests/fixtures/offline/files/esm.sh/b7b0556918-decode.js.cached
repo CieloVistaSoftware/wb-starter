@@ -1,0 +1,2 @@
+/* esm.sh - entities@6.0.1/decode */
+export * from "/entities@6.0.1/es2022/decode.mjs";

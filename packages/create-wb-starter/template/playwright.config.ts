@@ -1,5 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 import { readFileSync } from 'fs';
+// #961: MUST be an import. This file is loaded as an ES module (package.json
+// says "type": "module"), where `require` is not defined — so findFreePort()'s
+// `require('child_process')` threw a ReferenceError on every single run, was
+// swallowed by its own `catch`, and the function returned its fallback. See
+// its comment below.
+import { execFileSync } from 'child_process';
 
 // tests/compliance/ has grown to 79 files (~2 min for a full run) — running
 // the whole thing on every iteration wastes time when only one area is
@@ -48,8 +54,8 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
  * ┌─────────────────────────────────────────────────────────────────┐
  * │ TIER 3: DECORATED BEHAVIORS (browser required)                 │
  * │ Location: tests/behaviors/                                      │
- * │ - Permutation compliance (full behavior tests)                 │
- * │ - Individual behavior tests                                    │
+ * │ - Permutation compliance (full component tests)                 │
+ * │ - Individual component tests                                    │
  * │ - Interaction tests                                             │
  * └─────────────────────────────────────────────────────────────────┘
  */
@@ -75,11 +81,94 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
 // ALWAYS gets its own fresh server, since reusing a foreign server on a
 // non-default port would silently defeat the whole point of asking for
 // isolation in the first place.
-const TEST_PORT = Number(process.env.WB_TEST_PORT) || 3000;
+//
+// DEFAULT FLIPPED (John: "i'm using 3000 today ... you will need to open other
+// ports for wb-starter work").
+//
+// Everything above describes the 3000 hazard correctly, but the default was
+// still 3000, so it only protected a run that REMEMBERED to set WB_TEST_PORT.
+// It bit again today from the other direction: a suite left running on 3000
+// adopted — and would have tested — the owner's own server instead of its own
+// checkout, and killing anything on 3000 takes the whole suite down mid-run.
+//
+// So isolation is now the default and 3000 is the opt-in:
+//
+//   local  -> 3310, always its own fresh server, never adopts a stranger
+//   CI     -> 3000 + reuse, exactly as before (ci-tests.yml starts the server
+//             itself and server-smoke.yml curls localhost:3000/health)
+//
+// reuseExistingServer is gated on CI rather than on the port number. Port 3000
+// alone was never evidence that the server there is OURS — which is precisely
+// how the owner's dev server got adopted in the first place.
+//
+// A FIXED default is still a port someone else can be using — 3310 is no more
+// ours than 3000 was. So when nobody names a port, ask the OS for one that is
+// genuinely free instead of guessing.
+//
+// Bind to port 0 and the kernel hands back an unused port; we read it, close
+// the socket, and use it. Done in a child process because this config is
+// evaluated synchronously and net.listen is not.
+//
+// If that ever fails, fall back to a fixed port rather than crashing the run —
+// a suite on a possibly-busy port is still better than no suite.
+//
+// MEASURED 2026-09-08 (#961): none of that was happening. `require` is not
+// defined in an ES module, so the call below threw ReferenceError on every run,
+// the `catch` swallowed it, and EVERY local run got the fixed fallback 3310 —
+// the exact "a fixed port is still a port someone else can be using" hazard the
+// paragraph above says it is avoiding. Six consecutive runs this session all
+// served from :3310, and the seventh died with "http://localhost:3310 is
+// already used" against a leftover server from the sixth. A gate that has never
+// been seen to work is not evidence of anything
+// (docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md).
+//
+// The fallback stays, but it is now genuinely a fallback.
+function findFreePort(): number {
+  try {
+    const out = execFileSync(process.execPath, ['-e',
+      "const s=require('net').createServer();s.listen(0,'127.0.0.1',()=>{" +
+      "process.stdout.write(String(s.address().port));s.close()});"
+    ], { encoding: 'utf8', timeout: 5000 });
+    const port = Number(out.trim());
+    if (port > 0) return port;
+  } catch { /* fall through */ }
+  return 3310;
+}
+
+const TEST_PORT = Number(process.env.WB_TEST_PORT)
+  || (process.env.CI ? 3000 : findFreePort());
+
+// PIN IT. This config is evaluated MORE THAN ONCE per run — the main process
+// loads it, and so does every worker process — so a function that returns a
+// fresh random port each time hands each worker a DIFFERENT baseURL while
+// `webServer` started exactly one server, on the main process's port.
+//
+// Measured 2026-09-08, the first time findFreePort() actually ran (#1079):
+//   net::ERR_CONNECTION_REFUSED at http://localhost:64148/pages/home.html
+//   net::ERR_CONNECTION_REFUSED at http://localhost:64149/pages/home.html
+//   net::ERR_CONNECTION_REFUSED at http://localhost:64150/public/fix-viewer.html
+// — a different port per test, none of them the one being served.
+//
+// Writing the choice back into the environment makes the FIRST evaluation the
+// only one that decides: every later evaluation, in this process or in a worker
+// forked from it, takes the `Number(process.env.WB_TEST_PORT)` branch above.
+// A fixed fallback port was consistent by accident; this is consistent on
+// purpose, and still free.
+process.env.WB_TEST_PORT = String(TEST_PORT);
 
 export default defineConfig({
   testDir: './tests',
-  outputDir: './data/test-results',
+  // #1038: NOT './data/test-results'. Playwright CLEARS outputDir at the start
+  // of every run, and data/test-results/ is the reporter's evidence dir —
+  // scripts/issue-state.mjs, commit-readiness.mjs and mark-issue-verification.mjs
+  // all read <project>.json out of it. Sharing one directory meant running the
+  // tests DESTROYED the record of the tests: a filtered run (the pre-commit gate
+  // runs only the priority-1 specs and project-integrity) wiped all five
+  // projects' JSON and wrote back almost nothing, so every issue silently fell
+  // back to `unproven` and `ready` emptied out. Measured 2026-09-06: two gate
+  // runs took ready 3 -> 0, failing 7 -> 0, unproven 5 -> 18, with no work done
+  // to any of those issues. Playwright's scratch gets its own directory.
+  outputDir: './data/playwright-output',
   reporter: [
     ['./scripts/tools/test-reporter.ts'],
     ['list']
@@ -90,7 +179,21 @@ export default defineConfig({
   
   fullyParallel: true,
   workers: 8,
-  retries: 1,
+  // John: "there is no such thing as flaky, it either works or fails."
+  //
+  // retries: 1 does not make a test more reliable -- it makes an unreliable
+  // test INVISIBLE. A test that fails and then passes is reported as "flaky",
+  // Playwright exits 0, and the pre-commit gate goes green over a real defect.
+  // That is how 11 failures rode along in the 4.0.0 run reported as a separate
+  // benign category.
+  //
+  // A test that passes alone and fails under load is describing a genuine race
+  // -- almost always an assertion made before behavior attachment finishes.
+  // The retry wins because the second load is warm. Hiding that loses the
+  // signal exactly when the machine is busy, which is when it matters.
+  //
+  // Zero. Pass or fail, nothing in between. (#839)
+  retries: 0,
   timeout: 30000,
   
   expect: {
@@ -99,7 +202,29 @@ export default defineConfig({
   
   use: {
     baseURL: `http://localhost:${TEST_PORT}`,
-    trace: 'off',
+    // #961/#1097: a gate that HANGS gives no verdict and costs 3 hours. Tracing
+    // is off by default because a trace per test is expensive, but WB_TRACE=on
+    // records actions, network and timings so a stall can be read backwards to
+    // the exact step instead of guessed at.
+    //   WB_TRACE=on npm run test:async -- <spec>
+    // then: npx playwright show-trace test-results/<dir>/trace.zip
+    trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure') || 'off',
+    // #961 experiment: src/main.js:133 registers sw.js, which is network-first
+    // with a CACHE FALLBACK — when a fetch fails it silently serves a cached
+    // copy rather than failing. A service worker also does not control the
+    // FIRST page load, only later ones, which matches the measured signature:
+    // 18 of 19 failures occurred on a later repeat, never the first.
+    //
+    // WB_BLOCK_SW=1 takes the worker out of the picture so we can see whether
+    // the flapping stops. The default stays 'allow' — this measures rather than
+    // quietly changing what every run exercises.
+    serviceWorkers: process.env.WB_BLOCK_SW ? 'block' : 'allow',
+    // A click on a hidden element waits for it to become visible. With no
+    // action timeout that wait silently eats the whole test budget -- 90s in
+    // remaining-coverage, where 7 tests timed out on rows inside a collapsed
+    // <details> group. 30s changes nothing for tests on the default 30s budget
+    // but makes a stuck action in a long-budget spec fail by name, fast.
+    actionTimeout: 30_000,
   },
 
   // Web server - automatically starts before tests.
@@ -111,9 +236,17 @@ export default defineConfig({
   // still starts one via `command`. A WB_TEST_PORT override never reuses --
   // see the #518 comment above.
   webServer: {
-    command: 'npm start',
+    // #1074: through scripts/serve-with-log.mjs, not `npm start` directly.
+    // Playwright discards webServer stdout by default, so when the server died
+    // mid-run nothing recorded why — only the ERR_CONNECTION_REFUSED failures
+    // that followed. The wrapper tees stdout+stderr to a file under data/
+    // ($WB_SERVER_LOG, else data/test-server-logs/) and records the exit code.
+    command: 'node scripts/serve-with-log.mjs npm start',
     port: TEST_PORT,
-    reuseExistingServer: TEST_PORT === 3000,
+    // Only CI may adopt an already-running server, because only there do we
+    // know who started it. Locally this is always false, so a run can neither
+    // test someone else's code nor be killed by someone else's cleanup.
+    reuseExistingServer: !!process.env.CI && TEST_PORT === 3000,
     timeout: 60000,
     // Never pop a browser when Playwright starts the dev server for tests.
     env: { WB_NO_OPEN: '1', PORT: String(TEST_PORT) },
@@ -173,13 +306,13 @@ export default defineConfig({
     
     // ═══════════════════════════════════════════════════════════════
     // TIER 3: DECORATED BEHAVIORS
-    // Full behavior testing - all variants, interactions, events
+    // Full component testing - all variants, interactions, events
     // GATE: compliance + base must pass first (enforced by npm scripts)
     //
     // Auto-discovers all .spec.ts files in these directories:
     // - behaviors/ (all behavior tests)
     // - cards/ (card variant tests)
-    // - behaviors/ (behavior tests)
+    // - components/ (component tests)
     // - pages/ (page integration tests)
     // - semantics/ (semantic rendering tests)
     // Plus root-level darkmode-standard.spec.ts
@@ -191,11 +324,25 @@ export default defineConfig({
         'behaviors/behavior-verification.spec.ts',
         'behaviors/**/*.spec.ts',
         'cards/**/*.spec.ts',
-        'behaviors/**/*.spec.ts',
+        'components/**/*.spec.ts',
         'pages/**/*.spec.ts',
         'semantics/**/*.spec.ts',
         'demos/**/*.spec.ts',
         'darkmode-standard.spec.ts',
+        // #1091: these matched NO project, so they had never run — not once.
+        // Found by scripts/check-spec-collection.mjs on its first execution:
+        // 3 files, 6 test() calls, 7 expect() assertions, all invisible.
+        //
+        // They are not stale scratch. debug-css.spec.ts loads
+        // src/styles/behaviors/stock.css, which exists; docs-page-links.spec.ts
+        // asserts every link on the docs page resolves; the issue-note spec
+        // reproduces a filed bug about category buttons not scrolling.
+        //
+        // A .spec.ts that no testMatch covers is the quietest failure mode there
+        // is: it looks like coverage in the tree, in review, and in a file count,
+        // and it has never executed.
+        'issues/**/*.spec.ts',
+        'debug-css.spec.ts',
       ],
     },
     // ═══════════════════════════════════════════════════════════════
@@ -223,11 +370,23 @@ export default defineConfig({
     // INTEGRATION TESTS
     // Phase 2: Wizard validation, builder integration, end-to-end flows
     // ═══════════════════════════════════════════════════════════════
+    // Tests that NEED the outside world: the live GitHub Pages site, or GitHub
+    // itself through `gh`. Kept out of every gate project on purpose -- a gate
+    // must not depend on the network, a login or a remote host's mood, or its
+    // verdict describes the internet rather than the code. Run on demand, and
+    // after a push (the deployed site is what they check):
+    //   npm run test:deployed
+    {
+      name: 'deployed',
+      testDir: './tests/deployed',
+      testMatch: '**/*.spec.ts',
+    },
+
     {
       name: 'integration',
       testDir: './tests/integration',
       testMatch: '**/*.spec.ts',
-      // The behaviors page hydrates 38 x-demos (page-source fetch + WB.scan +
+      // The components page hydrates 38 x-demos (page-source fetch + WB.scan +
       // hljs each); under a full parallel run browsers are CPU-starved and the
       // default 30s timeout flakes. 60s absorbs the contention — the underlying
       // hydration latency is tracked as a performance issue.
@@ -262,7 +421,7 @@ export default defineConfig({
       testMatch: [
         'cards/card.spec.ts',
         'behaviors/behaviors.spec.ts',
-        'pages/all-behaviors.spec.ts',
+        'pages/all-components.spec.ts',
       ],
       use: { ...devices['Desktop Firefox'] },
     },
@@ -272,7 +431,7 @@ export default defineConfig({
       testMatch: [
         'cards/card.spec.ts',
         'behaviors/behaviors.spec.ts',
-        'pages/all-behaviors.spec.ts',
+        'pages/all-components.spec.ts',
       ],
       use: { ...devices['Desktop Safari'] },
     },

@@ -1,0 +1,157 @@
+{
+  "$comment": "Permutation source for x-toast. Params and values come from src/wb-models/toast.schema.json -- every declared property, its enum, its default, plus min/max/edge values the enum does not state. Tests are GENERATED from this file (tests/behaviors/toast-every-permutation.spec.ts); none are hand-picked. Same method as #1107's tooltip suite.",
+  "behavior": "x-toast",
+  "source": "src/wb-models/toast.schema.json",
+  "implementation": "src/wb-viewmodels/feedback.js (toastContainer, createToast, toast)",
+  "styles": "src/styles/behaviors/toast.css",
+  "host": "<div x-toast>Show</div>",
+  "hostNote": "A DIV, not a BUTTON. toast.schema.json's semanticElement is div, and its own test.setup authors <div x-toast>. It also matters for the test: tag-map.js's nativeMap auto-injects the `button` behavior into every <button>, and that behavior reads `variant` and `icon` too -- so a <button x-toast icon=\"...\"> would prove nothing about which behavior built the icon. A <div> is in no native map, so x-toast is the only thing running.",
+  "twoElements": "x-toast decorates the TRIGGER (.x-toast-trigger). The toast itself is a popup createToast() appends to a .x-toast-container on document.body. Every assertion below about structure, colour or position is about the POPUP; the trigger only carries the attributes.",
+  "simpleWorkingCase": {
+    "markup": "<div x-toast message=\"Saved\">Show</div>",
+    "action": "click the trigger",
+    "expect": "one .x-toast appears inside .x-toast-container, its .x-toast__message reads 'Saved', it carries a .x-toast__close, and it removes itself from the DOM 3000ms later"
+  },
+  "params": {
+    "message": {
+      "type": "string",
+      "default": "this is the message",
+      "attr": "message",
+      "alsoAccepts": ["toast-message"],
+      "read": true,
+      "values": [
+        "Saved",
+        "",
+        "   ",
+        "a deliberately long message of some length used to check that a long body wraps inside the toast instead of forcing it past its max-width",
+        "<b>not html</b>",
+        "quote\" and 'apos",
+        "emoji 🎉 and ünïcode"
+      ],
+      "edges": ["", "   ", "<b>not html</b>"],
+      "note": "feedback.js: `options.message || getAttribute('message') || getAttribute('toast-message') || 'Notification'`. An EMPTY message is falsy and falls through to the literal 'Notification' -- whitespace-only does not, it is truthy and renders as authored. The message is its own <p class=\"x-toast__message\">, never the toast's whole textContent (#1109)."
+    },
+    "title": {
+      "type": "string",
+      "default": "this is the title",
+      "attr": "toast-title",
+      "alsoAccepts": ["title"],
+      "read": true,
+      "wasDead": true,
+      "values": ["Saved", "", "<em>not html</em>", "A title that is longer than the message it heads"],
+      "edges": ["", "<em>not html</em>"],
+      "note": "Was DECLARED, NEVER READ: createToast() set `toast.textContent = message` and there was nowhere for a title to go. Now a <strong class=\"x-toast__title\"> inside .x-toast__content, ABOVE the message, not concatenated into it. `toast-title` is read FIRST and `title` second, for the reason `toast-variant` exists: `title` is a native global attribute, so a trigger legitimately carrying <div title=\"Save your work\"> must not have the browser's own tooltip silently promoted into the toast's heading."
+    },
+    "variant": {
+      "type": "enum",
+      "default": "info",
+      "attr": "toast-variant",
+      "alsoAccepts": ["variant"],
+      "read": true,
+      "values": ["info", "success", "warning", "error"],
+      "edges": ["info", "error"],
+      "appliesClass": "x-toast--{{value}}",
+      "note": "toast.css paints each from a theme variable: info -> --info-color, success -> --success-color, warning -> --warning-color, error -> --danger-color, each defined exactly once in themes.css and all four different. The oracle is the COMPUTED colour, not the class: tests/behaviors/toast-color.spec.ts asserts class names and compares only two of the four, so a regression that painted all four identically would pass it today (#1109)."
+    },
+    "icon": {
+      "type": "string",
+      "default": "this is the icon",
+      "attr": "icon",
+      "read": true,
+      "wasDead": true,
+      "values": ["🔔", "", "✅", "🎉🎉"],
+      "edges": ["", "🎉🎉"],
+      "note": "Was DECLARED, NEVER READ. Now a <span class=\"x-toast__icon\" aria-hidden=\"true\"> that is the toast's FIRST child, before .x-toast__content. aria-hidden on purpose: it is decoration beside the message, and a screen reader announcing 'party popper' ahead of an error is noise."
+    },
+    "duration": {
+      "type": "number",
+      "default": 3000,
+      "minimum": 0,
+      "maximum": 30000,
+      "attr": "duration",
+      "read": true,
+      "values": [0, 400, 3000, 30000],
+      "edges": [0, 30000, -1, "abc"],
+      "note": "`parseInt(...)` then `if (duration > 0)`. 0 is the declared minimum and means NO auto-dismiss -- the toast waits for the close button. -1 and 'abc' are not > 0 either, so they behave as 0: no timer, never a NaN timeout and never an instantly-vanishing toast. 30000 is the declared maximum; a test can only prove it does not fire EARLY."
+    },
+    "position": {
+      "type": "enum",
+      "default": "top-right",
+      "attr": "position",
+      "read": true,
+      "wasDead": true,
+      "values": [
+        "top-right",
+        "top-left",
+        "top-center",
+        "bottom-right",
+        "bottom-left",
+        "bottom-center"
+      ],
+      "edges": ["top-right", "bottom-center", "sideways"],
+      "note": "Was DECLARED, NEVER READ: every toast went into the ONE .x-toast-container that CSS pins top-right, so all six documented positions rendered in the same corner. toastContainer() now creates one container PER position carrying x-toast-container--{position} (toast.css places each). 'sideways' is the invalid edge: TOAST_POSITIONS.includes() rejects it and it falls back to the default corner. The value is a corner, so the oracle is a MEASURED rectangle -- the class alone was exactly what was true before the fix, when it meant nothing."
+    },
+    "dismissible": {
+      "type": "boolean",
+      "default": true,
+      "attr": "dismissible",
+      "read": true,
+      "wasDead": true,
+      "values": [true, false],
+      "edges": ["false", "0", ""],
+      "note": "Was DECLARED, NEVER READ, and toast.css had styled .x-toast__close since it was written -- dead flag, dead style. Now a <button class=\"x-toast__close\" aria-label=\"Dismiss notification\"> whose ✕ is a CSS ::before, so the glyph never enters textContent. Read through readFlag() (src/core/read-attr.js) with fallback TRUE, so dismissible=\"false\" and dismissible=\"0\" turn it OFF where a bare hasAttribute() would read them as ON (the #747 trap), and a bare `dismissible` (empty value) is ON."
+    },
+    "action": {
+      "type": "string",
+      "default": "this is the action",
+      "attr": "action",
+      "read": true,
+      "values": ["Undo", "", "Retry now"],
+      "edges": [""],
+      "note": "Action text. With no href it is a <button type=\"button\" class=\"x-toast__action\"> that fires wb:toast:action. Empty means no action element at all."
+    },
+    "actionHref": {
+      "type": "string",
+      "default": "#",
+      "attr": "action-href",
+      "read": true,
+      "values": ["", "#target", "https://example.com/undo"],
+      "edges": ["", "#"],
+      "note": "An action WITH an href is a LINK and is built as an <a href>: a button that navigates is not middle-clickable or open-in-new-tab-able, and the schema names this one 'Action button link URL'. An href with no action text builds nothing -- the text is what makes the control exist."
+    }
+  },
+  "oracle": {
+    "rule": [
+      "message: .x-toast__message is its own element and its text equals the authored message EXACTLY; markup in it is text, never parsed as HTML.",
+      "message empty: falls through to the literal 'Notification'; whitespace-only is truthy and renders as authored.",
+      "title: rendered as .x-toast__title, its OWN element -- .x-toast__message must still equal the message alone, never title+message concatenated.",
+      "title absent or empty: no .x-toast__title element at all.",
+      "title: `toast-title` wins over the native `title` attribute, and a bare `title` still works.",
+      "icon: rendered as .x-toast__icon, its OWN element, aria-hidden, first child of the toast -- the message text must not contain it.",
+      "icon absent or empty: no .x-toast__icon element at all.",
+      "variant: each of the 4 values paints a DIFFERENT computed background colour -- all four read via getComputedStyle after the entry animation, and all four distinct. The class alone is not the oracle.",
+      "position: the toast lands in a container carrying x-toast-container--<position>, AND that container's MEASURED rectangle sits in the named corner of the viewport.",
+      "position: two different values must produce two different container rectangles -- all six distinct, which is precisely what was false before #1109.",
+      "position invalid: falls back to the default top-right container, never creates a seventh one.",
+      "position: one container per position, reused -- clicking twice puts two toasts in one container, never two containers.",
+      "dismissible default/true: exactly one .x-toast__close exists, clicking it removes the toast from the DOM, and wb:toast:hide fires.",
+      "dismissible false (or \"0\"): no .x-toast__close, and with no action, no .x-toast__actions wrapper either.",
+      "dismissible: the ✕ glyph is CSS, so the toast's textContent stays the message -- never 'Saved✕'.",
+      "duration > 0: the toast removes itself from the DOM after that long.",
+      "duration 0, negative or non-numeric: NO auto-dismiss -- the toast is still there well past the 3000ms default, and is still dismissible by its close button.",
+      "action with no href: a <button type=\"button\" class=\"x-toast__action\"> that fires wb:toast:action; with an href: an <a href>.",
+      "action: the action text is its own control, never concatenated into the message.",
+      "every permutation: nothing leaks -- after dismissal or auto-dismiss the .x-toast element is GONE from the DOM, and repeated shows do not stack containers.",
+      "the permutation source covers the model: every property declared in src/wb-models/toast.schema.json has a param here, so adding one to the model without a permutation fails this suite."
+    ],
+    "expectedRedOnCurrentCode": [
+      "position: all six values rendered in the same top-right corner -- no CSS position modifier existed and nothing read the attribute",
+      "dismissible: no .x-toast__close was ever built, so the flag had no control to toggle and toast.css's style was dead",
+      "title: nowhere to render -- toast.textContent = message was the whole body",
+      "icon: nowhere to render, same reason",
+      "variant: 4 distinct computed colours was never asserted anywhere; toast-color.spec.ts compares two of the four by class",
+      "wb:toast:hide: declared in the schema's events and never dispatched"
+    ],
+    "resolvedIn": "#1109 -- every case listed in expectedRedOnCurrentCode is now expected GREEN. The list stays as written: it is the definition of done for that fix and the record of what was wrong."
+  }
+}

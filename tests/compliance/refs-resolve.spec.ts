@@ -79,7 +79,7 @@ function filesToCheck(): string[] {
   for (const root of ['demos', 'pages', 'public', 'docs']) {
     collectFiles(path.join(ROOT, root), root === 'docs' ? ['.md'] : ['.html'], acc);
   }
-  for (const name of ['README.md', 'CONTRIBUTING.md']) {
+  for (const name of ['README.md', '.github/CONTRIBUTING.md']) {
     const p = path.join(ROOT, name);
     if (fs.existsSync(p)) acc.push(p);
   }

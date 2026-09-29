@@ -10,6 +10,7 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { isDirty } from './lib/git-status.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -25,15 +26,155 @@ try {
 
 const builtAt = new Date().toISOString();
 
+/**
+ * #1002 -- John: "the version number is supposed to represent a specific code
+ * set", and "everything running on 3000 is the latest code" plus "no surprises
+ * like missing menu items".
+ *
+ * A bare version number cannot promise that. `4.0.1` was displayed while
+ * serving a tree 24 commits behind main with 377 uncommitted files -- the same
+ * string named the release AND something that was not the release, and nothing
+ * said which. So the stamp now records what the tree actually IS, and the badge
+ * shows it (src/wb-viewmodels/release.js).
+ *
+ * Measured cheaply: two git calls, only at stamp time.
+ */
+function drift() {
+  // `raw: true` returns the output UNTRIMMED. Every other caller here reads a
+  // single value where trailing newlines are noise, but porcelain status is
+  // column-oriented and its leading space is data (#1082).
+  const git = (cmd, fallback = '', { raw = false } = {}) => {
+    try {
+      const out = execSync(cmd, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+      return raw ? out : out.trim();
+    } catch {
+      return fallback;
+    }
+  };
+
+  // WHERE THE CODE LIVES, not where it happened to be authored.
+  //
+  // This used to be a bare `rev-parse --abbrev-ref HEAD`, so a release commit
+  // made on a feature branch kept that name after merging. 4.0.2 shipped to
+  // production stamped `branch: "spec/needs-test-coverage"` — a branch no
+  // visitor to the deployed site has any way to interpret, on an artifact that
+  // was very much on main.
+  //
+  // If the commit is reachable from the remote default branch, that is its home
+  // and that is what gets stamped. Otherwise the working branch is still the
+  // honest answer, because the code genuinely is only there.
+  const localBranch = git('git rev-parse --abbrev-ref HEAD', 'unknown');
+  const containing = git('git branch -r --contains HEAD --format=%(refname:short)')
+    .split('\n')
+    .map((b) => b.trim())
+    .filter(Boolean);
+  const home = containing.find((b) => b === 'origin/main' || b === 'origin/master');
+  const branch = home ? home.replace(/^origin\//, '') : localBranch;
+
+  // #1071: the stamp must not count ITS OWN OUTPUT as a dirty tree.
+  //
+  // This was a bare `git status --porcelain`, and this script rewrites
+  // src/core/version.js every time it runs (`npm start`, every commit) with a
+  // fresh `builtAt`. So the file it had just written made the tree dirty, which
+  // it then recorded as `dirty: true` -- circular, and permanent. The badge's
+  // "*" means "you have uncommitted changes"; it was really saying "this script
+  // ran", which is always.
+  //
+  // Everything else the suite regenerates (data/test-results.json,
+  // test-status.json, bg-health.json) is now gitignored, so `--porcelain` no
+  // longer lists it. version.js cannot be ignored -- the deployed badge reads
+  // it -- so it is excluded here instead.
+  //
+  // The flag now means what #1002 asked it to mean: real, uncommitted work.
+  // #1082: this split `git()`'s TRIMMED output and sliced(3) each line. The
+  // trim removes the leading status space from the FIRST LINE ONLY, so the
+  // alphabetically-first path lost a character. When the only change IS
+  // src/core/version.js it is that first line -- mangled to
+  // "rc/core/version.js", which GENERATED then failed to match. So the
+  // exclusion was bypassed in exactly the case it was written for, and the
+  // badge kept saying "uncommitted changes" after #1071 shipped.
+  const GENERATED = ['src/core/version.js'];
+  const dirty = isDirty(
+    git('git status --porcelain', '', { raw: true }),
+    GENERATED,
+  );
+
+  // Compare against the remote this branch tracks; fall back to origin/main,
+  // which is what "latest code" means for this project.
+  const upstream = git('git rev-parse --abbrev-ref --symbolic-full-name @{u}') || 'origin/main';
+  let behind = 0;
+  let ahead = 0;
+  const counts = git(`git rev-list --left-right --count HEAD...${upstream}`);
+  if (counts) {
+    const [a, b] = counts.split(/\s+/).map(Number);
+    ahead = a || 0;
+    behind = b || 0;
+  }
+
+  return { branch, dirty, ahead, behind, upstream };
+}
+
+const tree = drift();
+
+// #1071: keep the PREVIOUS builtAt when nothing else changed.
+//
+// This file is tracked (the deployed badge reads it) and was rewritten with a
+// fresh `builtAt` on every `npm start` and every commit. So starting the dev
+// server produced a diff when not one line of source had changed, the working
+// tree was permanently dirty, and "do we have uncommitted work?" could never be
+// answered. John: "why do we still have uncommitted work? we've lost track of
+// what we have and where we are going?"
+//
+// `builtAt` cannot simply be dropped -- release.js renders it in the badge
+// tooltip and the {built} format, and main.js logs it. So it is kept, and only
+// refreshed when something REAL differs: version, commit, branch, drift.
+//
+// That also makes it more honest. It now means "when this state was first
+// stamped" rather than "the last time anyone ran npm start", which is what a
+// reader looking at a build timestamp actually wants to know.
+const versionPath = path.join(root, 'src', 'core', 'version.js');
+const next = { version: pkg.version, commit, builtAt, ...tree };
+
+let previous = null;
+try {
+  const prevText = readFileSync(versionPath, 'utf8');
+  const m = prevText.match(/export const VERSION = ({[\s\S]*?});/);
+  if (m) previous = JSON.parse(m[1]);
+} catch { /* first run, or unreadable - stamp fresh */ }
+
+const sameExceptTime = previous
+  && Object.keys(next).every((k) => k === 'builtAt' || JSON.stringify(previous[k]) === JSON.stringify(next[k]))
+  && Object.keys(previous).every((k) => k === 'builtAt' || k in next);
+
+if (sameExceptTime) next.builtAt = previous.builtAt;
+
 const out = `/**
  * AUTO-GENERATED by scripts/stamp-version.js — do not hand-edit.
- * Regenerated on every commit via .husky/pre-commit.
+ * Regenerated on every commit via .husky/pre-commit, AND on npm start
+ * so what the badge says is always what is being served (#1002).
+ *
+ * builtAt only moves when something else does (#1071) — otherwise re-running
+ * this would dirty the working tree for no reason.
  */
-export const VERSION = ${JSON.stringify({ version: pkg.version, commit, builtAt }, null, 2)};
+export const VERSION = ${JSON.stringify(next, null, 2)};
 `;
 
-writeFileSync(path.join(root, 'src', 'core', 'version.js'), out);
-console.log(`[stamp-version] v${pkg.version} (${commit}) @ ${builtAt}`);
+// Skip the write entirely when the bytes would be identical: a no-op write
+// still updates mtime, which is enough to make some watchers rebuild.
+let unchanged = false;
+try { unchanged = readFileSync(versionPath, 'utf8') === out; } catch { /* no file yet */ }
+if (!unchanged) writeFileSync(versionPath, out);
+
+const flags = [
+  tree.behind ? `${tree.behind} BEHIND ${tree.upstream}` : '',
+  tree.ahead ? `${tree.ahead} ahead` : '',
+  tree.dirty ? 'dirty' : '',
+].filter(Boolean).join(', ');
+console.log(`[stamp-version] v${pkg.version} (${commit}) @ ${builtAt}${flags ? ` — ${flags}` : ''}`);
+if (tree.behind) {
+  console.log(`[stamp-version] ⚠  This tree is ${tree.behind} commits behind ${tree.upstream}.`);
+  console.log(`[stamp-version] ⚠  What you see on :3000 is NOT the latest code.`);
+}
 
 // Cache-bust local resource references (src/… and config/…) in every HTML
 // entry point. Leaves external URLs (fonts, CDNs) and already-anchored hash
@@ -43,7 +184,7 @@ console.log(`[stamp-version] v${pkg.version} (${commit}) @ ${builtAt}`);
 // reload, see the old page -- repeatedly, which reads as "still broken" and is
 // indistinguishable from a fix that did not work. Any HTML entry point that
 // loads local assets needs the stamp, not just the two SPA shells.
-const ENTRY_HTML = ['index.html', 'project-index.html', ...standaloneEntries()];
+const ENTRY_HTML = ['index.html', ...standaloneEntries()];
 
 function standaloneEntries() {
   const out = [];

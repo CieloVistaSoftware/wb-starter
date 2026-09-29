@@ -12,7 +12,7 @@
  * the x-* registry — so a Node-side check would re-implement that mapping and
  * drift from the page. Reading the panel's own words cannot drift.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const NO_DOC = /^No doc yet for (.+)\.$/;
 

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Live-reported: docs/V3-GUIDE.md's bare <span x-spinner>/<progress> examples
@@ -22,22 +22,22 @@ import { test, expect } from '@playwright/test';
  * genuinely narrow mobile viewport, wide enough that source code is always
  * legible regardless of how small the control itself is.
  */
-test.describe('x-demo code panels never collapse to unreadable vertical strips', () => {
-  test('V3-GUIDE.md: no x-demo widget renders narrower than the readable-code floor', async ({ page }) => {
+test.describe('[x-demo] code panels never collapse to unreadable vertical strips', () => {
+  test('V3-GUIDE.md: no [x-demo] widget renders narrower than the readable-code floor', async ({ page }) => {
     await page.goto('/public/doc-viewer.html?file=docs%2FV3-GUIDE.md', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content', { timeout: 15000 });
     await page.waitForTimeout(2000);
 
-    const demos = page.locator('x-demo');
+    const demos = page.locator('[x-demo]');
     const count = await demos.count();
-    expect(count, 'expected the guide to have multiple live x-demo examples').toBeGreaterThan(1);
+    expect(count, 'expected the guide to have multiple live [x-demo] examples').toBeGreaterThan(1);
 
     for (let i = 0; i < count; i++) {
       const box = await demos.nth(i).boundingBox();
       if (!box) continue; // not visible -- not this bug's concern
       expect(
         box.width,
-        `x-demo[${i}] rendered only ${Math.round(box.width)}px wide -- collapsed to an unreadable strip.`
+        `[x-demo][${i}] rendered only ${Math.round(box.width)}px wide -- collapsed to an unreadable strip.`
       ).toBeGreaterThan(150);
     }
   });
@@ -47,15 +47,27 @@ test.describe('x-demo code panels never collapse to unreadable vertical strips',
     await page.waitForSelector('#content', { timeout: 15000 });
 
     const label = page.getByText('Spinner —', { exact: false });
-    await expect(label).toBeVisible({ timeout: 15000 });
-    await page.waitForTimeout(1500);
+    await expect(label.first()).toBeVisible({ timeout: 15000 });
 
-    const demo = label.locator('xpath=following-sibling::x-demo[1]');
+    // x-demo is an ATTRIBUTE (`<div x-demo>`), never a tag -- the old
+    // `following-sibling::x-demo` step looked for an <x-demo> element that
+    // does not exist, so boundingBox() waited out the test timeout. And the
+    // label matches the <strong>/<code> inside the paragraph, so climb to the
+    // paragraph before stepping to its sibling.
+    const demo = label.first().locator('xpath=ancestor-or-self::p[1]/following-sibling::*[@x-demo][1]');
+    await demo.scrollIntoViewIfNeeded();
+    // Measure the DEMO once it has settled, not the spinner: the spinner is
+    // ready first, while x-demo is still mid-build (measured 64px wide with no
+    // code panel yet, then 281px once its shrink-width pass had run).
+    await expect(demo).toHaveAttribute('x-ready', '', { timeout: 15000 });
+    await expect(demo.locator('.x-demo__code')).toBeVisible();
     const box = await demo.boundingBox();
-    expect(box, 'the Spinner x-demo must have a measurable box').not.toBeNull();
+    expect(box, 'the Spinner [x-demo] must have a measurable box').not.toBeNull();
     expect(box!.width).toBeGreaterThan(150);
 
     const codeText = await demo.locator('.x-demo__code').innerText();
+    // The panel shows the authored source, `<div x-spinner`, not a CSS-style
+    // `[x-spinner]` selector -- the text a reader can copy back out.
     expect(codeText, 'code panel text should read as normal wrapped lines, not one character per line').toContain('x-spinner');
   });
 });

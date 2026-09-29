@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="product placeholder">
+  <!-- Local placeholder "product" (#946). Replaces a remote picsum.photos fetch.
+       The art carries a SUBJECT: a card titled "Mountain Vista" should not show
+       water. Cards are matched to art by their own title, not by a hash.
+       Composed in the lower band so a short cover crop keeps the subject, and
+       kept muted so it sits behind the text rather than competing with it.
+       Colours are baked in because an img src renders in its own document and
+       cannot read the page theme tokens. -->
+  <defs>
+    <linearGradient id="w-product" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#404a5c"/><stop offset="100%" stop-color="#252b37"/>
+    </linearGradient>
+    <pattern id="h-product" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#9aa6bd" stroke-width="1" opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#w-product)"/>
+  <rect width="800" height="500" fill="url(#h-product)"/>
+  <rect x="290" y="200" width="220" height="180" rx="14" fill="#9aa6bd" opacity="0.55"/><path d="M290 250 h220" stroke="#9aa6bd" stroke-width="6" opacity="0.5"/><circle cx="400" cy="315" r="34" fill="#9aa6bd" opacity="0.4"/>
+</svg>

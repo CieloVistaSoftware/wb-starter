@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * `--bg-surface` never existed anywhere in src/styles/themes.css (grep
@@ -12,12 +12,12 @@ import { test, expect } from '@playwright/test';
  * every other overlay panel already uses.
  */
 
-test('demos/site/overlays.html: x-drawer panel uses a real theme background, not the dead --bg-surface white fallback', async ({ page }) => {
+test('demos/site/overlays.html: [x-drawer] panel uses a real theme background, not the dead --bg-surface white fallback', async ({ page }) => {
   await page.goto('/demos/site/overlays.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
   await page.waitForTimeout(1000);
 
-  const trigger = page.locator('x-drawer').first();
+  const trigger = page.locator('[x-drawer]').first();
   await trigger.scrollIntoViewIfNeeded();
   await trigger.click();
 

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * demos/site/overlays.html: "not one single dropdown is working" -- three
@@ -30,7 +30,7 @@ async function ready(page) {
 test.describe('demos/site/overlays.html: dropdowns actually work', () => {
   test('every dropdown menu has real, visible items when opened (not an empty sliver)', async ({ page }) => {
     await ready(page);
-    const dropdowns = page.locator('x-dropdown');
+    const dropdowns = page.locator('[x-dropdown]');
     const count = await dropdowns.count();
     expect(count).toBeGreaterThanOrEqual(6);
 
@@ -58,7 +58,7 @@ test.describe('demos/site/overlays.html: dropdowns actually work', () => {
 
   test('bottom-start/bottom-end/top-start/top-end each position the menu distinctly', async ({ page }) => {
     await ready(page);
-    const positioned = page.locator('x-dropdown[position]');
+    const positioned = page.locator('[x-dropdown][position]');
     const count = await positioned.count();
     expect(count).toBeGreaterThanOrEqual(4);
 

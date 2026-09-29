@@ -15,21 +15,30 @@
  * generic rule should never apply to it at all.
  *
  * #448: mdhtml.css's selectors were converted from the `.x-mdhtml` class to
- * the `x-mdhtml` TAG (mdhtml() no longer adds a classList.add('x-mdhtml')
+ * the `[x-mdhtml]` TAG (mdhtml() no longer adds a classList.add('[x-mdhtml]')
  * that just duplicated the tag name) — the specificity property this test
  * guards still holds (tag+tag+:not(.x-pre)'s one class still outranks the
  * single-class `.x-pre--has-line-numbers`), just via a tag selector now.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { ROOT, readFile } from '../base';
 import * as path from 'path';
 
 test('mdhtml.css must not style pre.js-enhanced (.x-pre) code blocks', () => {
   const css = readFile(path.join(ROOT, 'src/styles/behaviors/mdhtml.css'));
-  const preRuleMatch = css.match(/x-mdhtml\s+pre(?!\s*code)[^{]*\{[^}]*padding[^}]*\}/);
-  expect(preRuleMatch, 'expected a x-mdhtml pre rule setting padding').not.toBeNull();
+  // #863: this was a regex LITERAL containing { and } (the CSS rule braces it
+  // matches). The "every test contains at least one expect()" gate finds a test
+  // body by brace-matching the source text, so those regex braces were counted
+  // as real block braces and closed this body early -- truncating it before
+  // both expect()s below and reporting the test as asserting nothing, which it
+  // never did. Built from a string instead: the braces now live inside quotes
+  // the scanner skips. Identical pattern, identical behaviour.
+  const preRuleMatch = css.match(
+    new RegExp('x-mdhtml\\s+pre(?!\\s*code)[^{]*\\{[^}]*padding[^}]*\\}'),
+  );
+  expect(preRuleMatch, 'expected a [x-mdhtml] pre rule setting padding').not.toBeNull();
   expect(
     preRuleMatch![0],
-    'the x-mdhtml pre padding rule must exclude .x-pre (pre.js-enhanced blocks manage their own padding, including extra room for the line-number gutter) — otherwise its higher specificity clobbers .x-pre--has-line-numbers regardless of load order'
+    'the [x-mdhtml] pre padding rule must exclude .x-pre (pre.js-enhanced blocks manage their own padding, including extra room for the line-number gutter) — otherwise its higher specificity clobbers .x-pre--has-line-numbers regardless of load order'
   ).toMatch(/x-mdhtml\s+pre:not\(\.x-pre\)/);
 });

@@ -38,7 +38,7 @@
  * means `<repo>/demos/audio.mp3`.
  *
  * The size floor catches the OTHER half of this bug class: an asset that exists
- * but holds no real content. `demos/image.jpg` and `demos/movie.mp4` are literal
+ * but holds no real content. `images/demo-image.jpg` (was `demos/image.jpg`) and `demos/movie.mp4` are literal
  * 13-byte text files reading "(dummy image)" / "(dummy movie)" -- they pass an
  * existence check and still fail to decode at runtime (audio.js's error message
  * calls out the 0-byte case by name).
@@ -98,7 +98,7 @@ const KNOWN_BROKEN_PENDING_519 = new Set<string>([]);
 
 function docsToCheck(): string[] {
   const files = mdFiles(path.join(ROOT, 'docs'));
-  for (const name of ['README.md', 'CONTRIBUTING.md']) {
+  for (const name of ['README.md', '.github/CONTRIBUTING.md']) {
     const p = path.join(ROOT, name);
     if (fs.existsSync(p)) files.push(p);
   }

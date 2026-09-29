@@ -1,13 +1,13 @@
 /**
  * v3 docs must use PLAIN attributes, not data-* (#222).
  *
- * v3 behaviors read bare attributes (title, variant, size, message, …); the
+ * v3 components read bare attributes (title, variant, size, message, …); the
  * legacy data-* / data-wb syntax is back-compat only and must not appear in
  * documentation examples. This audit scans every markdown file under docs/
  * and demos/, plus CONTRIBUTING.md/README.md at the repo root (the locations
  * #222 called out), and fails with the full list of offenders.
  *
- * Genuinely-legitimate data-* (not WB behavior conventions) are allowlisted:
+ * Genuinely-legitimate data-* (not WB component conventions) are allowlisted:
  *  - data-theme       — the theme system attribute on <html>
  *  - data-page        — SPA route marker
  *  - data-code-width  — <div x-demo>'s code-panel width preset. Verified (#553)
@@ -22,7 +22,7 @@
  *    attribute; rewriting them to `code-width` would document one that
  *    silently does nothing.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -46,7 +46,7 @@ test('docs use plain v3 attributes, not data-* (audit)', () => {
   const files = [
     ...mdFiles(path.join(ROOT, 'docs')),
     ...mdFiles(path.join(ROOT, 'demos')),
-    ...['CONTRIBUTING.md', 'README.md']
+    ...['.github/CONTRIBUTING.md', 'README.md']
       .map((f) => path.join(ROOT, f))
       .filter((f) => fs.existsSync(f)),
   ];

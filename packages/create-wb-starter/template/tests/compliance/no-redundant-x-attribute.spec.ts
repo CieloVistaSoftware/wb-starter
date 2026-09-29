@@ -31,7 +31,7 @@
  *     that name no behavior.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join, relative, extname } from 'path';
 
@@ -111,7 +111,6 @@ test.describe('No redundant x-{behavior} attribute', () => {
       ...walk(join(root, 'demos'), ['.html']),
       ...walk(join(root, 'docs'), ['.md']),
       join(root, 'index.html'),
-      join(root, 'project-index.html'),
     ];
 
     const failures: string[] = [];
@@ -138,8 +137,28 @@ test.describe('No redundant x-{behavior} attribute', () => {
     // The file-reading test above is structurally blind to this: the showcase
     // builds these in the browser at render time. That is exactly how
     // <figure x-figure> survived 3.0.70 and reached John (#753).
-    await page.goto('/pages/behaviors.html');
-    await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 15000 });
+    // The ROUTED url, not /pages/behaviors.html. That fragment's first script is
+    // `location.replace('?page=behaviors')` — opened directly it redirects
+    // immediately, so waiting for WB.behaviors can succeed on the document that
+    // is about to be replaced, and the evaluate then runs on a fresh page where
+    // the generator is not defined yet. The sweep found 0 behaviors and this
+    // test failed on its own vacuity guard, which is the guard working.
+    await page.goto('/?page=behaviors');
+    // Wait for the generator ITSELF, not for a sibling global: it is what the
+    // sweep calls, and it is the last of the two to appear.
+    await page.waitForFunction(
+      () => typeof (window as any).__wbGeneratedExample === 'function'
+        && Object.keys((window as any).WB?.behaviors ?? {}).length > 0,
+      null,
+      { timeout: 30000 },
+    );
+    // The generator is defined at parse time, but the tag->behavior map it
+    // consults arrives by a later dynamic import. Sweeping before then asks
+    // it about an empty map -- every native host looks attribute-driven. The
+    // browse list renders from that same import, so its rows mean the map is
+    // in. (The `null` above matters too: without it the options object was
+    // taken as the function ARGUMENT and the 30s timeout never applied.)
+    await expect(page.locator('#behaviors-search-results > *').first()).toBeAttached({ timeout: 30000 });
 
     const rendered: string[] = await page.evaluate(() => {
       // Call the generator directly rather than clicking every row: rows

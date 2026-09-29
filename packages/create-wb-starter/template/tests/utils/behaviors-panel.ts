@@ -15,9 +15,17 @@
  * Everything here reads from inside `#behaviors-live-example` for that reason —
  * the rendered example, never a list row.
  */
-import { expect, Page, Locator } from '@playwright/test';
+import { expect, Page, Locator } from '../fixtures/offline';
 
 export const EXAMPLE_ROOT = '#behaviors-live-example';
+
+// A row is matched by its LABEL as well as its browse token. #764 split every
+// behavior with a native host into two forms: the semantic row is labelled by
+// the element (`button`) while its data-browse-token stays the x- attribute
+// (`x-button`). Matching the token alone meant `openBehaviorsPanel(page,
+// 'button')` -- the native <button> this driver's first caller exists to test --
+// waited 30s for a row that no longer carries that token.
+
 
 /** Load the showcase and filter the list to one behavior. */
 export async function openBehaviorsPanel(page: Page, token: string): Promise<void> {
@@ -26,7 +34,7 @@ export async function openBehaviorsPanel(page: Page, token: string): Promise<voi
   await page.fill('#behaviors-search', token);
   await page.waitForFunction(
     (t) => [...document.querySelectorAll('.behaviors-search-results__row')]
-      .some((r) => r.getAttribute('data-browse-token') === t),
+      .some((r) => (r.getAttribute('data-label') === t || r.getAttribute('data-browse-token') === t)),
     token,
     { timeout: 30000 },
   );
@@ -36,7 +44,7 @@ export async function openBehaviorsPanel(page: Page, token: string): Promise<voi
 export async function variantsOf(page: Page, token: string): Promise<string[]> {
   return page.evaluate((t) =>
     [...document.querySelectorAll('.behaviors-search-results__row')]
-      .filter((r) => r.getAttribute('data-browse-token') === t)
+      .filter((r) => (r.getAttribute('data-label') === t || r.getAttribute('data-browse-token') === t))
       .map((r) => r.getAttribute('data-variant') || ''),
     token,
   );
@@ -47,14 +55,17 @@ export async function variantsOf(page: Page, token: string): Promise<string[]> {
  * Throws if that behavior has no such variant row, rather than silently
  * measuring whatever happened to be on screen.
  */
-export async function renderVariant(page: Page, token: string, variant: string): Promise<void> {
+// `variant` is null for a behavior with a single, variant-less row (x-accordion,
+// x-timeline): its row carries no data-variant at all, and getAttribute() reads
+// that as null, so null is what matches it.
+export async function renderVariant(page: Page, token: string, variant: string | null): Promise<void> {
   // Wait for THIS row, not just any row for the token: openBehaviorsPanel
   // returns as soon as one match exists, and the list is still filling in.
   // Without this the first variant asked for could be missing purely because it
   // had not rendered yet -- which read as "no such variant" and was wrong.
   await page.waitForFunction(
     ({ t, v }) => [...document.querySelectorAll('.behaviors-search-results__row')]
-      .some((r) => r.getAttribute('data-browse-token') === t
+      .some((r) => (r.getAttribute('data-label') === t || r.getAttribute('data-browse-token') === t)
                 && r.getAttribute('data-variant') === v),
     { t: token, v: variant },
     { timeout: 15000 },
@@ -62,7 +73,7 @@ export async function renderVariant(page: Page, token: string, variant: string):
 
   const picked = await page.evaluate(({ t, v }) => {
     const row = [...document.querySelectorAll('.behaviors-search-results__row')]
-      .find((r) => r.getAttribute('data-browse-token') === t
+      .find((r) => (r.getAttribute('data-label') === t || r.getAttribute('data-browse-token') === t)
                 && r.getAttribute('data-variant') === v) as HTMLElement | undefined;
     if (!row) return false;
     row.click();

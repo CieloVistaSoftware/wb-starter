@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('theme exposes critical CSS variables (dark mode fallbacks)', async ({ page }) => {
   await page.goto('/pages/offshoring.html');

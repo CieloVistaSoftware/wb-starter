@@ -46,14 +46,14 @@ export const EXAMPLES = {
 
   'x-cardexpandable': `<article x-cardexpandable
   title="What changed in 3.0"
-  content="Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through."
+  content="Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through."
   lines="2"></article>`,
 
   'x-cardfile': `<article x-cardfile filename="quarterly-report.pdf" file-type="pdf" size="2.4 MB" date="2026-08-14" href="#"></article>`,
 
   'x-cardhero': `<section x-cardhero
   pretitle="Release 3.0"
-  title="Zero build. Real behaviors."
+  title="Zero build. Real components."
   subtitle="Light DOM, no shadow boundaries, no class hierarchy."
   cta="Read the guide"
   cta-href="#"
@@ -134,7 +134,7 @@ export const EXAMPLES = {
   src="/demos/sample.mp4"
   poster="${img('screening', 480, 270)}"
   title="Behaviors in 90 seconds"
-  description="What replaced the behavior base class, and why."></article>`,
+  description="What replaced the component base class, and why."></article>`,
 
   'x-fix-card': `<article x-fix-card title="Pinned note" content="This card keeps its place while the rest of the page scrolls."></article>`,
 
@@ -151,8 +151,7 @@ export const EXAMPLES = {
 
   'x-skeleton': `<div x-skeleton variant="text" lines="3" animated></div>`,
 
-  'x-progress': `<progress x-progress value="72" max="100" label="Uploading footage" show-value></progress>`,
-  'x-progressbar': `<progress x-progressbar value="72" max="100" label="Uploading footage" show-value></progress>`,
+  'x-progress': `<progress value="72" max="100" label="Uploading footage" show-value></progress>`,
 
   'x-rating': `<div x-rating value="4" max="5" half></div>`,
 
@@ -175,7 +174,9 @@ export const EXAMPLES = {
 
   'x-dialog': `<button x-dialog title="Delete branch?" content="fix/706-dropdown will be removed. This cannot be undone." size="md">Delete branch…</button>`,
 
-  'x-drawer': `<button x-drawer title="Filters" content="Status, owner, label and date range live here." position="end" width="320px">Open filters</button>`,
+  // position is left/right/top/bottom (drawer.schema.json). "end" matched no
+  // .x-drawer--{position} rule, so this panel opened with no edge at all.
+  'x-drawer': `<button x-drawer title="Filters" content="Status, owner, label and date range live here." position="right" width="320px">Open filters</button>`,
 
   'x-accordion': `<div x-accordion>
   <details summary="How do behaviors attach?"><p>WB scans for x-* attributes and calls the matching behavior function on the element, in place.</p></details>
@@ -308,11 +309,13 @@ export const EXAMPLES = {
 
   'x-mark': `<p>Search matched <mark x-mark>light DOM</mark> in 12 documents.</p>`,
 
-  'x-truncate': `<p x-truncate lines="2">Composition replaced inheritance in 3.0: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through, so everything stays styleable and queryable.</p>`,
+  'x-truncate': `<p x-truncate lines="2">Composition replaced inheritance in 3.0: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through, so everything stays styleable and queryable.</p>`,
 
-  'x-typewriter': `<p x-typewriter speed="45">Zero build. Real behaviors. Light DOM only.</p>`,
+  'x-typewriter': `<p x-typewriter speed="45">Zero build. Real components. Light DOM only.</p>`,
 
-  'x-mdhtml': `<div x-mdhtml src="/docs/behaviors/dropdown.md"></div>`,
+  // Relative, not "/docs/...": the deployed site lives under /wb-starter/, where a
+  // root-absolute path 404s (assets-resolve-under-a-subpath, error-log-empty).
+  'x-mdhtml': `<div x-mdhtml src="docs/behaviors/dropdown.md"></div>`,
 
   'x-notes': `<aside x-notes position="end" default-width="280px">
   <p>Notes stay pinned beside the content while you scroll.</p>
@@ -354,7 +357,7 @@ export const EXAMPLES = {
 
   'x-relativetime': `<time x-relativetime datetime="2026-08-20T09:15:00Z"></time>`,
 
-  'x-share': `<button x-share title="wb-starter" text="Zero build. Real behaviors." url="https://github.com/CieloVistaSoftware/wb-starter">Share</button>`,
+  'x-share': `<button x-share title="wb-starter" text="Zero build. Real components." url="https://github.com/CieloVistaSoftware/wb-starter">Share</button>`,
 
   'x-print': `<button x-print>Print this page</button>`,
 
@@ -379,11 +382,6 @@ export const EXAMPLES = {
   'x-codecontrol': `<div x-codecontrol></div>`,
 
   // ── Positional / motion ────────────────────────────────────────────────────
-  'x-article': `<article x-article title="Ridge loop, 8km" subtitle="Moderate · 3h" author="Ada Lovelace" date="2026-08-20" category="Trails">
-  The north gate is open and the creek crossing is dry. Parking fills by 9am on
-  weekends — the overflow lot adds about ten minutes on foot.
-</article>`,
-
   'x-articles': `<section x-articles layout="grid" columns="2" limit="4">
   <article title="Ridge loop, 8km">Moderate, three hours, dry crossing.</article>
   <article title="Harbour wall at dawn">Flat, two hours, best before the fog lifts.</article>

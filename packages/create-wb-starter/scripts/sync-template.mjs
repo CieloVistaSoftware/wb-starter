@@ -26,8 +26,10 @@ const DIRS = [
 ];
 
 const FILES = [
-  'index.html', 'project-index.html', 'server.js', 'manifest.json',
-  'favicon.png', 'favicon.svg', 'sw.js', '.gitignore', 'LICENSE',
+  // The favicons live in assets/icons/ (copied with assets/), and
+  // project-index.html was archived (2026-09-29): one .html file at the root.
+  'index.html', 'server.js', 'manifest.json',
+  'sw.js', '.gitignore', 'LICENSE',
   'playwright.config.ts', 'eslint.config.js', 'global.d.ts',
 ];
 

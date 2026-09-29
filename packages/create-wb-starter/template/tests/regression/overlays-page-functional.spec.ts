@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * demos/site/overlays.html had NO test coverage of its actual functionality
@@ -18,12 +18,12 @@ import { test, expect } from '@playwright/test';
  * Root cause found and fixed here: src/core/wb-lazy.js maintained its own
  * SEPARATE tag->behavior table (customElementMappings), independent of
  * src/core/tag-map.js used by the full SPA. That table mapped
- * 'x-drawer' -> 'drawerLayout' (an unrelated collapsible-sidebar behavior)
+ * '[x-drawer]' -> 'drawerLayout' (an unrelated collapsible-sidebar behavior)
  * instead of 'drawer' (the actual trigger+overlay behavior every demo here
  * uses) -- confirmed live via computed classList showing BOTH
  * x-drawer-trigger AND x-drawer-layout classes (the array-based mapping
  * table let both entries match and both behaviors ran on the same element).
- * Fixed by removing the stale 'x-drawer': 'drawerLayout' entry so the tag
+ * Fixed by removing the stale '[x-drawer]': 'drawerLayout' entry so the tag
  * resolves only via the correct, already-shared tag-map.js mapping.
  */
 
@@ -38,8 +38,8 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     await ready(page);
   });
 
-  test('x-drawer trigger opens a real fixed-position panel, not a collapsible sidebar', async ({ page }) => {
-    const trigger = page.locator('x-drawer').first();
+  test('[x-drawer] trigger opens a real fixed-position panel, not a collapsible sidebar', async ({ page }) => {
+    const trigger = page.locator('[x-drawer]').first();
     await expect(trigger).toBeVisible();
     // The bug this guards: the trigger used to carry BOTH the correct
     // x-drawer-trigger class AND the wrong x-drawer-layout class.
@@ -56,8 +56,10 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     expect(position).toBe('fixed');
   });
 
-  test('x-dialog trigger opens a real dialog with its own title/content', async ({ page }) => {
-    const trigger = page.locator('x-dialog').first();
+  test('.x-dialog trigger opens a real dialog with its own title/content', async ({ page }) => {
+    // #448: a <dialog> acting as its own trigger carries .x-dialog-trigger,
+    // not .x-dialog (that class is the popped-open dialog box).
+    const trigger = page.locator('.x-dialog-trigger').first();
     await expect(trigger).toBeVisible();
     await trigger.click();
     const dialog = page.locator('dialog[open]').first();
@@ -65,14 +67,14 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     await expect(dialog).toContainText('Basic Dialog');
   });
 
-  test('x-dropdown trigger opens its menu on click', async ({ page }) => {
-    const trigger = page.locator('x-dropdown').first();
+  test('[x-dropdown] trigger opens its menu on click', async ({ page }) => {
+    const trigger = page.locator('[x-dropdown]').first();
     await expect(trigger).toBeVisible();
     await trigger.click();
     // dropdown() builds a .x-dropdown__menu (or similar) child -- accept any
     // newly-visible descendant popup rather than over-specifying the class.
     const opened = await page.evaluate(() => {
-      const dd = document.querySelector('x-dropdown');
+      const dd = document.querySelector('[x-dropdown]');
       if (!dd) return false;
       return Array.from(dd.querySelectorAll('*')).some((el) => {
         const cs = getComputedStyle(el);
@@ -90,16 +92,25 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
   // "not merely that the element renders").
   // ─────────────────────────────────────────────────────────────────────
 
-  test('every x-dialog trigger on the page opens with real content', async ({ page }) => {
+  test('every .x-dialog trigger on the page opens with real content', async ({ page }) => {
     // Only the "Basic Dialog" section's 4 triggers have distinct titles;
     // the size/variant-variant sections intentionally reuse the generic
     // default title (their point is demonstrating size/variant, not title
     // uniqueness) -- so assert every trigger opens with SOME real content,
     // and separately assert the Basic Dialog section specifically is
     // all-distinct (that's the section whose markup actually varies title).
-    const triggers = page.locator('x-dialog');
+    // The authored <dialog>s, not a class: the lazy runtime (#491) only builds
+    // a trigger as it nears the viewport, so counting .x-dialog-trigger up
+    // front would count only the ones already built. Each is scrolled to below.
+    //
+    // They are <button x-dialog> now. They were generated as bare <dialog>
+    // elements (the tag-to-attribute migration's reading of <x-dialog>), which
+    // the UA hides until opened and dialog.js enhances as the dialog itself,
+    // never as a trigger -- so every one rendered as nothing to click and this
+    // test timed out. scripts/generate-site.mjs now emits the trigger form.
+    const triggers = page.locator('section[id^="dialog-"] [x-dialog]');
     const count = await triggers.count();
-    expect(count, 'expected multiple x-dialog triggers on this page').toBeGreaterThan(1);
+    expect(count, 'expected multiple .x-dialog triggers on this page').toBeGreaterThan(1);
 
     for (let i = 0; i < count; i++) {
       const trigger = triggers.nth(i);
@@ -113,10 +124,11 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
       await expect(dialog).not.toBeVisible({ timeout: 3000 }).catch(() => {});
     }
 
-    const basicSection = page.locator('#dialog-dialog x-dialog');
+    const basicSection = page.locator('#dialog-dialog [x-dialog]');
     const basicCount = await basicSection.count();
     const basicTexts = new Set<string>();
     for (let i = 0; i < basicCount; i++) {
+      await basicSection.nth(i).scrollIntoViewIfNeeded();
       await basicSection.nth(i).click();
       const dialog = page.locator('dialog[open]').first();
       await expect(dialog).toBeVisible({ timeout: 5000 });
@@ -131,7 +143,7 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     // The "size variants" section triggers are unlabeled ("size=sm" etc as
     // their own text) -- select them by that section's own scope.
     const section = page.locator('#dialog-size-variants');
-    const triggers = section.locator('x-dialog');
+    const triggers = section.locator('[x-dialog]');
     const count = await triggers.count();
     expect(count).toBeGreaterThanOrEqual(5);
 
@@ -150,9 +162,9 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
     expect(new Set(widths).size, `expected ${count} distinct dialog widths across size variants, got: ${JSON.stringify(widths)}`).toBeGreaterThan(1);
   });
 
-  test('every x-drawer trigger opens its own panel with matching position', async ({ page }) => {
+  test('every [x-drawer] trigger opens its own panel with matching position', async ({ page }) => {
     const section = page.locator('#drawer-position-variants');
-    const triggers = section.locator('x-drawer');
+    const triggers = section.locator('[x-drawer]');
     const count = await triggers.count();
     expect(count).toBeGreaterThanOrEqual(4);
 
@@ -173,14 +185,18 @@ test.describe('demos/site/overlays.html: triggers actually open their overlay', 
         return last ? last.getBoundingClientRect() : null;
       });
       expect(panelRect, `trigger[${i}] (position=${expectedPosition}) should open a panel`).not.toBeNull();
-      // Close it (click its own close button if present, else re-click trigger to toggle).
-      const closeBtn = page.locator('body > div button', { hasText: '×' }).last();
-      if (await closeBtn.count()) await closeBtn.click().catch(() => {});
+      // Close it before the next trigger: an open panel covers the page and
+      // intercepts the next click. drawer() builds every trigger's panel up
+      // front (all in <body>, closed ones off-screen), so the LAST `×` in the
+      // body is some other, closed panel's -- close the one that is open.
+      const closeBtn = page.locator('.x-drawer__panel--open .x-drawer__close');
+      if (await closeBtn.count()) await closeBtn.first().click();
+      await expect(page.locator('.x-drawer__panel--open')).toHaveCount(0);
     }
   });
 
-  test('every x-dropdown trigger on the page opens something, not just the first', async ({ page }) => {
-    const triggers = page.locator('x-dropdown');
+  test('every [x-dropdown] trigger on the page opens something, not just the first', async ({ page }) => {
+    const triggers = page.locator('[x-dropdown]');
     const count = await triggers.count();
     expect(count).toBeGreaterThan(1);
 

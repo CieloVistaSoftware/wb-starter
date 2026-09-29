@@ -7,7 +7,7 @@
  *   - Current: fixes as array with id, fix (string), filesChanged
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readJson, DATA_FILES } from '../base';
 
 test.describe('Fix Data Integrity', () => {

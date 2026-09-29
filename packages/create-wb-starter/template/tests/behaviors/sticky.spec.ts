@@ -2,13 +2,13 @@
  * Sticky Behavior Tests
  * Tests for the sticky menu/element behavior
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Sticky Behavior', () => {
   
   test.beforeEach(async ({ page }) => {
     // Navigate to a test page that loads WB properly
-    await page.goto('http://localhost:3000/demos/autoinject.html');
+    await page.goto('/demos/autoinject.html');
     
     // Inject our test content into the page with existing WB init
     await page.evaluate(() => {
@@ -39,7 +39,7 @@ test.describe('Sticky Behavior', () => {
     await page.waitForTimeout(200);
   });
 
-  test('adds x-sticky class on init', async ({ page }) => {
+  test('adds [x-sticky] class on init', async ({ page }) => {
     const nav = page.locator('#stickyNav');
     await expect(nav).toHaveClass(/x-sticky/);
   });
@@ -116,9 +116,10 @@ test.describe('Sticky Behavior', () => {
     await page.evaluate(() => window.scrollTo(0, 200));
     await page.waitForTimeout(100);
     
-    // Check top position is 50px
+    // Check top position is 50px. Computed, not el.style: #779 moved the
+    // stuck geometry off the style attribute into a generated rule.
     const nav = page.locator('#stickyNav');
-    const top = await nav.evaluate(el => el.style.top);
+    const top = await nav.evaluate(el => getComputedStyle(el).top);
     expect(top).toBe('50px');
   });
 

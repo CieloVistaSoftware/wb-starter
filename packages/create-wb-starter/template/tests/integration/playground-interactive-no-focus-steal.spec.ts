@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Clicking a preview element normally jumps the HTML textarea to that
@@ -16,10 +16,12 @@ test.describe('playground: interactive examples do not steal textarea focus', ()
   test('clicking an x-ripple button does not move the textarea selection', async ({ page }) => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
     await page.selectOption('#pg-examples', 'xbehaviors');
-    await page.waitForFunction(() => {
-      const btn = document.querySelector('#pg-preview button[x-ripple]');
-      return !!btn && btn.classList.contains('x-ripple');
-    }, { timeout: 15000 });
+    // Wait on the behavior's own settled signal. The old check was
+    // classList.contains('[x-ripple]') -- a class literally named "[x-ripple]",
+    // which nothing has ever added, so the wait could only time out.
+    const ripple = page.locator('#pg-preview button[x-ripple]').first();
+    await ripple.scrollIntoViewIfNeeded();
+    await expect(ripple).toHaveAttribute('x-ready', '', { timeout: 15000 });
 
     await page.locator('#pg-input').evaluate((el: HTMLTextAreaElement) => {
       el.focus();
@@ -27,7 +29,7 @@ test.describe('playground: interactive examples do not steal textarea focus', ()
       el.scrollTop = 0;
     });
 
-    await page.locator('#pg-preview button[x-ripple]').first().click();
+    await ripple.click();
 
     const sel = await page.locator('#pg-input').evaluate((el: HTMLTextAreaElement) => ({
       start: el.selectionStart,
@@ -42,9 +44,13 @@ test.describe('playground: interactive examples do not steal textarea focus', ()
   test('clicking a plain (non-interactive) card example still jumps to its source', async ({ page }) => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
     await page.selectOption('#pg-examples', 'cards');
-    await page.waitForFunction(() => document.querySelectorAll('#pg-preview x-card').length > 0, { timeout: 15000 });
+    // By tag: an <article> IS the card, and cards stopped carrying the .x-card
+    // class in a8a7362e, so `.x-card` matched nothing and the wait timed out.
+    const card = page.locator('#pg-preview > article').first();
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toHaveAttribute('x-ready', '', { timeout: 15000 });
 
-    await page.locator('#pg-preview x-card').first().click();
+    await card.click();
 
     const sel = await page.locator('#pg-input').evaluate((el: HTMLTextAreaElement) => ({
       hasSelection: el.selectionEnd > el.selectionStart,

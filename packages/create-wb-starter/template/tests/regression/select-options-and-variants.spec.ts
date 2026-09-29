@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * #681 — <select> must honour its schema and render real options.

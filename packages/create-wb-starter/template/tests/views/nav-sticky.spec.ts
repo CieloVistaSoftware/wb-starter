@@ -3,9 +3,9 @@
  * the menu always shows it at the user's current location), and the page must use
  * a SINGLE scroll container (.site__body) — not also scroll the window.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 
 test.describe('Side nav stays at the current scroll location', () => {
   test('nav is sticky and pinned while .site__body scrolls', async ({ page }) => {

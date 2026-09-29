@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 /**
  * Two related "text clipped near a card edge" bugs found live on
@@ -29,10 +30,19 @@ test('demos/site/cards.html: card header is never clamped below its own content 
   await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
-  const card = page.locator('x-card').first();
+  // Cards no longer carry .x-card / .x-card__header / .x-card__subtitle
+  // (a8a7362e): the first card on the page is the curated gallery's base
+  // <article>, and its parts are its <header> and the header's <p>. The page
+  // runs the lazy runtime (#491), so bring it into view and let it build.
+  const card = page.locator('#card-gallery article').first();
+  await buildInView(card);
   await expect(card).toBeVisible({ timeout: 10000 });
-  const header = card.locator('.x-card__header');
-  await expect(header).toHaveClass(/x-header/); // confirms the collision still exists -- CSS must override it
+  const header = card.locator(':scope > header');
+  // The page-level header behavior must not claim a card's own header at all
+  // (component-landmark.js). This used to assert the collision still EXISTED
+  // and that CSS papered over it; on the lazy runtime nothing did, and
+  // .x-header's padding stacked a 26px gap under the subtitle.
+  await expect(header).not.toHaveClass(/x-header/);
 
   const { offsetHeight, scrollHeight } = await header.evaluate((el) => ({
     offsetHeight: el.offsetHeight,
@@ -40,10 +50,8 @@ test('demos/site/cards.html: card header is never clamped below its own content 
   }));
   expect(offsetHeight, 'header must be tall enough to fit its own content, not clamped by .x-header').toBeGreaterThanOrEqual(scrollHeight);
 
-  const subtitle = card.locator('.x-card__subtitle').first();
-  const gap = await page.evaluate(() => {
-    const h = document.querySelector('x-card .x-card__header')!;
-    const s = document.querySelector('x-card .x-card__subtitle')!;
+  const gap = await header.evaluate((h) => {
+    const s = h.querySelector(':scope > p')!;
     return h.getBoundingClientRect().bottom - s.getBoundingClientRect().bottom;
   });
   // Exactly ~0.5rem (8px), not just "at least" -- the header's own
@@ -55,17 +63,17 @@ test('demos/site/cards.html: card header is never clamped below its own content 
   expect(gap, 'subtitle-to-header-border gap must be ~0.5rem (8px), not stacked with header padding').toBeLessThanOrEqual(11);
 });
 
-test('demos/site/cards.html: x-cardprofile role badge clears the card\'s rounded corner', async ({ page }) => {
+test('demos/site/cards.html: [x-cardprofile] role badge clears the card\'s rounded corner', async ({ page }) => {
   await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
-  const profileCard = page.locator('x-cardprofile').first();
+  const profileCard = page.locator('[x-cardprofile]').first();
   await expect(profileCard).toBeVisible({ timeout: 10000 });
   const badge = profileCard.locator('.x-card__role');
   await expect(badge).toBeVisible();
 
   const { badgeTopWithinCover, cardBorderRadiusPx } = await page.evaluate(() => {
-    const card = document.querySelector('x-cardprofile')!;
+    const card = document.querySelector('[x-cardprofile]')!;
     const cover = card.querySelector('.x-card__cover')!;
     const badge = card.querySelector('.x-card__role')!;
     const coverRect = cover.getBoundingClientRect();

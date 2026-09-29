@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * Badge design system (John: "we need a badge design system this is too
@@ -8,8 +8,8 @@ import { test, expect, Page } from '@playwright/test';
  * hardcoded colors) and plain attributes (Law 11: no data-*).
  *
  * Same injection pattern as card-typed-variants-no-op.spec.ts: inject into
- * /demos/test-harness.html, run WB.scan(), poll for the base class before
- * asserting computed style — WB.scan()'s non-eager path defers wb-* elements
+ * /demos/test-harness.html, run await WB.scan(), poll for the base class before
+ * asserting computed style — await WB.scan()'s non-eager path defers wb-* elements
  * to an IntersectionObserver, so a fixed-instant check would be flaky.
  */
 

@@ -1,16 +1,21 @@
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, Page, Locator } from '../fixtures/offline';
+import { demoWidthsSettled } from '../base';
 
 /**
- * docs/behaviors/cards/cardhorizontal.md: John asked for unit tests on
+ * docs/behaviors/cardhorizontal.md: John asked for unit tests on
  * every live demo rendered on this doc page
- * (public/doc-viewer.html?file=docs%2Fcomponents%2Fcards%2Fcardhorizontal.md).
- * mdhtml.js's auto-live-render promotes the doc's one hand-authored
- * <div x-demo> block plus its four ```html fenced examples ("Basic Horizontal
- * Card", "Image on Left (explicit)", "Image on Right", "Custom Image
- * Width") into five live <div x-cardhorizontal> instances (the doc's final
- * fenced block, "Generated Structure", stays plain text -- it's
- * native-tag-only markup with no wb- or x- attribute, so mdhtml's
- * isRenderable check correctly leaves it alone).
+ * (public/doc-viewer.html?file=docs%2Fbehaviors%2Fcardhorizontal.md).
+ *
+ * The doc was rewritten (4e36ea09/adacd650) around <div x-demo> blocks -- its
+ * old ```html fences are gone, and card docs must not hide executable markup
+ * in a static fence (#419). The rewrite kept only the Usage demo and dropped
+ * the ones that showed image-position and image-width working, so the two
+ * attributes the page exists to explain had no example. Five demos again, one
+ * per claim: the default layout, authored body text, image-position="left"
+ * written explicitly, image-position="right", and image-width="60%".
+ *
+ * The card names its title and subtitle by tag (a8a7362e): the content
+ * column's <h3> and <p>, not .x-card__title/.x-card__subtitle.
  *
  * Two real bugs were found and fixed while writing/running these tests
  * (confirmed live via console/computed-style inspection on the actual
@@ -33,14 +38,14 @@ import { test, expect, Page, Locator } from '@playwright/test';
  *    figure measured ~40% (the default) instead of 60%. Fixed to
  *    kebab-case (`image-position`, `image-width`) site-wide in this doc.
  *
- * Separately (not a docs issue -- a real behavior gap): cardhorizontal()'s
+ * Separately (not a docs issue -- a real component gap): cardhorizontal()'s
  * <img> had no 'error' handler at all, so a broken image src rendered as a
  * silent broken-image icon with zero console/error-log signal. See
  * tests/regression/x-cardhorizontal-image-error-on-broken-src.spec.ts for
  * the fix + dedicated regression coverage of that behavior.
  */
 
-const DOC_FILE = 'docs/behaviors/cards/cardhorizontal.md';
+const DOC_FILE = 'docs/behaviors/cardhorizontal.md';
 const DOC_URL = `/public/doc-viewer.html?file=${encodeURIComponent(DOC_FILE)}`;
 const EXPECTED_DEMO_COUNT = 5;
 
@@ -50,12 +55,18 @@ async function gotoDoc(page: Page): Promise<void> {
     const t = document.getElementById('content')?.innerText || '';
     return t.length > 200 && !t.includes('Loading documentation');
   }, { timeout: 15000 });
-  const cards = page.locator('x-cardhorizontal');
+  const cards = page.locator('[x-cardhorizontal]');
   await expect(cards).toHaveCount(EXPECTED_DEMO_COUNT, { timeout: 15000 });
   // Let shrink-to-fit's rAF-scheduled code-panel measurement settle (same
   // wait used by doc-viewer-code-panel-not-narrow.spec.ts for this exact
   // demo.js code path).
   await page.waitForTimeout(500);
+  // ...and then until every demo has COMMITTED its width. Until it does,
+  // demo.css caps the code panel at 50vw, and demos 2-4 have a card wider
+  // than that (~800px at 1280): read inside the 500ms above -- the photo not
+  // yet decoded, so nothing committed -- demo 2 was "649px of content in a
+  // 640px box", a frame the reader never settles on.
+  await demoWidthsSettled(page);
 }
 
 // Real, external picsum.photos requests -- give the network a real chance
@@ -78,6 +89,10 @@ async function isImageLoaded(img: Locator): Promise<boolean> {
 /** Standard §6: the demo's code panel(s) must never wrap and must show
  * their full source (no artificial narrowing forcing a scrollbar). */
 async function assertCodePanelStandards(demo: Locator, label: string): Promise<void> {
+  // Read only once demo.js has committed the block's width: while it holds
+  // .x-demo--measuring the panel is capped at 50vw (640px at 1280), and the
+  // loaded pre-commit gate read "649px of content in a 640px box" mid-measure.
+  await expect(demo).not.toHaveClass(/x-demo--measuring/);
   const panels = demo.locator('.x-demo__code');
   const count = await panels.count();
   expect(count, `${label}: expected a code panel`).toBeGreaterThan(0);
@@ -122,121 +137,112 @@ async function assertNoPageHorizontalScroll(page: Page, label: string): Promise<
   expect(overflow, `${label}: page must not have horizontal overflow`).toBe(false);
 }
 
-test.describe('docs/behaviors/cards/cardhorizontal.md live demos (doc-viewer)', () => {
+/** One demo on the page: its card, its x-demo block, and a label for messages. */
+function demoAt(page: Page, n: number, what: string) {
+  return {
+    label: `demo ${n + 1} (${what})`,
+    card: page.locator('[x-cardhorizontal]').nth(n),
+    demo: page.locator('[x-demo]').nth(n),
+  };
+}
+
+async function assertText(card: Locator, label: string, title: string, subtitle: string, body?: string) {
+  await expect(card.locator('.x-card__horizontal-content > h3'), `${label}: title`).toHaveText(title);
+  await expect(card.locator('.x-card__horizontal-content > p'), `${label}: subtitle`).toHaveText(subtitle);
+  if (body) await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText(body);
+}
+
+async function assertImageLoads(card: Locator, label: string) {
+  const img = card.locator('.x-card__figure img');
+  await expect(img, `${label}: image element`).toHaveCount(1);
+  expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
+}
+
+const flexDirection = (card: Locator) => card.evaluate((el) => getComputedStyle(el).flexDirection);
+
+test.describe('docs/behaviors/cardhorizontal.md live demos (doc-viewer)', () => {
   test('demo 1 -- <div x-demo> block (Overview): Basic Horizontal Card renders correctly', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 1 (x-demo block)';
-    const card = page.locator('x-cardhorizontal').nth(0);
-    const demo = page.locator('x-demo').nth(0);
+    const { label, card, demo } = demoAt(page, 0, 'Usage');
 
-    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Feature Title');
-    await expect(card.locator('.x-card__subtitle'), `${label}: subtitle`).toHaveText('Feature description');
-    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Detailed content here.');
-
-    const img = card.locator('.x-card__figure img');
-    await expect(img, `${label}: image element`).toHaveCount(1);
-    expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
+    await assertText(card, label, 'Ridge loop, 8km', 'Moderate · 3h');
+    await assertImageLoads(card, label);
 
     // Default image-position="left": figure precedes content in DOM/flex order.
-    const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
-    expect(flexDirection, `${label}: default image-position should render image on the left (row)`).toBe('row');
+    expect(await flexDirection(card), `${label}: default image-position should render image on the left (row)`).toBe('row');
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);
     await assertNoPageHorizontalScroll(page, label);
   });
 
-  test('demo 2 -- "Basic Horizontal Card" fenced example renders correctly', async ({ page }) => {
+  test('demo 2 -- authored body text renders under the title', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 2 (Basic Horizontal Card)';
-    const card = page.locator('x-cardhorizontal').nth(1);
-    const demo = page.locator('x-demo').nth(1);
+    const { label, card, demo } = demoAt(page, 1, 'authored body');
 
-    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Feature Title');
-    await expect(card.locator('.x-card__subtitle'), `${label}: subtitle`).toHaveText('Feature description');
-    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Detailed content here.');
-
-    const img = card.locator('.x-card__figure img');
-    await expect(img, `${label}: image element`).toHaveCount(1);
-    expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
-
-    const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
-    expect(flexDirection, `${label}: default image-position should render image on the left (row)`).toBe('row');
+    await assertText(card, label, 'Summit push, 14km', 'Hard · 6h', 'The last kilometre is exposed scree');
+    await assertImageLoads(card, label);
+    expect(await flexDirection(card), `${label}: default image-position should render image on the left (row)`).toBe('row');
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);
     await assertNoPageHorizontalScroll(page, label);
   });
 
-  test('demo 3 -- "Image on Left (explicit)" fenced example: image renders on the left', async ({ page }) => {
+  test('demo 3 -- image-position="left" (explicit): image renders on the left', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 3 (Image on Left, explicit)';
-    const card = page.locator('x-cardhorizontal').nth(2);
-    const demo = page.locator('x-demo').nth(2);
+    const { label, card, demo } = demoAt(page, 2, 'image-position="left"');
 
-    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Left Image');
-    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Content appears on the right.');
+    await assertText(card, label, 'Harbour walk, 3km', 'Easy · 1h', 'Flat all the way');
+    await assertImageLoads(card, label);
 
-    const img = card.locator('.x-card__figure img');
-    await expect(img, `${label}: image element`).toHaveCount(1);
-    expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
-
-    // The doc's own attribute is image-position="left" (explicit, matching
-    // the default) -- must render exactly like the default: row, image first.
-    const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
-    expect(flexDirection, `${label}: image-position="left" must render the image on the left (row)`).toBe('row');
+    // Explicit left, matching the default -- must render exactly like it.
+    expect(await flexDirection(card), `${label}: image-position="left" must render the image on the left (row)`).toBe('row');
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);
     await assertNoPageHorizontalScroll(page, label);
   });
 
-  test('demo 4 -- "Image on Right" fenced example: image renders on the right', async ({ page }) => {
+  test('demo 4 -- image-position="right": image renders on the right', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 4 (Image on Right)';
-    const card = page.locator('x-cardhorizontal').nth(3);
-    const demo = page.locator('x-demo').nth(3);
+    const { label, card, demo } = demoAt(page, 3, 'image-position="right"');
 
-    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Right Image');
-    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Content appears on the left.');
+    await assertText(card, label, 'Sunrise viewpoint, 5km', 'Moderate · 2h', 'faces due east');
+    await assertImageLoads(card, label);
 
-    const img = card.locator('.x-card__figure img');
-    await expect(img, `${label}: image element`).toHaveCount(1);
-    expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
-
-    // The doc's own attribute is image-position="right" -- the card must
-    // actually reverse layout so the image renders on the right.
-    const flexDirection = await card.evaluate((el) => getComputedStyle(el).flexDirection);
-    expect(flexDirection, `${label}: image-position="right" must render the image on the right (row-reverse)`).toBe('row-reverse');
+    // The card must actually reverse its layout -- and the image must really
+    // be painted right of the text, not just carry the computed value.
+    expect(await flexDirection(card), `${label}: image-position="right" must render the image on the right (row-reverse)`).toBe('row-reverse');
+    const figureBox = await card.locator('.x-card__figure').boundingBox();
+    const contentBox = await card.locator('.x-card__horizontal-content').boundingBox();
+    expect(figureBox!.x, `${label}: the figure must sit right of the text`).toBeGreaterThanOrEqual(contentBox!.x + contentBox!.width - 2);
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);
     await assertNoPageHorizontalScroll(page, label);
   });
 
-  test('demo 5 -- "Custom Image Width" fenced example: image width is 60%', async ({ page }) => {
+  test('demo 5 -- image-width="60%": image width is 60%', async ({ page }) => {
     await gotoDoc(page);
-    const label = 'demo 5 (Custom Image Width)';
-    const card = page.locator('x-cardhorizontal').nth(4);
-    const demo = page.locator('x-demo').nth(4);
+    const { label, card, demo } = demoAt(page, 4, 'image-width="60%"');
 
-    await expect(card.locator('.x-card__title'), `${label}: title`).toHaveText('Large Image');
-    await expect(card.locator('.x-card__horiz-body'), `${label}: body`).toContainText('Narrower content area.');
+    await assertText(card, label, 'Valley panorama', 'Photo stop', 'The widest view on the route.');
+    await assertImageLoads(card, label);
 
-    const img = card.locator('.x-card__figure img');
-    await expect(img, `${label}: image element`).toHaveCount(1);
-    expect(await isImageLoaded(img), `${label}: image must actually load, not 404/render broken`).toBe(true);
-
-    // The doc's own attribute is image-width="60%" -- the figure must
-    // actually measure ~60% of the card's own width (small tolerance for
-    // border/box-sizing rounding).
-    const { figureWidth, cardWidth } = await card.evaluate((el) => {
+    // The figure must actually measure ~60% of the card's own content box
+    // (the width a percentage resolves against).
+    const { figureWidth, contentWidth } = await card.evaluate((el) => {
       const figure = el.querySelector('.x-card__figure') as HTMLElement;
-      return { figureWidth: figure.getBoundingClientRect().width, cardWidth: el.getBoundingClientRect().width };
+      const cs = getComputedStyle(el);
+      return {
+        figureWidth: figure.getBoundingClientRect().width,
+        contentWidth: el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight),
+      };
     });
-    const ratio = figureWidth / cardWidth;
-    expect(ratio, `${label}: image-width="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeGreaterThan(0.55);
-    expect(ratio, `${label}: image-width="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeLessThan(0.65);
+    const ratio = figureWidth / contentWidth;
+    expect(ratio, `${label}: image-width="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeGreaterThan(0.58);
+    expect(ratio, `${label}: image-width="60%" -- figure is ${Math.round(ratio * 100)}% of the card, expected ~60%`).toBeLessThan(0.62);
 
     await assertContentPadding(card, label);
     await assertCodePanelStandards(demo, label);

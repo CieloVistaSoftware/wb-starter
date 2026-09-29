@@ -1,7 +1,7 @@
 /**
  * x-spinner — renders animated, sized, themed (issue #128)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -21,7 +21,7 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-test.describe('x-spinner', () => {
+test.describe('[x-spinner]', () => {
   test('gets base + size + color classes', async ({ page }) => {
     await setup(page, '<span x-spinner id="sp" size="lg" color="success"></span>');
     const sp = page.locator('#sp');

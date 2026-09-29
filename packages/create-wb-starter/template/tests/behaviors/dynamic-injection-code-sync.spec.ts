@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * demos/autoinject.html's "11. Dynamic Injection" section: clicking "Add

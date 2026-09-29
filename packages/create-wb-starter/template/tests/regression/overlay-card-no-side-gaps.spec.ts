@@ -20,10 +20,10 @@
  * edges land relative to its host's, which only a laid-out page can answer.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const OVERLAY = `<article x-cardoverlay
-  image="/images/placeholder.svg"
+  image="https://picsum.photos/seed/city/480/320"
   title="Night shift"
   subtitle="City desk, 02:00"
   position="bottom"></article>`;

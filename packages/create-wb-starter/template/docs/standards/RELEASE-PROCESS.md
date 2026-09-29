@@ -30,7 +30,7 @@ Neither is testable. Both are prevented by bumping once, on `main`.
 
 ## 2. Cache-busting is a different job — give it its own stamp
 
-The `?v=` query strings in `index.html` and `project-index.html` genuinely must change on
+The `?v=` query strings in `index.html` genuinely must change on
 every commit, or browsers serve stale assets. **That need is what drove the per-commit
 bump, and it does not require the semver version.**
 
@@ -102,7 +102,7 @@ used, the commit message says so and why.
 - [ ] Write the `pages/whats-new.html` section headed by that version (rules 3, 4)
 - [ ] Every `#NNN` in it is a link (rule 5)
 - [ ] Confirm every version surface agrees: `package.json`, `package-lock.json`,
-      `src/core/version.js`, `index.html`, `project-index.html`, What's New heading
+      `src/core/version.js`, `index.html`, What's New heading
 - [ ] One commit, all of it together
 - [ ] Push; watch CI to green
 

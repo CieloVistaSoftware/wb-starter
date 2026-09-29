@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * #678 — a behavior must never destroy the author's content.

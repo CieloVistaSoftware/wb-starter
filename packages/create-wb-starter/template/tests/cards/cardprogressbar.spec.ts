@@ -1,19 +1,20 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
+import { settledWidthPercent } from '../helpers/settled-style';
 
 test.describe('Progress Bar (integration)', () => {
-  test('should render progress bar with x-progress class', async ({ page }: { page: Page }) => {
+  test('should render progress bar with progress class', async ({ page }: { page: Page }) => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '75');
+      el.setAttribute('value', '75');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const bar = page.locator('#test-progress');
@@ -26,23 +27,24 @@ test.describe('Progress Bar (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-fill';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '50');
-      el.setAttribute('data-max', '100');
+      // Plain value/max (v3, #224): progress() reads only the plain
+      // attributes, so data-value left the bar with no width at all.
+      el.setAttribute('value', '50');
+      el.setAttribute('max', '100');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const fill = page.locator('#test-progress-fill .x-progress__bar');
     await expect(fill).toBeVisible();
     
-    // Check the style attribute contains 50%
-    const style = await fill.getAttribute('style');
-    expect(style).toContain('width');
-    expect(style).toContain('50%');
+    // #779: the fill's width is a generated stylesheet rule, never a style
+    // attribute -- measure what renders.
+    expect(await settledWidthPercent(fill)).toBeCloseTo(50, 0);
   });
 
   test('should have appropriate height', async ({ page }: { page: Page }) => {
@@ -51,13 +53,17 @@ test.describe('Progress Bar (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-height';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '75');
+      el.setAttribute('value', '75');
+      // The % label is built in by default (#280) and the labeled bar is
+      // deliberately taller (1.25rem) so the text fits. This measures the
+      // BAR's own height, so switch the label off.
+      el.setAttribute('show-label', 'false');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const bar = page.locator('#test-progress-height');
@@ -74,13 +80,13 @@ test.describe('Progress Bar (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-radius';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '60');
+      el.setAttribute('value', '60');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const bar = page.locator('#test-progress-radius');
@@ -96,23 +102,23 @@ test.describe('Progress Bar (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-anim';
       el.setAttribute('x-progress', '');
-      el.setAttribute('data-value', '80');
-      el.setAttribute('data-animated', 'true');
+      el.setAttribute('value', '80');
+      el.setAttribute('animated', '');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
-    
-    // Wait for animation to complete
-    await page.waitForTimeout(200);
-    
+
     const fill = page.locator('#test-progress-anim .x-progress__bar');
-    const style = await fill.getAttribute('style');
-    
-    // Should have transition for smooth animation
-    expect(style).toContain('transition');
+    expect(await settledWidthPercent(fill)).toBeCloseTo(80, 0);
+
+    // Should have transition for smooth animation. Read the COMPUTED style:
+    // the transition moved out of an inline style into progress.css (Law 9,
+    // #370), so the style attribute now carries only the per-instance width.
+    const transition = await fill.evaluate((el) => getComputedStyle(el).transitionProperty);
+    expect(transition).toMatch(/width|all/);
   });
 });

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * scripts/generate-site.mjs builds demo instances for every schema's matrix
@@ -25,28 +25,28 @@ import { test, expect } from '@playwright/test';
  */
 test.describe('Generated demo instances render visibly (interactive.html)', () => {
   test('every <div x-draggable> instance has non-zero size and real content', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/interactive.html');
+    await page.goto('/demos/site/interactive.html');
     // #448: x-draggable no longer carries a same-named `.x-draggable`
     // class -- the tag selector alone is enough.
-    await page.waitForSelector('x-draggable', { timeout: 10_000 });
+    await page.waitForSelector('[x-draggable]', { timeout: 10_000 });
 
-    const drags = page.locator('x-draggable');
+    const drags = page.locator('[x-draggable]');
     const count = await drags.count();
     expect(count).toBeGreaterThan(0);
 
     for (let i = 0; i < count; i++) {
       const el = drags.nth(i);
       const box = await el.boundingBox();
-      expect(box, `x-draggable[${i}] should have a bounding box at all`).not.toBeNull();
-      expect(box!.height, `x-draggable[${i}] must not collapse to zero height`).toBeGreaterThan(0);
+      expect(box, `[x-draggable][${i}] should have a bounding box at all`).not.toBeNull();
+      expect(box!.height, `[x-draggable][${i}] must not collapse to zero height`).toBeGreaterThan(0);
       const text = await el.evaluate((e) => e.textContent?.trim() ?? '');
-      expect(text, `x-draggable[${i}] must not be empty`).not.toBe('');
+      expect(text, `[x-draggable][${i}] must not be empty`).not.toBe('');
     }
   });
 
   test('no generated custom element on interactive.html has zero size', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/interactive.html');
-    await page.waitForSelector('x-demo', { timeout: 10_000 });
+    await page.goto('/demos/site/interactive.html');
+    await page.waitForSelector('[x-demo]', { timeout: 10_000 });
     await page.waitForTimeout(1000); // let eager scan finish enhancing everything
 
     const invisible = await page.evaluate(() => {
@@ -55,7 +55,7 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
       // manualSections content is exempt (it's real, deliberately-authored
       // markup, not a bare {tag, attrs} instance).
       const offenders: string[] = [];
-      document.querySelectorAll('x-demo [class*="wb-"]').forEach((el) => {
+      document.querySelectorAll('[x-demo] [class*="wb-"]').forEach((el) => {
         const rect = el.getBoundingClientRect();
         if (rect.width === 0 && rect.height === 0 && (el.textContent ?? '').trim() === '') {
           offenders.push(el.tagName.toLowerCase() + '#' + (el.id || '(no id)'));
@@ -68,12 +68,14 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
   });
 
   test('sibling dialog demos on overlays.html have distinct, self-describing labels', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/overlays.html');
-    // #448: a <dialog> acting as its own trigger no longer carries a
-    // same-named `.x-dialog` class -- the tag selector alone is enough.
-    await page.waitForSelector('x-dialog', { timeout: 10_000 });
+    await page.goto('/demos/site/overlays.html');
+    // #448: a trigger no longer carries a same-named `.x-dialog` class --
+    // `.x-dialog` is the OPENED dialog. The demos are <button x-dialog>
+    // triggers now (a closed <dialog> is display:none and rendered nothing),
+    // so the attribute is the selector.
+    await page.waitForSelector('[x-dialog]', { timeout: 10_000 });
 
-    const labels = await page.locator('x-dialog').evaluateAll((els) =>
+    const labels = await page.locator('[x-dialog]').evaluateAll((els) =>
       els.slice(0, 4).map((el) => el.textContent?.trim() ?? ''),
     );
     expect(new Set(labels).size, `dialog demo labels must be distinct: ${labels.join(' | ')}`).toBe(labels.length);
@@ -83,10 +85,11 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
   });
 
   test('overlay variant demos expose their configuration in the closed trigger', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/overlays.html');
-    await page.waitForSelector('x-dialog, x-drawer, x-dropdown', { timeout: 10_000 });
+    await page.goto('/demos/site/overlays.html');
+    // [x-dialog], not .x-dialog: see the previous test.
+    await page.waitForSelector('[x-dialog], [x-drawer], [x-dropdown]', { timeout: 10_000 });
 
-    const unlabeled: string[] = await page.locator('x-dialog, x-drawer, x-dropdown').evaluateAll((els) => {
+    const unlabeled: string[] = await page.locator('[x-dialog], [x-drawer], [x-dropdown]').evaluateAll((els) => {
       return els.flatMap((el) => {
         const attribute = ['size', 'variant', 'position', 'trigger'].find((name) => el.hasAttribute(name));
         if (!attribute) return [];
@@ -105,12 +108,15 @@ test.describe('Generated demo instances render visibly (interactive.html)', () =
     // all -- every variant produced an identical, default-sized dialog
     // (confirmed live: clicking "Centered" or "Fullscreen" opened the exact
     // same dialog as "Basic Dialog").
-    await page.goto('http://localhost:3000/demos/site/overlays.html');
-    // #448: a <dialog> acting as its own trigger no longer carries a
-    // same-named `.x-dialog` class -- the tag selector alone is enough.
-    await page.waitForSelector('x-dialog', { timeout: 10_000 });
+    await page.goto('/demos/site/overlays.html');
+    // [x-dialog], not .x-dialog: see the sibling-labels test above.
+    await page.waitForSelector('[x-dialog]', { timeout: 10_000 });
 
-    const trigger = page.locator('x-dialog[variant="fullscreen"]').first();
+    const trigger = page.locator('[x-dialog][variant="fullscreen"]').first();
+    // The lazy runtime (#491) attaches the trigger's click handler only once
+    // the element nears the viewport; a click before x-ready does nothing.
+    await trigger.scrollIntoViewIfNeeded();
+    await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10_000 });
     await trigger.click();
 
     const box = page.locator('.x-dialog:not(.x-dialog-trigger)');

@@ -26,7 +26,7 @@
  * broken state being fixed.
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const EXAMPLE = `
   <div id="acc" x-accordion>

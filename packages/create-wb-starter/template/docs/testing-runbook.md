@@ -1,6 +1,6 @@
 # Testing & CI — Runbook (developer-focused)
 
-This concise runbook explains how to run tests locally, gather artifacts, and how CI runs the suite in this repository. It complements `CONTRIBUTING.md`, `docs/CommittingFixes.md`, and `docs/mcp.md`.
+This concise runbook explains how to run tests locally, gather artifacts, and how CI runs the suite in this repository. It complements `CONTRIBUTING.md`, `docs/committing-fixes.md`, and `docs/mcp.md`.
 
 ## Goal
 - Fast feedback for daily development (short runs by default).
@@ -61,7 +61,7 @@ This concise runbook explains how to run tests locally, gather artifacts, and ho
 
 Related docs
 - `CONTRIBUTING.md` — test / artifact publishing details
-- `docs/CommittingFixes.md` — PR & validation workflow
+- `docs/committing-fixes.md` — PR & validation workflow
 - `docs/mcp.md` — MCP usage for tests
 - `docs/builder-testing.md` — behavior-level test guidance
 

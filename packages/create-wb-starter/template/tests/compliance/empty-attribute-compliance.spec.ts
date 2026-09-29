@@ -10,7 +10,7 @@
  * This is Law: attributes with empty strings are prohibited.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 

@@ -15,22 +15,22 @@
  * close button had zero listeners ~90% of loads. Fixed by never touching
  * innerHTML at all when $view is empty.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { openBehaviorsPanel, renderVariant, EXAMPLE_ROOT } from '../utils/behaviors-panel';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
-const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
-
+// The showcase builds its examples on demand since #664 -- there are no alerts
+// on the page until a row is picked, so counting page-wide [role="alert"]
+// found 0. Render the dismissible variant (the x-alert row whose variant
+// column reads "true") in the live panel and dismiss THAT alert.
 test('dismissible alert close button removes the alert on click, on a fresh page load', async ({ page }) => {
-  await page.goto(URL, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('#mainPage-behaviors', { timeout: 25000 });
-  await page.waitForTimeout(2000);
+  await openBehaviorsPanel(page, 'x-alert');
+  await renderVariant(page, 'x-alert', 'true');
 
-  const before = await page.locator('[role="alert"]').count();
-  expect(before, 'expected at least one alert on the page').toBeGreaterThan(0);
+  const alert = page.locator(`${EXAMPLE_ROOT} [x-alert][dismissible]`);
+  await expect(alert, 'expected the dismissible alert in the live panel').toHaveCount(1);
+  await expect(alert).toHaveAttribute('x-ready', '');
 
-  await page.locator('.x-alert__close').first().click();
-  await page.waitForTimeout(300);
+  await alert.locator('.x-alert__close').click();
 
-  const after = await page.locator('[role="alert"]').count();
-  expect(after, 'clicking the dismiss button should remove one alert').toBe(before - 1);
+  await expect(alert, 'clicking the dismiss button should remove the alert').toHaveCount(0);
 });

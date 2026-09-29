@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/offline';
 
 const HARNESS = '/demos/test-harness.html';
 

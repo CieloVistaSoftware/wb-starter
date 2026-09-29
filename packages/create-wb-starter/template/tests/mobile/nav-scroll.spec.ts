@@ -11,9 +11,9 @@
  * site-engine instance, so navigation must be SPA (clicking nav links), never a
  * full reload — a reload would reset the memory.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
-const LINKS = ['home', 'behaviors', 'behaviors', 'themes', 'docs', 'about'];
+const LINKS = ['home', 'components', 'behaviors', 'themes', 'docs', 'about'];
 
 async function clickNav(page: Page, id: string) {
   // The links live in the off-canvas drawer on mobile (not pointer-actionable),
@@ -55,7 +55,7 @@ async function scrollState(page: Page) {
 
 test.describe('Nav link scroll behavior', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=home');
+    await page.goto('/?page=home');
     await page.waitForFunction(() => (window as any).WBSite?.currentPage, { timeout: 15000 });
     await page.waitForTimeout(400);
   });
@@ -79,7 +79,7 @@ test.describe('Nav link scroll behavior', () => {
       const before = await page.evaluate(() => window.scrollY);
       test.skip(before < 50, `${id}: page too short to scroll; restore N/A`);
 
-      const other = id === 'home' ? 'behaviors' : 'home';
+      const other = id === 'home' ? 'components' : 'home';
       await clickNav(page, other);
       await clickNav(page, id);
 

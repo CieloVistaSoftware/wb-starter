@@ -3,7 +3,7 @@
  * The whole card is the click target (and keyboard-activatable); it triggers a
  * download of href (falling back to the filename), naming it after `filename`.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const HARNESS = '/demos/test-harness.html';
 
@@ -13,22 +13,22 @@ async function inject(page: Page, html: string) {
     () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
     { timeout: 10000 }
   );
-  await page.evaluate((h: string) => {
+  await page.evaluate(async (h: string) => {
     const existing = document.getElementById('test-container');
     if (existing) existing.remove();
     const container = document.createElement('div');
     container.id = 'test-container';
     container.innerHTML = h;
     document.body.appendChild(container);
-    (window as any).WB.scan(container);
+    await (window as any).WB.scan(container);
   }, html);
-  await page.locator('#test-container x-cardfile.x-card-file').first().waitFor({ state: 'attached', timeout: 10000 });
+  await page.locator('#test-container [x-cardfile].x-card-file').first().waitFor({ state: 'attached', timeout: 10000 });
 }
 
-test.describe('x-cardfile download', () => {
+test.describe('[x-cardfile] download', () => {
   test('clicking a file card downloads the file (named after filename)', async ({ page }) => {
     await inject(page, '<div x-cardfile filename="report.pdf" size="2.4 MB" type="pdf" href="/files/report.pdf"></div>');
-    const card = page.locator('#test-container x-cardfile');
+    const card = page.locator('#test-container [x-cardfile]');
     await expect(card).toHaveAttribute('role', 'button');
 
     const downloadPromise = page.waitForEvent('download');
@@ -39,7 +39,7 @@ test.describe('x-cardfile download', () => {
 
   test('keyboard (Enter) on a focused file card downloads it', async ({ page }) => {
     await inject(page, '<div x-cardfile filename="archive.zip" size="15.7 MB" type="zip" href="/files/archive.zip"></div>');
-    const card = page.locator('#test-container x-cardfile');
+    const card = page.locator('#test-container [x-cardfile]');
     await expect(card).toHaveAttribute('tabindex', '0');
 
     const downloadPromise = page.waitForEvent('download');
@@ -59,14 +59,27 @@ test.describe('x-cardfile download', () => {
     // "Sample filename (N).htm". With no href there's nothing real to
     // download, so the card must not offer to.
     await inject(page, '<div x-cardfile filename="photo.jpg" size="856 KB" type="image"></div>');
-    const card = page.locator('#test-container x-cardfile');
+    const card = page.locator('#test-container [x-cardfile]');
     await expect(card).not.toHaveAttribute('role', 'button');
     await expect(card).not.toHaveAttribute('tabindex', '0');
     await expect(card.locator('.x-card__file-download')).toHaveCount(0);
-    // Silently doing nothing is confusing to whoever's authoring/testing
-    // the card -- surface it visibly instead.
-    await expect(card.locator('.x-card__file-warning')).toBeVisible();
-    await expect(card.locator('.x-card__file-warning')).toHaveText(/no href/i);
+    // AND IT SAYS NOTHING TO THE VISITOR ABOUT IT.
+    //
+    // This used to require the opposite -- a visible `.x-card__file-warning`
+    // reading "No href given" -- on the reasoning that silently doing nothing
+    // confuses whoever is authoring the card. Two gates then asserted opposite
+    // things about the same element: compliance/no-runtime-warning-leaks.spec.ts
+    // forbids author-facing prose rendered at visitors, and it caught this one on
+    // demos/site/cards.html.
+    //
+    // The newer rule wins, because the old one fired on the DEFAULT.
+    // `downloadable` defaults to true, so all 15 cardfile demos on that page --
+    // each demonstrating a file type or a variant, none claiming to download
+    // anything -- were labelled broken in front of readers. A card with no href
+    // is simply not a download card, which is what the assertions above check.
+    // The author who writes `downloadable` AND omits href still gets told, in
+    // the console, where framework diagnostics belong.
+    await expect(card.locator('.x-card__file-warning')).toHaveCount(0);
   });
 
   test('file-type attribute (the schema-declared name) picks the matching icon', async ({ page }) => {
@@ -78,7 +91,7 @@ test.describe('x-cardfile download', () => {
     // live: demos/site/cards.html's "fileType variants" section showed the
     // identical folder icon for pdf/doc/image/video/audio/zip/file.
     await inject(page, '<div x-cardfile file-type="image" filename="photo.jpg" href="/files/photo.jpg"></div>');
-    const icon = page.locator('#test-container x-cardfile > span').first();
+    const icon = page.locator('#test-container [x-cardfile] > span').first();
     await expect(icon).toHaveText('🖼️');
   });
 });

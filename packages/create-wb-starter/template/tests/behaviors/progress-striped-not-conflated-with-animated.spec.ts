@@ -9,7 +9,7 @@
  * rule wasn't enough on its own. Fixed in src/styles/behaviors/progress.css
  * and src/wb-viewmodels/semantics/progress.js.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -29,7 +29,7 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-test.describe('x-progress — striped texture is independent of the animated default', () => {
+test.describe('progress — striped texture is independent of the animated default', () => {
   test('a default (animated, not striped) bar has no diagonal texture', async ({ page }) => {
     await setup(page, '<progress id="p1" value="50"></progress>');
     const bar = page.locator('#p1 .x-progress__bar');

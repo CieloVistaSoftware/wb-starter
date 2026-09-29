@@ -1,12 +1,13 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { safeScrollIntoView } from '../base';
 
 /**
  * demos/site/feedback.html: John asked that every rendered example on this
  * page live inside a <div x-demo> (docs/standards/DEMOS-AND-DOCS-STANDARDS.md
- * §1 -- "Every behavior example is a <div x-demo>"), same sweep already done
+ * §1 -- "Every component example is a <div x-demo>"), same sweep already done
  * for demos/site/overlays.html and pages/behaviors.html. Auditing the page's
  * own markup, every example section (Alert/Avatar/Badge/Chip/Progress/
- * Rating/Skeleton/Spinner/Toast/Tooltip, plus the x-tooltip/x-progressbar/
+ * Rating/Skeleton/Spinner/Toast/Tooltip, plus the x-tooltip/x-progress/
  * x-notify behavior sections) was already wrapped in <div x-demo>, including
  * the §17 grouped-control cases (e.g. the big Badge combinatorial grid is
  * one logical group in one <div x-demo>, not split per-badge). This is the
@@ -26,27 +27,27 @@ async function ready(page) {
 const SECTIONS = [
   'alert-alert',
   'alert-variant-variants',
-  'alert-boolean-toggles',
+  'alert-toggles',
   'avatar-avatar',
   'avatar-size-variants',
   'avatar-shape-variants',
   'avatar-status-variants',
-  'avatar-boolean-toggles',
+  'avatar-toggles',
   'badge-badge',
   'badge-variant-variants',
   'badge-size-variants',
-  'badge-boolean-toggles',
+  'badge-toggles',
   'chip-chip',
   'chip-variant-variants',
   'chip-size-variants',
-  'chip-boolean-toggles',
+  'chip-toggles',
   'progress-progress',
   'progress-variant-variants',
   'progress-size-variants',
-  'progress-boolean-toggles',
+  'progress-toggles',
   'rating-rating',
   'rating-size-variants',
-  'rating-boolean-toggles',
+  'rating-toggles',
   'skeleton-skeleton',
   'skeleton-variant-variants',
   'spinner-spinner',
@@ -60,9 +61,9 @@ const SECTIONS = [
   'tooltip-position-variants',
   'tooltip-variant-variants',
   'tooltip-trigger-variants',
-  'tooltip-boolean-toggles',
+  'tooltip-toggles',
   'x-tooltip-on-a-real-trigger-element',
-  'x-progressbar-attribute-based-progress-bar',
+  'x-progress-on-any-element',
   'x-notify-one-off-notification',
 ];
 
@@ -76,41 +77,40 @@ test.describe('Feedback & Status page: every example section renders inside <div
       const section = page.locator(`section#${id}`);
       await expect(section, `section#${id} should exist on the page`).toHaveCount(1);
 
-      const demos = section.locator('x-demo');
+      const demos = section.locator('[x-demo]');
       const demoCount = await demos.count();
       expect(demoCount, `section#${id} should contain at least one <div x-demo>`).toBeGreaterThan(0);
 
       for (let i = 0; i < demoCount; i++) {
         const demo = demos.nth(i);
-        await expect(demo.locator('.x-demo__grid'), `section#${id} x-demo[${i}] should render a live grid`).toBeVisible();
+        // The page builds a demo only as it nears the viewport (#491), so one
+        // far down the page is unbuilt until a reader scrolls to it. Scroll
+        // there first, as a reader does -- the check stopped at badge demo 22.
+        await safeScrollIntoView(demo);
+        await expect(demo.locator('.x-demo__grid'), `section#${id} [x-demo][${i}] should render a live grid`).toBeVisible();
         const codePanel = demo.locator('.x-demo__code, pre').first();
-        await expect(codePanel, `section#${id} x-demo[${i}] should render a source/code panel`).toBeVisible();
+        await expect(codePanel, `section#${id} [x-demo][${i}] should render a source/code panel`).toBeVisible();
         const codeText = await codePanel.innerText();
-        expect(codeText.trim().length, `section#${id} x-demo[${i}] source panel should not be empty`).toBeGreaterThan(0);
+        expect(codeText.trim().length, `section#${id} [x-demo][${i}] source panel should not be empty`).toBeGreaterThan(0);
       }
     });
   }
 
-  test('no rendered wb-*/x-* example lives outside a <div x-demo> ancestor', async ({ page }) => {
-    // Every example's direct rendered content (the x-demo's own grid
-    // children) must be inside a <div x-demo>. Walk each <section>'s direct
-    // element children (skipping headings/paragraphs, which are prose, not
-    // examples) and assert each is either a <div x-demo> itself or nested
-    // inside one.
-    const stray = await page.evaluate(() => {
-      const found: string[] = [];
-      document.querySelectorAll('section[id]').forEach((section) => {
-        Array.from(section.children).forEach((child) => {
-          const tag = child.tagName.toLowerCase();
-          if (tag === 'h2' || tag === 'p') return; // prose, not an example
-          if (tag === 'x-demo') return; // the wrapper itself
-          if (!child.closest('x-demo')) {
-            found.push(`${section.id}: <${tag}>`);
-          }
-        });
-      });
-      return found;
-    });
-    expect(stray, `found rendered example(s) outside <div x-demo>: ${JSON.stringify(stray)}`).toEqual([]);
-  });
+  /**
+   * REMOVED: "no rendered x-* example lives outside <div x-demo>".
+   *
+   * John: "there is no requirement that states an x-behavior tag must be in a
+   * div." The standard agrees. DEMOS-AND-DOCS-STANDARDS.md §1 says "Every
+   * behavior EXAMPLE is a <div x-demo>" -- a rule about how examples are
+   * authored, not a ban on x-* markup elsewhere.
+   *
+   * The inverted form cannot hold under auto-injection, where a semantic tag
+   * IS its behavior: the <code> inside the prose sentence "attaches via
+   * <code>x-tooltip</code> to a real trigger element" becomes an x-code
+   * behavior. Enforcing this would mean wrapping prose in demo wrappers.
+   *
+   * The §1 requirement that DOES hold -- an example renders its live control
+   * and its source together -- is covered by the per-section tests above,
+   * which assert each x-demo has both a visible grid and a code panel.
+   */
 });

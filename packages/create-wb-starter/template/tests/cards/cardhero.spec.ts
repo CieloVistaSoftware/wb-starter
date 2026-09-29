@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Card Hero (integration)', () => {
   test('should render hero card with title', async ({ page }: { page: Page }) => {
@@ -7,14 +7,14 @@ test.describe('Card Hero (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-hero';
       el.setAttribute('x-cardhero', '');
       el.setAttribute('data-title', 'Hero Title');
       el.setAttribute('data-subtitle', 'Hero Subtitle');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-hero');
@@ -36,13 +36,13 @@ test.describe('Card Hero (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-hero-height';
       el.setAttribute('x-cardhero', '');
       el.setAttribute('data-title', 'Big Hero');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-hero-height');
@@ -55,14 +55,14 @@ test.describe('Card Hero (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-hero-bg';
       el.setAttribute('x-cardhero', '');
       el.setAttribute('data-title', 'Background Hero');
-      el.setAttribute('data-background', '/images/placeholder.svg');
+      el.setAttribute('data-background', 'https://picsum.photos/800/400');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-hero-bg');
@@ -76,17 +76,18 @@ test.describe('Card Hero (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-hero-left';
       el.setAttribute('x-cardhero', '');
       el.setAttribute('data-title', 'Left Aligned');
-      el.setAttribute('data-align', 'left');
+      // cardhero.schema.json declares `xalign`; data-align was never an option.
+      el.setAttribute('xalign', 'left');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-hero-left');
-    await expect(card).toHaveClass(/x-card--align-left/);
+    await expect(card).toHaveClass(/x-card--xalign-left/);
   });
 });

@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * A multi-line <code> listing must keep its lines.
@@ -8,7 +8,7 @@ import { test, expect, type Page } from '@playwright/test';
  * collapsed to a space, the whole thing reflowed as prose.
  *
  * Cause: `variant` defaults to "inline" in code.schema.json. That is correct
- * for the common case (a `<code>x-card</code>` chip amid prose) and wrong for
+ * for the common case (a `<code>.x-card</code>` chip amid prose) and wrong for
  * a standalone listing — an inline box gets `white-space: normal`, so source
  * newlines are collapsed by CSS before anyone sees them.
  *

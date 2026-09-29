@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/withLatestFrom */
+import{operate as c}from"../util/lift.mjs";import{createOperatorSubscriber as i}from"./OperatorSubscriber.mjs";import{innerFrom as s}from"../observable/innerFrom.mjs";import{identity as u}from"../util/identity.mjs";import{noop as h}from"../util/noop.mjs";import{popResultSelector as y}from"../util/args.mjs";function S(...r){let a=y(r);return c((p,m)=>{let n=r.length,f=new Array(n),o=r.map(()=>!1),l=!1;for(let e=0;e<n;e++)s(r[e]).subscribe(i(m,t=>{f[e]=t,!l&&!o[e]&&(o[e]=!0,(l=o.every(u))&&(o=null))},h));p.subscribe(i(m,e=>{if(l){let t=[e,...f];m.next(a?a(...t):t)}}))})}export{S as withLatestFrom};
+//# sourceMappingURL=withLatestFrom.mjs.map

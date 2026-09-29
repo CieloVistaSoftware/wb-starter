@@ -7,7 +7,7 @@
  * DELETE THIS FILE when cleaning up.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/offline';
 
 test.describe('Deprecated: Schema Compliance Tests', () => {
   test('placeholder - schema compliance tests moved to tests/compliance/', () => {

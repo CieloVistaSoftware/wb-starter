@@ -1,21 +1,21 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
  * <div x-input> is a schema-driven host whose $view already builds a full
  * structure (label, wrapper div, icon spans, clear button, and the real
  * <input>) declaratively. tag-map.js dispatches the 'input' behavior on
- * BOTH the host (elementMap['x-input']) and the real child (nativeMap
+ * BOTH the host (elementMap['[x-input]']) and the real child (nativeMap
  * ['input']), but semantics/input.js has NO guard for which one it's
  * looking at (unlike switch.js/select.js/textarea.js) -- confirmed live:
  * dispatched on the host, it wraps the ENTIRE already-built <div x-input>
- * behavior in a second bogus wrapper div's worth of classes/inline styles
+ * component in a second bogus wrapper div's worth of classes/inline styles
  * applied directly to the host tag itself (x-input__field class, width/
  * flex/padding inline styles meant for a bare text input). Separately, the
  * $view's "input" node never bound placeholder/value/name/type at all, so
  * the real built <input> rendered completely empty regardless. (#367)
  */
-test.describe('x-input does not double-wrap its host and reflects its attributes', () => {
+test.describe('[x-input] does not double-wrap its host and reflects its attributes', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });

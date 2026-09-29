@@ -14,7 +14,7 @@
  * module scope — which is exactly what a stale `?v=<commit>` shell does — and
  * that second instance calls init() again.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function loadSite(page: Page) {
   await page.goto('/?page=behaviors');

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
@@ -11,7 +11,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * 2. checkbox()'s own guard (`element.type !== 'checkbox'`) means the
  *    checkbox behavior itself never even runs on it either.
  */
-test.describe('x-checkbox does not wrap its hidden input in text-field styling', () => {
+test.describe('[x-checkbox] does not wrap its hidden input in text-field styling', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });

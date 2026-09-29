@@ -1,12 +1,21 @@
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Auto-Inject Demo', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/demos/autoinject.html');
     // Wait for WB to initialize (autoInject happens during init/scan)
     await page.waitForFunction(() => typeof window['WB'] !== 'undefined');
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
+    // #956: NOT WBSite -- window.WBSite is set only by src/index.js and
+    // src/main.js, and demos/autoinject.html loads neither (it imports
+    // wb-lazy.js directly). Confirmed live: WB is present with 210 behaviors
+    // while typeof window.WBSite is "undefined". As this is the file's OUTER
+    // beforeEach it ran for every test, so all 4 burned the 20s wait and
+    // failed having asserted nothing. Same stale wait as #735 / #949.
+    await page.waitForFunction(
+      () => (window as any).WB?.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
+      { timeout: 20000 }
+    );
     await page.waitForTimeout(1000); 
   });
 
@@ -25,7 +34,7 @@ test.describe('Auto-Inject Demo', () => {
   //    The observable signal is the actual effect: checkbox.js injects a
   //    stylesheet that sets appearance:none; select.js attaches a real
   //    `element.wbSelect` API (getValue/setValue/etc).
-  //  - card.js DOES add a real `x-card` class — article→card auto-inject
+  //  - card.js DOES add a real `.x-card` class — article→card auto-inject
   //    is the one case in this block with an actual wrapper-free class.
   test.describe('Form Elements', () => {
     test.beforeEach(async ({ page }) => {
@@ -50,9 +59,16 @@ test.describe('Auto-Inject Demo', () => {
       expect(hasApi, 'select behavior should attach element.wbSelect').toBe(true);
     });
 
-    test('Article is auto-injected as a card (x-card class)', async ({ page }) => {
+    test('Article is auto-injected as a card', async ({ page }) => {
+      // Cards no longer stamp .x-card onto an <article> (a8a7362e: card.css
+      // matches the tag), so "became a card" is what the card behavior itself
+      // leaves behind: it settled (x-ready), and it moved the loose text into
+      // the card's <main>, where card.css pads it.
       const article = page.locator('#fixture-article');
-      await expect(article).toHaveClass(/x-card/);
+      await expect(article).toHaveAttribute('x-ready', '');
+      await expect(article).not.toHaveClass(/x-card/);
+      await expect(article.locator(':scope > main')).toHaveText('An article, auto-injected as a card.');
+      await expect(article).toHaveCSS('display', 'flex');
     });
   });
 });

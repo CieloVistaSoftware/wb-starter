@@ -19,7 +19,7 @@
  *     shows a WORKING live demo AND its code").
  *
  * #500 fixed this by hand for `docs/behaviors/x-audio.md` and
- * `docs/behaviors/semantics/audio.md`, but missed `docs/behaviors-reference.md`
+ * `docs/behaviors/audio.md`, but missed `docs/behaviors-reference.md`
  * -- the same defect was refiled 2 days later as #514. Hand-auditing doc srcs
  * does not scale; this gate is the systemic fix.
  *
@@ -38,12 +38,12 @@
  * means `<repo>/demos/audio.mp3`.
  *
  * The size floor catches the OTHER half of this bug class: an asset that exists
- * but holds no real content. `demos/image.jpg` and `demos/movie.mp4` are literal
+ * but holds no real content. `images/demo-image.jpg` (was `demos/image.jpg`) and `demos/movie.mp4` are literal
  * 13-byte text files reading "(dummy image)" / "(dummy movie)" -- they pass an
  * existence check and still fail to decode at runtime (audio.js's error message
  * calls out the 0-byte case by name).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -55,7 +55,7 @@ const SKIP_DIRS = new Set([
 ]);
 
 /** Elements that fetch their `src` as soon as the doc-viewer renders them. */
-const MEDIA_TAGS = ['x-audio', 'x-video', 'audio', 'video', 'source', 'img'];
+const MEDIA_TAGS = ['.x-audio', '.x-video', 'audio', 'video', 'source', 'img'];
 const MEDIA_SRC = new RegExp(
   `<(${MEDIA_TAGS.join('|')})(\\s[^>]*?)?\\ssrc\\s*=\\s*["']([^"']+)["']`,
   'gi'
@@ -88,17 +88,17 @@ function mdFiles(dir: string, acc: string[] = []): string[] {
 // scope. Remove an entry here only once #519 has actually fixed that file.
 //
 // #519 fixed all three: docs/behavior-cross-reference.md and
-// docs/behaviors/semantics/img.md now point their live <div x-demo> media at
+// docs/behaviors/img.md now point their live <div x-demo> media at
 // https://placehold.co / https://ui-avatars.com URLs (the same remote-asset
 // convention already proven in demos/site/cards.html);
-// docs/behaviors/semantics/video.md points its live <div x-demo> at a real,
+// docs/behaviors/video.md points its live <div x-demo> at a real,
 // stable CC0 sample video (MDN's flower.mp4) rather than the dead 13-byte
 // demos/movie.mp4 placeholder.
 const KNOWN_BROKEN_PENDING_519 = new Set<string>([]);
 
 function docsToCheck(): string[] {
   const files = mdFiles(path.join(ROOT, 'docs'));
-  for (const name of ['README.md', 'CONTRIBUTING.md']) {
+  for (const name of ['README.md', '.github/CONTRIBUTING.md']) {
     const p = path.join(ROOT, name);
     if (fs.existsSync(p)) files.push(p);
   }

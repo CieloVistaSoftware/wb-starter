@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/elementAt */
+import{ArgumentOutOfRangeError as r}from"../util/ArgumentOutOfRangeError.mjs";import{filter as n}from"./filter.mjs";import{throwIfEmpty as p}from"./throwIfEmpty.mjs";import{defaultIfEmpty as i}from"./defaultIfEmpty.mjs";import{take as u}from"./take.mjs";function E(t,e){if(t<0)throw new r;let o=arguments.length>=2;return m=>m.pipe(n((a,f)=>f===t),u(1),o?i(e):p(()=>new r))}export{E as elementAt};
+//# sourceMappingURL=elementAt.mjs.map

@@ -1,19 +1,19 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Chip (integration)', () => {
-  test('should render chip with x-chip class', async ({ page }: { page: Page }) => {
+  test('should render chip with [x-chip] class', async ({ page }: { page: Page }) => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-chip';
       el.setAttribute('x-chip', '');
       el.textContent = 'Tag Label';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const chip = page.locator('#test-chip');
@@ -27,13 +27,13 @@ test.describe('Chip (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-chip-pill';
       el.setAttribute('x-chip', '');
       el.textContent = 'Pill Chip';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const chip = page.locator('#test-chip-pill');
@@ -46,14 +46,14 @@ test.describe('Chip (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-chip-dismiss';
       el.setAttribute('x-chip', '');
       el.setAttribute('data-dismissible', '');
       el.textContent = 'Dismissible';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const chip = page.locator('#test-chip-dismiss');

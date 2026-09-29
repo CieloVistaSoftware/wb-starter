@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION: demos/playground.html's "Endpoint sees" panel (#pg-endpoint)

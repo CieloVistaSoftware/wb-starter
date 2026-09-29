@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/single */
+import{EmptyError as f}from"../util/EmptyError.mjs";import{SequenceError as i}from"../util/SequenceError.mjs";import{NotFoundError as p}from"../util/NotFoundError.mjs";import{operate as u}from"../util/lift.mjs";import{createOperatorSubscriber as g}from"./OperatorSubscriber.mjs";function V(o){return u((t,e)=>{let r=!1,n,m=!1,a=0;t.subscribe(g(e,l=>{m=!0,(!o||o(l,a++,t))&&(r&&e.error(new i("Too many matching values")),r=!0,n=l)},()=>{r?(e.next(n),e.complete()):e.error(m?new p("No matching values"):new f)}))})}export{V as single};
+//# sourceMappingURL=single.mjs.map

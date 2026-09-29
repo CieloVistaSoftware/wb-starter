@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/WhiteSpace */
+import{WhiteSpace as e}from"../../../tokenizer.mjs";var r=Object.freeze({type:"WhiteSpace",loc:null,value:" "}),o="WhiteSpace",c={value:String};function a(){return this.eat(e),r}function p(t){this.token(e,t.value)}export{p as generate,o as name,a as parse,c as structure};
+//# sourceMappingURL=WhiteSpace.mjs.map

@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * #671 / #672 — variants and striping must be VISIBLE, not merely classed.

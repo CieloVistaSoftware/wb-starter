@@ -13,7 +13,7 @@
  * `embedParams` were ever declared) — a real ReferenceError that would
  * have fired instantly, the moment <div x-vimeo> was ever actually reachable.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const PIXEL =
   'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7';
@@ -37,7 +37,10 @@ async function setup(page: Page, html: string): Promise<void> {
 
 test.describe('media custom-tag mappings (were completely unmapped)', () => {
   test('<video> gets enhanced and wraps a real <video>', async ({ page }) => {
-    await setup(page, '<video id="v1" src="https://example.com/x.mp4"></video>');
+    // The container form: a native <video> IS the player and has no <video>
+    // child to find -- that is what the 4.0.0 tag removal rewrote the old
+    // <wb-video> fixture into. <div x-video> is the host that builds one.
+    await setup(page, '<div x-video id="v1" src="https://example.com/x.mp4"></div>');
     await expect(page.locator('#v1')).toHaveClass(/x-video/);
     await expect(page.locator('#v1 video')).toHaveCount(1);
   });
@@ -69,7 +72,8 @@ test.describe('media custom-tag mappings (were completely unmapped)', () => {
   test('<div x-ratio> gets enhanced with the configured aspect-ratio', async ({ page }) => {
     await setup(page, '<div x-ratio id="r1" ratio="16x9"><div>content</div></div>');
     await expect(page.locator('#r1')).toHaveClass(/x-ratio/);
-    const aspectRatio = await page.locator('#r1').evaluate((el) => (el as HTMLElement).style.aspectRatio);
+    // Computed, not el.style: #779 moved the ratio into a generated rule.
+    const aspectRatio = await page.locator('#r1').evaluate((el) => getComputedStyle(el).aspectRatio);
     expect(aspectRatio).toBe('16 / 9');
   });
 

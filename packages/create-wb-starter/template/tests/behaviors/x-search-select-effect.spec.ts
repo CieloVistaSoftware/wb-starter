@@ -1,20 +1,17 @@
 /**
  * Effect-based coverage for the forms.html "🔍 Search" / "📋 Select" sections:
- * <div x-searchfield> (src/wb-viewmodels/search.js), <select> (src/wb-viewmodels/semantics/select.js),
+ * <div x-searchfield> (src/wb-viewmodels/search.js), <div x-select> (src/wb-viewmodels/semantics/select.js),
  * plus the native <select> and <input x-autocomplete> alternative shown near the bottom of
  * that page. Per DEMOS-AND-DOCS-STANDARDS.md §19, every declared attribute below is asserted
  * by its real computed-style/behavioral effect, not by presence of a class or attribute alone.
  *
- * IMPORTANT — searchable on <select>: demos/site/forms.html itself documents (near its
- * "Standard Select" demo) that filtering is done via `x-autocomplete`, "not a `searchable`
- * attribute on <select> (which doesn't exist)". Confirmed in source: buildWbSelect() in
- * src/wb-viewmodels/semantics/select.js never reads a `searchable` attribute/option at all —
- * only select.schema.json (a stale/aspirational spec) declares it. So the `searchable` test
- * below asserts the CURRENT real behavior (it's inert — no filter UI appears, matching the
- * page's own disclaimer) rather than the schema's aspirational claim, per TIER1 Law #5/#7.
- * Real typed-filtering coverage lives in the x-autocomplete test instead.
+ * searchable on <div x-select>: select.schema.json declares it ("Enable search") and
+ * buildWbSelect() used to ignore it entirely, so this spec once pinned it as inert. It now
+ * builds an <input type="search" class="x-select__search"> above the real <select> that hides
+ * the options not matching the typed text (#768 sweep); the test below asserts that effect.
+ * The native-<select> alternative, x-autocomplete, keeps its own test further down.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -84,19 +81,14 @@ test.describe('<div x-searchfield> effect-based attribute coverage', () => {
   });
 
   test('variant produces real computed style differences (glass backdrop-filter, minimal border)', async ({ page }) => {
-    // SUSPECTED BUG (confirmed via this test's real run, not guessed): search.js's search()
-    // adds the `x-search--{variant}` class to `element`, which IS the <input> itself --
-    // see the classList.add() calls at the top of search(element, options) in
-    // src/wb-viewmodels/search.js, all executed BEFORE the wrapper div is created and the
-    // input is moved inside it. So the modifier class ends up on a DESCENDANT of
-    // .x-search__wrapper, never an ancestor. But search.css's variant rules are all
-    // ancestor-descendant selectors (`.x-search--glass .x-search__wrapper`,
-    // `.x-search--minimal .x-search__wrapper`) expecting the modifier class on an
-    // ancestor of the wrapper -- so they never match. Empirically confirmed: glass
-    // backdrop-filter computes to 'none' (same as default), identical to no variant at all.
-    // Marked test.fail() so the suite stays green until src/wb-viewmodels/search.js applies
-    // the modifier class to the wrapper (or the host <div x-searchfield> tag) instead of the input.
-    test.fail();
+    // #359: searchField() puts `x-search--{variant}` on the HOST <div x-searchfield>,
+    // an ancestor of .x-search__wrapper, which is what search.css's
+    // `.x-search--glass .x-search__wrapper` / `.x-search--minimal .x-search__wrapper`
+    // rules need. This test was once marked test.fail() because search() only classed
+    // the inner <input> (a descendant of the wrapper), so the rules never matched.
+    // With the host classed it passes for real, and test.fail() turned that into a
+    // red "expected to fail, but passed" -- so the marker is gone and this now
+    // guards the fix.
     await setup(page, `
       <div x-searchfield id="s-default" placeholder="default"></div>
       <div x-searchfield id="s-glass" variant="glass" placeholder="glass"></div>
@@ -119,16 +111,10 @@ test.describe('<div x-searchfield> effect-based attribute coverage', () => {
   });
 
   test('size sm vs lg produce a real computed height difference', async ({ page }) => {
-    // SUSPECTED BUG (same root cause as the variant test above, confirmed via this test's
-    // real run): the `x-search--sm`/`x-search--lg` class is added to the <input> element
-    // in search.js, before that input is moved inside .x-search__wrapper -- so it ends up
-    // a descendant of the wrapper, not an ancestor. search.css's size rules
-    // (`.x-search--sm .x-search__wrapper`, `.x-search--lg .x-search__wrapper`) need the
-    // modifier class on an ancestor of the wrapper, so they never match. Empirically
-    // confirmed: both sm and lg wrappers compute to the same 40px (2.5rem) default height.
-    // Marked test.fail() so the suite stays green until src/wb-viewmodels/search.js applies
-    // the modifier class to the wrapper (or the host <div x-searchfield> tag) instead of the input.
-    test.fail();
+    // Same root cause and same fix as the variant test above (#359): the size class
+    // is on the host, an ancestor of .x-search__wrapper, so search.css's
+    // `.x-search--sm .x-search__wrapper` / `.x-search--lg .x-search__wrapper` rules
+    // apply. No longer test.fail() -- it passes for real and now guards the fix.
     await setup(page, `
       <div x-searchfield id="s-sm" size="sm" placeholder="sm"></div>
       <div x-searchfield id="s-lg" size="lg" placeholder="lg"></div>
@@ -158,26 +144,32 @@ test.describe('<div x-searchfield> effect-based attribute coverage', () => {
   });
 });
 
-test.describe('<select> effect-based attribute coverage', () => {
+test.describe('<div x-select> effect-based attribute coverage', () => {
   const FRUIT_OPTIONS = '[{"value":"a","label":"Apple"},{"value":"b","label":"Banana"},{"value":"c","label":"Cherry"}]';
 
-  test('searchable is currently inert -- no filter UI, identical to a plain <select> (see file header)', async ({ page }) => {
+  test('searchable adds a filter box that hides non-matching options', async ({ page }) => {
     await setup(page, `
-      <select id="sel-plain" options='${FRUIT_OPTIONS}'></select>
-      <select id="sel-searchable" searchable options='${FRUIT_OPTIONS}'></select>
+      <div x-select id="sel-plain" options='${FRUIT_OPTIONS}'></div>
+      <div x-select id="sel-searchable" searchable options='${FRUIT_OPTIONS}'></div>
     `);
 
-    // No dedicated search/filter input is rendered by the searchable attribute.
-    await expect(page.locator('#sel-searchable input[type="text"], #sel-searchable input[type="search"]')).toHaveCount(0);
+    // The plain select gets no filter box; the searchable one does.
+    await expect(page.locator('#sel-plain input[type="search"]')).toHaveCount(0);
+    const search = page.locator('#sel-searchable input[type="search"]');
+    await expect(search).toHaveCount(1);
 
-    // Same option count as the plain select -- searchable does not add or remove anything.
+    // Same options either way -- filtering hides, it never removes.
     const plainCount = await page.locator('#sel-plain select option').count();
-    const searchableCount = await page.locator('#sel-searchable select option').count();
-    expect(searchableCount).toBe(plainCount);
+    expect(await page.locator('#sel-searchable select option').count()).toBe(plainCount);
+
+    await search.fill('an');
+    const visible = await page.locator('#sel-searchable select option').evaluateAll((opts) =>
+      (opts as HTMLOptionElement[]).filter((o) => !o.hidden && o.value).map((o) => o.textContent));
+    expect(visible).toEqual(['Banana']);
   });
 
   test('clearable actually empties the current selection', async ({ page }) => {
-    await setup(page, `<select id="sel-clearable" clearable options='${FRUIT_OPTIONS}'></select>`);
+    await setup(page, `<div x-select id="sel-clearable" clearable options='${FRUIT_OPTIONS}'></div>`);
 
     const select = page.locator('#sel-clearable select');
     await select.selectOption('a');
@@ -189,8 +181,8 @@ test.describe('<select> effect-based attribute coverage', () => {
 
   test('multiple allows two options to remain selected simultaneously; default does not', async ({ page }) => {
     await setup(page, `
-      <select id="sel-multiple" multiple options='${FRUIT_OPTIONS}'></select>
-      <select id="sel-single" options='${FRUIT_OPTIONS}'></select>
+      <div x-select id="sel-multiple" multiple options='${FRUIT_OPTIONS}'></div>
+      <div x-select id="sel-single" options='${FRUIT_OPTIONS}'></div>
     `);
 
     const multi = page.locator('#sel-multiple select');
@@ -206,7 +198,7 @@ test.describe('<select> effect-based attribute coverage', () => {
   });
 
   test('disabled cannot be changed by interaction', async ({ page }) => {
-    await setup(page, `<select id="sel-disabled" disabled options='${FRUIT_OPTIONS}'></select>`);
+    await setup(page, `<div x-select id="sel-disabled" disabled options='${FRUIT_OPTIONS}'></div>`);
 
     const select = page.locator('#sel-disabled select');
     await expect(select).toBeDisabled();
@@ -223,7 +215,7 @@ test.describe('<select> effect-based attribute coverage', () => {
   });
 
   test('required makes the underlying <select> fail native validation when empty, pass once a value is set', async ({ page }) => {
-    await setup(page, `<select id="sel-required" required options='${FRUIT_OPTIONS}'></select>`);
+    await setup(page, `<div x-select id="sel-required" required options='${FRUIT_OPTIONS}'></div>`);
 
     const select = page.locator('#sel-required select');
     await expect(select).toHaveJSProperty('required', true);

@@ -4,23 +4,23 @@
  * Validates all .schema.json files are complete and well-formed.
  * 
  * Respects schemaType tiers:
- *   "behavior" (default) — full rules: title, description, properties, $view, $methods, behavior/schemaFor
+ *   "component" (default) — full rules: title, description, properties, $view, $methods, behavior/schemaFor
  *   "base"               — abstract/inherited: title, description, properties (type+default on props)
  *   "definition"         — reference docs: title, description only
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import {
-  PATHS, getSchemaFiles, loadSchema, getComponentSchemas, Schema
+  PATHS, getSchemaFiles, loadSchema, getComponentSchemas, Schema, usesNativeHost
 } from '../base';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // HELPERS — Schema Type Resolution
 // ═══════════════════════════════════════════════════════════════════════════
 
-type SchemaType = 'behavior' | 'base' | 'definition' | 'behavior' | 'page';
+type SchemaType = 'component' | 'base' | 'definition' | 'behavior' | 'page';
 
 /**
  * Get all schema files recursively (including subdirs like semantic/, _base/)
@@ -49,7 +49,7 @@ function loadSchemaFull(relPath: string): any | null {
 }
 
 function getSchemaType(schema: any): SchemaType {
-  return schema?.schemaType || 'behavior';
+  return schema?.schemaType || 'component';
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -82,18 +82,18 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
     expect(issues, `Missing title/description:\n${issues.join('\n')}`).toEqual([]);
   });
 
-  test('behavior schemas have required fields (properties, $view, $methods, behavior/schemaFor)', () => {
+  test('component schemas have required fields (properties, $view, $methods, behavior/schemaFor)', () => {
     const files = getAllSchemaFiles();
     const issues: string[] = [];
     for (const file of files) {
       const schema = loadSchemaFull(file);
-      if (!schema || getSchemaType(schema) !== 'behavior') continue;
-      if (!schema.properties) issues.push(`${file}: behavior missing "properties"`);
-      if (schema.$view === undefined) issues.push(`${file}: behavior missing "$view"`);
-      if (schema.$methods === undefined) issues.push(`${file}: behavior missing "$methods"`);
-      if (!schema.behavior && !schema.schemaFor) issues.push(`${file}: behavior missing "behavior" or "schemaFor"`);
+      if (!schema || getSchemaType(schema) !== 'component') continue;
+      if (!schema.properties) issues.push(`${file}: component missing "properties"`);
+      if (schema.$view === undefined) issues.push(`${file}: component missing "$view"`);
+      if (schema.$methods === undefined) issues.push(`${file}: component missing "$methods"`);
+      if (!schema.behavior && !schema.schemaFor) issues.push(`${file}: component missing "behavior" or "schemaFor"`);
     }
-    expect(issues, `Behavior schema violations:\n${issues.join('\n')}`).toEqual([]);
+    expect(issues, `Component schema violations:\n${issues.join('\n')}`).toEqual([]);
   });
 
   test('base schemas have required fields (properties)', () => {
@@ -109,7 +109,7 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
 
   test('schemaType field is valid when present', () => {
     const files = getAllSchemaFiles();
-    const valid = ['behavior', 'base', 'definition', 'behavior', 'page'];
+    const valid = ['component', 'base', 'definition', 'behavior', 'page'];
     const issues: string[] = [];
     for (const file of files) {
       const schema = loadSchemaFull(file);
@@ -143,22 +143,22 @@ test.describe('Schema Validation: SchemaType Tiers', () => {
 
 test.describe('Schema Validation: Required Sections', () => {
   
-  test('behavior schemas have "schemaFor" field', () => {
+  test('component schemas have "schemaFor" field', () => {
     const files = getSchemaFiles();
     const missing: string[] = [];
     
     for (const file of files) {
       const schema = loadSchema(file) as any;
       if (!schema) continue;
-      // Skip non-behavior schemas (base, definition)
-      if (schema.schemaType && schema.schemaType !== 'behavior') continue;
+      // Skip non-component schemas (base, definition)
+      if (schema.schemaType && schema.schemaType !== 'component') continue;
       if (!schema.schemaFor) missing.push(file);
     }
     
     expect(missing, `Schemas missing "schemaFor" field: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('behavior schemas have "compliance" section', () => {
+  test('component schemas have "compliance" section', () => {
     const schemas = getComponentSchemas();
     const missing: string[] = [];
     
@@ -184,7 +184,7 @@ test.describe('Schema Validation: Required Sections', () => {
     expect(missing, `Schemas with compliance but missing baseClass: ${missing.join(', ')}`).toEqual([]);
   });
   
-  test('behavior schemas have "test" section', () => {
+  test('component schemas have "test" section', () => {
     const schemas = getComponentSchemas();
     const missing: string[] = [];
     
@@ -215,7 +215,7 @@ test.describe('Schema Validation: Required Sections', () => {
 
 test.describe('Schema Validation: Property Definitions', () => {
   
-  test('properties have "type" field (behavior + base tiers)', () => {
+  test('properties have "type" field (component + base tiers)', () => {
     const files = getAllSchemaFiles();
     const issues: string[] = [];
     
@@ -237,7 +237,7 @@ test.describe('Schema Validation: Property Definitions', () => {
     expect(issues, `Properties missing type:\n${issues.join('\n')}`).toEqual([]);
   });
 
-  test('properties have "default" field (behavior + base tiers)', () => {
+  test('properties have "default" field (component + base tiers)', () => {
     const files = getAllSchemaFiles();
     const issues: string[] = [];
     
@@ -245,7 +245,7 @@ test.describe('Schema Validation: Property Definitions', () => {
       const schema = loadSchemaFull(file);
       if (!schema?.properties) continue;
       const tier = getSchemaType(schema);
-      // Behaviors/modifiers describe attributes, not stateful behavior props —
+      // Behaviors/modifiers describe attributes, not stateful component props —
       // a "default" is not meaningful for them (same exemption as definitions).
       if (tier === 'definition' || tier === 'behavior') continue;
 
@@ -360,8 +360,11 @@ test.describe('Schema Validation: Test Section Completeness', () => {
           // x-* attributes are the v3 primary syntax for attaching behaviors
           // to native elements (e.g. <form x-form>, <button x-ripple>).
           const hasXBehavior = /\sx-[a-z][\w-]*/.test(html);
-          if (!hasWbTag && !hasDataWb && !hasXBehavior) {
-            issues.push(`${file}: setup[${i}] missing <wb-*> tag, data-wb, or x-* behavior attribute`);
+          // A native host that auto-injects this behavior (<audio>, <dialog>,
+          // <article> for card -- tag-map.js nativeMap) needs no marker at all.
+          const isNativeHost = usesNativeHost(html, schema.schemaFor);
+          if (!hasWbTag && !hasDataWb && !hasXBehavior && !isNativeHost) {
+            issues.push(`${file}: setup[${i}] missing <wb-*> tag, data-wb, x-* behavior attribute, or auto-injecting native host`);
           }
         }
       }
@@ -428,11 +431,12 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         const hasWbTag = possibleTags.some(tag => html.includes(tag));
         const hasDataWb = html.includes(dataWbPattern);
         const hasXAttr = xAttrPattern.test(html);
+        const isNativeHost = usesNativeHost(html, schema.schemaFor);
 
         const usesSharedCardMarkup = schema.schemaFor.startsWith('card') &&
           (html.includes('data-wb="card"') || html.includes('<article'));
 
-        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesSharedCardMarkup) {
+        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesSharedCardMarkup && !isNativeHost) {
           issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}>, x-${schema.schemaFor}, or data-wb="${schema.schemaFor}"`);
         }
       }
@@ -476,7 +480,7 @@ test.describe('Schema Validation: Summary', () => {
   test('schema inventory', () => {
     const schemas = getComponentSchemas();
     
-    console.log(`\n📋 Schema Inventory: ${schemas.size} behavior schemas found`);
+    console.log(`\n📋 Schema Inventory: ${schemas.size} component schemas found`);
     
     let complete = 0;
     let incomplete = 0;

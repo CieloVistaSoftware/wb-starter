@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Site navigation config guard', () => {
   test('standalone pages do not throw when navigation runs without config', async ({ page }) => {

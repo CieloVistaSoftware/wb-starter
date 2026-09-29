@@ -77,7 +77,7 @@ const RELOAD_IGNORE_DIRS = new Set([
   // .spec.ts file under tests/ -- each run was spuriously triggering a
   // full-page reload (and full module re-fetch) per file, even though none
   // of their mtimes had actually changed. Confirmed live: a burst of
-  // "[File Changed] tests\behaviors\*.spec.ts" messages during test runs,
+  // "[File Changed] tests\components\*.spec.ts" messages during test runs,
   // none of which had been edited (user-reported, read as "bogged down
   // network").
   'tests',
@@ -292,7 +292,7 @@ app.get('/pages/:page', (req, res, next) => {
       // standalone wrap (confirmed by dark-mode.spec.ts, which navigates
       // directly here) while working fine via the real SPA-injection
       // consumer. Added a generic wb-[a-z0-9-]+ alternative so every
-      // src/href-bearing <wb-*> behavior (x-audio, x-avatar, x-cardimage,
+      // src/href-bearing <wb-*> component (x-audio, x-avatar, x-cardimage,
       // x-cardvideo today, any future one) is covered, not just today's
       // known offenders.
       const RESOURCE_REF = /(<(?:link|script|img|source|audio|video|wb-[a-z0-9-]+)\b[^>]*?\b(?:href|src)\s*=\s*")([^"]+)(")/gi;
@@ -471,7 +471,7 @@ app.post('/api/markdown', express.text({ type: '*/*' }), (req, res) => {
 // PICKER wearing an upload label -- nothing in the codebase could send a file
 // anywhere. This gives it a real round trip to complete.
 //
-// Deliberately accept-and-report, never persist: a behavior showcase has no
+// Deliberately accept-and-report, never persist: a component showcase has no
 // business writing a reader's files into the repo, and a discarded upload
 // still exercises the whole path (pick -> POST -> progress -> response).
 // express.raw() so the bytes arrive untouched and the reported size is the
@@ -490,6 +490,31 @@ app.post('/api/upload', express.raw({ type: '*/*', limit: '25mb' }), (req, res) 
     stored: false,
     note: 'Received and discarded — the showcase does not persist uploads.'
   });
+});
+
+// #1030: the error log is READ as a static file (errors-viewer.html and
+// error-logger.js both fetch /data/errors.json), so it is joined to the fix
+// registry here, ahead of express.static. Enriching only on append would leave
+// every row written before its signature was analysed permanently blank — the
+// redundant-attribute rows in today's log still said `fixable: false` minutes
+// after the registry said true.
+//
+// Declared before the static handler on purpose: Express matches in order, and
+// after it the file would win and this would never run.
+app.get('/data/errors.json', (req, res) => {
+  try {
+    const full = path.join(rootDir, ERROR_LOG_REL_PATH);
+    const raw = fs.existsSync(full)
+      ? JSON.parse(fs.readFileSync(full, 'utf8'))
+      : { lastUpdated: null, count: 0, errors: [] };
+    const registry = readFixRegistry();
+    const errors = (raw.errors || []).map((e) => enrichFromRegistry(e, registry));
+    res.set('Cache-Control', 'no-store');
+    res.json({ ...raw, count: errors.length, errors });
+  } catch (e) {
+    console.error('[Error Log Read]', e);
+    res.status(500).json({ error: e.message });
+  }
 });
 
 app.use(express.static(rootDir, cacheConfig));
@@ -635,12 +660,116 @@ function writeErrorLog(errors) {
   }, null, 2), 'utf8');
 }
 
+// #1027 — John: "all of our error logs must stay on the system for 30 days."
+//
+// Every path that removes an entry from data/errors.json archives it first and
+// says so. Nothing here deletes: archives accumulate, and only
+// scripts/prune-error-archives.mjs removes any — opt-in, older than 30 days,
+// naming each file as it goes.
+const ERROR_ARCHIVE_DIR = 'data/error-log-archive';
+
+function archiveErrors(errors, reason) {
+  if (!Array.isArray(errors) || errors.length === 0) return null;
+  const dir = path.join(rootDir, ERROR_ARCHIVE_DIR);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const file = path.join(dir, `errors-${stamp}-${reason}.json`);
+  fs.writeFileSync(file, JSON.stringify({
+    archivedAt: new Date().toISOString(),
+    reason,
+    count: errors.length,
+    errors
+  }, null, 2), 'utf8');
+  console.log(
+    `[Error Log] ${errors.length} entr${errors.length === 1 ? 'y' : 'ies'} archived to `
+    + `${path.relative(rootDir, file)} (${reason}).`
+  );
+  return file;
+}
+
+const ERROR_LOG_CAP = 100;
+
+// #1030 — John: "error log view ---> issue --> Analysis/Test and how to fix next time."
+//
+// The registry lookup in error-logger.js is fire-and-forget, so the first errors
+// on a page — which is most of them, since pages log during startup — were
+// written with analysis/solution/verify/issue all null while a matching entry
+// sat in data/fix-registry.json the whole time. There is no race here: the file
+// is on disk, the request is synchronous, and every appended error can be joined
+// to what is already known about its signature before it is ever stored.
+const FIX_REGISTRY_REL_PATH = 'data/fix-registry.json';
+const REGISTRY_FIELDS = ['analysis', 'solution', 'fixable', 'remedy', 'verify', 'issue'];
+
+function readFixRegistry() {
+  try {
+    const full = path.join(rootDir, FIX_REGISTRY_REL_PATH);
+    if (!fs.existsSync(full)) return {};
+    return JSON.parse(fs.readFileSync(full, 'utf8')).entries || {};
+  } catch (e) {
+    // A malformed registry must not swallow the error being reported — but it
+    // must not pass silently either.
+    console.warn('[Error Log] fix registry unreadable, entries will not be enriched:', e.message);
+    return {};
+  }
+}
+
+/**
+ * Join one logged error to its known diagnosis.
+ *
+ * Only fills fields the entry does not already carry: whatever the page managed
+ * to attach client-side wins, because it was closer to the event.
+ */
+function enrichFromRegistry(entry, registry) {
+  if (!entry || !entry.signature) return entry;
+  const known = registry[entry.signature];
+  if (!known) return entry;
+  const out = { ...entry };
+  for (const field of REGISTRY_FIELDS) {
+    const missing = out[field] === undefined || out[field] === null
+      || (field === 'fixable' && known.fixable === true && out.fixable !== true);
+    if (missing && known[field] !== undefined) out[field] = known[field];
+  }
+  return out;
+}
+
 app.post("/api/error-log/append", (req, res) => {
   try {
     const { error } = req.body;
     if (!error) return res.status(400).json({ error: 'Missing error' });
     const current = readErrorLog();
-    const errors = [...current.errors, error].slice(-100);
+    const incoming = enrichFromRegistry(error, readFixRegistry());
+
+    // #1029: repeats are COUNTED, not re-listed — and that was only ever true
+    // in the browser's memory. error-logger.js increments `count` on the
+    // existing error and re-POSTs the SAME object so the stored copy carries
+    // the updated count; this route pushed it as a new row every time. One
+    // broken image retried five times therefore wrote five rows holding counts
+    // 1, 2, 3, 4, 5 — the same fault listed five times, each with a different
+    // and immediately stale number. Measured with a single missing image: 3
+    // rows for 1 fault.
+    //
+    // The client's `id` is assigned once per occurrence and resent unchanged,
+    // so it identifies the row to UPDATE. Message and source are checked too,
+    // because `id` is Date.now() and two pages can start an error in the same
+    // millisecond.
+    const sameRow = (e) =>
+      e && e.id === incoming.id && e.message === incoming.message && e.source === incoming.source;
+
+    const at = current.errors.findIndex(sameRow);
+    const all = at === -1
+      ? [...current.errors, incoming]
+      : current.errors.map((e, i) => (i === at ? incoming : e));
+
+    // The cap used to be a bare `.slice(-100)`: entry 101 pushed entry 1 out of
+    // existence with nothing recorded anywhere. Under a 30-day retention rule
+    // that is data loss on a timer, so whatever falls off the end is archived.
+    let errors = all;
+    if (all.length > ERROR_LOG_CAP) {
+      const dropped = all.slice(0, all.length - ERROR_LOG_CAP);
+      archiveErrors(dropped, 'overflow');
+      errors = all.slice(-ERROR_LOG_CAP);
+    }
+
     writeErrorLog(errors);
     res.json({ success: true, count: errors.length });
   } catch (e) {
@@ -649,10 +778,423 @@ app.post("/api/error-log/append", (req, res) => {
   }
 });
 
+// ── #1045: the issues viewer must not depend on the unauthenticated API ──────
+//
+// John: "Could not load issues: GitHub API responded 403 and nothing is cached
+// yet (GitHub API rate limits unauthenticated requests to 60/hour per IP)."
+//
+// pages/issues.html called api.github.com DIRECTLY from the browser. That is
+// the 60-per-hour-per-IP bucket, and it is shared with every other
+// unauthenticated thing on this machine — so a session that files and closes
+// issues (or a few page reloads) exhausts it and the page has nothing to show.
+// The localStorage cache only helps AFTER one successful load, which is exactly
+// what a rate-limited visitor cannot get.
+//
+// The dev server has `gh` and `gh` is authenticated: 5,000/hour instead of 60,
+// and a disk cache that survives a cleared browser, a private window, and a
+// first-ever visit. The browser keeps its direct call as the FALLBACK, because
+// the deployed GitHub Pages site is static and has no server to proxy through.
+const ISSUES_REPO = 'CieloVistaSoftware/wb-starter';
+const ISSUES_CACHE_REL_PATH = 'data/issues-cache.json';
+const ISSUES_TTL_MS = 5 * 60 * 1000;
+
+function readIssuesCache() {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(rootDir, ISSUES_CACHE_REL_PATH), 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+// ── #912: trace a fix back to its issue, and forward to its release ─────────
+//
+// John: "I need to be able to track fixes back to the issue and then what
+// release they were put into", "the open issue/closed issue should be specified
+// in fix viewer for each row", and — the rule the whole shape follows —
+// "the issue is the source of truth, everything else should build on that".
+//
+// So the ISSUE LIST is fetched first and is authoritative: a `#NNNN` in a commit
+// message counts only when an issue with that number actually exists. That is
+// not a nicety — it is what removed `#6366` (a four-digit number in a commit
+// body that was never an issue) from the table without special-casing it.
+//
+// data/fixes.json cannot answer any of this at any formatting: 13 hand-written
+// entries with no issue number and no version. The answer lives in git — a
+// commit cites its issue, and the EARLIEST tag containing that commit is the
+// release it shipped in. Releases had to exist first: 4.0.0 and 4.0.1 shipped
+// untagged, so nothing recent could be traced until they were tagged
+// retroactively.
+// #1054: this route was measured at 8.2s and 10.6s returning 3.86MB, recomputed
+// from scratch on every load, and the Fix Viewer paints nothing until it
+// resolves — John read that as "it's just hanging". It was not hanging; it was
+// working for longer than anyone waits.
+//
+// Cached on disk the same way /api/issues already is. Keyed on HEAD **and** a
+// TTL, not on HEAD alone: the issue text says "the answer cannot change while
+// HEAD does not", and that is not quite true — every row carries the issue's
+// STATE, and an issue opens or closes without any commit landing. HEAD alone
+// would serve a table insisting a closed issue is still open until someone
+// happened to commit. So HEAD changing invalidates immediately, and the TTL
+// bounds how stale the issue metadata can be.
+const FIXES_CACHE_REL_PATH = 'data/fixes-cache.json';
+const FIXES_TTL_MS = 5 * 60 * 1000;
+
+function headSha(rootDir) {
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: rootDir, encoding: 'utf8', timeout: 10000 }).trim();
+  } catch {
+    return null;
+  }
+}
+
+app.get('/api/fixes', (req, res) => {
+  const head = headSha(rootDir);
+  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+
+  if (head && !('refresh' in req.query)) {
+    try {
+      const cached = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+      const fresh = cached.head === head && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS;
+      if (fresh && cached.payload) {
+        res.set('Cache-Control', 'no-store');
+        res.set('X-Fixes-Cache', 'hit');
+        res.json(cached.payload);
+        return;
+      }
+    } catch { /* no cache, unreadable, or a shape from an older build — recompute */ }
+  }
+
+  const US = String.fromCharCode(31);
+  const RS = String.fromCharCode(30);
+  const NL = String.fromCharCode(10);
+  const git = (args) => {
+    try {
+      return execFileSync('git', args, {
+        cwd: rootDir, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000,
+      });
+    } catch { return ''; }
+  };
+
+  // 1. THE ISSUES — the source of truth. Everything below is filtered by this.
+  const meta = new Map();
+  try {
+    const out = execFileSync(
+      'gh',
+      ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
+       '--json', 'number,title,state,url,closedAt,labels'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000 },
+    );
+    for (const i of JSON.parse(out)) meta.set(i.number, i);
+  } catch (e) {
+    console.warn('[Fixes] gh issue list failed:', e.message);
+  }
+
+  // 2. Releases, oldest first, so the first tag containing a commit is the
+  //    release it shipped in.
+  const tags = git(['tag', '--list', 'v*', '--sort=v:refname'])
+    .split(NL).map((t) => t.trim()).filter(Boolean);
+  const tagSets = tags.map((t) => [t, new Set(git(['rev-list', t]).split(NL).filter(Boolean))]);
+  const releaseOf = (sha) => (tagSets.find(([, set]) => set.has(sha)) || [null])[0];
+
+  // 3. Commits, credited only to issues that exist.
+  //
+  // ONE log pass with --name-only carries the changed files inline. With
+  // --name-only git prints the file list AFTER the formatted record, so once
+  // split on RS the files for record N arrive at the head of chunk N+1 — which
+  // is why the leading lines of each chunk are attributed to the previous sha.
+  const byIssue = new Map();
+  const filesBySha = new Map();
+  const rawLog = git(['log', '--all', '--max-count=4000', '--name-only', `--format=%H${US}%s${US}%b${RS}`]);
+  const chunks = rawLog.split(RS);
+  const shaOrder = [];
+  const parsed = chunks.map((chunk) => {
+    const lines = chunk.split(NL);
+    const leading = [];
+    let i = 0;
+    for (; i < lines.length; i++) {
+      const candidate = lines[i].split(US)[0].trim();
+      if (/^[0-9a-f]{40}$/.test(candidate)) break;
+      if (lines[i].trim()) leading.push(lines[i].trim());
+    }
+    const rec = lines.slice(i).join(NL);
+    return { leading, rec };
+  });
+  parsed.forEach((p, idx) => {
+    // `leading` belongs to the PREVIOUS record's commit.
+    if (idx > 0 && shaOrder[idx - 1]) filesBySha.set(shaOrder[idx - 1], p.leading);
+    const [sha] = p.rec.replace(/^\s+/, '').split(US);
+    shaOrder[idx] = /^[0-9a-f]{40}$/.test(sha) ? sha : null;
+  });
+
+  for (const { rec: entry } of parsed) {
+    if (!entry.trim()) continue;
+    const [sha, subject = '', body = ''] = entry.replace(/^\s+/, '').split(US);
+    if (!/^[0-9a-f]{40}$/.test(sha)) continue;
+
+    const cited = new Set(
+      [...`${subject} ${body}`.matchAll(/#(\d{3,4})(?!\d)/g)]
+        .map((m) => Number(m[1]))
+        .filter((n) => meta.has(n)),   // the issue list decides, not the text
+    );
+    if (!cited.size) continue;
+
+    // Files this commit touched, linked at THIS sha so the link shows the code
+    // as it was when the fix landed, not as it is now.
+    //
+    // Read from the ONE log pass below, not `git show` per commit: that spawned
+    // a subprocess for every commit citing an issue — hundreds of them — and the
+    // page simply never finished loading.
+    const files = (filesBySha.get(sha) || []).slice(0, 40);
+
+    for (const n of cited) {
+      if (!byIssue.has(n)) byIssue.set(n, []);
+      byIssue.get(n).push({
+        sha: sha.slice(0, 8),
+        url: `https://github.com/${ISSUES_REPO}/commit/${sha}`,
+        subject,
+        release: releaseOf(sha),
+        files: files.map((f) => ({
+          path: f,
+          url: `https://github.com/${ISSUES_REPO}/blob/${sha}/${f}`,
+        })),
+      });
+    }
+  }
+
+  const rows = [...byIssue.entries()].map(([number, commits]) => {
+    const i = meta.get(number) || {};
+    const files = [];
+    const seen = new Set();
+    for (const c of commits) {
+      for (const f of c.files) {
+        if (seen.has(f.path)) continue;
+        seen.add(f.path);
+        files.push(f);
+      }
+    }
+    return {
+      number,
+      title: i.title || null,
+      state: (i.state || 'unknown').toLowerCase(),
+      url: i.url || `https://github.com/${ISSUES_REPO}/issues/${number}`,
+      closedAt: i.closedAt || null,
+      priority: (i.labels || []).map((l) => l.name).find((n) => /^priority:[1-5]$/.test(n)) || null,
+      commits,
+      files: files.slice(0, 25),
+      release: commits.map((c) => c.release).filter(Boolean).sort()[0] || null,
+    };
+  }).sort((a, b) => b.number - a.number);
+
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    counts: {
+      traced: rows.length,
+      released: rows.filter((r) => r.release).length,
+      unreleased: rows.filter((r) => !r.release).length,
+      open: rows.filter((r) => r.state === 'open').length,
+      closed: rows.filter((r) => r.state === 'closed').length,
+    },
+    releases: tags,
+    rows,
+  };
+
+  // Written only when there is something to write. Caching an empty result
+  // would pin a failed `gh` call (rate limit, network, not logged in) into the
+  // viewer for the life of the TTL, and an empty table is exactly what this
+  // issue is about being unable to distinguish from a broken one.
+  if (head && rows.length) {
+    try {
+      fs.writeFileSync(path.join(rootDir, FIXES_CACHE_REL_PATH),
+        JSON.stringify({ head, cachedAt: new Date().toISOString(), payload }));
+    } catch (err) {
+      console.warn('[Fixes] could not write cache:', err.message);
+    }
+  }
+
+  res.set('Cache-Control', 'no-store');
+  res.set('X-Fixes-Cache', 'miss');
+  res.json(payload);
+});
+
+// ── #1046: an account of work done, not just current state ──────────────────
+//
+// John: "I don't like what I'm seeing therefore on the issues page I want an
+// account of all work done within last 24hrs with links."
+//
+// The viewer renders derived STATE. A day with 15 issues closed, 7 filed and 16
+// commits renders identically to a day with none, because closing an issue moves
+// it OUT of the open list rather than into a record of what was done. This
+// answers "what happened", which is the question actually being asked when
+// progress is in doubt.
+//
+// Authenticated via gh, like /api/issues (#1045), so it costs nothing against the
+// 60/hour unauthenticated browser budget.
+app.get('/api/activity', (req, res) => {
+  const hours = Math.min(Math.max(Number(req.query.hours) || 24, 1), 24 * 30);
+  const sinceMs = Date.now() - hours * 3600 * 1000;
+  const sinceIso = new Date(sinceMs).toISOString();
+
+  const cites = (text) => [...new Set(
+    [...String(text || '').matchAll(/#(\d{3,4})(?!\d)/g)].map((m) => Number(m[1])),
+  )];
+
+  // ── commits ──────────────────────────────────────────────────────────────
+  let commits = [];
+  try {
+    const RS = String.fromCharCode(30);
+    const US = String.fromCharCode(31);
+    const raw = execFileSync(
+      'git',
+      ['log', `--since=${sinceIso}`, '--all', `--format=%H${US}%aI${US}%s${US}%b${RS}`],
+      { cwd: rootDir, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 20000 },
+    );
+    commits = raw.split(RS)
+      .map((e) => e.replace(/^\s+/, ''))
+      .filter((e) => e.trim())
+      .map((entry) => {
+        const [sha, when, subject = '', body = ''] = entry.split(US);
+        if (!/^[0-9a-f]{40}$/.test(sha)) return null;
+        return {
+          sha: sha.slice(0, 8),
+          url: `https://github.com/${ISSUES_REPO}/commit/${sha}`,
+          when,
+          subject,
+          issues: cites(`${subject} ${body}`),
+        };
+      })
+      .filter(Boolean);
+  } catch (e) {
+    console.warn('[Activity] git log failed:', e.message);
+  }
+
+  // ── issues, from the same authenticated source as /api/issues ────────────
+  let closed = [];
+  let opened = [];
+  try {
+    const out = execFileSync(
+      'gh',
+      ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
+       '--json', 'number,title,state,createdAt,closedAt,url,labels'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000 },
+    );
+    const all = JSON.parse(out);
+    const inWindow = (iso) => iso && new Date(iso).getTime() >= sinceMs;
+    const shape = (i, at) => ({
+      number: i.number,
+      title: i.title,
+      url: i.url,
+      at,
+      priority: (i.labels || []).map((l) => l.name)
+        .find((n) => /^priority:[1-5]$/.test(n)) || null,
+      // The commits in this window that name it — the evidence, inline.
+      commits: commits.filter((c) => c.issues.includes(i.number)).map((c) => c.sha),
+    });
+    closed = all.filter((i) => inWindow(i.closedAt)).map((i) => shape(i, i.closedAt))
+      .sort((a, b) => new Date(b.at) - new Date(a.at));
+    opened = all.filter((i) => inWindow(i.createdAt)).map((i) => shape(i, i.createdAt))
+      .sort((a, b) => new Date(b.at) - new Date(a.at));
+  } catch (e) {
+    console.warn('[Activity] gh issue list failed:', e.message);
+  }
+
+  // John: "Does this mean we effectively have closed +2".
+  //
+  // Yes, but the raw columns invite arithmetic that is only coincidentally
+  // right: an issue OPENED and CLOSED inside the window appears in BOTH, so it
+  // is counted twice while never having existed in the backlog at all. Those
+  // cancel, so closed - opened does give the correct net — but only by accident
+  // of the algebra, and nobody should have to notice that. The net is stated
+  // here, computed from the two populations that actually move the backlog:
+  //   reduction = issues closed that were opened BEFORE the window
+  //   addition  = issues opened in the window that are STILL open
+  const closedNums = new Set(closed.map((c) => c.number));
+  const openedNums = new Set(opened.map((o) => o.number));
+  const reduction = closed.filter((c) => !openedNums.has(c.number)).length;
+  const addition = opened.filter((o) => !closedNums.has(o.number)).length;
+  const sameWindow = [...openedNums].filter((n) => closedNums.has(n));
+
+  res.set('Cache-Control', 'no-store');
+  res.json({
+    hours,
+    since: sinceIso,
+    generatedAt: new Date().toISOString(),
+    counts: {
+      closed: closed.length,
+      opened: opened.length,
+      commits: commits.length,
+      // Negative means the backlog SHRANK.
+      netOpen: addition - reduction,
+      backlogReduction: reduction,
+      backlogAddition: addition,
+      openedAndClosedSameWindow: sameWindow,
+    },
+    closed,
+    opened,
+    commits,
+  });
+});
+
+app.get('/api/issues', (req, res) => {
+  const cached = readIssuesCache();
+  const ageMs = cached ? Date.now() - new Date(cached.fetchedAt).getTime() : Infinity;
+
+  // A fresh cache answers without spending a request at all.
+  if (cached && ageMs < ISSUES_TTL_MS && req.query.refresh !== '1') {
+    res.set('Cache-Control', 'no-store');
+    return res.json({ ...cached, source: 'cache', ageMs });
+  }
+
+  try {
+    const out = execFileSync(
+      'gh',
+      ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
+       '--json', 'number,title,labels,body,state,createdAt,updatedAt'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 30000 },
+    );
+    // `gh` and the REST API disagree on shape, and the viewer was written
+    // against REST. Normalising here rather than in the page keeps ONE contract
+    // for both routes — otherwise the proxy would silently serve a list that
+    // renders with every row filtered out (state "OPEN" never equals "open")
+    // and an empty Updated column.
+    const issues = JSON.parse(out).map((i) => ({
+      ...i,
+      state: String(i.state || '').toLowerCase(),
+      updated_at: i.updatedAt || i.updated_at || null,
+      created_at: i.createdAt || i.created_at || null,
+    }));
+    const payload = { fetchedAt: new Date().toISOString(), count: issues.length, issues };
+    try {
+      fs.writeFileSync(path.join(rootDir, ISSUES_CACHE_REL_PATH), JSON.stringify(payload));
+    } catch (e) {
+      console.warn('[Issues] could not write the cache:', e.message);
+    }
+    res.set('Cache-Control', 'no-store');
+    res.json({ ...payload, source: 'gh', ageMs: 0 });
+  } catch (e) {
+    // Serving a STALE cache beats an error page — the reader wants the list,
+    // and the age is reported so nothing is claimed silently.
+    if (cached) {
+      res.set('Cache-Control', 'no-store');
+      return res.json({ ...cached, source: 'stale-cache', ageMs, warning: String(e.message).slice(0, 300) });
+    }
+    console.error('[Issues]', e.message);
+    res.status(503).json({ error: 'gh is unavailable and nothing is cached', detail: String(e.message).slice(0, 300) });
+  }
+});
+
 app.post("/api/error-log/clear", (req, res) => {
   try {
+    // "Clear Log" in the viewer means "stop showing me these", not "destroy
+    // them". The entries are archived first; the button reads the same from the
+    // viewer's side, and the response now names where they went.
+    const current = readErrorLog();
+    const archived = archiveErrors(current.errors, 'cleared-from-viewer');
     writeErrorLog([]);
-    res.json({ success: true });
+    res.json({
+      success: true,
+      archived: archived ? path.relative(rootDir, archived) : null,
+      archivedCount: current.errors.length
+    });
   } catch (e) {
     console.error('[Error Log Clear]', e);
     res.status(500).json({ error: e.message });
@@ -749,7 +1291,7 @@ app.post("/api/notes/append", (req, res) => {
       return res.json({ success: true, duplicate: true, notes });
     }
 
-    // tests/behaviors/notes*.spec.ts drives every notes test against this
+    // tests/components/notes*.spec.ts drives every notes test against this
     // SAME dev server (demos/test-harness.html), not an isolated instance --
     // without this guard, every test run would spam a real GitHub issue per
     // test note. The test harness is the only real-world caller whose

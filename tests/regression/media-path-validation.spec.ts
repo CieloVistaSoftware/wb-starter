@@ -28,7 +28,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../');
 const DIRS = ['demos', 'pages', 'public'];
-const FILES = ['index.html', 'project-index.html'];
+const FILES = ['index.html'];
 const ASSET_TAG = /<(img|script|link|audio|video|source|track|iframe|embed)\b[^>]*>/gi;
 const ASSET_ATTR = /\s(src|href)\s*=\s*["']([^"']*)["']/gi;
 

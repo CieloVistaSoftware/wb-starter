@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/NotFoundError */
+import{createErrorClass as t}from"./createErrorClass.mjs";var e=t(r=>function(o){r(this),this.name="NotFoundError",this.message=o});export{e as NotFoundError};
+//# sourceMappingURL=NotFoundError.mjs.map

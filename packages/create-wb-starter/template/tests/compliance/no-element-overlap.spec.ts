@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { globSync } from 'glob';
 
 /**
@@ -45,9 +45,11 @@ import { globSync } from 'glob';
  *     "collide" with its own content, however that content is positioned.
  */
 
+// posix: forward slashes on every OS -- the file becomes part of each test's
+// NAME, and a name must be the same test on Windows and on CI.
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 // Minimum overlap width AND height (px) to count as a real visual collision,
@@ -69,7 +71,20 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
       // loading card image) gets measured mid-layout-shift. Confirmed via
       // repeated runs: flaked only under full-suite concurrency, passed
       // every time in isolation -- a load-timing race, not a real defect.
-      await page.goto(urlPath, { waitUntil: 'networkidle' });
+      const response = await page.goto(urlPath, { waitUntil: 'networkidle' });
+
+      // #863: the overlap sweep below can only report what it finds, and a page
+      // that 404s has nothing to find -- page.goto() does NOT throw on a 404, so
+      // a renamed or deleted file here produced an empty `violations` array and
+      // a green test forever. Assert the page actually loaded before trusting a
+      // clean sweep.
+      expect(
+        response?.status(),
+        `${urlPath} did not load (status ${response?.status()}) -- a 404 makes `
+        + 'the overlap sweep below pass vacuously, since there is nothing on the '
+        + 'page to overlap.',
+      ).toBeLessThan(400);
+
       await page.waitForTimeout(800); // settle lazy/eager scan + layout
 
       const violations = await page.evaluate((minOverlapDim) => {
@@ -112,7 +127,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             'x-popover', 'x-popover-trigger',
             'x-dropdown-menu',
             'x-modal', 'x-modal-content', 'x-modal-glass-overlay', 'x-modal-glass-content',
-            'x-dialog', 'x-dialog-trigger',
+            '.x-dialog', 'x-dialog-trigger',
             'x-toast', 'x-toast-container',
             'x-lightbox',
             'x-drawer__panel', 'x-drawer__backdrop',
@@ -127,13 +142,13 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             // deliberately sized/positioned to sit exactly under the visible
             // .x-switch__thumb/.x-switch__track it controls, same
             // "invisible input behind a styled visual" pattern countless
-            // custom checkbox/switch/radio behaviors use. Confirmed live on
+            // custom checkbox/switch/radio components use. Confirmed live on
             // demos/site/forms.html: isVisible()'s opacity===0 check misses
             // this element for its `disabled` demo instance specifically
             // (Chromium's own disabled-control rendering reports a non-zero
             // effective opacity there, no author CSS involved), so it still
             // reached the candidate set and got flagged as "overlapping"
-            // its own thumb -- the same element pair, on the SAME behavior,
+            // its own thumb -- the same element pair, on the SAME component,
             // that opacity:0 already correctly excludes for every OTHER
             // (non-disabled) switch on the page.
             'x-switch__input',
@@ -156,7 +171,7 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
           // anchored to whitespace/string edges), not a plain substring
           // like every entry above -- unanchored, it would ALSO swallow
           // the unrelated x-card__overlay-content/-title/-subtitle classes
-          // from cardoverlay() (card.js's separate image-caption behavior,
+          // from cardoverlay() (card.js's separate image-caption component,
           // src/wb-viewmodels/card.js ~L2130-2168), whose text is real
           // visible content sitting on an image, not a decorative layer
           // behind other content -- those must stay checked.
@@ -320,9 +335,28 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         // that's true on paper but never actually painted on top of
         // anything, exactly the same false positive already fixed for
         // overflow:hidden above, just via scroll instead of clip.
+        //
+        // The walk starts at `el` ITSELF, not at el.parentElement. For a
+        // border-box paint rect that is a no-op (intersecting a box with its
+        // own box changes nothing), but the Range-based rect above is NOT a
+        // box the element clips for free: it is the geometry of the element's
+        // own text runs in full, laid out as though nothing capped them. An
+        // element that clips ITSELF -- `overflow: hidden` plus a max-height or
+        // a line-clamp -- therefore reported text hundreds of pixels below the
+        // region Chromium actually paints. Found live on demos/site/cards.html:
+        // card.css's `.x-card__expandable-content` is exactly that shape
+        // (`overflow: hidden; max-height: var(--x-card-expandable-max-height,
+        // none)`), and cardexpandable() (src/wb-viewmodels/card.js) collapses
+        // it to its 100px default; the ~330 characters of that demo's own
+        // `content` wrap to roughly 330px of text inside a `size="sm"` card, so
+        // the unclipped Range rect ran ~230px past the collapsed box and was
+        // reported as overlapping the card's OWN footer (232x60px) and its
+        // "Show More" button (232x35px) -- neither of which anything is ever
+        // drawn on top of. Same class of false positive the ancestor walk below
+        // already fixes, just one level closer in.
         function getClippedRect(el: HTMLElement, rect: DOMRect | Rect): Rect | null {
           let r: Rect = { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: 0, height: 0 };
-          let node = el.parentElement;
+          let node: HTMLElement | null = el;
           while (node && node !== document.documentElement) {
             const ncs = getComputedStyle(node);
             const clipsX = ncs.overflowX === 'hidden' || ncs.overflowX === 'clip' || ncs.overflowX === 'auto' || ncs.overflowX === 'scroll';
@@ -389,6 +423,24 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
             const A = candidates[i];
             const B = candidates[j];
             if (A.el.contains(B.el) || B.el.contains(A.el)) continue; // ancestor/descendant — content, not a collision
+
+            // Two inline runs sharing a parent are text flowing across lines,
+            // not a collision. Their border boxes legitimately overlap when
+            // line-height is tighter than the inline content, which is how
+            // <code.x-code> "x-ripple" was reported as overlapping
+            // <code.x-code> "x-fadein" by 48x5px — adjacent chips in one
+            // paragraph. Occlusion means a painted box covering something it
+            // does not belong to; siblings in the same text flow cannot.
+            const inlineish = (el: HTMLElement) => {
+              const d = getComputedStyle(el).display;
+              return d === 'inline' || d === 'inline-block' || d === 'inline-flex';
+            };
+            if (
+              A.el.parentElement &&
+              A.el.parentElement === B.el.parentElement &&
+              inlineish(A.el) &&
+              inlineish(B.el)
+            ) continue;
 
             const a = A.rect;
             const b = B.rect;

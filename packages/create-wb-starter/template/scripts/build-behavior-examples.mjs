@@ -22,6 +22,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { demoInnerBlocks } from './lib/demo-blocks.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE = path.join(ROOT, 'pages', 'behaviors.html');
@@ -61,7 +62,7 @@ if (process.argv.includes('--check')) {
 
 // ─── extraction ────────────────────────────────────────────────────
 const html = fs.readFileSync(SOURCE, 'utf8');
-const blocks = [...html.matchAll(/<div x-demo[^>]*>([\s\S]*?)<\/x-demo>/g)].map((m) => m[1].trim());
+const blocks = demoInnerBlocks(html).map((s) => s.trim());
 
 /** Every distinct x-* token used as a real attribute or tag in a block. */
 function tokensIn(src) {

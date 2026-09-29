@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * #415: `<span x-badge dot removable>` rendered NOTHING usable -- `removable`'s

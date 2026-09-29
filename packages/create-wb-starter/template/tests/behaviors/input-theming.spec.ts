@@ -5,10 +5,14 @@
  * Asserts the OUTCOME (computed background luminance tracks the page surface),
  * across a matrix of dark and light themes, not merely that an <input> exists.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
-const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
+const BASE = process.env.WB_BASE || '';
+// Was `/?page=behaviors` with `waitForSelector('#inputs input')`. `#inputs` was a
+// section on the OLD sectioned page; that page is a searchable browser now, so
+// all eight tests timed out in setup and never evaluated a single theme (#910).
+// forms.html carries 64 real inputs and is a stable fixture for a theming check.
+const URL = `${BASE.replace(/\/$/, '')}/demos/site/forms.html`;
 
 const DARK_THEMES = ['dark', 'ocean', 'midnight', 'cyberpunk'];
 const LIGHT_THEMES = ['light', 'arctic', 'sakura'];
@@ -31,8 +35,10 @@ async function setTheme(page: Page, theme: string) {
 async function inputStyles(page: Page) {
   return page.evaluate(() => {
     // the "Basic Inputs" row in the Inputs section
-    const sec = document.querySelector('#inputs') || document;
-    const inputs = [...sec.querySelectorAll('input:not([type="range"]):not([type="checkbox"]):not([type="radio"])')].slice(0, 4);
+    // Any themed text input on the page; `#inputs` was the old page's section id.
+    const inputs = [...document.querySelectorAll('input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"])')]
+      .filter((el) => (el as HTMLElement).offsetParent !== null)
+      .slice(0, 4);
     return inputs.map((el) => {
       const cs = getComputedStyle(el as HTMLElement);
       return { bg: cs.backgroundColor, color: cs.color };
@@ -43,15 +49,18 @@ async function inputStyles(page: Page) {
 test.describe('Input theming follows the active theme', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(URL, { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('#inputs input', { timeout: 25000 });
-    await page.waitForTimeout(1500);
+    // wb-lazy.js defers injection to an IntersectionObserver; scroll the first
+    // input into view so it actually upgrades before styles are read.
+    await page.waitForSelector('input', { state: 'attached', timeout: 25000 });
+    await page.locator('input').first().scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1200);
   });
 
   for (const theme of DARK_THEMES) {
     test(`inputs are DARK in the "${theme}" theme (not native white)`, async ({ page }) => {
       await setTheme(page, theme);
       const styles = await inputStyles(page);
-      expect(styles.length, 'no inputs found in #inputs section').toBeGreaterThan(0);
+      expect(styles.length, 'no visible text inputs found on the page').toBeGreaterThan(0);
       for (const s of styles) {
         const bgLum = luminance(s.bg);
         const txtLum = luminance(s.color);

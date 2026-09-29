@@ -24,7 +24,7 @@
  * flaky gate is worse than no gate. The rule is about what the source says.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join, relative, extname, dirname } from 'path';
 import { fileURLToPath } from 'url';

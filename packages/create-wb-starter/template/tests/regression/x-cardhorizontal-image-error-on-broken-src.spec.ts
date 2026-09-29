@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #604. John, live report: "cardhorizontal is failing now on images. I
  * want a runtime error that says that, it should log and error" -- reproduced via
- * docs/behaviors/cards/cardhorizontal.md, whose examples pointed at
+ * docs/behaviors/cardhorizontal.md, whose examples pointed at
  * nonexistent /images/feature.jpg and /images/wide.jpg. The <img> created by
  * cardhorizontal() (src/wb-viewmodels/card.js) had NO 'error' listener at
  * all -- a 404/unreachable image rendered as nothing but the browser's own
@@ -16,7 +16,7 @@ import { test, expect } from '@playwright/test';
  * and by cardhero's own background-image probe earlier in this same file.
  */
 
-test('x-cardhorizontal throws a catchable runtime error when its image src is missing/unreachable', async ({ page }) => {
+test('[x-cardhorizontal] throws a catchable runtime error when its image src is missing/unreachable', async ({ page }) => {
   const pageErrors: string[] = [];
   page.on('pageerror', (err) => pageErrors.push(err.message));
 
@@ -26,24 +26,33 @@ test('x-cardhorizontal throws a catchable runtime error when its image src is mi
     { timeout: 10000 }
   );
 
-  await page.evaluate(() => {
+  // async: the body awaits WB.scan below. Without it this is a SyntaxError
+  // that aborts collection for the WHOLE regression project -- 'Total: 0
+  // tests in 0 files' -- so every regression test silently stopped running.
+  await page.evaluate(async () => {
     const container = document.createElement('div');
     // A path that deterministically 404s on this project's own dev server
     // -- no dependency on external network availability.
     container.innerHTML = '<div x-cardhorizontal title="Broken" image="/tests/fixtures/does-not-exist-cardhorizontal.jpg">Body</div>';
     document.body.appendChild(container);
-    return (window as any).WB.scan(container);
+    return await (window as any).WB.scan(container);
   });
 
   await page.waitForTimeout(1500);
 
+  // The runtime's media errors are prefixed `x-<name>:` -- the same form as
+  // x-cardhero's, x-cardoverlay's and x-audio's. This used to look for
+  // `[x-cardhorizontal]`, a spelling no error in src/ has ever used, so it
+  // failed while the error it wanted was sitting in pageErrors -- and the
+  // control test below, which checks that spelling is ABSENT, could never fail.
+  const CARD_ERROR_PREFIX = 'x-cardhorizontal:';
   const cardError = pageErrors.find(
-    (e) => e.includes('x-cardhorizontal') && e.includes('does-not-exist-cardhorizontal.jpg')
+    (e) => e.startsWith(CARD_ERROR_PREFIX) && e.includes('does-not-exist-cardhorizontal.jpg')
   );
-  expect(cardError, `expected a x-cardhorizontal runtime error for the broken image, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
+  expect(cardError, `expected a [x-cardhorizontal] runtime error for the broken image, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
 });
 
-test('x-cardhorizontal with a real, working image never throws', async ({ page }) => {
+test('[x-cardhorizontal] with a real, working image never throws', async ({ page }) => {
   const pageErrors: string[] = [];
   page.on('pageerror', (err) => pageErrors.push(err.message));
 
@@ -53,19 +62,20 @@ test('x-cardhorizontal with a real, working image never throws', async ({ page }
     { timeout: 10000 }
   );
 
-  await page.evaluate(() => {
+  await page.evaluate(async () => {
     const container = document.createElement('div');
-    container.innerHTML = '<div x-cardhorizontal title="Working" image="/images/placeholder.svg">Body</div>';
+    container.innerHTML = '<div x-cardhorizontal title="Working" image="https://picsum.photos/seed/cardhorizontal-error-test-control/400/300">Body</div>';
     document.body.appendChild(container);
-    return (window as any).WB.scan(container);
+    return await (window as any).WB.scan(container);
   });
 
-  const img = page.locator('x-cardhorizontal img');
+  const img = page.locator('[x-cardhorizontal] img');
   await expect.poll(
     () => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0),
     { timeout: 15000 }
   ).toBe(true);
 
-  const cardError = pageErrors.find((e) => e.includes('x-cardhorizontal'));
-  expect(cardError, `a real, working image must never throw a x-cardhorizontal error, got: ${JSON.stringify(pageErrors)}`).toBeFalsy();
+  // Same `x-cardhorizontal:` prefix as the broken-image test above.
+  const cardError = pageErrors.find((e) => e.startsWith('x-cardhorizontal:'));
+  expect(cardError, `a real, working image must never throw a [x-cardhorizontal] error, got: ${JSON.stringify(pageErrors)}`).toBeFalsy();
 });

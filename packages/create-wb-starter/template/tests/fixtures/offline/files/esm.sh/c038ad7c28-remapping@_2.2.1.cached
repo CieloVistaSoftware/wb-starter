@@ -1,0 +1,5 @@
+/* esm.sh - @ampproject/remapping@2.3.0 */
+import "/@jridgewell/gen-mapping@^0.3.5?target=es2022";
+import "/@jridgewell/trace-mapping@^0.3.24?target=es2022";
+export * from "/@ampproject/remapping@2.3.0/es2022/remapping.mjs";
+export { default } from "/@ampproject/remapping@2.3.0/es2022/remapping.mjs";

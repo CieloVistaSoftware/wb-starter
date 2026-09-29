@@ -7,20 +7,20 @@
  * - Code panels should not be unnecessarily wide for short snippets
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Code Panel Width Compliance (Standard §28)', () => {
   test('demos with short code snippets use data-code-width="narrow"', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/content.html');
+    await page.goto('/demos/site/content.html');
 
     // Find all x-demo elements with short code snippets
-    const shortDemos = page.locator('x-demo');
+    const shortDemos = page.locator('[x-demo]');
     const count = await shortDemos.count();
 
     // Check for demos that should have narrow width
     const narrowPatterns = [
       '.x-link',      // Single line link styling
-      '.x-badge',     // Short badge behavior
+      '.x-badge',     // Short badge component
       '.x-button',    // Single button example
       'class="wb-',    // Other single-line examples
     ];
@@ -48,9 +48,9 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   });
 
   test('all data-code-width attributes use valid presets', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/content.html');
+    await page.goto('/demos/site/content.html');
 
-    const demosWithWidth = page.locator('x-demo[data-code-width]');
+    const demosWithWidth = page.locator('[x-demo][data-code-width]');
     const count = await demosWithWidth.count();
 
     const validPresets = ['narrow', 'normal', 'wide', 'full'];
@@ -67,11 +67,16 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   });
 
   test('code panel max-width CSS variable is applied correctly', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/content.html');
+    await page.goto('/demos/site/content.html');
 
-    const demoNarrow = page.locator('x-demo[data-code-width="narrow"]').first();
+    const demoNarrow = page.locator('[x-demo][data-code-width="narrow"]').first();
     if (await demoNarrow.isVisible()) {
+      // x-demo builds its code panel when it injects -- on this lazy page,
+      // once it nears the viewport -- so bring it there and read the panel
+      // once it exists, not before.
+      await demoNarrow.scrollIntoViewIfNeeded();
       const codePanel = demoNarrow.locator('.x-demo__code');
+      await expect(codePanel).toBeAttached({ timeout: 15000 });
       const maxWidth = await codePanel.evaluate((el) => {
         return window.getComputedStyle(el).maxWidth;
       });
@@ -80,9 +85,14 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
       expect(maxWidth).toContain('400px');
     }
 
-    const demoNormal = page.locator('x-demo[data-code-width="normal"]').first();
+    const demoNormal = page.locator('[x-demo][data-code-width="normal"]').first();
     if (await demoNormal.isVisible()) {
+      // x-demo builds its code panel when it injects -- on this lazy page,
+      // once it nears the viewport -- so bring it there and read the panel
+      // once it exists, not before.
+      await demoNormal.scrollIntoViewIfNeeded();
       const codePanel = demoNormal.locator('.x-demo__code');
+      await expect(codePanel).toBeAttached({ timeout: 15000 });
       const maxWidth = await codePanel.evaluate((el) => {
         return window.getComputedStyle(el).maxWidth;
       });
@@ -91,9 +101,14 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
       expect(maxWidth).toContain('600px');
     }
 
-    const demoWide = page.locator('x-demo[data-code-width="wide"]').first();
+    const demoWide = page.locator('[x-demo][data-code-width="wide"]').first();
     if (await demoWide.isVisible()) {
+      // x-demo builds its code panel when it injects -- on this lazy page,
+      // once it nears the viewport -- so bring it there and read the panel
+      // once it exists, not before.
+      await demoWide.scrollIntoViewIfNeeded();
       const codePanel = demoWide.locator('.x-demo__code');
+      await expect(codePanel).toBeAttached({ timeout: 15000 });
       const maxWidth = await codePanel.evaluate((el) => {
         return window.getComputedStyle(el).maxWidth;
       });
@@ -104,14 +119,16 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   });
 
   test('link demo uses narrow width for short snippet', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/content.html');
+    await page.goto('/demos/site/content.html');
 
     // Scroll to link section
     const linkSection = page.locator('h2:has-text("Link")').first();
     await linkSection.scrollIntoViewIfNeeded();
 
-    // Find the demo after the Link heading
-    const linkDemo = linkSection.locator('xpath=../following-sibling::*//x-demo').first();
+    // Find the demo after the Link heading. `[x-demo]`, not `//x-demo`: the
+    // <x-demo> tag went away in 4.0.0, so the XPath matched nothing and the
+    // getAttribute below waited out the whole test timeout.
+    const linkDemo = linkSection.locator('xpath=following-sibling::*[1]').locator('[x-demo]').first();
     const dataCodeWidth = await linkDemo.getAttribute('data-code-width');
 
     expect(

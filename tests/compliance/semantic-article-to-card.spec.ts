@@ -1,7 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 
 test('semantic <article> should be processed to card synchronously on page load', async ({ page }) => {
-  await page.goto('/tests/repro_card_semantic.html');
+  await page.goto('/tests/fixtures/repro/card-semantic.html');
 
   // The semantic article should be processed into a card. Cards stopped
   // stamping .x-card / .x-card__* (a8a7362e): card.css matches `article` and

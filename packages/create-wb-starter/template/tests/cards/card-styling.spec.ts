@@ -4,19 +4,33 @@
  * Verifies cards have proper padding and elevated cards are lighter
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Card Styling Standards', () => {
   
   test.beforeEach(async ({ page }) => {
-    await page.goto('/demos/cards-showcase.html');
-    await page.waitForTimeout(1500);
+    // #863: /demos/cards-showcase.html was deleted when demos were
+    // consolidated. page.goto() does NOT throw on a 404, so this ran every
+    // assertion against the 404 body. The card permutations live here now.
+    await page.goto('/demos/site/cards.html');
+
+    // Readiness, not a stopwatch. Since a8a7362e cards carry no x-card /
+    // x-card--elevated classes -- card.css selects `article` and `[elevated]`
+    // directly -- so wait for that stylesheet to be applying (it loads
+    // just-in-time with the first card, #342), not for a class that no longer
+    // exists.
+    const elevated = page.locator('article[elevated]').first();
+    await elevated.scrollIntoViewIfNeeded();
+    await expect.poll(() => elevated.evaluate(el => getComputedStyle(el).boxShadow), { timeout: 20000 })
+      .not.toBe('none');
   });
 
   test('elevated cards have LIGHTER background than base cards', async ({ page }) => {
     // Get a base card background
-    const baseCard = page.locator('article.x-card:not(.x-card--elevated)').first();
-    const elevatedCard = page.locator('[data-elevated="true"]').first();
+    // Both plain (no variant): the first elevated card on the page is the
+    // Glass card, which is translucent by design and not what this compares.
+    const baseCard = page.locator('article:not([elevated]):not([variant])').first();
+    const elevatedCard = page.locator('article[elevated]:not([variant])').first();
     
     await expect(baseCard).toBeVisible();
     await expect(elevatedCard).toBeVisible();
@@ -56,7 +70,7 @@ test.describe('Card Styling Standards', () => {
   });
 
   test('all cards have at least 1rem (16px) content padding', async ({ page }) => {
-    const cards = await page.locator('.x-card').all();
+    const cards = await page.locator('article').all();
     expect(cards.length).toBeGreaterThan(0);
     
     const failures: string[] = [];
@@ -108,8 +122,8 @@ test.describe('Card Styling Standards', () => {
     expect(failures).toHaveLength(0);
   });
 
-  test('x-cardstats has proper internal padding', async ({ page }) => {
-    const statsCard = page.locator('x-cardstats').first();
+  test('[x-cardstats] has proper internal padding', async ({ page }) => {
+    const statsCard = page.locator('[x-cardstats]').first();
     await expect(statsCard).toBeVisible();
     
     const padding = await statsCard.evaluate(el => {
@@ -125,7 +139,7 @@ test.describe('Card Styling Standards', () => {
   });
 
   test('elevated cards have box-shadow', async ({ page }) => {
-    const elevatedCard = page.locator('[data-elevated="true"]').first();
+    const elevatedCard = page.locator('article[elevated]').first();
     await expect(elevatedCard).toBeVisible();
     
     const shadow = await elevatedCard.evaluate(el => {
@@ -140,7 +154,7 @@ test.describe('Card Styling Standards', () => {
     const issues = await page.evaluate(() => {
       const problems: string[] = [];
       
-      document.querySelectorAll('.x-card').forEach((card, idx) => {
+      document.querySelectorAll('article').forEach((card, idx) => {
         const cardRect = card.getBoundingClientRect();
         
         // Check first text element

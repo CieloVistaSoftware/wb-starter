@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * progress.schema.json's `size` (xs/sm/md/lg/xl) and rating.schema.json's
@@ -26,7 +26,7 @@ async function inject(page, html: string) {
   }, html);
 }
 
-test('x-progress xs/sm/md/lg/xl render five distinct heights', async ({ page }) => {
+test('progress xs/sm/md/lg/xl render five distinct heights', async ({ page }) => {
   await inject(page, `
     <progress id="p-xs" size="xs" value="50"></progress>
     <progress id="p-sm" size="sm" value="50"></progress>
@@ -42,7 +42,7 @@ test('x-progress xs/sm/md/lg/xl render five distinct heights', async ({ page }) 
   expect(new Set(heights).size, `expected 5 distinct heights, got: ${JSON.stringify(heights)}`).toBe(5);
 });
 
-test('x-rating sm/md/lg render three distinct star sizes', async ({ page }) => {
+test('[x-rating] sm/md/lg render three distinct star sizes', async ({ page }) => {
   await inject(page, `
     <span x-rating id="r-sm" size="sm" value="3"></span>
     <span x-rating id="r-md" size="md" value="3"></span>

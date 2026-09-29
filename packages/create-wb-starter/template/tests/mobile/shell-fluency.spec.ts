@@ -7,12 +7,12 @@
  * one column, "fluent layout" with NO horizontal scroll. Runs under the
  * mobile-validation-pixel / -iphone device profiles. (#165)
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 const PAGES = [
-  { name: 'home', url: 'http://localhost:3000/?page=home' },
-  { name: 'behaviors', url: 'http://localhost:3000/?page=behaviors' },
-  { name: 'docs', url: 'http://localhost:3000/?page=docs' },
+  { name: 'home', url: '/?page=home' },
+  { name: 'components', url: '/?page=behaviors' },
+  { name: 'docs', url: '/?page=docs' },
 ];
 
 test.describe('Mobile shell fluency (real SPA, not fragments)', () => {
@@ -20,7 +20,7 @@ test.describe('Mobile shell fluency (real SPA, not fragments)', () => {
     test(`no horizontal overflow: ${pg.name}`, async ({ page }) => {
       await page.goto(pg.url);
       await page.locator('.site__main').waitFor({ state: 'attached', timeout: 15000 });
-      await page.waitForTimeout(900); // let lazy behaviors hydrate
+      await page.waitForTimeout(900); // let lazy components hydrate
       const m = await page.evaluate(() => {
         const de = document.documentElement;
         return { scrollWidth: de.scrollWidth, clientWidth: de.clientWidth };

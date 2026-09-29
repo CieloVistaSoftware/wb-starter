@@ -1,0 +1,6 @@
+/* esm.sh - svelte@4.2.20/internal */
+import "/svelte@4.2.20/es2022/src/shared/boolean_attributes.mjs";
+import "/svelte@4.2.20/es2022/src/shared/utils/escape.mjs";
+import "/svelte@4.2.20/es2022/src/shared/utils/names.mjs";
+import "/svelte@4.2.20/es2022/src/shared/version.mjs";
+export * from "/svelte@4.2.20/es2022/internal.mjs";

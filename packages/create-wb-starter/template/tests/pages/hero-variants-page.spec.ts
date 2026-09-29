@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Hero Variants Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=hero-variants');
+    await page.goto('/?page=hero-variants');
     // Wait for WB to initialize
     await page.waitForTimeout(500);
   });

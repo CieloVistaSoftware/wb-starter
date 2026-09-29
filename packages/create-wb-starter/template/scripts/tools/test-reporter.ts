@@ -25,7 +25,7 @@ import type {
   TestResult, 
   FullResult 
 } from '@playwright/test/reporter';
-import { writeFileSync, appendFileSync, mkdirSync, existsSync, unlinkSync, readFileSync, copyFileSync } from 'fs';
+import { writeFileSync, appendFileSync, mkdirSync, existsSync, unlinkSync, readFileSync, copyFileSync, renameSync } from 'fs';
 import { join } from 'path';
 
 interface TestEntry {
@@ -70,6 +70,21 @@ interface FailureEntry {
   file: string;
   line: number;
   error: string;
+  /**
+   * Stack frames — #963.
+   *
+   * `error` deliberately drops `at ...` lines for readability, which is fine
+   * for an assertion failure (Playwright's call log plus file/line already say
+   * where it happened) and useless for a RUNTIME error. `TypeError: Cannot read
+   * properties of undefined (reading 'contains')` was recorded with no frames
+   * at all, and the stored file/line pointed at the test rather than at the code
+   * that threw — so nothing in the output said where the bug was.
+   *
+   * Kept separate from `error` so the human-readable summary stays clean.
+   */
+  stack?: string;
+  /** The failing source line, when Playwright resolved one. */
+  snippet?: string;
   retry: number;
 }
 
@@ -78,22 +93,79 @@ function stripAnsi(str: string): string {
   return str.replace(/\u001b\[[0-9;]*m/g, '');
 }
 
-// Extract clean error message (first meaningful line)
+/**
+ * Extract a clean error message.
+ *
+ * This used to return ONLY the first meaningful line. Fine for a one-line
+ * assertion -- but the richest specs here collect many findings and report
+ * them together. permutation-compliance.spec.ts raises ONE error whose first
+ * line is "card compliance failures:" and whose actual content is every line
+ * after it. Keeping one line reduced that to a label announcing that a failure
+ * exists, with the reason thrown away.
+ *
+ * The cost was not theoretical: a run reported 109 failures, failures.json
+ * recorded "<name> compliance failures:" 109 times, and it took three wrong
+ * hypotheses to find they were all a single crash on one line. The body would
+ * have said so immediately.
+ *
+ * Stack frames are still dropped -- noise here, and file:line is stored
+ * separately.
+ */
+const MAX_ERROR_LINES = 15;
+const MAX_ERROR_CHARS = 2000;
+
+/**
+ * Pull the `at ...` frames out of an error — #963.
+ *
+ * cleanErrorMessage() strips these on purpose, which reads well for assertion
+ * failures and blinds you completely for runtime ones. Kept here as its own
+ * field so both needs are served.
+ *
+ * node_modules and node: internals are dropped: for locating a defect in THIS
+ * repo they are noise, and keeping them pushes the frame that matters past the
+ * truncation limit.
+ */
+const MAX_STACK_FRAMES = 12;
+
+function extractStack(error: any): string | undefined {
+  const raw = error?.stack;
+  if (!raw) return undefined;
+
+  const frames = stripAnsi(String(raw))
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l.startsWith('at '))
+    .filter((l) => !l.includes('node_modules') && !l.includes('(node:'));
+
+  if (!frames.length) return undefined;
+
+  const kept = frames.slice(0, MAX_STACK_FRAMES);
+  if (frames.length > MAX_STACK_FRAMES) {
+    kept.push(`… ${frames.length - MAX_STACK_FRAMES} more frame(s)`);
+  }
+  return kept.join('\n');
+}
+
 function cleanErrorMessage(error: any): string {
   if (!error) return 'Unknown error';
-  
+
   const message = error.message || String(error);
   const cleaned = stripAnsi(message);
-  
-  // Get first non-empty line that isn't just "Error:"
+
   const lines = cleaned.split('\n').filter(line => {
     const trimmed = line.trim();
     return trimmed && trimmed !== 'Error:' && !trimmed.startsWith('at ');
   });
-  
-  // Return first line, truncated if too long
-  const firstLine = lines[0] || 'Unknown error';
-  return firstLine.length > 200 ? firstLine.substring(0, 200) + '...' : firstLine;
+
+  if (!lines.length) return 'Unknown error';
+
+  const kept = lines.slice(0, MAX_ERROR_LINES);
+  if (lines.length > MAX_ERROR_LINES) {
+    kept.push(`… ${lines.length - MAX_ERROR_LINES} more line(s)`);
+  }
+
+  const out = kept.join('\n');
+  return out.length > MAX_ERROR_CHARS ? out.substring(0, MAX_ERROR_CHARS) + '…' : out;
 }
 
 class WBTestReporter implements Reporter {
@@ -102,6 +174,7 @@ class WBTestReporter implements Reporter {
   private failures: FailureEntry[] = [];
   private startTime: number = 0;
   private failureLogPath: string = '';
+  private resultsLivePath: string = '';
   private failureCount: number = 0;
   private previousFailures: Set<string> = new Set();
 
@@ -117,6 +190,14 @@ class WBTestReporter implements Reporter {
       unlinkSync(this.failureLogPath);
     }
     writeFileSync(this.failureLogPath, `=== Test Run Started: ${new Date().toISOString()} ===\n\n`);
+
+    // Every result as it is known, one JSON line per test -- pass, fail or skip.
+    // failures.json and the per-project files are only written in onEnd, so a
+    // run that is still going (or died) had nothing readable but the failures
+    // above. John: "write results as soon as they are known then append the
+    // next result." Tail it, or read it any time mid-run.
+    this.resultsLivePath = join(this.outDir, 'results-live.jsonl');
+    writeFileSync(this.resultsLivePath, '');
 
     // #562: data/errors.json (src/core/error-logger.js's shared, server-side
     // runtime error log) used to carry over from whatever the PREVIOUS
@@ -195,6 +276,9 @@ class WBTestReporter implements Reporter {
           file: entry.file,
           line: test.location.line,
           error: entry.error,
+          // #963: capture the frames the message intentionally strips.
+          stack: extractStack(result.error),
+          snippet: result.error?.snippet ? stripAnsi(result.error.snippet).slice(0, 600) : undefined,
           retry: result.retry
         };
         this.failures.push(failureEntry);
@@ -213,12 +297,71 @@ class WBTestReporter implements Reporter {
 
     project.duration += result.duration;
     project.tests.push(entry);
+
+    appendFileSync(this.resultsLivePath, JSON.stringify({
+      at: new Date().toISOString(),
+      project: projectName,
+      file: entry.file,
+      line: entry.line,
+      title: entry.title,
+      status: result.status,
+      duration: result.duration,
+      retry: result.retry,
+      error: entry.error ? String(entry.error).split('\n')[0].slice(0, 300) : undefined,
+    }) + '\n');
   }
 
+  /**
+   * Clear the shared runtime error log for this run — but ARCHIVE it first.
+   *
+   * John: "there were 26 or more errors in the error log where did they go?"
+   * They were here, and this function destroyed them. #562 gave every run a
+   * clean slate, which is right for the gate, and it did so by overwriting the
+   * ONLY copy of a log a person reads — silently, with no console line and no
+   * backup. Running the suite therefore erased real findings that had nothing
+   * to do with the suite, and nothing said so afterwards. Two full gate runs
+   * and roughly fifteen single-spec runs in one session is fifteen chances to
+   * lose someone's morning.
+   *
+   * Nothing dies in silence: the previous contents are copied to
+   * data/error-log-archive/errors-<timestamp>.json and that path is printed, so
+   * a wiped log is recoverable and the wipe is announced. An already-empty log
+   * is not archived — nothing to lose, and no point in the noise.
+   */
   private resetErrorLog() {
+    const target = join('data', 'errors.json');
+    const archiveDir = join('data', 'error-log-archive');
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+
+    try {
+      if (existsSync(target)) {
+        const previous = readFileSync(target, 'utf8');
+        let count = 0;
+        try {
+          count = (JSON.parse(previous).errors || []).length;
+        } catch {
+          count = -1;   // unparseable is exactly the state worth keeping a copy of
+        }
+        if (count !== 0) {
+          mkdirSync(archiveDir, { recursive: true });
+          const archived = join(archiveDir, `errors-${stamp}.json`);
+          writeFileSync(archived, previous, 'utf8');
+          console.log(
+            `[WBTestReporter] data/errors.json held `
+            + `${count === -1 ? 'unparseable content' : `${count} error(s)`}; archived to `
+            + `${archived} before clearing it for this run.`
+          );
+        }
+      }
+    } catch (e) {
+      // An archive that cannot be written must SAY so — losing the log quietly
+      // is the whole defect this block exists to prevent.
+      console.warn('[WBTestReporter] Could not archive data/errors.json before clearing it:', e);
+    }
+
     try {
       writeFileSync(
-        join('data', 'errors.json'),
+        target,
         JSON.stringify({ lastUpdated: new Date().toISOString(), count: 0, errors: [] }, null, 2),
         'utf8'
       );
@@ -239,6 +382,10 @@ class WBTestReporter implements Reporter {
       `   Test: ${failure.title}`,
       `   File: ${failure.file}:${failure.line}`,
       `   Error: ${failure.error}`,
+      // #963: the frames go in the live log too. Chasing a failure from this
+      // file used to mean knowing only WHAT broke, never WHERE.
+      failure.snippet ? `   Source:\n${failure.snippet.split('\n').map((l) => '     ' + l).join('\n')}` : '',
+      failure.stack ? `   Stack:\n${failure.stack.split('\n').map((l) => '     ' + l).join('\n')}` : '',
       failure.retry > 0 ? `   Retry: ${failure.retry}` : '',
       '\n'
     ].filter(Boolean).join('\n');
@@ -360,8 +507,40 @@ class WBTestReporter implements Reporter {
     return Array.from(byKey.values());
   }
 
+  /**
+   * Archive the previous file before overwriting it.
+   *
+   * These files are rewritten by EVERY run, including a single-spec one. So a
+   * full-suite result — the only thing that can answer "what is actually
+   * failing right now" — is destroyed by the next `npm run test:async` on one
+   * file, and there is no way back to it. Measured cost, twice in one session:
+   * an attempt to reconcile the debt register read failures.json and found 0
+   * entries, because three single-spec runs had happened since the full run
+   * that produced it; and a stale test-status.json was misread as current
+   * because nothing said when it was written.
+   *
+   * Same pattern as data/error-log-archive/, which this repo already keeps for
+   * exactly this reason. Never destroy a diagnostic; move it aside.
+   */
+  private archivePrevious(filepath: string, filename: string) {
+    if (!existsSync(filepath)) return;
+    try {
+      const archiveDir = join(this.outDir, 'archive');
+      if (!existsSync(archiveDir)) mkdirSync(archiveDir, { recursive: true });
+      const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const dot = filename.lastIndexOf('.');
+      const base = dot > 0 ? filename.slice(0, dot) : filename;
+      const ext = dot > 0 ? filename.slice(dot) : '';
+      renameSync(filepath, join(archiveDir, `${base}-${stamp}${ext}`));
+    } catch {
+      // An archive that cannot be written must not stop the run from recording
+      // its own results — that would trade a lost history for a lost result.
+    }
+  }
+
   private writeJson(filename: string, data: any) {
     const filepath = join(this.outDir, filename);
+    this.archivePrevious(filepath, filename);
     writeFileSync(filepath, JSON.stringify(data, null, 2));
   }
 

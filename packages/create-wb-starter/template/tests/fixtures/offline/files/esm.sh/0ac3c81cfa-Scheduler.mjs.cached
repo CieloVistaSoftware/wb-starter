@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/Scheduler */
+import{dateTimestampProvider as i}from"./scheduler/dateTimestampProvider.mjs";var e=class r{constructor(t,o=r.now){this.schedulerActionCtor=t,this.now=o}schedule(t,o=0,s){return new this.schedulerActionCtor(this,t).schedule(s,o)}};e.now=i.now;export{e as Scheduler};
+//# sourceMappingURL=Scheduler.mjs.map

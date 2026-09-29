@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * <header icon="🚀" title="App" badge="v1.0"> rendered TWO rocket-ship
@@ -10,9 +10,9 @@ import { test, expect, Page } from '@playwright/test';
  * same collision the x-card family was already excluded for (see this
  * file's CARD_TAGS/CARD_TAG_EXCLUSIONS comment): the generic badge()
  * re-read the header's `icon` attribute and prepended its own
- * <span class="x-badge__icon">🚀</span> as the header's first child,
+ * <span class="[x-badge]__icon">🚀</span> as the header's first child,
  * alongside header()'s own correctly-built <span class="x-header__icon">.
- * Fixed by adding 'x-header' to a badge-specific exclusion list (it has no
+ * Fixed by adding '.x-header' to a badge-specific exclusion list (it has no
  * competing tooltip handling, so it stays included in the generic
  * `[tooltip]` mapping).
  */
@@ -37,7 +37,7 @@ async function inject(page: Page, html: string) {
   await page.waitForTimeout(300);
 }
 
-test.describe('x-header + badge attribute: no collision with the generic [badge] semantic property', () => {
+test.describe('.x-header + badge attribute: no collision with the generic [badge] semantic property', () => {
   test('icon/title/badge together render exactly one icon, not two', async ({ page }) => {
     await inject(page, `<header id="h1" icon="🚀" title="App" badge="v1.0"></header>`);
 
@@ -48,7 +48,7 @@ test.describe('x-header + badge attribute: no collision with the generic [badge]
     await expect(header.locator('.x-badge__icon')).toHaveCount(0);
   });
 
-  test('does not pick up x-badge/x-badge--* classes on the header root', async ({ page }) => {
+  test('does not pick up [x-badge]/x-badge--* classes on the header root', async ({ page }) => {
     await inject(page, `<header id="h2" icon="🚀" title="App" badge="v1.0"></header>`);
 
     const header = page.locator('#h2');
@@ -66,7 +66,7 @@ test.describe('x-header + badge attribute: no collision with the generic [badge]
     await expect(page.locator('#h3 .x-header__title')).toHaveText('App');
   });
 
-  test('a real standalone x-badge elsewhere on the page is unaffected', async ({ page }) => {
+  test('a real standalone [x-badge] elsewhere on the page is unaffected', async ({ page }) => {
     await inject(page, `
       <header id="h4" icon="🚀" title="App" badge="v1.0"></header>
       <span x-badge id="b1" icon="🟢">Live</span>
@@ -76,7 +76,7 @@ test.describe('x-header + badge attribute: no collision with the generic [badge]
     await expect(page.locator('#b1 .x-badge__icon')).toHaveText('🟢');
   });
 
-  test('x-header without a competing tooltip implementation still gets the generic themed tooltip', async ({ page }) => {
+  test('.x-header without a competing tooltip implementation still gets the generic themed tooltip', async ({ page }) => {
     await inject(page, `<header id="h5" title="Hover me" tooltip="A real tooltip"></header>`);
 
     const header = page.locator('#h5');

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { globSync } from 'glob';
 
@@ -8,7 +8,7 @@ import { globSync } from 'glob';
  * "These rules apply to EVERY demo... and EVERY Markdown document").
  *
  * §2 "One code sample per rendered element (strict 1:1)": a <div x-demo> must
- * not bundle several DIFFERENTLY-CONFIGURED instances of the same behavior
+ * not bundle several DIFFERENTLY-CONFIGURED instances of the same component
  * under one shared code sample (the "permutation matrix" anti-pattern
  * already fixed elsewhere this session for cards.html/cards-permutation-
  * matrix.html). §17 is the one exception: a single logical GROUP sharing a
@@ -21,14 +21,73 @@ import { globSync } from 'glob';
  * with almost no visible gap between them.
  */
 
+// posix: forward slashes on every OS -- the file becomes part of each test's
+// NAME, and a name must be the same test on Windows and on CI.
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 const MIN_GAP_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding
 const MIN_PADDING_PX = 15;
 const MIN_TEXT_EDGE_PX = 16; // 1rem — matches DEMOS-AND-DOCS-STANDARDS.md §13's documented minimum
+
+/**
+ * Read the page the way a reader does before measuring it.
+ *
+ * The lazy runtime (#491) builds an element only as it nears the viewport, so
+ * a check that measures right after load only ever sees the first screen
+ * built -- everything below the fold is still raw markup, carrying none of the
+ * padding, backgrounds or grids its behavior will give it. That is how
+ * demos/autoinject.html's decorator table (cells under a distinct header
+ * background) stayed invisible to the content-panel check: it is built only
+ * once it is scrolled near. Scroll through once, back to the top, then wait
+ * for every finite CSS transition/animation to finish (#1165,
+ * tests/helpers/settled-style.ts) -- cards carry `transition: all`, and a
+ * padding read mid-transition reports the STARTING value, a failure that
+ * appears only under load.
+ */
+async function readThrough(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const frame = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
+    // wb-lazy.js observes with rootMargin 1200px: a viewport at scrollY
+    // builds everything from scrollY-1200 to scrollY+innerHeight+1200, so a
+    // step of innerHeight+2000 still overlaps and skips nothing -- and keeps
+    // demos/site/cards.html (~160,000px tall) inside the test timeout.
+    const step = window.innerHeight + 2000;
+    for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await frame();
+      await frame();
+    }
+    window.scrollTo(0, 0);
+    await frame();
+    await frame();
+  });
+  // Building is asynchronous (a behavior's module and stylesheet load on
+  // first use). waitForLoadState('networkidle') resolves at once here -- the
+  // page already reached it before the scroll -- so watch the resource
+  // timeline instead: measure once it has stopped growing for 500ms.
+  await page.evaluate(async () => {
+    const count = () => performance.getEntriesByType('resource').length;
+    const deadline = Date.now() + 10_000;
+    let last = -1;
+    while (Date.now() < deadline && count() !== last) {
+      last = count();
+      await new Promise((r) => setTimeout(r, 500));
+    }
+  });
+  await page.evaluate(async () => {
+    const running = document.getAnimations().filter(
+      (a) => a.effect?.getTiming().iterations !== Infinity
+    );
+    await Promise.all(running.map((a) => a.finished.catch(() => undefined)));
+  });
+}
+
+// Reading demos/site/cards.html through (~160,000px, several hundred cards
+// built on the way down) takes longer than the default 30s on its own.
+test.describe.configure({ timeout: 90_000 });
 
 function parseWbDemoBlocks(html: string): string[] {
   const blocks: string[] = [];
@@ -91,21 +150,22 @@ test.describe('Demo layout standards (§2, §13) — static scan', () => {
 
 test.describe('Demo layout standards (§13) — live spacing', () => {
   for (const file of FILES) {
-    test(`${file}: x-demo containers/items have >=1rem spacing (§13)`, async ({ page }) => {
+    test(`${file}: [x-demo] containers/items have >=1rem spacing (§13)`, async ({ page }) => {
       const urlPath = '/' + file.replace(/\\/g, '/');
       const errs: string[] = [];
       page.on('pageerror', (e) => errs.push(String(e)));
 
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
-      const demos = page.locator('x-demo');
+      const demos = page.locator('[x-demo]');
       const count = await demos.count();
       if (count === 0) test.skip(true, 'no <div x-demo> blocks on this page');
 
       await page.waitForTimeout(800); // settle lazy/eager scan + grid build
+      await readThrough(page);
 
       const violations = await page.evaluate((minGap) => {
         const problems: string[] = [];
-        document.querySelectorAll('x-demo').forEach((demo, i) => {
+        document.querySelectorAll('[x-demo]').forEach((demo, i) => {
           const cs = getComputedStyle(demo);
           const padTop = parseFloat(cs.paddingTop) || 0;
           const grid = demo.querySelector('.x-demo__grid');
@@ -125,13 +185,13 @@ test.describe('Demo layout standards (§13) — live spacing', () => {
                 const verticalGap = b.top - a.bottom;
                 const realGap = Math.max(horizontalGap, verticalGap);
                 if (realGap < minGap) {
-                  problems.push(`x-demo[${i}]: item spacing ${realGap.toFixed(1)}px < ${minGap}px`);
+                  problems.push(`[x-demo][${i}]: item spacing ${realGap.toFixed(1)}px < ${minGap}px`);
                 }
               }
             }
           }
           if (padTop < minGap) {
-            problems.push(`x-demo[${i}]: own padding-top ${padTop}px < ${minGap}px`);
+            problems.push(`[x-demo][${i}]: own padding-top ${padTop}px < ${minGap}px`);
           }
         });
         return problems;
@@ -157,20 +217,21 @@ test.describe('Demo layout standards (§7) — single-item demos are not full wi
   // (plus the demo's own padding), not the page's available content width
   // -- regardless of whether that one child happens to be narrow or wide.
   for (const file of FILES) {
-    test(`${file}: single-item x-demo blocks shrink to fit their content`, async ({ page }) => {
+    test(`${file}: single-item [x-demo] blocks shrink to fit their content`, async ({ page }) => {
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
-      const demos = page.locator('x-demo');
+      const demos = page.locator('[x-demo]');
       if ((await demos.count()) === 0) test.skip(true, 'no <div x-demo> blocks on this page');
 
       await page.waitForTimeout(800); // settle lazy/eager scan + grid build
+      await readThrough(page);
 
       const violations = await page.evaluate(() => {
         const problems: string[] = [];
         const TOLERANCE_PX = 24; // padding rounding + border slack
-        document.querySelectorAll('x-demo').forEach((demo, i) => {
+        document.querySelectorAll('[x-demo]').forEach((demo, i) => {
           // #563 follow-up: `full-width` is a deliberate, documented escape
-          // hatch (demo.css's `x-demo.x-demo--full-width`) for behaviors
+          // hatch (demo.css's `[x-demo].x-demo--full-width`) for components
           // that are meant to fill their container by design (page heroes,
           // banner-style alerts) -- not a bug this check should ever flag.
           if (demo.classList.contains('x-demo--full-width')) return;
@@ -261,12 +322,44 @@ test.describe('Layout standard: no text within 1rem of a content-panel edge', ()
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(800);
+      await readThrough(page);
 
       const violations = await page.evaluate(({ minPad, minW, minH }) => {
         const problems: string[] = [];
         const all = Array.from(document.querySelectorAll('body *')) as HTMLElement[];
 
+        // Exclude by ROLE first, before any size heuristic. §13 governs content
+        // panels — surfaces that hold block text. Some elements are atoms no
+        // matter how large they get: a wide <code> chip, a long <button>, a
+        // badge, an avatar. Judging those by size produced a steady drip of
+        // false positives (#561 patched exactly one, by shape, and more kept
+        // arriving), because "big" and "is a panel" are different properties.
+        const ATOM_TAGS = new Set(['BUTTON', 'CODE', 'KBD', 'SAMP', 'VAR', 'A', 'LABEL', 'SUMMARY', 'OPTION', 'SELECT', 'INPUT', 'TEXTAREA']);
+        const ATOM_CLASS = /(^|[\s_-])(badge|chip|pill|avatar|tag|icon|btn|button|code|label|counter|dot)([\s_-]|$)/i;
+        const isAtomByRole = (el: HTMLElement) => {
+          if (ATOM_TAGS.has(el.tagName)) return true;
+          if (ATOM_CLASS.test(el.className || '')) return true;
+          const role = el.getAttribute('role') || '';
+          if (/^(button|link|img|status|badge)$/i.test(role)) return true;
+          // An inline box is by definition not a panel.
+          const d = getComputedStyle(el).display;
+          return d === 'inline' || d === 'inline-block' || d === 'inline-flex';
+        };
+
         for (const el of all) {
+          if (isAtomByRole(el)) continue;
+          // A cell of a table its author declared `compact` is on the
+          // compact padding scale on purpose -- data.css's
+          // `.x-table--compact` 0.5rem is the whole point of the variant,
+          // exactly as a badge's small padding is the point of a badge. The
+          // size cut-off below was the stand-in for "intentionally compact",
+          // and it only held while the demo tables were empty: with real rows
+          // (demos/site/content.html) a compact "Name" header is 127px wide
+          // and got judged as a 1rem content panel. No compact padding can
+          // satisfy that (with `bordered` every compact cell has four edges),
+          // so the variant itself is the exclusion. Non-compact cells are
+          // still held to 1rem (#545).
+          if ((el.tagName === 'TH' || el.tagName === 'TD') && el.closest('table.x-table--compact')) continue;
           const rect = el.getBoundingClientRect();
           if (rect.width < minW || rect.height < minH) continue; // a UI atom, not a content panel
           // #561: the SIZE-based atom exclusion above (width/height < 120px)

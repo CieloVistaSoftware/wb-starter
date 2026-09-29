@@ -6,7 +6,7 @@ on:
       - 'docs/**'
       - 'README.md'
       - '.github/**'
-      - 'CONTRIBUTING.md'
+      - '.github/CONTRIBUTING.md'
       - 'scripts/**'
       - 'tests/**'
   push:

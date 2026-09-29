@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { settledWidthPercent } from '../helpers/settled-style';
 
-test('x-progress renders its Light DOM fill after schema-aware scanning', async ({ page }) => {
+test('progress renders its Light DOM fill after schema-aware scanning', async ({ page }) => {
   await page.goto('/demos/test-harness.html');
   await page.waitForFunction(
     () => (window as any).WB && (window as any).WB.behaviors,
@@ -22,7 +23,8 @@ test('x-progress renders its Light DOM fill after schema-aware scanning', async 
   const progress = page.locator('#progress-render-target');
   const bar = progress.locator('.x-progress__bar');
   await expect(bar).toHaveCount(1);
-  await expect(bar).toHaveAttribute('style', /width: 65%/);
+  // #779: a generated rule sets the width, not a style attribute.
+  expect(await settledWidthPercent(bar)).toBeCloseTo(65, 0);
   await expect(progress).toBeVisible();
 
   const dimensions = await progress.evaluate((element) => ({

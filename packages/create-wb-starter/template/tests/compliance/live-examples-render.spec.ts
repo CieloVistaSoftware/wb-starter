@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -12,13 +12,13 @@ import { globSync } from 'glob';
  * checks the LIVE half of that pair directly (the code-panel half is
  * doc-viewer-code-panel-audit.spec.ts).
  *
- * `tests/regression/behavior-index-doc-coverage.spec.ts` already does
+ * `tests/regression/component-index-doc-coverage.spec.ts` already does
  * this same check ("real rendered content, not empty/placeholder") for
- * every behavior DOC page (docs/behaviors/**\/*.md, driven by
- * data/behavior-index.json). This test generalizes the same check to the
+ * every component DOC page (docs/behaviors/**\/*.md, driven by
+ * data/component-index.json). This test generalizes the same check to the
  * plain demos/**\/*.html and pages/**\/*.html files that render `<div x-demo>`
  * DIRECTLY (no doc-viewer/mdhtml involved) -- a different rendering path
- * behavior-index-doc-coverage.spec.ts never exercises, and the one demo.js
+ * component-index-doc-coverage.spec.ts never exercises, and the one demo.js
  * calls first-class per §16 ("The `demos/` folder exists so users can see
  * how it's done in HTML").
  *
@@ -49,8 +49,8 @@ function hasWbDemo(file: string): boolean {
 }
 
 const HTML_PAGES = [
-  ...globSync('demos/**/*.html', { cwd: ROOT }),
-  ...globSync('pages/**/*.html', { cwd: ROOT }),
+  ...globSync('demos/**/*.html', { cwd: ROOT, posix: true }),
+  ...globSync('pages/**/*.html', { cwd: ROOT, posix: true }),
 ]
   .map(toPosix)
   .filter((f) => hasWbDemo(path.join(ROOT, f)))
@@ -58,45 +58,65 @@ const HTML_PAGES = [
 
 test.describe('Live examples render — every <div x-demo> shows real content, no page errors', () => {
   for (const rel of HTML_PAGES) {
-    test(`${rel}: every x-demo renders real content with no page errors`, async ({ page }) => {
+    test(`${rel}: every [x-demo] renders real content with no page errors`, async ({ page }) => {
       const pageErrors: string[] = [];
       page.on('pageerror', (e) => pageErrors.push(String(e)));
 
       await page.goto('/' + rel, { waitUntil: 'domcontentloaded' });
 
-      const demos = page.locator('x-demo');
+      const demos = page.locator('[x-demo]');
       const demoCount = await demos.count();
+      // The work here is per block: every demo is scrolled into view so the lazy
+      // runtime (#491) builds it. demos/site/cards.html holds 293 of them and needs
+      // ~22s on an idle machine (at HEAD too), so a flat 30s budget failed it only
+      // under parallel load. The budget grows with the page; nothing asserted changes.
+      test.setTimeout(30_000 + demoCount * 150);
       if (demoCount === 0) test.skip(true, 'no <div x-demo> blocks actually rendered on this page');
 
       // x-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
       // synchronously; the rest wait for an IntersectionObserver against the
       // real scroll container. Scroll each into view so lazily-built demos
       // further down the page are actually checked, not silently skipped.
+      // 5000ms per demo was the real cost here: on a page with many blocks the
+      // scroll loop alone could consume the whole 30s test budget before a
+      // single assertion ran, and the test died as a timeout rather than
+      // reporting what rendered. Scrolling is cheap when it works, so cap it
+      // low — a scroll that needs more than 1.5s is not going to succeed.
       for (let i = 0; i < demoCount; i++) {
         try {
-          await demos.nth(i).scrollIntoViewIfNeeded({ timeout: 5000 });
+          await demos.nth(i).scrollIntoViewIfNeeded({ timeout: 1500 });
         } catch {
           // best-effort -- audit whatever built/rendered regardless
         }
       }
 
-      // Deterministic wait: every demo's grid should have finished building
-      // (non-empty innerHTML in the grid container) before evaluating, but
-      // cap it -- a demo that legitimately never renders anything (the bug
-      // this test exists to catch) must not hang the test.
-      await page.waitForTimeout(500);
+      // Wait for the grids to actually fill rather than sleeping 500ms and
+      // hoping. Capped and swallowed: a demo that legitimately never renders is
+      // the bug this test exists to CATCH, so it must fall through and report,
+      // never hang.
+      await page
+        .waitForFunction(
+          () =>
+            Array.from(document.querySelectorAll('[x-demo]')).every((d) => {
+              const g = d.querySelector('.x-demo__grid');
+              return g && g.innerHTML.trim().length > 0;
+            }),
+          null,
+          { timeout: 5000 }
+        )
+        .catch(() => {});
 
       const emptyDemos = await page.evaluate(() => {
         const problems: string[] = [];
-        document.querySelectorAll('x-demo').forEach((demo, i) => {
+        document.querySelectorAll('[x-demo]').forEach((demo, i) => {
           const grid = demo.querySelector('.x-demo__grid');
           if (!grid) {
-            problems.push(`x-demo[${i}]: no .x-demo__grid was built at all`);
+            problems.push(`[x-demo][${i}]: no .x-demo__grid was built at all`);
             return;
           }
           const kids = Array.from(grid.children) as HTMLElement[];
           if (kids.length === 0) {
-            problems.push(`x-demo[${i}]: .x-demo__grid built but has zero rendered children`);
+            problems.push(`[x-demo][${i}]: .x-demo__grid built but has zero rendered children`);
             return;
           }
           const anyVisible = kids.some((k) => {

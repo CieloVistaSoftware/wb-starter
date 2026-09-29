@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
-import { setupBehaviorTest, setupTestContainer } from '../base';
+import { test, expect } from '../fixtures/offline';
+import { setupBehaviorTest, setupTestContainer, buildInView } from '../base';
 
 /**
  * John, live report: "Size variants don't show much differences." Confirmed
@@ -17,7 +17,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * size="lg"> never gets the `.x-card` CLASS (composeCard skips it,
  * redundant with the tag selector) -- only the tag form matches that case.
  */
-test.describe('x-card size variants keep their own min-width inside a demo grid', () => {
+test.describe('.x-card size variants keep their own min-width inside a demo grid', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });
@@ -27,7 +27,9 @@ test.describe('x-card size variants keep their own min-width inside a demo grid'
       page,
       '<div x-demo columns="1"><article size="lg" title="Large">Short.</article></div>'
     );
-    const lg = page.locator('#test-container x-card');
+    // A base card is its <article>; it carries no .x-card class (a8a7362e).
+    const lg = page.locator('#test-container article');
+    await buildInView(lg);
     const lgWidth = await lg.evaluate(el => el.getBoundingClientRect().width);
     expect(lgWidth).toBeGreaterThanOrEqual(420);
   });
@@ -40,7 +42,9 @@ test.describe('x-card size variants keep their own min-width inside a demo grid'
       '<div x-demo columns="1"><article size="lg">Short.</article></div>' +
       '<div x-demo columns="1"><article size="xl">Short.</article></div></div>'
     );
-    const cards = page.locator('#test-container x-card');
+    const cards = page.locator('#test-container article');
+    await expect(cards).toHaveCount(4);
+    for (const card of await cards.all()) await buildInView(card);
     const widths = await cards.evaluateAll(els => els.map(el => el.getBoundingClientRect().width));
     expect(widths).toHaveLength(4);
     expect(widths[0]).toBeLessThan(widths[1]); // xs < sm

@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/connect */
+import{Subject as i}from"../Subject.mjs";import{innerFrom as s}from"../observable/innerFrom.mjs";import{operate as u}from"../util/lift.mjs";import{Observable as m}from"../Observable.mjs";function n(r){return new m(o=>r.subscribe(o))}var f={connector:()=>new i};function j(r,o=f){let{connector:c}=o;return u((b,e)=>{let t=c();s(r(n(t))).subscribe(e),e.add(b.subscribe(t))})}export{j as connect};
+//# sourceMappingURL=connect.mjs.map

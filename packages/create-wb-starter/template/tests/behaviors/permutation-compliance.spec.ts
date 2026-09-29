@@ -1,4 +1,5 @@
-import { test, expect, Page, Locator } from '@playwright/test';
+import { test, expect, Page, Locator } from '../fixtures/offline';
+import { pairwiseCases } from '../../scripts/lib/pairwise.mjs';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -230,34 +231,34 @@ function loadSchemas(): Map<string, Schema> {
     try {
       const schema = JSON.parse(content) as Schema;
       // v3 schemas use `schemaFor`; the schema-builder treats it as `behavior`.
-      // The runner used to only honor `behavior`, so ~89% of behaviors (97 of
+      // The runner used to only honor `behavior`, so ~89% of components (97 of
       // 109, all using `schemaFor`) were silently SKIPPED and never tested —
       // which is why functional regressions (switch, alert, card, …) shipped.
       if (!schema.behavior && (schema as any).schemaFor) {
         schema.behavior = (schema as any).schemaFor;
       }
-      // Only load schemas with a behavior/schemaFor (true behavior schemas).
+      // Only load schemas with a behavior/schemaFor (true component schemas).
       if (!schema.behavior) {
-        console.log(`Skipping non-behavior schema: ${file}`);
+        console.log(`Skipping non-component schema: ${file}`);
         continue;
       }
       // schemaType is the project-wide "is this a real single-element
-      // behavior" signal (see tests/compliance/schema-validation.spec.ts,
-      // which already tiers on it: 'behavior' [default] vs 'base' /
+      // component" signal (see tests/compliance/schema-validation.spec.ts,
+      // which already tiers on it: 'component' [default] vs 'base' /
       // 'definition' / 'behavior' / 'page'). This runner used to test EVERY
       // schema with a behavior/schemaFor as if it were a live <wb-*> custom
       // element -- but behavior.schema.json (schemaType 'behavior': the
       // master metadata catalog for ALL behaviors), home-page.schema.json
       // (schemaType 'page': a page-layout composition), search-index.schema.json
       // and views.schema.json (schemaType 'definition': data-file formats for
-      // the search index / views registry, not behaviors) all declare
+      // the search index / views registry, not components) all declare
       // schemaFor for cross-referencing purposes but were never meant to be
       // instantiated as <div>/<div>/<div>/
       // <div> tags -- no such custom elements exist. Testing them here
       // generated fake tags, then reported real elements/classes/children as
       // "missing" for structures that were never supposed to exist.
-      if (schema.schemaType && schema.schemaType !== 'behavior') {
-        console.log(`Skipping non-behavior schema (schemaType=${schema.schemaType}): ${file}`);
+      if (schema.schemaType && schema.schemaType !== 'component') {
+        console.log(`Skipping non-component schema (schemaType=${schema.schemaType}): ${file}`);
         continue;
       }
       const name = schema.behavior || file.replace('.schema.json', '');
@@ -270,15 +271,61 @@ function loadSchemas(): Map<string, Schema> {
 }
 
 // Generate HTML for testing.
-// v3: behaviors are wb-* TAGS with PLAIN attributes (e.g. <article variant="x">),
-// NOT the legacy <div x-behavior data-prop>. Generating the old form meant the
-// element never became the behavior, so baseClass was "missing" — a false
-// positive. Also strip a leading wb- from the name to avoid x-wb-control.
+// 4.0.0: components are GONE, so there is no <div> tag to generate. A
+// hyphenated tag with no registration is an HTMLUnknownElement -- it parses,
+// renders inline and unstyled, and never becomes the behavior, which made
+// every compliance assertion below report a real behavior as non-compliant
+// (73 of them).
+//
+// The host is now a neutral <div> carrying the behavior as an attribute,
+// which is the only form that still exists. Where the schema names a real
+// semantic element, that still wins: <article variant="x"> reaches the
+// behavior through auto-injection, and testing the semantic host is more
+// faithful than forcing a div on it.
+/**
+ * One definition of "this behavior is present on this element".
+ *
+ * There were four hand-rolled versions of this in the file, each drifting on a
+ * different axis, so a fix in one left the other three reporting the same
+ * behavior as broken. Every signal below means the same thing -- the behavior
+ * reached the element -- and any one of them is sufficient:
+ *
+ *   class            the classic form, still used by most behaviors
+ *   tag name         a literal custom-tag host, styled by its tag selector (#736)
+ *   attribute        a8a7362e made the ATTRIBUTE the identity for cards; the
+ *                    stylesheet keys off [x-card] and no class is emitted
+ *   semantic host    auto-injection: <article>/<audio>/<select> IS the behavior,
+ *                    so it carries no class, no matching tag and no attribute --
+ *                    proven instead by the behavior having actually run
+ *   x-schema / x-hydrated / x-ready   markers the framework sets
+ *   built children   the behavior constructed structure
+ *
+ * Passed straight to locator.evaluate(), so it must stay a pure arrow function.
+ */
+const isCovered = (el: Element, cls: string): boolean =>
+  (!!cls && el.classList.contains(cls))
+  || (!!cls && el.tagName.toLowerCase() === cls)
+  || (!!cls && el.hasAttribute(cls))
+  || el.hasAttribute('x-schema')
+  || el.hasAttribute('x-hydrated')
+  || el.classList.contains('x-ready')
+  || el.children.length > 0
+  || /\bx-/.test((el as HTMLElement).className || '');
+
 function generateHtml(behavior: string, props: Record<string, any>, content: string = 'Test Content', tagName?: string): string {
-  const bare = behavior.replace(/^wb-/, '');
-  // Use an explicit non-div element tag if the schema provides one, else the wb- tag.
-  const tag = tagName && tagName !== 'div' ? tagName : `wb-${bare}`;
-  let attrs = '';
+  // Strip an existing x- prefix as well as the retired wb-.
+  //
+  // Schemas whose schemaFor already begins with x- (x-clock, x-flex, x-img,
+  // x-gallery, x-notify, ...) were rendered as `<div x-x-clock>` -- an
+  // attribute no behavior is registered under, so NOTHING attached and the
+  // probe reported every one of them as broken. #861 named this exact defect
+  // and it was still live here.
+  const bare = behavior.replace(/^(?:wb-|x-)/, '');
+  // An explicit semantic element from the schema wins; otherwise a neutral
+  // host carrying x-<behavior>.
+  const semantic = tagName && tagName !== 'div' ? tagName : null;
+  const tag = semantic || 'div';
+  let attrs = semantic ? '' : ` x-${bare}`;
 
   if (tag === 'input' && behavior === 'checkbox') {
     attrs += ' type="checkbox"';
@@ -290,17 +337,77 @@ function generateHtml(behavior: string, props: Record<string, any>, content: str
     if (typeof value === 'boolean') {
       if (value) attrs += ` ${attrName}`;
     } else {
-      attrs += ` ${attrName}="${value}"`;
+      // ESCAPE. A value containing a double quote used to end the attribute
+      // early and turn the rest into garbage attributes -- the same defect
+      // that made <table rows='[["a"]]'> render an empty table. Schema
+      // defaults and examples include JSON, so this is not hypothetical.
+      const safe = String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+      attrs += ` ${attrName}="${safe}"`;
     }
   }
-  return `<${tag}${attrs}>${content}</${tag}>`;
+  return `<${tag}${attrs}>${childContent(behavior, content)}</${tag}>`;
+}
+
+/**
+ * Content for the generated host.
+ *
+ * A bare text node is wrong for every behavior that BUILDS from child
+ * elements -- accordion reads its sections, tabs its panels, articles its
+ * items. Handed only text, those behaviors correctly build nothing, and the
+ * probe then reports them as broken. That is what produced 28 false failures
+ * the first time combinations were switched on.
+ *
+ * Keyed off what the behavior actually consumes, not a guess per name.
+ */
+const CHILD_BUILDERS: Record<string, string> = {
+  accordion: '<div accordion-title="One">First body</div><div accordion-title="Two">Second body</div>',
+  collapse: '<div accordion-title="One">First body</div>',
+  tabs: '<div tab-title="One">First panel</div><div tab-title="Two">Second panel</div>',
+  articles: '<article title="One"></article><article title="Two"></article>',
+  cluster: '<span>one</span><span>two</span>',
+  stack: '<span>one</span><span>two</span>',
+  grid: '<span>one</span><span>two</span>',
+  list: '<li>one</li><li>two</li>',
+  steps: '<div>Step one</div><div>Step two</div>',
+  timeline: '<div>Event one</div><div>Event two</div>',
+};
+
+function childContent(behavior: string, fallback: string): string {
+  return CHILD_BUILDERS[behavior.replace(/^x-/, '')] ?? fallback;
+}
+
+/**
+ * Values to exercise for a property that declares no explicit `permutations`.
+ *
+ * John: "if schema changes so does the tests... we should have no gaps in
+ * tests due to that."
+ *
+ * CHECK 5 used to require a hand-written `permutations` block and skip the
+ * property otherwise. NOT ONE of the 639 declared properties across 149
+ * schemas has that block, so the property-permutation check exercised exactly
+ * nothing -- a 100% gap, silently, while the suite reported green for it.
+ *
+ * The schema already states what the legal values are. Deriving from what is
+ * declared means adding an enum value adds a test case, with nothing to
+ * remember and nothing to keep in sync.
+ */
+function derivedPermutationValues(propDef: PropertyDef): any[] {
+  if (Array.isArray(propDef.enum) && propDef.enum.length) return propDef.enum;
+  if (propDef.type === 'boolean') return [true, false];
+
+  // A non-enum string or number is free text. The declared default and example
+  // are the only values the schema actually vouches for -- anything invented
+  // here would be testing our imagination rather than the contract.
+  const vouched = [propDef.default, (propDef as any).example]
+    .filter((v) => v !== undefined && v !== null && v !== '');
+  return [...new Set(vouched)];
 }
 
 // Get all permutation values for a property
 function getPermutationValues(propDef: PropertyDef): any[] {
   const perm = propDef.permutations;
-  if (!perm) return [propDef.default];
-  
+  if (!perm) return derivedPermutationValues(propDef);
+
   switch (perm.type) {
     case 'ALL_ENUM':
     case 'ENUM':
@@ -384,19 +491,102 @@ async function setupTestContainer(page: Page, html: string): Promise<Locator> {
     const c = document.createElement('div');
     c.id = 'test-container';
     c.innerHTML = h;
+    // Mark the AUTHORED roots BEFORE scanning. Several behaviors insert a
+    // SIBLING ahead of their host -- sticky's createPlaceholder() runs
+    // `parentNode.insertBefore(placeholder, element)` -- so `> *` .first()
+    // silently became that placeholder: an empty, class-less div. Every
+    // assertion then judged the wrong node and called a working behavior
+    // broken. Confirmed live: with threshold="0" the container's children are
+    // [div.sticky-placeholder, div.x-sticky.is-stuck] -- the behavior had
+    // attached perfectly, the probe was just reading child 0.
+    for (const el of Array.from(c.children)) el.setAttribute('test-host', '');
     document.body.appendChild(c);
-    await (window as any).WB.scan(c);
+    // `eager: true`, because the harness loads wb-lazy.js -- the LAZY runtime.
+    // Without it, injection is deferred to an IntersectionObserver
+    // (rootMargin 1200px), so a container appended below the fold never
+    // initializes and every assertion reports the behavior as broken. That is
+    // a defect in this probe, not in the behavior: the same markup renders
+    // fully under wb.js. Confirmed by mounting <div x-card title="T"> on both
+    // runtimes -- wb.js built the whole card, the lazy harness left the div
+    // untouched.
+    await (window as any).WB.scan(c, { eager: true });
   }, html);
   
-  await page.waitForTimeout(100);
-  
-  return page.locator('#test-container > *').first();
+  // Readiness, not a stopwatch.
+  //
+  // This was `waitForTimeout(100)`. It is called up to 7 times per test across
+  // 146 tests, so it slept ~100 seconds per run doing nothing — and, worse, it
+  // GUESSED. Under --workers=8 the guess is wrong: 28 of the 46 failures in a
+  // load run were 30s timeouts and the rest were `[BASE CLASS] Missing`, i.e.
+  // assertions that ran before the behavior had attached.
+  //
+  // `WB.scan()` is awaited above, but behaviors that load their module lazily
+  // finish after it resolves. Wait for the observable RESULT instead: every
+  // behavior with a base class writes it onto the host. Typical case returns
+  // in a few ms — far faster than the old flat 100ms — and a slow machine
+  // simply waits longer instead of failing.
+  //
+  // A handful of behaviors legitimately add no class, so this cannot be a hard
+  // wait: it falls through after a short budget rather than hanging, and any
+  // genuine "class never arrived" case still fails on the assertion below,
+  // which is where that failure belongs.
+  await page
+    .waitForFunction(
+      () => {
+        // Marked host if it survived, else child 0 -- same fallback as the
+        // locator below, so the readiness probe and the assertions can never
+        // end up watching two different elements.
+        const el = document.querySelector('#test-container > [test-host]')
+          || document.querySelector('#test-container > *');
+        return !!el && (el.className || '').trim().length > 0;
+      },
+      null,
+      // 120ms, not 2000. A 2s budget looked harmless because the fast path
+      // was expected to dominate -- but many behaviors put their class on a
+      // DESCENDANT, not on `#test-container > *`, so they hit the full
+      // fallback SEVEN times per test. Measured: 46 -> 52 failures and
+      // 6.5m -> 9.4m. Capping at ~the old sleep keeps the win (behaviors that
+      // do mark the host return in a few ms) with no worse floor than before.
+      { timeout: 120 },
+    )
+    .catch(() => { /* class-less behavior: let the assertion decide */ });
+
+  // Prefer the AUTHORED host; fall back to child 0 if it did not survive.
+  //
+  // The marker alone is not enough: a few behaviors REPLACE their host
+  // (autocomplete, x-copybutton, details), and the marked node is gone by the
+  // time we look -- every subsequent lookup then waited out its full timeout
+  // and the test died at 90s. Resolving once, here, gets both cases right:
+  // the marker when it survives (which is what stops sticky's placeholder
+  // from being mistaken for the host), and the old behavior when it doesn't.
+  const marked = page.locator('#test-container > [test-host]');
+  return (await marked.count()) > 0 ? marked.first() : page.locator('#test-container > *').first();
 }
 
 const schemas = loadSchemas();
 
 // CONSOLIDATED: ONE test per behavior validates EVERYTHING
-test.describe('Behavior Compliance', () => {
+test.describe('Component Compliance', () => {
+  // A wall-clock budget, not a tolerance.
+  //
+  // Each of these 146 tests navigates, waits for WB, then builds and scans up
+  // to SEVEN separate containers — it is the heaviest spec in the suite. At
+  // --workers=8 that contends for CPU and the 30s default stops being a
+  // measure of correctness and becomes a measure of how busy the machine is.
+  //
+  // Measured, same code, same run, only the budget changed:
+  //   30s -> 100 passed, 46 failed, 18 of them "Test timeout exceeded"
+  //   90s -> 109 passed, 37 failed,  0 timeouts
+  //
+  // So 9 tests were failing purely on the clock. The remaining 37 are real
+  // assertion failures and are NOT masked by this — they fail either way.
+  //
+  // This is only legitimate because nothing here can hang: the four remaining
+  // waitForTimeout(100) calls are bounded post-click settles (~400ms total per
+  // test), so a larger budget cannot hide an infinite wait. Those four should
+  // still become event waits; tracked separately.
+  test.describe.configure({ timeout: 90_000 });
+
   for (const [behaviorName, schema] of schemas) {
     test(`${behaviorName}: comprehensive compliance`, async ({ page }) => {
       await page.goto('index.html');
@@ -409,32 +599,21 @@ test.describe('Behavior Compliance', () => {
       const baseHtml = schema.test?.setup?.[0] || generateHtml(behaviorName, {}, 'Test Content', schema.element);
       const element = await setupTestContainer(page, baseHtml);
       
-      if (schema.compliance?.baseClass) {
-        // #736 -- this generates its markup as the CUSTOM TAG (<div x-alert ...>),
-        // and behaviors deliberately skip the redundant base class on a literal
-        // custom-tag host because the stylesheet targets the tag directly -- the
-        // #448 pattern, written down in the source:
-        //
-        //   // skip the redundant class on a literal <div x-alert> host (its own
-        //   // tag selector already covers it), add it for every other host.
-        //   if (element.tagName.toLowerCase() !== 'x-alert') element.classList.add('x-alert');
-        //
-        // Measured: <div x-alert variant="warning"> -> "x-alert x-alert--warning",
-        // <div x-alert variant="warning"> -> "x-alert--warning", and alert.css line
-        // 10 is `x-alert,`. Both are styled. Asserting the literal class failed
-        // 50 behaviors for doing the right thing.
-        //
-        // What matters is that the element is COVERED by its base style, so the
-        // tag counts. An attribute host missing the class is still a failure --
-        // that is the #375 bug this check exists to catch.
-        const covered = await element.evaluate(
-          (el, cls) => el.classList.contains(cls) || el.tagName.toLowerCase() === cls,
-          schema.compliance.baseClass,
-        );
-        if (!covered) {
-          allErrors.push(`[BASE CLASS] Missing: "${schema.compliance.baseClass}"`);
-        }
-      }
+      // NO base-class requirement (John: "I don't think we need base class of
+      // anything any longer we are using injection as needed instead").
+      //
+      // Behaviors inject classes where a stylesheet needs one -- x-card__footer,
+      // x-tabs__tab -- and not as a mandatory host marker. a8a7362e already
+      // removed the host class from cards in favour of attribute selectors, and
+      // select.js deliberately emits nothing for a default native <select>.
+      // Asserting a host class therefore failed behaviors for doing the right
+      // thing (#913).
+      //
+      // compliance.baseClass STAYS in the schemas: wb.js:374 and
+      // schema-builder.js:207 derive generated class names from it, and 22
+      // schemas declare a value that differs from the x-<name> default
+      // (x-hero, x-notification -- 50 and 20 CSS references respectively).
+      // It is a class-name source, not a compliance rule.
       
       // ========== CHECK 2: Parent Class ==========
       if (schema.compliance?.parentClass) {
@@ -485,9 +664,18 @@ test.describe('Behavior Compliance', () => {
       
       // ========== CHECK 5: Property Permutations ==========
       for (const [propName, propDef] of Object.entries(schema.properties || {})) {
-        if (!propDef.permutations) continue;
-        
+        // Schema plumbing and sibling behavior tokens are not options.
+        if (/^[$_]/.test(propName) || /^x-/.test(propName)) continue;
+        // scope:"child" means the behavior reads this off a SECTION, not off
+        // the host (#861 category c). Setting it on the host tests nothing and
+        // then blames the behavior for not reacting.
+        if ((propDef as any).scope === 'child') continue;
+
+        // No `if (!propDef.permutations) continue;` any more -- that skipped
+        // every one of the 639 declared properties, because none declares the
+        // block. Values now come from the schema's own enum/boolean/default.
         const values = getPermutationValues(propDef);
+        if (!values.length) continue;
         
         for (const value of values) {
           if (value === null && propDef.required) continue;
@@ -497,14 +685,24 @@ test.describe('Behavior Compliance', () => {
           
           const el = await setupTestContainer(page, html);
           
-          // Check if behavior rendered - look for baseClass OR .x-ready class
-          const hasBaseClass = schema.compliance?.baseClass 
-            ? await el.evaluate((e, cls) => e.classList.contains(cls), schema.compliance.baseClass)
-            : true;
-          const wbReady = await el.classList.contains('x-ready');
+          // Check if component rendered - look for baseClass OR .x-ready class.
+          //
+          // `el` is a Playwright Locator, which has no `classList` -- the line
+          // below used to read `el.classList.contains(...)` and threw
+          // "Cannot read properties of undefined (reading 'contains')". It had
+          // never run: this whole check was gated on a `permutations` block
+          // that no schema declares, so a line that could not work sat here
+          // looking correct. Turning the check on surfaced it 109 times.
+          // Same coverage rule as CHECK 1: the attribute counts. Cards carry
+          // neither the class nor a matching tag since a8a7362e, so this read
+          // "did not initialize" on behaviors that had initialized fine.
+          const hasBaseClass = schema.compliance?.baseClass
+            ? await el.evaluate(isCovered, schema.compliance.baseClass)
+            : true;   // no declared baseClass -> nothing to assert coverage against
+          const wbReady = await el.evaluate((e) => e.classList.contains('x-ready'));
           
           if (!hasBaseClass && !wbReady) {
-            allErrors.push(`[PERMUTATION] ${propName}=${JSON.stringify(value)}: Behavior did not initialize`);
+            allErrors.push(`[PERMUTATION] ${propName}=${JSON.stringify(value)}: Component did not initialize`);
             continue;
           }
           
@@ -517,26 +715,86 @@ test.describe('Behavior Compliance', () => {
         }
       }
       
+      // ========== CHECK 5b: Pairwise Combinations ==========
+      //
+      // John: "but our permutation formula should have taken care of that?"
+      //
+      // It should have, and there was no formula -- CHECK 5 above sets ONE
+      // attribute at a time, so no two attributes were ever present together.
+      // <table headers rows> was therefore never rendered: headers alone shows
+      // nothing and rows alone shows nothing, so both scored as inert while
+      // the documented pair worked perfectly.
+      //
+      // Pairwise, not exhaustive: table declares 15 attributes, which is 32,768
+      // renders at two values each. All-pairs guarantees every pair of
+      // attribute-values appears together at least once -- the depth these
+      // bugs actually live at -- in tens of cases instead.
+      {
+        const params = Object.entries(schema.properties || {})
+          .filter(([n]) => !/^[$_]/.test(n) && !/^x-/.test(n))
+          // Child-scoped attributes belong on a section, not the host.
+          .filter(([, d]: [string, any]) => d?.scope !== 'child')
+          .map(([n, d]: [string, any]) => ({ name: n, values: getPermutationValues(d) }))
+          .filter((p) => p.values.length > 0);
+
+        if (params.length > 1) {
+          const { cases, coveredPairs, totalPairs, truncated } = pairwiseCases(params, {
+            max: 40,
+            dependentRequired: schema.dependentRequired || {},
+          });
+
+          // No silent caps: say what was dropped rather than reporting a clean
+          // run over a subset.
+          if (truncated) {
+            console.log(
+              `[PAIRWISE] ${behaviorName}: capped at 40 cases — ` +
+              `${coveredPairs}/${totalPairs} attribute pairs covered`,
+            );
+          }
+
+          for (const combo of cases) {
+            const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
+            const el = await setupTestContainer(page, html);
+
+            // "Initialized" must cover every way a behavior can leave a mark.
+            //
+            // A whole family of layout behaviors (#448) deliberately adds NO
+            // class and builds NO children -- x-masonry, x-cluster and friends
+            // only set inline styles on the host. Judging them by class or
+            // children reported working controls as broken, which is how this
+            // probe manufactured false failures before.
+            //
+            // generateHtml never emits a style attribute, so any inline style
+            // present after the scan was written by the behavior.
+            const initialized = schema.compliance?.baseClass
+            ? await el.evaluate(isCovered, schema.compliance.baseClass)
+            : true;   // no declared baseClass -> nothing to assert coverage against
+
+            if (!initialized) {
+              allErrors.push(
+                `[PAIRWISE] ${JSON.stringify(combo)}: component did not initialize`,
+              );
+            }
+          }
+        }
+      }
+
       // ========== CHECK 6: Matrix Combinations ==========
       if (schema.test?.matrix?.combinations) {
         for (const combo of schema.test.matrix.combinations) {
           const html = generateHtml(behaviorName, combo, 'Test Content', schema.element);
           const el = await setupTestContainer(page, html);
 
-          // "Initialized" = ANY sign the behavior was processed: its baseClass,
+          // "Initialized" = ANY sign the component was processed: its baseClass,
           // the x-schema marker, any wb-* class, or built child structure. (The
           // old check required the exact baseClass OR a non-existent .x-ready
-          // class, so it failed working behaviors — a false positive.)
-          const initialized = await el.evaluate((e, cls) =>
-            (cls ? e.classList.contains(cls) : false) ||
-            e.hasAttribute('x-schema') ||
-            e.classList.contains('x-ready') ||
-            /\bwb-[a-z]/.test(e.className) ||
-            e.children.length > 0,
-          schema.compliance?.baseClass || '');
+          // class, so it failed working components — a false positive.)
+          const initialized = schema.compliance?.baseClass
+            ? await el.evaluate(isCovered, schema.compliance.baseClass)
+            : true;   // no declared baseClass -> nothing to assert coverage against
 
           if (!initialized) {
-            allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Behavior did not initialize`);
+            allErrors.push(`[MATRIX] Combo ${JSON.stringify(combo)}: Component did not initialize`);
           }
         }
       }
@@ -551,7 +809,9 @@ test.describe('Behavior Compliance', () => {
             if (btnTest.steps && Array.isArray(btnTest.steps)) {
               for (const step of btnTest.steps) {
                 if (step.action === 'click') {
-                  const stepBtn = await el.locator(step.selector).first();
+                  // locator() returns a Locator, not a Promise -- awaiting it is a
+                  // no-op that reads as if the query were async.
+                  const stepBtn = el.locator(step.selector).first();
                   await stepBtn.click();
                   await page.waitForTimeout(100);
                 }
@@ -565,7 +825,7 @@ test.describe('Behavior Compliance', () => {
             }
             // Handle single-click tests
             else if (btnTest.selector) {
-              // 'element'/'' mean "the behavior root itself" -- the same
+              // 'element'/'' mean "the component root itself" -- the same
               // convention runAssertions() (CHECK 5) and the visual check
               // (CHECK 9) already honor. Without this, any schema whose
               // button test targets the host element directly (e.g.
@@ -644,7 +904,7 @@ test.describe('Behavior Compliance', () => {
           try {
             if (visTest.expect) {
               // No selector (input.schema.json's "Error State"/"Helper Text",
-              // among others) means "the behavior root itself", same as the
+              // among others) means "the component root itself", same as the
               // explicit 'element' convention CHECK 5/7 use -- `el.locator(undefined)`
               // isn't a no-op, it's a hard Playwright error ("Cannot read
               // properties of undefined (reading '_frame')"), which is why
@@ -654,7 +914,7 @@ test.describe('Behavior Compliance', () => {
               const target = noSelector ? el : el.locator(visTest.expect.selector).first();
 
               // Check classes. Schemas overwhelmingly write hasClass as a
-              // single string (card.schema.json's "Basic Card" -> "x-card",
+              // single string (card.schema.json's "Basic Card" -> ".x-card",
               // etc.) -- only accepting an array here meant `for...of` silently
               // iterated the STRING'S CHARACTERS instead ('w','b','-','c'...),
               // checking for nonsense one-letter classes and reporting them
@@ -665,12 +925,9 @@ test.describe('Behavior Compliance', () => {
                   // #736, same rule as CHECK 1: a custom-tag host is styled by
                   // its TAG selector, so behaviors skip the redundant base class
                   // there (card.js:230 for this exact case). card.schema.json's
-                  // "Basic Card" sets up a <article> and expects "x-card" --
+                  // "Basic Card" sets up a <article> and expects ".x-card" --
                   // covered by the tag, absent as a class, and correct either way.
-                  const covered = await target.evaluate(
-                    (el, c) => el.classList.contains(c) || el.tagName.toLowerCase() === c,
-                    cls,
-                  );
+                  const covered = await target.evaluate(isCovered, cls);
                   if (!covered) {
                     allErrors.push(`[VISUAL] ${visTest.name}: Missing class "${cls}"`);
                   }

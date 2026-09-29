@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -6,7 +6,7 @@ import * as path from 'path';
  * REGRESSION (#196 / #200 / #204 / #205): overlay demo markup must use the
  * canonical PLAIN attributes that the overlay behaviors actually read.
  *
- * The old demos used data-* attributes the behaviors never read — e.g.
+ * The old demos used data-* attributes the components never read — e.g.
  * `x-drawer data-position="left"` was ignored, so x-drawer fell back to its
  * default `position: 'right'` and BOTH drawer buttons opened to the right
  * (#204/#205). Likewise data-title/data-content/data-message rendered the
@@ -36,7 +36,34 @@ const FORBIDDEN_OVERLAY_ATTRS = [
 // process.cwd() (not __dirname, unavailable in ESM) — matches tests/base.ts's
 // own PATHS convention; Playwright always runs from the project root.
 const ROOT  = process.cwd();
-const PAGES = ['pages/behaviors.html', 'pages/behaviors.html', 'pages/newbehaviors.html'];
+// Only pages that exist. At HEAD this read
+//   ['pages/components.html', 'pages/behaviors.html', 'pages/newbehaviors.html']
+// The 4.0.0 sweep rewrote the deleted components.html into behaviors.html,
+// producing the SAME title twice -- and Playwright rejects duplicate test
+// titles by aborting collection for the whole project. The regression suite
+// reported 'Total: 0 tests in 0 files' as a result, so none of it ran.
+// newbehaviors.html does not exist either and would throw on readFileSync.
+//
+// pages/behaviors.html no longer carries its demos inline: all 88 <div x-demo>
+// blocks moved to data/behavior-examples.json (scripts/build-behavior-examples.mjs)
+// and the page renders them on demand, so reading the HTML found 0 overlay
+// triggers and failed on "found none". The examples file is what the page
+// actually shows, so it is what gets checked.
+const PAGES = ['data/behavior-examples.json'];
+
+/** The markup a file shows: HTML as-is; for the examples JSON, every source + alternate. */
+function markupOf(rel: string, raw: string): string {
+  if (!rel.endsWith('.json')) return raw;
+  const { examples } = JSON.parse(raw) as { examples: Record<string, { source?: string; alternates?: unknown[] }> };
+  const out: string[] = [];
+  for (const ex of Object.values(examples)) {
+    if (ex.source) out.push(ex.source);
+    for (const alt of ex.alternates ?? []) {
+      out.push(typeof alt === 'string' ? alt : JSON.stringify(alt));
+    }
+  }
+  return out.join('\n');
+}
 
 // Extract opening tags of overlay triggers (x-modal — legacy custom-element
 // tag form, still checked for any remaining archived pages — or any element
@@ -55,8 +82,8 @@ function overlayTriggerTags(html: string): string[] {
 
 test.describe('Overlay demo markup uses canonical plain attributes (#196/#200/#204/#205)', () => {
   for (const rel of PAGES) {
-    test(`${rel}: overlay triggers avoid data-* attributes the behaviors never read`, () => {
-      const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    test(`${rel}: overlay triggers avoid data-* attributes the components never read`, () => {
+      const html = markupOf(rel, fs.readFileSync(path.join(ROOT, rel), 'utf8'));
       const tags = overlayTriggerTags(html);
 
       expect(tags.length, `Expected overlay triggers in ${rel} but found none`).toBeGreaterThan(0);

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { globSync } from 'glob';
 
 /**
@@ -14,23 +14,23 @@ import { globSync } from 'glob';
  */
 
 const FILES = [
-  ...globSync('demos/**/*.html', { cwd: process.cwd() }),
-  ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+  ...globSync('demos/**/*.html', { cwd: process.cwd(), posix: true }),
+  ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
 ].sort();
 
 const MIN_PADDING_PX = 15; // ~1rem at the default 16px root, with a little slack for rounding
 const MIN_GAP_PX = 15;
 
-test.describe('x-alert (x-alert) keeps >=1rem text-edge padding and inter-alert gap (§13)', () => {
+test.describe('[x-alert] (x-alert) keeps >=1rem text-edge padding and inter-alert gap (§13)', () => {
   for (const file of FILES) {
-    test(`${file}: x-alert padding and gaps`, async ({ page }) => {
+    test(`${file}: [x-alert] padding and gaps`, async ({ page }) => {
       const urlPath = '/' + file.replace(/\\/g, '/');
       await page.goto(urlPath, { waitUntil: 'domcontentloaded' });
       await page.waitForTimeout(800);
 
       const result = await page.evaluate(({ minPad, minGap }) => {
         const alerts = Array.from(
-          document.querySelectorAll('.x-alert, x-alert, [x-alert]')
+          document.querySelectorAll('.x-alert, [x-alert], [x-alert]')
         ) as HTMLElement[];
         if (alerts.length === 0) return { skip: true, paddingViolations: [], gapViolations: [] };
 
@@ -84,15 +84,15 @@ test.describe('x-alert (x-alert) keeps >=1rem text-edge padding and inter-alert 
         return { skip: false, paddingViolations, gapViolations };
       }, { minPad: MIN_PADDING_PX, minGap: MIN_GAP_PX });
 
-      test.skip(result.skip, `${file} has no x-alert elements`);
+      test.skip(result.skip, `${file} has no [x-alert] elements`);
 
       expect(
         result.paddingViolations,
-        `${file}: x-alert padding violation(s):\n  ` + result.paddingViolations.join('\n  ')
+        `${file}: [x-alert] padding violation(s):\n  ` + result.paddingViolations.join('\n  ')
       ).toEqual([]);
       expect(
         result.gapViolations,
-        `${file}: x-alert gap violation(s):\n  ` + result.gapViolations.join('\n  ')
+        `${file}: [x-alert] gap violation(s):\n  ` + result.gapViolations.join('\n  ')
       ).toEqual([]);
     });
   }

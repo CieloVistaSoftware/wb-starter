@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md):
@@ -21,7 +21,7 @@ import { test, expect } from '@playwright/test';
  * on connect instead of lazily on click) -- that stays a deliberate
  * maintainer-decision-pending question, untouched here.
  */
-test.describe('x-dialog is excluded from schema $view building (#387)', () => {
+test.describe('.x-dialog is excluded from schema $view building (#387)', () => {
   test('/?page=forms: schema does not write div/header/h2/main/footer chrome into a live <dialog> host', async ({ page }) => {
     await page.goto('/?page=forms');
     await page.waitForTimeout(1500);
@@ -32,11 +32,16 @@ test.describe('x-dialog is excluded from schema $view building (#387)', () => {
     await page.evaluate(() => {
       const container = document.createElement('div');
       container.id = 'x-dialog-387-test';
-      container.innerHTML = '<dialog id="dlg-387" title="Test Dialog">Open the dialog</dialog>';
+      // A TRIGGER host: <button x-dialog>. This was <x-dialog>, and the
+      // tag-to-attribute migration rewrote it as a bare <dialog> -- which
+      // dialog.js (#1005) rightly treats as the dialog ITSELF, enhanced in
+      // place and hidden until opened, never as a trigger. So the host could
+      // never gain .x-dialog-trigger and the spec stopped testing #387.
+      container.innerHTML = '<button x-dialog id="dlg-387" title="Test Dialog">Open the dialog</button>';
       document.body.appendChild(container);
     });
-    await page.evaluate(() =>
-      (window as any).WB.scan(document.getElementById('x-dialog-387-test'), { eager: true })
+    await page.evaluate(async () =>
+      await (window as any).WB.scan(document.getElementById('x-dialog-387-test'), { eager: true })
     );
     // Give any async schema fetch/build a chance to run (it must NOT, but
     // wait long enough that a regression would actually show up here).
@@ -50,7 +55,7 @@ test.describe('x-dialog is excluded from schema $view building (#387)', () => {
 
     // Confirms schema did NOT write its stale $view chrome into the host --
     // none of dialog.schema.json's $view tags should appear as direct
-    // children of the live <dialog>.
+    // children of the trigger.
     const builtSchemaChrome = await host.evaluate((el) =>
       !!el.querySelector(':scope > header, :scope > h2, :scope > main, :scope > footer')
     );

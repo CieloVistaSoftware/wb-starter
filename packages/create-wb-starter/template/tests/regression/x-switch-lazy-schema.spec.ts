@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #489 (split off #322): <div x-switch> never rendered at all on wb-lazy.js
@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
  * semantics/switch.js) looks for a pre-built <input> via
  * `host.querySelector('input')`; that input only exists once schema-builder.js
  * constructs the host's internal structure from switch.schema.json's $view.
- * On wb.js (the main SPA runtime) WB.scan()/WB.processSchema() does that
+ * On wb.js (the main SPA runtime) await WB.scan()/WB.processSchema() does that
  * before dispatching behaviors; wb-lazy.js had no equivalent call anywhere,
  * so x-schema was never set and switchInput() silently fell back to a
  * same-looking-but-unmarked self-built structure (or, when several
@@ -48,7 +48,7 @@ async function injectAndScan(page, html: string) {
   return ids;
 }
 
-test.describe('x-switch schema builds on wb-lazy.js pages (#489)', () => {
+test.describe('[x-switch] schema builds on wb-lazy.js pages (#489)', () => {
   test('a single <div x-switch> gets x-schema and a real schema-built checkbox input', async ({ page }) => {
     await injectAndScan(page, '<div x-switch id="sw1" label="Notifications"></div>');
 

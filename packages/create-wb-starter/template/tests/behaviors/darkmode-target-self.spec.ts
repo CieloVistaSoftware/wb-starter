@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * x-darkmode with target="self" (found broken while redoing
@@ -28,7 +28,7 @@ async function injectAndScan(page: Page, html: string) {
     document.body.appendChild(container);
   }, html);
   await page.locator('#darkmode-test-container').scrollIntoViewIfNeeded();
-  await page.evaluate(() => (window as any).WB.scan(document.getElementById('darkmode-test-container')));
+  await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('darkmode-test-container')));
   await page.waitForTimeout(400);
 }
 

@@ -1,8 +1,8 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * Issue #365: an audit created a bare `<wb-{tag}></wb-{tag}>` for each of 96
- * behavior schemas, ran `WB.scan()`, and flagged 20 as completely inert
+ * component schemas, ran `await WB.scan()`, and flagged 20 as completely inert
  * (empty className + zero children after a settle delay). x-skeleton was
  * confirmed a false positive (its CSS is intentionally tag-selector-only).
  * The other 19 were assumed dead/unused as a batch and deprioritized without
@@ -12,7 +12,7 @@ import { test, expect, Page } from '@playwright/test';
  * that follow-up: it IS used (tests/behaviors/_misc/fix-card-layout.html),
  * but was inert for two stacked reasons:
  *   1. fix-card.js (the WBFixCard custom-element class, which self-registers
- *      via customElements.define('x-fix-card', ...)) was never imported by
+ *      via customElements.define('[x-fix-card]', ...)) was never imported by
  *      anything in the live app -- not eagerly (unlike x-grid.js/
  *      x-demo.js), not via tag-map.js's elementMap, not via
  *      wb-viewmodels/index.js's lazy-load behaviorModules registry. So the
@@ -25,8 +25,8 @@ import { test, expect, Page } from '@playwright/test';
  *      that doesn't exist (the real file is src/wb-viewmodels/fix-card.js)
  *      -- a second, independent reason the class never loaded there either.
  *
- * Fix: registered 'x-fix-card' -> 'fix-card' in tag-map.js's elementMap and
- * wb-viewmodels/index.js's behaviorModules (mirroring x-control.js's
+ * Fix: registered '[x-fix-card]' -> 'fix-card' in tag-map.js's elementMap and
+ * wb-viewmodels/index.js's behaviorModules (mirroring [x-control].js's
  * established pattern of a self-registering custom-element class that also
  * exports a default behavior function for the lazy-loader to resolve),
  * corrected the stale fixture path, and added x-fix-card to both
@@ -64,7 +64,7 @@ async function inject(page: Page, html: string) {
     container.id = 'test-container';
     container.innerHTML = h;
     document.body.appendChild(container);
-    // Same non-eager WB.scan() path as card-typed-variants-no-op.spec.ts --
+    // Same non-eager await WB.scan() path as card-typed-variants-no-op.spec.ts --
     // custom elements are deferred to an IntersectionObserver and scan()
     // does not await that, so callers must poll afterward rather than
     // trusting a fixed-instant check.
@@ -74,35 +74,49 @@ async function inject(page: Page, html: string) {
   return ids;
 }
 
-test.describe('x-fix-card actually upgrades and renders (#365)', () => {
+test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
   test('bare <div x-fix-card> upgrades to the real custom element class', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-upgrade"></div>`);
 
     // 'fix-card' is only added by WBFixCard.connectedCallback -- it only
-    // fires if customElements.define('x-fix-card', WBFixCard) actually ran
+    // fires if customElements.define('[x-fix-card]', WBFixCard) actually ran
     // and the browser upgraded the element. Before the fix, this class
     // never appeared because fix-card.js was never imported.
     await page.waitForFunction(
       () => document.getElementById('fc-upgrade')?.classList.contains('fix-card'),
+      // waitForFunction(fn, ARG, options): the options object used to sit in
+      // the ARG slot, so this 5s bound was never applied and a missing class
+      // hung until the 30s test timeout instead of failing here.
+      undefined,
       { timeout: 5000 }
     );
 
     const hasUpgraded = await page.locator('#fc-upgrade').evaluate((el) => {
-      // A real custom-element upgrade replaces the element's prototype --
-      // 'data' becomes an accessor (getter/setter) on WBFixCard.prototype,
-      // not a plain own property. On a never-upgraded HTMLElement, setting
-      // .data would just create a plain own property with no setter logic.
-      const proto = Object.getPrototypeOf(el);
-      const desc = Object.getOwnPropertyDescriptor(proto, 'data');
-      return typeof desc?.set === 'function';
+      // `data` must be a real ACCESSOR -- setter logic that renders. On an
+      // inert element, `.data = x` just creates a plain data property that
+      // does nothing, which is the #365 failure this guards.
+      //
+      // Where the accessor lives is not the contract. This used to look only
+      // at the prototype, i.e. demand a custom-element upgrade -- but a <div>
+      // can never be upgraded to a custom element class (only an element whose
+      // TAG is x-fix-card can), so on the 4.0.0 attribute form that check could
+      // not pass. fixCard() composes the capability onto the element itself
+      // (Tier 1: composition, not subclassing), so walk the chain from the
+      // element up and accept the first descriptor found.
+      for (let o: any = el; o; o = Object.getPrototypeOf(o)) {
+        const desc = Object.getOwnPropertyDescriptor(o, 'data');
+        if (desc) return typeof desc.set === 'function';
+      }
+      return false;
     });
-    expect(hasUpgraded, 'x-fix-card must upgrade to WBFixCard (data must be a real accessor)').toBe(true);
+    expect(hasUpgraded, '<div x-fix-card> must carry a real `data` accessor that renders').toBe(true);
   });
 
   test('setting .data on an upgraded <div x-fix-card> actually renders content', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-render"></div>`);
     await page.waitForFunction(
       () => document.getElementById('fc-render')?.classList.contains('fix-card'),
+      undefined,   // see the note in the test above: options go third
       { timeout: 5000 }
     );
 
@@ -110,7 +124,7 @@ test.describe('x-fix-card actually upgrades and renders (#365)', () => {
       el.data = {
         errorId: 'TEST-365',
         issue: 'Regression check',
-        behavior: 'schema-tags-render-audit.spec.ts',
+        component: 'schema-tags-render-audit.spec.ts',
         date: new Date().toISOString(),
         status: 'FIXED',
         cause: 'fix-card.js was never imported anywhere',
@@ -127,6 +141,6 @@ test.describe('x-fix-card actually upgrades and renders (#365)', () => {
     await expect(page.locator('#fc-render .fix-title')).toHaveText('Regression check');
     await expect(page.locator('#fc-render .fix-status')).toHaveText('FIXED');
     const childCount = await page.locator('#fc-render').evaluate((el) => el.children.length);
-    expect(childCount, 'x-fix-card must produce real child content once .data is set').toBeGreaterThan(0);
+    expect(childCount, '[x-fix-card] must produce real child content once .data is set').toBeGreaterThan(0);
   });
 });

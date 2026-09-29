@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * mdhtml.js originally read element.getAttribute('data-src') as a fallback
  * (added for issue #140 -- see tests/behaviors/doc-viewer.spec.ts, which
  * covers the doc-viewer.html page-level symptom of this exact bug). Commit
- * 8afed94 ("eager-scan root cause + widespread behavior/CSS/test-scope
+ * 8afed94 ("eager-scan root cause + widespread component/CSS/test-scope
  * bugs") deleted that fallback while removing what it believed were dead
  * `data-*` reads (#224: "zero data-* attributes anywhere") -- an audit that
  * only checked static HTML markup and missed that public/doc-viewer.html
@@ -43,7 +43,11 @@ test.describe('mdhtml() config.src reads data-src (regression for the 8afed94 de
       return {
         loaded: el.classList.contains('x-mdhtml--loaded'),
         hasPlaceholderText: el.textContent.includes('Loading documentation'),
-        h1: el.querySelector('h1')?.textContent || null,
+        // mdhtml's protectHyphenatedTokens (#295) deliberately swaps prose
+        // "-" for U+2011 (non-breaking hyphen) so "WB-Starter" can never wrap
+        // at its hyphen. That is intended rendering, not a failed load, so
+        // compare with hyphens normalized back (same as mdhtml-prose-flow).
+        h1: (el.querySelector('h1')?.textContent || '').replace(/\u2011/g, '-') || null,
       };
     });
 

@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * docs/behavior-cross-reference.md must follow DEMOS-AND-DOCS-STANDARDS.md
- * §1/§16 — every renderable behavior example is a live <div x-demo> (renders
+ * §1/§16 — every renderable component example is a live <div x-demo> (renders
  * the control AND shows its source), never a static, non-live code fence.
  * Converted from 37 plain ```html fences to live <div x-demo> blocks (per
  * docs/code-examples-standard.md Rule 4); the remaining plain fences on this
@@ -34,7 +34,7 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
       waitUntil: 'domcontentloaded',
     });
 
-    const demos = page.locator('x-demo');
+    const demos = page.locator('[x-demo]');
     await expect(demos.first().locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
 
     const count = await demos.count();
@@ -54,7 +54,7 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
       const demo = demos.nth(i);
       await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 10000 });
       // x-demo's own auto-generated source panel is always `.x-demo__code`
-      // (demo.js: `pre.className = 'x-demo__code'`) -- NOT a bare `pre`
+      // (demo.js: `pre.className = '[x-demo]__code'`) -- NOT a bare `pre`
       // selector. This doc has a "details" example whose rendered content
       // legitimately contains its own <pre><code> inside a collapsed
       // <details> (hidden until expanded); a `.x-demo__code, pre` selector
@@ -66,7 +66,7 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
     expect(errs, 'no page errors while rendering docs/behavior-cross-reference.md').toEqual([]);
   });
 
-  test('the x-modal dialog trigger pattern actually opens a working dialog', async ({ page }) => {
+  test('the [x-modal] dialog trigger pattern actually opens a working dialog', async ({ page }) => {
     // Regression guard for the mdhtml.js sanitizer bug found and fixed this
     // session: the on*= attribute-stripping regex's value-matching group
     // (`["'][^"']*["']`) didn't pair its closing quote with its opening one,
@@ -76,10 +76,13 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
     // docs/behaviors-reference.md's own dialog demo before the fix. Because
     // ALL on*= handlers are intentionally stripped by design (basic XSS
     // protection), this doc's dialog examples were rewritten to use the
-    // self-contained `<dialog modal-title modal-content>` trigger pattern
+    // self-contained `<button x-modal modal-title modal-content>` trigger pattern
     // instead of onclick+showModal(), which needs no event-handler
     // attribute at all. This test asserts that pattern still renders an
-    // un-mangled <dialog> tag and actually opens a dialog on click.
+    // un-mangled x-modal trigger and actually opens a dialog on click. (The
+    // doc's triggers had become bare <dialog modal-title> elements in the
+    // tag-to-attribute migration, carrying no x-modal at all, so this could
+    // not find one; they are <button x-modal> again.)
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
 
@@ -87,9 +90,19 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
       waitUntil: 'domcontentloaded',
     });
 
-    const trigger = page.locator('x-modal', { hasText: 'Show Welcome' }).first();
+    // The doc's trigger is `<button x-modal modal-title modal-content>Show
+    // Welcome</button>` (docs/behavior-cross-reference.md). This locator had
+    // been switched to `dialog[modal-title]` for an interim version of the doc
+    // that authored the trigger as a <dialog>; the doc went back to the
+    // <button x-modal> form (see the note above), so that locator matched
+    // nothing and timed out.
+    const trigger = page.locator('button[x-modal][modal-title]', { hasText: 'Show Welcome' }).first();
     await trigger.scrollIntoViewIfNeeded();
     await expect(trigger).toBeVisible({ timeout: 10000 });
+    // Visible is not enhanced: the lazy runtime (#491) attaches the click
+    // handler as the trigger nears the viewport, and a click before that lands
+    // on an inert button.
+    await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10000 });
 
     // No mangled tag names anywhere on the page (the corrupted form was a
     // tag literally named e.g. "buttonx').open()" per the confirmed bug).
@@ -113,6 +126,6 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
     await dialog.locator('.x-dialog__close').click();
     await expect(dialog).toBeHidden({ timeout: 5000 });
 
-    expect(errs, 'no page errors while opening/closing the x-modal dialog').toEqual([]);
+    expect(errs, 'no page errors while opening/closing the [x-modal] dialog').toEqual([]);
   });
 });

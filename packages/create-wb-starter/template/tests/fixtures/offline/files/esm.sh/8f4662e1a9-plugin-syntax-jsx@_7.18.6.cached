@@ -1,0 +1,4 @@
+/* esm.sh - @babel/plugin-syntax-jsx@7.29.7 */
+import "/@babel/helper-plugin-utils@^7.29.7?target=es2022";
+export * from "/@babel/plugin-syntax-jsx@7.29.7/es2022/plugin-syntax-jsx.mjs";
+export { default } from "/@babel/plugin-syntax-jsx@7.29.7/es2022/plugin-syntax-jsx.mjs";

@@ -6,7 +6,7 @@
  * Run: npm run test:compliance (runs on all browsers with test:browsers)
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Cross-Browser Support Infrastructure', () => {
   
@@ -406,21 +406,32 @@ test.describe('Cross-Browser Support Infrastructure', () => {
     expect(ignored).toBe(true);
   });
 
-  test('CSS custom properties can override behavior styles', async ({ page }) => {
-    const overrideWorks = await page.evaluate(() => {
-      // Create a card with custom property override
-      const card = document.createElement('x-card');
-      card.style.setProperty('--card-padding', '99px');
+  test('CSS custom properties can override component styles', async ({ page }) => {
+    // This created `document.createElement('.x-card')` -- a class selector
+    // is not a tag name, so it threw before asserting anything. It also only
+    // read back the custom property it had just set inline, which passes
+    // whether or not any component honours it. The escape hatch that matters
+    // is the one card.css actually reads: `background: var(--card-bg-override,
+    // ...)` on the base card rule, which matches <article> (x-card tags went
+    // away in 4.0.0).
+    await page.waitForFunction(() => {
+      const probe = document.createElement('article');
+      document.body.appendChild(probe);
+      const styled = getComputedStyle(probe).display === 'flex';
+      probe.remove();
+      return styled;
+    }, null, { timeout: 10000 });
+
+    const background = await page.evaluate(() => {
+      const card = document.createElement('article');
+      card.style.setProperty('--card-bg-override', 'rgb(1, 2, 3)');
       document.body.appendChild(card);
-      
-      // Check that custom property is set
-      const value = getComputedStyle(card).getPropertyValue('--card-padding').trim();
+      const value = getComputedStyle(card).backgroundColor;
       card.remove();
-      
-      return value === '99px';
+      return value;
     });
-    
-    expect(overrideWorks).toBe(true);
+
+    expect(background).toBe('rgb(1, 2, 3)');
   });
 
   test('Escape hatches documentation exists', async () => {

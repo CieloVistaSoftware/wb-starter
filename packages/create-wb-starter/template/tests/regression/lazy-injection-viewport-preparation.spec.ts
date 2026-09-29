@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('viewport-lazy injection prepares elements before visibility (#491)', () => {
   test('uses a 1200px preparation window while preserving lazy and eager scan modes', async ({ page }) => {
@@ -24,6 +24,9 @@ test.describe('viewport-lazy injection prepares elements before visibility (#491
 
       await (window as any).WB.scan(target.parentElement);
       await new Promise(resolve => setTimeout(resolve, 100));
+      // ripple.js adds the class `x-ripple`. This read `'[x-ripple]'` -- an
+      // attribute SELECTOR used as a class name, which no element ever has --
+      // so the lazy half passed vacuously and the eager half could not pass.
       const lazyClassBeforeEagerScan = target.classList.contains('x-ripple');
 
       await (window as any).WB.scan(target.parentElement, { eager: true });

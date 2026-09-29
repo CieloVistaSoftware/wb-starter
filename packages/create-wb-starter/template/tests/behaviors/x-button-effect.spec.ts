@@ -11,11 +11,11 @@
  *
  * Setup pattern copied from tests/behaviors/x-demo-width-and-toggle.spec.ts:
  * goto the lightweight test-harness page, inject markup, then
- * WB.scan(document.body, { eager: true }) so behaviors attach synchronously
+ * await WB.scan(document.body, { eager: true }) so behaviors attach synchronously
  * before any interaction is dispatched (TIER1 gotcha -- lazy IntersectionObserver
  * scan can leave listeners unattached for a one-shot click/keypress).
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string, id = 'x-button-effect-area'): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -178,7 +178,7 @@ test.describe('<button full-width> -- SUSPECTED BUG: attribute is declared but h
   //     attribute at all (only handles icon/iconPosition/loading/disabled).
   //   - src/styles/behaviors/button.css has no `.x-button--full` rule, and
   //     BUTTON_CSS in button.js's own injected <style> has no
-  //     `x-button[full-width]` rule either.
+  //     `.x-button[full-width]` rule either.
   // Net effect: the attribute is fully inert. Verified by reading both files
   // (no fix applied here per project rule -- product code under src/ is not
   // touched by this test-writing task).
@@ -257,14 +257,14 @@ test.describe('x-copy -- click actually writes the specified text to the clipboa
 
   test('clicking copies copy-text to the clipboard and shows the copied-feedback effect', async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-    await setup(page, `<button id="cpy" variant="info" x-copy copy-text="Copied from a x-button!">Copy to clipboard</button>`);
+    await setup(page, `<button id="cpy" variant="info" x-copy copy-text="Copied from a .x-button!">Copy to clipboard</button>`);
 
     const eventDetail = page.evaluate(() => new Promise(resolve => {
       document.getElementById('cpy')!.addEventListener('wb:copy:success', (e: any) => resolve(e.detail), { once: true });
     }));
     await page.locator('#cpy').click();
     const detail: any = await eventDetail;
-    expect(detail.text).toBe('Copied from a x-button!');
+    expect(detail.text).toBe('Copied from a .x-button!');
 
     // Visible feedback effect: innerHTML swaps to the feedback text and the
     // x-copy--copied class is added (copy.js's showFeedback()).
@@ -273,7 +273,7 @@ test.describe('x-copy -- click actually writes the specified text to the clipboa
 
     // Real clipboard effect, since permissions are granted for this origin.
     const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
-    expect(clipboardText).toBe('Copied from a x-button!');
+    expect(clipboardText).toBe('Copied from a .x-button!');
   });
 });
 

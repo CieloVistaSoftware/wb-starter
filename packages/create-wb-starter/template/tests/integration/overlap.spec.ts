@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * Standard §24 (#274): elements must never unintentionally overlap. Reported
@@ -41,7 +41,7 @@ import { test, expect, type Page } from '@playwright/test';
  *      (badge, tooltip, popover, dropdown, resizer, shimmer, glass,
  *      backdrop, skeleton, spinner, ripple, indicator, handle, caret,
  *      chevron, ribbon, toast, corner) — covers a legitimate normal-flow
- *      behavior that still plays a decorative/overlay role.
+ *      component that still plays a decorative/overlay role.
  *
  * Geometry itself uses `getClientRects()` (per-line boxes), not
  * `getBoundingClientRect()` — a wrapped multi-line inline element's overall
@@ -67,7 +67,7 @@ type OverlapHit = {
 
 const TARGET_PAGES: { name: string; url: string }[] = [
   { name: 'pages/behaviors', url: '/?page=behaviors' },
-  { name: 'pages/behaviors', url: '/?page=behaviors' },
+  { name: 'pages/components', url: '/?page=behaviors' },
   { name: 'demos/site/cards', url: '/demos/site/cards.html' },
   { name: 'demos/site/content', url: '/demos/site/content.html' },
   { name: 'demos/site/effects', url: '/demos/site/effects.html' },
@@ -126,6 +126,12 @@ async function detectOverlaps(page: Page): Promise<OverlapHit[]> {
       const cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity || '1') === 0) continue;
       if (cs.pointerEvents === 'none') continue;
+      // The body of a CLOSED <details> is never painted (its ::details-content
+      // slot is content-visibility: hidden), yet getClientRects() still forces
+      // layout for it and returns real boxes -- which "overlapped" the code
+      // sample under every collapsed details demo. checkVisibility() is the
+      // browser's own answer to "is this rendered at all?".
+      if (typeof el.checkVisibility === 'function' && !el.checkVisibility()) continue;
       if (cs.position !== 'static' && cs.position !== 'relative') continue;
       if (!hasOwnVisibleContent(el)) continue;
       if (isDecorative(el)) continue;

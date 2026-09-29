@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/AtrulePrelude */
+import{Semicolon as r,LeftCurlyBracket as o}from"../../../tokenizer.mjs";var i="AtrulePrelude",s="atrulePrelude",u={children:[[]]};function c(e){let t=null;return e!==null&&(e=e.toLowerCase()),this.skipSC(),hasOwnProperty.call(this.atrule,e)&&typeof this.atrule[e].prelude=="function"?t=this.atrule[e].prelude.call(this):t=this.readSequence(this.scope.AtrulePrelude),this.skipSC(),this.eof!==!0&&this.tokenType!==o&&this.tokenType!==r&&this.error("Semicolon or block is expected"),{type:"AtrulePrelude",loc:this.getLocationFromList(t),children:t}}function n(e){this.children(e)}export{n as generate,i as name,c as parse,u as structure,s as walkContext};
+//# sourceMappingURL=AtrulePrelude.mjs.map

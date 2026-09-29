@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * <div x-timeline> is a custom element; timeline.css's `.x-timeline` rule
@@ -12,14 +12,18 @@ import { test, expect } from '@playwright/test';
  * Fixed by adding `display: block` to `.x-timeline`.
  */
 
-test.describe('x-timeline renders as a real block with a visible connecting line', () => {
-  test('?page=behaviors: x-timeline is display:block with a real-height ::before line', async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
+// Checked on demos/site/layout.html now. The Behaviors page lost its static
+// timeline section in #664 (examples are built on demand in a panel), so
+// `[x-timeline]` there matched nothing until a row was picked and the test
+// timed out. layout.html still carries this exact five-item timeline.
+test.describe('[x-timeline] renders as a real block with a visible connecting line', () => {
+  test('?page=behaviors: [x-timeline] is display:block with a real-height ::before line', async ({ page }) => {
+    await page.goto('/demos/site/layout.html', { waitUntil: 'domcontentloaded' });
 
-    const timeline = page.locator('x-timeline').first();
+    const timeline = page.locator('[x-timeline][items^="Project Kickoff"]').first();
     await timeline.scrollIntoViewIfNeeded();
     await expect(timeline).toBeVisible({ timeout: 20000 });
+    await expect(timeline).toHaveAttribute('x-ready', '', { timeout: 20000 });
 
     await expect(timeline).toHaveCSS('display', 'block');
 

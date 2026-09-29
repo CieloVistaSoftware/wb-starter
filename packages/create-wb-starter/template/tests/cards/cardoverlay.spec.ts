@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Card Overlay (integration)', () => {
   test('should create overlay element with data-title text', async ({ page }: { page: Page }) => {
@@ -7,14 +7,14 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'My Overlay Title');
-      el.setAttribute('data-image', '/images/placeholder.svg');
+      el.setAttribute('data-image', 'https://picsum.photos/400/300');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-overlay');
@@ -36,19 +36,21 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay-gradient';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'Gradient Test');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const overlayContent = page.locator('#test-overlay-gradient .x-card__overlay-content');
     await expect(overlayContent).toBeVisible();
-    const style = await overlayContent.getAttribute('style');
-    expect(style).toContain('gradient');
+    // Computed, not the style attribute: #779 moved the gradient into
+    // card.css's .x-card__overlay-content--gradient-* rules.
+    const bg = await overlayContent.evaluate((el) => getComputedStyle(el).backgroundImage);
+    expect(bg).toContain('gradient');
   });
 
   test('should position overlay at bottom by default', async ({ page }: { page: Page }) => {
@@ -57,13 +59,13 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay-position';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'Bottom Position');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-overlay-position');
@@ -77,20 +79,21 @@ test.describe('Card Overlay (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-overlay-image';
       el.setAttribute('x-cardoverlay', '');
       el.setAttribute('data-title', 'Image Test');
-      el.setAttribute('data-image', '/images/placeholder.svg');
+      el.setAttribute('data-image', 'https://picsum.photos/400/300');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-overlay-image');
-    // Check for background-image in style attribute
-    const style = await card.getAttribute('style');
-    expect(style).toContain('background-image');
-    expect(style).toContain('url');
+    // Computed background-image: since #779 the image URL reaches the card
+    // through a generated stylesheet rule, not its style attribute.
+    const bg = await card.evaluate((el) => getComputedStyle(el).backgroundImage);
+    expect(bg).toContain('url');
+    expect(bg).toContain('picsum.photos');
   });
 });

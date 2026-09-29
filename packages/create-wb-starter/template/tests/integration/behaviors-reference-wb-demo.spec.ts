@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #323: docs/behaviors-reference.md must follow DEMOS-AND-DOCS-STANDARDS.md §1/§16 —
- * every behavior example is a live <div x-demo> (renders the control AND shows its
+ * every component example is a live <div x-demo> (renders the control AND shows its
  * source), never a static, non-live code fence.
  *
  * This file has MANY <div x-demo> blocks (intro syntax examples + a "Live Examples"
@@ -29,33 +29,47 @@ import { test, expect } from '@playwright/test';
  * this page; the "every <div x-demo> has a grid + source" check still covers them.
  */
 
-type Case = { selector: string; label: string; upgradeAttr?: string };
+type Case = { selector: string; label: string; upgradeAttr?: string; upgradeProp?: string };
 const CASES: Case[] = [
-  { selector: 'x-audio', label: 'audio' },
-  { selector: 'x-video', label: 'video' },
-  { selector: 'img[x-image]', label: 'img/image', upgradeAttr: 'class' },
+  // A plain native <audio src> is DECORATED in place (audio.js's
+  // needsCustomUI: only a non-<audio> host or show-eq gets the custom player),
+  // so it never has children -- "internal DOM" was the wrong proof. The
+  // behavior turning on native controls is the right one.
+  { selector: '.x-audio', label: 'audio', upgradeProp: 'controls' },
+  // Same for a native <video>: decorated in place (class, role, controls),
+  // never given children.
+  { selector: '.x-video', label: 'video', upgradeProp: 'controls' },
+  // <img> routes to the `img` behavior (tag-map nativeMap), which marks it
+  // .x-img -- there is no x-image attribute on it to select by.
+  { selector: 'img.x-img', label: 'img/image', upgradeAttr: 'class' },
   { selector: 'code[x-code]', label: 'code', upgradeAttr: 'class' },
-  { selector: 'x-input', label: 'input' },
-  { selector: 'x-textarea', label: 'textarea' },
-  { selector: 'x-select', label: 'select' },
-  { selector: 'x-checkbox', label: 'checkbox' },
-  { selector: 'x-switch', label: 'switch' },
-  { selector: 'x-rating', label: 'rating' },
+  { selector: '[x-input]', label: 'input' },
+  // A <textarea> is decorated in place and can hold no element children.
+  { selector: '.x-textarea', label: 'textarea', upgradeAttr: 'class' },
+  // #448: hosts no longer carry a class echoing their own attribute.
+  { selector: '[x-select]', label: 'select' },
+  { selector: '[x-checkbox]', label: 'checkbox' },
+  { selector: '[x-switch]', label: 'switch' },
+  { selector: '[x-rating]', label: 'rating' },
   // x-details is replaced in the DOM with a real native <details class="x-details">
   // (element.replaceWith(), matching x-form's own documented pattern) -- the
   // x-details TAG never exists post-upgrade, so select by the class it carries.
   { selector: 'details.x-details', label: 'details' },
-  { selector: 'x-dialog', label: 'dialog' },
-  { selector: 'x-button', label: 'button', upgradeAttr: 'role' },
-  { selector: 'x-card', label: 'card' },
-  { selector: 'x-cardlink', label: 'cardlink' },
-  { selector: 'x-progress', label: 'progressbar' },
-  { selector: 'x-tabs', label: 'tabs' },
-  { selector: 'x-drawer-layout', label: 'drawerLayout' },
-  { selector: 'x-carddraggable', label: 'draggable' },
-  { selector: 'x-themecontrol', label: 'themecontrol' },
-  { selector: 'x-mdhtml', label: 'mdhtml' },
-  { selector: 'x-confetti', label: 'confetti' },
+  { selector: '.x-dialog', label: 'dialog' },
+  // A native <button> already has role=button implicitly; button() does not
+  // restate it as an attribute, so the class it adds is the proof.
+  { selector: '.x-button', label: 'button', upgradeAttr: 'class' },
+  // <article> IS a card (nativeMap); #448 dropped the echoed .x-card class.
+  { selector: 'article', label: 'card' },
+  { selector: '[x-cardlink]', label: 'cardlink' },
+  // progress() replaces the <progress> with its own .x-progress bar.
+  { selector: '.x-progress', label: 'progressbar' },
+  { selector: '[x-tabs]', label: 'tabs' },
+  { selector: '[x-drawer-layout]', label: 'drawerLayout' },
+  { selector: '[x-carddraggable]', label: 'draggable' },
+  { selector: '[x-themecontrol]', label: 'themecontrol' },
+  { selector: '[x-mdhtml]', label: 'mdhtml' },
+  { selector: '[x-confetti]', label: 'confetti' },
 ];
 
 test.describe('docs/behaviors-reference.md: live <div x-demo> examples', () => {
@@ -69,7 +83,7 @@ test.describe('docs/behaviors-reference.md: live <div x-demo> examples', () => {
       waitUntil: 'domcontentloaded',
     });
 
-    const demos = page.locator('x-demo');
+    const demos = page.locator('[x-demo]');
     await expect(demos.first().locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
 
     const count = await demos.count();
@@ -102,10 +116,17 @@ test.describe('docs/behaviors-reference.md: live <div x-demo> examples', () => {
     // Spot-check that the added "Live Examples" actually upgraded (real behavior
     // ran), not just inert markup sitting inside a <div x-demo> wrapper.
     for (const c of CASES) {
-      const live = page.locator(`x-demo .x-demo__grid ${c.selector}`).first();
+      const live = page.locator(`[x-demo] .x-demo__grid ${c.selector}`).first();
       await expect(live, `${c.label} live example should be visible`).toBeVisible({ timeout: 5000 });
 
-      if (c.upgradeAttr) {
+      if (c.upgradeProp) {
+        await expect
+          .poll(() => live.evaluate((el, prop) => Boolean((el as any)[prop]), c.upgradeProp), {
+            message: `${c.label}: .${c.upgradeProp} should be set (upgraded)`,
+            timeout: 5000,
+          })
+          .toBe(true);
+      } else if (c.upgradeAttr) {
         await expect
           .poll(() => live.getAttribute(c.upgradeAttr as string), {
             message: `${c.label}: [${c.upgradeAttr}] should be set (upgraded)`,

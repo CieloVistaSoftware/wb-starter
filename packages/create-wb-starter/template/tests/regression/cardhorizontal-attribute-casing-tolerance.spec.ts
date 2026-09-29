@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #603: John pasted a real example using `imageposition="right"` (no
@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
  * Fix: card.js now also checks the no-hyphen form for both imagePosition
  * and imageWidth, alongside the existing kebab-case lookup.
  */
-test.describe('x-cardhorizontal tolerates both image-position and imageposition (#603)', () => {
+test.describe('[x-cardhorizontal] tolerates both image-position and imageposition (#603)', () => {
   const CASES = [
     { attr: 'image-position="right"', label: 'kebab-case (documented form)' },
     { attr: 'imageposition="right"', label: 'no-hyphen (what imagePosition="..." parses down to)' },
@@ -24,7 +24,7 @@ test.describe('x-cardhorizontal tolerates both image-position and imageposition 
       await page.goto('/');
       await page.setContent(`<div x-cardhorizontal
         title="Test"
-        image="/images/placeholder.svg"
+        image="https://picsum.photos/400/300?random=casing-test"
         ${attr}>
         Content
       </div>`);
@@ -39,7 +39,7 @@ test.describe('x-cardhorizontal tolerates both image-position and imageposition 
       });
       await page.waitForTimeout(1000);
 
-      const card = page.locator('x-cardhorizontal').first();
+      const card = page.locator('[x-cardhorizontal]').first();
       await expect(card.locator('.x-card__figure')).toBeVisible();
 
       const figBox = await card.locator('.x-card__figure').first().boundingBox();
@@ -55,7 +55,7 @@ test.describe('x-cardhorizontal tolerates both image-position and imageposition 
     for (const attr of ['image-width="60%"', 'imagewidth="60%"']) {
       await page.setContent(`<div x-cardhorizontal
         title="Test"
-        image="/images/placeholder.svg"
+        image="https://picsum.photos/400/300?random=width-test"
         ${attr}>
         Content
       </div>`);
@@ -72,8 +72,19 @@ test.describe('x-cardhorizontal tolerates both image-position and imageposition 
 
       const figure = page.locator('.x-card__figure').first();
       await expect(figure).toBeVisible();
-      const width = await figure.evaluate((el) => (el as HTMLElement).style.width);
-      expect(width, `${attr} should set the figure's inline width`).toBe('60%');
+      // Measured, not read off an inline style: the width now reaches the
+      // figure as the --horizontal-image-width custom property that card.css's
+      // `.x-card__horizontal-figure` rule consumes (Law 9), so `style.width`
+      // is empty by design. What must hold for BOTH spellings is the rendered
+      // result -- the figure takes 60% of the card's content box.
+      const ratio = await figure.evaluate((el) => {
+        const card = el.parentElement as HTMLElement;
+        const cs = getComputedStyle(card);
+        const content = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        return el.getBoundingClientRect().width / content;
+      });
+      expect(ratio, `${attr} should size the figure to 60% of the card`).toBeGreaterThan(0.58);
+      expect(ratio, `${attr} should size the figure to 60% of the card`).toBeLessThan(0.62);
     }
   });
 });

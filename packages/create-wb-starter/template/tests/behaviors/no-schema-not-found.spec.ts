@@ -7,7 +7,7 @@
  * Guards the fix in src/core/mvvm/schema-builder.js (detectSchema) +
  * src/wb-models/stack.schema.json registration.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#174 — no spurious "Schema not found" warnings', () => {
   test('behaviors page emits zero Schema-not-found warnings', async ({ page }) => {
@@ -17,7 +17,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
       if (/Schema not found/i.test(t)) schemaWarnings.push(t);
     });
 
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     await page.waitForTimeout(2500); // lazy injection + schema build + observer
 
@@ -31,7 +31,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
     const pageErrors: string[] = [];
     page.on('pageerror', (e) => pageErrors.push(String(e)));
 
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     // navigate away and back — this is what tripped x-demo's disconnectedCallback (#174/#175)
     await page.evaluate(() => {
@@ -39,7 +39,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
       home?.click();
     });
     await page.waitForTimeout(800);
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForTimeout(1500);
 
     expect(pageErrors, `uncaught errors:\n${pageErrors.join('\n')}`).toEqual([]);

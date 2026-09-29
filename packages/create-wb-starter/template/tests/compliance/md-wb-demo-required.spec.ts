@@ -11,7 +11,7 @@
  * custom tag or an x-* attribute. CSS/JS fences, reference tables, and
  * intentionally-invalid markup (no wb-* / x-* content) are not flagged.
  */
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -43,7 +43,7 @@ const LEGACY_ZERO_DEMO_FILES = new Set([
   'architecture/standards/ATTRIBUTE-NAMING-STANDARD.md',
   'architecture/standards/SCHEMA-SPECIFICATION.md',
   'architecture/WBVIEWS.md',
-  'Auto-Injection.md',
+  'auto-injection.md',
   'behaviors/autosize.md',
   'behaviors/label.md',
   'behaviors/x-card.md',

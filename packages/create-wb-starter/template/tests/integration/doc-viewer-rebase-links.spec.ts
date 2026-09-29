@@ -1,4 +1,4 @@
-import { test, expect, request as pwRequest } from '@playwright/test';
+import { test, expect, request as pwRequest } from '../fixtures/offline';
 
 /**
  * REGRESSION: the doc-viewer must rebase a doc's relative links/media against the

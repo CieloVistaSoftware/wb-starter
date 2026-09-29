@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/shareReplay */
+import{ReplaySubject as r}from"../ReplaySubject.mjs";import{share as s}from"./share.mjs";function y(t,n,l){let e,o=!1;return t&&typeof t=="object"?{bufferSize:e=1/0,windowTime:n=1/0,refCount:o=!1,scheduler:l}=t:e=t??1/0,s({connector:()=>new r(e,n,l),resetOnError:!0,resetOnComplete:!1,resetOnRefCountZero:o})}export{y as shareReplay};
+//# sourceMappingURL=shareReplay.mjs.map

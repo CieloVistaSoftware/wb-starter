@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -21,7 +21,7 @@ import { globSync } from 'glob';
  *
  * DISCOVERY: rather than hand-listing every file (the same "doesn't scale
  * to future usage" problem docs-live-media-assets-exist.spec.ts avoided by
- * driving off behavior-index.json), this greps for `<div x-demo[^>]*\bevents=`
+ * driving off component-index.json), this greps for `<div x-demo[^>]*\bevents=`
  * across demos/**\/*.html, pages/**\/*.html, and docs/**\/*.md (fenced code
  * and inline spans stripped in .md first, matching every other test in
  * this session's audit pass -- an `events=` attribute shown as inline
@@ -29,10 +29,10 @@ import { globSync } from 'glob';
  * live control). As of this pass there are 6 real usages across 5 files;
  * any future `events=` usage is automatically picked up.
  *
- * INTERACTION: the control behind an `events=` demo varies by behavior
+ * INTERACTION: the control behind an `events=` demo varies by component
  * (a button, a switch, a tab, a table row, ...) and this test does not
  * hand-pick a selector per file -- it tries a small, ordered cascade of
- * generic candidate selectors (the shapes real behaviors in this repo
+ * generic candidate selectors (the shapes real components in this repo
  * actually expose: a real `<button>`, `[role=switch]`, `[role=tab]`, a
  * `<tr>`, then a last-resort click on the first rendered child) and stops
  * at the first one that actually moves the event log. This generalizes to
@@ -69,8 +69,8 @@ interface Target {
 }
 
 const TARGETS: Target[] = [
-  ...globSync('demos/**/*.html', { cwd: ROOT }).map((f) => ({ rel: toPosix(f), isMd: false })),
-  ...globSync('pages/**/*.html', { cwd: ROOT }).map((f) => ({ rel: toPosix(f), isMd: false })),
+  ...globSync('demos/**/*.html', { cwd: ROOT, posix: true }).map((f) => ({ rel: toPosix(f), isMd: false })),
+  ...globSync('pages/**/*.html', { cwd: ROOT, posix: true }).map((f) => ({ rel: toPosix(f), isMd: false })),
   ...globSync('docs/**/*.md', { cwd: ROOT, ignore: ['docs/_today/**'] }).map((f) => ({ rel: toPosix(f), isMd: true })),
 ]
   .filter((t) => usesLiveEventsDemo(path.join(ROOT, t.rel), t.isMd))
@@ -78,7 +78,7 @@ const TARGETS: Target[] = [
 
 /**
  * Ordered cascade of generic interaction candidates for the control(s)
- * inside one `x-demo[events]`'s `.x-demo__grid`. Each entry is a
+ * inside one `[x-demo][events]`'s `.x-demo__grid`. Each entry is a
  * Playwright locator string tried in order; the first one that's visible
  * AND actually moves the event log wins. Order matters -- more specific
  * interactive-control shapes first, generic fallback last:
@@ -108,23 +108,23 @@ function interactionCandidates(grid: import('@playwright/test').Locator) {
   ];
 }
 
-test.describe('x-demo events= panels actually fire when interacted with (§27 audit)', () => {
+test.describe('[x-demo] events= panels actually fire when interacted with (§27 audit)', () => {
   for (const { rel, isMd } of TARGETS) {
-    test(`${rel}: every x-demo[events] logs a real event on interaction`, async ({ page }) => {
+    test(`${rel}: every [x-demo][events] logs a real event on interaction`, async ({ page }) => {
       const url = isMd ? '/public/doc-viewer.html?file=' + encodeURIComponent(rel) : '/' + rel;
       await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-      const eventDemos = page.locator('x-demo[events]');
+      const eventDemos = page.locator('[x-demo][events]');
       // mdhtml/doc-viewer renders markdown asynchronously; wait for the
       // attribute-carrying element to actually exist before counting.
       try {
         await expect(eventDemos.first()).toBeAttached({ timeout: 20000 });
       } catch {
-        test.skip(true, 'no x-demo[events] rendered on this page (attribute may be inside an inert code sample only)');
+        test.skip(true, 'no [x-demo][events] rendered on this page (attribute may be inside an inert code sample only)');
       }
 
       const count = await eventDemos.count();
-      if (count === 0) test.skip(true, 'no x-demo[events] rendered on this page');
+      if (count === 0) test.skip(true, 'no [x-demo][events] rendered on this page');
 
       const failures: string[] = [];
 
@@ -133,10 +133,10 @@ test.describe('x-demo events= panels actually fire when interacted with (§27 au
         await demo.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
 
         const log = demo.locator('.x-demo__events-log');
-        await expect(log, `x-demo[events][${i}] should build its events log panel (§27)`).toBeAttached({ timeout: 10000 });
+        await expect(log, `[x-demo][events][${i}] should build its events log panel (§27)`).toBeAttached({ timeout: 10000 });
 
         const entriesBefore = await demo.locator('.x-demo__events-log-entry').count();
-        expect(entriesBefore, `x-demo[events][${i}] should start with an EMPTY event log (nothing interacted with yet)`).toBe(0);
+        expect(entriesBefore, `[x-demo][events][${i}] should start with an EMPTY event log (nothing interacted with yet)`).toBe(0);
 
         const grid = demo.locator('.x-demo__grid');
         const candidates = interactionCandidates(grid);

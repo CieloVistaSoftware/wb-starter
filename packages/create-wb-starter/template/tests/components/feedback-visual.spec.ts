@@ -1,7 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { settledWidthPercent } from '../helpers/settled-style';
 
 /**
- * FEEDBACK BEHAVIOR VISUAL TESTS
+ * FEEDBACK COMPONENT VISUAL TESTS
  * ===============================
  * Tests for progress bars, spinners, skeleton loaders
  * Creates test elements directly rather than relying on page structure
@@ -14,21 +15,40 @@ test.describe('Progress Bars', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-height';
       el.setAttribute('x-progress', '');
       el.setAttribute('value', '75');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
 
     const progress = page.locator('#test-progress-height');
     const height = await progress.evaluate(el => parseFloat(getComputedStyle(el).height));
     
-    // Should have some height (0.6rem ≈ 9.6px)
-    expect(height).toBeLessThanOrEqual(12);
-    expect(height).toBeGreaterThan(5);
+    // #932: this asserted <= 12px ("0.6rem"), the BARE .x-progress height.
+    // But `showLabel` defaults TRUE (progress.js: `getAttribute('show-label')
+    // !== 'false'`), so every bar gets .x-progress--labeled { height: 1.25rem }
+    // -- added by #280 to give the built-in % label room. 20px is the default,
+    // and the test was contradicting it.
+    expect(height).toBeGreaterThan(12);
+    expect(height).toBeLessThanOrEqual(24);
+
+    // ...and show-label="false" returns it to the compact bar, which is what
+    // the old expectation actually described.
+    const bare = await page.evaluate(async () => {
+      const el = document.createElement('div');
+      el.id = 'test-progress-unlabeled';
+      el.setAttribute('x-progress', '');
+      el.setAttribute('value', '75');
+      el.setAttribute('show-label', 'false');
+      document.body.appendChild(el);
+      await (window as any).WB.scan();
+      return parseFloat(getComputedStyle(el).height);
+    });
+    expect(bare).toBeLessThanOrEqual(12);
+    expect(bare).toBeGreaterThan(2);
   });
   
   test('should animate from 0 to target value', async ({ page }) => {
@@ -37,14 +57,14 @@ test.describe('Progress Bars', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-progress-anim';
       el.setAttribute('x-progress', '');
       el.setAttribute('value', '75');
       el.setAttribute('animated', 'true');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
 
     // Wait for animation to complete
@@ -52,9 +72,8 @@ test.describe('Progress Bars', () => {
 
     // Check final width matches value
     const progressBar = page.locator('#test-progress-anim .x-progress__bar');
-    const barWidth = await progressBar.evaluate(el => el.style.width);
-    
-    expect(barWidth).toBe('75%');
+    // #779: rendered fill, not the style attribute nothing writes any more.
+    expect(await settledWidthPercent(progressBar)).toBeCloseTo(75, 0);
   });
 });
 
@@ -65,21 +84,29 @@ test.describe('Spinners', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner';
       el.setAttribute('x-spinner', '');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const spinner = page.locator('#test-spinner');
     await expect(spinner).toHaveClass(/x-spinner/);
     
-    const inner = spinner.locator('div').first();
-    const style = await inner.getAttribute('style');
-    expect(style).toContain('animation');
-    expect(style).toContain('x-spin');
+    // #932: this read an inline `style` attribute, which is always null now --
+    // Law 9 moved these rules into CSS, and `expect(null).toContain(...)` is a
+    // matcher error rather than a failed assertion. Read the COMPUTED value,
+    // which is true whether the rule lives in a stylesheet or inline.
+    const animation = await spinner.evaluate((el) => {
+      const self = getComputedStyle(el).animationName;
+      if (self && self !== 'none') return self;
+      const child = el.querySelector('*');
+      return child ? getComputedStyle(child).animationName : 'none';
+    });
+    expect(animation).not.toBe('none');
+    expect(animation).toContain('spin');
   });
   
   test('should have different colors based on color', async ({ page }) => {
@@ -88,7 +115,7 @@ test.describe('Spinners', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const primary = document.createElement('div');
       primary.id = 'spinner-primary';
       primary.setAttribute('x-spinner', '');
@@ -101,7 +128,7 @@ test.describe('Spinners', () => {
       success.setAttribute('color', 'success');
       document.body.appendChild(success);
       
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const primaryInner = page.locator('#spinner-primary > div').first();
@@ -121,23 +148,27 @@ test.describe('Skeleton Loaders', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-skeleton';
       el.setAttribute('x-skeleton', '');
       el.setAttribute('variant', 'text');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
 
     const skeleton = page.locator('#test-skeleton');
     await expect(skeleton).toBeVisible();
     
-    // Check for shimmer animation in inner div
-    const innerDiv = skeleton.locator('div').first();
-    const style = await innerDiv.getAttribute('style');
-    expect(style).toContain('animation');
-    expect(style).toContain('shimmer');
+    // #932: this waited on `skeleton.locator('div').first()` and timed out at
+    // 30s -- skeleton() appends bare <span> children, and only when lines > 1,
+    // so with the default lines=1 it builds nothing at all. The shimmer is a
+    // CSS rule on the skeleton itself; read it computed.
+    const animation = await skeleton.evaluate(
+      (el) => getComputedStyle(el).animationName,
+    );
+    expect(animation).not.toBe('none');
+    expect(animation.toLowerCase()).toContain('shimmer');
   });
   
   test('text variant creates multiple lines', async ({ page }) => {
@@ -146,20 +177,22 @@ test.describe('Skeleton Loaders', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-skeleton-lines';
       el.setAttribute('x-skeleton', '');
       el.setAttribute('variant', 'text');
       el.setAttribute('lines', '3');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const skeleton = page.locator('#test-skeleton-lines');
-    const lines = skeleton.locator('.x-skeleton__line');
-    const lineCount = await lines.count();
-    
+    // #932: `.x-skeleton__line` is emitted nowhere -- skeleton() appends
+    // UNCLASSED <span> elements, one per line. The old selector could only
+    // ever count 0.
+    const lineCount = await skeleton.locator('span').count();
+
     expect(lineCount).toBe(3);
   });
 });
@@ -171,14 +204,18 @@ test.describe('Clickable Card', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-clickable-card';
       el.setAttribute('x-card', '');
-      el.setAttribute('data-clickable', '');
+      // #932: was `data-clickable`. Law 11 removed data-* config; card.js:184
+      // reads the plain `clickable`, and card.css selects the [clickable]
+      // ATTRIBUTE for the pointer cursor ("No class: card.css reads the
+      // [clickable] attribute" -- card.js:344).
+      el.setAttribute('clickable', '');
       el.textContent = 'Click me';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-clickable-card');
@@ -208,7 +245,7 @@ test.describe('Card Structure', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-card-structure';
       el.setAttribute('x-card', '');
@@ -216,7 +253,7 @@ test.describe('Card Structure', () => {
       el.setAttribute('data-footer', 'Footer text');
       el.textContent = 'Card content';
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-card-structure');

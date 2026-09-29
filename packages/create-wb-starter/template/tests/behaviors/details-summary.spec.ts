@@ -1,7 +1,8 @@
 /**
  * x-details — summary attribute becomes the header (issue #131)
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
+import { openBehaviorsPanel, renderVariant, example } from '../utils/behaviors-panel';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -9,7 +10,7 @@ async function setup(page: Page, html: string): Promise<void> {
   // #691: NOT WBSite. /demos/test-harness.html is a standalone page, not an SPA
   // route, so window.WBSite is never created there -- waiting on it timed out at
   // 20s and these assertions never ran. WB.behaviors is the readiness signal
-  // that actually applies, and setup() calls WB.scan() itself below.
+  // that actually applies, and setup() calls await WB.scan() itself below.
   await page.evaluate((h: string) => {
     const c = document.createElement('div');
     c.id = 'details-test-area';
@@ -21,7 +22,7 @@ async function setup(page: Page, html: string): Promise<void> {
   await page.waitForTimeout(400);
 }
 
-test.describe('x-details', () => {
+test.describe('.x-details', () => {
   test('header shows the summary attribute, not the literal "Details"', async ({ page }) => {
     await setup(page, '<details summary="Question?"><p>Answer content here</p></details>');
     const label = page.locator('.x-details__label');
@@ -58,14 +59,19 @@ test.describe('x-details', () => {
   // concurrent wb-* elements competing for schema fetches, does -- so this
   // test loads the actual page the bug was found on instead.
   test('does not get double-processed by schema + native behavior (no nested summary, no duplicate class)', async ({ page }) => {
-    await page.goto('/?page=behaviors');
-    await page.waitForFunction(() => (window as any).WBSite !== undefined, { timeout: 15000 });
+    // The Behaviors page builds its examples on demand since #664, so there is
+    // no `details.x-details` on it until a row is picked -- and the answer text
+    // this used to look for belonged to the retired static section. Render the
+    // x-details example in the live panel: still the real page, with its full
+    // WB.init() boot and many concurrent behaviors, which is what reproduced it.
+    await openBehaviorsPanel(page, 'x-details');
+    await renderVariant(page, 'x-details', 'default');
 
-    const detailsEl = page.locator('details.x-details').first();
-    await detailsEl.scrollIntoViewIfNeeded();
-    await expect(detailsEl).toHaveCount(1);
+    const detailsEl = example(page);
+    await expect(detailsEl).toHaveAttribute('x-ready', '');
+    await expect(detailsEl).toHaveJSProperty('tagName', 'DETAILS');
 
-    // The buggy double-processed output ends up with "x-details x-details"
+    // The buggy double-processed output ends up with ".x-details .x-details"
     // (both the schema path and the behavior path add the class).
     const className = await detailsEl.getAttribute('class');
     expect(className?.trim().split(/\s+/).filter(c => c === 'x-details').length).toBe(1);
@@ -74,8 +80,8 @@ test.describe('x-details', () => {
     // the content div.
     await expect(detailsEl.locator('summary')).toHaveCount(1);
 
-    // The real content ("What is wb-starter?"'s answer, pages/behaviors.html)
-    // must survive, not be discarded by the schema's content-less $view.
-    await expect(detailsEl.locator('.x-details__content')).toContainText('zero-build behavior library');
+    // The real authored content must survive, not be discarded by the
+    // schema's content-less $view.
+    await expect(detailsEl.locator('.x-details__content')).toContainText('the summary text is authored via the');
   });
 });

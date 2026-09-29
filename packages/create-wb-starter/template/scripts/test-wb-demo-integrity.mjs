@@ -16,14 +16,15 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { extractDemoBlocks } from './lib/demo-blocks.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_DIR = path.resolve(__dirname, '..');
 const SCAN_DIRS = ['pages', 'demos'];
 
-const OPEN_RE = /<div x-demo(?:\s[^>]*)?>/g;
-const CLOSE_RE = /<\/x-demo>/g;
-const EMPTY_RE = /<div x-demo(?:\s[^>]*)?>\s*<\/x-demo>/g;
+// The host is a <div> now, and </div> is the commonest closing tag there is,
+// so tag COUNTING cannot tell a demo's own close from a nested one. Balance
+// and emptiness both come from the depth-aware scan instead.
 
 function stripHtmlComments(html) {
   return html.replace(/<!--[\s\S]*?-->/g, '');
@@ -181,15 +182,39 @@ export function scanHtml(rawHtml) {
   const html = stripComments(rawHtml);
   const issues = [];
 
-  const opens = (html.match(OPEN_RE) || []).length;
-  const closes = (html.match(CLOSE_RE) || []).length;
-  if (opens !== closes) {
-    issues.push(`unbalanced <div x-demo> tags: ${opens} open vs ${closes} close`);
+  const openCount = (html.match(/<div\b[^>]*\bx-demo\b[^>]*>/gi) || []).length;
+  const blocks = extractDemoBlocks(html);
+  if (blocks.length !== openCount) {
+    issues.push(
+      `unbalanced <div x-demo> blocks: ${openCount} opened, ${blocks.length} closed cleanly`,
+    );
   }
 
-  const emptyMatches = html.match(EMPTY_RE) || [];
-  if (emptyMatches.length > 0) {
-    issues.push(`${emptyMatches.length} empty <div x-demo></div> block(s) — renders as a blank box`);
+  // The depth-aware block scan above only looks INSIDE demo blocks, so the
+  // original bug's second half -- a stray </div> left after a self-closed
+  // <div x-demo></div> -- sailed through: the block closes cleanly, and the
+  // orphan sits outside every block where nothing counts it. A </div> with no
+  // open <div> to close is what re-parents the content after it, so count
+  // those across the whole document. Script/style bodies are skipped: markup
+  // quoted inside JS strings is not part of the document's own structure.
+  const structure = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '');
+  let depth = 0;
+  let orphans = 0;
+  for (const tag of structure.match(/<div\b[^>]*>|<\/div\s*>/gi) || []) {
+    if (tag.startsWith('</')) {
+      if (depth === 0) orphans++;
+      else depth--;
+    } else if (!tag.endsWith('/>')) {
+      depth++;
+    }
+  }
+  if (orphans > 0) {
+    issues.push(`unbalanced markup: ${orphans} stray </div> with no matching open <div>`);
+  }
+
+  const empty = blocks.filter((b) => b.inner.trim() === '');
+  if (empty.length > 0) {
+    issues.push(`${empty.length} empty <div x-demo></div> block(s) — renders as a blank box`);
   }
 
   return issues;

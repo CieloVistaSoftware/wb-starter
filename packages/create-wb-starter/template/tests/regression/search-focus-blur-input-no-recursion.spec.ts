@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { showBehavior } from '../helpers/behaviors-page';
 
 /**
  * search() (search.js) dispatched native-named 'focus'/'blur'/'input'
@@ -20,8 +21,10 @@ test.describe('x-search focus/blur/input do not recurse (Behaviors page)', () =>
     const pageErrors: string[] = [];
     page.on('pageerror', (err) => pageErrors.push(err.message));
 
-    await page.goto('http://localhost:3000/?page=behaviors');
-    const input = page.locator('input[x-search]').first();
+    // The Behaviors page builds one example on selection now (#666/#910);
+    // a bare goto() has no x-search input on it at all.
+    await showBehavior(page, 'x-search');
+    const input = page.locator('#behaviors-live-example input[x-search]').first();
     await expect(input).toHaveClass(/x-search__input/, { timeout: 10_000 });
 
     await input.click();

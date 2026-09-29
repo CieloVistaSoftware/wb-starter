@@ -1,11 +1,12 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { showBehavior } from '../helpers/behaviors-page';
 
 /**
- * `.page__hero` (src/styles/pages/behaviors.css) sets `text-align: center` —
+ * `.page__hero` (src/styles/pages/components.css) sets `text-align: center` —
  * intentional for the hero banner itself, but if the hero's own `<div>` is
  * never closed, every section AFTER it in the page (cards, docs, whatever)
  * stays nested INSIDE it and inherits that centering. That's exactly what
- * happened in pages/behaviors.html: `#behaviors-hero` opened at the top of
+ * happened in pages/behaviors.html: `#components-hero` opened at the top of
  * the file and its closing `</div>` was missing, so the entire "Cards"
  * section — including every `.x-card__header`/`.x-card__main`, which have
  * no text-align of their own — rendered centered, while `.x-card__footer`
@@ -17,7 +18,7 @@ import { test, expect } from '@playwright/test';
  * hero banner, never descendants of it.
  */
 const PAGES_WITH_HERO = [
-  'about', 'ai-docs', 'behaviors', 'behaviors', 'contact', 'demos',
+  'about', 'ai-docs', 'behaviors', 'components', 'contact', 'demos',
   'docs', 'features', 'links', 'newbehaviors', 'offshoring', 'services', 'themes',
 ];
 
@@ -35,17 +36,23 @@ test.describe('.page__hero never swallows page sections (unclosed-div structural
     });
   }
 
-  test('behaviors: card header/main/footer share the same text-align (no inherited-centering leak)', async ({ page }) => {
-    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
-    await page.waitForSelector('.x-card__header', { timeout: 15000 });
+  test('components: card header/main/footer share the same text-align (no inherited-centering leak)', async ({ page }) => {
+    // The behaviors page is a searchable browser now (#910): no card is on
+    // the stage until one is picked. x-cardexpandable's example is a card with
+    // all three parts, and none of them sets a centred alignment of its own --
+    // so any centring it shows was inherited from the page around it.
+    await showBehavior(page, 'x-cardexpandable');
     const aligns = await page.evaluate(() => {
-      const card = [...document.querySelectorAll('x-card')].find((c) => c.querySelector('.x-card__footer'));
+      // Cards carry no .x-card/.x-card__header/.x-card__main (a8a7362e); the
+      // parts are the article's own <header>, <main> and <footer>.
+      const card = [...document.querySelectorAll('#behaviors-live-example article')]
+        .find((c) => c.querySelector(':scope > header') && c.querySelector(':scope > main') && c.querySelector(':scope > footer'));
       if (!card) return null;
       const ta = (sel: string) => {
         const el = card.querySelector(sel);
         return el ? getComputedStyle(el).textAlign : null;
       };
-      return { header: ta('.x-card__header'), main: ta('.x-card__main'), footer: ta('.x-card__footer') };
+      return { header: ta(':scope > header'), main: ta(':scope > main'), footer: ta(':scope > footer') };
     });
     expect(aligns).not.toBeNull();
     // 'start' (the browser default, no rule matched) and 'left' (an explicit

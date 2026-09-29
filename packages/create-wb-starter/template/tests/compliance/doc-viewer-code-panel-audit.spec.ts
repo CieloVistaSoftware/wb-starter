@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -35,8 +35,8 @@ import { globSync } from 'glob';
  *
  * Scope: every `.x-demo__code` panel (the <pre x-behavior="pre"> that
  * <div x-demo> builds for its "view source" sample — see
- * src/wb-viewmodels/demo.js's `pre.className = 'x-demo__code'` and its
- * sibling `x-demo__events-code` panel for the optional "Listening for
+ * src/wb-viewmodels/demo.js's `pre.className = '[x-demo]__code'` and its
+ * sibling `[x-demo]__events-code` panel for the optional "Listening for
  * events" sample, §27). Three checks per panel, matching
  * docs/standards/DEMOS-AND-DOCS-STANDARDS.md:
  *
@@ -49,11 +49,20 @@ import { globSync } from 'glob';
  *       violation of this check by itself unless it means the panel is
  *       narrower than it was actually laid out to be.
  *
+ *       #1060: that NOTE was written and then not implemented. The check was a
+ *       flat `scrollWidth > clientWidth`, so it failed 8 files for producing
+ *       exactly the horizontal scrollbar §28 requires — and it could never be
+ *       satisfied alongside check (c), since a line longer than its panel must
+ *       either overflow (banned by (a)) or wrap (banned by (c)). It now
+ *       compares the panel against its x-demo CONTAINER, which is what
+ *       "narrower than it was actually laid out to be" means and what the
+ *       #560/#563 bugs actually looked like.
+ *
  *   (b) No blank lines that don't exist in the actual rendered text.
  *       <div x-demo>'s own pretty-printer (`formatHtml` in demo.js) never
  *       emits an empty line for a `.x-demo__code` (non-events) panel — see
  *       "Methodology" in the #583 report for the one documented exception
- *       (`x-demo__events-code` panels CAN have a real blank line, a `\n\n`
+ *       (`[x-demo]__events-code` panels CAN have a real blank line, a `\n\n`
  *       join between multiple event listeners) — so a genuinely blank
  *       VISUAL row elsewhere is a rendering artifact (#559: a wrapped
  *       line's number never gets positioned, leaving a visual gap that
@@ -72,7 +81,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
  * authors a `<div x-demo` block (or mdhtml.js's auto-live-render promotes a
  * ```html fence containing one — same literal substring either way, since
  * the fence source itself doesn't contain "<div x-demo" but the CONTENT it
- * promotes might contain a live behavior; auto-live-render candidates
+ * promotes might contain a live component; auto-live-render candidates
  * without an authored <div x-demo> tag are rare and already covered by the
  * #583 report's "Incidental finding" for V3-STANDARDS.md — not re-derived
  * here, this is a fast pre-filter, not a precise one, and false inclusions
@@ -97,8 +106,8 @@ const DOCS = globSync('docs/**/*.md', { cwd: ROOT, ignore: ['docs/_today/**'] })
   .sort();
 
 const HTML_PAGES = [
-  ...globSync('demos/**/*.html', { cwd: ROOT }),
-  ...globSync('pages/**/*.html', { cwd: ROOT }),
+  ...globSync('demos/**/*.html', { cwd: ROOT, posix: true }),
+  ...globSync('pages/**/*.html', { cwd: ROOT, posix: true }),
 ]
   .map(toPosix)
   .filter((f) => hasWbDemo(path.join(ROOT, f)))
@@ -114,6 +123,8 @@ interface PanelReport {
   label: string; // first non-empty line of the panel, for identifying the example
   scrollWidth: number;
   clientWidth: number;
+  containerWidth: number;
+  offsetWidth: number;
   whiteSpace: string;
   lineCount: number;
   gutterCount: number;
@@ -125,7 +136,7 @@ interface PanelReport {
 async function collectPanelReports(page: import('@playwright/test').Page, url: string): Promise<PanelReport[]> {
   await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-  const demos = page.locator('x-demo');
+  const demos = page.locator('[x-demo]');
   // Doc-viewer/mdhtml renders markdown asynchronously (fetch + parse), so
   // <div x-demo> tags don't exist in the DOM immediately after
   // domcontentloaded -- wait for the first one to actually appear (this
@@ -138,6 +149,11 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
     return [];
   }
   const demoCount = await demos.count();
+  // The work here is per block: every demo is scrolled into view so the lazy
+  // runtime (#491) builds it. demos/site/cards.html holds 293 of them and needs
+  // ~22s on an idle machine (at HEAD too), so a flat 30s budget failed it only
+  // under parallel load. The budget grows with the page; nothing asserted changes.
+  test.setTimeout(30_000 + demoCount * 150);
   if (demoCount === 0) return [];
 
   // x-demo.js only builds the first EAGER_BUILD_COUNT (5) blocks
@@ -163,16 +179,32 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
   // until every panel that EXISTS has its line-number gutter fully built
   // (count matches its own text's line count, every number positioned). A
   // demo with ZERO `.x-demo__code` panels (e.g. a §25 boilerplate-only
-  // example, or a live-rendered behavior that legitimately has no source
+  // example, or a live-rendered component that legitimately has no source
   // sample) is vacuously satisfied here — waiting for a panel that will
   // never exist would just burn the timeout.
   await page.waitForFunction(
     () => {
-      const demoEls = Array.from(document.querySelectorAll('x-demo'));
+      const demoEls = Array.from(document.querySelectorAll('[x-demo]'));
       if (demoEls.length === 0) return false;
       return demoEls.every((demo) => {
-        const panels = Array.from(demo.querySelectorAll('.x-demo__code'));
-        if (panels.length === 0) return true; // nothing on this demo to wait for
+        const panels = Array.from(demo.querySelectorAll('.x-demo__code'))
+          .filter((panel) => panel.closest('[x-demo]') === demo);
+        // Nothing to wait for -- unless demo.js has already started this block.
+        // It lays out the grid first and appends the code panel only after
+        // awaiting the docs manifest, so a block caught between the two looked
+        // finished here, passed the wait vacuously, and was then measured
+        // mid-measure at the 50vw cap: counter.md's input demos, whose
+        // x-counter adds a sibling and so span the 836px column, read as "640px
+        // inside 804px" under load. Every block demo.js builds gets a panel.
+        if (panels.length === 0) {
+          return !Array.from(demo.children).some((c) => c.classList.contains('x-demo__grid'));
+        }
+        // A single-item block is still being sized while demo.js holds
+        // .x-demo--measuring (it commits once, when control and code stop
+        // moving -- #985). Until then its panel is provisionally capped at
+        // 50vw, so measuring "cramped" mid-flight reads a width no reader is
+        // left with.
+        if (demo.classList.contains('x-demo--measuring')) return false;
         return panels.every((panel) => {
           const code = panel.querySelector('code');
           const text = (code || panel).textContent || '';
@@ -183,18 +215,44 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
           if (!wrapper) return false;
           const nums = Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[];
           if (nums.length !== lines.length) return false; // gutter still being built
-          return nums.every((n) => n.style.top !== ''); // every number actually positioned
+          // every number actually positioned -- pre.js marks each one it has
+          // measured; the top itself is a generated rule, not inline (#779)
+          return nums.every((n) => n.classList.contains('x-pre__line-number--placed'));
         });
       });
     },
     { timeout: 15000 }
   );
 
+  // The wait above and the read below are two round trips. Under load a block
+  // can start a new measurement between them (code.md on CI: its panel read
+  // "640px inside 804px" -- exactly the provisional 50vw cap -- after the wait
+  // had seen it settled; 1 in 18 runs at 8 workers locally). So the read itself
+  // refuses a snapshot taken while any block is measuring, and tries again
+  // once they have all committed.
+  for (;;) {
+    const snapshot = await readPanels(page);
+    if (snapshot) return snapshot;
+    await page.waitForFunction(() => !document.querySelector('[x-demo].x-demo--measuring'));
+  }
+}
+
+/** One settled snapshot of every panel, or null if a block is mid-measure. */
+function readPanels(page: import('@playwright/test').Page): Promise<PanelReport[] | null> {
   return page.evaluate(() => {
+    if (document.querySelector('[x-demo].x-demo--measuring')) return null;
     const out: PanelReport[] = [];
-    const demoEls = Array.from(document.querySelectorAll('x-demo'));
+    const demoEls = Array.from(document.querySelectorAll('[x-demo]'));
     demoEls.forEach((demo, demoIndex) => {
-      const panels = Array.from(demo.querySelectorAll('.x-demo__code')) as HTMLElement[];
+      // A demo's OWN panels only. A demo can hold another: content.html's
+      // <div x-mdhtml src="../code.md"> renders a markdown file that carries
+      // its own <div x-demo>, and a descendant query attributed THAT demo's
+      // panel to the outer block -- then measured it against the outer
+      // block's width and called a correctly sized 453px panel "cramped"
+      // inside 487px that was never its container. The inner demo is in
+      // demoEls too, and is audited against its own box.
+      const panels = (Array.from(demo.querySelectorAll('.x-demo__code')) as HTMLElement[])
+        .filter((panel) => panel.closest('[x-demo]') === demo);
       panels.forEach((panel, panelIndex) => {
         const code = panel.querySelector('code');
         const text = (code || panel).textContent || '';
@@ -206,7 +264,7 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
           ? (Array.from(wrapper.querySelectorAll('.x-pre__line-numbers > div')) as HTMLElement[])
           : [];
         const gaps: number[] = [];
-        const tops = gutterEls.map((el) => parseFloat(el.style.top || getComputedStyle(el).top) || 0);
+        const tops = gutterEls.map((el) => parseFloat(getComputedStyle(el).top) || 0);
         for (let i = 1; i < tops.length; i++) gaps.push(tops[i] - tops[i - 1]);
 
         const cs = getComputedStyle(panel);
@@ -220,6 +278,26 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
           label: firstNonEmpty.trim().slice(0, 60),
           scrollWidth: panel.scrollWidth,
           clientWidth: panel.clientWidth,
+          // #1060: check (a) is about a panel being narrower than the room it
+          // HAS, not about its content being long. Without the container width
+          // there is nothing to compare against, so the check degenerated into
+          // "any horizontal overflow is a defect" — which §28 requires.
+          //
+          // The room a panel has is the container's CONTENT box, not its
+          // clientWidth: clientWidth still includes the container's padding.
+          // Comparing against it flagged every panel in the suite by a constant
+          // 34px (344 vs 378, 422 vs 456) — the padding, mistaken for cramping.
+          containerWidth: (() => {
+            const host = demo as HTMLElement;
+            const cs = getComputedStyle(host);
+            return host.clientWidth
+              - (parseFloat(cs.paddingLeft) || 0)
+              - (parseFloat(cs.paddingRight) || 0);
+          })(),
+          // The panel's own BORDER box, which is what has to fill that room.
+          // panel.clientWidth excludes the panel's own padding and border, so
+          // comparing it against available space double-counts the panel's box.
+          offsetWidth: (panel as HTMLElement).offsetWidth,
           whiteSpace: cs.whiteSpace,
           lineCount: rawLines.length,
           gutterCount: gutterEls.length,
@@ -242,10 +320,26 @@ function auditReports(reports: PanelReport[]): { a: string[]; b: string[]; c: st
   const c: string[] = [];
 
   for (const r of reports) {
-    if (r.scrollWidth > r.clientWidth + NARROW_TOLERANCE_PX) {
+    // #1060: the violation is a panel CRAMPED below the width available to it
+    // (#560/#563), not a long line. §28 is explicit that a line longer than the
+    // container gets "a horizontal scrollbar — never forces a word-wrap", so
+    // overflow on its own is required behaviour, not a defect. Flagging it also
+    // made this check unsatisfiable alongside check (c) below, which forbids the
+    // only alternative: a long line must overflow or wrap, and (a) banned the
+    // first while (c) banned the second.
+    //
+    // A panel narrower than its own x-demo container still fails, which is the
+    // bug the check was written for and the one it can actually see.
+    // Border box vs the container's CONTENT box. The first attempt compared
+    // panel.clientWidth (padding and border excluded) against
+    // container.clientWidth (padding INCLUDED), which double-counted both boxes
+    // and reported every panel in the suite as cramped by a constant ~34px —
+    // 8 failures became 54. The offset was the padding, not a defect.
+    if (r.containerWidth > 0 && r.offsetWidth < r.containerWidth - NARROW_TOLERANCE_PX) {
       a.push(
-        `demo[${r.demoIndex}] panel[${r.panelIndex}] "${r.label}": scrollWidth=${r.scrollWidth}px > ` +
-          `clientWidth=${r.clientWidth}px — content is cut off / needs a scrollbar to see all the code`
+        `demo[${r.demoIndex}] panel[${r.panelIndex}] "${r.label}": the panel is ${r.offsetWidth}px ` +
+          `wide inside ${r.containerWidth}px of available space — it is cramped, not merely ` +
+          `scrolling a long line (§28 permits the scrollbar; it does not permit a narrow panel)`
       );
     }
 

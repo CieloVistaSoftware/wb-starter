@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * pages/issues.html renders GitHub issue bodies through mdhtml() (arbitrary,
@@ -24,7 +24,7 @@ test.describe('mdhtml() autoLiveRender option', () => {
     '```\n' +
     '\nMore text.';
 
-  test('default (docs) behavior: a real behavior example gets promoted to a live x-demo', async ({ page }) => {
+  test('default (docs) behavior: a real component example gets promoted to a live [x-demo]', async ({ page }) => {
     await page.goto('/demos/test-harness.html');
     const result = await page.evaluate(async (md) => {
       const { mdhtml } = await import('/src/wb-viewmodels/mdhtml.js');
@@ -32,7 +32,7 @@ test.describe('mdhtml() autoLiveRender option', () => {
       el.textContent = md;
       document.body.appendChild(el);
       await mdhtml(el, {});
-      return { hasLiveDemo: !!el.querySelector('x-demo x-mdhtml') };
+      return { hasLiveDemo: !!el.querySelector('[x-demo] [x-mdhtml]') };
     }, ISSUE_BODY_MD);
 
     expect(result.hasLiveDemo, 'doc-viewer.html\'s existing auto-live-render behavior must be unchanged').toBe(true);
@@ -51,7 +51,7 @@ test.describe('mdhtml() autoLiveRender option', () => {
       el.textContent = md;
       document.body.appendChild(el);
       await mdhtml(el, { autoLiveRender: false });
-      return { hasLiveDemo: !!el.querySelector('x-demo x-mdhtml') };
+      return { hasLiveDemo: !!el.querySelector('[x-demo] [x-mdhtml]') };
     }, ISSUE_BODY_MD);
 
     expect(result.hasLiveDemo, 'an issue body\'s embedded example must not become a live element').toBe(false);

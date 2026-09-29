@@ -34,7 +34,22 @@ function updateIntellisense() {
             
             // Determine Tag Name: prefers x-card-product if CamelCase, x-card for single word
             const hyphenatedName = toHyphenated(behaviorName);
-            const tagName = `wb-${hyphenatedName}`;
+            // NO custom tag is minted here any more.
+            //
+            // This line used to be `const tagName = `wb-${hyphenatedName}`;`
+            // and every run pushed one such tag into html-custom-data.json --
+            // regenerating, on demand, the exact `wb-*` vocabulary 4.0.0
+            // retired. The file had accumulated 266 custom tags (156 `wb-*`,
+            // 109 `x-*`); a grep of every .html in src/, demos/, pages/ and
+            // index.html found ZERO of them in use. Autocomplete was the last
+            // place in the project still offering components.
+            //
+            // Law 0: the attribute IS the behavior and the host tag is the
+            // author's choice, drawn from HTML they already know. Suggesting
+            // `<wb-card>` teaches a tag that does not exist, in place of the
+            // `<article>` that does. The `x-*` GLOBAL ATTRIBUTES below are the
+            // correct surface and are still generated.
+            const tagName = null;
             
             // Check for metadata to skip generation
             const skipAttribute = schema._metadata && schema._metadata.generateAttribute === false;
@@ -58,8 +73,20 @@ function updateIntellisense() {
             }
 
             // Semantic Element Hint
-            const semanticTag = schema.semanticElement ? schema.semanticElement.tagName : 'div';
-            const usageHint = `\n\nUsage: [<${semanticTag} ${attrName}>]`;
+            //
+            // No fallback. This used to end `: 'div'`, which FABRICATED a
+            // recommendation for every behavior that never declared one -- so
+            // the tooltip told authors to write `<div x-progress>` when HTML
+            // has <progress>, and `<div x-checkbox>` when it has
+            // <input type="checkbox">. 41 of 73 hints said "div" (#918).
+            // That is Law 0 inverted at the one moment it matters most: the
+            // author is typing, and the editor is what they read.
+            //
+            // A missing semanticElement now omits the hint entirely. Silence
+            // beats wrong advice -- the author falls back on the HTML they
+            // already know, which is the whole point of Law 0.
+            const semanticTag = schema.semanticElement?.tagName;
+            const usageHint = semanticTag ? `\n\nUsage: [<${semanticTag} ${attrName}>]` : '';
 
             // --- 2. UPDATE/ADD SCEMANTIC ATTRIBUTE (x-*) ---
             if (!skipAttribute) {
@@ -110,8 +137,8 @@ function updateIntellisense() {
                 }
             }
 
-            // --- 3. ADD MISSING TAG (wb-*) ---
-            const existingTagIndex = vscodeData.tags.findIndex(t => t.name === tagName);
+            // --- 3. TAGS: intentionally none. See the tagName note above. ---
+            const existingTagIndex = tagName ? vscodeData.tags.findIndex(t => t.name === tagName) : -2;
             
             if (existingTagIndex === -1) {
                 vscodeData.tags.push({
@@ -120,7 +147,7 @@ function updateIntellisense() {
                     attributes: tagAttributes
                 });
                 addedTags++;
-            } else {
+            } else if (existingTagIndex >= 0) {
                  vscodeData.tags[existingTagIndex].description = (schema.title ? `${schema.title}\n\n` : '') + (schema.description || '') + variantInfo + cssInfo;
                  // We could update attributes too, but for now just description to fix the Forbidden Term
             }

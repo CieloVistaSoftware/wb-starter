@@ -2,14 +2,14 @@
  * #433: `searchable` was computed by table.js but nothing ever created the
  * search input -- table.js only ever looked for an existing `.x-table__search`
  * element that neither table.schema.json's $view nor any native-<table>
- * markup ever actually provided. Confirmed live (docs/behaviors/semantics/
+ * markup ever actually provided. Confirmed live (docs/behaviors/
  * table.md's "Searchable" example rendered no search box at all). Fixed in
  * src/wb-viewmodels/semantics/table.js: when `searchable` is set and no
  * `.x-table__search` input exists, one is created and inserted directly
  * above the table (as a previous sibling for a real `<table>`, since an
  * `<input>` isn't valid `<table>` content; as a first child otherwise).
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

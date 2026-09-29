@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test } from '../fixtures/offline';
 import * as path from 'path';
 import { 
   getFiles, readFile, relativePath, IssueCollector, ROOT, EXCLUDE_DIRS 

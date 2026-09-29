@@ -111,7 +111,6 @@ test.describe('No redundant x-{behavior} attribute', () => {
       ...walk(join(root, 'demos'), ['.html']),
       ...walk(join(root, 'docs'), ['.md']),
       join(root, 'index.html'),
-      join(root, 'project-index.html'),
     ];
 
     const failures: string[] = [];

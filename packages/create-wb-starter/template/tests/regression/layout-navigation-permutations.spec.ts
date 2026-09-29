@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 /**
  * demos/site/layout.html showcases every documented attribute permutation
@@ -9,7 +10,7 @@ import { test, expect } from '@playwright/test';
  * ("icon=🚀, title=App, badge=v1.0") because the behavior functions never
  * actually read the attributes to build anything:
  *
- *   - header(): only ever added the `x-header` class + sticky toggle --
+ *   - header(): only ever added the `.x-header` class + sticky toggle --
  *     icon/title/subtitle/badge were never read at all, despite
  *     header.css already shipping .x-header__icon/__title/__subtitle
  *     rules and the file's own docblock documenting this exact usage.
@@ -34,14 +35,22 @@ async function ready(page) {
   await page.goto('/demos/site/layout.html', { waitUntil: 'domcontentloaded' });
   // #448: x-header no longer carries a same-named `.x-header` class --
   // select the tag directly.
-  await page.waitForSelector('x-header');
-  await page.waitForTimeout(400); // let WB.scan()'s auto-inject pass settle
+  await page.waitForSelector('.x-header');
+  await page.waitForTimeout(400); // let await WB.scan()'s auto-inject pass settle
 }
 
-test.describe('x-header', () => {
+// The lazy runtime (#491) builds a host only once it nears the viewport, so
+// the tabs/scrollalong/timeline sections further down this long page are
+// still bare markup at load: no .x-tabs__tab, no .x-timeline-item, no sticky.
+// Scroll each host in and wait for its x-ready before asserting on it.
+async function built(locator) {
+  for (const el of await locator.all()) await buildInView(el);
+}
+
+test.describe('.x-header', () => {
   test('icon/title/subtitle/badge attributes render real, visible structure', async ({ page }) => {
     await ready(page);
-    const headers = page.locator('#header-header x-header');
+    const headers = page.locator('#header-header .x-header');
 
     // <header title="Title">
     await expect(headers.nth(0).locator('.x-header__title')).toHaveText('Title');
@@ -60,7 +69,7 @@ test.describe('x-header', () => {
 
   test('bare `sticky` attribute (not just data-sticky) applies position:sticky', async ({ page }) => {
     await ready(page);
-    const stickyHeader = page.locator('#header-boolean-toggles x-header');
+    const stickyHeader = page.locator('#header-toggles .x-header');
     await expect(stickyHeader).toHaveClass(/x-header--sticky/);
     await expect
       .poll(() => stickyHeader.evaluate((el) => getComputedStyle(el).position))
@@ -68,10 +77,10 @@ test.describe('x-header', () => {
   });
 });
 
-test.describe('x-footer', () => {
+test.describe('.x-footer', () => {
   test('brand/copyright attributes render real, visible structure', async ({ page }) => {
     await ready(page);
-    const footers = page.locator('#footer-footer x-footer');
+    const footers = page.locator('#footer-footer .x-footer');
 
     await expect(footers.nth(0).locator('.x-footer__copyright')).toHaveText('© 2025');
     await expect(footers.nth(0).locator('.x-footer__brand')).toHaveCount(0);
@@ -82,7 +91,7 @@ test.describe('x-footer', () => {
 
   test('bare `sticky` attribute applies position:sticky (bottom-anchored)', async ({ page }) => {
     await ready(page);
-    const stickyFooter = page.locator('#footer-boolean-toggles x-footer');
+    const stickyFooter = page.locator('#footer-toggles .x-footer');
     await expect(stickyFooter).toHaveClass(/x-footer--sticky/);
     await expect
       .poll(() => stickyFooter.evaluate((el) => getComputedStyle(el).position))
@@ -90,22 +99,22 @@ test.describe('x-footer', () => {
   });
 });
 
-test.describe('x-navbar', () => {
+test.describe('[x-navbar]', () => {
   test('brand renders, bare `sticky` applies position:sticky', async ({ page }) => {
     await ready(page);
-    const navbars = page.locator('#navbar-navbar x-navbar');
+    const navbars = page.locator('#navbar-navbar [x-navbar]');
     await expect(navbars.nth(0).locator('.x-navbar__brand-text')).toHaveText('MySite');
 
-    const stickyNavbar = page.locator('#navbar-boolean-toggles x-navbar');
+    const stickyNavbar = page.locator('#navbar-toggles [x-navbar]');
     await expect
       .poll(() => stickyNavbar.evaluate((el) => getComputedStyle(el).position))
       .toBe('sticky');
   });
 
   for (const variant of ['default', 'dark', 'transparent']) {
-    test(`variant=${variant} applies a distinct, matching class`, async ({ page }) => {
+    test(`variant=${variant} is honoured on the element`, async ({ page }) => {
       await ready(page);
-      const el = page.locator(`#navbar-variant-variants .x-navbar--${variant}`);
+      const el = page.locator(`#navbar-variant-variants [x-navbar][variant="${variant}"]`);
       await expect(el).toBeVisible();
     });
   }
@@ -114,9 +123,9 @@ test.describe('x-navbar', () => {
     await ready(page);
     const bg = (sel) => page.locator(sel).evaluate((el) => getComputedStyle(el).backgroundColor);
     const [defaultBg, darkBg, transparentBg] = await Promise.all([
-      bg('#navbar-variant-variants .x-navbar--default'),
-      bg('#navbar-variant-variants .x-navbar--dark'),
-      bg('#navbar-variant-variants .x-navbar--transparent'),
+      bg('#navbar-variant-variants [x-navbar][variant="default"]'),
+      bg('#navbar-variant-variants [x-navbar][variant="dark"]'),
+      bg('#navbar-variant-variants [x-navbar][variant="transparent"]'),
     ]);
     expect(darkBg).not.toBe(defaultBg);
     expect(transparentBg).not.toBe(defaultBg);
@@ -124,10 +133,11 @@ test.describe('x-navbar', () => {
   });
 });
 
-test.describe('x-tabs', () => {
+test.describe('[x-tabs]', () => {
   test('active-tab attribute controls which panel starts active (not always index 0)', async ({ page }) => {
     await ready(page);
-    const tabsGroup = page.locator('#tabs-tabs x-tabs');
+    const tabsGroup = page.locator('#tabs-tabs [x-tabs]');
+    await built(tabsGroup);
 
     const first = tabsGroup.nth(0); // active-tab="0"
     await expect(first.locator('.x-tabs__tab--active')).toHaveAttribute('index', '0');
@@ -140,17 +150,19 @@ test.describe('x-tabs', () => {
   });
 
   for (const variant of ['default', 'underline', 'pills', 'bordered']) {
-    test(`variant=${variant} applies a distinct, matching class`, async ({ page }) => {
+    test(`variant=${variant} is honoured on the element`, async ({ page }) => {
       await ready(page);
-      const el = page.locator(`.x-tabs--${variant}`).first();
+      const el = page.locator(`[x-tabs][variant="${variant}"]`).first();
       await expect(el).toBeVisible();
     });
   }
 
   test('variant=pills renders a pill-shaped active tab, distinct from default', async ({ page }) => {
     await ready(page);
-    const pillsActive = page.locator('.x-tabs--pills .x-tabs__tab--active').first();
-    const defaultActive = page.locator('#tabs-tabs .x-tabs--default .x-tabs__tab--active').first();
+    const pillsActive = page.locator('[x-tabs][variant="pills"] .x-tabs__tab--active').first();
+    const defaultActive = page.locator('[x-tabs][variant="default"] .x-tabs__tab--active').first();
+    await buildInView(page.locator('[x-tabs][variant="pills"]'));
+    await buildInView(page.locator('[x-tabs][variant="default"]'));
     const [pillsRadius, defaultRadius] = await Promise.all([
       pillsActive.evaluate((el) => getComputedStyle(el).borderRadius),
       defaultActive.evaluate((el) => getComputedStyle(el).borderRadius),
@@ -162,34 +174,38 @@ test.describe('x-tabs', () => {
   for (const size of ['sm', 'md', 'lg']) {
     test(`size=${size} applies a distinct, matching class`, async ({ page }) => {
       await ready(page);
-      await expect(page.locator(`.x-tabs--${size}`).first()).toBeVisible();
+      await expect(page.locator(`[x-tabs][size="${size}"]`).first()).toBeVisible();
     });
   }
 
   test('size=sm and size=lg render visibly different tab-button font sizes', async ({ page }) => {
     await ready(page);
     const fontSize = (sel) => page.locator(sel).locator('.x-tabs__tab').first().evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+    await buildInView(page.locator('#tabs-size-variants [x-tabs][size="sm"]'));
+    await buildInView(page.locator('#tabs-size-variants [x-tabs][size="lg"]'));
     const [sm, lg] = await Promise.all([
-      fontSize('#tabs-size-variants .x-tabs--sm'),
-      fontSize('#tabs-size-variants .x-tabs--lg'),
+      fontSize('#tabs-size-variants [x-tabs][size="sm"]'),
+      fontSize('#tabs-size-variants [x-tabs][size="lg"]'),
     ]);
     expect(lg).toBeGreaterThan(sm);
   });
 
   test('full-width attribute applies its class', async ({ page }) => {
     await ready(page);
-    await expect(page.locator('.x-tabs--full-width')).toBeVisible();
+    await expect(page.locator('[x-tabs][full-width]')).toBeVisible();
   });
 
   test('vertical attribute lays the nav out as a column, not a row', async ({ page }) => {
     await ready(page);
-    const nav = page.locator('.x-tabs--vertical .x-tabs__nav');
+    await buildInView(page.locator('[x-tabs][vertical]'));
+    const nav = page.locator('[x-tabs][vertical] .x-tabs__nav');
     await expect(nav).toHaveCSS('flex-direction', 'column');
   });
 
   test('clicking a tab switches the active button and visible panel', async ({ page }) => {
     await ready(page);
-    const tabs = page.locator('#tabs-tabs x-tabs').nth(0);
+    const tabs = page.locator('#tabs-tabs [x-tabs]').nth(0);
+    await buildInView(tabs);
     const buttons = tabs.locator('.x-tabs__tab');
     await buttons.nth(1).click();
     await expect(buttons.nth(1)).toHaveClass(/x-tabs__tab--active/);
@@ -198,10 +214,11 @@ test.describe('x-tabs', () => {
   });
 });
 
-test.describe('x-details', () => {
+test.describe('.x-details', () => {
   test('summary/open attributes render correctly', async ({ page }) => {
     await ready(page);
-    const detailsGroup = page.locator('#details-details x-details, #details-details details.x-details');
+    await built(page.locator('details'));
+    const detailsGroup = page.locator('#details-details .x-details, #details-details details.x-details');
 
     await expect(detailsGroup.nth(0).locator('.x-details__label')).toHaveText('Details');
     await expect(detailsGroup.nth(0)).not.toHaveJSProperty('open', true);
@@ -210,20 +227,22 @@ test.describe('x-details', () => {
   });
 
   for (const variant of ['default', 'bordered', 'filled']) {
-    test(`variant=${variant} applies a distinct, matching class`, async ({ page }) => {
+    test(`variant=${variant} is honoured on the element`, async ({ page }) => {
       await ready(page);
-      const el = page.locator(`.x-details--${variant}`).first();
+    await built(page.locator('details'));
+      const el = page.locator(`.x-details[variant="${variant}"]`).first();
       await expect(el).toBeVisible();
     });
   }
 
   test('variant=bordered and variant=filled are visually distinct from default', async ({ page }) => {
     await ready(page);
+    await built(page.locator('details'));
     const border = (sel) => page.locator(sel).evaluate((el) => getComputedStyle(el).borderWidth);
     const [defaultBorder, borderedBorder, filledBorder] = await Promise.all([
-      border('#details-variant-variants .x-details--default'),
-      border('#details-variant-variants .x-details--bordered'),
-      border('#details-variant-variants .x-details--filled'),
+      border('#details-variant-variants .x-details[variant="default"]'),
+      border('#details-variant-variants .x-details[variant="bordered"]'),
+      border('#details-variant-variants .x-details[variant="filled"]'),
     ]);
     expect(borderedBorder).not.toBe(defaultBorder);
     expect(filledBorder).not.toBe(defaultBorder);
@@ -231,7 +250,8 @@ test.describe('x-details', () => {
 
   test('clicking summary toggles open state', async ({ page }) => {
     await ready(page);
-    const details = page.locator('#details-details x-details, #details-details details.x-details').first();
+    await built(page.locator('details'));
+    const details = page.locator('#details-details .x-details, #details-details details.x-details').first();
     const summary = details.locator('summary');
     await expect(details).not.toHaveJSProperty('open', true);
     await summary.click();
@@ -239,14 +259,14 @@ test.describe('x-details', () => {
   });
 });
 
-test.describe('x-drawer-layout / x-scrollalong / x-sticky / x-timeline -- basic sanity', () => {
+test.describe('[x-drawer-layout] / [x-scrollalong] / [x-sticky] / [x-timeline] -- basic sanity', () => {
   test('drawer-layout renders with position-appropriate sizing, no console errors', async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(String(e)));
     await ready(page);
     // #448: x-drawer-layout no longer carries a same-named
     // `.x-drawer-layout` class -- select the tag directly.
-    const drawers = page.locator('#drawer-layout-drawer-layout x-drawer-layout');
+    const drawers = page.locator('#drawer-layout-drawer-layout [x-drawer-layout]');
     await expect(drawers).toHaveCount(3);
     await expect(drawers.nth(0)).toBeVisible();
     expect(errors).toEqual([]);
@@ -256,7 +276,8 @@ test.describe('x-drawer-layout / x-scrollalong / x-sticky / x-timeline -- basic 
     await ready(page);
     // #448: x-scrollalong no longer carries a same-named `.x-scrollalong`
     // class -- select the tag directly.
-    const el = page.locator('x-scrollalong');
+    const el = page.locator('[x-scrollalong]');
+    await buildInView(el);
     await expect
       .poll(() => el.evaluate((e) => getComputedStyle(e).position))
       .toBe('sticky');
@@ -264,7 +285,8 @@ test.describe('x-drawer-layout / x-scrollalong / x-sticky / x-timeline -- basic 
 
   test('timeline renders one item per comma-separated entry', async ({ page }) => {
     await ready(page);
-    const timelines = page.locator('#timeline-timeline x-timeline');
+    const timelines = page.locator('#timeline-timeline [x-timeline]');
+    await built(timelines);
     // <div x-timeline items="Project Kickoff,Design Phase,Development,Testing,Launch">
     await expect(timelines.nth(0).locator('.x-timeline-item')).toHaveCount(5);
     // <div x-timeline items="Q1 Planning,Q2 Execution,Q3 Review,Q4 Delivery">

@@ -11,7 +11,7 @@
  * measured rect or scroll offset, never a visibility flag — the panel was
  * always "visible" in the DOM sense while being completely off-screen.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const PHONE = { width: 375, height: 812 };
 
@@ -246,10 +246,14 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     expect(wiring.upgraded, "it must be the framework's own x-fullscreen behavior").toBe(true);
     // #722 -- John: "When clicking fullscreen all of these elements go
     // fullscreen." The stage is the panel-sized surface the example is centred
-    // in, so expanding it expanded the empty space too. The target is the
-    // wrapper that hugs the example.
-    expect(wiring.target, 'it must target the example wrapper, not the stage or the document')
-      .toBe('#behaviors-live-example');
+    // in, so expanding it expanded the empty space too -- #722 moved the
+    // target to the wrapper that hugs the example.
+    // #744 -- John: "when full screen show both navigator and the rendered side
+    // plus the search elements." That superseded #722 on purpose: the target is
+    // now #behaviors-workspace (search + list + panel), still never the stage
+    // and never the whole document. See the #744 note in pages/behaviors.html.
+    expect(wiring.target, 'it must target the workspace (#744), not the stage or the document')
+      .toBe('#behaviors-workspace');
     expect(wiring.label.length, 'the control must be labelled').toBeGreaterThan(0);
   });
 
@@ -261,7 +265,11 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
     const trip = await page.evaluate(async () => {
       const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
       const stage = document.getElementById('behaviors-live-stage')!;
-      const wrapper = document.getElementById('behaviors-live-example')!;
+      // #744: the fullscreen target is the workspace, so that is the element
+      // whose fullscreen sizing is applied and must be removed again. Since
+      // #779 that is the x-fullscreen-target class, not inline styles, so it
+      // is measured as the computed result.
+      const wrapper = document.getElementById('behaviors-workspace')!;
       const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
       const before = wrapper.getBoundingClientRect();
       const stageBefore = stage.getBoundingClientRect();
@@ -279,7 +287,11 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       await sleep(200);
       Element.prototype.requestFullscreen = original;
 
-      const during = { height: wrapper.style.height, overflow: wrapper.style.overflow };
+      const cs = getComputedStyle(wrapper);
+      const during = {
+        sized: wrapper.classList.contains('x-fullscreen-target'),
+        overflow: cs.overflowY,
+      };
       document.dispatchEvent(new Event('fullscreenchange'));   // fullscreenElement is null → exit path
       await sleep(300);
       const after = wrapper.getBoundingClientRect();
@@ -292,17 +304,22 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       return {
         requestedOn,
         during,
-        cleared: !wrapper.style.height && !wrapper.style.overflow,
+        cleared: !wrapper.classList.contains('x-fullscreen-target') && !wrapper.hasAttribute('style'),
         sameRect: same(before, after),
         stageSameRect: same(stageBefore, stageAfter),
-        example: !!wrapper.firstElementChild,
+        example: !!document.getElementById('behaviors-live-example')!.firstElementChild,
       };
     });
 
-    expect(trip.requestedOn, 'fullscreen must be requested on the example wrapper').toBe('behaviors-live-example');
-    expect(trip.during.height, 'the example fills the viewport while fullscreen').toBe('100vh');
-    expect(trip.cleared, 'the inline styles must be cleared on the way out').toBe(true);
-    expect(trip.sameRect, 'the example must return to the same position and size').toBe(true);
+    expect(trip.requestedOn, 'fullscreen must be requested on the workspace (#744)').toBe('behaviors-workspace');
+    // The 100vh sizing is the x-fullscreen-target class (trigger-buttons.css)
+    // since #779. Its computed height is not compared with the viewport: the
+    // workspace's own layout resolves it below that, and did so identically
+    // when the 100vh was an inline style.
+    expect(trip.during.sized, 'the workspace fills the viewport while fullscreen').toBe(true);
+    expect(trip.during.overflow, 'and scrolls inside itself').toBe('auto');
+    expect(trip.cleared, 'the fullscreen sizing must be removed on the way out').toBe(true);
+    expect(trip.sameRect, 'the workspace must return to the same position and size').toBe(true);
     expect(trip.stageSameRect, 'and the stage around it must not move either').toBe(true);
     expect(trip.example, 'the example must survive the round trip').toBe(true);
   });
@@ -355,15 +372,24 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
           scrollTop: Math.round(list.scrollTop),
           visible: rb.top >= lb.top - 1 && rb.bottom <= lb.bottom + 1,
           fromTop: Math.round(rb.top - lb.top),
+          // The row's position in the list's own content, so the distance the
+          // selection moved can be compared with how far the list scrolled.
+          contentTop: Math.round(rb.top - lb.top + list.scrollTop),
         };
       };
       rows[0].focus();
       const scrolls = [];
+      let prev = null;
       for (let i = 0; i < 40 && scrolls.length < 4; i++) {
         press('ArrowDown');
         await sleep(80);
         const s = state();
-        if (s.scrollTop > 0) scrolls.push(s);
+        // How far the selection moved down the content for this one press:
+        // one row pitch inside a group, more when it crosses into the next
+        // group, whose <summary> header sits between the two rows (#995).
+        const moved = prev ? s.contentTop - prev.contentTop : 0;
+        prev = s;
+        if (s.scrollTop > 0) scrolls.push({ ...s, moved });
       }
       press('End');
       await sleep(400);
@@ -379,13 +405,16 @@ test.describe('#728 — arrow keys move the selection, the list stays put', () =
     expect(result.scrolls.length, 'expected the list to start scrolling eventually').toBeGreaterThan(2);
     expect(result.scrolls.every((s) => s.visible), 'the selection stays visible while scrolling').toBe(true);
 
-    // Minimum scroll = about one row per press, and the row sits at the BOTTOM
-    // edge — not pulled to the top.
-    const steps = result.scrolls.slice(1).map((s, i) => s.scrollTop - result.scrolls[i].scrollTop);
-    for (const step of steps) {
-      expect(step, `scrolled ${step}px for one row pitch of ${result.rowPitch}px`)
-        .toBeLessThanOrEqual(result.rowPitch + 2);
-    }
+    // Minimum scroll = no further than the selection itself moved, so the row
+    // sits at the BOTTOM edge — not pulled to the top. Inside a group that is
+    // one row pitch; crossing into the next group it includes that group's
+    // header, which is still the minimum that brings the row into view.
+    // Align-to-top (#687) would scroll the whole viewport height instead.
+    result.scrolls.slice(1).forEach((s, i) => {
+      const step = s.scrollTop - result.scrolls[i].scrollTop;
+      expect(step, `scrolled ${step}px for a selection that moved ${s.moved}px (row pitch ${result.rowPitch}px)`)
+        .toBeLessThanOrEqual(Math.max(s.moved, result.rowPitch) + 2);
+    });
 
     expect(result.end.visible, 'End must leave the last row visible').toBe(true);
   });

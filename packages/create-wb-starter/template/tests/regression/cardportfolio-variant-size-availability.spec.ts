@@ -1,8 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 /**
  * x-cardportfolio (card.js → cardportfolio(), CSS in card.css) had three
- * related bugs, all found live on demos/multi-behavior-demo-generated.html
+ * related bugs, all found live on demos/multi-component-demo-generated.html
  * (the auto-generated page that renders one <div x-demo> per enum value):
  *
  * 1. variant="compact"/"horizontal"/"full" added a `x-portfolio--{variant}`
@@ -31,14 +32,17 @@ import { test, expect } from '@playwright/test';
 
 const FIXTURE = '/tests/fixtures/cards-permutation-matrix.html';
 
-test.describe('x-cardportfolio variant/size/availability (regression)', () => {
+test.describe('[x-cardportfolio] variant/size/availability (regression)', () => {
   test('availability dot renders and is color-distinct with no avatar attribute set', async ({ page }) => {
     await page.goto(FIXTURE);
     const section = page.locator('#cardportfolio-availability-variants');
-    await section.locator('x-cardportfolio').first().waitFor();
+    await section.locator('[x-cardportfolio]').first().waitFor();
+    // Lazy runtime (#491): a card is built only near the viewport. Reading
+    // them straight after attach sometimes found a card with no dot yet.
+    for (const card of await section.locator('[x-cardportfolio]').all()) await buildInView(card);
 
     const results = await section.evaluate((sectionEl) => {
-      const cards = Array.from(sectionEl.querySelectorAll('x-cardportfolio'));
+      const cards = Array.from(sectionEl.querySelectorAll('[x-cardportfolio]'));
       return cards.map((c) => {
         const dot = c.querySelector('.x-portfolio__availability');
         const placeholder = c.querySelector('.x-portfolio__avatar-placeholder');
@@ -67,11 +71,15 @@ test.describe('x-cardportfolio variant/size/availability (regression)', () => {
   test('variant=compact/horizontal/full render visually distinct from default', async ({ page }) => {
     await page.goto(FIXTURE);
     const section = page.locator('#cardportfolio-variant-variants');
-    await section.locator('x-cardportfolio').first().waitFor();
+    // Waiting for the first card to be ATTACHED raced the build: under 4
+    // workers the variant cards were sometimes read before cardportfolio()
+    // had run on them (no modifier class yet). Bring each into view and wait
+    // for it to settle (lazy runtime, #491).
+    for (const card of await section.locator('[x-cardportfolio]').all()) await buildInView(card);
 
     const byVariant = await section.evaluate((sectionEl) => {
       const read = (variant: string) => {
-        const el = Array.from(sectionEl.querySelectorAll('x-cardportfolio')).find(
+        const el = Array.from(sectionEl.querySelectorAll('[x-cardportfolio]')).find(
           (c) => c.getAttribute('variant') === variant,
         ) as HTMLElement | undefined;
         if (!el) return null;
@@ -117,11 +125,14 @@ test.describe('x-cardportfolio variant/size/availability (regression)', () => {
   test('size=sm/md/lg/xl/full show increasing visual weight even inside a multi-column grid', async ({ page }) => {
     await page.goto(FIXTURE);
     const section = page.locator('#cardportfolio-size-variants');
-    await section.locator('x-cardportfolio').first().waitFor();
+    await section.locator('[x-cardportfolio]').first().waitFor();
+    // Same lazy-build race as the availability test: build every card first,
+    // or an unbuilt one reports no avatar (avatarWidth null).
+    for (const card of await section.locator('[x-cardportfolio]').all()) await buildInView(card);
 
     const bySize = await section.evaluate((sectionEl) => {
       const read = (size: string) => {
-        const el = Array.from(sectionEl.querySelectorAll('x-cardportfolio')).find(
+        const el = Array.from(sectionEl.querySelectorAll('[x-cardportfolio]')).find(
           (c) => c.getAttribute('size') === size,
         ) as HTMLElement | undefined;
         if (!el) return null;

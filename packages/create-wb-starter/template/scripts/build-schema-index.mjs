@@ -1,7 +1,7 @@
 /**
  * Build Schema Index (Phase 5)
  * ============================
- * Bundles all behavior schemas into a single data/schema-index.json
+ * Bundles all component schemas into a single data/schema-index.json
  * for the Interactive Schema Wizard to consume in the browser.
  *
  * Output: data/schema-index.json
@@ -38,6 +38,9 @@ for (const file of files) {
       tag: `wb-${schema.schemaFor}`,
       baseClass: schema.baseClass || `wb-${schema.schemaFor}`,
       properties: schema.properties || {},
+      // "scroll": every option of this behavior only shows while its box scrolls
+      // (x-sticky); the behaviors page renders its examples in a scroll box (#750).
+      ...(schema.demo ? { demo: schema.demo } : {}),
       matrix: schema.test?.matrix?.combinations || [],
       _metadata: schema._metadata || {}
     });
@@ -58,5 +61,5 @@ const index = {
 writeFileSync(OUTPUT, JSON.stringify(index, null, 2), 'utf-8');
 
 console.log(`\n📋 Schema Index Built`);
-console.log(`   Behaviors: ${schemas.length}`);
+console.log(`   Components: ${schemas.length}`);
 console.log(`   Output: ${OUTPUT}\n`);

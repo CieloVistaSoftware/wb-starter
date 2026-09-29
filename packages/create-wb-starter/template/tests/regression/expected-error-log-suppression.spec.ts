@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('expected fixture errors stay out of the persistent error log', async ({ page }) => {
   let appendRequests = 0;
@@ -11,11 +11,11 @@ test('expected fixture errors stay out of the persistent error log', async ({ pa
   await expect.poll(() => appendRequests).toBe(0);
 
   await page.goto('/demos/test-harness.html');
-  await page.evaluate(() => {
+  await page.evaluate(async () => {
     const container = document.createElement('div');
     container.innerHTML = '<audio src="/tests/fixtures/broken-audio-0-bytes.mp3"></audio>';
     document.body.appendChild(container);
-    return (window as any).WB.scan(container);
+    return await (window as any).WB.scan(container);
   });
   await page.waitForTimeout(1500);
   expect(appendRequests).toBe(0);

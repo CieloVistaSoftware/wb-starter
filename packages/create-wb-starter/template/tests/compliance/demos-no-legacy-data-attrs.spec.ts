@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -6,7 +6,7 @@ import * as path from 'path';
  * COMPLIANCE GATE: demo files must use plain v3 attributes, not deprecated
  * `data-*` config attributes.
  *
- * Demos render a behavior AND show their own markup as a code sample, so a
+ * Demos render a component AND show their own markup as a code sample, so a
  * `data-variant="primary"` in a demo teaches every reader the deprecated syntax
  * — the "code generation is all wrong" report. v3 uses plain attributes
  * (variant, size, tooltip, value-suffix, …) declared straight on the element.
@@ -22,7 +22,7 @@ import * as path from 'path';
  *     exact attribute name -- renaming it would regress those (#550).
  *   - `data-x-expected-errors` : a framework/test-infra hook on `<html>`, read by
  *     src/core/error-logger.js via `documentElement.hasAttribute(...)`, structurally
- *     identical to `data-theme` (documentElement flag, not wb-* / x-* behavior config).
+ *     identical to `data-theme` (documentElement flag, not wb-* / x-* component config).
  *     tests/regression/expected-error-log-suppression.spec.ts asserts this exact
  *     attribute name -- renaming it would regress that test (#550).
  *

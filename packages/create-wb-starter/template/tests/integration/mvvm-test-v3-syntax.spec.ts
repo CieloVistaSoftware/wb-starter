@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -24,7 +24,13 @@ test.describe('src/core/mvvm-test.html uses v3 syntax (#235)', () => {
     const dom3 = page.locator('#dom-output-3');
     await expect(dom1).not.toContainText('Loading...', { timeout: 5000 });
     await expect(dom3).not.toContainText('Loading...', { timeout: 5000 });
-    await expect(dom1).toContainText('x-card');
-    await expect(dom3).toContainText('x-card');
+    // The boxes print the built element's outerHTML, so the card class shows
+    // up as the attribute text `class="x-card"` -- never as the selector
+    // string ".x-card" this used to look for. x-schema="card" is the schema
+    // builder's own stamp that it built the element.
+    for (const dom of [dom1, dom3]) {
+      await expect(dom).toContainText('class="x-card"');
+      await expect(dom).toContainText('x-schema="card"');
+    }
   });
 });

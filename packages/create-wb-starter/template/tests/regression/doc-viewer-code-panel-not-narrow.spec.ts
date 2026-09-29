@@ -1,7 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { demoWidthsSettled } from '../base';
 
 /**
- * #560: "docs/behaviors/semantic/article.md: doc-viewer code panels render
+ * #560: "docs/behaviors/article.md: doc-viewer code panels render
  * too narrow" -- reported live on public/doc-viewer.html, whose
  * `<div x-demo>`-wrapped examples (Standard Semantic Article / WB Card /
  * WB Card Data Attributes) render through the exact SAME demo.js
@@ -9,7 +10,7 @@ import { test, expect } from '@playwright/test';
  * imports `demo` from src/wb-viewmodels/demo.js directly, and every
  * <div x-demo> in a rendered .md also upgrades to the real WBDemo custom
  * element (src/wb-viewmodels/x-demo.js) via the same wb.js -> demo.js
- * call once WB.scan() runs -- there is no separate doc-viewer-specific
+ * call once await WB.scan() runs -- there is no separate doc-viewer-specific
  * code-panel renderer.
  *
  * The narrow LOOK on article.md's small demos (a bare <article>, a small
@@ -23,14 +24,14 @@ import { test, expect } from '@playwright/test';
  * already-small code sample look even more cramped, clipping its last
  * character(s). This test locks that in specifically for doc-viewer.html
  * (tests/integration/doc-viewer-wb-demo.spec.ts covers upgrade behavior
- * but not width), across both a small-content doc (article.md) and a
+ * but not width), across both a small-content doc (card.md) and a
  * wide-content doc (table.md) so a regression in either direction is
  * caught.
  */
 const DOCS = [
-  'docs/behaviors/semantic/article.md',
-  'docs/behaviors/semantic/figure.md',
-  'docs/behaviors/semantics/table.md',
+  'docs/behaviors/card.md',
+  'docs/behaviors/figure.md',
+  'docs/behaviors/table.md',
 ];
 
 test.describe('doc-viewer.html code panels are never narrower than their own content (#560)', () => {
@@ -40,10 +41,13 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
         waitUntil: 'domcontentloaded',
       });
 
-      const demos = page.locator('x-demo');
+      const demos = page.locator('[x-demo]');
       await expect(demos.first()).toBeVisible({ timeout: 20000 });
-      // Let shrink-to-fit's rAF-scheduled measurement settle.
+      // Let shrink-to-fit's rAF-scheduled measurement settle -- and then wait
+      // for every demo to have committed it (demoWidthsSettled: until then
+      // demo.css holds the panel at the 50vw cap, whatever it will commit).
       await page.waitForTimeout(500);
+      await demoWidthsSettled(page);
 
       const count = await demos.count();
       expect(count, `${file} should render at least one <div x-demo>`).toBeGreaterThan(0);
@@ -53,15 +57,26 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
         const panelCount = await codePanels.count();
         for (let p = 0; p < panelCount; p++) {
           const panel = codePanels.nth(p);
-          const { scrollWidth, clientWidth } = await panel.evaluate((el) => ({
+          const { scrollWidth, clientWidth, atCap } = await panel.evaluate((el) => ({
             scrollWidth: el.scrollWidth,
             clientWidth: el.clientWidth,
+            atCap: el.getBoundingClientRect().width >= window.innerWidth * 0.5 - 2,
           }));
+          // The one scroll that is correct: code wider than 50vw sits AT the
+          // cap and scrolls the rest. Owner requirement 2026-08-07, "all
+          // x-demo code must show all the code up to 50% vw", pinned by
+          // demo-code-panel-50vw.spec.ts; #390 made scroll-not-wrap the x-demo
+          // rule. This check predates the cap and read every scroll as the
+          // #563/#569 too-narrow bug -- card.md's byline <article> demo has a
+          // 66-character body line (688px at 1280) that now correctly stops
+          // at 640px. A panel narrower than the cap is still held to its
+          // content, which is the bug this file exists for.
+          if (atCap) continue;
           // Small tolerance for sub-pixel rounding only -- any real gap
           // means the box is sized narrower than its own content again.
           expect(
             scrollWidth,
-            `${file} x-demo[${i}] code panel [${p}] is ${scrollWidth}px of content in a ` +
+            `${file} [x-demo][${i}] code panel [${p}] is ${scrollWidth}px of content in a ` +
             `${clientWidth}px box -- narrower than its own content, forcing an unnecessary scrollbar`
           ).toBeLessThanOrEqual(clientWidth + 2);
         }
@@ -69,8 +84,8 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
     });
   }
 
-  test('article.md: a plain (non-wb-demo) fenced code block spans the full reading column, not a cramped sliver', async ({ page }) => {
-    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/semantic/article.md'), {
+  test('card.md: a plain (non-wb-demo) fenced code block spans the full reading column, not a cramped sliver', async ({ page }) => {
+    await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/card.md'), {
       waitUntil: 'domcontentloaded',
     });
 

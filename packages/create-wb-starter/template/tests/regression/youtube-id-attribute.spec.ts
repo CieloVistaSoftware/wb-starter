@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#377 / BUG-2026-07-27-004): <div x-youtube id="..." ratio="16:9">
@@ -18,7 +18,7 @@ test.describe('x-youtube reads id="..." as the video ID (#377)', () => {
     const warnings: string[] = [];
     page.on('console', msg => { if (msg.type() === 'warning' || msg.type() === 'error') warnings.push(msg.text()); });
 
-    // demos/test-harness.html already boots WB (see tests/behaviors/overlay.spec.ts's
+    // demos/test-harness.html already boots WB (see tests/components/overlay.spec.ts's
     // injectAndScan pattern) -- inject the real page markup into it and scan eagerly.
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(
@@ -31,7 +31,7 @@ test.describe('x-youtube reads id="..." as the video ID (#377)', () => {
       container.innerHTML = '<div x-youtube id="dQw4w9WgXcQ" ratio="16:9"></div>';
       document.body.appendChild(container);
     });
-    await page.evaluate(() => (window as any).WB.scan(document.getElementById('yt-test-container'), { eager: true }));
+    await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('yt-test-container'), { eager: true }));
 
     const host = page.locator('#yt-test-container [x-youtube]');
     await expect(host).toHaveClass(/x-youtube/, { timeout: 5000 });

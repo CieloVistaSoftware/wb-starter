@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/switchScan */
+import{switchMap as s}from"./switchMap.mjs";import{operate as m}from"../util/lift.mjs";function a(e,c){return m((i,p)=>{let r=c;return s((o,t)=>e(r,o,t),(o,t)=>(r=t,t))(i).subscribe(p),()=>{r=null}})}export{a as switchScan};
+//# sourceMappingURL=switchScan.mjs.map

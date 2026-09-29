@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/switchAll */
+import{switchMap as t}from"./switchMap.mjs";import{identity as i}from"../util/identity.mjs";function m(){return t(i)}export{m as switchAll};
+//# sourceMappingURL=switchAll.mjs.map

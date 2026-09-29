@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Nth */
+import{Ident as i}from"../../../tokenizer.mjs";var l="Nth",r={nth:["AnPlusB","Identifier"],selector:["SelectorList",null]};function h(){this.skipSC();let t=this.tokenStart,e=t,s=null,o;return this.lookupValue(0,"odd")||this.lookupValue(0,"even")?o=this.Identifier():o=this.AnPlusB(),e=this.tokenStart,this.skipSC(),this.lookupValue(0,"of")&&(this.next(),s=this.SelectorList(),e=this.tokenStart),{type:"Nth",loc:this.getLocation(t,e),nth:o,selector:s}}function u(t){this.node(t.nth),t.selector!==null&&(this.token(i,"of"),this.node(t.selector))}export{u as generate,l as name,h as parse,r as structure};
+//# sourceMappingURL=Nth.mjs.map

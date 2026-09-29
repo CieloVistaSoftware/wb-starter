@@ -12,7 +12,7 @@
  *   - iPhone 12 (390x844) — iOS baseline
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -33,7 +33,7 @@ function getScreenshotDir(): string {
 // ═══════════════════════════════════════════════════════════════
 const PAGES = [
   { name: 'home',            url: '/pages/home.html',              title: 'Home Page' },
-  { name: 'behaviors',      url: '/pages/behaviors.html',        title: 'Behaviors Page' },
+  { name: 'components',      url: '/pages/behaviors.html',        title: 'Components Page' },
   { name: 'docs',            url: '/pages/docs.html',              title: 'Docs Page' },
   { name: 'card-demo',       url: '/demos/behaviors-card-code.html', title: 'Card Behaviors Demo' },
   { name: 'ai-permutation',  url: '/pages/ai-permutation-test.html', title: 'AI Permutation Test' },

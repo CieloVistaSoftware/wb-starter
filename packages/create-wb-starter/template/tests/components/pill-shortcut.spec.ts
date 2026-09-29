@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Pill Behavior Shortcut', () => {
   test.beforeEach(async ({ page }) => {
@@ -19,8 +19,10 @@ test.describe('Pill Behavior Shortcut', () => {
         </head>
         <body>
           <div class="demo-area">
-            <!-- Pill Shortcut -->
-            <div id="test-pill" variant="success">Pill Shortcut</div>
+            <!-- Pill Shortcut. The x-pill attribute IS the subject of this
+                 test; it had been lost from the markup, leaving a plain div
+                 that no behavior ever touched. -->
+            <div id="test-pill" x-pill variant="success">Pill Shortcut</div>
           </div>
 
           <script type="module">

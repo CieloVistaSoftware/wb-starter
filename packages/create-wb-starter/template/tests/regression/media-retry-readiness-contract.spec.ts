@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('media retry keeps real failure reporting independent of demo readiness', async ({ page }) => {
   await page.goto('/demos/site/content.html', { waitUntil: 'domcontentloaded' });

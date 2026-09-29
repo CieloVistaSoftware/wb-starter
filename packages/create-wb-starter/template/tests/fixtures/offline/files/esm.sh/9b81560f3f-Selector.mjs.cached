@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Selector */
+var t="Selector",r={children:[["TypeSelector","IdSelector","ClassSelector","AttributeSelector","PseudoClassSelector","PseudoElementSelector","Combinator","WhiteSpace"]]};function o(){let e=this.readSequence(this.scope.Selector);return this.getFirstListNode(e)===null&&this.error("Selector is expected"),{type:"Selector",loc:this.getLocationFromList(e),children:e}}function c(e){this.children(e)}export{c as generate,t as name,o as parse,r as structure};
+//# sourceMappingURL=Selector.mjs.map

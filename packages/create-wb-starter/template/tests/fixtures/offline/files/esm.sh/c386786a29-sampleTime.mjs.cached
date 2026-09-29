@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/sampleTime */
+import{asyncScheduler as e}from"../scheduler/async.mjs";import{sample as o}from"./sample.mjs";import{interval as t}from"../observable/interval.mjs";function a(r,m=e){return o(t(r,m))}export{a as sampleTime};
+//# sourceMappingURL=sampleTime.mjs.map

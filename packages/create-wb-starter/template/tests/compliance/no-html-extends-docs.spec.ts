@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 
 /**
  * Standard §9: the old HTML-`extends` design is PURGED. Docs and demos must not
- * show extends-based behavior code — customized built-ins
+ * show extends-based component code — customized built-ins
  * (`class X extends HTMLButtonElement`, `{ extends: 'button' }`, `is="…"`) or
  * `class X extends HTMLElement/LitElement` examples — not even as counter-examples.
  *
@@ -34,7 +34,7 @@ function walk(dir: string, out: string[]): void {
   }
 }
 
-test('no doc or demo shows HTML-extends behavior code (§9)', () => {
+test('no doc or demo shows HTML-extends component code (§9)', () => {
   const files: string[] = [];
   for (const d of DIRS) walk(path.join(ROOT, d), files);
 

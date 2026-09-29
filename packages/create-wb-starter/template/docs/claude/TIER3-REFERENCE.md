@@ -28,7 +28,7 @@ Historical snapshots — useful for understanding past decisions, not for curren
 | `docs/semantic-audit.md` | Semantic HTML audit results |
 | `docs/audits/X-USAGE-AUDIT.md` | x-attribute usage audit |
 | `docs/pce-candidates.md` | Proposed custom element candidates |
-| `SITE_VALIDATION_REPORT.md` | Site validation snapshot |
+| `archive/SITE_VALIDATION_REPORT.md` | Site validation snapshot (archived 2026-09-29) |
 | `CUSTOMER_READY.md` | Customer readiness checklist |
 
 ---
@@ -42,7 +42,7 @@ Documents decisions already made. Don't re-read unless revisiting a migration.
 | `docs/NOTES-V3-GUIDE.md` | V3 migration notes |
 | `docs/semantic-standard.md` | Semantic HTML standard (established) |
 | `docs/code-examples-standard.md` | Code example conventions |
-| `docs/CommittingFixes.md` | Git commit conventions |
+| `docs/committing-fixes.md` | Git commit conventions |
 | `docs/BRANCH_PROTECTION.md` | Branch protection rules |
 
 ---

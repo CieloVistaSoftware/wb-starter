@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/scheduler/intervalProvider */
+var n={setInterval(t,e,...l){let{delegate:r}=n;return r?.setInterval?r.setInterval(t,e,...l):setInterval(t,e,...l)},clearInterval(t){let{delegate:e}=n;return(e?.clearInterval||clearInterval)(t)},delegate:void 0};export{n as intervalProvider};
+//# sourceMappingURL=intervalProvider.mjs.map

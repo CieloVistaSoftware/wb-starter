@@ -1,0 +1,5 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/UnsubscriptionError */
+import{createErrorClass as t}from"./createErrorClass.mjs";var p=t(i=>function(r){i(this),this.message=r?`${r.length} errors occurred during unsubscription:
+${r.map((n,s)=>`${s+1}) ${n.toString()}`).join(`
+  `)}`:"",this.name="UnsubscriptionError",this.errors=r});export{p as UnsubscriptionError};
+//# sourceMappingURL=UnsubscriptionError.mjs.map

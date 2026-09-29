@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { MIN_CONTRAST_RATIO, hslContrastRatio } from '../../src/core/contrast.js';
 

@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/isFunction */
+function t(n){return typeof n=="function"}export{t as isFunction};
+//# sourceMappingURL=isFunction.mjs.map

@@ -9,7 +9,7 @@
  * exceptions are occurring.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readJson, PATHS } from '../base';
 import * as path from 'path';
 
@@ -54,6 +54,14 @@ test.describe('Error Log Compliance', () => {
     
     // Ignore expected errors from compliance tests
     errors = errors.filter(e => !e.url?.includes('legacy-syntax-check.html'));
+
+    // #1115: no media exemption here, on purpose. An unreachable THIRD-PARTY
+    // media host (demo media is remote by rule, #762) is classified where it
+    // happens -- src/wb-viewmodels/media-unreachable.js -- and reported on the
+    // element as error="unreachable" plus a [WB:media-unreachable] warning, so
+    // it never reaches this log. Anything that does reach it, including a
+    // same-origin media failure, is a real defect and fails this test.
+    // Guard: tests/regression/third-party-media-outage-is-not-a-page-error.spec.ts
 
     if (errors.length > 0) {
       // Format errors for clear reporting

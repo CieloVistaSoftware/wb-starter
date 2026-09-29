@@ -34,7 +34,7 @@
 - [Testing Strategy](./testing-strategy.md)
 - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI
 - [Test Schema Standard](./test-schema-standard.md)
-- [Schema Test Value](./schemaTestValue.md)
+- [Schema Test Value](./schema-test-value.md)
 - [Schema-First Audit Report](./schema-first-audit-report.md)
 - [Semantic Audit](./semantic-audit.md)
 - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)

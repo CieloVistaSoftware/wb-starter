@@ -363,9 +363,9 @@ function generatePlaywrightTest(tests) {
  * DO NOT EDIT - Regenerate with: node scripts/generate-schema-tests.js ${behavior}
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
-test.describe('${behavior} behavior', () => {
+test.describe('${behavior} component', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/src/core/mvvm-test.html');
     await page.waitForSelector('[data-testid="schema-ready"]', { timeout: 5000 }).catch(() => {});
@@ -454,7 +454,7 @@ function main() {
   console.log('═══════════════════════════════════════════════════════════\n');
   
   for (const [behavior, schema] of Object.entries(schemas)) {
-    // Skip base schemas and non-behavior schemas
+    // Skip base schemas and non-component schemas
     if (schema.isBase || !schema.$containment && !schema.properties) {
       continue;
     }

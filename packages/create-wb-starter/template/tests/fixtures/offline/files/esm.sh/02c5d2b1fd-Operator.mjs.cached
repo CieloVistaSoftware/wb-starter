@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/Operator */
+var e="Operator",r={value:String};function o(){let t=this.tokenStart;return this.next(),{type:"Operator",loc:this.getLocation(t,this.tokenStart),value:this.substrToCursor(t)}}function n(t){this.tokenize(t.value)}export{n as generate,e as name,o as parse,r as structure};
+//# sourceMappingURL=Operator.mjs.map

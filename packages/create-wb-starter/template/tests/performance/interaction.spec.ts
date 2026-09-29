@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { logPerfResult } from './perf-logger';
 
 test.describe('Interaction Performance', () => {
@@ -10,9 +10,9 @@ test.describe('Interaction Performance', () => {
     // Modal"]) is stale legacy-syntax that hasn't existed since the v3
     // data-* purge -- it never matched anything, so this test timed out for
     // 30s on every run instead of measuring anything. The real, current
-    // trigger is <dialog modal-title="..."> itself (behaviors.html) --
+    // trigger is <div x-modal modal-title="..."> itself (behaviors.html) --
     // the tag IS the clickable trigger, no nested button.
-    const modalTrigger = page.locator('x-modal').first();
+    const modalTrigger = page.locator('[x-modal]').first();
     await modalTrigger.waitFor({ state: 'visible' });
 
     const startTime = Date.now();
@@ -47,7 +47,7 @@ test.describe('Interaction Performance', () => {
     // the real thing instead of a mislabeled placeholder.
     await page.goto('/?page=behaviors');
 
-    const tabs = page.locator('x-tabs').first();
+    const tabs = page.locator('[x-tabs]').first();
     await tabs.scrollIntoViewIfNeeded();
     const secondTab = tabs.locator('.x-tabs__tab').nth(1);
     await secondTab.waitFor({ state: 'visible' });

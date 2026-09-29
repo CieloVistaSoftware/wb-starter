@@ -9,7 +9,7 @@
  * its content).
  *
  * Standard §26 (#390), MOBILE ONLY (<=700px): splits the two apart — the
- * control still hugs its content (§7), but `x-demo` itself and its code
+ * control still hugs its content (§7), but `[x-demo]` itself and its code
  * panel stay full width, so scrolling past many single-item demos on a
  * long mobile page doesn't jitter the page's horizontal footprint ("window
  * slop"). NOT applied above 700px: an earlier version of this fix applied
@@ -23,7 +23,7 @@
  * max-height, so there's nothing meaningful to collapse). Fixed in
  * src/wb-viewmodels/semantics/pre.js: gated behind config.maxHeight.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string, containerWidth = 1000): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -66,7 +66,7 @@ test.describe('single-item <div x-demo> hugs its content width (desktop, Standar
 test.describe('<div x-demo> code panel is full width on mobile only — no window slop (Standard §26, #390)', () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
-  test('the grid still hugs its single child, but x-demo/code panel stay full width', async ({ page }) => {
+  test('the grid still hugs its single child, but [x-demo]/code panel stay full width', async ({ page }) => {
     await setup(page, '<div x-demo id="d2m"><button>Solo</button></div>', 375);
     const demoWidth = await page.locator('#d2m').evaluate((el) => el.getBoundingClientRect().width);
     const gridWidth = await page.locator('#d2m .x-demo__grid').evaluate((el) => el.getBoundingClientRect().width);
@@ -74,12 +74,12 @@ test.describe('<div x-demo> code panel is full width on mobile only — no windo
     expect(demoWidth).toBeGreaterThan(300); // x-demo itself is NOT shrunk along with the grid at mobile widths
   });
 
-  test('the code panel spans x-demo\'s own content width, not the narrow grid above it', async ({ page }) => {
+  test('the code panel spans [x-demo]\'s own content width, not the narrow grid above it', async ({ page }) => {
     await setup(page, '<div x-demo id="d6"><button>Solo</button></div>', 375);
     // .x-demo__code is a direct child of x-demo, inside its 1rem padding --
     // it fills x-demo's CONTENT box (demoWidth minus that padding on both
     // sides), not demoWidth itself. Compare against the content width, not
-    // the outer box, so this doesn't false-fail on x-demo's own §13 padding.
+    // the outer box, so this doesn't false-fail on [x-demo]'s own §13 padding.
     const { demoWidth, codeWidth, paddingLeft, paddingRight } = await page.locator('#d6').evaluate((el) => {
       const code = el.querySelector('.x-demo__code') as HTMLElement;
       const cs = getComputedStyle(el);
@@ -94,7 +94,7 @@ test.describe('<div x-demo> code panel is full width on mobile only — no windo
     expect(Math.abs(codeWidth - demoContentWidth)).toBeLessThan(5); // code panel tracks x-demo's content box, not the shrunk grid
   });
 
-  test('a narrow single-item demo and a wide multi-item demo have the same x-demo footprint', async ({ page }) => {
+  test('a narrow single-item demo and a wide multi-item demo have the same [x-demo] footprint', async ({ page }) => {
     await setup(page, `
       <div x-demo id="d7"><button>Solo</button></div>
       <div x-demo id="d8" columns="3"><button>One</button><button>Two</button><button>Three</button></div>
@@ -127,17 +127,17 @@ test.describe('<div x-demo> single-item shrink works for stretchy content, not j
   // doesn't -- confirmed live (manual repro) that a real <div x-cardimage>
   // shrinks correctly, but the isolated mock in this test harness kept
   // computing a wide grid regardless. Rather than fight a mock that
-  // doesn't actually represent the real behavior, test the real thing:
+  // doesn't actually represent the real component, test the real thing:
   // <article class="x-card--auto"> (card.js's actual "no constraints,
   // fills container" size variant, card.css).
   test('a real <article class="x-card--auto"> still hugs its content, not the grid track', async ({ page }) => {
     await setup(page, `
       <div x-demo id="d9"><article title="Card" class="x-card--auto">Short content.</article></div>
     `);
-    await page.waitForFunction(() => {
-      const card = document.querySelector('#d9 x-card');
-      return !!card && card.classList.contains('x-card');
-    }, { timeout: 5000 });
+    // #448: the card no longer carries an .x-card class echoing its own
+    // behavior (this waited 30s for one); card() having built the header
+    // from `title` is the proof it ran.
+    await page.waitForFunction(() => !!document.querySelector('#d9 article > header'), { timeout: 5000 });
     const gridWidth = await page.locator('#d9 .x-demo__grid').evaluate((el) => el.getBoundingClientRect().width);
     expect(gridWidth).toBeLessThan(500); // hugs the card's own content, not the 1000px container
   });

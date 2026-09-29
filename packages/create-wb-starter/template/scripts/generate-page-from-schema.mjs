@@ -90,7 +90,7 @@ function renderContainer(viewDef) {
       lines.push(`  <div class="${child.className}"></div>`);
     } else if (child.tag === 'x-row' && child.children?.[0]?.tag === 'button') {
       const rowAttrs = (child.attributes || []).map(a => `${a.name}="${a.example}"`).join(' ');
-      lines.push(`  <div x-flex ${rowAttrs}>`);
+      lines.push(`  <div ${rowAttrs}>`);
       for (const action of schema.properties?.actions?.default || []) {
         if (action.behavior === 'x-tooltip') {
           lines.push(`    <button ${action.behavior}="I appear on hover!">${action.label}</button>`);
@@ -109,6 +109,8 @@ function renderGrid(viewDef) {
   const lines = ['<div x-grid>'];
   const variant = viewDef.children?.[0]?.attributes?.find(a => a.name === 'variant')?.example || '';
   for (const feature of schema.properties?.features?.default || []) {
+    // <article> is the card: 'x-card' maps to the 'article' behavior in
+    // tag-map.js, and injecting on <article> is what renders one.
     lines.push(`  <article${variant ? ` variant="${variant}"` : ''}>`);
     lines.push(`    <h3>${feature.title}</h3>`);
     lines.push(`    <p>${feature.description}</p>`);
@@ -150,7 +152,7 @@ function renderAudio(viewDef) {
 
 // ─── Page Assembly ────────────────────────────────────────────────────────────
 // ZERO inline styles. Uses .page-layout class from site.css for gap.
-// Behaviors are direct children — no wrapper divs/sections.
+// Components are direct children — no wrapper divs/sections.
 // This keeps the DOM flat so tests can find elements as body > tag.
 
 function generatePage() {

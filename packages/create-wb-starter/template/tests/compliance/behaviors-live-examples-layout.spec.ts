@@ -18,7 +18,7 @@
  * measure as demo-layout-standards.spec.ts's MIN_TEXT_EDGE_PX, applied to the
  * rendered result instead of the authored markup.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const MIN_TEXT_EDGE_PX = 15;   // 1rem at the default root size, minus rounding slack
 const SLICES = 6;              // split the 585 rows so no single test runs long

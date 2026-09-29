@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from '../fixtures/offline';
 
 /**
  * #669 — every audio flag must produce a VISIBLE result.
@@ -125,10 +125,28 @@ test.describe('audio: the custom UI renders outside the native element (#669)', 
     // The schema published `showEq` while the behavior only ever read `show-eq`,
     // so the DOCUMENTED name silently did nothing.
     await render(page, `<audio src="${SRC}" showeq="true">x</audio>`);
-    expectVisible(await box(page, '.x-audio__eq-container'), 'EQ via the schema spelling (showeq)');
+    const viaSchemaSpelling = await box(page, '.x-audio__eq-container');
+    expectVisible(viaSchemaSpelling, 'EQ via the schema spelling (showeq)');
 
     await render(page, `<audio src="${SRC}" show-eq="true">x</audio>`);
-    expectVisible(await box(page, '.x-audio__eq-container'), 'EQ via the hyphenated spelling (show-eq)');
+    const viaHyphenSpelling = await box(page, '.x-audio__eq-container');
+    expectVisible(viaHyphenSpelling, 'EQ via the hyphenated spelling (show-eq)');
+
+    // #872: "both spellings WORK" is a claim about EQUIVALENCE, and two
+    // independent visibility checks do not make it — an alias that built a
+    // different or degraded EQ would satisfy both while the DOCUMENTED name
+    // still did not mean what the docs say. Same harness, same 720px host, so
+    // the two renders must measure identically.
+    //
+    // This assertion is also the one the "every test contains at least one
+    // expect()" gate can see: it matches /expect\s*[.(]/ on the test body, and
+    // `expectVisible(` does not match (the character after "expect" is "V"),
+    // so a body whose only assertion is that helper reads as vacuous.
+    expect(
+      viaHyphenSpelling,
+      'showeq and show-eq must build the SAME EQ — an alias that renders something '
+      + 'different is still a broken alias',
+    ).toEqual(viaSchemaSpelling);
   });
 
   test('a bare <audio src> stays native — no custom UI is imposed', async ({ page }) => {
@@ -151,6 +169,23 @@ test.describe('audio: the custom UI renders outside the native element (#669)', 
     await render(page, `<audio src="${SRC}" showeq="true"></audio>`);
     expectVisible(await box(page, '.x-audio__transport'), 'transport on <audio>');
     expectVisible(await box(page, '.x-audio__eq-container'), 'EQ on <audio>');
+
+    // #872: a sized EQ CONTAINER is not a rendered EQ. The original bug put
+    // the UI inside <audio>, where children are fallback content and never
+    // render — and the container could regain a box while the controls inside
+    // it stayed at 0x0, which is the same invisibility with a passing test.
+    // Measure the band sliders themselves, and pin the mount point, since this
+    // is the tag form the fix moved.
+    const sliders = await page.evaluate(() =>
+      [...document.querySelectorAll('#harness input[type="range"]')]
+        .map((el) => { const r = el.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height) }; })
+    );
+    expect(sliders.length, 'the EQ on <audio> should render its band sliders').toBeGreaterThan(10);
+    expect(sliders.every((s) => s.w > 0 && s.h > 0), 'every band slider should be visible').toBe(true);
+
+    const eqParent = await page.evaluate(() =>
+      document.querySelector('.x-audio__eq-container')?.parentElement?.tagName.toLowerCase() ?? null);
+    expect(eqParent, 'the EQ must not be mounted inside <audio> — its children never render').not.toBe('audio');
   });
 
   test('native passthrough flags reach the media element', async ({ page }) => {

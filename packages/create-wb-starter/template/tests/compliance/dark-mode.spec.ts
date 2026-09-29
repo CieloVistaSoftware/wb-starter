@@ -2,7 +2,7 @@
  * Dark Mode Compliance Tests
  * Verifies all HTML pages render correctly in dark mode
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -61,23 +61,33 @@ const SKIP_DARK_MODE = [
   'public/performance-dashboard.html',     // Fetches JSON that may not exist
 ];
 
-// #546: pages/issues.html (and its template copy) call the unauthenticated
-// GitHub REST API (60 requests/hour per source IP) to list live issues.
-// GitHub Actions runners share IP ranges with countless other unauthenticated
-// callers and can start a job already near/at that limit, well before this
-// page ever loads -- there's no way to attach a token client-side on a
-// static site. When that happens, the request comes back 403 and Chromium's
-// own network layer logs "Failed to load resource: the server responded
-// with a status of 403 ()" to the console regardless of how gracefully
-// issues.html's own try/catch handles the response (that message is emitted
-// by the browser for the failed resource load itself, not by application
-// code, so there is no app-level fix that suppresses it). That makes this an
-// inherent CI-environment limitation rather than a real bug -- scoped to
-// just the page(s) that make this call so a genuine 403 elsewhere still
-// fails the test.
+// pages/issues.html lists live issues: /api/issues and /api/activity (the dev
+// server, which asks GitHub through `gh`), falling back to the public GitHub
+// API. None of that is the page's dark-mode rendering, and a gate must not
+// depend on GitHub, a login or a rate limit -- in CI the server answered 503
+// with no `gh` login, and before that the public API answered 403 (#546),
+// which an exemption for "403" used to wave through. Serve fixed data instead,
+// so the page renders the same everywhere and any real error still fails.
 const GITHUB_API_PAGES = ['pages/issues.html'];
+const FIXTURE_ISSUE = {
+  number: 1, title: 'Fixture issue', state: 'open', labels: [], body: '',
+  created_at: '2026-01-01T00:00:00Z', updated_at: '2026-01-01T00:00:00Z',
+  html_url: 'https://github.com/CieloVistaSoftware/wb-starter/issues/1', user: { login: 'fixture' },
+};
+async function serveIssueFixtures(page: import('@playwright/test').Page) {
+  const json = (body: unknown) => ({ status: 200, contentType: 'application/json', body: JSON.stringify(body) });
+  await page.route('**/api/issues*', (r) => r.fulfill(json({ source: 'live', issues: [FIXTURE_ISSUE] })));
+  await page.route('**/api/activity*', (r) => r.fulfill(json({ counts: { closed: 0, opened: 0, commits: 0, netOpen: 0 } })));
+  await page.route('https://api.github.com/**', (r) => r.fulfill(json([FIXTURE_ISSUE])));
+}
 
 test.describe('Dark Mode Compliance', () => {
+  // The service worker (src/main.js registers sw.js) makes the page's fetches
+  // itself, and Playwright cannot route a service worker's requests -- so the
+  // issue fixtures below never applied and /api/issues still reached the real,
+  // gh-backed server. Nothing here measures the worker; dark mode is CSS.
+  test.use({ serviceWorkers: 'block' });
+
 
   for (const htmlFile of relativeHtmlFiles) {
     // Skip pages known to redirect/navigate and destroy context
@@ -95,16 +105,16 @@ test.describe('Dark Mode Compliance', () => {
           const text = msg.text();
           // Skip known warnings that aren't dark-mode related
           const isKnownWarning = knownWarnings.some(w => text.includes(w));
-          // Skip GitHub API rate-limit 403s on the pages that call it (#546)
-          const isGithubRateLimit = isGithubApiPage && text.includes('403');
-          if (!isKnownWarning && !isGithubRateLimit) {
+          if (!isKnownWarning) {
             errors.push(text);
           }
         }
       });
       
+      if (isGithubApiPage) await serveIssueFixtures(page);
+
       // Navigate to the page
-      const url = `http://localhost:3000/${htmlFile}`;
+      const url = `/${htmlFile}`;
       const response = await page.goto(url);
       
       // Page should load
@@ -159,9 +169,13 @@ test.describe('Dark Mode Compliance', () => {
         console.warn(`⚠️ ${htmlFile} has potential dark mode issues:\n  ${colorIssues.join('\n  ')}`);
       }
       
+      // #1115: no media exemption. An unreachable third-party media host is a
+      // console WARNING at the source (src/wb-viewmodels/media-unreachable.js),
+      // not an error, so it never reaches this filter.
+
       // Filter for critical errors only
-      const criticalErrors = errors.filter(e => 
-        !e.includes('favicon') && 
+      const criticalErrors = errors.filter(e =>
+        !e.includes('favicon') &&
         !e.includes('404') &&
         !e.includes('net::ERR') &&
         !e.includes('Cannot read properties of null')  // Skip init errors for pages without #app
@@ -186,28 +200,46 @@ test.describe('Dark Mode Compliance', () => {
     !SKIP_DARK_MODE.some(skip => f.includes(skip))
   );
 
+  // #863: every one of these tests asserted nothing. A missing data-theme
+  // produced a console.warn and a PASS, and the bare catch swallowed navigation
+  // failures into a second console.warn and a PASS -- so this loop reported
+  // every main page as themed whether it was, whether it 404'd, or whether it
+  // failed to load at all. It is the exact shape #863 was opened for.
+  //
+  // Now asserted: the page must load, and site-engine must have stamped
+  // data-theme on <html> by the time it settles. Measured when turned on: all
+  // main pages pass.
   for (const htmlFile of mainSitePages) {
     test(`${htmlFile} has data-theme attribute`, async ({ page }) => {
-      try {
-        await page.goto(`http://localhost:3000/${htmlFile}`);
-        await page.waitForTimeout(300);
+      const response = await page.goto(`/${htmlFile}`);
+      expect(
+        response?.status(),
+        `/${htmlFile} did not load (status ${response?.status()})`,
+      ).toBeLessThan(400);
 
-        const hasTheme = await page.evaluate(() =>
-          document.documentElement.hasAttribute('data-theme')
-        );
+      await page.waitForTimeout(300);
 
-        // Main pages should have theme attribute after site-engine loads
-        if (!hasTheme) {
-          console.warn(`⚠️ ${htmlFile} missing data-theme attribute`);
-        }
-      } catch {
-        console.warn(`⚠️ ${htmlFile} navigation issue — skipping data-theme check`);
-      }
+      // Poll rather than snapshot once: site-engine stamps the attribute during
+      // init, and under full-suite worker load that can land after a fixed
+      // wait. A fixed wait here would be flaky in exactly one direction --
+      // reporting a themed page as unthemed.
+      await expect
+        .poll(
+          () => page.evaluate(() => document.documentElement.hasAttribute('data-theme')),
+          {
+            message:
+              `${htmlFile}: <html> has no data-theme attribute. Main pages must `
+              + 'be themed by site-engine on load; without it the page renders '
+              + 'against whatever the browser default happens to be.',
+            timeout: 5000,
+          },
+        )
+        .toBe(true);
     });
   }
   
   test('theme variables are defined in dark mode', async ({ page }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('/');
     await page.waitForTimeout(500);
     
     // Ensure dark mode
@@ -233,7 +265,7 @@ test.describe('Dark Mode Compliance', () => {
   });
   
   test('dark mode has dark background colors', async ({ page }) => {
-    await page.goto('http://localhost:3000/');
+    await page.goto('/');
     await page.waitForTimeout(500);
     
     // Set dark mode

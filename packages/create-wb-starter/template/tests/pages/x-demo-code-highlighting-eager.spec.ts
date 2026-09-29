@@ -20,14 +20,14 @@
  * process [x-behavior="name1 name2"] directly, independent of nativeMap/
  * autoInject.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
-test.describe('x-demo code panel is syntax-highlighted on the eager (main SPA) runtime', () => {
-  test('a <div x-demo> code block on pages/behaviors.html gets real hljs spans', async ({ page }) => {
-    await page.goto('/?page=behaviors');
+test.describe('[x-demo] code panel is syntax-highlighted on the eager (main SPA) runtime', () => {
+  test('a <div x-demo> code block on pages/demos.html gets real hljs spans', async ({ page }) => {
+    await page.goto('/?page=demos');
     await page.waitForTimeout(1000);
 
-    const codeEl = page.locator('x-demo code').first();
+    const codeEl = page.locator('[x-demo] code').first();
     await codeEl.scrollIntoViewIfNeeded();
     await page.waitForTimeout(500);
 
@@ -40,19 +40,23 @@ test.describe('x-demo code panel is syntax-highlighted on the eager (main SPA) r
 
   test('multiple <div x-demo> code blocks on the same page all get highlighted', async ({ page }) => {
     test.slow();
-    await page.goto('/?page=behaviors');
+    await page.goto('/?page=demos');
 
     // <div x-demo> builds its code panel lazily (IntersectionObserver-gated,
     // a deliberate perf optimization — see demo.js) regardless of which WB
     // runtime the page uses, so only viewport-near panels exist at first.
     // Force several distinct <div x-demo> hosts into view to trigger their
     // build, then verify each one highlights.
-    const demoHosts = page.locator('x-demo');
+    const demoHosts = page.locator('[x-demo]');
     // The SPA fetches/injects the page fragment async — wait for the SPA
     // itself to actually finish navigating before expecting any content.
     await expect(demoHosts.first()).toBeAttached({ timeout: 15000 });
     const hostCount = await demoHosts.count();
-    expect(hostCount).toBeGreaterThan(5);
+    // The guard only ensures the page has enough demos for "multiple" to mean
+    // something — the real assertion is the loop below, which checks EVERY
+    // host highlights. The old >5 was calibrated to components.html, which no
+    // longer exists; pages/demos.html carries 4.
+    expect(hostCount, 'need at least two demos for this to test anything').toBeGreaterThan(1);
 
     const sampleSize = Math.min(hostCount, 10);
     for (let i = 0; i < sampleSize; i++) {
@@ -67,16 +71,38 @@ test.describe('x-demo code panel is syntax-highlighted on the eager (main SPA) r
   });
 
   test('the pre panel chrome (copy button) also renders via x-behavior="pre"', async ({ page }) => {
-    await page.goto('/?page=behaviors');
+    await page.goto('/?page=demos');
     await page.waitForTimeout(1000);
 
-    const demo = page.locator('x-demo').filter({ has: page.locator('pre.x-demo__code') }).first();
-    await demo.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(500);
+    // pages/demos.html groups its demos inside <details class="demos-category">
+    // accordions, which start CLOSED. A descendant of a closed <details> keeps
+    // reporting display/visibility/opacity as visible and a non-zero
+    // offsetWidth, so the usual style probes all say "fine" — but
+    // checkVisibility() (what Playwright actually uses) is false. Open the
+    // accordion first, the same thing a reader does.
+    //
+    // The panel itself is then built lazily (IntersectionObserver, see
+    // demo.js), so a locator filtered on `pre.x-demo__code` matches nothing
+    // until a demo has been scrolled into view. The original test only passed
+    // because a demo happened to sit near the top of the old, un-grouped
+    // page — an ordering assumption that broke when the page changed.
+    // Wait for the groups to EXIST first. The page is fetched and injected
+    // after load, and a fixed 1s wait lost that race under load: .all() found
+    // no <details> yet, opened nothing, and the injected groups arrived closed.
+    await expect(page.locator('details.demos-category').first()).toBeAttached({ timeout: 15000 });
+    for (const details of await page.locator('details.demos-category').all()) {
+      await details.evaluate((el: HTMLDetailsElement) => { el.open = true; });
+    }
 
-    // pre.js's chrome adds a copy button (button.x-pre__copy), positioned as
-    // a sibling control alongside <pre>, not necessarily nested inside it.
-    const copyButton = demo.locator('.x-pre__copy');
-    await expect(copyButton.first()).toBeVisible();
+    const firstDemo = page.locator('[x-demo]').first();
+    await expect(firstDemo).toBeAttached({ timeout: 15000 });
+    await firstDemo.scrollIntoViewIfNeeded();
+
+    const panel = firstDemo.locator('pre.x-demo__code');
+    await expect(panel.first()).toBeAttached({ timeout: 10000 });
+
+    // pre.js's chrome adds a copy button, button.x-pre__copy.
+    const copyButton = firstDemo.locator('.x-pre__copy');
+    await expect(copyButton.first()).toBeVisible({ timeout: 10000 });
   });
 });

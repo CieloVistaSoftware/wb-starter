@@ -3,7 +3,7 @@
  * Auto-generated baseline — verifies render + no console errors
  * Source: src/wb-viewmodels/progressbar.js
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -31,8 +31,8 @@ async function injectAndScan(page: Page, html: string) {
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -64,7 +64,7 @@ test.describe('progressbar Behavior', () => {
     const html = '<progress>Test content</progress>';
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container x-progress, #test-container x-progressbar').first();
+    const el = page.locator('#test-container progress, #test-container [x-progress]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

@@ -20,6 +20,7 @@
  */
 
 import { writeFile, readFile, unlink, mkdir, readdir } from "fs/promises";
+import { watch } from "fs";
 import { join } from "path";
 import { homedir, freemem } from "os";
 
@@ -75,6 +76,10 @@ export function createGuards(opts) {
   const minFreeMb = opts.minFreeMb === undefined ? defaultMinFreeMb() : opts.minFreeMb;
   const freeMemBytes = opts.freeMemBytes || freemem;
   const isAlive = opts.isAlive || isProcessRunning;
+  // One re-check per hold, for a holder that died WITHOUT releasing: that
+  // produces no filesystem event, so without this a subscriber would be
+  // stranded. It is a single timer, not a poll -- nothing runs while it waits.
+  const staleCheckMs = opts.staleCheckMs === undefined ? 2 * 60 * 1000 : opts.staleCheckMs;
 
   const lockFile = join(globalDir, "test.lock");
   const slotDir = join(globalDir, "single-slots");
@@ -96,6 +101,36 @@ export function createGuards(opts) {
     }
   }
 
+  // ONE MACHINE, BOTH KINDS OF RUN (#1106).
+  //
+  // A suite and a single run were each checked only against their own kind:
+  // acquireSuiteLock never looked at the slots, and acquireSingleSlot never
+  // looked at the suite lock. So a single run launched during a commit gate
+  // was admitted beside it, the two fought over the dev-server port, and the
+  // gate hung for five hours. scripts/lock-permutations.schema.json is the
+  // exhaustive matrix that found it; these two readers are the fix.
+
+  /** A suite is live if its holder is alive, or it is a fresh unbound claim. */
+  async function liveSuite() {
+    const held = await readJson(lockFile);
+    if (!held) return null;                       // absent or unreadable: not live
+    if (held.pid) return isAlive(held.pid) ? held : null;
+    const ageMs = Date.now() - new Date(held.startedAt).getTime();
+    return ageMs >= 0 && ageMs < CLAIM_GRACE_MS ? held : null;
+  }
+
+  /** Slots whose holder is still alive. Dead holders do not count. */
+  async function liveSingles() {
+    let entries = [];
+    try { entries = await readdir(slotDir); } catch { return []; }
+    const live = [];
+    for (const name of entries) {
+      const held = await readJson(join(slotDir, name));
+      if (held && held.pid && isAlive(held.pid)) live.push(held);
+    }
+    return live;
+  }
+
   /** @returns {string|null} an error message when memory is too tight. */
   function checkMemory() {
     if (!(minFreeMb > 0)) return null;
@@ -114,6 +149,14 @@ export function createGuards(opts) {
    */
   async function acquireSuiteLock(startedAt, command) {
     await ensureDirs();
+
+    const singles = await liveSingles();
+    if (singles.length) {
+      return (
+        `${singles.length} single-spec run(s) already hold the machine:\n` +
+        singles.map((h) => `   ${h.specFile || "?"} (PID ${h.pid}, ${h.root})`).join("\n")
+      );
+    }
     const payload = JSON.stringify({ pid: null, root, startedAt, command }, null, 2);
 
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -175,6 +218,11 @@ export function createGuards(opts) {
    */
   async function acquireSingleSlot(specFile) {
     await ensureDirs();
+
+    // A suite owns the whole machine. Returning null here is the same answer
+    // as "every slot is busy" -- the caller is held, and is told why by
+    // describeSingleSlots() / readLock().
+    if (await liveSuite()) return null;
     const payload = () => JSON.stringify({
       pid: process.pid,
       root,
@@ -254,6 +302,51 @@ export function createGuards(opts) {
     try { await unlink(slotPath); } catch (e) { /* ignore */ }
   }
 
+  /**
+   * Subscribe to a release of the machine. Resolves on any change in the lock
+   * directory or the slot directory -- a released lock or slot is a file
+   * deleted there -- or, once, after staleCheckMs if the holder died silently.
+   * Zero CPU while it is pending: fs.watch and one timer, no loop.
+   */
+  function subscribeToRelease() {
+    let settle;
+    const promise = new Promise((resolve) => { settle = resolve; });
+    const watchers = [];
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      for (const w of watchers) { try { w.close(); } catch { /* already closed */ } }
+      settle();
+    };
+    for (const dir of [globalDir, slotDir]) {
+      try { watchers.push(watch(dir, finish)); } catch { /* dir not there yet */ }
+    }
+    const timer = setTimeout(finish, staleCheckMs);
+    return { promise, cancel: finish };
+  }
+
+  /**
+   * Take the machine, or be notified when it is free and take it then.
+   *
+   * The subscription is armed BEFORE the attempt, so a release that lands
+   * between a refusal and the subscribe cannot be missed. John: "try -- if
+   * locked -- wait for notification. Waiting for notification requires no CPU."
+   *
+   * @param {(why: string) => void} [onHeld] told once per hold, with the reason
+   */
+  async function acquireSuiteLockOnRelease(startedAt, command, onHeld) {
+    await ensureDirs();
+    for (;;) {
+      const release = subscribeToRelease();
+      const denied = await acquireSuiteLock(startedAt, command);
+      if (denied === null) { release.cancel(); return null; }
+      if (onHeld) onHeld(denied);
+      await release.promise;
+    }
+  }
+
   return {
     lockFile,
     slotDir,
@@ -269,5 +362,6 @@ export function createGuards(opts) {
     findOwnSlot,
     releaseSlot,
     readLock: () => readJson(lockFile),
+    acquireSuiteLockOnRelease,
   };
 }

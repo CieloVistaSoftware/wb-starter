@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as path from 'path';
 import { readJson, PATHS } from '../base';
 
@@ -14,15 +14,23 @@ const OBSERVER_ERROR_RE = /observer is not defined|ResizeObserver is not defined
 
 test.describe('Runtime: no undefined-observer ReferenceError', () => {
   test('demos and showcase pages should not throw observer ReferenceError', async ({ page }) => {
-    const pages = ['/demos/wb-views-demo.html', '/demos/site/cards.html', '/?page=behaviors'];
+    // demos/wb-views-demo.html was never committed (it survives only in the
+    // create-wb-starter template), so this loaded a 404 page, waited for a WB
+    // that could never arrive, and timed out -- while the `.catch` below would
+    // have let a missing page count as "no errors" had it been faster. Every
+    // page here must load and boot WB, or its silence proves nothing.
+    // demos/autoinject.html replaces it: the whole page is auto-injected, so
+    // every observer-owning behavior runs.
+    const pages = ['/demos/autoinject.html', '/demos/site/cards.html', '/?page=behaviors'];
     for (const p of pages) {
       const consoleErrors: string[] = [];
       page.on('console', msg => {
         if (msg.type() === 'error') consoleErrors.push(msg.text());
       });
 
-      await page.goto(p);
-      await page.waitForFunction(() => (window as any).WB !== undefined, { timeout: 5000 }).catch(() => null);
+      const response = await page.goto(p);
+      expect(response?.ok(), `${p} must exist (status ${response?.status()})`).toBe(true);
+      await page.waitForFunction(() => (window as any).WB !== undefined, null, { timeout: 10000 });
       await page.waitForTimeout(350);
 
       const found = consoleErrors.find(c => OBSERVER_ERROR_RE.test(c));

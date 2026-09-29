@@ -6,9 +6,10 @@
  * Dimensions: theme-correct controls, no native-white fallbacks, no zero-size /
  * unstyled custom elements, working interactions, readable contrast.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
+import { pickBehavior } from '../helpers/behaviors-page';
 
-const BASE = process.env.WB_BASE || 'http://localhost:3000';
+const BASE = process.env.WB_BASE || '';
 const URL = `${BASE.replace(/\/$/, '')}/?page=behaviors`;
 
 function lum(rgb: string): number {
@@ -53,9 +54,9 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
     expect(offenders, `checkboxes/radios not theme-accented (accent-color: auto):\n${JSON.stringify(offenders, null, 1)}`).toEqual([]);
   });
 
-  test('AUDIT: no wb-* behavior is zero-size or left as raw inline text', async ({ page }) => {
+  test('AUDIT: no wb-* component is zero-size or left as raw inline text', async ({ page }) => {
     const offenders = await page.evaluate(() => {
-      const tags = ['[x-switch]', '[x-rating]', '[x-alert]', '[x-badge]', '[x-progress]', '[x-spinner]', 'x-avatar', 'x-skeleton', '[x-tabs]', '[x-cardnotification]'];
+      const tags = ['[x-switch]', '[x-rating]', '[x-alert]', '[x-badge]', '[x-progress]', '[x-spinner]', '[x-avatar]', '[x-skeleton]', '[x-tabs]', '[x-cardnotification]'];
       const bad: any[] = [];
       for (const t of tags) {
         document.querySelectorAll('#mainPage-behaviors ' + t).forEach((el) => {
@@ -68,12 +69,15 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
       }
       return bad;
     });
-    expect(offenders, `behaviors zero-size or unstyled/unenhanced:\n${JSON.stringify(offenders, null, 1)}`).toEqual([]);
+    expect(offenders, `components zero-size or unstyled/unenhanced:\n${JSON.stringify(offenders, null, 1)}`).toEqual([]);
   });
 
   test('AUDIT: switches actually toggle state on click', async ({ page }) => {
+    // The page builds one behavior's example on selection now (#666/#910);
+    // nothing is on the stage until x-switch is picked.
+    await pickBehavior(page, 'x-switch');
     const result = await page.evaluate(async () => {
-      const sw = document.querySelector('#mainPage-behaviors [x-switch]');
+      const sw = document.querySelector('#behaviors-live-example [x-switch]');
       if (!sw) return 'NO_SWITCH';
       const read = () => {
         const inp = sw.querySelector('input') as HTMLInputElement | null;
@@ -85,7 +89,7 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
       await new Promise((r) => setTimeout(r, 150));
       return { before, after: read() };
     });
-    expect(result, 'no x-switch on page').not.toBe('NO_SWITCH');
+    expect(result, 'no [x-switch] on page').not.toBe('NO_SWITCH');
     expect((result as any).after, `switch did not change state on click (${JSON.stringify(result)})`).not.toBe((result as any).before);
   });
 

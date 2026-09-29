@@ -19,7 +19,7 @@
  * changes, which would make an ID-coupled regression test brittle. The
  * live "Table (Multi-Select)" section is covered by manual verification.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

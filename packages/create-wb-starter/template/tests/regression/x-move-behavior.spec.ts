@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#344 schema/behavior completeness audit):
@@ -22,7 +22,7 @@ import { test, expect } from '@playwright/test';
  *    a ReferenceError instead of swapping elements. Only moveup() worked.
  *    Fixed by renaming each handler's locals to match what it actually uses.
  */
-test.describe('x-move behavior (#344)', () => {
+test.describe('[x-move] behavior (#344)', () => {
   test('<div x-move> resolves without "Unknown behavior" and gets the baseClass', async ({ page }) => {
     const errors: string[] = [];
     page.on('console', (msg) => {

@@ -228,8 +228,19 @@
 
   <script>
     async function loadErrors() {
+      // #1000: this was fetch('/data/errors.json'), a ROOT-absolute path. This
+      // page is served under /wb-starter/ on GitHub Pages, so that resolved to
+      // the ORG root and 404'd — measured live:
+      //
+      //   404  https://cielovistasoftware.github.io/data/errors.json
+      //   (wanted https://cielovistasoftware.github.io/wb-starter/data/errors.json)
+      //
+      // Resolve against THIS page instead. The viewer lives at public/, and
+      // data/ is its sibling, so one level up is the site root wherever the
+      // site happens to be mounted.
+      const logUrl = new URL('../data/errors.json?t=' + Date.now(), location.href);
       try {
-        const response = await fetch('/data/errors.json?t=' + Date.now());
+        const response = await fetch(logUrl);
 
         // data/errors.json is gitignored -- it only exists once something has
         // actually been logged. A missing file therefore means "nothing has
@@ -237,8 +248,27 @@
         // as an error made this page throw and console.error on every clean
         // checkout, so the error viewer became a source of errors and failed
         // the JS-errors compliance check in CI, where the file never exists.
+        //
+        // But a 404 cannot tell "nothing has been logged" apart from "we asked
+        // the wrong place" — and while the URL above was wrong, this page
+        // cheerfully reported "No errors found. Great job! 🎉" on a deployed
+        // site that had errors. A false all-clear is worse than an error
+        // message. So the empty state now says where it looked.
         if (response.status === 404) {
+          // #1000: where there is no server route, error-logger.js keeps the log
+          // in localStorage under the SAME shape. Nothing here ever read it, so
+          // on the deployed site — the only place that fallback is ever used —
+          // errors were being recorded faithfully into a store the viewer did
+          // not open, and the page reported "No errors found. Great job!".
+          // The two halves were built to meet and never did.
+          const local = readLocalLog();
+          if (local.errors.length) {
+            renderErrors(local);
+            noteLocalSource(local.errors.length);
+            return;
+          }
           renderErrors({ errors: [] });
+          noteWhereItLooked(logUrl);
           return;
         }
         if (!response.ok) throw new Error(`Failed to load errors (HTTP ${response.status})`);
@@ -254,6 +284,44 @@
           </div>
         `;
       }
+    }
+
+    /** The browser-side log error-logger.js keeps when there is no API. */
+    function readLocalLog() {
+      try {
+        const raw = JSON.parse(localStorage.getItem('wb:error-log') || '{"errors":[]}');
+        return { errors: Array.isArray(raw.errors) ? raw.errors : [] };
+      } catch {
+        return { errors: [] };   // private mode, quota, storage disabled
+      }
+    }
+
+    /** Say so when what is on screen came from this browser, not the server. */
+    function noteLocalSource(n) {
+      const container = document.getElementById('error-container');
+      if (!container) return;
+      const note = document.createElement('p');
+      note.id = 'error-log-local-source';
+      note.className = 'empty-state';
+      note.textContent =
+        `${n} error(s) from this browser's local log — there is no server log at this address, ` +
+        'so these were recorded here and are visible only in this browser.';
+      container.insertBefore(note, container.firstChild);
+    }
+
+    /**
+     * Say which URL produced the empty state. An empty log and a wrong path
+     * look identical otherwise, and this page spent the whole of #1000
+     * reporting the second as the first.
+     */
+    function noteWhereItLooked(url) {
+      const empty = document.querySelector('#error-container .empty-state');
+      if (!empty) return;
+      const note = document.createElement('small');
+      note.id = 'error-log-source';
+      note.textContent = `No log file at ${url.pathname} — nothing has been logged, or it is not published here.`;
+      empty.appendChild(document.createElement('br'));
+      empty.appendChild(note);
     }
 
     function renderErrors(data) {
@@ -286,7 +354,9 @@
           <div class="error-header" onclick="toggleDetails(${index})">
             <div class="error-title">
               <span class="badge badge-${error.level || 'error'}">${error.level || 'ERROR'}</span>
-              <span class="source-badge">${error.source || 'Unknown'}</span>
+              <span class="source-badge">${escapeHtml(error.source || error.to || error.module || 'unattributed')}</span>
+              ${error.testOrigin ? '<span class="source-badge" title="raised by a test fixture, not by the app">test</span>' : ''}
+              ${error.fixable ? '<span class="source-badge" style="background:var(--success-color,#16a34a);color:#fff;" title="a known mechanical remedy exists">fixable</span>' : ''}
               <span>${escapeHtml(error.message)}</span>
             </div>
             <div class="error-meta">
@@ -309,16 +379,95 @@
                 <div style="color: var(--text-secondary);">→</div>
                 <div>
                   <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">TO</span>
-                  <strong>${escapeHtml(error.interaction?.to || 'Unknown')}</strong>
+                  <strong>${escapeHtml(error.interaction?.to || error.to || 'unattributed')}</strong>
                 </div>
               </div>
             </div>
 
             <div class="detail-row">
               <div class="detail-label">Location</div>
-              <code>${error.module || 'unknown'}:${error.line || '?'}:${error.column || '?'}</code>
-              ${error.function ? ` in <code>${error.function}()</code>` : ''}
+              <code>${escapeHtml(error.module || 'unknown')}:${error.line || '?'}:${error.column || '?'}</code>
+              ${error.function ? ` in <code>${escapeHtml(error.function)}()</code>` : ''}
             </div>
+
+            <!-- #1010: these were all being stored and none of them rendered.
+                 John: "who had this error? From what module? From what line
+                 number? Pointing to what?" -- every one of those was already in
+                 the record. -->
+            ${error.details && error.details.src ? `
+              <div class="detail-row">
+                <div class="detail-label">Pointing at</div>
+                <code>${escapeHtml(error.details.src)}</code>
+              </div>` : ''}
+
+            ${error.details && (error.details.reason || error.details.response) ? `
+              <div class="detail-row">
+                <div class="detail-label">Reason</div>
+                <code>${escapeHtml(error.details.reason || error.details.response)}</code>
+              </div>` : ''}
+
+            ${error.signature ? `
+              <div class="detail-row">
+                <div class="detail-label">Signature</div>
+                <code>${escapeHtml(error.signature)}</code>
+              </div>` : ''}
+
+            ${error.analysis ? `
+              <div class="detail-row">
+                <div class="detail-label">Analysis</div>
+                <div>${escapeHtml(error.analysis)}</div>
+              </div>` : ''}
+
+            ${error.solution ? `
+              <div class="detail-row">
+                <div class="detail-label">Solution</div>
+                <div>${escapeHtml(error.solution)}</div>
+              </div>` : ''}
+
+            ${error.verify ? `
+              <div class="detail-row">
+                <div class="detail-label">Test</div>
+                <div>
+                  <code>${escapeHtml(error.verify)}</code>
+                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                    What proves it fixed. A remedy without one is a change, not a fix.
+                  </p>
+                </div>
+              </div>` : ''}
+
+            ${error.fixable && error.remedy ? `
+              <div class="detail-row">
+                <div class="detail-label">How to fix next time</div>
+                <div>
+                  <code>${escapeHtml(error.remedy)}</code>
+                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                    Mechanical and verifiable${error.verify ? `, proven by <code>${escapeHtml(error.verify)}</code>` : ''}.
+                    Run it from the repository root.
+                  </p>
+                </div>
+              </div>` : ''}
+
+            ${error.issue ? `
+              <div class="detail-row">
+                <div class="detail-label">Issue</div>
+                <div>
+                  <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/${encodeURIComponent(String(error.issue))}"
+                     target="_blank" rel="noopener">#${escapeHtml(String(error.issue))}</a>
+                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                    Where this fault was diagnosed, and what closed it last time.
+                  </p>
+                </div>
+              </div>` : ''}
+
+            ${!error.analysis ? `
+              <div class="detail-row">
+                <div class="detail-label">Analysis</div>
+                <div style="color:var(--text-secondary);">
+                  This signature has not been analysed yet, so it is not fixable.
+                  Add an entry to <code>data/fix-registry.json</code> keyed by the
+                  signature above.
+                </div>
+              </div>` : ''}
             
             <div class="detail-row">
               <div class="detail-label">URL</div>

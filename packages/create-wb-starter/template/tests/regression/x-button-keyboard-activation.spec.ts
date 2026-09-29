@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
@@ -13,12 +13,12 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * semantic-element-fidelity sweep, then confirmed directly -- a focused
  * <button> does not fire a click on Enter or Space at all.
  */
-test.describe('x-button responds to keyboard activation like a real <button>', () => {
+test.describe('.x-button responds to keyboard activation like a real <button>', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });
 
-  test('Enter activates a focused x-button', async ({ page }) => {
+  test('Enter activates a focused .x-button', async ({ page }) => {
     const el = await setupTestContainer(page, '<button>Click me</button>');
     let clicked = false;
     await el.evaluate((node) => { (node as any).addEventListener('click', () => { (node as any).__clicked = true; }); });
@@ -28,7 +28,7 @@ test.describe('x-button responds to keyboard activation like a real <button>', (
     expect(clicked).toBe(true);
   });
 
-  test('Space activates a focused x-button', async ({ page }) => {
+  test('Space activates a focused .x-button', async ({ page }) => {
     const el = await setupTestContainer(page, '<button>Click me</button>');
     await el.evaluate((node) => { (node as any).addEventListener('click', () => { (node as any).__clicked = true; }); });
     await el.focus();

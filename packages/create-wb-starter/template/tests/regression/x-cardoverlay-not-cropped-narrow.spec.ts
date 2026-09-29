@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
@@ -23,7 +23,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * min-width floor) so it always has a sensible natural width relative to
  * its height, regardless of what a shrink-to-fit ancestor measures.
  */
-test.describe('x-cardoverlay is not squeezed into an unusably narrow box', () => {
+test.describe('[x-cardoverlay] is not squeezed into an unusably narrow box', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });

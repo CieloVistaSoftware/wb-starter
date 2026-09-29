@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * Accordion supports the v3 PLAIN attribute (`accordion-title`), not just legacy
  * data-*. Effect-based (§19): items build and toggle on click.
  *
  * Uses a static served fixture (tests/fixtures/accordion-plain.html) — the heavy
- * behaviors page (36 x-demos) flaked under load (#269), and setContent after
+ * components page (36 x-demos) flaked under load (#269), and setContent after
  * goto pre-defines the custom element so it upgrades before its children parse
  * (single-item fallback). A real served file parses all children first.
  */

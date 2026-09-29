@@ -2,12 +2,12 @@
  * ScrollAlong Behavior Tests
  * Tests against the ACTUAL site layout to verify sticky nav works
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
   test.beforeEach(async ({ page }) => {
     // Load the standalone scrollalong test page
-    await page.goto('http://localhost:3000/demos/scrollalong-test.html');
+    await page.goto('/demos/scrollalong-test.html');
     await page.waitForTimeout(500);
   });
 
@@ -16,7 +16,7 @@ test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
     await expect(nav).toHaveAttribute('x-scrollalong', '');
   });
 
-  test('nav has x-scrollalong class applied', async ({ page }) => {
+  test('nav has [x-scrollalong] class applied', async ({ page }) => {
     const nav = page.locator('#testNav');
     await expect(nav).toHaveClass(/x-scrollalong/);
   });
@@ -43,8 +43,14 @@ test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
     await expect(nav).toBeVisible();
     const scrolledBox = await nav.boundingBox();
     expect(scrolledBox).not.toBeNull();
-    // Nav Y position should be near top of viewport (sticky working)
-    expect(scrolledBox!.y).toBeLessThan(100);
+    // Sticky pins the nav to the top of its SCROLL CONTAINER, not the
+    // viewport. On this page #scrollContainer starts below a 200px spacer and
+    // a 2rem margin (~233px down), so the old "y < 100" could only pass if
+    // sticky were broken in some other way. Unstuck, 500px of scroll would
+    // carry the nav ~500px above the container top.
+    const containerBox = await scrollContainer.boundingBox();
+    expect(scrolledBox!.y).toBeGreaterThanOrEqual(containerBox!.y);
+    expect(scrolledBox!.y - containerBox!.y).toBeLessThan(10);
   });
 
   test('nav remains accessible after multiple scroll operations', async ({ page }) => {

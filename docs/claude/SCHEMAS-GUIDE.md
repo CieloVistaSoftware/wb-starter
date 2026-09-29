@@ -356,7 +356,7 @@ Schema changes can break other tests. After schema edits, also run:
 | `src/wb-models/schema.schema.json` | THE META-SCHEMA — defines what all schemas must look like | `schema-validation.spec.ts` + `node scripts/audit-schemas.mjs` |
 | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Full v3.0 schema spec with examples | N/A (docs only) |
 | `docs/test-schema-standard.md` | How test sections should be structured | N/A (docs only) |
-| `docs/schemaTestValue.md` | Test value conventions | N/A (docs only) |
+| `docs/schema-test-value.md` | Test value conventions | N/A (docs only) |
 | `tests/compliance/schema-validation.spec.ts` | The validation test (tier-aware, 16+ checks) | Itself — always re-run after editing |
 | `tests/compliance/source-schema-compliance.spec.ts` | Validates JS source matches schema requirements | After changing any behavior JS or schema |
 | `src/wb-models/alert.schema.json` | Good example of a complete behavior schema | `schema-validation.spec.ts` |

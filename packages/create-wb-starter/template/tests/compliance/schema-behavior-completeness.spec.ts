@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
+import { usesNativeHost } from '../base';
 
 const ROOT = process.cwd();
 const SCHEMA_DIR = path.join(ROOT, 'src', 'wb-models');
@@ -15,6 +16,8 @@ const EXPORT_ALIASES: Record<string, string> = {
   searchfield: 'searchField',
   copybutton: 'copyButton',
   'fix-card': 'fixCard',
+  // semantics/dialog.js: `export { dialog as modal }` -- x-modal IS dialog().
+  modal: 'dialog',
 };
 
 const NON_COMPONENT_SCHEMAS = new Set([
@@ -39,7 +42,7 @@ function loadSchemas() {
     schema: JSON.parse(fs.readFileSync(file, 'utf8')),
   })).filter(({ file, schema }) => {
     const behavior = schema.behavior || schema.schemaFor;
-    return (schema.schemaType || 'behavior') === 'behavior' &&
+    return (schema.schemaType || 'component') === 'component' &&
       !path.basename(file).includes('.base.') &&
       behavior && !NON_COMPONENT_SCHEMAS.has(behavior);
   });
@@ -72,7 +75,7 @@ function behaviorSurface(behavior: string) {
 }
 
 test.describe('Schema/behavior completeness audit (#344)', () => {
-  test('behavior schemas resolve through the behavior registry and source exports', () => {
+  test('component schemas resolve through the behavior registry and source exports', () => {
     const registry = registryKeys();
     const source = allViewmodelSource();
     const missingRegistry: string[] = [];
@@ -91,7 +94,62 @@ test.describe('Schema/behavior completeness audit (#344)', () => {
     expect(missingFunctions, `Missing exported functions:\n${missingFunctions.join('\n')}`).toEqual([]);
   });
 
-  test('behavior setup entries use their declared behavior surface', () => {
+  /**
+   * The REVERSE direction, which nothing checked.
+   *
+   * The test above walks schema -> behavior: every schema must resolve to a
+   * registry entry and an exported function. It cannot see a behavior that has
+   * NO schema, because there is no schema to start from.
+   *
+   * That matters more than it sounds, because a schema is not just
+   * documentation here -- it is the input to
+   * tests/behaviors/every-declared-attribute.spec.ts (#768), which sets every
+   * declared attribute and asserts the rendered element actually changed. A
+   * behavior with no schema declares no attributes, so that sweep has nothing
+   * to test and passes it in silence. The behavior is not verified; it is
+   * INVISIBLE.
+   *
+   * `fill` (#764) was exactly that: registered in tag-map, implemented,
+   * documented, styled, shipped -- and exempt from the property sweep because
+   * nobody wrote fill.schema.json. It also had no entry in
+   * data/behavior-examples.json, so the showcase rendered a placeholder for
+   * it, which is how it was finally noticed.
+   *
+   * John: "we need a unit test that ensures all properties are rendered for
+   * everything we have." The sweep that does that already exists; this is the
+   * assertion that keeps "everything we have" honest.
+   */
+  test('every registered behavior has a schema, so none escapes the property sweep', () => {
+    const tagMap = fs.readFileSync(path.join(ROOT, 'src', 'core', 'tag-map.js'), 'utf8');
+    const block = tagMap.match(/extensionMap\s*=\s*\{([\s\S]*?)\n\}/);
+    expect(block, 'could not read extensionMap from tag-map.js').toBeTruthy();
+
+    const behaviors = new Set(
+      [...(block ? block[1] : '').matchAll(/'x-[a-z0-9-]+'\s*:\s*'([a-z0-9-]+)'/g)].map((m) => m[1]),
+    );
+    expect(
+      behaviors.size,
+      'no behaviors parsed out of extensionMap — this check would pass vacuously',
+    ).toBeGreaterThan(50);
+
+    const haveSchema = new Set(
+      fs.readdirSync(SCHEMA_DIR)
+        .filter((f) => f.endsWith('.schema.json'))
+        .map((f) => f.replace('.schema.json', '')),
+    );
+
+    const missing = [...behaviors].filter((b) => !haveSchema.has(b) && !NON_COMPONENT_SCHEMAS.has(b)).sort();
+
+    expect(
+      missing,
+      `${missing.length} registered behavior(s) have no schema in src/wb-models, so ` +
+      `every-declared-attribute.spec.ts (#768) cannot test their properties and passes ` +
+      `them in silence:\n  ${missing.join('\n  ')}\n\n` +
+      `Add <name>.schema.json declaring each attribute the behavior reads.`,
+    ).toEqual([]);
+  });
+
+  test('component setup entries use their declared behavior surface', () => {
     const mismatches: string[] = [];
     const coverageGaps: string[] = [];
 
@@ -100,10 +158,14 @@ test.describe('Schema/behavior completeness audit (#344)', () => {
       const setups = schema.test?.setup || [];
       const surface = behaviorSurface(behavior);
       if (behavior.startsWith('card')) surface.push('<article');
-      const relevant = setups.filter((html: string) => surface.some(marker => html.includes(marker)));
+      // A native host that auto-injects the behavior (<audio>, <dialog> -- see
+      // tag-map.js nativeMap) is part of its surface: the element implies it.
+      const usesSurface = (html: string) =>
+        surface.some(marker => html.includes(marker)) || usesNativeHost(html, behavior);
+      const relevant = setups.filter(usesSurface);
 
-      if (setups.some((html: string) => !surface.some(marker => html.includes(marker)))) {
-        mismatches.push(`${file}: setup entry does not use <wb-${behavior}> or x-${behavior}`);
+      if (setups.some((html: string) => !usesSurface(html))) {
+        mismatches.push(`${file}: setup entry does not use <wb-${behavior}>, x-${behavior} or an auto-injecting native host`);
       }
       if (relevant.length < 5) coverageGaps.push(`${file}: ${relevant.length}/5 relevant setup entries`);
     }

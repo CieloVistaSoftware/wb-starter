@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * `drawer()` (src/wb-viewmodels/overlay.js) — a slide-out panel + backdrop
@@ -13,24 +13,32 @@ import { test, expect } from '@playwright/test';
  * why it went unnoticed.
  */
 test.describe('x-drawer auto-injection (drawer behavior)', () => {
-  test('behaviors page: "← Left" drawer button actually opens a drawer on click', async ({ page }) => {
-    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
-    const btn = page.locator('button[x-drawer]', { hasText: 'Left' }).first();
-    await btn.scrollIntoViewIfNeeded();
-    await expect(btn).toHaveClass(/x-drawer/, { timeout: 15000 });
-    await btn.click();
-    // drawer() appends a backdrop + panel directly to <body>, not a
-    // semantic <dialog> — assert by the panel's own rendered title text.
-    await expect(page.getByText('Left Drawer', { exact: true })).toBeVisible({ timeout: 5000 });
+  // These two ran against /?page=behaviors's "← Left"/"Right →" buttons. That
+  // page is now a catalogue rendering one example at a time from
+  // data/behavior-examples.json (#666), so neither button exists and both tests
+  // timed out looking for them. demos/site/overlays.html's Drawer section is
+  // where a Left/Right trigger pair lives now; the assertion is unchanged.
+  test('overlays page: "Left Drawer" trigger actually opens a drawer on click', async ({ page }) => {
+    await page.goto('/demos/site/overlays.html', { waitUntil: 'networkidle' });
+    const trigger = page.locator('#drawer-drawer [x-drawer][title="Left Drawer"]');
+    // Lazy runtime (#491): the behavior only attaches once near the viewport.
+    await trigger.scrollIntoViewIfNeeded();
+    await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 15000 });
+    await trigger.click();
+    // The panel is appended to <body>, not a semantic <dialog> -- assert by
+    // the open panel's own rendered title.
+    await expect(page.locator('.x-drawer__panel--open .x-drawer__title')).toHaveText('Left Drawer', { timeout: 5000 });
   });
 
-  test('behaviors page: "Right →" drawer button opens from the right', async ({ page }) => {
-    await page.goto('/?page=behaviors', { waitUntil: 'networkidle' });
-    const btn = page.locator('button[x-drawer]', { hasText: 'Right' }).first();
-    await btn.scrollIntoViewIfNeeded();
-    await expect(btn).toHaveClass(/x-drawer/, { timeout: 15000 });
-    await btn.click();
-    await expect(page.getByText('Right Drawer', { exact: true })).toBeVisible({ timeout: 5000 });
+  test('overlays page: "Right Drawer" trigger opens from the right', async ({ page }) => {
+    await page.goto('/demos/site/overlays.html', { waitUntil: 'networkidle' });
+    const trigger = page.locator('#drawer-drawer [x-drawer][title="Right Drawer"]');
+    await trigger.scrollIntoViewIfNeeded();
+    await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 15000 });
+    await trigger.click();
+    const panel = page.locator('.x-drawer__panel--open');
+    await expect(panel.locator('.x-drawer__title')).toHaveText('Right Drawer', { timeout: 5000 });
+    await expect(panel).toHaveClass(/x-drawer--right/);
   });
 
   test('playground.html: x-drawer example enhances eagerly and opens on click', async ({ page }) => {

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
@@ -12,7 +12,7 @@ import { setupBehaviorTest, setupTestContainer } from '../base';
  * `full-width` attribute to every alert demo's <div x-demo> wrapper (same
  * escape hatch cardhero uses).
  */
-test.describe('x-alert renders as a full-width banner, not a collapsed sliver', () => {
+test.describe('[x-alert] renders as a full-width banner, not a collapsed sliver', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });
@@ -22,7 +22,7 @@ test.describe('x-alert renders as a full-width banner, not a collapsed sliver', 
       page,
       '<div x-demo columns="1" full-width><div x-alert variant="info" message="Test"></div></div>'
     );
-    const alert = el.locator('x-alert');
+    const alert = el.locator('[x-alert]');
     const box = await alert.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.width).toBeGreaterThan(box!.height * 2);
@@ -33,7 +33,7 @@ test.describe('x-alert renders as a full-width banner, not a collapsed sliver', 
       page,
       '<div x-demo columns="1" full-width><div x-alert variant="warning" title="Warning" message="Be careful"></div></div>'
     );
-    const alert = el.locator('x-alert');
+    const alert = el.locator('[x-alert]');
     const icon = alert.locator('.x-alert__icon');
     const title = alert.locator('.x-alert__title');
     const message = alert.locator('.x-alert__message');

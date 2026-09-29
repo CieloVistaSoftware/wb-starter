@@ -1,21 +1,21 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
 /**
- * Behavior Attribute Validation — REGRESSION TEST
+ * Component Attribute Validation — REGRESSION TEST
  *
- * Ensures wb-* behavior attributes conform to expected ranges and standards.
+ * Ensures wb-* component attributes conform to expected ranges and standards.
  * Suspicious values (e.g., 360px for cardhero height when 400-600px is norm)
  * are flagged for manual review.
  *
  * Root cause of bug #4: demos/site/cards.html had cardhero with height="360px"
  * which is suspiciously small (other cardheros use 400-500px).
- * Prevention: validate behavior attributes against known ranges.
+ * Prevention: validate component attributes against known ranges.
  */
 
-test.describe('Behavior Attribute Validation', () => {
+test.describe('Component Attribute Validation', () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const htmlDir = path.join(__dirname, '../../');
 
@@ -73,7 +73,7 @@ test.describe('Behavior Attribute Validation', () => {
     ).toBe(0);
   });
 
-  test('x-progress value must be 0-100', () => {
+  test('progress value must be 0-100', () => {
     const htmlFiles = getHtmlFiles();
     const violations: string[] = [];
 
@@ -102,7 +102,7 @@ test.describe('Behavior Attribute Validation', () => {
     ).toBe(0);
   });
 
-  test('x-rating value must not exceed max', () => {
+  test('[x-rating] value must not exceed max', () => {
     const htmlFiles = getHtmlFiles();
     const violations: string[] = [];
 
@@ -132,7 +132,7 @@ test.describe('Behavior Attribute Validation', () => {
     ).toBe(0);
   });
 
-  test('x-avatar size must be valid (xs, sm, md, lg, xl)', () => {
+  test('[x-avatar] size must be valid (xs, sm, md, lg, xl)', () => {
     const htmlFiles = getHtmlFiles();
     const violations: string[] = [];
     // The valid set is avatar.schema.json's own enum, read rather than copied:

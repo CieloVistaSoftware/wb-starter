@@ -1,5 +1,5 @@
 {
-  "totalFiles": 270,
+  "totalFiles": 271,
   "categories": [
     "_today",
     "architecture",
@@ -26,21 +26,9 @@
         "category": "root"
       },
       {
-        "path": "docs/Auto-Injection.md",
-        "title": "Auto Injection (Preview)",
-        "name": "Auto-Injection",
-        "category": "root"
-      },
-      {
         "path": "docs/BRANCH_PROTECTION.md",
         "title": "Branch protection: require fast Tier‑1 check",
         "name": "BRANCH_PROTECTION",
-        "category": "root"
-      },
-      {
-        "path": "docs/CommittingFixes.md",
-        "title": "Committing Fixes Workflow",
-        "name": "CommittingFixes",
         "category": "root"
       },
       {
@@ -92,6 +80,12 @@
         "category": "root"
       },
       {
+        "path": "docs/auto-injection.md",
+        "title": "Auto Injection (Preview)",
+        "name": "auto-injection",
+        "category": "root"
+      },
+      {
         "path": "docs/behavior-cross-reference.md",
         "title": "WB-Starter Behaviors Cross-Reference",
         "name": "behavior-cross-reference",
@@ -113,6 +107,12 @@
         "path": "docs/code-examples-standard.md",
         "title": "Code Examples Standard",
         "name": "code-examples-standard",
+        "category": "root"
+      },
+      {
+        "path": "docs/committing-fixes.md",
+        "title": "Committing Fixes Workflow",
+        "name": "committing-fixes",
         "category": "root"
       },
       {
@@ -170,6 +170,12 @@
         "category": "root"
       },
       {
+        "path": "docs/npx-commands.md",
+        "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
+        "name": "npx-commands",
+        "category": "root"
+      },
+      {
         "path": "docs/pce-candidates.md",
         "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
         "name": "pce-candidates",
@@ -212,6 +218,12 @@
         "category": "root"
       },
       {
+        "path": "docs/schema-test-value.md",
+        "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
+        "name": "schema-test-value",
+        "category": "root"
+      },
+      {
         "path": "docs/schema.md",
         "title": "Schema Standards for WB-Starter Behaviors & Pages",
         "name": "schema",
@@ -221,12 +233,6 @@
         "path": "docs/schema.migration.md",
         "title": "WB-Starter Schema Migration Plan",
         "name": "schema.migration",
-        "category": "root"
-      },
-      {
-        "path": "docs/schemaTestValue.md",
-        "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
-        "name": "schemaTestValue",
         "category": "root"
       },
       {
@@ -1857,9 +1863,9 @@
       "category": "audits"
     },
     {
-      "path": "docs/Auto-Injection.md",
+      "path": "docs/auto-injection.md",
       "title": "Auto Injection (Preview)",
-      "name": "Auto-Injection",
+      "name": "auto-injection",
       "category": "root"
     },
     {
@@ -2997,9 +3003,9 @@
       "category": "root"
     },
     {
-      "path": "docs/CommittingFixes.md",
+      "path": "docs/committing-fixes.md",
       "title": "Committing Fixes Workflow",
-      "name": "CommittingFixes",
+      "name": "committing-fixes",
       "category": "root"
     },
     {
@@ -3099,6 +3105,12 @@
       "category": "root"
     },
     {
+      "path": "docs/npx-commands.md",
+      "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
+      "name": "npx-commands",
+      "category": "root"
+    },
+    {
       "path": "docs/pce-candidates.md",
       "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
       "name": "pce-candidates",
@@ -3141,6 +3153,12 @@
       "category": "root"
     },
     {
+      "path": "docs/schema-test-value.md",
+      "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
+      "name": "schema-test-value",
+      "category": "root"
+    },
+    {
       "path": "docs/schema.md",
       "title": "Schema Standards for WB-Starter Behaviors & Pages",
       "name": "schema",
@@ -3150,12 +3168,6 @@
       "path": "docs/schema.migration.md",
       "title": "WB-Starter Schema Migration Plan",
       "name": "schema.migration",
-      "category": "root"
-    },
-    {
-      "path": "docs/schemaTestValue.md",
-      "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
-      "name": "schemaTestValue",
       "category": "root"
     },
     {

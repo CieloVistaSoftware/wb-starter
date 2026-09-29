@@ -78,7 +78,7 @@ function targets(args) {
   if (args.length) return args.map((f) => path.resolve(ROOT, f));
   const out = [];
   for (const d of ['docs', 'demos']) walk(path.join(ROOT, d), out);
-  for (const f of ['README.md', 'CONTRIBUTING.md']) { const p = path.join(ROOT, f); if (fs.existsSync(p)) out.push(p); }
+  for (const f of ['README.md', '.github/CONTRIBUTING.md']) { const p = path.join(ROOT, f); if (fs.existsSync(p)) out.push(p); }
   return [...new Set(out)];
 }
 

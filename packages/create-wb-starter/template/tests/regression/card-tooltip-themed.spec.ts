@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #283: <article> hover text was only ever wired to the NATIVE browser
@@ -18,14 +18,17 @@ import { test, expect } from '@playwright/test';
  * `tooltip` nor `hoverText` set -- only a plain `title` -- keeps the native
  * browser tooltip working exactly as before.
  */
-test.describe('x-card tooltip -- themed hover text (#283)', () => {
+test.describe('.x-card tooltip -- themed hover text (#283)', () => {
   test('tooltip attribute shows the themed .x-tooltip on hover, not native title', async ({ page }) => {
-    await page.goto('http://localhost:3000/tests/fixtures/card-tooltip.html');
+    await page.goto('/tests/fixtures/card-tooltip.html');
     const card = page.locator('#card-tooltip');
     await card.waitFor();
 
     // The heading itself still renders from `title` (its normal job)...
-    await expect(card.locator('.x-card__title')).toHaveText('Card Heading');
+    // Found by tag: cards stopped carrying .x-card__title in a8a7362e -- the
+    // heading is the header's <h3>, which is what card.css styles.
+    await expect(card).toHaveAttribute('x-ready', '');
+    await expect(card.locator(':scope > header > h3')).toHaveText('Card Heading');
     // ...but the themed behavior takes over the hover experience -- the
     // literal `title` DOM attribute must not remain (tooltip.js strips it),
     // so there's no double native+themed tooltip on hover.
@@ -39,7 +42,7 @@ test.describe('x-card tooltip -- themed hover text (#283)', () => {
   });
 
   test('hover-text alias also shows the themed tooltip', async ({ page }) => {
-    await page.goto('http://localhost:3000/tests/fixtures/card-tooltip.html');
+    await page.goto('/tests/fixtures/card-tooltip.html');
     const card = page.locator('#card-hovertext');
     await card.waitFor();
 
@@ -51,7 +54,7 @@ test.describe('x-card tooltip -- themed hover text (#283)', () => {
   });
 
   test('a card with only a plain title attribute does not get a themed tooltip', async ({ page }) => {
-    await page.goto('http://localhost:3000/tests/fixtures/card-tooltip.html');
+    await page.goto('/tests/fixtures/card-tooltip.html');
     const card = page.locator('#card-plain-title');
     await card.waitFor();
 

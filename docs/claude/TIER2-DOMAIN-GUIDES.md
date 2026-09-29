@@ -17,7 +17,7 @@ Read when: modifying `src/core/`, behavior registration, behavior system, or WB.
 | `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` | Why `x-*` for behaviors, clean names for properties |
 | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec |
 | `docs/WB_BEHAVIOR_SYSTEM.md` | How behaviors attach to elements |
-| `docs/Auto-Injection.md` | How CSS/JS auto-loading works |
+| `docs/auto-injection.md` | How CSS/JS auto-loading works |
 | `docs/container-pattern.md` | Container behavior pattern |
 | `docs/escape-hatches.md` | How to override framework defaults |
 | `docs/architecture/proposals/proposed-custom-elements.md` | Custom elements proposals |
@@ -60,7 +60,7 @@ Read when: writing tests, fixing test failures, or modifying test infrastructure
 | `docs/testing-runbook.md` | Step-by-step test procedures |
 | `docs/builder-testing.md` | Builder-specific test rules |
 | `docs/test-schema-standard.md` | How to test schemas |
-| `docs/schemaTestValue.md` | Test value conventions for schemas |
+| `docs/schema-test-value.md` | Test value conventions for schemas |
 | `docs/ANNOUNCE_TEST_POLICY.md` | Test policy announcement |
 | `data/FUNCTIONAL-TEST-ANALYSIS.md` | Analysis of test gaps |
 | `docs/compliance/iso-42001-alignment.md` | Compliance alignment |

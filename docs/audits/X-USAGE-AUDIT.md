@@ -95,14 +95,14 @@ does not exist.
 | ❌ Invalid (AlpineJS?) | `docs/architecture/WBVIEWS.md` † | 1502 | `x-show` | `&lt;span class="badge" x-show="verified"&gt;✓ Verified&lt;/span&gt;` |
 | ✅ Valid | `docs/architecture/WBVIEWS.md` † | 1563 | `x-ripple` | `4. **Behavior integration** — `x-ripple`, `x-tooltip` work after render` |
 | ✅ Valid | `docs/architecture/WBVIEWS.md` † | 1563 | `x-tooltip` | `4. **Behavior integration** — `x-ripple`, `x-tooltip` work after render` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 21 | `x-ripple` | `It applies the default behavior for the element type. You can add *additional* behaviors using expli` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 21 | `x-as-card` | `It applies the default behavior for the element type. You can add *additional* behaviors using expli` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 27 | `x-ripple` | `&lt;button x-ripple&gt;Click Me&lt;/button&gt;` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 31 | `x-as-hero` | `&lt;article x-as-hero&gt;...&lt;/article&gt;` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 83 | `x-as-card` | `&lt;article x-as-card&gt;` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 100 | `x-as-navbar` | `&lt;nav x-as-navbar&gt;` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 118 | `x-dialog` | `&lt;dialog x-dialog&gt;...&lt;/div&gt;` |
-| ✅ Valid | [docs/Auto-Injection.md](../Auto-Injection.md) | 151 | `x-as-hero` | `&lt;article x-as-hero&gt;` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 21 | `x-ripple` | `It applies the default behavior for the element type. You can add *additional* behaviors using expli` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 21 | `x-as-card` | `It applies the default behavior for the element type. You can add *additional* behaviors using expli` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 27 | `x-ripple` | `&lt;button x-ripple&gt;Click Me&lt;/button&gt;` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 31 | `x-as-hero` | `&lt;article x-as-hero&gt;...&lt;/article&gt;` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 83 | `x-as-card` | `&lt;article x-as-card&gt;` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 100 | `x-as-navbar` | `&lt;nav x-as-navbar&gt;` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 118 | `x-dialog` | `&lt;dialog x-dialog&gt;...&lt;/div&gt;` |
+| ✅ Valid | [docs/auto-injection.md](../auto-injection.md) | 151 | `x-as-hero` | `&lt;article x-as-hero&gt;` |
 | ✅ Valid | [docs/behaviors-reference.md](../behaviors-reference.md) | 29 | `x-ripple` | `&lt;button x-ripple&gt;Click Me&lt;/button&gt;` |
 | ✅ Valid | [docs/behaviors-reference.md](../behaviors-reference.md) | 32 | `x-tooltip` | `&lt;div x-tooltip="Hello World"&gt;Hover Me&lt;/div&gt;` |
 | ❓ Unknown | [docs/behaviors-reference.md](../behaviors-reference.md) | 43 | `x-as` | `### 2. Morphing (`x-as-{behavior}`)` |

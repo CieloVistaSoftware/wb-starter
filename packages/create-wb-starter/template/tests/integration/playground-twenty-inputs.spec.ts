@@ -1,4 +1,4 @@
-import { test, expect, Locator } from '@playwright/test';
+import { test, expect, Locator } from '../fixtures/offline';
 
 // label() (src/wb-viewmodels/label.js) only assigns element.id lazily, the
 // first time IT runs -- an async, dynamic-imported behavior injection, not
@@ -32,7 +32,7 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
     await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
     await page.selectOption('#pg-examples', 'inputs');
     await page.waitForFunction(() => document.querySelectorAll('#pg-preview input').length > 0, { timeout: 15000 });
-    // counter.js puts the "N/max" readout on a sibling <span class="x-counter">,
+    // counter.js puts the "N/max" readout on a sibling <span class="[x-counter]">,
     // never on the input itself — wait for that span's text to confirm the
     // whole example set has actually finished enhancing.
     await page.waitForFunction(() => {
@@ -132,8 +132,12 @@ test.describe('Playground: 20 inputs with x-behaviors example set', () => {
   test('10. x-floatinglabel moves the label text out of the placeholder', async ({ page }) => {
     const wrapper = page.locator('#pg-preview .x-floating-label').first();
     await expect(wrapper.locator('.x-floating-label__label')).toHaveText('Email address');
+    // No placeholder text may remain to sit behind the resting label. The
+    // example authors none, and #765's floatinglabel() only clears one that
+    // exists (keeping it as the title) instead of stamping placeholder="" on
+    // every field -- so "absent" is as correct as "empty".
     const input = wrapper.locator('input');
-    await expect(input).toHaveAttribute('placeholder', '');
+    await expect.poll(async () => (await input.getAttribute('placeholder')) ?? '').toBe('');
   });
 
   test('11. x-label="Full name" generates a <label> to the left', async ({ page }) => {

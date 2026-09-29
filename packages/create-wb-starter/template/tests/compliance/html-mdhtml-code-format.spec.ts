@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -38,9 +38,9 @@ const MULTI_ATTR = /&lt;[a-zA-Z][a-zA-Z0-9-]*(?:\s+[a-zA-Z-]+(?:="[^"]*")?){2,}/
 
 test.describe('<div x-mdhtml> code samples in .html pages follow the multi-line format (#288)', () => {
   for (const rel of htmlFiles()) {
-    test(`${rel}: x-mdhtml code fences not crammed onto one line`, () => {
+    test(`${rel}: [x-mdhtml] code fences not crammed onto one line`, () => {
       const text = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-      if (!text.includes('x-mdhtml')) return; // nothing to check
+      if (!text.includes('[x-mdhtml]')) return; // nothing to check
       const lines = text.split('\n');
       let inFence = false;
       const offenders: string[] = [];

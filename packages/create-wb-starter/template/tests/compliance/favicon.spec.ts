@@ -8,15 +8,17 @@
  * and every standalone demos/*.html page never call it at all, so those
  * had literally no way to get a favicon.
  *
- * Fixed: a real favicon.svg at the project root (a blue star, already
+ * Fixed: a real favicon.svg (assets/icons/ since 2026-09-29; was the project root) (a blue star, already
  * existed but was never referenced by anything -- pure orphaned asset),
  * a static <link rel="icon"> in both index.html and project-index.html,
  * and config/site.json's browserTabIcon now points at the same file so
  * the dynamic override stays consistent instead of fighting the static tag.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
-for (const path of ['/', '/project-index.html']) {
+// project-index.html was archived (2026-09-29): a third of its links were dead
+// and nothing linked to it. index.html is the one root page.
+for (const path of ['/']) {
   test(`${path}: has a working <link rel="icon">, no implicit /favicon.ico 404`, async ({ page }) => {
     const failed: string[] = [];
     page.on('requestfailed', (req) => { if (req.url().endsWith('/favicon.ico')) failed.push(req.url()); });

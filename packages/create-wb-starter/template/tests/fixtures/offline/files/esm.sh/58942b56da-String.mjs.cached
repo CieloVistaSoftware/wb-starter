@@ -1,0 +1,3 @@
+/* esm.sh - css-tree@2.3.1/lib/syntax/node/String */
+import{String as t}from"../../../tokenizer.mjs";import{decode as n,encode as o}from"../../utils/string.mjs";var s="String",c={value:String};function a(){return{type:"String",loc:this.getLocation(this.tokenStart,this.tokenEnd),value:n(this.consume(t))}}function u(e){this.token(t,o(e.value))}export{u as generate,s as name,a as parse,c as structure};
+//# sourceMappingURL=String.mjs.map

@@ -4,9 +4,9 @@
  * card/cardhero/cardstats/cardnotification/audio log
  * "[WB] Schema for X not registered yet — attempting on-demand fetch".
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
-for (const route of ['/?page=behaviors', '/?page=behaviors', '/?page=home']) {
+for (const route of ['/?page=behaviors', '/?page=home']) {
   test(`no "schema not registered yet" warnings on ${route}`, async ({ page }) => {
     const warns: string[] = [];
     page.on('console', (m) => { if (/Schema for .* not registered yet/.test(m.text())) warns.push(m.text()); });

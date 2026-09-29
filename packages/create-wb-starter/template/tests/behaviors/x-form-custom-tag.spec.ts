@@ -1,10 +1,10 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * <form> never worked at all — no mapping existed in tag-map.js or
  * wb-lazy.js's customElementMappings, so the `form` behavior never ran on
  * it (confirmed live: no class, no submit handler, completely inert).
- * Found while investigating docs/behaviors/semantics/form.md, whose own
+ * Found while investigating docs/behaviors/form.md, whose own
  * "AJAX Submission"/"Auto-Save"/"Custom Success Message" examples all use
  * <form> exclusively.
  *
@@ -28,7 +28,7 @@ async function injectAndScan(page: Page, html: string) {
     document.body.appendChild(container);
   }, html);
   await page.locator('#wbform-test-container').scrollIntoViewIfNeeded();
-  await page.evaluate(() => (window as any).WB.scan(document.getElementById('wbform-test-container')));
+  await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('wbform-test-container')));
   await page.waitForTimeout(400);
 }
 

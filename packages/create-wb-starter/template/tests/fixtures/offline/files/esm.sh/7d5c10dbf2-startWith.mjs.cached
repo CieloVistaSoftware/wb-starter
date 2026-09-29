@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/startWith */
+import{concat as p}from"../observable/concat.mjs";import{popScheduler as e}from"../util/args.mjs";import{operate as i}from"../util/lift.mjs";function h(...r){let t=e(r);return i((o,c)=>{(t?p(r,o,t):p(r,o)).subscribe(c)})}export{h as startWith};
+//# sourceMappingURL=startWith.mjs.map

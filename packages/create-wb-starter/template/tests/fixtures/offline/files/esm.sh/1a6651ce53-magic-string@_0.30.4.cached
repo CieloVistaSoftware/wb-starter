@@ -1,0 +1,5 @@
+/* esm.sh - magic-string@0.30.21 */
+import "/@jridgewell/sourcemap-codec@^1.5.5?target=es2022";
+import "/node/buffer.mjs";
+export * from "/magic-string@0.30.21/es2022/magic-string.mjs";
+export { default } from "/magic-string@0.30.21/es2022/magic-string.mjs";

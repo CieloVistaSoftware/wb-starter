@@ -32,7 +32,7 @@ function walk(dir: string, out: string[]): void {
 function mdFiles(): string[] {
   const out: string[] = [];
   walk(path.join(ROOT, 'docs'), out);
-  for (const f of ['README.md', 'CONTRIBUTING.md']) if (fs.existsSync(path.join(ROOT, f))) out.push(f);
+  for (const f of ['README.md', '.github/CONTRIBUTING.md']) if (fs.existsSync(path.join(ROOT, f))) out.push(f);
   return [...new Set(out)];
 }
 

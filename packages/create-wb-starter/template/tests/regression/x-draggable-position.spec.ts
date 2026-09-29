@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * #390: <div x-draggable> (and bare x-draggable) jumped to a wildly wrong

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readJson, getFiles, ROOT, PATHS } from '../base';
 import * as path from 'path';
 

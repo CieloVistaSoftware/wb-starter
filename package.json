@@ -9,8 +9,6 @@
     "server.js",
     "sw.js",
     "manifest.json",
-    "favicon.svg",
-    "favicon.png",
     "global.d.ts",
     "src/",
     "public/",

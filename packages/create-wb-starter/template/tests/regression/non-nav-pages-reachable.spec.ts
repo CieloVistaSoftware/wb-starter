@@ -11,7 +11,7 @@
  * changed nothing, which is why this test loads pages through the real URL
  * rather than calling navigateTo() directly — only the URL path exercises both.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 

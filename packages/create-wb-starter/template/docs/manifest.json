@@ -1021,7 +1021,7 @@
           "description": "Schema-based testing approach"
         },
         {
-          "file": "schemaTestValue.md",
+          "file": "schema-test-value.md",
           "title": "Schema Test Value",
           "description": "Testing the schema test value"
         },
@@ -1042,7 +1042,7 @@
       "icon": "⚡",
       "docs": [
         {
-          "file": "Auto-Injection.md",
+          "file": "auto-injection.md",
           "title": "Auto-Injection",
           "description": "Automatic behavior injection"
         },
@@ -1129,9 +1129,19 @@
           "description": "Branch protection rules and policies"
         },
         {
-          "file": "CommittingFixes.md",
+          "file": "committing-fixes.md",
           "title": "Committing Fixes",
           "description": "Guidelines for committing fixes"
+        },
+        {
+          "file": "npx-commands.md",
+          "title": "npx Commands",
+          "description": "Copy-paste commands and PowerShell notes"
+        },
+        {
+          "file": "standards/REPO-LAYOUT.md",
+          "title": "Repo Layout",
+          "description": "Where every file goes: the root, folders, names, archive"
         }
       ]
     },

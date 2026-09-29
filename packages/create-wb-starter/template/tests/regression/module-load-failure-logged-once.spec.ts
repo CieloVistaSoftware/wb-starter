@@ -21,7 +21,7 @@
  * written to data/errors.json without actually polluting it (the
  * error-log-empty compliance test asserts that file stays empty).
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 // Trailing `**` is required: a cache-busted retry appends `?x-retry=<ts>`
 // (src/wb-viewmodels/index.js's loadModule(), #513), and without the

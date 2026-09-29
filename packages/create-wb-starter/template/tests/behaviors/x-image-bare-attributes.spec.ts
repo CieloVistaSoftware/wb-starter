@@ -10,7 +10,7 @@
  * x-audio, table.js → x-table, ...); no CSS ever depended on the old
  * x-image name (confirmed: zero matches in src/styles/).
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');

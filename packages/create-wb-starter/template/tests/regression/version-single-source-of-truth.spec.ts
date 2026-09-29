@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { globSync } from 'glob';
 
@@ -22,7 +22,7 @@ import { globSync } from 'glob';
 
 test('no pages/**/*.html or scripts/generate-*.js hardcodes a literal build-version string', async () => {
   const FILES = [
-    ...globSync('pages/**/*.html', { cwd: process.cwd() }),
+    ...globSync('pages/**/*.html', { cwd: process.cwd(), posix: true }),
     ...globSync('scripts/generate-*.js', { cwd: process.cwd() }),
   ];
   const offenders: string[] = [];
@@ -41,7 +41,12 @@ test('config/site.json has no separate/drifted appVersion field', async () => {
   expect(site.branding?.appVersion).toBeUndefined();
 });
 
-test('?page=behaviors: hero + footer show the real stamped version, not a stale literal', async ({ page }) => {
+// pages/behaviors.html no longer has a version in its hero or a page footer:
+// #774 removed the visible hero title/strapline and #1018 removed the footer
+// ("a footer repeating the version ... the header already shows"). The one
+// place this page shows the release is the site header's x-release button, so
+// that is what must carry the real stamped version.
+test('?page=behaviors: the header shows the real stamped version, not a stale literal', async ({ page }) => {
   await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
@@ -50,9 +55,7 @@ test('?page=behaviors: hero + footer show the real stamped version, not a stale 
     return mod.VERSION.version;
   });
 
-  const hero = page.locator('#behaviors-hero');
-  await expect(hero).toContainText(`wb-starter v${version}`);
-  await expect(page.locator('.page-footer')).toContainText(`wb-starter v${version}`);
+  await expect(page.locator('#headerVersion[x-release]')).toContainText(`v${version}`);
   // The raw placeholder token must never leak into rendered output.
   await expect(page.locator('#main')).not.toContainText('{{WB_VERSION}}');
 });

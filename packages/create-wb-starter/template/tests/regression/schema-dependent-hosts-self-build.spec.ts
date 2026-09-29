@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION: <div x-checkbox> and <textarea> are schema-driven hosts --
@@ -18,41 +18,51 @@ import { test, expect } from '@playwright/test';
  * schema-builder path, which was confirmed to clobber pre-filled content
  * when both ran on the same element.
  */
-test.describe('x-checkbox self-builds on wb-lazy.js pages (no schema support)', () => {
-  test('demos/site/forms.html: every x-checkbox gets a real, working input', async ({ page }) => {
+test.describe('[x-checkbox] self-builds on wb-lazy.js pages (no schema support)', () => {
+  test('demos/site/forms.html: every [x-checkbox] gets a real, working input', async ({ page }) => {
     await page.goto('/demos/site/forms.html');
     await page.waitForTimeout(1500);
 
-    const checkboxes = page.locator('x-checkbox');
+    const checkboxes = page.locator('[x-checkbox]');
     const count = await checkboxes.count();
-    expect(count, 'page must actually have x-checkbox demos to test').toBeGreaterThan(0);
+    expect(count, 'page must actually have [x-checkbox] demos to test').toBeGreaterThan(0);
 
+    // The lazy runtime (#491) builds an element only once it nears the
+    // viewport, and these demos start ~10,000px down -- so bring each one
+    // into view first, the way a reader reaches it.
     for (let i = 0; i < count; i++) {
       const host = checkboxes.nth(i);
+      await host.scrollIntoViewIfNeeded();
       const input = host.locator('input[type="checkbox"]');
       await expect(input, `checkbox #${i} must have a real input`).toHaveCount(1);
     }
 
     // The "Checked" example specifically must reflect checked=true onto the real input.
-    const checkedHost = page.locator('x-checkbox[label="Checked"]');
+    const checkedHost = page.locator('[x-checkbox][label="Checked"]');
     await expect(checkedHost.locator('input')).toBeChecked();
 
     // Clicking toggles state (proves the input is genuinely live, not decorative).
-    const defaultHost = page.locator('x-checkbox[label="Default checkbox"]');
+    const defaultHost = page.locator('[x-checkbox][label="Default checkbox"]');
     const defaultInput = defaultHost.locator('input');
     await expect(defaultInput).not.toBeChecked();
-    await defaultInput.click();
+    // Click the host, as a reader does: the input is the hidden state carrier.
+    await defaultHost.click();
     await expect(defaultInput).toBeChecked();
   });
 });
 
-test.describe('x-textarea self-builds on wb-lazy.js pages (no schema support)', () => {
-  test('demos/site/forms.html: x-textarea gets a real, working textarea', async ({ page }) => {
+test.describe('.x-textarea self-builds on wb-lazy.js pages (no schema support)', () => {
+  test('demos/site/forms.html: .x-textarea gets a real, working textarea', async ({ page }) => {
     await page.goto('/demos/site/forms.html');
     await page.waitForTimeout(1500);
 
-    const host = page.locator('x-textarea').first();
-    await expect(host, 'page must actually have a x-textarea demo to test').toHaveCount(1);
+    // The host is found by its attribute: `.x-textarea` is the class the
+    // enhancement puts on the real <textarea> field (input.css styles it), not
+    // on the <div x-textarea> around it -- and nothing is classed at all until
+    // the lazy runtime (#491) builds the demo, ~10,000px down, near the viewport.
+    const host = page.locator('[x-textarea]').first();
+    await expect(host, 'page must actually have a [x-textarea] demo to test').toHaveCount(1);
+    await host.scrollIntoViewIfNeeded();
 
     const field = host.locator('textarea');
     await expect(field).toHaveCount(1);

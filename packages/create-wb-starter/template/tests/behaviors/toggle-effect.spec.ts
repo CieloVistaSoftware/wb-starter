@@ -1,12 +1,12 @@
 /**
  * x-toggle — effect-based coverage (Standard #19: every declared attribute
  * must be tested to actually WORK, not merely that the element renders).
- * The auto-generated tests/behaviors/toggle.spec.ts only checks render +
+ * The auto-generated tests/components/toggle.spec.ts only checks render +
  * no-console-errors; this file asserts the real behavior of toggle.js:
  * class toggling (self and `target`), aria-pressed, keyboard activation,
  * and the wb:toggle event.
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -27,13 +27,13 @@ async function setup(page: Page, html: string): Promise<void> {
   // the time a one-shot interaction (a single click, a single keypress) is
   // dispatched below, since only assertions retry, not the interaction
   // itself. x-demo-width-and-toggle.spec.ts uses the same fix.
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('toggle-effect-test-area'), { eager: true });
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('toggle-effect-test-area'), { eager: true });
   });
   await page.waitForTimeout(100);
 }
 
-test.describe('x-toggle behavior effects', () => {
+test.describe('[x-toggle] behavior effects', () => {
   test('clicking toggles the default "active" class on itself and updates aria-pressed', async ({ page }) => {
     await setup(page, '<div x-toggle id="t1">Click me</div>');
     const el = page.locator('#t1');

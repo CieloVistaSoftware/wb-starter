@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * §19: `<span x-badge>` attributes must WORK. The behavior read variant/pill/dot/
@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
  * Fixed: label text renders, size applies (xs<lg), pill is fully rounded, the
  * tag is fit-content (not full-width), removable adds a × that removes it.
  */
-test('x-badge label/size/pill/removable all take effect (§19)', async ({ page }) => {
+test('[x-badge] label/size/pill/removable all take effect (§19)', async ({ page }) => {
   await page.goto('/');
   await page.setContent(`
     <link rel="stylesheet" href="/src/styles/themes.css">

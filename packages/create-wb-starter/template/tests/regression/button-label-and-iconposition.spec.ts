@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION (#632): John, live: <button label="Save" icon="💾"> rendered
@@ -36,7 +36,7 @@ test.describe('button label attribute renders as text (#632)', () => {
   test('<button label="..." icon="..."> shows both the icon and the label text', async ({ page }) => {
     await renderButtons(page, `<button id="b1" label="Save" icon="💾"></button>`);
     const text = await page.locator('#b1').textContent();
-    expect(text?.trim(), 'label text missing from x-button face').toContain('Save');
+    expect(text?.trim(), 'label text missing from .x-button face').toContain('Save');
     await expect(page.locator('#b1 .x-button__icon')).toHaveCount(1);
   });
 
@@ -53,7 +53,7 @@ test.describe('button label attribute renders as text (#632)', () => {
     expect(text?.trim()).toBe('Real Text');
   });
 
-  test('label + doc-link icon (x-demo) coexist -- doc-link does not block label rendering', async ({ page }) => {
+  test('label + doc-link icon ([x-demo]) coexist -- doc-link does not block label rendering', async ({ page }) => {
     await renderButtons(page, `<button id="b4" label="Save"><a class="x-demo__card-doc-link">📖</a></button>`);
     const text = await page.locator('#b4').textContent();
     expect(text?.trim(), 'label was skipped because the doc-link icon looked like author content').toContain('Save');

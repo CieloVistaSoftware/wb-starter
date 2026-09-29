@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #656 — <div x-stagelight>text</div> discarded its authored content,
@@ -7,19 +7,19 @@ import { test, expect } from '@playwright/test';
  *        innerHTML = ''). Fixed by adding x-stagelight to SCHEMA_EXCLUDED_TAGS.
  * #657 — demos/site/effects.html rendered the identical <div x-snow> demo twice.
  * #658 — the spotlight had no off switch, though the fixture variant of the
- *        same behavior has toggled since it shipped.
+ *        same component has toggled since it shipped.
  */
 
-test.describe('x-stagelight renders content, builds one overlay, and toggles (#656/#658)', () => {
+test.describe('[x-stagelight] renders content, builds one overlay, and toggles (#656/#658)', () => {
   test('every <div x-stagelight> keeps its authored text', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => document.querySelectorAll('x-stagelight').length > 0, null, {
+    await page.waitForFunction(() => document.querySelectorAll('[x-stagelight]').length > 0, null, {
       timeout: 30000,
     });
     await page.waitForTimeout(2000);
 
     const texts = await page.evaluate(() =>
-      [...document.querySelectorAll('x-stagelight')].map((e) => (e.textContent ?? '').trim())
+      [...document.querySelectorAll('[x-stagelight]')].map((e) => (e.textContent ?? '').trim())
     );
 
     expect(texts.length, 'expected stagelight demos on the page').toBeGreaterThan(0);
@@ -102,7 +102,7 @@ test.describe('x-stagelight renders content, builds one overlay, and toggles (#6
 test.describe('effects.html has no duplicate demos (#657)', () => {
   test('no two <div x-demo> blocks contain byte-identical live markup', async ({ page }) => {
     await page.goto('/demos/site/effects.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForFunction(() => document.querySelectorAll('x-demo').length > 0, null, {
+    await page.waitForFunction(() => document.querySelectorAll('[x-demo]').length > 0, null, {
       timeout: 30000,
     });
 
@@ -112,7 +112,7 @@ test.describe('effects.html has no duplicate demos (#657)', () => {
       const html = await (await fetch(location.pathname)).text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const seen = new Map<string, number>();
-      for (const d of [...doc.querySelectorAll('x-demo')]) {
+      for (const d of [...doc.querySelectorAll('[x-demo]')]) {
         const key = d.innerHTML.replace(/\s+/g, ' ').trim();
         seen.set(key, (seen.get(key) ?? 0) + 1);
       }

@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 async function loadPage(page: Page) {
   await page.goto('/?page=behaviors');
@@ -30,11 +30,11 @@ test.describe('site-wide click confirmation (#456)', () => {
 
     await page.locator('#click-confirm-button').click();
     await expect(page.locator('.x-toast')).toHaveCount(1);
-    await expect(page.locator('.x-toast')).toContainText('Clicked: Save');
+    await expect(page.locator('.x-toast')).toContainText('Clicked: click-confirm-button');
 
     await page.locator('#click-confirm-card').click();
     await expect(page.locator('.x-toast')).toHaveCount(2);
-    await expect(page.locator('.x-toast').last()).toContainText('Clicked: Open card');
+    await expect(page.locator('.x-toast').last()).toContainText('Clicked: click-confirm-card');
 
     await page.locator('#click-confirm-link').click();
     await expect(page.locator('.x-toast')).toHaveCount(2);
@@ -43,7 +43,19 @@ test.describe('site-wide click confirmation (#456)', () => {
 
   test('does not duplicate an explicit x-toast confirmation', async ({ page }) => {
     await loadPage(page);
-    const button = page.locator('[x-toast][toast-variant="success"]').first();
+    // The Behaviors page is a catalogue now (#666): an x-toast trigger only
+    // exists once its row is picked, so this used to wait out the timeout on a
+    // button that was never there. A query opens the collapsed group (#995).
+    await expect(page.locator('.behaviors-search-results__row').first()).toBeVisible({ timeout: 25000 });
+    await page.locator('#behaviors-search').fill('x-toast');
+    const row = page.locator('.behaviors-search-results__row[data-browse-token="x-toast"][data-variant="success"]').first();
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
+    const button = page.locator('#behaviors-live [x-toast][toast-variant="success"]').first();
+    await button.scrollIntoViewIfNeeded();
+    await expect(button).toHaveAttribute('x-ready', '', { timeout: 10000 });
+    // The row click is a plain button, so it raised its own confirmation.
+    await page.evaluate(() => document.querySelectorAll('.x-toast').forEach((el) => el.remove()));
     await button.click();
     await expect(page.locator('.x-toast--success')).toHaveCount(1);
     await expect(page.locator('.x-toast')).toHaveCount(1);

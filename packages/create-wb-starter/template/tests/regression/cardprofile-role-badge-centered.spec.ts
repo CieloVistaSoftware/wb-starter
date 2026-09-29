@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
+import { buildInView } from '../base';
 
 /**
  * <div x-cardprofile cover="…" role="…"> renders the role as a pill badge
@@ -23,15 +24,49 @@ import { test, expect } from '@playwright/test';
  *      the curve.
  */
 
-test.describe('x-cardprofile role badge', () => {
+// cards.html runs the lazy runtime (#491): the first profile card with a
+// cover and a role is far below the fold and is not built until scrolled to,
+// so every test brings it into view and waits for it first. The badge and
+// cover are then read from THAT card, not from whatever `.first()` on the page
+// happens to be -- the old `.x-card` locator matched nothing at all once
+// cards stopped carrying the class (a8a7362e).
+async function profileWithRoleBadge(page: Page) {
+  await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
+  const card = page.locator('[x-cardprofile][cover][role]').first();
+  await buildInView(card);
+  return {
+    card,
+    badge: card.locator('.x-card__cover > .x-card__role--badge'),
+    cover: card.locator('.x-card__cover'),
+  };
+}
+
+
+/**
+ * Badge and cover boxes from ONE frame. Two boundingBox() calls are two round
+ * trips, and cards.html is still growing above this card while its demos
+ * build -- CI read the badge 257px above its own cover ("top clearance
+ * -256.89px") because the page moved between the two reads.
+ */
+function boxes(card: import('@playwright/test').Locator) {
+  return card.evaluate((el) => {
+    const r = (q: string) => el.querySelector(q)!.getBoundingClientRect();
+    const b = r('.x-card__cover > .x-card__role--badge');
+    const c = r('.x-card__cover');
+    return {
+      badgeBox: { x: b.x, y: b.y, width: b.width, height: b.height },
+      coverBox: { x: c.x, y: c.y, width: c.width, height: c.height },
+      radiusPx: parseFloat(getComputedStyle(el).borderRadius),
+    };
+  });
+}
+
+test.describe('[x-cardprofile] role badge', () => {
   test('role badge is vertically centered on the cover strip', async ({ page }) => {
-    await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    const badge = page.locator('.x-card__role--badge').first();
+    const { card, badge } = await profileWithRoleBadge(page);
     await expect(badge).toBeVisible();
 
-    const cover = page.locator('.x-card__cover').first();
-    const [badgeBox, coverBox] = await Promise.all([badge.boundingBox(), cover.boundingBox()]);
-    expect(badgeBox && coverBox, 'both badge and cover must have a bounding box').toBeTruthy();
+    const { badgeBox, coverBox } = await boxes(card);
 
     const badgeVCenter = badgeBox!.y + badgeBox!.height / 2;
     const coverVCenter = coverBox!.y + coverBox!.height / 2;
@@ -39,10 +74,9 @@ test.describe('x-cardprofile role badge', () => {
   });
 
   test('role badge sits on the right side of the cover strip', async ({ page }) => {
-    await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    const badge = page.locator('.x-card__role--badge').first();
-    const cover = page.locator('.x-card__cover').first();
-    const [badgeBox, coverBox] = await Promise.all([badge.boundingBox(), cover.boundingBox()]);
+    const { card, badge } = await profileWithRoleBadge(page);
+    await expect(badge).toBeVisible();
+    const { badgeBox, coverBox } = await boxes(card);
 
     const badgeCenterX = badgeBox!.x + badgeBox!.width / 2;
     const coverCenterX = coverBox!.x + coverBox!.width / 2;
@@ -50,13 +84,10 @@ test.describe('x-cardprofile role badge', () => {
   });
 
   test('role badge clears the card\'s border-radius curve on both edges (no corner clipping)', async ({ page }) => {
-    await page.goto('/demos/site/cards.html', { waitUntil: 'domcontentloaded' });
-    const badge = page.locator('.x-card__role--badge').first();
-    const cover = page.locator('.x-card__cover').first();
-    const card = page.locator('.x-card').filter({ has: page.locator('.x-card__cover') }).first();
+    const { card, badge } = await profileWithRoleBadge(page);
+    await expect(badge).toBeVisible();
 
-    const [badgeBox, coverBox] = await Promise.all([badge.boundingBox(), cover.boundingBox()]);
-    const radiusPx = await card.evaluate((el) => parseFloat(getComputedStyle(el).borderRadius));
+    const { badgeBox, coverBox, radiusPx } = await boxes(card);
 
     const clearanceFromRight = coverBox!.x + coverBox!.width - (badgeBox!.x + badgeBox!.width);
     const clearanceFromTop = badgeBox!.y - coverBox!.y;

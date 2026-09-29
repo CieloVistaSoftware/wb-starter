@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #285: pre.js used to write ~15 inline style properties per code block via
@@ -8,10 +8,13 @@ import { test, expect } from '@playwright/test';
  * classes plus the handful of values that are genuinely per-instance
  * (measured sibling-control positions, per-line-number top offsets, an
  * explicit max-height value).
+ *
+ * #779 finished the job: those per-instance values are generated stylesheet
+ * rules now, so nothing pre.js builds carries a style attribute at all.
  */
 test.describe('pre.js code blocks have no static inline styles (#285)', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/?page=behaviors');
+    await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
     await page.waitForTimeout(2500);
   });
@@ -25,7 +28,7 @@ test.describe('pre.js code blocks have no static inline styles (#285)', () => {
     await expect(wrapper).not.toHaveAttribute('style', /.+/);
   });
 
-  test('header controls only carry the genuinely-dynamic `right` offset inline', async ({ page }) => {
+  test('header controls are placed by a generated rule, not an inline `right`', async ({ page }) => {
     const wrapper = page.locator('.x-pre-wrapper').filter({
       has: page.locator('.x-pre__copy, .x-pre__language, .x-pre__toggle'),
     }).first();
@@ -34,18 +37,18 @@ test.describe('pre.js code blocks have no static inline styles (#285)', () => {
     for (const sel of ['.x-pre__copy', '.x-pre__language', '.x-pre__toggle']) {
       const control = wrapper.locator(sel).first();
       if ((await control.count()) === 0) continue;
-      const style = await control.getAttribute('style');
-      if (style === null) continue; // no inline style at all is fine too
-      expect(style.trim(), `${sel} should only set right:…, got: ${style}`).toMatch(/^right:\s*[\d.]+px;?$/);
+      await expect(control, `${sel} must carry no style attribute (#779)`).not.toHaveAttribute('style', /.+/);
+      const right = await control.evaluate((el) => getComputedStyle(el).right);
+      expect(right, `${sel} should still be offset from the right edge`).toMatch(/^[\d.]+px$/);
     }
   });
 
-  test('line-number gutter divs only carry the genuinely-dynamic `top` offset inline', async ({ page }) => {
+  test('line-number gutter divs are placed by a generated rule, not an inline `top`', async ({ page }) => {
     const gutter = page.locator('.x-pre__line-numbers').first();
     await expect(gutter).toBeVisible();
     const firstNumber = gutter.locator('> div').first();
-    const style = await firstNumber.getAttribute('style');
-    expect(style, 'line number should have a top offset set').toMatch(/^top:\s*[\d.]+px;?$/);
+    await expect(firstNumber, 'line number should have been measured and placed').toHaveClass(/x-pre__line-number--placed/);
+    await expect(firstNumber, 'no style attribute (#779)').not.toHaveAttribute('style', /.+/);
   });
 
   test('code block still renders correctly: real background, monospace font, correct text', async ({ page }) => {

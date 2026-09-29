@@ -18,7 +18,7 @@
  * convention, so a src-less <audio> shown as illustrative text inside a
  * ```html fence is fine -- nothing loads it live).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -98,7 +98,7 @@ test.describe('Every <audio>/<audio> has a resolvable src (attribute or <source>
         offenders,
         `${rel} has audio element(s) with no resolvable src:\n  ` +
         offenders.join('\n  ') +
-        `\n\naudio.js throws "x-audio: no src provided" for these at runtime (#433) -- ` +
+        `\n\naudio.js throws ".x-audio: no src provided" for these at runtime (#433) -- ` +
         `add a src="..." attribute or a <source src="..."> child.`
       ).toEqual([]);
     });

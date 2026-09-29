@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #241 — frameworks.html code examples must be syntax-highlighted (theme colors)
@@ -74,7 +74,7 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
  * #324 / #460 — DEMOS-AND-DOCS-STANDARDS.md §1/§16/§25.
  *
  * HTMX needs no build step, so it's real, executable HTML and MUST use <div x-demo>
- * like any other behavior example (§25's own carve-out for what stays exempt).
+ * like any other component example (§25's own carve-out for what stays exempt).
  * The React/Vue/Svelte/Angular/SolidJS sections mount via framework-specific
  * script/compiler output that <div x-demo> can't represent as 1:1 source — they keep
  * the hand-rolled highlighted <pre> pattern (already covered by the #241 test
@@ -82,18 +82,18 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
  *
  * #460 now covers all five framework sections: React and Vue use CDN UMD builds;
  * Svelte and SolidJS compile client-side at runtime; Angular bootstraps a real
- * standalone behavior from its pinned browser ESM packages. None needs a repo
+ * standalone component from its pinned browser ESM packages. None needs a repo
  * build dependency, and each keeps its author-facing source block below the live
  * mount because compiled framework output is not 1:1 with that source.
  */
-test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)', () => {
+test.describe('frameworks demo: [x-demo] / build-step exception (§25, #324, #460)', () => {
   test('HTMX section renders as a real <div x-demo> (live control + matching source)', async ({ page }) => {
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
 
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
-    const demo = page.locator('x-demo').first();
+    const demo = page.locator('[x-demo]').first();
     await expect(demo).toBeVisible();
     await expect(demo.locator('.x-demo__grid')).toBeVisible({ timeout: 20000 });
     await expect(demo.locator('.x-demo__code, pre').first()).toBeVisible();
@@ -133,8 +133,8 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     await expect(page.locator('#vue-demo pre[language]')).toBeVisible();
 
     // Neither section is wrapped in <div x-demo> — that's the deliberate §25 exception.
-    expect(await page.locator('#react-demo x-demo').count()).toBe(0);
-    expect(await page.locator('#vue-demo x-demo').count()).toBe(0);
+    expect(await page.locator('#react-demo [x-demo]').count()).toBe(0);
+    expect(await page.locator('#vue-demo [x-demo]').count()).toBe(0);
   });
 
   test('Svelte section compiles client-side and renders live, interactively, with its real source shown (#460)', async ({ page }) => {
@@ -144,7 +144,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     const button = page.locator('#svelte-root button');
-    await expect(button, 'svelte/compiler (loaded from esm.sh) must compile and mount a real behavior').toBeVisible({ timeout: 15000 });
+    await expect(button, 'svelte/compiler (loaded from esm.sh) must compile and mount a real component').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('Svelte Button');
 
     // #591: clicking the button must also update a persistent, visible
@@ -175,7 +175,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
 
     // Not wrapped in <div x-demo> — compiled Svelte output isn't 1:1 with the
     // hand-authored .svelte-equivalent source shown below it.
-    expect(await page.locator('#svelte-demo x-demo').count()).toBe(0);
+    expect(await page.locator('#svelte-demo [x-demo]').count()).toBe(0);
 
     expect(errs, `no page errors while compiling/mounting the Svelte demo: ${errs.join(' | ')}`).toEqual([]);
   });
@@ -187,7 +187,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
 
     const button = page.locator('#solid-root button');
-    await expect(button, 'babel-plugin-jsx-dom-expressions (loaded from esm.sh via @babel/standalone) must compile and mount a real behavior').toBeVisible({ timeout: 15000 });
+    await expect(button, 'babel-plugin-jsx-dom-expressions (loaded from esm.sh via @babel/standalone) must compile and mount a real component').toBeVisible({ timeout: 15000 });
     await expect(button).toHaveText('SolidJS Button');
 
     // #591: clicking the button must also update a persistent, visible
@@ -213,12 +213,12 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
 
     // Not wrapped in <div x-demo> — compiled Solid output isn't 1:1 with the
     // hand-authored JSX source shown below it.
-    expect(await page.locator('#solid-demo x-demo').count()).toBe(0);
+    expect(await page.locator('#solid-demo [x-demo]').count()).toBe(0);
 
     expect(errs, `no page errors while compiling/mounting the SolidJS demo: ${errs.join(' | ')}`).toEqual([]);
   });
 
-  test('Angular section bootstraps a live standalone behavior from browser ESM packages (#460)', async ({ page }) => {
+  test('Angular section bootstraps a live standalone component from browser ESM packages (#460)', async ({ page }) => {
     const errs: string[] = [];
     page.on('pageerror', (e) => errs.push(String(e)));
 
@@ -228,7 +228,7 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     try {
       await expect(button).toBeVisible({ timeout: 20000 });
     } catch (error) {
-      throw new Error(`Angular must bootstrap and render a real behavior. ${error instanceof Error ? error.message : String(error)} Page errors: ${errs.join(' | ')}`);
+      throw new Error(`Angular must bootstrap and render a real component. ${error instanceof Error ? error.message : String(error)} Page errors: ${errs.join(' | ')}`);
     }
     await expect(button).toHaveText('Increment + WB Magic');
     await expect(page.locator('#angular-root h3')).toHaveText('Angular Count: 0');
@@ -241,6 +241,6 @@ test.describe('frameworks demo: x-demo / build-step exception (§25, #324, #460)
     await expect(page.locator('#angular-demo pre[language]')).toBeVisible();
 
     expect(errs, `no page errors while bootstrapping the Angular demo: ${errs.join(' | ')}`).toEqual([]);
-    expect(await page.locator('x-demo').count()).toBe(1); // HTMX only
+    expect(await page.locator('[x-demo]').count()).toBe(1); // HTMX only
   });
 });

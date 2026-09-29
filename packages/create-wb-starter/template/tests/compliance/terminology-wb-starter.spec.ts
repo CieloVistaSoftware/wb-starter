@@ -5,7 +5,7 @@
  * Any usage of "Web Behaviors (WB)" or "WB Framework" is forbidden.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

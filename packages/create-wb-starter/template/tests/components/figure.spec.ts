@@ -1,20 +1,20 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
-test.describe('Figure Behavior', () => {
+test.describe('Figure Component', () => {
   test('should render caption from caption attribute', async ({ page }: { page: Page }) => {
     await page.goto('index.html');
     await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('figure');
       el.id = 'test-figure-caption';
       el.setAttribute('x-figure', '');
       el.setAttribute('caption', 'Test Caption');
       const img = document.createElement('img');
-      img.src = '/images/placeholder.svg';
+      img.src = 'https://picsum.photos/200';
       el.appendChild(img);
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const figure = page.locator('#test-figure-caption');

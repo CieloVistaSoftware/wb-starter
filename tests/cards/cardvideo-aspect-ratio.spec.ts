@@ -38,7 +38,7 @@ const HARNESS = '/demos/test-harness.html';
  * A missing path 404s for real: server.js 404s anything naming a file.
  */
 const GOOD_VIDEO = '/demos/movie.mp4';
-const GOOD_IMAGE = '/demos/image.jpg';
+const GOOD_IMAGE = '/images/demo-image.jpg';
 const MISSING_VIDEO = '/demos/no-such-video-871.mp4';
 
 /** The five ratios demos/site/cards.html actually ships at #cardvideo-aspect-variants. */

@@ -103,7 +103,7 @@ the required `pre`:
 | 5 | Naming and Attributes → Tags and behavior attributes | `<span x-badge variant="success">` | `pre-wrap` |
 | 6 | Naming and Attributes → Tags and behavior attributes | `<button` (x-tooltip) | `pre-wrap` |
 | 7 | Naming and Attributes → Configuration attributes | `<article title="Hello" variant="glass" hoverable>` | `pre-wrap` |
-| 8 | Examples → Component with semantic children | `<div x-article>` | `pre-wrap` |
+| 8 | Examples → Component with semantic children | `<div x-as-article>` | `pre-wrap` |
 | 9 | Examples → Native element with an explicit enhancement | `<button` (x-ripple, submit) | `pre-wrap` |
 | 10 | Migration from Legacy Syntax (see incidental finding) | `<div` (x-card legacy example) | `pre-wrap` |
 

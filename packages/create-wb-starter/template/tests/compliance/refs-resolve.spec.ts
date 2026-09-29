@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -35,7 +35,7 @@ import { fileURLToPath } from 'url';
  *   - A `#fragment`-only href (same-page anchor) is NOT statically
  *     verified as a hard failure -- many target ids are generated at
  *     RUNTIME (mdhtml.js's heading-id generation from markdown headings
- *     doesn't exist in the raw .md source; JS-built behavior internals
+ *     doesn't exist in the raw .md source; JS-built component internals
  *     add ids after upgrade) and a static text scan would produce a wall
  *     of false positives. It's still worth surfacing as a signal, so
  *     fragment-only hrefs with no statically-findable id/name are reported
@@ -52,6 +52,14 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const SKIP_DIRS = new Set([
   'node_modules', '.git', 'data', 'test-results', '.playwright-artifacts',
   'coverage', 'dist', 'out', '.claude',
+  // Generated audit reports are dated snapshots of a past scan: they quote the
+  // files and line numbers that existed when they ran, so a link inside one is
+  // a historical citation, not a live reference. docs/audits/X-USAGE-AUDIT.md
+  // ("Date: 1/5/2026", "Scan Target: docs/**/*.md") cites
+  // docs/architecture/WBVIEWS.md, which was correct then and was deleted with
+  // the wb-views subsystem (#876). Rewriting the citation would falsify the
+  // record; leaving it fails a link check that is meant to catch live rot.
+  'audits',
 ]);
 
 function collectFiles(dir: string, exts: string[], acc: string[] = []): string[] {
@@ -71,7 +79,7 @@ function filesToCheck(): string[] {
   for (const root of ['demos', 'pages', 'public', 'docs']) {
     collectFiles(path.join(ROOT, root), root === 'docs' ? ['.md'] : ['.html'], acc);
   }
-  for (const name of ['README.md', 'CONTRIBUTING.md']) {
+  for (const name of ['README.md', '.github/CONTRIBUTING.md']) {
     const p = path.join(ROOT, name);
     if (fs.existsSync(p)) acc.push(p);
   }

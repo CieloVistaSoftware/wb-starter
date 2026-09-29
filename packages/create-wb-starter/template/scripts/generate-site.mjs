@@ -6,17 +6,17 @@
  *
  * Site Schema Format:
  *   {
- *     "title": "WB Behavior Library",
+ *     "title": "WB Component Library",
  *     "outputDir": "demos/site",          // where HTML goes
  *     "defaults": "x-page-defaults",     // $extends for all pages
  *     "generateIndex": true,              // create index.html with links
  *     "pages": [
  *       {
  *         "id": "cards",
- *         "title": "Card Behaviors",
+ *         "title": "Card Components",
  *         "description": "All card variants",
  *         "icon": "🃏",
- *         "behaviors": ["card", "cardbutton", ...],   // auto-showcase these
+ *         "components": ["card", "cardbutton", ...],   // auto-showcase these
  *         "columns": 3
  *       },
  *       {
@@ -51,6 +51,31 @@ function loadJSON(path) {
   return JSON.parse(readFileSync(resolve(path), 'utf-8'));
 }
 
+/**
+ * A stand-in value for a required prop that declares no `default`.
+ *
+ * Prose is the right answer for most props -- `message="Sample message"`
+ * reads as a label and renders as one. It is the WRONG answer for a prop
+ * whose value gets FETCHED: `image="Sample image"` is not a broken link, it
+ * is a string that was never meant to reach the network, and the behavior
+ * dutifully requests it and throws. That accounted for 38 of the 67 uncaught
+ * errors on demos/site/cards.html (#838) -- enough on its own to blow the
+ * "fewer than 10 errors" budget in site-generation.spec.ts.
+ *
+ * Local, not picsum.photos: a demo page that needs the network to render
+ * without errors cannot be asserted on offline or in CI.
+ */
+const URL_VALUED_PROPS = /^(image|background|src|avatar|poster|thumbnail|cover)$/i;
+const PLACEHOLDER_IMAGE = '/images/dachshund-puppy-image-960x540.jpg';
+const PLACEHOLDER_LOGO = '/images/wb.png';
+
+function samplePropValue(propName, propDef) {
+  if (propDef && propDef.default) return propDef.default;
+  if (/^logo$/i.test(propName)) return PLACEHOLDER_LOGO;
+  if (URL_VALUED_PROPS.test(propName)) return PLACEHOLDER_IMAGE;
+  return `Sample ${propName}`;
+}
+
 function camelToKebab(str) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
@@ -78,7 +103,7 @@ function findSchema(name) {
   return null;
 }
 
-// ─── Generate sections for a single behavior (same logic as auto-showcase) ───
+// ─── Generate sections for a single component (same logic as auto-showcase) ───
 
 // Every generated instance needs SOME children, regardless of whether its
 // behavior self-generates content (avatar/badge/chip clear+rebuild
@@ -104,24 +129,44 @@ function findSchema(name) {
 // (Children)"), body content should be genuinely distinct copy, not an
 // echo of the attributes -- e.g. `<div x-alert variant="warning"><strong>
 // Warning:</strong> This is the alert content.</div>`. A generator
-// can't hand-write per-behavior prose, but it can stay non-empty (still
+// can't hand-write per-component prose, but it can stay non-empty (still
 // solving the original 0-height problem) without parroting the attrs.
-function placeholderChildren(schema) {
-  const label = (schema.title || schema.schemaFor || 'behavior').toLowerCase();
+function placeholderChildren(schema, host) {
+  // A <table> cannot hold text: the parser foster-parents it OUT, in front of
+  // the table, leaving an empty 0x0 <table> -- every table demo on
+  // content.html rendered as a blank box with its sentence floating above.
+  // Tables get rows instead, enough for sortable/filterable/paginated to act on.
+  if (host === 'table') return TABLE_SAMPLE;
+  // tabs() builds one tab per CHILD ELEMENT and does nothing for bare text
+  // (no children -> early return), so the generic sentence left every tabs
+  // demo on layout.html unbuilt: no tab buttons, and active-tab/variant/size/
+  // vertical had nothing to act on. Several panels also make active-tab="1"
+  // demonstrable at all.
+  if (schema.schemaFor === 'tabs') return TABS_SAMPLE;
+  const label = (schema.title || schema.schemaFor || 'component').toLowerCase();
   return `This is example ${label} content.`;
 }
 
-// #490: behaviors whose resting render is a CLOSED trigger -- the
+const TABS_SAMPLE = '<div tab-title="Overview">This is the overview panel.</div>'
+  + '<div tab-title="Details">This is the details panel.</div>'
+  + '<div tab-title="Settings">This is the settings panel.</div>';
+
+const TABLE_SAMPLE = '<thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead>'
+  + '<tbody><tr><td>Ada Lovelace</td><td>Engineer</td><td>Active</td></tr>'
+  + '<tr><td>Grace Hopper</td><td>Admiral</td><td>Active</td></tr>'
+  + '<tr><td>Alan Turing</td><td>Researcher</td><td>Away</td></tr></tbody>';
+
+// #490: components whose resting render is a CLOSED trigger -- the
 // position/variant-differentiated panel only exists after a click
 // (src/wb-viewmodels/overlay.js show(), dialog.js, dropdown.js). With the
 // generic shared placeholder above, every demo box on a showcase page is
 // pixel-identical at rest (John, live: "There is no difference in these
-// three elements, why?"). For these behaviors the children text doubles as
+// three elements, why?"). For these components the children text doubles as
 // the trigger's visible label AND the panel body, so echo the instance's
 // own attrs (e.g. "position=left") to make each box legible without
 // clicking it. This is the documented exception to #413's "don't parrot the
-// attrs" rule: #413 assumed the behavior's resting render already shows
-// its difference, which is true for every normally-visible behavior but
+// attrs" rule: #413 assumed the component's resting render already shows
+// its difference, which is true for every normally-visible component but
 // definitionally false for a closed overlay trigger.
 const TRIGGER_COMPONENTS = new Set(['dialog', 'drawer', 'dropdown', 'popover', 'offcanvas', 'sheet']);
 
@@ -137,10 +182,44 @@ const DEMO_EXTRA_ATTRS = {
   dropdown: { items: 'Profile,Settings,Logout' }
 };
 
-// Build one demo instance: attr-echo children for closed-trigger behaviors
+// Build one demo instance: attr-echo children for closed-trigger components
 // (#490), generic placeholder for everything else (#413), plus any
 // functional extra attrs (which never override the showcased attrs and
 // never appear in the label).
+
+/**
+ * element -> behavior, read from src/core/tag-map.js's nativeMap. Read rather
+ * than duplicated: a copied table drifts from the registry silently, and this
+ * decides whether a demo carries its behavior attribute at all.
+ */
+const NATIVE_MAP = (() => {
+  try {
+    // This module imports NAMED exports from fs/path -- there is no `fs`
+    // namespace here. Calling fs.readFileSync threw, the catch swallowed it,
+    // NATIVE_MAP came back {} and every lookup failed, so EVERY demo got an
+    // attribute -- including <button x-button>, the redundant form that can
+    // suppress the behavior (#746). A silent catch turned a typo into wrong
+    // output rather than a crash.
+    const src = readFileSync(resolve('src/core/tag-map.js'), 'utf8');
+    const i = src.indexOf('nativeMap');
+    const o = src.indexOf('{', i);
+    let d = 0, e = -1;
+    for (let k = o; k < src.length; k++) {
+      if (src[k] === '{') d++;
+      else if (src[k] === '}' && --d === 0) { e = k + 1; break; }
+    }
+    return new Function(`return ${src.slice(o, e)}`)();
+  } catch (err) {
+    // Fail loudly. An empty map does not degrade gracefully -- it changes
+    // what every generated demo says.
+    throw new Error(`could not read nativeMap from tag-map.js: ${err.message}`);
+  }
+})();
+
+if (!Object.keys(NATIVE_MAP).length) {
+  throw new Error('nativeMap parsed empty — refusing to generate demos that would all carry a redundant attribute');
+}
+
 function buildDemo(schema, tag, attrs) {
   const isTrigger = TRIGGER_COMPONENTS.has(schema.schemaFor);
   // Skip the values generatePageHtml's attr emitter drops (false/null/
@@ -149,14 +228,51 @@ function buildDemo(schema, tag, attrs) {
   const label = Object.entries(attrs)
     .filter(([, v]) => v !== false && v !== null && v !== undefined)
     .map(([k, v]) => `${k}=${v}`).join(', ');
-  const children = (isTrigger && label) ? label : placeholderChildren(schema);
   const extras = DEMO_EXTRA_ATTRS[schema.schemaFor] || {};
-  return { tag, attrs: { ...extras, ...attrs }, children };
+
+  // Components are gone, but "no component tag" does not mean "always a div".
+  // There are two kinds of behavior and the demo must show the right one:
+  //
+  //   decorates a semantic element  ->  <button variant="primary">
+  //   new capability                ->  <div x-ripple>
+  //
+  // Emitting `<div x-button …>` for the first kind teaches readers to reach
+  // for a div where <button> is the answer -- losing the implicit role, the
+  // keyboard behavior and the point of a semantic-first framework. Worse,
+  // for an element that auto-injects, the redundant attribute can suppress
+  // the behavior outright (#746), so the demo must omit it.
+  const declared = schema.semanticElement;
+  const semanticTag = typeof declared === 'string' ? declared : declared?.tagName;
+  // div/span are neutral hosts, not semantic elements -- naming one means the
+  // behavior is new capability, not decoration.
+  const isSemantic = semanticTag && semanticTag !== 'div' && semanticTag !== 'span';
+
+  // Naming a semantic element is NOT permission to drop the attribute. The
+  // attribute may only be omitted when that element auto-injects THIS
+  // behavior. cardimage declares semanticElement `article`, but nativeMap
+  // maps article -> the `article` behavior, so `<article src=…>` injects a
+  // plain article and the card never renders -- ~30 generated sections came
+  // out as bare placeholder text (#844).
+  //
+  // nativeMap is the authority for what a bare tag actually becomes.
+  const autoInjectsThis = isSemantic && NATIVE_MAP[semanticTag] === schema.schemaFor;
+
+  // A closed <dialog> is display:none -- as the demo's subject it renders
+  // nothing at all, so a showcase of dialog variants was a column of empty
+  // boxes (overlays.html). A trigger component's resting render must be its
+  // TRIGGER (#490), and dialog.js's trigger mode is x-dialog on any element
+  // other than <dialog>: a <button> is the semantic one.
+  const dialogTrigger = isTrigger && isSemantic && semanticTag === 'dialog';
+  const host = dialogTrigger ? 'button' : (isSemantic ? semanticTag : tag);
+  const behavior = (autoInjectsThis && !dialogTrigger) ? {} : { [`x-${schema.schemaFor}`]: true };
+  const children = (isTrigger && label) ? label : placeholderChildren(schema, host);
+
+  return { tag: host, attrs: { ...behavior, ...extras, ...attrs }, children };
 }
 
 function generateComponentSections(schema) {
   const sections = [];
-  const tag = `wb-${schema.schemaFor}`;
+  const tag = 'div';   // was `wb-${schema.schemaFor}` -- components removed
   const props = schema.properties || {};
 
   // Matrix combinations
@@ -171,7 +287,7 @@ function generateComponentSections(schema) {
     const columns = demos.length <= 2 ? demos.length : demos.length <= 4 ? 2 : 3;
     sections.push({
       heading: `${schema.schemaFor} — Combinations`,
-      behavior: schema.schemaFor,
+      component: schema.schemaFor,
       tag,
       columns,
       demos
@@ -188,7 +304,7 @@ function generateComponentSections(schema) {
       const attrs = { [attrName]: val };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
+          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -204,7 +320,7 @@ function generateComponentSections(schema) {
       // tests/regression/drawer-path-b-content-position-variant.spec.ts's
       // #drawer-variant-variants). Ids are API; headings are copy.
       id: slugify(`${schema.schemaFor}-${attrName}-variants`),
-      behavior: schema.schemaFor,
+      component: schema.schemaFor,
       tag,
       columns,
       demos
@@ -220,7 +336,7 @@ function generateComponentSections(schema) {
       const attrs = { [camelToKebab(propName)]: true };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = rv.default || `Sample ${rk}`;
+          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -233,7 +349,7 @@ function generateComponentSections(schema) {
       // shorter heading that matches the one-word style used elsewhere
       // ("Variants").
       heading: `Toggles`,
-      behavior: schema.schemaFor,
+      component: schema.schemaFor,
       tag,
       columns,
       demos
@@ -247,13 +363,13 @@ function generateComponentSections(schema) {
       if (propDef.default !== undefined && propDef.default !== '' && propDef.default !== false) {
         defaultAttrs[camelToKebab(propName)] = propDef.default;
       } else if (propDef.required) {
-        defaultAttrs[camelToKebab(propName)] = propDef.default || `Sample ${propName}`;
+        defaultAttrs[camelToKebab(propName)] = samplePropValue(propName, propDef);
       }
     }
     if (Object.keys(defaultAttrs).length > 0) {
       sections.push({
         heading: `${schema.schemaFor} — Defaults`,
-        behavior: schema.schemaFor,
+        component: schema.schemaFor,
         tag,
         columns: 1,
         demos: [buildDemo(schema, tag, defaultAttrs)]
@@ -270,7 +386,15 @@ function deduplicateSections(sections) {
   const seen = new Set();
   for (const section of sections) {
     section.demos = section.demos.filter(demo => {
-      const key = JSON.stringify({ tag: demo.tag, attrs: demo.attrs });
+      // Key on what is RENDERED, not on the attrs object: generatePageHtml
+      // drops false/null/undefined attributes, so snow's matrix combo
+      // { repeat: false } and the empty combo {} were different keys that
+      // emitted the byte-identical <div x-snow> -- the same demo twice on
+      // effects.html (#657).
+      const rendered = Object.fromEntries(
+        Object.entries(demo.attrs).filter(([, v]) => v !== false && v !== null && v !== undefined)
+      );
+      const key = JSON.stringify({ tag: demo.tag, attrs: rendered });
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
@@ -279,13 +403,13 @@ function deduplicateSections(sections) {
   return sections.filter(s => s.demos.length > 0);
 }
 
-// ─── Build a multi-behavior page schema ───
+// ─── Build a multi-component page schema ───
 
 function buildMultiComponentPage(pageDef, defaults) {
   const allSections = [];
   const componentResults = [];
 
-  for (const componentName of (pageDef.behaviors || [])) {
+  for (const componentName of (pageDef.components || [])) {
     const schema = findSchema(componentName);
     if (!schema) {
       console.warn(`  ⚠️ Schema not found: ${componentName} — skipping`);
@@ -302,10 +426,10 @@ function buildMultiComponentPage(pageDef, defaults) {
       demos: demoCount
     });
 
-    // Add a behavior separator heading
+    // Add a component separator heading
     const icon = schema._metadata?.icon || '📦';
     if (sections.length > 0) {
-      // Prefix the first section heading with the behavior name
+      // Prefix the first section heading with the component name
       sections[0].heading = `${icon} ${schema.title || schema.schemaFor}`;
     }
     allSections.push(...sections);
@@ -330,7 +454,7 @@ function buildMultiComponentPage(pageDef, defaults) {
 
   const pageSchema = {
     title: pageDef.title,
-    description: pageDef.description || `Showcase for: ${(pageDef.behaviors || []).join(', ')}`,
+    description: pageDef.description || `Showcase for: ${(pageDef.components || []).join(', ')}`,
     schemaFor: pageDef.id,
     page: {
       lang: 'en',
@@ -352,7 +476,7 @@ function buildMultiComponentPage(pageDef, defaults) {
       content: `${pageDef.icon || '📦'} ${pageDef.title}`,
       subtitle: {
         tag: 'p',
-        content: pageDef.description || `Showcasing ${(pageDef.behaviors || []).length} behaviors`
+        content: pageDef.description || `Showcasing ${(pageDef.components || []).length} components`
       }
     },
     sections: deduplicated
@@ -407,7 +531,7 @@ function generateIndexHtml(siteSchema, pageResults) {
   const totalPages = pageResults.filter(p => p.status === 'ok').length;
   const totalComponents = pageResults.reduce((s, p) => s + (p.componentCount || 0), 0);
   const totalDemos = pageResults.reduce((s, p) => s + (p.totalDemos || 0), 0);
-  lines.push(`    <div class="site-stats">${totalPages} pages · ${totalComponents} behaviors · ${totalDemos} demos</div>`);
+  lines.push(`    <div class="site-stats">${totalPages} pages · ${totalComponents} components · ${totalDemos} demos</div>`);
 
   lines.push('    <div class="page-grid">');
   for (const page of pageResults) {
@@ -418,7 +542,7 @@ function generateIndexHtml(siteSchema, pageResults) {
     if (page.description) {
       lines.push(`          <p>${page.description}</p>`);
     }
-    lines.push(`          <span class="stats">${page.componentCount || 0} behaviors · ${page.sectionCount || 0} sections · ${page.totalDemos || 0} demos</span>`);
+    lines.push(`          <span class="stats">${page.componentCount || 0} components · ${page.sectionCount || 0} sections · ${page.totalDemos || 0} demos</span>`);
     lines.push('        </a>');
     lines.push('      </div>');
   }
@@ -432,6 +556,10 @@ function generateIndexHtml(siteSchema, pageResults) {
   lines.push('    await WB.init({ autoInject: true });');
   lines.push('    await WB.scan(document.body, { eager: true });');
   lines.push(`    console.log('${siteSchema.title} index initialized');`);
+  // Same readiness flag every generated page sets (see the page template
+  // below): the index never had it, so demos-site-page-padding.spec.ts waited
+  // out its whole timeout on index.html alone.
+  lines.push('    window.__WB_DEMO_INITIALIZED__ = true;');
   lines.push('  </script>');
 
   lines.push('</body>');
@@ -462,7 +590,7 @@ function generatePageHtml(pageSchema) {
   lines.push('</head>');
   lines.push('');
   // #274/live report: was a bare <body> -- these standalone pages aren't
-  // routed through the .site/.site__body app shell (see behaviors.html),
+  // routed through the .site/.site__body app shell (see components.html),
   // so with no page-level padding class their content sat flush against
   // the viewport edge (headings, code blocks, everything at x=0). site.css
   // already declares `.demo-page` for exactly this; it just never got
@@ -487,7 +615,7 @@ function generatePageHtml(pageSchema) {
     const seenIds = new Set();
     for (let i = 0; i < pageSchema.sections.length; i++) {
       const section = pageSchema.sections[i];
-      let sectionId = section.id || slugify(section.behavior ? `${section.behavior}-${section.heading}` : section.heading);
+      let sectionId = section.id || slugify(section.component ? `${section.component}-${section.heading}` : section.heading);
       if (seenIds.has(sectionId)) sectionId = `${sectionId}-${i}`;
       seenIds.add(sectionId);
       lines.push(`  <!-- ${i + 1}. ${section.heading} -->`);
@@ -525,7 +653,7 @@ function generatePageHtml(pageSchema) {
       if (demos.length > 1) {
         // §2 "one code sample per rendered element (strict 1:1)": a section
         // sweeping several differently-configured instances of the same
-        // behavior (enum variants, boolean toggles, matrix combinations)
+        // component (enum variants, boolean toggles, matrix combinations)
         // must not bundle them all under one shared <div x-demo> code sample --
         // that's the exact "permutation matrix" anti-pattern §2 forbids. One
         // <div x-demo> per instance instead, each with its own code sample.
@@ -616,8 +744,8 @@ for (const pageDef of (siteSchema.pages || [])) {
   const pageId = pageDef.id;
   console.log(`\n─── Page: ${pageDef.icon || '📦'} ${pageDef.title} (${pageId}) ───`);
 
-  // Option A: Behaviors list → auto-generate multi-behavior page
-  if (pageDef.behaviors && pageDef.behaviors.length > 0) {
+  // Option A: Components list → auto-generate multi-component page
+  if (pageDef.components && pageDef.components.length > 0) {
     const { pageSchema, componentResults } = buildMultiComponentPage(pageDef, siteSchema.defaults);
 
     const foundCount = componentResults.filter(c => c.status === 'ok').length;
@@ -625,7 +753,7 @@ for (const pageDef of (siteSchema.pages || [])) {
     const sectionCount = pageSchema.sections.length;
     const totalDemos = pageSchema.sections.reduce((s, sec) => s + (sec.demos?.length || 0), 0);
 
-    console.log(`  Behaviors: ${foundCount} found, ${missingCount} missing`);
+    console.log(`  Components: ${foundCount} found, ${missingCount} missing`);
     console.log(`  Sections: ${sectionCount}, Demos: ${totalDemos}`);
 
     if (missingCount > 0) {
@@ -645,7 +773,7 @@ for (const pageDef of (siteSchema.pages || [])) {
         componentCount: foundCount,
         sectionCount,
         totalDemos,
-        behaviors: componentResults
+        components: componentResults
       });
       continue;
     }
@@ -663,7 +791,7 @@ for (const pageDef of (siteSchema.pages || [])) {
         componentCount: foundCount,
         sectionCount,
         totalDemos,
-        behaviors: componentResults
+        components: componentResults
       });
       continue;
     }
@@ -694,7 +822,7 @@ for (const pageDef of (siteSchema.pages || [])) {
       componentCount: foundCount,
       sectionCount,
       totalDemos,
-      behaviors: componentResults
+      components: componentResults
     });
   }
   // Option B: Reference an existing page schema
@@ -751,7 +879,7 @@ for (const pageDef of (siteSchema.pages || [])) {
     }
   }
   else {
-    console.warn(`  ⚠️ Page "${pageId}" has no behaviors or schema — skipping`);
+    console.warn(`  ⚠️ Page "${pageId}" has no components or schema — skipping`);
     pageResults.push({ id: pageId, title: pageDef.title, status: 'skipped' });
   }
 }
@@ -796,7 +924,7 @@ console.log(`\n═════════════════════�
 console.log(`  🌐 Site Generation Complete`);
 console.log(`  Pages: ${okCount}/${siteSchema.pages?.length || 0} generated`);
 if (errCount > 0) console.log(`  Errors: ${errCount}`);
-console.log(`  Behaviors: ${result.summary.totalComponents}`);
+console.log(`  Components: ${result.summary.totalComponents}`);
 console.log(`  Sections: ${result.summary.totalSections}`);
 console.log(`  Demos: ${result.summary.totalDemos}`);
 console.log(`  Time: ${elapsed}s`);

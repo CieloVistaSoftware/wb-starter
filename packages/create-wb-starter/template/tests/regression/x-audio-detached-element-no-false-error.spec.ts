@@ -19,7 +19,7 @@
  * broken src on the CURRENT, still-attached element must still throw --
  * covered separately by x-audio-error-on-broken-src.spec.ts.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test('a detached (superseded) <audio> element\'s late error event does not throw', async ({ page }) => {
   const pageErrors: string[] = [];
@@ -33,11 +33,14 @@ test('a detached (superseded) <audio> element\'s late error event does not throw
 
   const result = await page.evaluate(async () => {
     const container = document.createElement('div');
-    container.innerHTML = '<audio src="/demos/sample.wav"></audio>';
+    // <div x-audio>: this was <x-audio>, and the tag-to-attribute migration made it
+    // a bare <audio> -- which the harness (autoInject off) never enhances and
+    // which, being its own media element, has no inner <audio> to find.
+    container.innerHTML = '<div x-audio src="/demos/sample.wav"></div>';
     document.body.appendChild(container);
-    (window as any).WB.scan(container);
+    await (window as any).WB.scan(container, { eager: true });
 
-    const host = container.querySelector('x-audio')!;
+    const host = container.querySelector('[x-audio]')!;
     const waitForAudioEl = async () => {
       for (let i = 0; i < 40; i++) {
         const el = host.querySelector('audio');
@@ -50,7 +53,7 @@ test('a detached (superseded) <audio> element\'s late error event does not throw
     if (!oldAudioEl) return { replaced: false, oldStillAttached: false, noOldEl: true };
 
     // Re-run the audio() viewmodel directly on the SAME host -- this is what
-    // a lazy rebuild/re-init path does (WB.scan() itself dedupes
+    // a lazy rebuild/re-init path does (await WB.scan() itself dedupes
     // already-processed elements, so it won't trigger a second pass; the
     // underlying behavior function has no such guard).
     const mod = await import('/src/wb-viewmodels/semantics/audio.js');
@@ -71,6 +74,10 @@ test('a detached (superseded) <audio> element\'s late error event does not throw
   expect(result.replaced, 'expected re-scan to replace audioEl (the condition this bug needs)').toBe(true);
   expect(result.oldStillAttached, 'expected the old audioEl to be detached after re-scan').toBe(false);
 
-  const falsePositive = pageErrors.find((e) => e.includes('x-audio') && e.includes('sample.wav'));
+  // audio.js's errors begin "x-audio:" (the behavior's token). This filter
+  // read '.x-audio' -- a class-selector spelling no message contains -- so
+  // it could never match: a real error went unseen and a false positive
+  // would have passed unnoticed.
+  const falsePositive = pageErrors.find((e) => e.includes('x-audio:') && e.includes('sample.wav'));
   expect(falsePositive, `a detached element's error must not throw, got: ${JSON.stringify(pageErrors)}`).toBeFalsy();
 });

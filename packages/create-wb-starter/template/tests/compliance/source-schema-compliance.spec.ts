@@ -4,7 +4,7 @@
  * Validates JS source code matches schema requirements.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import {
@@ -13,14 +13,14 @@ import {
 } from '../base';
 
 // Schemas that don't have JS functions -- these document/describe the
-// SYSTEM rather than a single behavioral behavior, so they can never have
+// SYSTEM rather than a single behavioral component, so they can never have
 // a matching `export function <behavior>()` (#344 triage):
 //   - button: no dedicated JS function (native <button> + attribute
 //     behaviors handle it)
-//   - css-oop: documents CSS architecture rules, not a behavior
+//   - css-oop: documents CSS architecture rules, not a component
 //   - behaviors: "Master schema defining all behavior metadata" -- meta,
 //     documents the behavior SYSTEM itself, same as css-oop
-//   - home-page: schemaType "page" -- composes other behaviors (cardhero,
+//   - home-page: schemaType "page" -- composes other components (cardhero,
 //     cardstats, etc.) via $layout; the page has no behavior of its own
 const NON_FUNCTIONAL_SCHEMAS = ['button', 'css-oop', 'behaviors', 'home-page'];
 
@@ -36,6 +36,8 @@ const FUNCTION_NAME_MAP: Record<string, string> = {
   'switch': 'switchInput',
   'fix-card': 'fixCard',
   'drawer-layout': 'drawerLayout',
+  // semantics/dialog.js: `export { dialog as modal }` -- x-modal IS dialog().
+  'modal': 'dialog',
 };
 
 function getAllJsSource(): string {
@@ -215,16 +217,23 @@ test.describe('Source-Schema: Required Children', () => {
 
 test.describe('Source-Schema: Card Border Compliance', () => {
   
+  // #779: this used to demand `element.style.border =` in card.js -- an
+  // inline style, which the no-inline-styles rule forbids outright. It only
+  // ever passed on cardpricing's `featured` write, which had nothing to do
+  // with the shared composition it claimed to check. What it was guarding --
+  // every card gets a border -- is card.css's shared card rule, so that is
+  // what is asserted now.
   test('shared card composition sets border', () => {
-    const cardJsPath = path.join(PATHS.behaviorsJs, 'card.js');
-    if (!fileExists(cardJsPath)) {
+    const cardCssPath = path.join(ROOT, 'src', 'styles', 'behaviors', 'card.css');
+    if (!fileExists(cardCssPath)) {
       test.skip();
       return;
     }
-    
-    const cardJs = readFile(cardJsPath);
-    const hasBorder = cardJs.includes("element.style.border =") || cardJs.includes("element.style.border=");
-    expect(hasBorder, 'shared card composition MUST set element.style.border').toBe(true);
+
+    const cardCss = readFile(cardCssPath);
+    const sharedRule = cardCss.match(/\.x-card,\s*\narticle,[^{]*\{([^}]*)\}/);
+    expect(sharedRule, 'card.css must declare the shared `.x-card, article, …` rule').not.toBeNull();
+    expect(sharedRule![1], 'the shared card rule MUST set a border').toMatch(/\bborder:\s*1px solid/);
   });
 });
 
@@ -247,9 +256,36 @@ test.describe('Source-Schema: Event Compliance', () => {
       }
     }
     
-    if (issues.length > 0) {
-      console.log('Event dispatch issues (may be in helper functions):', issues.slice(0, 5).join('\n'));
-    }
+    // #863: this collected `issues` and console.log()ged the first 5, never
+    // asserting -- the schema/implementation event contract was not enforced at
+    // all.
+    //
+    // Turning it on measured 71 issues across 84 schema-declared events. Two
+    // distinct causes, both real:
+    //   - ~29 are dispatched, but from a helper inside the module rather than
+    //     from the top-level exported function extractFunction() slices out
+    //     (e.g. wb:toast:show lives in feedback.js outside toast()). These are
+    //     limitations of the static slice, not defects.
+    //   - 42 of the 84 declared events appear NOWHERE in src/wb-viewmodels at
+    //     all -- schema declares an event no code ever fires (audio:*, dialog:*,
+    //     drawer:*, select:*, table:*, tooltip:*, confetti:*, fireworks:*,
+    //     snow:*, ...). Those are genuine schema/implementation drift.
+    //
+    // Ratcheted at the measured count rather than asserted at zero, because
+    // fixing 42 event contracts is its own piece of work and an unsatisfiable
+    // gate gets bypassed. THIS CEILING MUST ONLY COME DOWN.
+    //
+    // 71 -> 56: extractFunction() (tests/base.ts) ended every
+    // `function x(element, options = {})` at the `{}` default parameter, so
+    // those behaviors were checked as empty bodies. Measured again once it
+    // sliced the real body.
+    const EVENT_DISPATCH_BASELINE = 56;
+    expect(
+      issues.length,
+      `${issues.length} schema events are not dispatched by their behavior `
+      + `function, above the ${EVENT_DISPATCH_BASELINE} ceiling. Either dispatch `
+      + `the event or remove it from the schema:\n${issues.join('\n')}`,
+    ).toBeLessThanOrEqual(EVENT_DISPATCH_BASELINE);
   });
 });
 

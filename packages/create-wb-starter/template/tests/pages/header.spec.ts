@@ -1,12 +1,12 @@
 /**
  * Header Behavior Tests
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('Header Behavior', () => {
   
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/autoinject.html');
+    await page.goto('/demos/autoinject.html');
     await page.waitForTimeout(300);
   });
 
@@ -27,7 +27,9 @@ test.describe('Header Behavior', () => {
     // `.x-header` class -- header.css selects the tag directly. Its own
     // icon/title children (checked below) already prove header() enhanced
     // it; this just confirms the enhancement ran on the right element.
-    await expect(header).toHaveJSProperty('tagName', 'WB-HEADER');
+    // (Was 'WB-HEADER': the markup above was migrated from <wb-header> to a
+    // native <header>, but this assertion kept the old custom tag name.)
+    await expect(header).toHaveJSProperty('tagName', 'HEADER');
 
     const icon = header.locator('.x-header__icon');
     await expect(icon).toHaveText('📂');

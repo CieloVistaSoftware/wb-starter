@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 import { logPerfResult } from './perf-logger';
 
 test.describe('Resource Performance', () => {

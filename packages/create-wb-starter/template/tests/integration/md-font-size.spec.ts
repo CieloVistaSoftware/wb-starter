@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * All .md docs must render at a readable size on mobile — 1rem equivalent —

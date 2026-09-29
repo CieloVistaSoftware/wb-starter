@@ -1,0 +1,99 @@
+{
+  "$comment": "Lock permutations (#1106). Exhaustive: 9 x 2 = 18 cases.",
+  "parameters": {
+    "existing": {
+      "description": "What already holds the machine when a run arrives.",
+      "values": [
+        {
+          "id": "idle",
+          "edge": "min",
+          "setup": "nothing",
+          "blocksSuite": false,
+          "blocksSingle": false
+        },
+        {
+          "id": "suite-live",
+          "edge": null,
+          "setup": "suite lock, bound to a live pid",
+          "blocksSuite": true,
+          "blocksSingle": true
+        },
+        {
+          "id": "suite-dead",
+          "edge": "stale",
+          "setup": "suite lock, bound to a dead pid",
+          "blocksSuite": false,
+          "blocksSingle": false
+        },
+        {
+          "id": "suite-unbound-fresh",
+          "edge": "grace-inside",
+          "setup": "suite lock, pid null, claimed just now",
+          "blocksSuite": true,
+          "blocksSingle": true
+        },
+        {
+          "id": "suite-unbound-expired",
+          "edge": "grace-outside",
+          "setup": "suite lock, pid null, claimed past the grace",
+          "blocksSuite": false,
+          "blocksSingle": false
+        },
+        {
+          "id": "lock-corrupt",
+          "edge": "invalid",
+          "setup": "suite lock file holds non-JSON",
+          "blocksSuite": false,
+          "blocksSingle": false
+        },
+        {
+          "id": "single-one",
+          "edge": "cap-1",
+          "setup": "one live single slot",
+          "blocksSuite": true,
+          "blocksSingle": false
+        },
+        {
+          "id": "single-cap",
+          "edge": "max",
+          "setup": "every single slot live (cap)",
+          "blocksSuite": true,
+          "blocksSingle": true
+        },
+        {
+          "id": "single-dead",
+          "edge": "stale",
+          "setup": "one single slot, dead pid",
+          "blocksSuite": false,
+          "blocksSingle": false
+        }
+      ]
+    },
+    "arriving": {
+      "description": "The run that asks for the machine. The commit gate is a suite.",
+      "values": [
+        {
+          "id": "suite"
+        },
+        {
+          "id": "single"
+        }
+      ]
+    }
+  },
+  "oracle": {
+    "outcomes": {
+      "proceeds": "the run gets the machine now",
+      "notified": "the run is subscribed to the release and resumes when notified -- no polling, no sleep"
+    },
+    "rule": [
+      "One machine.",
+      "A suite needs it empty of live runs.",
+      "A single needs no live suite and a free slot.",
+      "Dead, expired or unreadable holders are not live runs.",
+      "A run that cannot proceed is notified on release; it never polls."
+    ],
+    "outcome": "(arriving === 'suite' ? existing.blocksSuite : existing.blocksSingle) ? 'notified' : 'proceeds'"
+  },
+  "maxParallelSingle": 2
+}

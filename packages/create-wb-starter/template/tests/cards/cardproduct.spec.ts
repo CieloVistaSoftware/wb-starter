@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Product Card (integration)', () => {
   test('should render all product properties', async ({ page }: { page: Page }) => {
@@ -7,11 +7,11 @@ test.describe('Product Card (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-product';
       el.setAttribute('x-cardproduct', '');
-      el.setAttribute('data-image', '/images/placeholder.svg');
+      el.setAttribute('data-image', 'https://picsum.photos/200/200');
       el.setAttribute('data-title', 'Test Product');
       el.setAttribute('data-price', '$99.99');
       el.setAttribute('data-original-price', '$149.99');
@@ -20,7 +20,7 @@ test.describe('Product Card (integration)', () => {
       el.setAttribute('data-reviews', '128');
       el.setAttribute('data-cta', 'Buy Now');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const card = page.locator('#test-product');
@@ -39,8 +39,10 @@ test.describe('Product Card (integration)', () => {
     const originalPrice = card.locator('.x-card__price-original');
     await expect(originalPrice).toHaveText('$149.99');
     
-    // Check badge is rendered
-    const badge = card.locator('.x-card__badge');
+    // Check badge is rendered. It is the <span> over the product image --
+    // a8a7362e stopped stamping .x-card__badge; card.css styles
+    // `figure > span` by tag and position instead.
+    const badge = card.locator(':scope > figure > span');
     await expect(badge).toHaveText('SALE');
     
     // Check rating stars exist
@@ -61,18 +63,18 @@ test.describe('Product Card (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-product-img';
       el.setAttribute('x-cardproduct', '');
-      el.setAttribute('data-image', '/images/placeholder.svg');
+      el.setAttribute('data-image', 'https://picsum.photos/200/200');
       el.setAttribute('data-title', 'Product With Image');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const img = page.locator('#test-product-img img');
     await expect(img).toBeVisible();
-    await expect(img).toHaveAttribute('src', '/images/placeholder.svg');
+    await expect(img).toHaveAttribute('src', 'https://picsum.photos/200/200');
   });
 });

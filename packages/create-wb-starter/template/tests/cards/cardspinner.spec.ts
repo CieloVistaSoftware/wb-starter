@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 test.describe('Spinner (integration)', () => {
   test('should render a spinner with animation', async ({ page }: { page: Page }) => {
@@ -7,13 +7,13 @@ test.describe('Spinner (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner';
       el.setAttribute('x-spinner', '');
-      el.setAttribute('data-color', 'primary');
+      el.setAttribute('variant', 'primary');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     // The spinner behavior adds x-spinner class
@@ -24,10 +24,10 @@ test.describe('Spinner (integration)', () => {
     const innerDiv = spinner.locator('div');
     await expect(innerDiv).toBeVisible();
     
-    // Verify animation is applied (x-spin)
-    const style = await innerDiv.getAttribute('style');
-    expect(style).toContain('animation');
-    expect(style).toContain('x-spin');
+    // Verify animation is applied (x-spin). Computed, not the style
+    // attribute: the ring's animation lives in the spinner stylesheet now
+    // (Law 9, #370) -- the inline style it used to be read from is gone.
+    await expect(innerDiv).toHaveCSS('animation-name', 'x-spin');
   });
 
   test('should have border-radius for circular spinner', async ({ page }: { page: Page }) => {
@@ -36,12 +36,12 @@ test.describe('Spinner (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner-2';
       el.setAttribute('x-spinner', '');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const innerDiv = page.locator('#test-spinner-2 div');
@@ -54,20 +54,26 @@ test.describe('Spinner (integration)', () => {
     await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage);
     await page.waitForTimeout(100);
     
-    await page.evaluate(() => {
+    await page.evaluate(async () => {
       const el = document.createElement('div');
       el.id = 'test-spinner-3';
       el.setAttribute('x-spinner', '');
-      el.setAttribute('data-color', 'primary');
+      el.setAttribute('variant', 'primary');
       document.body.appendChild(el);
-      (window as any).WB.scan();
+      await (window as any).WB.scan();
     });
     
     const innerDiv = page.locator('#test-spinner-3 div');
-    const style = await innerDiv.getAttribute('style');
-    
-    // Should have border and border-top-color for the spinning effect
-    expect(style).toContain('border');
-    expect(style).toContain('border-top-color');
+    await expect(innerDiv).toBeVisible();
+
+    // Should have a border whose top edge is a different colour -- that
+    // contrast IS the spinning effect. Computed styles: the border moved from
+    // an inline style into CSS (Law 9, #370).
+    const b = await innerDiv.evaluate((el) => {
+      const cs = getComputedStyle(el);
+      return { width: parseFloat(cs.borderTopWidth), top: cs.borderTopColor, right: cs.borderRightColor };
+    });
+    expect(b.width).toBeGreaterThan(0);
+    expect(b.top).not.toBe(b.right);
   });
 });

@@ -25,7 +25,7 @@
  * pasted.
  */
 
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /** Noise that is about the test environment, not the example. */
 const IGNORE = [

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * cardbutton()'s primary/secondary buttons had zero click handling when no
@@ -10,16 +10,16 @@ import { test, expect } from '@playwright/test';
  * cardnotification/cardproduct/cardexpandable/etc in card.js -- so a real
  * consumer has something to listen for.
  */
-test.describe('x-cardbutton click dispatch (cards demo page)', () => {
+test.describe('[x-cardbutton] click dispatch (cards demo page)', () => {
   test('clicking a primary/secondary button with no href dispatches a bubbling event', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/cards.html');
-    await page.waitForSelector('x-cardbutton .x-card__btn--primary');
+    await page.goto('/demos/site/cards.html');
+    await page.waitForSelector('[x-cardbutton] .x-card__btn--primary');
 
     const result = await page.evaluate(() => {
       const btn = Array.from(document.querySelectorAll('.x-card__btn--primary'))
         .find((b) => b.textContent?.trim() === 'Confirm Delete');
       if (!btn) return { error: 'button not found' };
-      const card = btn.closest('x-cardbutton');
+      const card = btn.closest('[x-cardbutton]');
       let detail: unknown = null;
       card?.addEventListener('wb:cardbutton:primary', (e) => {
         detail = (e as CustomEvent).detail;
@@ -34,14 +34,14 @@ test.describe('x-cardbutton click dispatch (cards demo page)', () => {
   });
 
   test('a button with primaryHref renders as a real link, not a dead button', async ({ page }) => {
-    await page.goto('http://localhost:3000/demos/site/cards.html');
-    await page.waitForSelector('x-cardbutton');
+    await page.goto('/demos/site/cards.html');
+    await page.waitForSelector('[x-cardbutton]');
 
-    const hrefButtons = await page.locator('x-cardbutton .x-card__btn[href]').count();
+    const hrefButtons = await page.locator('[x-cardbutton] .x-card__btn[href]').count();
     // Not every cardbutton demo uses *Href, but at least confirm the branch
     // path renders an <a> (not a <button>) whenever it does.
     if (hrefButtons > 0) {
-      const tag = await page.locator('x-cardbutton .x-card__btn[href]').first().evaluate((el) => el.tagName);
+      const tag = await page.locator('[x-cardbutton] .x-card__btn[href]').first().evaluate((el) => el.tagName);
       expect(tag).toBe('A');
     }
   });

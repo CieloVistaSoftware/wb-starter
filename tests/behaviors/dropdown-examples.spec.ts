@@ -192,16 +192,33 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
         const menu = root.querySelector('.x-dropdown__menu') as HTMLElement;
         const trigger = (root.querySelector('.x-dropdown__trigger') || root) as HTMLElement;
 
-        const closedHeight = Math.round(stage.getBoundingClientRect().height);
+        const closedRect = stage.getBoundingClientRect();
+        const closedHeight = Math.round(closedRect.height);
+        const closedBottom = Math.round(closedRect.bottom);
         trigger.click();
         for (let i = 0; i < 30 && getComputedStyle(menu).display === 'none'; i++) await sleep(50);
-        await sleep(200);   // let the stage's rAF fit run
+        // Wait for the stage's fit to have RUN, not a fixed 200ms: on a loaded
+        // Windows runner that sleep ended before the rAF fit (4.0.6 CI). The fit
+        // is done when the open menu ends inside the stage and two frames agree.
+        const frame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
+        let last = -1;
+        for (let i = 0; i < 120; i++) {
+          await frame();
+          const h = Math.round(stage.getBoundingClientRect().height);
+          const inside = menu.getBoundingClientRect().bottom <= stage.getBoundingClientRect().bottom + 1;
+          if (inside && h === last) break;
+          last = h;
+        }
 
         const sb = stage.getBoundingClientRect();
         const mb = menu.getBoundingClientRect();
         const cb = code.getBoundingClientRect();
         return {
           closedHeight,
+          // Whether the open menu, left alone, would have run past the closed
+          // stage. Only then must the stage grow: at 375px the closed stage was
+          // already 637px on Windows CI and the menu fit inside it.
+          needsGrowth: Math.round(mb.bottom) > closedBottom,
           openHeight: Math.round(sb.height),
           menuBottom: Math.round(mb.bottom),
           stageBottom: Math.round(sb.bottom),
@@ -209,7 +226,9 @@ test.describe('#703 — an opened menu stays inside the stage', () => {
         };
       });
 
-      expect(geo.openHeight, 'the stage must grow to hold the open menu').toBeGreaterThan(geo.closedHeight);
+      if (geo.needsGrowth) {
+        expect(geo.openHeight, 'the stage must grow to hold the open menu').toBeGreaterThan(geo.closedHeight);
+      }
       expect(geo.menuBottom, 'the menu must end inside the stage (Standard §15)')
         .toBeLessThanOrEqual(geo.stageBottom + 1);
       expect(geo.menuBottom, 'the menu must not reach the code panel')

@@ -1,0 +1,3 @@
+/* esm.sh - is-reference@3.0.3 */
+function r(e,t){if(e.type==="MemberExpression")return!e.computed&&r(e.object,e);if(e.type!=="Identifier")return!1;switch(t?.type){case"MemberExpression":return t.computed||e===t.object;case"MethodDefinition":return t.computed;case"MetaProperty":return t.meta===e;case"PropertyDefinition":return t.computed||e===t.value;case"Property":return t.computed||e===t.value;case"ExportSpecifier":case"ImportSpecifier":return e===t.local;case"LabeledStatement":case"BreakStatement":case"ContinueStatement":return!1;default:return!0}}export{r as default};
+//# sourceMappingURL=is-reference.mjs.map

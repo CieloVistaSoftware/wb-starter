@@ -27,7 +27,7 @@
  * isolated page. blank.html has no scripts, so nothing calls WB.init()
  * before this test's own explicit call does.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 async function renderWithWB(page, coreModule: string, initOptions: string) {
   await page.goto('/tests/fixtures/blank.html');

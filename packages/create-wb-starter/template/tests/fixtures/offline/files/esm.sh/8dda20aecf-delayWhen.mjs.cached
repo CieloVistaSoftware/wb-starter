@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/delayWhen */
+import{concat as i}from"../observable/concat.mjs";import{take as p}from"./take.mjs";import{ignoreElements as t}from"./ignoreElements.mjs";import{mapTo as f}from"./mapTo.mjs";import{mergeMap as n}from"./mergeMap.mjs";import{innerFrom as g}from"../observable/innerFrom.mjs";function a(m,o){return o?r=>i(o.pipe(p(1),t()),r.pipe(a(m))):n((r,e)=>g(m(r,e)).pipe(p(1),f(r)))}export{a as delayWhen};
+//# sourceMappingURL=delayWhen.mjs.map

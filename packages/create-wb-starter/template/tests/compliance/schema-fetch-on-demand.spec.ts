@@ -7,7 +7,7 @@
  * capture of the home page showed 81 unique schema.json requests. The home
  * page only uses a handful of wb-* tags (x-audio, x-card, x-cardhero,
  * x-cardnotification, x-cardstats, x-container, x-grid, x-row,
- * x-stack), and a separate on-demand path (WB.scan() -> processSchema() ->
+ * x-stack), and a separate on-demand path (await WB.scan() -> processSchema() ->
  * loadSchemaFile()) already fetches exactly what's needed per tag actually
  * present. The bulk fetch is pure duplication of that working path.
  *
@@ -17,7 +17,7 @@
  * WB.init()) actually changes network behavior, not just internal registry
  * state.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 test.describe('#312 — schema.json is fetched on-demand, not eagerly for every schema', () => {
   test('home page fetches only a handful of schema.json files, not all of them', async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
       }
     });
 
-    await page.goto('http://localhost:3000/?page=home');
+    await page.goto('/?page=home');
     await page.waitForSelector('#mainPage-home', { timeout: 20000 });
     // Let any deferred/lazy schema fetches (scroll-triggered, MutationObserver-driven) settle.
     await page.waitForTimeout(1500);
@@ -37,7 +37,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
 
     // Sanity: total schema files available in the registry, so the assertion
     // below is provably "way less than everything," not a magic number.
-    const indexRes = await page.request.get('http://localhost:3000/src/wb-models/index.json');
+    const indexRes = await page.request.get('/src/wb-models/index.json');
     const index = await indexRes.json();
     const totalSchemaCount = (index.schemas || []).length;
 
@@ -49,7 +49,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
   });
 
   // Follow-up to the on-demand fix above: the home page has several
-  // instances of the same behavior (multiple <article>-family tags), and
+  // instances of the same component (multiple <article>-family tags), and
   // each independently discovers on scan that the shared schema isn't
   // registered yet — none of them see it as registered until their OWN
   // fetch resolves, so they each started their own redundant fetch. Live
@@ -66,7 +66,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
       }
     });
 
-    await page.goto('http://localhost:3000/?page=home');
+    await page.goto('/?page=home');
     await page.waitForSelector('#mainPage-home', { timeout: 20000 });
     await page.waitForTimeout(1500);
 

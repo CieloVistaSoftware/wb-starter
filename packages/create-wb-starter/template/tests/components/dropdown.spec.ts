@@ -3,7 +3,7 @@
  * Auto-generated baseline — verifies render + no console errors
  * Source: src/wb-viewmodels/dropdown.js
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -31,8 +31,8 @@ async function injectAndScan(page: Page, html: string) {
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -71,7 +71,7 @@ test.describe('dropdown Behavior', () => {
     const html = "<div x-dropdown>Basic dropdown content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container x-dropdown, #test-container x-dropdown').first();
+    const el = page.locator('#test-container [x-dropdown]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {
@@ -86,19 +86,19 @@ test.describe('dropdown Behavior', () => {
 
   test('matrix combo 1: position=bottom-start', async ({ page }) => {
     await injectAndScan(page, "<div x-dropdown position=\"bottom-start\">Test</div>");
-    const el = page.locator('#test-container x-dropdown, #test-container x-dropdown').first();
+    const el = page.locator('#test-container [x-dropdown]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 2: position=bottom-end', async ({ page }) => {
     await injectAndScan(page, "<div x-dropdown position=\"bottom-end\">Test</div>");
-    const el = page.locator('#test-container x-dropdown, #test-container x-dropdown').first();
+    const el = page.locator('#test-container [x-dropdown]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 
   test('matrix combo 3: trigger=hover', async ({ page }) => {
     await injectAndScan(page, "<div x-dropdown trigger=\"hover\">Test</div>");
-    const el = page.locator('#test-container x-dropdown, #test-container x-dropdown').first();
+    const el = page.locator('#test-container [x-dropdown]').first();
     await expect(el).toBeVisible({ timeout: 5000 });
   });
 });

@@ -46,7 +46,7 @@ test('docs use plain v3 attributes, not data-* (audit)', () => {
   const files = [
     ...mdFiles(path.join(ROOT, 'docs')),
     ...mdFiles(path.join(ROOT, 'demos')),
-    ...['CONTRIBUTING.md', 'README.md']
+    ...['.github/CONTRIBUTING.md', 'README.md']
       .map((f) => path.join(ROOT, f))
       .filter((f) => fs.existsSync(f)),
   ];

@@ -1,0 +1,3 @@
+/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/takeWhile */
+import{operate as m}from"../util/lift.mjs";import{createOperatorSubscriber as a}from"./OperatorSubscriber.mjs";function l(o,n=!1){return m((p,e)=>{let i=0;p.subscribe(a(e,t=>{let r=o(t,i++);(r||n)&&e.next(t),!r&&e.complete()}))})}export{l as takeWhile};
+//# sourceMappingURL=takeWhile.mjs.map

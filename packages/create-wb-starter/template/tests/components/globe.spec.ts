@@ -3,7 +3,7 @@
  * Auto-generated baseline — verifies render + no console errors
  * Source: src/wb-viewmodels/globe.js
  */
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -31,8 +31,8 @@ async function injectAndScan(page: Page, html: string) {
     document.body.appendChild(container);
   }, html);
   
-  await page.evaluate(() => {
-    (window as any).WB.scan(document.getElementById('test-container'));
+  await page.evaluate(async () => {
+    await (window as any).WB.scan(document.getElementById('test-container'));
   });
   
   await page.waitForTimeout(500);
@@ -68,7 +68,7 @@ test.describe('globe Behavior', () => {
     const html = "<div x-globe>Basic globe content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container x-globe, #test-container x-globe').first();
+    const el = page.locator('#test-container [x-globe]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

@@ -184,7 +184,7 @@ if (tree.behind) {
 // reload, see the old page -- repeatedly, which reads as "still broken" and is
 // indistinguishable from a fix that did not work. Any HTML entry point that
 // loads local assets needs the stamp, not just the two SPA shells.
-const ENTRY_HTML = ['index.html', 'project-index.html', ...standaloneEntries()];
+const ENTRY_HTML = ['index.html', ...standaloneEntries()];
 
 function standaloneEntries() {
   const out = [];

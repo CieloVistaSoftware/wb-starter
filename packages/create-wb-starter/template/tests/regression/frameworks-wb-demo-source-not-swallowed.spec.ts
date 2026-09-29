@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * John, live report -- demos/frameworks.html's HTMX section's <div x-demo> code
@@ -23,23 +23,23 @@ import { test, expect } from '@playwright/test';
  * mentions a tag name doesn't get counted as the tag itself.
  */
 
-test.describe('demos/frameworks.html: x-demo code panel is bounded to its own section, not the rest of the page', () => {
+test.describe('demos/frameworks.html: [x-demo] code panel is bounded to its own section, not the rest of the page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/demos/frameworks.html');
     // The HTMX section's <div x-demo> is the only one on the page -- wait for
     // its code panel to finish rendering (demo.js builds `.x-demo__code`
     // asynchronously after measuring/formatting the extracted source).
-    await page.waitForSelector('x-demo .x-demo__code', { timeout: 30000 });
+    await page.waitForSelector('[x-demo] .x-demo__code', { timeout: 30000 });
   });
 
-  test('the HTMX x-demo code panel contains only the HTMX section\'s own markup', async ({ page }) => {
-    const codePanel = page.locator('x-demo .x-demo__code').first();
+  test('the HTMX [x-demo] code panel contains only the HTMX section\'s own markup', async ({ page }) => {
+    const codePanel = page.locator('[x-demo] .x-demo__code').first();
     await expect(codePanel).toContainText('hx-post');
     await expect(codePanel).toContainText('Click Me (HTMX)');
   });
 
-  test('the HTMX x-demo code panel does NOT swallow other frameworks\' markup', async ({ page }) => {
-    const codeText = await page.locator('x-demo .x-demo__code').first().innerText();
+  test('the HTMX [x-demo] code panel does NOT swallow other frameworks\' markup', async ({ page }) => {
+    const codeText = await page.locator('[x-demo] .x-demo__code').first().innerText();
 
     // None of these should ever appear in the HTMX section's own source --
     // if any do, extractTagBlock() has regressed to over-capturing again.
@@ -61,8 +61,8 @@ test.describe('demos/frameworks.html: x-demo code panel is bounded to its own se
     }
   });
 
-  test('the HTMX x-demo code panel is a short, single-section block, not a multi-thousand-character dump', async ({ page }) => {
-    const codeText = await page.locator('x-demo .x-demo__code').first().innerText();
+  test('the HTMX [x-demo] code panel is a short, single-section block, not a multi-thousand-character dump', async ({ page }) => {
+    const codeText = await page.locator('[x-demo] .x-demo__code').first().innerText();
     // The real HTMX block is ~200 chars; the regressed bug produced a block
     // spanning 5 other framework sections (thousands of characters). A
     // generous 500-char ceiling catches the regression without being

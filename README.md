@@ -374,7 +374,7 @@ base, behaviors.
 - `npm run audit:page-fragments` — checks every page fragment survives being
   opened directly; takes `--dir <path>` so a downstream site can gate on it
 - Runbook and Playwright traces: `docs/testing-runbook.md`
-- Copy-paste commands and PowerShell notes: `NPXCOMMANDS.md`
+- Copy-paste commands and PowerShell notes: `docs/npx-commands.md`
 
 ---
 

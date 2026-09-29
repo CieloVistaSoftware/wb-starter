@@ -466,6 +466,10 @@
    .x-code--inline whatever order the two sheets load in. */
 code.harmony-formula {
   overflow-x: auto;
+  /* Its own nowrap, not only code.css's .x-code--inline: that class arrives
+     when the lazy code behavior runs, and until then the formula wrapped --
+     Windows CI read `white-space: normal` on 4.0.6 before the class landed. */
+  white-space: nowrap;
 }
 
 .harmony-themes {

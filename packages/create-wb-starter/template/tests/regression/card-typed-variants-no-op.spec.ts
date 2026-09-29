@@ -1,4 +1,4 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect, Page } from '../fixtures/offline';
 
 /**
  * cardBase() (card.js) reads `variant` directly off the element and adds a
@@ -28,7 +28,7 @@ async function inject(page: Page, html: string) {
     container.id = 'test-container';
     container.innerHTML = h;
     document.body.appendChild(container);
-    // WB.scan()'s default (non-eager) path defers wb-* custom elements to an
+    // await WB.scan()'s default (non-eager) path defers wb-* custom elements to an
     // IntersectionObserver and does not await it -- checking computed styles
     // right after scan() races that observer (~60ms lag, confirmed live via
     // manual trace). Not a CSS bug. Using the real (non-eager) path here and
@@ -38,18 +38,42 @@ async function inject(page: Page, html: string) {
     return Array.from(container.children).map(el => el.id).filter(Boolean);
   }, html);
 
-  // Poll for every injected element to have picked up its base x-card class
-  // before asserting on computed style -- the IntersectionObserver callback
-  // above fires asynchronously, so a fixed-instant check would be flaky.
+  // Poll for every injected element to have been UPGRADED before asserting on
+  // computed style -- the IntersectionObserver callback above fires
+  // asynchronously, so a fixed-instant check would be flaky.
+  //
+  // This used to wait for `.x-card`, which a8a7362e stopped injecting
+  // ("specificity replaces class injection"). Measured: a cardstats host
+  // carries `x-card--stats x-stats` and a plain `<div x-card>` carries NO class
+  // at all. So all seven tests spent 5s waiting for a class that never arrives
+  // and timed out in SETUP -- none of them ever reached the variant assertions
+  // they exist to make. A harness that cannot start reports the same red as a
+  // real defect, which is how this cluster stayed opaque.
+  //
+  // Wait for evidence of upgrade instead: a card behavior builds child
+  // structure (header/main/figure), and most also add their own x-* class.
   await page.waitForFunction(
-    (elementIds: string[]) => elementIds.every(id => document.getElementById(id)?.classList.contains('x-card')),
+    (elementIds: string[]) => elementIds.every((id) => {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      return el.children.length > 0 || /(^|\s)x-/.test(el.className || '');
+    }),
     ids,
     { timeout: 5000 }
   );
 }
 
 async function surface(page: Page, selector: string) {
-  return page.locator(selector).first().evaluate((el) => {
+  return page.locator(selector).first().evaluate(async (el) => {
+    // SETTLE BEFORE READING (#1106). card.css gives the host
+    // `transition: all 0.2s ease`, so reading computed style the moment the card
+    // is built samples a value in flight. Traced 2026-09-11: default, compact,
+    // large and minimal all read 1.13058px at the instant this used to measure,
+    // and 16px two seconds later — the same number for all four each time, and a
+    // different number every run (6.52px, 16px, 1.13px). Wait on each running
+    // animation's `finished` promise: the browser announces the settled value,
+    // no sleep and no guess at 0.2s.
+    await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)));
     const cs = getComputedStyle(el);
     return { background: cs.backgroundColor, border: cs.border, boxShadow: cs.boxShadow, padding: cs.padding };
   });
