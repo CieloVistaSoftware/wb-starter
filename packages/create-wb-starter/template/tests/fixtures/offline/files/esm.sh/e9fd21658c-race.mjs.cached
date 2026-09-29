@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/observable/race */
-import{Observable as f}from"../Observable.mjs";import{innerFrom as o}from"./innerFrom.mjs";import{argsOrArgArray as m}from"../util/argsOrArgArray.mjs";import{createOperatorSubscriber as p}from"../operators/OperatorSubscriber.mjs";function c(...r){return r=m(r),r.length===1?o(r[0]):new f(a(r))}function a(r){return i=>{let t=[];for(let e=0;t&&!i.closed&&e<r.length;e++)t.push(o(r[e]).subscribe(p(i,l=>{if(t){for(let n=0;n<t.length;n++)n!==e&&t[n].unsubscribe();t=null}i.next(l)})))}}export{c as race,a as raceInit};
-//# sourceMappingURL=race.mjs.map

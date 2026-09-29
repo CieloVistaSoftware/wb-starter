@@ -1,2 +1,0 @@
-/* esm.sh - locate-character@3.0.0 */
-export * from "/locate-character@3.0.0/es2022/locate-character.mjs";

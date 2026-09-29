@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/IdSelector */
-import{Hash as e,Delim as o}from"../../../tokenizer.mjs";var n="IdSelector",s={name:String};function a(){let t=this.tokenStart;return this.eat(e),{type:"IdSelector",loc:this.getLocation(t,this.tokenStart),name:this.substrToCursor(t+1)}}function i(t){this.token(o,"#"+t.name)}export{i as generate,n as name,a as parse,s as structure};
-//# sourceMappingURL=IdSelector.mjs.map

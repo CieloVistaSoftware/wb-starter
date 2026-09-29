@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/reduce */
-import{scanInternals as t}from"./scanInternals.mjs";import{operate as n}from"../util/lift.mjs";function m(r,e){return n(t(r,e,arguments.length>=2,!1,!0))}export{m as reduce};
-//# sourceMappingURL=reduce.mjs.map

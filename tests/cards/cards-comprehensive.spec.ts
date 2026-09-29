@@ -542,7 +542,7 @@ test.describe('Interactive Cards', () => {
         <div x-cardoverlay 
           title="Overlay Title"
           subtitle="Overlay subtitle"
-          image="/packages/create-wb-starter/template/images/wb.png"
+          image="/images/wb.png"
           height="300px">
         </div>
       `);

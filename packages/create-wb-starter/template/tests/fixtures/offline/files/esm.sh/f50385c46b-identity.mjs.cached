@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/identity */
-function n(t){return t}export{n as identity};
-//# sourceMappingURL=identity.mjs.map

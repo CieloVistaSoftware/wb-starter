@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/observable/of */
-import{popScheduler as e}from"../util/args.mjs";import{from as t}from"./from.mjs";function p(...o){let r=e(o);return t(o,r)}export{p as of};
-//# sourceMappingURL=of.mjs.map

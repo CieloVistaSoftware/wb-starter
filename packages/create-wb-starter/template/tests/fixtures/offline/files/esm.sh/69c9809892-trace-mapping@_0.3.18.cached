@@ -1,4 +1,0 @@
-/* esm.sh - @jridgewell/trace-mapping@0.3.31 */
-import "/@jridgewell/resolve-uri@^3.1.0?target=es2022";
-import "/@jridgewell/sourcemap-codec@^1.4.14?target=es2022";
-export * from "/@jridgewell/trace-mapping@0.3.31/es2022/trace-mapping.mjs";

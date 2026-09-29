@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/SelectorList */
-import{Comma as e}from"../../../tokenizer.mjs";var r="SelectorList",i="selector",n={children:[["Selector","Raw"]]};function s(){let t=this.createList();for(;!this.eof;){if(t.push(this.Selector()),this.tokenType===e){this.next();continue}break}return{type:"SelectorList",loc:this.getLocationFromList(t),children:t}}function c(t){this.children(t,()=>this.token(e,","))}export{c as generate,r as name,s as parse,n as structure,i as walkContext};
-//# sourceMappingURL=SelectorList.mjs.map

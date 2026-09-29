@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/throttleTime */
-import{asyncScheduler as m}from"../scheduler/async.mjs";import{throttle as i}from"./throttle.mjs";import{timer as n}from"../observable/timer.mjs";function u(t,r=m,o){let e=n(t,r);return i(()=>e,o)}export{u as throttleTime};
-//# sourceMappingURL=throttleTime.mjs.map

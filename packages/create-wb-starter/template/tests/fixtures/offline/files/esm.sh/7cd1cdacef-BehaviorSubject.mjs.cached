@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/BehaviorSubject */
-import{Subject as u}from"./Subject.mjs";var r=class extends u{constructor(t){super(),this._value=t}get value(){return this.getValue()}_subscribe(t){let e=super._subscribe(t);return!e.closed&&t.next(this._value),e}getValue(){let{hasError:t,thrownError:e,_value:s}=this;if(t)throw e;return this._throwIfClosed(),s}next(t){super.next(this._value=t)}};export{r as BehaviorSubject};
-//# sourceMappingURL=BehaviorSubject.mjs.map

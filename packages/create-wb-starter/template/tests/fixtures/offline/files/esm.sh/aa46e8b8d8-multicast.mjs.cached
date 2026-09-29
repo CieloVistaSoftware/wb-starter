@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/multicast */
-import{ConnectableObservable as m}from"../observable/ConnectableObservable.mjs";import{isFunction as t}from"../util/isFunction.mjs";import{connect as e}from"./connect.mjs";function a(n,o){let r=t(n)?n:()=>n;return t(o)?e(o,{connector:r}):i=>new m(i,r)}export{a as multicast};
-//# sourceMappingURL=multicast.mjs.map

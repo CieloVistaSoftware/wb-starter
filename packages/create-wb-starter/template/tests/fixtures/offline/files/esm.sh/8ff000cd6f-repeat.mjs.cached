@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/repeat */
-import{EMPTY as m}from"../observable/empty.mjs";import{operate as p}from"../util/lift.mjs";import{createOperatorSubscriber as b}from"./OperatorSubscriber.mjs";import{innerFrom as a}from"../observable/innerFrom.mjs";import{timer as y}from"../observable/timer.mjs";function T(t){let i=1/0,r;return t!=null&&(typeof t=="object"?{count:i=1/0,delay:r}=t:i=t),i<=0?()=>m:p((c,s)=>{let l=0,e,u=()=>{if(e?.unsubscribe(),e=null,r!=null){let o=typeof r=="number"?y(r):a(r(l)),f=b(s,()=>{f.unsubscribe(),n()});o.subscribe(f)}else n()},n=()=>{let o=!1;e=c.subscribe(b(s,void 0,()=>{++l<i?e?u():o=!0:s.complete()})),o&&u()};n()})}export{T as repeat};
-//# sourceMappingURL=repeat.mjs.map

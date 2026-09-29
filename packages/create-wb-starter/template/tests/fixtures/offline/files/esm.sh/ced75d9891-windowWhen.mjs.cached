@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/windowWhen */
-import{Subject as p}from"../Subject.mjs";import{operate as d}from"../util/lift.mjs";import{createOperatorSubscriber as l}from"./OperatorSubscriber.mjs";import{innerFrom as s}from"../observable/innerFrom.mjs";function w(c){return d((m,n)=>{let o,e,t=r=>{o.error(r),n.error(r)},i=()=>{e?.unsubscribe(),o?.complete(),o=new p,n.next(o.asObservable());let r;try{r=s(c())}catch(u){t(u);return}r.subscribe(e=l(n,i,i,t))};i(),m.subscribe(l(n,r=>o.next(r),()=>{o.complete(),n.complete()},t,()=>{e?.unsubscribe(),o=null}))})}export{w as windowWhen};
-//# sourceMappingURL=windowWhen.mjs.map

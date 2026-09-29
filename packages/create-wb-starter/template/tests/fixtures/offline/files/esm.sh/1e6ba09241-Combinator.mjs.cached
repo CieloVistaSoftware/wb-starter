@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/Combinator */
-import{WhiteSpace as o,Delim as r}from"../../../tokenizer.mjs";var n=43,s=47,a=62,i=126,h="Combinator",m={name:String};function p(){let t=this.tokenStart,e;switch(this.tokenType){case o:e=" ";break;case r:switch(this.charCodeAt(this.tokenStart)){case a:case n:case i:this.next();break;case s:this.next(),this.eatIdent("deep"),this.eatDelim(s);break;default:this.error("Combinator is expected")}e=this.substrToCursor(t);break}return{type:"Combinator",loc:this.getLocation(t,this.tokenStart),name:e}}function x(t){this.tokenize(t.name)}export{x as generate,h as name,p as parse,m as structure};
-//# sourceMappingURL=Combinator.mjs.map

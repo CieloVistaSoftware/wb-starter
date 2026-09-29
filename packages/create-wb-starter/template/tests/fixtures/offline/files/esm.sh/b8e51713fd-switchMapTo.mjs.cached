@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/switchMapTo */
-import{switchMap as t}from"./switchMap.mjs";import{isFunction as p}from"../util/isFunction.mjs";function f(o,i){return p(i)?t(()=>o,i):t(()=>o)}export{f as switchMapTo};
-//# sourceMappingURL=switchMapTo.mjs.map

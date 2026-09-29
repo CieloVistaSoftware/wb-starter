@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/timeoutWith */
-import{async as m}from"../scheduler/async.mjs";import{isValidDate as n}from"../util/isDate.mjs";import{timeout as p}from"./timeout.mjs";function y(o,e,t){let i,r,f;if(t=t??m,n(o)?i=o:typeof o=="number"&&(r=o),e)f=()=>e;else throw new TypeError("No observable provided to switch to");if(i==null&&r==null)throw new TypeError("No timeout provided.");return p({first:i,each:r,scheduler:t,with:f})}export{y as timeoutWith};
-//# sourceMappingURL=timeoutWith.mjs.map

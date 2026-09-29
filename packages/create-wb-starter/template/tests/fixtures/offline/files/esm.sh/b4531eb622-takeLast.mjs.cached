@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/takeLast */
-import{EMPTY as n}from"../observable/empty.mjs";import{operate as p}from"../util/lift.mjs";import{createOperatorSubscriber as m}from"./OperatorSubscriber.mjs";function u(o){return o<=0?()=>n:p((f,t)=>{let e=[];f.subscribe(m(t,r=>{e.push(r),o<e.length&&e.shift()},()=>{for(let r of e)t.next(r);t.complete()},void 0,()=>{e=null}))})}export{u as takeLast};
-//# sourceMappingURL=takeLast.mjs.map

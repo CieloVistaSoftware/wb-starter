@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/distinctUntilChanged */
-import{identity as l}from"../util/identity.mjs";import{operate as s}from"../util/lift.mjs";import{createOperatorSubscriber as d}from"./OperatorSubscriber.mjs";function b(e,t=l){return e=e??p,s((o,i)=>{let n,r=!0;o.subscribe(d(i,f=>{let u=t(f);(r||!e(n,u))&&(r=!1,n=u,i.next(f))}))})}function p(e,t){return e===t}export{b as distinctUntilChanged};
-//# sourceMappingURL=distinctUntilChanged.mjs.map

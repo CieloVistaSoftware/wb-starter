@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/pseudo/index */
-var t={parse(){return this.createSingleNodeList(this.SelectorList())}},s={parse(){return this.createSingleNodeList(this.Selector())}},i={parse(){return this.createSingleNodeList(this.Identifier())}},e={parse(){return this.createSingleNodeList(this.Nth())}},n={dir:i,has:t,lang:i,matches:t,is:t,"-moz-any":t,"-webkit-any":t,where:t,not:t,"nth-child":e,"nth-last-child":e,"nth-last-of-type":e,"nth-of-type":e,slotted:s,host:s,"host-context":s};export{n as default};
-//# sourceMappingURL=index.mjs.map

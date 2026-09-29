@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/MediaQuery */
-import{WhiteSpace as i,Comment as r,Ident as s,LeftParenthesis as n}from"../../../tokenizer.mjs";var c="MediaQuery",h={children:[["Identifier","MediaFeature","WhiteSpace"]]};function o(){let e=this.createList(),t=null;this.skipSC();e:for(;!this.eof;){switch(this.tokenType){case r:case i:this.next();continue;case s:t=this.Identifier();break;case n:t=this.MediaFeature();break;default:break e}e.push(t)}return t===null&&this.error("Identifier or parenthesis is expected"),{type:"MediaQuery",loc:this.getLocationFromList(e),children:e}}function d(e){this.children(e)}export{d as generate,c as name,o as parse,h as structure};
-//# sourceMappingURL=MediaQuery.mjs.map

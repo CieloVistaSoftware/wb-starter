@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/Comment */
-import{Comment as o}from"../../../tokenizer.mjs";var n=42,r=47,i="Comment",a={value:String};function c(){let t=this.tokenStart,e=this.tokenEnd;return this.eat(o),e-t+2>=2&&this.charCodeAt(e-2)===n&&this.charCodeAt(e-1)===r&&(e-=2),{type:"Comment",loc:this.getLocation(t,this.tokenStart),value:this.substring(t+2,e)}}function h(t){this.token(o,"/*"+t.value+"*/")}export{h as generate,i as name,c as parse,a as structure};
-//# sourceMappingURL=Comment.mjs.map

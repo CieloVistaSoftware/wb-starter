@@ -1,5 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/definition-syntax/SyntaxError */
-import{createCustomError as t}from"../utils/create-custom-error.mjs";function e(r,n,o){return Object.assign(t("SyntaxError",r),{input:n,offset:o,rawMessage:r,message:r+`
-  `+n+`
---`+new Array((o||n.length)+1).join("-")+"^"})}export{e as SyntaxError};
-//# sourceMappingURL=SyntaxError.mjs.map

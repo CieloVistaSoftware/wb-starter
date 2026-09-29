@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/args */
-import{isFunction as t}from"./isFunction.mjs";import{isScheduler as p}from"./isScheduler.mjs";function n(e){return e[e.length-1]}function i(e){return t(n(e))?e.pop():void 0}function f(e){return p(n(e))?e.pop():void 0}function c(e,o){return typeof n(e)=="number"?e.pop():o}export{c as popNumber,i as popResultSelector,f as popScheduler};
-//# sourceMappingURL=args.mjs.map

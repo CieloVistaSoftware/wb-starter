@@ -1,7 +1,0 @@
-/* esm.sh - code-red@1.0.4 */
-import "/@jridgewell/sourcemap-codec@^1.4.15?target=es2022";
-import "/acorn@^8.10.0?target=es2022";
-import "/estree-walker@^3.0.3?target=es2022";
-import "/node/buffer.mjs";
-import "/periscopic@^3.1.0?target=es2022";
-export * from "/code-red@1.0.4/es2022/code-red.mjs";

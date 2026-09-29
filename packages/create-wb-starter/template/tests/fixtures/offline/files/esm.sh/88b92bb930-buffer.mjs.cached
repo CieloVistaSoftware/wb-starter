@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/buffer */
-import{operate as p}from"../util/lift.mjs";import{noop as f}from"../util/noop.mjs";import{createOperatorSubscriber as e}from"./OperatorSubscriber.mjs";import{innerFrom as u}from"../observable/innerFrom.mjs";function x(n){return p((m,r)=>{let o=[];return m.subscribe(e(r,t=>o.push(t),()=>{r.next(o),r.complete()})),u(n).subscribe(e(r,()=>{let t=o;o=[],r.next(t)},f)),()=>{o=null}})}export{x as buffer};
-//# sourceMappingURL=buffer.mjs.map

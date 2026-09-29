@@ -1,3 +1,0 @@
-/* esm.sh - svelte@4.2.20 */
-import "/svelte@4.2.20/es2022/internal.mjs";
-export * from "/svelte@4.2.20/es2022/svelte.mjs";

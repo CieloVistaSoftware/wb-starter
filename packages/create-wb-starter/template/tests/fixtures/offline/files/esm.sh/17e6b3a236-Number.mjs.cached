@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/Number */
-import{Number as t}from"../../../tokenizer.mjs";var r="Number",n={value:String};function u(){return{type:"Number",loc:this.getLocation(this.tokenStart,this.tokenEnd),value:this.consume(t)}}function s(e){this.token(t,e.value)}export{s as generate,r as name,u as parse,n as structure};
-//# sourceMappingURL=Number.mjs.map

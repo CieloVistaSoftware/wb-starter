@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/timestamp */
-import{dateTimestampProvider as r}from"../scheduler/dateTimestampProvider.mjs";import{map as o}from"./map.mjs";function p(m=r){return o(t=>({value:t,timestamp:m.now()}))}export{p as timestamp};
-//# sourceMappingURL=timestamp.mjs.map

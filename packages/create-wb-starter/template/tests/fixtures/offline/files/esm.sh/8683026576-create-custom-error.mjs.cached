@@ -1,4 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/utils/create-custom-error */
-function c(r,t){let e=Object.create(SyntaxError.prototype),o=new Error;return Object.assign(e,{name:r,message:t,get stack(){return(o.stack||"").replace(/^(.+\n){1,3}/,`${r}: ${t}
-`)}})}export{c as createCustomError};
-//# sourceMappingURL=create-custom-error.mjs.map

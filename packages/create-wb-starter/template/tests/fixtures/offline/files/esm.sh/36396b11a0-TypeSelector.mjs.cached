@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/TypeSelector */
-import{Ident as s}from"../../../tokenizer.mjs";var r=42,i=124;function e(){this.tokenType!==s&&this.isDelim(r)===!1&&this.error("Identifier or asterisk is expected"),this.next()}var o="TypeSelector",c={name:String};function a(){let t=this.tokenStart;return this.isDelim(i)?(this.next(),e.call(this)):(e.call(this),this.isDelim(i)&&(this.next(),e.call(this))),{type:"TypeSelector",loc:this.getLocation(t,this.tokenStart),name:this.substrToCursor(t)}}function h(t){this.tokenize(t.name)}export{h as generate,o as name,a as parse,c as structure};
-//# sourceMappingURL=TypeSelector.mjs.map

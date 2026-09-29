@@ -290,6 +290,19 @@ The 50 themes are real palettes, light and dark — `dark`, `light`, `cyberpunk`
 
 ## Quick Start
 
+### A new website that uses wb-starter
+
+```powershell
+npm create wb-starter my-site
+cd my-site
+npm install
+npm start          # http://localhost:3000
+```
+
+You get a small site (`index.html`, `config/site.json`, `pages/`, `styles/`) that depends on the `wb-starter` package. `npm run build` writes `dist/` for any static host. See [packages/create-wb-starter](packages/create-wb-starter/README.md).
+
+### Working on wb-starter itself
+
 ```bash
 git clone https://github.com/CieloVistaSoftware/wb-starter.git
 cd wb-starter

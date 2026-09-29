@@ -1,3 +1,0 @@
-/* esm.sh - @babel/helper-string-parser@7.29.7 */
-export * from "/@babel/helper-string-parser@7.29.7/es2022/helper-string-parser.mjs";
-export { default } from "/@babel/helper-string-parser@7.29.7/es2022/helper-string-parser.mjs";

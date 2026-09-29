@@ -1,2 +1,0 @@
-/* esm.sh - acorn@8.18.0 */
-export * from "/acorn@8.18.0/es2022/acorn.mjs";

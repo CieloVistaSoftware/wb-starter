@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/tokenizer */
-import "/css-tree@2.3.1/es2022/lib/tokenizer/types.mjs";
-export * from "/css-tree@2.3.1/es2022/tokenizer.mjs";

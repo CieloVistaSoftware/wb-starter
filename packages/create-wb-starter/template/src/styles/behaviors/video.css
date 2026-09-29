@@ -1,9 +1,0 @@
-/**
- * x-video (#779)
- * -----------------------------------------------------------------------------
- * The <video> semantics/video.js builds inside a non-<video> host fills it.
- * It used to be written onto the element's style attribute.
- */
-.x-video .x-video__media {
-  width: 100%;
-}

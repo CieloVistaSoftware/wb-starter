@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/switchMap */
-import{innerFrom as f}from"../observable/innerFrom.mjs";import{operate as x}from"../util/lift.mjs";import{createOperatorSubscriber as p}from"./OperatorSubscriber.mjs";function C(c,o){return x((u,t)=>{let e=null,s=0,n=!1,r=()=>n&&!e&&t.complete();u.subscribe(p(t,i=>{e?.unsubscribe();let d=0,l=s++;f(c(i,l)).subscribe(e=p(t,m=>t.next(o?o(i,m,l,d++):m),()=>{e=null,r()}))},()=>{n=!0,r()}))})}export{C as switchMap};
-//# sourceMappingURL=switchMap.mjs.map

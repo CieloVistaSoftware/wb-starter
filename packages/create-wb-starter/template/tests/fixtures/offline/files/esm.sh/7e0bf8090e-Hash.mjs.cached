@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/Hash */
-import{Hash as e}from"../../../tokenizer.mjs";var r="XXX",s="Hash",n={value:String};function a(){let t=this.tokenStart;return this.eat(e),{type:"Hash",loc:this.getLocation(t,this.tokenStart),value:this.substrToCursor(t+1)}}function i(t){this.token(e,"#"+t.value)}export{i as generate,s as name,a as parse,n as structure,r as xxx};
-//# sourceMappingURL=Hash.mjs.map

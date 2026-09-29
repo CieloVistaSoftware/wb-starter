@@ -1,4 +1,0 @@
-/* esm.sh - parse5@7.3.0 */
-import "/entities@^6.0.0/decode?target=es2022";
-import "/entities@^6.0.0/escape?target=es2022";
-export * from "/parse5@7.3.0/es2022/parse5.mjs";

@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/CDO */
-import{CDO as t}from"../../../tokenizer.mjs";var r="CDO",n=[];function s(){let e=this.tokenStart;return this.eat(t),{type:"CDO",loc:this.getLocation(e,this.tokenStart)}}function i(){this.token(t,"<!--")}export{i as generate,r as name,s as parse,n as structure};
-//# sourceMappingURL=CDO.mjs.map

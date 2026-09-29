@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/bufferToggle */
-import{Subscription as b}from"../Subscription.mjs";import{operate as a}from"../util/lift.mjs";import{innerFrom as i}from"../observable/innerFrom.mjs";import{createOperatorSubscriber as f}from"./OperatorSubscriber.mjs";import{noop as m}from"../util/noop.mjs";import{arrRemove as h}from"../util/arrRemove.mjs";function v(p,u){return a((c,o)=>{let r=[];i(p).subscribe(f(o,e=>{let t=[];r.push(t);let n=new b,s=()=>{h(r,t),o.next(t),n.unsubscribe()};n.add(i(u(e)).subscribe(f(o,s,m)))},m)),c.subscribe(f(o,e=>{for(let t of r)t.push(e)},()=>{for(;r.length>0;)o.next(r.shift());o.complete()}))})}export{v as bufferToggle};
-//# sourceMappingURL=bufferToggle.mjs.map

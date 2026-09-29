@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/take */
-import{EMPTY as p}from"../observable/empty.mjs";import{operate as f}from"../util/lift.mjs";import{createOperatorSubscriber as i}from"./OperatorSubscriber.mjs";function x(e){return e<=0?()=>p:f((o,r)=>{let t=0;o.subscribe(i(r,m=>{++t<=e&&(r.next(m),e<=t&&r.complete())}))})}export{x as take};
-//# sourceMappingURL=take.mjs.map

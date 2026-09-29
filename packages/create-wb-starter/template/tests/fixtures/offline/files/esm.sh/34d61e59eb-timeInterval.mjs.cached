@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/timeInterval */
-import{asyncScheduler as s}from"../scheduler/async.mjs";import{operate as p}from"../util/lift.mjs";import{createOperatorSubscriber as l}from"./OperatorSubscriber.mjs";function w(r=s){return p((o,t)=>{let n=r.now();o.subscribe(l(t,c=>{let a=r.now(),i=a-n;n=a,t.next(new e(c,i))}))})}var e=class{constructor(o,t){this.value=o,this.interval=t}};export{e as TimeInterval,w as timeInterval};
-//# sourceMappingURL=timeInterval.mjs.map

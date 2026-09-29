@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/EmptyError */
-import{createErrorClass as e}from"./createErrorClass.mjs";var s=e(r=>function(){r(this),this.name="EmptyError",this.message="no elements in sequence"});export{s as EmptyError};
-//# sourceMappingURL=EmptyError.mjs.map

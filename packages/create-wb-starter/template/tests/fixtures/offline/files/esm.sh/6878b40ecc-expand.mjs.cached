@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/expand */
-import{operate as m}from"../util/lift.mjs";import{mergeInternals as p}from"./mergeInternals.mjs";function a(i,e=1/0,t){return e=(e||0)<1?1/0:e,m((f,n)=>p(f,n,i,e,void 0,!0,t))}export{a as expand};
-//# sourceMappingURL=expand.mjs.map

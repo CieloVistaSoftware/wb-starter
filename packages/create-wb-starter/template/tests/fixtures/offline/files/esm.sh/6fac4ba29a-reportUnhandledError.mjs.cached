@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/reportUnhandledError */
-import{config as t}from"../config.mjs";import{timeoutProvider as e}from"../scheduler/timeoutProvider.mjs";function m(o){e.setTimeout(()=>{let{onUnhandledError:r}=t;if(r)r(o);else throw o})}export{m as reportUnhandledError};
-//# sourceMappingURL=reportUnhandledError.mjs.map

@@ -1,3 +1,0 @@
-/* esm.sh - svelte@4.2.20/src/shared/utils/escape */
-var r=/[&"<]/g,i=/[&<]/g;function g(a,l=!1){let t=String(a),s=l?r:i;s.lastIndex=0;let c="",n=0;for(;s.test(t);){let e=s.lastIndex-1,o=t[e];c+=t.substring(n,e)+(o==="&"?"&amp;":o==='"'?"&quot;":"&lt;"),n=e+1}return c+t.substring(n)}export{g as escape};
-//# sourceMappingURL=escape.mjs.map

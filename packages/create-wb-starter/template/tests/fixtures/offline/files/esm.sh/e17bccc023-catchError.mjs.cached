@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/catchError */
-import{innerFrom as b}from"../observable/innerFrom.mjs";import{createOperatorSubscriber as o}from"./OperatorSubscriber.mjs";import{operate as s}from"../util/lift.mjs";function f(u){return s((i,r)=>{let e=null,t=!1,n;e=i.subscribe(o(r,void 0,void 0,l=>{n=b(u(l,f(u)(i))),e?(e.unsubscribe(),e=null,n.subscribe(r)):t=!0})),t&&(e.unsubscribe(),e=null,n.subscribe(r))})}export{f as catchError};
-//# sourceMappingURL=catchError.mjs.map

@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/observable/timer */
-import{Observable as m}from"../Observable.mjs";import{async as p}from"../scheduler/async.mjs";import{isScheduler as s}from"../util/isScheduler.mjs";import{isValidDate as a}from"../util/isDate.mjs";function w(o=0,t,n=p){let e=-1;return t!=null&&(s(t)?n=t:e=t),new m(f=>{let i=a(o)?+o-n.now():o;i<0&&(i=0);let l=0;return n.schedule(function(){f.closed||(f.next(l++),0<=e?this.schedule(void 0,e):f.complete())},i)})}export{w as timer};
-//# sourceMappingURL=timer.mjs.map

@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/throwIfEmpty */
-import{EmptyError as p}from"../util/EmptyError.mjs";import{operate as a}from"../util/lift.mjs";import{createOperatorSubscriber as f}from"./OperatorSubscriber.mjs";function i(e=n){return a((o,r)=>{let t=!1;o.subscribe(f(r,m=>{t=!0,r.next(m)},()=>t?r.complete():r.error(e())))})}function n(){return new p}export{i as throwIfEmpty};
-//# sourceMappingURL=throwIfEmpty.mjs.map

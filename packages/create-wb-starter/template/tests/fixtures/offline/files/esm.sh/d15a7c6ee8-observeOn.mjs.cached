@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/observeOn */
-import{executeSchedule as p}from"../util/executeSchedule.mjs";import{operate as n}from"../util/lift.mjs";import{createOperatorSubscriber as f}from"./OperatorSubscriber.mjs";function a(t,e=0){return n((r,o)=>{r.subscribe(f(o,m=>p(o,t,()=>o.next(m),e),()=>p(o,t,()=>o.complete(),e),m=>p(o,t,()=>o.error(m),e)))})}export{a as observeOn};
-//# sourceMappingURL=observeOn.mjs.map

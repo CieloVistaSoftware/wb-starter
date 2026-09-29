@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/tokenizer/types */
-var t=0,o=1,e=2,r=3,n=4,c=5,s=6,p=7,x=8,a=9,i=10,m=11,C=12,h=13,l=14,g=15,u=16,B=17,S=18,d=19,k=20,D=21,f=22,y=23,L=24,P=25;export{r as AtKeyword,s as BadString,x as BadUrl,g as CDC,l as CDO,u as Colon,S as Comma,P as Comment,a as Delim,C as Dimension,t as EOF,e as Function,n as Hash,o as Ident,y as LeftCurlyBracket,D as LeftParenthesis,d as LeftSquareBracket,i as Number,m as Percentage,L as RightCurlyBracket,f as RightParenthesis,k as RightSquareBracket,B as Semicolon,c as String,p as Url,h as WhiteSpace};
-//# sourceMappingURL=types.mjs.map

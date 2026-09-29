@@ -196,7 +196,7 @@ export default class WBSite {
         </main>
       </div>
       ${this.renderFooter()}
-      <div x-notes id="siteNotes" x-eager position="right"></div>
+      ${this.config.headerSettings?.displayNotesButton !== false ? '<div x-notes id="siteNotes" x-eager position="right"></div>' : ''}
     `;
     // The nav's configured width reaches site.css's var(--nav-width) through a
     // generated rule -- it used to be a style="" attribute in renderNav()'s
@@ -250,11 +250,15 @@ export default class WBSite {
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
+          <!-- The version badge, Playground and Notes are wb-starter's own
+               developer tools. A site built ON wb-starter (npm create
+               wb-starter, #813) turns them off in headerSettings; each
+               defaults to shown, so this site is unchanged. -->
           <!-- #821: a button, not a link. x-release clears caches and reloads;
                it navigates nowhere, so href="#" was only there to make an
                anchor clickable. An <a> announces as a link and promises
                navigation, and Enter/Space differ between the two. -->
-          <button type="button" class="header__version" id="headerVersion" x-ripple x-release></button>
+          ${headerSettings.displayVersionBadge !== false ? `<button type="button" class="header__version" id="headerVersion" x-ripple x-release></button>` : ''}
         </div>
         <div class="header__right" id="headerRight">
           ${headerSettings.displaySearchBar ? `
@@ -263,8 +267,8 @@ export default class WBSite {
             </div>
           ` : ''}
           <div x-themecontrol id="headerThemeControl"></div>
-          <a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>
-          <button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>
+          ${headerSettings.displayPlaygroundLink !== false ? `<a class="header__playground-btn" id="playgroundLink" href="demos/playground.html" target="_blank" rel="noopener" x-ripple title="Playground — paste HTML, see it render live" aria-label="Open the Playground">🧪</a>` : ''}
+          ${headerSettings.displayNotesButton !== false ? `<button class="header__notes-btn" id="notesToggle" x-ripple title="Toggle Notes" aria-label="Toggle Notes">📝</button>` : ''}
         </div>
       </header>
     `;

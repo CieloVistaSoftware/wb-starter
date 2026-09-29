@@ -1,3 +1,0 @@
-/* esm.sh - svelte@4.2.20/internal/disclose-version */
-import "/svelte@4.2.20/es2022/src/shared/version.mjs";
-export * from "/svelte@4.2.20/es2022/internal/disclose-version.mjs";

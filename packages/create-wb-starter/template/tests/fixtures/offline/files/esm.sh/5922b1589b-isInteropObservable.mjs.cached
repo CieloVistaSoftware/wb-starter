@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/util/isInteropObservable */
-import{observable as r}from"../symbol/observable.mjs";import{isFunction as e}from"./isFunction.mjs";function i(o){return e(o[r])}export{i as isInteropObservable};
-//# sourceMappingURL=isInteropObservable.mjs.map

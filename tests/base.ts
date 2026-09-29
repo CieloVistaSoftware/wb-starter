@@ -51,19 +51,11 @@ export const DATA_FILES = {
 // css-oop-compliance flagged its popup CSS for hardcoded colors that are
 // legitimate there (a browser-extension UI, not a themed component).
 //
-// packages/create-wb-starter/template (#543) is a machine-generated,
-// byte-for-byte copy of src/ (and pages/, demos/, etc.) produced by
-// packages/create-wb-starter/scripts/sync-template.mjs so the create-wb-starter
-// npm package ships a working scaffold -- it is not hand-authored CSS/HTML
-// subject to this project's own OOP conventions, same rationale as
-// x-overlay-ext above. Confirmed live: because it duplicates every file
-// under src/styles/, every compliance scan (including this file's own
-// `!important` count) was silently counting each real violation TWICE the
-// moment the create-wb-starter package was added, thereby doubling the
-// css-oop-compliance "minimal !important usage" total from 129 (achieved and
-// verified green pre-#543) to 273+ with zero new CSS actually written.
-// 'template' (singular) only ever matches this one directory in the repo --
-// the unrelated top-level `templates/` dir is plural and untouched.
+// packages/create-wb-starter/template is the new-site template (#813): a
+// small hand-written site whose pages hold placeholders like __SITE_NAME__
+// until the scaffolder fills them. It is tested as a scaffolded site by
+// tests/regression/create-wb-starter-new-site.spec.ts, not as pages of this
+// one. (It used to be a machine-generated copy of the whole repo, #543/#771.)
 export const EXCLUDE_DIRS = [
   'node_modules', '.git', '.claude', 'dist', 'build', 'coverage',
   'test-results', '.playwright-artifacts', 'x-overlay-ext', 'template'

@@ -1,5 +1,0 @@
-/* esm.sh - @angular/core@17.3.12 */
-import "/@angular/core@17.3.12/es2022/primitives/signals.mjs";
-import "/rxjs@^7.8.2/operators?target=es2022";
-import "/rxjs@^7.8.2?target=es2022";
-export * from "/@angular/core@17.3.12/es2022/core.mjs";

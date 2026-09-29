@@ -1,5 +1,0 @@
-/* esm.sh - @angular/platform-browser@17.3.12 */
-import "/@angular/common@17.3.12/es2022/common.mjs";
-import "/@angular/common@17.3.12/es2022/http.mjs";
-import "/@angular/core@17.3.12/es2022/core.mjs";
-export * from "/@angular/platform-browser@17.3.12/es2022/platform-browser.mjs";

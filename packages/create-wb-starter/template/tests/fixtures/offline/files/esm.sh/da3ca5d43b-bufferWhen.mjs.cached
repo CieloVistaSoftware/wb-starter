@@ -1,3 +1,0 @@
-/* esm.sh - rxjs@7.8.2/dist/esm/internal/operators/bufferWhen */
-import{operate as f}from"../util/lift.mjs";import{noop as p}from"../util/noop.mjs";import{createOperatorSubscriber as l}from"./OperatorSubscriber.mjs";import{innerFrom as m}from"../observable/innerFrom.mjs";function v(u){return f((i,e)=>{let o=null,n=null,t=()=>{n?.unsubscribe();let r=o;o=[],r&&e.next(r),m(u()).subscribe(n=l(e,t,p))};t(),i.subscribe(l(e,r=>o?.push(r),()=>{o&&e.next(o),e.complete()},void 0,()=>o=n=null))})}export{v as bufferWhen};
-//# sourceMappingURL=bufferWhen.mjs.map

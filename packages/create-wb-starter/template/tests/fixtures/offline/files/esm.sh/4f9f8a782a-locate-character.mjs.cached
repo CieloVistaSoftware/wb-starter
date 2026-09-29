@@ -1,4 +1,0 @@
-/* esm.sh - locate-character@3.0.0 */
-function g(e,r){return e.start<=r&&r<e.end}function s(e,r={}){let{offsetLine:o=0,offsetColumn:c=0}=r,i=0,a=e.split(`
-`).map((t,l)=>{let n=i+t.length+1,u={start:i,end:n,line:l};return i=n,u}),f=0;function d(t,l){if(typeof t=="string"&&(t=e.indexOf(t,l??0)),t===-1)return;let n=a[f],u=t>=n.end?1:-1;for(;n;){if(g(n,t))return{line:o+n.line,column:c+t-n.start,character:t};f+=u,n=a[f]}}return d}function m(e,r,o){return s(e,o)(r,o&&o.startIndex)}export{s as getLocator,m as locate};
-//# sourceMappingURL=locate-character.mjs.map

@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/Value */
-var n="Value",r={children:[[]]};function o(){let t=this.tokenStart,e=this.readSequence(this.scope.Value);return{type:"Value",loc:this.getLocation(t,this.tokenStart),children:e}}function c(t){this.children(t)}export{c as generate,n as name,o as parse,r as structure};
-//# sourceMappingURL=Value.mjs.map

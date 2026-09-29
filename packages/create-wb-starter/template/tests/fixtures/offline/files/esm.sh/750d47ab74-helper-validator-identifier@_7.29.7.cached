@@ -1,3 +1,0 @@
-/* esm.sh - @babel/helper-validator-identifier@7.29.7 */
-export * from "/@babel/helper-validator-identifier@7.29.7/es2022/helper-validator-identifier.mjs";
-export { default } from "/@babel/helper-validator-identifier@7.29.7/es2022/helper-validator-identifier.mjs";

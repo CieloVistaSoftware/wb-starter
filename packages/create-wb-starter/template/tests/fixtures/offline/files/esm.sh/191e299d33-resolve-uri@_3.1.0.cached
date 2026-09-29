@@ -1,3 +1,0 @@
-/* esm.sh - @jridgewell/resolve-uri@3.1.2 */
-export * from "/@jridgewell/resolve-uri@3.1.2/es2022/resolve-uri.mjs";
-export { default } from "/@jridgewell/resolve-uri@3.1.2/es2022/resolve-uri.mjs";

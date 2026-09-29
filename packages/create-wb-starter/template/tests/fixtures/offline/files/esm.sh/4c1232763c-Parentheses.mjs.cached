@@ -1,3 +1,0 @@
-/* esm.sh - css-tree@2.3.1/lib/syntax/node/Parentheses */
-import{LeftParenthesis as s,RightParenthesis as n}from"../../../tokenizer.mjs";var h="Parentheses",a={children:[[]]};function c(t,r){let i=this.tokenStart,e=null;return this.eat(s),e=t.call(this,r),this.eof||this.eat(n),{type:"Parentheses",loc:this.getLocation(i,this.tokenStart),children:e}}function l(t){this.token(s,"("),this.children(t),this.token(n,")")}export{l as generate,h as name,c as parse,a as structure};
-//# sourceMappingURL=Parentheses.mjs.map
