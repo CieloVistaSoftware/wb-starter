@@ -43,6 +43,19 @@ const MEDIA_DIR = join(OFFLINE_DIR, 'media');
 
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1', '0.0.0.0']);
 
+/**
+ * The deployed origin, when `npm run test:smoke:deployed` points
+ * tests/compliance/site-smoke.spec.ts at it (SMOKE_BASE_URL). That spec is the
+ * site under test in that mode, not a third party, so it goes to the real
+ * network like localhost does. Without this the fixture aborted every
+ * navigation (ERR_BLOCKED_BY_CLIENT) and the deploy check reported the live
+ * site "broken" while it served 200. Unset in every other run, so the offline
+ * guarantee is unchanged.
+ */
+const SITE_UNDER_TEST_ORIGIN = (() => {
+  try { return process.env.SMOKE_BASE_URL ? new URL(process.env.SMOKE_BASE_URL).origin : null; } catch { return null; }
+})();
+
 /** Hosts whose URLs are sample media; answered from the generated stand-ins. */
 export const SAMPLE_MEDIA_HOSTS = new Set([
   'picsum.photos', 'fastly.picsum.photos', 'i.pravatar.cc', 'placehold.co', 'images.unsplash.com',
@@ -209,6 +222,7 @@ export async function routeOffline(context: BrowserContext, info: TestInfo | nul
     let u: URL;
     try { u = new URL(url); } catch { return route.fallback(); }
     if ((u.protocol !== 'http:' && u.protocol !== 'https:') || LOCAL_HOSTS.has(u.hostname)) return route.fallback();
+    if (SITE_UNDER_TEST_ORIGIN && u.origin === SITE_UNDER_TEST_ORIGIN) return route.fallback();
 
     const entry = cachedEntry(url);
     if (entry) {

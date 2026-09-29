@@ -224,6 +224,10 @@
         // The behavior sections above the list build asynchronously and add
         // ~2,350px about a second later, so placement waits for them
         // (data-built) before it can call the layout settled.
+        // Waited on as an EVENT, not a frame count: the old loop gave up after
+        // 300 frames (~5s), and on a loaded machine the sections finished after
+        // that -- 2,350px landed above an already-placed list and the reader
+        // came back 230px off (the 1.0 release gate, under full-suite load).
         const sections = document.getElementById('behaviors-sections');
         let frames = 0, still = 0, last = -1;
         const settle = () => {
@@ -231,10 +235,19 @@
           place();
           still = el.scrollTop === last ? still + 1 : 0;
           last = el.scrollTop;
-          const sectionsPending = sections && !sections.dataset.built;
-          if (sectionsPending || still < 5) requestAnimationFrame(settle);
+          if (still < 5) requestAnimationFrame(settle);
         };
-        requestAnimationFrame(settle);
+        const whenSectionsBuilt = (then) => {
+          if (!sections || sections.dataset.built) return then();
+          place();
+          const mo = new MutationObserver(() => {
+            if (!sections.dataset.built) return;
+            mo.disconnect();
+            then();
+          });
+          mo.observe(sections, { attributes: true, attributeFilter: ['data-built'] });
+        };
+        whenSectionsBuilt(() => requestAnimationFrame(settle));
       }
 
       if (searchInput) {

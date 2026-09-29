@@ -28,10 +28,13 @@ async function injectAndScan(page: Page, html: string) {
   // #983: the 500ms here was a guess unrelated to what it waited for.
   // Settle the injected element instead. x-ready means SETTLED, not
   // succeeded, so the assertions still do the verifying.
-  const injected = page.locator('#test-container > *').first();
-  if (await injected.count()) {
-    await elementReady(injected).catch(() => {});
-  }
+  // The container is #grid-test-container. This read '#test-container > *',
+  // which matches nothing, so the settle was skipped and every assertion ran
+  // straight after scan(). It held on an idle machine; in the 1.0 release gate,
+  // under load, alt-rows read a transparent row before layout.css applied.
+  const injected = page.locator('#grid-test-container > *').first();
+  await expect(injected).toBeAttached();
+  await elementReady(injected);
 }
 
 test.describe('[x-grid] attribute effects (#281)', () => {
