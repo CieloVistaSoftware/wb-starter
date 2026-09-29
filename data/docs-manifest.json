@@ -1,5 +1,5 @@
 {
-  "totalFiles": 271,
+  "totalFiles": 272,
   "categories": [
     "_today",
     "architecture",
@@ -1650,6 +1650,12 @@
         "category": "standards"
       },
       {
+        "path": "docs/standards/REPO-LAYOUT.md",
+        "title": "Repo Layout",
+        "name": "REPO-LAYOUT",
+        "category": "standards"
+      },
+      {
         "path": "docs/standards/V3-STANDARDS.md",
         "title": "WB-Starter v3 Standards",
         "name": "V3-STANDARDS",
@@ -3222,6 +3228,12 @@
       "path": "docs/standards/RELEASE-PROCESS.md",
       "title": "Release Process Standards",
       "name": "RELEASE-PROCESS",
+      "category": "standards"
+    },
+    {
+      "path": "docs/standards/REPO-LAYOUT.md",
+      "title": "Repo Layout",
+      "name": "REPO-LAYOUT",
       "category": "standards"
     },
     {

@@ -4,11 +4,112 @@
     "adds each new release from its commits when `npm run ship` cuts it. Hand edits are",
     "fine; keep `kind` one of added | fixed | changed."
   ],
-  "unreleased": {
-    "summary": "The first public release. Everything before it was 4.x and earlier development. From here on, every push to the site is a numbered release, and this page says what is in it.",
-    "items": []
-  },
   "releases": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-29",
+      "summary": "The first public release. Everything before it was 4.x and earlier development. From here on, every push to the site is a numbered release, and this page says what is in it.",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The inline-style gate scans the whole new-site template</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/791\" target=\"_blank\" rel=\"noopener\">#791</a>",
+          "issues": [
+            791
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Two specs caught up with the small template</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/813\" target=\"_blank\" rel=\"noopener\">#813</a>",
+          "issues": [
+            813
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>`npm create wb-starter` makes a website that uses wb-starter</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/813\" target=\"_blank\" rel=\"noopener\">#813</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/771\" target=\"_blank\" rel=\"noopener\">#771</a>",
+          "issues": [
+            813,
+            771
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The behaviors doc panel no longer duplicates the example&#39;s id; two lazy-page specs wait for their element</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/730\" target=\"_blank\" rel=\"noopener\">#730</a>",
+          "issues": [
+            730
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The typing-filters spec waits for a visible row, not the first row</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/995\" target=\"_blank\" rel=\"noopener\">#995</a>",
+          "issues": [
+            995
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Back to Docs waits for the sections above the list; two test harness gaps closed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1184\" target=\"_blank\" rel=\"noopener\">#1184</a>",
+          "issues": [
+            1184
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The 1.0 release gate&#39;s two blockers -- entry order, and clicks before the page is live</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1182\" target=\"_blank\" rel=\"noopener\">#1182</a>",
+          "issues": [
+            1182
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Release entries list changes, not CI follow-ups; 1.0 gets its summary</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1182\" target=\"_blank\" rel=\"noopener\">#1182</a>",
+          "issues": [
+            1182
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>What&#39;s New becomes Releases, and every release lists what it added, fixed and changed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1182\" target=\"_blank\" rel=\"noopener\">#1182</a>",
+          "issues": [
+            1182
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Declared modifiers finally apply; the schema index names behaviors correctly</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1146\" target=\"_blank\" rel=\"noopener\">#1146</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1147\" target=\"_blank\" rel=\"noopener\">#1147</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1150\" target=\"_blank\" rel=\"noopener\">#1150</a>",
+          "issues": [
+            1146,
+            1147,
+            1150
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every example image in every behavior doc loads in the doc viewer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1183\" target=\"_blank\" rel=\"noopener\">#1183</a>",
+          "issues": [
+            1183
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Back to Docs returns to the filtered, scrolled list the reader left</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1184\" target=\"_blank\" rel=\"noopener\">#1184</a>",
+          "issues": [
+            1184
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Behavior docs only teach names the runtime knows; x-ul/x-ol/x-dl work</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1185\" target=\"_blank\" rel=\"noopener\">#1185</a>",
+          "issues": [
+            1185
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Every file in its place; one .html and one .md at the root</strong>"
+        }
+      ]
+    },
     {
       "version": "4.0.6",
       "date": "2026-09-29",
