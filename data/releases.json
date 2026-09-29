@@ -4,6 +4,10 @@
     "adds each new release from its commits when `npm run ship` cuts it. Hand edits are",
     "fine; keep `kind` one of added | fixed | changed."
   ],
+  "unreleased": {
+    "summary": "The first public release. Everything before it was 4.x and earlier development. From here on, every push to the site is a numbered release, and this page says what is in it.",
+    "items": []
+  },
   "releases": [
     {
       "version": "4.0.6",

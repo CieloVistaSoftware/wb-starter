@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
+import { execFileSync } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -34,6 +35,18 @@ test.describe('Releases page (#1182)', () => {
     for (const h of data.history || []) {
       for (const item of h.items) expect(KINDS.has(item.kind), `${h.label}: kind "${item.kind}"`).toBe(true);
     }
+  });
+
+  test('the next release entry lists changes, not CI follow-ups, and carries a written summary', () => {
+    // A "CI on <sha>" commit repairs another commit in the same batch, so as an
+    // item it only repeated that commit, vaguer. The 1.0.0 entry would have
+    // opened with two of them.
+    const out = execFileSync(process.execPath, ['scripts/release-entry.mjs', '--check'], { cwd: ROOT, encoding: 'utf8' });
+    const entry = JSON.parse(out);
+    for (const item of entry.items) {
+      expect(item.html, 'a CI follow-up commit became a release item').not.toMatch(/\bCI on [0-9a-f]{7,}/);
+    }
+    expect(entry.summary).toBe((data.unreleased && data.unreleased.summary) || '');
   });
 
   test('the package version is the newest release', () => {

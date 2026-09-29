@@ -55,8 +55,11 @@ const range = lastTag ? `${lastTag}..HEAD` : 'HEAD';
 const commits = git(`git log ${range} --no-merges --pretty=format:%H%x1f%s%x00`)
   .split(NUL).map((r) => r.trim()).filter(Boolean)
   .map((r) => { const [sha, subject] = r.split(US); return { sha, subject: (subject || '').trim() }; })
-  // The release commits themselves are bookkeeping, not changes.
-  .filter((c) => !/^release: /.test(c.subject));
+  // The release commits themselves are bookkeeping, not changes. So is a
+  // "CI on <sha>" follow-up: it repairs a commit in this same batch, which is
+  // already listed, and would otherwise appear as a second, vaguer entry.
+  .filter((c) => !/^release: /.test(c.subject))
+  .filter((c) => !/^[a-z]+(\([^)]*\))?!?:\s*CI on [0-9a-f]{7,}\b/.test(c.subject));
 
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
   { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
@@ -88,7 +91,10 @@ if (!items.length) {
   process.exit(1);
 }
 
-const entry = { version: next, date: new Date().toISOString().slice(0, 10), summary: '', items };
+// A summary written ahead of the release (unreleased.summary) introduces it;
+// the items still come from the commits, so the two cannot drift.
+const summary = (data.unreleased && data.unreleased.summary) || '';
+const entry = { version: next, date: new Date().toISOString().slice(0, 10), summary, items };
 
 if (CHECK_ONLY) {
   console.log(JSON.stringify(entry, null, 2));
