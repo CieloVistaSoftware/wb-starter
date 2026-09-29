@@ -33,6 +33,17 @@ async function openBehaviors(page: any) {
     undefined,
     { timeout: 30_000 }
   );
+  // Rows existing is not the page being wired. In the 1.0 release gate (the
+  // full suite, 30 minutes of load) every one of the 22 samples reported
+  // "nothing rendered in the stage": the clicks landed before the page could
+  // answer them. The page preselects a row once it is live (#771) and
+  // highlights that row's source only after the stage scan resolves, so a
+  // highlighted <code> in the live-code panel is the page saying it is ready.
+  await page.waitForFunction(
+    () => !!document.querySelector('#behaviors-live-code pre code.hljs'),
+    undefined,
+    { timeout: 30_000 }
+  );
 }
 
 test.describe('dialog samples: visible close, section 13 spacing (#1005)', () => {

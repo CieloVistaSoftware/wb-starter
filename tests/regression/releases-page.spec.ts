@@ -49,9 +49,14 @@ test.describe('Releases page (#1182)', () => {
     expect(entry.summary).toBe((data.unreleased && data.unreleased.summary) || '');
   });
 
-  test('the package version is the newest release', () => {
+  test('the package version is a listed release', () => {
+    // Not "the newest": `npm run ship` writes the entry for the release it is
+    // cutting BEFORE release.mjs bumps package.json, and the release gate runs
+    // in between -- so during a release the newest entry is legitimately one
+    // ahead. That exact check blocked the 1.0.0 release. What must always hold
+    // is that the version the code declares is one the page describes.
     const version = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
-    expect(data.releases[0].version).toBe(version);
+    expect(data.releases.map((r: { version: string }) => r.version)).toContain(version);
   });
 
   test('the page shows one section per release, each headed by its version', async ({ page }) => {
