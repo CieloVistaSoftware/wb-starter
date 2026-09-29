@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/offline';
 
 /**
  * #295: rendered .md docs (via public/doc-viewer.html) must wrap text
@@ -31,7 +31,32 @@ async function gotoDocAtNarrowWidth(page) {
   }, { timeout: 15000 });
   // Let syntax highlighting / linkify / rebasing settle (all run in the
   // wb:mdhtml:loaded handler, async, after the content text is already in).
-  await page.waitForTimeout(300);
+  // A fixed 300ms read the page mid-render: mdhtml.css is JIT-loaded (#342),
+  // so for a moment every fenced <pre> had no `overflow-x: auto` yet and its
+  // <code> measured as leaking past the viewport (7 "offenders", all bare
+  // code-in-pre, all contained once the stylesheet landed). Highlighting is
+  // the LAST step of that handler, so every block carrying .hljs means the
+  // render -- and the behavior CSS it pulled in -- has finished.
+  await page.waitForFunction(() => {
+    const blocks = Array.from(document.querySelectorAll('#content pre code'));
+    return blocks.length > 0 && blocks.every((b) => b.classList.contains('hljs'));
+  }, { timeout: 15000 });
+  await page.evaluate(() => document.fonts.ready);
+  // Live examples in the doc (a card, a demo) are built lazily as they near
+  // the viewport. Measured before that, an x-card--md read as unbuilt and
+  // passed here, while loaded Windows CI caught it built: 360px wide in a
+  // 321px column, 12px past the screen edge. Scroll the whole document
+  // through, then wait for every example host to have finished building.
+  await page.evaluate(async () => {
+    const frame = () => new Promise((r) => requestAnimationFrame(r));
+    for (let y = 0; y < document.documentElement.scrollHeight; y += window.innerHeight / 2) {
+      window.scrollTo(0, y);
+      await frame();
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForFunction(() => Array.from(document.querySelectorAll('#content [class*="x-card--"], #content [x-demo]'))
+    .every((el) => el.hasAttribute('x-ready')), undefined, { timeout: 15000 });
 }
 
 test.describe('doc-viewer: narrow-viewport wrap (#295)', () => {

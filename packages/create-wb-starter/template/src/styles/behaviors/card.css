@@ -401,41 +401,47 @@ article > header > data,
    (`article.x-card--{size}` and `:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--{size}`) cover that case,
    and the class form (`.x-card.x-card--{size}`, 0,0,2,0) covers every card
    variant that still carries the class. All of them beat the grid reset's
-   (0,0,1,0). */x-card.x-card--xs,
+   (0,0,1,0).
+   The minimums stay px on purpose (#294 exception). As rem they grew with
+   the root, and phones raise the root to 112.5%: md's 20rem became 360px in
+   a 321px doc-viewer column and ran 12px off a 375px screen. min(…, 100%)
+   cannot cap them either -- inside a demo grid the column is sized from the
+   card, so 100% resolves against the collapsed track and every size shrinks
+   to its content. A floor that must hold the layout is a fixed length. */x-card.x-card--xs,
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--xs,
 .x-card.x-card--xs,
 .x-card[variant="xs"],
 article.x-card--xs {
   max-width: 12.5rem;
-  min-width: 10rem;
+  min-width: 160px;
 }x-card.x-card--sm,
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--sm,
 .x-card.x-card--sm,
 .x-card[variant="sm"],
 article.x-card--sm {
   max-width: 18.75rem;
-  min-width: 13.75rem;
+  min-width: 220px;
 }x-card.x-card--md,
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--md,
 .x-card.x-card--md,
 .x-card[variant="md"],
 article.x-card--md {
   max-width: 25rem;
-  min-width: 20rem;
+  min-width: 320px;
 }x-card.x-card--lg,
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--lg,
 .x-card.x-card--lg,
 .x-card[variant="lg"],
 article.x-card--lg {
   max-width: 32.5rem;
-  min-width: 26.25rem;
+  min-width: 420px;
 }x-card.x-card--xl,
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--xl,
 .x-card.x-card--xl,
 .x-card[variant="xl"],
 article.x-card--xl {
   max-width: 40.625rem;
-  min-width: 33.75rem;
+  min-width: 540px;
 }x-card.x-card--full,
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]).x-card--full,
 .x-card.x-card--full,

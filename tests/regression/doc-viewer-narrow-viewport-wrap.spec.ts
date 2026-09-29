@@ -42,6 +42,21 @@ async function gotoDocAtNarrowWidth(page) {
     return blocks.length > 0 && blocks.every((b) => b.classList.contains('hljs'));
   }, { timeout: 15000 });
   await page.evaluate(() => document.fonts.ready);
+  // Live examples in the doc (a card, a demo) are built lazily as they near
+  // the viewport. Measured before that, an x-card--md read as unbuilt and
+  // passed here, while loaded Windows CI caught it built: 360px wide in a
+  // 321px column, 12px past the screen edge. Scroll the whole document
+  // through, then wait for every example host to have finished building.
+  await page.evaluate(async () => {
+    const frame = () => new Promise((r) => requestAnimationFrame(r));
+    for (let y = 0; y < document.documentElement.scrollHeight; y += window.innerHeight / 2) {
+      window.scrollTo(0, y);
+      await frame();
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForFunction(() => Array.from(document.querySelectorAll('#content [class*="x-card--"], #content [x-demo]'))
+    .every((el) => el.hasAttribute('x-ready')), undefined, { timeout: 15000 });
 }
 
 test.describe('doc-viewer: narrow-viewport wrap (#295)', () => {
