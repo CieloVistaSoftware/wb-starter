@@ -34,6 +34,13 @@ async function build(page: Page, markup: string) {
   await page.waitForFunction(() => document.body.dataset.built === '1');
 }
 
+/**
+ * Classes each measured dialog carried, keyed by width label. Reported in the
+ * failure message: Windows CI once measured sm/md/lg all at 456px (unsized)
+ * and nothing local reproduced it, so a repeat must say which class was there.
+ */
+const openedClasses: string[] = [];
+
 /** Open the modal `open()` shows and return its rendered width. */
 async function openedWidth(page: Page, open: () => Promise<void>) {
   await open();
@@ -42,6 +49,7 @@ async function openedWidth(page: Page, open: () => Promise<void>) {
   // offsetWidth, not boundingBox: the open animation scales the box for 0.3s,
   // and a transform mid-flight is not the size the dialog was given.
   const width = await dialog.evaluate((d) => (d as HTMLElement).offsetWidth);
+  openedClasses.push(`${width}px "${await dialog.evaluate((d) => d.className)}"`);
   await page.evaluate(() => document.querySelectorAll('dialog[open]').forEach((d) => (d as HTMLDialogElement).close()));
   await expect(page.locator('dialog[open]')).toHaveCount(0);
   return width;
@@ -50,12 +58,13 @@ async function openedWidth(page: Page, open: () => Promise<void>) {
 function expectStrictlyWider(widths: Record<string, number>) {
   for (let i = 1; i < SIZES.length; i++) {
     const [smaller, larger] = [SIZES[i - 1], SIZES[i]];
-    expect(widths[larger], `size=${larger} (${widths[larger]}px) must be wider than size=${smaller} (${widths[smaller]}px) — all: ${JSON.stringify(widths)}`)
+    expect(widths[larger], `size=${larger} (${widths[larger]}px) must be wider than size=${smaller} (${widths[smaller]}px) — all: ${JSON.stringify(widths)}; opened: ${openedClasses.join(' | ')}`)
       .toBeGreaterThan(widths[smaller] + 10);
   }
 }
 
 test.use({ viewport: { width: 1400, height: 900 } });
+test.beforeEach(() => { openedClasses.length = 0; });
 
 test('authored <dialog size="…">: every size opens at its own width', async ({ page }) => {
   await page.goto('/');
@@ -93,9 +102,15 @@ for (const label of ['dialog', 'x-dialog']) {
     for (const s of SIZES) {
       const before = await page.evaluate(() => document.getElementById('behaviors-live-example')?.innerHTML ?? '');
       await rows.and(page.locator(`[data-variant="${s}"]`)).first().click();
+      // Every <dialog> in the example must be ready, not just SOME element: the
+      // `dialog` rows build a plain trigger <button> beside the <dialog>, and
+      // the button is ready first. On Windows CI the click landed before the
+      // dialog had its x-dialog--{size} class, so sm, md and lg all opened at
+      // the unsized 456px while xl and full (by then built) measured right.
       await page.waitForFunction((prev) => {
         const ex = document.getElementById('behaviors-live-example');
-        return !!ex && ex.innerHTML !== prev && !!ex.querySelector('[x-ready]');
+        if (!ex || ex.innerHTML === prev || !ex.querySelector('[x-ready]')) return false;
+        return [...ex.querySelectorAll('dialog')].every((d) => d.hasAttribute('x-ready'));
       }, before);
       // The example is a trigger: whatever opens the dialog is the first button.
       widths[s] = await openedWidth(page, () => page.locator('#behaviors-live-example button').first().click());

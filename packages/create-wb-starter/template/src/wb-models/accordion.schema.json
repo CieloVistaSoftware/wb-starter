@@ -8,6 +8,7 @@
     "accordion-title": {
       "type": "string",
       "description": "Marks a child as an accordion panel and supplies its header text. This is the canonical spelling; `data-accordion-title` is read as a fallback.",
+      "default": "",
       "scope": "child"
     },
     "open": {
