@@ -28,14 +28,27 @@ test.describe('[x-cardhorizontal] image and content never overlap, content is no
     await expect(figure).toBeVisible();
     await expect(content).toBeVisible();
 
-    const figureBox = await figure.boundingBox();
-    const contentBox = await content.boundingBox();
-    expect(figureBox).not.toBeNull();
-    expect(contentBox).not.toBeNull();
+    // Read the finished layout, not one in motion. On loaded Windows CI the
+    // figure's right edge read 3px past the content's left edge: the x-demo
+    // around the card was still sizing its grid (.x-demo--measuring), and the
+    // image can arrive after the card is visible and resize its figure.
+    const demo = page.locator('[x-demo]').first();
+    await expect(demo).toHaveAttribute('x-ready', '');
+    await expect(demo).not.toHaveClass(/x-demo--measuring/);
+    await expect.poll(() => figure.locator('img').evaluateAll(
+      (imgs) => imgs.every((i) => (i as HTMLImageElement).complete))).toBe(true);
+
+    // Both boxes from the same frame, so a reflow between two reads cannot
+    // pair an old figure with a new content box.
+    const { figureRight, contentLeft } = await page.evaluate(() => {
+      const f = document.querySelector('.x-card__horizontal-figure')!.getBoundingClientRect();
+      const c = document.querySelector('.x-card__horizontal-content')!.getBoundingClientRect();
+      return { figureRight: f.right, contentLeft: c.left };
+    });
 
     // No horizontal overlap: the figure's right edge must not extend past
     // the content's left edge (a couple px tolerance for shared borders).
-    expect(figureBox!.x + figureBox!.width).toBeLessThanOrEqual(contentBox!.x + 2);
+    expect(figureRight).toBeLessThanOrEqual(contentLeft + 2);
   });
 
   test('content padding meets Standard §13 (>= 1rem)', async ({ page }) => {

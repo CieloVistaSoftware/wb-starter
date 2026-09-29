@@ -33,6 +33,12 @@ test.describe('Behaviors page: Progress Bars demo actually reflects its labeled 
       const fill = bar.locator('.x-progress__bar');
       await expect(fill).toHaveCount(1);
       // #779: rendered fill, not the style attribute nothing writes any more.
+      // Polled to its value: settledWidthPercent awaits RUNNING transitions,
+      // but under Windows CI load the fill's width rule could land after the
+      // read, when none had started yet, and 0 came back. A bar that never
+      // reaches its value -- the data-value bug this guards -- still fails.
+      await expect.poll(async () => Math.round(await settledWidthPercent(fill)),
+        { message: `the value="${value}" bar fills to ${value}%` }).toBe(Number(value));
       percents.push(await settledWidthPercent(fill));
     }
 
