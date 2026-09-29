@@ -110,8 +110,12 @@ const SOURCE_PATTERNS: Array<{ re: RegExp; what: string }> = [
 /** Source trees that are "our work". */
 const SOURCE_DIRS = ['src', 'pages'];
 
-/** Template carries a second copy of everything and ships it to users (#791). */
-const TEMPLATE_DIRS = [join('packages', 'create-wb-starter', 'template', 'src')];
+/**
+ * What `npm create wb-starter` gives every new site. It used to be a second
+ * copy of src/ (#791); since #813 it is a small site of its own, and every
+ * file in it is what a new user starts from, so all of it is scanned.
+ */
+const TEMPLATE_DIRS = [join('packages', 'create-wb-starter', 'template')];
 
 const SKIP_DIRS = new Set([
   'node_modules', '.git', 'data', 'test-results', '.playwright-artifacts',
