@@ -274,6 +274,35 @@ input[type="radio"] {
   min-width: 0;
 }
 
+/* <div x-input> path. input() builds label + .x-input__wrapper > real <input>
+   inside the host and puts .x-input and the size/variant classes on the HOST,
+   where every rule above landed: the host got the padding and a border ring
+   around label and field together, while the real field kept the browser's
+   own 1px 2px padding, so size=sm/md/lg read 25/28/31px against the <input>
+   form's 26/36/47px -- "none of the sizes work" (John, 2026-09-28; #754).
+   Here the host is only a container, and size and variant style the field,
+   exactly as they do on the <input> form. */
+.x-input:has(> .x-input__wrapper) {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: inherit;
+  /* .x-input's 1.5 was inherited by the field and made it 5px taller than
+     the same size on the <input> form. */
+  line-height: inherit;
+}
+.x-input > .x-input__wrapper > .x-input__field {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+}
+.x-input--xs > .x-input__wrapper > .x-input__field { padding: 0.125rem 0.5rem; font-size: 0.75rem; }
+.x-input--sm > .x-input__wrapper > .x-input__field { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
+.x-input--lg > .x-input__wrapper > .x-input__field { padding: 0.75rem 1rem; font-size: 1.125rem; }
+.x-input--xl > .x-input__wrapper > .x-input__field { padding: 1rem 1.25rem; font-size: 1.25rem; }
+.x-input--success > .x-input__wrapper > .x-input__field { border-color: var(--success-color); }
+.x-input--warning > .x-input__wrapper > .x-input__field { border-color: var(--warning-color); }
+.x-input--error > .x-input__wrapper > .x-input__field { border-color: var(--danger-color); }
+
 /* Native <input x-input> path only: it always set outline and a per-size
    padding (md unless a known size says otherwise), and styled its prefix,
    suffix and clear button; the <div x-input> builder never did. Two classes,

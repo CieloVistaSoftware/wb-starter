@@ -54,3 +54,35 @@ for (const type of ['date', 'time', 'datetime-local']) {
     await expect(page.locator('#behaviors-live-code')).toContainText(`input-type="${type}"`);
   });
 }
+
+/**
+ * John, 2026-09-28: "NONE OF THE SIZES WORK." The rows above were measured
+ * on the <input> form only. The x-input rows build <div x-input size="…">,
+ * where the size class landed on the host <div> and the real field inside
+ * kept the browser's own 1px 2px padding: sm/md/lg read 25/28/31px against
+ * the <input> form's 26/36/47px -- three near-identical boxes.
+ * One size must look the same whichever way it is written.
+ */
+test('x-input size=sm, md, lg render the same field as <input size>', async ({ page }) => {
+  const field = async (label: string, size: string) => {
+    const row = page.locator(`.behaviors-search-results__row[data-label="${label}"][data-prop="size"][data-variant="${size}"]`).first();
+    await expect(row).toBeAttached({ timeout: 30_000 });
+    const group = page.locator('#behaviors-search-results details', { has: row });
+    if (!(await group.first().evaluate((d) => (d as HTMLDetailsElement).open))) {
+      await group.first().locator(':scope > summary').click();
+    }
+    await row.click();
+    const input = page.locator(`#behaviors-live-example #input-size-${size} input.x-input__field, #behaviors-live-example input#input-size-${size}`).first();
+    await expect(input).toHaveClass(/x-input__field/);
+    await expect(page.locator(`#behaviors-live-example [id="input-size-${size}"]`)).toHaveAttribute('x-ready', '');
+    return input.evaluate((el) => {
+      const cs = getComputedStyle(el);
+      return { h: (el as HTMLElement).offsetHeight, font: cs.fontSize, pad: cs.padding };
+    });
+  };
+  for (const size of ['sm', 'md', 'lg']) {
+    const native = await field('input', size);
+    const container = await field('x-input', size);
+    expect(container, `size=${size}: <div x-input> field vs <input> field`).toEqual(native);
+  }
+});
