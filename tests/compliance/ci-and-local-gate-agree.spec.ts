@@ -77,14 +77,13 @@ test.describe('#1044: CI and the local gate apply the same standard', () => {
     ).toEqual([]);
   });
 
-  test('the register exists and is non-empty, so the ratchet has something to compare against', () => {
+  // Shape, not size. This asserted a NON-empty register, written while the
+  // register still held debt. Empty is the goal (John, 2026-09-28: "I want all
+  // failures fixed") and reached it: every failure is new, which is the point.
+  test('the register exists and is well-formed, so the ratchet has something to compare against', () => {
     const reg = JSON.parse(readFileSync(REGISTER, 'utf8'));
     expect(Array.isArray(reg.failures), `${REGISTER} has no failures array`).toBe(true);
-    expect(
-      reg.failures.length,
-      `${REGISTER} is empty. The ratchet would then treat EVERY failure as new and CI would\n` +
-      'block permanently — the exact state this change removes.',
-    ).toBeGreaterThan(0);
+    expect(reg.count, `${REGISTER} count disagrees with its failures list`).toBe(reg.failures.length);
   });
 
   test('the ratchet reuses CI\'s server instead of booting a second one', () => {

@@ -28,12 +28,22 @@ async function openGroup(page: Page, token: string) {
 /** Click the row for prop=value and return the example markup it produced. */
 async function pick(page: Page, token: string, prop: string, value: string) {
   const rows = await openGroup(page, token);
-  const before = await page.evaluate(() => document.getElementById('behaviors-live-example')?.innerHTML ?? '');
+  // The render barrier, not "the example changed": renderSource() builds a NEW
+  // code panel per selection and highlights it only after the example has been
+  // scanned, so a new code element carrying .hljs is THIS row's code. Reading
+  // on the example's first change raced it -- the panel was still empty on
+  // Windows CI once #1219 made the scan wait for async behaviors to finish.
+  await page.evaluate(() => {
+    (window as unknown as { __prevCode?: Element | null }).__prevCode =
+      document.querySelector('#behaviors-live-code pre code');
+  });
   await rows.and(page.locator(`[data-prop="${prop}"][data-variant="${value}"]`)).first().click();
-  await page.waitForFunction((prev) => {
+  await page.waitForFunction(() => {
+    const code = document.querySelector('#behaviors-live-code pre code');
     const ex = document.getElementById('behaviors-live-example');
-    return !!ex && ex.children.length > 0 && ex.innerHTML !== prev;
-  }, before, { timeout: 20_000 });
+    return !!code && code !== (window as unknown as { __prevCode?: Element | null }).__prevCode
+      && code.classList.contains('hljs') && !!ex && ex.children.length > 0;
+  }, undefined, { timeout: 20_000 });
   return (await page.locator('#behaviors-live-code').textContent()) ?? '';
 }
 
