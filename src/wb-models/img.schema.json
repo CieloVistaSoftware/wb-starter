@@ -23,7 +23,9 @@
     "lazy": {
       "type": "boolean",
       "description": "Sets `loading=\"lazy\"`, so the browser defers fetching until the image nears the viewport. Bare attribute.",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Sets loading=\"lazy\", which defers the fetch until the image nears the viewport; the image on screen is unchanged."
     },
     "zoomable": {
       "type": "boolean",

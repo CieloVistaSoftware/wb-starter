@@ -46,11 +46,19 @@ export function styleSheetDefinesClass(cls) {
         // empty -- an unreadable sheet is unknown, not absent.
         try { rules = sheet.cssRules; } catch { continue; }
         if (!rules) continue;
+        // A rule's own selector first, THEN any nested rules. The old walk
+        // took "has cssRules" to mean "a grouping rule (@media, @layer)" and
+        // skipped the selector -- but since CSS nesting (Chrome 112) every
+        // CSSStyleRule has a cssRules list too, empty. So no selector was ever
+        // recorded, every class read as undefined, and no declared modifier
+        // (.x-hero--cosmic, x-button--primary, ...) was applied in Chromium
+        // (#1147).
         const walk = (list) => {
           for (const rule of Array.from(list)) {
-            if (rule.cssRules) { walk(rule.cssRules); continue; }
-            if (!rule.selectorText) continue;
-            for (const m of rule.selectorText.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) found.add(m[1]);
+            if (rule.selectorText) {
+              for (const m of rule.selectorText.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) found.add(m[1]);
+            }
+            if (rule.cssRules && rule.cssRules.length) walk(rule.cssRules);
           }
         };
         walk(rules);

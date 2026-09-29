@@ -6,9 +6,8 @@
   "schemaFor": "accordion",
   "properties": {
     "accordion-title": {
-      "type": "boolean",
+      "type": "string",
       "description": "Marks a child as an accordion panel and supplies its header text. This is the canonical spelling; `data-accordion-title` is read as a fallback.",
-      "default": false,
       "scope": "child"
     },
     "open": {

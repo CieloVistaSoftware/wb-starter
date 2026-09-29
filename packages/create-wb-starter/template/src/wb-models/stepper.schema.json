@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Stepper Behavior",
+  "schemaFor": "stepper",
   "schemaType": "behavior",
   "type": "object",
   "description": "x-stepper builds a number field with − and + buttons that change the value by step, never going below min or above max.",
@@ -28,5 +29,6 @@
     "category": "inputs",
     "description": "Adds increment/decrement controls to numeric inputs.",
     "src": "src/wb-viewmodels/stepper.js"
-  }
+  },
+  "$view": []
 }

@@ -98,8 +98,12 @@ jobs:
 
       - name: Start server
         run: |
-          node server.js > server.log 2>&1 &
-          echo $! > server.pid
+          # Runtime files live in the ignored data/test-results/, never the repo
+          # root (docs/standards/REPO-LAYOUT.md; repo-layout.spec.ts failed on
+          # a root server.pid).
+          mkdir -p data/test-results
+          node server.js > data/test-results/server.log 2>&1 &
+          echo $! > data/test-results/server.pid
           # Wait for server to be ready
           for i in {1..30}; do
             if curl -fsS http://localhost:3000/health -m 2 >/dev/null 2>&1; then
@@ -192,12 +196,12 @@ jobs:
       - name: Stop server
         if: always()
         run: |
-          if [ -f server.pid ]; then
-            kill "$(cat server.pid)" 2>/dev/null || true
+          if [ -f data/test-results/server.pid ]; then
+            kill "$(cat data/test-results/server.pid)" 2>/dev/null || true
           fi
 
       - name: Show server log on failure
         if: failure()
         run: |
           echo "=== Server Log ==="
-          cat server.log || true
+          cat data/test-results/server.log || true

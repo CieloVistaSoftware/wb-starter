@@ -18,14 +18,26 @@
     "modal-size": {
       "type": "string",
       "description": "Size of the opened dialog. `size` is read first when both are set.",
-      "enum": ["sm", "md", "lg", "xl", "full"],
-      "default": "md"
+      "enum": [
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "full"
+      ],
+      "default": "md",
+      "visibleWhen": "open"
     },
     "variant": {
       "type": "string",
       "description": "Layout of the opened dialog; any value but default adds x-dialog--{{value}} to it.",
-      "enum": ["default", "centered", "fullscreen"],
-      "default": "default"
+      "enum": [
+        "default",
+        "centered",
+        "fullscreen"
+      ],
+      "default": "default",
+      "visibleWhen": "open"
     }
   },
   "$view": [],

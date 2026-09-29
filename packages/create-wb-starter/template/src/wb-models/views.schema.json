@@ -10,7 +10,7 @@
     "views"
   ],
   "compliance": {
-    "baseClass": "wb-views",
+    "baseClass": "x-views",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -168,9 +168,9 @@
     },
     "site": {
       "page": "interactive",
-      "tag": "wb-views",
+      "tag": "x-views",
       "renders": true,
-      "baseClass": "wb-views",
+      "baseClass": "x-views",
       "minInstances": 1,
       "checkText": [],
       "checkClasses": [],

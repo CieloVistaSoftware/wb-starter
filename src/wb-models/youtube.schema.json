@@ -23,17 +23,23 @@
     "autoplay": {
       "type": "boolean",
       "description": "Begin playing on load. Needs `muted`, since browsers block autoplay with sound.",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A player URL parameter: starts playback on load. The embedded frame looks the same."
     },
     "muted": {
       "type": "boolean",
       "description": "Start with audio silenced. Required for `autoplay` to be permitted.",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A player URL parameter: starts with sound off. The embedded frame looks the same."
     },
     "loop": {
       "type": "boolean",
       "description": "Restart from the beginning when playback ends.",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "A player URL parameter: restarts the video when it ends. The embedded frame looks the same."
     }
   },
   "$view": [],

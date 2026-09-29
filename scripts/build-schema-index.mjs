@@ -30,13 +30,22 @@ for (const file of files) {
     const schema = JSON.parse(raw);
 
     // Extract only what the wizard needs
+    // #1150: a behavior schema says which behavior it is. One without
+    // schemaFor is an aggregate or meta schema (schema, demofile, x-effects,
+    // x-enhancements), not a behavior, and wb.js dropped every nameless
+    // entry anyway. otp/password/stepper were the behaviors among them and
+    // now carry schemaFor.
+    if (!schema.schemaFor) continue;
+    // #1147: x-, not the wb- that 4.0.0 retired -- wb.js builds modifier
+    // classes from baseClass, so wb-hero--cosmic matched no stylesheet.
+    const name = schema.schemaFor;
     schemas.push({
       file,
-      name: schema.schemaFor,
-      title: schema.title || schema.schemaFor,
+      name,
+      title: schema.title || name,
       description: schema.description || '',
-      tag: `wb-${schema.schemaFor}`,
-      baseClass: schema.baseClass || `wb-${schema.schemaFor}`,
+      tag: `x-${name}`,
+      baseClass: schema.baseClass || `x-${name}`,
       properties: schema.properties || {},
       // "scroll": every option of this behavior only shows while its box scrolls
       // (x-sticky); the behaviors page renders its examples in a scroll box (#750).

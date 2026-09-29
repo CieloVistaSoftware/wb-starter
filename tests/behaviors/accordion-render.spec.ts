@@ -14,7 +14,10 @@ import { openBehaviorsPanel, renderVariant, example } from '../utils/behaviors-p
 // body that merely repeats its title.
 test('three sibling accordions, each with its distinct answer (not the title)', async ({ page }) => {
   await openBehaviorsPanel(page, 'x-accordion');
-  await renderVariant(page, 'x-accordion', null);
+  // Its one option row (open=true). There was a bare "no option" row only
+  // while the stale schema index hid x-accordion's options (#1146); the claim
+  // below is about the panels, which are the same either way.
+  await renderVariant(page, 'x-accordion', 'true');
 
   const accordion = example(page);
   await expect(accordion).toHaveAttribute('x-accordion', '');

@@ -300,12 +300,16 @@ function getAutoInjectBehavior(element) {
  * modifier class -- exactly what button(), input() and select() write by hand
  * -- so do it once, for every behavior, instead of 101 times or not at all.
  *
- * Loaded lazily and cached. If it has not arrived yet the call is a no-op and
- * the next scan applies it: a missing modifier class is a cosmetic delay, and
- * blocking every injection on a fetch is not worth that.
+ * Loaded lazily and cached, never awaited: blocking every injection on a
+ * fetch is not worth it. It used to be a no-op until the index arrived, on the
+ * promise that "the next scan applies it" -- but a scan skips elements it has
+ * already built, so everything built on page load before the fetch landed
+ * never got its modifiers (<div x-hero variant="cosmic"> stayed plain x-hero,
+ * #1147). Those calls are queued now and applied the moment it arrives.
  */
 let schemaIndex = null;
 let schemaIndexPending = null;
+const modifiersWaitingForIndex = [];
 
 function loadSchemaIndex() {
   if (schemaIndex || schemaIndexPending) return schemaIndexPending;
@@ -336,9 +340,12 @@ function loadSchemaIndex() {
       for (const sc of (idx && idx.schemas) || []) {
         if (sc && sc.name) schemaIndex[sc.name] = sc;
       }
+      for (const [element, behaviorName] of modifiersWaitingForIndex.splice(0)) {
+        try { applyDeclaredModifiers(element, behaviorName); } catch { /* never break inject */ }
+      }
       return schemaIndex;
     })
-    .catch(() => { schemaIndex = {}; return schemaIndex; });
+    .catch(() => { schemaIndex = {}; modifiersWaitingForIndex.length = 0; return schemaIndex; });
   return schemaIndexPending;
 }
 
@@ -348,7 +355,11 @@ function attrNameFor(prop) {
 }
 
 function applyDeclaredModifiers(element, behaviorName) {
-  if (!schemaIndex) { loadSchemaIndex(); return; }
+  if (!schemaIndex) {
+    modifiersWaitingForIndex.push([element, behaviorName]);
+    loadSchemaIndex();
+    return;
+  }
   const schema = schemaIndex[behaviorName];
   const props = schema && schema.properties;
   if (!props) return;
