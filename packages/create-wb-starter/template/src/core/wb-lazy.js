@@ -240,6 +240,10 @@ export const WB_LAZY_ONLY_ATTRIBUTES = {
   'x-flash': 'flash',
   'x-relativetime': 'relativetime',
   'x-password': 'password',
+  // #1185: documented from 4.0.0, never wired here (wb.js resolves x-{name}).
+  'x-ul': 'ul',
+  'x-ol': 'ol',
+  'x-dl': 'dl',
   'x-stepper': 'stepper',
   'x-otp': 'otp',
   'x-search': 'search',

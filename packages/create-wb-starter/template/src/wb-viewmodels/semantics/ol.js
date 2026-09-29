@@ -13,10 +13,10 @@ export function ol(element, options = {}) {
 
   const config = {
     variant: options.variant || readAttr(element, 'variant') || 'default',
-    numberType: options.numberType || element.dataset.numberType || 'decimal',
+    numberType: options.numberType || readAttr(element, 'numberType') || 'decimal',
     gap: options.gap || readAttr(element, 'gap') || '0.5rem',
-    indentSize: options.indentSize || element.dataset.indentSize || '1.5rem',
-    start: options.start || element.dataset.start || element.start || 1,
+    indentSize: options.indentSize || readAttr(element, 'indentSize') || '1.5rem',
+    start: options.start || readAttr(element, 'start') || element.start || 1,
     ...options
   };
 

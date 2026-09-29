@@ -1,11 +1,11 @@
 # Password Behavior
 
-`x-password` wraps a password `<input>` with a show/hide button, and with `strength` adds a meter that rates the password as it is typed.
+A password `<input>` gets a show/hide button, and with `strength` a meter that rates the password as it is typed. `type="password"` already says which behavior this is, so there is nothing to add: the runtime applies it to every password input (#1185). Writing `x-password` as well is redundant and the page audits flag it.
 
 ## Usage
 
 <div x-demo>
-<input type="password" x-password strength placeholder="Choose a password">
+<input type="password" strength placeholder="Choose a password">
 </div>
 
 ## Attributes

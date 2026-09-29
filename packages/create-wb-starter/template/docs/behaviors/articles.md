@@ -9,7 +9,7 @@ optional heading and static pagination controls. Implemented by `articles()` in
 | Property | Value |
 |----------|-------|
 | Attribute | `x-articles` |
-| Attribute form | `<div x-as-articles>` |
+| Attribute form | `<section x-articles>` |
 | Behavior function | `articles()` — `src/wb-viewmodels/article.js` |
 | Pairs with | `<article>` children, each of which is a [card](../behaviors/card.md) |
 | Semantic element | `<section role="feed">` (schema default; the behavior itself doesn't add a role) |
@@ -73,7 +73,7 @@ attribute needed.
 
 | Class | Applied when | Description |
 |-------|--------------|-------------|
-| `<section x-articles>` | host isn't already a `<div x-as-articles>` tag | Base marker class |
+| `.x-articles` | Always | Base marker class |
 | `.x-articles__header` | `title` set | Wraps the `<h2>` heading |
 | `.x-articles__list` | Always | The container that actually holds the (moved) children |
 | `.x-articles--{grid,list,masonry}` | Always, per `layout` | Sets the actual layout mode (CSS grid columns / flex column / CSS columns) |

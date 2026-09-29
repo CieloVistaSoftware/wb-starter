@@ -119,6 +119,13 @@ const behaviorModules = {
   timeline: 'semantics/timeline',
   stat: 'semantics/stat',
   list: 'semantics/list',
+  // #1185: ul/ol/dl were finished modules that only the <wb-ul>/<wb-ol>/<wb-dl>
+  // tags ever loaded. 4.0.0 removed the tags and the docs moved to x-ul/x-ol/
+  // x-dl, but nothing registered the attribute, so every documented example
+  // logged "matches no behavior". Opt-in only: a bare <ul> is left alone.
+  ul: 'semantics/ul',
+  ol: 'semantics/ol',
+  dl: 'semantics/dl',
   desclist: 'semantics/desclist',
   empty: 'semantics/empty',
   // Diff (lightweight shim) — ensure registry consistency with data/behavior-inventory.json

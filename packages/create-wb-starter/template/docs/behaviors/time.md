@@ -55,7 +55,7 @@ Shown here as illustrative markup only; it will render without a timestamp.
 
 ### 3. Timeline Behavior
 
-`x-timeline` only adds a `<div x-as-timeline>` class hook — it doesn't rebuild
+`x-timeline` only adds the `.x-timeline` class hook — it doesn't rebuild
 children, so hand-authored markup (including real `<time>` elements) renders
 as-is.
 
