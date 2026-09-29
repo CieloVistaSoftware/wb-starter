@@ -115,8 +115,11 @@
               filePath = filePath.replace(/^\/+/, '');
               if (!/^docs\//.test(filePath)) filePath = 'docs/' + filePath;
             }
+            // Same tab (#1184): a new tab left the filtered, scrolled list
+            // behind, so the viewer's Back to Docs could only open a fresh one.
+            // Ctrl/middle-click still opens a tab for anyone who wants one.
             html += '<a href="' + siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
-            html += 'class="docs-card" target="_blank">';
+            html += 'class="docs-card">';
             html += '<h3 class="docs-card__title">' + escapeText(doc.title) + '</h3>';
             html += '<p class="docs-card__desc">' + escapeText(doc.description) + '</p>';
             html += '</a>';
@@ -194,12 +197,70 @@
         renderDocs(fullManifest);
       }
 
+      // #1184: the reader's place in this list survives opening a doc. The
+      // filter lives in the URL (?q=, which the block above already reads), and
+      // the scroll offset of the panel that scrolls -- #siteBody, not the
+      // window -- is saved as a doc is opened and put back when the list is
+      // rebuilt with the same filter.
+      const STATE_KEY = 'x-docs-list-state';
+      const scroller = () => document.getElementById('siteBody') || document.scrollingElement;
+      let saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem(STATE_KEY) || 'null'); } catch { /* blocked storage: nothing to restore */ }
+      if (saved && (saved.q || '') === (query || '')) {
+        // Put the card the reader opened back where it sat on screen, not a
+        // raw offset: content above the list settles after this render, and
+        // the browser's scroll anchoring then moved a restored 720px to 3076px
+        // (1 run in 3). Re-placed each frame until the layout stops moving,
+        // for at most ~2s, and never once the reader scrolls themselves.
+        const el = scroller();
+        let userMoved = false;
+        const stop = () => { userMoved = true; };
+        ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((t) => el.addEventListener(t, stop, { once: true, passive: true }));
+        const place = () => {
+          const card = saved.href && [...container.querySelectorAll('a.docs-card')].find((a) => a.getAttribute('href') === saved.href);
+          if (!card) { el.scrollTop = saved.scroll || 0; return; }
+          el.scrollTop += card.getBoundingClientRect().top - el.getBoundingClientRect().top - (saved.offset || 0);
+        };
+        // The behavior sections above the list build asynchronously and add
+        // ~2,350px about a second later, so placement waits for them
+        // (data-built) before it can call the layout settled.
+        const sections = document.getElementById('behaviors-sections');
+        let frames = 0, still = 0, last = -1;
+        const settle = () => {
+          if (userMoved || frames++ > 300) return;
+          place();
+          still = el.scrollTop === last ? still + 1 : 0;
+          last = el.scrollTop;
+          const sectionsPending = sections && !sections.dataset.built;
+          if (sectionsPending || still < 5) requestAnimationFrame(settle);
+        };
+        requestAnimationFrame(settle);
+      }
+
       if (searchInput) {
         searchInput.addEventListener('input', (e) => {
           const filtered = filterManifest(e.target.value);
           renderDocs(filtered);
+          const url = new URL(window.location.href);
+          if (e.target.value) url.searchParams.set('q', e.target.value);
+          else url.searchParams.delete('q');
+          history.replaceState(history.state, '', url);
         });
       }
+
+      container.addEventListener('click', (e) => {
+        const card = e.target.closest && e.target.closest('a.docs-card');
+        if (!card) return;
+        const el = scroller();
+        try {
+          sessionStorage.setItem(STATE_KEY, JSON.stringify({
+            q: searchInput ? searchInput.value : '',
+            scroll: el.scrollTop,
+            href: card.getAttribute('href'),
+            offset: card.getBoundingClientRect().top - el.getBoundingClientRect().top,
+          }));
+        } catch { /* blocked storage: Back still opens the filtered list */ }
+      });
       
     } catch (err) {
       console.error('Failed to load docs manifest:', err);
@@ -249,7 +310,7 @@
 
     const tagMod = mods[0];
     const lazyMod = mods[1] || {};
-    if (!tagMod) return;
+    if (!tagMod) { wrap.dataset.built = '1'; return; }
 
     // Keep the attribute -> BEHAVIOUR mapping, not just the attribute names.
     // A doc is named after the behaviour, which need not match the attribute:
@@ -368,7 +429,7 @@
     // Share the page's existing search box rather than adding a second one.
     const search = document.getElementById('docs-search');
     if (search) {
-      search.addEventListener('input', function () {
+      const applyFilter = function () {
         const term = search.value.trim().toLowerCase();
         for (const list of [semanticList, extensionList]) {
           let shown = 0;
@@ -379,7 +440,13 @@
           }
           list.closest('.behaviors-section').hidden = shown === 0;
         }
-      });
+      };
+      search.addEventListener('input', applyFilter);
+      // #1184: a filter already in the box (?q=, or Back to Docs) applies to
+      // these sections too. They only listened for typing, so returning to a
+      // filtered list showed every behavior chip unfiltered above it.
+      applyFilter();
     }
+    wrap.dataset.built = '1';
   })();
 </script>

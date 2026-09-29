@@ -290,6 +290,7 @@ test.describe('Cards Showcase Page', () => {
       // 4.0.0: attribute form, not the x-cardstats[...] tag form.
       const statsCard = page.locator('[x-cardstats][trend="up"]').first();
       await expect(statsCard).toBeVisible();
+      await buildInView(statsCard);
       const trend = statsCard.locator('.x-card__stats-trend');
       await expect(trend).toContainText('↑');
     });
@@ -297,9 +298,12 @@ test.describe('Cards Showcase Page', () => {
     test('stats card with trend down shows down arrow', async ({ page }) => {
       const statsCard = page.locator('[x-cardstats][trend="down"]').first();
       await expect(statsCard).toBeVisible();
-      // #491: a card is built only as it nears the viewport; scroll to it
-      // as a reader does before looking inside it.
-      await statsCard.scrollIntoViewIfNeeded();
+      // #491: a card is built only as it nears the viewport. One scroll was
+      // not enough under the commit gate's load: other cards finished building
+      // and moved this one out of range before it was built, and its trend
+      // never appeared ("element(s) not found" after 15s). buildInView
+      // re-scrolls every frame until this card is x-ready.
+      await buildInView(statsCard);
       const trend = statsCard.locator('.x-card__stats-trend');
       await expect(trend).toContainText('↓');
     });

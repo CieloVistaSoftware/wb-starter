@@ -51,7 +51,7 @@ upstream URLs), and conventional names (`README.md`, `LICENSE`, `CODEOWNERS`).
 
 ## Unused files
 
-Move them to `archive/`, keeping their original path (`scripts/fix-demos.mjs` →
-`archive/scripts/fix-demos.mjs`). Nothing is deleted, and nothing in `archive/`
+Move them to `archive/`, keeping their original path (a one-off script in
+`scripts/` moves to the same name under `archive/scripts/`). Nothing is deleted, and nothing in `archive/`
 is loaded, tested or shipped. `archive/` is still in the public repo: archiving
 does not make a file private.

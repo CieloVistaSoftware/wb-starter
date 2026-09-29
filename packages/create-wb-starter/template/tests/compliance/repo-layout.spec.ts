@@ -27,8 +27,15 @@ import { suiteEnv } from '../../scripts/lib/suite-env.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
 // suiteEnv: never inherit the commit hook's GIT_DIR/GIT_INDEX_FILE (#1161).
-const tracked = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8', env: suiteEnv(process.env) })
-  .split('\n').filter(Boolean)
+// --cached --others --exclude-standard, not the index alone: the commit gate
+// runs specs in a `git worktree add --no-checkout` copy whose index is empty
+// (every file there is "untracked"), and a plain `git ls-files` returned
+// nothing -- every check failed on an empty list. Files on disk that .gitignore
+// does not exclude are also the right set: a stray file is caught before it is
+// ever committed.
+const tracked = [...new Set(execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard'],
+  { cwd: ROOT, encoding: 'utf8', env: suiteEnv(process.env) })
+  .split('\n').filter(Boolean))]
   .filter((f) => !f.startsWith('archive/') && !f.startsWith('packages/create-wb-starter/template/'));
 const rootFiles = tracked.filter((f) => !f.includes('/'));
 

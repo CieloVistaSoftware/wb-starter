@@ -17,7 +17,7 @@ errors he was reading, silently, seventeen times over (#1027).
    names every file it removes with its age and entry count.
 4. **An agent does not delete a log at all** — including archives it created
    itself, and including ones that look like test data. See
-   [`CLAUDE.md`](../../.claude/CLAUDE.md) and the session rule: a log is evidence, and
+   `CLAUDE.md` (in `.claude/`, which the site does not serve) and the session rule: a log is evidence, and
    whether it looks like junk is not the deleter's call.
 
 ## Where the entries live

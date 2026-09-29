@@ -119,7 +119,23 @@
       // GitHub Pages sub-path (/wb-starter/public/doc-viewer.html) — same
       // pattern used elsewhere in this project (e.g. src/wb-viewmodels/demo.js).
       const siteRoot = location.pathname.replace(/public\/.*$/, '');
-      document.getElementById('back-to-docs').href = siteRoot + '?page=docs';
+      // #1184: back to the list the reader left, not a fresh one. docs.html
+      // saves the filter and scroll as a doc is opened; the link carries the
+      // filter, and docs.html puts the scroll back.
+      const back = document.getElementById('back-to-docs');
+      let saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem('x-docs-list-state') || 'null'); } catch { /* blocked storage */ }
+      back.href = siteRoot + '?page=docs' + (saved && saved.q ? '&q=' + encodeURIComponent(saved.q) : '');
+      // Came straight from the docs list in this tab: step back, which is
+      // exactly what the reader means, and lets the browser restore the page.
+      back.addEventListener('click', function (e) {
+        let fromList = false;
+        try {
+          const ref = new URL(document.referrer);
+          fromList = ref.origin === location.origin && ref.searchParams.get('page') === 'docs';
+        } catch { /* no referrer */ }
+        if (fromList && history.length > 1) { e.preventDefault(); history.back(); }
+      });
     })();
     (function () {
       var KEY = 'x-doc-font-scale';
