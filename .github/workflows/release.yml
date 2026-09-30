@@ -92,13 +92,19 @@ jobs:
           if [ -z "${NODE_AUTH_TOKEN}" ]; then
             echo "::warning::NPM_TOKEN is not set in the repository secrets, so npm was not published."; exit 0
           fi
+          # Publish the code the tag names, not whatever main holds now: main
+          # moves on after a release and still says the same version until the
+          # next one is cut.
+          pub="${RUNNER_TEMP}/publish-v${version}"
+          git worktree add --detach "${pub}" "v${version}"
+          echo "Publishing from v${version} ($(git rev-parse --short "v${version}^{commit}"))"
           for dir in . packages/create-wb-starter; do
-            name=$(node -p "require('./${dir}/package.json').name")
-            ver=$(node -p "require('./${dir}/package.json').version")
+            name=$(node -p "require('${pub}/${dir}/package.json').name")
+            ver=$(node -p "require('${pub}/${dir}/package.json').version")
             if npm view "${name}@${ver}" version >/dev/null 2>&1; then
               echo "✓ ${name}@${ver} already on npm"
             else
-              (cd "${dir}" && npm publish --ignore-scripts --access public)
+              (cd "${pub}/${dir}" && npm publish --ignore-scripts --access public)
               echo "➕ published ${name}@${ver}"
             fi
           done
