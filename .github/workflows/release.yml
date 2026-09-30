@@ -37,19 +37,31 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
+      # One tag that cannot be made must not stop the others, the GitHub releases
+      # or npm (first run, 2026-09-30: v1.0.0 was tagged, then v4.0.6 was refused
+      # and the job ended there). A git push of a tag whose commit carries older
+      # workflow files is refused to the Actions token ("without `workflows`
+      # permission"), so the tag API is tried next; a tag both refuse is named
+      # in a warning and the run goes on.
       - name: Tag every release commit that has no tag
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git fetch --tags --force
           git log --format='%H %s' origin/main | grep -E '^[0-9a-f]+ release: [0-9]+\.[0-9]+\.[0-9]+' | while read -r sha _ version _; do
             tag="v${version}"
             if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
               echo "✓ ${tag} already tagged"
-            else
-              git tag "${tag}" "${sha}"
-              git push origin "refs/tags/${tag}"
+            elif git tag "${tag}" "${sha}" && git push origin "refs/tags/${tag}" 2>push.err; then
               echo "➕ tagged ${tag} at ${sha:0:8}"
+            elif gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/${tag}" -f sha="${sha}" >/dev/null 2>api.err; then
+              echo "➕ tagged ${tag} at ${sha:0:8} (tag API; git push was refused: $(tr '\n' ' ' < push.err))"
+            else
+              git tag -d "${tag}" >/dev/null 2>&1 || true
+              echo "::warning::${tag} could not be tagged at ${sha:0:8}. git push: $(tr '\n' ' ' < push.err) | tag API: $(tr '\n' ' ' < api.err)"
             fi
           done
+          git fetch --tags --force
 
       - name: GitHub release for every version in data/releases.json
         env:
