@@ -18,6 +18,8 @@ Options:
 | `--name "My Site"` | from the folder name | The site name in the header, title and footer |
 | `--wb-starter <version or path>` | `^1.0.0` | Which wb-starter to depend on (a local path installs a checkout) |
 
+The full walkthrough -- editing pages, adding a page, settings, publishing and updating -- is in [How to Create a Website with wb-starter](https://github.com/CieloVistaSoftware/wb-starter/blob/main/docs/guides/create-a-website.md).
+
 ## What you get
 
 ```text

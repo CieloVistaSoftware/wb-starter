@@ -7,6 +7,11 @@
       "icon": "📘",
       "docs": [
         {
+          "file": "guides/create-a-website.md",
+          "title": "How to Create a Website with wb-starter",
+          "description": "npm create wb-starter: create, run, edit, add pages, publish and update a site"
+        },
+        {
           "file": "V3-GUIDE.md",
           "title": "wb-starter v3 — Complete Guide",
           "description": "How to use wb-starter and how it works internally"
