@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "fix-card.schema.json",
   "title": "Fix Card",
-  "description": "Behavior for displaying fix/remediation details.",
+  "description": "Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.",
   "schemaFor": "fix-card",
   "compliance": {
     "baseClass": "x-fix-card",
