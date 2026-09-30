@@ -50,4 +50,20 @@ test.describe('WB.settled()', () => {
     expect(state.callback, 'the settled callback ran before the content was built').toBe(true);
     expect(state.event, 'wb:settled fired before the content was built').toBe(true);
   });
+
+  test('whenIdle() is the same callback: no quiet window when nothing is pending', async ({ page }) => {
+    // whenIdle() used to resolve only after nothing had been in flight for
+    // 50ms -- a waitForTimeout inside the runtime. Proven without a clock:
+    // when the page is settled, a callback-based signal resolves within a few
+    // microtasks, before ANY timer can fire; a quiet window cannot.
+    const resolvedInMicrotasks = await page.evaluate(async () => {
+      const WB = (window as any).WB;
+      await WB.settled();
+      let done = false;
+      WB.whenIdle().then(() => { done = true; });
+      for (let i = 0; i < 10 && !done; i++) await new Promise<void>((r) => queueMicrotask(r));
+      return done;
+    });
+    expect(resolvedInMicrotasks, 'whenIdle() waited on a timer while nothing was pending').toBe(true);
+  });
 });

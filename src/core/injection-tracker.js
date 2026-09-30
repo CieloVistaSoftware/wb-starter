@@ -35,14 +35,16 @@
  * it is needed. Held via WeakRef so an abandoned injection cannot leak its
  * element either.
  *
- * WHY A QUIET WINDOW: the counter legitimately touches zero mid-build. The
- * MutationObserver in observe() only sees a behavior's inserted nodes on a
- * LATER task, so injection A can finish (count 0) before the injections it
- * caused have started. Resolving on the first zero would hand back the same
- * mid-construction sample the sleeps do. `quiet` requires the zero to HOLD;
- * it is bounded by real work finishing, not a guess at how long work takes.
- * It also re-reads the count at the end of the window, so an element that was
- * briefly detached while a behavior rebuilt it is counted again on its return.
+ * WHY THERE IS NO QUIET WINDOW ANY MORE (#962): whenIdle() used to require
+ * zero to HOLD for 50ms, on the grounds that injection A could finish before
+ * the injections its inserted nodes caused had started. But a
+ * MutationObserver's callback is a MICROTASK, queued when the node is
+ * inserted -- ahead of the continuation that finishes A and ahead of
+ * settled()'s own one-microtask confirmation. Work that is not an injection
+ * (a viewport observer's first report, a fetch) is counted by track() until it
+ * calls back. So every unit reports its own end, and a guess about "long
+ * enough" has nothing left to cover. settled() is the signal; whenIdle() is
+ * kept as its alias.
  *
  * WHY IT REJECTS: nothing dies silently. A whenIdle() that quietly resolved on
  * timeout would turn a hung build into a passing test, which is the failure
@@ -157,53 +159,20 @@ export function createInjectionTracker() {
   }
 
   /**
-   * Resolve once no live injection has been in flight for `quiet` milliseconds.
+   * Kept for callers written before settled() (#962); it IS settled() now.
+   *
+   * It used to resolve only after nothing had been in flight for `quiet` ms
+   * (50 by default): a waitForTimeout inside the runtime, guessing that work
+   * was over because nothing had happened for a while. Work now reports its own
+   * end (track(), the viewport observer's first report, injections that start
+   * their children before they finish), so there is nothing left to guess.
+   * `quiet` is accepted and ignored so no caller breaks.
    *
    * @param {{ timeout?: number, quiet?: number }} [options]
    * @returns {Promise<void>} rejects if still busy after `timeout` ms
    */
-  function whenIdle({ timeout = 10000, quiet = 50 } = {}) {
-    return new Promise((resolve, reject) => {
-      let settled = false;
-      /** @type {any} */
-      let quietTimer = null;
-
-      const deadlineTimer = setTimeout(() => {
-        if (settled) return;
-        settled = true;
-        waiters.delete(onZero);
-        clearTimeout(quietTimer);
-        reject(new Error(
-          `WB.whenIdle: ${count()} injection(s) still in flight after ${timeout}ms — ` +
-          `${describe()}. On the lazy runtime an element below the fold is not ` +
-          `injected until it intersects — scroll to it first, then await idle.`
-        ));
-      }, timeout);
-
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(deadlineTimer);
-        waiters.delete(onZero);
-        resolve();
-      };
-
-      // Confirm the zero HOLDS. If work restarted during the window, go back
-      // to waiting for the next zero rather than resolving on a gap.
-      const confirmQuiet = () => {
-        clearTimeout(quietTimer);
-        quietTimer = setTimeout(() => {
-          if (settled) return;
-          if (count() === 0) finish();
-          else waiters.add(onZero);
-        }, quiet);
-      };
-
-      const onZero = () => { if (!settled) confirmQuiet(); };
-
-      if (count() === 0) confirmQuiet();
-      else waiters.add(onZero);
-    });
+  function whenIdle({ timeout = 10000 } = {}) {
+    return settled({ timeout });
   }
 
   /**
