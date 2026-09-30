@@ -160,7 +160,7 @@ import { setupGlobalErrorHandler } from './error-logger.js';
 import { pubsub } from './pubsub.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
-import { createInjectionTracker } from './injection-tracker.js';
+import { runtimeTracker, settledCall } from './injection-tracker.js';
 import { teachByExample } from './teach-by-example.js';
 
 // Global dev/test diagnostics: surface uncaught errors/rejections to console so Playwright traces capture them.
@@ -405,7 +405,8 @@ const inFlight = new WeakMap();
 // #961/#962: a COUNTABLE view of the same thing `pending` tracks. A WeakMap
 // cannot be counted, so "is WB still building?" was unanswerable from outside
 // and tests slept instead. Shared with wb-lazy.js — one contract, one file.
-const injectionTracker = createInjectionTracker();
+// #962: shared with wb-lazy.js, so either runtime's settled() sees all work.
+const injectionTracker = runtimeTracker;
 // Track schema-processed elements
 const schemaProcessed = new WeakSet();
 // Track elements currently mid-processSchema() (#312 follow-up): scan()'s
@@ -639,6 +640,18 @@ const WB = {
    */
   whenIdle(options) {
     return injectionTracker.whenIdle(options);
+  },
+
+  /**
+   * Resolve when every unit of work, in either runtime, has called back
+   * (#962). Promise, callback, or listen for `wb:settled`. See
+   * injection-tracker.js settled() for the contract.
+   * @param {(() => void) | { timeout?: number }} [callbackOrOptions]
+   * @param {{ timeout?: number }} [options]
+   * @returns {Promise<void>}
+   */
+  settled(callbackOrOptions, options) {
+    return settledCall(callbackOrOptions, options);
   },
 
   /**
@@ -1388,7 +1401,8 @@ const WB = {
       useSchemas = true, // v3.0: Enable schema-based DOM building
       // Base-path aware (relative to this module) so schemas load under any base —
       // domain root locally or /wb-starter/ on GitHub Pages. Absolute 404s there. (#225)
-      schemaPath = new URL('../wb-models', import.meta.url).href // Path to schema files
+      schemaPath = new URL('../wb-models', import.meta.url).href, // Path to schema files
+      onSettled = null, // #962: called once the first build has finished
     } = options;
 
     // Set debug mode
@@ -1523,6 +1537,13 @@ const WB = {
 
     if (debug) {
       Events.log('info', 'WB', 'Initialized', options);
+    }
+
+    // #962 -- John: "wb.init(cb => callback(cb)) requires no timing". Called
+    // once the first build has finished, never on a timer. A failure to settle
+    // is reported, not swallowed: nothing dies silently.
+    if (typeof onSettled === 'function') {
+      WB.settled(onSettled).catch((err) => console.error('[WB] init onSettled:', err && err.message));
     }
 
     return WB;

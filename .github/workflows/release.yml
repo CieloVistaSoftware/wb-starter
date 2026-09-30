@@ -1,0 +1,92 @@
+name: Release
+
+# Every "release: X.Y.Z" commit on main gets its tag, its GitHub release and its
+# npm packages, without a person doing it by hand (#1182). `npm run ship` makes
+# the release commit; this finishes the release. Nothing here depends on who
+# pushed: it runs on every push to main and fills in whatever is missing, so a
+# release the tagging missed (1.0.0, 4.0.6) is completed by the next push.
+#
+# Every step says what it did or why it did nothing -- never a silent skip.
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Tag, GitHub release, npm
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout (full history, for the release commits)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Tag every release commit that has no tag
+        run: |
+          git fetch --tags --force
+          git log --format='%H %s' origin/main | grep -E '^[0-9a-f]+ release: [0-9]+\.[0-9]+\.[0-9]+' | while read -r sha _ version _; do
+            tag="v${version}"
+            if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+              echo "✓ ${tag} already tagged"
+            else
+              git tag "${tag}" "${sha}"
+              git push origin "refs/tags/${tag}"
+              echo "➕ tagged ${tag} at ${sha:0:8}"
+            fi
+          done
+
+      - name: GitHub release for every version in data/releases.json
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for version in $(node -p "require('./data/releases.json').releases.map(r => r.version).join(' ')"); do
+            tag="v${version}"
+            if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+              echo "… ${tag}: no release commit on main yet, no GitHub release"
+            elif gh release view "${tag}" >/dev/null 2>&1; then
+              echo "✓ ${tag} GitHub release exists"
+            else
+              node scripts/release-notes.mjs "${version}" > notes.md
+              latest=$([ "${version}" = "$(node -p "require('./package.json').version")" ] && echo --latest || echo --latest=false)
+              gh release create "${tag}" --title "${version}" --notes-file notes.md --verify-tag ${latest}
+              echo "➕ GitHub release ${tag}"
+            fi
+          done
+
+      - name: Publish to npm (wb-starter, create-wb-starter)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if ! git rev-parse -q --verify "refs/tags/v${version}" >/dev/null; then
+            echo "… ${version} has no release commit yet: nothing to publish"; exit 0
+          fi
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "::warning::NPM_TOKEN is not set in the repository secrets, so npm was not published."; exit 0
+          fi
+          for dir in . packages/create-wb-starter; do
+            name=$(node -p "require('./${dir}/package.json').name")
+            ver=$(node -p "require('./${dir}/package.json').version")
+            if npm view "${name}@${ver}" version >/dev/null 2>&1; then
+              echo "✓ ${name}@${ver} already on npm"
+            else
+              (cd "${dir}" && npm publish --ignore-scripts --access public)
+              echo "➕ published ${name}@${ver}"
+            fi
+          done

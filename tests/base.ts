@@ -713,16 +713,14 @@ export async function wbIdle(
   opts: { timeout?: number; quiet?: number } = {}
 ): Promise<void> {
   const timeout = opts.timeout ?? 15000;
-  const quiet = opts.quiet ?? 50;
+  // `quiet` is ignored since #962: WB.settled() is callback-based and has no
+  // quiet window to configure. The option stays so existing callers compile.
   await page.waitForFunction(
-    () => typeof (window as any).WB?.whenIdle === 'function',
+    () => typeof (window as any).WB?.settled === 'function',
     undefined,
     { timeout }
   );
-  await page.evaluate(
-    ([t, q]) => (window as any).WB.whenIdle({ timeout: t, quiet: q }),
-    [timeout, quiet]
-  );
+  await page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
 }
 
 // #962 NOTE — `WB.ready` is still NOT adopted in this file's shared helpers.

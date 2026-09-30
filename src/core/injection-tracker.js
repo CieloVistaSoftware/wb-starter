@@ -35,14 +35,16 @@
  * it is needed. Held via WeakRef so an abandoned injection cannot leak its
  * element either.
  *
- * WHY A QUIET WINDOW: the counter legitimately touches zero mid-build. The
- * MutationObserver in observe() only sees a behavior's inserted nodes on a
- * LATER task, so injection A can finish (count 0) before the injections it
- * caused have started. Resolving on the first zero would hand back the same
- * mid-construction sample the sleeps do. `quiet` requires the zero to HOLD;
- * it is bounded by real work finishing, not a guess at how long work takes.
- * It also re-reads the count at the end of the window, so an element that was
- * briefly detached while a behavior rebuilt it is counted again on its return.
+ * WHY THERE IS NO QUIET WINDOW ANY MORE (#962): whenIdle() used to require
+ * zero to HOLD for 50ms, on the grounds that injection A could finish before
+ * the injections its inserted nodes caused had started. But a
+ * MutationObserver's callback is a MICROTASK, queued when the node is
+ * inserted -- ahead of the continuation that finishes A and ahead of
+ * settled()'s own one-microtask confirmation. Work that is not an injection
+ * (a viewport observer's first report, a fetch) is counted by track() until it
+ * calls back. So every unit reports its own end, and a guess about "long
+ * enough" has nothing left to cover. settled() is the signal; whenIdle() is
+ * kept as its alias.
  *
  * WHY IT REJECTS: nothing dies silently. A whenIdle() that quietly resolved on
  * timeout would turn a hung build into a passing test, which is the failure
@@ -61,6 +63,9 @@ export function createInjectionTracker() {
   const inFlight = new Set();
   /** @type {Set<() => void>} */
   const waiters = new Set();
+  /** @type {Set<() => void>} called each time a busy period ends (#962) */
+  const settledHooks = new Set();
+  let busy = false;
 
   const canWeakRef = typeof WeakRef === 'function';
 
@@ -87,7 +92,23 @@ export function createInjectionTracker() {
     /** @type {InjectionRecord} */
     const rec = { name: behaviorName, ref };
     inFlight.add(rec);
+    busy = true;
     return rec;
+  }
+
+  /**
+   * Count any unit of work -- a fetch, a stylesheet, an observer's first
+   * report -- until its promise settles (#962). Work that is not an injection
+   * still has to finish before the page is finished.
+   * @template T
+   * @param {string} name what it is, for describe()
+   * @param {Promise<T>} promise
+   * @returns {Promise<T>} the same promise
+   */
+  function track(name, promise) {
+    const rec = start(name, null);
+    Promise.resolve(promise).then(() => end(rec), () => end(rec));
+    return promise;
   }
 
   function count() {
@@ -117,6 +138,17 @@ export function createInjectionTracker() {
   /** @param {InjectionRecord} rec */
   function end(rec) {
     if (rec) inFlight.delete(rec);
+    if (count() === 0 && busy && settledHooks.size > 0) {
+      // One microtask hop, the same confirmation settled() uses: work this
+      // one caused (a MutationObserver delivery) registers first.
+      queueMicrotask(() => {
+        if (!busy || count() !== 0) return;
+        busy = false;
+        for (const hook of Array.from(settledHooks)) {
+          try { hook(); } catch { /* a listener must not break the runtime */ }
+        }
+      });
+    }
     if (count() === 0 && waiters.size > 0) {
       // Snapshot and clear before notifying: a waiter that re-arms (because
       // the zero did not hold) must land in the NEXT round, not this one.
@@ -127,54 +159,101 @@ export function createInjectionTracker() {
   }
 
   /**
-   * Resolve once no live injection has been in flight for `quiet` milliseconds.
+   * Kept for callers written before settled() (#962); it IS settled() now.
+   *
+   * It used to resolve only after nothing had been in flight for `quiet` ms
+   * (50 by default): a waitForTimeout inside the runtime, guessing that work
+   * was over because nothing had happened for a while. Work now reports its own
+   * end (track(), the viewport observer's first report, injections that start
+   * their children before they finish), so there is nothing left to guess.
+   * `quiet` is accepted and ignored so no caller breaks.
    *
    * @param {{ timeout?: number, quiet?: number }} [options]
    * @returns {Promise<void>} rejects if still busy after `timeout` ms
    */
-  function whenIdle({ timeout = 10000, quiet = 50 } = {}) {
-    return new Promise((resolve, reject) => {
-      let settled = false;
-      /** @type {any} */
-      let quietTimer = null;
+  function whenIdle({ timeout = 10000 } = {}) {
+    return settled({ timeout });
+  }
 
-      const deadlineTimer = setTimeout(() => {
-        if (settled) return;
-        settled = true;
-        waiters.delete(onZero);
-        clearTimeout(quietTimer);
+  /**
+   * Resolve when every unit of work has called back (#962).
+   *
+   * No quiet window and no timer: work reports its own end, and a unit
+   * that starts another starts it before it ends, so the count cannot touch
+   * zero between them. The one microtask hop lets MutationObserver deliveries
+   * queued by the mutation that just happened register their work first --
+   * microtasks run in order, so they are ahead of this check.
+   *
+   * The only number is the deadline, which never delays a settled page: it
+   * decides how long to wait before calling a hang a hang, and the error says
+   * what never finished.
+   *
+   * @param {{ timeout?: number }} [options]
+   * @returns {Promise<void>}
+   */
+  function settled({ timeout = 15000 } = {}) {
+    return new Promise((resolve, reject) => {
+      let done = false;
+      const deadline = setTimeout(() => {
+        if (done) return;
+        done = true;
+        waiters.delete(check);
         reject(new Error(
-          `WB.whenIdle: ${count()} injection(s) still in flight after ${timeout}ms — ` +
-          `${describe()}. On the lazy runtime an element below the fold is not ` +
-          `injected until it intersects — scroll to it first, then await idle.`
+          `WB.settled: ${count()} unit(s) of work still pending after ${timeout}ms — ${describe()}.`
         ));
       }, timeout);
-
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(deadlineTimer);
-        waiters.delete(onZero);
-        resolve();
-      };
-
-      // Confirm the zero HOLDS. If work restarted during the window, go back
-      // to waiting for the next zero rather than resolving on a gap.
-      const confirmQuiet = () => {
-        clearTimeout(quietTimer);
-        quietTimer = setTimeout(() => {
-          if (settled) return;
-          if (count() === 0) finish();
-          else waiters.add(onZero);
-        }, quiet);
-      };
-
-      const onZero = () => { if (!settled) confirmQuiet(); };
-
-      if (count() === 0) confirmQuiet();
-      else waiters.add(onZero);
+      function check() {
+        queueMicrotask(() => {
+          if (done) return;
+          if (count() === 0) {
+            done = true;
+            clearTimeout(deadline);
+            resolve();
+          } else {
+            waiters.add(check);
+          }
+        });
+      }
+      check();
     });
   }
 
-  return { start, end, count, describe, whenIdle };
+  /** @param {() => void} hook called each time a busy period ends */
+  function onSettled(hook) {
+    settledHooks.add(hook);
+    return () => settledHooks.delete(hook);
+  }
+
+  return { start, end, track, count, describe, whenIdle, settled, onSettled };
+}
+
+/**
+ * THE tracker (#962). Both runtimes can be live on one page -- main.js sets
+ * window.WB to wb.js while pages and docs load through wb-lazy.js -- and a
+ * "finished" signal that sees only one of them is not finished. So they share
+ * this instance, and settled() on either means ALL work has called back.
+ */
+export const runtimeTracker = createInjectionTracker();
+
+/**
+ * WB.settled() for both runtimes: a promise, and a callback if one is given.
+ * One implementation, so the two cannot drift (#923, #951).
+ * @param {(() => void) | { timeout?: number }} [callbackOrOptions]
+ * @param {{ timeout?: number }} [options]
+ * @returns {Promise<void>}
+ */
+export function settledCall(callbackOrOptions, options) {
+  const cb = typeof callbackOrOptions === 'function' ? callbackOrOptions : null;
+  const opts = cb ? options : callbackOrOptions;
+  const done = runtimeTracker.settled(opts || {});
+  if (cb) done.then(() => cb());
+  return done;
+}
+
+// The document hears when each busy period ends, as `wb:settled` -- once,
+// however many runtimes loaded this module.
+if (typeof document !== 'undefined') {
+  runtimeTracker.onSettled(() => {
+    document.dispatchEvent(new CustomEvent('wb:settled', { detail: { pending: 0 } }));
+  });
 }

@@ -660,22 +660,27 @@ export default class WBSite {
           oldScript.parentNode.replaceChild(newScript, oldScript);
         });
         
-        // Process wb-* elements that were just added
+        // Build the page's behaviors, and AWAIT it (#962). This was
+        // setTimeout(scan, 10): navigateTo's promise resolved with the page
+        // inserted but unbuilt, so every caller had to guess how much longer
+        // to wait. scan() resolves once every in-view element is built and
+        // every out-of-view one is deferred -- a callback, not a clock. The
+        // DOM is complete the moment innerHTML returns; the 10ms bought
+        // nothing.
         if (window.WB) {
-          // Small delay to ensure DOM is fully updated
-          setTimeout(() => window.WB.scan(main), 10);
+          try { await window.WB.scan(main); } catch { /* a broken behavior must not stop navigation */ }
         }
 
         // #730 -- John: "if all elements on the page have an id then duplicate
         // work would have a run time error." Checked AFTER the old page has been
         // replaced and the new one scanned, so a normal navigation never trips
-        // it -- only genuine duplication does. Dynamic import so a page render
-        // never waits on the detector, and never fails because of it.
-        setTimeout(() => {
-          import('./duplicate-ids.js')
-            .then((m) => m.reportDuplicateIds(`after navigating to ${pageId}`))
-            .catch(() => { /* the detector is never allowed to break a render */ });
-        }, 400);
+        // it -- only genuine duplication does. It used to run on a 400ms timer
+        // that guessed when the scan was over; it now runs when it IS over.
+        // Dynamic import, never awaited, so a render never waits on the
+        // detector and never fails because of it.
+        import('./duplicate-ids.js')
+          .then((m) => m.reportDuplicateIds(`after navigating to ${pageId}`))
+          .catch(() => { /* the detector is never allowed to break a render */ });
       } else {
         main.innerHTML = this.render404(pageId);
       }

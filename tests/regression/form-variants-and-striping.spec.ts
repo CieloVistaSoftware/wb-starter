@@ -85,9 +85,15 @@ async function render(page: Page, markup: string, requiredCss: string[]) {
 }
 
 function borderOf(page: Page, selector: string) {
-  return page.evaluate((sel) => {
+  return page.evaluate(async (sel) => {
     const el = document.querySelector(sel);
-    return el ? getComputedStyle(el).borderColor : null;
+    if (!el) return null;
+    // input.css transitions border-color over 0.15s. Read mid-flight (Windows
+    // CI, after one frame), all three variants reported the same in-between
+    // colour. The browser says when a transition is over: every running
+    // animation has a `finished` promise -- a callback, not a guess (#962).
+    await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => null)));
+    return getComputedStyle(el).borderColor;
   }, selector);
 }
 
