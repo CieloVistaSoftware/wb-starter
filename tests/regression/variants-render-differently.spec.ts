@@ -390,6 +390,21 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
           unrendered.push(`${label} (an image never finished loading)`);
           continue;
         }
+        // Likewise its <video>/<audio> have reached the look they rest at. An
+        // autoplay video is drawn at its poster's size until playback starts and
+        // at its own frame's size after, so read before that and autoplay=true
+        // is the same box as loop=true (Windows CI, #962: once whenIdle() lost
+        // its 50ms quiet window, nothing else happened to cover the gap).
+        // Autoplay rests once playing; any other media once its metadata is in;
+        // either one once the browser has given up on it.
+        const media = Array.from(stage.querySelectorAll('video, audio')) as HTMLMediaElement[];
+        const atRest = (m: HTMLMediaElement) => !!m.error || m.networkState === HTMLMediaElement.NETWORK_NO_SOURCE
+          || (m.autoplay ? !m.paused && m.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+            : m.readyState >= HTMLMediaElement.HAVE_METADATA);
+        if (!(await until(() => media.every(atRest), 10_000))) {
+          unrendered.push(`${label} (a video or audio never loaded, played or failed)`);
+          continue;
+        }
         // Freeze every animation at its start and let finite transitions end,
         // so the reading is the option's look, not a moment in its motion.
         const anims = stage.getAnimations({ subtree: true });
