@@ -15,6 +15,12 @@ import { test, expect } from '../fixtures/offline';
  */
 test('await navigateTo(page) returns with the page\'s in-view behaviors already built', async ({ page }) => {
   await page.goto('/?page=about');
+  // The site engine announces the page it has loaded; the fragment's HTML can
+  // be in the document before window.WBSite exists (Windows CI: "reading
+  // 'navigateTo' of undefined").
+  await page.waitForFunction(() => (window as any).WBSite?.currentPage === 'about');
+  // And the about fragment is in: past that point the first navigation only
+  // scans, so it cannot overwrite the page the test navigates to next.
   await expect(page.locator('#main .page--about')).toBeAttached();
 
   const state = await page.evaluate(async () => {
