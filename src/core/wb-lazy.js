@@ -23,7 +23,7 @@ import { isComponentLandmark } from './component-landmark.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
-import { createInjectionTracker } from './injection-tracker.js';
+import { runtimeTracker, settledCall } from './injection-tracker.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { aliasesFor } from './attribute-aliases.js';
 import { teachByExample } from './teach-by-example.js';
@@ -543,7 +543,8 @@ let injectionTimeout = null;
 // #961/#962: the countable, awaitable view of the same in-flight work.
 // Same module wb.js uses — one contract, implemented once (#923/#951 are what
 // happens when the two runtimes each grow their own copy).
-const injectionTracker = createInjectionTracker();
+// #962: shared with wb.js, so either runtime's settled() sees all work.
+const injectionTracker = runtimeTracker;
 
 // Shared observer for lazy loading
 const lazyPending = new WeakMap();
@@ -877,6 +878,25 @@ const WB = {
   },
 
   /**
+   * Resolve when every unit of work has called back (#962): injections,
+   * elements waiting on the viewport observer's first report, and the work
+   * they start. No quiet window, no timer.
+   *
+   *     await WB.settled();                 // promise
+   *     WB.settled(() => start());          // callback
+   *     document.addEventListener('wb:settled', start);   // event
+   *
+   * Rejects at the deadline (default 15s), naming what never finished.
+   *
+   * @param {(() => void) | { timeout?: number }} [callbackOrOptions]
+   * @param {{ timeout?: number }} [options]
+   * @returns {Promise<void>}
+   */
+  settled(callbackOrOptions, options) {
+    return settledCall(callbackOrOptions, options);
+  },
+
+  /**
    * Inject a behavior when element enters viewport
    * @param {HTMLElement} element 
    * @param {string} behaviorName 
@@ -907,8 +927,10 @@ const WB = {
       if (!waiting) {
         waiting = new Set();
         lazyWatchers.set(target, waiting);
-        // Created before observe(), so the observer's first report finds it.
-        firstReportFor(target);
+        // Created before observe(), so the observer's first report finds it,
+        // and counted as work until that report arrives (#962): until the
+        // observer says whether it is in view, nobody knows it is finished.
+        injectionTracker.track(`${behaviorName} (awaiting viewport)`, firstReportFor(target).promise);
         getLazyObserver().observe(target);
       }
       waiting.add(element);
@@ -1227,7 +1249,8 @@ const WB = {
       theme = null,
       debug = false,
       autoInject, // No default here — see the setConfig() call below for why.
-      preload = [] // Array of behavior names to preload
+      preload = [], // Array of behavior names to preload
+      onSettled = null, // #962: called once the first build has finished
     } = options;
 
     // Set debug mode
@@ -1331,6 +1354,13 @@ const WB = {
     
     if (debug) {
       Events.log('info', 'WB', 'Initialized', options);
+    }
+
+    // #962 -- John: "wb.init(cb => callback(cb)) requires no timing". Called
+    // once the first build has finished, never on a timer. A failure to settle
+    // is reported, not swallowed: nothing dies silently.
+    if (typeof onSettled === 'function') {
+      WB.settled(onSettled).catch((err) => console.error('[WB] init onSettled:', err && err.message));
     }
 
     return WB;
