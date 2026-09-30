@@ -5,6 +5,7 @@ import http from 'http';
 import net from 'net';
 import os from 'os';
 import path from 'path';
+import { pipeline } from 'stream';
 import { fileURLToPath } from 'url';
 
 /**
@@ -28,7 +29,7 @@ test.describe.configure({ mode: 'serial', timeout: 120_000 });
 let work: string;
 let site: string;
 let server: ChildProcess | null = null;
-let staticServer: http.Server | null = null;
+let staticServer: StaticSite | null = null;
 
 function freePort(): Promise<number> {
   return new Promise((resolve, reject) => {
@@ -36,6 +37,45 @@ function freePort(): Promise<number> {
     srv.once('error', reject);
     srv.listen(0, () => { const port = (srv.address() as net.AddressInfo).port; srv.close(() => resolve(port)); });
   });
+}
+
+type StaticSite = { port: number; opened: Set<fs.ReadStream>; close: () => Promise<void> };
+
+/**
+ * A plain static server for `dir`, as a host would be.
+ *
+ * close() resolves once every file it opened is CLOSED, not just once the
+ * server stops listening. Windows will not delete a file that is still open:
+ * with createReadStream(file).pipe(res), a request the browser drops
+ * mid-transfer (a page closing while it still loads) leaves its file open for
+ * good, and deleting the site afterwards failed on Windows CI with ENOTEMPTY in
+ * dist\src\lib. pipeline() destroys the file stream when the response goes
+ * away, and each stream's own 'close' event says when its handle is released
+ * -- a signal, not a timer.
+ */
+async function serveStatic(dir: string): Promise<StaticSite> {
+  const opened = new Set<fs.ReadStream>();
+  const server = http.createServer((req, res) => {
+    const rel = decodeURIComponent((req.url || '/').split('?')[0]).replace(/^\/+/, '') || 'index.html';
+    const file = path.join(dir, rel);
+    if (!file.startsWith(dir) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404).end(); return; }
+    const type = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml' }[path.extname(file)] || 'application/octet-stream';
+    res.writeHead(200, { 'content-type': type });
+    const stream = fs.createReadStream(file);
+    opened.add(stream);
+    pipeline(stream, res, () => { /* a dropped request is not an error here */ });
+  });
+  const port = await freePort();
+  await new Promise<void>((resolve) => server.listen(port, resolve));
+  return {
+    port,
+    opened,
+    close: async () => {
+      server.closeAllConnections();
+      await new Promise((resolve) => server.close(resolve));
+      await Promise.all([...opened].map((st) => (st.closed ? null : new Promise((r) => st.once('close', r)))));
+    },
+  };
 }
 
 /** Resolves once the server answers -- a readiness signal, not a sleep. */
@@ -60,7 +100,7 @@ test.afterAll(async () => {
     server.kill();
     await exited;
   }
-  await new Promise((resolve) => (staticServer ? staticServer.close(resolve) : resolve(null)));
+  if (staticServer) await staticServer.close();
   fs.rmSync(work, { recursive: true, force: true });
 });
 
@@ -112,15 +152,8 @@ test('npm run build writes a static site that works without wb-starter running',
   execFileSync(NPM, ['run', 'build'], { cwd: site, stdio: 'pipe', shell: process.platform === 'win32' });
   const dist = path.join(site, 'dist');
   // A plain static server, as a host would be: dist/ and nothing else.
-  const port = await freePort();
-  staticServer = http.createServer((req, res) => {
-    const rel = decodeURIComponent((req.url || '/').split('?')[0]).replace(/^\/+/, '') || 'index.html';
-    const file = path.join(dist, rel);
-    if (!file.startsWith(dist) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404).end(); return; }
-    const type = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml' }[path.extname(file)] || 'application/octet-stream';
-    res.writeHead(200, { 'content-type': type });
-    fs.createReadStream(file).pipe(res);
-  }).listen(port);
+  staticServer = await serveStatic(dist);
+  const port = staticServer.port;
   const base = `http://localhost:${port}/`;
   await answering(base);
 
@@ -128,6 +161,27 @@ test('npm run build writes a static site that works without wb-starter running',
   await expect(page.locator('#about-hero h1')).toHaveText('About');
   await expect(page.locator('#siteNav')).toContainText('Home');
   expect(fs.existsSync(path.join(dist, '.nojekyll')), 'GitHub Pages would drop _-prefixed files').toBe(true);
+});
+
+test('a request dropped mid-file leaves no file open, so the site can be deleted', async () => {
+  test.setTimeout(30_000);
+  // The Windows CI failure, on any platform: Linux deletes an open file
+  // without complaint, so ask the streams themselves whether they closed.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'wb-static-'));
+  fs.writeFileSync(path.join(dir, 'big.bin'), Buffer.alloc(8 * 1024 * 1024));
+  const site = await serveStatic(dir);
+  await new Promise<void>((resolve, reject) => {
+    const req = http.get(`http://localhost:${site.port}/big.bin`, (res) => {
+      res.once('data', () => { req.destroy(); resolve(); });
+    });
+    req.on('error', (err) => (req.destroyed ? null : reject(err)));
+  });
+  // What afterAll does before it deletes the site. With pipe() the dropped
+  // file's stream never closes, so this never resolves: its deadline is the
+  // test's own timeout, and the failure names it.
+  await site.close();
+  expect([...site.opened].map((st) => st.closed), 'a file the server opened is still open').toEqual([true]);
+  fs.rmSync(dir, { recursive: true, force: true });
 });
 
 test('both packages stay small enough to install', () => {
