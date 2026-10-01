@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -40,6 +41,74 @@ function getMarkdownFiles(dir, basePath = '') {
   }
   
   return results;
+}
+
+const CURATED_MANIFEST = path.join(DOCS_DIR, 'manifest.json');
+
+// docs/manifest.json -- the curated index pages/docs.html renders -- carries a
+// `modified` date (YYYY-MM-DD) on every entry, for the docs page's "Newest
+// first" order. This script keeps those dates current on every `npm start`.
+//
+// The date is the file's last COMMIT, never its mtime: a fresh clone stamps
+// every mtime with the checkout time, and an mtime changes on every save, so
+// the tracked manifest would churn exactly the way #1071 removed the
+// `generated` timestamp to stop. A commit date changes only when the doc
+// itself is committed again.
+//
+// Returns null when git cannot give a true answer -- no git, not a repo, or a
+// shallow clone, where every file older than the cut-off would wrongly carry
+// the newest commit's date. The recorded dates are then left as they are.
+function readGitDates() {
+  const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] });
+  try {
+    if (git('rev-parse', '--is-shallow-repository').trim() === 'true') return null;
+    // One pass over history, newest commit first: the first time a path
+    // appears is its latest commit.
+    const log = git('log', '--format=%x00%cs', '--name-only', '--', 'docs', 'pages');
+    const dates = new Map();
+    let date = '';
+    for (const line of log.split('\n')) {
+      if (line.startsWith('\0')) { date = line.slice(1); continue; }
+      const file = line.trim();
+      if (file && !dates.has(file)) dates.set(file, date);
+    }
+    return dates;
+  } catch {
+    return null;
+  }
+}
+
+// The repo path an entry of docs/manifest.json points at, or null for an
+// external link. Mirrors how pages/docs.html builds each card's link.
+function curatedEntryPath(entry) {
+  if (entry.page) return `pages/${entry.page}.html`;
+  if (!entry.file || /^https?:/i.test(entry.file)) return null;
+  const file = entry.file.replace(/^\/+/, '');
+  return /^docs\//.test(file) ? file : `docs/${file}`;
+}
+
+function stampCuratedDates() {
+  const gitDates = readGitDates();
+  if (!gitDates) {
+    console.log('No full git history: docs/manifest.json dates left as recorded');
+    return;
+  }
+  const text = fs.readFileSync(CURATED_MANIFEST, 'utf-8');
+  const curated = JSON.parse(text);
+  for (const category of curated.categories || []) {
+    for (const entry of [...(category.docs || []), ...(category.pages || [])]) {
+      const repoPath = curatedEntryPath(entry);
+      // A file not committed yet has no git date; it keeps any date it had.
+      const modified = repoPath && gitDates.get(repoPath);
+      if (modified) entry.modified = modified;
+    }
+  }
+  const updated = JSON.stringify(curated, null, 2) + '\n';
+  // Written only on a real change, so an unchanged tree stays clean (#1071).
+  if (updated !== text) {
+    fs.writeFileSync(CURATED_MANIFEST, updated);
+    console.log('Updated doc dates in docs/manifest.json');
+  }
 }
 
 function generateManifest() {
@@ -89,3 +158,4 @@ function generateManifest() {
 }
 
 generateManifest();
+stampCuratedDates();
