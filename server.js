@@ -4,7 +4,15 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import compression from 'compression';
 import { WebSocketServer } from 'ws';
-import { exec, execSync, execFileSync } from 'child_process';
+import { exec, execSync, execFile, execFileSync } from 'child_process';
+import { promisify } from 'util';
+
+// `gh` is called ASYNCHRONOUSLY. execFileSync froze the whole server for as
+// long as gh took -- up to its 30s timeout when gh hangs (unauthenticated, no
+// network), which is exactly a test's whole budget. On CI every page requested
+// during that window timed out in page.goto: four dark-mode.spec.ts pages
+// failed the first time the compliance project ran on its own runner.
+const execFileAsync = promisify(execFile);
 import { marked } from 'marked';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -847,7 +855,7 @@ function headSha(rootDir) {
   }
 }
 
-app.get('/api/fixes', (req, res) => {
+app.get('/api/fixes', async (req, res) => {
   const head = headSha(rootDir);
   const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
 
@@ -878,7 +886,7 @@ app.get('/api/fixes', (req, res) => {
   // 1. THE ISSUES — the source of truth. Everything below is filtered by this.
   const meta = new Map();
   try {
-    const out = execFileSync(
+    const { stdout: out } = await execFileAsync(
       'gh',
       ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
        '--json', 'number,title,state,url,closedAt,labels'],
@@ -1029,7 +1037,7 @@ app.get('/api/fixes', (req, res) => {
 //
 // Authenticated via gh, like /api/issues (#1045), so it costs nothing against the
 // 60/hour unauthenticated browser budget.
-app.get('/api/activity', (req, res) => {
+app.get('/api/activity', async (req, res) => {
   const hours = Math.min(Math.max(Number(req.query.hours) || 24, 1), 24 * 30);
   const sinceMs = Date.now() - hours * 3600 * 1000;
   const sinceIso = new Date(sinceMs).toISOString();
@@ -1071,7 +1079,7 @@ app.get('/api/activity', (req, res) => {
   let closed = [];
   let opened = [];
   try {
-    const out = execFileSync(
+    const { stdout: out } = await execFileAsync(
       'gh',
       ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
        '--json', 'number,title,state,createdAt,closedAt,url,labels'],
@@ -1134,7 +1142,7 @@ app.get('/api/activity', (req, res) => {
   });
 });
 
-app.get('/api/issues', (req, res) => {
+app.get('/api/issues', async (req, res) => {
   const cached = readIssuesCache();
   const ageMs = cached ? Date.now() - new Date(cached.fetchedAt).getTime() : Infinity;
 
@@ -1145,7 +1153,7 @@ app.get('/api/issues', (req, res) => {
   }
 
   try {
-    const out = execFileSync(
+    const { stdout: out } = await execFileAsync(
       'gh',
       ['issue', 'list', '--repo', ISSUES_REPO, '--state', 'all', '--limit', '1000',
        '--json', 'number,title,labels,body,state,createdAt,updatedAt'],
