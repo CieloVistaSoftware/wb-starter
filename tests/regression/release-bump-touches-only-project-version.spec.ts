@@ -31,10 +31,10 @@
 
 import { test, expect } from '../fixtures/offline';
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -88,6 +88,16 @@ function buildFakeProject(): string {
   // The script under test — the real one, not a copy of its logic.
   copyFileSync(join(ROOT, 'scripts/release.mjs'), join(dir, 'scripts/release.mjs'));
   copyFileSync(join(ROOT, 'scripts/lib/next-version.mjs'), join(dir, 'scripts/lib/next-version.mjs'));
+
+  // ...with EVERY scripts/lib/*.mjs beside it, not a hand-listed few. release.mjs
+  // gained an import (#1178's full-run-counter) and this fixture died with
+  // ERR_MODULE_NOT_FOUND, which the ratchet scored as a NEW failure and which
+  // aborted the 4.0.6 release. A fixture that lists its dependencies by name is
+  // a gate that breaks on the next import.
+  mkdirSync(join(dir, 'scripts/lib'), { recursive: true });
+  for (const name of readdirSync(join(ROOT, 'scripts/lib'))) {
+    if (name.endsWith('.mjs')) copyFileSync(join(ROOT, 'scripts/lib', name), join(dir, 'scripts/lib', name));
+  }
 
   // Gate 1: the ratchet. Nothing to ratchet here, so it passes.
   writeFileSync(join(dir, '.husky/test-ratchet.mjs'), 'process.exit(0);\n');
@@ -149,7 +159,37 @@ function changedPaths(before: Record<string, string>, after: Record<string, stri
   return [...keys].filter((k) => before[k] !== after[k]).sort();
 }
 
-test('a release bumps only the project\'s own version fields in package-lock.json', () => {
+/**
+ * #1203: release.mjs takes the machine-wide suite lock (#1128). Inside a gate or
+ * ship run that lock is already held -- by the very run executing this test -- so
+ * a fixture sharing the machine's lock directory waited up to 85 minutes for it.
+ * execFileSync blocks the worker, so Playwright's timeout could not fire either:
+ * the test never reported, the ratchet counted one result short, and every full
+ * run since 2026-09-17 was killed as a HANG after finishing.
+ *
+ * So the fixture gets a lock directory of its own, and a bound. And this test
+ * holds a suite lock itself for the whole run, so the gate's condition is
+ * reproduced every time, not only when a gate happens to be running it.
+ */
+const RELEASE_TIMEOUT_MS = 120_000;
+
+test('a release bumps only the project\'s own version fields in package-lock.json', async () => {
+  const { withMachine } = await import(pathToFileURL(join(ROOT, 'scripts/lib/hold-machine.mjs')).href);
+  const heldLockDir = mkdtempSync(join(tmpdir(), 'wb-held-lock-'));
+  const fixtureLockDir = mkdtempSync(join(tmpdir(), 'wb-fixture-lock-'));
+  const priorLockDir = process.env.WB_TEST_LOCK_DIR;
+  process.env.WB_TEST_LOCK_DIR = heldLockDir;
+  let releaseHolder: (v?: unknown) => void = () => {};
+  let holder: Promise<{ held: boolean; why?: string }> = Promise.resolve({ held: false });
+  const acquired = new Promise<void>((onHeld) => {
+    holder = withMachine(
+      { root: ROOT, kind: 'suite', label: 'held by the running suite (#1203)', waitMs: 5_000, handleSignals: false },
+      () => new Promise((resolve) => { releaseHolder = resolve; onHeld(); })
+    );
+  });
+  const outcome = await Promise.race([acquired.then(() => null), holder]);
+  expect(outcome, 'the test could not hold its own suite lock, so it would not reproduce the gate').toBeNull();
+
   const dir = buildFakeProject();
   try {
     const lockBefore = JSON.parse(readFileSync(join(dir, 'package-lock.json'), 'utf8'));
@@ -170,11 +210,14 @@ test('a release bumps only the project\'s own version fields in package-lock.jso
         cwd: dir,
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe'],
+        env: { ...process.env, WB_TEST_LOCK_DIR: fixtureLockDir },
+        timeout: RELEASE_TIMEOUT_MS,
       });
     } catch (err: any) {
-      throw new Error(
-        `release.mjs exited non-zero in the fixture project:\n${err.stdout || ''}\n${err.stderr || ''}`
-      );
+      const why = err.code === 'ETIMEDOUT' || err.signal
+        ? `did not finish within ${RELEASE_TIMEOUT_MS / 1000}s -- most likely waiting for a machine lock it should not share (#1203)`
+        : 'exited non-zero';
+      throw new Error(`release.mjs ${why} in the fixture project:\n${err.stdout || ''}\n${err.stderr || ''}`);
     }
 
     const lockAfter = JSON.parse(readFileSync(join(dir, 'package-lock.json'), 'utf8'));
@@ -201,6 +244,12 @@ test('a release bumps only the project\'s own version fields in package-lock.jso
     }
   } finally {
     rmSync(dir, { recursive: true, force: true });
+    releaseHolder();
+    await holder;
+    if (priorLockDir === undefined) delete process.env.WB_TEST_LOCK_DIR;
+    else process.env.WB_TEST_LOCK_DIR = priorLockDir;
+    rmSync(heldLockDir, { recursive: true, force: true });
+    rmSync(fixtureLockDir, { recursive: true, force: true });
   }
 });
 

@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 
 /**
  * #1044 — CI and the local gate must ask the same question.
@@ -197,6 +197,58 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
       'Cancelling is right for a pull request and wrong for main, where every commit is permanent\n' +
       'and the question is whether THAT commit was green.',
     ).not.toBe('true');
+  });
+
+  test('EVERY workflow asks the gate\'s question, not its own (#1163)', () => {
+    // #1044 fixed ci-tests.yml and this guard hard-coded that one filename, so
+    // "CI — Full Compliance" kept its own January command and nobody could see
+    // it: 79 failures, 66 of them register entries, every one of its last 30
+    // runs red, and its colour therefore meaningless. A guard that names one
+    // file cannot notice the second copy of the defect.
+    const dir = '.github/workflows';
+    const offenders: string[] = [];
+
+    for (const name of readdirSync(dir).filter((f) => f.endsWith('.yml'))) {
+      const file = `${dir}/${name}`;
+      runLines(readFileSync(file, 'utf8')).forEach((line) => {
+        if (!/playwright\s+test/.test(line)) return;
+        // A run that cannot fail the build is a report, not a gate.
+        if (/\|\|\s*true/.test(line) || /continue-on-error:\s*true/.test(line)) return;
+        offenders.push(`  ${file}: ${line.trim()}`);
+      });
+      // --reporter= REPLACES playwright.config.ts's reporters, including
+      // scripts/tools/test-reporter.ts, whose onBegin creates data/errors.json.
+      // Without it "error log should exist" passes only when a page happened to
+      // log an error — that is, only when the site is broken.
+      runLines(readFileSync(file, 'utf8')).forEach((line) => {
+        if (/--reporter=/.test(line) && !/\|\|\s*true/.test(line)) {
+          offenders.push(`  ${file}: overrides the project's reporters — ${line.trim()}`);
+        }
+      });
+    }
+
+    expect(
+      offenders,
+      'These workflows run Playwright their own way:\n' + offenders.join('\n') + '\n\n' +
+      'A raw run has no register, so it fails on recorded debt; --reporter= removes the\n' +
+      "project's reporters. Run a whole project through .husky/test-ratchet.mjs (narrow it\n" +
+      'with WB_GATE_PROJECTS), named specs through scripts/locked-spec-run.mjs, and ask for\n' +
+      'traces with WB_TRACE rather than --trace.',
+    ).toEqual([]);
+  });
+
+  test('the compliance workflow runs the ratchet, narrowed by WB_GATE_PROJECTS', () => {
+    const compliance = readFileSync('.github/workflows/ci-compliance.yml', 'utf8');
+    expect(
+      /test-ratchet\.mjs/.test(compliance),
+      '.github/workflows/ci-compliance.yml no longer runs the ratchet, so it is judging the\n' +
+      'same code by a different standard again (#1163).',
+    ).toBe(true);
+    expect(
+      /WB_GATE_PROJECTS:\s*compliance/.test(compliance),
+      'ci-compliance.yml must narrow the gate to the compliance project through\n' +
+      'WB_GATE_PROJECTS, not by hand-writing a playwright command.',
+    ).toBe(true);
   });
 
   test('the uploaded evidence is a path this repo actually writes', () => {

@@ -18,6 +18,7 @@
  */
 import { execFileSync } from 'child_process';
 import { suiteEnv } from './suite-env.mjs';
+import { changedPaths } from './git-status.mjs';
 
 // `root` must decide which repository these act on. An inherited GIT_DIR (set
 // whenever this runs under a git hook) silently overrides cwd: from a worktree
@@ -41,6 +42,26 @@ export function tagsCreatedSince(before, now) {
  * Delete only the tags this run created. Returns the list it deleted, so the
  * caller can say so; a pre-existing tag is never touched.
  */
+/**
+ * Put the tracked tree back to HEAD, index included, and return any tracked
+ * path still changed afterwards (empty means restored) (#1179).
+ *
+ * FROM HEAD, not from the index. ship.mjs runs `git add -A` before its commit,
+ * and the commit is where the gate refuses, so by the time a rollback runs the
+ * index holds the release. `git checkout -- .` restores the working tree FROM THE
+ * INDEX, so on 2026-09-15 it restored nothing and printed "Tree restored" over
+ * 33 staged files and a package.json reading 4.0.6.
+ *
+ * `restore --source=HEAD --staged --worktree` resets both. A file only the
+ * release added is removed from both too. Ignored files are not touched, and
+ * untracked files are not reported: ship refuses to start with any.
+ */
+export function restoreTreeToHead(root) {
+  git(root, ['restore', '--source=HEAD', '--staged', '--worktree', '--', '.'], { stdio: 'pipe' });
+  const raw = git(root, ['status', '--porcelain', '--untracked-files=no'], { encoding: 'utf8' });
+  return changedPaths(raw);
+}
+
 export function deleteTagsCreatedSince(root, before) {
   const created = tagsCreatedSince(before, releaseTags(root));
   for (const tag of created) {

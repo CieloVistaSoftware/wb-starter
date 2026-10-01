@@ -757,6 +757,50 @@ export async function wbIdle(
 // changing one shared helper and hoping. Tracked in #962.
 
 /**
+ * Load a page and wait until the runtime says it is built (#1087). Opt-in, for a
+ * page that settles, which is exactly where the #962 note above says a page-wide
+ * wait is sound. It is not a change to waitForWB().
+ *
+ *     await gotoSettled(page, '/pages/home.html');
+ *
+ * The replacement for `page.goto(url, { waitUntil: 'networkidle' })`. networkidle
+ * is not "the page is ready": it is "no request for 500ms", so it waits on
+ * whatever the page fetches, including other people's servers. Measured on
+ * /pages/home.html at one worker: built at 0.7-0.95s, networkidle at 2.5-2.9s,
+ * the gap being three archive.org requests for the home page's MP3 (one of
+ * them a redirect to a mirror). Under load, or with archive.org slow, that
+ * passed 30s, and seven tests died in beforeEach and aborted the 4.0.6 release.
+ *
+ * The wait, each step being a signal rather than a duration (#1167):
+ *   1. WB.ready exists. It is assigned only when init() starts the boot scan,
+ *      so waiting on WB alone lets an uninitialised page through.
+ *   2. await WB.ready.
+ *   3. Two animation frames. The dev shell's eager WB.scan() runs just after
+ *      init resolves, and a lazy scan's IntersectionObserver delivers its first
+ *      batch during a rendering update. Either way, injections have started.
+ *   4. await WB.settled(). It rejects on timeout, naming the work still pending,
+ *      so a hung build fails loudly (#962: whenIdle() is now an alias of it).
+ */
+export async function gotoSettled(
+  page: Page,
+  url: string,
+  opts: { timeout?: number } = {}
+): Promise<void> {
+  const timeout = opts.timeout ?? 15000;
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => {
+    const WB = (window as any).WB;
+    return typeof WB?.settled === 'function' && WB?.ready instanceof Promise;
+  }, undefined, { timeout });
+  await page.evaluate(async (t) => {
+    const WB = (window as any).WB;
+    await WB.ready;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await WB.settled({ timeout: t });
+  }, timeout);
+}
+
+/**
  * Setup a test container with HTML and scan for behaviors
  */
 export async function setupTestContainer(page: Page, html: string): Promise<Locator> {

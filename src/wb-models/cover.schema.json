@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "cover.schema.json",
   "title": "Cover",
-  "description": "Behavior applied with x-cover.",
+  "description": "A full-height flex column that centers its content, with a <header> child pinned to the top and a <footer> child pinned to the bottom -- the hero or splash-screen layout.",
   "schemaFor": "cover",
   "properties": {
     "min-height": {

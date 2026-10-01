@@ -373,6 +373,54 @@ async function testSubscriberIsNotStrandedByADeadHolder() {
   });
 }
 
+// ─── THE WAIT ENDS, AND SINGLES WAIT TOO (#1128) ───────────────────
+// A holder that is alive but stuck never releases and never goes stale, so a
+// subscriber without a deadline waited forever. And a single run could only be
+// refused, never notified -- so the per-commit spec runs had nothing to wait on.
+async function testSubscriberGivesUpAtItsDeadline() {
+  console.log("\nA subscriber behind a live holder that never releases gives up at its deadline:");
+
+  await withTempDir(async (dir) => {
+    const [holder, subscriber] = twoWorktrees(dir, { staleCheckMs: 60_000 });
+    await holder.acquireSuiteLock(new Date().toISOString(), "stuck holder");
+    await holder.bindSuiteLock(process.pid, {});
+
+    const began = Date.now();
+    const outcome = await Promise.race([
+      subscriber.acquireSuiteLockOnRelease(new Date().toISOString(), "subscriber", null, { timeoutMs: 300 }),
+      new Promise((r) => setTimeout(() => r("never returned"), 3000)),
+    ]);
+    check("it returns a refusal naming the holder, not the lock",
+      typeof outcome === "string" && outcome.includes("agent-A"), `got: ${JSON.stringify(outcome)}`);
+    check("and returns at the deadline, not before", Date.now() - began >= 300, `${Date.now() - began}ms`);
+    const held = await holder.readLock();
+    check("the holder's lock is untouched", held && held.pid === process.pid, JSON.stringify(held));
+  });
+}
+
+async function testSingleSubscriberIsNotifiedOnRelease() {
+  console.log("\nA single run held by a suite SUBSCRIBES and is notified on release:");
+
+  await withTempDir(async (dir) => {
+    const [holder, subscriber] = twoWorktrees(dir, { staleCheckMs: 60_000 });
+    await holder.acquireSuiteLock(new Date().toISOString(), "holder");
+    await holder.bindSuiteLock(process.pid, {});
+
+    if (typeof subscriber.acquireSingleSlotOnRelease !== "function") {
+      check("acquireSingleSlotOnRelease exists", false, "a single run can only be refused, never notified");
+      return;
+    }
+    let told = "";
+    const pending = subscriber.acquireSingleSlotOnRelease("tests/x.spec.ts", (why) => { told = why; }, { timeoutMs: 10_000 });
+    await new Promise((r) => setTimeout(r, 300));
+    check("it is told why it is held, naming the suite", told.includes("A suite holds the machine"), `told: ${JSON.stringify(told)}`);
+
+    await holder.removeLock();
+    const got = await Promise.race([pending, new Promise((r) => setTimeout(() => r(null), 3000))]);
+    check("the release notifies it and it gets a slot", !!got && typeof got.slot === "string", JSON.stringify(got));
+  });
+}
+
 // ─── MEMORY FLOOR ──────────────────────────────────────────────────
 async function testMemoryFloor() {
   console.log("\nMemory floor refuses to launch on a starved machine:");
@@ -424,6 +472,8 @@ await testSimpleWorkingCase();
 await testEveryPermutationFromTheSchema();
 await testSubscriberIsNotifiedOnRelease();
 await testSubscriberIsNotStrandedByADeadHolder();
+await testSubscriberGivesUpAtItsDeadline();
+await testSingleSubscriberIsNotifiedOnRelease();
 await testMemoryFloor();
 
 console.log(`\n${failed === 0 ? "✅" : "❌"} ${passed} passed, ${failed} failed`);

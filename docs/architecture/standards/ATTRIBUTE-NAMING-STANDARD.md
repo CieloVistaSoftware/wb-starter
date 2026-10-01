@@ -90,16 +90,20 @@ cta="Click"     →   "tag": "button"    →   <button>Click</button>
 
 ## Element Naming Convention
 
-WB uses three patterns for applying behaviors:
+WB-Starter uses two patterns for applying behaviors:
 
 | Pattern | Meaning | Use Case | Example |
 |---------|---------|----------|---------|
-| `<wb-{name}>` | **Standalone** | Behavior gets its own tag | `<div x-cardpricing>` |
-| `x-behavior` | **Modifier** | Behavior decorates an existing tag | `x-ripple` |
+| semantic HTML tag | **Native** | The element IS the behavior (`nativeMap` in `src/core/tag-map.js`) | `<article>`, `<audio>`, `<input type="range">` |
+| `x-{name}` | **Extension** | An attribute names the behavior on a host (`extensionMap`) | `<div x-cardpricing>`, `<button x-ripple>` |
 
-> **Both are composition.** The split is only about where the behavior is named —
-> whether it gets its own tag or decorates a tag that already exists. Nothing
-> subclasses anything: `<div x-cardpricing>` does not extend a `card` class, the
+There are no behavior tags of our own: 4.0.0 removed them, and `elementMap` is empty
+on purpose (Tier-1 Law 5). A behavior with no semantic tag is always an `x-*`
+attribute on a host.
+
+> **Both are composition.** The split is only about how the behavior is named —
+> by the semantic tag itself, or by an attribute on a host. Nothing subclasses
+> anything: `<div x-cardpricing>` does not extend a `card` class, the
 > `cardpricing` behavior function decorates the element in place, exactly as
 > `x-ripple` does.
 >
@@ -108,20 +112,23 @@ WB uses three patterns for applying behaviors:
 > composition, so the vocabulary is too.
 
 ```html
-<!-- Standalone: gets its own tag (noun) -->
-<articlestats
+<!-- Native: the semantic tag is the behavior -->
+<article
+  title="Hello">
+  Content
+</article>
+<!-- Extension: an attribute names the behavior on a host -->
+<div
+  x-cardstats
   value="1,234"
   label="Users"
   trend="up">
 </div>
-<!-- Modifier: decorates an existing tag (verb) -->
 <button
   x-ripple
   x-tooltip="Save changes">
   Save
 </button>
-<!-- BECOMES: Morph -->
-<article x-as-card>Plain article becomes styled card</article>
 ```
 
 ---
@@ -383,13 +390,6 @@ Extensions use `x-` prefix with optional value:
       <img x-placeholder="blur">
 ```
 
-### Morphing (x-as-)
-```html
-<article x-as-card>
-  <ul x-as-timeline>
-    <blockquote x-as-testimonial>
-```
-
 ---
 
 ## Naming Conventions
@@ -404,13 +404,17 @@ Extensions use `x-` prefix with optional value:
 
 ```html
 <!-- ✅ CORRECT -->
-<articlestats
+<div
+  x-cardstats
   trend-value="+5%"
   per-page="10">
-  <!-- ❌ WRONG -->
-  <articlestats
-    trendValue="+5%"
-    perPage="10">
+</div>
+<!-- ❌ WRONG -->
+<div
+  x-cardstats
+  trendValue="+5%"
+  perPage="10">
+</div>
 ```
 
 ### Pluralization Rules
@@ -574,21 +578,26 @@ Display values can include formatting - they're strings, not numbers:
 
 ```html
 <!-- Display value (string) - can have formatting -->
-<articlestats
+<div
+  x-cardstats
   value="$1,234.56"
   label="Revenue">
-  <articlestats
-    value="99.9%"
-    label="Uptime">
-    <!-- Numeric value (number) - no formatting -->
-    <progress
-      value="75"
-      max="100">
-      <input
-        x-stepper
-        value="5"
-        min="0"
-        max="10">
+</div>
+<div
+  x-cardstats
+  value="99.9%"
+  label="Uptime">
+</div>
+<!-- Numeric value (number) - no formatting -->
+<progress
+  value="75"
+  max="100">
+</progress>
+<input
+  x-stepper
+  value="5"
+  min="0"
+  max="10">
 ```
 
 ---
@@ -681,7 +690,7 @@ already the direct `x-{name}` form, not `x-behavior="{name}"`:
 
 | Old Pattern | New Pattern |
 |-------------|-------------|
-| `x-behavior="{name}"` | `<wb-{name}>` custom element tag |
+| `x-behavior="{name}"` | the semantic tag when one exists (`<article>`), otherwise `x-{name}` on a host |
 | `data-{prop}` (behavior config) | `{prop}` (plain attribute) |
 | `type` (for variants) | `variant` |
 | `x-{modifier}` (e.g. `x-ripple`) | unchanged — always was the direct attribute form |
@@ -788,7 +797,7 @@ name         attribute with DIFFERENT meaning?
   featured
   cta="Get Started">
 </div>
-<articlestats
+<div x-cardstats
   value="1,234"
   label="Users"
   icon="👥"
@@ -932,9 +941,6 @@ name         attribute with DIFFERENT meaning?
   x-resizable>
   Drag and resize me
 </div>
-<!-- Morphing -->
-<article x-as-card>Becomes a card</article>
-<ul x-as-timeline>Becomes a timeline</ul>
 ```
 
 ---

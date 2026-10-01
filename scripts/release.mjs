@@ -32,6 +32,9 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { nextVersion } from './lib/next-version.mjs';
+import { resetFullRunCounter } from './lib/full-run-counter.mjs';
+import { isNoVerdict } from './lib/gate-exit.mjs';
+import { gateBounds, withMachine, runBounded, reportBusy } from './lib/hold-machine.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK_ONLY = process.argv.includes('--check');
@@ -65,11 +68,49 @@ console.log(`\n📦 Release: ${pkg.version} → ${next}\n`);
 // THIS batch break anything NEW, measured against data/test-baseline-failures.json.
 // That is strictly stronger than what was happening in practice, which was
 // bypassing the check entirely.
+//
+// THE RATCHET RUNS THE FULL SUITE, SO IT HOLDS THE MACHINE, AND IT IS BOUNDED
+// (#1128). It used to be a bare execSync: no machine-wide lock, so a release
+// suite ran beside any other run on the box and fought it for memory and ports
+// (Tier-1 Law 4, #1072); and no timeout, so a wedged run held the release
+// forever. Same lock and same bounds as the 10th-commit gate, from one place.
 console.log('🔒 Gate 1 — no NEW failures vs the register (compliance + regression + behaviors + schema-viewer)\n');
-try {
-  execSync('node .husky/test-ratchet.mjs', { cwd: ROOT, stdio: 'inherit' });
+const { suiteMs, lockWaitMs } = gateBounds();
+const ratchet = await withMachine(
+  { root: ROOT, kind: 'suite', label: 'release gate', waitMs: lockWaitMs },
+  () => runBounded(process.execPath, [path.join('.husky', 'test-ratchet.mjs')], {
+    cwd: ROOT, timeoutMs: suiteMs, label: 'release',
+  })
+);
+if (!ratchet.held) {
+  reportBusy('release', lockWaitMs, ratchet.why);
+  die('the machine stayed busy, so the suite never ran — that is not a verdict on this batch');
+}
+if (ratchet.result.hung) {
+  die('the ratchet did not finish in time — that is a HANG, not a verdict on this batch');
+}
+if (ratchet.result.error) {
+  die(`the ratchet could not start: ${ratchet.result.error.message}`);
+}
+// NOTHING MEASURED IS NOT A FAILING BATCH (#1181).
+//
+// The ratchet used to exit 1 both for NEW failures and for its own
+// 'THE SUITE NEVER RAN - this is not a code failure' report, so this gate
+// answered a no-verdict run with 'this batch broke them' and sent someone
+// looking for a regression that did not exist (2026-09-15, 4.0.6 attempt 3).
+if (isNoVerdict(ratchet.result.status)) {
+  die(
+    'the suite produced no verdict, so nothing is known about this batch',
+    '\n   The ratchet stopped without measuring anything - a stall, a dead test\n' +
+      '   server, or a missing register. Its own output above says which.\n\n' +
+      '   This is NOT a report that the batch broke tests. Nothing was compared\n' +
+      '   against data/test-baseline-failures.json, so there is nothing to blame\n' +
+      '   the batch for. Fix the run and release again.'
+  );
+}
+if (ratchet.result.status === 0) {
   console.log('   ✓ no new failures');
-} catch {
+} else {
   die(
     'the ratchet found NEW failures',
     '\n   These are not the pre-existing debt in data/test-baseline-failures.json —\n' +
@@ -79,6 +120,27 @@ try {
       '     node .husky/test-ratchet.mjs --update\n' +
       '   or fix the failure. Both leave a trail; a bypass does not.'
   );
+}
+
+// That was the same full ratchet the 10th-commit hook runs, so it counts as the
+// hook's full run too (#1178). Without this, a release commit landing on the
+// 10th count ran all ~7,800 tests a second time on the batch just tested.
+// Outside the try: a failure to write the counter is not "NEW failures".
+//
+// And never fatal. The counter is an optimisation — the worst case without it is
+// a commit rerunning the suite — so a release that has just passed its ratchet
+// must not abort because a file could not be written. It did, and twice over:
+// the #991 fixture runs release.mjs in a plain temp directory where git
+// rev-parse fails, which the ratchet scored as a NEW failure and which aborted
+// the 4.0.6 release; and #1128's release guard runs a copy of this script
+// outside any repository, where the throw (git's status 128) took the whole
+// release down with it.
+try {
+  resetFullRunCounter(ROOT);
+  console.log('   ✓ 10th-commit counter reset — the release commit will not rerun the suite');
+} catch (err) {
+  console.warn(`   ⚠ could not reset the 10th-commit counter (${err.message.split('\n')[0]})`);
+  console.warn('     Harmless: the release commit may run the full suite again (#1178).');
 }
 
 // ── 2. The Releases page must name the version being released ─────────────────

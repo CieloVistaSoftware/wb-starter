@@ -54,6 +54,8 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
+import { classifyFailure } from '../scripts/lib/server-down.mjs';
+import { NO_VERDICT_EXIT } from '../scripts/lib/gate-exit.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '..');
@@ -80,6 +82,24 @@ const RUN_TIMEOUT_MS = (Number(process.env.WB_GATE_TIMEOUT_MIN) || 75) * 60 * 10
 // between lines.
 const ACK_SILENCE_MS = (Number(process.env.WB_GATE_ACK_MIN) || 3) * 60 * 1000;
 
+// SILENCE AFTER THE LAST TEST IS NOT SILENCE (#1180).
+//
+// The deadline above is right while tests are still finishing and wrong the
+// moment they stop. Playwright's shutdown -- flushing the HTML report, writing
+// traces, tearing down the web server -- prints no per-test lines, so to a
+// watchdog counting acks it is indistinguishable from a hang.
+//
+// On 2026-09-15 that cost a release. All 7,862 tests finished, the ack deadline
+// then expired 190s into shutdown, the gate SIGINTed a completed run and printed
+// 'THE SUITE NEVER RAN', and 4.0.6 aborted on a run that had in fact passed.
+//
+// So once the acks reach the count Playwright announced in its own
+// 'Running N tests' header, the ack deadline stops applying and this bounded
+// shutdown grace takes over. A genuinely wedged teardown still ends -- it just
+// is not called a hang three minutes in, and it is measured against a budget
+// that reflects what shutdown actually does.
+const SHUTDOWN_GRACE_MS = (Number(process.env.WB_GATE_SHUTDOWN_MIN) || 10) * 60 * 1000;
+
 // After evidence is captured, SIGTERM first: Playwright can flush its trace and
 // its report on a catchable signal. SIGKILL cannot be caught, which is exactly
 // why the 185-minute run left nothing behind to read.
@@ -88,7 +108,38 @@ const SIGTERM_GRACE_MS = 30_000;
 // schema-viewer: its own project (playwright.config.ts), so no gate ran it and
 // it failed for every schema, unnoticed, until someone opened the page. Its
 // 29 tests take ~1 minute; a page nobody measures is a page that rots.
-const PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer'];
+const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer'];
+
+/**
+ * The gate's projects, narrowable by WB_GATE_PROJECTS (#1163).
+ *
+ * "CI — Full Compliance" wanted the compliance project only and, having no way
+ * to ask for it, wrote its own `npx playwright test --project=compliance
+ * --reporter=list --trace=on` instead. That command has no register (66 of its
+ * 79 failures were recorded debt), replaces the project's reporter (so
+ * data/errors.json is never created and "error log should exist" fails), and
+ * traces every test at 8 workers (9 timeouts). The workflow has never been green.
+ *
+ * So the narrowing belongs here, where the register, the reporters and the
+ * worker count come with it. An unknown name is refused rather than silently
+ * running nothing — a gate that measures no projects reports success (#1091).
+ */
+const PROJECTS = (() => {
+  const wanted = (process.env.WB_GATE_PROJECTS || '').split(',').map((p) => p.trim()).filter(Boolean);
+  if (!wanted.length) return ALL_PROJECTS;
+  const unknown = wanted.filter((p) => !ALL_PROJECTS.includes(p));
+  if (unknown.length) {
+    console.error(
+      `❌ WB_GATE_PROJECTS names ${unknown.join(', ')}, which the gate does not run.\n` +
+      `   Known projects: ${ALL_PROJECTS.join(', ')}.`
+    );
+    // A gate asked for a project it does not have measures nothing, which is
+    // the no-verdict case rather than a failing batch (#1181). Exiting 1 here
+    // would tell a workflow with a typo in WB_GATE_PROJECTS that its code broke.
+    process.exit(NO_VERDICT_EXIT);
+  }
+  return wanted;
+})();
 
 const update = process.argv.includes('--update');
 
@@ -99,7 +150,7 @@ function loadBaseline() {
   if (!existsSync(BASELINE_PATH)) {
     console.error(`\n🛑 No test baseline at ${BASELINE_PATH}.`);
     console.error('   Record one with:  node .husky/test-ratchet.mjs --update\n');
-    process.exit(1);
+    process.exit(NO_VERDICT_EXIT);
   }
   try {
     const raw = JSON.parse(readFileSync(BASELINE_PATH, 'utf8'));
@@ -107,7 +158,7 @@ function loadBaseline() {
   } catch (err) {
     console.error(`\n🛑 Test baseline is unreadable: ${err.message}`);
     console.error('   Fix or re-record it; refusing to guess.\n');
-    process.exit(1);
+    process.exit(NO_VERDICT_EXIT);
   }
 }
 
@@ -220,7 +271,12 @@ async function runGate(port) {
   const ACK = /^\s*(ok|x|-|✓|✘)\s+\d+\s/;
   // ESC built from its code, so the regex carries no literal control character.
   const ANSI = new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*[A-Za-z]`, 'g');
+  // Playwright announces its collected count before the first test. That number
+  // is what tells the watchdog when a run is finished rather than merely quiet (#1180).
+  const COLLECTED = /^\s*Running\s+(\d+)\s+tests?\b/;
   let acks = 0;
+  let collected = null;
+  let allTestsDoneAt = null;
   let lastAckAt = Date.now();
   let lastTest = '(none yet)';
   const inspectorUrls = new Set();
@@ -236,10 +292,20 @@ async function runGate(port) {
         const line = raw.replace(ANSI, '');
         const dbg = line.match(/Debugger listening on (ws:\/\/\S+)/);
         if (dbg) inspectorUrls.add(dbg[1]);
+        const header = line.match(COLLECTED);
+        if (header) {
+          collected = Number(header[1]);
+          continue;
+        }
         if (!ACK.test(line)) continue;
         acks += 1;
         lastAckAt = Date.now();
         lastTest = line.trim().slice(0, 160);
+        // Every collected test has reported. Whatever the process does from
+        // here is shutdown, not progress, and must not be timed as silence.
+        if (collected !== null && acks >= collected && allTestsDoneAt === null) {
+          allTestsDoneAt = Date.now();
+        }
       }
     });
   };
@@ -391,13 +457,23 @@ async function runGate(port) {
     let firing = false;
     const watch = setInterval(async () => {
       if (firing) return;
-      const quiet = Date.now() - lastAckAt;
       const overall = Date.now() - started;
-      if (quiet < ACK_SILENCE_MS && overall < RUN_TIMEOUT_MS) return;
+
+      // #1180: which deadline applies depends on whether the run still has
+      // tests to report. Before the last ack, silence means stuck. After it,
+      // silence is what shutdown sounds like, and only the shutdown grace and
+      // the overall ceiling can end the run.
+      const finished = allTestsDoneAt !== null;
+      const quiet = Date.now() - (finished ? allTestsDoneAt : lastAckAt);
+      const quietLimit = finished ? SHUTDOWN_GRACE_MS : ACK_SILENCE_MS;
+
+      if (quiet < quietLimit && overall < RUN_TIMEOUT_MS) return;
       firing = true;
 
-      const reason = quiet >= ACK_SILENCE_MS
-        ? `no test finished for ${Math.round(quiet / 1000)}s`
+      const reason = quiet >= quietLimit
+        ? (finished
+          ? `all ${collected} tests finished, but shutdown did not complete within ${Math.round(quiet / 1000)}s`
+          : `no test finished for ${Math.round(quiet / 1000)}s`)
         : `the run passed its ${RUN_TIMEOUT_MS / 60000}-minute ceiling`;
 
       // Stack BEFORE any signal: a terminated process has no stack to give.
@@ -457,11 +533,20 @@ async function runGate(port) {
     return { failures: null, why: `failures.json is stale (${report.timestamp}) — the run wrote nothing new` };
   }
 
+  // A REFUSED CONNECTION TO THIS RUN'S OWN SERVER IS NOT A TEST RESULT (#1127).
+  //
+  // #1074 taught scripts/test-async.mjs to separate "the test failed" from "the
+  // server it needed was gone", but this file read failures.json raw, so a server
+  // that died mid-gate still came back as a list of NEW failures and blocked the
+  // commit over tests that never ran. The same classifier decides here, with the
+  // port this gate chose itself (null in CI, where any loopback refusal counts).
   const gate = new Set(PROJECTS);
-  const failures = (report.failures || [])
-    .filter((f) => gate.has(f.project))
+  const inGate = (report.failures || []).filter((f) => gate.has(f.project));
+  const serverDown = inGate.filter((f) => classifyFailure(f.error, port) === 'server-down');
+  const failures = inGate
+    .filter((f) => classifyFailure(f.error, port) !== 'server-down')
     .map((f) => idFor(f.file, f.title));
-  return { failures };
+  return { failures, serverDown };
 }
 
 function freePort() {
@@ -496,10 +581,19 @@ if (!gate.failures) {
   console.error('     • the dev server port is still held by an orphaned run');
   console.error('     • node_modules is missing or incomplete (run: npm install)');
   console.error('   Nothing was verified, so nothing is known. Commit blocked.\n');
-  process.exit(1);
+  // Not exit 1: nothing was measured, so no caller may say this batch broke
+  // anything. release.mjs said exactly that about this path on 2026-09-15 (#1181).
+  process.exit(NO_VERDICT_EXIT);
 }
 const failing = new Set(gate.failures);
+// Tests that never reached the server have no result this run (#1127).
+const unrun = new Set(gate.serverDown.map((f) => idFor(f.file, f.title)));
 
+if (update && unrun.size) {
+  console.error(`\n🛑 Not recording a baseline: the test server died and ${unrun.size} test(s) never ran.`);
+  console.error('   A register written from this run would drop entries it never measured. Run again.\n');
+  process.exit(1);
+}
 if (update) {
   // --update only SHRINKS the register: it drops what passed and never adds a
   // new failure (scripts/check-register-shrinks.mjs refuses that commit anyway).
@@ -537,12 +631,29 @@ const regressions = [...failing].filter((f) => !baseline.has(f));
 // Repaired = in the register, but no longer failing. The run covers all three
 // gate projects, so "absent from the failure list" means it passed — or the
 // test was renamed/deleted, which equally means the entry must not linger.
-const repaired = [...baseline].filter((b) => !failing.has(b));
+// A register entry that could not reach the server did not pass: it did not run.
+const repaired = [...baseline].filter((b) => !failing.has(b) && !unrun.has(b));
 
 console.log('');
 console.log(`   known-failing (debt) : ${failing.size - regressions.length}`);
 console.log(`   new failures         : ${regressions.length}`);
 console.log(`   repaired since baseline: ${repaired.length}`);
+console.log(`   never reached server : ${gate.serverDown.length}`);
+
+// The server died: those tests did not run, so this run can claim nothing about
+// them -- not "new failures", and not "no new failures" either (#1127). Real
+// regressions found alongside it are still printed below.
+if (gate.serverDown.length) {
+  console.error(`\n🛑 THE TEST SERVER DIED — ${gate.serverDown.length} test(s) could not reach it.`);
+  console.error('   That is not a verdict on this change: those tests never ran.');
+  for (const f of gate.serverDown.slice(0, 5)) {
+    console.error(`     • ${idFor(f.file, f.title)} — ${String(f.error || '').split('\n')[0].slice(0, 120)}`);
+  }
+  if (gate.serverDown.length > 5) console.error(`     … and ${gate.serverDown.length - 5} more`);
+  console.error('   The server log for the run is under data/test-server-logs/. Commit blocked until a run completes.\n');
+  // Stated once more in plain words, so a summary that greps for it cannot miss it.
+  console.error('   SERVER DIED: nothing about those tests is known.\n');
+}
 
 if (regressions.length) {
   console.error('\n❌ NEW test failures — commit blocked.');
@@ -552,6 +663,9 @@ if (regressions.length) {
   console.error('');
   process.exit(1);
 }
+// The server died, so those tests never reported. That is not a verdict on
+// this batch either (#1181).
+if (gate.serverDown.length) process.exit(NO_VERDICT_EXIT);
 
 // Removal is DELIBERATE, never automatic.
 //

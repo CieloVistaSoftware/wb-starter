@@ -70,7 +70,9 @@ node scripts/test-lock-guards.mjs || exit 1
 
 # The GATE itself is bounded and holds that lock (#1106). test-lock-guards proves
 # the library refuses a run; this proves the gate ever takes the lock and that
-# its bounds fire -- deleting either used to leave every check green. ~20s, no
+# its bounds fire -- deleting either used to leave every check green. Since
+# #1128 it proves the same for release.mjs, priority-gate.mjs and the
+# project-integrity run below, and that no wait for the lock is endless. ~25s, no
 # Playwright run, a private lock dir: it cannot collide with a real suite.
 node scripts/test-gate-guards.mjs || exit 1
 
@@ -78,13 +80,28 @@ node scripts/test-gate-guards.mjs || exit 1
 # `git init` rewrote the REAL repo as bare with a fake identity (#1161).
 node scripts/test-suite-env.mjs || exit 1
 
-# A failed ship deleted the LIVE release's tag (#1157). Milliseconds, throwaway
-# repos only: proves a rollback removes just the tag its own run cut.
+# A failed ship deleted the LIVE release's tag (#1157), and a refused release
+# commit left the whole release staged under "Tree restored" (#1179). Throwaway
+# repos only: proves a rollback removes just the tag its own run cut and returns
+# the tree, index included, to HEAD.
 node scripts/test-ship-rollback.mjs || exit 1
 
 # The known-failures register only shrinks. A new failure is fixed, never
 # recorded -- John: "I want all the failures to stop." Milliseconds, git only.
 node scripts/check-register-shrinks.mjs || exit 1
+
+# A ship ran all ~7,800 tests twice: release.mjs's full run never reset the
+# 10th-commit counter below, so the release commit ran them again (#1178).
+# Seconds, throwaway repos only.
+node scripts/test-full-run-counter.mjs || exit 1
+
+# A control byte in staged source (#1162). Before this, the only check was a
+# compliance spec inside the 10th-commit gate, so an ESC decoded from an escape an
+# agent wrote was found 59 minutes later as one of 14 "new failures". This reads
+# the index, uses the spec's own rule (scripts/lib/control-bytes.mjs), and takes
+# milliseconds. Its guard proves every byte value and every placement.
+node scripts/check-staged-control-bytes.mjs || exit 1
+node scripts/test-staged-control-bytes.mjs || exit 1
 
 # ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
 # John: "each issue will have a priority 1 through 5 assessed based on negative
@@ -100,6 +117,9 @@ node scripts/check-register-shrinks.mjs || exit 1
 # Reads data/priority-gate.json, so no network. A stale or missing manifest
 # warns and passes: blocking a commit on a cold cache is how a hook becomes
 # something people bypass, and a bypassed hook takes every other check with it.
+#
+# #1128: it holds a machine-wide single-run slot, is bounded, and leaves the port
+# to playwright.config.ts -- see scripts/lib/hold-machine.mjs.
 node scripts/priority-gate.mjs || exit 1
 
 # ── Full validation every 10th commit ────────────────────────────────────────
@@ -121,7 +141,11 @@ node scripts/priority-gate.mjs || exit 1
 # absorbing the entire cadence alone. --git-common-dir returns .git from every
 # worktree AND from the main checkout, making the count global, which is the
 # only way "every 10th commit" means anything.
-COUNT_FILE="$(git rev-parse --git-common-dir)/wb-fix-count"
+#
+# #1178: the path comes from scripts/lib/full-run-counter.mjs, the same module
+# release.mjs uses to reset the count after its own full run. Two copies of the
+# git command could name two different files, and the release reset would miss.
+COUNT_FILE="$(node scripts/lib/full-run-counter.mjs --path)" || exit 1
 COUNT=$(cat "$COUNT_FILE" 2>/dev/null || echo 0)
 COUNT=$((COUNT + 1))
 
@@ -177,7 +201,12 @@ fi
 # &&-chained script, so every commit was silently running the ENTIRE suite
 # unfiltered before this fix (never caught: core.hooksPath wasn't set for
 # this worktree until now, so the hook itself had never actually run).
-npx playwright test tests/compliance/project-integrity.spec.ts --reporter=line
+#
+# #1128: through locked-spec-run.mjs, not a bare `npx playwright test`. That took
+# no machine-wide slot and had no time limit, so it ran beside any other run on
+# the box and a wedged run held the commit forever. scripts/test-gate-guards.mjs
+# runs THIS line against a fake Playwright and fails if it stops holding a slot.
+node scripts/locked-spec-run.mjs tests/compliance/project-integrity.spec.ts --reporter=line
 
 if [ $? -ne 0 ]; then
   echo ""
