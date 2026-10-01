@@ -622,6 +622,27 @@ export function countdown(element, options = {}) {
   };
 }
 
+// The faces helpers.css styles, in the order the docs and schema list them.
+const CLOCK_VARIANTS = ['digital', 'led', 'analog'];
+
+/**
+ * One of CLOCK_VARIANTS for whatever the author wrote. Whitespace and case are
+ * forgiven: the playground re-renders on every keystroke, so a half-typed
+ * `variant="analogue` arrives as "analogue\n    " (#1229). Anything else
+ * renders digital, and the warning says what would have worked.
+ */
+function clockVariant(raw) {
+  const wanted = String(raw ?? '').trim().toLowerCase();
+  if (!wanted) return 'digital';
+  if (CLOCK_VARIANTS.includes(wanted)) return wanted;
+  const near = CLOCK_VARIANTS.find((v) => wanted.startsWith(v) || v.startsWith(wanted));
+  console.warn(
+    `[x-clock] variant="${wanted}" is not a clock face -- use one of: ${CLOCK_VARIANTS.join(', ')}` +
+      `${near ? ` (did you mean "${near}"?)` : ''}. Showing digital.`
+  );
+  return 'digital';
+}
+
 /**
  * Clock - Live clock with VARIANTS (digital, led, analog)
  * Helper Attribute: [x-clock]
@@ -633,10 +654,11 @@ export function clock(element, options = {}) {
     showSeconds: (options.showSeconds ?? element.getAttribute('show-seconds')) !== 'false',
     ...options
   };
+  config.variant = clockVariant(config.variant);
 
   // #779: base (with #486's 1rem padding floor), led, analog and the
   // digital default are .x-clock rules in helpers.css, keyed on the
-  // x-clock--{variant} class added here; any other variant renders digital.
+  // x-clock--{variant} class added here.
   element.classList.add('x-clock', `x-clock--${config.variant}`);
 
   const update = () => {
@@ -659,8 +681,8 @@ export function clock(element, options = {}) {
   const updateInterval = setInterval(update, 1000);
 
   return () => { 
-    clearInterval(interval); 
-    element.classList.remove('x-clock', `x-clock--${config.variant}`); 
+    clearInterval(updateInterval);
+    element.classList.remove('x-clock', `x-clock--${config.variant}`);
   };
 }
 

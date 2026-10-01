@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T07:25:35.114Z",
+  "generatedAt": "2026-10-01T03:29:01.178Z",
   "count": 159,
   "schemas": [
     {
@@ -1583,18 +1583,31 @@
       "properties": {
         "variant": {
           "type": "string",
-          "description": "Clock face: `digital` (default) or the analogue rendering.",
+          "description": "Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial). Any other value renders `digital` and logs a warning naming these three.",
+          "enum": [
+            "digital",
+            "led",
+            "analog"
+          ],
           "default": "digital"
         },
         "format": {
           "type": "string",
           "description": "`24` (default) or `12` for a 12-hour clock with AM/PM.",
+          "enum": [
+            "24",
+            "12"
+          ],
           "default": "24"
         },
         "show-seconds": {
           "type": "string",
           "description": "Show the seconds field. On unless set to `\"false\"`.",
-          "default": "this is the show seconds"
+          "enum": [
+            "true",
+            "false"
+          ],
+          "default": "true"
         }
       },
       "matrix": [],
@@ -2046,7 +2059,7 @@
       "file": "cover.schema.json",
       "name": "cover",
       "title": "Cover",
-      "description": "Behavior applied with x-cover.",
+      "description": "A full-height flex column that centers its content, with a <header> child pinned to the top and a <footer> child pinned to the bottom -- the hero or splash-screen layout.",
       "tag": "x-cover",
       "baseClass": "x-cover",
       "properties": {
@@ -2919,7 +2932,7 @@
       "file": "fix-card.schema.json",
       "name": "fix-card",
       "title": "Fix Card",
-      "description": "Behavior for displaying fix/remediation details.",
+      "description": "Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.",
       "tag": "x-fix-card",
       "baseClass": "x-fix-card",
       "properties": {},
