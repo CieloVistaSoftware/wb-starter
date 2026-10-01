@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 /**
  * #1044 — CI and the local gate must ask the same question.
@@ -133,7 +134,8 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
   /** `timeout-minutes: N` under the given step name, or the job when name is null. */
   const stepOf = (name: string) => {
     const steps = ci.split(/^ {6}- (?=name:|uses:)/m).slice(1);
-    return steps.find((s) => s.startsWith(`name: ${name}`)) ?? '';
+    // A step name may be quoted (a name holding ` #` must be, or YAML cuts it).
+    return steps.find((s) => s.replace(/^name: "/, 'name: ').startsWith(`name: ${name}`)) ?? '';
   };
 
   test('the job budget clears the measured cost of the ratchet run', () => {
@@ -261,5 +263,69 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
       'on an empty path, so a red run has been leaving no evidence behind at all. Upload the\n' +
       "reporter's own data/test-results/ instead.",
     ).toBe(false);
+  });
+});
+
+/**
+ * One check per test category (John, 2026-10-01: "many categories of test,
+ * not just one big test").
+ *
+ * ci-tests.yml runs one Playwright project per matrix job, so a red check on
+ * the PR names its category. These hold the shape that makes that true and
+ * keeps it as strict as the single run it replaced.
+ */
+test.describe('CI runs one check per test category', () => {
+  const GATED = (/const ALL_PROJECTS = \[([^\]]+)\]/.exec(ratchet)?.[1] ?? '')
+    .split(',').map((p) => p.trim().replace(/'/g, '')).filter(Boolean);
+  const matrixRow = (project: string) =>
+    new RegExp(`-\\s*\\{\\s*project:\\s*${project},\\s*gated:\\s*(true|false)\\s*\\}`).exec(ci)?.[1];
+
+  test('every gated project is its own gated job, and integration and base are reported', () => {
+    expect(GATED.length, `${RATCHET} ALL_PROJECTS could not be read`).toBeGreaterThan(0);
+    for (const project of GATED) {
+      expect(matrixRow(project), `${CI} has no gated matrix job for ${project}`).toBe('true');
+    }
+    for (const project of ['integration', 'base']) {
+      expect(matrixRow(project), `${CI} has no report job for ${project}`).toBe('false');
+    }
+  });
+
+  test('a red category cannot cancel the others', () => {
+    expect(
+      /fail-fast:\s*false/.test(ci),
+      'Without fail-fast: false the first red category cancels the rest, which leaves them\n' +
+      'unmeasured: the #1044 skipped-steps defect in a new shape.',
+    ).toBe(true);
+  });
+
+  test('each gated job runs the ratchet narrowed to its own project', () => {
+    expect(/WB_GATE_PROJECTS:\s*\$\{\{\s*matrix\.project\s*\}\}/.test(ci)).toBe(true);
+    expect(/if:\s*matrix\.gated/.test(ci)).toBe(true);
+  });
+
+  test('"Playwright Tests" still exists, and fails when any category fails', () => {
+    const summary = ci.split(/^ {2}playwright:\s*$/m)[1] ?? '';
+    expect(summary, `${CI} has no summary job`).not.toBe('');
+    expect(summary).toMatch(/name:\s*Playwright Tests/);
+    expect(summary).toMatch(/needs:\s*test/);
+    expect(summary).toMatch(/needs\.test\.result[^\n]*!=\s*"success"/);
+  });
+
+  test('each category uploads its evidence under its own name', () => {
+    // upload-artifact@v4 refuses a second artifact with the same name, so a
+    // shared name would lose every category's report but the first.
+    for (const prefix of ['test-results', 'playwright-traces']) {
+      expect(ci).toMatch(new RegExp(`name: ${prefix}-\\$\\{\\{ github\\.run_number \\}\\}-\\$\\{\\{ matrix\\.project \\}\\}`));
+    }
+  });
+
+  test('a narrowed ratchet refuses --update, which would drop other projects\' entries', () => {
+    const r = spawnSync(process.execPath, [RATCHET, '--update'], {
+      encoding: 'utf8',
+      env: { ...process.env, WB_GATE_PROJECTS: 'compliance' },
+      timeout: 30_000,
+    });
+    expect(r.status).toBe(1);
+    expect(r.stderr).toContain('--update needs the full gate');
   });
 });
