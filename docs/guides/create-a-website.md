@@ -65,10 +65,10 @@ Open `pages/home.html` and change the text, then refresh the browser. There is n
 
 Pages are plain HTML. To give an element a behavior, add an `x-*` attribute:
 
-```html
+<div x-demo>
 <button x-ripple>Click me</button>
 <section x-cardhero title="Welcome" subtitle="Built with wb-starter"></section>
-```
+</div>
 
 The full list of behaviors, with a live example of each, is on the wb-starter site's **Behaviors** page.
 
