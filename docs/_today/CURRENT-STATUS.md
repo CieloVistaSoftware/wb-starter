@@ -2,6 +2,29 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-01.** On branch `claude/nifty-darwin-8mf277`.
+
+**Task:** the Docs page opens newest first (owner request), and the default is easy to change.
+
+**Files touched:** `scripts/update-docs-manifest.js`, `docs/manifest.json`,
+`pages/docs.html`, `src/styles/pages/docs.css`,
+`tests/integration/docs-page-sort-newest.spec.ts`.
+
+**Last action:** every entry in `docs/manifest.json` now carries `modified`
+(its last commit date). `npm start` keeps those dates current through
+update-docs-manifest.js. In a shallow clone it leaves them as they are. The page
+has a "Sort documents" control (Newest first / By category). The reader's pick
+is remembered and kept in `?sort=`.
+
+**To change the default:** in `pages/docs.html`, move `selected` to the other
+`<option>` of `#docs-sort`.
+
+**Next step:** John reviews the draft PR.
+
+**Open questions:** none.
+
+---
+
 **Updated 2026-09-29.** On branch `claude/fervent-noether-ydmxea` (PR #1221).
 
 **Task:** P1 issues, in order. Fixed on the branch: [#1185](https://github.com/CieloVistaSoftware/wb-starter/issues/1185), [#1184](https://github.com/CieloVistaSoftware/wb-starter/issues/1184), [#1183](https://github.com/CieloVistaSoftware/wb-starter/issues/1183),
