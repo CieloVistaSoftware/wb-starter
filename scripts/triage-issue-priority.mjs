@@ -45,12 +45,14 @@
  *   node scripts/triage-issue-priority.mjs              # propose, change nothing
  *   node scripts/triage-issue-priority.mjs --apply      # set the labels
  *   node scripts/triage-issue-priority.mjs --only 1047
+ *   node scripts/triage-issue-priority.mjs --suggest issue.json   # one issue, no gh
  */
 
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadRubric, propose, hasRunnableTest } from './lib/priority-triage.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -63,83 +65,24 @@ function gh(a) {
   return JSON.parse(execFileSync('gh', a, { cwd: root, encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 }));
 }
 
-/** The five levels, read from the workflow's own posted table. */
-function loadRubric() {
-  const wf = readFileSync(path.join(root, '.github/workflows/issue-priority-check.yml'), 'utf8');
-  const levels = new Map();
-  for (const m of wf.matchAll(/\|\s*\\?`priority:([1-5])\\?`\s*\|\s*([^|]+?)\s*\|/g)) {
-    levels.set(Number(m[1]), m[2].trim());
-  }
-  if (levels.size !== 5) {
-    throw new Error(`rubric: parsed ${levels.size} levels from the workflow, expected 5 — the table shape changed`);
-  }
-  return levels;
-}
-
-/**
- * Signals per level, in the rubric's own terms. Ordered most severe first; the
- * first level whose evidence appears wins, so a "blinds the gate" phrase beats
- * a "cosmetic" one in the same issue.
- *
- * Deliberately conservative: anything with no match at all is left unrated
- * rather than defaulted, because a wrong rating is worse than an absent one —
- * the whole point of the field is that someone decided.
- */
-// PRECISION, NOT COVERAGE.
-//
-// The first version scored on broad keywords and was audited against 190
-// already-rated issues: 60 agreed, 88 DISAGREED, 42 no opinion. Roughly a third
-// right, and `--apply` would have mislabelled most of the backlog. The failure
-// was systematic rather than unlucky — "docs", "stale" and "generated" match
-// nearly any documentation issue and dragged a human's 4 down to a 3, while
-// #341 ("CI red on every run for weeks", i.e. blocks everyone, rated 1) matched
-// "flaky" and came out 3.
-//
-// Severity is a judgement about IMPACT, and impact is mostly not stated in
-// words a regex can find. So this keeps only rules that were right in the audit
-// and says nothing otherwise. A tool that rates 20 issues correctly and stays
-// silent on 170 is useful; one that rates all 190 at 31% accuracy is worse than
-// the empty field it fills.
-//
-// Anything with no match is reported as needing a person. That is the honest
-// default and it is deliberately the common case — re-run `--audit` after
-// changing anything here.
-const SIGNALS = [
-  [1, [
-    // Destroys work, or the gates stop reporting. Both phrased distinctively.
-    /\boverwrit\w+\b[^.]{0,60}\bwith (?:76 bytes|nothing|an empty)/i,
-    /\bred on every run\b|\bblocks every commit\b|\bblocks everyone\b/i,
-    /\bdisables the (?:check|gate)s?\b|\bmatches nothing at all\b/i,
-  ]],
-  [2, [
-    // Something a user meets, in the place users meet it.
-    /\bdeployed site\b|\bevery visitor\b|\bon the deployed\b/i,
-    /\bnever (?:applies|applied) on any\b/i,
-  ]],
-  [5, [
-    // The repo's own conventions for a non-defect, and unambiguous.
-    /^Q:\s/,
-    /^Index:\s/,
-  ]],
-];
-
-function propose(issue) {
-  const text = `${issue.title}\n${issue.body || ''}`;
-  for (const [level, patterns] of SIGNALS) {
-    for (const re of patterns) {
-      const m = text.match(re);
-      if (m) {
-        const at = text.indexOf(m[0]);
-        return { level, why: text.slice(Math.max(0, at - 50), at + 70).replace(/\s+/g, ' ').trim() };
-      }
-    }
-  }
-  return null;
-}
-
-const hasRunnableTest = (body) => /^\s*test:\s*\S/m.test(body || '');
-
 const rubric = loadRubric();
+
+// --suggest FILE: one issue (JSON with title and body, as `gh issue view
+// --json title,body` writes it) in, one markdown line out -- or nothing when no
+// rule matches. Used by issue-priority-check.yml to put the proposal in its
+// comment. Never labels anything: one proposal in four is wrong (see header).
+if (args.includes('--suggest')) {
+  const issue = JSON.parse(readFileSync(args[args.indexOf('--suggest') + 1], 'utf8'));
+  const p = propose(issue);
+  if (p) {
+    const testNote = p.level === 1 && !hasRunnableTest(issue.body)
+      ? ' A `priority:1` also needs a runnable `test:` in the Signature block.'
+      : '';
+    console.log(`**Suggested: \`priority:${p.level}\`** (${rubric.get(p.level)}), because it says: "${p.why.replace(/"/g, "'")}". ` +
+      `This is a keyword match and is wrong about one time in four, so check it before you apply it.${testNote}`);
+  }
+  process.exit(0);
+}
 const issues = ONLY
   ? [gh(['issue', 'view', ONLY, '--json', 'number,title,body,labels,comments'])]
   : gh(['issue', 'list', '--state', 'open', '--limit', '400', '--json', 'number,title,body,labels,comments']);

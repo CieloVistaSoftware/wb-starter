@@ -22,12 +22,22 @@ permissions:
   issues: write
   contents: read
 
+# One issue's runs go one at a time. Filing an issue with labels fires
+# `opened` plus one `labeled` per label at the same moment; each run checked for
+# the marker comment before any had posted it, and #1231 got the comment twice.
+# Queued, the second run finds the first one's comment. `closed` has its own
+# group so a label added right after closing cannot cancel the closing check.
+concurrency:
+  group: issue-priority-${{ github.event.issue.number }}-${{ github.event.action == 'closed' && 'closed' || 'open' }}
+  cancel-in-progress: false
+
 jobs:
   rated:
     name: exactly one priority
     if: github.event.action != 'closed' && github.event.issue.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4        # for scripts/triage-issue-priority.mjs
       - name: Count priority labels
         env:
           GH_TOKEN: ${{ github.token }}
@@ -41,6 +51,10 @@ jobs:
 
           MARKER='<!-- priority-check -->'
           if ! gh issue view "$NUMBER" --repo "$REPO" --json comments --jq '.comments[].body' | grep -qF "$MARKER"; then
+            # The triage rules' proposal, when one matches -- a suggestion with
+            # its evidence, never applied (scripts/triage-issue-priority.mjs).
+            gh issue view "$NUMBER" --repo "$REPO" --json title,body > /tmp/issue.json
+            SUGGESTION=$(node scripts/triage-issue-priority.mjs --suggest /tmp/issue.json || true)
             cat > /tmp/c.md <<EOF
           $MARKER
           **This issue needs exactly one priority label** (it has $COUNT). Priority is assessed on *negative impact to the project*:
@@ -55,6 +69,7 @@ jobs:
 
           A \`priority:1\` must also name a runnable \`test:\` in its Signature block — see the check below.
           EOF
+            if [ -n "$SUGGESTION" ]; then printf '\n%s\n' "$SUGGESTION" >> /tmp/c.md; fi
             gh issue comment "$NUMBER" --repo "$REPO" --body-file /tmp/c.md
           fi
           echo "::error::Issue #$NUMBER has $COUNT priority labels; exactly one is required."
