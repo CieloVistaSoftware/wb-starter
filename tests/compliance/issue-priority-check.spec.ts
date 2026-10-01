@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { loadRubric } from '../../scripts/lib/priority-triage.mjs';
 
 /**
  * The issue priority check posts its comment once, and shows the triage
@@ -49,5 +50,19 @@ test.describe('issue priority check', () => {
 
     expect(suggest({ title: 'Q: how do themes load?', body: '' })).toContain('`priority:5`');
     expect(suggest({ title: 'Add a button', body: 'It would be nice.' })).toBe('');
+  });
+
+  // Law 15 and the bug template repeat the rubric so it is read BEFORE an
+  // issue is filed (#1231 was filed without a priority). A copy can drift, so
+  // each level's wording must still match the workflow's table.
+  test('Law 15 and the bug template carry the workflow\'s rubric, word for word', () => {
+    const words = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    const law = words(readFileSync('docs/claude/TIER1-LAWS.md', 'utf8').split('## 15.')[1] || '');
+    const template = words(readFileSync('.github/ISSUE_TEMPLATE/bug.md', 'utf8'));
+    expect(law, 'TIER1-LAWS.md has no Law 15').not.toBe('');
+    for (const [level, meaning] of loadRubric() as Map<number, string>) {
+      expect(law, `Law 15, priority:${level}`).toContain(words(meaning));
+      expect(template, `bug template, priority:${level}`).toContain(words(`priority:${level} ${meaning}`));
+    }
   });
 });

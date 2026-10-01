@@ -197,6 +197,26 @@ wrong for every instance after the first.
   legitimately exist more than once in the DOM at the same time? If yes,
   the id must be generated, not hardcoded.
 
+## 15. Every Issue Is Filed With Exactly One Priority Label
+
+**Put exactly one `priority:1` to `priority:5` label on an issue when you
+create it, not afterwards.** `.github/workflows/issue-priority-check.yml`
+checks every new issue. An issue filed without a priority gets the bot's
+"needs exactly one priority label" comment, and #1231 got it twice, because it
+was filed without one.
+
+- The rubric is the table in that workflow: 1 destroys work, blinds the gates,
+  or blocks everyone; 2 a behavior people use is broken, or tooling costs hours
+  repeatedly; 3 real defect, secondary surface, or test debt that hides
+  regressions; 4 cosmetic, local, or cleanup; 5 question, idea or tracker, no
+  defect.
+- Rate by **impact**, not by kind. A feature request is not automatically a 5:
+  John has rated features 1, 3 and 4 (#995, #1004, #907).
+- A `priority:1` must also name a runnable `test:` in its Signature block, or
+  the workflow fails it.
+- Not sure? Pick the closest level, say so in the issue, and let John change
+  it. A rating someone can correct is better than none.
+
 ---
 
 ## 17. A Push To `.io` Is Not Done Until The Deployed Site Boots
