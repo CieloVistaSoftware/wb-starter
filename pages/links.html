@@ -31,7 +31,7 @@
   <div class="links-container">
     
     <!-- Add Form -->
-    <div class="x-glass links-add-form-card">
+    <div class="x-glass-card links-add-form-card">
       <h3>Add New Link</h3>
       <form id="add-link-form" class="links-add-form">
         <input type="text" id="link-url" placeholder="URL (e.g. https://github.com/...)" class="x-input-glass" required>
@@ -90,7 +90,7 @@
     links.forEach(link => {
       const item = document.createElement('div');
       // Layout lives in links.css under .links-item (#779: no inline styles).
-      item.className = 'x-glass links-item';
+      item.className = 'x-glass-card links-item';
       
       item.innerHTML = `
         <div class="links-item__body">

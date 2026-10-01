@@ -2,6 +2,30 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-01 (night).** On branch `claude/nifty-darwin-8mf277`, after PR #1235 merged.
+
+**Task:** #1236, `x-glass`: a new behavior that lets an element carry the background scene (John: "a button which carries the scene of the background"; name chosen by John).
+
+**Files touched:** `src/wb-viewmodels/glass.js`, `src/wb-models/glass.schema.json`,
+`src/styles/behaviors/glass.css`, `docs/behaviors/glass.md` (new); `src/wb-viewmodels/index.js`,
+`src/core/tag-map.js`, `src/styles/behavior-css-manifest.js`, `src/styles/themes.css`,
+`src/wb-viewmodels/card.js`, `src/styles/behaviors/hero.css`, `data/schema-index.json`,
+`data/behavior-examples.json`, `docs/manifest.json`, `docs/behaviors-reference.md`,
+`docs/behavior-cross-reference.md`; the old `.x-glass` card utility renamed `.x-glass-card`
+in `site.css`, `x-signature.css`, `pages/links.html`, `pages/hero-variants.html`;
+`tests/regression/x-glass-carries-the-scene.spec.ts` (new).
+
+**Last action:** x-glass built and registered, with `amount` = most (default, 14% tint) / some (22%) / least (30%).
+The card hero's "Read the Guide" button now uses it and renders as before (99.86% of pixels identical).
+
+**Next step:** John reviews the PR. Follow-ups: move the hero pill and card/badge `glass`
+variants onto x-glass (each changes its look slightly, so left out); `npm run audit:behavior-registry`
+reports 61 pre-existing hard errors (same on main).
+
+**Open questions:** none.
+
+---
+
 **Updated 2026-10-01 (evening).** On branch `claude/nifty-darwin-8mf277`.
 
 **Task:** John wants Playwright CI split into categories, one check per category, run in parallel (his pick over one run that posts per-category results at the end).

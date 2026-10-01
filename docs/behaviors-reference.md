@@ -401,6 +401,7 @@ Tools for arranging content.
 | `sticky` | `<div x-sticky>` | - | Sticky positioning |
 | `scrollable` | `<div>` | - | Scrollable area |
 | [`fill`](behaviors/fill.md) | `[x-fill]` | - | As wide as the container allows — picks flex/grid/block sizing from the parent |
+| [`glass`](behaviors/glass.md) | `[x-glass]` | - | The element carries the background scene: a see-through fill the scene passes through |
 | [`drawerLayout`](behaviors/drawer.md) | `<div x-drawer>` | - | App layout with drawer |
 | `sidebarlayout` | `<div x-sidebarlayout>` | - | Sidebar layout |
 | `switcher` | `<div x-switcher>` | - | Responsive switcher |

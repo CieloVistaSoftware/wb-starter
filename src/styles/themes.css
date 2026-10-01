@@ -79,6 +79,12 @@
   --overlay-dark-hsl: 0 0% 0%;    /* scrims, shadows */
   --overlay-light-hsl: 0 0% 100%; /* glass, sheen, hovers */
 
+  /* x-glass (#1236): the colour mixed into an element that carries the scene
+     behind it. The theme's text colour, so the tint reads on light and dark
+     themes alike; glass.css mixes it at the element so a context (the hero)
+     can re-tint it by setting --glass-tint. */
+  --glass-tint: var(--text-primary);
+
   /* Pre-composed glass tokens (card.css .x-card--glass, #232) — css-oop-
      compliance only exempts hsl()/rgba() composition in shadow contexts or
      exception-listed files, so the alpha is baked in here rather than
@@ -156,6 +162,17 @@
 
   /* Rating star color */
   --rating-active-color: hsl(45, 96%, 56%);
+}
+
+/* x-glass contexts (#1236). The card hero's secondary CTA is x-glass; over the
+   hero's artwork its text is on-accent white in every theme, so its tint is
+   that white rather than the theme's text colour, with the 1.5px edge it has
+   always had. Defined here, not in hero.css: custom property definitions live
+   in themes.css (css-oop-compliance). */
+x-cardhero .x-hero-cta--secondary,
+[x-cardhero] .x-hero-cta--secondary {
+  --glass-tint: var(--text-on-accent);
+  --x-glass-edge-width: 1.5px;
 }
 
 /* =============================================================================

@@ -3012,6 +3012,7 @@ Admin sidebar with icons:
 | `<div x-frame>` | frame | Aspect ratio frame |
 | `<div x-sticky>` | sticky | Sticky positioning |
 | `[x-fill]` | fill | As wide as the container allows (attribute-only — width is a layout choice, not a kind of element) |
+| `[x-glass]` | glass | The element carries the background scene (attribute-only — see-through is a look any element can take) |
 | `<div x-drawer>` | drawerLayout | Collapsible drawer |
 | `<span x-icon>` | icon | Icon + text alignment |
 | `<article>` | card | Generic card |

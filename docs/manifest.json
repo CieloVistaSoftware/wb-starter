@@ -40,7 +40,7 @@
           "file": "claude/TIER1-LAWS.md",
           "title": "Tier 1 Laws",
           "description": "Core architectural laws and principles",
-          "modified": "2026-09-27"
+          "modified": "2026-10-01"
         },
         {
           "file": "claude/TIER2-DOMAIN-GUIDES.md",
@@ -707,6 +707,12 @@
           "title": "Gallery",
           "description": "x-gallery lays the images inside it out as a grid of columns (or fixed-size tiles with size), and clicking any image opens it full-size in a lightbox you…",
           "modified": "2026-09-27"
+        },
+        {
+          "file": "behaviors/glass.md",
+          "title": "glass — the element carries the background scene",
+          "description": "x-glass makes an element see-through, so the background scene behind it passes straight through it.",
+          "modified": "2026-10-01"
         },
         {
           "file": "behaviors/globe.md",

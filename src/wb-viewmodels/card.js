@@ -1306,6 +1306,11 @@ export function cardhero(element, options = {}) {
     if (base.config.ctaSecondary) {
       const secondaryBtn = document.createElement('a');
       secondaryBtn.className = 'x-hero-cta x-hero-cta--secondary';
+      // #1236: the secondary CTA carries the hero's scene -- the wave runs
+      // through it. That is x-glass, applied as the behavior (set before
+      // appending, so auto-injection picks it up like x-tooltip below), not
+      // a private copy of the recipe in hero.css.
+      secondaryBtn.setAttribute('x-glass', '');
       secondaryBtn.href = base.config.ctaSecondaryHref || '#';
       secondaryBtn.textContent = base.config.ctaSecondary;
       if (base.config.ctaSecondaryTooltip) secondaryBtn.setAttribute('x-tooltip', base.config.ctaSecondaryTooltip);
