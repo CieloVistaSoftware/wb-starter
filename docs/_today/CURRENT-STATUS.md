@@ -2,6 +2,26 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-01 (later).** On branch `claude/nifty-darwin-8mf277`, restarted from main after PR #1230 merged.
+
+**Task:** the issue priority bot. It posted its comment twice on #1231, and John asked why priority is not set automatically.
+
+**Files touched:** `.github/workflows/issue-priority-check.yml`,
+`scripts/triage-issue-priority.mjs`, `scripts/lib/priority-triage.mjs` (new),
+`tests/compliance/issue-priority-check.spec.ts` (new).
+
+**Last action:** a concurrency group per issue stops the double comment. The
+comment now includes the triage rules' proposal and its evidence, but never
+applies it. An audit of a new "enhancement label means priority 5" rule
+against John's ratings agreed 1 time in 15, so that rule was dropped. John rates
+feature requests by impact (1, 3 or 4), not as "no defect".
+
+**Next step:** John rates #1231 and #1232 (both set to priority:5 for now, likely too low).
+
+**Open questions:** none.
+
+---
+
 **Updated 2026-10-01.** On branch `claude/nifty-darwin-8mf277`.
 
 **Task:** the Docs page opens newest first (owner request), and the default is easy to change.
