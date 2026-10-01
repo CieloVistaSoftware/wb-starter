@@ -19,11 +19,9 @@ x-cardhero, [x-cardhero]{
      neighbouring cards (e.g. the overlay card in the components demo).
      Opt into edge-to-edge with the .x-cardhero--fullbleed modifier instead. */
   width: 100%;
-  /* Title/subtitle size off the hero's OWN width (cqi), not the viewport
-     (vw) — a hero embedded in a narrow column (2-up grid, sidebar) is far
-     narrower than the viewport, and vw-sized text ignores that entirely,
-     forcing genuine mid-word breaks because the font is simply too big for
-     the box it's actually in. */
+  /* A container, so the @container rule below can ask how wide the HERO is
+     (the split layout's breakpoint). The title and subtitle do NOT size off
+     this one: they size off .x-card__hero-content, their own column. */
   container-type: inline-size;
   position: relative;
   display: flex;
@@ -88,6 +86,14 @@ x-cardhero .x-card__overlay, [x-cardhero] .x-card__overlay{
    width; `text-align` then does the aligning, which is what it is for, and the
    heading keeps a whole line's worth of room to break on word boundaries. */
 x-cardhero .x-card__hero-content, [x-cardhero] .x-card__hero-content{
+  /* The title and subtitle size off THIS column's width (cqi), not the
+     hero's. The split variant gives the text a column about half the hero's
+     width, so a title sized at 6cqi of the hero was twice what its column
+     could hold, and "Themeable to the core" broke as "Themeabl / e to the /
+     core". John: "Don't allow card hero to split on characters." The column
+     has a definite width (width: 100% / its max-width), so containing it
+     cannot collapse it. */
+  container-type: inline-size;
   position: relative;
   z-index: 1;
   display: flex;
@@ -156,16 +162,26 @@ x-cardhero .x-card__title.x-card__hero-title, [x-cardhero] .x-card__title.x-card
   margin: 0;
   font-weight: 800;
   line-height: 1.05;
-  font-size: clamp(2rem, 6cqi, 3.5rem);
+  /* 11cqi of the column: a 13-letter word ("Accessibility") at weight 800
+     is ~8em, so 11% of the column keeps it on one line down to a phone. The
+     floor was 2rem, which alone was wider than a 320px hero's column. */
+  font-size: clamp(1.25rem, 11cqi, 3.5rem);
   letter-spacing: -0.01em;
+  /* Break between words only. The card's own `overflow-wrap: break-word`
+     (card.css) is inherited, and it broke a heading that did not fit at a
+     character. The size above is what makes it fit. */
+  overflow-wrap: normal;
+  word-break: normal;
   color: var(--text-on-accent, #fff);
   text-shadow: 0 2px 14px hsl(var(--overlay-dark-hsl) / 0.35);
 }
 
 x-cardhero .x-card__subtitle.x-card__hero-subtitle, [x-cardhero] .x-card__subtitle.x-card__hero-subtitle{
   margin: 0.75rem 0 0;
-  font-size: clamp(1rem, 2.5cqi, 1.35rem);
+  font-size: clamp(1rem, 4.5cqi, 1.35rem);
   line-height: 1.5;
+  overflow-wrap: normal;
+  word-break: normal;
   color: var(--text-on-accent, #fff);
   opacity: 0.94;
   text-shadow: 0 1px 8px hsl(var(--overlay-dark-hsl) / 0.3);

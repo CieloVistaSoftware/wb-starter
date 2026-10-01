@@ -80,4 +80,31 @@ test.describe('Playground: 20 signature heroes example set', () => {
     await trigger.click();
     await expect(page.locator('dialog[open]')).toHaveCount(1);
   });
+
+  // John: "make all the links on hero demos go to the .io site". A hero demos
+  // a real landing page, so its buttons go to the live site, not to a relative
+  // path that only resolves inside this repo. "Star on GitHub" is the one
+  // button whose destination is GitHub itself.
+  test('every hero CTA goes to the live .io site (or GitHub, for Star on GitHub)', async ({ page }) => {
+    const SITE = 'https://cielovistasoftware.github.io/wb-starter/';
+    await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
+    await page.selectOption('#pg-examples', 'heroes-120');
+    await expect(page.locator('#pg-preview [x-cardhero]')).toHaveCount(120);
+
+    const ctas = await page.locator('#pg-preview [x-cardhero]').evaluateAll((heroes) => heroes.flatMap((h) => [
+      [h.getAttribute('cta'), h.getAttribute('cta-href')],
+      [h.getAttribute('cta-secondary'), h.getAttribute('cta-secondary-href')],
+    ]).filter(([label]) => label));
+    expect(ctas.length).toBeGreaterThan(0);
+
+    const wrong = ctas.filter(([label, href]) => label === 'Star on GitHub'
+      ? href !== 'https://github.com/CieloVistaSoftware/wb-starter'
+      : !String(href).startsWith(SITE));
+    expect(wrong, 'hero CTAs that do not go to the live site').toEqual([]);
+
+    const playground = ctas.filter(([label]) => label === 'Try the Playground').map(([, href]) => href);
+    expect(new Set(playground)).toEqual(new Set([SITE + 'demos/playground.html']));
+    const guide = ctas.filter(([label]) => /^Read the guide$/i.test(String(label))).map(([, href]) => href);
+    expect(new Set(guide)).toEqual(new Set([SITE + 'public/doc-viewer.html?file=docs%2FV3-GUIDE.md']));
+  });
 });

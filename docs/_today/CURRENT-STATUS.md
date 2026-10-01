@@ -2,6 +2,26 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-01 (evening).** On branch `claude/nifty-darwin-8mf277`.
+
+**Task:** John wants Playwright CI split into categories, one check per category, run in parallel (his pick over one run that posts per-category results at the end).
+
+**Files touched:** `.github/workflows/ci-tests.yml`, `.husky/test-ratchet.mjs`,
+`tests/compliance/ci-and-local-gate-agree.spec.ts`.
+
+**Last action:** ci-tests.yml became a matrix of six jobs (compliance, regression,
+behaviors and schema-viewer gated through the ratchet with WB_GATE_PROJECTS;
+integration and base reported, as before), plus a "Playwright Tests" summary
+job that fails if any category fails. A narrowed ratchet now refuses `--update`
+and does not report a repaired count it cannot measure.
+
+**Next step:** watch the first CI run of the PR. If branch protection requires
+the old "Playwright Tests" check, the summary job keeps that name.
+
+**Open questions:** six Windows runners per push instead of one. Fine for John?
+
+---
+
 **Updated 2026-10-01 (later).** On branch `claude/nifty-darwin-8mf277`, restarted from main after PR #1230 merged.
 
 **Task:** the issue priority bot. It posted its comment twice on #1231, and John asked why priority is not set automatically.
