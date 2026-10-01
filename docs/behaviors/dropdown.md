@@ -38,9 +38,9 @@ real child `<a>`/`<button>`/`<div>` elements. Implemented by `dropdown()` in
 
 <div x-demo>
 <div x-dropdown label="Actions" position="bottom-end">
-  <a href="#edit">Edit</a>
-  <a href="#duplicate">Duplicate</a>
-  <a href="#delete">Delete</a>
+  <a href="#">Edit</a>
+  <a href="#">Duplicate</a>
+  <a href="#">Delete</a>
 </div>
 </div>
 

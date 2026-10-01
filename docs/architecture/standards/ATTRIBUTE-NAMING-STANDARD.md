@@ -74,7 +74,7 @@ cta="Click"     →   "tag": "button"    →   <button>Click</button>
 2. [Native Attributes to Reuse](#native-attributes-to-reuse)
 3. [Native Attributes to Avoid](#native-attributes-to-avoid)
 4. [Standard Custom Attributes](#standard-custom-attributes)
-5. [Data Injection](#injection)
+5. [Data Injection](#data-injection)
 6. [Extension Attributes](#extension-attributes)
 7. [Naming Conventions](#naming-conventions)
 8. [Accessibility Attributes](#accessibility-attributes)

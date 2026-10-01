@@ -10,8 +10,8 @@ This guide covers **how to use it** and **how it works internally**.
 
 1. [Mental model](#1-mental-model)
 2. [Quick start](#2-quick-start)
-3. [Using behaviors (custom tags)](#3-using-behaviors-custom-tags)
-4. [Using behaviors (x-* attributes)](#4-using-behaviors-x-attributes)
+3. [Using behaviors (semantic elements)](#3-using-behaviors-semantic-elements)
+4. [Using behaviors (x-prefixed attributes)](#4-using-behaviors-x-prefixed-attributes)
 5. [Auto-enhanced plain elements](#5-auto-enhanced-plain-elements)
 6. [Theming](#6-theming)
 7. [How it works internally](#7-how-it-works-internally)
@@ -197,7 +197,7 @@ Each behavior's exact attributes live in its schema at `src/wb-models/<name>.sch
 
 ---
 
-## 4. Using behaviors (x-* attributes)
+## 4. Using behaviors (x-prefixed attributes)
 
 Attach a behavior to **any** element with an `x-<name>` attribute. These don't
 need a custom tag:

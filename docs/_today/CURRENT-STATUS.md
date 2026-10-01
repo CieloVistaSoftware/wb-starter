@@ -2,6 +2,25 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-01 (late night).** On branch `claude/nifty-darwin-8mf277`, added to PR #1238.
+
+**Task:** markdown link audit. John: "write a test that proves all links in all of our .md documents work, consider it an audit which 1) Identifies failures and the 2) Fixed them the tests are then rerun to prove things."
+
+**Files touched:** `scripts/lib/md-links.mjs`, `scripts/audit-md-links.mjs`,
+`tests/compliance/md-links-resolve.spec.ts`, `data/md-link-audit.json` (new); fixed links in
+`docs/V3-GUIDE.md`, `docs/properties.md`, `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md`,
+`docs/behavior-cross-reference.md`, `docs/behaviors/dropdown.md`, `docs/standards/V3-STANDARDS.md`.
+
+**Last action:** audit before: 69 broken internal links (4 wrong anchors, 65 dead demo routes) and 1 broken
+web link (`github.com/wb`). All fixed. Rerun: 293 files, 688 internal links, 0 broken; 53 web links, 53 ok.
+The new gate fails on the old docs (69) and passes on the fixed ones.
+
+**Next step:** John reviews PR #1238. Rerun `node scripts/audit-md-links.mjs --external` now and then; web links are not in the gate.
+
+**Open questions:** none.
+
+---
+
 **Updated 2026-10-01 (night).** On branch `claude/nifty-darwin-8mf277`, after PR #1235 merged.
 
 **Task:** #1236, `x-glass`: a new behavior that lets an element carry the background scene (John: "a button which carries the scene of the background"; name chosen by John).
