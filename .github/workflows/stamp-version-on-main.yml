@@ -40,6 +40,28 @@ jobs:
         with:
           node-version: '20'
 
+      # John, 2026-10-02: "count pushes not commits." Pushes are counted from
+      # tag v1.0.89, set on main's "stamp v1.0.89" commit, so the number carries
+      # on from the last commit-counted one instead of going backwards. Made
+      # here because only this token can write tags. Idempotent: once the tag
+      # exists this does nothing. A tag push the Actions token is refused falls
+      # back to the tag API, as release.yml does.
+      - name: Numbering anchor tag (v1.0.89)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch --tags --force
+          if git rev-parse -q --verify refs/tags/v1.0.89 >/dev/null; then
+            echo "✓ v1.0.89 already tagged"
+          else
+            sha=$(git log origin/main --format='%H %s' | grep -m1 ' chore(version): stamp v1.0.89 for main$' | cut -d' ' -f1)
+            if [ -z "${sha}" ]; then echo "::error::no 'stamp v1.0.89' commit on main to anchor the count"; exit 1; fi
+            git tag v1.0.89 "${sha}"
+            git push origin refs/tags/v1.0.89 \
+              || gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref=refs/tags/v1.0.89 -f sha="${sha}" >/dev/null
+            echo "➕ tagged v1.0.89 at ${sha:0:8}"
+          fi
+
       # No npm ci: stamp-version.js uses only Node and git. Without it the
       # repo's hooks are not installed, so the stamp commit runs no hook.
       - name: Stamp
