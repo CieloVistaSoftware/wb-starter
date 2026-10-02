@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.100",
+      "date": "2026-10-02",
+      "summary": "In-progress rows show Now/Next; badge never fails silently on localhost (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1269\" target=\"_blank\" rel=\"noopener\">PR 1269</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>On localhost the version badge always says why it did not update</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Issues page: in-progress rows show Now / Next and when it was said</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.99",
       "date": "2026-10-02",
       "summary": "Nav selection closes API and Docs; tests stop crediting wb-* (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1268\" target=\"_blank\" rel=\"noopener\">PR 1268</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1267\" target=\"_blank\" rel=\"noopener\">#1267</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
