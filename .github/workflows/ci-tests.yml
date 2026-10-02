@@ -182,6 +182,38 @@ jobs:
           echo "shallow: $(git rev-parse --is-shallow-repository)  commits: $(git rev-list --count HEAD)  tags: $(git tag | wc -l)"
           ls -la .git/shallow 2>/dev/null || echo "no .git/shallow"
 
+      # #1272: catch WHO writes .git/shallow. Runs alongside the gate; the
+      # moment the file appears it records every git.exe command line and
+      # its parent process.
+      - name: "Probe #1272 — watch for .git/shallow"
+        if: matrix.project == 'regression'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force data/test-results | Out-Null
+          $dir = (Get-Location).Path
+          $script = @'
+          param($dir)
+          $out = Join-Path $dir 'data/test-results/shallow-watch.txt'
+          for ($i = 0; $i -lt 14400; $i++) {
+            $procs = Get-CimInstance Win32_Process -Filter "Name='git.exe'" -ErrorAction SilentlyContinue
+            foreach ($p in $procs) {
+              if ($p.CommandLine -match 'depth|shallow|fetch|clone|pull') {
+                $parent = Get-CimInstance Win32_Process -Filter "ProcessId=$($p.ParentProcessId)" -ErrorAction SilentlyContinue
+                Add-Content $out ("{0:HH:mm:ss.fff} git: {1}`n    parent: {2}" -f (Get-Date), $p.CommandLine, $parent.CommandLine)
+              }
+            }
+            if (Test-Path (Join-Path $dir '.git/shallow')) {
+              Add-Content $out ("{0:HH:mm:ss.fff} .git/shallow EXISTS: {1}" -f (Get-Date), (Get-Content (Join-Path $dir '.git/shallow') -Raw))
+              break
+            }
+            Start-Sleep -Milliseconds 250
+          }
+          '@
+          $file = Join-Path $env:RUNNER_TEMP 'shallow-watch.ps1'
+          Set-Content -Path $file -Value $script
+          "watcher started $(Get-Date -Format HH:mm:ss)" | Set-Content data/test-results/shallow-watch.txt
+          Start-Process pwsh -ArgumentList '-NoProfile', '-File', $file, $dir -WindowStyle Hidden
+
       - name: Gate — no NEW failures vs the register (${{ matrix.project }})
         if: matrix.gated
         timeout-minutes: 45
@@ -225,6 +257,7 @@ jobs:
           echo "shallow: $(git rev-parse --is-shallow-repository)  commits: $(git rev-list --count HEAD)  tags: $(git tag | wc -l)"
           ls -la .git/shallow 2>/dev/null && head -3 .git/shallow || echo "no .git/shallow"
           git reflog -n 5 2>/dev/null || true
+          echo "=== shallow watcher ==="; cat data/test-results/shallow-watch.txt 2>/dev/null || echo "(no watcher output)"
 
       - name: Upload test report
         if: always()
