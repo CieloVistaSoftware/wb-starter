@@ -73,5 +73,17 @@ test.describe('Issues page', () => {
     // not remembered. Only status:in-progress counts; the open priority:1
     // issue (#515) must not.
     await expect(page.locator('#issues-active')).toHaveText('Current Active: 1');
+
+    // John, 2026-10-02: "how do i know you are working on it now" -- "In
+    // progress work is indicated in Green?" The in-progress issue is green,
+    // says so in words, and is the first row; the priority:1 one is not.
+    await page.locator('.issues-tab', { hasText: 'Open' }).first().click();
+    const now = page.locator('.issues-row[number="517"]');
+    await expect(now).toHaveClass(/issues-row--now/);
+    await expect(now.locator('.issue-now')).toHaveText('● Working on it now');
+    await expect(page.locator('.issues-row').first()).toHaveAttribute('number', '517');
+    await expect(page.locator('.issues-row[number="515"]')).not.toHaveClass(/issues-row--now/);
+    const bg = await now.evaluate((el) => getComputedStyle(el).boxShadow);
+    expect(bg, 'a green bar marks the row').toMatch(/inset/);
   });
 });

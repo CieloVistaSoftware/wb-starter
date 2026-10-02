@@ -188,6 +188,8 @@
       String(label.name || '').trim().toLowerCase() === 'status:in-progress');
   }
 
+  const isOpenInProgress = (issue) => issue.state === 'open' && isInProgress(issue);
+
   function updateActiveCount() {
     const activeCount = allIssues.filter((issue) => issue.state === 'open' && isInProgress(issue)).length;
     activeEl.textContent = `Current Active: ${activeCount}`;
@@ -286,8 +288,11 @@
     // should show at the top" — what is finished and provable is what a reader
     // acts on now; severity orders everything behind it. The sortable columns
     // let them re-order at will; this is only what they see on arrival.
+    // ...except what is being worked on RIGHT NOW, which comes before all of
+    // it (John, 2026-10-02: "how do i know you are working on it now").
     filtered.sort((a, b) =>
-      (STATE_RANK[verifyStateOf(a)] === 1 ? 0 : 1) - (STATE_RANK[verifyStateOf(b)] === 1 ? 0 : 1)
+      (isOpenInProgress(a) ? 0 : 1) - (isOpenInProgress(b) ? 0 : 1)
+      || (STATE_RANK[verifyStateOf(a)] === 1 ? 0 : 1) - (STATE_RANK[verifyStateOf(b)] === 1 ? 0 : 1)
       || priorityOf(a) - priorityOf(b)
       || b.number - a.number);
 
@@ -317,14 +322,19 @@
       const vdetail = signatureField(issue.body, 'verified') || signatureField(issue.body, 'test') || 'no test named';
       const labels = (issue.labels || [])
         .map((l) => l.name)
-        .filter((n) => !PRIORITY.test(n) && !n.startsWith('state:'))
+        .filter((n) => !PRIORITY.test(n) && !n.startsWith('state:') && n !== 'status:in-progress')
         .map((n) => `<span class="issue-label">${escapeHtml(n)}</span>`)
         .join(' ');
+      // In green, at the top, with a pill that says so: the issue being worked
+      // on right now (status:in-progress). John: "In progress work is
+      // indicated in Green?"
+      const now = isOpenInProgress(issue);
+      const nowPill = now ? '<span class="issue-now" title="Labelled status:in-progress: being worked on right now">● Working on it now</span> ' : '';
       return `
-        <tr class="issues-row issues-row--p${p}" number="${issue.number}" tabindex="0">
+        <tr class="issues-row issues-row--p${p}${now ? ' issues-row--now' : ''}" number="${issue.number}" tabindex="0">
           <td class="issues-cell--priority" sort-value="${p}"><span class="issue-priority issue-priority--${p}">${p === 9 ? '—' : p}</span></td>
           <td>#${issue.number}</td>
-          <td class="issues-cell--title">${escapeHtml(issue.title)}</td>
+          <td class="issues-cell--title">${nowPill}${escapeHtml(issue.title)}</td>
           <td>${escapeHtml(kind) || '—'}</td>
           <td class="issues-cell--state" sort-value="${STATE_RANK[vstate]}" title="${escapeHtml(vdetail)}"><span class="issue-verify issue-verify--${vstate}">${STATE_GLYPH[vstate]}</span></td>
           <td class="issues-cell--labels">${labels}</td>
