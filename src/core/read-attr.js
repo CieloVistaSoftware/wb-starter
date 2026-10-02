@@ -95,4 +95,25 @@ export function readNumber(el, name, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
-export default { readFlag, readAttr, readNumber };
+/**
+ * Read a string option a behavior accepts from its options object OR the
+ * element: `options[name]`, then readAttr(), then the literal attribute.
+ *
+ * #883: card.js and layouts.js spelled this out by hand ~150 times as
+ * `options.x || readAttr(element, 'x') || element.getAttribute('x')`, the
+ * single largest source of the duplicate clusters the code audit found. This
+ * is that exact expression, so a caller's `|| 'default'` keeps working and an
+ * absent value still comes back as `null`, as it did inline.
+ *
+ * @param {Element} el
+ * @param {object} options  the behavior's options object
+ * @param {string} name     option / plain attribute name (`maxWidth`)
+ * @param {string} [attr]   literal attribute for the last lookup; defaults
+ *                          to the kebab spelling (`max-width`)
+ * @returns {*}
+ */
+export function readOption(el, options, name, attr = kebab(name)) {
+  return options[name] || readAttr(el, name) || el.getAttribute(attr);
+}
+
+export default { readFlag, readAttr, readNumber, readOption };

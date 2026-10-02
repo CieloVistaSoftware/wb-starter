@@ -1,4 +1,4 @@
-import { readAttr } from '../core/read-attr.js';
+import { readOption } from '../core/read-attr.js';
 /**
  * Markdown to HTML Behavior
  * -----------------------------------------------------------------------------
@@ -143,7 +143,7 @@ function protectHyphenatedTokens(root) {
 
 export async function mdhtml(element, options = {}) {
   const config = {
-    src: options.src || readAttr(element, 'src') || element.getAttribute('src'),
+    src: readOption(element, options, 'src'),
     sanitize: options.sanitize ?? (element.getAttribute('sanitize') !== 'false'),
     // John: "all text must flow until the end of the sentence, no 1/2 line
     // breaks" -- this defaulted to `true` (marked's `breaks` option: every
