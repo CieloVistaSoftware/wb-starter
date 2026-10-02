@@ -1,4 +1,5 @@
 import { VERSION } from '../core/version.js';
+import { versionNumber } from '../core/version-number.js';
 
 /**
  * Release — the ONE place any element displays the site's release/build
@@ -88,16 +89,10 @@ export function release(element, options = {}) {
   // upstream: a checkout level with origin/main but 12 commits past v1.0.0 used
   // to read a bare "v1.0.0". An older stamp without the tag fields falls back to
   // the previous meaning rather than to nothing.
-  const releaseName = VERSION.release || VERSION.version;
-  const ahead = Number.isInteger(VERSION.sinceRelease) ? VERSION.sinceRelease : Number(VERSION.ahead || 0);
-
-  // John, 2026-10-02: "I want port 3000 to show 1.0.what the latest push is
-  // e.g. 1.0.41 simple." The number is the tagged release with its patch moved
-  // on by the commits since it: v1.0.0 + 41 commits reads "v1.0.41". One plain
-  // version, always three segments (#1139: never a fourth), counted by git from
-  // the GitHub tag, so every copy of the same commit shows the same number.
-  const [maj = 0, min = 0, pat = 0] = String(releaseName).split('.').map((n) => Number(n) || 0);
-  const shownVersion = `${maj}.${min}.${pat + ahead}`;
+  // John, 2026-10-02: "1.0.what the latest push is e.g. 1.0.41 simple." The
+  // number is computed in one place (src/core/version-number.js) so every
+  // display of it agrees.
+  const { number: shownVersion, release: releaseName, since: ahead } = versionNumber(VERSION);
 
   // BEHIND is not rolled into the number on purpose. Being behind does not make
   // a newer build; it makes a STALE one, and counting it would read as
