@@ -149,19 +149,30 @@ export function release(element, options = {}) {
     e.preventDefault();
     element.textContent = '⏳';
     const root = location.pathname.replace(/[^/]*$/, '');
+    // John, 2026-10-02: "i clicked the version button and in progress shows
+    // this" -- the badge still read the old number and nothing said why. On
+    // the user's own machine every way the update can NOT happen is now said
+    // out loud: no endpoint on this server (a plain file server, another
+    // copy), a test-mode server, a refused pull, a failed request. Only on the
+    // live site, which already IS main, is a silent reload the right answer.
+    const local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    let why = '';
     try {
       const res = await fetch(root + 'api/update-to-latest', { method: 'POST' });
       if (res.ok) {
         const { updated, message } = await res.json();
         if (message) console.info(`[version] ${message}`);
-        // John, 2026-10-02: "I want ... the latest code to be shown. That means
-        // I get new versions every time i click." A refused update used to
-        // reload silently onto the same old code. Now it says why.
-        if (!updated && message && message !== 'already the latest code' && message !== 'test server: not updating') {
-          window.alert(`Could not get the latest code:\n\n${message}`);
-        }
+        if (!updated && message !== 'already the latest code') why = message || 'the server did not say why';
+      } else {
+        why = `the server on port ${location.port || '80'} has no update endpoint (HTTP ${res.status}). `
+          + 'It is not wb-starter\'s own server (npm start) -- stop it and run npm start in your wb-starter folder';
       }
-    } catch { /* the live site has no endpoint: just reload */ }
+    } catch (err) {
+      why = `the request to the server failed (${err && err.message ? err.message : 'no answer'})`;
+    }
+    if (local && why) {
+      window.alert(`Could not get the latest code:\n\n${why}\n\nThis page is served from: ${location.origin}`);
+    }
     await clearCacheAndReload();
   };
   element.addEventListener('click', onClick);
