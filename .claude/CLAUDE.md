@@ -103,6 +103,15 @@ saying we didn't tell you what to do?" The rules exist; read them before filing.
 2. **Exactly one priority label**, `priority:1`–`priority:5` (Tier-1 Law 15).
 3. **After filing, validate**: parse the posted body with `parseSignature()` from `scripts/lib/signature-schema.mjs` (or `node scripts/check-issue-signatures.mjs --number N`) and fix anything it reports before moving on.
 
+## Working on an issue — John can always see what it is
+
+John, 2026-10-02: "I should be able to see what you are working on at all times
+via our issues view."
+
+1. **Before starting** work on an issue, put the `status:in-progress` label on it. The Issues page's **In Progress** tab shows exactly those issues.
+2. **No work without an issue.** A request with no issue gets one filed first (with its Signature block), then labelled.
+3. **When the fix merges** (or the work stops), take the label off. Closing via `Fixes #N` closes it; remove the label anyway so the tab stays truthful.
+
 ## Merging — Claude merges when the tests say so
 
 John, 2026-10-02: "you trigger the merges when the tests indicate to do it."

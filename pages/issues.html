@@ -177,15 +177,15 @@
     summaryEl.textContent = `${filtered.length} ${noun} · ${range}`;
   }
 
-  // An issue counts as "being worked on" when it carries the explicit
-  // status:in-progress label OR priority:1 (John's convention for flagging
-  // active work) -- same detection the VS Code Issue Viewer uses
-  // (src/shared/github-issues-view.ts), so both surfaces agree.
+  // An issue is "being worked on" when it carries status:in-progress, and only
+  // then. John, 2026-10-02: "I should be able to see what you are working on at
+  // all times via our issues view." Claude puts the label on before starting
+  // and takes it off when the fix merges. priority:1 used to count too, but
+  // since Law 15 every issue has a priority, so it marked ~18 untouched issues
+  // as active and hid the real one.
   function isInProgress(issue) {
-    return (issue.labels || []).some((label) => {
-      const name = String(label.name || '').trim().toLowerCase();
-      return name === 'status:in-progress' || name === 'priority:1';
-    });
+    return (issue.labels || []).some((label) =>
+      String(label.name || '').trim().toLowerCase() === 'status:in-progress');
   }
 
   function updateActiveCount() {
