@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.98",
+      "date": "2026-10-02",
+      "summary": "Write-time control-byte hook (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1266\" target=\"_blank\" rel=\"noopener\">PR 1266</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1162\" target=\"_blank\" rel=\"noopener\">#1162</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Claude Code hook rejects a control byte the moment it is written</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1162\" target=\"_blank\" rel=\"noopener\">#1162</a>",
+          "issues": [
+            1162
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.97",
       "date": "2026-10-02",
       "summary": "Never write escapes that decode to control bytes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1265\" target=\"_blank\" rel=\"noopener\">PR 1265</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1162\" target=\"_blank\" rel=\"noopener\">#1162</a>",
