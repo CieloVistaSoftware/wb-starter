@@ -355,16 +355,17 @@ test.describe('Schema Validation: Test Section Completeness', () => {
         if (typeof html !== 'string') {
           issues.push(`${file}: setup[${i}] is not a string`);
         } else {
-          const hasWbTag = html.includes('<wb-');
-          const hasDataWb = html.includes('data-wb=');
+          // #1144: <wb-*> tags and data-wb are retired (4.0.0) -- John: "this is
+          // an outdated rule. we don't use wb-* any more". They no longer count
+          // as a valid way to attach a behavior; only these two do.
           // x-* attributes are the v3 primary syntax for attaching behaviors
           // to native elements (e.g. <form x-form>, <button x-ripple>).
           const hasXBehavior = /\sx-[a-z][\w-]*/.test(html);
           // A native host that auto-injects this behavior (<audio>, <dialog>,
           // <article> for card -- tag-map.js nativeMap) needs no marker at all.
           const isNativeHost = usesNativeHost(html, schema.schemaFor);
-          if (!hasWbTag && !hasDataWb && !hasXBehavior && !isNativeHost) {
-            issues.push(`${file}: setup[${i}] missing <wb-*> tag, data-wb, x-* behavior attribute, or auto-injecting native host`);
+          if (!hasXBehavior && !isNativeHost) {
+            issues.push(`${file}: setup[${i}] has neither an x-* behavior attribute nor an auto-injecting native host`);
           }
         }
       }
@@ -400,44 +401,27 @@ test.describe('Schema Validation: Test Section Completeness', () => {
     const schemas = getComponentSchemas();
     const issues: string[] = [];
     
-    function getPossibleTags(behavior: string): string[] {
-      const tags = [`<wb-${behavior}`];
-      const hyphenated = behavior.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-      if (hyphenated !== behavior) {
-        tags.push(`<wb-${hyphenated}`);
-      }
-      const compoundMatch = behavior.match(/^(card|button|input|nav|tab)(.+)$/);
-      if (compoundMatch) {
-        tags.push(`<wb-${compoundMatch[1]}-${compoundMatch[2].toLowerCase()}`);
-      }
-      return tags;
-    }
-    
     for (const [file, schema] of schemas) {
       if (!schema.test?.setup) continue;
 
-      const possibleTags = getPossibleTags(schema.schemaFor);
-      const dataWbPattern = `data-wb="${schema.schemaFor}"`;
       // #344: some behaviors (form, fieldset, label, ...) are attribute-based
       // enhancements of NATIVE elements per TIER1 law #11 -- <form x-form>,
-      // <fieldset x-fieldset>, <input x-label='...'> -- never a <wb-*> tag or
-      // the deprecated data-wb= fallback at all. Word-boundary regex (not a
-      // plain .includes()) so schema.schemaFor "form" doesn't false-match
-      // setup html containing the unrelated x-formrow attribute.
+      // <fieldset x-fieldset>, <input x-label='...'>. #1144: a retired <wb-*>
+      // tag or data-wb= no longer counts as referencing the behavior.
+      // Word-boundary regex (not a plain .includes()) so schema.schemaFor
+      // "form" doesn't false-match setup html containing x-formrow.
       const xAttrPattern = new RegExp(`x-${schema.schemaFor}(?![a-zA-Z0-9-])`);
 
       for (let i = 0; i < schema.test.setup.length; i++) {
         const html = schema.test.setup[i];
-        const hasWbTag = possibleTags.some(tag => html.includes(tag));
-        const hasDataWb = html.includes(dataWbPattern);
         const hasXAttr = xAttrPattern.test(html);
         const isNativeHost = usesNativeHost(html, schema.schemaFor);
 
         const usesSharedCardMarkup = schema.schemaFor.startsWith('card') &&
-          (html.includes('data-wb="card"') || html.includes('<article'));
+          html.includes('<article');
 
-        if (!hasWbTag && !hasDataWb && !hasXAttr && !usesSharedCardMarkup && !isNativeHost) {
-          issues.push(`${file}: setup[${i}] doesn't use <wb-${schema.schemaFor}>, x-${schema.schemaFor}, or data-wb="${schema.schemaFor}"`);
+        if (!hasXAttr && !usesSharedCardMarkup && !isNativeHost) {
+          issues.push(`${file}: setup[${i}] doesn't use x-${schema.schemaFor} or a native host for it`);
         }
       }
     }

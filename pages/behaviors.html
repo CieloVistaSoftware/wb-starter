@@ -877,6 +877,17 @@
     let liveApiBody = document.getElementById('behaviors-live-api-body');
 
     /**
+     * John, 2026-10-02: "Any time the nav selection changes, make sure the API
+     * and Docs buttons are closed." An open panel belonged to the example that
+     * was showing; carried over, it describes the wrong thing and hides the new
+     * example. Every selection path (selectRow, the variant buttons) calls this.
+     */
+    function closeLivePanels() {
+      if (liveApi) liveApi.open = false;
+      if (liveDoc) liveDoc.open = false;
+    }
+
+    /**
      * #774 -- John: "Should be toggles, show/hide only one at a time."
      *
      * Both panels open at once pushed the running example far down the panel,
@@ -2879,6 +2890,7 @@
         resultsEl.scrollTop = rowBottom - resultsEl.clientHeight;
       }
       if (focus) row.focus({ preventScroll: true });
+      closeLivePanels();
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
                row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
       // #1003 follow-up -- John: "click this first, page down in this element,
@@ -3187,6 +3199,7 @@
       // away from the search box is the behaviour this panel replaces.
       const rowToken = btn.querySelector('.behaviors-search-results__token');
       if (rowToken) {
+        closeLivePanels();
         showLive(rowToken.textContent.trim().split(/\s+/)[0], btn.dataset.variant || '');
         // #686: same reveal as the branch above -- stacked, the panel is below
         // the fold and the render is invisible without it.

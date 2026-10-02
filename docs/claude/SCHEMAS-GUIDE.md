@@ -316,7 +316,7 @@ Never create a schema from scratch if one already exists. Extend what's there.
   "$view": [],
   "$methods": {},
   "test": {
-    "setup": ["<wb-{behavior} ...></wb-{behavior}>"]
+    "setup": ["<div x-{behavior} ...></div>"]
   }
 }
 ```
