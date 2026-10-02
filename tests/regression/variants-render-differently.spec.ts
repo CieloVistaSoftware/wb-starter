@@ -380,7 +380,10 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
           }
         }
         // Behaviors attach asynchronously (module + stylesheet on first use).
-        if (WB?.whenIdle) await WB.whenIdle({ timeout: 10_000 });
+        // #1246: under Windows CI load a lazy element's first IntersectionObserver
+        // report ("awaiting viewport") once took over 10s. Still a wait for the
+        // runtime's own signal, never a sleep -- only the ceiling is wider.
+        if (WB?.whenIdle) await WB.whenIdle({ timeout: 20_000 });
         // And the example's images have arrived (loaded or failed). An image
         // still in flight is a 0x0 box, which is how x-cardimage's aspect=4/3
         // and aspect=21/9 once read as the same card: neither had its picture
@@ -492,6 +495,8 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
 test.describe('Showcase variants are visually distinct', () => {
   for (const { token, form, options } of behaviorsWithOptions()) {
     test(`${token} (${form}): no two options render identically`, async ({ page }) => {
+      // Room for the 20s idle ceiling above on a starved CI runner (#1246).
+      test.setTimeout(60_000);
       await openPanel(page);
       const findings = await fingerprintOptions(page, token, form, options);
 
