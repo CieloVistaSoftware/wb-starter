@@ -6,6 +6,31 @@
   ],
   "releases": [
     {
+      "version": "1.0.108",
+      "date": "2026-10-02",
+      "summary": "Refactor(card): fold duplicated card.js blocks into shared helpers (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1278\" target=\"_blank\" rel=\"noopener\">PR 1278</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Scroll the disabled host into view before the forced click</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Count readOption() reads as consuming an attribute</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a>",
+          "issues": [
+            883
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Fold duplicated card.js blocks into shared helpers</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a>",
+          "issues": [
+            883
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.107",
       "date": "2026-10-02",
       "summary": "Fix(ci): stop Playwright fetching the PR base at depth 1 (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1277\" target=\"_blank\" rel=\"noopener\">PR 1277</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
