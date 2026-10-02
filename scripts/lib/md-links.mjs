@@ -33,13 +33,22 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { suiteEnv } from './suite-env.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
-/** Every tracked .md file, repo-relative with forward slashes. */
+/**
+ * Every tracked .md file, repo-relative with forward slashes.
+ *
+ * --cached --others --exclude-standard, as tests/compliance/repo-layout.spec.ts
+ * does: the commit gate runs the suite in a `git worktree add --no-checkout`
+ * copy whose index is empty, so the index alone listed 0 files there.
+ * suiteEnv: never inherit the hook's GIT_DIR/GIT_INDEX_FILE (#1161).
+ */
 export function trackedMarkdown(root = ROOT) {
-  return execFileSync('git', ['ls-files', '-z', '*.md'], { cwd: root, encoding: 'utf8' })
-    .split('\0').filter(Boolean).sort();
+  const out = execFileSync('git', ['ls-files', '-z', '--cached', '--others', '--exclude-standard', '*.md'],
+    { cwd: root, encoding: 'utf8', env: suiteEnv(process.env) });
+  return [...new Set(out.split('\0').filter(Boolean))].sort();
 }
 
 /** Blank out code fences, inline code and HTML comments, keeping line numbers. */

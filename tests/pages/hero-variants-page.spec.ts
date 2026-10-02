@@ -46,8 +46,11 @@ test.describe('Hero Variants Page', () => {
     await expect(video).toBeVisible();
     // The expand animation now comes from hero-variants.css (#779: no inline
     // styles), so assert what the browser applies rather than the attribute.
-    const animationName = await video.evaluate((el) => getComputedStyle(el).animationName);
-    expect(animationName).toBe('aurora-expand');
+    // Polled, not read once: under the full gate's load the video was visible
+    // before hero-variants.css applied, and a single read saw "none".
+    await expect
+      .poll(() => video.evaluate((el) => getComputedStyle(el).animationName), { timeout: 15000 })
+      .toBe('aurora-expand');
   });
 
   test('quick reference table exists', async ({ page }) => {

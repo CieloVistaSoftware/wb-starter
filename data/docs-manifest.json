@@ -1,5 +1,5 @@
 {
-  "totalFiles": 272,
+  "totalFiles": 274,
   "categories": [
     "_today",
     "architecture",
@@ -964,6 +964,12 @@
         "category": "behaviors"
       },
       {
+        "path": "docs/behaviors/glass.md",
+        "title": "glass — the element carries the background scene",
+        "name": "glass",
+        "category": "behaviors"
+      },
+      {
         "path": "docs/behaviors/globe.md",
         "title": "Globe",
         "name": "globe",
@@ -1605,6 +1611,12 @@
       }
     ],
     "guides": [
+      {
+        "path": "docs/guides/create-a-website.md",
+        "title": "How to Create a Website with wb-starter",
+        "name": "create-a-website",
+        "category": "guides"
+      },
       {
         "path": "docs/guides/search-index.md",
         "title": "Search Index Generator",
@@ -2361,6 +2373,12 @@
       "category": "behaviors"
     },
     {
+      "path": "docs/behaviors/glass.md",
+      "title": "glass — the element carries the background scene",
+      "name": "glass",
+      "category": "behaviors"
+    },
+    {
       "path": "docs/behaviors/globe.md",
       "title": "Globe",
       "name": "globe",
@@ -3031,6 +3049,12 @@
       "title": "wb-starter Escape Hatches",
       "name": "escape-hatches",
       "category": "root"
+    },
+    {
+      "path": "docs/guides/create-a-website.md",
+      "title": "How to Create a Website with wb-starter",
+      "name": "create-a-website",
+      "category": "guides"
     },
     {
       "path": "docs/guides/search-index.md",

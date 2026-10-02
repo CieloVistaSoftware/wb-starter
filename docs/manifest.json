@@ -16,7 +16,7 @@
           "file": "V3-GUIDE.md",
           "title": "wb-starter v3 — Complete Guide",
           "description": "How to use wb-starter and how it works internally",
-          "modified": "2026-09-28"
+          "modified": "2026-10-01"
         }
       ]
     },
@@ -70,7 +70,7 @@
           "file": "standards/V3-STANDARDS.md",
           "title": "V3 STANDARDS",
           "description": "Documentation for V3 STANDARDS",
-          "modified": "2026-09-27"
+          "modified": "2026-10-01"
         },
         {
           "file": "standards/DEMOS-AND-DOCS-STANDARDS.md",
@@ -100,13 +100,13 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-09-28"
+          "modified": "2026-10-01"
         },
         {
           "file": "behavior-cross-reference.md",
           "title": "Behavior Cross-Reference",
           "description": "Relationships between every behavior",
-          "modified": "2026-09-27"
+          "modified": "2026-10-01"
         },
         {
           "file": "audio.md",
@@ -238,7 +238,7 @@
           "file": "properties.md",
           "title": "Properties",
           "description": "Behavior property reference",
-          "modified": "2026-09-12"
+          "modified": "2026-10-01"
         },
         {
           "file": "card.md",
@@ -598,7 +598,7 @@
           "file": "behaviors/dropdown.md",
           "title": "dropdown",
           "description": "Click (or hover) to open a menu — from either a comma-separated items list or real child <a>/<button>/<div> elements.",
-          "modified": "2026-09-26"
+          "modified": "2026-10-01"
         },
         {
           "file": "behaviors/error.md",
@@ -1522,7 +1522,7 @@
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
           "title": "Attribute Naming Standard",
           "description": "Standards for attribute naming conventions",
-          "modified": "2026-09-30"
+          "modified": "2026-10-01"
         },
         {
           "file": "architecture/standards/ERROR-MESSAGE.md",
