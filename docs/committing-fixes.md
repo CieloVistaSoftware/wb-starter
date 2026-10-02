@@ -71,14 +71,22 @@ test.describe("Issue: description", () => {
 # Run the specific test
 npx playwright test tests/issues/test-file.spec.ts --reporter=list
 
-# Run full test suite (sequential by project)
-npm run test:duplicates
-npx playwright test --project=compliance --workers=8
-npx playwright test --project=regression --workers=8
-npx playwright test --project=base --workers=8
+# Optionally, the one category the fix touches
 npx playwright test --project=behaviors --workers=8
 ```
+
+Do not run the whole suite for a fix. The full suite runs nightly on `main` (see step 8).
 
 > Tip: `npm test` is fast-by-default for developer feedback; use `npm test -- --full` (or `CI=true npm test`) to run the ordered full pipeline. See `docs/testing-runbook.md` for the recommended developer workflow, CI examples, and how to gather Playwright traces for PR investigations.
 
 ### 6. Commit Changes
+
+The commit hook runs fast checks only (~30s): version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. It runs no Playwright.
+
+### 7. Open a PR
+
+PR CI (`.github/workflows/ci-tests.yml`) runs one Playwright check per category on windows-latest, plus "Gate scripts self-test". Its results are information.
+
+### 8. Merge and version
+
+The PR is merged once every check on its head is green, and the live site serves `main` within minutes. The version badge then shows the new number: `1.0.<commits since the v1.0.0 tag>`, e.g. `v1.0.41`. The full suite also runs nightly on `main`; a new failure files a `priority:2` issue. See `docs/standards/RELEASE-PROCESS.md`.

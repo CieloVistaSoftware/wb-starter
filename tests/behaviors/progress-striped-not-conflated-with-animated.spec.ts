@@ -10,6 +10,7 @@
  * and src/wb-viewmodels/semantics/progress.js.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -26,7 +27,7 @@ async function setup(page: Page, html: string): Promise<void> {
     document.body.appendChild(c);
   }, html);
   await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
-  await page.waitForTimeout(400);
+  await wbIdle(page);
 }
 
 test.describe('progress — striped texture is independent of the animated default', () => {

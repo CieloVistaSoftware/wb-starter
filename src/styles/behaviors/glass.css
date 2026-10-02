@@ -1,0 +1,37 @@
+/* =============================================================================
+   glass (#1236) — the element carries the background scene
+   =============================================================================
+   John: "a button which carries the scene of the background." On the
+   playground's hero #7 the wave runs straight through the "Read the Guide"
+   button: its fill is mostly transparent, so the scene behind it is its
+   picture.
+
+   The tint is mixed from --glass-tint (themes.css: the theme's text colour,
+   so it reads on light and dark themes alike). It is mixed HERE, at the
+   element, not pre-composed on :root: a value composed on :root cannot be
+   re-tinted further down, and the hero needs exactly that (themes.css sets
+   --glass-tint to its on-accent white there). Tunable per use without
+   overriding the rule: --glass-tint, --x-glass-edge-width, --x-glass-blur.
+   No custom property is DEFINED here: css-oop-compliance keeps definitions in
+   themes.css; this file only reads them, each with its fallback.
+
+   [x-glass].x-glass (0,2,0), not .x-glass (0,1,0): themes.css's
+   `[data-theme] button` reset is (0,1,1) and sets a background, so a bare
+   class lost to it and an x-glass <button> stayed opaque.
+   ========================================================================== */
+
+[x-glass].x-glass {
+  background: color-mix(in srgb, var(--glass-tint, currentColor) 14%, transparent);
+  border: var(--x-glass-edge-width, 1px) solid color-mix(in srgb, var(--glass-tint, currentColor) 40%, transparent);
+  /* A small softening so text on the element stays readable over a busy
+     scene. The scene passing through is the effect; the blur is a detail. */
+  -webkit-backdrop-filter: blur(var(--x-glass-blur, 8px));
+  backdrop-filter: blur(var(--x-glass-blur, 8px));
+}
+
+/* amount — how much of the scene comes through. Capped at a 30% tint: past
+   that the element stops carrying the scene and starts hiding it, and light
+   text on it loses contrast against a dark scene. */
+[x-glass].x-glass--most  { background: color-mix(in srgb, var(--glass-tint, currentColor) 14%, transparent); }
+[x-glass].x-glass--some  { background: color-mix(in srgb, var(--glass-tint, currentColor) 22%, transparent); }
+[x-glass].x-glass--least { background: color-mix(in srgb, var(--glass-tint, currentColor) 30%, transparent); }

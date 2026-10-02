@@ -9,11 +9,12 @@
   <script type="module">
     import WB from '../src/core/wb-lazy.js';
     import { VERSION } from '../src/core/version.js';
+    import { versionNumber } from '../src/core/version-number.js';
     // Set the real version BEFORE scan builds the badge -- x-badge reads
     // its `label` attribute once at build time, so patching it afterward
     // wouldn't re-render the already-built element.
     const versionBadge = document.getElementById('lp-version-badge');
-    if (versionBadge) versionBadge.setAttribute('label', `v${VERSION.version} — zero build step`);
+    if (versionBadge) versionBadge.setAttribute('label', `v${versionNumber(VERSION).number} — zero build step`);
     window.WB = WB;
     await WB.init({ autoInject: true });
     await WB.scan(document.body);

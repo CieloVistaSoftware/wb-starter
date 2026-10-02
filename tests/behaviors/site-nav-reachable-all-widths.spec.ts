@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * The site nav must be reachable at every width — never just disappear
@@ -12,7 +13,7 @@ test.describe('site nav reachability across widths (#276)', () => {
   for (const width of WIDTHS) {
     test(`nav or hamburger toggle is visible at ${width}px`, async ({ page }) => {
       await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
-      await page.waitForTimeout(1000);
+      await wbIdle(page);
       await page.setViewportSize({ width, height: 800 });
       await page.waitForTimeout(400);
 
@@ -28,7 +29,7 @@ test.describe('site nav reachability across widths (#276)', () => {
 
   test('hamburger toggle at mobile width actually reveals the nav', async ({ page }) => {
     await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(1000);
+    await wbIdle(page);
     await page.setViewportSize({ width: 375, height: 800 });
     await page.waitForTimeout(400);
 

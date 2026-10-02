@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   push:
     branches: [ main ]
+  # nightly.yml calls this same workflow for the overnight full run, so the
+  # suite it runs is the one PRs see -- one definition, not two.
+  workflow_call:
 
 permissions:
   contents: read
@@ -33,8 +36,11 @@ permissions:
 # This does not queue runs without bound. GitHub keeps at most one PENDING run
 # per concurrency group and cancels the previously pending one, so a burst of
 # six pushes costs one in-flight run plus one waiting — never six.
+# github.workflow is the CALLER's name when nightly.yml calls this, so the
+# nightly run gets its own group and is never queued behind (or cancelled as a
+# pending duplicate of) a push run on main.
 concurrency:
-  group: ci-tests-${{ github.ref }}
+  group: ci-tests-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -236,6 +242,41 @@ jobs:
   # single job used to have, so anything that waits on "Playwright Tests"
   # (branch protection, a person) still finds it. Skipped on a cancel: a
   # cancelled run has no verdict to report.
+  # The gate scripts' own guards. They used to run in the commit hook on every
+  # commit; since 2026-10-02 the hook runs fast checks only (John: "no ci
+  # duplication at all"), so they run here, once per PR and once per nightly.
+  # No Playwright run, no server: throwaway repos and fake CLIs, ~1 minute.
+  gate-self-test:
+    name: Gate scripts self-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      # test-ship-rollback and test-suite-env commit inside throwaway repos.
+      - name: Git identity for throwaway repos
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Lock, gate, suite-env, ship-rollback and control-byte guards
+        run: |
+          npm run test:lock-guards
+          npm run test:gate-guards
+          npm run test:suite-env
+          npm run test:ship-rollback
+          npm run test:staged-control-bytes
+
   playwright:
     name: Playwright Tests
     needs: test

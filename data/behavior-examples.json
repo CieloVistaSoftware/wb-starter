@@ -1,7 +1,7 @@
 {
   "generatedBy": "scripts/build-behavior-examples.mjs",
   "source": "pages/behaviors.html",
-  "count": 155,
+  "count": 156,
   "demoBlocks": 88,
   "examples": {
     "x-ripple": {
@@ -664,6 +664,13 @@
     "x-sticky": {
       "source": "<div x-sticky offset=\"0\" stuck-class=\"is-stuck\">\n  Sticks to the top of its scroll container once you pass it.\n</div>",
       "alternates": []
+    },
+    "x-glass": {
+      "source": "<section x-cardhero\n  background=\"images/placeholder-waves.svg\"\n  height=\"280px\"\n  pretitle=\"x-glass\"\n  title=\"Infinite Possibility.\"\n  cta=\"Try the Playground\"\n  cta-secondary=\"Read the Guide\"></section>",
+      "alternates": [
+        "<button x-glass amount=\"some\">amount=some</button>",
+        "<button x-glass amount=\"least\">amount=least</button>"
+      ]
     },
     "x-fill": {
       "source": "<div id=\"fill-demo-row\" x-cluster gap=\"0.5rem\">\n  <button id=\"fill-demo-target\" x-fill>Fills the rest of the row</button>\n  <button id=\"fill-demo-sibling\">Natural width</button>\n</div>",

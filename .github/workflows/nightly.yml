@@ -1,0 +1,69 @@
+name: Nightly
+
+# The full suite, overnight, on main. Releases are NOT cut here: every merge to
+# main is already the next 1.0.x (release-on-merge.yml; John, 2026-10-02: "it
+# should be release 1.0.x to indicate where it is"). This run catches what a
+# day of merges broke together, and says so in one issue by morning.
+#
+# "park" starts it (Claude runs `gh workflow run nightly.yml --ref main`); the
+# schedule is the backup for a day that ended without "park".
+#
+#   tests   the full suite: ci-tests.yml itself (one definition, not a copy),
+#           every category through the ratchet, plus the gate self-tests.
+#   report  tests failed -> one priority:2 issue naming the run.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 08:00 UTC = 2am CST (3am CDT). GitHub schedules are UTC only.
+    - cron: '0 8 * * *'
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Full suite
+    uses: ./.github/workflows/ci-tests.yml
+    permissions:
+      contents: read
+
+  report:
+    name: The suite failed
+    needs: tests
+    if: always() && needs.tests.result != 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      # Law 15: every issue carries exactly one priority label.
+      - name: File one issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          today=$(date -u +%Y-%m-%d)
+          printf '%s\n' \
+            "The nightly full suite did not pass on main (\`${{ github.sha }}\`)." \
+            "" \
+            "- Run: ${run_url}" \
+            "- Result of the tests job: \`${{ needs.tests.result }}\`" \
+            "" \
+            "Each failed category is its own red check in the run, and its log names the NEW failures (failures already in data/test-baseline-failures.json do not count)." \
+            "" \
+            "Fix them in a PR; the next merge is released as the next 1.0.x once its checks are green." \
+            "" \
+            "## Signature" \
+            '```yaml' \
+            "kind: test-failure" \
+            "subject: nightly full suite on main (${{ github.sha }})" \
+            "observed: \"tests job result: ${{ needs.tests.result }} -- see ${run_url}\"" \
+            "expected: \"every gated category passes with no new failures vs data/test-baseline-failures.json\"" \
+            '```' > body.md
+          gh issue create --repo "${{ github.repository }}" \
+            --title "Nightly ${today}: new test failures on main" \
+            --label "priority:2" --body-file body.md

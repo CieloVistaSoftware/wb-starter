@@ -51,13 +51,13 @@ only needs an enhancement. An explicit behavior uses an `x-*` attribute:
 </div>
 
 <div x-demo>
-<a x-tooltip="Open the release notes" href="/release-notes">Release notes</a>
+<a x-tooltip="Open the release notes" href="#">Release notes</a>
 </div>
 
 <div x-demo>
 <nav x-sticky aria-label="Primary">
   <a href="#top">Top</a>
-  <a href="#docs">Docs</a>
+  <a href="#">Docs</a>
 </nav>
 </div>
 

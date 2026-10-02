@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 const pageSpecs = [
   {
@@ -22,7 +23,7 @@ test.describe('Page Compliance', () => {
   for (const spec of pageSpecs) {
     test(`Page compliance: ${spec.url}`, async ({ page }) => {
       await page.goto(spec.url);
-      await page.waitForTimeout(1000); // Wait for hydration
+      await wbIdle(page);
       for (const el of spec.elements) {
         const locator = page.locator(el.selector);
         if (el.required) {

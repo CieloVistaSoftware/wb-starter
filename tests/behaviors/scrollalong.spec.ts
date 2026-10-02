@@ -3,12 +3,13 @@
  * Tests against the ACTUAL site layout to verify sticky nav works
  */
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('ScrollAlong Behavior - Standalone Test Page', () => {
   test.beforeEach(async ({ page }) => {
     // Load the standalone scrollalong test page
     await page.goto('/demos/scrollalong-test.html');
-    await page.waitForTimeout(500);
+    await wbIdle(page);
   });
 
   test('nav element exists with scrollalong behavior', async ({ page }) => {

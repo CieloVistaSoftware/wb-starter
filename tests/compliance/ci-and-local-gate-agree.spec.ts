@@ -39,11 +39,18 @@ const runLines = (yaml: string) =>
   yaml.split('\n').filter((l) => !/^\s*#/.test(l));
 
 test.describe('#1044: CI and the local gate apply the same standard', () => {
-  test('both gates invoke the ratchet', () => {
+  // 2026-10-02 (John: "no ci duplication at all"): the commit hook runs fast
+  // checks only, and the full suite runs in CI -- ci-tests.yml on PRs, and the
+  // same workflow called by nightly.yml overnight. So there is ONE place
+  // the suite is judged, and it must be the ratchet. A hook that quietly grew a
+  // second, differently-judged suite run would bring #1044 back.
+  test('CI invokes the ratchet, and the commit hook runs no suite of its own', () => {
+    const hookRuns = hook.split('\n').filter((l) => !/^\s*#/.test(l)).join('\n');
     expect(
-      /test-ratchet\.mjs/.test(hook),
-      `${HOOK} no longer runs the ratchet — the local gate has stopped using the register.`,
-    ).toBe(true);
+      /test-ratchet\.mjs|playwright\s+test|locked-spec-run/.test(hookRuns),
+      `${HOOK} runs a test suite again. The suite runs in CI (ci-tests.yml) and nightly.yml;\n` +
+      'a second run in the hook duplicates CI and can judge by a different standard (#1044).',
+    ).toBe(false);
 
     expect(
       /test-ratchet\.mjs/.test(ci),

@@ -11,14 +11,14 @@ import { fileURLToPath } from 'url';
  * open test page to reload mid-run. (The server was first thought to die
  * there; it does not -- the log going quiet afterwards is browser caching, and
  * the tail-of-suite stall is #962.) A one-shot throwaway checkout has no use
- * for live-reload, so .husky/gate-staged-tree.mjs now sets DISABLE_WATCH=true
- * for the server it starts.
+ * for live-reload, so the suite's server runs with DISABLE_WATCH=true.
  *
  * Two things have to be true for that fix to mean anything:
  *  1. server.js's watcher actually honours DISABLE_WATCH (run, not read --
  *     #1049's lesson: a check that greps for a phrase passes on code that no
  *     longer does anything).
- *  2. gate-staged-tree.mjs actually sets it for the server it spawns.
+ *  2. the run that starts the suite's server sets it: since 2026-10-02 that is
+ *     CI (ci-tests.yml, which nightly.yml calls), not a local commit gate.
  */
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -68,9 +68,11 @@ test.describe('#1200 -- the gate\'s throwaway server does not arm a live-reload 
     }
   });
 
-  test('gate-staged-tree.mjs actually sets DISABLE_WATCH for the throwaway server', () => {
-    const src = fs.readFileSync(path.join(REPO, '.husky', 'gate-staged-tree.mjs'), 'utf8');
-    const envBlock = src.slice(src.indexOf('const run = runBounded('), src.indexOf('timeoutMs: GATE_TIMEOUT_MS'));
-    expect(envBlock, 'the env object passed to the throwaway server must set DISABLE_WATCH').toMatch(/DISABLE_WATCH:\s*['"]true['"]/);
+  // The local 10th-commit gate (.husky/gate-staged-tree.mjs) is gone since
+  // 2026-10-02; the full suite runs in CI (ci-tests.yml, also called by
+  // nightly.yml). That is now the run whose server must not live-reload.
+  test('CI\'s test job sets DISABLE_WATCH for the server it starts', () => {
+    const wf = fs.readFileSync(path.join(REPO, '.github', 'workflows', 'ci-tests.yml'), 'utf8');
+    expect(wf, 'ci-tests.yml must set DISABLE_WATCH for the test server').toMatch(/DISABLE_WATCH:\s*['"]true['"]/);
   });
 });

@@ -11,6 +11,17 @@ learn what was in it, and given a build no way to know its number was unique.
 
 ---
 
+
+## The number on the badge (since 2026-10-02)
+
+John: "I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple."
+The version badge shows the last release tag with its patch moved on by the
+commits since it: `v1.0.0` + 41 commits reads **`v1.0.41`**. It is counted by git
+from the tag (`scripts/stamp-version.js`), so the same commit shows the same
+number on port 3000 and on the live site. `*` after it means uncommitted local
+edits; `⚠` means the checkout is behind GitHub. A release (below) is still cut
+deliberately with `npm run ship` and resets the count to its new tag.
+
 ## 1. One number per release, never per commit
 
 A release number changes **once, on `main`, when something is being released**. It does not

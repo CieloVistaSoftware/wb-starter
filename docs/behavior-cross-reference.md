@@ -941,7 +941,7 @@ Registration form:
       type="checkbox"
       name="terms"
       required>
-      I agree to the <a href="/terms">Terms of Service
+      I agree to the <a href="#">Terms of Service
     </a>
   </label>
   <label>
@@ -1357,7 +1357,7 @@ Terms agreement:
     type="checkbox"
     name="terms"
     required>
-    I agree to the <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy
+    I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy
   </a>
 </label>
 </div>
@@ -2266,7 +2266,7 @@ Basic semantic card:
     <p>Learn the basics of WB Behaviors in just 5 minutes.</p>
   </main>
   <footer>
-    <a href="/docs/start">Read more →</a>
+    <a href="#">Read more →</a>
   </footer>
 </article>
 </div>
@@ -2435,7 +2435,7 @@ Notification/Alert card:
     <p>Your order #12345 has been confirmed. You will receive an email shortly.</p>
   </main>
   <footer>
-    <a href="/orders/12345">View Order Details</a>
+    <a href="#">View Order Details</a>
   </footer>
 </article>
 </div>
@@ -2650,13 +2650,13 @@ Basic semantic navbar:
       <a href="/">Home</a>
     </li>
     <li>
-      <a href="/about">About</a>
+      <a href="#">About</a>
     </li>
     <li>
-      <a href="/services">Services</a>
+      <a href="#">Services</a>
     </li>
     <li>
-      <a href="/contact">Contact</a>
+      <a href="#">Contact</a>
     </li>
   </ul>
 </nav>
@@ -2674,16 +2674,16 @@ With logo image:
   </a>
   <ul>
     <li>
-      <a href="/products">Products</a>
+      <a href="#">Products</a>
     </li>
     <li>
-      <a href="/pricing">Pricing</a>
+      <a href="#">Pricing</a>
     </li>
     <li>
       <a href="/docs">Docs</a>
     </li>
     <li>
-      <a href="/login">Login</a>
+      <a href="#">Login</a>
     </li>
   </ul>
 </nav>
@@ -2726,16 +2726,16 @@ Full featured navbar:
   </div>
   <ul>
     <li>
-      <a href="/dashboard">Dashboard</a>
+      <a href="#">Dashboard</a>
     </li>
     <li>
-      <a href="/projects">Projects</a>
+      <a href="#">Projects</a>
     </li>
     <li>
-      <a href="/team">Team</a>
+      <a href="#">Team</a>
     </li>
     <li>
-      <a href="/settings">Settings</a>
+      <a href="#">Settings</a>
     </li>
   </ul>
   <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -2759,16 +2759,16 @@ E-commerce navbar:
   <a href="/">ShopName</a>
   <ul>
     <li>
-      <a href="/new">New Arrivals</a>
+      <a href="#">New Arrivals</a>
     </li>
     <li>
-      <a href="/women">Women</a>
+      <a href="#">Women</a>
     </li>
     <li>
-      <a href="/men">Men</a>
+      <a href="#">Men</a>
     </li>
     <li>
-      <a href="/sale">Sale 🔥</a>
+      <a href="#">Sale 🔥</a>
     </li>
   </ul>
   <div style="display: flex; gap: 0.5rem;">
@@ -2793,21 +2793,21 @@ Documentation navbar:
   </a>
   <ul>
     <li>
-      <a href="/guides">Guides</a>
+      <a href="#">Guides</a>
     </li>
     <li>
-      <a href="/api">API Reference</a>
+      <a href="#">API Reference</a>
     </li>
     <li>
-      <a href="/examples">Examples</a>
+      <a href="#">Examples</a>
     </li>
     <li>
-      <a href="/changelog">Changelog</a>
+      <a href="#">Changelog</a>
     </li>
   </ul>
   <div style="display: flex; gap: 0.5rem;">
     <a
-      href="https://github.com/wb"
+      href="https://github.com/CieloVistaSoftware/wb-starter"
       target="_blank">
       GitHub
     </a>
@@ -2853,14 +2853,14 @@ Semantic sidebar:
 <aside>
   <nav>
     <a
-      href="/dashboard"
+      href="#"
       class="active">
       📊 Dashboard
     </a>
-    <a href="/projects">📁 Projects</a>
-    <a href="/team">👥 Team</a>
-    <a href="/analytics">📈 Analytics</a>
-    <a href="/settings">⚙️ Settings</a>
+    <a href="#">📁 Projects</a>
+    <a href="#">👥 Team</a>
+    <a href="#">📈 Analytics</a>
+    <a href="#">⚙️ Settings</a>
   </nav>
 </aside>
 </div>
@@ -2871,17 +2871,17 @@ Sidebar with sections:
 <aside>
   <nav>
     <strong style="display: block; padding: 0.5rem; opacity: 0.7; font-size: 0.75rem;">MAIN</strong>
-    <a href="/dashboard">Dashboard</a>
-    <a href="/inbox">Inbox</a>
-    <a href="/calendar">Calendar</a>
+    <a href="#">Dashboard</a>
+    <a href="#">Inbox</a>
+    <a href="#">Calendar</a>
     <strong style="display: block; padding: 0.5rem; margin-top: 1rem; opacity: 0.7; font-size: 0.75rem;">PROJECTS</strong>
-    <a href="/projects/alpha">Project Alpha</a>
-    <a href="/projects/beta">Project Beta</a>
-    <a href="/projects/new">+ New Project</a>
+    <a href="#">Project Alpha</a>
+    <a href="#">Project Beta</a>
+    <a href="#">+ New Project</a>
     <strong style="display: block; padding: 0.5rem; margin-top: 1rem; opacity: 0.7; font-size: 0.75rem;">SETTINGS</strong>
-    <a href="/profile">Profile</a>
-    <a href="/preferences">Preferences</a>
-    <a href="/logout">Log out</a>
+    <a href="#">Profile</a>
+    <a href="#">Preferences</a>
+    <a href="#">Log out</a>
   </nav>
 </aside>
 </div>
@@ -2892,21 +2892,21 @@ Documentation sidebar:
 <aside>
   <nav>
     <strong>Getting Started</strong>
-    <a href="/docs/intro">Introduction</a>
-    <a href="/docs/install">Installation</a>
-    <a href="/docs/quickstart">Quick Start</a>
+    <a href="#">Introduction</a>
+    <a href="#">Installation</a>
+    <a href="#">Quick Start</a>
     <strong style="margin-top: 1rem; display: block;">Core Concepts</strong>
     <a href="/docs/behaviors">Behaviors</a>
-    <a href="/docs/auto-inject">Auto Injection</a>
-    <a href="/docs/themes">Theming</a>
+    <a href="#">Auto Injection</a>
+    <a href="#">Theming</a>
     <strong style="margin-top: 1rem; display: block;">Behaviors</strong>
-    <a href="/docs/buttons">Buttons</a>
-    <a href="/docs/forms">Forms</a>
-    <a href="/docs/cards">Cards</a>
-    <a href="/docs/dialogs">Dialogs</a>
+    <a href="#">Buttons</a>
+    <a href="#">Forms</a>
+    <a href="#">Cards</a>
+    <a href="#">Dialogs</a>
     <strong style="margin-top: 1rem; display: block;">Advanced</strong>
-    <a href="/docs/custom">Custom Behaviors</a>
-    <a href="/docs/api">JavaScript API</a>
+    <a href="#">Custom Behaviors</a>
+    <a href="#">JavaScript API</a>
   </nav>
 </aside>
 </div>
@@ -2919,16 +2919,16 @@ Admin sidebar with icons:
     <strong>Admin Panel</strong>
   </div>
   <nav>
-    <a href="/admin">🏠 Overview</a>
-    <a href="/admin/users">👥 Users</a>
-    <a href="/admin/orders">📦 Orders</a>
-    <a href="/admin/products">🛍️ Products</a>
-    <a href="/admin/analytics">📊 Analytics</a>
-    <a href="/admin/reports">📋 Reports</a>
+    <a href="#">🏠 Overview</a>
+    <a href="#">👥 Users</a>
+    <a href="#">📦 Orders</a>
+    <a href="#">🛍️ Products</a>
+    <a href="#">📊 Analytics</a>
+    <a href="#">📋 Reports</a>
   </nav>
   <div style="margin-top: auto; padding: 1rem; border-top: 1px solid var(--border-color);">
-    <a href="/admin/settings">⚙️ Settings</a>
-    <a href="/logout">🚪 Log out</a>
+    <a href="#">⚙️ Settings</a>
+    <a href="#">🚪 Log out</a>
   </div>
 </aside>
 </div>
@@ -2939,9 +2939,9 @@ Admin sidebar with icons:
 <div x-flex min-height="100vh">
   <aside style="width: 240px; flex-shrink: 0;">
     <nav>
-      <a href="/dashboard">Dashboard</a>
-      <a href="/projects">Projects</a>
-      <a href="/settings">Settings</a>
+      <a href="#">Dashboard</a>
+      <a href="#">Projects</a>
+      <a href="#">Settings</a>
     </nav>
   </aside>
   <main style="flex: 1; padding: 2rem;">
@@ -3012,6 +3012,7 @@ Admin sidebar with icons:
 | `<div x-frame>` | frame | Aspect ratio frame |
 | `<div x-sticky>` | sticky | Sticky positioning |
 | `[x-fill]` | fill | As wide as the container allows (attribute-only — width is a layout choice, not a kind of element) |
+| `[x-glass]` | glass | The element carries the background scene (attribute-only — see-through is a look any element can take) |
 | `<div x-drawer>` | drawerLayout | Collapsible drawer |
 | `<span x-icon>` | icon | Icon + text alignment |
 | `<article>` | card | Generic card |
@@ -3605,7 +3606,7 @@ Badge on any element:
 <span badge="3">🔔 Notifications</span>
 <button badge="New">✨ Features</button>
 <a
-  href="/inbox"
+  href="#"
   badge="99+">
   📧 Inbox
 </a>

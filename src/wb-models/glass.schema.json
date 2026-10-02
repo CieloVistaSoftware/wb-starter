@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "glass.schema.json",
+  "title": "Glass",
+  "description": "The element carries the background scene: its fill is mostly transparent, so whatever is behind it (an image, an SVG scene, a gradient) passes straight through it",
+  "schemaFor": "glass",
+  "baseClass": "x-glass",
+  "semanticElement": {
+    "tagName": "button"
+  },
+  "compliance": {
+    "baseClass": "x-glass",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {
+    "amount": {
+      "type": "string",
+      "description": "How much of the scene comes through: most (14% tint, the playground hero's \"Read the Guide\" button), some (22%), least (30%, for busy scenes where text needs more help). Capped at 30% so light text on the element still reads against a dark scene.",
+      "enum": ["most", "some", "least"],
+      "default": "most",
+      "appliesClass": "x-glass--{{value}}"
+    }
+  },
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {
+    "--glass-tint": {
+      "default": "var(--text-primary)",
+      "description": "The colour mixed into the element. Set it on a container to re-tint every x-glass inside it (the hero sets its on-accent white)."
+    },
+    "--x-glass-edge-width": {
+      "default": "1px",
+      "description": "Width of the faint edge that outlines the element."
+    },
+    "--x-glass-blur": {
+      "default": "8px",
+      "description": "Softening of the scene behind the element, so text on it stays readable."
+    }
+  },
+  "test": {
+    "setup": [
+      "<button x-glass>Read the Guide</button>",
+      "<button x-glass amount=\"most\">amount=most</button>",
+      "<button x-glass amount=\"some\">amount=some</button>",
+      "<button x-glass amount=\"least\">amount=least</button>",
+      "<span x-glass>Zero build</span>"
+    ]
+  },
+  "_metadata": {
+    "category": "effects",
+    "icon": "🪟",
+    "since": "1.0.0",
+    "status": "stable"
+  }
+}

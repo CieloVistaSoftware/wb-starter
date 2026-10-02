@@ -12,6 +12,7 @@
  */
 
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('JS Syntax Compliance', () => {
   
@@ -34,7 +35,7 @@ test.describe('JS Syntax Compliance', () => {
     await page.goto('index.html', { timeout: 15000 });
     
     // Wait for behaviors to initialize
-    await page.waitForTimeout(1000);
+    await wbIdle(page);
 
     // Check for syntax-related errors
     const syntaxErrors = [...consoleErrors, ...pageErrors].filter(error => 
@@ -107,7 +108,7 @@ test.describe('JS Syntax Compliance', () => {
     });
 
     await page.goto('index.html', { timeout: 15000 });
-    await page.waitForTimeout(500);
+    await wbIdle(page);
 
     // Check specific behavior groups loaded
     // Check both WBServices.behaviors (legacy) and WB.behaviors (current)

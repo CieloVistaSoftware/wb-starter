@@ -6,6 +6,7 @@
  * Source: src/wb-viewmodels/semantics/audio.js (+ x-audio.js)
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 const BASE_URL = '/demos/test-harness.html';
 
@@ -29,7 +30,7 @@ async function setup(page: Page, html: string): Promise<void> {
   // it built 1 EQ container holding 16 band sliders. permutation-compliance's
   // own harness carries this exact note for the same reason.
   await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('audio-test'), { eager: true }));
-  await page.waitForTimeout(600);
+  await wbIdle(page);
 }
 
 test.describe('.x-audio', () => {

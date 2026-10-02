@@ -1,4 +1,5 @@
 import { VERSION } from '../core/version.js';
+import { versionNumber } from '../core/version-number.js';
 
 /**
  * Release — the ONE place any element displays the site's release/build
@@ -81,17 +82,22 @@ export function release(element, options = {}) {
   // means "this IS the code set the number names", which is the only way the
   // number is worth reading.
   const behind = Number(VERSION.behind || 0);
-  const ahead = Number(VERSION.ahead || 0);
 
-  // #1139 -- John, 2026-09-28: "i can't figure out what's going on" with
-  // v4.0.5.23. A fourth segment reads as a release that does not exist -- no
-  // 4.0.5.23 was ever cut -- so the badge names the real release and counts
-  // the commits past it: "v4.0.5 +23". The tooltip says it in words.
-  //
-  // BEHIND is not expressed this way on purpose. Being behind does not make a
-  // newer build; it makes a STALE one, and rolling it into the number would
-  // read as progress. It stays a warning.
-  const versionText = ahead ? `${VERSION.version} +${ahead}` : VERSION.version;
+  // #1243 -- John: the badge "must always represent the proper release it
+  // displays". The release and the commits past it come from the release TAG
+  // (stamp-version.js: `release`, `sinceRelease`), not from package.json and the
+  // upstream: a checkout level with origin/main but 12 commits past v1.0.0 used
+  // to read a bare "v1.0.0". An older stamp without the tag fields falls back to
+  // the previous meaning rather than to nothing.
+  // John, 2026-10-02: "1.0.what the latest push is e.g. 1.0.41 simple." The
+  // number is computed in one place (src/core/version-number.js) so every
+  // display of it agrees.
+  const { number: shownVersion, release: releaseName, since: ahead } = versionNumber(VERSION);
+
+  // BEHIND is not rolled into the number on purpose. Being behind does not make
+  // a newer build; it makes a STALE one, and counting it would read as
+  // progress. It stays a warning.
+  const versionText = shownVersion;
 
   // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
   // origin/main · dirty" -- made the badge wide enough to wrap the whole site
@@ -100,6 +106,8 @@ export function release(element, options = {}) {
   // lives in the tooltip below.
   const marks = [];
   if (behind) marks.push('⚠');
+  // `*` = uncommitted local edits: John's "release-modification format" (see
+  // behaviors-header-controls-aligned.spec.ts). The words are in the tooltip.
   if (VERSION.dirty) marks.push('*');
   const drift = marks.length ? ' ' + marks.join('') : '';
 
@@ -112,10 +120,10 @@ export function release(element, options = {}) {
   element.classList.toggle('x-release--stale', behind > 0);
 
   element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
-    + (ahead ? ` · ${ahead} unreleased commit${ahead === 1 ? '' : 's'} past release ${VERSION.version}` : '')
+    + (ahead ? ` · ${ahead} commit${ahead === 1 ? '' : 's'} since the v${releaseName} tag` : '')
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
-    + (VERSION.dirty ? ' · uncommitted changes' : '')
+    + (VERSION.dirty ? ` · uncommitted local edits — these files are not ${shownVersion} as committed` : '')
     + (config.reload ? ' — tap to clear cache and reload' : '');
 
   let onClick = null;

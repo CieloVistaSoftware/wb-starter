@@ -8,12 +8,13 @@
  * in sync: changing the hero's control changes the site theme AND the header's.
  */
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('Docs Page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=docs');
     // Wait for WB to initialize
-    await page.waitForTimeout(500);
+    await wbIdle(page);
   });
 
   test('page loads successfully', async ({ page }) => {

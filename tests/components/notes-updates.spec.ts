@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 // This file previously drove the notes drawer via a stale selector
 // (`buttonwb-sheet[data-title="My Notes"]`) that never matched anything real
@@ -23,7 +24,7 @@ async function injectNotes(page: Page) {
     document.body.appendChild(container);
   });
   await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('test-container'), { eager: true }));
-  await page.waitForTimeout(50);
+  await wbIdle(page);
   await page.evaluate(() => {
     (document.querySelector('#test-container [x-notes]') as any).wbNotes.open();
   });

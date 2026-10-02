@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-29T07:25:35.114Z",
-  "count": 159,
+  "generatedAt": "2026-10-02T02:33:36.748Z",
+  "count": 160,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -2046,7 +2046,7 @@
       "file": "cover.schema.json",
       "name": "cover",
       "title": "Cover",
-      "description": "Behavior applied with x-cover.",
+      "description": "A full-height flex column that centers its content, with a <header> child pinned to the top and a <footer> child pinned to the bottom -- the hero or splash-screen layout.",
       "tag": "x-cover",
       "baseClass": "x-cover",
       "properties": {
@@ -2919,7 +2919,7 @@
       "file": "fix-card.schema.json",
       "name": "fix-card",
       "title": "Fix Card",
-      "description": "Behavior for displaying fix/remediation details.",
+      "description": "Renders one fix-registry entry as a card — the issue it closed, the root cause, and the test that proves it — for the Fix Registry Viewer page.",
       "tag": "x-fix-card",
       "baseClass": "x-fix-card",
       "properties": {},
@@ -3188,6 +3188,34 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "glass.schema.json",
+      "name": "glass",
+      "title": "Glass",
+      "description": "The element carries the background scene: its fill is mostly transparent, so whatever is behind it (an image, an SVG scene, a gradient) passes straight through it",
+      "tag": "x-glass",
+      "baseClass": "x-glass",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "How much of the scene comes through: most (14% tint, the playground hero's \"Read the Guide\" button), some (22%), least (30%, for busy scenes where text needs more help). Capped at 30% so light text on the element still reads against a dark scene.",
+          "enum": [
+            "most",
+            "some",
+            "least"
+          ],
+          "default": "most",
+          "appliesClass": "x-glass--{{value}}"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "effects",
+        "icon": "🪟",
+        "since": "1.0.0",
+        "status": "stable"
       }
     },
     {
@@ -8253,7 +8281,9 @@
         "autoplay": {
           "type": "boolean",
           "description": "Begin playing on load. Browsers block autoplay with sound, so this needs `muted` to work unattended.",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Starts playback on load. Once a frame is showing, a playing and a paused video are the same box; any difference is timing, not the option (Windows CI, 2026-10-02)."
         },
         "muted": {
           "type": "boolean",
@@ -8263,7 +8293,9 @@
         "loop": {
           "type": "boolean",
           "description": "Restart from the beginning when playback reaches the end.",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Restarts playback at the end. Nothing on the player is drawn for it, as in audio.schema.json (#773)."
         }
       },
       "matrix": [],

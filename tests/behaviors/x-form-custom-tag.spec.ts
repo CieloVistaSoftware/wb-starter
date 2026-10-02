@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * <form> never worked at all — no mapping existed in tag-map.js or
@@ -29,7 +30,7 @@ async function injectAndScan(page: Page, html: string) {
   }, html);
   await page.locator('#wbform-test-container').scrollIntoViewIfNeeded();
   await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('wbform-test-container')));
-  await page.waitForTimeout(400);
+  await wbIdle(page);
 }
 
 test.describe('<form> custom tag', () => {

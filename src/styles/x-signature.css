@@ -99,7 +99,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 /* Glass Card */
-.x-glass {
+.x-glass-card {
   background: var(--x-glass-bg);
   backdrop-filter: var(--x-glass-blur);
   -webkit-backdrop-filter: var(--x-glass-blur);
@@ -108,7 +108,7 @@
   transition: all var(--x-transition-base);
 }
 
-.x-glass:hover {
+.x-glass-card:hover {
   background: var(--x-glass-bg-hover);
   border-color: var(--x-glass-border-hover);
   transform: translateY(-2px);

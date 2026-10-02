@@ -120,6 +120,7 @@ export const extensionMap = {
   // #764 -- as wide as the container allows. No semantic tag maps to this:
   // width is a layout decision, not something an element IS.
   'x-fill': 'fill',
+  'x-glass': 'glass',
   'x-release': 'release',
   // x-progress on any host; <progress> injects it on its own. x-progressbar
   // was a second spelling of the same behavior and has been removed -- one

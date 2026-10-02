@@ -16,6 +16,7 @@
  */
 
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // TEST UTILITIES
@@ -455,7 +456,7 @@ test.describe('Badge — Edge Cases', () => {
       document.body.appendChild(container);
     });
     await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
-    await page.waitForTimeout(300);
+    await wbIdle(page);
 
     await expect(page.locator('#in-flex')).toBeVisible();
     await expect(page.locator('#in-flex')).toHaveClass(/x-badge--primary/);

@@ -213,11 +213,14 @@ x-cardhero .x-hero-cta--primary, [x-cardhero] .x-hero-cta--primary{
   box-shadow: 0 12px 30px hsl(var(--overlay-dark-hsl) / 0.35);
 }
 [x-cardhero] .x-hero-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 18px 42px hsl(var(--overlay-dark-hsl) / 0.45); }
+/* The secondary CTA carries the scene behind it: it is x-glass (#1236, set by
+   card.js), so the see-through fill, edge and softening come from glass.css.
+   The hero's own choices for it (on-accent white as the tint, a 1.5px edge)
+   are custom properties, so they live in themes.css with the other
+   definitions. Together that reproduces the button exactly as it was before
+   x-glass existed. */
 x-cardhero .x-hero-cta--secondary, [x-cardhero] .x-hero-cta--secondary{
-  background: hsl(var(--overlay-light-hsl) / 0.14);
   color: var(--text-on-accent, #fff);
-  border: 1.5px solid hsl(var(--overlay-light-hsl) / 0.4);
-  backdrop-filter: blur(8px);
 }
 [x-cardhero] .x-hero-cta--secondary:hover { background: hsl(var(--overlay-light-hsl) / 0.26); transform: translateY(-2px); }
 
