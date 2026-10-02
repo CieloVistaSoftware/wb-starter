@@ -21,7 +21,7 @@
     "ship": "node scripts/ship.mjs",
     "release": "node scripts/release.mjs",
     "release:check": "node scripts/release.mjs --check",
-    "start": "node scripts/stamp-version.js && node scripts/update-docs-manifest.js && node server.js",
+    "start": "node scripts/pull-on-start.mjs && node scripts/stamp-version.js && node scripts/update-docs-manifest.js && node server.js",
     "start:mcp": "node scripts/start-mcp.js",
     "mcp:healthcheck": "node scripts/mcp-healthcheck.js",
     "dev": "npx serve . -p 3000",
@@ -90,7 +90,7 @@
     "test:collection": "node scripts/check-test-collection.mjs"
   },
   "scripts-info": {
-    "start": "Start site (update docs manifest then run express server)",
+    "start": "Start site (pull latest main, stamp version, update docs manifest, then run express server)",
     "start:mcp": "Start MCP runner (MCP + web server with health gating)",
     "mcp:healthcheck": "TCP health probe for MCP (used by CI/orchestration)",
     "dev": "Serve the repository on localhost:3000 for quick manual testing",
