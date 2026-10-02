@@ -58,8 +58,20 @@ export const DATA_FILES = {
 // one. (It used to be a machine-generated copy of the whole repo, #543/#771.)
 export const EXCLUDE_DIRS = [
   'node_modules', '.git', '.claude', 'dist', 'build', 'coverage',
-  'test-results', '.playwright-artifacts', 'x-overlay-ext', 'template'
+  // #1158: Playwright's scratch folder (outputDir since #1038). With tracing
+  // on it holds copies of the site's own stylesheets, which the CSS rule
+  // checks then counted as 24 extra "offending" files.
+  'test-results', 'playwright-output', '.playwright-artifacts', 'x-overlay-ext', 'template'
 ];
+
+/**
+ * Is this directory name one the file walkers skip? Exact names, plus
+ * Playwright's per-worker `.playwright-artifacts-7`, `-8`, ... folders, which
+ * the bare '.playwright-artifacts' entry never matched (#1158).
+ */
+export function isExcludedDir(name: string): boolean {
+  return EXCLUDE_DIRS.includes(name) || name.startsWith('.playwright-artifacts');
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // FILE UTILITIES
@@ -125,7 +137,7 @@ export function getFiles(
     const fullPath = path.join(dir, entry.name);
     
     if (entry.isDirectory()) {
-      if (!EXCLUDE_DIRS.includes(entry.name)) {
+      if (!isExcludedDir(entry.name)) {
         getFiles(fullPath, extensions, fileList);
       }
     } else {
