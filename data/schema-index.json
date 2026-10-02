@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T02:33:36.748Z",
+  "generatedAt": "2026-10-02T21:05:18.161Z",
   "count": 160,
   "schemas": [
     {
@@ -1179,6 +1179,19 @@
           "type": "boolean",
           "description": "Promote this card over its siblings: a heavier border and a visible marker. Bare featured prints \"Featured\"; featured=\"Deal of the week\" prints that label instead",
           "default": false
+        },
+        "featuredTone": {
+          "type": "string",
+          "description": "Colour of the featured marker, as a theme role so it reads correctly in every theme. For any other colour set --x-featured-bg (and --x-featured-fg) in your stylesheet",
+          "enum": [
+            "primary",
+            "success",
+            "warning",
+            "danger",
+            "info",
+            "neutral"
+          ],
+          "default": "primary"
         }
       },
       "matrix": [
