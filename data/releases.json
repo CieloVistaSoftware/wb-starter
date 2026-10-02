@@ -6,6 +6,17 @@
   ],
   "releases": [
     {
+      "version": "1.0.95",
+      "date": "2026-10-02",
+      "summary": "In-progress issues are green, labelled and on top (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1263\" target=\"_blank\" rel=\"noopener\">PR 1263</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Issues page: work in progress is green, labelled and on top</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.94",
       "date": "2026-10-02",
       "summary": "In Progress tab shows only status:in-progress; hook stops stamping (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1262\" target=\"_blank\" rel=\"noopener\">PR 1262</a>)",
