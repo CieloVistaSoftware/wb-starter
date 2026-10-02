@@ -10,7 +10,7 @@
  *   1. Full document structure: <!DOCTYPE html>, <html lang data-theme>, 
  *      charset, viewport, title, <head>, <body>, </html>
  *   2. Stylesheet loading: themes.css + site.css required
- *   3. WB loader: wb-lazy.js or wb-bootstrap.js if using wb-* components
+ *   3. WB loader: wb-lazy.js, wb-bootstrap.js or wb.js if using x-* behaviors
  *   4. Partial detection: fragments must declare parent via <!-- Parent: filename.html -->
  *   5. No orphan partials: declared parent must exist and be a full document
  */
@@ -149,12 +149,14 @@ test.describe('Demo Files — Stylesheet Loading', () => {
 
 test.describe('Demo Files — WB Loader', () => {
   for (const { relPath, html } of fullDemos) {
-    const usesWB = /<wb-[a-z]/i.test(html) || /data-wb=/i.test(html);
+    // #1144: was /<wb-[a-z]/ || /data-wb=/ -- both retired, so no demo matched
+    // and the check had become a no-op. Behaviors are x-* attributes.
+    const usesWB = /<[a-z][\w-]*\s[^>]*\bx-[a-z][\w-]*(?=[\s=>/])/i.test(html);
 
     if (usesWB) {
       test(`${relPath} — loads WB (wb-lazy.js, wb-bootstrap.js, or wb.js)`, () => {
         const loadsWB = /wb-lazy\.js|wb-bootstrap\.js|wb\.js/i.test(html);
-        expect(loadsWB, `uses WB components but doesn't load WB`).toBe(true);
+        expect(loadsWB, `uses x-* behaviors but doesn't load WB`).toBe(true);
       });
     }
   }

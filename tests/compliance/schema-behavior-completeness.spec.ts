@@ -71,7 +71,8 @@ function allViewmodelSource() {
 
 function behaviorSurface(behavior: string) {
   const kebab = behavior.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-  return [`<wb-${kebab}`, `x-${kebab}`];
+  // #1144: a retired <wb-${kebab}> tag is not a surface; the x-* attribute is.
+  return [`x-${kebab}`];
 }
 
 test.describe('Schema/behavior completeness audit (#344)', () => {
@@ -165,7 +166,7 @@ test.describe('Schema/behavior completeness audit (#344)', () => {
       const relevant = setups.filter(usesSurface);
 
       if (setups.some((html: string) => !usesSurface(html))) {
-        mismatches.push(`${file}: setup entry does not use <wb-${behavior}>, x-${behavior} or an auto-injecting native host`);
+        mismatches.push(`${file}: setup entry does not use x-${behavior} or an auto-injecting native host`);
       }
       if (relevant.length < 5) coverageGaps.push(`${file}: ${relevant.length}/5 relevant setup entries`);
     }
