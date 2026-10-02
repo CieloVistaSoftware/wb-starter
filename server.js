@@ -14,6 +14,7 @@ import { promisify } from 'util';
 // failed the first time the compliance project ran on its own runner.
 const execFileAsync = promisify(execFile);
 import { marked } from 'marked';
+import { updateToLatest } from './scripts/lib/pull-latest.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -463,6 +464,19 @@ app.get('/api/markdown', (req, res) => {
 // ============================================
 // MARKDOWN API - POST /api/markdown (raw MD)
 // ============================================
+// The version badge, clicked on port 3000: get the latest main, then the page
+// reloads (John, 2026-10-02: "make pressing this button first get the latest
+// code before reloading"). Only fast-forwards main, never touches uncommitted
+// work, and does nothing on a test or CI server (scripts/lib/pull-latest.mjs).
+// Refuses requests from other sites.
+app.post('/api/update-to-latest', async (req, res) => {
+  const origin = req.get('origin');
+  if (origin && origin !== `${req.protocol}://${req.get('host')}`) {
+    return res.status(403).json({ updated: false, message: 'refused: request from another site' });
+  }
+  res.json(await updateToLatest(rootDir));
+});
+
 app.post('/api/markdown', express.text({ type: '*/*' }), (req, res) => {
   try {
     const html = marked.parse(req.body || '');
