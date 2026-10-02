@@ -81,6 +81,18 @@ npm_test_async(filter: "tests/behaviors/badge.spec.ts")    # single spec
 - **No full suite during the day.** Run single specs or a filtered category for the work at hand. The full suite runs in **Nightly** after "park".
 - **main moves freely.** A push to main is not a deploy. The public site updates only when Nightly cuts a release.
 
+## Release Line — say where everything stands, every time
+
+John, 2026-10-02: "you have to communicate release information so that it keeps
+our discussions in sync." Start every status update (and repeat after any merge,
+release or push) with one line, in this order, in these words:
+
+> **Release vX.Y.Z** (tagged MM-DD) · **main** = vX.Y.Z +N (not released) · **live site** = … · **PR #NNNN** = +M on main, not merged · **your local** = what John's badge shows (when known)
+
+- **"Release" means a GitHub tag `vX.Y.Z`, nothing else.** Merged-but-untagged code is "main, not released". Never call `+N` code by the bare release number.
+- **Distances are commits since the tag**, exactly as the version badge counts them (`v1.0.0 +41`, `· edited` for local changes), so what Claude says and what John's badge shows always match.
+- Get the numbers from git (`git describe --tags --match "v[0-9]*"`, `git rev-list --count tag..origin/main`), never from memory.
+
 ## End of Session — "park"
 
 When John says **"park"**:
