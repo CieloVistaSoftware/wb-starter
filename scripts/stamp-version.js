@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import { changedPaths } from './lib/git-status.mjs';
 import { isBuildOutput } from './lib/build-output.mjs';
+import { countPushes } from './lib/push-count.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -128,14 +129,13 @@ function drift() {
   let sinceRelease = null;
   const described = git('git describe --tags --match "v[0-9]*" --long');
   const m = described.match(/^v(.+)-(\d+)-g[0-9a-f]+$/);
-  if (m) { release = m[1]; sinceRelease = Number(m[2]); }
-
-  // FOR THE COMMIT THIS STAMP WILL BE COMMITTED IN (stamp-version-on-main.yml).
-  // A stamp written before its commit exists counts one short -- the live site
-  // showed "v1.0.55" while main was v1.0.57. The workflow stamps a clean main
-  // and commits the result as one more commit, so the number it writes is the
-  // count INCLUDING that commit: the file then names the commit it lives in.
-  if (process.env.WB_STAMP_FOR_NEXT_COMMIT === '1' && Number.isInteger(sinceRelease)) sinceRelease += 1;
+  if (m) {
+    release = m[1];
+    // John, 2026-10-02: "count pushes not commits" (scripts/lib/push-count.mjs).
+    // The stamp commit is not a push, so the stamp needs no "+1 for the commit
+    // it is about to make": it carries the number of the push it stamps.
+    try { sinceRelease = countPushes(root, `v${release}`); } catch { sinceRelease = Number(m[2]); }
+  }
 
   return { branch, dirty, ahead, behind, upstream, release, sinceRelease };
 }

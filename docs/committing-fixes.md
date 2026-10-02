@@ -89,4 +89,4 @@ PR CI (`.github/workflows/ci-tests.yml`) runs one Playwright check per category 
 
 ### 8. Merge and version
 
-The PR is merged once every check on its head is green, and the live site serves `main` within minutes. The version badge then shows the new number: `1.0.<commits since the v1.0.0 tag>`, e.g. `v1.0.41`. The full suite also runs nightly on `main`; a new failure files a `priority:2` issue. See `docs/standards/RELEASE-PROCESS.md`.
+The PR is merged once every check on its head is green, and the live site serves `main` within minutes. The version badge then shows the new number: `1.0.<pushes to main since the last tag>`, e.g. `v1.0.92`. The full suite also runs nightly on `main`; a new failure files a `priority:2` issue. See `docs/standards/RELEASE-PROCESS.md`.

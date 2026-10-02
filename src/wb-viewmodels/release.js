@@ -111,7 +111,7 @@ export function release(element, options = {}) {
   element.classList.toggle('x-release--stale', behind > 0);
 
   element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
-    + (ahead ? ` · ${ahead} commit${ahead === 1 ? '' : 's'} since the v${releaseName} tag` : '')
+    + (ahead ? ` · ${ahead} push${ahead === 1 ? '' : 'es'} to main since the v${releaseName} tag` : '')
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
     + (VERSION.dirty ? ` · uncommitted local edits — these files are not ${shownVersion} as committed` : '')

@@ -1,6 +1,7 @@
 name: Stamp version on main
 
-# John, 2026-10-02: the badge shows "1.0.what the latest push is e.g. 1.0.41".
+# John, 2026-10-02: the badge shows "1.0.what the latest push is e.g. 1.0.41",
+# counting pushes to main, not commits (scripts/lib/push-count.mjs).
 #
 # src/core/version.js is what the live site's badge reads, and the commit hook
 # can never write it correctly: it runs BEFORE its commit exists (one short,
@@ -39,17 +40,39 @@ jobs:
         with:
           node-version: '20'
 
+      # John, 2026-10-02: "count pushes not commits." Pushes are counted from
+      # tag v1.0.89, set on main's "stamp v1.0.89" commit, so the number carries
+      # on from the last commit-counted one instead of going backwards. Made
+      # here because only this token can write tags. Idempotent: once the tag
+      # exists this does nothing. A tag push the Actions token is refused falls
+      # back to the tag API, as release.yml does.
+      - name: Numbering anchor tag (v1.0.89)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch --tags --force
+          if git rev-parse -q --verify refs/tags/v1.0.89 >/dev/null; then
+            echo "✓ v1.0.89 already tagged"
+          else
+            sha=$(git log origin/main --format='%H %s' | grep -m1 ' chore(version): stamp v1.0.89 for main$' | cut -d' ' -f1)
+            if [ -z "${sha}" ]; then echo "::error::no 'stamp v1.0.89' commit on main to anchor the count"; exit 1; fi
+            git tag v1.0.89 "${sha}"
+            git push origin refs/tags/v1.0.89 \
+              || gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref=refs/tags/v1.0.89 -f sha="${sha}" >/dev/null
+            echo "➕ tagged v1.0.89 at ${sha:0:8}"
+          fi
+
       # No npm ci: stamp-version.js uses only Node and git. Without it the
       # repo's hooks are not installed, so the stamp commit runs no hook.
       - name: Stamp
         id: stamp
         run: |
           git fetch --tags --force
-          WB_STAMP_FOR_NEXT_COMMIT=1 node scripts/stamp-version.js
+          node scripts/stamp-version.js
           # John: "A release has no meaning if i can't read about the content."
           # Add this version's entry (its PR title, its commits, their issue
           # links) to data/releases.json, which the Releases page renders.
-          node scripts/release-versions.mjs --for-next-commit
+          node scripts/release-versions.mjs
           # stamp-version.js rewrites version.js AND the ?v= cache key in every
           # entry page (index.html, pages/, demos/); release-versions.mjs
           # rewrites data/releases.json -- all of it is the stamp.
