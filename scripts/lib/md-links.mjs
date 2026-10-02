@@ -38,6 +38,16 @@ import { suiteEnv } from './suite-env.mjs';
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 /**
+ * A file's text with \n line endings. CI runs on Windows, where git checks
+ * docs out with \r\n: the per-line regexes then saw headings ending in \r and
+ * 65 table-of-contents links failed there while passing on Linux. Normalising
+ * here, once, keeps every rule below line-ending blind.
+ */
+export function readText(abs) {
+  return readFileSync(abs, 'utf8').replace(/\r\n?/g, '\n');
+}
+
+/**
  * Every tracked .md file, repo-relative with forward slashes.
  *
  * --cached --others --exclude-standard, as tests/compliance/repo-layout.spec.ts
@@ -187,7 +197,7 @@ export function checkInternal(resolved, root = ROOT, cache = new Map()) {
   if (!resolved.anchor) return null;
   if (statSync(abs).isDirectory()) return { problem: 'anchor-on-directory', detail: `#${resolved.anchor} on a directory` };
   if (!/\.(md|html?)$/i.test(abs)) return null; // an anchor into code/json: not a document anchor
-  if (!cache.has(abs)) cache.set(abs, anchorsOf(readFileSync(abs, 'utf8'), /\.md$/i.test(abs)));
+  if (!cache.has(abs)) cache.set(abs, anchorsOf(readText(abs), /\.md$/i.test(abs)));
   const { viewer, github } = cache.get(abs);
   const a = resolved.anchor;
   // HTML: the fragment "top" scrolls to the top of the document even when no
@@ -228,7 +238,7 @@ export function auditInternal(root = ROOT) {
   let links = 0;
   const files = trackedMarkdown(root);
   for (const from of files) {
-    const src = readFileSync(path.join(root, from), 'utf8');
+    const src = readText(path.join(root, from));
     const demos = demoLines(src);
     for (const l of extractLinks(src)) {
       const r = resolveLink(l.dest, from);
@@ -246,7 +256,7 @@ export function auditInternal(root = ROOT) {
 export function externalLinks(root = ROOT) {
   const map = new Map();
   for (const from of trackedMarkdown(root)) {
-    const src = readFileSync(path.join(root, from), 'utf8');
+    const src = readText(path.join(root, from));
     for (const l of extractLinks(src)) {
       const r = resolveLink(l.dest, from);
       if (r.type !== 'external') continue;

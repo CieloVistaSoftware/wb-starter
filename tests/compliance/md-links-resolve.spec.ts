@@ -1,6 +1,9 @@
 import { test, expect } from '../fixtures/offline';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 // @ts-ignore -- plain ESM helper shared with scripts/audit-md-links.mjs
-import { auditInternal } from '../../scripts/lib/md-links.mjs';
+import { auditInternal, checkInternal } from '../../scripts/lib/md-links.mjs';
 
 /**
  * GATE: every internal link in every tracked .md file works.
@@ -34,4 +37,23 @@ test('every internal link in every .md document resolves', () => {
       `${b.from}:${b.line}  ${b.dest}  -- ${b.detail}`,
   );
   expect(report, `${broken.length} broken link(s) of ${links} in ${files} files`).toEqual([]);
+});
+
+/**
+ * CI runs on Windows, where git checks docs out with \r\n. This gate passed on
+ * Linux and failed there with 65 table-of-contents links "missing": the
+ * headings carried a trailing \r. The same doc must give the same verdict
+ * whatever its line endings.
+ */
+test('a table-of-contents link works in a doc with Windows (CRLF) line endings', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'md-links-crlf-'));
+  try {
+    const doc = ['# Guide', '', '- [Quick start](#2-quick-start)', '', '## 2. Quick start', '', 'Text.', ''];
+    fs.writeFileSync(path.join(root, 'lf.md'), doc.join('\n'));
+    fs.writeFileSync(path.join(root, 'crlf.md'), doc.join('\r\n'));
+    expect(checkInternal({ file: 'lf.md', anchor: '2-quick-start' }, root), 'LF').toBeNull();
+    expect(checkInternal({ file: 'crlf.md', anchor: '2-quick-start' }, root), 'CRLF').toBeNull();
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });
