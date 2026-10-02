@@ -10,11 +10,11 @@
 # the full suite that decides a release runs nightly (nightly.yml). The old
 # every-10th-commit full run and the per-commit priority-1 run are gone.
 
-# #743: stamp, never bump -- a release cuts the version. stamp-version.js also
-# moves index.html's ?v= cache keys, so both files are re-staged.
-echo "🏷  Stamping version (no bump — a release cuts the version)..."
-node scripts/stamp-version.js
-git add src/core/version.js index.html
+# No version stamp here any more. main's stamp workflow
+# (.github/workflows/stamp-version-on-main.yml) writes src/core/version.js and
+# the ?v= keys for every push, and `npm start` stamps a local checkout. A stamp
+# committed from a branch was always wrong on main (it predates its merge) and
+# made every PR conflict with main on src/core/version.js.
 
 echo "🔍 Running pre-commit checks..."
 

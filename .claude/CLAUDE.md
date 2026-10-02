@@ -76,7 +76,8 @@ npm_test_async(filter: "tests/behaviors/badge.spec.ts")    # single spec
 
 ## Commits, CI and Releases
 
-- **Commit hook:** fast checks only (~30s) that CI does not run — version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright on commit.
+- **Commit hook:** fast checks only (~30s) that CI does not run — lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright on commit.
+- **Version stamp:** written only by the stamp workflow on main (and by `npm start` locally), never by a commit -- so PRs do not conflict on `src/core/version.js`.
 - **PR CI:** `ci-tests.yml` runs one Playwright check per category on windows-latest, plus "Gate scripts self-test". Information, not a merge gate.
 - **No full suite during the day.** Run single specs or a filtered category for the work at hand. The full suite runs in **Nightly** after "park".
 - **The live site serves `main`**, so a merge is live within minutes. The version badge shows `1.0.<pushes to main since the last tag>`, e.g. `v1.0.92`; every version is on the Releases page with what it contains.

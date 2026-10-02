@@ -81,7 +81,7 @@ Do not run the whole suite for a fix. The full suite runs nightly on `main` (see
 
 ### 6. Commit Changes
 
-The commit hook runs fast checks only (~30s): version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. It runs no Playwright.
+The commit hook runs fast checks only (~30s): lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. It runs no Playwright.
 
 ### 7. Open a PR
 
