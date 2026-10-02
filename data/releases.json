@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.106",
+      "date": "2026-10-02",
+      "summary": "Catch the process that writes .git/shallow (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1276\" target=\"_blank\" rel=\"noopener\">PR 1276</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Catch the process that writes .git/shallow</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
+          "issues": [
+            1272
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.105",
       "date": "2026-10-02",
       "summary": "Featured marker colour by role; x-clock crash + timer leak (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1275\" target=\"_blank\" rel=\"noopener\">PR 1275</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/998\" target=\"_blank\" rel=\"noopener\">#998</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1229\" target=\"_blank\" rel=\"noopener\">#1229</a>",
