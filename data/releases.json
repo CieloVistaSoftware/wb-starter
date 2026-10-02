@@ -6,6 +6,17 @@
   ],
   "releases": [
     {
+      "version": "1.0.89",
+      "date": "2026-10-02",
+      "summary": "Console and page cache key use the 1.0.N number (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1257\" target=\"_blank\" rel=\"noopener\">PR 1257</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Console and page cache key use the 1.0.N number, not 1.0.0</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.86",
       "date": "2026-10-02",
       "summary": "Releases page lists every 1.0.N version and what it contains (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1256\" target=\"_blank\" rel=\"noopener\">PR 1256</a>)",
