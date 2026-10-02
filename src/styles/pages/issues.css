@@ -154,7 +154,7 @@
   padding: 0.05rem 0.35rem;
   margin: 0 0.15rem 0.15rem 0;
   border: 1px solid var(--border-color);
-  border-radius: 999px;
+  border-radius: 999rem;
   color: var(--text-secondary);
   white-space: nowrap;
 }
