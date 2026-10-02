@@ -243,7 +243,15 @@ for (const file of ENTRY_HTML) {
   // ?v=80d6768, the 3.0.62 commit). pkg.version is known before the commit,
   // changes exactly when a release ships, and is what the release is named
   // after. See #743.
-  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${pkg.version}${post}`);
+  //
+  // 2026-10-02: the version number now moves on EVERY commit (v1.0.<commits
+  // since the tag>), so the cache key is that number, not package.json's
+  // "1.0.0" -- which stayed "1.0.0" for 64 commits and let browsers keep
+  // yesterday's code (John saw "v1.0.0 ⚠*" on the live site after v1.0.64).
+  const cacheKey = (tree.release && Number.isInteger(tree.sinceRelease))
+    ? (() => { const [a = 0, b = 0, c = 0] = tree.release.split('.').map(Number); return `${a}.${b}.${c + tree.sinceRelease}`; })()
+    : pkg.version;
+  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${cacheKey}${post}`);
   if (stamped !== html) {
     writeFileSync(filePath, stamped);
     console.log(`[stamp-version] cache-busted ${file}`);
