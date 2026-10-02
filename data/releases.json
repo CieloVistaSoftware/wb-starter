@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.94",
+      "date": "2026-10-02",
+      "summary": "In Progress tab shows only status:in-progress; hook stops stamping (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1262\" target=\"_blank\" rel=\"noopener\">PR 1262</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Issues page In Progress tab shows only status:in-progress</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Commit hook no longer stamps the version, so PRs stop conflicting on version.js</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.93",
       "date": "2026-10-02",
       "summary": "Badge tooltip says Commit, not Build (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1261\" target=\"_blank\" rel=\"noopener\">PR 1261</a>)",
