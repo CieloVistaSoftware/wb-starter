@@ -1,0 +1,78 @@
+name: Stamp version on main
+
+# John, 2026-10-02: the badge shows "1.0.what the latest push is e.g. 1.0.41".
+#
+# src/core/version.js is what the live site's badge reads, and the commit hook
+# can never write it correctly: it runs BEFORE its commit exists (one short,
+# the parent's sha, the change being committed counted as "edited", the feature
+# branch's name), and GitHub's merge commit is never stamped at all. On the
+# first merge under the new badge the live site read "v1.0.55 *" while main was
+# v1.0.57. So after every push to main this stamps main as it really is --
+# clean, branch main, counted from the tag -- commits it, and asks Pages to
+# publish that commit.
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: stamp-version-on-main
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  stamp:
+    name: Stamp src/core/version.js for main
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # No npm ci: stamp-version.js uses only Node and git. Without it the
+      # repo's hooks are not installed, so the stamp commit runs no hook.
+      - name: Stamp
+        id: stamp
+        run: |
+          git fetch --tags --force
+          WB_STAMP_FOR_NEXT_COMMIT=1 node scripts/stamp-version.js
+          if git diff --quiet -- src/core/version.js index.html; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "version.js already describes main: nothing to commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # This push is made with the workflow token, so it does not start this
+      # workflow (or CI) again.
+      - name: Commit the stamp
+        if: steps.stamp.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          n=$(node -p "const v=require('fs').readFileSync('src/core/version.js','utf8');const j=JSON.parse(v.match(/VERSION = ({[\s\S]*?});/)[1]);const [a,b,c]=j.release.split('.').map(Number);a+'.'+b+'.'+(c+j.sinceRelease)")
+          git add src/core/version.js index.html
+          git commit -m "chore(version): stamp v${n} for main"
+          git push origin HEAD:main
+          echo "Stamped v${n}."
+
+      # A push made with the workflow token may not start a Pages build by
+      # itself, so ask for one: the live site must serve the stamped commit.
+      - name: Publish to Pages
+        if: steps.stamp.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" >/dev/null \
+            && echo "Pages build requested." \
+            || echo "::warning::Could not request a Pages build; the next push will publish the stamp."
