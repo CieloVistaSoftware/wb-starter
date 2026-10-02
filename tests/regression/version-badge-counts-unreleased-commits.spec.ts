@@ -63,3 +63,12 @@ test('local edits and being behind add no marks: the badge is the number only', 
   await expect(badge).toHaveAttribute('title', /not 1\.0\.41 as committed/);
   await expect(badge).toHaveAttribute('title', /3 commits behind/);
 });
+
+// John, 2026-10-02: "I thought we didn't do builds?" The tooltip names the
+// commit, not a "Build", and says which files make the copy "edited".
+test('the tooltip says Commit, not Build, and names the edited files', async ({ page }) => {
+  const badge = await badgeFor(page, 0, { release: '1.0.89', sinceRelease: 3, dirty: true, dirtyFiles: ['src/a.js', 'README.md'], dirtyCount: 4 });
+  await expect(badge).toHaveAttribute('title', /^Commit /);
+  await expect(badge).not.toHaveAttribute('title', /Build/);
+  await expect(badge).toHaveAttribute('title', /uncommitted local edits in src\/a\.js, README\.md \(\+2 more\)/);
+});
