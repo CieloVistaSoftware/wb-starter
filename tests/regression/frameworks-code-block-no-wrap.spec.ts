@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * demos/frameworks.html: "this code layout is not right". The
@@ -17,7 +18,7 @@ import { test, expect } from '../fixtures/offline';
 
 test('demos/frameworks.html: code blocks never wrap mid-line, scroll horizontally instead', async ({ page }) => {
   await page.goto('/demos/frameworks.html', { waitUntil: 'domcontentloaded' });
-  await page.waitForTimeout(500);
+  await wbIdle(page);
 
   const pres = page.locator('pre[language]');
   const count = await pres.count();

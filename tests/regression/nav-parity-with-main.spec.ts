@@ -25,7 +25,7 @@ import { test, expect } from '../fixtures/offline';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { ROOT } from '../base';
+import { ROOT, wbIdle } from '../base';
 
 interface NavItem { menuItemId?: string; menuItemText?: string; href?: string }
 
@@ -62,7 +62,7 @@ test.describe('navigation parity (#1002)', () => {
     expect(declared.length, 'config/site.json declares no navigation').toBeGreaterThan(0);
 
     await page.goto('/?page=home', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(1200);
+    await wbIdle(page);
 
     const rendered = await page.evaluate(() =>
       Array.from(document.querySelectorAll('nav a, aside a, .site__nav a')).map(

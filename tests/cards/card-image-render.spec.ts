@@ -3,7 +3,7 @@
  * Tests that x-cardimage actually displays images
  */
 import { test, expect } from '../fixtures/offline';
-import { buildInView } from '../base';
+import { buildInView, wbIdle } from '../base';
 
 test.describe('Card Image Rendering', () => {
   test('[x-cardimage] should display images on cards-showcase', async ({ page }) => {
@@ -50,7 +50,7 @@ test.describe('Card Image Rendering', () => {
 
   test('[x-cardimage] should have 1rem padding', async ({ page }) => {
     await page.goto('/demos/site/cards.html');
-    await page.waitForTimeout(2000);
+    await wbIdle(page);
     
     const cardImages = page.locator('[x-cardimage]');
     const count = await cardImages.count();

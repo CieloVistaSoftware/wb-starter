@@ -1,10 +1,11 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('Hero Variants Page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=hero-variants');
     // Wait for WB to initialize
-    await page.waitForTimeout(500);
+    await wbIdle(page);
   });
 
   test('page loads successfully', async ({ page }) => {

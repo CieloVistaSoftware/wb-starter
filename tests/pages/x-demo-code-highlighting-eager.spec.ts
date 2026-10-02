@@ -21,11 +21,12 @@
  * autoInject.
  */
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('[x-demo] code panel is syntax-highlighted on the eager (main SPA) runtime', () => {
   test('a <div x-demo> code block on pages/demos.html gets real hljs spans', async ({ page }) => {
     await page.goto('/?page=demos');
-    await page.waitForTimeout(1000);
+    await wbIdle(page);
 
     const codeEl = page.locator('[x-demo] code').first();
     await codeEl.scrollIntoViewIfNeeded();
@@ -72,7 +73,7 @@ test.describe('[x-demo] code panel is syntax-highlighted on the eager (main SPA)
 
   test('the pre panel chrome (copy button) also renders via x-behavior="pre"', async ({ page }) => {
     await page.goto('/?page=demos');
-    await page.waitForTimeout(1000);
+    await wbIdle(page);
 
     // pages/demos.html groups its demos inside <details class="demos-category">
     // accordions, which start CLOSED. A descendant of a closed <details> keeps

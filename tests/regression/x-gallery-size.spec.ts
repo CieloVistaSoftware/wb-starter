@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * x-gallery `size` attribute: a fixed thumbnail size (e.g. "150px"),
@@ -17,7 +18,7 @@ async function setup(page: Page, html: string): Promise<void> {
     document.body.appendChild(c);
   }, html);
   await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
-  await page.waitForTimeout(300);
+  await wbIdle(page);
 }
 
 const IMGS = '<img src="https://picsum.photos/200/200?r=1" alt="1"><img src="https://picsum.photos/200/200?r=2" alt="2"><img src="https://picsum.photos/200/200?r=3" alt="3"><img src="https://picsum.photos/200/200?r=4" alt="4">';

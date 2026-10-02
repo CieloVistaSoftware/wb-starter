@@ -1,4 +1,5 @@
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * #390: <select> silently discarded real <option> children.
@@ -29,7 +30,7 @@ async function setup(page: Page, html: string): Promise<void> {
     document.body.appendChild(c);
   }, html);
   await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
-  await page.waitForTimeout(300);
+  await wbIdle(page);
 }
 
 test.describe('<select> real <option> children (#390)', () => {

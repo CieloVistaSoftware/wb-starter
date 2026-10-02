@@ -23,6 +23,7 @@
  */
 
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test('a schema that does not exist is requested once, and no schema 404s', async ({ page, baseURL }) => {
   test.slow();
@@ -46,7 +47,7 @@ test('a schema that does not exist is requested once, and no schema 404s', async
   // carries x-container, x-grid, x-sidebarlayout and x-switcher, four of the
   // schema-less thirteen, and is where the fallback path actually fires.
   await page.goto(`${baseURL}/demos/layout-test.html`, { waitUntil: 'domcontentloaded' });
-  await page.waitForTimeout(1500);
+  await wbIdle(page);
 
   // A second round of schema resolution, in the same page lifetime.
   //

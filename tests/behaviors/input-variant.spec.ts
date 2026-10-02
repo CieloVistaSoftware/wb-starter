@@ -2,6 +2,7 @@
  * input[variant] — success/error get a colored border (issue #133)
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 async function setup(page: Page, html: string): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -19,7 +20,7 @@ async function setup(page: Page, html: string): Promise<void> {
     document.body.appendChild(c);
   }, html);
   await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
-  await page.waitForTimeout(300);
+  await wbIdle(page);
 }
 
 test('success and error variants have distinct, colored borders', async ({ page }) => {

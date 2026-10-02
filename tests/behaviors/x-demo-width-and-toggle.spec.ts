@@ -24,6 +24,7 @@
  * src/wb-viewmodels/semantics/pre.js: gated behind config.maxHeight.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 async function setup(page: Page, html: string, containerWidth = 1000): Promise<void> {
   await page.goto('/demos/test-harness.html');
@@ -40,7 +41,7 @@ async function setup(page: Page, html: string, containerWidth = 1000): Promise<v
     document.body.appendChild(c);
   }, { h: html, w: containerWidth });
   await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
-  await page.waitForTimeout(500);
+  await wbIdle(page);
 }
 
 test.describe('single-item <div x-demo> hugs its content width (desktop, Standard §7)', () => {

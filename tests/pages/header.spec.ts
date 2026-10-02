@@ -2,12 +2,13 @@
  * Header Behavior Tests
  */
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('Header Behavior', () => {
   
   test.beforeEach(async ({ page }) => {
     await page.goto('/demos/autoinject.html');
-    await page.waitForTimeout(300);
+    await wbIdle(page);
   });
 
   test('renders with icon and title', async ({ page }) => {

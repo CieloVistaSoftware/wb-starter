@@ -15,6 +15,7 @@
  * the dynamic override stays consistent instead of fighting the static tag.
  */
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 // project-index.html was archived (2026-09-29): a third of its links were dead
 // and nothing linked to it. index.html is the one root page.
@@ -25,7 +26,7 @@ for (const path of ['/']) {
     page.on('response', (res) => { if (res.url().endsWith('/favicon.ico') && res.status() === 404) failed.push(res.url()); });
 
     await page.goto(path);
-    await page.waitForTimeout(500);
+    await wbIdle(page);
 
     const icon = page.locator('link[rel="icon"]');
     await expect(icon).toHaveCount(1);
