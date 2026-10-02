@@ -13,7 +13,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `string` | `digital` | Clock face: `digital` (default) or the analogue rendering. |
+| `variant` | `string` | `digital` | Clock face: `digital` (default), `led`, or `analog` (`analogue` is accepted). Any other value renders digital. |
 | `format` | `string` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. |
 | `show-seconds` | `string` | — | Show the seconds field. On unless set to `"false"`. |
 

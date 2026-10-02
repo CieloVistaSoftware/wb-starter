@@ -7,18 +7,31 @@
   "properties": {
     "variant": {
       "type": "string",
-      "description": "Clock face: `digital` (default) or the analogue rendering.",
+      "description": "Clock face: `digital` (default), `led`, or `analog` (`analogue` is accepted). Any other value renders digital.",
+      "enum": [
+        "digital",
+        "led",
+        "analog"
+      ],
       "default": "digital"
     },
     "format": {
       "type": "string",
       "description": "`24` (default) or `12` for a 12-hour clock with AM/PM.",
+      "enum": [
+        "24",
+        "12"
+      ],
       "default": "24"
     },
     "show-seconds": {
       "type": "string",
       "description": "Show the seconds field. On unless set to `\"false\"`.",
-      "default": "this is the show seconds"
+      "enum": [
+        "true",
+        "false"
+      ],
+      "default": "true"
     }
   },
   "$view": [],
