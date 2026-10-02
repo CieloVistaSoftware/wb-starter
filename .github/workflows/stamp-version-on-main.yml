@@ -46,7 +46,9 @@ jobs:
         run: |
           git fetch --tags --force
           WB_STAMP_FOR_NEXT_COMMIT=1 node scripts/stamp-version.js
-          if git diff --quiet -- src/core/version.js index.html; then
+          # stamp-version.js rewrites version.js AND the ?v= cache key in every
+          # entry page (index.html, pages/, demos/) -- all of it is the stamp.
+          if git diff --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "version.js already describes main: nothing to commit."
           else
@@ -61,7 +63,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           n=$(node -p "const v=require('fs').readFileSync('src/core/version.js','utf8');const j=JSON.parse(v.match(/VERSION = ({[\s\S]*?});/)[1]);const [a,b,c]=j.release.split('.').map(Number);a+'.'+b+'.'+(c+j.sinceRelease)")
-          git add src/core/version.js index.html
+          git add -u
           git commit -m "chore(version): stamp v${n} for main"
           git push origin HEAD:main
           echo "Stamped v${n}."
