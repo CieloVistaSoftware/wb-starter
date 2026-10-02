@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.97",
+      "date": "2026-10-02",
+      "summary": "Never write escapes that decode to control bytes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1265\" target=\"_blank\" rel=\"noopener\">PR 1265</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1162\" target=\"_blank\" rel=\"noopener\">#1162</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Never write escapes that decode to control bytes (, layer 3)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1162\" target=\"_blank\" rel=\"noopener\">#1162</a>",
+          "issues": [
+            1162
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.96",
       "date": "2026-10-02",
       "summary": "Remove CI — Full Compliance (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1264\" target=\"_blank\" rel=\"noopener\">PR 1264</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1163\" target=\"_blank\" rel=\"noopener\">#1163</a>",
