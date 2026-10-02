@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.104",
+      "date": "2026-10-02",
+      "summary": "Finish — no test teaches or credits retired wb-*/data-wb (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1274\" target=\"_blank\" rel=\"noopener\">PR 1274</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Last checks that credited &lt;wb-*&gt;/data-wb now use the current contract</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+          "issues": [
+            1144
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Four more specs describe the current contract, not wb-*</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+          "issues": [
+            1144
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.103",
       "date": "2026-10-02",
       "summary": "Probe when the regression checkout turns shallow (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1273\" target=\"_blank\" rel=\"noopener\">PR 1273</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
