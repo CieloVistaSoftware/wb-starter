@@ -127,6 +127,13 @@ function drift() {
   const m = described.match(/^v(.+)-(\d+)-g[0-9a-f]+$/);
   if (m) { release = m[1]; sinceRelease = Number(m[2]); }
 
+  // FOR THE COMMIT THIS STAMP WILL BE COMMITTED IN (stamp-version-on-main.yml).
+  // A stamp written before its commit exists counts one short -- the live site
+  // showed "v1.0.55" while main was v1.0.57. The workflow stamps a clean main
+  // and commits the result as one more commit, so the number it writes is the
+  // count INCLUDING that commit: the file then names the commit it lives in.
+  if (process.env.WB_STAMP_FOR_NEXT_COMMIT === '1' && Number.isInteger(sinceRelease)) sinceRelease += 1;
+
   return { branch, dirty, ahead, behind, upstream, release, sinceRelease };
 }
 
