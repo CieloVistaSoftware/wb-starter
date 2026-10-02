@@ -18,8 +18,11 @@ const DOC_PATH = path.join(process.cwd(), 'docs/architecture/standards/ATTRIBUTE
 
 const NATIVE_HYPHENATED_TAGS = new Set(['x-behavior']); // not a real tag, appears only in prose/code as an attribute name
 
-test.describe('ATTRIBUTE-NAMING-STANDARD.md uses only wb-* custom tags (#255)', () => {
-  test('every hyphenated custom-element tag in the doc is x-prefixed', () => {
+// #1144: this demanded every custom tag be wb-prefixed. <wb-*> tags were
+// retired in 4.0.0: there are no custom-element tags at all now, so the doc
+// may show none -- only semantic elements and x-* attributes.
+test.describe('ATTRIBUTE-NAMING-STANDARD.md shows no custom-element tags (#255, #1144)', () => {
+  test('no hyphenated custom-element tag appears in the doc', () => {
     const md = fs.readFileSync(DOC_PATH, 'utf8');
     const tagPattern = /<([a-z][a-z0-9]*-[a-z0-9-]+)(?=[\s>/])/g;
     const found = new Set<string>();
@@ -28,9 +31,9 @@ test.describe('ATTRIBUTE-NAMING-STANDARD.md uses only wb-* custom tags (#255)', 
       found.add(match[1]);
     }
     const offenders = [...found].filter(
-      (tag) => !tag.startsWith('wb-') && !NATIVE_HYPHENATED_TAGS.has(tag)
+      (tag) => !NATIVE_HYPHENATED_TAGS.has(tag)
     );
-    expect(offenders, `non-wb-prefixed custom tags found: ${offenders.join(', ')}`).toEqual([]);
+    expect(offenders, `custom-element tags found (retired; use the semantic element or x-*): ${offenders.join(', ')}`).toEqual([]);
   });
 
   test('legacy x-behavior="…" pattern only appears inside the "Migration from Legacy Syntax" section', () => {
