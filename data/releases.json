@@ -6,6 +6,32 @@
   ],
   "releases": [
     {
+      "version": "1.0.91",
+      "date": "2026-10-02",
+      "summary": "Count pushes from a 1.0.89 anchor commit (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1259\" target=\"_blank\" rel=\"noopener\">PR 1259</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Count pushes from a 1.0.89 anchor commit, not a tag GitHub refuses</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.90",
+      "date": "2026-10-02",
+      "summary": "Version number counts pushes to main, not commits (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1258\" target=\"_blank\" rel=\"noopener\">PR 1258</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Stamp workflow creates the v1.0.89 numbering anchor tag</strong>"
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Version number counts pushes to main, not commits</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.89",
       "date": "2026-10-02",
       "summary": "Console and page cache key use the 1.0.N number (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1257\" target=\"_blank\" rel=\"noopener\">PR 1257</a>)",
