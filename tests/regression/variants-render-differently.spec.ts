@@ -380,10 +380,28 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
           }
         }
         // Behaviors attach asynchronously (module + stylesheet on first use).
-        // #1246: under Windows CI load a lazy element's first IntersectionObserver
-        // report ("awaiting viewport") once took over 10s. Still a wait for the
-        // runtime's own signal, never a sleep -- only the ceiling is wider.
-        if (WB?.whenIdle) await WB.whenIdle({ timeout: 20_000 });
+        // #1246: on Windows CI (and on main's own CI, 6bb465df) x-progress never
+        // settles: "progress (awaiting viewport)" -- the lazy runtime is still
+        // waiting for an IntersectionObserver report that does not come. It
+        // does not reproduce on Linux, so when it happens the failure carries
+        // what the page looked like, to find the cause from the CI log alone.
+        if (WB?.whenIdle) {
+          try {
+            await WB.whenIdle({ timeout: 20_000 });
+          } catch (err) {
+            const lazies = Array.from(stage.querySelectorAll('progress, [x-progress]')).map((el) => {
+              const cs = getComputedStyle(el);
+              const r = el.getBoundingClientRect();
+              let hiddenBy = '';
+              for (let a = el.parentElement; a; a = a.parentElement) {
+                const acs = getComputedStyle(a);
+                if (acs.display === 'none' || acs.contentVisibility === 'hidden') { hiddenBy = `${a.tagName.toLowerCase()}#${a.id}.${a.className}`; break; }
+              }
+              return `<${el.tagName.toLowerCase()} ${Array.from(el.attributes).map((x) => `${x.name}="${x.value}"`).join(' ')}> connected=${el.isConnected} display=${cs.display} visibility=${cs.visibility} cv=${cs.contentVisibility} rect=${Math.round(r.x)},${Math.round(r.y)},${Math.round(r.width)}x${Math.round(r.height)} ready=${el.hasAttribute('x-ready')} hiddenBy=${hiddenBy || '-'}`;
+            });
+            throw new Error(`${(err as Error).message}\n  [#1246 diagnostics] label=${label} visibility=${document.visibilityState} focus=${document.hasFocus()} viewport=${innerWidth}x${innerHeight} scrollY=${Math.round(scrollY)}\n  ${lazies.join('\n  ') || '(no progress elements in the stage)'}`);
+          }
+        }
         // And the example's images have arrived (loaded or failed). An image
         // still in flight is a 0x0 box, which is how x-cardimage's aspect=4/3
         // and aspect=21/9 once read as the same card: neither had its picture
