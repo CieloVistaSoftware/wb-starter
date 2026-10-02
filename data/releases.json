@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.96",
+      "date": "2026-10-02",
+      "summary": "Remove CI — Full Compliance (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1264\" target=\"_blank\" rel=\"noopener\">PR 1264</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1163\" target=\"_blank\" rel=\"noopener\">#1163</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Remove CI — Full Compliance, a duplicate of PR CI and nightly</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1163\" target=\"_blank\" rel=\"noopener\">#1163</a>",
+          "issues": [
+            1163
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.95",
       "date": "2026-10-02",
       "summary": "In-progress issues are green, labelled and on top (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1263\" target=\"_blank\" rel=\"noopener\">PR 1263</a>)",
