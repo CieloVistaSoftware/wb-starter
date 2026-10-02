@@ -7,7 +7,7 @@
  *   2. Have <html> with data-theme
  *   3. Have <meta charset> and <meta viewport>
  *   4. Have <title>
- *   5. If uses wb-* components, must import WB
+ *   5. If it uses x-* behaviors, must import WB
  */
 import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
@@ -48,8 +48,12 @@ for (const file of demoFiles) {
       expect(html).toMatch(/<title>/i);
     });
 
-    test('if uses wb-* components, must import WB', () => {
-      const usesWB = /<wb-[a-z]/i.test(html);
+    // #1144: was "if uses wb-* components" -- <wb-*> tags are retired (4.0.0),
+    // no demo has one, so the check had silently become a no-op. Behaviors are
+    // x-* attributes now, and a demo using them without loading WB shows dead
+    // markup.
+    test('if it uses x-* behaviors, it must import WB', () => {
+      const usesWB = /<[a-z][\w-]*\s[^>]*\bx-[a-z][\w-]*(?=[\s=>/])/i.test(html);
       if (usesWB) {
         const hasImport = /wb-lazy\.js|wb\.js/i.test(html);
         expect(hasImport).toBeTruthy();
