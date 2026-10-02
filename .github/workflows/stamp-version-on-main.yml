@@ -1,6 +1,7 @@
 name: Stamp version on main
 
-# John, 2026-10-02: the badge shows "1.0.what the latest push is e.g. 1.0.41".
+# John, 2026-10-02: the badge shows "1.0.what the latest push is e.g. 1.0.41",
+# counting pushes to main, not commits (scripts/lib/push-count.mjs).
 #
 # src/core/version.js is what the live site's badge reads, and the commit hook
 # can never write it correctly: it runs BEFORE its commit exists (one short,
@@ -45,11 +46,11 @@ jobs:
         id: stamp
         run: |
           git fetch --tags --force
-          WB_STAMP_FOR_NEXT_COMMIT=1 node scripts/stamp-version.js
+          node scripts/stamp-version.js
           # John: "A release has no meaning if i can't read about the content."
           # Add this version's entry (its PR title, its commits, their issue
           # links) to data/releases.json, which the Releases page renders.
-          node scripts/release-versions.mjs --for-next-commit
+          node scripts/release-versions.mjs
           # stamp-version.js rewrites version.js AND the ?v= cache key in every
           # entry page (index.html, pages/, demos/); release-versions.mjs
           # rewrites data/releases.json -- all of it is the stamp.

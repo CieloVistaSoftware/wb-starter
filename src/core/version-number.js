@@ -3,7 +3,7 @@
  *
  * John, 2026-10-02: "I want port 3000 to show 1.0.what the latest push is e.g.
  * 1.0.41 simple." The number is the last release tag with its patch moved on by
- * the commits since it: tag v1.0.0 + 41 commits -> "1.0.41". Always three
+ * the pushes to main since it: tag v1.0.0 + 41 pushes -> "1.0.41". Always three
  * segments (#1139: a fourth, "4.0.5.23", read as a release nobody cut).
  *
  * Every display of the version (the header's x-release badge, a standalone

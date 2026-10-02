@@ -79,7 +79,7 @@ npm_test_async(filter: "tests/behaviors/badge.spec.ts")    # single spec
 - **Commit hook:** fast checks only (~30s) that CI does not run — version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright on commit.
 - **PR CI:** `ci-tests.yml` runs one Playwright check per category on windows-latest, plus "Gate scripts self-test". Information, not a merge gate.
 - **No full suite during the day.** Run single specs or a filtered category for the work at hand. The full suite runs in **Nightly** after "park".
-- **The live site serves `main`**, so a merge is live within minutes. The version badge shows `1.0.<commits since the v1.0.0 tag>`, e.g. `v1.0.41`.
+- **The live site serves `main`**, so a merge is live within minutes. The version badge shows `1.0.<pushes to main since the last tag>`, e.g. `v1.0.92`; every version is on the Releases page with what it contains.
 
 ## Release Line — say where everything stands, every time
 
@@ -89,9 +89,9 @@ release or push) with one line, in this order, in these words:
 
 > **main** = v1.0.N · **live site** = v1.0.N · **PR #NNNN** = M commits on top of main, not merged · **your local** = what John's badge shows (when known)
 
-- **The number is the badge's number**: the last tag's patch plus the commits since it (`git describe --tags --match "v[0-9]*" --long` → `v1.0.0-41-g…` = `v1.0.41`). Same commit, same number, everywhere.
+- **The number is the badge's number**: the last tag's patch plus the pushes to main since it (`scripts/lib/push-count.mjs`; tag `v1.0.89` + 3 pushes = `v1.0.92`). Same commit, same number, everywhere.
 - The badge is the number only, no marks (John: "I only want numbers"). Behind GitHub or local edits are said in its tooltip.
-- Get the numbers from git (`git describe --tags --match "v[0-9]*"`, `git rev-list --count tag..origin/main`), never from memory.
+- Get the numbers from git, never from memory: `node -e "import('./scripts/lib/push-count.mjs').then(m=>console.log(m.countPushes('.','v1.0.89','origin/main')))"` (pushes since the tag), or read `release`/`sinceRelease` in `src/core/version.js` on main.
 
 ## Filing an Issue — every time, no exceptions
 

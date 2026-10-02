@@ -3,7 +3,7 @@
  * release-versions.mjs — one Releases-page entry for every 1.0.N on main.
  *
  * John, 2026-10-02: "A release has no meaning if i can't read about the
- * content." The badge shows 1.0.<commits since the v1.0.0 tag>, and every push
+ * content." The badge shows 1.0.<pushes since the tag>, and every push
  * to main is live, but data/releases.json only had tagged releases -- so the
  * page said "1.0.0 · Live now" while the site ran 1.0.83, and nothing said
  * what any 1.0.N contained.
@@ -13,7 +13,8 @@
  *   - a version is a first-parent commit -- except that a merge immediately
  *     followed by its "chore(version): stamp" commit is ONE version, numbered
  *     like the stamp (that is the commit the live site serves);
- *   - its number is the badge's: tag patch + `git rev-list --count tag..commit`;
+ *   - its number is the badge's: tag patch + pushes since the tag
+ *     (scripts/lib/push-count.mjs -- pushes, not commits);
  *   - its summary is the merge's PR title; its items are the non-merge commits
  *     it brought, linked to their issues (scripts/lib/release-item.mjs).
  *
@@ -21,8 +22,6 @@
  * releases (1.0.0, 4.x) and history are left alone. Re-running is a no-op.
  *
  *   node scripts/release-versions.mjs                     # up to HEAD
- *   node scripts/release-versions.mjs --for-next-commit   # in the stamp workflow:
- *        HEAD's version is the stamp commit about to be made (count + 1)
  *   node scripts/release-versions.mjs --check             # print, change nothing
  */
 import { execFileSync } from 'node:child_process';
@@ -30,14 +29,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { esc, issueLinks, itemFor } from './lib/release-item.mjs';
+import { STAMP_SUBJECT as STAMP } from './lib/push-count.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data', 'releases.json');
 const CHECK_ONLY = process.argv.includes('--check');
-const FOR_NEXT = process.argv.includes('--for-next-commit');
 
 const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).trim();
-const STAMP = /^chore\(version\): stamp v/;
 const NUL = String.fromCharCode(0);
 const US = String.fromCharCode(31);
 
@@ -65,9 +63,9 @@ spine.forEach((c, i) => {
   if (next && STAMP.test(next.subject) && !STAMP.test(c.subject)) return;
 
   const last = pending[pending.length - 1];
-  const isHead = !next;
-  let count = Number(git('rev-list', '--count', `${tag}..${last.sha}`));
-  if (isHead && FOR_NEXT && !STAMP.test(last.subject)) count += 1;
+  // Pushes, not commits: this version's number is how many non-stamp
+  // first-parent commits there are up to and including it (push-count.mjs).
+  const count = spine.slice(0, i + 1).filter((s) => !STAMP.test(s.subject)).length;
 
   const items = [];
   const titles = [];
