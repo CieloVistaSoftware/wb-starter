@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.103",
+      "date": "2026-10-02",
+      "summary": "Probe when the regression checkout turns shallow (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1273\" target=\"_blank\" rel=\"noopener\">PR 1273</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Probe when the regression checkout turns shallow</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
+          "issues": [
+            1272
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.102",
       "date": "2026-10-02",
       "summary": "Two more checks stop treating wb-*/data-wb as current (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1271\" target=\"_blank\" rel=\"noopener\">PR 1271</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
