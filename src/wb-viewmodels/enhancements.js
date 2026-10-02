@@ -14,6 +14,20 @@ import { readFlag } from '../core/read-attr.js';
  */
 
 /**
+ * Wrap a form input in <div class="{wrapperClass}"> where it stands and give
+ * the input its own class. search() and password() each did this by hand
+ * (#883). Callers check element.parentNode first.
+ */
+function wrapInput(element, wrapperClass, inputClass) {
+  const wrapper = document.createElement('div');
+  wrapper.className = wrapperClass;
+  element.parentNode.insertBefore(wrapper, element);
+  wrapper.appendChild(element);
+  element.classList.add(inputClass);
+  return wrapper;
+}
+
+/**
  * Form - Enhanced form
  * Helper Attribute: [x-form]
  */
@@ -197,11 +211,7 @@ export function search(element, options = {}) {
     return () => {};
   }
 
-  const wrapper = document.createElement('div');
-  wrapper.className = 'x-search';
-  element.parentNode.insertBefore(wrapper, element);
-  wrapper.appendChild(element);
-  element.classList.add('x-search__input');
+  const wrapper = wrapInput(element, 'x-search', 'x-search__input');
   element.type = 'search';
 
   const icon = document.createElement('span');
@@ -241,14 +251,10 @@ export function password(element, options = {}) {
     return () => {};
   }
 
-  const wrapper = document.createElement('div');
   // #779: wrapper, field, toggle and strength meter are .x-password* rules
-  // in password.css -- they were cssText blocks here.
-  wrapper.className = 'x-password';
-  element.parentNode.insertBefore(wrapper, element);
-  wrapper.appendChild(element);
-  // Room for the toggle button: .x-password__input in password.css.
-  element.classList.add('x-password__input');
+  // in password.css -- they were cssText blocks here. Room for the toggle
+  // button: .x-password__input in password.css.
+  const wrapper = wrapInput(element, 'x-password', 'x-password__input');
 
   if (config.toggle) {
     const toggleBtn = document.createElement('button');

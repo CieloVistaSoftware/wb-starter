@@ -1021,18 +1021,17 @@ const WB = {
     // by the code panel's un-wrapped raw-source width).
     const elements = matchingElements(root, '[x-behavior]');
     const injections = [];
+    // One queueing rule for all three scans below (#883: it was written out
+    // three times): inject now, or hand to the viewport-deferred lazy path.
+    const queueInjection = (element, name, now) => {
+      injections.push(now ? WB.inject(element, name) : WB.lazyInject(element, name));
+    };
 
     elements.forEach(element => {
       const behaviorList = element.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
       const isEager = eager || element.hasAttribute('x-eager');
 
-      behaviorList.forEach(name => {
-        if (isEager) {
-          injections.push(WB.inject(element, name));
-        } else {
-          injections.push(WB.lazyInject(element, name));
-        }
-      });
+      behaviorList.forEach(name => queueInjection(element, name, isEager));
     });
 
     // Custom elements scan (always active)
@@ -1041,13 +1040,7 @@ const WB = {
       // one custom element directly (as the playground does for its theme
       // control), otherwise the registration silently never runs.
       const customElements = matchingElements(root, selector);
-      customElements.forEach(element => {
-        if (eager) {
-          injections.push(WB.inject(element, behavior));
-        } else {
-          injections.push(WB.lazyInject(element, behavior));
-        }
-      });
+      customElements.forEach(element => queueInjection(element, behavior, eager));
     });
 
     // Auto-inject scan. Unconditional per-element check -- `variant` triggers
@@ -1074,13 +1067,7 @@ const WB = {
           // every injection path, not just the tidiest one.
           if (isReplacedByExplicitBehavior(element, behavior)) return;
           // Skip if x-behavior is present (already handled)
-          if (!element.hasAttribute('x-behavior')) {
-            if (eager) {
-              injections.push(WB.inject(element, behavior));
-            } else {
-              injections.push(WB.lazyInject(element, behavior));
-            }
-          }
+          if (!element.hasAttribute('x-behavior')) queueInjection(element, behavior, eager);
         });
       });
     }
