@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.99",
+      "date": "2026-10-02",
+      "summary": "Nav selection closes API and Docs; tests stop crediting wb-* (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1268\" target=\"_blank\" rel=\"noopener\">PR 1268</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1267\" target=\"_blank\" rel=\"noopener\">#1267</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Changing the nav selection closes the API and Docs panels</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1267\" target=\"_blank\" rel=\"noopener\">#1267</a>",
+          "issues": [
+            1267
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>No test credits retired &lt;wb-*&gt;/data-wb; guard against its return</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+          "issues": [
+            1144
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.98",
       "date": "2026-10-02",
       "summary": "Write-time control-byte hook (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1266\" target=\"_blank\" rel=\"noopener\">PR 1266</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1162\" target=\"_blank\" rel=\"noopener\">#1162</a>",
