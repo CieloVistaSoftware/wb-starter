@@ -10,7 +10,8 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { isDirty } from './lib/git-status.mjs';
+import { changedPaths } from './lib/git-status.mjs';
+import { isBuildOutput } from './lib/build-output.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -93,11 +94,13 @@ function drift() {
   // "rc/core/version.js", which GENERATED then failed to match. So the
   // exclusion was bypassed in exactly the case it was written for, and the
   // badge kept saying "uncommitted changes" after #1071 shipped.
-  const GENERATED = ['src/core/version.js'];
-  const dirty = isDirty(
-    git('git status --porcelain', '', { raw: true }),
-    GENERATED,
-  );
+  //
+  // John, 2026-10-02, on a badge saying "uncommitted local edits" right after
+  // npm start: the docs manifests and the ?v= keys in entry pages are rewritten
+  // on every start too. Everything the build rewrites is excluded, by the same
+  // test pull-latest.mjs uses before it resets anything (build-output.mjs).
+  const dirty = changedPaths(git('git status --porcelain', '', { raw: true }))
+    .some((f) => !isBuildOutput(root, f));
 
   // Compare against the remote this branch tracks; fall back to origin/main,
   // which is what "latest code" means for this project.

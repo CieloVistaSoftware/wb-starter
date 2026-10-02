@@ -115,7 +115,8 @@ export function release(element, options = {}) {
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
     + (VERSION.dirty ? ` · uncommitted local edits — these files are not ${shownVersion} as committed` : '')
-    + (config.reload ? ' — tap to clear cache and reload' : '');
+    + ' — click to get the latest code and reload'
+    + (config.reload ? ' · right-click to only clear the cache and reload' : '');
 
   let onClick = null;
   let onContext = null;
@@ -141,8 +142,14 @@ export function release(element, options = {}) {
     try {
       const res = await fetch(root + 'api/update-to-latest', { method: 'POST' });
       if (res.ok) {
-        const { message } = await res.json();
+        const { updated, message } = await res.json();
         if (message) console.info(`[version] ${message}`);
+        // John, 2026-10-02: "I want ... the latest code to be shown. That means
+        // I get new versions every time i click." A refused update used to
+        // reload silently onto the same old code. Now it says why.
+        if (!updated && message && message !== 'already the latest code' && message !== 'test server: not updating') {
+          window.alert(`Could not get the latest code:\n\n${message}`);
+        }
       }
     } catch { /* the live site has no endpoint: just reload */ }
     await clearCacheAndReload();
