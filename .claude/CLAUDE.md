@@ -16,6 +16,7 @@
 - ❌ Never ask "what are you working on" — read the status file
 - ❌ Never run tests synchronously — see async syntax below
 - ❌ Never skip reading Tier 1 — that's how regressions happen
+- ❌ Never write `\b`, `\x1b`, `\u001b` or any escape that decodes to a control byte as literal text in file content: the write tool can decode it into the real byte (#888, #1049, #1162). Build the character from its code (`String.fromCharCode(27)`), or use a regex class like `[\b]` only inside code that is itself checked. The commit hook rejects staged control bytes (`scripts/check-staged-control-bytes.mjs`).
 
 ---
 
