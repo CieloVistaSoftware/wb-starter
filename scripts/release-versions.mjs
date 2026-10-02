@@ -29,7 +29,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { esc, issueLinks, itemFor } from './lib/release-item.mjs';
-import { STAMP_SUBJECT as STAMP } from './lib/push-count.mjs';
+import { STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data', 'releases.json');
@@ -39,8 +39,11 @@ const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8'
 const NUL = String.fromCharCode(0);
 const US = String.fromCharCode(31);
 
-const tag = git('describe', '--tags', '--abbrev=0', '--match', 'v[0-9]*');
-const [maj, min, pat] = tag.replace(/^v/, '').split('.').map(Number);
+// Where the badge's count starts (push-count.mjs): a tag, or the 1.0.89 anchor.
+const start = countBase(ROOT);
+if (!start) { console.error('[release-versions] no release tag: nothing to count from'); process.exit(1); }
+const tag = start.base;
+const [maj, min, pat] = start.release.split('.').map(Number);
 const versionOf = (count) => `${maj}.${min}.${pat + count}`;
 
 /** Commits as {sha, subject, body, date}, from `git log` with the given args. */
@@ -100,7 +103,7 @@ entries.reverse(); // newest first, as the page lists them
 
 if (CHECK_ONLY) {
   console.log(JSON.stringify(entries.slice(0, 3), null, 2));
-  console.log(`[release-versions] ${entries.length} version(s) since ${tag}`);
+  console.log(`[release-versions] ${entries.length} version(s) since ${start.release}`);
   process.exit(0);
 }
 
@@ -110,4 +113,4 @@ const isGenerated = (v) => { const m = String(v).match(generated); return !!m &&
 const kept = data.releases.filter((r) => !isGenerated(r.version));
 data.releases = [...entries, ...kept];
 fs.writeFileSync(DATA, JSON.stringify(data, null, 2) + '\n');
-console.log(`[release-versions] wrote ${entries.length} version(s) since ${tag}; newest ${entries[0] ? entries[0].version : '(none)'}`);
+console.log(`[release-versions] wrote ${entries.length} version(s) since ${start.release}; newest ${entries[0] ? entries[0].version : '(none)'}`);

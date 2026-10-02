@@ -20,8 +20,9 @@ The version badge shows the last release tag with its patch moved on by the
 2026-10-02: "count pushes not commits" -- counting commits made it jump by three
 per push. A push is one first-parent commit on main; the stamp workflow's own
 `chore(version): stamp` commit belongs to the push it stamps
-(`scripts/lib/push-count.mjs`). The numbering switched at the `v1.0.89` tag, so
-it never went backwards. It is counted by git from the tag
+(`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89`
+commit (`ANCHOR` in that file), so it never went backwards; a release tag cut
+after it takes over. It is counted by git from the tag
 (`scripts/stamp-version.js`), so the same commit shows the same number on port
 3000 and on the live site. Every version is listed on the Releases page with
 what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks;

@@ -12,7 +12,8 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import { changedPaths } from './lib/git-status.mjs';
 import { isBuildOutput } from './lib/build-output.mjs';
-import { countPushes } from './lib/push-count.mjs';
+import { countBase, countPushes } from './lib/push-count.mjs';
+import { versionNumber } from '../src/core/version-number.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -129,13 +130,15 @@ function drift() {
   let sinceRelease = null;
   const described = git('git describe --tags --match "v[0-9]*" --long');
   const m = described.match(/^v(.+)-(\d+)-g[0-9a-f]+$/);
-  if (m) {
-    release = m[1];
-    // John, 2026-10-02: "count pushes not commits" (scripts/lib/push-count.mjs).
-    // The stamp commit is not a push, so the stamp needs no "+1 for the commit
-    // it is about to make": it carries the number of the push it stamps.
-    try { sinceRelease = countPushes(root, `v${release}`); } catch { sinceRelease = Number(m[2]); }
-  }
+  if (m) { release = m[1]; sinceRelease = Number(m[2]); }
+  // John, 2026-10-02: "count pushes not commits" (scripts/lib/push-count.mjs):
+  // pushes to main since the tag, or since the 1.0.89 anchor where that is
+  // newer. The stamp commit is not a push, so the stamp needs no "+1 for the
+  // commit it is about to make": it carries the number of the push it stamps.
+  try {
+    const start = countBase(root);
+    if (start) { release = start.release; sinceRelease = countPushes(root, start.base); }
+  } catch { /* keep the tag's commit count rather than nothing */ }
 
   return { branch, dirty, ahead, behind, upstream, release, sinceRelease };
 }
@@ -196,7 +199,7 @@ const flags = [
   tree.ahead ? `${tree.ahead} ahead` : '',
   tree.dirty ? 'dirty' : '',
 ].filter(Boolean).join(', ');
-console.log(`[stamp-version] v${pkg.version} (${commit}) @ ${builtAt}${flags ? ` — ${flags}` : ''}`);
+console.log(`[stamp-version] v${versionNumber({ version: pkg.version, ...tree }).number} (${commit}) @ ${builtAt}${flags ? ` — ${flags}` : ''}`);
 if (tree.behind) {
   console.log(`[stamp-version] ⚠  This tree is ${tree.behind} commits behind ${tree.upstream}.`);
   console.log(`[stamp-version] ⚠  What you see on :3000 is NOT the latest code.`);

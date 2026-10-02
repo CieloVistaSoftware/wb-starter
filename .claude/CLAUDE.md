@@ -89,9 +89,9 @@ release or push) with one line, in this order, in these words:
 
 > **main** = v1.0.N · **live site** = v1.0.N · **PR #NNNN** = M commits on top of main, not merged · **your local** = what John's badge shows (when known)
 
-- **The number is the badge's number**: the last tag's patch plus the pushes to main since it (`scripts/lib/push-count.mjs`; tag `v1.0.89` + 3 pushes = `v1.0.92`). Same commit, same number, everywhere.
+- **The number is the badge's number**: the last tag's patch plus the pushes to main since it (`scripts/lib/push-count.mjs`; from the 1.0.89 anchor, 3 pushes = `v1.0.92`). Same commit, same number, everywhere.
 - The badge is the number only, no marks (John: "I only want numbers"). Behind GitHub or local edits are said in its tooltip.
-- Get the numbers from git, never from memory: `node -e "import('./scripts/lib/push-count.mjs').then(m=>console.log(m.countPushes('.','v1.0.89','origin/main')))"` (pushes since the tag), or read `release`/`sinceRelease` in `src/core/version.js` on main.
+- Get the numbers from git, never from memory: `node scripts/stamp-version.js` prints it for your checkout, or read `release`/`sinceRelease` in `src/core/version.js` on main.
 
 ## Filing an Issue — every time, no exceptions
 
