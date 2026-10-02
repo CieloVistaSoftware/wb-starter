@@ -6,6 +6,17 @@
   ],
   "releases": [
     {
+      "version": "1.0.86",
+      "date": "2026-10-02",
+      "summary": "Releases page lists every 1.0.N version and what it contains (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1256\" target=\"_blank\" rel=\"noopener\">PR 1256</a>)",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Releases page lists every 1.0.N version and what it contains</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.83",
       "date": "2026-10-02",
       "summary": "Placeholder fine lines are white (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1255\" target=\"_blank\" rel=\"noopener\">PR 1255</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1254\" target=\"_blank\" rel=\"noopener\">#1254</a>",
