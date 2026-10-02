@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { demoWidthsSettled } from '../base';
+import { demoWidthsSettled, wbIdle } from '../base';
 
 /**
  * #560: "docs/behaviors/article.md: doc-viewer code panels render
@@ -92,12 +92,20 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
     const content = page.locator('#content');
     await expect(content.locator('h1')).toBeVisible({ timeout: 20000 });
 
-    // The "Structure" section's ```html fence has no wb-*/x-* tags, so
-    // mdhtml.js's auto-live-render leaves it as a plain <pre> enhanced by
-    // pre.js (x-pre) -- a completely different code path from x-demo's,
-    // and one that must fill the doc's own reading column width, not
-    // collapse to its content's natural size the way a <div x-demo> does.
-    const pre = content.locator('pre').first();
+    // A plain fence (card.md's ```text block under "Styling") stays a plain
+    // <pre> enhanced by pre.js (x-pre) -- a completely different code path
+    // from x-demo's, and one that must fill the doc's own reading column
+    // width, not collapse to its content's natural size the way a
+    // <div x-demo> does.
+    //
+    // #1241: this used to take `pre` .first(). Once the page finished, the
+    // first <pre> is an x-demo's own code panel (pre.x-demo__code), which is
+    // MEANT to fit its content -- so the test passed only when it measured
+    // before the demos had built their panels, and failed when they won the
+    // race (1 run in 5). Wait for the runtime to finish, then measure the
+    // first <pre> that is not a demo's code panel.
+    await wbIdle(page);
+    const pre = content.locator('pre:not(.x-demo__code)').first();
     await expect(pre).toBeVisible();
 
     const preWidth = await pre.evaluate((el) => el.getBoundingClientRect().width);

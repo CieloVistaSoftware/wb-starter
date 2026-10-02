@@ -93,6 +93,23 @@ release or push) with one line, in this order, in these words:
 - **Distances are commits since the tag**, exactly as the version badge counts them (`v1.0.0 +41`, `· edited` for local changes), so what Claude says and what John's badge shows always match.
 - Get the numbers from git (`git describe --tags --match "v[0-9]*"`, `git rev-list --count tag..origin/main`), never from memory.
 
+## Filing an Issue — every time, no exceptions
+
+John, 2026-10-02, after five issues went up without a Signature block: "are you
+saying we didn't tell you what to do?" The rules exist; read them before filing.
+
+1. **Signature block** per `docs/standards/ISSUE-SIGNATURE-BLOCK.md`: `kind` (one of the six), `subject`, `observed`, `expected`; `detect` + dated `evidence` when computable; `related` when a family exists. Never `status`/`state`/`shipped`/`released`/`commit`.
+2. **Exactly one priority label**, `priority:1`–`priority:5` (Tier-1 Law 15).
+3. **After filing, validate**: parse the posted body with `parseSignature()` from `scripts/lib/signature-schema.mjs` (or `node scripts/check-issue-signatures.mjs --number N`) and fix anything it reports before moving on.
+
+## Merging — Claude merges when the tests say so
+
+John, 2026-10-02: "you trigger the merges when the tests indicate to do it."
+
+- Claude merges its own PRs when **every check on the PR's current head commit is green** and there is no merge conflict. No asking first.
+- **Any red check blocks the merge**, even one Claude believes the PR did not cause. Claude fixes it, or fixes the flaky test, and lets CI answer again. A merge is never argued past a red check.
+- After merging, report with the release line (above) and say when the change is live.
+
 ## End of Session — "park"
 
 When John says **"park"**:
