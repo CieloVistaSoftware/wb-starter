@@ -91,15 +91,18 @@ export function release(element, options = {}) {
   const releaseName = VERSION.release || VERSION.version;
   const ahead = Number.isInteger(VERSION.sinceRelease) ? VERSION.sinceRelease : Number(VERSION.ahead || 0);
 
-  // #1139 -- John, 2026-09-28: "i can't figure out what's going on" with
-  // v4.0.5.23. A fourth segment reads as a release that does not exist -- no
-  // 4.0.5.23 was ever cut -- so the badge names the real release and counts
-  // the commits past it: "v4.0.5 +23". The tooltip says it in words.
-  //
-  // BEHIND is not expressed this way on purpose. Being behind does not make a
-  // newer build; it makes a STALE one, and rolling it into the number would
-  // read as progress. It stays a warning.
-  const versionText = ahead ? `${releaseName} +${ahead}` : releaseName;
+  // John, 2026-10-02: "I want port 3000 to show 1.0.what the latest push is
+  // e.g. 1.0.41 simple." The number is the tagged release with its patch moved
+  // on by the commits since it: v1.0.0 + 41 commits reads "v1.0.41". One plain
+  // version, always three segments (#1139: never a fourth), counted by git from
+  // the GitHub tag, so every copy of the same commit shows the same number.
+  const [maj = 0, min = 0, pat = 0] = String(releaseName).split('.').map((n) => Number(n) || 0);
+  const shownVersion = `${maj}.${min}.${pat + ahead}`;
+
+  // BEHIND is not rolled into the number on purpose. Being behind does not make
+  // a newer build; it makes a STALE one, and counting it would read as
+  // progress. It stays a warning.
+  const versionText = shownVersion;
 
   // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
   // origin/main · dirty" -- made the badge wide enough to wrap the whole site
@@ -122,10 +125,10 @@ export function release(element, options = {}) {
   element.classList.toggle('x-release--stale', behind > 0);
 
   element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
-    + (ahead ? ` · ${ahead} unreleased commit${ahead === 1 ? '' : 's'} past release ${releaseName}` : '')
+    + (ahead ? ` · ${ahead} commit${ahead === 1 ? '' : 's'} since the v${releaseName} tag` : '')
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
-    + (VERSION.dirty ? ` · uncommitted local edits — these files are not release ${releaseName} as tagged` : '')
+    + (VERSION.dirty ? ` · uncommitted local edits — these files are not ${shownVersion} as committed` : '')
     + (config.reload ? ' — tap to clear cache and reload' : '');
 
   let onClick = null;

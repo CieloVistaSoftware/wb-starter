@@ -62,8 +62,8 @@ Where each gate runs (since 2026-10-02):
 - **PR CI** (`.github/workflows/ci-tests.yml`) — one Playwright check per category
   on windows-latest, plus the "Gate scripts self-test" job. Information, not a merge gate.
 - **Nightly** (`.github/workflows/nightly.yml`) — the full suite on `main` through
-  the test ratchet. No new failures → release + Pages deploy. New failures → no
-  release, one `priority:2` issue linking the run.
+  the test ratchet. A new failure files one `priority:2` issue linking the run. It
+  does not release; the badge number (`v1.0.41`) is counted from the last tag.
 
 ## Reading attributes in a behavior
 

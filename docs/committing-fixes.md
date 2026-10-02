@@ -87,6 +87,6 @@ The commit hook runs fast checks only (~30s): version stamp, lint ratchet on sta
 
 PR CI (`.github/workflows/ci-tests.yml`) runs one Playwright check per category on windows-latest, plus "Gate scripts self-test". Its results are information.
 
-### 8. Release
+### 8. Merge and version
 
-There is no release per merge. At end of day ("park") the finished PRs are merged and the Nightly workflow runs the full suite on `main`. No new failures → release and site deploy. New failures → no release, one `priority:2` issue. See `docs/standards/RELEASE-PROCESS.md`.
+The PR is merged once every check on its head is green, and the live site serves `main` within minutes. The version badge then shows the new number: `1.0.<commits since the v1.0.0 tag>`, e.g. `v1.0.41`. The full suite also runs nightly on `main`; a new failure files a `priority:2` issue. See `docs/standards/RELEASE-PROCESS.md`.

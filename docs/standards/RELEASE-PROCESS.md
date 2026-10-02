@@ -11,25 +11,16 @@ learn what was in it, and given a build no way to know its number was unique.
 
 ---
 
-## When a release happens (since 2026-10-02)
 
-Releases are cut by the **Nightly** workflow (`.github/workflows/nightly.yml`), never by hand
-during the day and never by a push.
+## The number on the badge (since 2026-10-02)
 
-1. At end of day John says **"park"**. Claude updates the parking lot in
-   `docs/_today/CURRENT-STATUS.md`, merges the day's finished PRs, and triggers Nightly
-   (`workflow_dispatch`). Backup: Nightly is also scheduled at 08:00 UTC (2am CST) and
-   skips if `main`'s HEAD is already a tagged release.
-2. Nightly runs the full suite on `main` (all categories in parallel) through the ratchet
-   against the known-failures register.
-3. **No new failures** → `scripts/ship.mjs` writes the `data/releases.json` entry, bumps the
-   version, tags, creates the GitHub release and publishes to npm, and the site is deployed
-   to GitHub Pages from the released commit.
-4. **New failures** → no release. One issue is filed (`priority:2`) linking the run.
-5. In the morning Claude reports "vX.Y.Z released" or "no release, these failed" with the issue.
-
-The public site changes only on a release (Pages source = GitHub Actions). Between releases
-`main` moves freely; the version badge shows `vX.Y.Z +N` for unreleased commits.
+John: "I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple."
+The version badge shows the last release tag with its patch moved on by the
+commits since it: `v1.0.0` + 41 commits reads **`v1.0.41`**. It is counted by git
+from the tag (`scripts/stamp-version.js`), so the same commit shows the same
+number on port 3000 and on the live site. `*` after it means uncommitted local
+edits; `⚠` means the checkout is behind GitHub. A release (below) is still cut
+deliberately with `npm run ship` and resets the count to its new tag.
 
 ## 1. One number per release, never per commit
 
@@ -76,7 +67,7 @@ A release commit MUST contain, together, in one commit:
    what it added, fixed and changed
 
 Shipping any one of those without the others is the defect this document exists to prevent.
-`scripts/ship.mjs` (run by Nightly) does all three: `scripts/release-entry.mjs` writes the entry from the commits
+`npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits
 since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and
 `scripts/release.mjs` gate 2 refuses a release the file does not name.
 
@@ -128,9 +119,6 @@ used, the commit message says so and why.
 
 ## Release checklist
 
-Nightly does every step below. The list is what it does, and the order to follow if a release
-ever has to be cut by hand.
-
 - [ ] On `main`, up to date with `origin/main`
 - [ ] Pick the next number — above every number any branch has consumed (rule 6)
 - [ ] Bump `package.json` + `package-lock.json`
@@ -140,7 +128,7 @@ ever has to be cut by hand.
 - [ ] Confirm every version surface agrees: `package.json`, `package-lock.json`,
       `src/core/version.js`, `index.html`, the `data/releases.json` entry
 - [ ] One commit, all of it together
-- [ ] Push the commit and tag; deploy Pages from that commit; run `npm run test:smoke:deployed` (Law 17)
+- [ ] Push; watch CI to green
 
 ## Enforcement
 

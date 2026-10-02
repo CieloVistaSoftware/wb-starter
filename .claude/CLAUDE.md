@@ -79,7 +79,7 @@ npm_test_async(filter: "tests/behaviors/badge.spec.ts")    # single spec
 - **Commit hook:** fast checks only (~30s) that CI does not run — version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright on commit.
 - **PR CI:** `ci-tests.yml` runs one Playwright check per category on windows-latest, plus "Gate scripts self-test". Information, not a merge gate.
 - **No full suite during the day.** Run single specs or a filtered category for the work at hand. The full suite runs in **Nightly** after "park".
-- **main moves freely.** A push to main is not a deploy. The public site updates only when Nightly cuts a release.
+- **The live site serves `main`**, so a merge is live within minutes. The version badge shows `1.0.<commits since the v1.0.0 tag>`, e.g. `v1.0.41`.
 
 ## Release Line — say where everything stands, every time
 
@@ -87,10 +87,10 @@ John, 2026-10-02: "you have to communicate release information so that it keeps
 our discussions in sync." Start every status update (and repeat after any merge,
 release or push) with one line, in this order, in these words:
 
-> **Release vX.Y.Z** (tagged MM-DD) · **main** = vX.Y.Z +N (not released) · **live site** = … · **PR #NNNN** = +M on main, not merged · **your local** = what John's badge shows (when known)
+> **main** = v1.0.N · **live site** = v1.0.N · **PR #NNNN** = M commits on top of main, not merged · **your local** = what John's badge shows (when known)
 
-- **"Release" means a GitHub tag `vX.Y.Z`, nothing else.** Merged-but-untagged code is "main, not released". Never call `+N` code by the bare release number.
-- **Distances are commits since the tag**, exactly as the version badge counts them (`v1.0.0 +41`, `*` for local edits), so what Claude says and what John's badge shows always match.
+- **The number is the badge's number**: the last tag's patch plus the commits since it (`git describe --tags --match "v[0-9]*" --long` → `v1.0.0-41-g…` = `v1.0.41`). Same commit, same number, everywhere.
+- `*` after the number = uncommitted local edits; `⚠` = behind GitHub.
 - Get the numbers from git (`git describe --tags --match "v[0-9]*"`, `git rev-list --count tag..origin/main`), never from memory.
 
 ## Filing an Issue — every time, no exceptions
@@ -116,8 +116,8 @@ When John says **"park"**:
 
 1. Update the 🅿️ PARKING LOT in `docs/_today/CURRENT-STATUS.md` (task, files touched, last action, next step, open questions).
 2. Merge the day's finished PRs into `main`.
-3. Trigger the **Nightly** workflow: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST) and skips if main's HEAD is already a tagged release.
+3. Trigger the **Nightly** test run: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST).
 
-Nightly runs the full suite on main against the known-failures register. No new failures → release cut (`scripts/ship.mjs`: What's New in `data/releases.json`, version bump, tag, GitHub release, npm publish) and the site deployed to GitHub Pages from that commit. New failures → no release, one `priority:2` issue linking the run.
+Nightly runs the full suite on main against the known-failures register. A new failure files one `priority:2` issue linking the run. It does not release: the version number is counted from the last tag.
 
-**Next morning:** report "vX.Y.Z released" (then run `npm run test:smoke:deployed`, Law 17) or "no release, these failed" with the issue link.
+**Next morning:** report the nightly result, and the issue link if it failed.

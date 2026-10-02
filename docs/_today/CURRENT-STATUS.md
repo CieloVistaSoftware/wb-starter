@@ -7,9 +7,9 @@
 - Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.
 - PR CI (`ci-tests.yml`, one check per category + "Gate scripts self-test") is information.
 - **"park"** at end of day: update this parking lot, merge the day's finished PRs, trigger `nightly.yml`. Backup schedule 08:00 UTC.
-- Nightly: full suite on main vs the register. No new failures → release + Pages deploy. New failures → no release, one `priority:2` issue.
-- The site updates only on release (Pages source = GitHub Actions; John switches it in Settings → Pages). The pre-push rule (#1076) is gone. Badge shows `vX.Y.Z +N` for unreleased commits.
-- Morning: Claude reports "vX.Y.Z released" or "no release, these failed" with the issue.
+- Nightly: full suite on main vs the register. A new failure files one `priority:2` issue. It does not release.
+- The live site serves `main`; a merge is live in minutes. The pre-push rule (#1076) is gone.
+- **Version number** (John: "1.0.what the latest push is e.g. 1.0.41 simple"): the badge shows the last tag's patch plus the commits since it — `v1.0.41`. `*` = local edits, `⚠` = behind GitHub.
 
 ---
 

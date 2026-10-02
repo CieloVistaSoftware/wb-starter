@@ -99,9 +99,9 @@ nothing overflows a 375px phone screen.
 
 **Gates that cannot be talked past.**
 
-- **Nightly release gate.** The full suite runs on `main` every night. A
-  release is cut, and the site deployed, only if no new failure appears; a
-  new failure files an issue instead. Commits run fast checks only.
+- **Nightly full suite.** The full suite runs on `main` every night against
+  the known-failures register; a new failure files an issue by morning.
+  Commits run fast checks only, and every PR runs CI.
 - **Known-failures register.** Existing failures are tracked in a register
   that is only allowed to shrink. It is being driven to zero.
 - **Lint ratchet.** The lint baseline can only go down.

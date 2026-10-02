@@ -41,7 +41,7 @@ const runLines = (yaml: string) =>
 test.describe('#1044: CI and the local gate apply the same standard', () => {
   // 2026-10-02 (John: "no ci duplication at all"): the commit hook runs fast
   // checks only, and the full suite runs in CI -- ci-tests.yml on PRs, and the
-  // same workflow called by nightly.yml before a release. So there is ONE place
+  // same workflow called by nightly.yml overnight. So there is ONE place
   // the suite is judged, and it must be the ratchet. A hook that quietly grew a
   // second, differently-judged suite run would bring #1044 back.
   test('CI invokes the ratchet, and the commit hook runs no suite of its own', () => {

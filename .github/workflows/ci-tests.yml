@@ -5,8 +5,8 @@ on:
     branches: [ main ]
   push:
     branches: [ main ]
-  # nightly.yml calls this same workflow before it cuts a release, so the
-  # suite that decides a release is the one PRs see -- one definition, not two.
+  # nightly.yml calls this same workflow for the overnight full run, so the
+  # suite it runs is the one PRs see -- one definition, not two.
   workflow_call:
 
 permissions:

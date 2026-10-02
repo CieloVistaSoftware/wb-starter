@@ -73,18 +73,6 @@ console.log(`\n📦 Release: ${pkg.version} → ${next}\n`);
 // suite ran beside any other run on the box and fought it for memory and ports
 // (Tier-1 Law 4, #1072); and no timeout, so a wedged run held the release
 // forever.
-//
-// NIGHTLY (2026-10-02): .github/workflows/nightly.yml runs this same ratchet,
-// one job per category, on the exact commit it then releases, and only calls
-// ship.mjs when every category passed. It says so with WB_RELEASE_TESTED_SHA.
-// When that names HEAD, running the whole suite again here would measure the
-// same tree twice, so it is skipped. Any other value (or none) runs it as before.
-let headSha = '';
-try { headSha = execSync('git rev-parse HEAD', { cwd: ROOT, encoding: 'utf8' }).trim(); } catch { /* not a checkout */ }
-const nightlyTested = Boolean(headSha) && process.env.WB_RELEASE_TESTED_SHA === headSha;
-if (nightlyTested) {
-  console.log(`🔒 Gate 1 — skipped: the nightly run already passed the full suite on ${headSha.slice(0, 8)}\n`);
-} else {
 console.log('🔒 Gate 1 — no NEW failures vs the register (compliance + regression + behaviors + schema-viewer)\n');
 const { suiteMs, lockWaitMs } = gateBounds();
 const ratchet = await withMachine(
@@ -131,7 +119,6 @@ if (ratchet.result.status === 0) {
       '     node .husky/test-ratchet.mjs --update\n' +
       '   or fix the failure. Both leave a trail; a bypass does not.'
   );
-}
 }
 
 // ── 2. The Releases page must name the version being released ─────────────────
