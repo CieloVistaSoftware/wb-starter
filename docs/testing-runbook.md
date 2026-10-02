@@ -44,7 +44,7 @@ This concise runbook explains how to run tests locally, gather artifacts, and ho
 
 ## CI & GitHub Actions
 - When tests run (since 2026-10-02): the commit hook runs no Playwright (fast checks only). PRs run `.github/workflows/ci-tests.yml` (one check per category on windows-latest, plus "Gate scripts self-test") as information. The full suite runs only in `.github/workflows/nightly.yml`, triggered when John says "park" (backup 08:00 UTC); it releases and deploys if there are no new failures, otherwise files one `priority:2` issue.
-- Other workflows: `.github/workflows/ci-compliance.yml`, `manual-compliance.yml`, `server-smoke.yml`.
+- Other workflows: `manual-compliance.yml`, `server-smoke.yml`. (`ci-compliance.yml` was removed, #1163: it duplicated PR CI and the nightly suite.)
 - To run a manual dispatch with trace (GH CLI):
   - gh workflow run "Manual Compliance (dispatch)" -f ref=main -f tests="tests/compliance/that.spec.ts" -f trace=true
 

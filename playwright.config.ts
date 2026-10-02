@@ -232,7 +232,7 @@ export default defineConfig({
   // ci-tests.yml starts the server itself (node server.js &) before
   // invoking Playwright, so Playwright must reuse it rather than trying to
   // bind port 3000 a second time (which fails with "port 3000 is already
-  // used"). When no server is running (e.g. ci-compliance.yml), Playwright
+  // used"). When no server is running (e.g. a CI job), Playwright
   // still starts one via `command`. A WB_TEST_PORT override never reuses --
   // see the #518 comment above.
   webServer: {

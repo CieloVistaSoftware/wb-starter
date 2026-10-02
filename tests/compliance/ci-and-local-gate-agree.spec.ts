@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
 /**
@@ -246,18 +246,12 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
     ).toEqual([]);
   });
 
-  test('the compliance workflow runs the ratchet, narrowed by WB_GATE_PROJECTS', () => {
-    const compliance = readFileSync('.github/workflows/ci-compliance.yml', 'utf8');
-    expect(
-      /test-ratchet\.mjs/.test(compliance),
-      '.github/workflows/ci-compliance.yml no longer runs the ratchet, so it is judging the\n' +
-      'same code by a different standard again (#1163).',
-    ).toBe(true);
-    expect(
-      /WB_GATE_PROJECTS:\s*compliance/.test(compliance),
-      'ci-compliance.yml must narrow the gate to the compliance project through\n' +
-      'WB_GATE_PROJECTS, not by hand-writing a playwright command.',
-    ).toBe(true);
+  // #1163: ci-compliance.yml is gone. It re-ran the compliance project on every
+  // push to main, which PR CI (ci-tests.yml, one check per category) and the
+  // nightly full suite already cover. John: "no ci duplication at all".
+  test('no second workflow re-runs the compliance project', () => {
+    expect(existsSync('.github/workflows/ci-compliance.yml'),
+      'ci-compliance.yml is back: compliance already runs in ci-tests.yml and nightly.yml').toBe(false);
   });
 
   test('the uploaded evidence is a path this repo actually writes', () => {
