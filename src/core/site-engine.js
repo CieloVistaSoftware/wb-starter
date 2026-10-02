@@ -3,6 +3,7 @@
 import WB from './wb.js';  // v3.0: Use main wb.js with schema support
 import { preloadCssForHtml } from './style-loader.js';
 import { VERSION } from './version.js';
+import { versionNumber } from './version-number.js';
 import { setRule } from './dynamic-style.js';
 
 /** Old page ids that now render another page (URL is rewritten to the new id). */
@@ -624,7 +625,10 @@ export default class WBSite {
       // re-served whatever copy the browser had, so a page edit stayed
       // invisible after deploy while the raw URL served the new file — the
       // reason What's New kept looking unchanged after a release. See #743.
-      const res = await fetch(`pages/${pageId}.html?v=${VERSION.version}`);
+      // The key is the badge's number (1.0.N), which moves on every push to
+      // main. package.json's version stays 1.0.0 between tags, so keying on it
+      // let the browser keep serving old page content for every 1.0.N.
+      const res = await fetch(`pages/${pageId}.html?v=${versionNumber(VERSION).number}`);
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }

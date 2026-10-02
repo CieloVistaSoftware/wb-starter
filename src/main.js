@@ -19,6 +19,7 @@ const _window = window;
 import WB from './core/wb.js';
 import WBSiteClass from './core/site-engine.js';
 import { VERSION } from './core/version.js';
+import { versionNumber } from './core/version-number.js';
 import { traceStatusLabel } from './core/debug-trace.js';
 import { reportDuplicateIds } from './core/duplicate-ids.js';
 
@@ -53,7 +54,7 @@ async function init() {
   // Commit + build time on the very first line — the console log itself is
   // the fastest way to confirm which deploy you're actually looking at,
   // without digging through the header or network tab.
-  console.log(`🚀 wb-starter starting... v${VERSION.version} (${VERSION.commit}, built ${VERSION.builtAt})`);
+  console.log(`🚀 wb-starter starting... v${versionNumber(VERSION).number} (${VERSION.commit}, built ${VERSION.builtAt})`);
   // Debug it via tracing, not guessing: always show whether [WB.scan]/
   // [WB.observe] trace output is active, right on the 2nd console line, so
   // it's never a guessing game whether logging is on before you go looking
