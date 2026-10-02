@@ -6,6 +6,17 @@
   ],
   "releases": [
     {
+      "version": "1.0.93",
+      "date": "2026-10-02",
+      "summary": "Badge tooltip says Commit, not Build (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1261\" target=\"_blank\" rel=\"noopener\">PR 1261</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Badge tooltip says Commit, not Build, and names the edited files</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.92",
       "date": "2026-10-02",
       "summary": "File walkers skip Playwright&#39;s scratch folders (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1260\" target=\"_blank\" rel=\"noopener\">PR 1260</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1158\" target=\"_blank\" rel=\"noopener\">#1158</a>",
