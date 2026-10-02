@@ -15,6 +15,15 @@ test.describe('Issues page', () => {
     // -- 404, no proxy -- so the page takes its GitHub API path, which is what
     // this test is about.
     await context.route(/\/api\/issues(?:\?|$)/, (route) => route.fulfill({ status: 404, body: '' }));
+    // The in-progress issue's status comments (John: "what is next, when and why?").
+    const postedAt = new Date(Date.now() - 5 * 60000).toISOString();
+    await context.route(/\/issues\/517\/comments/, (route) => route.fulfill({
+      status: 200, contentType: 'application/json',
+      body: JSON.stringify([
+        { body: 'unrelated chatter', created_at: postedAt },
+        { body: '**Now:** step 2 of 3 — reviewing test lines\n**Next:** the standards docs\n**Why:** guard is in', created_at: postedAt },
+      ]),
+    }));
     await context.route(/https:\/\/api\.github\.com\/repos\/CieloVistaSoftware\/wb-starter\/issues(?:\?|$)/, async (route) => {
       await route.fulfill({
         status: 200,
@@ -85,5 +94,11 @@ test.describe('Issues page', () => {
     await expect(page.locator('.issues-row[number="515"]')).not.toHaveClass(/issues-row--now/);
     const bg = await now.evaluate((el) => getComputedStyle(el).boxShadow);
     expect(bg, 'a green bar marks the row').toMatch(/inset/);
+
+    // ...and says what is happening now, what is next, and when it was said.
+    const note = now.locator('.issue-now-note');
+    await expect(note).toContainText('Now: step 2 of 3 — reviewing test lines');
+    await expect(note).toContainText('Next: the standards docs');
+    await expect(note).toContainText('5 min ago');
   });
 });

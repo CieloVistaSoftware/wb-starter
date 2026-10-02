@@ -190,6 +190,72 @@
 
   const isOpenInProgress = (issue) => issue.state === 'open' && isInProgress(issue);
 
+  // ── what is happening NOW on an in-progress issue ─────────────────────────
+  // John, 2026-10-02: "How can something be in progress with old dates and no
+  // update to indicate what is next, when and why?" Claude posts a status
+  // comment on the issue at every step -- "**Now:** ... **Next:** ...
+  // **Why:** ..." (.claude/CLAUDE.md). The green row shows the latest one and
+  // how long ago it was posted; a row with none says so in red, because an
+  // in-progress issue nobody has reported on is exactly the problem.
+  const nowNotes = new Map();   // number -> { now, next, at } | null (none) | 'loading'
+  const STALE_MS = 24 * 60 * 60 * 1000;
+
+  function noteField(body, name) {
+    const m = String(body || '').match(new RegExp('\\*\\*' + name + ':\\*\\*\\s*([^\\n]+)'));
+    return m ? m[1].trim() : '';
+  }
+
+  function ago(iso) {
+    const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+    if (mins < 60) return mins + ' min ago';
+    const hrs = Math.round(mins / 60);
+    return hrs < 48 ? hrs + ' h ago' : Math.round(hrs / 24) + ' days ago';
+  }
+
+  function paintNowNote(number) {
+    const cell = tbodyEl.querySelector('.issues-row[number="' + number + '"] .issues-cell--title');
+    if (!cell) return;
+    let el = cell.querySelector('.issue-now-note');
+    if (!el) { el = document.createElement('div'); el.className = 'issue-now-note'; cell.appendChild(el); }
+    const note = nowNotes.get(number);
+    if (note === 'loading') { el.textContent = 'Loading status…'; return; }
+    if (!note) {
+      el.classList.add('issue-now-note--missing');
+      el.textContent = 'No status posted: nothing says what is being done now, what is next, or why.';
+      return;
+    }
+    el.classList.toggle('issue-now-note--stale', Date.now() - new Date(note.at).getTime() > STALE_MS);
+    el.innerHTML = '<strong>Now:</strong> ' + escapeHtml(note.now)
+      + (note.next ? ' <span class="issue-now-note__next"><strong>Next:</strong> ' + escapeHtml(note.next) + '</span>' : '')
+      + ' <span class="issue-now-note__when" title="' + escapeHtml(note.at) + '">· ' + ago(note.at) + '</span>';
+  }
+
+  async function loadNowNote(number) {
+    nowNotes.set(number, 'loading');
+    paintNowNote(number);
+    try {
+      const res = await fetch(`https://api.github.com/repos/${REPO}/issues/${number}/comments?per_page=100`);
+      if (!res.ok) throw new Error(String(res.status));
+      const comments = await res.json();
+      const last = comments.filter((c) => noteField(c.body, 'Now')).pop();
+      nowNotes.set(number, last ? { now: noteField(last.body, 'Now'), next: noteField(last.body, 'Next'), at: last.created_at } : null);
+    } catch {
+      nowNotes.delete(number);   // try again on the next render; never paint a guess
+      const cell = tbodyEl.querySelector('.issues-row[number="' + number + '"] .issue-now-note');
+      if (cell) cell.textContent = 'Status could not be loaded right now.';
+      return;
+    }
+    paintNowNote(number);
+  }
+
+  function showNowNotes(rows) {
+    for (const issue of rows) {
+      if (!isOpenInProgress(issue)) continue;
+      const n = String(issue.number);
+      if (nowNotes.has(n)) paintNowNote(n); else loadNowNote(n);
+    }
+  }
+
   function updateActiveCount() {
     const activeCount = allIssues.filter((issue) => issue.state === 'open' && isInProgress(issue)).length;
     activeEl.textContent = `Current Active: ${activeCount}`;
@@ -341,6 +407,8 @@
           <td>${fmtDate(issue.updated_at || issue.created_at)}</td>
         </tr>`;
     }).join('');
+
+    showNowNotes(filtered);
 
     const byNumber = new Map(filtered.map((i) => [String(i.number), i]));
 

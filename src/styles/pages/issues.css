@@ -71,6 +71,31 @@
   box-shadow: inset 4px 0 0 var(--success-color);
 }
 
+.issue-now-note {
+  margin-top: var(--space-xs, 0.25rem);
+  font-size: 0.85em;
+  color: var(--text-secondary);
+}
+
+.issue-now-note strong {
+  color: var(--success-color);
+}
+
+.issue-now-note__next {
+  margin-left: var(--space-sm, 0.5rem);
+}
+
+.issue-now-note__when {
+  opacity: 0.8;
+}
+
+/* No status posted, or none for a day: an in-progress issue nobody has
+   reported on is the problem John named, so it is shown as one. */
+.issue-now-note--missing,
+.issue-now-note--stale .issue-now-note__when {
+  color: var(--danger-color, var(--error-color));
+}
+
 .issue-now {
   display: inline-block;
   margin-right: var(--space-xs, 0.25rem);
