@@ -9,7 +9,7 @@
 - **"park"** at end of day: update this parking lot, merge the day's finished PRs, trigger `nightly.yml`. Backup schedule 08:00 UTC.
 - Nightly: full suite on main vs the register. A new failure files one `priority:2` issue. It does not release.
 - The live site serves `main`; a merge is live in minutes. The pre-push rule (#1076) is gone.
-- **Version number** (John: "1.0.what the latest push is e.g. 1.0.41 simple"): the badge shows the last tag's patch plus the commits since it — `v1.0.41`. `*` = local edits, `⚠` = behind GitHub.
+- **Version number** (John: "1.0.what the latest push is e.g. 1.0.41 simple"): the badge shows the last tag's patch plus the commits since it — `v1.0.41`. Numbers only, no marks; the tooltip says if the copy is behind or edited.
 
 ---
 
