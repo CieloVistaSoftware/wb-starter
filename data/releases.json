@@ -6,6 +6,17 @@
   ],
   "releases": [
     {
+      "version": "1.0.101",
+      "date": "2026-10-02",
+      "summary": "Px creep fix; release-versions explains a missing base (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1270\" target=\"_blank\" rel=\"noopener\">PR 1270</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Px creep from the in-progress pill; release-versions explains a missing base</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.100",
       "date": "2026-10-02",
       "summary": "In-progress rows show Now/Next; badge never fails silently on localhost (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1269\" target=\"_blank\" rel=\"noopener\">PR 1269</a>)",
