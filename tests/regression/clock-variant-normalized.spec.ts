@@ -1,0 +1,49 @@
+import { test, expect } from '../fixtures/offline';
+
+/**
+ * #1229 -- John, in the playground: "WB: clock Failed to execute 'add' on
+ * 'DOMTokenList': The token provided ('x-clock--analogue    ') contains HTML
+ * space characters". The playground re-renders on every keystroke, so a
+ * half-typed variant carried a newline and indentation into classList.add().
+ *
+ * Also: "analogue" (the docs' word) matched no CSS face, and the teardown
+ * cleared an out-of-scope `interval`, throwing a ReferenceError and leaving
+ * the 1-second timer running.
+ */
+test('x-clock normalizes its variant, never throws, and its teardown stops the timer', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto('/demos/test-harness.html');
+  await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
+  const r = await page.evaluate(async () => {
+    const host = document.createElement('div');
+    host.innerHTML =
+      '<div id="ws" x-clock variant="analogue\n    "></div>' +
+      '<div id="led" x-clock variant=" LED "></div>' +
+      '<div id="junk" x-clock variant="sundial"></div>' +
+      '<div id="fmt" x-clock format=" 12 " show-seconds="false"></div>';
+    document.body.appendChild(host);
+    await (window as any).WB.scan(host, { eager: true });
+    await (window as any).WB.settled?.({ timeout: 10000 });
+    const cls = (id: string) => [...document.getElementById(id)!.classList].filter((c) => c.startsWith('x-clock--'));
+    const text = document.getElementById('fmt')!.textContent || '';
+    // Teardown: the cleanup returned by clock() must clear its own timer.
+    const { clock } = await import('/src/wb-viewmodels/helpers.js');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    let teardownError = '';
+    const cleanup = clock(el, { variant: 'digital' });
+    try { cleanup(); } catch (e: any) { teardownError = e.message; }
+    el.textContent = 'frozen';
+    await new Promise((res) => setTimeout(res, 1300));
+    return { ws: cls('ws'), led: cls('led'), junk: cls('junk'), text, teardownError, afterTeardown: el.textContent, removed: el.classList.contains('x-clock') };
+  });
+  expect(errors.filter((e) => /DOMTokenList|InvalidCharacterError|interval is not defined/.test(e))).toEqual([]);
+  expect(r.ws).toEqual(['x-clock--analog']);
+  expect(r.led).toEqual(['x-clock--led']);
+  expect(r.junk).toEqual(['x-clock--digital']);
+  expect(r.text, '12-hour format with AM/PM and no seconds').toMatch(/^\d{2}:\d{2} (AM|PM)$/);
+  expect(r.teardownError).toBe('');
+  expect(r.afterTeardown, 'the timer kept rewriting the element after teardown').toBe('frozen');
+  expect(r.removed).toBe(false);
+});

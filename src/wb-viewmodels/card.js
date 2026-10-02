@@ -176,6 +176,13 @@ export function composeCard(element, options = {}) {
       // A bare attribute parses to "", and "true" is the boolean spelled out.
       return (raw === '' || raw === 'true') ? 'Featured' : raw;
     })(),
+    // #998 -- "we need ability to change color at will": a theme ROLE for the
+    // marker (card.css maps each to that theme's variable). featured-tone and
+    // featuredTone both read; anything else falls back to the default.
+    featuredTone: (() => {
+      const t = String(options.featuredTone || readAttr(element, 'featuredTone') || '').trim().toLowerCase();
+      return ['primary', 'success', 'warning', 'danger', 'info', 'neutral'].includes(t) ? t : '';
+    })(),
     content: options.content || readAttr(element, 'content') || element.getAttribute('content') || authoredContent,
     footer: options.footer || readAttr(element, 'footer') || element.getAttribute('footer') || '',
     variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
@@ -591,6 +598,7 @@ export function composeCard(element, options = {}) {
           if (config.featuredLabel) {
             const featuredEl = document.createElement('mark');
             featuredEl.textContent = config.featuredLabel;
+            if (config.featuredTone) featuredEl.setAttribute('tone', config.featuredTone);
             // Before the title, not after it: the point of the marker is to
             // be read BEFORE you read what the card is about.
             headerEl.insertBefore(featuredEl, headerEl.firstChild);

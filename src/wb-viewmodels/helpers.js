@@ -627,16 +627,25 @@ export function countdown(element, options = {}) {
  * Helper Attribute: [x-clock]
  */
 export function clock(element, options = {}) {
+  // #1229: the values were used raw. In the playground, typing
+  // variant="analogue" left a newline and indentation in the value and
+  // classList.add() threw InvalidCharacterError on every keystroke. Every
+  // value is trimmed and lowercased, and only the faces helpers.css defines
+  // are used; "analogue" (the word the docs used) means analog.
+  const FACES = ['digital', 'led', 'analog'];
+  const rawVariant = String(options.variant || element.getAttribute('variant') || '').trim().toLowerCase();
+  const variant = rawVariant === 'analogue' ? 'analog' : (FACES.includes(rawVariant) ? rawVariant : 'digital');
+  const rawFormat = String(options.format || element.getAttribute('format') || '').trim();
   const config = {
-    variant: options.variant || element.getAttribute('variant') || 'digital',
-    format: options.format || element.getAttribute('format') || '24',
-    showSeconds: (options.showSeconds ?? element.getAttribute('show-seconds')) !== 'false',
-    ...options
+    ...options,
+    variant,
+    format: rawFormat === '12' ? '12' : '24',
+    showSeconds: String(options.showSeconds ?? element.getAttribute('show-seconds') ?? '').trim() !== 'false',
   };
 
   // #779: base (with #486's 1rem padding floor), led, analog and the
   // digital default are .x-clock rules in helpers.css, keyed on the
-  // x-clock--{variant} class added here; any other variant renders digital.
+  // x-clock--{variant} class added here.
   element.classList.add('x-clock', `x-clock--${config.variant}`);
 
   const update = () => {
@@ -658,9 +667,11 @@ export function clock(element, options = {}) {
   update();
   const updateInterval = setInterval(update, 1000);
 
-  return () => { 
-    clearInterval(interval); 
-    element.classList.remove('x-clock', `x-clock--${config.variant}`); 
+  // #1229: this cleared `interval`, a name not in scope -- the teardown threw
+  // a ReferenceError and the 1-second timer was never stopped.
+  return () => {
+    clearInterval(updateInterval);
+    element.classList.remove('x-clock', `x-clock--${config.variant}`);
   };
 }
 
