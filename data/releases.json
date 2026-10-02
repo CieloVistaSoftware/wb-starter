@@ -6,6 +6,461 @@
   ],
   "releases": [
     {
+      "version": "1.0.83",
+      "date": "2026-10-02",
+      "summary": "Placeholder fine lines are white (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1255\" target=\"_blank\" rel=\"noopener\">PR 1255</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1254\" target=\"_blank\" rel=\"noopener\">#1254</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Placeholder image&#39;s fine lines are white</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1254\" target=\"_blank\" rel=\"noopener\">#1254</a>",
+          "issues": [
+            1254
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.80",
+      "date": "2026-10-02",
+      "summary": "Badge click says when it can&#39;t update (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1253\" target=\"_blank\" rel=\"noopener\">PR 1253</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Badge click says when it can&#39;t update; start no longer reads as &quot;edited&quot;</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.77",
+      "date": "2026-10-02",
+      "summary": "Npm start pulls the latest main first (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1252\" target=\"_blank\" rel=\"noopener\">PR 1252</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Npm start pulls the latest main first; fix pull refusing every update</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.74",
+      "date": "2026-10-02",
+      "summary": "Clicking the version badge gets the latest code, then reloads (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1251\" target=\"_blank\" rel=\"noopener\">PR 1251</a>)",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Clicking the version badge gets the latest code, then reloads</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.71",
+      "date": "2026-10-02",
+      "summary": "Stamp workflow commits every file the stamp rewrites (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1250\" target=\"_blank\" rel=\"noopener\">PR 1250</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The stamp workflow commits every file the stamp rewrites</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.68",
+      "date": "2026-10-02",
+      "summary": "Cache key is the version number (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1249\" target=\"_blank\" rel=\"noopener\">PR 1249</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Cache key is the version number, so a refresh loads the newest code</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.64",
+      "date": "2026-10-02",
+      "summary": "Version badge shows the number only (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1248\" target=\"_blank\" rel=\"noopener\">PR 1248</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The version badge shows the number only -- no marks</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.61",
+      "date": "2026-10-02",
+      "summary": "Stamp version.js on main after every push, so the live badge shows main&#39;s number (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1247\" target=\"_blank\" rel=\"noopener\">PR 1247</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Fullscreen-failure-rollback waits for the button&#39;s handler, not 600ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Stamp version.js on main after every push, so the live badge names main</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.57",
+      "date": "2026-10-01",
+      "summary": "X-glass; md link audit; fast commit hook + nightly suite; signals; badge reads v1.0.&lt;commits&gt; (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1238\" target=\"_blank\" rel=\"noopener\">PR 1238</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>X-progress settle failure reports what the page looked like</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1246\" target=\"_blank\" rel=\"noopener\">#1246</a>",
+          "issues": [
+            1246
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Variants spec gives the runtime&#39;s idle signal a wider ceiling on starved CI runners</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1246\" target=\"_blank\" rel=\"noopener\">#1246</a>",
+          "issues": [
+            1246
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>One function computes the version number, so every display agrees</strong>"
+        },
+        {
+          "kind": "added",
+          "html": "<strong>The badge reads 1.0.&lt;commits since the tag&gt;; nightly only tests</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Keep John&#39;s `*` for local edits; &quot;· edited&quot; broke his badge format</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1243\" target=\"_blank\" rel=\"noopener\">#1243</a>",
+          "issues": [
+            1243
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Two flaky checks fixed at the cause; merge and filing rules</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1241\" target=\"_blank\" rel=\"noopener\">#1241</a>",
+          "issues": [
+            1241
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>A release line opens every status update, so discussions stay in sync</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The badge names the release from its GitHub tag, and says when it is not that release</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1243\" target=\"_blank\" rel=\"noopener\">#1243</a>",
+          "issues": [
+            1243
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Nightly release; commit hook is fast checks only; no CI duplication</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Functional-runner waits on signals, not 12 sleeps</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>51 specs await the runtime&#39;s settled signal instead of sleeping</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Link audit gives the same verdict on Windows (CRLF) checkouts</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The full gate run passes again; link audit lists files in the gate&#39;s tree</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Audit every link in every .md file; fix the 70 that were broken</strong>"
+        },
+        {
+          "kind": "added",
+          "html": "<strong>X-glass, a behavior that lets an element carry the background scene</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1236\" target=\"_blank\" rel=\"noopener\">#1236</a>",
+          "issues": [
+            1236
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.41",
+      "date": "2026-10-01",
+      "summary": "Per-category Playwright CI; cardhero fixes; server never blocks on gh (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1235\" target=\"_blank\" rel=\"noopener\">PR 1235</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Gh runs asynchronously, so a hung gh cannot freeze the server</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Hero buttons go to the live .io site</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A hero title never breaks inside a word</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>One check per Playwright category, run in parallel</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.36",
+      "date": "2026-10-01",
+      "summary": "Every issue is filed with exactly one priority label (Law 15) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1234\" target=\"_blank\" rel=\"noopener\">PR 1234</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Every issue is filed with exactly one priority label (Law 15)</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.34",
+      "date": "2026-10-01",
+      "summary": "The priority bot comments once, and shows its triage proposal (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1233\" target=\"_blank\" rel=\"noopener\">PR 1233</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The priority bot comments once, and shows its triage proposal</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.32",
+      "date": "2026-09-30",
+      "summary": "The Docs page opens newest first (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1230\" target=\"_blank\" rel=\"noopener\">PR 1230</a>)",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>The Docs page opens newest first; the default is one attribute</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.30",
+      "date": "2026-09-30",
+      "summary": "Port John&#39;s 23 local-only commits onto main (16 carried, 7 superseded) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1227\" target=\"_blank\" rel=\"noopener\">PR 1227</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>CI asks the gate&#39;s question instead of writing its own command</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1163\" target=\"_blank\" rel=\"noopener\">#1163</a>",
+          "issues": [
+            1163
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A gate that measured nothing no longer says the batch broke tests</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1181\" target=\"_blank\" rel=\"noopener\">#1181</a>",
+          "issues": [
+            1181
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A control byte in staged source is refused at commit time, not 59 minutes later</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1162\" target=\"_blank\" rel=\"noopener\">#1162</a>",
+          "issues": [
+            1162
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every Playwright run on the commit and release path takes the lock and is bounded</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1128\" target=\"_blank\" rel=\"noopener\">#1128</a>",
+          "issues": [
+            1128
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The release gate no longer depends on which shell started it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1156\" target=\"_blank\" rel=\"noopener\">#1156</a>",
+          "issues": [
+            1156
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A refused release commit is rolled back to HEAD, not to the index</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1179\" target=\"_blank\" rel=\"noopener\">#1179</a>",
+          "issues": [
+            1179
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A release&#39;s full test run counts, so ship runs the suite once</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1178\" target=\"_blank\" rel=\"noopener\">#1178</a>",
+          "issues": [
+            1178
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The ship rollback is proven to ignore an inherited GIT_DIR (ported)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1161\" target=\"_blank\" rel=\"noopener\">#1161</a>",
+          "issues": [
+            1161
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The home page tests wait on the page, not on archive.org</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1087\" target=\"_blank\" rel=\"noopener\">#1087</a>",
+          "issues": [
+            1087
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Every behavior schema says what the behavior is for (ported)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1198\" target=\"_blank\" rel=\"noopener\">#1198</a>",
+          "issues": [
+            1198
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The gate&#39;s throwaway server no longer reloads every test page mid-run</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1200\" target=\"_blank\" rel=\"noopener\">#1200</a>",
+          "issues": [
+            1200
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Full runs finish again -- the release-bump fixture no longer waits on the gate&#39;s own lock</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1203\" target=\"_blank\" rel=\"noopener\">#1203</a>",
+          "issues": [
+            1203
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A run that finished every test is not a hang, however quiet shutdown is</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1180\" target=\"_blank\" rel=\"noopener\">#1180</a>",
+          "issues": [
+            1180
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>An x-* attribute that names no behavior is proven reported</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1101\" target=\"_blank\" rel=\"noopener\">#1101</a>",
+          "issues": [
+            1101
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The attribute naming standard describes 4.x behaviors, not wb-* tags</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+          "issues": [
+            1144
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A test server that dies during the gate is reported as that, not as new failures</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1127\" target=\"_blank\" rel=\"noopener\">#1127</a>",
+          "issues": [
+            1127
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.13",
+      "date": "2026-09-30",
+      "summary": "How to Create a Website with wb-starter (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1225\" target=\"_blank\" rel=\"noopener\">PR 1225</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>How to create a website with wb-starter</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/813\" target=\"_blank\" rel=\"noopener\">#813</a>",
+          "issues": [
+            813
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.11",
+      "date": "2026-09-30",
+      "summary": "Release workflow finishes a release even when one tag is refused (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1224\" target=\"_blank\" rel=\"noopener\">PR 1224</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Npm gets the code the release tag names, not main&#39;s head</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1182\" target=\"_blank\" rel=\"noopener\">#1182</a>",
+          "issues": [
+            1182
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>One tag that cannot be made no longer stops the release</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1182\" target=\"_blank\" rel=\"noopener\">#1182</a>",
+          "issues": [
+            1182
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.8",
+      "date": "2026-09-30",
+      "summary": "Readiness by callback + a release completes itself (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1223\" target=\"_blank\" rel=\"noopener\">PR 1223</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>A release completes itself -- tag, GitHub release, npm</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1182\" target=\"_blank\" rel=\"noopener\">#1182</a>",
+          "issues": [
+            1182
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Static server closes every file before the site is deleted</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/813\" target=\"_blank\" rel=\"noopener\">#813</a>",
+          "issues": [
+            813
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Variants test waits for media to rest, not a quiet window</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>WhenIdle() loses its 50ms quiet window and becomes settled()</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>WB.settled() -- one finished signal, as a promise, a callback and an event</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>CI on 73923a36 -- two specs wait for the event they need</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>NavigateTo resolves when the page it loaded is built -- callbacks, not timers</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/962\" target=\"_blank\" rel=\"noopener\">#962</a>",
+          "issues": [
+            962
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.0",
       "date": "2026-09-29",
       "summary": "The first public release. Everything before it was 4.x and earlier development. From here on, every push to the site is a numbered release, and this page says what is in it.",

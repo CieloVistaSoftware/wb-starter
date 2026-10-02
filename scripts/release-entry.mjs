@@ -30,6 +30,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { nextVersion } from './lib/next-version.mjs';
+import { itemFor } from './lib/release-item.mjs';
 
 const NUL = String.fromCharCode(0);
 const US = String.fromCharCode(31);
@@ -60,27 +61,6 @@ const commits = git(`git log ${range} --no-merges --pretty=format:%H%x1f%s%x00`)
   // already listed, and would otherwise appear as a second, vaguer entry.
   .filter((c) => !/^release: /.test(c.subject))
   .filter((c) => !/^[a-z]+(\([^)]*\))?!?:\s*CI on [0-9a-f]{7,}\b/.test(c.subject));
-
-const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
-  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-));
-const ISSUE_URL = 'https://github.com/CieloVistaSoftware/wb-starter/issues/';
-
-function itemFor(subject) {
-  const breaking = /^[a-z]+(\([^)]*\))?!:/.test(subject) || /^BREAKING/.test(subject);
-  const kind = /^feat(\([^)]*\))?!?:/.test(subject) ? 'added'
-    : /^fix(\([^)]*\))?!?:/.test(subject) ? 'fixed' : 'changed';
-  // Issue refs are dropped from the prose and appended as real links below: a
-  // bare "#1182" is a string, not a reference (RELEASE-PROCESS.md rule 5).
-  const text = subject.replace(/^[a-z]+(\([^)]*\))?!?:\s*/, '')
-    .replace(/\s*\((?:#\d+[,\s/]*)+\)|\s*#\d+\b/g, '').trim();
-  const issues = [...new Set((subject.match(/#(\d{2,5})/g) || []).map((m) => Number(m.slice(1))))];
-  const links = issues.map((n) => `<a href="${ISSUE_URL}${n}" target="_blank" rel="noopener">#${n}</a>`).join(' ');
-  const item = { kind, html: `<strong>${esc(text.charAt(0).toUpperCase() + text.slice(1))}</strong>${links ? ' ' + links : ''}` };
-  if (breaking) item.breaking = true;
-  if (issues.length) item.issues = issues;
-  return item;
-}
 
 const data = JSON.parse(fs.readFileSync(DATA, 'utf8'));
 const items = commits.map((c) => itemFor(c.subject));
