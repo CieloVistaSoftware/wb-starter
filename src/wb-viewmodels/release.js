@@ -99,22 +99,13 @@ export function release(element, options = {}) {
   // progress. It stays a warning.
   const versionText = shownVersion;
 
-  // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
-  // origin/main · dirty" -- made the badge wide enough to wrap the whole site
-  // header onto a second line, pushing the control strip over the sidebar. A
-  // badge is a glance, not a sentence: the marks are symbols, the sentence
-  // lives in the tooltip below.
-  const marks = [];
-  if (behind) marks.push('⚠');
-  // `*` = uncommitted local edits: John's "release-modification format" (see
-  // behaviors-header-controls-aligned.spec.ts). The words are in the tooltip.
-  if (VERSION.dirty) marks.push('*');
-  const drift = marks.length ? ' ' + marks.join('') : '';
-
+  // Numbers only. John, 2026-10-02, on "v1.0.0 ⚠*": "What the hell are these
+  // markings? I told you i only want numbers." The badge is the version and
+  // nothing else; behind/edited live in the tooltip below, in words.
   element.textContent = config.format
     .replace('{version}', versionText)
     .replace('{commit}', VERSION.commit)
-    .replace('{built}', formatBuiltAtCentral(VERSION.builtAt)) + drift;
+    .replace('{built}', formatBuiltAtCentral(VERSION.builtAt));
 
   // Behind is the one that misleads, so make it impossible to read past.
   element.classList.toggle('x-release--stale', behind > 0);

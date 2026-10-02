@@ -90,7 +90,7 @@ release or push) with one line, in this order, in these words:
 > **main** = v1.0.N · **live site** = v1.0.N · **PR #NNNN** = M commits on top of main, not merged · **your local** = what John's badge shows (when known)
 
 - **The number is the badge's number**: the last tag's patch plus the commits since it (`git describe --tags --match "v[0-9]*" --long` → `v1.0.0-41-g…` = `v1.0.41`). Same commit, same number, everywhere.
-- `*` after the number = uncommitted local edits; `⚠` = behind GitHub.
+- The badge is the number only, no marks (John: "I only want numbers"). Behind GitHub or local edits are said in its tooltip.
 - Get the numbers from git (`git describe --tags --match "v[0-9]*"`, `git rev-list --count tag..origin/main`), never from memory.
 
 ## Filing an Issue — every time, no exceptions

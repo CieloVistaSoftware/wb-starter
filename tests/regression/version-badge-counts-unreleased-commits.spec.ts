@@ -55,10 +55,11 @@ test('the release comes from the tag, not package.json', async ({ page }) => {
   await expect(badge).toHaveText('v1.0.0');
 });
 
-// Local edits keep John's compact mark (`*`, "release-modification format",
-// behaviors-header-controls-aligned.spec.ts); the tooltip says it in words.
-test('uncommitted edits are marked', async ({ page }) => {
-  const badge = await badgeFor(page, 0, { release: '1.0.0', sinceRelease: 41, dirty: true });
-  await expect(badge).toHaveText('v1.0.41 *');
+// Numbers only (John: "I told you i only want numbers"): local edits and
+// being behind GitHub never add marks to the badge; the tooltip says it.
+test('local edits and being behind add no marks: the badge is the number only', async ({ page }) => {
+  const badge = await badgeFor(page, 0, { release: '1.0.0', sinceRelease: 41, dirty: true, behind: 3 });
+  await expect(badge).toHaveText('v1.0.41');
   await expect(badge).toHaveAttribute('title', /not 1\.0\.41 as committed/);
+  await expect(badge).toHaveAttribute('title', /3 commits behind/);
 });
