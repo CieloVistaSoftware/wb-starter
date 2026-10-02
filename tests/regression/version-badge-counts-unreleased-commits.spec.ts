@@ -59,8 +59,10 @@ test('the release name comes from the tag, not package.json', async ({ page }) =
   await expect(badge).toHaveText('v1.0.0');
 });
 
-test('uncommitted edits are spelled out, never shown as the bare release', async ({ page }) => {
+// Local edits keep John's compact mark (`*`, "release-modification format",
+// behaviors-header-controls-aligned.spec.ts); the tooltip says it in words.
+test('uncommitted edits are marked, never shown as the bare release', async ({ page }) => {
   const badge = await badgeFor(page, 0, { release: '1.0.0', sinceRelease: 0, dirty: true });
-  await expect(badge).toHaveText('v1.0.0 · edited');
+  await expect(badge).toHaveText('v1.0.0 *');
   await expect(badge).toHaveAttribute('title', /not release 1\.0\.0 as tagged/);
 });

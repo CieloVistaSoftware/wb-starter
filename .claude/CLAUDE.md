@@ -90,7 +90,7 @@ release or push) with one line, in this order, in these words:
 > **Release vX.Y.Z** (tagged MM-DD) · **main** = vX.Y.Z +N (not released) · **live site** = … · **PR #NNNN** = +M on main, not merged · **your local** = what John's badge shows (when known)
 
 - **"Release" means a GitHub tag `vX.Y.Z`, nothing else.** Merged-but-untagged code is "main, not released". Never call `+N` code by the bare release number.
-- **Distances are commits since the tag**, exactly as the version badge counts them (`v1.0.0 +41`, `· edited` for local changes), so what Claude says and what John's badge shows always match.
+- **Distances are commits since the tag**, exactly as the version badge counts them (`v1.0.0 +41`, `*` for local edits), so what Claude says and what John's badge shows always match.
 - Get the numbers from git (`git describe --tags --match "v[0-9]*"`, `git rev-list --count tag..origin/main`), never from memory.
 
 ## Filing an Issue — every time, no exceptions

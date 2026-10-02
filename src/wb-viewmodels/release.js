@@ -99,12 +99,7 @@ export function release(element, options = {}) {
   // BEHIND is not expressed this way on purpose. Being behind does not make a
   // newer build; it makes a STALE one, and rolling it into the number would
   // read as progress. It stays a warning.
-  //
-  // Uncommitted edits are spelled out, not a `*` (#1243): the served files are
-  // then no commit at all, let alone the release, and on 2026-10-01 "v1.0.0 ⚠*"
-  // served a behavior doc that v1.0.0 does not contain. "edited" fits a glance.
-  const versionText = (ahead ? `${releaseName} +${ahead}` : releaseName)
-    + (VERSION.dirty ? ' · edited' : '');
+  const versionText = ahead ? `${releaseName} +${ahead}` : releaseName;
 
   // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
   // origin/main · dirty" -- made the badge wide enough to wrap the whole site
@@ -113,6 +108,9 @@ export function release(element, options = {}) {
   // lives in the tooltip below.
   const marks = [];
   if (behind) marks.push('⚠');
+  // `*` = uncommitted local edits: John's "release-modification format" (see
+  // behaviors-header-controls-aligned.spec.ts). The words are in the tooltip.
+  if (VERSION.dirty) marks.push('*');
   const drift = marks.length ? ' ' + marks.join('') : '';
 
   element.textContent = config.format
