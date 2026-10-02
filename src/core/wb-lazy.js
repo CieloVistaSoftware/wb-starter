@@ -568,8 +568,41 @@ function firstReportFor(target) {
     const promise = new Promise((r) => { resolve = r; });
     entry = { promise, resolve, reported: false };
     lazyFirstReport.set(target, entry);
+    watchForRemoval(target, entry);
   }
   return entry;
+}
+
+// #1246: a target removed from the document before the observer's first
+// report on it is not work in flight -- it can never be shown. On Windows CI
+// Chromium sometimes never delivers that report (the diagnostics read
+// "progress (awaiting viewport)" pending with no progress element left in the
+// stage), so settled() waited out its deadline on an element that no longer
+// existed. One MutationObserver, live only while a first report is awaited,
+// settles such a target the moment it leaves the document.
+const awaitingFirstReport = new Map();
+let removalObserver = null;
+function watchForRemoval(target, entry) {
+  awaitingFirstReport.set(target, entry);
+  entry.promise.then(() => forgetAwaiting(target));
+  if (!removalObserver && typeof MutationObserver === 'function') {
+    removalObserver = new MutationObserver(() => {
+      awaitingFirstReport.forEach((pending, node) => {
+        if (node.isConnected) return;
+        pending.reported = true;
+        pending.resolve();
+        forgetAwaiting(node);
+      });
+    });
+    removalObserver.observe(document, { childList: true, subtree: true });
+  }
+}
+function forgetAwaiting(target) {
+  awaitingFirstReport.delete(target);
+  if (!awaitingFirstReport.size && removalObserver) {
+    removalObserver.disconnect();
+    removalObserver = null;
+  }
 }
 
 /**
