@@ -76,7 +76,8 @@ npm_test_async(filter: "tests/behaviors/badge.spec.ts")    # single spec
 
 ## Commits, CI and Releases
 
-- **Commit hook:** fast checks only (~30s) that CI does not run — version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright on commit.
+- **Commit hook:** fast checks only (~30s) that CI does not run — lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright on commit.
+- **Version stamp:** written only by the stamp workflow on main (and by `npm start` locally), never by a commit -- so PRs do not conflict on `src/core/version.js`.
 - **PR CI:** `ci-tests.yml` runs one Playwright check per category on windows-latest, plus "Gate scripts self-test". Information, not a merge gate.
 - **No full suite during the day.** Run single specs or a filtered category for the work at hand. The full suite runs in **Nightly** after "park".
 - **The live site serves `main`**, so a merge is live within minutes. The version badge shows `1.0.<pushes to main since the last tag>`, e.g. `v1.0.92`; every version is on the Releases page with what it contains.
@@ -101,6 +102,15 @@ saying we didn't tell you what to do?" The rules exist; read them before filing.
 1. **Signature block** per `docs/standards/ISSUE-SIGNATURE-BLOCK.md`: `kind` (one of the six), `subject`, `observed`, `expected`; `detect` + dated `evidence` when computable; `related` when a family exists. Never `status`/`state`/`shipped`/`released`/`commit`.
 2. **Exactly one priority label**, `priority:1`–`priority:5` (Tier-1 Law 15).
 3. **After filing, validate**: parse the posted body with `parseSignature()` from `scripts/lib/signature-schema.mjs` (or `node scripts/check-issue-signatures.mjs --number N`) and fix anything it reports before moving on.
+
+## Working on an issue — John can always see what it is
+
+John, 2026-10-02: "I should be able to see what you are working on at all times
+via our issues view."
+
+1. **Before starting** work on an issue, put the `status:in-progress` label on it. The Issues page's **In Progress** tab shows exactly those issues.
+2. **No work without an issue.** A request with no issue gets one filed first (with its Signature block), then labelled.
+3. **When the fix merges** (or the work stops), take the label off. Closing via `Fixes #N` closes it; remove the label anyway so the tab stays truthful.
 
 ## Merging — Claude merges when the tests say so
 

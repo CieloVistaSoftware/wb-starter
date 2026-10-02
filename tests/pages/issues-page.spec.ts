@@ -29,6 +29,16 @@ test.describe('Issues page', () => {
             body: '',
           },
           {
+            // priority:1 alone is NOT active work (John, 2026-10-02): only
+            // status:in-progress marks what is being worked on right now.
+            number: 515,
+            title: 'Important but untouched',
+            state: 'open',
+            created_at: '2026-07-15T00:00:00Z',
+            labels: [{ name: 'priority:1', color: 'b60205' }],
+            body: '',
+          },
+          {
             number: 516,
             title: 'Completed job',
             state: 'closed',
@@ -60,7 +70,8 @@ test.describe('Issues page', () => {
     ).toBeAttached({ timeout: 10000 });
 
     // Derived from the fixture (one open issue labelled status:in-progress),
-    // not remembered. The page counts status:in-progress OR priority:1.
+    // not remembered. Only status:in-progress counts; the open priority:1
+    // issue (#515) must not.
     await expect(page.locator('#issues-active')).toHaveText('Current Active: 1');
   });
 });
