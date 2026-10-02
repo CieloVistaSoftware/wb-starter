@@ -128,11 +128,24 @@ export function release(element, options = {}) {
   // nobody would guess from a version number; it moves to right-click so it is
   // still there without occupying the obvious gesture.
   element.classList.add('x-release--clickable');
-  onClick = (e) => {
+  // John, 2026-10-02: "make pressing this button first get the latest code
+  // before reloading." On port 3000 the local server fetches main
+  // (POST api/update-to-latest; fast-forward only, never touches local edits).
+  // On the live site there is no such endpoint -- the site already IS main --
+  // so the request just fails and the page reloads with the newest files.
+  // Releases stays one click away in the menu.
+  onClick = async (e) => {
     e.preventDefault();
+    element.textContent = '⏳';
     const root = location.pathname.replace(/[^/]*$/, '');
-    // What's New became Releases for 1.0; open the entry for this version.
-    location.href = root + '?page=releases#release-' + String(VERSION.version || '').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    try {
+      const res = await fetch(root + 'api/update-to-latest', { method: 'POST' });
+      if (res.ok) {
+        const { message } = await res.json();
+        if (message) console.info(`[version] ${message}`);
+      }
+    } catch { /* the live site has no endpoint: just reload */ }
+    await clearCacheAndReload();
   };
   element.addEventListener('click', onClick);
 
