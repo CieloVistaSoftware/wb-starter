@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.102",
+      "date": "2026-10-02",
+      "summary": "Two more checks stop treating wb-*/data-wb as current (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1271\" target=\"_blank\" rel=\"noopener\">PR 1271</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Two more checks stop treating &lt;wb-*&gt;/data-wb as current</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
+          "issues": [
+            1144
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.101",
       "date": "2026-10-02",
       "summary": "Px creep fix; release-versions explains a missing base (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1270\" target=\"_blank\" rel=\"noopener\">PR 1270</a>)",
