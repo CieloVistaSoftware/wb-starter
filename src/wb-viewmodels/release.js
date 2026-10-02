@@ -81,7 +81,15 @@ export function release(element, options = {}) {
   // means "this IS the code set the number names", which is the only way the
   // number is worth reading.
   const behind = Number(VERSION.behind || 0);
-  const ahead = Number(VERSION.ahead || 0);
+
+  // #1243 -- John: the badge "must always represent the proper release it
+  // displays". The release and the commits past it come from the release TAG
+  // (stamp-version.js: `release`, `sinceRelease`), not from package.json and the
+  // upstream: a checkout level with origin/main but 12 commits past v1.0.0 used
+  // to read a bare "v1.0.0". An older stamp without the tag fields falls back to
+  // the previous meaning rather than to nothing.
+  const releaseName = VERSION.release || VERSION.version;
+  const ahead = Number.isInteger(VERSION.sinceRelease) ? VERSION.sinceRelease : Number(VERSION.ahead || 0);
 
   // #1139 -- John, 2026-09-28: "i can't figure out what's going on" with
   // v4.0.5.23. A fourth segment reads as a release that does not exist -- no
@@ -91,7 +99,12 @@ export function release(element, options = {}) {
   // BEHIND is not expressed this way on purpose. Being behind does not make a
   // newer build; it makes a STALE one, and rolling it into the number would
   // read as progress. It stays a warning.
-  const versionText = ahead ? `${VERSION.version} +${ahead}` : VERSION.version;
+  //
+  // Uncommitted edits are spelled out, not a `*` (#1243): the served files are
+  // then no commit at all, let alone the release, and on 2026-10-01 "v1.0.0 ⚠*"
+  // served a behavior doc that v1.0.0 does not contain. "edited" fits a glance.
+  const versionText = (ahead ? `${releaseName} +${ahead}` : releaseName)
+    + (VERSION.dirty ? ' · edited' : '');
 
   // Compact by design. Spelling the drift out in full -- "v4.0.1.7 ⚠ 1 behind
   // origin/main · dirty" -- made the badge wide enough to wrap the whole site
@@ -100,7 +113,6 @@ export function release(element, options = {}) {
   // lives in the tooltip below.
   const marks = [];
   if (behind) marks.push('⚠');
-  if (VERSION.dirty) marks.push('*');
   const drift = marks.length ? ' ' + marks.join('') : '';
 
   element.textContent = config.format
@@ -112,10 +124,10 @@ export function release(element, options = {}) {
   element.classList.toggle('x-release--stale', behind > 0);
 
   element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
-    + (ahead ? ` · ${ahead} unreleased commit${ahead === 1 ? '' : 's'} past release ${VERSION.version}` : '')
+    + (ahead ? ` · ${ahead} unreleased commit${ahead === 1 ? '' : 's'} past release ${releaseName}` : '')
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
-    + (VERSION.dirty ? ' · uncommitted changes' : '')
+    + (VERSION.dirty ? ` · uncommitted local edits — these files are not release ${releaseName} as tagged` : '')
     + (config.reload ? ' — tap to clear cache and reload' : '');
 
   let onClick = null;

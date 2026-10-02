@@ -111,7 +111,23 @@ function drift() {
     behind = b || 0;
   }
 
-  return { branch, dirty, ahead, behind, upstream };
+  // #1243 -- THE RELEASE THE BADGE NAMES, counted from its TAG.
+  //
+  // John: "it must always represent the proper release it displays" -- "it's
+  // the only way we stay in sync". `ahead` above is commits ahead of the
+  // UPSTREAM, not past the release, so a checkout level with origin/main but 12
+  // commits past v1.0.0 stamped ahead=0 and the badge read a bare "v1.0.0" for
+  // code that is not 1.0.0. The release and the distance from it come from the
+  // tag itself: `v1.0.0-12-gabc1234` -> release 1.0.0, 12 commits past it.
+  // Double-quoted pattern: it must survive cmd.exe and sh alike, and an
+  // unquoted v* would glob to the repo's `vscode/` folder under sh.
+  let release = null;
+  let sinceRelease = null;
+  const described = git('git describe --tags --match "v[0-9]*" --long');
+  const m = described.match(/^v(.+)-(\d+)-g[0-9a-f]+$/);
+  if (m) { release = m[1]; sinceRelease = Number(m[2]); }
+
+  return { branch, dirty, ahead, behind, upstream, release, sinceRelease };
 }
 
 const tree = drift();
