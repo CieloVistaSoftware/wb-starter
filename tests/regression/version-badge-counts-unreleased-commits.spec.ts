@@ -30,7 +30,7 @@ async function badgeFor(page: import('@playwright/test').Page, ahead: number, ex
 test('41 commits past the v1.0.0 tag reads "v1.0.41"', async ({ page }) => {
   const badge = await badgeFor(page, 0, { release: '1.0.0', sinceRelease: 41, version: '1.0.0' });
   await expect(badge).toHaveText('v1.0.41');
-  await expect(badge).toHaveAttribute('title', /41 pushes to main since the v1\.0\.0 tag/);
+  await expect(badge).toHaveAttribute('title', /41 pushes to main since v1\.0\.0/);
 });
 
 test('on the tag itself the badge is the release', async ({ page }) => {
