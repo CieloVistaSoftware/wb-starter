@@ -173,6 +173,15 @@ jobs:
       # next push, which is why this went unnoticed for days. A step timeout
       # says which step ran out of time, and leaves the report + artifact steps
       # enough of the job budget to still upload the evidence.
+      # #1272: the regression run found the repo SHALLOW although checkout
+      # fetched full history. These two probes say when it changes.
+      - name: "Probe #1272 — history before the run"
+        if: always()
+        shell: bash
+        run: |
+          echo "shallow: $(git rev-parse --is-shallow-repository)  commits: $(git rev-list --count HEAD)  tags: $(git tag | wc -l)"
+          ls -la .git/shallow 2>/dev/null || echo "no .git/shallow"
+
       - name: Gate — no NEW failures vs the register (${{ matrix.project }})
         if: matrix.gated
         timeout-minutes: 45
@@ -209,6 +218,14 @@ jobs:
       # data/test-results/ — failures.json and the per-project JSON that
       # issue-state.mjs already treats as the record. Upload what actually
       # exists.
+      - name: "Probe #1272 — history after the run"
+        if: always()
+        shell: bash
+        run: |
+          echo "shallow: $(git rev-parse --is-shallow-repository)  commits: $(git rev-list --count HEAD)  tags: $(git tag | wc -l)"
+          ls -la .git/shallow 2>/dev/null && head -3 .git/shallow || echo "no .git/shallow"
+          git reflog -n 5 2>/dev/null || true
+
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
