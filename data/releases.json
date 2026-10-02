@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.105",
+      "date": "2026-10-02",
+      "summary": "Featured marker colour by role; x-clock crash + timer leak (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1275\" target=\"_blank\" rel=\"noopener\">PR 1275</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/998\" target=\"_blank\" rel=\"noopener\">#998</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1229\" target=\"_blank\" rel=\"noopener\">#1229</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-clock normalizes its variant and stops its own timer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1229\" target=\"_blank\" rel=\"noopener\">#1229</a>",
+          "issues": [
+            1229
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Featured marker colour by theme role (featuredTone); never yellow by accident</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/998\" target=\"_blank\" rel=\"noopener\">#998</a>",
+          "issues": [
+            998
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.104",
       "date": "2026-10-02",
       "summary": "Finish — no test teaches or credits retired wb-*/data-wb (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1274\" target=\"_blank\" rel=\"noopener\">PR 1274</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1144\" target=\"_blank\" rel=\"noopener\">#1144</a>",
