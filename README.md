@@ -99,13 +99,14 @@ nothing overflows a 375px phone screen.
 
 **Gates that cannot be talked past.**
 
-- **Pre-commit gate.** Every commit runs the test ratchet, and a commit that
-  introduces a new failure is refused.
+- **Nightly release gate.** The full suite runs on `main` every night. A
+  release is cut, and the site deployed, only if no new failure appears; a
+  new failure files an issue instead. Commits run fast checks only.
 - **Known-failures register.** Existing failures are tracked in a register
   that is only allowed to shrink. It is being driven to zero.
 - **Lint ratchet.** The lint baseline can only go down.
-- **CI on Windows.** CI runs the same gate on Windows, the platform the site
-  is built and shipped from.
+- **CI on Windows.** Every PR runs one Playwright check per category on
+  Windows, the platform the site is built and shipped from.
 - **Issue signatures.** Every defect is filed as an issue with a
   machine-readable signature (what was observed, what was expected, a command
   that detects it, the test that proves the fix), so a solved problem becomes

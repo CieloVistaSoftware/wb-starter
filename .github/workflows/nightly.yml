@@ -1,0 +1,186 @@
+name: Nightly
+
+# John, 2026-10-02: "no full test run until the end of the day when i say park,
+# then when I get up the next morning we have a new release".
+#
+# During the day nothing runs the full suite locally (the commit hook is fast
+# checks only) and a push to main is not a release. At the end of the day,
+# "park" starts this workflow (Claude runs `gh workflow run nightly.yml --ref
+# main`); the schedule is the backup for a day that ended without "park".
+#
+#   changes  main's HEAD already a v* release?  -> nothing new, stop.
+#   tests    the full suite: ci-tests.yml itself (one definition, not a copy),
+#            every category through the ratchet, plus the gate self-tests.
+#   release  every category passed -> ship.mjs: What's New entry, version bump,
+#            release commit + tag, pushed to main.
+#   publish  release.yml: tag / GitHub release / npm for the release commit.
+#   deploy   the site goes live from the release tag (GitHub Pages, source =
+#            GitHub Actions). The site changes only when a release is cut.
+#   report   tests failed -> no release; one issue says which categories.
+#
+# In the morning: "vX.Y.Z released", or the issue saying why not.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 08:00 UTC = 2am CST (3am CDT). GitHub schedules are UTC only.
+    - cron: '0 8 * * *'
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Anything new since the last release?
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.c.outputs.sha }}
+      run: ${{ steps.c.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - id: c
+        run: |
+          git fetch --tags --force
+          sha=$(git rev-parse HEAD)
+          echo "sha=${sha}" >> "$GITHUB_OUTPUT"
+          tag=$(git tag --points-at HEAD --list 'v*' | head -1)
+          if [ -n "${tag}" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "main (${sha:0:8}) is already release ${tag}: nothing new since the last release, so no run."
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "main (${sha:0:8}) has commits past the last release: running the full suite."
+          fi
+
+  tests:
+    name: Full suite
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
+    uses: ./.github/workflows/ci-tests.yml
+    permissions:
+      contents: read
+
+  release:
+    name: Cut the release
+    needs: [changes, tests]
+    if: needs.changes.outputs.run == 'true' && needs.tests.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # Release only what was tested. If main moved during the run, tonight's
+      # verdict is about a commit that is no longer HEAD; tomorrow's run covers it.
+      - name: main is still the commit that was tested
+        run: |
+          now=$(git rev-parse HEAD)
+          if [ "${now}" != "${{ needs.changes.outputs.sha }}" ]; then
+            echo "::error::main moved from ${{ needs.changes.outputs.sha }} to ${now} during the run. No release tonight; the next run tests the new HEAD."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --tags --force
+
+      # WB_RELEASE_TESTED_SHA: release.mjs skips its own full-suite gate when it
+      # names HEAD, because the tests job above just ran that suite on this commit.
+      - name: Ship
+        env:
+          WB_RELEASE_TESTED_SHA: ${{ needs.changes.outputs.sha }}
+        run: node scripts/ship.mjs
+
+  publish:
+    name: Tag, GitHub release, npm
+    needs: [changes, tests, release]
+    # Also after a failed ship: release.yml tags any release commit that has no
+    # tag (by API when a git push of the tag is refused), so it can finish a
+    # release whose push of main succeeded but whose tag push did not.
+    if: always() && needs.changes.outputs.run == 'true' && needs.tests.result == 'success'
+    uses: ./.github/workflows/release.yml
+    permissions:
+      contents: write
+    secrets: inherit
+
+  deploy:
+    name: Deploy the site
+    needs: [changes, tests, publish]
+    if: always() && needs.changes.outputs.run == 'true' && needs.publish.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # The site is the latest release, never untagged work on main.
+      - name: Check out the latest release
+        run: |
+          git fetch --tags --force
+          tag=$(git tag --list 'v*' --sort=-v:refname | head -1)
+          git checkout --quiet "${tag}"
+          echo "Deploying ${tag} ($(git rev-parse --short HEAD))"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  report:
+    name: No release tonight
+    needs: [changes, tests]
+    if: always() && needs.changes.outputs.run == 'true' && needs.tests.result != 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      # Law 15: every issue carries exactly one priority label.
+      - name: File one issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          run_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          today=$(date -u +%Y-%m-%d)
+          printf '%s\n' \
+            "The nightly full suite did not pass on main (\`${{ needs.changes.outputs.sha }}\`), so no release was cut." \
+            "" \
+            "- Run: ${run_url}" \
+            "- Result of the tests job: \`${{ needs.tests.result }}\`" \
+            "" \
+            "Each failed category is its own red check in the run, and its log names the NEW failures (failures already in data/test-baseline-failures.json do not count)." \
+            "" \
+            "Fix them and say \"park\" again, or let tonight's run retry." > body.md
+          gh issue create --repo "${{ github.repository }}" \
+            --title "Nightly ${today}: no release — new test failures" \
+            --label "priority:2" --body-file body.md

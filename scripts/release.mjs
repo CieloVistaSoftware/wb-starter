@@ -32,7 +32,6 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { nextVersion } from './lib/next-version.mjs';
-import { resetFullRunCounter } from './lib/full-run-counter.mjs';
 import { isNoVerdict } from './lib/gate-exit.mjs';
 import { gateBounds, withMachine, runBounded, reportBusy } from './lib/hold-machine.mjs';
 
@@ -73,7 +72,19 @@ console.log(`\n📦 Release: ${pkg.version} → ${next}\n`);
 // (#1128). It used to be a bare execSync: no machine-wide lock, so a release
 // suite ran beside any other run on the box and fought it for memory and ports
 // (Tier-1 Law 4, #1072); and no timeout, so a wedged run held the release
-// forever. Same lock and same bounds as the 10th-commit gate, from one place.
+// forever.
+//
+// NIGHTLY (2026-10-02): .github/workflows/nightly.yml runs this same ratchet,
+// one job per category, on the exact commit it then releases, and only calls
+// ship.mjs when every category passed. It says so with WB_RELEASE_TESTED_SHA.
+// When that names HEAD, running the whole suite again here would measure the
+// same tree twice, so it is skipped. Any other value (or none) runs it as before.
+let headSha = '';
+try { headSha = execSync('git rev-parse HEAD', { cwd: ROOT, encoding: 'utf8' }).trim(); } catch { /* not a checkout */ }
+const nightlyTested = Boolean(headSha) && process.env.WB_RELEASE_TESTED_SHA === headSha;
+if (nightlyTested) {
+  console.log(`🔒 Gate 1 — skipped: the nightly run already passed the full suite on ${headSha.slice(0, 8)}\n`);
+} else {
 console.log('🔒 Gate 1 — no NEW failures vs the register (compliance + regression + behaviors + schema-viewer)\n');
 const { suiteMs, lockWaitMs } = gateBounds();
 const ratchet = await withMachine(
@@ -121,26 +132,6 @@ if (ratchet.result.status === 0) {
       '   or fix the failure. Both leave a trail; a bypass does not.'
   );
 }
-
-// That was the same full ratchet the 10th-commit hook runs, so it counts as the
-// hook's full run too (#1178). Without this, a release commit landing on the
-// 10th count ran all ~7,800 tests a second time on the batch just tested.
-// Outside the try: a failure to write the counter is not "NEW failures".
-//
-// And never fatal. The counter is an optimisation — the worst case without it is
-// a commit rerunning the suite — so a release that has just passed its ratchet
-// must not abort because a file could not be written. It did, and twice over:
-// the #991 fixture runs release.mjs in a plain temp directory where git
-// rev-parse fails, which the ratchet scored as a NEW failure and which aborted
-// the 4.0.6 release; and #1128's release guard runs a copy of this script
-// outside any repository, where the throw (git's status 128) took the whole
-// release down with it.
-try {
-  resetFullRunCounter(ROOT);
-  console.log('   ✓ 10th-commit counter reset — the release commit will not rerun the suite');
-} catch (err) {
-  console.warn(`   ⚠ could not reset the 10th-commit counter (${err.message.split('\n')[0]})`);
-  console.warn('     Harmless: the release commit may run the full suite again (#1178).');
 }
 
 // ── 2. The Releases page must name the version being released ─────────────────

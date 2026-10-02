@@ -54,10 +54,16 @@ Baselines **only ever shrink**. A repaired test is removed automatically so it
 can never rot again. Never raise a ceiling to make a build pass — that is the
 moment the gate stops meaning anything.
 
-The pre-commit hook runs lint on **every** commit and the test ratchet on every
-**10th** (counter at `.git/wb-fix-count`, located by
-`scripts/lib/full-run-counter.mjs`). A passing `release.mjs` full run resets the
-counter too, so a release commit does not rerun the suite (#1178).
+Where each gate runs (since 2026-10-02):
+
+- **Commit hook** — fast checks only (~30s), none of which CI runs: version
+  stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks
+  check, staged control-byte check. No Playwright, no counter, no every-10th run.
+- **PR CI** (`.github/workflows/ci-tests.yml`) — one Playwright check per category
+  on windows-latest, plus the "Gate scripts self-test" job. Information, not a merge gate.
+- **Nightly** (`.github/workflows/nightly.yml`) — the full suite on `main` through
+  the test ratchet. No new failures → release + Pages deploy. New failures → no
+  release, one `priority:2` issue linking the run.
 
 ## Reading attributes in a behavior
 

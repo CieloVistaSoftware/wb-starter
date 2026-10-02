@@ -43,7 +43,8 @@ This concise runbook explains how to run tests locally, gather artifacts, and ho
 - When opening a PR for flaky or failing tests: attach `trace.zip` and include the failing test command in the PR description (see `CONTRIBUTING.md`).
 
 ## CI & GitHub Actions
-- Notable workflows: `.github/workflows/ci-compliance.yml`, `manual-compliance.yml`, `server-smoke.yml`.
+- When tests run (since 2026-10-02): the commit hook runs no Playwright (fast checks only). PRs run `.github/workflows/ci-tests.yml` (one check per category on windows-latest, plus "Gate scripts self-test") as information. The full suite runs only in `.github/workflows/nightly.yml`, triggered when John says "park" (backup 08:00 UTC); it releases and deploys if there are no new failures, otherwise files one `priority:2` issue.
+- Other workflows: `.github/workflows/ci-compliance.yml`, `manual-compliance.yml`, `server-smoke.yml`.
 - To run a manual dispatch with trace (GH CLI):
   - gh workflow run "Manual Compliance (dispatch)" -f ref=main -f tests="tests/compliance/that.spec.ts" -f trace=true
 
@@ -53,7 +54,7 @@ This concise runbook explains how to run tests locally, gather artifacts, and ho
 - Missing artifacts after CI: open the Actions run and download the `Artifacts` for the job that executed the tests.
 
 ## Best practices (developer)
-- Run `npm test` while developing; run `npm test -- --full` before pushing a large change.
+- Run `npm test` or the focused spec while developing. Leave the full suite to Nightly.
 - Create/attach a Playwright trace for flaky failures and reference it in the PR.
 - Add focused tests that run quickly and are stable; avoid adding slow end-to-end checks to the fast path.
 

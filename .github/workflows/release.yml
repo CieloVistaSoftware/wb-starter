@@ -1,16 +1,20 @@
 name: Release
 
 # Every "release: X.Y.Z" commit on main gets its tag, its GitHub release and its
-# npm packages, without a person doing it by hand (#1182). `npm run ship` makes
-# the release commit; this finishes the release. Nothing here depends on who
-# pushed: it runs on every push to main and fills in whatever is missing, so a
-# release the tagging missed (1.0.0, 4.0.6) is completed by the next push.
+# npm packages, without a person doing it by hand (#1182). `ship.mjs` makes the
+# release commit; this finishes the release, filling in whatever is missing, so
+# a release the tagging missed (1.0.0, 4.0.6) is completed by the next run.
+#
+# Since 2026-10-02 releases are nightly (John: "no full test run until the end
+# of the day when i say park, then when I get up the next morning we have a new
+# release"). nightly.yml calls this right after it pushes the release commit; it
+# no longer runs on every push to main, because a push to main is no longer a
+# release. workflow_dispatch stays for finishing a release by hand.
 #
 # Every step says what it did or why it did nothing -- never a silent skip.
 
 on:
-  push:
-    branches: [ main ]
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -26,9 +30,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # ref: main, not the triggering commit: when nightly.yml calls this, the
+      # run started on the commit BEFORE the release commit it just pushed, and
+      # the npm step reads the version from package.json in this checkout.
       - name: Checkout (full history, for the release commits)
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Use Node.js

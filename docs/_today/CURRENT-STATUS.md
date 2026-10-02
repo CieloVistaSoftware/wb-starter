@@ -2,6 +2,17 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-02.** Build process changed (John's decision).
+
+- Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.
+- PR CI (`ci-tests.yml`, one check per category + "Gate scripts self-test") is information.
+- **"park"** at end of day: update this parking lot, merge the day's finished PRs, trigger `nightly.yml`. Backup schedule 08:00 UTC.
+- Nightly: full suite on main vs the register. No new failures → release + Pages deploy. New failures → no release, one `priority:2` issue.
+- The site updates only on release (Pages source = GitHub Actions; John switches it in Settings → Pages). The pre-push rule (#1076) is gone. Badge shows `vX.Y.Z +N` for unreleased commits.
+- Morning: Claude reports "vX.Y.Z released" or "no release, these failed" with the issue.
+
+---
+
 **Updated 2026-10-01 (late night).** On branch `claude/nifty-darwin-8mf277`, added to PR #1238.
 
 **Task:** markdown link audit. John: "write a test that proves all links in all of our .md documents work, consider it an audit which 1) Identifies failures and the 2) Fixed them the tests are then rerun to prove things."

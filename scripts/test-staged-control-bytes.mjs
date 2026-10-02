@@ -165,10 +165,12 @@ console.log('\nline and column');
 console.log('\nwiring');
 {
   const hook = readFileSync(join(ROOT, '.husky', 'pre-commit'), 'utf8');
+  // The hook is fast checks only since 2026-10-02 (no Playwright, no full run),
+  // so "wired where it is fast" means: the hook runs it, and the hook runs no suite.
   const at = hook.indexOf('node scripts/check-staged-control-bytes.mjs || exit 1');
-  const gate = hook.indexOf('COUNT_FILE=');
-  check(at !== -1 && gate !== -1 && at < gate,
-    'pre-commit runs the check in its fast section, before the 10th-commit gate', `check at ${at}, gate at ${gate}`);
+  const suite = /playwright|test-ratchet|COUNT_FILE=/.test(hook.split('\n').filter((l) => !l.trim().startsWith('#')).join('\n'));
+  check(at !== -1 && !suite,
+    'pre-commit runs the check, and runs no test suite that could delay it', `check at ${at}, suite in hook: ${suite}`);
   const spec = readFileSync(join(ROOT, 'tests', 'compliance', 'no-control-characters-in-source.spec.ts'), 'utf8');
   check(spec.includes('scripts/lib/control-bytes.mjs') && !/const ROOTS = \[/.test(spec),
     'the compliance spec takes its rule from scripts/lib/control-bytes.mjs, with no second copy');

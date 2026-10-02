@@ -11,6 +11,26 @@ learn what was in it, and given a build no way to know its number was unique.
 
 ---
 
+## When a release happens (since 2026-10-02)
+
+Releases are cut by the **Nightly** workflow (`.github/workflows/nightly.yml`), never by hand
+during the day and never by a push.
+
+1. At end of day John says **"park"**. Claude updates the parking lot in
+   `docs/_today/CURRENT-STATUS.md`, merges the day's finished PRs, and triggers Nightly
+   (`workflow_dispatch`). Backup: Nightly is also scheduled at 08:00 UTC (2am CST) and
+   skips if `main`'s HEAD is already a tagged release.
+2. Nightly runs the full suite on `main` (all categories in parallel) through the ratchet
+   against the known-failures register.
+3. **No new failures** → `scripts/ship.mjs` writes the `data/releases.json` entry, bumps the
+   version, tags, creates the GitHub release and publishes to npm, and the site is deployed
+   to GitHub Pages from the released commit.
+4. **New failures** → no release. One issue is filed (`priority:2`) linking the run.
+5. In the morning Claude reports "vX.Y.Z released" or "no release, these failed" with the issue.
+
+The public site changes only on a release (Pages source = GitHub Actions). Between releases
+`main` moves freely; the version badge shows `vX.Y.Z +N` for unreleased commits.
+
 ## 1. One number per release, never per commit
 
 A release number changes **once, on `main`, when something is being released**. It does not
@@ -56,7 +76,7 @@ A release commit MUST contain, together, in one commit:
    what it added, fixed and changed
 
 Shipping any one of those without the others is the defect this document exists to prevent.
-`npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits
+`scripts/ship.mjs` (run by Nightly) does all three: `scripts/release-entry.mjs` writes the entry from the commits
 since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and
 `scripts/release.mjs` gate 2 refuses a release the file does not name.
 
@@ -108,6 +128,9 @@ used, the commit message says so and why.
 
 ## Release checklist
 
+Nightly does every step below. The list is what it does, and the order to follow if a release
+ever has to be cut by hand.
+
 - [ ] On `main`, up to date with `origin/main`
 - [ ] Pick the next number — above every number any branch has consumed (rule 6)
 - [ ] Bump `package.json` + `package-lock.json`
@@ -117,7 +140,7 @@ used, the commit message says so and why.
 - [ ] Confirm every version surface agrees: `package.json`, `package-lock.json`,
       `src/core/version.js`, `index.html`, the `data/releases.json` entry
 - [ ] One commit, all of it together
-- [ ] Push; watch CI to green
+- [ ] Push the commit and tag; deploy Pages from that commit; run `npm run test:smoke:deployed` (Law 17)
 
 ## Enforcement
 

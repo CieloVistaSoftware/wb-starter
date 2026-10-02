@@ -10,15 +10,17 @@
  * acquire from .husky/gate-staged-tree.mjs, or the watchdog from
  * .husky/test-ratchet.mjs, and every existing check stayed green.
  *
- * This drives the two real gate scripts, unmodified, against fixtures:
+ * This drives the real ratchet, unmodified, against a fixture:
  *
  *   RATCHET  .husky/test-ratchet.mjs is copied into a throwaway directory whose
  *            node_modules/@playwright/test/cli.js is a fake. The fake prints the
  *            per-test lines Playwright's REAL list reporter prints (the reporter
  *            is loaded from this repo's node_modules), or prints nothing.
- *   GATE     .husky/gate-staged-tree.mjs runs in a throwaway git repo whose
- *            staged .husky/test-ratchet.mjs is a stub that runs until told to
- *            stop, so the lock can be inspected while the "suite" is running.
+ *
+ * 2026-10-02: the commit hook no longer runs the suite (the 10th-commit gate,
+ * .husky/gate-staged-tree.mjs, is gone; the full suite runs in nightly.yml), so
+ * its cases went with it. The ratchet, which CI and nightly still run, and the
+ * release path keep theirs. This file now runs in CI, not in the commit hook.
  *
  * No Playwright run, no dev server, no browser. The real ~/.wb-starter lock is
  * never touched: every gate here gets its own WB_TEST_LOCK_DIR.
@@ -51,7 +53,7 @@
  * Run: npm run test:gate-guards
  */
 
-import { spawn, execFileSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { mkdtemp, rm, mkdir, copyFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -428,7 +430,7 @@ const remoteRefusedRun = () => ratchetCase(
   ]
 );
 
-// ─── GATE FIXTURE ──────────────────────────────────────────────────────────
+// ─── RATCHET STUBS (used by the release cases) ───────────────────────────────
 
 /** Stands in for the full suite: announces itself, runs until stdin closes. */
 const STUB_RATCHET = `
@@ -452,223 +454,12 @@ console.error('   Nothing was verified, so nothing is known.');
 process.exit(3);
 `;
 
-async function gateFixture(ratchet = STUB_RATCHET) {
-  const dir = await mkdtemp(join(tmpdir(), 'wb-gate-guard-gate-'));
-  const repo = join(dir, 'repo');
-  const lockDir = join(dir, 'locks');
-  await mkdir(join(repo, '.husky'), { recursive: true });
-  await mkdir(join(repo, 'scripts', 'lib'), { recursive: true });
-  await mkdir(lockDir, { recursive: true });
-  await copyFile(join(REPO, '.husky', 'gate-staged-tree.mjs'), join(repo, '.husky', 'gate-staged-tree.mjs'));
-  // Every scripts/lib/*.mjs, not a hand-listed few: the copied gate imports
-  // test-lock, suite-env and hold-machine, and a missing one fails every Gate
-  // case on ERR_MODULE_NOT_FOUND instead of on a verdict (#1161).
-  await copyLib(repo);
-  await writeFile(join(repo, '.husky', 'test-ratchet.mjs'), ratchet);
-  await writeFile(join(repo, 'package.json'), '{"type":"module"}\n');
-  await writeFile(join(repo, 'staged.txt'), 'one\n');
-
-  const git = (...args) => execFileSync('git',
-    ['-c', 'user.name=gate-guard', '-c', 'user.email=gate-guard@localhost', ...args],
-    { cwd: repo, env: cleanEnv(), stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8' });
-  git('init', '-q');
-  git('add', '-A');
-  git('commit', '-q', '-m', 'fixture');
-  await writeFile(join(repo, 'staged.txt'), 'two\n');
-  git('add', 'staged.txt');   // the gate skips when nothing is staged
-  return { dir, repo, lockDir, git };
-}
-
-async function gateCase(label, envExtra, body, ratchet) {
-  const fx = await gateFixture(ratchet);
-  try {
-    const guards = createGuards({ root: 'C:/elsewhere/arriving', globalDir: fx.lockDir, minFreeMb: 0 });
-    const launch = (boundMs) => start(join('.husky', 'gate-staged-tree.mjs'), {
-      cwd: fx.repo,
-      env: cleanEnv({ WB_TEST_LOCK_DIR: fx.lockDir, ...envExtra }),
-      boundMs,
-    });
-    return { label, results: await body({ fx, guards, launch }) };
-  } finally {
-    await rm(fx.dir, { recursive: true, force: true, maxRetries: 3 }).catch(() => {});
-  }
-}
-
-/** While the gate's suite runs, the machine is the gate's. */
-const gateHoldsTheMachine = () => gateCase(
-  'Gate: while its suite runs, the machine-wide lock is held and other runs are refused',
-  {},
-  async ({ guards, launch }) => {
-    const gate = launch(60_000);
-    const started = await gate.waitFor('STUB-RATCHET-STARTED', 20_000);
-    const checks = [['the gate reaches its suite', started, tail(gate.output())]];
-
-    const held = await guards.readLock();
-    checks.push(['the lock names the gate as holder',
-      !!held && held.pid === gate.child.pid && held.command === 'pre-commit gate',
-      `lock file: ${JSON.stringify(held)} (gate PID ${gate.child.pid})`]);
-
-    const slot = await guards.acquireSingleSlot('tests/arriving.spec.ts');
-    checks.push(['a single-spec run arriving now is refused', slot === null, `it was given ${slot}`]);
-    if (slot) await guards.releaseSlot(slot);
-
-    const denied = await guards.acquireSuiteLock(new Date().toISOString(), 'arriving suite');
-    checks.push(['a suite arriving now is refused', typeof denied === 'string', 'it was given the lock']);
-    if (denied === null) await guards.removeLock();
-
-    gate.child.stdin.end();
-    const r = await gate.exited;
-    checks.push(['the gate passes when its suite passes', r.code === 0 && !r.boundHit, `exit ${r.code}\n${tail(gate.output())}`]);
-    checks.push(['the lock is released when the gate ends', !existsSync(guards.lockFile), 'lock file still present']);
-    const after = await guards.acquireSingleSlot('tests/after.spec.ts');
-    checks.push(['a single-spec run is admitted afterwards', after !== null, 'still refused']);
-    return checks;
-  }
-);
-
-/**
- * The suite inherits none of the hook's git variables (#1160).
- *
- * Git hands GIT_DIR and GIT_INDEX_FILE to hooks. From a linked worktree GIT_DIR
- * is absolute, and a spec that builds its own throwaway repo then ran its git
- * commands against the real one: three every-push-to-main-is-a-release specs
- * failed "must be run in a work tree" and the gate blocked a commit. Set here
- * exactly as git sets them for a worktree hook: absolute, and correct for the
- * gate's OWN git commands, which must keep working.
- */
-const gateStripsHookGitEnv = async () => {
-  const label = "Gate: the suite inherits none of the hook's GIT_* variables (#1160)";
-  const fx = await gateFixture();
-  try {
-    const gate = start(join('.husky', 'gate-staged-tree.mjs'), {
-      cwd: fx.repo,
-      env: cleanEnv({
-        WB_TEST_LOCK_DIR: fx.lockDir,
-        GIT_DIR: join(fx.repo, '.git'),
-        GIT_INDEX_FILE: join(fx.repo, '.git', 'index'),
-      }),
-      boundMs: 60_000,
-    });
-    const started = await gate.waitFor('STUB-RATCHET-STARTED', 20_000);
-    const line = (gate.output().match(/STUB-GIT-ENV (\[.*\])/) || [])[1];
-    let seen = null;
-    try { seen = JSON.parse(line); } catch { /* stays null */ }
-    const checks = [
-      ['the gate reaches its suite with the hook variables set', started, tail(gate.output())],
-      ['the suite sees no GIT_* variable', Array.isArray(seen) && seen.length === 0, `the suite saw ${line}`],
-    ];
-    gate.child.stdin.end();
-    const r = await gate.exited;
-    checks.push(['the gate still passes (its own git commands kept the variables)', r.code === 0 && !r.boundHit,
-      `exit ${r.code}\n${tail(gate.output())}`]);
-    return { label, results: checks };
-  } finally {
-    await rm(fx.dir, { recursive: true, force: true, maxRetries: 3 }).catch(() => {});
-  }
-};
-
-/** A gate arriving on a busy machine waits for the release instead of colliding. */
-const gateWaitsForASingle = () => gateCase(
-  'Gate: arriving while a single-spec run holds the machine, it waits for the release',
-  {},
-  async ({ guards, launch }) => {
-    const slot = await guards.acquireSingleSlot('tests/already-running.spec.ts');
-    const gate = launch(60_000);
-    const waited = await gate.waitFor('the machine is busy', 20_000);
-    const checks = [
-      ['the gate reports it is waiting', waited, tail(gate.output())],
-      ['its suite does not start beside the single run', !gate.output().includes('STUB-RATCHET-STARTED'), tail(gate.output())],
-    ];
-
-    await guards.releaseSlot(slot);
-    const startedAfter = await gate.waitFor('STUB-RATCHET-STARTED', 20_000);
-    checks.push(['the release notifies it, and its suite starts', startedAfter, tail(gate.output())]);
-
-    gate.child.stdin.end();
-    const r = await gate.exited;
-    checks.push(['the gate finishes', r.code === 0 && !r.boundHit, `exit ${r.code}`]);
-    return checks;
-  }
-);
-
-/**
- * The outer bound fires, and the lock and the temp checkout go with it.
- *
- * The outer bound is defined as WB_GATE_TIMEOUT_MIN + 5 minutes, so the only
- * way to put it in seconds without a test-only knob is a negative override:
- * -4.875 + 5 = 0.125 minutes = 7.5 seconds.
- */
-const gateOuterBound = () => gateCase(
-  'Gate: a suite that never returns is killed at the outer bound, releasing the machine',
-  { WB_GATE_TIMEOUT_MIN: '-4.875' },
-  async ({ fx, guards, launch }) => {
-    const gate = launch(60_000);
-    const r = await gate.exited;   // stdin is never closed: the stub never ends
-    const worktrees = fx.git('worktree', 'list').split('\n').filter(Boolean);
-    return [
-      ['the gate returns on its own', !r.boundHit, `still running after ${r.ms}ms\n${tail(gate.output())}`],
-      ['it exits non-zero and says HANG', r.code === 1 && gate.output().includes('did not finish within'),
-        `exit ${r.code}\n${tail(gate.output())}`],
-      ['the lock is released on the timeout path', !existsSync(guards.lockFile), 'lock file still present'],
-      ['the staged-tree checkout is removed', worktrees.length === 1, worktrees.join('\n')],
-    ];
-  }
-);
-
-/**
- * The override the bound is tuned with must not break the gate. spawnSync
- * rejects a non-integer timeout, and (m + 5) * 60 * 1000 is not an integer for
- * 284 of the 1000 values 0.01..10.00 -- 0.01 among them -- so the gate died
- * with "failed to set up the staged-tree checkout" before running anything.
- */
-const gateFractionalOverride = () => gateCase(
-  'Gate: a fractional WB_GATE_TIMEOUT_MIN is a bound, not a crash',
-  { WB_GATE_TIMEOUT_MIN: '0.01' },
-  async ({ launch }) => {
-    const gate = launch(60_000);
-    const started = await gate.waitFor('STUB-RATCHET-STARTED', 20_000);
-    gate.child.stdin.end();
-    const r = await gate.exited;
-    return [
-      ['the gate reaches its suite', started, tail(gate.output())],
-      ['and passes', r.code === 0 && !r.boundHit, `exit ${r.code}\n${tail(gate.output())}`],
-    ];
-  }
-);
-
-/**
- * The WAIT for the machine ends too (#1128). A holder that is alive but stuck
- * never releases and never goes stale, so a gate that waits without a deadline
- * stalls the commit for as long as the holder stays stuck.
- */
-const gateWaitBound = () => gateCase(
-  'Gate: a holder that never releases does not stall the commit forever',
-  { WB_GATE_LOCK_WAIT_MIN: '0.05' },
-  async ({ guards, launch }) => {
-    await guards.acquireSuiteLock(new Date().toISOString(), 'stuck holder');
-    await guards.bindSuiteLock(process.pid, { command: 'stuck holder' });
-    const gate = launch(40_000);
-    const r = await gate.exited;
-    const held = await guards.readLock();
-    return [
-      ['the gate returns on its own', !r.boundHit, `still waiting after ${r.ms}ms\n${tail(gate.output())}`],
-      ['it exits non-zero, saying it gave up waiting', r.code === 1 && gate.output().includes('gave up waiting'),
-        `exit ${r.code}\n${tail(gate.output())}`],
-      ['its suite never starts beside the holder', !gate.output().includes('STUB-RATCHET-STARTED'), tail(gate.output())],
-      ["the holder's lock is left alone", !!held && held.pid === process.pid && held.command === 'stuck holder',
-        `lock file: ${JSON.stringify(held)}`],
-    ];
-  }
-);
-
-// ─── THE OTHER PLAYWRIGHT LAUNCHES ON THE COMMIT AND RELEASE PATH (#1128) ────
+// ─── THE OTHER PLAYWRIGHT LAUNCHES ON THE RELEASE PATH (#1128) ───────────────
 //
-// #1106 put the lock and the bounds on the 10th-commit gate. Three more
-// launches had neither: scripts/release.mjs (the full ratchet),
-// scripts/priority-gate.mjs (every commit, on a fixed port 3399), and the
-// project-integrity run at the end of .husky/pre-commit. Each is driven here,
-// unmodified, in a throwaway directory whose Playwright CLI is a fake and whose
-// lock dir is private.
+// scripts/release.mjs (the full ratchet) and scripts/priority-gate.mjs (run by
+// hand since 2026-10-02; it left the commit hook) are driven here, unmodified,
+// in a throwaway directory whose Playwright CLI is a fake and whose lock dir is
+// private. The commit hook itself no longer launches Playwright at all.
 
 /** Stands in for Playwright on a spec run: records what it was given, runs until stdin closes. */
 const FAKE_SPEC_CLI = `
@@ -889,34 +680,6 @@ const releaseNoVerdict = () => pathCase(
   }
 );
 
-/**
- * The commit gate carries the same distinction (#1181).
- *
- * gate-staged-tree.mjs collapsed every non-zero ratchet exit to 1 and said
- * 'The STAGED tree did not pass. This verdict is about the commit itself' --
- * sending someone to fix staged content over a run that compared nothing.
- *
- * It uses the gate fixture, not the path fixture: the gate needs a real git
- * repo with a staged tree, and without one it dies in `git diff` long before
- * it reaches the verdict this case is about.
- */
-const gateNoVerdict = () => gateCase(
-  'Commit gate: a ratchet that measured nothing is not a verdict on the staged tree (#1181)',
-  {},
-  async ({ launch }) => {
-    const gate = launch(60_000);
-    const r = await gate.exited;
-    const out = gate.output();
-    return [
-      ['the commit is blocked', r.code !== 0 && !r.boundHit, `exit ${r.code}\n${tail(out)}`],
-      ['the no-verdict code reaches the hook, not a flattened 1', r.code === NO_VERDICT_EXIT, `exit ${r.code}\n${tail(out)}`],
-      ['it does NOT say the staged tree failed', !/STAGED tree did not pass/.test(out), tail(out)],
-      ['it says nothing was measured', /NO VERDICT|Nothing was measured/i.test(out), tail(out)],
-    ];
-  },
-  STUB_RATCHET_NO_VERDICT,
-);
-
 const releaseBound = () => pathCase(
   'Release: a ratchet that never returns is killed at the bound, releasing the machine',
   releaseFiles(),
@@ -930,77 +693,6 @@ const releaseBound = () => pathCase(
         r.code === 1 && rel.output().includes('did not finish within') && !rel.output().includes('found NEW failures'),
         `exit ${r.code}\n${tail(rel.output())}`],
       ['the lock is released on the timeout path', !existsSync(join(fx.lockDir, 'test.lock')), 'lock file still present'],
-    ];
-  }
-);
-
-// ── .husky/pre-commit, project-integrity ──
-//
-// The hook is shell, so the guard runs the hook's OWN line: it is read out of
-// .husky/pre-commit, and `node` / `npx playwright` are pointed at this fixture.
-const DIRECT_PLAYWRIGHT = /\bnpx\s+playwright\b|@playwright[\\/]test[\\/]cli/;
-
-function integrityCommand() {
-  const lines = readFileSync(join(REPO, '.husky', 'pre-commit'), 'utf8')
-    .split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith('#'));
-  const direct = lines.filter((l) => DIRECT_PLAYWRIGHT.test(l));
-  const line = lines.find((l) => l.includes('project-integrity.spec.ts')) || null;
-  const tokens = line ? line.split(/\s*(?:\|\||&&|;)\s*/)[0].split(/\s+/) : [];
-  let script = null;
-  let args = [];
-  let viaFake = false;
-  if (tokens[0] === 'npx' && tokens[1] === 'playwright') { viaFake = true; args = tokens.slice(2); }
-  else if (tokens[0] === 'node' && tokens[1] && existsSync(join(REPO, tokens[1]))) { script = tokens[1]; args = tokens.slice(2); }
-  return { line, direct, script, args, viaFake };
-}
-
-const integrityCase = (label, envExtra, body) => {
-  const cmd = integrityCommand();
-  const files = {
-    'package.json': '{"type":"module"}\n',
-    'tests/compliance/project-integrity.spec.ts': '// fixture: never run -- the Playwright CLI here is a fake\n',
-  };
-  if (cmd.script) files[cmd.script] = COPY;
-  return pathCase(label, files, async ({ fx, guards, launch }) => {
-    if (!cmd.line || (!cmd.script && !cmd.viaFake)) {
-      return [['the project-integrity line in .husky/pre-commit is one this guard can run', false, cmd.line || '(no such line)']];
-    }
-    const run = launch(cmd.viaFake ? fx.fakeCli : cmd.script, { args: cmd.args, env: envExtra, boundMs: 60_000 });
-    return body({ fx, guards, run, cmd });
-  });
-};
-
-const integrityHoldsASlot = () => integrityCase(
-  'pre-commit project-integrity: while it runs it holds a slot',
-  {},
-  async ({ fx, guards, run, cmd }) => {
-    const checks = [
-      ['no line of .husky/pre-commit starts Playwright directly', cmd.direct.length === 0, cmd.direct.join('\n')],
-    ];
-    const started = await run.waitFor('FAKE-PW-STARTED', 20_000);
-    checks.push(['it reaches the spec', started && (fakeRun(fx.root)?.argv || []).includes('tests/compliance/project-integrity.spec.ts'),
-      `${tail(run.output())}\nfake got: ${JSON.stringify(fakeRun(fx.root))}`]);
-    checks.push(...await holdsASlot(run.child, fx, guards));
-    run.child.stdin.end();
-    const r = await run.exited;
-    checks.push(['it passes when the spec passes', r.code === 0 && !r.boundHit, `exit ${r.code}\n${tail(run.output())}`]);
-    const left = await slotHolders(fx.lockDir);
-    checks.push(['the slot is released when it ends', left.length === 0, JSON.stringify(left)]);
-    return checks;
-  }
-);
-
-const integrityBound = () => integrityCase(
-  'pre-commit project-integrity: a run that never returns is killed at the bound',
-  { WB_GATE_SPEC_TIMEOUT_MIN: '0.1' },
-  async ({ fx, run }) => {
-    const r = await run.exited;
-    const left = await slotHolders(fx.lockDir);
-    return [
-      ['it returns on its own', !r.boundHit, `still running after ${r.ms}ms\n${tail(run.output())}`],
-      ['it exits non-zero and says HANG', r.code === 1 && run.output().includes('did not finish within'),
-        `exit ${r.code}\n${tail(run.output())}`],
-      ['the slot is released on the timeout path', left.length === 0, JSON.stringify(left)],
     ];
   }
 );
@@ -1027,12 +719,6 @@ const sections = await Promise.all([
   healthyRun('Windows Terminal (WT_SESSION)', { WT_SESSION: 'gate-guard' }),
   healthyRun('the VS Code terminal (TERM_PROGRAM=vscode)', { TERM_PROGRAM: 'vscode' }),
   healthyRun('a colour-forcing shell (FORCE_COLOR=1)', { FORCE_COLOR: '1' }),
-  gateHoldsTheMachine(),
-  gateStripsHookGitEnv(),
-  gateWaitsForASingle(),
-  gateOuterBound(),
-  gateFractionalOverride(),
-  gateWaitBound(),
   priorityHoldsASlot(),
   priorityWaitsForASuite(),
   priorityBound(),
@@ -1040,9 +726,6 @@ const sections = await Promise.all([
   releaseHoldsTheMachine(),
   releaseBound(),
   releaseNoVerdict(),
-  gateNoVerdict(),
-  integrityHoldsASlot(),
-  integrityBound(),
 ]);
 
 for (const { label, results } of sections) {

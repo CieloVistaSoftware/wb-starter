@@ -219,22 +219,26 @@ was filed without one.
 
 ---
 
-## 17. A Push To `.io` Is Not Done Until The Deployed Site Boots
+## 17. A Release Is Not Done Until The Deployed Site Boots
 
-Pushing to `main` publishes live to
-https://cielovistasoftware.github.io/wb-starter/. **The push is not the
-deliverable. A booting site is.**
+The public site, https://cielovistasoftware.github.io/wb-starter/, updates
+**only on a release**. Since 2026-10-02 GitHub Pages is deployed by GitHub
+Actions from the released commit, not served from `main`, so `main` can move
+freely during the day. Releases are cut by the **Nightly** workflow
+(`.github/workflows/nightly.yml`): full suite on `main`, and only if there are no
+new failures does it release and deploy. **The release is not the deliverable.
+A booting site is.**
 
-After every push to `main`:
+After every release (the morning after "park"):
 
 ```bash
 npm run test:smoke:deployed
 ```
 
-It waits for the Pages build to report `built` (running against a `building`
-origin smokes the PREVIOUS deploy and returns a confident, meaningless pass),
-then runs `site-smoke` against the live site. Green = done. Anything else = the
-site is broken and you fix it before you say a word about anything else.
+It waits for the deploy to finish (running against a deploy still in progress
+smokes the PREVIOUS deploy and returns a confident, meaningless pass), then runs
+`site-smoke` against the live site. Green = done. Anything else = the site is
+broken and you fix it before you say a word about anything else.
 
 **The published URL lives in the repo**, in `scripts/smoke-deployed.mjs`,
 under version control — it is public, identical for every clone, and works on a
@@ -250,7 +254,7 @@ there breaks the gate on every machine that has not had it set by hand.
 - **Grepping the served HTML.** This is what was actually done, and it passed
   while the site was dead.
 - **A 200 on every asset.** Every file was served correctly during the outage.
-- **The local suite.** It runs against localhost and cannot see a bad deploy.
+- **The local suite, or Nightly's suite.** Both run against localhost and cannot see a bad deploy.
 - **CI being green.** CI does not load the deployed origin either.
 - **"The file I pushed has the right content."** It did. The site was still
   down.
@@ -276,7 +280,7 @@ still `Loading...`. It was proven by fault injection, not by passing.
 A deployed fix can be **invisible for ten minutes**. JS is served
 `Cache-Control: max-age=600` at URLs with no content hash (#989), so a browser
 that loaded the broken build will keep it. If the smoke test fails right after
-a push, re-fetch with `{cache:'reload'}` before concluding the fix did not
+a release, re-fetch with `{cache:'reload'}` before concluding the fix did not
 land — and never tell John it is live when you have only checked the origin.
 
 ---

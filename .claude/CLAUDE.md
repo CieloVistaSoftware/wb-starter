@@ -63,7 +63,7 @@ All tests run asynchronously. **Never block on anything.**
 
 **MCP syntax:**
 ```
-npm_test_async()                                           # full suite
+npm_test_async()                                           # full suite (only if John asks; Nightly runs it)
 npm_test_async(filter: "--project=compliance")             # filtered suite
 npm_test_async(filter: "tests/behaviors/badge.spec.ts")    # single spec
 ```
@@ -71,3 +71,24 @@ npm_test_async(filter: "tests/behaviors/badge.spec.ts")    # single spec
 **Workflow:** Launch → poll status 1x/min → report to John 1x/min → if 3+ failures: STOP and diagnose.
 
 **Only John runs sync tests.** The `npm_command` tool blocks all test commands.
+
+---
+
+## Commits, CI and Releases
+
+- **Commit hook:** fast checks only (~30s) that CI does not run — version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright on commit.
+- **PR CI:** `ci-tests.yml` runs one Playwright check per category on windows-latest, plus "Gate scripts self-test". Information, not a merge gate.
+- **No full suite during the day.** Run single specs or a filtered category for the work at hand. The full suite runs in **Nightly** after "park".
+- **main moves freely.** A push to main is not a deploy. The public site updates only when Nightly cuts a release.
+
+## End of Session — "park"
+
+When John says **"park"**:
+
+1. Update the 🅿️ PARKING LOT in `docs/_today/CURRENT-STATUS.md` (task, files touched, last action, next step, open questions).
+2. Merge the day's finished PRs into `main`.
+3. Trigger the **Nightly** workflow: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST) and skips if main's HEAD is already a tagged release.
+
+Nightly runs the full suite on main against the known-failures register. No new failures → release cut (`scripts/ship.mjs`: What's New in `data/releases.json`, version bump, tag, GitHub release, npm publish) and the site deployed to GitHub Pages from that commit. New failures → no release, one `priority:2` issue linking the run.
+
+**Next morning:** report "vX.Y.Z released" (then run `npm run test:smoke:deployed`, Law 17) or "no release, these failed" with the issue link.
