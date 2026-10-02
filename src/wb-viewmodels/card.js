@@ -169,8 +169,12 @@ export function composeCard(element, options = {}) {
     // say WHY. The marker is the label that does.
     // Bare `featured` gives the default word; `featured="Deal of the week"`
     // prints that instead, so the same attribute carries the reason.
+    // A featured-tone with no featured is a colour for a marker that is not
+    // there; it was a silent no-op (every tone rendered the same plain card).
+    // Naming a tone means "show the marker in this colour", so it implies it.
     featuredLabel: (() => {
-      if (!element.hasAttribute('featured') && !options.featured) return '';
+      const toneOnly = !!(options.featuredTone || readAttr(element, 'featuredTone'));
+      if (!element.hasAttribute('featured') && !options.featured) return toneOnly ? 'Featured' : '';
       const raw = String(options.featured ?? element.getAttribute('featured') ?? '').trim();
       if (raw === 'false' || raw === '0') return '';
       // A bare attribute parses to "", and "true" is the boolean spelled out.

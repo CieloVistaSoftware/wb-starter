@@ -169,6 +169,13 @@ export default defineConfig({
   // runs took ready 3 -> 0, failing 7 -> 0, unproven 5 -> 18, with no work done
   // to any of those issues. Playwright's scratch gets its own directory.
   outputDir: './data/playwright-output',
+  // #1272: Playwright's git-info plugin defaults to capturing a diff on CI,
+  // and for a pull request it gets one by running
+  // `git fetch origin <base> --depth=1`. On our full-history checkout that
+  // writes .git/shallow and cuts history to a few commits, so anything that
+  // reads history (the Releases list, the push-count version number) breaks
+  // in CI only. Commit info stays; the diff fetch is off.
+  captureGitInfo: { commit: true, diff: false },
   reporter: [
     ['./scripts/tools/test-reporter.ts'],
     ['list']
