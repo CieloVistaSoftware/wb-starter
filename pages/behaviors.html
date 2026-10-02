@@ -761,7 +761,15 @@
       resultsEl.innerHTML = '';
       const frag = document.createDocumentFragment();
       let rendered = 0;
-      allEntries.forEach((entry) => {
+      // A behavior whose NAME matches is listed before one that matched only
+      // on an option (#997 added written-out example labels, so "checkbox"
+      // also matches label's "wrapping a checkbox" row) -- the same rule
+      // bestMatch() uses to pick the row a search opens.
+      const nameHit = (entry) => [entry.label, entry.attr].join(' ').toLowerCase().includes(q);
+      const orderedEntries = q
+        ? [...allEntries.filter(nameHit), ...allEntries.filter((entry) => !nameHit(entry))]
+        : allEntries;
+      orderedEntries.forEach((entry) => {
         // #995 — John: "put same named links into dropdown, the use must
         // expand it first to view the items in the list." A behavior with
         // several options repeated its own name on every row: x-avatar alone
