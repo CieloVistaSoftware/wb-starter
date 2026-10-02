@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { execFileSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { readFileSync } from 'fs';
 
 /**
@@ -24,7 +24,11 @@ test('1.0.N versions are listed newest first, each with a summary and items', ()
 });
 
 test('the generator reproduces the checked-in entries (nothing hand-edited, nothing missing)', () => {
-  const out = execFileSync('node', ['scripts/release-versions.mjs', '--check'], { encoding: 'utf8' });
+  // spawnSync, not execFileSync: on failure the generator's own diagnosis
+  // (stderr) must reach the test report, not just "Command failed".
+  const run = spawnSync(process.execPath, ['scripts/release-versions.mjs', '--check'], { encoding: 'utf8' });
+  expect(run.status, `release-versions --check failed:\n${run.stderr}`).toBe(0);
+  const out = run.stdout;
   const newest = JSON.parse(out.slice(0, out.indexOf('\n[release-versions]')));
   // HEAD may carry commits not yet stamped on main, so compare what both have.
   for (const g of newest) {

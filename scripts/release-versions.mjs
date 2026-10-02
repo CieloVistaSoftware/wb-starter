@@ -29,7 +29,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { esc, issueLinks, itemFor } from './lib/release-item.mjs';
-import { STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
+import { ANCHOR, STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data', 'releases.json');
@@ -41,7 +41,22 @@ const US = String.fromCharCode(31);
 
 // Where the badge's count starts (push-count.mjs): a tag, or the 1.0.89 anchor.
 const start = countBase(ROOT);
-if (!start) { console.error('[release-versions] no release tag: nothing to count from'); process.exit(1); }
+if (!start) {
+  // Say WHY, so a CI log is enough to diagnose it (a Windows runner reported
+  // only this line once, with full history fetched).
+  const probe = (...args) => {
+    try { return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim() || '(empty)'; }
+    catch (e) { return `FAILED: ${String((e.stderr || e.message) || e).trim().split('\n')[0]}`; }
+  };
+  console.error('[release-versions] no release tag: nothing to count from');
+  console.error(`  git --version            : ${probe('--version')}`);
+  console.error(`  HEAD                     : ${probe('rev-parse', 'HEAD')}`);
+  console.error(`  describe --tags          : ${probe('describe', '--tags', '--abbrev=0', '--match', 'v[0-9]*', 'HEAD')}`);
+  console.error(`  anchor ${ANCHOR.commit.slice(0, 8)} type    : ${probe('cat-file', '-t', ANCHOR.commit)}`);
+  console.error(`  anchor is ancestor       : ${probe('merge-base', '--is-ancestor', ANCHOR.commit, 'HEAD') === '(empty)' ? 'yes' : 'no'}`);
+  console.error(`  shallow                  : ${probe('rev-parse', '--is-shallow-repository')}`);
+  process.exit(1);
+}
 const tag = start.base;
 const [maj, min, pat] = start.release.split('.').map(Number);
 const versionOf = (count) => `${maj}.${min}.${pat + count}`;
