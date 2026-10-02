@@ -412,7 +412,7 @@
     // enum-valued property now produces rows, SUMMED per axis (not a cartesian
     // product -- that would explode 143 entries into thousands).
     //   variant-only: 272 rows.  all enum properties: 484.
-    function variantsFor(attr) {
+    function variantsFor(attr, form) {
       const sc = schemaByName.get(extensionMap[attr]);
       const props = (sc && sc.properties) || {};
       const out = [];
@@ -434,6 +434,18 @@
           const demoValue = (def.default === true && !DEMO_AS_TRUE.has(name)) ? 'false' : 'true';
           out.push({ prop: name, value: demoValue, boolean: true, defaultsTo: def.default === true });
           continue;
+        } else if (Array.isArray(def.examples) && def.examples.length) {
+          // #997 -- John: "all items on left must have minimum of 5 examples,
+          // either varying colors etc." A free-form property (a colour, a gap,
+          // a ratio, a label) has no enum to walk, so it never produced a row:
+          // x-stack's four styling attributes gave it ONE row, the bare stack.
+          // JSON Schema's own `examples` keyword names the sample values worth
+          // showing; each becomes a row, written onto the example exactly as an
+          // enum value is (withOption), so it works on both authoring forms.
+          for (const value of def.examples) {
+            if (value === null || value === undefined || value === '') continue;
+            out.push({ prop: name, value: String(value) });
+          }
         }
       }
       // Sorted so `variant` leads -- it is the axis most readers look for --
@@ -451,12 +463,36 @@
         if (b.prop === 'variant') return 1;
         return a.prop.localeCompare(b.prop);
       });
+      // #997: authored examples follow the schema-driven rows. Some behaviors
+      // have no attribute to vary at all -- x-bounce, x-tada and the other
+      // click animations read nothing but the click -- so the only honest way
+      // to show five different things is five different authored uses of it
+      // (another host, another colour, another context). They live beside the
+      // behavior's curated example in data/behavior-examples.json, as
+      // `examples: [{ label, source }]`, and render verbatim.
+      // An example may name the authoring form it is written in (`form:
+      // "semantic"` for <code language=...>, `"attribute"` for <div x-code
+      // ...>), so each row of a behavior with a native host shows markup in
+      // its own form. Unnamed, it serves both.
+      authoredExamples(attr).forEach((ex, i) => {
+        if (form && ex.form && ex.form !== form) return;
+        out.push({ prop: '', value: ex.label, example: i });
+      });
       return out.length ? out : [{ prop: '', value: '' }];
+    }
+
+    /** #997: the authored `examples` for a token, or [] -- see variantsFor(). */
+    function authoredExamples(attr) {
+      const entry = exampleCatalogue && exampleCatalogue[attr];
+      const list = entry && Array.isArray(entry.examples) ? entry.examples : [];
+      return list.filter((ex) => ex && ex.label && ex.source);
     }
 
     /** How an option reads in the variant column: bare for variant, prop=value otherwise. */
     function optionLabel(opt) {
       if (!opt || !opt.value) return '';
+      // #997: an authored example is named by its own label.
+      if (opt.example !== undefined && opt.example !== null && opt.example !== '') return opt.value;
       // A default-true flag is demonstrated by switching it OFF, so the label
       // has to say so -- a bare `showPlayButton` would imply the opposite.
       if (opt.boolean) return opt.value === 'false' ? `${opt.prop}=false` : opt.prop;
@@ -622,12 +658,17 @@
         // non-fatal: the list still renders, just without variant rows.
         // #666: curated examples now come from a data file, so the demo
         // sections no longer have to stay on the page purely as a data source.
-        fetch(siteRoot() + 'data/behavior-examples.json')
+        const catalogueLoaded = fetch(siteRoot() + 'data/behavior-examples.json')
           .then((r) => (r.ok ? r.json() : null))
           .then((cat) => { if (cat && cat.examples) { exampleCatalogue = rootRelativeAssets(cat.examples); try { relabelByExample(); } catch { /* list still renders */ } } })
           .catch(() => {});
 
-        return fetch(siteRoot() + 'data/schema-index.json')
+        // #997: the catalogue also carries authored example ROWS, so the list
+        // is built once both have arrived -- otherwise a fast schema index
+        // rendered the list without them and a reader (or a test) saw a
+        // behavior with one row that seconds later had five.
+        return Promise.all([fetch(siteRoot() + 'data/schema-index.json'), catalogueLoaded.then(() => {}, () => {})])
+          .then(([r]) => r)
           .then((r) => (r.ok ? r.json() : null))
           .then((idx) => {
             if (idx && Array.isArray(idx.schemas)) {
@@ -730,7 +771,7 @@
         // Build this entry's rows first, then choose the shape: one option
         // stays a plain row (nothing to collapse), several become a <details>.
         const built = [];
-        variantsFor(entry.attr).forEach((opt) => {
+        variantsFor(entry.attr, entry.form || 'attribute').forEach((opt) => {
           const variant = opt.value;
           const shownOption = optionLabel(opt);
           // Match on everything the reader can see or type: the displayed name,
@@ -750,6 +791,7 @@
             btn.dataset.variant = variant;
             btn.dataset.prop = opt.prop;
             if (opt.boolean) btn.dataset.boolean = '1';
+            if (opt.example !== undefined) btn.dataset.example = String(opt.example);
           }
 
           // John: "change the variant to be in col. two" -- name first, variant
@@ -2723,7 +2765,29 @@
       }
     }
 
-    async function renderLive(token, variant, label, prop, isBool, form) {
+    /**
+     * #997: the markup a row renders, as one pure function -- the authored
+     * example verbatim, or the curated/generated example with the row's option
+     * written in. Exposed (read-only) so the regression test can check every
+     * row's output without clicking 900 rows.
+     *
+     * @returns {{ source: string|null, authored: object|null }}
+     */
+    function exampleSourceFor(token, form, prop, variant, isBool, exampleIndex) {
+      const hasIndex = exampleIndex !== undefined && exampleIndex !== null && exampleIndex !== '';
+      const authored = hasIndex ? (authoredExamples(token)[Number(exampleIndex)] || null) : null;
+      // Already re-rooted: the whole catalogue goes through rootRelativeAssets() on load.
+      if (authored) return { source: authored.source, authored };
+      const raw = sourceFor(token, form);
+      return { source: raw ? withOption(raw, token, prop, variant, isBool) : raw, authored: null };
+    }
+    window.__wbExampleSource = (token, form, prop, variant, isBool, exampleIndex, label) => {
+      const { source } = exampleSourceFor(token, form, prop, variant, isBool, exampleIndex);
+      return source || generatedExample(token, variant, label || '', prop, isBool);
+    };
+    window.__wbVariantsFor = (attr, form) => variantsFor(attr, form).map((o) => ({ ...o }));
+
+    async function renderLive(token, variant, label, prop, isBool, form, exampleIndex) {
       // #769 -- John, 4th report: "get rid of all this dead space!"
       //
       // fitStageToOverlays() grows the stage so an open dropdown or a
@@ -2741,8 +2805,7 @@
       // This render's ticket. Everything below the first await is only painted
       // while this is still the newest selection -- see renderSeq above.
       const seq = ++renderSeq;
-      const raw = sourceFor(token, form);
-      const src = raw ? withOption(raw, token, prop, variant, isBool) : raw;
+      const { source: src, authored } = exampleSourceFor(token, form, prop, variant, isBool, exampleIndex);
       liveEl.hidden = false;
       // John: "Switch these two, behaivor first, variant 2nd".
       const shown = label || token;
@@ -2753,7 +2816,9 @@
       // lacked the default-true case, so a row listed as `hoverable=false`
       // rendered under a header reading plain `hoverable` -- the opposite of
       // what the stage was showing.
-      const optionText = optionLabel({ prop, value: variant, boolean: isBool });
+      const optionText = authored
+        ? authored.label
+        : optionLabel({ prop, value: variant, boolean: isBool });
       liveToken.textContent = optionText ? `${shown} · ${optionText}` : shown;
 
       if (!src) {
@@ -2815,7 +2880,7 @@
         liveExample.parentNode.insertBefore(note, liveExample.nextSibling);
       }
 
-      liveNote.textContent = optionDescription(token, prop) || 'running live';
+      liveNote.textContent = (authored && authored.note) || optionDescription(token, prop) || 'running live';
       showInScrollBox(token, prop, variant, isBool);
       // #703: drop the previous example's grown height before measuring this one.
       liveStage.style.minHeight = '';
@@ -2835,7 +2900,7 @@
       // already says exactly that ("Show 15-band equalizer", "Start muted"),
       // and it is accurate for options with no visible surface change, where
       // summarise() can only ever report the host's background.
-      const described = optionDescription(token, prop);
+      const described = (authored && authored.note) || optionDescription(token, prop);
       const summary = described || summarise(liveExample.firstElementChild);
       if (summary) liveNote.textContent = summary;
       // #703: an example can render something taller than the stage's 6rem
@@ -2892,7 +2957,8 @@
       if (focus) row.focus({ preventScroll: true });
       closeLivePanels();
       showLive(row.dataset.browseToken, row.dataset.variant || '', row.dataset.label || '',
-               row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute');
+               row.dataset.prop || '', row.dataset.boolean === '1', row.dataset.form || 'attribute',
+               row.dataset.example);
       // #1003 follow-up -- John: "click this first, page down in this element,
       // click the link again: page does not reset to top."
       //

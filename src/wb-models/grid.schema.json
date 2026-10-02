@@ -8,7 +8,11 @@
     "columns": {
       "type": "string",
       "description": "Read by grid().",
-      "default": "3"
+      "default": "3",
+      "examples": [
+        "4",
+        "6"
+      ]
     },
     "rows": {
       "type": "string",
@@ -18,7 +22,11 @@
     "gap": {
       "type": "string",
       "description": "Read by grid().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "3rem"
+      ]
     },
     "min-width": {
       "type": "string",

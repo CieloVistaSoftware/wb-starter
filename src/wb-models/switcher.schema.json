@@ -8,12 +8,20 @@
     "threshold": {
       "type": "string",
       "description": "Read by switcher().",
-      "default": "30rem"
+      "default": "30rem",
+      "examples": [
+        "10rem",
+        "90rem"
+      ]
     },
     "gap": {
       "type": "string",
       "description": "Read by switcher().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "3rem"
+      ]
     },
     "limit": {
       "type": "string",

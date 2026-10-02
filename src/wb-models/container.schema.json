@@ -8,7 +8,10 @@
     "direction": {
       "type": "string",
       "description": "Read by container().",
-      "default": "column"
+      "default": "column",
+      "examples": [
+        "column"
+      ]
     },
     "columns": {
       "type": "string",
@@ -18,7 +21,10 @@
     "gap": {
       "type": "string",
       "description": "Read by container().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "3rem"
+      ]
     },
     "align": {
       "type": "string",
@@ -28,12 +34,19 @@
     "justify": {
       "type": "string",
       "description": "Read by container().",
-      "default": "start"
+      "default": "start",
+      "examples": [
+        "flex-start",
+        "center"
+      ]
     },
     "padding": {
       "type": "string",
       "description": "Read by container().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "2.5rem"
+      ]
     },
     "max-width": {
       "type": "string",

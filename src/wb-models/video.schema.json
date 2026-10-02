@@ -13,7 +13,10 @@
     "controls": {
       "type": "string",
       "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script.",
-      "default": "this is the controls"
+      "default": "this is the controls",
+      "examples": [
+        "false"
+      ]
     },
     "playsinline": {
       "type": "string",

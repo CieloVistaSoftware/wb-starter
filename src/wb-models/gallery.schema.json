@@ -8,7 +8,12 @@
     "columns": {
       "type": "string",
       "description": "Number of columns in the grid. Defaults to `3`.",
-      "default": "3"
+      "default": "3",
+      "examples": [
+        "2",
+        "3",
+        "6"
+      ]
     },
     "size": {
       "type": "string",
@@ -18,7 +23,11 @@
     "gap": {
       "type": "string",
       "description": "Space between items, as a CSS length. Defaults to `1rem`.",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "2rem"
+      ]
     },
     "lightbox": {
       "type": "string",

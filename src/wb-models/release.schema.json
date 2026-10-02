@@ -8,7 +8,14 @@
     "format": {
       "type": "string",
       "description": "Template for the badge text, with `{version}` replaced. Defaults to `v{version}`.",
-      "default": "v{version}"
+      "default": "v{version}",
+      "examples": [
+        "Release {version}",
+        "Build {version}",
+        "wb-starter {version}",
+        "{version}",
+        "Version {version} is live"
+      ]
     },
     "reload": {
       "type": "string",

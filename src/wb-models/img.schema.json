@@ -18,7 +18,12 @@
     "aspect-ratio": {
       "type": "string",
       "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
-      "default": "this is the aspect ratio"
+      "default": "this is the aspect ratio",
+      "examples": [
+        "1/1",
+        "4/3",
+        "21/9"
+      ]
     },
     "lazy": {
       "type": "boolean",
