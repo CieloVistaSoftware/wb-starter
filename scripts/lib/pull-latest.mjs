@@ -17,23 +17,13 @@
  * Never throws: returns { updated, message } with one line saying what it did.
  */
 import { execFileSync, execFile } from 'node:child_process';
-import { readFileSync } from 'node:fs';
 import path from 'node:path';
-
-const STAMPED = new Set(['src/core/version.js', 'docs/manifest.json', 'data/docs-manifest.json']);
-const isEntryPage = (f) => f === 'index.html' || /^(pages|demos)\/[^/]+\.html$/.test(f);
-const withoutKeys = (s) => s.replace(/\?v=[^"'\s)]*/g, '');
+import { changedPaths } from './git-status.mjs';
+import { isBuildOutput } from './build-output.mjs';
 
 export function pullLatest(root) {
   const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 30000 }).trim();
   const firstLine = (e) => String((e && e.message) || e).split('\n')[0];
-
-  // A file the build rewrote, not something the person wrote.
-  const rewrittenByBuild = (f) => {
-    if (STAMPED.has(f)) return true;
-    if (!isEntryPage(f)) return false;
-    try { return withoutKeys(git('show', `HEAD:${f}`)) === withoutKeys(readFileSync(path.join(root, f), 'utf8').trim()); } catch { return false; }
-  };
 
   try {
     const branch = git('rev-parse', '--abbrev-ref', 'HEAD');
@@ -43,11 +33,10 @@ export function pullLatest(root) {
     const behind = Number(git('rev-list', '--count', 'HEAD..origin/main'));
     if (!behind) return { updated: false, message: 'already the latest code' };
 
-    // Not through git(): its trim() would eat the leading space of the first
-    // " M path" line, and slice(3) would then cut the path's first letter.
+    // Raw, never trimmed: see git-status.mjs (#1082).
     const status = execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8', timeout: 30000 });
-    const changed = status.split('\n').filter(Boolean).map((l) => l.slice(3).replace(/\\/g, '/'));
-    const own = changed.filter((f) => !rewrittenByBuild(f));
+    const changed = changedPaths(status).map((f) => f.split('\\').join('/'));
+    const own = changed.filter((f) => !isBuildOutput(root, f));
     if (own.length) {
       return { updated: false, message: `not updated: you have uncommitted changes (${own.slice(0, 3).join(', ')}${own.length > 3 ? ', ...' : ''}), left untouched` };
     }

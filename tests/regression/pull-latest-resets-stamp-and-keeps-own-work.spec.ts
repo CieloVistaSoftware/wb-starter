@@ -56,3 +56,18 @@ test('a checkout with the person\'s own edit is left untouched', () => {
     expect(git(clone, 'diff', '--name-only')).toBe('README.md');
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('an entry page whose only change is the ?v= cache key counts as build output', async () => {
+  const { isBuildOutput } = await import('../../scripts/lib/build-output.mjs');
+  const { dir, clone } = behindByOne();
+  try {
+    writeFileSync(path.join(clone, 'index.html'), '<script src="a.js?v=1.0.1"></script>\n');
+    git(clone, 'add', '-A'); git(clone, '-c', 'user.email=t@t', '-c', 'user.name=t', 'commit', '-qm', 'page');
+    writeFileSync(path.join(clone, 'index.html'), '<script src="a.js?v=1.0.9"></script>\n');
+    expect(isBuildOutput(clone, 'index.html')).toBe(true);
+    writeFileSync(path.join(clone, 'index.html'), '<script src="b.js?v=1.0.9"></script>\n');
+    expect(isBuildOutput(clone, 'index.html')).toBe(false);
+    expect(isBuildOutput(clone, 'docs/manifest.json')).toBe(true);
+    expect(isBuildOutput(clone, 'README.md')).toBe(false);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
