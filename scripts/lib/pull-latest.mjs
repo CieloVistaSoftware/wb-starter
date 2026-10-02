@@ -25,7 +25,7 @@ const isEntryPage = (f) => f === 'index.html' || /^(pages|demos)\/[^/]+\.html$/.
 const withoutKeys = (s) => s.replace(/\?v=[^"'\s)]*/g, '');
 
 export function pullLatest(root) {
-  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 30000 }).trim();
   const firstLine = (e) => String((e && e.message) || e).split('\n')[0];
 
   // A file the build rewrote, not something the person wrote.
@@ -43,7 +43,10 @@ export function pullLatest(root) {
     const behind = Number(git('rev-list', '--count', 'HEAD..origin/main'));
     if (!behind) return { updated: false, message: 'already the latest code' };
 
-    const changed = git('status', '--porcelain').split('\n').filter(Boolean).map((l) => l.slice(3).replace(/\\/g, '/'));
+    // Not through git(): its trim() would eat the leading space of the first
+    // " M path" line, and slice(3) would then cut the path's first letter.
+    const status = execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8', timeout: 30000 });
+    const changed = status.split('\n').filter(Boolean).map((l) => l.slice(3).replace(/\\/g, '/'));
     const own = changed.filter((f) => !rewrittenByBuild(f));
     if (own.length) {
       return { updated: false, message: `not updated: you have uncommitted changes (${own.slice(0, 3).join(', ')}${own.length > 3 ? ', ...' : ''}), left untouched` };
