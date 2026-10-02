@@ -60,6 +60,14 @@ async function clearCacheAndReload() {
     + location.hash;
 }
 
+// " in a.js, b.css (+3 more)" -- the files that make the copy "edited".
+function editedList(stamp) {
+  const files = Array.isArray(stamp.dirtyFiles) ? stamp.dirtyFiles : [];
+  if (!files.length) return '';
+  const more = Number(stamp.dirtyCount || files.length) - files.length;
+  return ` in ${files.join(', ')}${more > 0 ? ` (+${more} more)` : ''}`;
+}
+
 export function release(element, options = {}) {
   const config = {
     format: options.format || element.getAttribute('format') || 'v{version}',
@@ -110,11 +118,13 @@ export function release(element, options = {}) {
   // Behind is the one that misleads, so make it impossible to read past.
   element.classList.toggle('x-release--stale', behind > 0);
 
-  element.title = `Build ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
+  // "Commit", not "Build": nothing is built (John: "I thought we didn't do
+  // builds?"). It is the git commit these files are, and when it was stamped.
+  element.title = `Commit ${VERSION.commit} · ${formatBuiltAtCentral(VERSION.builtAt)}`
     + (ahead ? ` · ${ahead} push${ahead === 1 ? '' : 'es'} to main since v${releaseName}` : '')
     + (VERSION.branch ? ` · branch ${VERSION.branch}` : '')
     + (behind ? ` · ${behind} commits behind ${VERSION.upstream} — this is NOT the latest code` : '')
-    + (VERSION.dirty ? ` · uncommitted local edits — these files are not ${shownVersion} as committed` : '')
+    + (VERSION.dirty ? ` · uncommitted local edits${editedList(VERSION)} — these files are not ${shownVersion} as committed` : '')
     + ' — click to get the latest code and reload'
     + (config.reload ? ' · right-click to only clear the cache and reload' : '');
 

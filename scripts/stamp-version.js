@@ -101,8 +101,13 @@ function drift() {
   // npm start: the docs manifests and the ?v= keys in entry pages are rewritten
   // on every start too. Everything the build rewrites is excluded, by the same
   // test pull-latest.mjs uses before it resets anything (build-output.mjs).
-  const dirty = changedPaths(git('git status --porcelain', '', { raw: true }))
-    .some((f) => !isBuildOutput(root, f));
+  const edited = changedPaths(git('git status --porcelain', '', { raw: true }))
+    .filter((f) => !isBuildOutput(root, f));
+  const dirty = edited.length > 0;
+  // Which files: the tooltip names them, so "uncommitted local edits" can be
+  // checked instead of taken on trust. Omitted when clean, so a clean stamp
+  // (the one committed on main) stays byte-identical run to run.
+  const dirtyFiles = dirty ? edited.slice(0, 5) : undefined;
 
   // Compare against the remote this branch tracks; fall back to origin/main,
   // which is what "latest code" means for this project.
@@ -140,7 +145,7 @@ function drift() {
     if (start) { release = start.release; sinceRelease = countPushes(root, start.base); }
   } catch { /* keep the tag's commit count rather than nothing */ }
 
-  return { branch, dirty, ahead, behind, upstream, release, sinceRelease };
+  return { branch, dirty, ...(dirtyFiles ? { dirtyFiles, dirtyCount: edited.length } : {}), ahead, behind, upstream, release, sinceRelease };
 }
 
 const tree = drift();
