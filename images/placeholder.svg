@@ -9,7 +9,8 @@
     <img src>/background-image, so it renders in its own document and cannot
     read the page's theme tokens. The no-hardcoded-colours rule governs
     stylesheets, not the contents of an image file. Tones are neutral so it
-    sits acceptably on both light and dark surfaces.
+    sits acceptably on both light and dark surfaces. The fine line art is white
+    (#1254, John: "make the fine lines white") so it reads inside a dark avatar.
   -->
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
@@ -18,9 +19,9 @@
     </linearGradient>
   </defs>
   <rect width="800" height="500" fill="url(#g)"/>
-  <g fill="none" stroke="#9ca3af" stroke-width="3" opacity="0.5">
+  <g fill="none" stroke="#ffffff" stroke-width="3" opacity="0.9">
     <circle cx="290" cy="200" r="46"/>
     <path d="M120 400 L300 250 L420 350 L540 240 L690 400 Z"/>
   </g>
-  <rect x="1.5" y="1.5" width="797" height="497" fill="none" stroke="#9ca3af" stroke-width="3" opacity="0.35"/>
+  <rect x="1.5" y="1.5" width="797" height="497" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.7"/>
 </svg>
