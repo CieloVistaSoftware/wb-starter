@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.107",
+      "date": "2026-10-02",
+      "summary": "Fix(ci): stop Playwright fetching the PR base at depth 1 (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1277\" target=\"_blank\" rel=\"noopener\">PR 1277</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Featured-tone shows its marker; removed lazy elements stop holding settled()</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/998\" target=\"_blank\" rel=\"noopener\">#998</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1246\" target=\"_blank\" rel=\"noopener\">#1246</a>",
+          "issues": [
+            998,
+            1246
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Stop Playwright fetching the PR base at depth 1</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
+          "issues": [
+            1272
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.106",
       "date": "2026-10-02",
       "summary": "Catch the process that writes .git/shallow (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1276\" target=\"_blank\" rel=\"noopener\">PR 1276</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1272\" target=\"_blank\" rel=\"noopener\">#1272</a>",
