@@ -66,6 +66,10 @@ export const conceptOf = (s) => s.toLowerCase().replace(/^data-/, '').replace(/[
  */
 const ATTR_CALL = /(?:get|has|remove|set)Attribute\(\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
 const READ_FLAG = /readFlag\(\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
+// #883: readOption(el, options, 'name'[, 'attr']) (src/core/read-attr.js) reads
+// options.name, then readAttr(el, 'name'), then el.getAttribute(attr), where
+// attr defaults to kebab(name). Both names are read off the element.
+const READ_OPTION = /readOption\(\s*[^,]+,\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`](?:\s*,\s*['"`]([a-zA-Z][\w:-]*)['"`])?/g;
 
 function jsFiles(dir, out = []) {
   if (!fs.existsSync(dir)) return out;
@@ -83,13 +87,20 @@ function readIndex(root = VM) {
   for (const f of jsFiles(root)) {
     const src = fs.readFileSync(f, 'utf8');
     const base = path.basename(f);
+    const add = (attr) => {
+      if (!idx.has(attr)) idx.set(attr, new Set());
+      idx.get(attr).add(base);
+    };
     for (const re of [ATTR_CALL, READ_FLAG]) {
       re.lastIndex = 0;
       let m;
-      while ((m = re.exec(src))) {
-        if (!idx.has(m[1])) idx.set(m[1], new Set());
-        idx.get(m[1]).add(base);
-      }
+      while ((m = re.exec(src))) add(m[1]);
+    }
+    READ_OPTION.lastIndex = 0;
+    let m;
+    while ((m = READ_OPTION.exec(src))) {
+      add(m[1]);
+      add(m[2] || kebab(m[1]));
     }
   }
   return idx;
