@@ -3,9 +3,9 @@
  *
  * Root cause: SchemaBuilder.loadSchemas() (called unconditionally from
  * WB.init()) fetches index.json and then every schema it lists, in
- * parallel — regardless of which wb-* tags are actually on the page. A HAR
+ * parallel — regardless of which behaviors are actually on the page. A HAR
  * capture of the home page showed 81 unique schema.json requests. The home
- * page only uses a handful of wb-* tags (x-audio, x-card, x-cardhero,
+ * page only uses a handful of behaviors (x-audio, x-card, x-cardhero,
  * x-cardnotification, x-cardstats, x-container, x-grid, x-row,
  * x-stack), and a separate on-demand path (await WB.scan() -> processSchema() ->
  * loadSchemaFile()) already fetches exactly what's needed per tag actually
@@ -44,7 +44,7 @@ test.describe('#312 — schema.json is fetched on-demand, not eagerly for every 
     expect(totalSchemaCount, 'sanity check: the schema library should be non-trivially large').toBeGreaterThan(30);
     expect(
       uniqueSchemaRequests.size,
-      `home page requested ${uniqueSchemaRequests.size}/${totalSchemaCount} schema.json files — expected only the ones its own wb-* tags need, not the whole library: ${[...uniqueSchemaRequests].join(', ')}`
+      `home page requested ${uniqueSchemaRequests.size}/${totalSchemaCount} schema.json files — expected only the ones its own behaviors need, not the whole library: ${[...uniqueSchemaRequests].join(', ')}`
     ).toBeLessThan(20);
   });
 

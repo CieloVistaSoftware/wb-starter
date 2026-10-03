@@ -1,5 +1,6 @@
-import { readFlag, readAttr } from '../core/read-attr.js';
+import { readFlag, readAttr, readOption } from '../core/read-attr.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
+import { dragStartPoint } from '../core/drag-start.js';
 /**
  * Card Behavior + Variants
  * -----------------------------------------------------------------------------
@@ -92,6 +93,110 @@ const getAttr = (element, options, name) => {
   return options[name] || element.dataset[name] || element.getAttribute(name) || '';
 };
 
+// #883: the shared helpers below replace blocks that were written out by hand
+// in card after card -- the code audit counted 72 duplicate clusters in this
+// file. Each one is the exact logic it replaced, so behavior is unchanged; a
+// fix now lands once instead of in whichever copies someone remembered.
+
+// An off-by-default boolean (clickable, elevated, autoplay, featured, ...):
+// a parsed option wins; otherwise any truthy spelling of the attribute, or the
+// bare attribute itself, turns it on.
+const readOnFlag = (element, options, name) => parseBoolean(options[name])
+  ?? (readAttr(element, name) === 'true'
+    || (readFlag(element, name) && readAttr(element, name) !== 'false')
+    || element.hasAttribute(name));
+
+// An on-by-default boolean (hoverable, controls, overlay, ...): only an
+// explicit "false" -- data-* or plain -- turns it off.
+const readDefaultOnFlag = (element, options, name) => parseBoolean(options[name])
+  ?? (readAttr(element, name) !== 'false' && element.getAttribute(name) !== 'false');
+
+// Enter/Space activation for an element acting as a button.
+const onActivateKey = (activate) => (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    activate(e);
+  }
+};
+
+// Create one card part: <tag class="..."> with optional text, appended to
+// `parent` when one is given. Text goes in as textContent -- authored values
+// are text, not markup; cardHtmlPart() is the explicit markup variant.
+function cardPart(parent, tag, className, text) {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined) el.textContent = text;
+  if (parent) parent.appendChild(el);
+  return el;
+}
+
+function cardHtmlPart(parent, tag, className, html) {
+  const el = cardPart(null, tag, className);
+  el.innerHTML = html;
+  if (parent) parent.appendChild(el);
+  return el;
+}
+
+function cardImg(parent, className, src, alt) {
+  const img = cardPart(null, 'img', className);
+  img.src = src;
+  img.alt = alt;
+  if (parent) parent.appendChild(img);
+  return img;
+}
+
+// A call-to-action link (cardpricing, cardportfolio): href, class, label.
+function appendCtaLink(parent, className, href, label) {
+  const link = document.createElement('a');
+  link.href = href;
+  link.className = className;
+  link.textContent = label;
+  parent.appendChild(link);
+  return link;
+}
+
+// Title then subtitle from a card's config, each only when set -- the pair
+// almost every card variant renders into its own content block.
+function appendTitleAndSubtitle(parent, config, titleTag, titleClass, subtitleTag, subtitleClass) {
+  if (config.title) cardPart(parent, titleTag, titleClass, config.title);
+  if (config.subtitle) cardPart(parent, subtitleTag, subtitleClass, config.subtitle);
+}
+
+// CSS background-image has no load-failure signal of its own, so a probe
+// Image() supplies one (#534 cardhero, cardoverlay). On failure, and only while
+// the card is still in the document: undo the background (`onFail`), then
+// report an unreachable third-party host on the card (#1115), or throw into
+// the global error handler -- the same convention audio.js uses.
+function probeBackgroundImage(element, src, tag, what, onFail) {
+  const probe = new Image();
+  probe.addEventListener('error', () => {
+    if (!document.contains(element)) return;
+    onFail();
+    if (reportIfThirdPartyMedia(element, src, tag)) return;
+    throw new Error(`${tag}: failed to load ${what} "${src}" -- the file is missing or unreachable. Falling back to the default gradient.`);
+  });
+  probe.src = src;
+}
+
+// A real <a> stretched over the whole card (.x-card__link-overlay in card.css)
+// so the card keeps native link semantics -- cardimage href= and cardlink.
+// target="_blank" also gets rel="noopener".
+function appendLinkOverlay(element, href, label, target) {
+  const link = cardPart(null, 'a', 'x-card__link-overlay');
+  link.href = href;
+  if (target === '_blank') {
+    link.target = '_blank';
+    link.rel = 'noopener';
+  }
+  link.setAttribute('aria-label', label);
+  element.appendChild(link);
+  return link;
+}
+
+// Shown in an expandable/minimizable body with nothing in it. card.css
+// defines .x-card__expandable-placeholder (#943); both cards use it.
+const CARD_CONTENT_PLACEHOLDER = '<div class="x-card__expandable-placeholder">Add content here...</div>';
+
 // (The VAR_* colour constants that stood here were only ever written into
 // inline styles. #779 moved the last of those into card.css, so they went
 // with them: a dead style constant is a second, silently-diverging definition
@@ -151,36 +256,46 @@ export function composeCard(element, options = {}) {
   const config = {
     ...options, // Spread first to allow overrides, but specific logic below takes precedence
     behavior: options.behavior || 'card',
-    title: options.title || readAttr(element, 'title') || element.getAttribute('title') || '',
-    subtitle: options.subtitle || readAttr(element, 'subtitle') || element.getAttribute('subtitle') || '',
+    title: readOption(element, options, 'title') || '',
+    subtitle: readOption(element, options, 'subtitle') || '',
     // card.schema.json declares author/date/category/reading-time (merged
     // from the former article schema), and nativeMap routes <article> to
     // this module -- so these render here or not at all. They once lived
     // only in article.js's article(), which was unreachable and has been
     // deleted; that left four declared attributes silently ignored (#861).
-    author: options.author || readAttr(element, 'author') || element.getAttribute('author') || '',
-    date: options.date || readAttr(element, 'date') || element.getAttribute('date') || '',
-    category: options.category || readAttr(element, 'category') || element.getAttribute('category') || '',
-    readingTime: options.readingTime || readAttr(element, 'readingTime')
-      || element.getAttribute('reading-time') || '',
+    author: readOption(element, options, 'author') || '',
+    date: readOption(element, options, 'date') || '',
+    category: readOption(element, options, 'category') || '',
+    readingTime: readOption(element, options, 'readingTime') || '',
     // #886 follow-up. John: "featured is something to print on a price tag
     // when items are featured this week. Something has to identify this is
     // the thing." A heavier border says "this one is different"; it does not
     // say WHY. The marker is the label that does.
     // Bare `featured` gives the default word; `featured="Deal of the week"`
     // prints that instead, so the same attribute carries the reason.
+    // A featured-tone with no featured is a colour for a marker that is not
+    // there; it was a silent no-op (every tone rendered the same plain card).
+    // Naming a tone means "show the marker in this colour", so it implies it.
     featuredLabel: (() => {
-      if (!element.hasAttribute('featured') && !options.featured) return '';
+      const toneOnly = !!(options.featuredTone || readAttr(element, 'featuredTone'));
+      if (!element.hasAttribute('featured') && !options.featured) return toneOnly ? 'Featured' : '';
       const raw = String(options.featured ?? element.getAttribute('featured') ?? '').trim();
       if (raw === 'false' || raw === '0') return '';
       // A bare attribute parses to "", and "true" is the boolean spelled out.
       return (raw === '' || raw === 'true') ? 'Featured' : raw;
     })(),
-    content: options.content || readAttr(element, 'content') || element.getAttribute('content') || authoredContent,
-    footer: options.footer || readAttr(element, 'footer') || element.getAttribute('footer') || '',
-    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
-    badge: options.badge || readAttr(element, 'badge') || element.getAttribute('badge') || '',
-    clickable: parseBoolean(options.clickable) ?? (readAttr(element, 'clickable') === 'true' || (readFlag(element, 'clickable') && readAttr(element, 'clickable') !== 'false') || element.hasAttribute('clickable')),
+    // #998 -- "we need ability to change color at will": a theme ROLE for the
+    // marker (card.css maps each to that theme's variable). featured-tone and
+    // featuredTone both read; anything else falls back to the default.
+    featuredTone: (() => {
+      const t = String(options.featuredTone || readAttr(element, 'featuredTone') || '').trim().toLowerCase();
+      return ['primary', 'success', 'warning', 'danger', 'info', 'neutral'].includes(t) ? t : '';
+    })(),
+    content: readOption(element, options, 'content') || authoredContent,
+    footer: readOption(element, options, 'footer') || '',
+    variant: readOption(element, options, 'variant') || 'default',
+    badge: readOption(element, options, 'badge') || '',
+    clickable: readOnFlag(element, options, 'clickable'),
     // #627: card.md documents `hoverable` as a plain boolean attribute
     // (`elevated`/`clickable`'s own pattern, both checked via
     // element.hasAttribute() below) -- but this only ever read
@@ -189,9 +304,9 @@ export function composeCard(element, options = {}) {
     // hoverable="false"> kept its hover effect regardless, since nothing
     // ever looked at that attribute. Also check the plain attribute now,
     // same as data-hoverable, so either form can disable it.
-    hoverable: parseBoolean(options.hoverable) ?? (readAttr(element, 'hoverable') !== 'false' && element.getAttribute('hoverable') !== 'false'),
-    elevated: parseBoolean(options.elevated) ?? (readAttr(element, 'elevated') === 'true' || (readFlag(element, 'elevated') && readAttr(element, 'elevated') !== 'false') || element.hasAttribute('elevated')),
-    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || 'auto',
+    hoverable: readDefaultOnFlag(element, options, 'hoverable'),
+    elevated: readOnFlag(element, options, 'elevated'),
+    size: readOption(element, options, 'size') || 'auto',
     // #283: `tooltip` is the WB-standard attribute name for hover text
     // (ATTRIBUTE-NAMING-STANDARD.md's cheat sheet: "Set tooltip -> `tooltip`
     // or native `title`"). `hoverText` / `hover-text` stays supported as the
@@ -199,7 +314,7 @@ export function composeCard(element, options = {}) {
     // cardprofile.schema.json) -- both resolve to the same themed tooltip
     // below, `tooltip` taking priority if a card author sets both.
     tooltip: options.tooltip || element.getAttribute('tooltip') || '',
-    hoverText: options.hoverText || readAttr(element, 'hoverText') || element.getAttribute('hoverText') || element.getAttribute('hover-text') || '',
+    hoverText: readOption(element, options, 'hoverText', 'hoverText') || element.getAttribute('hover-text') || '',
     onClick: options.onClick || element.dataset.onClick || '',
     dataContext: options.dataContext || element.dataset.dataContext || '{}',
     // v3.0: Skip structure building if schema already did it
@@ -354,12 +469,7 @@ export function composeCard(element, options = {}) {
     element.addEventListener('click', clickHandler);
     
     // Also handle Enter/Space for accessibility
-    element.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        clickHandler();
-      }
-    });
+    element.addEventListener('keydown', onActivateKey(() => clickHandler()));
   }
 
   // LOGIC: Dynamic onClick handler (v3.1)
@@ -396,13 +506,18 @@ export function composeCard(element, options = {}) {
     element.addEventListener('click', runAction);
     
     // Accessibility support for enter/space
-    element.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        runAction(e);
-      }
-    });
+    element.addEventListener('keydown', onActivateKey(runAction));
   }
+
+  // Header pieces shared by createHeader() and buildStructure() below, which
+  // used to build each of them twice (#883). Title and subtitle are children
+  // of the <header> itself -- see createHeader for why there is no wrapper.
+  const appendTitles = (h) => appendTitleAndSubtitle(h, config, 'h3', '', 'p', '');
+  const appendHeaderExtra = (h, html) => {
+    if (html) cardHtmlPart(h, 'div', 'x-card__header-extra', html);
+  };
+  // card.css targets `article > header > span`.
+  const appendBadge = (h) => cardPart(h, 'span', '', config.badge);
 
   // Return base context for variants to use
   return {
@@ -442,11 +557,8 @@ export function composeCard(element, options = {}) {
         existing.innerHTML = config.content;
         return existing;
       }
-      const body = document.createElement('main');
       // card.css targets `article > main`.
-      body.innerHTML = config.content;
-      element.appendChild(body);
-      return body;
+      return cardHtmlPart(element, 'main', '', config.content);
     },
     
     // =========================================
@@ -471,33 +583,9 @@ export function composeCard(element, options = {}) {
       // the title and subtitle are children of the <header> itself and the
       // badge takes its own column. One less element, and the structure reads
       // as what it is.
-      if (config.title) {
-        const titleEl = document.createElement('h3');
-        
-        titleEl.textContent = config.title;
-        h.appendChild(titleEl);
-      }
-
-      if (config.subtitle) {
-        const subtitleEl = document.createElement('p');
-        
-        subtitleEl.textContent = config.subtitle;
-        h.appendChild(subtitleEl);
-      }
-
-      if (extraContent) {
-        const extra = document.createElement('div');
-        extra.className = 'x-card__header-extra';
-        extra.innerHTML = extraContent;
-        h.appendChild(extra);
-      }
-
-      if (config.badge) {
-        const badgeEl = document.createElement('span');
-        // card.css targets `article > header > span`.
-        badgeEl.textContent = config.badge;
-        h.appendChild(badgeEl);
-      }
+      appendTitles(h);
+      appendHeaderExtra(h, extraContent);
+      if (config.badge) appendBadge(h);
 
       return h;
     },
@@ -574,23 +662,11 @@ export function composeCard(element, options = {}) {
           
           // Children of the <header> itself -- see createHeader above for why
           // the wrapper div is gone.
-          if (config.title) {
-            const titleElem = document.createElement('h3');
-            
-            titleElem.textContent = config.title;
-            headerEl.appendChild(titleElem);
-          }
-
-          if (config.subtitle) {
-            const subtitleElem = document.createElement('p');
-            
-            subtitleElem.textContent = config.subtitle;
-            headerEl.appendChild(subtitleElem);
-          }
+          appendTitles(headerEl);
 
           if (config.featuredLabel) {
-            const featuredEl = document.createElement('mark');
-            featuredEl.textContent = config.featuredLabel;
+            const featuredEl = cardPart(null, 'mark', '', config.featuredLabel);
+            if (config.featuredTone) featuredEl.setAttribute('tone', config.featuredTone);
             // Before the title, not after it: the point of the marker is to
             // be read BEFORE you read what the card is about.
             headerEl.insertBefore(featuredEl, headerEl.firstChild);
@@ -599,11 +675,7 @@ export function composeCard(element, options = {}) {
           // Article metadata. Distinct semantic tags rather than classes:
           // card.css reaches each one as `article > header > time`,
           // `> address`, `> small`.
-          if (config.category) {
-            const categoryEl = document.createElement('small');
-            categoryEl.textContent = config.category;
-            headerEl.appendChild(categoryEl);
-          }
+          if (config.category) cardPart(headerEl, 'small', '', config.category);
 
           if (config.date) {
             const dateEl = document.createElement('time');
@@ -622,28 +694,14 @@ export function composeCard(element, options = {}) {
             headerEl.appendChild(readingEl);
           }
 
-          if (config.author) {
-            const bylineEl = document.createElement('address');
-            bylineEl.textContent = `By ${config.author}`;
-            headerEl.appendChild(bylineEl);
-          }
+          if (config.author) cardPart(headerEl, 'address', '', `By ${config.author}`);
 
-          if (headerContent) {
-            const extraDiv = document.createElement('div');
-            extraDiv.className = 'x-card__header-extra';
-            extraDiv.innerHTML = headerContent;
-            headerEl.appendChild(extraDiv);
-          }
+          appendHeaderExtra(headerEl, headerContent);
 
           // #884: cardproduct already painted this same badge= over its
           // figure, and it builds before the header is inserted. Emitting it
           // here too rendered "SALE" twice in one card.
-          if (config.badge && !badgeAlreadyRendered(element, config.badge)) {
-            const headerBadge = document.createElement('span');
-            // card.css targets `article > header > span`.
-            headerBadge.textContent = config.badge;
-            headerEl.appendChild(headerBadge);
-          }
+          if (config.badge && !badgeAlreadyRendered(element, config.badge)) appendBadge(headerEl);
           
           header = headerEl;
           if (element.firstChild) {
@@ -655,12 +713,7 @@ export function composeCard(element, options = {}) {
           // Enhance existing header
           // Already a <header> inside the card -- card.css matches the tag.
           // Inject badge if missing
-          if (config.badge && !badgeAlreadyRendered(element, config.badge)) {
-            const existingHeaderBadge = document.createElement('span');
-            // card.css targets `article > header > span`.
-            existingHeaderBadge.textContent = config.badge;
-            header.appendChild(existingHeaderBadge);
-          }
+          if (config.badge && !badgeAlreadyRendered(element, config.badge)) appendBadge(header);
         }
       }
       
@@ -876,7 +929,7 @@ export function cardimage(element, options = {}) {
     // innerHTML, which is empty for a self-closing-style <div x-cardimage
     // src="..." content="...">. Confirmed live: "Optional content below the
     // image." never rendered, just an empty content area.
-    content: options.content || readAttr(element, 'content') || element.getAttribute('content') || element.innerHTML,
+    content: readOption(element, options, 'content') || element.innerHTML,
     // caption / href / loading were declared in cardimage.schema.json and read
     // nowhere: no caption ever rendered, href never made the card clickable,
     // and every image was hard-wired to loading="lazy".
@@ -894,10 +947,7 @@ export function cardimage(element, options = {}) {
   // with it. textContent: the caption is authored text, not markup.
   const addCaption = (figure) => {
     if (!config.caption) return;
-    const cap = document.createElement('figcaption');
-    cap.className = 'x-card__caption';
-    cap.textContent = config.caption;
-    figure.appendChild(cap);
+    cardPart(figure, 'figcaption', 'x-card__caption', config.caption);
   };
 
   // Build header/main/footer structure
@@ -945,11 +995,7 @@ export function cardimage(element, options = {}) {
   let stretchedLink = null;
   if (config.href && config.href !== '#') {
     element.classList.add('x-card-image--linked');
-    stretchedLink = document.createElement('a');
-    stretchedLink.className = 'x-card__link-overlay';
-    stretchedLink.href = config.href;
-    stretchedLink.setAttribute('aria-label', config.title || config.alt || config.href);
-    element.appendChild(stretchedLink);
+    stretchedLink = appendLinkOverlay(element, config.href, config.title || config.alt || config.href);
   }
 
   return () => {
@@ -971,16 +1017,16 @@ export function cardvideo(element, options = {}) {
     title: getAttr(element, options, 'title'),
     subtitle: getAttr(element, options, 'subtitle'),
     // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
-    autoplay: parseBoolean(options.autoplay) ?? (readAttr(element, 'autoplay') === 'true' || element.getAttribute('autoplay') === 'true' || (readFlag(element, 'autoplay') && readAttr(element, 'autoplay') !== 'false') || element.hasAttribute('autoplay')),
-    muted: parseBoolean(options.muted) ?? (readAttr(element, 'muted') === 'true' || element.getAttribute('muted') === 'true' || (readFlag(element, 'muted') && readAttr(element, 'muted') !== 'false') || element.hasAttribute('muted')),
-    loop: parseBoolean(options.loop) ?? (readAttr(element, 'loop') === 'true' || element.getAttribute('loop') === 'true' || (readFlag(element, 'loop') && readAttr(element, 'loop') !== 'false') || element.hasAttribute('loop')),
-    controls: parseBoolean(options.controls) ?? (readAttr(element, 'controls') !== 'false' && element.getAttribute('controls') !== 'false'),
+    autoplay: readOnFlag(element, options, 'autoplay'),
+    muted: readOnFlag(element, options, 'muted'),
+    loop: readOnFlag(element, options, 'loop'),
+    controls: readDefaultOnFlag(element, options, 'controls'),
     // Same aspect-ratio pattern as cardimage() above: a fixed box size,
     // deterministic regardless of load success/failure, instead of falling
     // back to the browser's intrinsic video default (~300x150) (#482).
     aspect: getAttr(element, options, 'aspect') || '16/9',
     // #608: same missing getAttribute('content') gap as cardimage() above.
-    content: options.content || readAttr(element, 'content') || element.getAttribute('content') || element.innerHTML,
+    content: readOption(element, options, 'content') || element.innerHTML,
     // cardvideo.schema.json declares `description`, not `subtitle`; it was
     // never read. Render it where cardproduct renders its own description:
     // as the header subtitle, unless an explicit subtitle already fills it.
@@ -1021,12 +1067,9 @@ export function cardvideo(element, options = {}) {
       element.dataset.needsCaptions = "For accessibility, consider adding captions";
       element.setAttribute('data-captions-missing', 'true');
       // Add accessibility warning
-      const warning = document.createElement('div');
       // Hidden but present for tests/SR: `.x-card__video-warning { display:
       // none }` in card.css (#779 -- was also written inline).
-      warning.className = 'x-card__video-warning';
-      warning.textContent = 'Video missing captions';
-      coverFigure.appendChild(warning);
+      cardPart(coverFigure, 'div', 'x-card__video-warning', 'Video missing captions');
     }
 
     coverFigure.appendChild(video);
@@ -1045,10 +1088,10 @@ export function cardbutton(element, options = {}) {
   const config = {
     ...element.dataset,
     ...options,
-    primary: options.primary || readAttr(element, 'primary') || element.getAttribute('primary'),
-    secondary: options.secondary || readAttr(element, 'secondary') || element.getAttribute('secondary'),
-    primaryHref: options.primaryHref || readAttr(element, 'primaryHref') || element.getAttribute('primary-href'),
-    secondaryHref: options.secondaryHref || readAttr(element, 'secondaryHref') || element.getAttribute('secondary-href'),
+    primary: readOption(element, options, 'primary'),
+    secondary: readOption(element, options, 'secondary'),
+    primaryHref: readOption(element, options, 'primaryHref'),
+    secondaryHref: readOption(element, options, 'secondaryHref'),
     behavior: 'cardbutton'
   };
 
@@ -1119,22 +1162,22 @@ export function cardbutton(element, options = {}) {
  */
 export function cardhero(element, options = {}) {
   const config = {
-    background: options.background || readAttr(element, 'background') || element.getAttribute('background'),
-    overlay: parseBoolean(options.overlay) ?? (readAttr(element, 'overlay') !== 'false' && element.getAttribute('overlay') !== 'false'),
-    xalign: options.xalign || readAttr(element, 'xalign') || element.getAttribute('xalign') || 'center',
-    height: options.height || readAttr(element, 'height') || element.getAttribute('height') || '400px',
-    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta'),
-    ctaHref: options.ctaHref || readAttr(element, 'ctaHref') || element.getAttribute('cta-href'),
+    background: readOption(element, options, 'background'),
+    overlay: readDefaultOnFlag(element, options, 'overlay'),
+    xalign: readOption(element, options, 'xalign') || 'center',
+    height: readOption(element, options, 'height') || '400px',
+    cta: readOption(element, options, 'cta'),
+    ctaHref: readOption(element, options, 'ctaHref'),
     ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || element.getAttribute('cta-tooltip'),
-    ctaSecondary: options.ctaSecondary || readAttr(element, 'ctaSecondary') || element.getAttribute('cta-secondary'),
-    ctaSecondaryHref: options.ctaSecondaryHref || readAttr(element, 'ctaSecondaryHref') || element.getAttribute('cta-secondary-href'),
+    ctaSecondary: readOption(element, options, 'ctaSecondary'),
+    ctaSecondaryHref: readOption(element, options, 'ctaSecondaryHref'),
     ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || element.getAttribute('cta-secondary-tooltip'),
-    pretitle: options.pretitle || readAttr(element, 'pretitle') || element.getAttribute('pretitle'),
+    pretitle: readOption(element, options, 'pretitle'),
     // Documented in cardhero.schema.json (enum: default/cosmic/split/
     // minimal/gradient) but never actually read here -- CSS never got a
     // corresponding .x-cardhero--<variant> rule either, so every variant
     // rendered pixel-identical (#383).
-    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
+    variant: readOption(element, options, 'variant') || 'default',
     // Declared in cardhero.schema.json ("Make hero full viewport height") and
     // read nowhere, so <x-cardhero full-height> rendered at the default 400px.
     fullHeight: parseBoolean(options.fullHeight) ?? readFlag(element, 'fullHeight'),
@@ -1213,104 +1256,78 @@ export function cardhero(element, options = {}) {
     // failed <audio> src -- so it surfaces in the app's own error viewer
     // instead of silently rendering broken. (#534)
     if (!isCssValue) {
-      const probe = new Image();
-      probe.addEventListener('error', () => {
-        if (!document.contains(element)) return;
+      probeBackgroundImage(element, config.background, 'x-cardhero', 'background', () => {
         element.removeAttribute('background');
         // Only the image goes; the cover/center sizing stays, as it did when
         // this was a removeProperty('background-image') on the style attribute.
         setRule(element, 'hero-background', { backgroundSize: 'cover', backgroundPosition: 'center' }, { weight: 3 });
-        // #1115: gradient fallback above still applies; an unreachable
-        // third-party host is reported on the card, not thrown.
-        if (reportIfThirdPartyMedia(element, config.background, 'x-cardhero')) return;
-        throw new Error(`x-cardhero: failed to load background "${config.background}" -- the file is missing or unreachable. Falling back to the default gradient.`);
       });
-      probe.src = config.background;
     }
   }
 
   // Legibility scrim + content are styled by classes in hero.css.
-  if (config.overlay) {
-    const overlayEl = document.createElement('div');
-    overlayEl.className = 'x-card__overlay';
-    element.appendChild(overlayEl);
-  }
+  if (config.overlay) cardPart(element, 'div', 'x-card__overlay');
 
-  const content = document.createElement('div');
-  content.className = 'x-card__hero-content';
+  const content = cardPart(null, 'div', 'x-card__hero-content');
 
-  // Pretitle (eyebrow). All visual styling lives in hero.css.
-  if (slots.pretitle) {
-    slots.pretitle.classList.add('x-card__hero-pretitle');
-    content.appendChild(slots.pretitle);
-  } else if (base.config.pretitle) {
-    const preEl = document.createElement('div');
-    preEl.className = 'x-card__hero-pretitle';
-    preEl.innerHTML = base.config.pretitle;
-    content.appendChild(preEl);
-  }
+  // Pretitle, title and subtitle each come from an authored slot when there
+  // is one, otherwise from config. Config values may carry markup, so they go
+  // in as innerHTML. All visual styling lives in hero.css.
+  const placeHeroPart = (slotEl, slotClass, value, tag, className) => {
+    if (slotEl) {
+      slotEl.classList.add(slotClass);
+      content.appendChild(slotEl);
+    } else if (value) {
+      cardHtmlPart(content, tag, className, value);
+    }
+  };
+
+  // Pretitle (eyebrow).
+  placeHeroPart(slots.pretitle, 'x-card__hero-pretitle', base.config.pretitle, 'div', 'x-card__hero-pretitle');
 
   // Title.
-  if (slots.title) {
-    slots.title.classList.add('x-card__hero-title');
-    content.appendChild(slots.title);
-  } else if (base.config.title) {
-    // A page hero is usually the page's main heading, but a hero can also sit
-    // inside a section where h1 would be wrong. Hardcoding h3 left the home
-    // page with NO h1 at all and a backwards outline (h3 "Build stunning UIs"
-    // followed by h2 "By the Numbers"), so the level is now the author's
-    // choice with h3 as the unchanged default.
-    // readAttr, not getAttribute (#1124). The schema declares headingLevel,
-    // the HTML parser lowercases it to headinglevel, and a literal
-    // getAttribute('heading-level') can never match that -- so all six
-    // declared values silently rendered h3 and the six demo rows were
-    // identical. readAttr tries every spelling. John: no attribute name
-    // carries a dash; the only dash is the x- behavior prefix (#1125).
-    // Now read once into config.headingLevel above.
-    const level = String(config.headingLevel).replace(/^h/i, '');
-    const tag = /^[1-6]$/.test(level) ? `h${level}` : 'h3';
-    const titleEl = document.createElement(tag);
-    titleEl.className = 'x-card__title x-card__hero-title';
-    titleEl.innerHTML = base.config.title;
-    content.appendChild(titleEl);
-  }
+  // A page hero is usually the page's main heading, but a hero can also sit
+  // inside a section where h1 would be wrong. Hardcoding h3 left the home
+  // page with NO h1 at all and a backwards outline (h3 "Build stunning UIs"
+  // followed by h2 "By the Numbers"), so the level is now the author's
+  // choice with h3 as the unchanged default.
+  // readAttr, not getAttribute (#1124). The schema declares headingLevel,
+  // the HTML parser lowercases it to headinglevel, and a literal
+  // getAttribute('heading-level') can never match that -- so all six
+  // declared values silently rendered h3 and the six demo rows were
+  // identical. readAttr tries every spelling. John: no attribute name
+  // carries a dash; the only dash is the x- behavior prefix (#1125).
+  // Now read once into config.headingLevel above.
+  const level = String(config.headingLevel).replace(/^h/i, '');
+  const titleTag = /^[1-6]$/.test(level) ? `h${level}` : 'h3';
+  placeHeroPart(slots.title, 'x-card__hero-title', base.config.title, titleTag, 'x-card__title x-card__hero-title');
 
   // Subtitle.
-  if (slots.subtitle) {
-    slots.subtitle.classList.add('x-card__hero-subtitle');
-    content.appendChild(slots.subtitle);
-  } else if (base.config.subtitle) {
-    const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'x-card__subtitle x-card__hero-subtitle';
-    subtitleEl.innerHTML = base.config.subtitle;
-    content.appendChild(subtitleEl);
-  }
+  placeHeroPart(slots.subtitle, 'x-card__hero-subtitle', base.config.subtitle, 'div', 'x-card__subtitle x-card__hero-subtitle');
 
   // CTAs — hero-specific button classes (styled in hero.css, theme colors).
   if (base.config.cta || base.config.ctaSecondary) {
-    const ctaGroup = document.createElement('div');
-    ctaGroup.className = 'x-card__cta-group';
+    const ctaGroup = cardPart(null, 'div', 'x-card__cta-group');
 
-    if (base.config.cta) {
-      const btn = document.createElement('a');
-      btn.className = 'x-hero-cta x-hero-cta--primary';
-      btn.href = base.config.ctaHref || '#';
-      btn.textContent = base.config.cta;
-      // Set BEFORE appending — the MutationObserver-driven auto-injection
-      // (wb-lazy.js) picks up new [x-tooltip] elements as they're inserted,
-      // so this is enough for the real tooltip behavior to attach on its own.
-      if (base.config.ctaTooltip) btn.setAttribute('x-tooltip', base.config.ctaTooltip);
+    // Attributes are set BEFORE appending — the MutationObserver-driven
+    // auto-injection (wb-lazy.js) picks up new [x-tooltip] / [x-glass]
+    // elements as they're inserted, so that is enough for the real behaviors
+    // to attach on their own.
+    const addCta = (kind, label, href, tooltip, glass) => {
+      if (!label) return;
+      const btn = cardPart(null, 'a', `x-hero-cta x-hero-cta--${kind}`);
+      if (glass) btn.setAttribute('x-glass', '');
+      btn.href = href || '#';
+      btn.textContent = label;
+      if (tooltip) btn.setAttribute('x-tooltip', tooltip);
       ctaGroup.appendChild(btn);
-    }
+    };
 
-    if (base.config.ctaSecondary) {
-      const secondaryBtn = document.createElement('a');
-      secondaryBtn.className = 'x-hero-cta x-hero-cta--secondary';
-      secondaryBtn.href = base.config.ctaSecondaryHref || '#';
-      secondaryBtn.textContent = base.config.ctaSecondary;
-      if (base.config.ctaSecondaryTooltip) secondaryBtn.setAttribute('x-tooltip', base.config.ctaSecondaryTooltip);
-      ctaGroup.appendChild(secondaryBtn);
-    }
+    addCta('primary', base.config.cta, base.config.ctaHref, base.config.ctaTooltip, false);
+    // #1236: the secondary CTA carries the hero's scene -- the wave runs
+    // through it. That is x-glass, applied as the behavior, not a private
+    // copy of the recipe in hero.css.
+    addCta('secondary', base.config.ctaSecondary, base.config.ctaSecondaryHref, base.config.ctaSecondaryTooltip, true);
     content.appendChild(ctaGroup);
   }
 
@@ -1327,16 +1344,16 @@ export function cardhero(element, options = {}) {
  */
 export function cardprofile(element, options = {}) {
   const config = {
-    avatar: options.avatar || readAttr(element, 'avatar') || element.getAttribute('avatar'),
-    name: options.name || readAttr(element, 'name') || element.getAttribute('name'),
-    role: options.role || readAttr(element, 'role') || element.getAttribute('role'),
-    bio: options.bio || readAttr(element, 'bio') || element.getAttribute('bio'),
-    cover: options.cover || readAttr(element, 'cover') || element.getAttribute('cover'),
+    avatar: readOption(element, options, 'avatar'),
+    name: readOption(element, options, 'name'),
+    role: readOption(element, options, 'role'),
+    bio: readOption(element, options, 'bio'),
+    cover: readOption(element, options, 'cover'),
     // schema-declared but previously never read -- size/align had zero
     // effect (#19: every declared attribute must produce a real effect).
-    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || 'md',
-    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'center',
-    hoverText: options.hoverText || readAttr(element, 'hoverText') || element.getAttribute('hoverText') || element.getAttribute('hover-text'),
+    size: readOption(element, options, 'size') || 'md',
+    align: readOption(element, options, 'align') || 'center',
+    hoverText: readOption(element, options, 'hoverText', 'hoverText') || element.getAttribute('hover-text'),
     ...options
   };
 
@@ -1369,12 +1386,7 @@ export function cardprofile(element, options = {}) {
     // records the change -- but this function kept writing the OLD placement
     // inline (top:8px; right:0.6rem) and never emitted the class, so the
     // badge sat above centre on every profile card.
-    if (config.role) {
-      const roleBadge = document.createElement('div');
-      roleBadge.className = 'x-card__subtitle x-card__role x-card__role--badge';
-      roleBadge.textContent = config.role;
-      coverFig.appendChild(roleBadge);
-    }
+    if (config.role) cardPart(coverFig, 'div', 'x-card__subtitle x-card__role x-card__role--badge', config.role);
 
     element.appendChild(coverFig);
   }
@@ -1390,40 +1402,15 @@ export function cardprofile(element, options = {}) {
   // #779: padding and alignment are `.x-card__profile-content` and its
   // `--left` modifier in card.css, and the avatar's box is `.x-card__avatar`
   // plus `--sm/--md/--lg` -- the cssText copies of those rules are gone.
-  const content = document.createElement('div');
-  content.className = 'x-card__profile-content';
+  const content = cardPart(null, 'div', 'x-card__profile-content');
   if (config.align === 'left') content.classList.add('x-card__profile-content--left');
 
   const avatarSize = ['sm', 'md', 'lg'].includes(config.size) ? config.size : 'md';
 
-  if (config.avatar) {
-    const avatarImg = document.createElement('img');
-    avatarImg.className = `x-card__avatar x-card__avatar--${avatarSize}`;
-    avatarImg.src = config.avatar;
-    avatarImg.alt = config.name || 'Avatar';
-    content.appendChild(avatarImg);
-  }
-
-  if (config.name) {
-    const nameEl = document.createElement('h3');
-    nameEl.className = 'x-card__title x-card__name';
-    nameEl.textContent = config.name;
-    content.appendChild(nameEl);
-  }
-
-  if (config.role && !config.cover) {
-    const roleEl = document.createElement('div');
-    roleEl.className = 'x-card__subtitle x-card__role';
-    roleEl.textContent = config.role;
-    content.appendChild(roleEl);
-  }
-
-  if (config.bio) {
-    const bioEl = document.createElement('div');
-    bioEl.className = 'x-card__bio';
-    bioEl.textContent = config.bio;
-    content.appendChild(bioEl);
-  }
+  if (config.avatar) cardImg(content, `x-card__avatar x-card__avatar--${avatarSize}`, config.avatar, config.name || 'Avatar');
+  if (config.name) cardPart(content, 'h3', 'x-card__title x-card__name', config.name);
+  if (config.role && !config.cover) cardPart(content, 'div', 'x-card__subtitle x-card__role', config.role);
+  if (config.bio) cardPart(content, 'div', 'x-card__bio', config.bio);
 
   element.appendChild(content);
 
@@ -1443,17 +1430,17 @@ export function cardprofile(element, options = {}) {
  */
 export function cardpricing(element, options = {}) {
   const config = {
-    plan: options.plan || readAttr(element, 'plan') || element.getAttribute('plan') || 'Basic Plan',
-    price: options.price || readAttr(element, 'price') || element.getAttribute('price') || '$0',
-    period: options.period || readAttr(element, 'period') || element.getAttribute('period') || '/month',
+    plan: readOption(element, options, 'plan') || 'Basic Plan',
+    price: readOption(element, options, 'price') || '$0',
+    period: readOption(element, options, 'period') || '/month',
     // Declared in cardpricing.schema.json ("Short plan description"), read nowhere.
     description: options.description || readAttr(element, 'description'),
     features: options.features || readAttr(element, 'features')?.split(',') || element.getAttribute('features')?.split(',') || ['Feature 1', 'Feature 2'],
-    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta') || 'Get Started',
-    ctaHref: options.ctaHref || readAttr(element, 'ctaHref') || element.getAttribute('cta-href') || '#',
+    cta: readOption(element, options, 'cta') || 'Get Started',
+    ctaHref: readOption(element, options, 'ctaHref') || '#',
     // Same bare-boolean-attribute gap as cardexpandable/cardminimizable above.
-    featured: parseBoolean(options.featured) ?? (readAttr(element, 'featured') === 'true' || element.getAttribute('featured') === 'true' || (readFlag(element, 'featured') && readAttr(element, 'featured') !== 'false') || element.hasAttribute('featured')),
-    background: options.background || readAttr(element, 'background') || element.getAttribute('background'),
+    featured: readOnFlag(element, options, 'featured'),
+    background: readOption(element, options, 'background'),
     ...options
   };
 
@@ -1477,17 +1464,9 @@ export function cardpricing(element, options = {}) {
   const header = base.createHeader();
   header.innerHTML = ''; // Clear default
 
-  const planEl = document.createElement('h3');
-  planEl.className = 'x-card__title x-card__plan';
-  planEl.textContent = config.plan;
-  header.appendChild(planEl);
+  cardPart(header, 'h3', 'x-card__title x-card__plan', config.plan);
   // Plan description under the name; .x-card__description is styled in card.css.
-  if (config.description) {
-    const descEl = document.createElement('p');
-    descEl.className = 'x-card__description';
-    descEl.textContent = config.description;
-    header.appendChild(descEl);
-  }
+  if (config.description) cardPart(header, 'p', 'x-card__description', config.description);
   element.appendChild(header);
 
   // Main content with Price and Features
@@ -1498,33 +1477,15 @@ export function cardpricing(element, options = {}) {
   const main = base.createMain();
 
   // Price
-  const priceWrap = document.createElement('div');
-  priceWrap.className = 'x-card__price-wrap';
-
-  const priceEl = document.createElement('span');
-  priceEl.className = 'x-card__amount';
-  priceEl.textContent = config.price;
-  priceWrap.appendChild(priceEl);
-
-  const periodEl = document.createElement('span');
-  periodEl.className = 'x-card__period';
-  periodEl.textContent = config.period;
-  priceWrap.appendChild(periodEl);
-
-  main.appendChild(priceWrap);
+  const priceWrap = cardPart(main, 'div', 'x-card__price-wrap');
+  cardPart(priceWrap, 'span', 'x-card__amount', config.price);
+  cardPart(priceWrap, 'span', 'x-card__period', config.period);
 
   // Features
-  const featuresList = document.createElement('ul');
-  featuresList.className = 'x-card__features';
-
+  const featuresList = cardPart(main, 'ul', 'x-card__features');
   config.features.forEach(f => {
-    const li = document.createElement('li');
-    li.className = 'x-card__feature';
-    li.innerHTML = `<span class="x-card__feature-check">✓</span> ${f.trim()}`;
-    featuresList.appendChild(li);
+    cardHtmlPart(featuresList, 'li', 'x-card__feature', `<span class="x-card__feature-check">✓</span> ${f.trim()}`);
   });
-
-  main.appendChild(featuresList);
   element.appendChild(main);
 
   // Footer with CTA
@@ -1532,10 +1493,7 @@ export function cardpricing(element, options = {}) {
   const footer = base.createFooter();
   footer.innerHTML = ''; // Clear default
 
-  const ctaBtn = document.createElement('a');
-  ctaBtn.href = config.ctaHref;
-  ctaBtn.className = 'x-card__cta';
-  // #561: #520 already removed this exact inline style.cssText (its
+  // #561: #520 already removed this CTA's inline style.cssText (its
   // padding:0.875rem/14px duplicated -- and silently overrode -- card.css's
   // `.x-card__cta` rule, which #520 also bumped to the compliant 1rem/16px).
   // A later, unrelated commit (0005dbb0, same day) re-added it verbatim,
@@ -1543,9 +1501,8 @@ export function cardpricing(element, options = {}) {
   // `git blame`, this line's inline cssText was reintroduced after #520's
   // removal. No inline style needed here: card.css's `.x-card__cta` already
   // covers every property this used to set.
-  ctaBtn.textContent = config.cta;
-  footer.appendChild(ctaBtn);
-  
+  appendCtaLink(footer, 'x-card__cta', config.ctaHref, config.cta);
+
   element.appendChild(footer);
 
   return base.cleanup;
@@ -1557,10 +1514,10 @@ export function cardpricing(element, options = {}) {
  */
 export function cardstats(element, options = {}) {
   const config = {
-    value: options.value || readAttr(element, 'value') || element.getAttribute('value'),
-    label: options.label || readAttr(element, 'label') || element.getAttribute('label'),
-    icon: options.icon || readAttr(element, 'icon') || element.getAttribute('icon'),
-    trend: options.trend || readAttr(element, 'trend') || element.getAttribute('trend'),
+    value: readOption(element, options, 'value'),
+    label: readOption(element, options, 'label'),
+    icon: readOption(element, options, 'icon'),
+    trend: readOption(element, options, 'trend'),
     trendValue: options.trendValue || element.getAttribute('trend-value') || readAttr(element, 'trendValue'),
     // Declared in cardstats.schema.json ("Accent color"), read nowhere.
     color: options.color || readAttr(element, 'color'),
@@ -1625,12 +1582,7 @@ export function cardstats(element, options = {}) {
     content.appendChild(valueEl);
   }
 
-  if (config.label) {
-    const labelEl = document.createElement('div');
-    labelEl.className = 'x-card__stats-label';
-    labelEl.textContent = config.label;
-    content.appendChild(labelEl);
-  }
+  if (config.label) cardPart(content, 'div', 'x-card__stats-label', config.label);
 
   if (config.trend && config.trendValue) {
     const trendEl = document.createElement('div');
@@ -1662,11 +1614,11 @@ export function cardstats(element, options = {}) {
  */
 export function cardtestimonial(element, options = {}) {
   const config = {
-    quote: options.quote || readAttr(element, 'quote') || element.getAttribute('quote') || element.textContent,
-    author: options.author || readAttr(element, 'author') || element.getAttribute('author'),
-    role: options.role || readAttr(element, 'role') || element.getAttribute('role'),
-    avatar: options.avatar || readAttr(element, 'avatar') || element.getAttribute('avatar'),
-    rating: options.rating || readAttr(element, 'rating') || element.getAttribute('rating'),
+    quote: readOption(element, options, 'quote') || element.textContent,
+    author: readOption(element, options, 'author'),
+    role: readOption(element, options, 'role'),
+    avatar: readOption(element, options, 'avatar'),
+    rating: readOption(element, options, 'rating'),
     ...options
   };
 
@@ -1686,54 +1638,26 @@ export function cardtestimonial(element, options = {}) {
   //
   // aria-hidden because the glyph is ornament: the quote's meaning is in the
   // <blockquote> below, and a screen reader announcing a bare `"` is noise.
-  const quoteIcon = document.createElement('div');
-  quoteIcon.className = 'x-card__quote-icon';
+  const quoteIcon = cardPart(null, 'div', 'x-card__quote-icon');
   quoteIcon.setAttribute('aria-hidden', 'true');
   quoteIcon.textContent = '"';
   element.appendChild(quoteIcon);
 
   // Quote
-  if (config.quote) {
-    const quoteEl = document.createElement('blockquote');
-    quoteEl.className = 'x-card__quote';
-    quoteEl.textContent = config.quote;
-    element.appendChild(quoteEl);
-  }
+  if (config.quote) cardPart(element, 'blockquote', 'x-card__quote', config.quote);
 
   // Rating
   if (config.rating) {
-    const ratingEl = document.createElement('div');
-    ratingEl.className = 'x-card__rating';
-    ratingEl.textContent = '★'.repeat(parseInt(config.rating)) + '☆'.repeat(5 - parseInt(config.rating));
-    element.appendChild(ratingEl);
+    cardPart(element, 'div', 'x-card__rating', '★'.repeat(parseInt(config.rating)) + '☆'.repeat(5 - parseInt(config.rating)));
   }
 
   // Author
-  const authorWrap = document.createElement('footer');
-  authorWrap.className = 'x-card__footer';
+  const authorWrap = cardPart(null, 'footer', 'x-card__footer');
+  if (config.avatar) cardImg(authorWrap, 'x-card__avatar x-card__avatar--testimonial', config.avatar, config.author || '');
 
-  if (config.avatar) {
-    const avatarImg = document.createElement('img');
-    avatarImg.className = 'x-card__avatar x-card__avatar--testimonial';
-    avatarImg.src = config.avatar;
-    avatarImg.alt = config.author || '';
-    authorWrap.appendChild(avatarImg);
-  }
-
-  const authorInfo = document.createElement('div');
-  if (config.author) {
-    const authorName = document.createElement('cite');
-    authorName.className = 'x-card__author';
-    authorName.textContent = config.author;
-    authorInfo.appendChild(authorName);
-  }
-
-  if (config.role) {
-    const roleEl = document.createElement('span');
-    roleEl.className = 'x-card__author-role';
-    roleEl.textContent = config.role;
-    authorInfo.appendChild(roleEl);
-  }
+  const authorInfo = cardPart(null, 'div');
+  if (config.author) cardPart(authorInfo, 'cite', 'x-card__author', config.author);
+  if (config.role) cardPart(authorInfo, 'span', 'x-card__author-role', config.role);
 
   authorWrap.appendChild(authorInfo);
   element.appendChild(authorWrap);
@@ -1747,14 +1671,14 @@ export function cardtestimonial(element, options = {}) {
  */
 export function cardproduct(element, options = {}) {
   const config = {
-    image: options.image || readAttr(element, 'image') || element.getAttribute('image'),
-    price: options.price || readAttr(element, 'price') || element.getAttribute('price'),
+    image: readOption(element, options, 'image'),
+    price: readOption(element, options, 'price'),
     originalPrice: options.originalPrice || element.getAttribute('original-price') || readAttr(element, 'originalPrice'),
-    badge: options.badge || readAttr(element, 'badge') || element.getAttribute('badge'),
-    rating: options.rating || readAttr(element, 'rating') || element.getAttribute('rating'),
-    reviews: options.reviews || readAttr(element, 'reviews') || element.getAttribute('reviews'),
-    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta') || 'Add to Cart',
-    description: options.description || readAttr(element, 'description') || element.getAttribute('description'),
+    badge: readOption(element, options, 'badge'),
+    rating: readOption(element, options, 'rating'),
+    reviews: readOption(element, options, 'reviews'),
+    cta: readOption(element, options, 'cta') || 'Add to Cart',
+    description: readOption(element, options, 'description'),
     ...options
   };
 
@@ -1781,10 +1705,8 @@ export function cardproduct(element, options = {}) {
       // composeCard().buildStructure() (which owns the shared header-badge
       // logic elsewhere in this file) -- it never calls that path, so the
       // badge has to render here or not at all (#380).
-      const badgeEl = document.createElement('span');
       // card.css targets `article > header > span`.
-      badgeEl.textContent = config.badge;
-      figure.appendChild(badgeEl);
+      cardPart(figure, 'span', '', config.badge);
     }
 
     element.appendChild(figure);
@@ -1797,56 +1719,20 @@ export function cardproduct(element, options = {}) {
   // .x-product); the cssText copies are gone.
   info.className = 'x-card__product-info';
 
-  if (base.config.title) {
-    const titleEl = document.createElement('h3');
-    titleEl.className = 'x-card__title x-card__product-title';
-    titleEl.textContent = base.config.title;
-    info.appendChild(titleEl);
-  }
-
-  if (base.config.subtitle) {
-    const descEl = document.createElement('div');
-    descEl.className = 'x-card__subtitle x-card__product-desc';
-    descEl.textContent = base.config.subtitle;
-    info.appendChild(descEl);
-  }
+  appendTitleAndSubtitle(info, base.config, 'h3', 'x-card__title x-card__product-title', 'div', 'x-card__subtitle x-card__product-desc');
 
   // Rating
   if (config.rating) {
-    const ratingWrap = document.createElement('div');
-    ratingWrap.className = 'x-card__product-rating';
-
-    const stars = document.createElement('span');
-    stars.className = 'x-card__product-stars';
-    stars.textContent = '★'.repeat(Math.floor(parseFloat(config.rating)));
-    ratingWrap.appendChild(stars);
-
-    const ratingText = document.createElement('span');
-    ratingText.className = 'x-card__product-rating-text';
-    ratingText.textContent = config.rating + (config.reviews ? ` (${config.reviews})` : '');
-    ratingWrap.appendChild(ratingText);
-
+    const ratingWrap = cardPart(null, 'div', 'x-card__product-rating');
+    cardPart(ratingWrap, 'span', 'x-card__product-stars', '★'.repeat(Math.floor(parseFloat(config.rating))));
+    cardPart(ratingWrap, 'span', 'x-card__product-rating-text', config.rating + (config.reviews ? ` (${config.reviews})` : ''));
     info.appendChild(ratingWrap);
   }
 
   // Price
-  const priceWrap = document.createElement('div');
-  priceWrap.className = 'x-card__price-wrap';
-
-  if (config.price) {
-    const priceEl = document.createElement('span');
-    priceEl.className = 'x-card__price-current';
-    priceEl.textContent = config.price;
-    priceWrap.appendChild(priceEl);
-  }
-
-  if (config.originalPrice) {
-    const origEl = document.createElement('span');
-    origEl.className = 'x-card__price-original';
-    origEl.textContent = config.originalPrice;
-    priceWrap.appendChild(origEl);
-  }
-
+  const priceWrap = cardPart(null, 'div', 'x-card__price-wrap');
+  if (config.price) cardPart(priceWrap, 'span', 'x-card__price-current', config.price);
+  if (config.originalPrice) cardPart(priceWrap, 'span', 'x-card__price-original', config.originalPrice);
   info.appendChild(priceWrap);
 
   // CTA button
@@ -1908,17 +1794,26 @@ export function cardnotification(element, options = {}) {
 
   // Read variant (primary) with fallback to type (legacy).
   // Check dataset (data-*) first to match the framework's attribute convention.
-  const variant = options.variant || readAttr(element, 'variant') || element.getAttribute('variant')
-    || options.type || readAttr(element, 'type') || element.getAttribute('type') || 'info';
-  const title = options.title || readAttr(element, 'title') || element.getAttribute('title') || '';
-  const message = options.message || readAttr(element, 'message') || element.getAttribute('message') || element.textContent || '';
+  const variant = readOption(element, options, 'variant')
+    || readOption(element, options, 'type') || 'info';
+  const title = readOption(element, options, 'title') || '';
+  const message = readOption(element, options, 'message') || element.textContent || '';
   const dismissible = parseBoolean(
     options.dismissible ?? readAttr(element, 'dismissible') ?? element.getAttribute('dismissible')
   ) !== false;
-  const customIcon = options.icon || readAttr(element, 'icon') || element.getAttribute('icon');
+  const customIcon = readOption(element, options, 'icon');
 
   // Default icon letters per variant
   const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
+  const iconText = customIcon || defaultIcons[variant] || 'i';
+
+  // Variant class: both paths below need it.
+  const applyVariantClass = () => {
+    element.classList.add('x-notification');
+    if (variant !== 'default') {
+      element.classList.add(`x-notification--${variant}`);
+    }
+  };
 
   // ── Accessibility (always) ──
   element.setAttribute('role', 'alert');
@@ -1942,15 +1837,12 @@ export function cardnotification(element, options = {}) {
   if (schemaProcessed) {
     // Ensure variant class is present (schema should have added it,
     // but belt-and-suspenders for edge cases)
-    element.classList.add('x-notification');
-    if (variant !== 'default') {
-      element.classList.add(`x-notification--${variant}`);
-    }
+    applyVariantClass();
 
     // Fill in default icon text if schema left it empty
     const iconEl = element.querySelector('.x-notification__icon');
     if (iconEl && !iconEl.textContent.trim()) {
-      iconEl.textContent = customIcon || defaultIcons[variant] || 'i';
+      iconEl.textContent = iconText;
     }
 
     // Wire up dismiss button
@@ -1976,36 +1868,16 @@ export function cardnotification(element, options = {}) {
   // PATH B: No schema — build DOM from scratch (standalone)
   // Uses CSS classes, no inline color styles
   // ═══════════════════════════════════════════════════════
-  element.classList.add('x-notification');
-  if (variant !== 'default') {
-    element.classList.add(`x-notification--${variant}`);
-  }
+  applyVariantClass();
   element.innerHTML = '';
 
   // Icon
-  const standaloneIconEl = document.createElement('span');
-  standaloneIconEl.className = 'x-notification__icon';
-  standaloneIconEl.textContent = customIcon || defaultIcons[variant] || 'i';
-  element.appendChild(standaloneIconEl);
+  cardPart(element, 'span', 'x-notification__icon', iconText);
 
   // Content
-  const content = document.createElement('main');
-  content.className = 'x-notification__content';
-
-  if (title) {
-    const titleEl = document.createElement('strong');
-    titleEl.className = 'x-notification__title';
-    titleEl.textContent = title;
-    content.appendChild(titleEl);
-  }
-
-  if (message) {
-    const msgEl = document.createElement('div');
-    msgEl.className = 'x-notification__message';
-    msgEl.textContent = message;
-    content.appendChild(msgEl);
-  }
-
+  const content = cardPart(null, 'main', 'x-notification__content');
+  if (title) cardPart(content, 'strong', 'x-notification__title', title);
+  if (message) cardPart(content, 'div', 'x-notification__message', message);
   element.appendChild(content);
 
   // Dismiss button
@@ -2067,7 +1939,7 @@ const cardFileTypeFromName = (name) => {
  * Custom Tag: <card-file>
  */
 export function cardfile(element, options = {}) {
-  const filename = options.filename || readAttr(element, 'filename') || element.getAttribute('filename');
+  const filename = readOption(element, options, 'filename');
   const config = {
     filename,
     // cardfile.schema.json declares this property as `fileType` (HTML
@@ -2087,10 +1959,10 @@ export function cardfile(element, options = {}) {
       || readAttr(element, 'fileType') || element.getAttribute('file-type')
       || readAttr(element, 'type') || element.getAttribute('type')
       || cardFileTypeFromName(filename),
-    size: options.size || readAttr(element, 'size') || element.getAttribute('size'),
-    date: options.date || readAttr(element, 'date') || element.getAttribute('date'),
-    downloadable: parseBoolean(options.downloadable) ?? (readAttr(element, 'downloadable') !== 'false' && element.getAttribute('downloadable') !== 'false'),
-    href: options.href || readAttr(element, 'href') || element.getAttribute('href'),
+    size: readOption(element, options, 'size'),
+    date: readOption(element, options, 'date'),
+    downloadable: readDefaultOnFlag(element, options, 'downloadable'),
+    href: readOption(element, options, 'href'),
     ...options
   };
 
@@ -2105,32 +1977,17 @@ export function cardfile(element, options = {}) {
   // card.css, which is why variant="compact" could never be styled.
 
   // Icon
-  const iconEl = document.createElement('span');
-  iconEl.className = 'x-card__file-icon';
-  iconEl.textContent = icons[config.type] || icons.file;
-  element.appendChild(iconEl);
+  cardPart(element, 'span', 'x-card__file-icon', icons[config.type] || icons.file);
 
   // Info
-  const info = document.createElement('div');
-  info.className = 'x-card__file-info';
-
-  if (config.filename) {
-    const nameEl = document.createElement('h3');
-    nameEl.className = 'x-card__filename';
-    nameEl.textContent = config.filename;
-    info.appendChild(nameEl);
-  }
+  const info = cardPart(null, 'div', 'x-card__file-info');
+  if (config.filename) cardPart(info, 'h3', 'x-card__filename', config.filename);
 
   const meta = [];
   if (config.size) meta.push(config.size);
   if (config.date) meta.push(config.date);
 
-  if (meta.length) {
-    const metaEl = document.createElement('div');
-    metaEl.className = 'x-card__file-meta';
-    metaEl.textContent = meta.join(' • ');
-    info.appendChild(metaEl);
-  }
+  if (meta.length) cardPart(info, 'div', 'x-card__file-meta', meta.join(' • '));
 
   element.appendChild(info);
 
@@ -2142,10 +1999,7 @@ export function cardfile(element, options = {}) {
   // download, so the card isn't made clickable at all.
   const downloadUrl = config.href;
   if (config.downloadable && downloadUrl) {
-    const dlIcon = document.createElement('span');
-    dlIcon.className = 'x-card__file-download';
-    dlIcon.textContent = '⬇️';
-    element.appendChild(dlIcon);
+    cardPart(element, 'span', 'x-card__file-download', '⬇️');
 
     // The whole card is the click target: .x-card-file--downloadable (#779).
     element.classList.add('x-card-file--downloadable');
@@ -2163,9 +2017,7 @@ export function cardfile(element, options = {}) {
       a.remove();
     };
     const onClick = () => triggerDownload();
-    const onKey = (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerDownload(); }
-    };
+    const onKey = onActivateKey(() => triggerDownload());
     element.addEventListener('click', onClick);
     element.addEventListener('keydown', onKey);
 
@@ -2210,11 +2062,11 @@ export function cardfile(element, options = {}) {
  */
 export function cardlink(element, options = {}) {
   const config = {
-    href: options.href || readAttr(element, 'href') || element.getAttribute('href') || '#',
-    target: options.target || readAttr(element, 'target') || element.getAttribute('target') || '_self',
-    icon: options.icon || readAttr(element, 'icon') || element.getAttribute('icon'),
-    description: options.description || readAttr(element, 'description') || element.getAttribute('description') || '',
-    badge: options.badge || readAttr(element, 'badge') || element.getAttribute('badge') || '',
+    href: readOption(element, options, 'href') || '#',
+    target: readOption(element, options, 'target') || '_self',
+    icon: readOption(element, options, 'icon'),
+    description: readOption(element, options, 'description') || '',
+    badge: readOption(element, options, 'badge') || '',
     badgeVariant: options.badgeVariant || element.dataset.badgeVariant || element.getAttribute('badge-variant') || 'glass', // glass, gradient
     ...options
   };
@@ -2231,62 +2083,34 @@ export function cardlink(element, options = {}) {
   // now carry the classes those rules were written for.
 
   // Header row with icon and external indicator
-  const headerRow = document.createElement('div');
-  headerRow.className = 'x-card__link-header';
-
-  const titleGroup = document.createElement('div');
-  titleGroup.className = 'x-card__link-title-group';
+  const headerRow = cardPart(null, 'div', 'x-card__link-header');
+  const titleGroup = cardPart(null, 'div', 'x-card__link-title-group');
 
   // Icon + Title row
   if (config.icon || base.config.title) {
-    const titleRow = document.createElement('div');
-    titleRow.className = 'x-card__link-title-row';
+    const titleRow = cardPart(null, 'div', 'x-card__link-title-row');
 
-    if (config.icon) {
-      const iconEl = document.createElement('span');
-      // .x-card__link-icon sets the 1.25rem size .x-card__icon would
-      // otherwise take from --x-card-icon-size.
-      iconEl.className = 'x-card__icon x-card__link-icon';
-      iconEl.textContent = config.icon;
-      titleRow.appendChild(iconEl);
-    }
-    
-    if (base.config.title) {
-      const titleEl = document.createElement('h3');
-      
-      titleEl.textContent = base.config.title;
-      titleRow.appendChild(titleEl);
-    }
-    
+    // .x-card__link-icon sets the 1.25rem size .x-card__icon would
+    // otherwise take from --x-card-icon-size.
+    if (config.icon) cardPart(titleRow, 'span', 'x-card__icon x-card__link-icon', config.icon);
+    if (base.config.title) cardPart(titleRow, 'h3', '', base.config.title);
+
     titleGroup.appendChild(titleRow);
   }
 
   // Description (subtitle or description)
   const desc = config.description || base.config.subtitle;
-  if (desc) {
-    const descEl = document.createElement('div');
-    descEl.className = 'x-card__description';
-    descEl.textContent = desc;
-    titleGroup.appendChild(descEl);
-  }
+  if (desc) cardPart(titleGroup, 'div', 'x-card__description', desc);
 
   // Badge
   if (config.badge) {
-    const badgeEl = document.createElement('span');
-    badgeEl.className = `${config.badgeVariant === 'gradient' ? 'x-badge-gradient' : 'x-tag-glass'} x-card__link-badge`;
-    badgeEl.textContent = config.badge;
-    titleGroup.appendChild(badgeEl);
+    cardPart(titleGroup, 'span', `${config.badgeVariant === 'gradient' ? 'x-badge-gradient' : 'x-tag-glass'} x-card__link-badge`, config.badge);
   }
 
   headerRow.appendChild(titleGroup);
 
   // External indicator
-  if (config.target === '_blank') {
-    const extIcon = document.createElement('span');
-    extIcon.className = 'x-card__link-external';
-    extIcon.textContent = '↗';
-    headerRow.appendChild(extIcon);
-  }
+  if (config.target === '_blank') cardPart(headerRow, 'span', 'x-card__link-external', '↗');
 
   element.appendChild(headerRow);
 
@@ -2302,15 +2126,7 @@ export function cardlink(element, options = {}) {
   // opens in a background tab) that a div + role="link" only approximates.
   let stretchedLink = null;
   if (config.href && config.href !== '#') {
-    stretchedLink = document.createElement('a');
-    stretchedLink.href = config.href;
-    if (config.target === '_blank') {
-      stretchedLink.target = '_blank';
-      stretchedLink.rel = 'noopener';
-    }
-    stretchedLink.setAttribute('aria-label', base.config.title || config.href);
-    stretchedLink.className = 'x-card__link-overlay';
-    element.appendChild(stretchedLink);
+    stretchedLink = appendLinkOverlay(element, config.href, base.config.title || config.href, config.target);
   }
 
   // #678: show the author's own content -- see renderAuthoredContent().
@@ -2327,7 +2143,7 @@ export function cardlink(element, options = {}) {
  */
 export function cardhorizontal(element, options = {}) {
   const config = {
-    image: options.image || readAttr(element, 'image') || element.getAttribute('image'),
+    image: readOption(element, options, 'image'),
     // #602: the schema's property name (imagePosition) is camelCase, but an
     // author writing that same casing directly into HTML markup
     // (imagePosition="right") gets it silently parsed down to "imageposition"
@@ -2339,10 +2155,8 @@ export function cardhorizontal(element, options = {}) {
     // natural, expected mistake here, not a one-off. Accept both forms
     // rather than expect every author to always get one exact spelling
     // right.
-    imagePosition: options.imagePosition || readAttr(element, 'imagePosition')
-      || element.getAttribute('image-position') || element.getAttribute('imageposition') || 'left',
-    imageWidth: options.imageWidth || readAttr(element, 'imageWidth')
-      || element.getAttribute('image-width') || element.getAttribute('imagewidth') || '40%',
+    imagePosition: readOption(element, options, 'imagePosition') || element.getAttribute('imageposition') || 'left',
+    imageWidth: readOption(element, options, 'imageWidth') || element.getAttribute('imagewidth') || '40%',
     // Declared in cardhorizontal.schema.json but never read: the <img> always
     // took its alt from the title. The author's alt text wins; title stays
     // the fallback.
@@ -2413,31 +2227,14 @@ export function cardhorizontal(element, options = {}) {
   }
 
   // Content
-  const content = document.createElement('div');
-  content.className = 'x-card__horizontal-content';
+  const content = cardPart(null, 'div', 'x-card__horizontal-content');
 
   // Title and subtitle are named by tag, like every other card's header
   // (a8a7362e): card.css reaches them as `.x-card__horizontal-content > h3`
   // and `> p`. The subtitle was a bare <div>, which gave CSS nothing to
   // select it by; a <p> is what it is.
-  if (base.config.title) {
-    const titleEl = document.createElement('h3');
-    titleEl.textContent = base.config.title;
-    content.appendChild(titleEl);
-  }
-
-  if (base.config.subtitle) {
-    const subtitleEl = document.createElement('p');
-    subtitleEl.textContent = base.config.subtitle;
-    content.appendChild(subtitleEl);
-  }
-
-  if (base.config.content) {
-    const bodyEl = document.createElement('div');
-    bodyEl.className = 'x-card__horiz-body';
-    bodyEl.innerHTML = base.config.content;
-    content.appendChild(bodyEl);
-  }
+  appendTitleAndSubtitle(content, base.config, 'h3', '', 'p', '');
+  if (base.config.content) cardHtmlPart(content, 'div', 'x-card__horiz-body', base.config.content);
 
   element.appendChild(content);
 
@@ -2450,15 +2247,15 @@ export function cardhorizontal(element, options = {}) {
  */
 export function cardoverlay(element, options = {}) {
   const config = {
-    image: options.image || readAttr(element, 'image') || element.getAttribute('image'),
-    position: options.position || readAttr(element, 'position') || element.getAttribute('position') || 'bottom',
-    gradient: parseBoolean(options.gradient) ?? (readAttr(element, 'gradient') !== 'false' && element.getAttribute('gradient') !== 'false'),
-    height: options.height || readAttr(element, 'height') || element.getAttribute('height') || '300px',
+    image: readOption(element, options, 'image'),
+    position: readOption(element, options, 'position') || 'bottom',
+    gradient: readDefaultOnFlag(element, options, 'gradient'),
+    height: readOption(element, options, 'height') || '300px',
     // Neither was ever read here before -- xalign only existed on cardhero
     // (a different function), and variant only got composeCard's generic
     // x-card--{variant} class with no matching CSS for dark/light/blur.
-    xalign: options.xalign || readAttr(element, 'xalign') || element.getAttribute('xalign') || 'left',
-    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
+    xalign: readOption(element, options, 'xalign') || 'left',
+    variant: readOption(element, options, 'variant') || 'default',
     ...options
   };
 
@@ -2493,24 +2290,14 @@ export function cardoverlay(element, options = {}) {
   // and throw so the global error handler (error-logger.js) catches and
   // logs it -- same convention as audio.js/cardhero/cardhorizontal.
   if (config.image) {
-    const probe = new Image();
-    probe.addEventListener('error', () => {
-      if (!document.contains(element)) return;
-      // Dropping the image lets card.css's default gradient show (#779).
-      setRule(element, 'overlay-image', null);
-      // #1115: gradient fallback above still applies; an unreachable
-      // third-party host is reported on the card, not thrown.
-      if (reportIfThirdPartyMedia(element, config.image, 'x-cardoverlay')) return;
-      throw new Error(`x-cardoverlay: failed to load image "${config.image}" -- the file is missing or unreachable. Falling back to the default gradient.`);
-    });
-    probe.src = config.image;
+    // Dropping the image lets card.css's default gradient show (#779).
+    probeBackgroundImage(element, config.image, 'x-cardoverlay', 'image', () => setRule(element, 'overlay-image', null));
   }
-  
+
   // Content. Its box, the gradient (`--gradient-top/-bottom`) and the
   // variant tints (`--dark/-light/-blur`, declared after the gradients so a
   // tint wins, as the old write order did) are card.css classes (#779).
-  const content = document.createElement('div');
-  content.className = 'x-card__overlay-content';
+  const content = cardPart(null, 'div', 'x-card__overlay-content');
   if (config.gradient) {
     content.classList.add(`x-card__overlay-content--gradient-${config.position === 'top' ? 'top' : 'bottom'}`);
   }
@@ -2520,19 +2307,7 @@ export function cardoverlay(element, options = {}) {
   // The author's xalign: the --overlay-xalign card.css reads (left default).
   if (config.xalign !== 'left') setRule(content, 'xalign', { '--overlay-xalign': config.xalign });
 
-  if (base.config.title) {
-    const titleEl = document.createElement('h3');
-    titleEl.className = 'x-card__title x-card__overlay-title';
-    titleEl.textContent = base.config.title;
-    content.appendChild(titleEl);
-  }
-
-  if (base.config.subtitle) {
-    const subtitleEl = document.createElement('div');
-    subtitleEl.className = 'x-card__subtitle x-card__overlay-subtitle';
-    subtitleEl.textContent = base.config.subtitle;
-    content.appendChild(subtitleEl);
-  }
+  appendTitleAndSubtitle(content, base.config, 'h3', 'x-card__title x-card__overlay-title', 'div', 'x-card__subtitle x-card__overlay-subtitle');
 
   element.appendChild(content);
 
@@ -2554,15 +2329,15 @@ export function cardexpandable(element, options = {}) {
     // (see clickable/elevated above) -- this only checked expanded="true",
     // so <div x-cardexpandable expanded> (what every demo actually writes) was
     // silently ignored and always rendered collapsed.
-    expanded: parseBoolean(options.expanded) ?? (readAttr(element, 'expanded') === 'true' || element.getAttribute('expanded') === 'true' || (readFlag(element, 'expanded') && readAttr(element, 'expanded') !== 'false') || element.hasAttribute('expanded')),
-    maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '100px',
+    expanded: readOnFlag(element, options, 'expanded'),
+    maxHeight: readOption(element, options, 'maxHeight') || '100px',
     // #435: a pixel maxHeight truncates text mid-line, which looks broken
     // for arbitrary content -- `lines` clamps to exactly N full lines via
     // CSS line-clamp instead. An alternative to maxHeight, not a
     // replacement: maxHeight still applies as-is for non-text/mixed content
     // where line-clamp doesn't make sense (images, nested cards, ...). When
     // both are set, `lines` wins for the collapsed state.
-    lines: options.lines || readAttr(element, 'lines') || element.getAttribute('lines') || null,
+    lines: readOption(element, options, 'lines') || null,
     ...options
   };
 
@@ -2601,10 +2376,7 @@ export function cardexpandable(element, options = {}) {
   } else {
     applyMaxHeight(contentWrap, config.expanded ? '1000px' : config.maxHeight);
   }
-  contentWrap.innerHTML = base.config.content || rawContent
-    // card.css already defines .x-card__expandable-placeholder with exactly
-    // these two declarations (#943).
-    || '<div class="x-card__expandable-placeholder">Add content here...</div>';
+  contentWrap.innerHTML = base.config.content || rawContent || CARD_CONTENT_PLACEHOLDER;
   // Generate ID for aria-controls
   const contentId = 'expandable-content-' + Math.random().toString(36).substr(2, 9);
   contentWrap.id = contentId;
@@ -2621,19 +2393,14 @@ export function cardexpandable(element, options = {}) {
   btn.setAttribute('aria-expanded', config.expanded);
   btn.setAttribute('aria-controls', contentId);
   
-  const icon = document.createElement('span');
-  icon.className = 'x-card__expand-icon';
-  if (config.expanded) icon.classList.add('x-card__expand-icon--expanded');
+  const icon = cardPart(null, 'span', 'x-card__expand-icon');
   icon.textContent = '▼';
   // display / transition live in .x-card__expand-icon. Rotation is STATE, so
   // it is a modifier class rather than an inline transform (#943).
   if (config.expanded) icon.classList.add('x-card__expand-icon--expanded');
   btn.appendChild(icon);
 
-  const text = document.createElement('span');
-  text.className = 'x-card__expand-text';
-  text.textContent = config.expanded ? 'Show Less' : 'Show More';
-  btn.appendChild(text);
+  const text = cardPart(btn, 'span', 'x-card__expand-text', config.expanded ? 'Show Less' : 'Show More');
 
   let isExpanded = config.expanded;
   if (isExpanded) element.classList.add('x-card--expanded');
@@ -2646,7 +2413,6 @@ export function cardexpandable(element, options = {}) {
       applyMaxHeight(contentWrap, isExpanded ? '1000px' : config.maxHeight);
     }
     icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
-    icon.classList.toggle('x-card__expand-icon--expanded', isExpanded);
     text.textContent = isExpanded ? 'Show Less' : 'Show More';
     element.classList.toggle('x-card--expanded', isExpanded);
     btn.setAttribute('aria-expanded', isExpanded);
@@ -2657,14 +2423,9 @@ export function cardexpandable(element, options = {}) {
   };
 
   btn.onclick = toggle;
-  
+
   // Keyboard support
-  btn.onkeydown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggle();
-    }
-  };
+  btn.onkeydown = onActivateKey(() => toggle());
 
   btnWrap.appendChild(btn);
   element.appendChild(btnWrap);
@@ -2699,7 +2460,7 @@ export function cardminimizable(element, options = {}) {
     // Same bare-boolean-attribute gap as cardexpandable's `expanded` had --
     // <div x-cardminimizable minimized> (the only form any demo writes) was
     // never detected without this hasAttribute check.
-    minimized: parseBoolean(options.minimized) ?? (readAttr(element, 'minimized') === 'true' || element.getAttribute('minimized') === 'true' || (readFlag(element, 'minimized') && readAttr(element, 'minimized') !== 'false') || element.hasAttribute('minimized')),
+    minimized: readOnFlag(element, options, 'minimized'),
     ...options
   };
 
@@ -2713,28 +2474,12 @@ export function cardminimizable(element, options = {}) {
   // minimizable-card rules there (#779 -- all of it was cssText here).
   const header = document.createElement('header');
 
-  const titleWrap = document.createElement('div');
-  titleWrap.className = 'x-card__title-wrap';
-
-  if (base.config.title) {
-    const titleEl = document.createElement('h3');
-    titleEl.textContent = base.config.title;
-    titleWrap.appendChild(titleEl);
-  }
-
-  if (base.config.subtitle) {
-    const subtitleEl = document.createElement('div');
-    subtitleEl.textContent = base.config.subtitle;
-    titleWrap.appendChild(subtitleEl);
-  }
-
+  const titleWrap = cardPart(null, 'div', 'x-card__title-wrap');
+  appendTitleAndSubtitle(titleWrap, base.config, 'h3', '', 'div', '');
   header.appendChild(titleWrap);
 
   // Minimize button
-  const minBtn = document.createElement('button');
-  minBtn.className = 'x-card__minimize-btn';
-  minBtn.textContent = config.minimized ? '+' : '−';
-  header.appendChild(minBtn);
+  const minBtn = cardPart(header, 'button', 'x-card__minimize-btn', config.minimized ? '+' : '−');
 
   element.appendChild(header);
 
@@ -2742,8 +2487,8 @@ export function cardminimizable(element, options = {}) {
   const content = document.createElement('main');
   // Box and the collapsed state (`.x-card--minimized ...`) are card.css.
   content.className = 'x-card__minimizable-content';
-  // Same placeholder, same two declarations, as cardexpandable's -- reuse it.
-  content.innerHTML = base.config.content || rawContent || '<div class="x-card__expandable-placeholder">Add content here...</div>';
+  // Same placeholder as cardexpandable's.
+  content.innerHTML = base.config.content || rawContent || CARD_CONTENT_PLACEHOLDER;
   element.appendChild(content);
 
   // Toggle
@@ -2773,14 +2518,9 @@ export function cardminimizable(element, options = {}) {
   minBtn.setAttribute('aria-expanded', !config.minimized);
   minBtn.setAttribute('aria-label', config.minimized ? 'Expand' : 'Minimize');
   minBtn.onclick = toggle;
-  
+
   // Keyboard support
-  minBtn.onkeydown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggle();
-    }
-  };
+  minBtn.onkeydown = onActivateKey(() => toggle());
 
   // Footer
   if (base.config.footer) {
@@ -2814,9 +2554,9 @@ export function carddraggable(element, options = {}) {
   const rawContent = element.innerHTML.trim();
 
   const config = {
-    constrain: options.constrain || readAttr(element, 'constrain') || element.getAttribute('constrain') || 'none',
-    axis: options.axis || readAttr(element, 'axis') || element.getAttribute('axis') || 'both',
-    snapToGrid: parseInt(options.snapToGrid || readAttr(element, 'snapToGrid') || element.getAttribute('snap-to-grid') || 0),
+    constrain: readOption(element, options, 'constrain') || 'none',
+    axis: readOption(element, options, 'axis') || 'both',
+    snapToGrid: parseInt(readOption(element, options, 'snapToGrid') || 0),
     content: options.content || readAttr(element, 'content') || rawContent,
     ...options
   };
@@ -2841,17 +2581,8 @@ export function carddraggable(element, options = {}) {
   headerEl.setAttribute('aria-label', 'Drag to move card');
   headerEl.setAttribute('role', 'button');
 
-  const handleIcon = document.createElement('span');
-  handleIcon.className = 'x-card__drag-handle-icon';
-  handleIcon.textContent = '⋮⋮';
-  headerEl.appendChild(handleIcon);
-
-  if (base.config.title) {
-    const titleEl = document.createElement('h3');
-    titleEl.className = 'x-card__drag-title';
-    titleEl.textContent = base.config.title;
-    headerEl.appendChild(titleEl);
-  }
+  cardPart(headerEl, 'span', 'x-card__drag-handle-icon', '⋮⋮');
+  if (base.config.title) cardPart(headerEl, 'h3', 'x-card__drag-title', base.config.title);
 
   element.appendChild(headerEl);
 
@@ -2882,12 +2613,11 @@ export function carddraggable(element, options = {}) {
   };
 
   const onMouseDown = (e) => {
-    if (e.button !== 0) return; // Left click only
-    e.preventDefault(); // Prevent text selection
+    const point = dragStartPoint(e);
+    if (!point) return;
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    // Read the current CSS left/top values, NOT offsetLeft/offsetTop
+    ({ x: startX, y: startY } = point);
+// Read the current CSS left/top values, NOT offsetLeft/offsetTop
     // offsetLeft includes the element's normal flow position which causes
     // a massive jump when applied back as left/top on a relative element
     initialLeft = getCurrentLeft();
@@ -3039,46 +2769,46 @@ export function cardportfolio(element, options = {}) {
 
   const config = {
     // Identity
-    name: options.name || readAttr(element, 'name') || element.getAttribute('name'),
-    title: options.title || readAttr(element, 'title') || element.getAttribute('title'),
-    company: options.company || readAttr(element, 'company') || element.getAttribute('company'),
-    location: options.location || readAttr(element, 'location') || element.getAttribute('location'),
-    tagline: options.tagline || readAttr(element, 'tagline') || element.getAttribute('tagline'),
-    availability: options.availability || readAttr(element, 'availability') || element.getAttribute('availability') || 'available',
+    name: readOption(element, options, 'name'),
+    title: readOption(element, options, 'title'),
+    company: readOption(element, options, 'company'),
+    location: readOption(element, options, 'location'),
+    tagline: readOption(element, options, 'tagline'),
+    availability: readOption(element, options, 'availability') || 'available',
     
     // Media
-    avatar: options.avatar || readAttr(element, 'avatar') || element.getAttribute('avatar'),
-    cover: options.cover || readAttr(element, 'cover') || element.getAttribute('cover'),
-    bio: options.bio || readAttr(element, 'bio') || element.getAttribute('bio'),
+    avatar: readOption(element, options, 'avatar'),
+    cover: readOption(element, options, 'cover'),
+    bio: readOption(element, options, 'bio'),
     
     // Contact
-    email: options.email || readAttr(element, 'email') || element.getAttribute('email'),
-    phone: options.phone || readAttr(element, 'phone') || element.getAttribute('phone'),
-    website: options.website || readAttr(element, 'website') || element.getAttribute('website'),
+    email: readOption(element, options, 'email'),
+    phone: readOption(element, options, 'phone'),
+    website: readOption(element, options, 'website'),
     
     // Social
-    linkedin: options.linkedin || readAttr(element, 'linkedin') || element.getAttribute('linkedin'),
-    twitter: options.twitter || readAttr(element, 'twitter') || element.getAttribute('twitter'),
-    github: options.github || readAttr(element, 'github') || element.getAttribute('github'),
-    dribbble: options.dribbble || readAttr(element, 'dribbble') || element.getAttribute('dribbble'),
+    linkedin: readOption(element, options, 'linkedin'),
+    twitter: readOption(element, options, 'twitter'),
+    github: readOption(element, options, 'github'),
+    dribbble: readOption(element, options, 'dribbble'),
     
     // Skills & Experience
-    skills: options.skills || readAttr(element, 'skills') || element.getAttribute('skills'),
-    skillLevels: parseJSON(options.skillLevels || readAttr(element, 'skillLevels') || element.getAttribute('skill-levels')),
-    experience: parseJSON(options.experience || readAttr(element, 'experience') || element.getAttribute('experience')),
-    education: parseJSON(options.education || readAttr(element, 'education') || element.getAttribute('education')),
-    projects: parseJSON(options.projects || readAttr(element, 'projects') || element.getAttribute('projects')),
-    certifications: options.certifications || readAttr(element, 'certifications') || element.getAttribute('certifications'),
-    languages: options.languages || readAttr(element, 'languages') || element.getAttribute('languages'),
-    stats: parseJSON(options.stats || readAttr(element, 'stats') || element.getAttribute('stats')),
+    skills: readOption(element, options, 'skills'),
+    skillLevels: parseJSON(readOption(element, options, 'skillLevels')),
+    experience: parseJSON(readOption(element, options, 'experience')),
+    education: parseJSON(readOption(element, options, 'education')),
+    projects: parseJSON(readOption(element, options, 'projects')),
+    certifications: readOption(element, options, 'certifications'),
+    languages: readOption(element, options, 'languages'),
+    stats: parseJSON(readOption(element, options, 'stats')),
     
     // CTA
-    cta: options.cta || readAttr(element, 'cta') || element.getAttribute('cta'),
-    ctaHref: options.ctaHref || readAttr(element, 'ctaHref') || element.getAttribute('cta-href'),
+    cta: readOption(element, options, 'cta'),
+    ctaHref: readOption(element, options, 'ctaHref'),
     
     // Variant
-    variant: options.variant || readAttr(element, 'variant') || element.getAttribute('variant') || 'default',
-    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || 'auto',
+    variant: readOption(element, options, 'variant') || 'default',
+    size: readOption(element, options, 'size') || 'auto',
     ...options
   };
 
@@ -3131,12 +2861,8 @@ export function cardportfolio(element, options = {}) {
     const coverFigure = document.createElement('figure');
     coverFigure.className = 'x-portfolio__cover';
     coverFigure.setAttribute('lightbox', 'false');
-    const coverImg = document.createElement('img');
-    coverImg.className = 'x-portfolio__cover-img';
-    coverImg.src = config.cover;
-    // Decorative: the card's name/title already say who this is.
-    coverImg.alt = '';
-    coverFigure.appendChild(coverImg);
+    // Decorative (empty alt): the card's name/title already say who this is.
+    cardImg(coverFigure, 'x-portfolio__cover-img', config.cover, '');
     element.appendChild(coverFigure);
   }
 
@@ -3162,15 +2888,10 @@ export function cardportfolio(element, options = {}) {
   // vanished behind the cover. It holds an image and a status dot -- a
   // layout wrapper, not a self-contained figure.
   if (config.avatar || hasAvailability) {
-    const avatarWrap = document.createElement('div');
-    avatarWrap.className = 'x-portfolio__avatar-wrap';
+    const avatarWrap = cardPart(null, 'div', 'x-portfolio__avatar-wrap');
 
     if (config.avatar) {
-      const avatarImg = document.createElement('img');
-      avatarImg.className = 'x-portfolio__avatar';
-      avatarImg.src = config.avatar;
-      avatarImg.alt = config.name || 'Avatar';
-      avatarWrap.appendChild(avatarImg);
+      cardImg(avatarWrap, 'x-portfolio__avatar', config.avatar, config.name || 'Avatar');
     } else {
       // No avatar image supplied -- render initials in a themed circle
       // (card.css: .x-portfolio__avatar-placeholder) so the availability dot
@@ -3201,99 +2922,73 @@ export function cardportfolio(element, options = {}) {
   }
 
   // Name
-  if (config.name) {
-    const nameEl = document.createElement('h2');
-    nameEl.className = 'x-portfolio__name';
-    // margin/font-size/color/white-space/overflow/max-width now live in
-    // card.css's `.x-portfolio__name` base rule -- see the avatarWrap
-    // comment above; lets compact/horizontal/full/size-scaling CSS resize
-    // or rewrap the name without !important.
-    nameEl.textContent = config.name;
-    header.appendChild(nameEl);
-  }
+  // margin/font-size/color/white-space/overflow/max-width live in card.css's
+  // `.x-portfolio__name` base rule -- see the avatarWrap comment above; lets
+  // compact/horizontal/full/size-scaling CSS resize or rewrap the name
+  // without !important.
+  if (config.name) cardPart(header, 'h2', 'x-portfolio__name', config.name);
 
   // Title & Company
   if (config.title) {
-    const titleEl = document.createElement('div');
-    titleEl.className = 'x-portfolio__title';
     // Styled by card.css `.x-portfolio__title`. The inline
     // `color: var(--primary)` it replaced measured rgb(38,38,217) on the
     // card's dark surface -- the same unreadable accent-on-dark #887 fixed
     // for card titles.
-    titleEl.textContent = config.title + (config.company ? ` at ${config.company}` : '');
-    header.appendChild(titleEl);
+    cardPart(header, 'div', 'x-portfolio__title', config.title + (config.company ? ` at ${config.company}` : ''));
   } else if (config.company) {
-    const companyEl = document.createElement('div');
-    companyEl.className = 'x-portfolio__company';
-    companyEl.textContent = config.company;
-    header.appendChild(companyEl);
+    cardPart(header, 'div', 'x-portfolio__company', config.company);
   }
 
   // Location
-  if (config.location) {
-    const locEl = document.createElement('div');
-    locEl.className = 'x-portfolio__location';
-    locEl.textContent = `📍 ${config.location}`;
-    header.appendChild(locEl);
-  }
+  if (config.location) cardPart(header, 'div', 'x-portfolio__location', `📍 ${config.location}`);
 
   // Availability, in words. Same modifier class as the dot, so one theme
   // rule colours both.
   if (hasAvailability) {
-    const statusEl = document.createElement('div');
-    statusEl.className = `x-portfolio__status x-portfolio__status--${config.availability}`;
-    statusEl.textContent = availabilityConfig[config.availability].label;
-    header.appendChild(statusEl);
+    cardPart(header, 'div', `x-portfolio__status x-portfolio__status--${config.availability}`, availabilityConfig[config.availability].label);
   }
 
   // Tagline
-  if (config.tagline) {
-    const tagEl = document.createElement('div');
-    tagEl.className = 'x-portfolio__tagline';
-    tagEl.textContent = `"${config.tagline}"`;
-    header.appendChild(tagEl);
-  }
+  if (config.tagline) cardPart(header, 'div', 'x-portfolio__tagline', `"${config.tagline}"`);
 
   element.appendChild(header);
 
   // ==================== MAIN CONTENT ====================
-  const main = document.createElement('main');
-  main.className = 'x-portfolio__main';
+  const main = cardPart(null, 'main', 'x-portfolio__main');
   // padding now lives in card.css's `.x-portfolio__main` base rule -- see
   // the avatarWrap comment above; lets the compact variant's own padding
   // override win without !important.
 
+  // Every section below is a <section class="x-portfolio__{name}">, most
+  // with an <h3 class="x-portfolio__section-title"> heading. Each is
+  // appended to main by its caller once it is filled.
+  const portfolioSection = (name, heading) => {
+    const section = cardPart(null, 'section', `x-portfolio__${name}`);
+    if (heading) cardPart(section, 'h3', 'x-portfolio__section-title', heading);
+    return section;
+  };
+
+  // Pills from a comma-separated string (skills, languages).
+  const appendPills = (parent, csv) => {
+    const pills = cardPart(null, 'div', 'x-portfolio__pills');
+    csv.split(',').forEach(item => cardPart(pills, 'span', 'x-portfolio__pill', item.trim()));
+    parent.appendChild(pills);
+  };
+
   // Bio Section
   if (config.bio) {
-    const bioSection = document.createElement('section');
-    bioSection.className = 'x-portfolio__bio';
-    
-    const bioText = document.createElement('div');
-    bioText.classList.add('x-portfolio__bio-text');
-    bioText.textContent = config.bio;
-    bioSection.appendChild(bioText);
+    const bioSection = portfolioSection('bio');
+    cardPart(bioSection, 'div', 'x-portfolio__bio-text', config.bio);
     main.appendChild(bioSection);
   }
 
   // Stats Section
   if (config.stats && config.stats.length > 0) {
-    const statsSection = document.createElement('section');
-    statsSection.className = 'x-portfolio__stats';
-    
+    const statsSection = portfolioSection('stats');
     config.stats.forEach(stat => {
-      const statItem = document.createElement('div');
-      statItem.classList.add('x-portfolio__stat');
-      
-      const valueEl = document.createElement('span');
-      valueEl.classList.add('x-portfolio__stat-value');
-      valueEl.textContent = stat.value;
-      statItem.appendChild(valueEl);
-      
-      const labelEl = document.createElement('span');
-      labelEl.classList.add('x-portfolio__stat-label');
-      labelEl.textContent = stat.label;
-      statItem.appendChild(labelEl);
-      
+      const statItem = cardPart(null, 'div', 'x-portfolio__stat');
+      cardPart(statItem, 'span', 'x-portfolio__stat-value', stat.value);
+      cardPart(statItem, 'span', 'x-portfolio__stat-label', stat.label);
       statsSection.appendChild(statItem);
     });
     main.appendChild(statsSection);
@@ -3301,106 +2996,52 @@ export function cardportfolio(element, options = {}) {
 
   // Skills Section
   if (config.skills || config.skillLevels) {
-    const skillsSection = document.createElement('section');
-    skillsSection.className = 'x-portfolio__skills';
-    
-    const skillsTitle = document.createElement('h3');
-    skillsTitle.classList.add('x-portfolio__section-title');
-    skillsTitle.textContent = '🛠️ Skills';
-    skillsSection.appendChild(skillsTitle);
+    const skillsSection = portfolioSection('skills', '🛠️ Skills');
 
     // Skill pills (from comma-separated string)
-    if (config.skills) {
-      const skillPills = document.createElement('div');
-      skillPills.classList.add('x-portfolio__pills');
-      
-      config.skills.split(',').forEach(skill => {
-        const pill = document.createElement('span');
-        pill.classList.add('x-portfolio__pill');
-        pill.textContent = skill.trim();
-        skillPills.appendChild(pill);
-      });
-      skillsSection.appendChild(skillPills);
-    }
+    if (config.skills) appendPills(skillsSection, config.skills);
 
     // Skill bars (from JSON array)
     if (config.skillLevels && config.skillLevels.length > 0) {
-      const skillBars = document.createElement('div');
-      skillBars.classList.add('x-portfolio__skill-bars');
-      
+      const skillBars = cardPart(null, 'div', 'x-portfolio__skill-bars');
+
       config.skillLevels.forEach(skill => {
-        const skillRow = document.createElement('div');
-        skillRow.classList.add('x-portfolio__skill-row');
-        
-        const skillHeader = document.createElement('div');
-        skillHeader.classList.add('x-portfolio__skill-header');
-        skillHeader.innerHTML = `<span class="x-portfolio__skill-name">${skill.name}</span><span class="x-portfolio__skill-level">${skill.level}%</span>`;
-        skillRow.appendChild(skillHeader);
-        
-        const barBg = document.createElement('div');
-        barBg.classList.add('x-portfolio__skill-bar');
-        
-        const barFill = document.createElement('div');
-        barFill.classList.add('x-portfolio__skill-fill');
+        const skillRow = cardPart(null, 'div', 'x-portfolio__skill-row');
+        cardHtmlPart(skillRow, 'div', 'x-portfolio__skill-header',
+          `<span class="x-portfolio__skill-name">${skill.name}</span><span class="x-portfolio__skill-level">${skill.level}%</span>`);
+
+        const barBg = cardPart(null, 'div', 'x-portfolio__skill-bar');
+        const barFill = cardPart(null, 'div', 'x-portfolio__skill-fill');
         // The level is per-skill data: a generated rule, not the style attribute.
         setRule(barFill, 'level', { width: `${skill.level}%` });
         barBg.appendChild(barFill);
         skillRow.appendChild(barBg);
-        
+
         skillBars.appendChild(skillRow);
       });
       skillsSection.appendChild(skillBars);
     }
-    
+
     main.appendChild(skillsSection);
   }
 
   // Experience Section
   if (config.experience && config.experience.length > 0) {
-    const expSection = document.createElement('section');
-    expSection.className = 'x-portfolio__experience';
-    
-    const expTitle = document.createElement('h3');
-    expTitle.classList.add('x-portfolio__section-title');
-    expTitle.textContent = '💼 Experience';
-    expSection.appendChild(expTitle);
+    const expSection = portfolioSection('experience', '💼 Experience');
 
     config.experience.forEach((exp, i) => {
-      const expItem = document.createElement('div');
-      expItem.classList.add('x-portfolio__exp-item');
+      const expItem = cardPart(null, 'div', 'x-portfolio__exp-item');
       // Every entry after the first is divided from the one above it.
       if (i > 0) expItem.classList.add('x-portfolio__exp-item--divided');
-      
-      const expHeader = document.createElement('div');
-      expHeader.classList.add('x-portfolio__exp-header');
-      
-      const expRole = document.createElement('strong');
-      expRole.classList.add('x-portfolio__exp-role');
-      expRole.textContent = exp.role || exp.title;
-      expHeader.appendChild(expRole);
-      
-      if (exp.period) {
-        const expPeriod = document.createElement('span');
-        expPeriod.classList.add('x-portfolio__exp-period');
-        expPeriod.textContent = exp.period;
-        expHeader.appendChild(expPeriod);
-      }
+
+      const expHeader = cardPart(null, 'div', 'x-portfolio__exp-header');
+      cardPart(expHeader, 'strong', 'x-portfolio__exp-role', exp.role || exp.title);
+      if (exp.period) cardPart(expHeader, 'span', 'x-portfolio__exp-period', exp.period);
       expItem.appendChild(expHeader);
-      
-      if (exp.company) {
-        const expCompany = document.createElement('div');
-        expCompany.classList.add('x-portfolio__exp-company');
-        expCompany.textContent = exp.company;
-        expItem.appendChild(expCompany);
-      }
-      
-      if (exp.description) {
-        const expDesc = document.createElement('div');
-        expDesc.classList.add('x-portfolio__exp-desc');
-        expDesc.textContent = exp.description;
-        expItem.appendChild(expDesc);
-      }
-      
+
+      if (exp.company) cardPart(expItem, 'div', 'x-portfolio__exp-company', exp.company);
+      if (exp.description) cardPart(expItem, 'div', 'x-portfolio__exp-desc', exp.description);
+
       expSection.appendChild(expItem);
     });
     main.appendChild(expSection);
@@ -3408,28 +3049,12 @@ export function cardportfolio(element, options = {}) {
 
   // Education Section
   if (config.education && config.education.length > 0) {
-    const eduSection = document.createElement('section');
-    eduSection.className = 'x-portfolio__education';
-    
-    const eduTitle = document.createElement('h3');
-    eduTitle.classList.add('x-portfolio__section-title');
-    eduTitle.textContent = '🎓 Education';
-    eduSection.appendChild(eduTitle);
+    const eduSection = portfolioSection('education', '🎓 Education');
 
     config.education.forEach(edu => {
-      const eduItem = document.createElement('div');
-      eduItem.classList.add('x-portfolio__edu-item');
-      
-      const eduDegree = document.createElement('strong');
-      eduDegree.classList.add('x-portfolio__edu-degree');
-      eduDegree.textContent = edu.degree;
-      eduItem.appendChild(eduDegree);
-      
-      const eduSchool = document.createElement('span');
-      eduSchool.classList.add('x-portfolio__edu-school');
-      eduSchool.textContent = edu.school + (edu.year ? ` • ${edu.year}` : '');
-      eduItem.appendChild(eduSchool);
-      
+      const eduItem = cardPart(null, 'div', 'x-portfolio__edu-item');
+      cardPart(eduItem, 'strong', 'x-portfolio__edu-degree', edu.degree);
+      cardPart(eduItem, 'span', 'x-portfolio__edu-school', edu.school + (edu.year ? ` • ${edu.year}` : ''));
       eduSection.appendChild(eduItem);
     });
     main.appendChild(eduSection);
@@ -3437,16 +3062,8 @@ export function cardportfolio(element, options = {}) {
 
   // Projects Section
   if (config.projects && config.projects.length > 0) {
-    const projSection = document.createElement('section');
-    projSection.className = 'x-portfolio__projects';
-    
-    const projTitle = document.createElement('h3');
-    projTitle.classList.add('x-portfolio__section-title');
-    projTitle.textContent = '🚀 Projects';
-    projSection.appendChild(projTitle);
-
-    const projGrid = document.createElement('div');
-    projGrid.classList.add('x-portfolio__project-grid');
+    const projSection = portfolioSection('projects', '🚀 Projects');
+    const projGrid = cardPart(null, 'div', 'x-portfolio__project-grid');
 
     config.projects.forEach(proj => {
       const projCard = document.createElement('a');
@@ -3454,7 +3071,7 @@ export function cardportfolio(element, options = {}) {
       projCard.target = proj.url ? '_blank' : '_self';
       projCard.classList.add('x-portfolio__project');
       // Hover lift: `.x-portfolio__project:hover` in card.css (#779).
-      
+
       if (proj.image) {
         const projImg = document.createElement('img');
         projImg.src = proj.image;
@@ -3462,73 +3079,32 @@ export function cardportfolio(element, options = {}) {
         projImg.classList.add('x-portfolio__project-image');
         projCard.appendChild(projImg);
       }
-      
-      const projInfo = document.createElement('div');
-      projInfo.classList.add('x-portfolio__project-info');
-      
-      const projName = document.createElement('strong');
-      projName.classList.add('x-portfolio__project-name');
-      projName.textContent = proj.name;
-      projInfo.appendChild(projName);
-      
-      if (proj.description) {
-        const projDesc = document.createElement('span');
-        projDesc.classList.add('x-portfolio__project-desc');
-        projDesc.textContent = proj.description;
-        projInfo.appendChild(projDesc);
-      }
-      
+
+      const projInfo = cardPart(null, 'div', 'x-portfolio__project-info');
+      cardPart(projInfo, 'strong', 'x-portfolio__project-name', proj.name);
+      if (proj.description) cardPart(projInfo, 'span', 'x-portfolio__project-desc', proj.description);
+
       projCard.appendChild(projInfo);
       projGrid.appendChild(projCard);
     });
-    
+
     projSection.appendChild(projGrid);
     main.appendChild(projSection);
   }
 
   // Certifications
   if (config.certifications) {
-    const certSection = document.createElement('section');
-    certSection.className = 'x-portfolio__certifications';
-    
-    const certTitle = document.createElement('h3');
-    certTitle.classList.add('x-portfolio__section-title');
-    certTitle.textContent = '🏆 Certifications';
-    certSection.appendChild(certTitle);
-    
-    const certList = document.createElement('ul');
-    certList.classList.add('x-portfolio__cert-list');
-    
-    config.certifications.split(',').forEach(cert => {
-      const li = document.createElement('li');
-      li.classList.add('x-portfolio__cert');
-      li.textContent = cert.trim();
-      certList.appendChild(li);
-    });
+    const certSection = portfolioSection('certifications', '🏆 Certifications');
+    const certList = cardPart(null, 'ul', 'x-portfolio__cert-list');
+    config.certifications.split(',').forEach(cert => cardPart(certList, 'li', 'x-portfolio__cert', cert.trim()));
     certSection.appendChild(certList);
     main.appendChild(certSection);
   }
 
   // Languages
   if (config.languages) {
-    const langSection = document.createElement('section');
-    langSection.className = 'x-portfolio__languages';
-    
-    const langTitle = document.createElement('h3');
-    langTitle.classList.add('x-portfolio__section-title');
-    langTitle.textContent = '🌐 Languages';
-    langSection.appendChild(langTitle);
-    
-    const langPills = document.createElement('div');
-    langPills.classList.add('x-portfolio__pills');
-    
-    config.languages.split(',').forEach(lang => {
-      const langPill = document.createElement('span');
-      langPill.classList.add('x-portfolio__pill');
-      langPill.textContent = lang.trim();
-      langPills.appendChild(langPill);
-    });
-    langSection.appendChild(langPills);
+    const langSection = portfolioSection('languages', '🌐 Languages');
+    appendPills(langSection, config.languages);
     main.appendChild(langSection);
   }
 
@@ -3589,19 +3165,12 @@ export function cardportfolio(element, options = {}) {
 
   // ==================== CTA FOOTER ====================
   if (config.cta) {
-    const footer = document.createElement('footer');
-    footer.className = 'x-portfolio__footer';
-    
-    const ctaBtn = document.createElement('a');
-    ctaBtn.href = config.ctaHref || '#';
-    ctaBtn.className = 'x-portfolio__cta';
+    const footer = cardPart(null, 'footer', 'x-portfolio__footer');
     // #561: static layout/padding lives in card.css's `.x-portfolio__cta`
     // rule (padding:1rem, was inline at 0.875rem/14px -- below the §13
     // minimum). #779: the hover state is a :hover rule there too, not a pair
     // of pointer handlers writing element.style.
-    ctaBtn.textContent = config.cta;
-    footer.appendChild(ctaBtn);
-    
+    appendCtaLink(footer, 'x-portfolio__cta', config.ctaHref || '#', config.cta);
     element.appendChild(footer);
   }
 

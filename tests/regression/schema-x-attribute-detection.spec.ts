@@ -2,59 +2,42 @@ import { test, expect } from '../fixtures/offline';
 import { setupBehaviorTest, setupTestContainer } from '../base';
 
 /**
- * #521 (docs/architecture/proposals/remove-wb-prefix-authoring-surface.md):
- * schema-builder.js's detectSchema() previously only recognized composite
- * components via `wb-*` tag-name-prefix matching. Any element carrying an
- * `x-{name}` attribute matching a registered schema now ALSO resolves --
- * dual-maintained alongside `wb-*` tags indefinitely, by design (not a
- * deprecation/replacement). `<span x-chip>` and `<span x-chip>` must build
- * identical DOM/classes from this point on.
+ * #521: schema-builder.js's detectSchema() once recognized composite
+ * behaviors only by a `wb-*` tag-name prefix. An element carrying an
+ * `x-{name}` attribute for a registered schema now resolves it too -- and
+ * since 4.0.0 retired `<wb-*>` tags (#1144: "we don't use wb-* any more"),
+ * the x-{name} attribute is the ONLY way: `<span x-chip>` builds the chip.
  *
- * Also covers a real bug found auditing this: `x-ignore` (the existing
- * opt-out for wb.js's native-tag autoInject) was never checked anywhere in
+ * Also covers a real bug found auditing this: `x-ignore` (the opt-out for
+ * wb.js's native-tag autoInject) was never checked anywhere in
  * schema-builder.js, so `<span x-chip x-ignore>` was fully built despite the
  * attribute. Fixed as a single check in processElement() -- the one entry
  * point every caller (scan(), the MutationObserver, and wb.js's own
  * processSchema()) funnels through.
+ *
+ * #1144: after the 4.0.0 rename this file compared `<span x-chip>` with
+ * `<span x-chip>` -- the same markup twice, under titles that still promised a
+ * `wb-*` tag. The duplicates are folded into one test each.
  */
-// The class assertions below read `wb-chip` / `wb-chip--primary`: the class
-// prefix is x- since the wb- authoring surface was retired, so the positive
-// checks failed on a correctly built chip and the x-ignore checks passed
-// whether or not x-ignore did anything.
-test.describe('x-{name} attribute resolves the same schema as the wb-* tag (#521)', () => {
+test.describe('an x-{name} attribute resolves its schema (#521)', () => {
   test.beforeEach(async ({ page }) => {
     await setupBehaviorTest(page);
   });
 
-  test('<span x-chip> builds the same chip content as <span x-chip>', async ({ page }) => {
-    // <span x-chip> deliberately has NO .x-chip class (#448 -- chip.css selects
-    // the x-chip TAG directly, same guard buildStructure() uses to avoid
-    // #478's redundant-class violation). <span x-chip> has no tag to select
-    // on, so it needs (and gets, per #521's fix to chip()) the class instead
-    // -- both forms end up equally stylable, just via a different selector.
-    const tagChip = await setupTestContainer(page, '<span x-chip label="Tag"></span>');
-    await expect(tagChip.locator('.x-chip__label')).toHaveText('Tag');
-
-    const attrChip = await setupTestContainer(page, '<span x-chip label="Tag"></span>');
-    await expect(attrChip).toHaveClass(/\bx-chip\b/);
-    await expect(attrChip.locator('.x-chip__label')).toHaveText('Tag');
+  test('<span x-chip> builds the chip: class and label', async ({ page }) => {
+    // <span x-chip> has no tag to select on, so it needs (and gets, per
+    // #521's fix to chip()) the .x-chip class; chip.css styles that class.
+    const chip = await setupTestContainer(page, '<span x-chip label="Tag"></span>');
+    await expect(chip).toHaveClass(/\bx-chip\b/);
+    await expect(chip.locator('.x-chip__label')).toHaveText('Tag');
   });
 
-  test('<span x-chip variant="primary"> gets the same modifier class as <span x-chip variant="primary">', async ({ page }) => {
-    const attrChip = await setupTestContainer(
-      page,
-      '<span x-chip label="Tag" variant="primary"></span>'
-    );
-    await expect(attrChip).toHaveClass(/\bx-chip--primary\b/);
+  test('<span x-chip variant="primary"> gets the modifier class', async ({ page }) => {
+    const chip = await setupTestContainer(page, '<span x-chip label="Tag" variant="primary"></span>');
+    await expect(chip).toHaveClass(/\bx-chip--primary\b/);
   });
 
-  test('x-ignore opts a wb-* tag out of schema building entirely', async ({ page }) => {
-    const ignored = await setupTestContainer(page, '<span x-chip x-ignore label="Tag"></span>');
-    await expect(ignored).not.toHaveClass(/\bx-chip\b/);
-    await expect(ignored.locator('.x-chip__label')).toHaveCount(0);
-  });
-
-  test('x-ignore opts an x-{name} attribute element out of schema building entirely', async ({ page }) => {
+  test('x-ignore opts an x-{name} element out of schema building entirely', async ({ page }) => {
     const ignored = await setupTestContainer(page, '<span x-chip x-ignore label="Tag"></span>');
     await expect(ignored).not.toHaveClass(/\bx-chip\b/);
     await expect(ignored.locator('.x-chip__label')).toHaveCount(0);

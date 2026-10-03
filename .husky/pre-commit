@@ -1,220 +1,36 @@
 #!/bin/sh
-# WB Starter Pre-commit Hook
-# Runs project-integrity tests before allowing commit
-
-# #743: the `npm version patch` that used to run here is GONE.
+# WB Starter pre-commit hook — fast checks only.
 #
-# It bumped on EVERY commit, which drove 3.0.36 -> 3.0.60 in two days with
-# nothing describing any of them, and stopped a release number identifying a
-# build at all: 3.0.55 named two different commits, 3.0.35 named forty, and
-# 3.0.56/58/59/60 never reached main. Worse, it turned this hook into
-# something to get around — 16 commits in one day used --no-verify purely to
-# dodge the bump, and every one of those skipped the checks below with it.
-# A hook people must bypass is not a gate.
+# John, 2026-10-02: "no ci duplication at all" and "no full test run until the
+# end of the day when i say park, then when I get up the next morning we have a
+# new release".
 #
-# The version moves only when a release is cut, deliberately, with a What's
-# New entry naming it. Cache-busting keys off the version now, so it no longer
-# needs a per-commit token.
+# So this hook runs only checks that take seconds AND that CI does not run.
+# Playwright runs nowhere here: PR CI runs every category (ci-tests.yml), and
+# the full suite that decides a release runs nightly (nightly.yml). The old
+# every-10th-commit full run and the per-commit priority-1 run are gone.
 
-echo "🏷  Stamping version (no bump — a release cuts the version)..."
-node scripts/stamp-version.js
-# stamp-version.js also bumps every ?v= cache-busting query string in
-# index.html to match — only version.js was ever
-# re-staged, leaving it perpetually one commit stale (each commit's
-# stamp reflected the PARENT commit's hash, since HEAD hasn't moved yet
-# when this hook runs, and the cache-bust for THIS commit's own changes
-# never got included in it).
-git add src/core/version.js index.html
+# No version stamp here any more. main's stamp workflow
+# (.github/workflows/stamp-version-on-main.yml) writes src/core/version.js and
+# the ?v= keys for every push, and `npm start` stamps a local checkout. A stamp
+# committed from a branch was always wrong on main (it predates its merge) and
+# made every PR conflict with main on src/core/version.js.
 
 echo "🔍 Running pre-commit checks..."
 
-# ── Lint ratchet — EVERY commit (#840) ───────────────────────────────────────
-# `npm run lint` has existed for a long time and this hook never called it. That
-# is how 149 unawaited `WB.scan()` calls accumulated against 66 correct ones:
-# nothing was looking. Playwright hands .ts to Babel, which strips types and
-# runs — transpiling is not type-checking — and jsconfig.json only ever included
-# **/*.js, so the .spec.ts suite sat outside every check the project had.
-#
-# This runs on EVERY commit, deliberately NOT inside the 10-commit block below.
-# A check that runs one commit in ten lets nine commits of breakage through and
-# then blames the tenth author for all of it. It lints only STAGED files, which
-# keeps it to ~20-35s instead of the ~37s full-repo sweep.
-#
-# It is a RATCHET, not a pass/fail gate: it fails only when a file you touched
-# has MORE problems than the baseline recorded for it — never merely because
-# problems exist. Full rationale in .husky/lint-ratchet.mjs. Short version: a
-# gate too strict to pass gets bypassed, and the --no-verify habit takes every
-# other check down with it. This repo has already lived that once — see the #743
-# note above, where 16 commits in one day used --no-verify to dodge the version
-# bump and skipped all of these checks in the process.
+# Lint ratchet on STAGED files (#840): fails only when a file you touched has
+# more problems than its recorded baseline. CI does not lint.
 node .husky/lint-ratchet.mjs --staged || exit 1
 
-# #1091: a spec that collects ZERO tests exits 0 and reports success.
-#
-# Seven confirmed incidents ran through that hole -- #975 (twelve days of
-# "Total: 0 tests" reported as a passing gate), #1049, #1085, a dead fixture
-# sitting in the register looking like a defect, and two specs written THIS
-# SESSION that collected nothing and reported green, one of them the spec
-# written to fix another instance of it.
-#
-# Listing is cheap: no browser, no server, a few seconds. It runs before the
-# expensive gates precisely because a suite that cannot be trusted to have run
-# makes everything after it meaningless.
+# A spec that collects zero tests exits 0 and reports success (#1091). Listing
+# only: no browser, no server, a few seconds.
 node scripts/check-spec-collection.mjs || exit 1
 
-# The machine-wide lock guards (#651, #1106). Milliseconds, no Playwright. Until
-# now nothing ran this at all -- which is how "a single run is admitted while a
-# suite holds the machine" survived: every case it had tested one kind of run
-# against its own kind. scripts/lock-permutations.schema.json now drives all 18.
-node scripts/test-lock-guards.mjs || exit 1
-
-# The GATE itself is bounded and holds that lock (#1106). test-lock-guards proves
-# the library refuses a run; this proves the gate ever takes the lock and that
-# its bounds fire -- deleting either used to leave every check green. Since
-# #1128 it proves the same for release.mjs, priority-gate.mjs and the
-# project-integrity run below, and that no wait for the lock is endless. ~25s, no
-# Playwright run, a private lock dir: it cannot collide with a real suite.
-node scripts/test-gate-guards.mjs || exit 1
-
-# The gate once ran the suite with the hook's GIT_DIR, and a spec's scratch
-# `git init` rewrote the REAL repo as bare with a fake identity (#1161).
-node scripts/test-suite-env.mjs || exit 1
-
-# A failed ship deleted the LIVE release's tag (#1157), and a refused release
-# commit left the whole release staged under "Tree restored" (#1179). Throwaway
-# repos only: proves a rollback removes just the tag its own run cut and returns
-# the tree, index included, to HEAD.
-node scripts/test-ship-rollback.mjs || exit 1
-
-# The known-failures register only shrinks. A new failure is fixed, never
-# recorded -- John: "I want all the failures to stop." Milliseconds, git only.
+# The known-failures register only shrinks. Milliseconds, git only.
 node scripts/check-register-shrinks.mjs || exit 1
 
-# A ship ran all ~7,800 tests twice: release.mjs's full run never reset the
-# 10th-commit counter below, so the release commit ran them again (#1178).
-# Seconds, throwaway repos only.
-node scripts/test-full-run-counter.mjs || exit 1
-
-# A control byte in staged source (#1162). Before this, the only check was a
-# compliance spec inside the 10th-commit gate, so an ESC decoded from an escape an
-# agent wrote was found 59 minutes later as one of 14 "new failures". This reads
-# the index, uses the spec's own rule (scripts/lib/control-bytes.mjs), and takes
-# milliseconds. Its guard proves every byte value and every placement.
+# A control byte in staged source (#1162). Reads the index, milliseconds.
 node scripts/check-staged-control-bytes.mjs || exit 1
-node scripts/test-staged-control-bytes.mjs || exit 1
-
-# ── Priority-1 gate — EVERY commit (2026-09-05) ──────────────────────────────
-# John: "each issue will have a priority 1 through 5 assessed based on negative
-# impact to the project... now change our gates based on priorities."
-#
-# Severity decides how hard the check bites. Priority 1 means "destroys work,
-# blinds the gates, or blocks everyone", so the tests those issues name run on
-# EVERY commit -- a handful of specs, about a minute -- rather than waiting for
-# the 10th-commit matrix. That matrix stays where it is below; it just is not
-# the only line of defence any more, which matters on a suite where it samples
-# a nondeterministic pool (#961) and takes 40 minutes to say so.
-#
-# Reads data/priority-gate.json, so no network. A stale or missing manifest
-# warns and passes: blocking a commit on a cold cache is how a hook becomes
-# something people bypass, and a bypassed hook takes every other check with it.
-#
-# #1128: it holds a machine-wide single-run slot, is bounded, and leaves the port
-# to playwright.config.ts -- see scripts/lib/hold-machine.mjs.
-node scripts/priority-gate.mjs || exit 1
-
-# ── Full validation every 10th commit ────────────────────────────────────────
-# John: "after 10 fixes run the whole set of tests."
-#
-# Running the ~1hr matrix on every commit is a gate people disable; running it
-# never is how sticky.spec.ts sat failing since January while 20 releases
-# shipped over a red build. Ten is the compromise: fast checks every time, the
-# whole suite often enough that a regression cannot travel far.
-#
-# The counter lives in .git/ deliberately — a tracked file would change on
-# every commit, churn every diff, and conflict on every merge.
-#
-# #974: --git-common-dir, NOT --git-dir. In a worktree --git-dir resolves to
-# .git/worktrees/<name>, so every worktree got its OWN counter starting at zero
-# and the 10th-commit gate effectively never fired for agents — who work almost
-# exclusively in worktrees. Observed: main sat at 9 while a fresh worktree sat
-# at 1 and five agent worktrees had no counter at all, so the main checkout was
-# absorbing the entire cadence alone. --git-common-dir returns .git from every
-# worktree AND from the main checkout, making the count global, which is the
-# only way "every 10th commit" means anything.
-#
-# #1178: the path comes from scripts/lib/full-run-counter.mjs, the same module
-# release.mjs uses to reset the count after its own full run. Two copies of the
-# git command could name two different files, and the release reset would miss.
-COUNT_FILE="$(node scripts/lib/full-run-counter.mjs --path)" || exit 1
-COUNT=$(cat "$COUNT_FILE" 2>/dev/null || echo 0)
-COUNT=$((COUNT + 1))
-
-if [ "$COUNT" -ge 10 ]; then
-  echo ""
-  echo "🔁 $COUNT commits since the last full run — running the WHOLE suite"
-  echo "   (compliance + regression + behaviors + schema-viewer)"
-  echo ""
-  # #959: this used to exit 1 if ANY project was red. The suite has been red for
-  # months (499 failures over 227 files), so that gate blocked every commit
-  # permanently AND detected nothing -- a regression introduced today arrived as
-  # one more line among 499, indistinguishable from January's debt. Blocked and
-  # blind is worse than unblocked with real detection.
-  #
-  # It is a RATCHET now, on exactly the argument .husky/lint-ratchet.mjs (#840)
-  # already makes for lint: fail only on failures NOT in the recorded baseline,
-  # and drop repaired tests from that baseline so they can never rot again.
-  # The register is data/test-baseline-failures.json; it only ever shrinks.
-  # #1065: gate the COMMIT, not the working directory.
-  #
-  # This used to call test-ratchet.mjs directly, which boots a server on THIS
-  # directory and tests whatever is on disk for the ~50 minutes the suite takes.
-  # So the verdict described a tree that no longer existed by the time it
-  # arrived, and any edit landing in that window silently changed what was under
-  # test. Measured in one session: three runs invalidated, one of them by a
-  # different session changing a spec the commit did not even contain (the
-  # commit named 18 files by pathspec and was blocked by a file outside it).
-  #
-  # John: "this is only about the 10th time changes (late) have aborted the
-  # commit/next release. This points to our process being unable to finish doing
-  # the right thing."
-  #
-  # gate-staged-tree.mjs materialises the INDEX into a throwaway worktree and
-  # runs the same unchanged ratchet in there. Late edits cannot affect it,
-  # because the run is not looking at the place edits happen.
-  node .husky/gate-staged-tree.mjs || exit 1
-
-  echo ""
-  # #959: NOT "green" -- the ratchet asserts "no NEW failures", which is a
-  # weaker and more honest claim. Saying green here while 499 tests are red is
-  # how a gate stops meaning anything.
-  echo "✅ No new failures vs the baseline — counter reset."
-  echo 0 > "$COUNT_FILE"
-else
-  echo "   ($COUNT/10 commits since the last full run)"
-  echo "$COUNT" > "$COUNT_FILE"
-fi
-
-
-# Run project integrity tests only — NOT `npm test` (the full multi-tier
-# matrix: compliance/regression/integration/base/behaviors, ~1hr). `npm test
-# -- --grep ...` only appends those flags to the LAST command in that
-# &&-chained script, so every commit was silently running the ENTIRE suite
-# unfiltered before this fix (never caught: core.hooksPath wasn't set for
-# this worktree until now, so the hook itself had never actually run).
-#
-# #1128: through locked-spec-run.mjs, not a bare `npx playwright test`. That took
-# no machine-wide slot and had no time limit, so it ran beside any other run on
-# the box and a wedged run held the commit forever. scripts/test-gate-guards.mjs
-# runs THIS line against a fake Playwright and fails if it stops holding a slot.
-node scripts/locked-spec-run.mjs tests/compliance/project-integrity.spec.ts --reporter=line
-
-if [ $? -ne 0 ]; then
-  echo ""
-  echo "❌ Pre-commit checks FAILED"
-  echo "   Fix the issues above before committing."
-  echo ""
-  exit 1
-fi
 
 echo ""
 echo "✅ Pre-commit checks passed"

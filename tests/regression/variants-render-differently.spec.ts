@@ -46,6 +46,15 @@
  * Animations are frozen at their start before reading, so a spinner's
  * rotation cannot make one option look different from itself.
  *
+ * WHICH ROWS ARE COMPARED (#997)
+ *
+ * Every row the list offers: enum values, booleans, the sample values a
+ * free-form property declares in JSON Schema's `examples`, and the authored
+ * examples in data/behavior-examples.json (`examples: [{ label, source }]`,
+ * optionally for one authoring `form`). John asked for at least five varied
+ * examples per behavior; this is what holds "varied" to mean "looks
+ * different", not "is labelled differently".
+ *
  * WHICH ROWS ARE EXPECTED TO LOOK LIKE ANOTHER ONE
  *
  * Exactly three kinds, all read from the behavior's schema -- never listed
@@ -134,7 +143,7 @@ const NATIVE_WIDGETS = [
 ];
 
 type PropDef = {
-  enum?: unknown[]; type?: string; default?: unknown;
+  enum?: unknown[]; type?: string; default?: unknown; examples?: unknown[];
   visual?: boolean; nonVisualValues?: unknown[]; visualReason?: string; aliasOf?: string;
   visibleWhen?: 'open';
 };
@@ -177,7 +186,7 @@ function behaviorsWithOptions(): { token: string; form: 'semantic' | 'attribute'
   const byName = new Map<string, { properties?: Record<string, PropDef> }>(
     index.schemas.map((s: { name: string }) => [s.name, s]),
   );
-  const examples: Record<string, { source?: string }> =
+  const examples: Record<string, { source?: string; examples?: { label?: string; source?: string; form?: string; visual?: boolean; visibleWhen?: string }[] }> =
     JSON.parse(readFileSync(join(ROOT, 'data/behavior-examples.json'), 'utf8')).examples || {};
 
   // behaviors.html: the first native selector for a behavior is its host.
@@ -240,11 +249,35 @@ function behaviorsWithOptions(): { token: string; form: 'semantic' | 'attribute'
           same,
           open: def.visibleWhen === 'open',
         });
+      } else if (Array.isArray(def.examples) && def.examples.length) {
+        // #997: a free-form property's sample values (JSON Schema `examples`)
+        // are rows too, and promise a distinct look like any enum value.
+        for (const v of def.examples) {
+          if (v === '' || v == null) continue;
+          const value = String(v);
+          const isDefault = def.default !== undefined && String(def.default) === value;
+          options.push({
+            label: labelFor(prop, value),
+            exempt: nonVisual(value) ? 'non-visual' : isDefault ? 'default' : '',
+            open: def.visibleWhen === 'open',
+          });
+        }
       }
     }
-    if (options.length < 2) continue;
-    if (host && usesHost(attr, host)) out.push({ token: attr, form: 'semantic', options });
-    out.push({ token: attr, form: 'attribute', options });
+    // #997: authored examples (data/behavior-examples.json `examples`) are
+    // labelled by their own label and must look different from every other row.
+    // One may be written for a single authoring form (`form`), as on the page.
+    const withAuthored = (form: 'semantic' | 'attribute'): OptionInfo[] => [
+      ...options,
+      ...(examples[attr]?.examples || [])
+        .filter((ex) => ex && ex.label && ex.source && (!ex.form || ex.form === form))
+        .map((ex) => ({ label: ex.label!, exempt: (ex.visual === false ? 'non-visual' : '') as OptionInfo['exempt'], open: ex.visibleWhen === 'open' })),
+    ];
+    for (const form of ['semantic', 'attribute'] as const) {
+      if (form === 'semantic' && !(host && usesHost(attr, host))) continue;
+      const forForm = withAuthored(form);
+      if (forForm.length >= 2) out.push({ token: attr, form, options: forForm });
+    }
   }
   return out.sort((a, b) => a.token.localeCompare(b.token) || a.form.localeCompare(b.form));
 }
@@ -346,6 +379,8 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
     const seen = new Map<string, string[]>();
     const unrendered: string[] = [];
     const labels: string[] = [];
+    // #997: see the semantic-host wait below.
+    let semanticRootReports = true;
 
     try {
       for (const row of rows) {
@@ -378,9 +413,42 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
             unrendered.push(`${label} (its ${tok} host never reported x-ready)`);
             continue;
           }
+        } else {
+          // #997: a semantic host carries no x-* attribute to wait on, and
+          // rows that only change TEXT (header's title, footer's links) read
+          // as identical when fingerprinted before the behavior had built
+          // anything. Wait briefly for the root to report x-ready. Some roots
+          // never carry it (an <input> the behavior wraps): the first time
+          // the wait runs out, stop waiting for this behavior's other rows,
+          // or a 30-row behavior spends its whole budget here.
+          const root = stage.firstElementChild;
+          if (root && semanticRootReports) {
+            semanticRootReports = await until(() => root.hasAttribute('x-ready'), 3_000);
+          }
         }
         // Behaviors attach asynchronously (module + stylesheet on first use).
-        if (WB?.whenIdle) await WB.whenIdle({ timeout: 10_000 });
+        // #1246: on Windows CI (and on main's own CI, 6bb465df) x-progress never
+        // settles: "progress (awaiting viewport)" -- the lazy runtime is still
+        // waiting for an IntersectionObserver report that does not come. It
+        // does not reproduce on Linux, so when it happens the failure carries
+        // what the page looked like, to find the cause from the CI log alone.
+        if (WB?.whenIdle) {
+          try {
+            await WB.whenIdle({ timeout: 20_000 });
+          } catch (err) {
+            const lazies = Array.from(stage.querySelectorAll('progress, [x-progress]')).map((el) => {
+              const cs = getComputedStyle(el);
+              const r = el.getBoundingClientRect();
+              let hiddenBy = '';
+              for (let a = el.parentElement; a; a = a.parentElement) {
+                const acs = getComputedStyle(a);
+                if (acs.display === 'none' || acs.contentVisibility === 'hidden') { hiddenBy = `${a.tagName.toLowerCase()}#${a.id}.${a.className}`; break; }
+              }
+              return `<${el.tagName.toLowerCase()} ${Array.from(el.attributes).map((x) => `${x.name}="${x.value}"`).join(' ')}> connected=${el.isConnected} display=${cs.display} visibility=${cs.visibility} cv=${cs.contentVisibility} rect=${Math.round(r.x)},${Math.round(r.y)},${Math.round(r.width)}x${Math.round(r.height)} ready=${el.hasAttribute('x-ready')} hiddenBy=${hiddenBy || '-'}`;
+            });
+            throw new Error(`${(err as Error).message}\n  [#1246 diagnostics] label=${label} visibility=${document.visibilityState} focus=${document.hasFocus()} viewport=${innerWidth}x${innerHeight} scrollY=${Math.round(scrollY)}\n  ${lazies.join('\n  ') || '(no progress elements in the stage)'}`);
+          }
+        }
         // And the example's images have arrived (loaded or failed). An image
         // still in flight is a 0x0 box, which is how x-cardimage's aspect=4/3
         // and aspect=21/9 once read as the same card: neither had its picture
@@ -492,6 +560,8 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
 test.describe('Showcase variants are visually distinct', () => {
   for (const { token, form, options } of behaviorsWithOptions()) {
     test(`${token} (${form}): no two options render identically`, async ({ page }) => {
+      // Room for the 20s idle ceiling above on a starved CI runner (#1246).
+      test.setTimeout(60_000);
       await openPanel(page);
       const findings = await fingerprintOptions(page, token, form, options);
 

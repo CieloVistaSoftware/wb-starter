@@ -105,24 +105,31 @@ test.describe('behaviors header control strip alignment (#1004)', () => {
     expect(spread, `the strip wrapped — tops span ${Math.round(spread)}px`).toBeLessThan(16);
   });
 
-  test('the version badge stays a badge: short, and it opens Releases', async ({ page }) => {
+  test('the version badge is the number only, and clicking it gets the latest code then reloads', async ({ page }) => {
     // John: "Shrink to just version, release-modification format, and remove
     // text." Spelling the drift out — "v4.0.1.7 ⚠ 1 behind origin/main · dirty"
     // — made the badge wide enough to wrap the whole header, which is what
     // pushed the strip over the sidebar in the first place. And: "I already
-    // told you when clicking it will open What's New." What's New became
-    // Releases for 1.0, and the click lands on this version's entry.
+    // told you when clicking it will open What's New." -- superseded
+    // 2026-10-02: "make pressing this button first get the latest code before
+    // reloading", and "I only want numbers".
     const badge = page.locator('.x-release, [x-release]').first();
     await badge.waitFor({ state: 'visible', timeout: 15_000 });
 
     const text = ((await badge.textContent()) || '').trim();
     // #1139: the release, then commits past it as "+N" -- never a fourth
     // version segment, which reads as a release nobody cut.
-    expect(text, `badge reads "${text}"`).toMatch(/^v?\d+\.\d+\.\d+( \+\d+)?[\s\u26a0*!~]*$/u);
+    expect(text, `badge reads "${text}"`).toMatch(/^v\d+\.\d+\.\d+$/);
     expect(text.length, `badge is prose, not a badge: "${text}"`).toBeLessThanOrEqual(20);
     expect(/behind|ahead|dirty|origin/i.test(text), `badge still spells out drift: "${text}"`).toBe(false);
 
+    // The click asks the local server for the latest main, then reloads. The
+    // endpoint is faked here: a test must never pull anyone's checkout.
+    let asked = false;
+    await page.route('**/api/update-to-latest', (route) => { asked = true; return route.fulfill({ json: { updated: false, message: 'test' } }); });
+    const reloaded = page.waitForEvent('load');
     await badge.click();
-    await expect.poll(() => page.url(), { timeout: 10_000 }).toContain('page=releases');
+    await reloaded;
+    expect(asked, 'clicking the badge must ask for the latest code first').toBe(true);
   });
 });

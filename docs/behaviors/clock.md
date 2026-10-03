@@ -14,7 +14,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `digital` · `led` · `analog` | `digital` | Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial). Any other value renders `digital` and logs a warning naming these three. |
+| `variant` | `digital` · `led` · `analog` | `digital` | Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial; `analogue` is accepted). Any other value renders `digital` and logs a warning naming these three. |
 | `format` | `24` · `12` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. |
 | `show-seconds` | `true` · `false` | `true` | Show the seconds field. On unless set to `"false"`. |
 

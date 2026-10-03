@@ -8,12 +8,20 @@
     "max-width": {
       "type": "string",
       "description": "Read by center().",
-      "default": "this is the max width"
+      "default": "this is the max width",
+      "examples": [
+        "20ch",
+        "60ch"
+      ]
     },
     "gutters": {
       "type": "string",
       "description": "Read by center().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "3rem"
+      ]
     },
     "intrinsic": {
       "type": "boolean",

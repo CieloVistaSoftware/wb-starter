@@ -16,6 +16,16 @@
     <input type="search" id="docs-search" placeholder="Search documentation...">
     <span class="docs-search-icon">🔍</span>
   </div>
+  <!-- The option marked `selected` is the order the list opens in. To change
+       the site default, move `selected` to the other option. A reader's own
+       pick is remembered (and kept in ?sort=) and wins over the default. -->
+  <div class="docs-sort">
+    <label for="docs-sort">Sort documents</label>
+    <select id="docs-sort">
+      <option value="newest" selected>Newest first</option>
+      <option value="category">By category</option>
+    </select>
+  </div>
 </div>
 
 <!-- #1098: every behavior, in two sections. Rendered from tag-map union
@@ -73,74 +83,105 @@
     
     let fullManifest = null;
 
+    // Manifest titles and descriptions are TEXT that often names a tag
+    // ("A bare <audio> gets a styled player"). Concatenated raw into
+    // innerHTML, that became a real, src-less <audio> the audio behavior
+    // then rejected with a runtime error -- and "<article> renders a card"
+    // rendered an actual card. Escape them; they are never markup.
+    const escapeText = (value) => String(value ?? '')
+      .replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    // Sort order: ?sort= (so Back to Docs returns to it), then the reader's
+    // last pick, then the <option selected> in the markup -- the site default.
+    const sortSelect = document.getElementById('docs-sort');
+    const SORT_KEY = 'x-docs-sort';
+    const SORTS = ['newest', 'category'];
+    function initialSort() {
+      const fromUrl = new URLSearchParams(window.location.search).get('sort');
+      if (SORTS.includes(fromUrl)) return fromUrl;
+      let stored = null;
+      try { stored = localStorage.getItem(SORT_KEY); } catch { /* blocked storage: use the default */ }
+      if (SORTS.includes(stored)) return stored;
+      const marked = sortSelect && [...sortSelect.options].find((o) => o.defaultSelected);
+      return marked ? marked.value : 'newest';
+    }
+    if (sortSelect) sortSelect.value = initialSort();
+    const currentSort = () => (sortSelect ? sortSelect.value : 'newest');
+
+    // One card. `modified` (YYYY-MM-DD) is kept current in docs/manifest.json
+    // by scripts/update-docs-manifest.js on every `npm start`.
+    function cardHtml(entry, categoryName) {
+      let href, target = '';
+      if (entry.page) {
+        // Page links (like research papers)
+        href = siteRoot() + 'pages/' + entry.page + '.html';
+        target = ' target="_blank"';
+      } else {
+        // Site-root-relative path (no leading slash) so it survives the
+        // GitHub Pages sub-path base (/wb-starter/). doc-viewer resolves it
+        // against its own computed site root. (#226)
+        let filePath = entry.file;
+        if (!/^https?:/i.test(filePath)) {
+          filePath = filePath.replace(/^\/+/, '');
+          if (!/^docs\//.test(filePath)) filePath = 'docs/' + filePath;
+        }
+        // Same tab (#1184): a new tab left the filtered, scrolled list
+        // behind, so the viewer's Back to Docs could only open a fresh one.
+        // Ctrl/middle-click still opens a tab for anyone who wants one.
+        href = siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath);
+      }
+      const meta = [categoryName, entry.modified ? 'Updated ' + entry.modified : '']
+        .filter(Boolean).map(escapeText).join(' \u00b7 ');
+      return '<a href="' + href + '" class="docs-card"' + target + '>' +
+        '<h3 class="docs-card__title">' + escapeText(entry.title) + '</h3>' +
+        '<p class="docs-card__desc">' + escapeText(entry.description) + '</p>' +
+        (meta ? '<p class="docs-card__meta">' + meta + '</p>' : '') +
+        '</a>';
+    }
+
+    function sectionHtml(icon, name, cards) {
+      return '<div class="docs-category">' +
+        '<h2 class="docs-category__title"><span>' + icon + '</span><span>' + name + '</span></h2>' +
+        '<div class="docs-grid">' + cards + '</div>' +
+        '</div>';
+    }
+
     function renderDocs(manifestData) {
       if (!manifestData || !manifestData.categories) {
         container.innerHTML = '<p class="docs-empty">No documentation found.</p>';
         return;
       }
 
+      // Skip empty categories after filtering
+      const categories = manifestData.categories.filter((category) =>
+        (category.docs && category.docs.length > 0) || (category.pages && category.pages.length > 0));
+
       let html = '';
-      let hasResults = false;
-      
-      for (const category of manifestData.categories) {
-        // Skip empty categories after filtering
-        const hasDocs = category.docs && category.docs.length > 0;
-        const hasPages = category.pages && category.pages.length > 0;
-        
-        if (!hasDocs && !hasPages) continue;
-        
-        hasResults = true;
-        html += '<div class="docs-category">';
-        html += '<h2 class="docs-category__title">';
-        html += '<span>' + category.icon + '</span>';
-        html += '<span>' + category.name + '</span>';
-        html += '</h2>';
-        html += '<div class="docs-grid">';
-        
-        // Handle markdown docs
-        // Manifest titles and descriptions are TEXT that often names a tag
-        // ("A bare <audio> gets a styled player"). Concatenated raw into
-        // innerHTML, that became a real, src-less <audio> the audio behavior
-        // then rejected with a runtime error -- and "<article> renders a card"
-        // rendered an actual card. Escape them; they are never markup.
-        const escapeText = (value) => String(value ?? '')
-          .replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-        if (category.docs) {
-          for (const doc of category.docs) {
-            // Site-root-relative path (no leading slash) so it survives the
-            // GitHub Pages sub-path base (/wb-starter/). doc-viewer resolves it
-            // against its own computed site root. (#226)
-            let filePath = doc.file;
-            if (!/^https?:/i.test(filePath)) {
-              filePath = filePath.replace(/^\/+/, '');
-              if (!/^docs\//.test(filePath)) filePath = 'docs/' + filePath;
-            }
-            // Same tab (#1184): a new tab left the filtered, scrolled list
-            // behind, so the viewer's Back to Docs could only open a fresh one.
-            // Ctrl/middle-click still opens a tab for anyone who wants one.
-            html += '<a href="' + siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath) + '" ';
-            html += 'class="docs-card">';
-            html += '<h3 class="docs-card__title">' + escapeText(doc.title) + '</h3>';
-            html += '<p class="docs-card__desc">' + escapeText(doc.description) + '</p>';
-            html += '</a>';
+      if (currentSort() === 'newest') {
+        // One list across every category, most recently updated first; an
+        // entry with no date sorts last. Each card names its category.
+        const entries = [];
+        for (const category of categories) {
+          for (const entry of [...(category.docs || []), ...(category.pages || [])]) {
+            entries.push({ entry, category });
           }
         }
-        
-        // Handle page links (like research papers)
-        if (category.pages) {
-          for (const page of category.pages) {
-            html += '<a href="' + siteRoot() + 'pages/' + page.page + '.html" ';
-            html += 'class="docs-card" target="_blank">';
-            html += '<h3 class="docs-card__title">' + escapeText(page.title) + '</h3>';
-            html += '<p class="docs-card__desc">' + escapeText(page.description) + '</p>';
-            html += '</a>';
-          }
+        entries.sort((a, b) =>
+          (b.entry.modified || '').localeCompare(a.entry.modified || '') ||
+          String(a.entry.title).localeCompare(String(b.entry.title)));
+        if (entries.length) {
+          html = sectionHtml('🕐', 'Newest first',
+            entries.map(({ entry, category }) => cardHtml(entry, category.name)).join(''));
         }
-        
-        html += '</div></div>';
+      } else {
+        for (const category of categories) {
+          const cards = [...(category.docs || []), ...(category.pages || [])]
+            .map((entry) => cardHtml(entry, '')).join('');
+          html += sectionHtml(category.icon, category.name, cards);
+        }
       }
-      
-      if (!hasResults) {
+
+      if (!html) {
         container.innerHTML = '<div class="docs-empty docs-empty--search">' +
           '<p class="docs-empty__icon">🔍</p>' +
           '<p>No results found matching your search.</p>' +
@@ -206,7 +247,7 @@
       const scroller = () => document.getElementById('siteBody') || document.scrollingElement;
       let saved = null;
       try { saved = JSON.parse(sessionStorage.getItem(STATE_KEY) || 'null'); } catch { /* blocked storage: nothing to restore */ }
-      if (saved && (saved.q || '') === (query || '')) {
+      if (saved && (saved.q || '') === (query || '') && (saved.sort || currentSort()) === currentSort()) {
         // Put the card the reader opened back where it sat on screen, not a
         // raw offset: content above the list settles after this render, and
         // the browser's scroll anchoring then moved a restored 720px to 3076px
@@ -261,6 +302,16 @@
         });
       }
 
+      if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+          renderDocs(filterManifest(searchInput ? searchInput.value : ''));
+          try { localStorage.setItem(SORT_KEY, currentSort()); } catch { /* blocked storage: the pick lasts this visit */ }
+          const url = new URL(window.location.href);
+          url.searchParams.set('sort', currentSort());
+          history.replaceState(history.state, '', url);
+        });
+      }
+
       container.addEventListener('click', (e) => {
         const card = e.target.closest && e.target.closest('a.docs-card');
         if (!card) return;
@@ -268,6 +319,7 @@
         try {
           sessionStorage.setItem(STATE_KEY, JSON.stringify({
             q: searchInput ? searchInput.value : '',
+            sort: currentSort(),
             scroll: el.scrollTop,
             href: card.getAttribute('href'),
             offset: card.getBoundingClientRect().top - el.getBoundingClientRect().top,

@@ -22,6 +22,23 @@
 import { test, expect, Page } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
+import { wbIdle } from '../base';
+
+/**
+ * After a click, key, hover or focus: let the page react, without guessing a
+ * duration (#962). Waits for any injection the action started (WB.settled),
+ * then two animation frames so synchronous handlers and the style recalc they
+ * cause have run. The retrying assertions that follow wait for anything slower
+ * (a debounce, a transition); this is what lets a NEGATIVE assertion ("should
+ * not have class") see a wrong state the action produced at once.
+ */
+async function afterAction(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const wb = (window as any).WB;
+    if (typeof wb?.settled === 'function') await wb.settled({ timeout: 10000 });
+    await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
+  });
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CONFIGURATION
@@ -264,8 +281,8 @@ async function setupTestPage(page: Page, setupHtml: string): Promise<void> {
     await (window as any).WB.scan(container);
   }, setupHtml);
   
-  // Small delay for behavior initialization
-  await page.waitForTimeout(100);
+  // Wait for the runtime to say injection has finished, not a guessed 100ms (#962).
+  await wbIdle(page);
 }
 
 /**
@@ -388,7 +405,7 @@ async function runSteps(page: Page, steps: Step[]): Promise<void> {
         await page.fill(await controlSelector(page, step.selector), step.value || '');
         break;
     }
-    await page.waitForTimeout(50);
+    await afterAction(page);
   }
 }
 
@@ -449,38 +466,33 @@ async function assertExpectations(
     }
   }
   
-  // Style checks
+  // Style checks -- POLLED (#962): a computed style read once races any CSS
+  // transition the action started. Re-read until it matches or times out.
+  const styleOf = (p: string) => page.locator(selector).first().evaluate((el, prop) =>
+    getComputedStyle(el).getPropertyValue(prop) || (el as HTMLElement).style.getPropertyValue(prop), p);
   if (merged.style) {
     for (const [prop, value] of Object.entries(merged.style)) {
       // Handle special checks like <=150px
       if (typeof value === 'string' && (value.startsWith('<=') || value.startsWith('>='))) {
-         const op = value.substring(0, 2);
-         const num = parseFloat(value.substring(2));
-         const actualValue = await page.locator(selector).first().evaluate((el, p) => {
-            return parseFloat(getComputedStyle(el).getPropertyValue(p) || (el as HTMLElement).style.getPropertyValue(p));
-         }, prop);
-         
-         if (op === '<=') expect(actualValue, `${testName}: style.${prop} should be <= ${num}`).toBeLessThanOrEqual(num);
-         if (op === '>=') expect(actualValue, `${testName}: style.${prop} should be >= ${num}`).toBeGreaterThanOrEqual(num);
+        const op = value.substring(0, 2);
+        const num = parseFloat(value.substring(2));
+        const poll = expect.poll(async () => parseFloat(await styleOf(prop)),
+          { message: `${testName}: style.${prop} should be ${op} ${num}` });
+        if (op === '<=') await poll.toBeLessThanOrEqual(num);
+        if (op === '>=') await poll.toBeGreaterThanOrEqual(num);
       } else {
-        const actualValue = await page.locator(selector).first().evaluate((el, p) => {
-          return getComputedStyle(el).getPropertyValue(p) || (el as HTMLElement).style.getPropertyValue(p);
-        }, prop);
-        expect(actualValue, `${testName}: style.${prop} should be ${value}`).toBe(value);
+        await expect.poll(() => styleOf(prop), { message: `${testName}: style.${prop} should be ${value}` }).toBe(value);
       }
     }
   }
-  
+
   // Style contains (partial match)
   if (merged.styleContains) {
     for (const [prop, value] of Object.entries(merged.styleContains)) {
-      const actualValue = await page.locator(selector).first().evaluate((el, p) => {
-        return getComputedStyle(el).getPropertyValue(p) || (el as HTMLElement).style.getPropertyValue(p);
-      }, prop);
-      expect(actualValue, `${testName}: style.${prop} should contain ${value}`).toContain(value);
+      await expect.poll(() => styleOf(prop), { message: `${testName}: style.${prop} should contain ${value}` }).toContain(value);
     }
   }
-  
+
   // Focus check
   if (merged.focused) {
     if (typeof merged.focused === 'string') {
@@ -574,7 +586,7 @@ for (const { file, schema } of schemasWithTests) {
             
             // Click the button
             await page.click(selector);
-            await page.waitForTimeout(50);
+            await afterAction(page);
             
             // Check event fired
             if (btn.expect.event) {
@@ -622,7 +634,7 @@ for (const { file, schema } of schemasWithTests) {
                }]);
             }
             
-            await page.waitForTimeout(100);
+            await afterAction(page);
             
             // Check event fired
             if (interaction.expect.event) {
@@ -662,7 +674,7 @@ for (const { file, schema } of schemasWithTests) {
               await page.focus(await controlSelector(page, undefined));
             }
             
-            await page.waitForTimeout(50);
+            await afterAction(page);
             
             // Set up event listener
             if (kb.expect.event) {
@@ -681,7 +693,7 @@ for (const { file, schema } of schemasWithTests) {
                await page.keyboard.press(kb.key);
             }
             
-            await page.waitForTimeout(100);
+            await afterAction(page);
             
             // Check event
             if (kb.expect.event) {
@@ -710,7 +722,7 @@ for (const { file, schema } of schemasWithTests) {
             
             // Hover over element
             await page.hover(selector);
-            await page.waitForTimeout(300); // Allow for hover delay
+            await afterAction(page);
             
             await assertExpectations(page, hv.expect, behavior, hv.name);
             
@@ -718,7 +730,7 @@ for (const { file, schema } of schemasWithTests) {
             if (hv.unhover) {
               // Move mouse away
               await page.mouse.move(0, 0);
-              await page.waitForTimeout(300);
+              await afterAction(page);
               
               await assertExpectations(page, hv.unhover, behavior, `${hv.name} (unhover)`);
             }
@@ -744,7 +756,7 @@ for (const { file, schema } of schemasWithTests) {
               } else if (vis.action === 'hover') {
                 await page.hover(selector);
               }
-              await page.waitForTimeout(100);
+              await afterAction(page);
             }
             
             await assertExpectations(page, vis.expect, behavior, vis.name);
@@ -792,7 +804,7 @@ for (const { file, schema } of schemasWithTests) {
               await page.keyboard.press(dismiss.key);
             }
             
-            await page.waitForTimeout(100);
+            await afterAction(page);
             
             if (dismiss.expect) {
               await assertExpectations(page, dismiss.expect, behavior, dismiss.name);
@@ -828,7 +840,7 @@ for (const { file, schema } of schemasWithTests) {
               await page.keyboard.press('Tab');
             }
             
-            await page.waitForTimeout(50);
+            await afterAction(page);
             
             const focusSelector = resolveSelector(focus.expect.focused);
             await expect(page.locator(focusSelector).first()).toBeFocused();
@@ -877,7 +889,7 @@ for (const { file, schema } of schemasWithTests) {
               await page.keyboard.press(dis.key);
             }
             
-            await page.waitForTimeout(50);
+            await afterAction(page);
             
             // Verify event did NOT fire
             if (dis.expect.event === null) {

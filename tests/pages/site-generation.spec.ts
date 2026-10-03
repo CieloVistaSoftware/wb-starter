@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/offline';
-import { readJson, safeScrollIntoView } from '../base';
+import { readJson, safeScrollIntoView, wbIdle } from '../base';
 import * as path from 'path';
 
 /**
@@ -114,7 +114,7 @@ test.describe('Site Generation — Phase 4', () => {
       page.on('pageerror', err => errors.push(err.message));
 
       await page.goto(`${SITE_DIR}/index.html`);
-      await page.waitForTimeout(1000);
+      await wbIdle(page);
 
       const critical = errors.filter(e =>
         !e.includes('favicon') && !e.includes('404')

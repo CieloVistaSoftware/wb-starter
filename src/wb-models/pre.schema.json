@@ -33,7 +33,11 @@
     "size": {
       "type": "string",
       "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
-      "default": "this is the size"
+      "default": "this is the size",
+      "examples": [
+        "xs",
+        "lg"
+      ]
     },
     "show-copy": {
       "type": "boolean",

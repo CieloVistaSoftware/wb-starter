@@ -8,7 +8,11 @@
     "direction": {
       "type": "string",
       "description": "Flex direction: `row` (default) or `column`, plus the `-reverse` forms. Maps to CSS `flex-direction`.",
-      "default": "row"
+      "default": "row",
+      "examples": [
+        "column",
+        "row-reverse"
+      ]
     },
     "wrap": {
       "type": "string",
@@ -18,7 +22,10 @@
     "justify": {
       "type": "string",
       "description": "Distribution along the main axis — `flex-start` (default), `center`, `space-between`, and the rest of CSS `justify-content`.",
-      "default": "flex-start"
+      "default": "flex-start",
+      "examples": [
+        "center"
+      ]
     },
     "align": {
       "type": "string",
@@ -28,7 +35,11 @@
     "gap": {
       "type": "string",
       "description": "Space between items, as a CSS length. Defaults to `1rem`.",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "3rem"
+      ]
     }
   },
   "$view": [],

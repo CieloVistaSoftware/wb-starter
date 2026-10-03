@@ -8,7 +8,10 @@
     "caption-position": {
       "type": "string",
       "description": "Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar.",
-      "default": "bottom"
+      "default": "bottom",
+      "examples": [
+        "overlay"
+      ]
     },
     "zoom": {
       "type": "boolean",
@@ -23,7 +26,12 @@
     "caption": {
       "type": "string",
       "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none.",
-      "default": "this is the caption"
+      "default": "this is the caption",
+      "examples": [
+        "Fog over the north tower, 6:04am.",
+        "Golden Gate, seen from Battery Spencer at dusk — the lights just coming on.",
+        "Morning commute"
+      ]
     }
   },
   "$view": [],

@@ -8,12 +8,21 @@
     "gap": {
       "type": "string",
       "description": "Space between clustered items, as a CSS length. Defaults to `1rem`.",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "2rem"
+      ]
     },
     "justify": {
       "type": "string",
       "description": "How items are distributed along the row — CSS `justify-content`. Defaults to `flex-start`.",
-      "default": "flex-start"
+      "default": "flex-start",
+      "examples": [
+        "center",
+        "flex-end",
+        "space-between"
+      ]
     },
     "align": {
       "type": "string",

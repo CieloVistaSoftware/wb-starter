@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * REGRESSION (#387 audit, docs/audits/HOST-CHILD-DISPATCH-AUDIT.md):
@@ -24,7 +25,7 @@ import { test, expect } from '../fixtures/offline';
 test.describe('.x-dialog is excluded from schema $view building (#387)', () => {
   test('/?page=forms: schema does not write div/header/h2/main/footer chrome into a live <dialog> host', async ({ page }) => {
     await page.goto('/?page=forms');
-    await page.waitForTimeout(1500);
+    await wbIdle(page);
 
     const hasSchema = await page.evaluate(() => !!(window as any).WB?.schema);
     expect(hasSchema, 'main SPA must expose WB.schema for this test to be meaningful').toBe(true);
@@ -45,7 +46,7 @@ test.describe('.x-dialog is excluded from schema $view building (#387)', () => {
     );
     // Give any async schema fetch/build a chance to run (it must NOT, but
     // wait long enough that a regression would actually show up here).
-    await page.waitForTimeout(500);
+    await wbIdle(page);
 
     const host = page.locator('#dlg-387');
     // Confirms dialog.js's own trigger-mode behavior still ran (unaffected

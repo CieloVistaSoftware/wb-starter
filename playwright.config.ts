@@ -169,6 +169,13 @@ export default defineConfig({
   // runs took ready 3 -> 0, failing 7 -> 0, unproven 5 -> 18, with no work done
   // to any of those issues. Playwright's scratch gets its own directory.
   outputDir: './data/playwright-output',
+  // #1272: Playwright's git-info plugin defaults to capturing a diff on CI,
+  // and for a pull request it gets one by running
+  // `git fetch origin <base> --depth=1`. On our full-history checkout that
+  // writes .git/shallow and cuts history to a few commits, so anything that
+  // reads history (the Releases list, the push-count version number) breaks
+  // in CI only. Commit info stays; the diff fetch is off.
+  captureGitInfo: { commit: true, diff: false },
   reporter: [
     ['./scripts/tools/test-reporter.ts'],
     ['list']
@@ -232,7 +239,7 @@ export default defineConfig({
   // ci-tests.yml starts the server itself (node server.js &) before
   // invoking Playwright, so Playwright must reuse it rather than trying to
   // bind port 3000 a second time (which fails with "port 3000 is already
-  // used"). When no server is running (e.g. ci-compliance.yml), Playwright
+  // used"). When no server is running (e.g. a CI job), Playwright
   // still starts one via `command`. A WB_TEST_PORT override never reuses --
   // see the #518 comment above.
   webServer: {

@@ -54,7 +54,7 @@ test.describe('Behaviors page — STRICT audit (dark theme)', () => {
     expect(offenders, `checkboxes/radios not theme-accented (accent-color: auto):\n${JSON.stringify(offenders, null, 1)}`).toEqual([]);
   });
 
-  test('AUDIT: no wb-* component is zero-size or left as raw inline text', async ({ page }) => {
+  test('AUDIT: no behavior is zero-size or left as raw inline text', async ({ page }) => {
     const offenders = await page.evaluate(() => {
       const tags = ['[x-switch]', '[x-rating]', '[x-alert]', '[x-badge]', '[x-progress]', '[x-spinner]', '[x-avatar]', '[x-skeleton]', '[x-tabs]', '[x-cardnotification]'];
       const bad: any[] = [];

@@ -13,7 +13,10 @@
     "controls": {
       "type": "string",
       "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script.",
-      "default": "this is the controls"
+      "default": "this is the controls",
+      "examples": [
+        "false"
+      ]
     },
     "playsinline": {
       "type": "string",
@@ -23,7 +26,9 @@
     "autoplay": {
       "type": "boolean",
       "description": "Begin playing on load. Browsers block autoplay with sound, so this needs `muted` to work unattended.",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Starts playback on load. Once a frame is showing, a playing and a paused video are the same box; any difference is timing, not the option (Windows CI, 2026-10-02)."
     },
     "muted": {
       "type": "boolean",
@@ -33,7 +38,9 @@
     "loop": {
       "type": "boolean",
       "description": "Restart from the beginning when playback reaches the end.",
-      "default": false
+      "default": false,
+      "visual": false,
+      "visualReason": "Restarts playback at the end. Nothing on the player is drawn for it, as in audio.schema.json (#773)."
     }
   },
   "$view": [],

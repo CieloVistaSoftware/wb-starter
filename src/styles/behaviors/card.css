@@ -510,27 +510,52 @@ article,
    horizontal phrase.
 
    The horizontal padding covers the 6px bite the teeth take out of each
-   end, so text never lands inside a notch. */article > header > mark,
-:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]) > header > mark {
+   end, so text never lands inside a notch. */article > header > mark:is(.x-mark, *),
+:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]) > header > mark:is(.x-mark, *) {
   grid-column: 1;
   justify-self: start;
   margin: 0 0 0.5rem;
   padding: 0.3125rem 1rem;
-  background: var(--primary);
-  color: white;
+  /* :is(.x-mark, *) on the selector: <mark> also gets the generic .x-mark
+     highlight (inline.css), whose single class out-ranked this rule, so every
+     featured marker came out warning-yellow (#998). The :is() lifts this rule
+     above it without naming a class the card does not own. */
+  /* #998: the colour is a theme ROLE, chosen with featuredTone (below), or
+     --x-featured-bg set in the page's own stylesheet -- never a literal in
+     markup, so it reads correctly in all 50 themes. */
+  background: var(--x-featured-bg, var(--primary));
+  color: var(--x-featured-fg, white);
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.4;
+  /* #998: "FEATURE" / "D" -- the label broke mid-word at narrow widths. It
+     is as wide as its text, wraps only between words, and never past the
+     card. */
+  width: max-content;
+  max-width: 100%;
+  overflow-wrap: normal;
+  word-break: normal;
   clip-path: polygon( 8px 0%, 100% 0%, calc(100% - 8px) 16.66%, 100% 33.33%, calc(100% - 8px) 50%, 100% 66.66%, calc(100% - 8px) 83.33%, 100% 100%, 8px 100%, 0% 83.33%, 8px 66.66%, 0% 50%, 8px 33.33%, 0% 16.66% );
 }
+
+/* featuredTone -- John (#998): "we need ability to change color at will".
+   A role, not a colour: each resolves to the theme's own variable.
+   card.js copies the host's featured-tone / featuredTone onto the marker as
+   tone="…", so the rule needs no list of card selectors. */
+header > mark[tone="primary"] { --x-featured-bg: var(--primary); }
+header > mark[tone="success"] { --x-featured-bg: var(--success-color); }
+header > mark[tone="warning"] { --x-featured-bg: var(--warning-color); --x-featured-fg: var(--bg-primary); }
+header > mark[tone="danger"]  { --x-featured-bg: var(--danger-color); }
+header > mark[tone="info"]    { --x-featured-bg: var(--info-color); }
+header > mark[tone="neutral"] { --x-featured-bg: var(--secondary); }
 
 /* No border-radius alongside the clip-path: the polygon would cut a rounded
    corner away regardless, and a stray radius invites someone to "fix" the
    jagged edge later by rounding it. Only where clip-path is unavailable. */
-@supports not (clip-path: polygon(0 0)) {article > header > mark,
-:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]) > header > mark {
+@supports not (clip-path: polygon(0 0)) {article > header > mark:is(.x-mark, *),
+:is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]) > header > mark:is(.x-mark, *) {
     border-radius: var(--radius-sm, 0.25rem);
   }
 }article[featured] > header > h1,

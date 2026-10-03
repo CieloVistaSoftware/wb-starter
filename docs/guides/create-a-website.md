@@ -65,7 +65,7 @@ Open `pages/home.html` and change the text, then refresh the browser. There is n
 
 Pages are plain HTML. To give an element a behavior, add an `x-*` attribute:
 
-<div x-demo>
+<div x-demo columns="1">
 <button x-ripple>Click me</button>
 <section x-cardhero title="Welcome" subtitle="Built with wb-starter"></section>
 </div>

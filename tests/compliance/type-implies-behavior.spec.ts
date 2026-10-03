@@ -6,9 +6,10 @@
  * needs no `x-checkbox`; `<input type="password">` needs no `x-password` (#481, previously
  * required x-password only — nativeMap had no `input[type="password"]` entry).
  *
- * `wb-*` custom elements already satisfy this by construction (elementMap keys behaviors by
- * tag name) — this file also spot-checks that a couple of them never secretly need a matching
- * x-attribute on top of the bare tag.
+ * A composite behavior attached by its own x-{name} attribute must also activate from that
+ * one attribute alone -- this file spot-checks that x-cardexpandable never secretly needs a
+ * second x-* attribute. (#1144: this used to speak of `wb-*` custom elements, retired in
+ * 4.0.0.)
  *
  * Regression guard: any FUTURE behavior whose name exactly matches a native <input> type
  * value must be explicitly classified below — an unclassified match fails loudly instead of
@@ -149,9 +150,9 @@ for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
   });
 }
 
-test.describe('wb-* custom elements never need a matching x-attribute on top of the bare tag', () => {
+test.describe('a composite behavior activates from its one x-{name} attribute, nothing more', () => {
   for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
-    test(`<div x-cardexpandable> with zero x-* attributes still activates (${core})`, async ({ page }) => {
+    test(`<div x-cardexpandable> with no other x-* attribute activates (${core})`, async ({ page }) => {
       await renderWithWB(page, core, `<div x-cardexpandable id="probe" title="Read More" max-height="80px"><p>Body</p></div>`);
       await expect(page.locator('#probe')).toHaveClass(/x-card/, { timeout: 10000 });
     });

@@ -31,6 +31,26 @@
   opacity: 0.5;
 }
 
+/* Sort order control, under the search box */
+.docs-sort {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.docs-sort select {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
 /* Loading state */
 .docs-loading {
   text-align: center;
@@ -194,6 +214,12 @@
 .docs-card .docs-card__desc {
   margin: 0;
   font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.docs-card .docs-card__meta {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 

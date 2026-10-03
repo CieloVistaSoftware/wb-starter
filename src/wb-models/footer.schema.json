@@ -18,22 +18,34 @@
     "copyright": {
       "type": "string",
       "description": "Copyright text",
-      "default": "this is the copyright"
+      "default": "this is the copyright",
+      "examples": [
+        "1999"
+      ]
     },
     "brand": {
       "type": "string",
       "description": "Brand name",
-      "default": "this is the brand"
+      "default": "this is the brand",
+      "examples": [
+        "Northwind Labs"
+      ]
     },
     "links": {
       "type": "string",
       "description": "Navigation links as JSON [{label, href}]",
-      "default": "this is the links"
+      "default": "this is the links",
+      "examples": [
+        "Docs,Blog,Careers,Contact,Status"
+      ]
     },
     "social": {
       "type": "string",
       "description": "Social links as JSON [{platform, href}]",
-      "default": "this is the social"
+      "default": "this is the social",
+      "examples": [
+        "github,twitter,linkedin"
+      ]
     },
     "sticky": {
       "type": "boolean",

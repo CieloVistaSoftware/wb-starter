@@ -8,12 +8,21 @@
     "item-width": {
       "type": "string",
       "description": "Read by reel().",
-      "default": "auto"
+      "default": "auto",
+      "examples": [
+        "8rem",
+        "22rem",
+        "30rem"
+      ]
     },
     "gap": {
       "type": "string",
       "description": "Read by reel().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "3rem"
+      ]
     }
   },
   "$view": [],

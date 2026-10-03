@@ -8,12 +8,19 @@
     "side": {
       "type": "string",
       "description": "Read by sidebarlayout().",
-      "default": "left"
+      "default": "left",
+      "examples": [
+        "right"
+      ]
     },
     "side-width": {
       "type": "string",
       "description": "Read by sidebarlayout().",
-      "default": "300px"
+      "default": "300px",
+      "examples": [
+        "8rem",
+        "22rem"
+      ]
     },
     "content-min": {
       "type": "string",
@@ -23,7 +30,11 @@
     "gap": {
       "type": "string",
       "description": "Read by sidebarlayout().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "3rem"
+      ]
     }
   },
   "$view": [],

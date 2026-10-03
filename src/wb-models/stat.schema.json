@@ -8,12 +8,21 @@
     "label": {
       "type": "string",
       "description": "Read by stat().",
-      "default": "this is the label"
+      "default": "this is the label",
+      "examples": [
+        "Monthly revenue"
+      ]
     },
     "variant": {
       "type": "string",
       "description": "Read by stat().",
-      "default": "this is the variant"
+      "default": "this is the variant",
+      "examples": [
+        "blue",
+        "green",
+        "orange",
+        "purple"
+      ]
     }
   },
   "$view": [],

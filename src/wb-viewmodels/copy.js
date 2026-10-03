@@ -67,6 +67,17 @@ export async function writeToClipboard(text) {
 }
 
 /**
+ * Announce a copy's outcome on the element: wb:copy:success or wb:copy:error,
+ * both carrying the text. copy() and copyButton() each spelled this out (#883).
+ */
+function dispatchCopyResult(element, ok, text) {
+  element.dispatchEvent(new CustomEvent(ok ? 'wb:copy:success' : 'wb:copy:error', {
+    bubbles: true,
+    detail: { text }
+  }));
+}
+
+/**
  * Copy Behavior
  * Helper Attribute: [x-copy]
  * Copy text to clipboard on click. The element ITSELF is the copy trigger.
@@ -140,18 +151,8 @@ export function copy(element, options = {}) {
     const text = getTextToCopy();
     const ok = await writeToClipboard(text);
 
-    if (ok) {
-      showFeedback();
-      element.dispatchEvent(new CustomEvent('wb:copy:success', {
-        bubbles: true,
-        detail: { text }
-      }));
-    } else {
-      element.dispatchEvent(new CustomEvent('wb:copy:error', {
-        bubbles: true,
-        detail: { text }
-      }));
-    }
+    if (ok) showFeedback();
+    dispatchCopyResult(element, ok, text);
   };
 
   element.addEventListener('click', onClick);
@@ -251,17 +252,8 @@ export function copyButton(element, options = {}) {
         button.textContent = IDLE_LABEL;
         button.classList.remove('x-copybutton__btn--copied');
       }, config.duration);
-
-      element.dispatchEvent(new CustomEvent('wb:copy:success', {
-        bubbles: true,
-        detail: { text }
-      }));
-    } else {
-      element.dispatchEvent(new CustomEvent('wb:copy:error', {
-        bubbles: true,
-        detail: { text }
-      }));
     }
+    dispatchCopyResult(element, ok, text);
   };
 
   button.addEventListener('click', onClick);

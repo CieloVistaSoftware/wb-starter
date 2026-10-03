@@ -13,7 +13,14 @@
     "separator": {
       "type": "string",
       "description": "Character drawn between items. Defaults to `/`.",
-      "default": "/"
+      "default": "/",
+      "examples": [
+        "›",
+        "→",
+        "•",
+        "|",
+        "»"
+      ]
     }
   },
   "$view": [],

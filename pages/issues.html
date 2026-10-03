@@ -177,15 +177,83 @@
     summaryEl.textContent = `${filtered.length} ${noun} · ${range}`;
   }
 
-  // An issue counts as "being worked on" when it carries the explicit
-  // status:in-progress label OR priority:1 (John's convention for flagging
-  // active work) -- same detection the VS Code Issue Viewer uses
-  // (src/shared/github-issues-view.ts), so both surfaces agree.
+  // An issue is "being worked on" when it carries status:in-progress, and only
+  // then. John, 2026-10-02: "I should be able to see what you are working on at
+  // all times via our issues view." Claude puts the label on before starting
+  // and takes it off when the fix merges. priority:1 used to count too, but
+  // since Law 15 every issue has a priority, so it marked ~18 untouched issues
+  // as active and hid the real one.
   function isInProgress(issue) {
-    return (issue.labels || []).some((label) => {
-      const name = String(label.name || '').trim().toLowerCase();
-      return name === 'status:in-progress' || name === 'priority:1';
-    });
+    return (issue.labels || []).some((label) =>
+      String(label.name || '').trim().toLowerCase() === 'status:in-progress');
+  }
+
+  const isOpenInProgress = (issue) => issue.state === 'open' && isInProgress(issue);
+
+  // ── what is happening NOW on an in-progress issue ─────────────────────────
+  // John, 2026-10-02: "How can something be in progress with old dates and no
+  // update to indicate what is next, when and why?" Claude posts a status
+  // comment on the issue at every step -- "**Now:** ... **Next:** ...
+  // **Why:** ..." (.claude/CLAUDE.md). The green row shows the latest one and
+  // how long ago it was posted; a row with none says so in red, because an
+  // in-progress issue nobody has reported on is exactly the problem.
+  const nowNotes = new Map();   // number -> { now, next, at } | null (none) | 'loading'
+  const STALE_MS = 24 * 60 * 60 * 1000;
+
+  function noteField(body, name) {
+    const m = String(body || '').match(new RegExp('\\*\\*' + name + ':\\*\\*\\s*([^\\n]+)'));
+    return m ? m[1].trim() : '';
+  }
+
+  function ago(iso) {
+    const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+    if (mins < 60) return mins + ' min ago';
+    const hrs = Math.round(mins / 60);
+    return hrs < 48 ? hrs + ' h ago' : Math.round(hrs / 24) + ' days ago';
+  }
+
+  function paintNowNote(number) {
+    const cell = tbodyEl.querySelector('.issues-row[number="' + number + '"] .issues-cell--title');
+    if (!cell) return;
+    let el = cell.querySelector('.issue-now-note');
+    if (!el) { el = document.createElement('div'); el.className = 'issue-now-note'; cell.appendChild(el); }
+    const note = nowNotes.get(number);
+    if (note === 'loading') { el.textContent = 'Loading status…'; return; }
+    if (!note) {
+      el.classList.add('issue-now-note--missing');
+      el.textContent = 'No status posted: nothing says what is being done now, what is next, or why.';
+      return;
+    }
+    el.classList.toggle('issue-now-note--stale', Date.now() - new Date(note.at).getTime() > STALE_MS);
+    el.innerHTML = '<strong>Now:</strong> ' + escapeHtml(note.now)
+      + (note.next ? ' <span class="issue-now-note__next"><strong>Next:</strong> ' + escapeHtml(note.next) + '</span>' : '')
+      + ' <span class="issue-now-note__when" title="' + escapeHtml(note.at) + '">· ' + ago(note.at) + '</span>';
+  }
+
+  async function loadNowNote(number) {
+    nowNotes.set(number, 'loading');
+    paintNowNote(number);
+    try {
+      const res = await fetch(`https://api.github.com/repos/${REPO}/issues/${number}/comments?per_page=100`);
+      if (!res.ok) throw new Error(String(res.status));
+      const comments = await res.json();
+      const last = comments.filter((c) => noteField(c.body, 'Now')).pop();
+      nowNotes.set(number, last ? { now: noteField(last.body, 'Now'), next: noteField(last.body, 'Next'), at: last.created_at } : null);
+    } catch {
+      nowNotes.delete(number);   // try again on the next render; never paint a guess
+      const cell = tbodyEl.querySelector('.issues-row[number="' + number + '"] .issue-now-note');
+      if (cell) cell.textContent = 'Status could not be loaded right now.';
+      return;
+    }
+    paintNowNote(number);
+  }
+
+  function showNowNotes(rows) {
+    for (const issue of rows) {
+      if (!isOpenInProgress(issue)) continue;
+      const n = String(issue.number);
+      if (nowNotes.has(n)) paintNowNote(n); else loadNowNote(n);
+    }
   }
 
   function updateActiveCount() {
@@ -286,8 +354,11 @@
     // should show at the top" — what is finished and provable is what a reader
     // acts on now; severity orders everything behind it. The sortable columns
     // let them re-order at will; this is only what they see on arrival.
+    // ...except what is being worked on RIGHT NOW, which comes before all of
+    // it (John, 2026-10-02: "how do i know you are working on it now").
     filtered.sort((a, b) =>
-      (STATE_RANK[verifyStateOf(a)] === 1 ? 0 : 1) - (STATE_RANK[verifyStateOf(b)] === 1 ? 0 : 1)
+      (isOpenInProgress(a) ? 0 : 1) - (isOpenInProgress(b) ? 0 : 1)
+      || (STATE_RANK[verifyStateOf(a)] === 1 ? 0 : 1) - (STATE_RANK[verifyStateOf(b)] === 1 ? 0 : 1)
       || priorityOf(a) - priorityOf(b)
       || b.number - a.number);
 
@@ -317,20 +388,27 @@
       const vdetail = signatureField(issue.body, 'verified') || signatureField(issue.body, 'test') || 'no test named';
       const labels = (issue.labels || [])
         .map((l) => l.name)
-        .filter((n) => !PRIORITY.test(n) && !n.startsWith('state:'))
+        .filter((n) => !PRIORITY.test(n) && !n.startsWith('state:') && n !== 'status:in-progress')
         .map((n) => `<span class="issue-label">${escapeHtml(n)}</span>`)
         .join(' ');
+      // In green, at the top, with a pill that says so: the issue being worked
+      // on right now (status:in-progress). John: "In progress work is
+      // indicated in Green?"
+      const now = isOpenInProgress(issue);
+      const nowPill = now ? '<span class="issue-now" title="Labelled status:in-progress: being worked on right now">● Working on it now</span> ' : '';
       return `
-        <tr class="issues-row issues-row--p${p}" number="${issue.number}" tabindex="0">
+        <tr class="issues-row issues-row--p${p}${now ? ' issues-row--now' : ''}" number="${issue.number}" tabindex="0">
           <td class="issues-cell--priority" sort-value="${p}"><span class="issue-priority issue-priority--${p}">${p === 9 ? '—' : p}</span></td>
           <td>#${issue.number}</td>
-          <td class="issues-cell--title">${escapeHtml(issue.title)}</td>
+          <td class="issues-cell--title">${nowPill}${escapeHtml(issue.title)}</td>
           <td>${escapeHtml(kind) || '—'}</td>
           <td class="issues-cell--state" sort-value="${STATE_RANK[vstate]}" title="${escapeHtml(vdetail)}"><span class="issue-verify issue-verify--${vstate}">${STATE_GLYPH[vstate]}</span></td>
           <td class="issues-cell--labels">${labels}</td>
           <td>${fmtDate(issue.updated_at || issue.created_at)}</td>
         </tr>`;
     }).join('');
+
+    showNowNotes(filtered);
 
     const byNumber = new Map(filtered.map((i) => [String(i.number), i]));
 

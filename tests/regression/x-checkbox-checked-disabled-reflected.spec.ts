@@ -61,6 +61,15 @@ test.describe('[x-checkbox] reflects checked/disabled onto its real input', () =
   test('a disabled checkbox does not toggle on click', async ({ page }) => {
     const el = await setupTestContainer(page, '<div x-checkbox label="Disabled" disabled></div>');
     const input = el.locator('input[type="checkbox"]');
+    // CI (Windows) failed this with "Element is outside of the viewport". The
+    // container is appended below the page (the host sat at y=720 in a 720px
+    // viewport), and force skips Playwright's actionability waits. Scrolling it
+    // in once is not enough: the page's own scroll reset can land after it
+    // (reproduced locally, scrollY back to 0). Scroll until it is in view.
+    await expect(async () => {
+      await el.evaluate((node) => node.scrollIntoView({ block: 'center' }));
+      await expect(el).toBeInViewport({ timeout: 500 });
+    }).toPass();
     await el.click({ force: true });
     await expect(input).not.toBeChecked();
   });

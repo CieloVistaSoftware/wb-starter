@@ -1,15 +1,16 @@
 /**
  * Rule 4 (docs/code-examples-standard.md, #307): a markdown code example
- * showing real wb-* / x-* markup must be a live x-demo block, not a plain
+ * showing real behavior markup (x-* attributes) must be a live x-demo block, not a plain
  * static html fence.
  *
  * This is a focused policy gate for the issue's zero-demo corpus. The existing
  * legacy files remain an explicit migration baseline; a new all-static doc is
  * a failure, while partial conversions continue to be reported for follow-up.
  *
- * Heuristic: a fence "shows real component usage" if it contains a wb-*
- * custom tag or an x-* attribute. CSS/JS fences, reference tables, and
- * intentionally-invalid markup (no wb-* / x-* content) are not flagged.
+ * Heuristic: a fence "shows real behavior usage" if it contains an x-*
+ * attribute (or a retired wb-* tag, which docs must not show live either).
+ * CSS/JS fences, reference tables, and intentionally-invalid markup are not
+ * flagged.
  */
 import { expect, test } from '../fixtures/offline';
 import fs from 'fs';

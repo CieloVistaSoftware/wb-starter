@@ -14,6 +14,7 @@
  * have fired instantly, the moment <div x-vimeo> was ever actually reachable.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 const PIXEL =
   'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7';
@@ -32,7 +33,7 @@ async function setup(page: Page, html: string): Promise<void> {
     document.body.appendChild(c);
   }, html);
   await page.evaluate(async () => { if ((window as any).WB?.scan) await (window as any).WB.scan(document.body, { eager: true }); });
-  await page.waitForTimeout(400);
+  await wbIdle(page);
 }
 
 test.describe('media custom-tag mappings (were completely unmapped)', () => {

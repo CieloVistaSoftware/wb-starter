@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   push:
     branches: [ main ]
+  # nightly.yml calls this same workflow for the overnight full run, so the
+  # suite it runs is the one PRs see -- one definition, not two.
+  workflow_call:
 
 permissions:
   contents: read
@@ -33,13 +36,40 @@ permissions:
 # This does not queue runs without bound. GitHub keeps at most one PENDING run
 # per concurrency group and cancels the previously pending one, so a burst of
 # six pushes costs one in-flight run plus one waiting — never six.
+# github.workflow is the CALLER's name when nightly.yml calls this, so the
+# nightly run gets its own group and is never queued behind (or cancelled as a
+# pending duplicate of) a push run on main.
 concurrency:
-  group: ci-tests-${{ github.ref }}
+  group: ci-tests-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # One job definition, one check per test category, run side by side.
+  #
+  # John, 2026-10-01: "I want to see more granularity on these tests ... many
+  # categories of test, not just one big test." One 33-minute "Playwright
+  # Tests" check said only red or green; which category broke was in the log.
+  # Each project now runs on its own runner as its own check, so a red one
+  # names its category on the PR, and the wall clock is the slowest category
+  # rather than the sum of all of them.
+  #
+  # The gated projects run the SAME ratchet as before, narrowed to one project
+  # with WB_GATE_PROJECTS (#1163): same register, same reporters, same worker
+  # count. integration and base are still reported, not enforced (#1044).
+  # fail-fast: false, or the first red category would cancel the rest and
+  # leave them unmeasured, which is the #1044 skipped-steps defect again.
   test:
-    name: Playwright Tests
+    name: Playwright (${{ matrix.project }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { project: compliance, gated: true }
+          - { project: regression, gated: true }
+          - { project: behaviors, gated: true }
+          - { project: schema-viewer, gated: true }
+          - { project: integration, gated: false }
+          - { project: base, gated: false }
     # #1218 -- John: "the only reason Linux is a part is that it's what you
     # use internally." The site is built, served and shipped from Windows, so
     # the gate that decides whether a commit is good runs there too. On Linux
@@ -143,8 +173,11 @@ jobs:
       # next push, which is why this went unnoticed for days. A step timeout
       # says which step ran out of time, and leaves the report + artifact steps
       # enough of the job budget to still upload the evidence.
-      - name: Gate — no NEW failures vs the register (compliance, regression, behaviors, schema-viewer)
+      - name: Gate — no NEW failures vs the register (${{ matrix.project }})
+        if: matrix.gated
         timeout-minutes: 45
+        env:
+          WB_GATE_PROJECTS: ${{ matrix.project }}
         run: node .husky/test-ratchet.mjs
         continue-on-error: false
 
@@ -160,13 +193,12 @@ jobs:
       # killed it. A step that enforces nothing must never extend a job that is
       # already over. success() || failure() runs it on a normal red or green
       # and skips it on a cancel or timeout.
-      - name: Report — integration and base (not yet ratcheted, see #1044)
-        if: success() || failure()
+      - name: "Report — ${{ matrix.project }} (not yet ratcheted, see #1044)"
+        if: (success() || failure()) && !matrix.gated
         timeout-minutes: 12
         continue-on-error: true
         run: |
-          npx playwright test --project=integration --reporter=github || true
-          npx playwright test --project=base --reporter=github || true
+          npx playwright test --project=${{ matrix.project }} --reporter=github || true
 
       # #341: this used to upload `playwright-report/`, which this repo does not
       # produce — playwright.config.ts's reporters are the project's own
@@ -181,7 +213,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ github.run_number }}
+          name: test-results-${{ github.run_number }}-${{ matrix.project }}
           path: data/test-results/
           retention-days: 14
 
@@ -189,7 +221,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-traces-${{ github.run_number }}
+          name: playwright-traces-${{ github.run_number }}-${{ matrix.project }}
           path: data/playwright-output/**/*.zip
           retention-days: 7
 
@@ -205,3 +237,56 @@ jobs:
         run: |
           echo "=== Server Log ==="
           cat data/test-results/server.log || true
+
+  # The one check that answers "did every category pass?", under the name the
+  # single job used to have, so anything that waits on "Playwright Tests"
+  # (branch protection, a person) still finds it. Skipped on a cancel: a
+  # cancelled run has no verdict to report.
+  # The gate scripts' own guards. They used to run in the commit hook on every
+  # commit; since 2026-10-02 the hook runs fast checks only (John: "no ci
+  # duplication at all"), so they run here, once per PR and once per nightly.
+  # No Playwright run, no server: throwaway repos and fake CLIs, ~1 minute.
+  gate-self-test:
+    name: Gate scripts self-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      # test-ship-rollback and test-suite-env commit inside throwaway repos.
+      - name: Git identity for throwaway repos
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Lock, gate, suite-env, ship-rollback and control-byte guards
+        run: |
+          npm run test:lock-guards
+          npm run test:gate-guards
+          npm run test:suite-env
+          npm run test:ship-rollback
+          npm run test:staged-control-bytes
+
+  playwright:
+    name: Playwright Tests
+    needs: test
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every category passed
+        run: |
+          if [ "${{ needs.test.result }}" != "success" ]; then
+            echo "::error::A Playwright category failed (${{ needs.test.result }}). Its own check above names it."
+            exit 1
+          fi
+          echo "All Playwright categories passed."

@@ -29,6 +29,7 @@ jobs:
       - name: Checkout (full history, for the release commits)
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Use Node.js

@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/offline';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 /**
  * #1044 — CI and the local gate must ask the same question.
@@ -38,11 +39,18 @@ const runLines = (yaml: string) =>
   yaml.split('\n').filter((l) => !/^\s*#/.test(l));
 
 test.describe('#1044: CI and the local gate apply the same standard', () => {
-  test('both gates invoke the ratchet', () => {
+  // 2026-10-02 (John: "no ci duplication at all"): the commit hook runs fast
+  // checks only, and the full suite runs in CI -- ci-tests.yml on PRs, and the
+  // same workflow called by nightly.yml overnight. So there is ONE place
+  // the suite is judged, and it must be the ratchet. A hook that quietly grew a
+  // second, differently-judged suite run would bring #1044 back.
+  test('CI invokes the ratchet, and the commit hook runs no suite of its own', () => {
+    const hookRuns = hook.split('\n').filter((l) => !/^\s*#/.test(l)).join('\n');
     expect(
-      /test-ratchet\.mjs/.test(hook),
-      `${HOOK} no longer runs the ratchet — the local gate has stopped using the register.`,
-    ).toBe(true);
+      /test-ratchet\.mjs|playwright\s+test|locked-spec-run/.test(hookRuns),
+      `${HOOK} runs a test suite again. The suite runs in CI (ci-tests.yml) and nightly.yml;\n` +
+      'a second run in the hook duplicates CI and can judge by a different standard (#1044).',
+    ).toBe(false);
 
     expect(
       /test-ratchet\.mjs/.test(ci),
@@ -133,7 +141,8 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
   /** `timeout-minutes: N` under the given step name, or the job when name is null. */
   const stepOf = (name: string) => {
     const steps = ci.split(/^ {6}- (?=name:|uses:)/m).slice(1);
-    return steps.find((s) => s.startsWith(`name: ${name}`)) ?? '';
+    // A step name may be quoted (a name holding ` #` must be, or YAML cuts it).
+    return steps.find((s) => s.replace(/^name: "/, 'name: ').startsWith(`name: ${name}`)) ?? '';
   };
 
   test('the job budget clears the measured cost of the ratchet run', () => {
@@ -237,18 +246,12 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
     ).toEqual([]);
   });
 
-  test('the compliance workflow runs the ratchet, narrowed by WB_GATE_PROJECTS', () => {
-    const compliance = readFileSync('.github/workflows/ci-compliance.yml', 'utf8');
-    expect(
-      /test-ratchet\.mjs/.test(compliance),
-      '.github/workflows/ci-compliance.yml no longer runs the ratchet, so it is judging the\n' +
-      'same code by a different standard again (#1163).',
-    ).toBe(true);
-    expect(
-      /WB_GATE_PROJECTS:\s*compliance/.test(compliance),
-      'ci-compliance.yml must narrow the gate to the compliance project through\n' +
-      'WB_GATE_PROJECTS, not by hand-writing a playwright command.',
-    ).toBe(true);
+  // #1163: ci-compliance.yml is gone. It re-ran the compliance project on every
+  // push to main, which PR CI (ci-tests.yml, one check per category) and the
+  // nightly full suite already cover. John: "no ci duplication at all".
+  test('no second workflow re-runs the compliance project', () => {
+    expect(existsSync('.github/workflows/ci-compliance.yml'),
+      'ci-compliance.yml is back: compliance already runs in ci-tests.yml and nightly.yml').toBe(false);
   });
 
   test('the uploaded evidence is a path this repo actually writes', () => {
@@ -261,5 +264,69 @@ test.describe('#341: CI budgets enough time to reach a verdict', () => {
       'on an empty path, so a red run has been leaving no evidence behind at all. Upload the\n' +
       "reporter's own data/test-results/ instead.",
     ).toBe(false);
+  });
+});
+
+/**
+ * One check per test category (John, 2026-10-01: "many categories of test,
+ * not just one big test").
+ *
+ * ci-tests.yml runs one Playwright project per matrix job, so a red check on
+ * the PR names its category. These hold the shape that makes that true and
+ * keeps it as strict as the single run it replaced.
+ */
+test.describe('CI runs one check per test category', () => {
+  const GATED = (/const ALL_PROJECTS = \[([^\]]+)\]/.exec(ratchet)?.[1] ?? '')
+    .split(',').map((p) => p.trim().replace(/'/g, '')).filter(Boolean);
+  const matrixRow = (project: string) =>
+    new RegExp(`-\\s*\\{\\s*project:\\s*${project},\\s*gated:\\s*(true|false)\\s*\\}`).exec(ci)?.[1];
+
+  test('every gated project is its own gated job, and integration and base are reported', () => {
+    expect(GATED.length, `${RATCHET} ALL_PROJECTS could not be read`).toBeGreaterThan(0);
+    for (const project of GATED) {
+      expect(matrixRow(project), `${CI} has no gated matrix job for ${project}`).toBe('true');
+    }
+    for (const project of ['integration', 'base']) {
+      expect(matrixRow(project), `${CI} has no report job for ${project}`).toBe('false');
+    }
+  });
+
+  test('a red category cannot cancel the others', () => {
+    expect(
+      /fail-fast:\s*false/.test(ci),
+      'Without fail-fast: false the first red category cancels the rest, which leaves them\n' +
+      'unmeasured: the #1044 skipped-steps defect in a new shape.',
+    ).toBe(true);
+  });
+
+  test('each gated job runs the ratchet narrowed to its own project', () => {
+    expect(/WB_GATE_PROJECTS:\s*\$\{\{\s*matrix\.project\s*\}\}/.test(ci)).toBe(true);
+    expect(/if:\s*matrix\.gated/.test(ci)).toBe(true);
+  });
+
+  test('"Playwright Tests" still exists, and fails when any category fails', () => {
+    const summary = ci.split(/^ {2}playwright:\s*$/m)[1] ?? '';
+    expect(summary, `${CI} has no summary job`).not.toBe('');
+    expect(summary).toMatch(/name:\s*Playwright Tests/);
+    expect(summary).toMatch(/needs:\s*test/);
+    expect(summary).toMatch(/needs\.test\.result[^\n]*!=\s*"success"/);
+  });
+
+  test('each category uploads its evidence under its own name', () => {
+    // upload-artifact@v4 refuses a second artifact with the same name, so a
+    // shared name would lose every category's report but the first.
+    for (const prefix of ['test-results', 'playwright-traces']) {
+      expect(ci).toMatch(new RegExp(`name: ${prefix}-\\$\\{\\{ github\\.run_number \\}\\}-\\$\\{\\{ matrix\\.project \\}\\}`));
+    }
+  });
+
+  test('a narrowed ratchet refuses --update, which would drop other projects\' entries', () => {
+    const r = spawnSync(process.execPath, [RATCHET, '--update'], {
+      encoding: 'utf8',
+      env: { ...process.env, WB_GATE_PROJECTS: 'compliance' },
+      timeout: 30_000,
+    });
+    expect(r.status).toBe(1);
+    expect(r.stderr).toContain('--update needs the full gate');
   });
 });

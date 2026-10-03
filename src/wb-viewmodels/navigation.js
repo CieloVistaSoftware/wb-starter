@@ -21,6 +21,20 @@ import { setRule, clearRulesIn } from '../core/dynamic-style.js';
  */
 
 /**
+ * Split one "Label:value" list item. With no colon the whole (trimmed) item is
+ * the label and the value is `fallback`, or the label itself when no fallback
+ * is given. navbar(), sidebar() and menu() each parsed this by hand (#883).
+ */
+function splitItem(item, fallback) {
+  const idx = item.indexOf(':');
+  if (idx === -1) {
+    const label = item.trim();
+    return { label, value: fallback === undefined ? label : fallback };
+  }
+  return { label: item.substring(0, idx).trim(), value: item.substring(idx + 1).trim() };
+}
+
+/**
  * Navbar - Navigation bar from data attributes
  * Custom Tag: <div x-navbar>
  * 
@@ -132,15 +146,7 @@ export function navbar(element, options = {}) {
       ${buildBrandHTML()}
       <div class="x-navbar__menu">
         ${config.items.map(item => {
-          let label = item.trim();
-          let href = '#';
-          
-          if (item.includes(':')) {
-            const idx = item.indexOf(':');
-            label = item.substring(0, idx).trim();
-            href = item.substring(idx + 1).trim();
-          }
-          
+          const { label, value: href } = splitItem(item, '#');
           return `
           <a class="x-navbar__item" href="${href}">
             ${label}
@@ -225,16 +231,8 @@ export function sidebar(element, options = {}) {
     element.classList.toggle('x-sidebar--collapsed', !!config.collapsed);
 
     element.innerHTML = config.items.map(item => {
-      let label = item.trim();
-      let href = '#';
-      
-      if (item.includes(':')) {
-        const idx = item.indexOf(':');
-        label = item.substring(0, idx).trim();
-        href = item.substring(idx + 1).trim();
-      }
-
-      const isActive = label === config.active;
+      const { label, value: href } = splitItem(item, '#');
+      const isActive= label === config.active;
       const tooltipAttrs = config.collapsed ? `x-tooltip data-tooltip="${label}" data-tooltip-position="right"` : `title="${label}"`;
       
       return `
@@ -297,14 +295,7 @@ export function menu(element, options = {}) {
   element.setAttribute('role', 'menu');
 
   element.innerHTML = config.items.map((item, idx) => {
-    let label = item.trim();
-    let value = label;
-    
-    if (item.includes(':')) {
-      const splitIdx = item.indexOf(':');
-      label = item.substring(0, splitIdx).trim();
-      value = item.substring(splitIdx + 1).trim();
-    }
+    const { label, value } = splitItem(item);
 
     return `
     <div class="x-menu__item" role="menuitem" tabindex="0" data-index="${idx}" data-value="${value}">

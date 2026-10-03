@@ -13,6 +13,16 @@
             "statusMessage": "Checking menu links on deployed site…"
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/check-written-control-bytes.mjs",
+            "timeout": 15
+          }
+        ]
       }
     ]
   }

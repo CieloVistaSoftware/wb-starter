@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-01T03:29:01.178Z",
-  "count": 159,
+  "generatedAt": "2026-10-03T01:12:11.228Z",
+  "count": 160,
   "schemas": [
     {
       "file": "accordion.schema.json",
@@ -824,7 +824,14 @@
         "separator": {
           "type": "string",
           "description": "Character drawn between items. Defaults to `/`.",
-          "default": "/"
+          "default": "/",
+          "examples": [
+            "›",
+            "→",
+            "•",
+            "|",
+            "»"
+          ]
         }
       },
       "matrix": [],
@@ -1179,6 +1186,19 @@
           "type": "boolean",
           "description": "Promote this card over its siblings: a heavier border and a visible marker. Bare featured prints \"Featured\"; featured=\"Deal of the week\" prints that label instead",
           "default": false
+        },
+        "featuredTone": {
+          "type": "string",
+          "description": "Colour of the featured marker, as a theme role so it reads correctly in every theme. Setting it on its own shows the marker (it implies featured). For any other colour set --x-featured-bg (and --x-featured-fg) in your stylesheet",
+          "enum": [
+            "primary",
+            "success",
+            "warning",
+            "danger",
+            "info",
+            "neutral"
+          ],
+          "default": "primary"
         }
       },
       "matrix": [
@@ -1368,12 +1388,20 @@
         "max-width": {
           "type": "string",
           "description": "Read by center().",
-          "default": "this is the max width"
+          "default": "this is the max width",
+          "examples": [
+            "20ch",
+            "60ch"
+          ]
         },
         "gutters": {
           "type": "string",
           "description": "Read by center().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "3rem"
+          ]
         },
         "intrinsic": {
           "type": "boolean",
@@ -1583,7 +1611,7 @@
       "properties": {
         "variant": {
           "type": "string",
-          "description": "Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial). Any other value renders `digital` and logs a warning naming these three.",
+          "description": "Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial; `analogue` is accepted). Any other value renders `digital` and logs a warning naming these three.",
           "enum": [
             "digital",
             "led",
@@ -1628,12 +1656,21 @@
         "gap": {
           "type": "string",
           "description": "Space between clustered items, as a CSS length. Defaults to `1rem`.",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "2rem"
+          ]
         },
         "justify": {
           "type": "string",
           "description": "How items are distributed along the row — CSS `justify-content`. Defaults to `flex-start`.",
-          "default": "flex-start"
+          "default": "flex-start",
+          "examples": [
+            "center",
+            "flex-end",
+            "space-between"
+          ]
         },
         "align": {
           "type": "string",
@@ -1862,7 +1899,10 @@
         "direction": {
           "type": "string",
           "description": "Read by container().",
-          "default": "column"
+          "default": "column",
+          "examples": [
+            "column"
+          ]
         },
         "columns": {
           "type": "string",
@@ -1872,7 +1912,10 @@
         "gap": {
           "type": "string",
           "description": "Read by container().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "3rem"
+          ]
         },
         "align": {
           "type": "string",
@@ -1882,12 +1925,19 @@
         "justify": {
           "type": "string",
           "description": "Read by container().",
-          "default": "start"
+          "default": "start",
+          "examples": [
+            "flex-start",
+            "center"
+          ]
         },
         "padding": {
           "type": "string",
           "description": "Read by container().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "2.5rem"
+          ]
         },
         "max-width": {
           "type": "string",
@@ -2066,12 +2116,21 @@
         "min-height": {
           "type": "string",
           "description": "Read by cover().",
-          "default": "100vh"
+          "default": "100vh",
+          "examples": [
+            "8rem",
+            "22rem",
+            "30rem"
+          ]
         },
         "padding": {
           "type": "string",
           "description": "Read by cover().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "3rem"
+          ]
         }
       },
       "matrix": [],
@@ -2706,7 +2765,10 @@
         "caption-position": {
           "type": "string",
           "description": "Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar.",
-          "default": "bottom"
+          "default": "bottom",
+          "examples": [
+            "overlay"
+          ]
         },
         "zoom": {
           "type": "boolean",
@@ -2721,7 +2783,12 @@
         "caption": {
           "type": "string",
           "description": "Caption text. Sets the `<figcaption>` content, creating one if the figure has none.",
-          "default": "this is the caption"
+          "default": "this is the caption",
+          "examples": [
+            "Fog over the north tower, 6:04am.",
+            "Golden Gate, seen from Battery Spencer at dusk — the lights just coming on.",
+            "Morning commute"
+          ]
         }
       },
       "matrix": [],
@@ -2965,7 +3032,11 @@
         "direction": {
           "type": "string",
           "description": "Flex direction: `row` (default) or `column`, plus the `-reverse` forms. Maps to CSS `flex-direction`.",
-          "default": "row"
+          "default": "row",
+          "examples": [
+            "column",
+            "row-reverse"
+          ]
         },
         "wrap": {
           "type": "string",
@@ -2975,7 +3046,10 @@
         "justify": {
           "type": "string",
           "description": "Distribution along the main axis — `flex-start` (default), `center`, `space-between`, and the rest of CSS `justify-content`.",
-          "default": "flex-start"
+          "default": "flex-start",
+          "examples": [
+            "center"
+          ]
         },
         "align": {
           "type": "string",
@@ -2985,7 +3059,11 @@
         "gap": {
           "type": "string",
           "description": "Space between items, as a CSS length. Defaults to `1rem`.",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "3rem"
+          ]
         }
       },
       "matrix": [],
@@ -3032,22 +3110,34 @@
         "copyright": {
           "type": "string",
           "description": "Copyright text",
-          "default": "this is the copyright"
+          "default": "this is the copyright",
+          "examples": [
+            "1999"
+          ]
         },
         "brand": {
           "type": "string",
           "description": "Brand name",
-          "default": "this is the brand"
+          "default": "this is the brand",
+          "examples": [
+            "Northwind Labs"
+          ]
         },
         "links": {
           "type": "string",
           "description": "Navigation links as JSON [{label, href}]",
-          "default": "this is the links"
+          "default": "this is the links",
+          "examples": [
+            "Docs,Blog,Careers,Contact,Status"
+          ]
         },
         "social": {
           "type": "string",
           "description": "Social links as JSON [{platform, href}]",
-          "default": "this is the social"
+          "default": "this is the social",
+          "examples": [
+            "github,twitter,linkedin"
+          ]
         },
         "sticky": {
           "type": "boolean",
@@ -3178,7 +3268,12 @@
         "columns": {
           "type": "string",
           "description": "Number of columns in the grid. Defaults to `3`.",
-          "default": "3"
+          "default": "3",
+          "examples": [
+            "2",
+            "3",
+            "6"
+          ]
         },
         "size": {
           "type": "string",
@@ -3188,7 +3283,11 @@
         "gap": {
           "type": "string",
           "description": "Space between items, as a CSS length. Defaults to `1rem`.",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "2rem"
+          ]
         },
         "lightbox": {
           "type": "string",
@@ -3201,6 +3300,34 @@
         "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
         "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+      }
+    },
+    {
+      "file": "glass.schema.json",
+      "name": "glass",
+      "title": "Glass",
+      "description": "The element carries the background scene: its fill is mostly transparent, so whatever is behind it (an image, an SVG scene, a gradient) passes straight through it",
+      "tag": "x-glass",
+      "baseClass": "x-glass",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "How much of the scene comes through: most (14% tint, the playground hero's \"Read the Guide\" button), some (22%), least (30%, for busy scenes where text needs more help). Capped at 30% so light text on the element still reads against a dark scene.",
+          "enum": [
+            "most",
+            "some",
+            "least"
+          ],
+          "default": "most",
+          "appliesClass": "x-glass--{{value}}"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "effects",
+        "icon": "🪟",
+        "since": "1.0.0",
+        "status": "stable"
       }
     },
     {
@@ -3225,7 +3352,14 @@
         "color": {
           "type": "string",
           "description": "Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it.",
-          "default": "var(--primary, #6366f1)"
+          "default": "var(--primary, #6366f1)",
+          "examples": [
+            "#22c55e",
+            "#ef4444",
+            "#f59e0b",
+            "#06b6d4",
+            "#ec4899"
+          ]
         }
       },
       "matrix": [],
@@ -3246,7 +3380,11 @@
         "columns": {
           "type": "string",
           "description": "Read by grid().",
-          "default": "3"
+          "default": "3",
+          "examples": [
+            "4",
+            "6"
+          ]
         },
         "rows": {
           "type": "string",
@@ -3256,7 +3394,11 @@
         "gap": {
           "type": "string",
           "description": "Read by grid().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "3rem"
+          ]
         },
         "min-width": {
           "type": "string",
@@ -3312,22 +3454,34 @@
         "icon": {
           "type": "string",
           "description": "Logo icon (emoji or text)",
-          "default": "this is the icon"
+          "default": "this is the icon",
+          "examples": [
+            "🚀"
+          ]
         },
         "title": {
           "type": "string",
           "description": "Header title",
-          "default": "this is the title"
+          "default": "this is the title",
+          "examples": [
+            "Release notes"
+          ]
         },
         "subtitle": {
           "type": "string",
           "description": "Subtitle text",
-          "default": "this is the subtitle"
+          "default": "this is the subtitle",
+          "examples": [
+            "Version 4.2 — what changed and why"
+          ]
         },
         "badge": {
           "type": "string",
           "description": "Badge text (e.g., version)",
-          "default": "this is the badge"
+          "default": "this is the badge",
+          "examples": [
+            "Beta"
+          ]
         },
         "logoHref": {
           "type": "string",
@@ -3974,7 +4128,13 @@
         "space": {
           "type": "string",
           "description": "Read by icon().",
-          "default": "0.5em"
+          "default": "0.5em",
+          "examples": [
+            "0",
+            "1em",
+            "2em",
+            "3em"
+          ]
         }
       },
       "matrix": [],
@@ -4144,7 +4304,12 @@
         "aspect-ratio": {
           "type": "string",
           "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
-          "default": "this is the aspect ratio"
+          "default": "this is the aspect ratio",
+          "examples": [
+            "1/1",
+            "4/3",
+            "21/9"
+          ]
         },
         "lazy": {
           "type": "boolean",
@@ -4544,12 +4709,21 @@
         "variant": {
           "type": "string",
           "description": "Semantic highlight colour: `success`, `warning`, `danger` or `info`. **Ignored when `color` is set** — an explicit colour wins.",
-          "default": "this is the variant"
+          "default": "this is the variant",
+          "examples": [
+            "success",
+            "warning",
+            "danger",
+            "info"
+          ]
         },
         "color": {
           "type": "string",
           "description": "Any CSS colour, used as the highlight background. The text colour is computed from its luminance so the mark stays readable, and setting this overrides `variant`.",
-          "default": "this is the color"
+          "default": "this is the color",
+          "examples": [
+            "#a855f7"
+          ]
         }
       },
       "matrix": [],
@@ -4636,12 +4810,21 @@
         "columns": {
           "type": "string",
           "description": "Number of masonry columns. Defaults to `3`.",
-          "default": "3"
+          "default": "3",
+          "examples": [
+            "2",
+            "4",
+            "5"
+          ]
         },
         "gap": {
           "type": "string",
           "description": "Space between items, as a CSS length. Defaults to `1rem`.",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "2rem"
+          ]
         }
       },
       "matrix": [],
@@ -5025,7 +5208,14 @@
         "length": {
           "type": "integer",
           "description": "Number of OTP digits",
-          "default": 0
+          "default": 0,
+          "examples": [
+            3,
+            4,
+            5,
+            6,
+            8
+          ]
         }
       },
       "matrix": [],
@@ -5489,7 +5679,11 @@
         "size": {
           "type": "string",
           "description": "Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`.",
-          "default": "this is the size"
+          "default": "this is the size",
+          "examples": [
+            "xs",
+            "lg"
+          ]
         },
         "show-copy": {
           "type": "boolean",
@@ -6121,7 +6315,14 @@
         "ratio": {
           "type": "string",
           "description": "The aspect ratio the frame holds its child to, applied as the `--x-frame-ratio` custom property. The behavior's own default is `16/9`. NOTE: this schema declares a default of `16x9`, which the code never produces — the two disagree and the code is authoritative.",
-          "default": "16x9"
+          "default": "16x9",
+          "examples": [
+            "1:1",
+            "4:3",
+            "3:2",
+            "21:9",
+            "9:16"
+          ]
         }
       },
       "matrix": [],
@@ -6142,12 +6343,21 @@
         "item-width": {
           "type": "string",
           "description": "Read by reel().",
-          "default": "auto"
+          "default": "auto",
+          "examples": [
+            "8rem",
+            "22rem",
+            "30rem"
+          ]
         },
         "gap": {
           "type": "string",
           "description": "Read by reel().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "3rem"
+          ]
         }
       },
       "matrix": [],
@@ -6199,7 +6409,14 @@
         "format": {
           "type": "string",
           "description": "Template for the badge text, with `{version}` replaced. Defaults to `v{version}`.",
-          "default": "v{version}"
+          "default": "v{version}",
+          "examples": [
+            "Release {version}",
+            "Build {version}",
+            "wb-starter {version}",
+            "{version}",
+            "Version {version} is live"
+          ]
         },
         "reload": {
           "type": "string",
@@ -6670,12 +6887,19 @@
         "side": {
           "type": "string",
           "description": "Read by sidebarlayout().",
-          "default": "left"
+          "default": "left",
+          "examples": [
+            "right"
+          ]
         },
         "side-width": {
           "type": "string",
           "description": "Read by sidebarlayout().",
-          "default": "300px"
+          "default": "300px",
+          "examples": [
+            "8rem",
+            "22rem"
+          ]
         },
         "content-min": {
           "type": "string",
@@ -6685,7 +6909,11 @@
         "gap": {
           "type": "string",
           "description": "Read by sidebarlayout().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "3rem"
+          ]
         }
       },
       "matrix": [],
@@ -6990,19 +7218,30 @@
           "type": "string",
           "description": "CSS gap between stacked children. Accepts any valid CSS length value.",
           "default": "1rem",
-          "example": "0.25rem"
+          "example": "0.25rem",
+          "examples": [
+            "0",
+            "2.5rem"
+          ]
         },
         "bg": {
           "type": "string",
           "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
           "default": "this is the bg",
-          "example": "#1a2f4e"
+          "example": "#1a2f4e",
+          "examples": [
+            "#1a2f4e",
+            "#4c1d95"
+          ]
         },
         "pad": {
           "type": "string",
           "description": "CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges).",
           "default": "this is the pad",
-          "example": "0 0 0.75rem"
+          "example": "0 0 0.75rem",
+          "examples": [
+            "2.5rem"
+          ]
         },
         "radius": {
           "type": "string",
@@ -7104,12 +7343,21 @@
         "label": {
           "type": "string",
           "description": "Read by stat().",
-          "default": "this is the label"
+          "default": "this is the label",
+          "examples": [
+            "Monthly revenue"
+          ]
         },
         "variant": {
           "type": "string",
           "description": "Read by stat().",
-          "default": "this is the variant"
+          "default": "this is the variant",
+          "examples": [
+            "blue",
+            "green",
+            "orange",
+            "purple"
+          ]
         }
       },
       "matrix": [],
@@ -7416,12 +7664,20 @@
         "threshold": {
           "type": "string",
           "description": "Read by switcher().",
-          "default": "30rem"
+          "default": "30rem",
+          "examples": [
+            "10rem",
+            "90rem"
+          ]
         },
         "gap": {
           "type": "string",
           "description": "Read by switcher().",
-          "default": "1rem"
+          "default": "1rem",
+          "examples": [
+            "0",
+            "3rem"
+          ]
         },
         "limit": {
           "type": "string",
@@ -8194,7 +8450,11 @@
         "lines": {
           "type": "string",
           "description": "Number of lines to clamp to before truncating. Defaults to `1`.",
-          "default": "1"
+          "default": "1",
+          "examples": [
+            "1",
+            "3"
+          ]
         },
         "expandable": {
           "type": "boolean",
@@ -8256,7 +8516,10 @@
         "controls": {
           "type": "string",
           "description": "Show the browser's native play/pause/seek controls. Without them the video can only be driven by script.",
-          "default": "this is the controls"
+          "default": "this is the controls",
+          "examples": [
+            "false"
+          ]
         },
         "playsinline": {
           "type": "string",
@@ -8266,7 +8529,9 @@
         "autoplay": {
           "type": "boolean",
           "description": "Begin playing on load. Browsers block autoplay with sound, so this needs `muted` to work unattended.",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Starts playback on load. Once a frame is showing, a playing and a paused video are the same box; any difference is timing, not the option (Windows CI, 2026-10-02)."
         },
         "muted": {
           "type": "boolean",
@@ -8276,7 +8541,9 @@
         "loop": {
           "type": "boolean",
           "description": "Restart from the beginning when playback reaches the end.",
-          "default": false
+          "default": false,
+          "visual": false,
+          "visualReason": "Restarts playback at the end. Nothing on the player is drawn for it, as in audio.schema.json (#773)."
         }
       },
       "matrix": [],

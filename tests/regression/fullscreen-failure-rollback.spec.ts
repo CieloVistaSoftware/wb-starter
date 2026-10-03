@@ -27,7 +27,14 @@ async function openExample(page: Page) {
     { timeout: 20000 },
   );
   await page.locator('.behaviors-search-results__row').first().click();
-  await page.waitForTimeout(600);
+  // Wait for the thing both tests call, the fullscreen button's handler, not
+  // a guessed 600ms (#962): on Windows CI the click landed before the
+  // behavior had wired it, and `btn.onclick!()` threw "is not a function".
+  await page.waitForFunction(
+    () => typeof (document.getElementById('behaviors-live-fullscreen') as HTMLElement | null)?.onclick === 'function',
+    null,
+    { timeout: 20000 },
+  );
 }
 
 test.describe('#733 — a refused fullscreen changes nothing', () => {

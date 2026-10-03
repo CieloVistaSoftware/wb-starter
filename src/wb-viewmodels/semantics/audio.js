@@ -374,16 +374,12 @@ function uiHost(element) {
   return wrapper;
 }
 
-function buildTransportUI(element, audioEl, config) {
-  const transport = document.createElement('div');
-  transport.className = 'x-audio__transport';
-
-  // Play/Pause button
-  const playBtn = document.createElement('button');
-  playBtn.className = 'x-audio__play-btn';
-  playBtn.setAttribute('aria-label', 'Play');
-  playBtn.innerHTML = '&#9654;'; // ▶
-  playBtn.onclick = () => {
+/**
+ * Click handler for a play button: pause if playing, otherwise play. The
+ * transport and the master row each carried this (#883).
+ */
+function togglePlayback(audioEl, playBtn) {
+  return () => {
     if (!audioEl.paused) { audioEl.pause(); return; }
     // play() returns a promise that rejects if the source can't load
     // (bad URL / unsupported / CORS). Swallow it so it isn't an unhandled
@@ -397,6 +393,18 @@ function buildTransportUI(element, audioEl, config) {
       });
     }
   };
+}
+
+function buildTransportUI(element, audioEl, config) {
+  const transport = document.createElement('div');
+  transport.className = 'x-audio__transport';
+
+  // Play/Pause button
+  const playBtn = document.createElement('button');
+  playBtn.className = 'x-audio__play-btn';
+  playBtn.setAttribute('aria-label', 'Play');
+  playBtn.innerHTML = '&#9654;'; // ▶
+  playBtn.onclick = togglePlayback(audioEl, playBtn);
 
   audioEl.addEventListener('play', () => {
     playBtn.innerHTML = '&#9646;&#9646;'; // ❚❚
@@ -661,21 +669,8 @@ function createVolumeRow(audioEl, config) {
   const updateIcon = () => {
     playBtn.innerHTML = `<span class="x-audio__master-icon">${isPlaying ? '⏸️' : '🔊'}</span>`;
   };
-  playBtn.onclick = () => {
-    if (!audioEl.paused) { audioEl.pause(); return; }
-    // play() returns a promise that rejects if the source can't load
-    // (bad URL / unsupported / CORS). Swallow it so it isn't an unhandled
-    // rejection, and surface a readable message + visual hint instead.
-    const p = audioEl.play();
-    if (p && typeof p.catch === 'function') {
-      p.catch((err) => {
-        console.warn('[x-audio] playback failed:', err && err.message);
-        playBtn.setAttribute('aria-label', 'Audio source unavailable');
-        playBtn.title = 'Audio source unavailable';
-      });
-    }
-  };
-  audioEl.addEventListener('play', () => { isPlaying = true; updateIcon(); });
+  playBtn.onclick = togglePlayback(audioEl, playBtn);
+audioEl.addEventListener('play', () => { isPlaying = true; updateIcon(); });
   audioEl.addEventListener('pause', () => { isPlaying = false; updateIcon(); });
   volumeRow.appendChild(playBtn);
 

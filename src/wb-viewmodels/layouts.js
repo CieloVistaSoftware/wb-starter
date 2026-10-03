@@ -1,4 +1,4 @@
-import { readFlag, readAttr } from '../core/read-attr.js';
+import { readFlag, readAttr, readOption } from '../core/read-attr.js';
 import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
 /**
  * Layout Behaviors - Extended
@@ -22,15 +22,26 @@ import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
  */
 
 /**
+ * Give every current child of `element` the layout's item class, and return
+ * the function that takes it off again. switcher, masonry and reel each
+ * spelled this out by hand (#883).
+ */
+function classChildren(element, itemClass) {
+  const children = Array.from(element.children);
+  children.forEach(child => child.classList.add(itemClass));
+  return () => children.forEach(child => child.classList.remove(itemClass));
+}
+
+/**
  * Grid - CSS Grid layout
  * Custom Tag: <div x-grid>
  */
 export function grid(element, options = {}) {
   const config = {
-    columns: options.columns || readAttr(element, 'columns') || element.getAttribute('columns') || '3',
-    rows: options.rows || readAttr(element, 'rows') || element.getAttribute('rows') || '',
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
-    minWidth: options.minWidth || readAttr(element, 'minWidth') || element.getAttribute('min-width') || '',
+    columns: readOption(element, options, 'columns') || '3',
+    rows: readOption(element, options, 'rows') || '',
+    gap: readOption(element, options, 'gap') || '1rem',
+    minWidth: readOption(element, options, 'minWidth') || '',
     align: options.align || element.getAttribute('align') || '',
     justify: options.justify || element.getAttribute('justify') || '',
     center: options.center ?? element.hasAttribute('center'),
@@ -111,11 +122,11 @@ export function grid(element, options = {}) {
  */
 export function flex(element, options = {}) {
   const config = {
-    direction: options.direction || readAttr(element, 'direction') || element.getAttribute('direction') || 'row',
-    wrap: options.wrap || readAttr(element, 'wrap') || element.getAttribute('wrap') || 'wrap',
-    justify: options.justify || readAttr(element, 'justify') || element.getAttribute('justify') || 'flex-start',
-    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'stretch',
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    direction: readOption(element, options, 'direction') || 'row',
+    wrap: readOption(element, options, 'wrap') || 'wrap',
+    justify: readOption(element, options, 'justify') || 'flex-start',
+    align: readOption(element, options, 'align') || 'stretch',
+    gap: readOption(element, options, 'gap') || '1rem',
     ...options
   };
 
@@ -140,14 +151,14 @@ export function flex(element, options = {}) {
  */
 export function container(element, options = {}) {
   const config = {
-    direction: options.direction || readAttr(element, 'direction') || element.getAttribute('direction') || 'column',
-    columns: parseInt(options.columns || readAttr(element, 'columns') || element.getAttribute('columns') || '1'),
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
-    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'stretch',
-    justify: options.justify || readAttr(element, 'justify') || element.getAttribute('justify') || 'start',
+    direction: readOption(element, options, 'direction') || 'column',
+    columns: parseInt(readOption(element, options, 'columns') || '1'),
+    gap: readOption(element, options, 'gap') || '1rem',
+    align: readOption(element, options, 'align') || 'stretch',
+    justify: readOption(element, options, 'justify') || 'start',
     wrap: (options.wrap ?? readAttr(element, 'wrap') ?? element.getAttribute('wrap')) !== 'false',
     padding: options.padding || element.dataset.padding || element.getAttribute('padding') || '1rem',
-    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '',
+    maxWidth: readOption(element, options, 'maxWidth') || '',
     ...options
   };
 
@@ -206,7 +217,7 @@ export function container(element, options = {}) {
  */
 export function stack(element, options = {}) {
   const config = {
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    gap: readOption(element, options, 'gap') || '1rem',
     // Parity with the retired <div> custom element (v3: behavior, not a
     // class that `extends HTMLElement`). These are optional.
     justify: options.justify || element.getAttribute('justify') || '',
@@ -251,9 +262,9 @@ export function stack(element, options = {}) {
  */
 export function cluster(element, options = {}) {
   const config = {
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
-    justify: options.justify || readAttr(element, 'justify') || element.getAttribute('justify') || 'flex-start',
-    align: options.align || readAttr(element, 'align') || element.getAttribute('align') || 'center',
+    gap: readOption(element, options, 'gap') || '1rem',
+    justify: readOption(element, options, 'justify') || 'flex-start',
+    align: readOption(element, options, 'align') || 'center',
     ...options
   };
 
@@ -281,7 +292,7 @@ export function cluster(element, options = {}) {
  */
 export function center(element, options = {}) {
   const config = {
-    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '',
+    maxWidth: readOption(element, options, 'maxWidth') || '',
     gutters: options.gutters || element.dataset.gutters || element.getAttribute('gutters') || '1rem',
     intrinsic: options.intrinsic ?? (readFlag(element, 'intrinsic') || element.hasAttribute('intrinsic')),
     ...options
@@ -316,7 +327,7 @@ export function sidebarlayout(element, options = {}) {
     side: options.side || element.dataset.side || element.getAttribute('side') || 'left',
     sideWidth: options.sideWidth || element.dataset.sideWidth || element.getAttribute('side-width') || '300px',
     contentMin: options.contentMin || element.dataset.contentMin || element.getAttribute('content-min') || '50%',
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    gap: readOption(element, options, 'gap') || '1rem',
     ...options
   };
 
@@ -356,9 +367,9 @@ export function sidebarlayout(element, options = {}) {
  */
 export function switcher(element, options = {}) {
   const config = {
-    threshold: options.threshold || readAttr(element, 'threshold') || element.getAttribute('threshold') || '30rem',
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
-    limit: parseInt(options.limit || readAttr(element, 'limit') || element.getAttribute('limit') || '4'),
+    threshold: readOption(element, options, 'threshold') || '30rem',
+    gap: readOption(element, options, 'gap') || '1rem',
+    limit: parseInt(readOption(element, options, 'limit') || '4'),
     ...options
   };
 
@@ -375,12 +386,11 @@ export function switcher(element, options = {}) {
     '--x-switcher-threshold': config.threshold,
   }, { gap: '1rem', '--x-switcher-threshold': '30rem' }));
 
-  const children = Array.from(element.children);
-  children.forEach(child => child.classList.add('x-switcher__item'));
+  const unclassChildren = classChildren(element, 'x-switcher__item');
 
   return () => {
     clearRules(element);
-    children.forEach(child => child.classList.remove('x-switcher__item'));
+    unclassChildren();
     element.classList.remove('x-switcher');
   };
 }
@@ -391,8 +401,8 @@ export function switcher(element, options = {}) {
  */
 export function masonry(element, options = {}) {
   const config = {
-    columns: parseInt(options.columns || readAttr(element, 'columns') || element.getAttribute('columns') || '3'),
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    columns: parseInt(readOption(element, options, 'columns') || '3'),
+    gap: readOption(element, options, 'gap') || '1rem',
     ...options
   };
 
@@ -403,12 +413,11 @@ export function masonry(element, options = {}) {
     '--x-masonry-gap': config.gap,
   }, { columnCount: 3, '--x-masonry-gap': '1rem' }));
 
-  const items = Array.from(element.children);
-  items.forEach(item => item.classList.add('x-masonry__item'));
+  const unclassItems = classChildren(element, 'x-masonry__item');
 
   return () => {
     clearRules(element);
-    items.forEach(item => item.classList.remove('x-masonry__item'));
+    unclassItems();
     element.classList.remove('x-masonry');
   };
 }
@@ -421,7 +430,7 @@ export function sticky(element, options = {}) {
   const config = {
     top: options.top || element.dataset.top || element.getAttribute('top') || '0',
     bottom: options.bottom || element.dataset.bottom || element.getAttribute('bottom') || '',
-    zIndex: options.zIndex || readAttr(element, 'zIndex') || element.getAttribute('z-index') || '100',
+    zIndex: readOption(element, options, 'zIndex') || '100',
     ...options
   };
 
@@ -441,9 +450,9 @@ export function sticky(element, options = {}) {
  */
 export function fixed(element, options = {}) {
   const config = {
-    position: options.position || readAttr(element, 'position') || element.getAttribute('position') || 'bottom-right',
-    offset: options.offset || readAttr(element, 'offset') || element.getAttribute('offset') || '1rem',
-    zIndex: options.zIndex || readAttr(element, 'zIndex') || element.getAttribute('z-index') || '1000',
+    position: readOption(element, options, 'position') || 'bottom-right',
+    offset: readOption(element, options, 'offset') || '1rem',
+    zIndex: readOption(element, options, 'zIndex') || '1000',
     ...options
   };
 
@@ -465,9 +474,9 @@ export function fixed(element, options = {}) {
  */
 export function scrollable(element, options = {}) {
   const config = {
-    direction: options.direction || readAttr(element, 'direction') || element.getAttribute('direction') || 'both',
-    maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '',
-    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '',
+    direction: readOption(element, options, 'direction') || 'both',
+    maxHeight: readOption(element, options, 'maxHeight') || '',
+    maxWidth: readOption(element, options, 'maxWidth') || '',
     ...options
   };
 
@@ -537,7 +546,7 @@ export function cover(element, options = {}) {
  */
 export function frame(element, options = {}) {
   const config = {
-    ratio: options.ratio || readAttr(element, 'ratio') || element.getAttribute('ratio') || '16/9',
+    ratio: readOption(element, options, 'ratio') || '16/9',
     ...options
   };
 
@@ -561,7 +570,7 @@ export function frame(element, options = {}) {
 export function reel(element, options = {}) {
   const config = {
     itemWidth: options.itemWidth || element.dataset.itemWidth || element.getAttribute('item-width') || 'auto',
-    gap: options.gap || readAttr(element, 'gap') || element.getAttribute('gap') || '1rem',
+    gap: readOption(element, options, 'gap') || '1rem',
     ...options
   };
 
@@ -575,12 +584,11 @@ export function reel(element, options = {}) {
     '--x-reel-item-width': config.itemWidth,
   }, { gap: '1rem', '--x-reel-item-width': 'auto' }));
 
-  const children = Array.from(element.children);
-  children.forEach(child => child.classList.add('x-reel__item'));
+  const unclassChildren = classChildren(element, 'x-reel__item');
 
   return () => {
     clearRules(element);
-    children.forEach(child => child.classList.remove('x-reel__item'));
+    unclassChildren();
     element.classList.remove('x-reel', 'x-reel--sized');
   };
 }
@@ -616,7 +624,7 @@ export function imposter(element, options = {}) {
  */
 export function icon(element, options = {}) {
   const config = {
-    size: options.size || readAttr(element, 'size') || element.getAttribute('size') || '1em',
+    size: readOption(element, options, 'size') || '1em',
     space: options.space || element.dataset.space || element.getAttribute('space') || '0.5em',
     ...options
   };
@@ -644,13 +652,13 @@ export function icon(element, options = {}) {
  */
 export function drawerLayout(element, options = {}) {
   const config = {
-    position: options.position || readAttr(element, 'position') || element.getAttribute('position') || 'left',
-    width: options.width || readAttr(element, 'width') || element.getAttribute('width') || '250px',
-    height: options.height || readAttr(element, 'height') || element.getAttribute('height') || '250px',
-    minWidth: options.minWidth || readAttr(element, 'minWidth') || element.getAttribute('min-width') || '1.5rem',
+    position: readOption(element, options, 'position') || 'left',
+    width: readOption(element, options, 'width') || '250px',
+    height: readOption(element, options, 'height') || '250px',
+    minWidth: readOption(element, options, 'minWidth') || '1.5rem',
     minHeight: options.minHeight || element.dataset.minHeight || element.getAttribute('min-height') || '1.5rem',
-    maxWidth: options.maxWidth || readAttr(element, 'maxWidth') || element.getAttribute('max-width') || '50vw',
-    maxHeight: options.maxHeight || readAttr(element, 'maxHeight') || element.getAttribute('max-height') || '50vh',
+    maxWidth: readOption(element, options, 'maxWidth') || '50vw',
+    maxHeight: readOption(element, options, 'maxHeight') || '50vh',
     resizable: options.resizable ?? (element.dataset.resizable === 'true' || element.getAttribute('resizable') === 'true'),
     saveState: options.saveState ?? (element.dataset.saveState === 'true' || element.getAttribute('save-state') === 'true'),
     // Declared in drawerLayout.schema.json ("Initial collapsed state") and

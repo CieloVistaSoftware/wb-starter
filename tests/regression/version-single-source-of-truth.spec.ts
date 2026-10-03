@@ -51,8 +51,11 @@ test('?page=behaviors: the header shows the real stamped version, not a stale li
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
   const version = await page.evaluate(async () => {
-    const mod = await import('/src/core/version.js');
-    return mod.VERSION.version;
+    // The number every display shows (src/core/version-number.js, #1243):
+    // the tag's patch plus the commits since it, e.g. v1.0.0 + 41 -> 1.0.41.
+    const { VERSION } = await import('/src/core/version.js');
+    const { versionNumber } = await import('/src/core/version-number.js');
+    return versionNumber(VERSION).number;
   });
 
   await expect(page.locator('#headerVersion[x-release]')).toContainText(`v${version}`);
@@ -65,8 +68,11 @@ test('demos/landing-page-showcase.html: hero badge shows the real stamped versio
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
 
   const version = await page.evaluate(async () => {
-    const mod = await import('/src/core/version.js');
-    return mod.VERSION.version;
+    // The number every display shows (src/core/version-number.js, #1243):
+    // the tag's patch plus the commits since it, e.g. v1.0.0 + 41 -> 1.0.41.
+    const { VERSION } = await import('/src/core/version.js');
+    const { versionNumber } = await import('/src/core/version-number.js');
+    return versionNumber(VERSION).number;
   });
 
   const badge = page.locator('#lp-version-badge');

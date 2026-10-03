@@ -13,13 +13,14 @@
  * forms.html alone.
  */
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test('every non-disabled, non-readonly [x-input] on forms.html has a real, typeable <input>', async ({ page }) => {
   // 32 fields, each scrolled to, built and typed into: more than the default
   // 30s budget whenever the machine is busy.
   test.slow();
   await page.goto('/demos/site/forms.html');
-  await page.waitForTimeout(1500);
+  await wbIdle(page);
 
   const wbInputs = page.locator('[x-input]');
   const count = await wbInputs.count();

@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * REGRESSION: <div x-checkbox> and <textarea> are schema-driven hosts --
@@ -21,7 +22,7 @@ import { test, expect } from '../fixtures/offline';
 test.describe('[x-checkbox] self-builds on wb-lazy.js pages (no schema support)', () => {
   test('demos/site/forms.html: every [x-checkbox] gets a real, working input', async ({ page }) => {
     await page.goto('/demos/site/forms.html');
-    await page.waitForTimeout(1500);
+    await wbIdle(page);
 
     const checkboxes = page.locator('[x-checkbox]');
     const count = await checkboxes.count();
@@ -54,7 +55,7 @@ test.describe('[x-checkbox] self-builds on wb-lazy.js pages (no schema support)'
 test.describe('.x-textarea self-builds on wb-lazy.js pages (no schema support)', () => {
   test('demos/site/forms.html: .x-textarea gets a real, working textarea', async ({ page }) => {
     await page.goto('/demos/site/forms.html');
-    await page.waitForTimeout(1500);
+    await wbIdle(page);
 
     // The host is found by its attribute: `.x-textarea` is the class the
     // enhancement puts on the real <textarea> field (input.css styles it), not
@@ -77,7 +78,7 @@ test('does not fight wb.js\'s own schema processing when it IS available', async
   // fallback -- confirmed live this raced and lost pre-filled text content
   // before the `!window.WB?.schema` gate was added.
   await page.goto('/?page=forms');
-  await page.waitForTimeout(1500);
+  await wbIdle(page);
   const hasSchema = await page.evaluate(() => !!(window as any).WB?.schema);
   expect(hasSchema, 'main SPA must expose WB.schema for this test to be meaningful').toBe(true);
 });

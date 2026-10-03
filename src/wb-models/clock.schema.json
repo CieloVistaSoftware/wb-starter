@@ -7,7 +7,7 @@
   "properties": {
     "variant": {
       "type": "string",
-      "description": "Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial). Any other value renders `digital` and logs a warning naming these three.",
+      "description": "Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial; `analogue` is accepted). Any other value renders `digital` and logs a warning naming these three.",
       "enum": [
         "digital",
         "led",

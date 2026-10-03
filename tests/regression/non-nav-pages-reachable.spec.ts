@@ -90,6 +90,10 @@ test.describe('#725 — a page that does not exist says so', () => {
   test('an invalid page id is refused before any fetch', async ({ page }) => {
     await page.goto('/?page=behaviors');
     await page.waitForSelector('#behaviors-search', { timeout: 25000 });
+    // The search box can render before src/index.js assigns window.WBSite; under
+    // the full gate's load it did, and navigateTo read off undefined. Wait for
+    // the thing the test calls, not a neighbour of it.
+    await page.waitForFunction(() => typeof (window as any).WBSite?.navigateTo === 'function', null, { timeout: 25000 });
 
     const state = await page.evaluate(async () => {
       const requested: string[] = [];

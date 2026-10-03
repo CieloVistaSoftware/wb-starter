@@ -626,14 +626,17 @@ export function countdown(element, options = {}) {
 const CLOCK_VARIANTS = ['digital', 'led', 'analog'];
 
 /**
- * One of CLOCK_VARIANTS for whatever the author wrote. Whitespace and case are
- * forgiven: the playground re-renders on every keystroke, so a half-typed
- * `variant="analogue` arrives as "analogue\n    " (#1229). Anything else
- * renders digital, and the warning says what would have worked.
+ * One of CLOCK_VARIANTS for whatever the author wrote (#1229). The values were
+ * used raw: in the playground, typing variant="analogue" left a newline and
+ * indentation in the value and classList.add() threw InvalidCharacterError on
+ * every keystroke. Whitespace and case are forgiven, and "analogue" (the word
+ * the docs used) means analog. Anything else renders digital, and the warning
+ * says which values would have worked.
  */
 function clockVariant(raw) {
   const wanted = String(raw ?? '').trim().toLowerCase();
   if (!wanted) return 'digital';
+  if (wanted === 'analogue') return 'analog';
   if (CLOCK_VARIANTS.includes(wanted)) return wanted;
   const near = CLOCK_VARIANTS.find((v) => wanted.startsWith(v) || v.startsWith(wanted));
   console.warn(
@@ -648,13 +651,13 @@ function clockVariant(raw) {
  * Helper Attribute: [x-clock]
  */
 export function clock(element, options = {}) {
+  const rawFormat = String(options.format || element.getAttribute('format') || '').trim();
   const config = {
-    variant: options.variant || element.getAttribute('variant') || 'digital',
-    format: options.format || element.getAttribute('format') || '24',
-    showSeconds: (options.showSeconds ?? element.getAttribute('show-seconds')) !== 'false',
-    ...options
+    ...options,
+    variant: clockVariant(options.variant || element.getAttribute('variant')),
+    format: rawFormat === '12' ? '12' : '24',
+    showSeconds: String(options.showSeconds ?? element.getAttribute('show-seconds') ?? '').trim() !== 'false',
   };
-  config.variant = clockVariant(config.variant);
 
   // #779: base (with #486's 1rem padding floor), led, analog and the
   // digital default are .x-clock rules in helpers.css, keyed on the
@@ -680,7 +683,9 @@ export function clock(element, options = {}) {
   update();
   const updateInterval = setInterval(update, 1000);
 
-  return () => { 
+  // #1229: this cleared `interval`, a name not in scope -- the teardown threw
+  // a ReferenceError and the 1-second timer was never stopped.
+  return () => {
     clearInterval(updateInterval);
     element.classList.remove('x-clock', `x-clock--${config.variant}`);
   };

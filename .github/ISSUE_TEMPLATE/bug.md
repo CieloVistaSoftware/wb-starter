@@ -6,6 +6,16 @@ labels: bug
 assignees: ''
 ---
 
+<!--
+Add exactly ONE priority label before submitting (rated by impact; the
+issue-priority-check workflow comments on any issue without one):
+  priority:1  destroys work, blinds the gates, or blocks everyone (also needs `test:` below)
+  priority:2  a behavior people use is broken, or tooling costs hours repeatedly
+  priority:3  real defect, secondary surface, or test debt that hides regressions
+  priority:4  cosmetic, local, or cleanup
+  priority:5  question, idea or tracker, no defect
+-->
+
 ## In plain English
 
 <!-- What a person sees going wrong. No jargon. -->

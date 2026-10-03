@@ -18,8 +18,23 @@ function sizeClass(size) {
   return `x-dialog--${SIZES.includes(size) ? size : 'md'}`;
 }
 
+/**
+ * Append the header's x close button when `show` is set, and return it (null
+ * otherwise). Both the trigger-built and the authored path did this (#883).
+ */
+function addCloseButton(header, show) {
+  if (!show) return null;
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'x-dialog__close';
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close dialog');
+  closeBtn.innerHTML = '&times;';
+  header.appendChild(closeBtn);
+  return closeBtn;
+}
+
 export function dialog(element, options = {}) {
-  const config = {
+const config = {
     title: options.title || element.getAttribute('title') || element.getAttribute('modal-title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
     content: options.content || element.getAttribute('content') || element.getAttribute('modal-content') || element.dataset.dialogContent || element.dataset.modalContent || '',
     size: options.size || element.getAttribute('size') || element.getAttribute('modal-size') || element.dataset.dialogSize || element.dataset.modalSize || 'md',
@@ -73,16 +88,8 @@ export function dialog(element, options = {}) {
     title.textContent = titleText;
     header.appendChild(title);
     
-    let closeBtn = null;
-    if (config.showClose) {
-      closeBtn = document.createElement('button');
-      closeBtn.className = 'x-dialog__close';
-      closeBtn.type = 'button';
-      closeBtn.setAttribute('aria-label', 'Close dialog');
-      closeBtn.innerHTML = '&times;';
-      header.appendChild(closeBtn);
-    }
-    
+    const closeBtn = addCloseButton(header, config.showClose);
+
     dialogEl.appendChild(header);
 
     // MAIN (<main>) - body content
@@ -264,15 +271,7 @@ export function dialog(element, options = {}) {
       header.appendChild(heading);
     }
 
-    let closeBtn = null;
-    if (config.showClose) {
-      closeBtn = document.createElement('button');
-      closeBtn.className = 'x-dialog__close';
-      closeBtn.type = 'button';
-      closeBtn.setAttribute('aria-label', 'Close dialog');
-      closeBtn.innerHTML = '&times;';
-      header.appendChild(closeBtn);
-    }
+    const closeBtn = addCloseButton(header, config.showClose);
 
     const body = document.createElement('main');
     body.className = 'x-dialog__body';

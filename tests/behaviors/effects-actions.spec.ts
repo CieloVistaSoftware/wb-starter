@@ -44,9 +44,9 @@ import { test, expect, Page, Locator } from '../fixtures/offline';
  * `cls` is asserted, not merely waited on — it is the exact surface #847 broke.
  */
 const CLICK_EFFECTS: { token: string; cls: string }[] = [
-  // The authored example is `direction="left"`; the other directions are
-  // covered by the scan-driven test below, because the browser offers no
-  // direction rows for x-slidein.
+  // The first x-slidein row is `direction="left"` (#997 added authored rows
+  // for the other directions too); every direction is also covered by the
+  // scan-driven test below.
   { token: 'x-slidein', cls: 'x-slide-in-left' },
   { token: 'x-fadein', cls: 'x-fade-in' },
   { token: 'x-zoomin', cls: 'x-zoom-in' },

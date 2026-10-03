@@ -211,7 +211,7 @@ test.describe('Project Integrity', () => {
     ).toEqual([]);
   });
 
-  test('all data-wb attributes reference valid behaviors', () => {
+  test('no data-wb attributes remain (retired in 4.0.0, #1144)', () => {
     const validBehaviors = getRegisteredBehaviors();
     const htmlFiles = [
       ...getFiles(PATHS.pages, ['.html']),
@@ -226,6 +226,9 @@ test.describe('Project Integrity', () => {
     ];
     
     for (const file of htmlFiles) {
+      // The strict-mode fixture carries data-wb ON PURPOSE, so
+      // strict-mode-runtime.spec.ts can prove the runtime rejects it.
+      if (file.replace(/\\/g, '/').endsWith('demos/legacy-syntax-check.html')) continue;
       const content = stripDynamicContent(readFile(file));
       
       const wbRegex = /data-wb=['"]([^'"]+)['"]/g;
@@ -236,10 +239,12 @@ test.describe('Project Integrity', () => {
         
         for (const b of behaviors) {
           if (ignoredPatterns.some(pattern => pattern.test(b))) continue;
-          
-          if (b && !validBehaviors.has(b)) {
-            issues.add(`${relativePath(file)}: uses unknown behavior '${b}'`);
-          }
+          // #1144: data-wb is retired (4.0.0). A VALID behavior name no longer
+          // makes it acceptable -- every data-wb is reported, valid or not.
+          if (!b) continue;
+          issues.add(validBehaviors.has(b)
+            ? `${relativePath(file)}: data-wb="${b}" is retired -- use x-${b} or the semantic tag`
+            : `${relativePath(file)}: uses unknown behavior '${b}' (and data-wb is retired)`);
         }
       }
     }
@@ -249,7 +254,7 @@ test.describe('Project Integrity', () => {
     // the unknown behaviour names appear in the failure.
     expect(
       issues.all,
-      `Unknown behaviors used in HTML:\n${issues.all.join('\n')}`,
+      `Retired data-wb attributes in HTML (#1144):\n${issues.all.join('\n')}`,
     ).toEqual([]);
   });
 });

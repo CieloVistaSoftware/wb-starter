@@ -2,6 +2,123 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-02.** Build process changed (John's decision).
+
+- Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.
+- PR CI (`ci-tests.yml`, one check per category + "Gate scripts self-test") is information.
+- **"park"** at end of day: update this parking lot, merge the day's finished PRs, trigger `nightly.yml`. Backup schedule 08:00 UTC.
+- Nightly: full suite on main vs the register. A new failure files one `priority:2` issue. It does not release.
+- The live site serves `main`; a merge is live in minutes. The pre-push rule (#1076) is gone.
+- **Version number** (John: "1.0.what the latest push is e.g. 1.0.41 simple"): the badge shows the last tag's patch plus the commits since it — `v1.0.41`. Numbers only, no marks; the tooltip says if the copy is behind or edited.
+
+---
+
+**Updated 2026-10-01 (late night).** On branch `claude/nifty-darwin-8mf277`, added to PR #1238.
+
+**Task:** markdown link audit. John: "write a test that proves all links in all of our .md documents work, consider it an audit which 1) Identifies failures and the 2) Fixed them the tests are then rerun to prove things."
+
+**Files touched:** `scripts/lib/md-links.mjs`, `scripts/audit-md-links.mjs`,
+`tests/compliance/md-links-resolve.spec.ts`, `data/md-link-audit.json` (new); fixed links in
+`docs/V3-GUIDE.md`, `docs/properties.md`, `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md`,
+`docs/behavior-cross-reference.md`, `docs/behaviors/dropdown.md`, `docs/standards/V3-STANDARDS.md`.
+
+**Last action:** audit before: 69 broken internal links (4 wrong anchors, 65 dead demo routes) and 1 broken
+web link (`github.com/wb`). All fixed. Rerun: 293 files, 688 internal links, 0 broken; 53 web links, 53 ok.
+The new gate fails on the old docs (69) and passes on the fixed ones.
+
+**Next step:** John reviews PR #1238. Rerun `node scripts/audit-md-links.mjs --external` now and then; web links are not in the gate.
+
+**Open questions:** none.
+
+---
+
+**Updated 2026-10-01 (night).** On branch `claude/nifty-darwin-8mf277`, after PR #1235 merged.
+
+**Task:** #1236, `x-glass`: a new behavior that lets an element carry the background scene (John: "a button which carries the scene of the background"; name chosen by John).
+
+**Files touched:** `src/wb-viewmodels/glass.js`, `src/wb-models/glass.schema.json`,
+`src/styles/behaviors/glass.css`, `docs/behaviors/glass.md` (new); `src/wb-viewmodels/index.js`,
+`src/core/tag-map.js`, `src/styles/behavior-css-manifest.js`, `src/styles/themes.css`,
+`src/wb-viewmodels/card.js`, `src/styles/behaviors/hero.css`, `data/schema-index.json`,
+`data/behavior-examples.json`, `docs/manifest.json`, `docs/behaviors-reference.md`,
+`docs/behavior-cross-reference.md`; the old `.x-glass` card utility renamed `.x-glass-card`
+in `site.css`, `x-signature.css`, `pages/links.html`, `pages/hero-variants.html`;
+`tests/regression/x-glass-carries-the-scene.spec.ts` (new).
+
+**Last action:** x-glass built and registered, with `amount` = most (default, 14% tint) / some (22%) / least (30%).
+The card hero's "Read the Guide" button now uses it and renders as before (99.86% of pixels identical).
+
+**Next step:** John reviews the PR. Follow-ups: move the hero pill and card/badge `glass`
+variants onto x-glass (each changes its look slightly, so left out); `npm run audit:behavior-registry`
+reports 61 pre-existing hard errors (same on main).
+
+**Open questions:** none.
+
+---
+
+**Updated 2026-10-01 (evening).** On branch `claude/nifty-darwin-8mf277`.
+
+**Task:** John wants Playwright CI split into categories, one check per category, run in parallel (his pick over one run that posts per-category results at the end).
+
+**Files touched:** `.github/workflows/ci-tests.yml`, `.husky/test-ratchet.mjs`,
+`tests/compliance/ci-and-local-gate-agree.spec.ts`.
+
+**Last action:** ci-tests.yml became a matrix of six jobs (compliance, regression,
+behaviors and schema-viewer gated through the ratchet with WB_GATE_PROJECTS;
+integration and base reported, as before), plus a "Playwright Tests" summary
+job that fails if any category fails. A narrowed ratchet now refuses `--update`
+and does not report a repaired count it cannot measure.
+
+**Next step:** watch the first CI run of the PR. If branch protection requires
+the old "Playwright Tests" check, the summary job keeps that name.
+
+**Open questions:** six Windows runners per push instead of one. Fine for John?
+
+---
+
+**Updated 2026-10-01 (later).** On branch `claude/nifty-darwin-8mf277`, restarted from main after PR #1230 merged.
+
+**Task:** the issue priority bot. It posted its comment twice on #1231, and John asked why priority is not set automatically.
+
+**Files touched:** `.github/workflows/issue-priority-check.yml`,
+`scripts/triage-issue-priority.mjs`, `scripts/lib/priority-triage.mjs` (new),
+`tests/compliance/issue-priority-check.spec.ts` (new).
+
+**Last action:** a concurrency group per issue stops the double comment. The
+comment now includes the triage rules' proposal and its evidence, but never
+applies it. An audit of a new "enhancement label means priority 5" rule
+against John's ratings agreed 1 time in 15, so that rule was dropped. John rates
+feature requests by impact (1, 3 or 4), not as "no defect".
+
+**Next step:** John rates #1231 and #1232 (both set to priority:5 for now, likely too low).
+
+**Open questions:** none.
+
+---
+
+**Updated 2026-10-01.** On branch `claude/nifty-darwin-8mf277`.
+
+**Task:** the Docs page opens newest first (owner request), and the default is easy to change.
+
+**Files touched:** `scripts/update-docs-manifest.js`, `docs/manifest.json`,
+`pages/docs.html`, `src/styles/pages/docs.css`,
+`tests/integration/docs-page-sort-newest.spec.ts`.
+
+**Last action:** every entry in `docs/manifest.json` now carries `modified`
+(its last commit date). `npm start` keeps those dates current through
+update-docs-manifest.js. In a shallow clone it leaves them as they are. The page
+has a "Sort documents" control (Newest first / By category). The reader's pick
+is remembered and kept in `?sort=`.
+
+**To change the default:** in `pages/docs.html`, move `selected` to the other
+`<option>` of `#docs-sort`.
+
+**Next step:** John reviews the draft PR.
+
+**Open questions:** none.
+
+---
+
 **Updated 2026-09-29.** On branch `claude/fervent-noether-ydmxea` (PR #1221).
 
 **Task:** P1 issues, in order. Fixed on the branch: [#1185](https://github.com/CieloVistaSoftware/wb-starter/issues/1185), [#1184](https://github.com/CieloVistaSoftware/wb-starter/issues/1184), [#1183](https://github.com/CieloVistaSoftware/wb-starter/issues/1183),

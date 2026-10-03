@@ -15,6 +15,7 @@
 
 import { test, expect, Page } from '../fixtures/offline';
 import { pickBehavior } from '../helpers/behaviors-page';
+import { wbIdle } from '../base';
 
 test.describe('Behaviors Showcase Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -34,7 +35,7 @@ test.describe('Behaviors Showcase Page', () => {
       });
       
       await page.reload();
-      await page.waitForTimeout(1000);
+      await wbIdle(page);
       
       // Filter out expected errors from missing external resources
       const unexpectedErrors = errors.filter(e => 

@@ -498,7 +498,7 @@
         '  cta="Star on GitHub"',
         '  cta-href="https://github.com/CieloVistaSoftware/wb-starter"',
         '  cta-secondary="Read the guide"',
-        '  cta-secondary-href="../public/doc-viewer.html?file=docs%2FV3-GUIDE.md"',
+        '  cta-secondary-href="https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md"',
         '  background="linear-gradient(135deg, var(--danger-color), var(--warning-color))"',
         '  style="display:block; width:100%;"',
         '  x-fadein>',
@@ -680,15 +680,19 @@
         'linear-gradient(135deg, var(--primary), var(--info-color))',
         '../images/placeholder-waves.svg',
       ];
-      // Each CTA links to the doc it's talking about (opens in the doc-viewer).
-      const DV = (file) => '../public/doc-viewer.html?file=' + encodeURIComponent(file);
+      // Each CTA links to the doc it's talking about, on the LIVE site (John:
+      // "make all the links on hero demos go to the .io site"). A hero is a
+      // demo of a real landing page, so its buttons go where a real visitor's
+      // would, not to a relative path that only works inside this repo.
+      const SITE = 'https://cielovistasoftware.github.io/wb-starter/';
+      const DV = (file) => SITE + 'public/doc-viewer.html?file=' + encodeURIComponent(file);
       const CTA_HREF = {
         'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
         'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
         'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/x-behaviors.md'),
         'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
         'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
-        'Try the Playground': 'playground.html',
+        'Try the Playground': SITE + 'demos/playground.html',
       };
       const href = (c) => CTA_HREF[c] || DV('docs/V3-GUIDE.md');
       const out = [];
@@ -781,7 +785,7 @@
         "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it \u2014 the position sticks.\" constrain axis=\"both\"></article>",
         "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no behavior base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
         "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
-        "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real behaviors.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
+        "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real behaviors.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md\"\n  height=\"320px\"></section>",
         "<article x-cardhorizontal\n  image=\"../images/placeholder-city.svg\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",
         "<article x-cardimage\n  src=\"../images/placeholder-forest.svg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
         "<article x-cardlink\n  href=\"#\"\n  title=\"Attribute naming standard\"\n  description=\"Why every attribute is kebab-case, and what breaks when it is not.\"\n  badge=\"Standard\"></article>",

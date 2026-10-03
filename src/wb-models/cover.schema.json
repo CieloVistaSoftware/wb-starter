@@ -8,12 +8,21 @@
     "min-height": {
       "type": "string",
       "description": "Read by cover().",
-      "default": "100vh"
+      "default": "100vh",
+      "examples": [
+        "8rem",
+        "22rem",
+        "30rem"
+      ]
     },
     "padding": {
       "type": "string",
       "description": "Read by cover().",
-      "default": "1rem"
+      "default": "1rem",
+      "examples": [
+        "0",
+        "3rem"
+      ]
     }
   },
   "$view": [],

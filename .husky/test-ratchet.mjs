@@ -143,6 +143,18 @@ const PROJECTS = (() => {
 
 const update = process.argv.includes('--update');
 
+// A narrowed run measures only its own projects, but the register holds every
+// project's entries and records no project per entry. So on a narrowed run an
+// entry from a project that did not run would read as "repaired", and --update
+// would delete it. ci-tests.yml runs one project per job, so this is now the
+// common case in CI, not an edge case.
+const narrowed = PROJECTS.length !== ALL_PROJECTS.length;
+if (update && narrowed) {
+  console.error('❌ --update needs the full gate: unset WB_GATE_PROJECTS.');
+  console.error('   A narrowed run would drop every register entry from the projects it skipped.');
+  process.exit(1);
+}
+
 /** Stable identity for one test, independent of OS path separators. */
 const idFor = (file, title) => `${String(file).split('\\').join('/')} › ${title}`;
 
@@ -632,12 +644,12 @@ const regressions = [...failing].filter((f) => !baseline.has(f));
 // gate projects, so "absent from the failure list" means it passed — or the
 // test was renamed/deleted, which equally means the entry must not linger.
 // A register entry that could not reach the server did not pass: it did not run.
-const repaired = [...baseline].filter((b) => !failing.has(b) && !unrun.has(b));
+const repaired = narrowed ? [] : [...baseline].filter((b) => !failing.has(b) && !unrun.has(b));
 
 console.log('');
 console.log(`   known-failing (debt) : ${failing.size - regressions.length}`);
 console.log(`   new failures         : ${regressions.length}`);
-console.log(`   repaired since baseline: ${repaired.length}`);
+console.log(`   repaired since baseline: ${narrowed ? 'not counted on a narrowed run' : repaired.length}`);
 console.log(`   never reached server : ${gate.serverDown.length}`);
 
 // The server died: those tests did not run, so this run can claim nothing about

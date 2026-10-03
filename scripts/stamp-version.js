@@ -10,7 +10,10 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { isDirty } from './lib/git-status.mjs';
+import { changedPaths } from './lib/git-status.mjs';
+import { isBuildOutput } from './lib/build-output.mjs';
+import { countBase, countPushes } from './lib/push-count.mjs';
+import { versionNumber } from '../src/core/version-number.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -93,11 +96,18 @@ function drift() {
   // "rc/core/version.js", which GENERATED then failed to match. So the
   // exclusion was bypassed in exactly the case it was written for, and the
   // badge kept saying "uncommitted changes" after #1071 shipped.
-  const GENERATED = ['src/core/version.js'];
-  const dirty = isDirty(
-    git('git status --porcelain', '', { raw: true }),
-    GENERATED,
-  );
+  //
+  // John, 2026-10-02, on a badge saying "uncommitted local edits" right after
+  // npm start: the docs manifests and the ?v= keys in entry pages are rewritten
+  // on every start too. Everything the build rewrites is excluded, by the same
+  // test pull-latest.mjs uses before it resets anything (build-output.mjs).
+  const edited = changedPaths(git('git status --porcelain', '', { raw: true }))
+    .filter((f) => !isBuildOutput(root, f));
+  const dirty = edited.length > 0;
+  // Which files: the tooltip names them, so "uncommitted local edits" can be
+  // checked instead of taken on trust. Omitted when clean, so a clean stamp
+  // (the one committed on main) stays byte-identical run to run.
+  const dirtyFiles = dirty ? edited.slice(0, 5) : undefined;
 
   // Compare against the remote this branch tracks; fall back to origin/main,
   // which is what "latest code" means for this project.
@@ -111,7 +121,31 @@ function drift() {
     behind = b || 0;
   }
 
-  return { branch, dirty, ahead, behind, upstream };
+  // #1243 -- THE RELEASE THE BADGE NAMES, counted from its TAG.
+  //
+  // John: "it must always represent the proper release it displays" -- "it's
+  // the only way we stay in sync". `ahead` above is commits ahead of the
+  // UPSTREAM, not past the release, so a checkout level with origin/main but 12
+  // commits past v1.0.0 stamped ahead=0 and the badge read a bare "v1.0.0" for
+  // code that is not 1.0.0. The release and the distance from it come from the
+  // tag itself: `v1.0.0-12-gabc1234` -> release 1.0.0, 12 commits past it.
+  // Double-quoted pattern: it must survive cmd.exe and sh alike, and an
+  // unquoted v* would glob to the repo's `vscode/` folder under sh.
+  let release = null;
+  let sinceRelease = null;
+  const described = git('git describe --tags --match "v[0-9]*" --long');
+  const m = described.match(/^v(.+)-(\d+)-g[0-9a-f]+$/);
+  if (m) { release = m[1]; sinceRelease = Number(m[2]); }
+  // John, 2026-10-02: "count pushes not commits" (scripts/lib/push-count.mjs):
+  // pushes to main since the tag, or since the 1.0.89 anchor where that is
+  // newer. The stamp commit is not a push, so the stamp needs no "+1 for the
+  // commit it is about to make": it carries the number of the push it stamps.
+  try {
+    const start = countBase(root);
+    if (start) { release = start.release; sinceRelease = countPushes(root, start.base); }
+  } catch { /* keep the tag's commit count rather than nothing */ }
+
+  return { branch, dirty, ...(dirtyFiles ? { dirtyFiles, dirtyCount: edited.length } : {}), ahead, behind, upstream, release, sinceRelease };
 }
 
 const tree = drift();
@@ -170,7 +204,7 @@ const flags = [
   tree.ahead ? `${tree.ahead} ahead` : '',
   tree.dirty ? 'dirty' : '',
 ].filter(Boolean).join(', ');
-console.log(`[stamp-version] v${pkg.version} (${commit}) @ ${builtAt}${flags ? ` — ${flags}` : ''}`);
+console.log(`[stamp-version] v${versionNumber({ version: pkg.version, ...tree }).number} (${commit}) @ ${builtAt}${flags ? ` — ${flags}` : ''}`);
 if (tree.behind) {
   console.log(`[stamp-version] ⚠  This tree is ${tree.behind} commits behind ${tree.upstream}.`);
   console.log(`[stamp-version] ⚠  What you see on :3000 is NOT the latest code.`);
@@ -220,7 +254,15 @@ for (const file of ENTRY_HTML) {
   // ?v=80d6768, the 3.0.62 commit). pkg.version is known before the commit,
   // changes exactly when a release ships, and is what the release is named
   // after. See #743.
-  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${pkg.version}${post}`);
+  //
+  // 2026-10-02: the version number now moves on EVERY commit (v1.0.<commits
+  // since the tag>), so the cache key is that number, not package.json's
+  // "1.0.0" -- which stayed "1.0.0" for 64 commits and let browsers keep
+  // yesterday's code (John saw "v1.0.0 ⚠*" on the live site after v1.0.64).
+  const cacheKey = (tree.release && Number.isInteger(tree.sinceRelease))
+    ? (() => { const [a = 0, b = 0, c = 0] = tree.release.split('.').map(Number); return `${a}.${b}.${c + tree.sinceRelease}`; })()
+    : pkg.version;
+  const stamped = html.replace(ATTR_RE, (_match, pre, url, post) => `${pre}${url}?v=${cacheKey}${post}`);
   if (stamped !== html) {
     writeFileSync(filePath, stamped);
     console.log(`[stamp-version] cache-busted ${file}`);

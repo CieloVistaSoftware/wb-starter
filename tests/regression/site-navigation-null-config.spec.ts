@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('Site navigation config guard', () => {
   test('standalone pages do not throw when navigation runs without config', async ({ page }) => {
@@ -6,7 +7,7 @@ test.describe('Site navigation config guard', () => {
     page.on('pageerror', (error) => errors.push(error.message));
 
     await page.goto('/demos/intellisense-check.html', { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(250);
+    await wbIdle(page);
 
     expect(errors.filter((message) => message.includes("reading 'navigationMenu'"))).toEqual([]);
   });

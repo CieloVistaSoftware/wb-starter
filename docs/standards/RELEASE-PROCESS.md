@@ -11,6 +11,24 @@ learn what was in it, and given a build no way to know its number was unique.
 
 ---
 
+
+## The number on the badge (since 2026-10-02)
+
+John: "I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple."
+The version badge shows the last release tag with its patch moved on by the
+**pushes to main** since it: `v1.0.89` + 3 pushes reads **`v1.0.92`**. John,
+2026-10-02: "count pushes not commits" -- counting commits made it jump by three
+per push. A push is one first-parent commit on main; the stamp workflow's own
+`chore(version): stamp` commit belongs to the push it stamps
+(`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89`
+commit (`ANCHOR` in that file), so it never went backwards; a release tag cut
+after it takes over. It is counted by git from the tag
+(`scripts/stamp-version.js`), so the same commit shows the same number on port
+3000 and on the live site. Every version is listed on the Releases page with
+what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks;
+local edits or being behind GitHub are said in its tooltip. A release (below) is still cut
+deliberately with `npm run ship` and resets the count to its new tag.
+
 ## 1. One number per release, never per commit
 
 A release number changes **once, on `main`, when something is being released**. It does not

@@ -16,7 +16,7 @@ async function inject(page: Page, html: string) {
   await page.waitForTimeout(500);
 }
 
-test.describe('wb-* primary values', () => {
+test.describe('x-* primary values', () => {
   test('supports chip label attributes and authored text', async ({ page }) => {
     await inject(page, '<span x-chip id="attribute" label="Attribute label"></span><span x-chip id="text">Authored label</span>');
 

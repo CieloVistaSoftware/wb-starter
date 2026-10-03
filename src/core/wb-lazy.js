@@ -568,8 +568,41 @@ function firstReportFor(target) {
     const promise = new Promise((r) => { resolve = r; });
     entry = { promise, resolve, reported: false };
     lazyFirstReport.set(target, entry);
+    watchForRemoval(target, entry);
   }
   return entry;
+}
+
+// #1246: a target removed from the document before the observer's first
+// report on it is not work in flight -- it can never be shown. On Windows CI
+// Chromium sometimes never delivers that report (the diagnostics read
+// "progress (awaiting viewport)" pending with no progress element left in the
+// stage), so settled() waited out its deadline on an element that no longer
+// existed. One MutationObserver, live only while a first report is awaited,
+// settles such a target the moment it leaves the document.
+const awaitingFirstReport = new Map();
+let removalObserver = null;
+function watchForRemoval(target, entry) {
+  awaitingFirstReport.set(target, entry);
+  entry.promise.then(() => forgetAwaiting(target));
+  if (!removalObserver && typeof MutationObserver === 'function') {
+    removalObserver = new MutationObserver(() => {
+      awaitingFirstReport.forEach((pending, node) => {
+        if (node.isConnected) return;
+        pending.reported = true;
+        pending.resolve();
+        forgetAwaiting(node);
+      });
+    });
+    removalObserver.observe(document, { childList: true, subtree: true });
+  }
+}
+function forgetAwaiting(target) {
+  awaitingFirstReport.delete(target);
+  if (!awaitingFirstReport.size && removalObserver) {
+    removalObserver.disconnect();
+    removalObserver = null;
+  }
 }
 
 /**
@@ -988,18 +1021,17 @@ const WB = {
     // by the code panel's un-wrapped raw-source width).
     const elements = matchingElements(root, '[x-behavior]');
     const injections = [];
+    // One queueing rule for all three scans below (#883: it was written out
+    // three times): inject now, or hand to the viewport-deferred lazy path.
+    const queueInjection = (element, name, now) => {
+      injections.push(now ? WB.inject(element, name) : WB.lazyInject(element, name));
+    };
 
     elements.forEach(element => {
       const behaviorList = element.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
       const isEager = eager || element.hasAttribute('x-eager');
 
-      behaviorList.forEach(name => {
-        if (isEager) {
-          injections.push(WB.inject(element, name));
-        } else {
-          injections.push(WB.lazyInject(element, name));
-        }
-      });
+      behaviorList.forEach(name => queueInjection(element, name, isEager));
     });
 
     // Custom elements scan (always active)
@@ -1008,13 +1040,7 @@ const WB = {
       // one custom element directly (as the playground does for its theme
       // control), otherwise the registration silently never runs.
       const customElements = matchingElements(root, selector);
-      customElements.forEach(element => {
-        if (eager) {
-          injections.push(WB.inject(element, behavior));
-        } else {
-          injections.push(WB.lazyInject(element, behavior));
-        }
-      });
+      customElements.forEach(element => queueInjection(element, behavior, eager));
     });
 
     // Auto-inject scan. Unconditional per-element check -- `variant` triggers
@@ -1041,13 +1067,7 @@ const WB = {
           // every injection path, not just the tidiest one.
           if (isReplacedByExplicitBehavior(element, behavior)) return;
           // Skip if x-behavior is present (already handled)
-          if (!element.hasAttribute('x-behavior')) {
-            if (eager) {
-              injections.push(WB.inject(element, behavior));
-            } else {
-              injections.push(WB.lazyInject(element, behavior));
-            }
-          }
+          if (!element.hasAttribute('x-behavior')) queueInjection(element, behavior, eager);
         });
       });
     }

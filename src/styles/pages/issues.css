@@ -64,6 +64,50 @@
   background: var(--bg-tertiary);
 }
 
+/* Being worked on right now (status:in-progress): green, so it is the first
+   thing seen. John: "In progress work is indicated in Green?" */
+.issues-row--now {
+  background: color-mix(in srgb, var(--success-color) 14%, transparent);
+  box-shadow: inset 4px 0 0 var(--success-color);
+}
+
+.issue-now-note {
+  margin-top: var(--space-xs, 0.25rem);
+  font-size: 0.85em;
+  color: var(--text-secondary);
+}
+
+.issue-now-note strong {
+  color: var(--success-color);
+}
+
+.issue-now-note__next {
+  margin-left: var(--space-sm, 0.5rem);
+}
+
+.issue-now-note__when {
+  opacity: 0.8;
+}
+
+/* No status posted, or none for a day: an in-progress issue nobody has
+   reported on is the problem John named, so it is shown as one. */
+.issue-now-note--missing,
+.issue-now-note--stale .issue-now-note__when {
+  color: var(--danger-color, var(--error-color));
+}
+
+.issue-now {
+  display: inline-block;
+  margin-right: var(--space-xs, 0.25rem);
+  padding: 0.1em 0.6em;
+  border-radius: 999px;
+  background: var(--success-color);
+  color: var(--bg-primary);
+  font-size: 0.8em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .issues-cell--title {
   /* The column that earns the width: everything else is short and fixed. */
   width: 45%;
@@ -110,7 +154,7 @@
   padding: 0.05rem 0.35rem;
   margin: 0 0.15rem 0.15rem 0;
   border: 1px solid var(--border-color);
-  border-radius: 999px;
+  border-radius: 999rem;
   color: var(--text-secondary);
   white-space: nowrap;
 }

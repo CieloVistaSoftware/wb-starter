@@ -8,6 +8,7 @@
  * src/wb-models/stack.schema.json registration.
  */
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 test.describe('#174 — no spurious "Schema not found" warnings', () => {
   test('behaviors page emits zero Schema-not-found warnings', async ({ page }) => {
@@ -40,7 +41,7 @@ test.describe('#174 — no spurious "Schema not found" warnings', () => {
     });
     await page.waitForTimeout(800);
     await page.goto('/?page=behaviors');
-    await page.waitForTimeout(1500);
+    await wbIdle(page);
 
     expect(pageErrors, `uncaught errors:\n${pageErrors.join('\n')}`).toEqual([]);
   });

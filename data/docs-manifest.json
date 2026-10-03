@@ -1,5 +1,5 @@
 {
-  "totalFiles": 273,
+  "totalFiles": 274,
   "categories": [
     "_today",
     "architecture",
@@ -961,6 +961,12 @@
         "path": "docs/behaviors/gallery.md",
         "title": "Gallery",
         "name": "gallery",
+        "category": "behaviors"
+      },
+      {
+        "path": "docs/behaviors/glass.md",
+        "title": "glass — the element carries the background scene",
+        "name": "glass",
         "category": "behaviors"
       },
       {
@@ -2364,6 +2370,12 @@
       "path": "docs/behaviors/gallery.md",
       "title": "Gallery",
       "name": "gallery",
+      "category": "behaviors"
+    },
+    {
+      "path": "docs/behaviors/glass.md",
+      "title": "glass — the element carries the background scene",
+      "name": "glass",
       "category": "behaviors"
     },
     {
