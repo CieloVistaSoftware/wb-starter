@@ -1858,8 +1858,8 @@
           "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" alt=\"Dachshund puppy, 240 pixels wide\">"
         },
         {
-          "label": "width + height: cropped to that shape",
-          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"240\" alt=\"Dachshund puppy, cropped to 240 by 240\">"
+          "label": "width + height: cropped to 3:2",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"160\" alt=\"Dachshund puppy, cropped to 240 by 160\">"
         },
         {
           "label": "wide banner from width + height",
