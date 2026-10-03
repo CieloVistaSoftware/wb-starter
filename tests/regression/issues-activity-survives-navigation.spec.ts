@@ -31,6 +31,14 @@ import { test, expect } from '../fixtures/offline';
 // rather than on the defect, which is the poll doing its job (#863).
 const ACTIVITY = (url: URL) => url.pathname.endsWith('/api/activity');
 
+// THE SERVICE WORKER IS BLOCKED, or the mock is never what the page receives.
+// main.js registers sw.js on every origin, localhost included (#1108). A page it
+// controls sends /api/activity through the worker, and page.route never sees a
+// worker's requests. Traced 2026-10-03: zero route hits, and the panel showed
+// either the live server's real activity or the worker's manufactured 503s
+// (#891). Both tests failed on every CI run for that reason, not the defect.
+test.use({ serviceWorkers: 'block' });
+
 const EMPTY_ACTIVITY = JSON.stringify({
   closed: [], opened: [], commits: [],
   counts: { closed: 0, opened: 0, commits: 0 },
@@ -63,7 +71,10 @@ test.describe('#1118 the Issues activity loader outlives its own page', () => {
 
     // Leave by CLICKING, so the SPA swaps main's innerHTML and the in-flight
     // loadActivity() is left holding references into a DOM that is gone.
-    const link = page.locator('a[href*="page=whats-new"], a[href$="whats-new"]').first();
+    // The site nav's Releases link (config/site.json navigationMenu). There is
+    // no "whats-new" entry in the nav any more, which is the second reason this
+    // never ran: the link it waited for does not exist.
+    const link = page.locator('a[href*="page=releases"]').first();
     await expect(link).toBeVisible({ timeout: 10_000 });
     await link.click();
 
