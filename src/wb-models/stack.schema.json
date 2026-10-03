@@ -15,19 +15,30 @@
       "type": "string",
       "description": "CSS gap between stacked children. Accepts any valid CSS length value.",
       "default": "1rem",
-      "example": "0.25rem"
+      "example": "0.25rem",
+      "examples": [
+        "0",
+        "2.5rem"
+      ]
     },
     "bg": {
       "type": "string",
       "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
       "default": "this is the bg",
-      "example": "#1a2f4e"
+      "example": "#1a2f4e",
+      "examples": [
+        "#1a2f4e",
+        "#4c1d95"
+      ]
     },
     "pad": {
       "type": "string",
       "description": "CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges).",
       "default": "this is the pad",
-      "example": "0 0 0.75rem"
+      "example": "0 0 0.75rem",
+      "examples": [
+        "2.5rem"
+      ]
     },
     "radius": {
       "type": "string",

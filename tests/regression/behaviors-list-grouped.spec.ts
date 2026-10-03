@@ -84,19 +84,23 @@ test.describe('behaviors list is grouped (#995)', () => {
     ).toBe(result.own);
   });
 
-  test('a behavior with one option stays a plain row, not a dropdown', async ({ page }) => {
+  test('a behavior with one option stays a plain row; one with several is a dropdown', async ({ page }) => {
     await listReady(page);
 
-    // Nothing to collapse when a name appears once — wrapping it would add a
-    // click for no benefit.
-    const singles = await page.evaluate(({ LIST, ROW }) => {
+    // Nothing to collapse when a name appears once -- wrapping it would add a
+    // click for no benefit. Since #997 every behavior offers at least five
+    // examples, so the list should hold no single rows at all -- but whichever
+    // shape an entry takes must match how many rows it holds.
+    const shapes = await page.evaluate(({ LIST, ROW }) => {
       const l = document.querySelector(LIST)!;
-      return Array.from(l.children).filter(
-        (li) => !li.querySelector('details') && li.querySelector(ROW)
-      ).length;
+      return Array.from(l.children)
+        .filter((li) => li.querySelector(ROW))
+        .map((li) => ({ grouped: !!li.querySelector('details'), rows: li.querySelectorAll(ROW).length }));
     }, { LIST, ROW });
 
-    expect(singles, 'single-option behaviors should render as plain rows').toBeGreaterThan(0);
+    expect(shapes.length).toBeGreaterThan(100);
+    const wrong = shapes.filter((s) => s.grouped !== (s.rows > 1));
+    expect(wrong, 'a single row must stay plain and several rows must be grouped').toEqual([]);
   });
 
   test('searching opens the groups holding the matches', async ({ page }) => {

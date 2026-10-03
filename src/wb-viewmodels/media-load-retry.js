@@ -137,14 +137,25 @@ function attachLoadRetry(el, config) {
     }, 0);
   }
 
+  // An element no longer in the document can never be shown, so it is not a
+  // load failure: the Behaviors page replaces its example on every row click,
+  // and a replaced <img> that had not finished loading was retried five times
+  // and then logged as "missing or unreachable" (CI error-log-empty, #997).
+  function detached() {
+    if (el.isConnected) return false;
+    settled = true;
+    cleanup();
+    return true;
+  }
+
   function retry() {
-    if (settled) return;
+    if (settled || detached()) return;
     if (attempt >= maxAttempts) { giveUp(); return; }
     const delay = baseDelayMs * Math.pow(2, attempt - 1);
     console.warn(`[WB:media-retry] ${config.label} attempt ${attempt}/${maxAttempts} not ready -- retrying in ${delay}ms -- ${traceLabel(el)} src=${config.currentSrc(el)}`);
     attempt++;
     setTimeout(() => {
-      if (settled) return;
+      if (settled || detached()) return;
       config.reload(el);
       scheduleCheck();
     }, delay);

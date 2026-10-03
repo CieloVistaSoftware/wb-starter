@@ -8,7 +8,11 @@
     "lines": {
       "type": "string",
       "description": "Number of lines to clamp to before truncating. Defaults to `1`.",
-      "default": "1"
+      "default": "1",
+      "examples": [
+        "1",
+        "3"
+      ]
     },
     "expandable": {
       "type": "boolean",

@@ -280,7 +280,26 @@ export function pre(element, options = {}) {
       el.classList.add('x-pre__line-number--placed');
     };
 
+    // Positions are collected first and committed together. Two or more lines
+    // that all measure at the SAME top mean the text was not laid out as lines
+    // yet (its white-space rule or the page around it had not landed): a real
+    // multi-line block never puts every line on one row. Committing that marked
+    // every number "placed" while stacking all of them on line 1, which is what
+    // the doc-viewer panel audit caught on CI (docs/guides/create-a-website.md:
+    // every gap 0.0px). Measure again on a later frame instead; the
+    // ResizeObserver and fonts.ready passes below still apply.
+    let layoutRetries = 0;
+    const commitPlacements = (placements) => {
+      const tops = new Set(placements.map(([, top]) => Math.round(top)));
+      if (placements.length > 1 && tops.size === 1) {
+        if (layoutRetries++ < 60) requestAnimationFrame(measureAndPosition);
+        return;
+      }
+      placements.forEach(([el, top]) => placeLineNumber(el, top));
+    };
+
     const measureAndPosition = () => {
+      const placements = [];
       const target = codeChild || element;
       // Container top is the <pre>'s OWN border-box edge, which INCLUDES its
       // padding-top (1rem/1.5rem/2rem depending on badge/copy). Line 1's
@@ -360,7 +379,7 @@ export function pre(element, options = {}) {
       if (textNodes[0] && lineNumEls[0]) {
         const pos = firstContentOffset(0, 0);
         const rect = measureFrom(pos.nodeIndex, pos.offset);
-        if (rect) placeLineNumber(lineNumEls[0], rect.top - containerTop);
+        if (rect) placements.push([lineNumEls[0], rect.top - containerTop]);
       }
 
       let lineIndex = 0;
@@ -373,11 +392,12 @@ export function pre(element, options = {}) {
           if (lineIndex < lineNumEls.length) {
             const pos = firstContentOffset(i, nlAt + 1);
             const rect = measureFrom(pos.nodeIndex, pos.offset);
-            if (rect) placeLineNumber(lineNumEls[lineIndex], rect.top - containerTop);
+            if (rect) placements.push([lineNumEls[lineIndex], rect.top - containerTop]);
           }
           searchFrom = nlAt + 1;
         }
       }
+      commitPlacements(placements);
     };
     requestAnimationFrame(() => requestAnimationFrame(measureAndPosition));
 

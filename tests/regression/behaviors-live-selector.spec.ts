@@ -53,8 +53,9 @@ test.describe('Behaviors selector — structure (#664/#666)', () => {
       const attrs = new Set(rows.map((r) => r.dataset.browseToken));
       const malformed = rows.filter((r) => {
         if (!r.dataset.label || !r.dataset.browseToken) return true;
-        // A row with a variant must say which property it belongs to.
-        if (r.dataset.variant && !r.dataset.prop) return true;
+        // A row with a variant must say which property it belongs to -- or,
+        // since #997, which authored example it is (data-example).
+        if (r.dataset.variant && !r.dataset.prop && r.dataset.example === undefined) return true;
         return r.children.length !== 2; // name column + option column
       });
 

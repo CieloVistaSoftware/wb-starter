@@ -9,6 +9,24 @@
       "alternates": [
         "<button variant=\"primary\" x-ripple>\n  x-ripple · variant: primary\n</button>",
         "<div x-ripple class=\"ripple-box\">Ripple on any element</div>"
+      ],
+      "examples": [
+        {
+          "label": "dark ripple on a light button",
+          "source": "<button variant=\"secondary\" size=\"lg\" x-ripple color=\"rgba(0,0,0,0.35)\">\n  Dark ripple\n</button>"
+        },
+        {
+          "label": "slow ripple",
+          "source": "<button variant=\"success\" x-ripple duration=\"1500\">\n  Slow ripple\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-ripple title=\"Click anywhere\" subtitle=\"The ripple starts where you click\"></article>"
+        },
+        {
+          "label": "error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-ripple>\n  Dismiss\n</button>"
+        }
       ]
     },
     "x-toast": {
@@ -31,7 +49,21 @@
     },
     "x-password": {
       "source": "<input type=\"password\" x-password placeholder=\"Password with toggle\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "toggle and strength",
+          "source": "<input type=\"password\" x-password toggle strength value=\"correct horse battery\">"
+        },
+        {
+          "label": "weak value",
+          "source": "<input type=\"password\" x-password strength value=\"1234\">"
+        },
+        {
+          "label": "new-password field",
+          "source": "<input type=\"password\" x-password toggle placeholder=\"Choose a new password\" autocomplete=\"new-password\">"
+        }
+      ]
     },
     "x-search": {
       "source": "<input type=\"text\" x-search placeholder=\"Search with icon\">",
@@ -39,18 +71,84 @@
     },
     "x-colorpicker": {
       "source": "<input type=\"text\" x-colorpicker value=\"#6366f1\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "green",
+          "source": "<input type=\"text\" x-colorpicker value=\"#22c55e\">"
+        },
+        {
+          "label": "red",
+          "source": "<input type=\"text\" x-colorpicker value=\"#ef4444\">"
+        },
+        {
+          "label": "amber",
+          "source": "<input type=\"text\" x-colorpicker value=\"#f59e0b\">"
+        },
+        {
+          "label": "black",
+          "source": "<input type=\"text\" x-colorpicker value=\"#000000\">"
+        },
+        {
+          "label": "white",
+          "source": "<input type=\"text\" x-colorpicker value=\"#ffffff\">"
+        }
+      ]
     },
     "x-masked": {
       "source": "<input x-masked mask=\"(999) 999-9999\" placeholder=\"Phone: (999) 999-9999\">",
       "alternates": [
         "<input x-masked mask=\"99/99/9999\" placeholder=\"Date: MM/DD/YYYY\">",
         "<input x-masked mask=\"9999 9999 9999 9999\" placeholder=\"Credit Card\">"
+      ],
+      "examples": [
+        {
+          "label": "date",
+          "source": "<input x-masked mask=\"99/99/9999\" placeholder=\"MM/DD/YYYY\">"
+        },
+        {
+          "label": "credit card",
+          "source": "<input x-masked mask=\"9999 9999 9999 9999\" placeholder=\"Card number\">"
+        },
+        {
+          "label": "postcode",
+          "source": "<input x-masked mask=\"99999-9999\" placeholder=\"ZIP+4\">"
+        },
+        {
+          "label": "prefilled time",
+          "source": "<input x-masked mask=\"99:99\" value=\"0930\" placeholder=\"HH:MM\">"
+        },
+        {
+          "label": "IBAN",
+          "source": "<input x-masked mask=\"AA99 9999 9999 9999 99\" placeholder=\"IBAN\">"
+        }
       ]
     },
     "x-stepper": {
       "source": "<div x-stepper value=\"5\" min=\"0\" max=\"10\"></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "quantity",
+          "source": "<div x-stepper value=\"1\" min=\"1\" max=\"99\"></div>"
+        },
+        {
+          "label": "steps of five",
+          "source": "<div x-stepper value=\"25\" min=\"0\" max=\"100\" step=\"5\"></div>"
+        },
+        {
+          "label": "at its maximum",
+          "source": "<div x-stepper value=\"10\" min=\"0\" max=\"10\"></div>"
+        },
+        {
+          "label": "negative range",
+          "source": "<div x-stepper value=\"-3\" min=\"-10\" max=\"10\"></div>"
+        },
+        {
+          "label": "decimals",
+          "source": "<div x-stepper value=\"0.5\" min=\"0\" max=\"2\" step=\"0.25\"></div>"
+        }
+      ]
     },
     "x-alert": {
       "source": "<div x-alert type=\"info\" message=\"Info alert message\"></div>",
@@ -63,20 +161,108 @@
     },
     "x-popover": {
       "source": "<button variant=\"primary\" x-popover popover-title=\"Popover Title\" popover-content=\"This is additional information displayed in a popover.\">\n  x-popover · variant: primary · popover-title: Popover Title · popover-content: This is additional information displayed in a popover.\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "below the trigger",
+          "source": "<button variant=\"secondary\" x-popover position=\"bottom\" popover-title=\"Below\" popover-content=\"Opens under the button.\">\n  Popover below\n</button>"
+        },
+        {
+          "label": "to the right",
+          "source": "<button variant=\"success\" x-popover position=\"right\" popover-title=\"Right\" popover-content=\"Opens beside the button.\">\n  Popover right\n</button>"
+        },
+        {
+          "label": "large trigger",
+          "source": "<button variant=\"warning\" size=\"lg\" x-popover popover-title=\"Help\" popover-content=\"A longer explanation lives here.\">\n  What is this?\n</button>"
+        },
+        {
+          "label": "on a link",
+          "source": "<a href=\"#\" x-popover popover-title=\"Glossary\" popover-content=\"Light DOM: no shadow root, so styles and queries reach everything.\">light DOM</a>"
+        },
+        {
+          "label": "error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-popover position=\"left\" popover-title=\"Build failed\" popover-content=\"2 of 13 checks failed.\">\n  Why did this fail?\n</button>"
+        }
+      ]
     },
     "x-confirm": {
       "source": "<button variant=\"primary\" x-confirm confirm-title=\"Confirm Action\" confirm-message=\"Are you sure you want to proceed?\">\n  x-confirm · variant: primary · confirm-title: Confirm Action · confirm-message: Are you sure you want to proceed?\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "destructive",
+          "source": "<button variant=\"error\" x-confirm confirm-title=\"Delete project?\" confirm-message=\"This removes every file and cannot be undone.\">\n  Project deletion\n</button>"
+        },
+        {
+          "label": "publish",
+          "source": "<button variant=\"success\" size=\"lg\" x-confirm confirm-title=\"Publish now?\" confirm-message=\"Readers will see this immediately.\">\n  Go live\n</button>"
+        },
+        {
+          "label": "sign out",
+          "source": "<button variant=\"secondary\" size=\"sm\" x-confirm confirm-title=\"Sign out?\" confirm-message=\"Unsaved drafts stay on this device.\">\n  Sign out\n</button>"
+        },
+        {
+          "label": "warning",
+          "source": "<button variant=\"warning\" x-confirm confirm-title=\"Reset settings?\" confirm-message=\"Every preference goes back to its default.\">\n  Reset settings\n</button>"
+        },
+        {
+          "label": "on a link",
+          "source": "<a href=\"#\" x-confirm confirm-title=\"Leave this page?\" confirm-message=\"Your changes will be lost.\">Discard changes</a>"
+        }
+      ]
     },
     "x-prompt": {
       "source": "<button variant=\"primary\" x-prompt prompt-title=\"Enter Value\" prompt-message=\"Please enter your name:\">\n  x-prompt · variant: primary · prompt-title: Enter Value · prompt-message: Please enter your name:\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "rename",
+          "source": "<button variant=\"secondary\" x-prompt prompt-title=\"Rename\" prompt-message=\"New file name:\">\n  Rename file\n</button>"
+        },
+        {
+          "label": "invite",
+          "source": "<button variant=\"success\" size=\"lg\" x-prompt prompt-title=\"Invite\" prompt-message=\"Their email address:\">\n  Invite teammate\n</button>"
+        },
+        {
+          "label": "small trigger",
+          "source": "<button variant=\"warning\" size=\"sm\" x-prompt prompt-title=\"Budget\" prompt-message=\"Monthly limit in dollars:\">\n  Set budget\n</button>"
+        },
+        {
+          "label": "error-coloured trigger",
+          "source": "<button variant=\"error\" x-prompt prompt-title=\"Confirm deletion\" prompt-message=\"Type DELETE to continue:\">\n  Type DELETE\n</button>"
+        },
+        {
+          "label": "on a link",
+          "source": "<a href=\"#\" x-prompt prompt-title=\"Search\" prompt-message=\"What are you looking for?\">Search…</a>"
+        }
+      ]
     },
     "x-lightbox": {
       "source": "<button variant=\"primary\" x-lightbox src=\"/images/placeholder.svg\">\n  x-lightbox · variant: primary · src: /images/placeholder.svg\n</button>",
       "alternates": [
         "<button variant=\"primary\" x-lightbox src=\"/images/placeholder.svg\">\n  x-lightbox · variant: primary · src: /images/placeholder.svg\n</button>"
+      ],
+      "examples": [
+        {
+          "label": "city",
+          "source": "<button variant=\"secondary\" x-lightbox src=\"/images/placeholder-city.svg\">\n  Open the city photo\n</button>"
+        },
+        {
+          "label": "forest",
+          "source": "<button variant=\"success\" size=\"sm\" x-lightbox src=\"/images/placeholder-forest.svg\">\n  Forest\n</button>"
+        },
+        {
+          "label": "sunrise",
+          "source": "<button variant=\"warning\" size=\"lg\" x-lightbox src=\"/images/placeholder-sunrise.svg\">\n  See the sunrise\n</button>"
+        },
+        {
+          "label": "on a thumbnail",
+          "source": "<img x-lightbox src=\"/images/placeholder-mountain.svg\" alt=\"Mountain ridge — click to enlarge\" width=\"160\">"
+        },
+        {
+          "label": "office",
+          "source": "<button variant=\"error\" x-lightbox src=\"/images/placeholder-office.svg\">\n  Office photo\n</button>"
+        }
       ]
     },
     "x-breadcrumb": {
@@ -85,20 +271,138 @@
     },
     "x-pagination": {
       "source": "<nav x-pagination total=\"100\" per-page=\"10\" current=\"5\"></nav>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "first page",
+          "source": "<nav x-pagination total=\"100\" per-page=\"10\" current=\"1\"></nav>"
+        },
+        {
+          "label": "last page",
+          "source": "<nav x-pagination total=\"100\" per-page=\"10\" current=\"10\"></nav>"
+        },
+        {
+          "label": "three pages",
+          "source": "<nav x-pagination total=\"30\" per-page=\"10\" current=\"2\"></nav>"
+        },
+        {
+          "label": "many pages",
+          "source": "<nav x-pagination total=\"1000\" per-page=\"10\" current=\"50\"></nav>"
+        },
+        {
+          "label": "fifty per page",
+          "source": "<nav x-pagination total=\"500\" per-page=\"50\" current=\"3\"></nav>"
+        }
+      ]
     },
     "x-steps": {
       "source": "<div x-steps items=\"Cart,Shipping,Payment,Confirm\" current=\"2\"></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "first step",
+          "source": "<div x-steps items=\"Cart,Shipping,Payment,Confirm\" current=\"1\"></div>"
+        },
+        {
+          "label": "last step",
+          "source": "<div x-steps items=\"Cart,Shipping,Payment,Confirm\" current=\"4\"></div>"
+        },
+        {
+          "label": "three steps",
+          "source": "<div x-steps items=\"Account,Profile,Done\" current=\"2\"></div>"
+        },
+        {
+          "label": "six steps",
+          "source": "<div x-steps items=\"Plan,Design,Build,Test,Ship,Measure\" current=\"3\"></div>"
+        },
+        {
+          "label": "nothing done yet",
+          "source": "<div x-steps items=\"Upload,Review,Publish\" current=\"0\"></div>"
+        }
+      ]
     },
     "x-timeline": {
       "source": "<div x-timeline items=\"Project kickoff,Design phase,Development,Testing,Launch\"></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "three milestones",
+          "source": "<div x-timeline items=\"Founded,Series A,IPO\"></div>"
+        },
+        {
+          "label": "release history",
+          "source": "<div x-timeline items=\"v1.0 — 2022,v2.0 — 2023,v3.0 — 2024,v4.0 — 2026\"></div>"
+        },
+        {
+          "label": "two events",
+          "source": "<div x-timeline items=\"Ordered,Delivered\"></div>"
+        },
+        {
+          "label": "long labels",
+          "source": "<div x-timeline items=\"Requirements gathered from every team,Prototype reviewed with customers,General availability\"></div>"
+        },
+        {
+          "label": "one event",
+          "source": "<div x-timeline items=\"Account created\"></div>"
+        }
+      ]
     },
     "x-kbd": {
       "source": "<p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p>",
       "alternates": [
         "<p>Press <span x-kbd>Ctrl</span> + <span x-kbd>S</span> to save, or <span x-kbd>⌘</span> + <span x-kbd>K</span> on Mac.</p>"
+      ],
+      "examples": [
+        {
+          "label": "copy shortcut",
+          "source": "<p>Copy with <kbd>Ctrl</kbd> + <kbd>C</kbd>.</p>",
+          "form": "semantic"
+        },
+        {
+          "label": "command palette",
+          "source": "<p>Open the palette: <kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></p>",
+          "form": "semantic"
+        },
+        {
+          "label": "single key",
+          "source": "<p>Press <kbd>Esc</kbd> to close.</p>",
+          "form": "semantic"
+        },
+        {
+          "label": "arrow keys",
+          "source": "<p>Move with <kbd>←</kbd> <kbd>↑</kbd> <kbd>↓</kbd> <kbd>→</kbd></p>",
+          "form": "semantic"
+        },
+        {
+          "label": "in a heading",
+          "source": "<h3>Undo is <kbd>Ctrl</kbd> + <kbd>Z</kbd></h3>",
+          "form": "semantic"
+        },
+        {
+          "label": "copy shortcut",
+          "source": "<p>Copy with <span x-kbd>Ctrl</span> + <span x-kbd>C</span>.</p>",
+          "form": "attribute"
+        },
+        {
+          "label": "command palette",
+          "source": "<p>Open the palette: <span x-kbd>⌘</span> + <span x-kbd>Shift</span> + <span x-kbd>P</span></p>",
+          "form": "attribute"
+        },
+        {
+          "label": "single key",
+          "source": "<p>Press <span x-kbd>Esc</span> to close.</p>",
+          "form": "attribute"
+        },
+        {
+          "label": "arrow keys",
+          "source": "<p>Move with <span x-kbd>←</span> <span x-kbd>↑</span> <span x-kbd>↓</span> <span x-kbd>→</span></p>",
+          "form": "attribute"
+        },
+        {
+          "label": "in a heading",
+          "source": "<h3>Undo is <span x-kbd>Ctrl</span> + <span x-kbd>Z</span></h3>",
+          "form": "attribute"
+        }
       ]
     },
     "x-image": {
@@ -114,74 +418,416 @@
     },
     "x-youtube": {
       "source": "<div x-youtube id=\"dQw4w9WgXcQ\" ratio=\"16:9\"></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "another video",
+          "source": "<div x-youtube id=\"aqz-KE-bpKQ\" ratio=\"16:9\"></div>"
+        },
+        {
+          "label": "square frame",
+          "source": "<div x-youtube id=\"dQw4w9WgXcQ\" ratio=\"1:1\"></div>"
+        }
+      ]
     },
     "x-bounce": {
       "source": "<button class=\"effect-demo\" x-bounce>\n  x-bounce\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-bounce>\n  Saved — click to bounce\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-bounce>\n  Click to bounce\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-bounce>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-bounce title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-bounce>Click this heading to bounce it</h3>"
+        }
+      ]
     },
     "x-shake": {
       "source": "<button class=\"effect-demo\" x-shake>\n  x-shake\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-shake>\n  Saved — click to shake\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-shake>\n  Click to shake\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-shake>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-shake title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-shake>Click this heading to shake it</h3>"
+        }
+      ]
     },
     "x-pulse": {
       "source": "<button class=\"effect-demo\" x-pulse>\n  x-pulse\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-pulse>\n  Saved — click to pulse\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-pulse>\n  Click to pulse\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-pulse>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-pulse title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-pulse>Click this heading to pulse it</h3>"
+        }
+      ]
     },
     "x-flash": {
       "source": "<button class=\"effect-demo\" x-flash>\n  x-flash\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-flash>\n  Saved — click to flash\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-flash>\n  Click to flash\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-flash>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-flash title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-flash>Click this heading to flash it</h3>"
+        }
+      ]
     },
     "x-tada": {
       "source": "<button class=\"effect-demo\" x-tada>\n  x-tada\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-tada>\n  Saved — click to tada\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-tada>\n  Click to tada\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-tada>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-tada title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-tada>Click this heading to tada it</h3>"
+        }
+      ]
     },
     "x-wobble": {
       "source": "<button class=\"effect-demo\" x-wobble>\n  x-wobble\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-wobble>\n  Saved — click to wobble\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-wobble>\n  Click to wobble\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-wobble>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-wobble title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-wobble>Click this heading to wobble it</h3>"
+        }
+      ]
     },
     "x-jello": {
       "source": "<button class=\"effect-demo\" x-jello>\n  x-jello\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-jello>\n  Saved — click to wobble like jello\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-jello>\n  Click to wobble like jello\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-jello>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-jello title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-jello>Click this heading to wobble like jello it</h3>"
+        }
+      ]
     },
     "x-heartbeat": {
       "source": "<button class=\"effect-demo\" x-heartbeat>\n  x-heartbeat\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-heartbeat>\n  Saved — click to beat\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-heartbeat>\n  Click to beat\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-heartbeat>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-heartbeat title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-heartbeat>Click this heading to beat it</h3>"
+        }
+      ]
     },
     "x-fadein": {
       "source": "<button class=\"effect-demo\" x-fadein>\n  x-fadein\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-fadein>\n  Saved — click to fade in\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-fadein>\n  Click to fade in\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-fadein>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-fadein title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-fadein>Click this heading to fade in it</h3>"
+        }
+      ]
     },
     "x-slidein": {
       "source": "<button class=\"effect-demo\" x-slidein direction=\"left\">\n  x-slidein · direction: left\n</button>",
       "alternates": [
         "<button class=\"effect-demo\" x-slidein direction=\"right\">\n  x-slidein · direction: right\n</button>",
         "<button class=\"effect-demo\" x-slidein direction=\"up\">\n  x-slidein · direction: up\n</button>"
+      ],
+      "examples": [
+        {
+          "label": "from the left, on a card",
+          "source": "<article x-slidein direction=\"left\" title=\"Click this card\" subtitle=\"It slides in from the left\"></article>"
+        },
+        {
+          "label": "from the right, success button",
+          "source": "<button variant=\"success\" x-slidein direction=\"right\">\n  Slides in from the right\n</button>"
+        },
+        {
+          "label": "from below, large warning button",
+          "source": "<button variant=\"warning\" size=\"lg\" x-slidein direction=\"up\">\n  Slides up\n</button>"
+        },
+        {
+          "label": "from above, small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-slidein direction=\"down\">\n  Drops down\n</button>"
+        },
+        {
+          "label": "from below, on a heading",
+          "source": "<h3 x-slidein direction=\"up\">Click this heading</h3>"
+        }
       ]
     },
     "x-zoomin": {
       "source": "<button class=\"effect-demo\" x-zoomin>\n  x-zoomin\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-zoomin>\n  Saved — click to zoom in\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-zoomin>\n  Click to zoom in\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-zoomin>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-zoomin title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-zoomin>Click this heading to zoom in it</h3>"
+        }
+      ]
     },
     "x-flip": {
       "source": "<button class=\"effect-demo\" x-flip>\n  x-flip\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-flip>\n  Saved — click to flip\n</button>"
+        },
+        {
+          "label": "large warning button with an icon",
+          "source": "<button variant=\"warning\" size=\"lg\" icon=\"star\" x-flip>\n  Click to flip\n</button>"
+        },
+        {
+          "label": "small error button",
+          "source": "<button variant=\"error\" size=\"sm\" x-flip>\n  Danger zone\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-flip title=\"Click this card\" subtitle=\"The whole card plays the animation\"></article>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-flip>Click this heading to flip it</h3>"
+        }
+      ]
     },
     "x-confetti": {
       "source": "<button variant=\"primary\" x-confetti>\n  x-confetti · variant: primary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "gold confetti",
+          "source": "<button variant=\"warning\" x-confetti colors=\"#facc15,#f59e0b,#fde68a\">\n  Gold confetti\n</button>"
+        },
+        {
+          "label": "a big burst",
+          "source": "<button variant=\"success\" size=\"lg\" x-confetti count=\"200\">\n  Ship it! (200 pieces)\n</button>"
+        },
+        {
+          "label": "slow fall",
+          "source": "<button variant=\"secondary\" size=\"sm\" x-confetti duration=\"6s\" colors=\"#a855f7,#ec4899\">\n  Slow celebration\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-confetti title=\"You finished the course\" subtitle=\"Click the card to celebrate\"></article>"
+        }
+      ]
     },
     "x-fireworks": {
       "source": "<button variant=\"primary\" x-fireworks>\n  x-fireworks · variant: primary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "red and gold",
+          "source": "<button variant=\"error\" x-fireworks colors=\"#ef4444,#facc15\">\n  Red and gold\n</button>"
+        },
+        {
+          "label": "a big show",
+          "source": "<button variant=\"success\" size=\"lg\" x-fireworks count=\"80\">\n  Grand finale\n</button>"
+        },
+        {
+          "label": "cool palette",
+          "source": "<button variant=\"secondary\" size=\"sm\" x-fireworks colors=\"#06b6d4,#6366f1,#a855f7\">\n  Cool palette\n</button>"
+        }
+      ]
     },
     "x-snow": {
       "source": "<button variant=\"primary\" x-snow>\n  x-snow · variant: primary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "light flurry",
+          "source": "<button variant=\"secondary\" size=\"sm\" x-snow count=\"10\">\n  Light flurry\n</button>"
+        },
+        {
+          "label": "blizzard",
+          "source": "<button variant=\"primary\" size=\"lg\" x-snow count=\"120\" duration=\"4s\">\n  Blizzard\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-snow title=\"Winter sale\" subtitle=\"Click for a snowfall\"></article>"
+        }
+      ]
     },
     "x-sparkle": {
       "source": "<button variant=\"primary\" x-sparkle>\n  x-sparkle · variant: primary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-sparkle>\n  New feature\n</button>"
+        },
+        {
+          "label": "many sparkles",
+          "source": "<button variant=\"warning\" size=\"lg\" x-sparkle count=\"40\">\n  Premium\n</button>"
+        },
+        {
+          "label": "a few sparkles",
+          "source": "<button variant=\"secondary\" size=\"sm\" x-sparkle count=\"4\">\n  Subtle\n</button>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-sparkle>Sparkling headline</h3>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-sparkle title=\"Pro plan\" subtitle=\"Now with sparkles\"></article>"
+        }
+      ]
     },
     "x-glow": {
       "source": "<button variant=\"primary\" x-glow>\n  x-glow · variant: primary\n</button>",
@@ -189,25 +835,135 @@
     },
     "x-rainbow": {
       "source": "<button variant=\"primary\" x-rainbow>\n  x-rainbow · variant: primary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "fast cycle",
+          "source": "<button variant=\"secondary\" size=\"lg\" x-rainbow duration=\"1s\">\n  Fast rainbow\n</button>"
+        },
+        {
+          "label": "slow cycle",
+          "source": "<button variant=\"primary\" size=\"sm\" x-rainbow duration=\"10s\">\n  Slow rainbow\n</button>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h2 x-rainbow>Rainbow headline</h2>"
+        },
+        {
+          "label": "on a paragraph",
+          "source": "<p x-rainbow>Every letter of this sentence cycles through the spectrum.</p>"
+        },
+        {
+          "label": "error button",
+          "source": "<button variant=\"error\" x-rainbow duration=\"2s\">\n  Rainbow alert\n</button>"
+        }
+      ]
     },
     "x-copy": {
       "source": "<button variant=\"primary\" x-copy copy-text=\"Text copied to clipboard!\">\n  x-copy · variant: primary · copy-text: Text copied to clipboard!\n</button>",
       "alternates": [
         "<button variant=\"primary\" x-copy copy-text=\"npm install x-framework\">\n  x-copy · variant: primary · copy-text: npm install x-framework\n</button>"
+      ],
+      "examples": [
+        {
+          "label": "copy a command",
+          "source": "<button variant=\"secondary\" x-copy copy-text=\"npm install wb-starter\">\n  Copy install command\n</button>"
+        },
+        {
+          "label": "copy a link",
+          "source": "<button variant=\"success\" size=\"sm\" x-copy copy-text=\"https://example.com/invite/7Q2\">\n  Copy link\n</button>"
+        },
+        {
+          "label": "large",
+          "source": "<button variant=\"warning\" size=\"lg\" x-copy copy-text=\"sk_test_51H8\">\n  Copy API key\n</button>"
+        },
+        {
+          "label": "from an element",
+          "source": "<code id=\"x-ex-copy-target\">git clone https://github.com/example/repo</code>\n<button variant=\"primary\" x-copy target=\"#x-ex-copy-target\">Copy clone command</button>"
+        },
+        {
+          "label": "error colour",
+          "source": "<button variant=\"error\" x-copy copy-text=\"TypeError: x is undefined at main.js:42\">\n  Copy error report\n</button>"
+        }
       ]
     },
     "x-share": {
       "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">\n  x-share · variant: secondary · share-title: wb-starter · share-url: https://example.com\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "primary",
+          "source": "<button variant=\"primary\" x-share share-title=\"Field notes\" share-url=\"https://example.com/notes\">\n  Spread the word\n</button>"
+        },
+        {
+          "label": "small",
+          "source": "<button variant=\"success\" size=\"sm\" x-share share-title=\"Release 4.2\" share-url=\"https://example.com/release\">\n  Pass it on\n</button>"
+        },
+        {
+          "label": "large",
+          "source": "<button variant=\"warning\" size=\"lg\" x-share share-title=\"Try wb-starter\" share-text=\"Zero-build web components\" share-url=\"https://example.com\">\n  Tell a friend\n</button>"
+        },
+        {
+          "label": "error colour",
+          "source": "<button variant=\"error\" x-share share-title=\"Broken page\" share-url=\"https://example.com/broken\">\n  Report this page\n</button>"
+        },
+        {
+          "label": "on a link",
+          "source": "<a href=\"#\" x-share share-title=\"Field notes\" share-url=\"https://example.com/notes\">Recommend this</a>"
+        }
+      ]
     },
     "x-print": {
       "source": "<button variant=\"secondary\" x-print>\n  x-print · variant: secondary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "primary",
+          "source": "<button variant=\"primary\" x-print>\n  Invoice (printable)\n</button>"
+        },
+        {
+          "label": "small",
+          "source": "<button variant=\"success\" size=\"sm\" x-print>\n  Receipt copy\n</button>"
+        },
+        {
+          "label": "large",
+          "source": "<button variant=\"warning\" size=\"lg\" x-print>\n  Boarding pass\n</button>"
+        },
+        {
+          "label": "a section only",
+          "source": "<section id=\"x-ex-print-area\"><h3>Packing list</h3><p>Tent, stove, two days of food.</p></section>\n<button variant=\"secondary\" x-print target=\"#x-ex-print-area\">Packing list only</button>"
+        },
+        {
+          "label": "error colour",
+          "source": "<button variant=\"error\" x-print>\n  Error log on paper\n</button>"
+        }
+      ]
     },
     "x-fullscreen": {
       "source": "<button variant=\"secondary\" x-fullscreen>\n  x-fullscreen · variant: secondary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "primary",
+          "source": "<button variant=\"primary\" x-fullscreen>\n  Go fullscreen\n</button>"
+        },
+        {
+          "label": "small",
+          "source": "<button variant=\"success\" size=\"sm\" x-fullscreen>\n  Expand\n</button>"
+        },
+        {
+          "label": "large",
+          "source": "<button variant=\"warning\" size=\"lg\" x-fullscreen>\n  Present\n</button>"
+        },
+        {
+          "label": "an image only",
+          "source": "<img id=\"x-ex-fs-img\" src=\"/images/placeholder-mountain.svg\" alt=\"Mountain ridge\">\n<button variant=\"secondary\" x-fullscreen target=\"#x-ex-fs-img\">View image fullscreen</button>"
+        },
+        {
+          "label": "error colour",
+          "source": "<button variant=\"error\" size=\"sm\" x-fullscreen>\n  Fullscreen alerts\n</button>"
+        }
+      ]
     },
     "x-clock": {
       "source": "<div x-clock></div>",
@@ -215,19 +971,95 @@
     },
     "x-countdown": {
       "source": "<div x-countdown to=\"2027-12-31\" class=\"time-display\"></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "ninety seconds",
+          "source": "<div x-countdown seconds=\"90\" class=\"time-display\"></div>"
+        },
+        {
+          "label": "one hour",
+          "source": "<div x-countdown seconds=\"3600\" class=\"time-display\"></div>"
+        },
+        {
+          "label": "custom format",
+          "source": "<div x-countdown seconds=\"7265\" format=\"HH h MM m SS s\" class=\"time-display\"></div>"
+        },
+        {
+          "label": "days to a date",
+          "source": "<div x-countdown date=\"2030-01-01\" format=\"DD days, HH:MM:SS\" class=\"time-display\"></div>"
+        },
+        {
+          "label": "ten seconds",
+          "source": "<div x-countdown seconds=\"10\" class=\"time-display\"></div>"
+        }
+      ]
     },
     "x-relativetime": {
       "source": "<span x-relativetime date=\"2025-01-01\" class=\"time-display\">Jan 1, 2025</span>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "years ago",
+          "source": "<span x-relativetime date=\"2019-06-01\" class=\"time-display\">Jun 1, 2019</span>"
+        },
+        {
+          "label": "a few days ago",
+          "source": "<span x-relativetime date=\"2026-09-28\" class=\"time-display\">Sep 28, 2026</span>"
+        },
+        {
+          "label": "in a sentence",
+          "source": "<p>Last deployed <span x-relativetime date=\"2026-01-15\">Jan 15, 2026</span> by the release bot.</p>"
+        },
+        {
+          "label": "invalid date",
+          "source": "<span x-relativetime date=\"not-a-date\" class=\"time-display\">?</span>"
+        },
+        {
+          "label": "a minute ago",
+          "source": "<span x-relativetime date=\"2026-10-02T00:00:00Z\" class=\"time-display\">today</span>"
+        }
+      ]
     },
     "x-darkmode": {
       "source": "<button variant=\"primary\" x-darkmode>\n  x-darkmode · variant: primary\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "secondary",
+          "source": "<button variant=\"secondary\" x-darkmode>\n  Toggle dark mode\n</button>"
+        },
+        {
+          "label": "small",
+          "source": "<button variant=\"success\" size=\"sm\" x-darkmode>\n  🌙\n</button>"
+        },
+        {
+          "label": "large",
+          "source": "<button variant=\"warning\" size=\"lg\" x-darkmode>\n  Lights on / off\n</button>"
+        },
+        {
+          "label": "error colour",
+          "source": "<button variant=\"error\" x-darkmode>\n  Night shift\n</button>"
+        },
+        {
+          "label": "outline",
+          "source": "<button variant=\"outline\" x-darkmode>\n  Dim the lights\n</button>"
+        }
+      ]
     },
     "x-truncate": {
       "source": "<p x-truncate lines=\"2\" class=\"truncate-box\">\r\n        This is a very long text that will be truncated after two lines. Lorem ipsum dolor sit amet, consectetur\r\n        adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n      </p>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "long text, two lines",
+          "source": "<p x-truncate lines=\"2\" class=\"truncate-box\">Behaviors decorate real elements in light DOM. There is no build step: the browser loads native ES modules directly. There is no shadow root, so every style and query reaches every element. There is no base class either: a behavior is a function applied to an element, and several can be applied to the same one. This paragraph is long enough to need more than two lines at any width the stage can have.</p>"
+        },
+        {
+          "label": "long text, five lines",
+          "source": "<p x-truncate lines=\"5\" class=\"truncate-box\">Behaviors decorate real elements in light DOM. There is no build step: the browser loads native ES modules directly. There is no shadow root, so every style and query reaches every element. There is no base class either: a behavior is a function applied to an element, and several can be applied to the same one. This paragraph is long enough to need more than five lines at any width the stage can have, so the clamp shows. It keeps going with one more sentence, and then another, and then a final one to be sure the fifth line ends in an ellipsis.</p>"
+        }
+      ]
     },
     "x-table": {
       "source": "<table\n  headers=\"Component,Behavior,Variants\"\n  rows=\"[[&quot;alert&quot;,&quot;alert&quot;,&quot;4&quot;],[&quot;badge&quot;,&quot;badge&quot;,&quot;9&quot;],[&quot;button&quot;,&quot;button&quot;,&quot;8&quot;],[&quot;card&quot;,&quot;card&quot;,&quot;4&quot;],[&quot;code&quot;,&quot;code&quot;,&quot;12&quot;],[&quot;dialog&quot;,&quot;dialog&quot;,&quot;3&quot;],[&quot;details&quot;,&quot;details&quot;,&quot;2&quot;],[&quot;audio&quot;,&quot;audio&quot;,&quot;6&quot;],[&quot;table&quot;,&quot;table&quot;,&quot;5&quot;],[&quot;tabs&quot;,&quot;tabs&quot;,&quot;3&quot;],[&quot;toast&quot;,&quot;toast&quot;,&quot;4&quot;],[&quot;tooltip&quot;,&quot;tooltip&quot;,&quot;4&quot;]]\">\n</table>",
@@ -245,6 +1077,38 @@
       "source": "<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
       "alternates": [
         "<div x-code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "Python",
+          "source": "<code language=\"python\">def greet(name):\n    return f\"Hello, {name}!\"\n\nprint(greet(\"world\"))</code>",
+          "form": "semantic"
+        },
+        {
+          "label": "CSS",
+          "source": "<code language=\"css\">.card {\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);\n}</code>",
+          "form": "semantic"
+        },
+        {
+          "label": "inline in a sentence",
+          "source": "<p>Run <code>npm start</code> and open the printed URL.</p>",
+          "form": "semantic"
+        },
+        {
+          "label": "Python",
+          "source": "<div x-code language=\"python\">def greet(name):\n    return f\"Hello, {name}!\"\n\nprint(greet(\"world\"))</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "CSS",
+          "source": "<div x-code language=\"css\">.card {\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);\n}</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "shell",
+          "source": "<div x-code language=\"bash\">git clone https://github.com/example/repo\ncd repo &amp;&amp; npm install</div>",
+          "form": "attribute"
+        }
       ]
     },
     "x-dropdown": {
@@ -262,7 +1126,17 @@
     },
     "x-cardbutton": {
       "source": "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "one action",
+          "source": "<article x-cardbutton title=\"Download report\" content=\"Q3 numbers, 2.4 MB PDF.\" primary=\"Open report\"></article>"
+        },
+        {
+          "label": "long copy",
+          "source": "<article x-cardbutton title=\"Join the beta\" content=\"Get early access to new behaviors, a private feedback channel, and a say in what ships next. We read every message.\" primary=\"Request access\" secondary=\"Learn more\"></article>"
+        }
+      ]
     },
     "x-carddraggable": {
       "source": "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it — the position sticks.\" constrain axis=\"both\"></article>",
@@ -270,7 +1144,13 @@
     },
     "x-cardexpandable": {
       "source": "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through.\"\n  lines=\"2\"></article>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "four lines visible",
+          "source": "<article x-cardexpandable title=\"Changelog\" content=\"Faster scans. A new dropdown. Fewer network requests. Better focus handling in dialogs. Smaller CSS. Lazy behavior loading. A rewritten docs viewer.\" lines=\"4\"></article>"
+        }
+      ]
     },
     "x-cardfile": {
       "source": "<article x-cardfile filename=\"quarterly-report.pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
@@ -303,7 +1183,13 @@
     },
     "x-cardminimizable": {
       "source": "<article x-cardminimizable\n  title=\"Build log\"\n  content=\"tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.\"></article>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "long content",
+          "source": "<article x-cardminimizable title=\"Deploy log\" content=\"Pulled image. Ran migrations (3). Warmed caches. Health checks passed on 6 of 6 instances. Traffic shifted 10%, 50%, 100%.\"></article>"
+        }
+      ]
     },
     "x-cardnotification": {
       "source": "<aside x-cardnotification\n  variant=\"warning\"\n  title=\"Certificate expires in 6 days\"\n  message=\"Renew before 26 Aug or the staging domain will start failing TLS.\"\n  dismissible></aside>",
@@ -343,7 +1229,29 @@
     },
     "x-fix-card": {
       "source": "<article x-fix-card title=\"Pinned note\" content=\"This card keeps its place while the rest of the page scrolls.\"></article>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "short note",
+          "source": "<article x-fix-card title=\"Reminder\" content=\"Standup at 9:30.\"></article>"
+        },
+        {
+          "label": "long content",
+          "source": "<article x-fix-card title=\"Incident 4471\" content=\"The API returned 502s for eleven minutes after the deploy. Rolled back at 14:12; root cause was a missing environment variable in the new container image.\"></article>"
+        },
+        {
+          "label": "title only",
+          "source": "<article x-fix-card title=\"Pinned\"></article>"
+        },
+        {
+          "label": "with an emoji",
+          "source": "<article x-fix-card title=\"🎉 Shipped\" content=\"Version 4.2 is live.\"></article>"
+        },
+        {
+          "label": "with a list",
+          "source": "<article x-fix-card title=\"Today\">\n  <ul><li>Review PR</li><li>Ship 4.2</li></ul>\n</article>"
+        }
+      ]
     },
     "x-button": {
       "source": "<button variant=\"primary\" icon=\"download\" size=\"md\">\n  variant: primary · icon: download · size: md\n</button>",
@@ -399,11 +1307,27 @@
     },
     "x-navbar": {
       "source": "<nav x-navbar brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></nav>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "with links",
+          "source": "<nav x-navbar brand=\"Northwind\" items=\"Docs,Pricing,Blog\"></nav>"
+        }
+      ]
     },
     "x-hero": {
       "source": "<div x-hero variant=\"centered\">\n  <h1>Ship the markup, not the toolchain</h1>\n  <p>Behaviors decorate real elements in light DOM — no build, no shadow roots.</p>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "cosmic with a call to action",
+          "source": "<div x-hero variant=\"cosmic\">\n  <h1>Launch faster</h1>\n  <p>Everything you need, nothing to build.</p>\n  <button variant=\"primary\">Get started</button>\n</div>"
+        },
+        {
+          "label": "short headline",
+          "source": "<div x-hero>\n  <h1>Hello.</h1>\n</div>"
+        }
+      ]
     },
     "x-dialog": {
       "source": "<button onclick=\"document.getElementById('delete-branch').showModal()\">\n  Open the dialog\n</button>\n<dialog id=\"delete-branch\" size=\"md\">\n  <h2>Delete branch?</h2>\n  <p>fix/706-dropdown will be removed. This cannot be undone.</p>\n</dialog>",
@@ -417,7 +1341,25 @@
     },
     "x-accordion": {
       "source": "<div x-accordion>\n  <details summary=\"Details sample of How do behaviors attach?\"><p>WB scans for x-* attributes and calls the matching behavior function on the element, in place.</p></details>\n  <details summary=\"Details sample of Is there a shadow root?\"><p>No. Light DOM only — you can style and query everything.</p></details>\n  <details summary=\"Details sample of What about a build step?\"><p>There isn't one. The browser loads the modules directly.</p></details>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "first item open",
+          "source": "<div x-accordion>\n  <details summary=\"Shipping\" open><p>Free over $50.</p></details>\n  <details summary=\"Returns\"><p>30 days, no questions.</p></details>\n  <details summary=\"Warranty\"><p>Two years, parts and labour.</p></details>\n</div>"
+        },
+        {
+          "label": "two items",
+          "source": "<div x-accordion>\n  <details summary=\"Is it free?\"><p>Yes, MIT licensed.</p></details>\n  <details summary=\"Does it need a build?\"><p>No.</p></details>\n</div>"
+        },
+        {
+          "label": "five items",
+          "source": "<div x-accordion>\n  <details summary=\"Install\"><p>npm i</p></details>\n  <details summary=\"Configure\"><p>Edit config.json</p></details>\n  <details summary=\"Run\"><p>npm start</p></details>\n  <details summary=\"Test\"><p>npm test</p></details>\n  <details summary=\"Deploy\"><p>Push to main</p></details>\n</div>"
+        },
+        {
+          "label": "rich content",
+          "source": "<div x-accordion>\n  <details summary=\"Screenshot\" open><img src=\"/images/placeholder-office.svg\" alt=\"Office\" width=\"240\"></details>\n  <details summary=\"Notes\"><p>Taken on the second floor.</p></details>\n</div>"
+        }
+      ]
     },
     "x-input": {
       "source": "<input\n  variant=\"error\"\n  placeholder=\"owner/name\"\n  name=\"repo\"\n  type=\"text\">",
@@ -451,61 +1393,361 @@
     },
     "x-counter": {
       "source": "<textarea x-counter max=\"280\" warning=\"40\" placeholder=\"What are you shipping?\"></textarea>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "tweet length",
+          "source": "<textarea x-counter max=\"280\" warning=\"20\">Release 4.2 ships today.</textarea>"
+        },
+        {
+          "label": "short limit, nearly full",
+          "source": "<textarea x-counter max=\"40\" warning=\"10\">This message is close to its limit</textarea>"
+        },
+        {
+          "label": "over the limit",
+          "source": "<textarea x-counter max=\"20\">This text is far longer than twenty characters.</textarea>"
+        },
+        {
+          "label": "on a single-line input",
+          "source": "<input x-counter max=\"60\" warning=\"10\" value=\"Page title\">"
+        },
+        {
+          "label": "empty, long limit",
+          "source": "<textarea x-counter max=\"2000\" placeholder=\"Write the full description…\"></textarea>"
+        }
+      ]
     },
     "x-form": {
       "source": "<form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Send</button>\n</form>",
       "alternates": [
         "<div x-form validate ajax action=\"/api/demo-form\" successMessage=\"Sent — check the events panel below.\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Message <textarea name=\"message\" rows=\"3\" required></textarea></label>\n  <button type=\"submit\">Sample submit button</button>\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "sign-in form",
+          "source": "<form validate ajax action=\"/api/demo-form\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Password <input type=\"password\" name=\"password\" required></label>\n  <button type=\"submit\" variant=\"primary\">Continue</button>\n</form>",
+          "form": "semantic"
+        },
+        {
+          "label": "one-line subscribe",
+          "source": "<form validate ajax action=\"/api/demo-form\">\n  <input type=\"email\" name=\"email\" required placeholder=\"Email for updates\">\n  <button type=\"submit\" variant=\"success\">Join the list</button>\n</form>",
+          "form": "semantic"
+        },
+        {
+          "label": "survey with choices",
+          "source": "<form ajax action=\"/api/demo-form\">\n  <p>How did you hear about us?</p>\n  <label><input type=\"radio\" name=\"src\" checked> Search</label>\n  <label><input type=\"radio\" name=\"src\"> A friend</label>\n  <label><input type=\"radio\" name=\"src\"> Conference</label>\n  <button type=\"submit\" variant=\"secondary\">Answer</button>\n</form>",
+          "form": "semantic"
+        },
+        {
+          "label": "sign-in form",
+          "source": "<div x-form validate ajax action=\"/api/demo-form\">\n  <label>Email <input type=\"email\" name=\"email\" required placeholder=\"you@example.com\"></label>\n  <label>Password <input type=\"password\" name=\"password\" required></label>\n  <button type=\"submit\" variant=\"primary\">Continue</button>\n</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "one-line subscribe",
+          "source": "<div x-form validate ajax action=\"/api/demo-form\">\n  <input type=\"email\" name=\"email\" required placeholder=\"Email for updates\">\n  <button type=\"submit\" variant=\"success\">Join the list</button>\n</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "survey with choices",
+          "source": "<div x-form ajax action=\"/api/demo-form\">\n  <p>How did you hear about us?</p>\n  <label><input type=\"radio\" name=\"src-x\" checked> Search</label>\n  <label><input type=\"radio\" name=\"src-x\"> A friend</label>\n  <label><input type=\"radio\" name=\"src-x\"> Conference</label>\n  <button type=\"submit\" variant=\"secondary\">Answer</button>\n</div>",
+          "form": "attribute"
+        }
       ]
     },
     "x-formrow": {
       "source": "<div x-formrow inline>\n  <input type=\"text\" placeholder=\"City\">\n  <input type=\"text\" placeholder=\"ZIP code\">\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "three fields",
+          "source": "<div x-formrow>\n  <input type=\"text\" placeholder=\"First name\">\n  <input type=\"text\" placeholder=\"Last name\">\n  <input type=\"email\" placeholder=\"Email\">\n</div>"
+        },
+        {
+          "label": "field and button",
+          "source": "<div x-formrow inline>\n  <input type=\"search\" placeholder=\"Search docs\">\n  <button variant=\"primary\">Search</button>\n</div>"
+        },
+        {
+          "label": "labelled fields",
+          "source": "<div x-formrow>\n  <label>Card <input type=\"text\" placeholder=\"4242 4242 4242 4242\"></label>\n  <label>CVC <input type=\"text\" placeholder=\"123\"></label>\n</div>"
+        },
+        {
+          "label": "select and input",
+          "source": "<div x-formrow inline>\n  <select><option>USD</option><option>EUR</option></select>\n  <input type=\"number\" value=\"250\">\n</div>"
+        }
+      ]
     },
     "x-fieldset": {
       "source": "<fieldset collapsible>\n  <legend>Notification settings</legend>\n  <label><input type=\"checkbox\" checked> Build finished</label>\n  <label><input type=\"checkbox\"> Nightly audit</label>\n</fieldset>",
       "alternates": [
         "<div x-fieldset collapsible>\n  <legend>Notification settings</legend>\n  <label><input type=\"checkbox\" checked> Build finished</label>\n  <label><input type=\"checkbox\"> Nightly audit</label>\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "shipping address",
+          "source": "<fieldset>\n  <legend>Shipping address</legend>\n  <input type=\"text\" placeholder=\"Street\">\n  <input type=\"text\" placeholder=\"City\">\n</fieldset>",
+          "form": "semantic"
+        },
+        {
+          "label": "radio choice",
+          "source": "<fieldset>\n  <legend>Plan</legend>\n  <label><input type=\"radio\" name=\"fs-plan\" checked> Free</label>\n  <label><input type=\"radio\" name=\"fs-plan\"> Team</label>\n  <label><input type=\"radio\" name=\"fs-plan\"> Enterprise</label>\n</fieldset>",
+          "form": "semantic"
+        },
+        {
+          "label": "disabled group",
+          "source": "<fieldset disabled>\n  <legend>Billing (locked)</legend>\n  <input type=\"text\" value=\"Visa ending 4242\">\n  <button type=\"button\">Change card</button>\n</fieldset>",
+          "form": "semantic"
+        },
+        {
+          "label": "single toggle",
+          "source": "<fieldset>\n  <legend>Newsletter</legend>\n  <label><input type=\"checkbox\" checked> Send me the monthly digest</label>\n</fieldset>",
+          "form": "semantic"
+        },
+        {
+          "label": "textarea",
+          "source": "<fieldset>\n  <legend>Feedback</legend>\n  <textarea rows=\"4\" placeholder=\"What should we build next?\"></textarea>\n</fieldset>",
+          "form": "semantic"
+        },
+        {
+          "label": "shipping address",
+          "source": "<div x-fieldset>\n  <legend>Shipping address</legend>\n  <input type=\"text\" placeholder=\"Street\">\n  <input type=\"text\" placeholder=\"City\">\n</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "radio choice",
+          "source": "<div x-fieldset>\n  <legend>Plan</legend>\n  <label><input type=\"radio\" name=\"fs-plan-x\" checked> Free</label>\n  <label><input type=\"radio\" name=\"fs-plan-x\"> Team</label>\n  <label><input type=\"radio\" name=\"fs-plan-x\"> Enterprise</label>\n</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "disabled controls",
+          "source": "<div x-fieldset>\n  <legend>Billing (locked)</legend>\n  <input type=\"text\" value=\"Visa ending 4242\" disabled>\n  <button type=\"button\" disabled>Change card</button>\n</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "single toggle",
+          "source": "<div x-fieldset>\n  <legend>Newsletter</legend>\n  <label><input type=\"checkbox\" checked> Send me the monthly digest</label>\n</div>",
+          "form": "attribute"
+        },
+        {
+          "label": "textarea",
+          "source": "<div x-fieldset>\n  <legend>Feedback</legend>\n  <textarea rows=\"4\" placeholder=\"What should we build next?\"></textarea>\n</div>",
+          "form": "attribute"
+        }
       ]
     },
     "x-inputgroup": {
       "source": "<div x-inputgroup>\n  <span>https://</span>\n  <input type=\"text\" placeholder=\"your-site.io\">\n  <button type=\"button\">\n  type: button\n</button>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "price",
+          "source": "<div x-inputgroup>\n  <span>$</span>\n  <input type=\"number\" value=\"49\">\n  <span>.00</span>\n</div>"
+        },
+        {
+          "label": "search with button",
+          "source": "<div x-inputgroup>\n  <input type=\"search\" placeholder=\"Search issues\">\n  <button type=\"button\" variant=\"primary\">Go</button>\n</div>"
+        },
+        {
+          "label": "email domain",
+          "source": "<div x-inputgroup>\n  <input type=\"text\" placeholder=\"username\">\n  <span>@example.com</span>\n</div>"
+        },
+        {
+          "label": "icon prefix",
+          "source": "<div x-inputgroup>\n  <span>🔒</span>\n  <input type=\"password\" placeholder=\"Password\">\n</div>"
+        },
+        {
+          "label": "two buttons",
+          "source": "<div x-inputgroup>\n  <button type=\"button\" variant=\"secondary\">−</button>\n  <input type=\"number\" value=\"1\">\n  <button type=\"button\" variant=\"secondary\">+</button>\n</div>"
+        }
+      ]
     },
     "x-floatinglabel": {
       "source": "<div x-floatinglabel>\n  <input type=\"text\" id=\"x-ex-floating\" placeholder=\" \">\n  <label for=\"x-ex-floating\">Project name</label>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "email, filled",
+          "source": "<div x-floatinglabel>\n  <input type=\"email\" id=\"x-ex-fl-email\" placeholder=\" \" value=\"ada@example.com\">\n  <label for=\"x-ex-fl-email\">Email</label>\n</div>"
+        },
+        {
+          "label": "password",
+          "source": "<div x-floatinglabel>\n  <input type=\"password\" id=\"x-ex-fl-pw\" placeholder=\" \">\n  <label for=\"x-ex-fl-pw\">Password</label>\n</div>"
+        },
+        {
+          "label": "textarea",
+          "source": "<div x-floatinglabel>\n  <textarea id=\"x-ex-fl-msg\" placeholder=\" \" rows=\"3\"></textarea>\n  <label for=\"x-ex-fl-msg\">Message</label>\n</div>"
+        },
+        {
+          "label": "select",
+          "source": "<div x-floatinglabel>\n  <select id=\"x-ex-fl-plan\"><option>Free</option><option>Team</option></select>\n  <label for=\"x-ex-fl-plan\">Plan</label>\n</div>"
+        },
+        {
+          "label": "number",
+          "source": "<div x-floatinglabel>\n  <input type=\"number\" id=\"x-ex-fl-qty\" placeholder=\" \" value=\"3\">\n  <label for=\"x-ex-fl-qty\">Quantity</label>\n</div>"
+        }
+      ]
     },
     "x-searchfield": {
       "source": "<input x-searchfield type=\"search\" placeholder=\"Search 143 behaviors…\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "large",
+          "source": "<input x-searchfield type=\"search\" size=\"lg\" placeholder=\"Search the whole site…\">"
+        },
+        {
+          "label": "prefilled",
+          "source": "<input x-searchfield type=\"search\" value=\"dropdown\" placeholder=\"Search…\">"
+        }
+      ]
     },
     "x-slider": {
       "source": "<input x-slider type=\"range\" min=\"0\" max=\"100\" value=\"35\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "low value",
+          "source": "<input x-slider type=\"range\" min=\"0\" max=\"100\" value=\"5\">"
+        },
+        {
+          "label": "high value",
+          "source": "<input x-slider type=\"range\" min=\"0\" max=\"100\" value=\"95\">"
+        },
+        {
+          "label": "with a label",
+          "source": "<label>Volume <input x-slider type=\"range\" min=\"0\" max=\"100\" value=\"60\"></label>"
+        },
+        {
+          "label": "disabled",
+          "source": "<input x-slider type=\"range\" min=\"0\" max=\"100\" value=\"50\" disabled>"
+        },
+        {
+          "label": "wide range",
+          "source": "<input x-slider type=\"range\" min=\"-50\" max=\"50\" value=\"0\">"
+        }
+      ]
     },
     "x-file": {
       "source": "<input x-file type=\"file\" accept=\"image/*\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "with a label",
+          "source": "<label>Résumé (PDF) <input x-file type=\"file\" accept=\".pdf\"></label>"
+        },
+        {
+          "label": "in a card",
+          "source": "<article title=\"Company logo\" subtitle=\"PNG or SVG, up to 2 MB\">\n  <input x-file type=\"file\" accept=\"image/*\">\n</article>"
+        },
+        {
+          "label": "with a note",
+          "source": "<div>\n  <input x-file type=\"file\" multiple>\n  <p>Up to 10 files, 5 MB each.</p>\n</div>"
+        },
+        {
+          "label": "disabled",
+          "source": "<input x-file type=\"file\" disabled>"
+        },
+        {
+          "label": "images only, required",
+          "source": "<label>Avatar <input x-file type=\"file\" accept=\"image/png,image/jpeg\" required></label>"
+        }
+      ]
     },
     "x-label": {
       "source": "<label>Deploy key <input name=\"deploy-key\" placeholder=\"ssh-ed25519 AAAA…\"></label>",
       "alternates": [
         "<div x-label>Deploy key <input name=\"deploy-key\" placeholder=\"ssh-ed25519 AAAA…\"></div>"
+      ],
+      "examples": [
+        {
+          "label": "wrapping a checkbox",
+          "source": "<label required>Accept the terms <input type=\"checkbox\"></label>",
+          "form": "semantic"
+        },
+        {
+          "label": "wrapping a checkbox",
+          "source": "<div x-label required>Accept the terms <input type=\"checkbox\"></div>",
+          "form": "attribute"
+        }
       ]
     },
     "x-autocomplete": {
       "source": "<input x-autocomplete items=\"main,develop,release/3.0,fix/706-dropdown,docs/behaviors\" placeholder=\"Find a branch…\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "countries",
+          "source": "<input x-autocomplete items=\"Argentina,Australia,Austria,Belgium,Brazil,Canada\" placeholder=\"Country…\">"
+        },
+        {
+          "label": "languages",
+          "source": "<input x-autocomplete items=\"JavaScript,TypeScript,Python,Rust,Go\" value=\"Type\" placeholder=\"Language…\">"
+        },
+        {
+          "label": "prefilled",
+          "source": "<input x-autocomplete items=\"red,orange,yellow,green,blue\" value=\"green\">"
+        },
+        {
+          "label": "wide search box",
+          "source": "<input x-autocomplete items=\"Inbox,Sent,Drafts,Archive,Spam\" placeholder=\"Jump to folder…\" size=\"40\">"
+        },
+        {
+          "label": "cities, disabled",
+          "source": "<input x-autocomplete items=\"Austin,Boston,Chicago,Denver\" value=\"Boston\" disabled>"
+        }
+      ]
     },
     "x-autosize": {
       "source": "<textarea x-autosize rows=\"1\" placeholder=\"This grows as you type — try three or four lines.\"></textarea>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "prefilled with three lines",
+          "source": "<textarea x-autosize rows=\"1\">First line\nSecond line\nThird line — the box already fits all three.</textarea>"
+        },
+        {
+          "label": "starts taller",
+          "source": "<textarea x-autosize rows=\"4\" placeholder=\"Starts at four rows and still grows.\"></textarea>"
+        },
+        {
+          "label": "long paragraph",
+          "source": "<textarea x-autosize rows=\"1\">Autosize measures the content, so a long paragraph like this one wraps onto several lines and the textarea grows to show all of it without a scrollbar appearing.</textarea>"
+        },
+        {
+          "label": "one short line",
+          "source": "<textarea x-autosize rows=\"1\">ok</textarea>"
+        },
+        {
+          "label": "code snippet",
+          "source": "<textarea x-autosize rows=\"1\">function add(a, b) {\n  return a + b;\n}</textarea>"
+        }
+      ]
     },
     "x-control": {
       "source": "<div x-control label=\"Threshold\">\n  <input type=\"range\" min=\"0\" max=\"100\" value=\"60\">\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "number field",
+          "source": "<div x-control label=\"Retries\">\n  <input type=\"number\" value=\"3\" min=\"0\" max=\"10\">\n</div>"
+        },
+        {
+          "label": "select",
+          "source": "<div x-control label=\"Region\">\n  <select><option>us-east</option><option>eu-west</option></select>\n</div>"
+        },
+        {
+          "label": "checkbox",
+          "source": "<div x-control label=\"Notifications\">\n  <input type=\"checkbox\" checked>\n</div>"
+        },
+        {
+          "label": "text field",
+          "source": "<div x-control label=\"Project name\">\n  <input type=\"text\" value=\"wb-starter\">\n</div>"
+        },
+        {
+          "label": "colour",
+          "source": "<div x-control label=\"Accent\">\n  <input type=\"color\" value=\"#22c55e\">\n</div>"
+        }
+      ]
     },
     "x-flex": {
       "source": "<div x-flex gap=\"1rem\">\n  <div>First</div><div>Second</div><div>Third</div>\n</div>",
@@ -533,11 +1775,55 @@
     },
     "x-repeater": {
       "source": "<div x-repeater>\n  <div>Row template — add and remove copies of this block.</div>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "text field rows",
+          "source": "<div x-repeater>\n  <input type=\"text\" placeholder=\"Tag name\">\n</div>"
+        },
+        {
+          "label": "email rows",
+          "source": "<div x-repeater>\n  <label>Invite <input type=\"email\" placeholder=\"teammate@example.com\"></label>\n</div>"
+        },
+        {
+          "label": "key and value",
+          "source": "<div x-repeater>\n  <div x-cluster gap=\"0.5rem\"><input type=\"text\" placeholder=\"Key\"><input type=\"text\" placeholder=\"Value\"></div>\n</div>"
+        },
+        {
+          "label": "card template",
+          "source": "<div x-repeater>\n  <article title=\"New step\" subtitle=\"Describe it\"></article>\n</div>"
+        },
+        {
+          "label": "select rows",
+          "source": "<div x-repeater>\n  <select><option>Viewer</option><option>Editor</option><option>Owner</option></select>\n</div>"
+        }
+      ]
     },
     "x-demo": {
       "source": "<div x-demo columns=\"2\">\n  <button>\n  no attributes\n</button>\n  <button>\n  no attributes\n</button>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "three columns",
+          "source": "<div x-demo columns=\"3\">\n  <button variant=\"primary\">One</button>\n  <button variant=\"success\">Two</button>\n  <button variant=\"warning\">Three</button>\n</div>"
+        },
+        {
+          "label": "one column",
+          "source": "<div x-demo columns=\"1\">\n  <button variant=\"secondary\">Stacked one</button>\n  <button variant=\"secondary\">Stacked two</button>\n</div>"
+        },
+        {
+          "label": "four badges",
+          "source": "<div x-demo columns=\"4\">\n  <span x-badge variant=\"info\">info</span>\n  <span x-badge variant=\"success\">ok</span>\n  <span x-badge variant=\"warning\">warn</span>\n  <span x-badge variant=\"error\">fail</span>\n</div>"
+        },
+        {
+          "label": "cards",
+          "source": "<div x-demo columns=\"2\">\n  <article title=\"Left\" subtitle=\"Card one\"></article>\n  <article title=\"Right\" subtitle=\"Card two\"></article>\n</div>"
+        },
+        {
+          "label": "two inputs",
+          "source": "<div x-demo columns=\"2\">\n  <input type=\"text\" placeholder=\"Left field\">\n  <input type=\"text\" placeholder=\"Right field\">\n</div>"
+        }
+      ]
     },
     "x-audio": {
       "source": "<audio src=\"https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3\" controls></audio>",
@@ -549,6 +1835,18 @@
       "source": "<video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></video>",
       "alternates": [
         "<div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></div>"
+      ],
+      "examples": [
+        {
+          "label": "in a card",
+          "source": "<article title=\"Trailer\" subtitle=\"Big Buck Bunny\">\n  <video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></video>\n</article>",
+          "form": "semantic"
+        },
+        {
+          "label": "in a card",
+          "source": "<article title=\"Trailer\" subtitle=\"Big Buck Bunny\">\n  <div x-video src=\"https://www.w3schools.com/html/mov_bbb.mp4\" poster=\"/images/placeholder.svg\" controls></div>\n</article>",
+          "form": "attribute"
+        }
       ]
     },
     "x-img": {
@@ -563,7 +1861,17 @@
     },
     "x-vimeo": {
       "source": "<div x-vimeo video-id=\"76979871\"></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "in a card",
+          "source": "<article title=\"Product tour\" subtitle=\"Two minutes\">\n  <div x-vimeo video-id=\"76979871\"></div>\n</article>"
+        },
+        {
+          "label": "with a caption",
+          "source": "<figure>\n  <div x-vimeo video-id=\"76979871\"></div>\n  <figcaption>Recorded at the 2026 meetup.</figcaption>\n</figure>"
+        }
+      ]
     },
     "x-pre": {
       "source": "<pre>npm run test:compliance\n  7591 passed\n     82 failed</pre>",
@@ -579,71 +1887,389 @@
     },
     "x-typewriter": {
       "source": "<p x-typewriter speed=\"45\">Zero build. Real components. Light DOM only.</p>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "fast",
+          "source": "<p x-typewriter speed=\"15\">Typed quickly, fifteen milliseconds a letter.</p>"
+        },
+        {
+          "label": "slow",
+          "source": "<p x-typewriter speed=\"150\">Slow. Deliberate. Dramatic.</p>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h2 x-typewriter speed=\"60\">Hello, world.</h2>"
+        },
+        {
+          "label": "custom cursor",
+          "source": "<p x-typewriter speed=\"45\" cursor=\"▌\">Block cursor at the end.</p>"
+        },
+        {
+          "label": "long sentence",
+          "source": "<p x-typewriter speed=\"30\">Behaviors decorate real elements in light DOM — no build step, no shadow roots, no base classes.</p>"
+        }
+      ]
     },
     "x-mdhtml": {
       "source": "<div x-mdhtml src=\"docs/behaviors/dropdown.md\"></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "another document",
+          "source": "<div x-mdhtml src=\"docs/behaviors/badge.md\"></div>"
+        },
+        {
+          "label": "a third document",
+          "source": "<div x-mdhtml src=\"docs/behaviors/tooltip.md\"></div>"
+        },
+        {
+          "label": "a fourth document",
+          "source": "<div x-mdhtml src=\"docs/behaviors/alert.md\"></div>"
+        }
+      ]
     },
     "x-notes": {
       "source": "<aside x-notes position=\"end\" default-width=\"280px\">\n  <p>Notes stay pinned beside the content while you scroll.</p>\n</aside>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "wide default",
+          "source": "<aside x-notes position=\"right\" default-width=\"420px\">\n  <p>A wider notes panel.</p>\n</aside>"
+        }
+      ]
     },
     "x-error": {
       "source": "<div x-error>Build failed: 2 of 13 catalog-integrity checks.</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "field message",
+          "source": "<div x-error>Email is required.</div>"
+        },
+        {
+          "label": "list of problems",
+          "source": "<div x-error>\n  <strong>3 problems:</strong>\n  <ul><li>Name is empty</li><li>Password too short</li><li>Terms not accepted</li></ul>\n</div>"
+        },
+        {
+          "label": "under an input",
+          "source": "<label>Age <input type=\"number\" value=\"-4\"></label>\n<div x-error>Age cannot be negative.</div>"
+        },
+        {
+          "label": "one word",
+          "source": "<span x-error>Invalid</span>"
+        },
+        {
+          "label": "inside a card",
+          "source": "<article title=\"Payment\"><div x-error>Your card was declined.</div></article>"
+        }
+      ]
     },
     "x-help": {
       "source": "<span x-help>Deploy key</span>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "on a heading",
+          "source": "<h3 x-help>Billing address</h3>"
+        },
+        {
+          "label": "long text",
+          "source": "<span x-help>Two-factor authentication code</span>"
+        },
+        {
+          "label": "inside a label",
+          "source": "<label><span x-help>API token</span> <input type=\"text\"></label>"
+        },
+        {
+          "label": "on a button",
+          "source": "<button variant=\"secondary\" x-help>Advanced</button>"
+        },
+        {
+          "label": "on a paragraph",
+          "source": "<p x-help>Retention period</p>"
+        }
+      ]
     },
     "x-collapse": {
       "source": "<div x-collapse heading=\"Environment\" expanded>\n  <p>Node 24.13, Chrome 139, Windows 11.</p>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "collapsed",
+          "source": "<div x-collapse heading=\"Show build output\">\n  <pre>✓ 141 tests passed</pre>\n</div>"
+        },
+        {
+          "label": "long heading",
+          "source": "<div x-collapse heading=\"Why does this page load without a build step?\" expanded>\n  <p>Every module is a native ES module the browser loads directly.</p>\n</div>"
+        },
+        {
+          "label": "with an image",
+          "source": "<div x-collapse heading=\"Floor plan\" expanded>\n  <img src=\"/images/placeholder-office.svg\" alt=\"Floor plan\" width=\"240\">\n</div>"
+        },
+        {
+          "label": "list inside",
+          "source": "<div x-collapse heading=\"Changelog\" expanded>\n  <ul><li>Faster scans</li><li>New dropdown</li><li>Fewer requests</li></ul>\n</div>"
+        }
+      ]
     },
     "x-copybutton": {
       "source": "<button x-copybutton copy-target=\"#x-ex-copy-source\">\n  x-copybutton · copy-target: #x-ex-copy-source\n</button>\n<code id=\"x-ex-copy-source\">npm run test:compliance</code>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "on a code block",
+          "source": "<pre x-copybutton>npm run build\nnpm run test</pre>"
+        },
+        {
+          "label": "bottom-right",
+          "source": "<pre x-copybutton position=\"bottom-right\">curl -sS https://example.com/install.sh | sh</pre>"
+        },
+        {
+          "label": "custom label",
+          "source": "<pre x-copybutton label=\"Copy SQL\">SELECT name, email FROM users WHERE active = 1;</pre>"
+        },
+        {
+          "label": "on a paragraph",
+          "source": "<blockquote x-copybutton>Simplicity is prerequisite for reliability. — Dijkstra</blockquote>"
+        },
+        {
+          "label": "custom feedback",
+          "source": "<pre x-copybutton copy-feedback=\"Got it!\">docker compose up -d</pre>"
+        }
+      ]
     },
     "x-notify": {
       "source": "<button x-notify message=\"Deploy finished — staging is live.\" variant=\"success\">\n  x-notify · message: Deploy finished — staging is live. · variant: success\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "info",
+          "source": "<button x-notify message=\"Sync started.\" variant=\"info\">\n  Start sync\n</button>"
+        },
+        {
+          "label": "warning",
+          "source": "<button x-notify message=\"Disk is 90% full.\" variant=\"warning\">\n  Check disk\n</button>"
+        },
+        {
+          "label": "error",
+          "source": "<button x-notify message=\"Upload failed — retry?\" variant=\"error\">\n  Retry the upload\n</button>"
+        },
+        {
+          "label": "long duration",
+          "source": "<button x-notify message=\"This one stays for 8 seconds.\" duration=\"8000\" variant=\"secondary\">\n  Slow notice\n</button>"
+        },
+        {
+          "label": "success, large trigger",
+          "source": "<button x-notify message=\"Saved.\" variant=\"success\" size=\"lg\">\n  Everything saved?\n</button>"
+        }
+      ]
     },
     "x-toggle": {
       "source": "<button x-toggle target=\"#x-ex-toggle-panel\">\n  x-toggle · target: #x-ex-toggle-panel\n</button>\n<div id=\"x-ex-toggle-panel\">The panel this button toggles.</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "primary trigger",
+          "source": "<button variant=\"primary\" x-toggle target=\"#x-ex-toggle-a\">Show details</button>\n<div id=\"x-ex-toggle-a\">Ships in 2–3 business days.</div>"
+        },
+        {
+          "label": "panel starts hidden",
+          "source": "<button variant=\"secondary\" x-toggle target=\"#x-ex-toggle-b\">Reveal the answer</button>\n<div id=\"x-ex-toggle-b\" hidden>42.</div>"
+        },
+        {
+          "label": "small trigger",
+          "source": "<button variant=\"warning\" size=\"sm\" x-toggle target=\"#x-ex-toggle-c\">Hide warning</button>\n<p id=\"x-ex-toggle-c\">⚠️ Maintenance tonight at 22:00 UTC.</p>"
+        },
+        {
+          "label": "toggling an image",
+          "source": "<button variant=\"success\" x-toggle target=\"#x-ex-toggle-d\">Toggle photo</button>\n<img id=\"x-ex-toggle-d\" src=\"/images/placeholder-forest.svg\" alt=\"Forest\" width=\"200\">"
+        },
+        {
+          "label": "error trigger",
+          "source": "<button variant=\"error\" size=\"lg\" x-toggle target=\"#x-ex-toggle-e\">Toggle the error log</button>\n<pre id=\"x-ex-toggle-e\">Error: connection refused</pre>"
+        }
+      ]
     },
     "x-globe": {
       "source": "<div x-globe></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "with a caption",
+          "source": "<figure>\n  <div x-globe></div>\n  <figcaption>Live regions: 14</figcaption>\n</figure>"
+        },
+        {
+          "label": "beside text",
+          "source": "<div x-sidebarlayout side-width=\"12rem\" gap=\"1rem\">\n  <div x-globe></div>\n  <p>Served from 14 regions worldwide, with failover in every continent.</p>\n</div>"
+        },
+        {
+          "label": "in a card",
+          "source": "<article title=\"Global CDN\" subtitle=\"Edge locations\">\n  <div x-globe></div>\n</article>"
+        },
+        {
+          "label": "under a heading",
+          "source": "<section>\n  <h3>Where our users are</h3>\n  <div x-globe></div>\n</section>"
+        },
+        {
+          "label": "in a two-column grid",
+          "source": "<div x-grid columns=\"2\" gap=\"1rem\">\n  <div x-globe></div>\n  <div x-globe></div>\n</div>"
+        }
+      ]
     },
     "x-themecontrol": {
       "source": "<div x-themecontrol></div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "in a sidebar",
+          "source": "<aside>\n  <h4>Theme</h4>\n  <div x-themecontrol></div>\n</aside>"
+        },
+        {
+          "label": "beside a button",
+          "source": "<div x-cluster gap=\"1rem\">\n  <div x-themecontrol></div>\n  <button variant=\"secondary\">Reset</button>\n</div>"
+        },
+        {
+          "label": "in a toolbar",
+          "source": "<div x-cluster gap=\"1rem\">\n  <strong>Appearance</strong>\n  <div x-themecontrol></div>\n</div>"
+        },
+        {
+          "label": "in a card",
+          "source": "<article title=\"Settings\" subtitle=\"Pick a theme\">\n  <div x-themecontrol></div>\n</article>"
+        },
+        {
+          "label": "with a caption",
+          "source": "<div>\n  <div x-themecontrol></div>\n  <p>The theme applies to the whole page.</p>\n</div>"
+        }
+      ]
     },
     "x-codecontrol": {
       "source": "<div x-codecontrol></div>\n<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "small",
+          "source": "<div x-codecontrol size=\"sm\"></div>"
+        },
+        {
+          "label": "large",
+          "source": "<div x-codecontrol size=\"lg\"></div>"
+        },
+        {
+          "label": "extra small",
+          "source": "<div x-codecontrol size=\"xs\"></div>"
+        },
+        {
+          "label": "without its label",
+          "source": "<div x-codecontrol show-label=\"false\" size=\"sm\"></div>"
+        },
+        {
+          "label": "medium, beside code",
+          "source": "<div x-codecontrol size=\"md\"></div>\n<code language=\"css\">.card { border-radius: 8px; }</code>"
+        }
+      ]
     },
     "x-tags": {
       "source": "<input x-tags value=\"light-dom,no-build,playwright\" placeholder=\"Add a tag…\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "empty",
+          "source": "<input x-tags placeholder=\"Type a tag and press Enter\">"
+        },
+        {
+          "label": "one tag",
+          "source": "<input x-tags value=\"urgent\">"
+        },
+        {
+          "label": "many tags",
+          "source": "<input x-tags value=\"frontend,backend,devops,docs,design,qa\">"
+        },
+        {
+          "label": "long tags",
+          "source": "<input x-tags value=\"needs-design-review,blocked-by-upstream\">"
+        },
+        {
+          "label": "emoji tags",
+          "source": "<input x-tags value=\"🔥 hot,✅ done,🐛 bug\">"
+        }
+      ]
     },
     "x-articles": {
       "source": "<section x-articles layout=\"grid\" columns=\"2\" limit=\"4\">\n  <article title=\"Ridge loop, 8km\">Moderate, three hours, dry crossing.</article>\n  <article title=\"Harbour wall at dawn\">Flat, two hours, best before the fog lifts.</article>\n  <article title=\"Pine gap traverse\">Hard, six hours, carry water.</article>\n  <article title=\"Old quarry circuit\">Easy, ninety minutes, good in rain.</article>\n</section>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "three columns",
+          "source": "<section x-articles layout=\"grid\" columns=\"3\" limit=\"3\">\n  <article title=\"Alpha\">First.</article>\n  <article title=\"Beta\">Second.</article>\n  <article title=\"Gamma\">Third.</article>\n</section>"
+        }
+      ]
     },
     "x-draggable": {
       "source": "<div x-draggable axis=\"both\">Drag me anywhere in the stage.</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "on a card",
+          "source": "<article x-draggable title=\"Drag this card\" subtitle=\"Anywhere in the stage\"></article>"
+        },
+        {
+          "label": "success button",
+          "source": "<button variant=\"success\" x-draggable axis=\"x\">Drag me sideways</button>"
+        }
+      ]
     },
     "x-drawer-layout": {
       "source": "<aside x-drawer-layout position=\"start\" width=\"220px\" min-width=\"64px\">\n  <nav><a href=\"#\">Overview</a><a href=\"#\">Runs</a><a href=\"#\">Settings</a></nav>\n</aside>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "wide drawer",
+          "source": "<aside x-drawer-layout position=\"start\" width=\"320px\" min-width=\"64px\">\n  <nav><a href=\"#\">Inbox</a><a href=\"#\">Starred</a><a href=\"#\">Sent</a><a href=\"#\">Archive</a></nav>\n</aside>"
+        },
+        {
+          "label": "narrow drawer",
+          "source": "<aside x-drawer-layout position=\"start\" width=\"140px\" min-width=\"48px\">\n  <nav><a href=\"#\">Home</a><a href=\"#\">Search</a></nav>\n</aside>"
+        },
+        {
+          "label": "right side",
+          "source": "<aside x-drawer-layout position=\"end\" width=\"220px\" min-width=\"64px\">\n  <p>Details panel on the right.</p>\n</aside>"
+        },
+        {
+          "label": "with a heading",
+          "source": "<aside x-drawer-layout position=\"start\" width=\"260px\" min-width=\"64px\">\n  <h3>Projects</h3>\n  <nav><a href=\"#\">wb-starter</a><a href=\"#\">docs-site</a></nav>\n</aside>"
+        },
+        {
+          "label": "icons only",
+          "source": "<aside x-drawer-layout position=\"start\" width=\"72px\" min-width=\"48px\">\n  <nav><a href=\"#\">🏠</a><a href=\"#\">🔍</a><a href=\"#\">⚙️</a></nav>\n</aside>"
+        }
+      ]
     },
     "x-move": {
       "source": "<button x-move distance=\"120px\" duration=\"0.6s\">\n  x-move · distance: 120px · duration: 0.6s\n</button>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "short and quick",
+          "source": "<button variant=\"success\" x-move distance=\"40px\" duration=\"0.2s\">\n  Nudge\n</button>"
+        },
+        {
+          "label": "long and slow",
+          "source": "<button variant=\"warning\" size=\"lg\" x-move distance=\"240px\" duration=\"1.5s\">\n  Glide\n</button>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-move distance=\"80px\" duration=\"0.6s\" title=\"Movable card\" subtitle=\"Click to move\"></article>"
+        },
+        {
+          "label": "small",
+          "source": "<button variant=\"error\" size=\"sm\" x-move distance=\"120px\" duration=\"0.6s\">\n  Step\n</button>"
+        },
+        {
+          "label": "on a heading",
+          "source": "<h3 x-move distance=\"160px\" duration=\"0.8s\">Click to move this heading</h3>"
+        }
+      ]
     },
     "x-release": {
       "source": "<div x-release version=\"3.0.48\" date=\"2026-08-20\">\n  143 behavior docs, curated showcase examples, dropdown fixes.\n</div>",
@@ -651,30 +2277,130 @@
     },
     "x-resizable": {
       "source": "<div x-resizable handles=\"se\">\n  Grab the corner and resize this panel.\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "holding an image",
+          "source": "<div x-resizable handles=\"se\">\n  <img src=\"/images/placeholder-waves.svg\" alt=\"Waves\" width=\"240\">\n</div>"
+        },
+        {
+          "label": "holding a list",
+          "source": "<div x-resizable handles=\"se\">\n  <ul><li>Resize me</li><li>From the corner</li><li>Content reflows</li></ul>\n</div>"
+        },
+        {
+          "label": "holding a card",
+          "source": "<div x-resizable handles=\"se\">\n  <article title=\"Resizable card\" subtitle=\"Drag the corner\"></article>\n</div>"
+        },
+        {
+          "label": "long paragraph",
+          "source": "<div x-resizable handles=\"se\">\n  <p>Make this panel narrower and the paragraph wraps onto more lines; wider, and it wraps onto fewer. The handle sits in the bottom-right corner.</p>\n</div>"
+        },
+        {
+          "label": "holding a button",
+          "source": "<div x-resizable handles=\"se\">\n  <button variant=\"success\">Resize around me</button>\n</div>"
+        }
+      ]
     },
     "x-scrollalong": {
       "source": "<aside x-scrollalong offset=\"16\">\n  Keeps pace with the page as you scroll.\n</aside>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "table of contents",
+          "source": "<aside x-scrollalong offset=\"16\">\n  <strong>On this page</strong>\n  <ul><li>Install</li><li>Usage</li><li>API</li></ul>\n</aside>"
+        },
+        {
+          "label": "call to action",
+          "source": "<aside x-scrollalong offset=\"40\">\n  <button variant=\"primary\">Start free trial</button>\n</aside>"
+        },
+        {
+          "label": "ad slot",
+          "source": "<aside x-scrollalong offset=\"0\">\n  <img src=\"/images/placeholder-product.svg\" alt=\"Product\" width=\"160\">\n</aside>"
+        },
+        {
+          "label": "progress note",
+          "source": "<aside x-scrollalong offset=\"24\">\n  <p>Chapter 3 of 12</p>\n</aside>"
+        },
+        {
+          "label": "on a card",
+          "source": "<article x-scrollalong offset=\"8\" title=\"Order summary\" subtitle=\"3 items · $84\"></article>"
+        }
+      ]
     },
     "x-stagelight": {
       "source": "<div x-stagelight variant=\"spotlight\" color=\"#f59e0b\" intensity=\"0.5\" size=\"360px\">\n  The spotlight follows the pointer across this panel.\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "red beam",
+          "source": "<div x-stagelight variant=\"beam\" color=\"#ef4444\" intensity=\"0.8\">\n  A red beam sweeps the stage.\n</div>"
+        },
+        {
+          "label": "wide blue spotlight",
+          "source": "<div x-stagelight variant=\"spotlight\" color=\"#3b82f6\" size=\"600px\" intensity=\"0.4\">\n  A wide, soft blue spotlight.\n</div>"
+        }
+      ]
     },
     "x-sticky": {
       "source": "<div x-sticky offset=\"0\" stuck-class=\"is-stuck\">\n  Sticks to the top of its scroll container once you pass it.\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "offset below a header",
+          "source": "<div x-sticky offset=\"48\" stuck-class=\"is-stuck\">\n  Sticks 48px from the top — under a site header.\n</div>"
+        },
+        {
+          "label": "toolbar",
+          "source": "<div x-sticky offset=\"0\">\n  <button variant=\"primary\" size=\"sm\">Draft</button> <button variant=\"secondary\" size=\"sm\">Preview</button>\n</div>"
+        },
+        {
+          "label": "alert bar",
+          "source": "<div x-sticky offset=\"0\">\n  <strong>⚠️ Read-only mode until 22:00 UTC.</strong>\n</div>"
+        },
+        {
+          "label": "a card that sticks",
+          "source": "<article x-sticky offset=\"16\" title=\"Pinned card\" subtitle=\"Stays in view while you scroll\"></article>"
+        }
+      ]
     },
     "x-glass": {
       "source": "<section x-cardhero\n  background=\"images/placeholder-waves.svg\"\n  height=\"280px\"\n  pretitle=\"x-glass\"\n  title=\"Infinite Possibility.\"\n  cta=\"Try the Playground\"\n  cta-secondary=\"Read the Guide\"></section>",
       "alternates": [
         "<button x-glass amount=\"some\">amount=some</button>",
         "<button x-glass amount=\"least\">amount=least</button>"
+      ],
+      "examples": [
+        {
+          "label": "over an image card",
+          "source": "<div x-glass amount=\"some\">\n  <img src=\"/images/placeholder-forest.svg\" alt=\"Forest\" width=\"320\">\n  <p>Frosted caption over a forest.</p>\n</div>"
+        },
+        {
+          "label": "on a panel",
+          "source": "<div x-glass amount=\"least\">\n  <h3>Frosted panel</h3>\n  <p>Light blur, light tint.</p>\n</div>"
+        }
       ]
     },
     "x-fill": {
       "source": "<div id=\"fill-demo-row\" x-cluster gap=\"0.5rem\">\n  <button id=\"fill-demo-target\" x-fill>Fills the rest of the row</button>\n  <button id=\"fill-demo-sibling\">Natural width</button>\n</div>",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "with two siblings",
+          "source": "<div x-cluster gap=\"0.5rem\">\n  <button variant=\"secondary\">Back</button>\n  <button variant=\"primary\" x-fill>Continue — fills the gap</button>\n  <button variant=\"secondary\">Skip</button>\n</div>"
+        },
+        {
+          "label": "filling an input",
+          "source": "<div x-cluster gap=\"0.5rem\">\n  <input type=\"search\" placeholder=\"Search…\" x-fill>\n  <button variant=\"success\">Go</button>\n</div>"
+        },
+        {
+          "label": "success colour",
+          "source": "<div x-cluster gap=\"0.5rem\">\n  <button variant=\"success\" x-fill>Fills the row</button>\n  <button variant=\"warning\">Natural</button>\n</div>"
+        },
+        {
+          "label": "alone",
+          "source": "<div x-cluster gap=\"0.5rem\">\n  <button variant=\"warning\" x-fill>Alone, it takes the whole row</button>\n</div>"
+        }
+      ]
     },
     "x-center": {
       "source": "<div x-center max-width=\"40ch\" gutters=\"1rem\">\n  <h3>Centred measure</h3>\n  <p>This column stops at 40 characters and keeps a 1rem gutter on each side, however wide the page gets.</p>\n</div>",
@@ -700,6 +2426,28 @@
       "alternates": [
         "<div x-frame ratio=\"1:1\">\n  <img src=\"/images/placeholder.svg\" alt=\"Cropped to a square\">\n</div>",
         "<div x-frame ratio=\"4:3\">\n  <img src=\"/images/placeholder.svg\" alt=\"Held at 4:3\">\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "a card",
+          "source": "<div x-frame>\n  <article title=\"Framed card\" subtitle=\"The frame holds its ratio\"></article>\n</div>"
+        },
+        {
+          "label": "a heading block",
+          "source": "<div x-frame>\n  <h2>Framed headline</h2>\n</div>"
+        },
+        {
+          "label": "a paragraph",
+          "source": "<div x-frame>\n  <p>Any single child fills the frame, whatever its own size.</p>\n</div>"
+        },
+        {
+          "label": "a button",
+          "source": "<div x-frame>\n  <button variant=\"success\">Framed button</button>\n</div>"
+        },
+        {
+          "label": "a list",
+          "source": "<div x-frame>\n  <ul><li>One</li><li>Two</li><li>Three</li></ul>\n</div>"
+        }
       ]
     },
     "x-grid": {
@@ -712,6 +2460,12 @@
       "source": "<span x-icon size=\"1.25em\" space=\"0.5em\">\n  <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg>\n  Saved\n</span>",
       "alternates": [
         "<span x-icon size=\"2em\" space=\"0.75em\">\n  <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 8v4l3 2\"/></svg>\n  Pending\n</span>"
+      ],
+      "examples": [
+        {
+          "label": "longer label",
+          "source": "<span x-icon space=\"0.5em\">\n  <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg>\n  Saved to the cloud just now\n</span>"
+        }
       ]
     },
     "x-reel": {
@@ -737,6 +2491,124 @@
       "source": "<div x-switcher threshold=\"30rem\" gap=\"1rem\">\n  <article title=\"Side by side\" subtitle=\"Above 30rem\"></article>\n  <article title=\"Then stacked\" subtitle=\"Below 30rem\"></article>\n</div>",
       "alternates": [
         "<div x-switcher threshold=\"20rem\" limit=\"3\" gap=\"0.75rem\">\n  <article title=\"One\"></article>\n  <article title=\"Two\"></article>\n  <article title=\"Three\"></article>\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "three items",
+          "source": "<div x-switcher threshold=\"30rem\" gap=\"1rem\">\n  <article title=\"Plan\" subtitle=\"Week one\"></article>\n  <article title=\"Build\" subtitle=\"Weeks two to four\"></article>\n  <article title=\"Ship\" subtitle=\"Week five\"></article>\n</div>"
+        }
+      ]
+    },
+    "x-radio": {
+      "examples": [
+        {
+          "label": "checked with label",
+          "source": "<input type=\"radio\" name=\"rd-1\" label=\"Monthly billing\" checked>"
+        },
+        {
+          "label": "unchecked with label",
+          "source": "<input type=\"radio\" name=\"rd-2\" label=\"Annual billing (save 20%)\">"
+        },
+        {
+          "label": "disabled",
+          "source": "<input type=\"radio\" name=\"rd-3\" label=\"Lifetime (sold out)\" disabled>"
+        },
+        {
+          "label": "disabled and checked",
+          "source": "<input type=\"radio\" name=\"rd-4\" label=\"Current plan\" checked disabled>"
+        },
+        {
+          "label": "without a label",
+          "source": "<input type=\"radio\" name=\"rd-5\" checked aria-label=\"Selected\">"
+        }
+      ]
+    },
+    "x-range": {
+      "examples": [
+        {
+          "label": "percentage readout",
+          "source": "<input type=\"range\" min=\"0\" max=\"100\" value=\"72\" show-value value-suffix=\"%\">"
+        },
+        {
+          "label": "price readout",
+          "source": "<input type=\"range\" min=\"0\" max=\"500\" value=\"120\" show-value value-prefix=\"$\">"
+        },
+        {
+          "label": "min/max labels and readout",
+          "source": "<input type=\"range\" min=\"1\" max=\"10\" value=\"3\" show-labels show-value>"
+        }
+      ]
+    },
+    "x-dl": {
+      "examples": [
+        {
+          "label": "vertical",
+          "source": "<dl x-dl>\n  <dt>Version</dt><dd>4.2.0</dd>\n  <dt>License</dt><dd>MIT</dd>\n</dl>"
+        },
+        {
+          "label": "horizontal",
+          "source": "<dl x-dl variant=\"horizontal\">\n  <dt>Version</dt><dd>4.2.0</dd>\n  <dt>License</dt><dd>MIT</dd>\n  <dt>Size</dt><dd>38 KB</dd>\n</dl>"
+        },
+        {
+          "label": "bordered",
+          "source": "<dl x-dl bordered>\n  <dt>Status</dt><dd>Active</dd>\n  <dt>Owner</dt><dd>Platform team</dd>\n</dl>"
+        },
+        {
+          "label": "horizontal and striped",
+          "source": "<dl x-dl variant=\"horizontal\" striped>\n  <dt>CPU</dt><dd>8 cores</dd>\n  <dt>Memory</dt><dd>32 GB</dd>\n  <dt>Disk</dt><dd>1 TB</dd>\n  <dt>GPU</dt><dd>None</dd>\n</dl>"
+        },
+        {
+          "label": "wide gap",
+          "source": "<dl x-dl gap=\"2rem\">\n  <dt>Term one</dt><dd>Spaced well apart.</dd>\n  <dt>Term two</dt><dd>From each other.</dd>\n</dl>"
+        }
+      ]
+    },
+    "x-ol": {
+      "examples": [
+        {
+          "label": "numbered",
+          "source": "<ol x-ol>\n  <li>Clone</li>\n  <li>Install</li>\n  <li>Run</li>\n</ol>"
+        },
+        {
+          "label": "stepped",
+          "source": "<ol x-ol variant=\"stepped\">\n  <li>Create an account</li>\n  <li>Verify your email</li>\n  <li>Invite your team</li>\n</ol>"
+        },
+        {
+          "label": "timeline",
+          "source": "<ol x-ol variant=\"timeline\">\n  <li>Kickoff — March</li>\n  <li>Beta — June</li>\n  <li>Launch — September</li>\n</ol>"
+        },
+        {
+          "label": "roman numerals",
+          "source": "<ol x-ol number-type=\"upper-roman\">\n  <li>Introduction</li>\n  <li>Method</li>\n  <li>Results</li>\n</ol>"
+        },
+        {
+          "label": "letters, starting at c",
+          "source": "<ol x-ol number-type=\"lower-alpha\" start=\"3\">\n  <li>Third option</li>\n  <li>Fourth option</li>\n</ol>"
+        }
+      ]
+    },
+    "x-ul": {
+      "examples": [
+        {
+          "label": "bulleted",
+          "source": "<ul x-ul>\n  <li>Light DOM</li>\n  <li>No build</li>\n  <li>Composition</li>\n</ul>"
+        },
+        {
+          "label": "checklist",
+          "source": "<ul x-ul variant=\"checklist\">\n  <li>Tests pass</li>\n  <li>Docs updated</li>\n  <li>Changelog written</li>\n</ul>"
+        },
+        {
+          "label": "no markers",
+          "source": "<ul x-ul variant=\"none\">\n  <li>Home</li>\n  <li>Pricing</li>\n  <li>About</li>\n</ul>"
+        },
+        {
+          "label": "square markers",
+          "source": "<ul x-ul marker=\"square\">\n  <li>Alpha</li>\n  <li>Beta</li>\n  <li>Gamma</li>\n</ul>"
+        },
+        {
+          "label": "icon list",
+          "source": "<ul x-ul variant=\"icon-list\">\n  <li>Fast</li>\n  <li>Small</li>\n  <li>Accessible</li>\n</ul>"
+        }
       ]
     }
   }
