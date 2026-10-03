@@ -454,26 +454,39 @@ async function stopProcess(child) {
 }
 
 /**
- * Binds `bind` to a real holder process, lets that holder die, then gives its
- * record the PID of `stranger` -- exactly what the file looks like after the OS
- * recycles the dead holder's PID onto an unrelated live process.
+ * How long the simulated holder runs. A recycled PID can only go to a process
+ * started AFTER the holder died, so the stranger must start later than the
+ * holder by more than the coarsest start-time clock this runs on: Linux counts
+ * /proc starttime in 10ms ticks, and `ps -o lstart` has 1s resolution. CI
+ * caught the first version spawning both inside one tick.
  */
-async function recycleOnto(file, stranger, bind) {
+const HOLDER_LIFETIME_MS = 1100;
+
+/**
+ * Binds `bind` to a real holder process, lets that holder run and die, then
+ * starts an unrelated process and gives the holder's record its PID -- exactly
+ * what the file looks like after the OS recycles the dead holder's PID.
+ * @returns the stranger, which the caller must stop.
+ */
+async function recycleOntoStranger(file, bind) {
   const holder = startIdleProcess();
   try {
     await bind(holder.pid);
+    await new Promise((r) => setTimeout(r, HOLDER_LIFETIME_MS));
   } finally {
     await stopProcess(holder);
   }
+  const stranger = startIdleProcess();
   const record = JSON.parse(await readFile(file, "utf-8"));
   record.pid = stranger.pid;
   await writeFile(file, JSON.stringify(record, null, 2));
+  return stranger;
 }
 
 async function testRecycledPidDoesNotWedgeTheSuiteLock() {
   console.log("\nA suite lock whose PID now belongs to an unrelated live process is reclaimed:");
 
-  const stranger = startIdleProcess();
+  let stranger = null;
   try {
     await withTempDir(async (dir) => {
       const opts = { globalDir: dir, minFreeMb: 0, maxParallelSingle: 1 };
@@ -481,7 +494,7 @@ async function testRecycledPidDoesNotWedgeTheSuiteLock() {
       const b = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-B" });
 
       await a.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
-      await recycleOnto(a.lockFile, stranger, (pid) => a.bindSuiteLock(pid, { command: "npx playwright test" }));
+      stranger = await recycleOntoStranger(a.lockFile, (pid) => a.bindSuiteLock(pid, { command: "npx playwright test" }));
 
       const single = await b.acquireSingleSlot("tests/arriving.spec.ts");
       check("a single run is not held by the recycled PID", single !== null, `got: ${single}`);
@@ -493,14 +506,14 @@ async function testRecycledPidDoesNotWedgeTheSuiteLock() {
       check("the lock now records the new holder", held && held.root && held.root.includes("agent-B"), JSON.stringify(held));
     });
   } finally {
-    await stopProcess(stranger);
+    if (stranger) await stopProcess(stranger);
   }
 }
 
 async function testRecycledPidDoesNotWedgeASingleSlot() {
   console.log("\nA single-run slot whose PID now belongs to an unrelated live process is reaped:");
 
-  const stranger = startIdleProcess();
+  let stranger = null;
   try {
     await withTempDir(async (dir) => {
       const opts = { globalDir: dir, minFreeMb: 0, maxParallelSingle: 1 };
@@ -508,7 +521,7 @@ async function testRecycledPidDoesNotWedgeASingleSlot() {
       const b = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-B" });
 
       const slot = await a.acquireSingleSlot("tests/held.spec.ts");
-      await recycleOnto(slot, stranger, (pid) => a.bindSlot(slot, pid, "tests/held.spec.ts", new Date().toISOString()));
+      stranger = await recycleOntoStranger(slot, (pid) => a.bindSlot(slot, pid, "tests/held.spec.ts", new Date().toISOString()));
 
       const denied = await b.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
       check("a suite is not held by the recycled slot", denied === null, denied);
@@ -518,7 +531,7 @@ async function testRecycledPidDoesNotWedgeASingleSlot() {
       check("a single run reaps the recycled slot", next !== null, `got: ${next}`);
     });
   } finally {
-    await stopProcess(stranger);
+    if (stranger) await stopProcess(stranger);
   }
 }
 
