@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.120",
+      "date": "2026-10-03",
+      "summary": "Two regression tests that only fail under the release gate&#39;s load (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1303\" target=\"_blank\" rel=\"noopener\">PR 1303</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Two regression tests that failed only under the release gate&#39;s load</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1302\" target=\"_blank\" rel=\"noopener\">#1302</a>",
+          "issues": [
+            1302
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.119",
       "date": "2026-10-02",
       "summary": "Fix: on a phone the list and the example take turns (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1294\" target=\"_blank\" rel=\"noopener\">PR 1294</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1138\" target=\"_blank\" rel=\"noopener\">#1138</a>",
