@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.139",
+      "date": "2026-10-03",
+      "summary": "Fix: the Issues activity spec can run -- its mock reaches the page, and its link exists (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1348\" target=\"_blank\" rel=\"noopener\">PR 1348</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Issues activity spec can run -- its mock reaches the page, and its link exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1118
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.138",
       "date": "2026-10-03",
       "summary": "Fix: a recycled PID no longer wedges the machine-wide test lock (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1318\" target=\"_blank\" rel=\"noopener\">PR 1318</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
