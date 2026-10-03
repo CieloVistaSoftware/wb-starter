@@ -38,6 +38,7 @@ import { fileURLToPath } from "url";
 import { createGuards, isProcessRunning } from "./lib/test-lock.mjs";
 import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
 import { classifyRun, readServerLogPort } from "./lib/server-down.mjs";
+import { playwrightInvocation } from "./lib/playwright-launch.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -317,10 +318,13 @@ async function runMonitor(args) {
     return run;
   };
 
-  // Spawn Playwright with pipes so we can read output
-  const proc = spawn("npx", cmdArgs, {
+  // Spawn Playwright with pipes so we can read output. No shell (#1194): a shell
+  // re-parses the joined arguments, so a --grep pattern with "|" became a pipe and
+  // one with spaces became several arguments. The argument array goes straight to
+  // Playwright's own CLI instead.
+  const { command: playwrightCommand, args: playwrightArgs } = playwrightInvocation(cmdArgs);
+  const proc = spawn(playwrightCommand, playwrightArgs, {
     cwd: ROOT,
-    shell: true,
     env: { ...process.env, FORCE_COLOR: "0", WB_SERVER_LOG: serverLog },
     stdio: ["ignore", "pipe", "pipe"],
   });
