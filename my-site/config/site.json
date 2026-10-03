@@ -1,0 +1,37 @@
+{
+  "branding": {
+    "companyName": "Cielo Vista Software",
+    "headerSubtitle": "Built with wb-starter",
+    "browserTabIcon": "assets/icons/favicon.svg",
+    "colorTheme": "dark",
+    "autoInjectComponents": true
+  },
+  "headerSettings": {
+    "displayHeaderLogo": true,
+    "displayThemeSwitcher": true,
+    "displaySearchBar": false,
+    "keepHeaderAtTop": true,
+    "displayVersionBadge": false,
+    "displayPlaygroundLink": false,
+    "displayNotesButton": false
+  },
+  "navigationMenu": [
+    { "menuItemId": "home", "menuItemText": "Home", "menuItemEmoji": "🏠", "pageToLoad": "home" },
+    { "menuItemId": "about", "menuItemText": "About", "menuItemEmoji": "ℹ️", "pageToLoad": "about" }
+  ],
+  "navigationLayout": {
+    "navigationPosition": "left",
+    "navigationWidth": "fit-content",
+    "navigationCanCollapse": true,
+    "navigationStartCollapsed": false
+  },
+  "footerSettings": {
+    "footerCopyrightText": "© 2026 Cielo Vista Software",
+    "displaySocialMediaLinks": false
+  },
+  "searchEngineOptimization": {
+    "pageTitle": "Cielo Vista Software",
+    "pageDescription": "Cielo Vista Software -- built with wb-starter.",
+    "seoKeywords": []
+  }
+}

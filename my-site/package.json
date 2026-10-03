@@ -1,0 +1,14 @@
+{
+  "name": "my-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cielo Vista Software -- a website built with wb-starter.",
+  "type": "module",
+  "scripts": {
+    "start": "wb-starter serve",
+    "build": "wb-starter build"
+  },
+  "dependencies": {
+    "wb-starter": "^1.0.0"
+  }
+}

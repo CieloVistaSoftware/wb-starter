@@ -444,9 +444,28 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
   the repo or a real remote URL — is not "illustrative," it's a broken control that ships (2026-08-15
   retrospective: this exact mistake caused 9+ separate issues in one week, #610/#605/#601/#551/#548/#529/
   #526/#519/#514).
-- Use real remote assets: `/images/placeholder.svg` for images (distinct `n` per
-  example, ≥800px on the short edge so it doesn't look blurry when cropped into a card), a real hosted
-  sample for audio/video (this codebase's established convention is soundhelix.com for audio).
+- **Media sources are REMOTE, images included.** #762, and John again on 2026-09-13:
+  "NO LOCAL IMAGES". A `src` in an example points at a URL on the internet, never at
+  a path in this repo. The convention is `upload.wikimedia.org` (Wikimedia Commons):
+  stable, real subjects, a permissive licence, and no API key.
+- **The image must be OF the thing the example is about.** An example captioned
+  "Fishing boats at the harbour wall" shows fishing boats; one captioned "Dachshund
+  puppy" shows a dachshund puppy. A single placeholder repeated everywhere teaches
+  nothing and hides the layout bugs that only appear at real aspect ratios. Verify
+  each URL returns 200 before committing it.
+- **Audio and video the same way**, from the same host. There is no separate rule for
+  them and no local sample committed to the repo.
+- **THIS REPLACES THE RULE THAT CAUSED #1122, TWICE.** This section used to read "use
+  real remote assets" and then offer `/images/placeholder.svg` -- a LOCAL path -- as its
+  own example, followed by a dangling note about a "distinct `n` per example" for a URL
+  scheme that was no longer named anywhere. Everyone adding an image followed the rule
+  as written, so one filename accounted for most of the local sources in the repo. The
+  doc viewer resolves a relative path against `/public/`, so each became a 404;
+  `media-load-retry.js` then retried five times and threw uncaught, putting three entries
+  in the error log per image, and `compliance/error-log-empty.spec.ts` fails on a non-empty
+  log -- so a release could not be cut. The media was fixed once in September and
+  regrew to 45 references, because only the code was changed and this paragraph was
+  not. That is the whole lesson of #1115: rewrite the rule or the defect comes back.
 - Never invent a local path unless the file is actually committed to the repo at that exact path — verify
   with a file-existence check, not by eye.
 - Test: `tests/compliance/docs-live-media-assets-exist.spec.ts` (markdown docs),

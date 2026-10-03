@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Read before any script runs (search engines, link previews, the tab
+       title while loading). Keep it in step with
+       config/site.json → searchEngineOptimization. -->
+  <title>Cielo Vista Software</title>
+  <meta name="description" content="Cielo Vista Software -- built with wb-starter.">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <!-- wb-starter's runtime (src/, assets/) comes from the wb-starter package:
+       `npm start` serves it underneath this folder, and `npm run build` copies
+       it into dist/. Your own files always win over the package's. -->
+  <link rel="stylesheet" href="src/styles/normalize.css">
+  <link rel="stylesheet" href="src/styles/themes.css">
+  <link rel="stylesheet" href="src/styles/site.css">
+  <link rel="stylesheet" href="styles/site.css">
+</head>
+<body>
+  <!-- The header, navigation and footer are built from config/site.json, and
+       each menu item loads pages/<name>.html into the page. To add a page:
+       create pages/<name>.html and add it to navigationMenu. -->
+  <div id="app" class="site">
+    <div class="site__loading">
+      <span x-spinner color="primary"></span>
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <template id="error-template">
+    <div class="site__error">
+      <h1>Unable to Load Site</h1>
+      <p>Could not load config/site.json.</p>
+      <button onclick="location.reload()" class="error__retry">Retry</button>
+    </div>
+  </template>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

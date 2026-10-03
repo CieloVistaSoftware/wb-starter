@@ -10,7 +10,7 @@
           "file": "guides/create-a-website.md",
           "title": "How to Create a Website with wb-starter",
           "description": "npm create wb-starter: create, run, edit, add pages, publish and update a site",
-          "modified": "2026-09-30"
+          "modified": "2026-10-02"
         },
         {
           "file": "V3-GUIDE.md",
@@ -40,7 +40,7 @@
           "file": "claude/TIER1-LAWS.md",
           "title": "Tier 1 Laws",
           "description": "Core architectural laws and principles",
-          "modified": "2026-10-01"
+          "modified": "2026-10-02"
         },
         {
           "file": "claude/TIER2-DOMAIN-GUIDES.md",
@@ -88,7 +88,7 @@
           "file": "claude/TOOLING-INVENTORY.md",
           "title": "Tooling Inventory — What This Repo Already Has",
           "description": "Read this before writing any new tooling.",
-          "modified": "2026-09-30"
+          "modified": "2026-10-02"
         }
       ]
     },
@@ -460,7 +460,7 @@
           "file": "behaviors/clock.md",
           "title": "Clock",
           "description": "x-clock shows the current time in the element and updates it every second.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/cluster.md",
@@ -1246,7 +1246,7 @@
           "file": "testing-runbook.md",
           "title": "Testing Runbook",
           "description": "Step-by-step testing procedures",
-          "modified": "2026-09-29"
+          "modified": "2026-10-02"
         }
       ]
     },
@@ -1360,7 +1360,7 @@
           "file": "committing-fixes.md",
           "title": "Committing Fixes",
           "description": "Guidelines for committing fixes",
-          "modified": "2026-09-29"
+          "modified": "2026-10-02"
         },
         {
           "file": "npx-commands.md",
@@ -1408,7 +1408,7 @@
           "file": "standards/RELEASE-PROCESS.md",
           "title": "Release Process Standards",
           "description": "Every version number this project shows anyone MUST be traceable to a written list of what it contains.",
-          "modified": "2026-09-29"
+          "modified": "2026-10-02"
         }
       ]
     },
@@ -1540,7 +1540,7 @@
           "file": "claude/SCHEMAS-GUIDE.md",
           "title": "Schemas Guide",
           "description": "Claude guide for working with schemas",
-          "modified": "2026-09-29"
+          "modified": "2026-10-02"
         },
         {
           "file": "claude/TIER3-REFERENCE.md",

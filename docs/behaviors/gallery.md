@@ -6,10 +6,10 @@
 
 <div x-demo>
 <div x-gallery columns="4">
-  <img src="../../images/placeholder.svg" alt="Gallery 1">
-  <img src="../../images/placeholder.svg" alt="Gallery 2">
-  <img src="../../images/placeholder.svg" alt="Gallery 3">
-  <img src="../../images/placeholder.svg" alt="Gallery 4">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg" alt="Gallery 1">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg" alt="Gallery 2">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Utah_Dunes_Landscape_-_West_Desert_District.jpg/1280px-Utah_Dunes_Landscape_-_West_Desert_District.jpg" alt="Gallery 3">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Frederic_Edwin_Church_-_Aurora_Borealis_-_Google_Art_Project.jpg/1280px-Frederic_Edwin_Church_-_Aurora_Borealis_-_Google_Art_Project.jpg" alt="Gallery 4">
 </div>
 </div>
 

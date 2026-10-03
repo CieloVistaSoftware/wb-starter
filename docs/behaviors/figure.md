@@ -6,7 +6,7 @@ A plain `<figure>` gets image handling: clicking the image opens it in a lightbo
 
 <div x-demo>
 <figure>
-  <img src="../../images/placeholder.svg" alt="Suspension bridge in fog">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg" alt="Suspension bridge in fog">
   <figcaption>The 6am crossing, before the fog lifted.</figcaption>
 </figure>
 </div>

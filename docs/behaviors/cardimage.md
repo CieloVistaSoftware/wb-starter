@@ -6,7 +6,7 @@
 
 <div x-demo>
 <article x-cardimage
-  src="../../images/placeholder.svg"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg/1280px-Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg"
   alt="Fishing boats at the harbour wall"
   title="Harbour at first light"
   caption="Shot on the 6am walk-around."></article>

@@ -8,10 +8,18 @@
  */
 export const VERSION = {
   "version": "1.0.0",
-  "commit": "ad60702f",
-  "builtAt": "2026-10-03T01:08:40.680Z",
+  "commit": "f0ed18ca",
+  "builtAt": "2026-10-03T01:42:51.974Z",
   "branch": "main",
-  "dirty": false,
+  "dirty": true,
+  "dirtyFiles": [
+    "data/schema-index.json",
+    "demos/autoinject.html",
+    "demos/playground.html",
+    "demos/site/cards.html",
+    "docs/WB_BEHAVIOR_SYSTEM.md"
+  ],
+  "dirtyCount": 34,
   "ahead": 0,
   "behind": 0,
   "upstream": "origin/main",

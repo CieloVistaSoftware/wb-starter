@@ -353,7 +353,7 @@
     function rootRelativeAssetsInMarkdown(md) {
       // A doc's RELATIVE asset paths are relative to the DOC, not this page.
       //
-      // docs/behaviors/avatar.md writes src="../../images/placeholder.svg" --
+      // docs/behaviors/avatar.md writes src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg" --
       // correct from docs/behaviors/ on disk, on GitHub and in doc-viewer.html
       // (whose rebaseDocResources() resolves against the doc's directory). This
       // panel renders that markup into a page served at the SITE root, so the

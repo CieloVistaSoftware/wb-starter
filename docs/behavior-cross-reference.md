@@ -3403,7 +3403,7 @@ Image card:
 
 <div x-demo>
 <div x-cardimage
-  src="../images/placeholder.svg"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg/1280px-Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg"
   title="Beautiful Sunset"
   alt="Sunset over mountains">
 </div>
@@ -3437,7 +3437,7 @@ Product card:
 
 <div x-demo>
 <div x-cardproduct
-  image="../images/placeholder.svg"
+  image="../https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Widget Pro"
   price="$99.99"
   rating="4.5"
@@ -3463,7 +3463,7 @@ Testimonial card:
   quote="This product changed everything!"
   author="John Smith"
   role="CEO, TechCorp"
-  avatar="../images/placeholder.svg">
+  avatar="../https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg">
 </div>
 </div>
 
@@ -3473,7 +3473,7 @@ Hero card:
 <div x-cardhero
   title="Welcome"
   subtitle="Get started today"
-  image="../images/placeholder.svg"
+  image="../https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   cta="Learn More"
   href="/start">
 </div>
@@ -3484,7 +3484,7 @@ Video card:
 <div x-demo>
 <div x-cardvideo
   src="https://www.w3schools.com/html/mov_bbb.mp4"
-  poster="images/placeholder.svg"
+  poster="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Product Demo">
 </div>
 </div>
@@ -3515,7 +3515,7 @@ Portfolio card:
 
 <div x-demo>
 <div x-cardportfolio
-  image="../images/placeholder.svg"
+  image="../https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="E-commerce Redesign"
   category="Web Design"
   href="/portfolio/ecommerce">
@@ -3537,7 +3537,7 @@ Horizontal card:
 
 <div x-demo>
 <div x-cardhorizontal
-  image="../images/placeholder.svg"
+  image="../https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Article Title"
   description="Brief description of the article...">
 </div>
@@ -3547,7 +3547,7 @@ Overlay card:
 
 <div x-demo>
 <div x-cardoverlay
-  image="../images/placeholder.svg"
+  image="../https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   title="Overlay Title"
   subtitle="Text appears over the image">
 </div>
