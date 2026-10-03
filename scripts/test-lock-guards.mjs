@@ -604,6 +604,54 @@ async function testMemoryFloor() {
   });
 }
 
+// ─── #1321: A WAITING SUITE IS NOT STARVED ─────────────────────────
+async function testWaitingSuiteIsNotStarved() {
+  console.log("\nA suite refused by running singles keeps its place (#1321):");
+
+  await withTempDir(async (dir) => {
+    const [a, b] = twoWorktrees(dir, { maxParallelSingle: 2 });
+
+    const running = await a.acquireSingleSlot("tests/running.spec.ts");
+    check("a single run is on the machine", running !== null);
+
+    const refused = await b.acquireSuiteLock(new Date().toISOString(), "suite B");
+    check("a suite arriving now is refused", typeof refused === "string", refused);
+    check("the refusal says the suite is now reserved", /reserved/.test(refused || ""), refused);
+
+    // The defect: a free slot used to admit this, and singles kept arriving.
+    const arriving = await a.acquireSingleSlot("tests/arriving.spec.ts");
+    check("a NEW single is held back while the suite waits", arriving === null, `got: ${arriving}`);
+
+    await a.releaseSlot(running);
+    const taken = await b.acquireSuiteLock(new Date().toISOString(), "suite B");
+    check("once the running single finishes, the waiting suite gets the machine", taken === null, taken);
+    check("taking the machine clears the reservation", (await b.readReservation()) === null);
+    await b.removeLock();
+
+    const after = await a.acquireSingleSlot("tests/after.spec.ts");
+    check("after the suite, singles are admitted again", after !== null);
+  });
+
+  await withTempDir(async (dir) => {
+    const [a, b] = twoWorktrees(dir, { maxParallelSingle: 2, reserveTtlMs: 50 });
+    await a.acquireSingleSlot("tests/running.spec.ts");
+    await b.acquireSuiteLock(new Date().toISOString(), "suite B");
+    await new Promise((r) => setTimeout(r, 120));
+    const late = await a.acquireSingleSlot("tests/late.spec.ts");
+    check("a reservation nobody refreshes expires: singles flow again", late !== null, `got: ${late}`);
+  });
+
+  await withTempDir(async (dir) => {
+    const [a, b] = twoWorktrees(dir, { maxParallelSingle: 2, staleCheckMs: 50 });
+    await a.acquireSingleSlot("tests/running.spec.ts");
+    const why = await b.acquireSuiteLockOnRelease(new Date().toISOString(), "suite B", null, { timeoutMs: 100 });
+    check("a waiting suite that reaches its deadline gives up", typeof why === "string", why);
+    check("a suite that gave up leaves no reservation behind", (await b.readReservation()) === null);
+    const next = await a.acquireSingleSlot("tests/next.spec.ts");
+    check("so singles are not held back by a suite that left", next !== null, `got: ${next}`);
+  });
+}
+
 // ─── RUN ───────────────────────────────────────────────────────────
 console.log("🔒 test-lock guards — regression tests for #651");
 
@@ -625,6 +673,7 @@ await testRecycledPidDoesNotWedgeTheSuiteLock();
 await testRecycledPidDoesNotWedgeASingleSlot();
 await testLiveHolderIsStillHonoured();
 await testMemoryFloor();
+await testWaitingSuiteIsNotStarved();
 
 console.log(`\n${failed === 0 ? "✅" : "❌"} ${passed} passed, ${failed} failed`);
 process.exit(failed === 0 ? 0 : 1);
