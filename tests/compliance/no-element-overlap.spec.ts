@@ -85,7 +85,29 @@ test.describe('No element overlap (§22) — project-wide detection', () => {
         + 'page to overlap.',
       ).toBeLessThan(400);
 
-      await page.waitForTimeout(800); // settle lazy/eager scan + layout
+      // #1306: settle on SIGNALS, not on elapsed time. A fixed 800 ms sleep let the
+      // sweep read a <details> mid-entrance on a slow runner: its content is animated
+      // in (detailsOpen: translateY(-5px) -> 0, 0.2s), so a sample taken while the
+      // animation was young reported the summary overlapping its own content
+      // (316x4px on pages/behaviors.html, about 1 run in 40 under load). Reproduced
+      // deterministically by stretching that animation to 60s: the unfixed spec fails
+      // with exactly the nightly's message, this one passes.
+      // WB.whenIdle() covers the lazy/eager scan; the loop waits for finite animations
+      // and transitions to END. Infinite ones (spinners, rainbow) never finish, so
+      // they are skipped, not awaited.
+      await page.evaluate(async () => {
+        const w = window as unknown as { WB?: { whenIdle?: () => Promise<unknown> } };
+        if (w.WB && typeof w.WB.whenIdle === 'function') await w.WB.whenIdle();
+        await document.fonts.ready;
+        for (let round = 0; round < 5; round += 1) {
+          const running = document.getAnimations().filter((a) => {
+            const timing = a.effect && a.effect.getComputedTiming();
+            return !!timing && Number.isFinite(timing.endTime) && a.playState === 'running';
+          });
+          if (!running.length) break;
+          await Promise.all(running.map((a) => a.finished.catch(() => undefined)));
+        }
+      });
 
       const violations = await page.evaluate((minOverlapDim) => {
         const problems: string[] = [];
