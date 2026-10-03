@@ -269,13 +269,14 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Lock, gate, suite-env, ship-rollback and control-byte guards
+      - name: Lock, gate, suite-env, ship-rollback, control-byte and launcher guards
         run: |
           npm run test:lock-guards
           npm run test:gate-guards
           npm run test:suite-env
           npm run test:ship-rollback
           npm run test:staged-control-bytes
+          npm run test:playwright-launch
 
   playwright:
     name: Playwright Tests
