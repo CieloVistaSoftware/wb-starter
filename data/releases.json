@@ -6,6 +6,17 @@
   ],
   "releases": [
     {
+      "version": "1.0.134",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Restore the page-loading markup my rebase clobbered</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.133",
       "date": "2026-10-03",
       "summary": "",
