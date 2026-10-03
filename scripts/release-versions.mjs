@@ -30,6 +30,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { esc, issueLinks, itemFor } from './lib/release-item.mjs';
 import { ANCHOR, STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
+import { releaseDate } from './lib/release-date.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data', 'releases.json');
@@ -111,7 +112,7 @@ spine.forEach((c, i) => {
     const text = t.title.replace(/\s*\((?:#\d+[,\s/]*)+\)|\s*#\d+\b/g, '').trim();
     return `${esc(text.charAt(0).toUpperCase() + text.slice(1))} (${prLink(t.pr)})${refs.length ? ' ' + issueLinks(refs) : ''}`;
   }).join(' · ');
-  entries.push({ version: versionOf(count), date: last.date.slice(0, 10), summary, items });
+  entries.push({ version: versionOf(count), date: releaseDate(last.date), summary, items });
 });
 
 entries.reverse(); // newest first, as the page lists them
