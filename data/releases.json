@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.124",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The attribute naming standard now says what was actually ruled</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1125\" target=\"_blank\" rel=\"noopener\">#1125</a>",
+          "issues": [
+            1125
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.123",
       "date": "2026-10-03",
       "summary": "Fix: a stopped server is one error, not one per file (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1301\" target=\"_blank\" rel=\"noopener\">PR 1301</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1291\" target=\"_blank\" rel=\"noopener\">#1291</a>",
