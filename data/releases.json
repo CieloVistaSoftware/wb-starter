@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.119",
+      "date": "2026-10-02",
+      "summary": "Fix: on a phone the list and the example take turns (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1294\" target=\"_blank\" rel=\"noopener\">PR 1294</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1138\" target=\"_blank\" rel=\"noopener\">#1138</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Example controls on one row, so the demo starts at 140px</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1138\" target=\"_blank\" rel=\"noopener\">#1138</a>",
+          "issues": [
+            1138
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>On a phone the list and the example take turns</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1138\" target=\"_blank\" rel=\"noopener\">#1138</a>",
+          "issues": [
+            1138
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.118",
       "date": "2026-10-02",
       "summary": "Fix: a release&#39;s date is the calendar date in one timezone (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1288\" target=\"_blank\" rel=\"noopener\">PR 1288</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1287\" target=\"_blank\" rel=\"noopener\">#1287</a>",
