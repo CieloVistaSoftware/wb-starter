@@ -717,6 +717,10 @@ test.describe('Cards Showcase Page', () => {
       const content = expandCard.locator('.x-card__expandable-content');
       await expect(btn).toBeVisible();
       await expect(content).toBeAttached();
+      // The button is painted before the behavior has bound its click: wait
+      // for x-ready, or under full-suite load the click lands on a button
+      // that does nothing yet (#1304).
+      await expect(expandCard).toHaveAttribute('x-ready', '');
 
       // Computed, not el.style: since #779 the height is set through the
       // --x-card-expandable-max-height custom property, so style.maxHeight
