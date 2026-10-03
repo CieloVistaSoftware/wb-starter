@@ -15,7 +15,7 @@
  *   list view    -- one-row header, compact search, the list in the page's
  *                   single scroll, no example
  *   example view -- a tap shows the example near the top of the screen with
- *                   Back/API/Docs/Fullscreen in its own header; Back returns
+ *                   Back/API/Docs/Fullscreen on ONE row above it; Back returns
  *                   to the list at the row that was open
  * Desktop is unchanged: both columns, tools in the site header, no Back.
  *
@@ -103,6 +103,7 @@ for (const [name, viewport] of PHONES) {
         return {
           vh: innerHeight,
           vw: innerWidth,
+          headH: r('.behaviors-live__head').height,
           stageTop: r('#behaviors-live-stage').top,
           stageBottom: r('#behaviors-live-stage').bottom,
           exampleRight: ex.getBoundingClientRect().right,
@@ -114,8 +115,12 @@ for (const [name, viewport] of PHONES) {
         };
       });
 
-      expect(shown.stageTop, 'the example must start in the top third of the screen')
-        .toBeLessThan(shown.vh / 3);
+      // John, second pass: "Still too much vertical space. I want more demo
+      // showing." Back/API/Docs/Fullscreen are ONE row, and the example starts
+      // right under the two headers -- measured 140px at 360x800.
+      expect(shown.headH, 'the example controls must be a single row').toBeLessThan(80);
+      expect(shown.stageTop, 'the example must start right under the headers')
+        .toBeLessThan(160);
       expect(shown.stageBottom, 'the example must be on the first screen').toBeLessThanOrEqual(shown.vh);
       expect(shown.exampleRight, 'the example must not be cut off at the right edge')
         .toBeLessThanOrEqual(shown.vw);

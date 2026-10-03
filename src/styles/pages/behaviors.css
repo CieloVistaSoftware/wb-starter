@@ -2368,7 +2368,7 @@ body:has(#behaviors-live-api[open]) #behaviors-live-doc-body {
   #behaviors-live-back,
   #behaviors-live-fullscreen,
   #behaviors-live .behaviors-live__head summary {
-    padding: 0 var(--space-sm, 0.5rem);
+    padding: 0 var(--space-xs, 0.25rem);
   }
 
   /* Back in the example header, Docs is a chip beside API again. #666 flattened
@@ -2394,16 +2394,29 @@ body:has(#behaviors-live-api[open]) #behaviors-live-doc-body {
   /* The ID because a <header> is auto-injected as x-header, whose
      space-between flung Docs to the far edge and pushed Fullscreen onto a
      third row; header.css is injected at runtime, after this sheet. */
+  /* ONE control row: Back, API, Docs, Fullscreen -- four 44px controls in a
+     340px strip, so 0.25rem between them. */
   #behaviors-live .behaviors-live__head {
     justify-content: flex-start;
-    gap: var(--space-sm, 0.5rem);
+    flex-wrap: nowrap;
+    gap: var(--space-xs, 0.25rem);
     padding: var(--space-sm, 0.5rem);
   }
 
-  /* Back and the token on one row, API/Docs/Fullscreen on the next. The note
-     ("Visual style variant") was a third row; Docs says the same at length. */
-  .behaviors-live__head .behaviors-live__note {
+  /* John, second pass: "Still too much vertical space. I want more demo
+     showing." The note ("Visual
+     style variant") and the token ("article . glass") each cost a row; the
+     HTML panel directly under the example already names what is showing,
+     and Docs carries the note at length. */
+  .behaviors-live__head .behaviors-live__note,
+  .behaviors-live__head .behaviors-live__token {
     display: none;
+  }
+
+  /* Back is an arrow; its name is on aria-label. */
+  #behaviors-live-back {
+    min-width: 2.75rem;
+    justify-content: center;
   }
 
   .behaviors-live__head .behaviors-live__fullscreen {
@@ -2424,13 +2437,9 @@ body:has(#behaviors-live-api[open]) #behaviors-live-doc-body {
     overflow-x: auto;
   }
 
-  /* The token names what is showing; it takes the rest of the Back row. */
-  .behaviors-live__head .behaviors-live__token {
-    flex: 1 1 auto;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  /* Main's 1rem top padding sat between the header and the example. */
+  main.site__main:has(#mainPage-behaviors) {
+    padding-top: var(--space-sm, 0.5rem);
   }
 }
 
