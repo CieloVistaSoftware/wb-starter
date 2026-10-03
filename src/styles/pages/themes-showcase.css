@@ -62,13 +62,27 @@
   gap: 1.5rem;
 }
 
+/* Each card is a <button data-theme="<id>"> generated from the theme registry
+   (#1025): the theme's own variables apply inside it, so the card previews
+   that theme. The button resets keep it looking like a card. */
 .theme-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--text-primary);
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.theme-card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .theme-card:hover {
@@ -82,6 +96,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  background: var(--bg-primary);
 }
 
 .theme-card__colors {
@@ -102,6 +117,8 @@
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .sample-text {
@@ -111,18 +128,22 @@
 }
 
 .theme-card__info {
+  display: block;
   padding: 1rem;
   border-top: 1px solid var(--border-color);
   background: var(--bg-tertiary);
 }
 
-.theme-card__info h3 {
+.theme-card__name {
+  display: block;
   margin: 0 0 0.25rem;
   font-size: 1rem;
+  font-weight: 600;
   color: var(--text-primary);
 }
 
-.theme-card__info p {
+.theme-card__description {
+  display: block;
   margin: 0 0 0.5rem;
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -629,8 +650,9 @@ input:focus, select:focus {
 /* ─────────────────────────────────────────────────────────────────────────
    Values that used to be style="..." attributes in pages/themes.html (#779).
    No inline styles anywhere: each swatch's colour is a fixed illustration of
-   a specific theme or harmony, so it lives here keyed on the card's own hook
-   (preview-theme / the harmony modifier) and position, not on the element.
+   a specific harmony, so it lives here keyed on the harmony modifier and
+   position, not on the element. Theme cards need none: they render in their
+   own data-theme (#1025).
    ───────────────────────────────────────────────────────────────────────── */
 
 .hcs-wave--primary { --hue: 240; }
@@ -758,393 +780,9 @@ input:focus, select:focus {
   background: hsl(20, 60%, 50%);
 }
 
-.theme-card[preview-theme="dark"] .theme-card__colors span:nth-child(1) {
-  background: hsl(240, 70%, 50%);
-}
-
-.theme-card[preview-theme="dark"] .theme-card__colors span:nth-child(2) {
-  background: hsl(60, 60%, 50%);
-}
-
-.theme-card[preview-theme="dark"] .theme-card__colors span:nth-child(3) {
-  background: hsl(210, 60%, 50%);
-}
-
-.theme-card[preview-theme="dark"] .theme-card__sample {
-  background: hsl(220, 25%, 10%);
-  color: hsl(0, 0%, 98%);
-}
-
-.theme-card[preview-theme="light"] .theme-card__colors span:nth-child(1) {
-  background: hsl(240, 70%, 50%);
-}
-
-.theme-card[preview-theme="light"] .theme-card__colors span:nth-child(2) {
-  background: hsl(60, 60%, 45%);
-}
-
-.theme-card[preview-theme="light"] .theme-card__colors span:nth-child(3) {
-  background: hsl(210, 60%, 50%);
-}
-
-.theme-card[preview-theme="light"] .theme-card__sample {
-  background: hsl(0, 0%, 98%);
-  color: hsl(220, 25%, 15%);
-}
-
-.theme-card[preview-theme="cyberpunk"] .theme-card__colors span:nth-child(1) {
-  background: hsl(320, 100%, 50%);
-}
-
-.theme-card[preview-theme="cyberpunk"] .theme-card__colors span:nth-child(2) {
-  background: hsl(180, 100%, 50%);
-}
-
-.theme-card[preview-theme="cyberpunk"] .theme-card__colors span:nth-child(3) {
-  background: hsl(290, 90%, 50%);
-}
-
-.theme-card[preview-theme="cyberpunk"] .theme-card__sample {
-  background: hsl(270, 40%, 8%);
-  color: hsl(180, 100%, 95%);
-}
-
-.theme-card[preview-theme="ocean"] .theme-card__colors span:nth-child(1) {
-  background: hsl(200, 80%, 50%);
-}
-
-.theme-card[preview-theme="ocean"] .theme-card__colors span:nth-child(2) {
-  background: hsl(230, 80%, 50%);
-}
-
-.theme-card[preview-theme="ocean"] .theme-card__colors span:nth-child(3) {
-  background: hsl(170, 70%, 45%);
-}
-
-.theme-card[preview-theme="ocean"] .theme-card__sample {
-  background: hsl(200, 40%, 10%);
-  color: hsl(200, 20%, 95%);
-}
-
-.theme-card[preview-theme="sunset"] .theme-card__colors span:nth-child(1) {
-  background: hsl(25, 90%, 55%);
-}
-
-.theme-card[preview-theme="sunset"] .theme-card__colors span:nth-child(2) {
-  background: hsl(145, 80%, 45%);
-}
-
-.theme-card[preview-theme="sunset"] .theme-card__colors span:nth-child(3) {
-  background: hsl(265, 70%, 55%);
-}
-
-.theme-card[preview-theme="sunset"] .theme-card__sample {
-  background: hsl(15, 30%, 10%);
-  color: hsl(40, 30%, 95%);
-}
-
-.theme-card[preview-theme="forest"] .theme-card__colors span:nth-child(1) {
-  background: hsl(140, 60%, 45%);
-}
-
-.theme-card[preview-theme="forest"] .theme-card__colors span:nth-child(2) {
-  background: hsl(320, 55%, 50%);
-}
-
-.theme-card[preview-theme="forest"] .theme-card__colors span:nth-child(3) {
-  background: hsl(20, 60%, 50%);
-}
-
-.theme-card[preview-theme="forest"] .theme-card__sample {
-  background: hsl(140, 30%, 8%);
-  color: hsl(80, 20%, 95%);
-}
-
-.theme-card[preview-theme="midnight"] .theme-card__colors span:nth-child(1) {
-  background: hsl(230, 85%, 35%);
-}
-
-.theme-card[preview-theme="midnight"] .theme-card__colors span:nth-child(2) {
-  background: hsl(230, 75%, 50%);
-}
-
-.theme-card[preview-theme="midnight"] .theme-card__colors span:nth-child(3) {
-  background: hsl(230, 60%, 65%);
-}
-
-.theme-card[preview-theme="midnight"] .theme-card__sample {
-  background: hsl(230, 40%, 6%);
-  color: hsl(230, 30%, 95%);
-}
-
-.theme-card[preview-theme="sakura"] .theme-card__colors span:nth-child(1) {
-  background: hsl(340, 70%, 70%);
-}
-
-.theme-card[preview-theme="sakura"] .theme-card__colors span:nth-child(2) {
-  background: hsl(70, 60%, 60%);
-}
-
-.theme-card[preview-theme="sakura"] .theme-card__colors span:nth-child(3) {
-  background: hsl(160, 50%, 60%);
-}
-
-.theme-card[preview-theme="sakura"] .theme-card__sample {
-  background: hsl(350, 25%, 96%);
-  color: hsl(340, 40%, 20%);
-}
-
-.theme-card[preview-theme="arctic"] .theme-card__colors span:nth-child(1) {
-  background: hsl(190, 75%, 65%);
-}
-
-.theme-card[preview-theme="arctic"] .theme-card__colors span:nth-child(2) {
-  background: hsl(210, 70%, 60%);
-}
-
-.theme-card[preview-theme="arctic"] .theme-card__colors span:nth-child(3) {
-  background: hsl(170, 65%, 55%);
-}
-
-.theme-card[preview-theme="arctic"] .theme-card__sample {
-  background: hsl(190, 20%, 95%);
-  color: hsl(200, 40%, 20%);
-}
-
-.theme-card[preview-theme="desert"] .theme-card__colors span:nth-child(1) {
-  background: hsl(35, 65%, 60%);
-}
-
-.theme-card[preview-theme="desert"] .theme-card__colors span:nth-child(2) {
-  background: hsl(45, 60%, 55%);
-}
-
-.theme-card[preview-theme="desert"] .theme-card__colors span:nth-child(3) {
-  background: hsl(15, 55%, 55%);
-}
-
-.theme-card[preview-theme="desert"] .theme-card__sample {
-  background: hsl(40, 25%, 92%);
-  color: hsl(30, 40%, 20%);
-}
-
-.theme-card[preview-theme="neon-dreams"] .theme-card__colors span:nth-child(1) {
-  background: hsl(280, 95%, 55%);
-}
-
-.theme-card[preview-theme="neon-dreams"] .theme-card__colors span:nth-child(2) {
-  background: hsl(320, 95%, 55%);
-}
-
-.theme-card[preview-theme="neon-dreams"] .theme-card__colors span:nth-child(3) {
-  background: hsl(240, 90%, 60%);
-}
-
-.theme-card[preview-theme="neon-dreams"] .theme-card__sample {
-  background: hsl(270, 35%, 8%);
-  color: hsl(280, 50%, 95%);
-}
-
-.theme-card[preview-theme="retro-wave"] .theme-card__colors span:nth-child(1) {
-  background: hsl(330, 85%, 60%);
-}
-
-.theme-card[preview-theme="retro-wave"] .theme-card__colors span:nth-child(2) {
-  background: hsl(300, 80%, 55%);
-}
-
-.theme-card[preview-theme="retro-wave"] .theme-card__colors span:nth-child(3) {
-  background: hsl(260, 75%, 60%);
-}
-
-.theme-card[preview-theme="retro-wave"] .theme-card__sample {
-  background: hsl(260, 30%, 12%);
-  color: hsl(330, 40%, 95%);
-}
-
-.theme-card[preview-theme="lavender"] .theme-card__colors span:nth-child(1) {
-  background: hsl(270, 60%, 70%);
-}
-
-.theme-card[preview-theme="lavender"] .theme-card__colors span:nth-child(2) {
-  background: hsl(300, 50%, 65%);
-}
-
-.theme-card[preview-theme="lavender"] .theme-card__colors span:nth-child(3) {
-  background: hsl(240, 50%, 70%);
-}
-
-.theme-card[preview-theme="lavender"] .theme-card__sample {
-  background: hsl(270, 30%, 95%);
-  color: hsl(270, 40%, 20%);
-}
-
-.theme-card[preview-theme="emerald"] .theme-card__colors span:nth-child(1) {
-  background: hsl(160, 85%, 40%);
-}
-
-.theme-card[preview-theme="emerald"] .theme-card__colors span:nth-child(2) {
-  background: hsl(180, 75%, 35%);
-}
-
-.theme-card[preview-theme="emerald"] .theme-card__colors span:nth-child(3) {
-  background: hsl(140, 70%, 45%);
-}
-
-.theme-card[preview-theme="emerald"] .theme-card__sample {
-  background: hsl(160, 35%, 8%);
-  color: hsl(160, 20%, 95%);
-}
-
-.theme-card[preview-theme="ruby"] .theme-card__colors span:nth-child(1) {
-  background: hsl(350, 80%, 45%);
-}
-
-.theme-card[preview-theme="ruby"] .theme-card__colors span:nth-child(2) {
-  background: hsl(330, 70%, 50%);
-}
-
-.theme-card[preview-theme="ruby"] .theme-card__colors span:nth-child(3) {
-  background: hsl(15, 75%, 50%);
-}
-
-.theme-card[preview-theme="ruby"] .theme-card__sample {
-  background: hsl(350, 30%, 8%);
-  color: hsl(350, 20%, 95%);
-}
-
-.theme-card[preview-theme="golden"] .theme-card__colors span:nth-child(1) {
-  background: hsl(45, 90%, 50%);
-}
-
-.theme-card[preview-theme="golden"] .theme-card__colors span:nth-child(2) {
-  background: hsl(30, 85%, 50%);
-}
-
-.theme-card[preview-theme="golden"] .theme-card__colors span:nth-child(3) {
-  background: hsl(60, 70%, 45%);
-}
-
-.theme-card[preview-theme="golden"] .theme-card__sample {
-  background: hsl(40, 30%, 8%);
-  color: hsl(45, 30%, 95%);
-}
-
-.theme-card[preview-theme="slate"] .theme-card__colors span:nth-child(1) {
-  background: hsl(215, 20%, 50%);
-}
-
-.theme-card[preview-theme="slate"] .theme-card__colors span:nth-child(2) {
-  background: hsl(215, 25%, 45%);
-}
-
-.theme-card[preview-theme="slate"] .theme-card__colors span:nth-child(3) {
-  background: hsl(200, 30%, 50%);
-}
-
-.theme-card[preview-theme="slate"] .theme-card__sample {
-  background: hsl(215, 15%, 12%);
-  color: hsl(215, 10%, 95%);
-}
-
-.theme-card[preview-theme="coffee"] .theme-card__colors span:nth-child(1) {
-  background: hsl(25, 50%, 40%);
-}
-
-.theme-card[preview-theme="coffee"] .theme-card__colors span:nth-child(2) {
-  background: hsl(35, 45%, 45%);
-}
-
-.theme-card[preview-theme="coffee"] .theme-card__colors span:nth-child(3) {
-  background: hsl(15, 55%, 45%);
-}
-
-.theme-card[preview-theme="coffee"] .theme-card__sample {
-  background: hsl(25, 25%, 10%);
-  color: hsl(30, 25%, 92%);
-}
-
-.theme-card[preview-theme="mint"] .theme-card__colors span:nth-child(1) {
-  background: hsl(165, 60%, 50%);
-}
-
-.theme-card[preview-theme="mint"] .theme-card__colors span:nth-child(2) {
-  background: hsl(180, 55%, 45%);
-}
-
-.theme-card[preview-theme="mint"] .theme-card__colors span:nth-child(3) {
-  background: hsl(150, 50%, 50%);
-}
-
-.theme-card[preview-theme="mint"] .theme-card__sample {
-  background: hsl(165, 30%, 95%);
-  color: hsl(165, 40%, 15%);
-}
-
-.theme-card[preview-theme="noir"] .theme-card__colors span:nth-child(1) {
-  background: hsl(0, 0%, 100%);
-}
-
-.theme-card[preview-theme="noir"] .theme-card__colors span:nth-child(2) {
-  background: hsl(0, 0%, 70%);
-}
-
-.theme-card[preview-theme="noir"] .theme-card__colors span:nth-child(3) {
-  background: hsl(0, 0%, 50%);
-}
-
-.theme-card[preview-theme="noir"] .theme-card__sample {
-  background: hsl(0, 0%, 4%);
-  color: hsl(0, 0%, 98%);
-}
-
-.theme-card[preview-theme="aurora"] .theme-card__colors span:nth-child(1) {
-  background: hsl(160, 80%, 55%);
-}
-
-.theme-card[preview-theme="aurora"] .theme-card__colors span:nth-child(2) {
-  background: hsl(280, 70%, 60%);
-}
-
-.theme-card[preview-theme="aurora"] .theme-card__colors span:nth-child(3) {
-  background: hsl(200, 75%, 55%);
-}
-
-.theme-card[preview-theme="aurora"] .theme-card__sample {
-  background: hsl(240, 30%, 8%);
-  color: hsl(160, 30%, 95%);
-}
-
-.theme-card[preview-theme="twilight"] .theme-card__colors span:nth-child(1) {
-  background: hsl(250, 70%, 45%);
-}
-
-.theme-card[preview-theme="twilight"] .theme-card__colors span:nth-child(2) {
-  background: hsl(280, 60%, 52%);
-}
-
-.theme-card[preview-theme="twilight"] .theme-card__colors span:nth-child(3) {
-  background: hsl(25, 85%, 55%);
-}
-
-.theme-card[preview-theme="twilight"] .theme-card__sample {
-  background: hsl(245, 35%, 7%);
-  color: hsl(245, 25%, 95%);
-}
-
-.theme-card[preview-theme="grape"] .theme-card__colors span:nth-child(1) {
-  background: hsl(280, 70%, 50%);
-}
-
-.theme-card[preview-theme="grape"] .theme-card__colors span:nth-child(2) {
-  background: hsl(260, 65%, 55%);
-}
-
-.theme-card[preview-theme="grape"] .theme-card__colors span:nth-child(3) {
-  background: hsl(300, 60%, 50%);
-}
-
-.theme-card[preview-theme="grape"] .theme-card__sample {
-  background: hsl(280, 35%, 8%);
-  color: hsl(280, 25%, 95%);
-}
+/* The preview swatches: each card carries its own data-theme, so these are
+   that theme's colours -- no per-theme rules to keep in step with themes.css
+   (#1025). */
+.theme-card__colors span:nth-child(1) { background: var(--primary); }
+.theme-card__colors span:nth-child(2) { background: var(--secondary); }
+.theme-card__colors span:nth-child(3) { background: var(--accent); }

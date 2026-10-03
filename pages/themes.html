@@ -17,7 +17,7 @@
 
 <div id="themes-hero" class="page__hero">
   <h1>🎨 Themes Showcase</h1>
-  <p>23 beautiful themes powered by the Harmonic Color System (HCS)</p>
+  <p id="themes-hero-count">50 beautiful themes powered by the Harmonic Color System (HCS)</p>
 </div>
 
 <!-- QUICK STATS -->
@@ -33,9 +33,9 @@
      for a grid cell, and it beats the base floor on specificity without an
      !important. -->
 <div id="themes-stats" class="themes-stats">
-  <article x-cardstats size="full" id="themes-stats-total" value="23" label="Total Themes" icon="🎨"></article>
-  <article x-cardstats size="full" id="themes-stats-dark" value="12" label="Dark Themes" icon="🌙"></article>
-  <article x-cardstats size="full" id="themes-stats-light" value="11" label="Light Themes" icon="☀️"></article>
+  <article x-cardstats size="full" id="themes-stats-total" value="50" label="Total Themes" icon="🎨"></article>
+  <article x-cardstats size="full" id="themes-stats-dark" value="31" label="Dark Themes" icon="🌙"></article>
+  <article x-cardstats size="full" id="themes-stats-light" value="19" label="Light Themes" icon="☀️"></article>
   <article x-cardstats size="full" id="themes-stats-vars" value="∞" label="CSS Variables" icon="🎯"></article>
 </div>
 
@@ -218,448 +218,562 @@ const oceanPalette = generateHarmonicPalette(200, 'analogous');
 
 <!-- THEME GRID -->
 <div class="page__section" id="autogen-themes-html-1">
-  <h2 class="section-title">All 23 Themes</h2>
+  <h2 class="section-title" id="themes-grid-title">All 50 Themes</h2>
   <p class="section-subtitle">Click any theme card to switch to that theme</p>
   
   <div class="themes-grid">
-    
-    <!-- DARK (Default) -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'dark')" preview-theme="dark">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Dark</h3>
-        <p>Default • Complementary</p>
+    <!-- generated:theme-cards:start -- scripts/build-themes-page.mjs writes this; do not edit by hand -->
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-dark" data-theme="dark" title="Switch to Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Dark</span>
+        <span class="theme-card__description">Standard dark theme</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- LIGHT -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'light')" preview-theme="light">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Light</h3>
-        <p>Classic • Complementary</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-light" data-theme="light" title="Switch to Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Light</span>
+        <span class="theme-card__description">Standard light theme</span>
         <span class="theme-card__tag">☀️ Light</span>
-      </div>
-    </div>
-
-    <!-- CYBERPUNK -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'cyberpunk')" preview-theme="cyberpunk">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Cyberpunk</h3>
-        <p>Vibrant • Magenta/Cyan</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-cyberpunk" data-theme="cyberpunk" title="Switch to Cyberpunk">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Cyberpunk</span>
+        <span class="theme-card__description">Vibrant magenta/cyan</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- OCEAN -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'ocean')" preview-theme="ocean">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Ocean</h3>
-        <p>Calm • Analogous Blues</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-ocean" data-theme="ocean" title="Switch to Ocean">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Ocean</span>
+        <span class="theme-card__description">Calm blues</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- SUNSET -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'sunset')" preview-theme="sunset">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Sunset</h3>
-        <p>Warm • Triadic Orange</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-sunset" data-theme="sunset" title="Switch to Sunset">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Sunset</span>
+        <span class="theme-card__description">Warm oranges</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- FOREST -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'forest')" preview-theme="forest">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Forest</h3>
-        <p>Natural • Split-Complementary</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-forest" data-theme="forest" title="Switch to Forest">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Forest</span>
+        <span class="theme-card__description">Natural greens</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- MIDNIGHT -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'midnight')" preview-theme="midnight">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Midnight</h3>
-        <p>Calm • Monochromatic Blue</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-midnight" data-theme="midnight" title="Switch to Midnight">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Midnight</span>
+        <span class="theme-card__description">Deep monochromatic blue</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- SAKURA -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'sakura')" preview-theme="sakura">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Sakura</h3>
-        <p>Elegant • Tetradic Pink</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-twilight" data-theme="twilight" title="Switch to Twilight">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Twilight</span>
+        <span class="theme-card__description">Purple-blue with warm accents</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-sakura" data-theme="sakura" title="Switch to Sakura">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Sakura</span>
+        <span class="theme-card__description">Elegant pink</span>
         <span class="theme-card__tag">☀️ Light</span>
-      </div>
-    </div>
-
-    <!-- ARCTIC -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'arctic')" preview-theme="arctic">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Arctic</h3>
-        <p>Ice Blue • Doppler Shift</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-arctic" data-theme="arctic" title="Switch to Arctic">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Arctic</span>
+        <span class="theme-card__description">Ice blue</span>
         <span class="theme-card__tag">☀️ Light</span>
-      </div>
-    </div>
-
-    <!-- DESERT -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'desert')" preview-theme="desert">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Desert</h3>
-        <p>Sand • Standing Wave</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-desert" data-theme="desert" title="Switch to Desert">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Desert</span>
+        <span class="theme-card__description">Warm sand tones</span>
         <span class="theme-card__tag">☀️ Light</span>
-      </div>
-    </div>
-
-    <!-- NEON DREAMS -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'neon-dreams')" preview-theme="neon-dreams">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Neon Dreams</h3>
-        <p>Neon Purple • Beat Pattern</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-neon-dreams" data-theme="neon-dreams" title="Switch to Neon Dreams">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Neon Dreams</span>
+        <span class="theme-card__description">Purple neon</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- RETRO WAVE -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'retro-wave')" preview-theme="retro-wave">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Retro Wave</h3>
-        <p>80s Pink • Harmonic Series</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-retro-wave" data-theme="retro-wave" title="Switch to Retro Wave">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Retro Wave</span>
+        <span class="theme-card__description">Retro pink/purple</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- LAVENDER -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'lavender')" preview-theme="lavender">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Lavender</h3>
-        <p>Soft Purple Pastels</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-lavender" data-theme="lavender" title="Switch to Lavender">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Lavender</span>
+        <span class="theme-card__description">Soft purple pastels</span>
         <span class="theme-card__tag">☀️ Light</span>
-      </div>
-    </div>
-
-    <!-- EMERALD -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'emerald')" preview-theme="emerald">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Emerald</h3>
-        <p>Jewel-Toned Green</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-emerald" data-theme="emerald" title="Switch to Emerald">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Emerald</span>
+        <span class="theme-card__description">Rich jewel-toned green</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- RUBY -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'ruby')" preview-theme="ruby">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Ruby</h3>
-        <p>Deep Red Elegance</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-ruby" data-theme="ruby" title="Switch to Ruby">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Ruby</span>
+        <span class="theme-card__description">Deep red elegance</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- GOLDEN -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'golden')" preview-theme="golden">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Golden</h3>
-        <p>Luxurious Gold &amp; Amber</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-golden" data-theme="golden" title="Switch to Golden">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Golden</span>
+        <span class="theme-card__description">Luxurious gold and amber</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- SLATE -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'slate')" preview-theme="slate">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Slate</h3>
-        <p>Professional Gray Tones</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-slate" data-theme="slate" title="Switch to Slate">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Slate</span>
+        <span class="theme-card__description">Professional gray tones</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- COFFEE -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'coffee')" preview-theme="coffee">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Coffee</h3>
-        <p>Warm Brown Tones</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-coffee" data-theme="coffee" title="Switch to Coffee">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Coffee</span>
+        <span class="theme-card__description">Warm brown tones</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- MINT -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'mint')" preview-theme="mint">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Mint</h3>
-        <p>Fresh Mint Green</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-mint" data-theme="mint" title="Switch to Mint">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Mint</span>
+        <span class="theme-card__description">Fresh mint green</span>
         <span class="theme-card__tag">☀️ Light</span>
-      </div>
-    </div>
-
-    <!-- NOIR -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'noir')" preview-theme="noir">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Noir</h3>
-        <p>High Contrast B&amp;W</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-noir" data-theme="noir" title="Switch to Noir">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Noir</span>
+        <span class="theme-card__description">High contrast black/white</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- AURORA -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'aurora')" preview-theme="aurora">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Aurora</h3>
-        <p>Northern Lights</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-aurora" data-theme="aurora" title="Switch to Aurora">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Aurora</span>
+        <span class="theme-card__description">Northern lights inspired</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- TWILIGHT -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'twilight')" preview-theme="twilight">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Twilight</h3>
-        <p>Purple-Blue Gradients</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-grape" data-theme="grape" title="Switch to Grape">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Grape</span>
+        <span class="theme-card__description">Deep purple vibes</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
-    <!-- GRAPE -->
-    <div class="theme-card" onclick="document.documentElement.setAttribute('data-theme', 'grape')" preview-theme="grape">
-      <div class="theme-card__preview">
-        <div class="theme-card__colors">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="theme-card__sample">
-          <div class="sample-text">Aa</div>
-        </div>
-      </div>
-      <div class="theme-card__info">
-        <h3>Grape</h3>
-        <p>Deep Purple Vibes</p>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-coral-dark" data-theme="coral-dark" title="Switch to Coral Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Coral Dark</span>
+        <span class="theme-card__description">Vibrant coral with high saturation</span>
         <span class="theme-card__tag">🌙 Dark</span>
-      </div>
-    </div>
-
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-teal-dark" data-theme="teal-dark" title="Switch to Teal Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Teal Dark</span>
+        <span class="theme-card__description">Rich teal with high saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-indigo-dark" data-theme="indigo-dark" title="Switch to Indigo Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Indigo Dark</span>
+        <span class="theme-card__description">Deep indigo with medium saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-plum-dark" data-theme="plum-dark" title="Switch to Plum Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Plum Dark</span>
+        <span class="theme-card__description">Rich plum with medium saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-sage-dark" data-theme="sage-dark" title="Switch to Sage Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Sage Dark</span>
+        <span class="theme-card__description">Muted sage green with low saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-amber-dark" data-theme="amber-dark" title="Switch to Amber Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Amber Dark</span>
+        <span class="theme-card__description">Deep amber with high saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-sapphire-dark" data-theme="sapphire-dark" title="Switch to Sapphire Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Sapphire Dark</span>
+        <span class="theme-card__description">Rich sapphire blue with high saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-turquoise-dark" data-theme="turquoise-dark" title="Switch to Turquoise Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Turquoise Dark</span>
+        <span class="theme-card__description">Bright turquoise with high saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-tomato-dark" data-theme="tomato-dark" title="Switch to Tomato Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Tomato Dark</span>
+        <span class="theme-card__description">Vibrant tomato red with high saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-rose-dark" data-theme="rose-dark" title="Switch to Rose Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Rose Dark</span>
+        <span class="theme-card__description">Deep rose pink with medium saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-copper-dark" data-theme="copper-dark" title="Switch to Copper Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Copper Dark</span>
+        <span class="theme-card__description">Warm copper tones with medium saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-jade-dark" data-theme="jade-dark" title="Switch to Jade Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Jade Dark</span>
+        <span class="theme-card__description">Deep jade green with medium saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-amethyst-dark" data-theme="amethyst-dark" title="Switch to Amethyst Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Amethyst Dark</span>
+        <span class="theme-card__description">Rich amethyst purple with medium saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-marigold-dark" data-theme="marigold-dark" title="Switch to Marigold Dark">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Marigold Dark</span>
+        <span class="theme-card__description">Bright marigold with high saturation</span>
+        <span class="theme-card__tag">🌙 Dark</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-seafoam-light" data-theme="seafoam-light" title="Switch to Seafoam Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Seafoam Light</span>
+        <span class="theme-card__description">Light seafoam with medium saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-peony-light" data-theme="peony-light" title="Switch to Peony Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Peony Light</span>
+        <span class="theme-card__description">Light peony pink with medium saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-taupe-light" data-theme="taupe-light" title="Switch to Taupe Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Taupe Light</span>
+        <span class="theme-card__description">Warm taupe with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-khaki-light" data-theme="khaki-light" title="Switch to Khaki Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Khaki Light</span>
+        <span class="theme-card__description">Warm khaki with medium saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-steel-light" data-theme="steel-light" title="Switch to Steel Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Steel Light</span>
+        <span class="theme-card__description">Cool steel gray with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-moss-light" data-theme="moss-light" title="Switch to Moss Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Moss Light</span>
+        <span class="theme-card__description">Muted moss green with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-sand-light" data-theme="sand-light" title="Switch to Sand Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Sand Light</span>
+        <span class="theme-card__description">Warm sand tones with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-blush-light" data-theme="blush-light" title="Switch to Blush Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Blush Light</span>
+        <span class="theme-card__description">Soft blush pink with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-sage-light" data-theme="sage-light" title="Switch to Sage Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Sage Light</span>
+        <span class="theme-card__description">Light sage green with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-mauve-light" data-theme="mauve-light" title="Switch to Mauve Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Mauve Light</span>
+        <span class="theme-card__description">Soft mauve purple with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-celadon-light" data-theme="celadon-light" title="Switch to Celadon Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Celadon Light</span>
+        <span class="theme-card__description">Light celadon green with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-linen-light" data-theme="linen-light" title="Switch to Linen Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Linen Light</span>
+        <span class="theme-card__description">Warm linen beige with low saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <button type="button" x-ignore class="theme-card x-themecontrol__pick" id="theme-card-pistachio-light" data-theme="pistachio-light" title="Switch to Pistachio Light">
+      <span class="theme-card__preview">
+        <span class="theme-card__colors"><span></span><span></span><span></span></span>
+        <span class="theme-card__sample"><span class="sample-text">Aa</span></span>
+      </span>
+      <span class="theme-card__info">
+        <span class="theme-card__name">Pistachio Light</span>
+        <span class="theme-card__description">Light pistachio with medium saturation</span>
+        <span class="theme-card__tag">☀️ Light</span>
+      </span>
+    </button>
+    <!-- generated:theme-cards:end -->
   </div>
 </div>
 
