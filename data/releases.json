@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.129",
+      "date": "2026-10-03",
+      "summary": "Fix: dark-mode-switch waits for the runtime and the theme change, not 120 ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1315\" target=\"_blank\" rel=\"noopener\">PR 1315</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1299\" target=\"_blank\" rel=\"noopener\">#1299</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Dark-mode-switch waits for the runtime and the theme change, not 120 ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1299\" target=\"_blank\" rel=\"noopener\">#1299</a>",
+          "issues": [
+            1299
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.128",
       "date": "2026-10-03",
       "summary": "Fix: every local test run gets a port of its own, or refuses to start (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1312\" target=\"_blank\" rel=\"noopener\">PR 1312</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1073\" target=\"_blank\" rel=\"noopener\">#1073</a>",
