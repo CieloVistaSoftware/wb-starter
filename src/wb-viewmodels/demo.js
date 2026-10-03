@@ -39,46 +39,43 @@ export function formatHtml(raw) {
         return src; // never break the demo over a formatting failure
     }
     const attrStr = (a) => (a.value === '' ? a.name : `${a.name}="${a.value}"`);
+    // #1015: whitespace is CONTENT inside these three, so a pretty-printer has
+    // no business touching what sits between their tags. They are OPAQUE: the
+    // opening tag is emitted where the element sits, the body is copied through
+    // byte for byte, and the closing tag is appended to the body's last line.
+    // Nothing is re-indented, nothing is collapsed, and -- the part that is
+    // easy to get wrong -- NO newline is introduced after the `>` of the
+    // opening tag, because inside <pre> that newline is a visible blank first
+    // line and the trailing one is visible trailing whitespace.
+    const OPAQUE = new Set(['pre', 'code', 'textarea']);
+    // An opaque element's children, serialized with zero reformatting.
+    // Recursive, so <pre><code>...</code></pre> survives intact: the <code>
+    // nested in the <pre> is itself opaque, and so is anything inside it.
+    const serializeOpaque = (el) => {
+        let s = '';
+        el.childNodes.forEach((n) => {
+            if (n.nodeType === 3) { s += n.textContent; return; } // verbatim
+            if (n.nodeType !== 1) return;
+            const t = n.tagName.toLowerCase();
+            const a = Array.from(n.attributes).map((x) => ' ' + attrStr(x)).join('');
+            s += VOID.has(t) ? `<${t}${a} />` : `<${t}${a}>${serializeOpaque(n)}</${t}>`;
+        });
+        return s;
+    };
     const out = [];
     const walk = (parent, depth) => {
         const pad = INDENT.repeat(depth);
         parent.childNodes.forEach((node) => {
             if (node.nodeType === 3) { // text
-                // #1015: collapsing ALL whitespace is right for prose and wrong
-                // for a code example. The body of
-                // <code language="javascript">...</code> is ONE text node
-                // holding ~20 lines, and collapsing it produced a single
-                // run-on line -- John, pointing at the source panel: "this
-                // didn't parse correct".
-                //
-                // Inside code/pre/textarea whitespace IS content. Keep the line
-                // structure, strip the shared leading indentation (an artefact
-                // of where the example sits in the HTML file), re-indent to
-                // this node's depth.
-                //
-                // Newline and tab come from String.fromCharCode rather than
-                // escape sequences: three earlier attempts at this edit had
-                // their escapes rewritten in transit and shipped a literal
-                // line break inside a regex, which broke the whole page.
-                const parentTag = parent.nodeName ? parent.nodeName.toLowerCase() : '';
-                if (parentTag === 'code' || parentTag === 'pre' || parentTag === 'textarea') {
-                    const NL = String.fromCharCode(10);
-                    const TAB = String.fromCharCode(9);
-                    let body = node.textContent;
-                    while (body.charAt(0) === NL) body = body.slice(1);
-                    body = body.trimEnd();
-                    if (!body) return;
-                    const leadWidth = (line) => {
-                        let n = 0;
-                        while (line.charAt(n) === ' ' || line.charAt(n) === TAB) n += 1;
-                        return n;
-                    };
-                    const lines = body.split(NL);
-                    const widths = lines.filter((l) => l.trim()).map(leadWidth);
-                    const common = widths.length ? Math.min.apply(null, widths) : 0;
-                    lines.forEach((l) => out.push(l.trim() ? pad + l.slice(common) : ''));
-                    return;
-                }
+                // PROSE ONLY. An author's arbitrary line breaks inside
+                // <article>Some copy here</article> are not content, so they
+                // collapse. Text inside pre/code/textarea never arrives here:
+                // walk() does not descend into an opaque element, it hands the
+                // whole body to serializeOpaque() untouched (#1015). The
+                // earlier attempt at #1015 special-cased the text node instead
+                // and still re-indented every line to the node's depth, which
+                // is not preservation -- and it could not see the newlines the
+                // walker itself was injecting around a nested <code>.
                 const t = node.textContent.replace(/\s+/g, ' ').trim();
                 if (t) out.push(pad + t);
                 return;
@@ -96,18 +93,34 @@ export function formatHtml(raw) {
             const lead = attrs.length > 1 && attrs[0].name.startsWith('x-') && attrs[0].value === ''
                 ? attrs[0]
                 : null;
+            // Built into its own array first, because an opaque element needs
+            // to append its body to the LAST of these lines rather than start
+            // a new one.
+            const openLines = [];
             if (attrs.length > 1) {
-                out.push(`${pad}<${tag}${lead ? ' ' + lead.name : ''}`);
+                openLines.push(`${pad}<${tag}${lead ? ' ' + lead.name : ''}`);
                 attrs.forEach((a, i) => {
                     if (a === lead) return;
                     const last = i === attrs.length - 1;
-                    out.push(`${pad}${INDENT}${attrStr(a)}${last ? (isVoid ? ' />' : '>') : ''}`);
+                    openLines.push(`${pad}${INDENT}${attrStr(a)}${last ? (isVoid ? ' />' : '>') : ''}`);
                 });
             } else {
                 const a = attrs.length ? ' ' + attrStr(attrs[0]) : '';
-                out.push(`${pad}<${tag}${a}${isVoid ? ' />' : '>'}`);
+                openLines.push(`${pad}<${tag}${a}${isVoid ? ' />' : '>'}`);
             }
-            if (isVoid) return;
+            const emitOpen = () => openLines.forEach((l) => out.push(l));
+            if (isVoid) { emitOpen(); return; }
+            if (OPAQUE.has(tag)) {
+                // The body joins the line that closed the opening tag, so the
+                // first character after `>` is the first character the author
+                // wrote -- never a newline this formatter added. One pushed
+                // string may therefore carry many lines; out.join below keeps
+                // them exactly as they are.
+                openLines[openLines.length - 1] += `${serializeOpaque(node)}</${tag}>`;
+                emitOpen();
+                return;
+            }
+            emitOpen();
             walk(node, depth + 1);
             out.push(`${pad}</${tag}>`);
         });
