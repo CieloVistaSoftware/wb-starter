@@ -52,7 +52,7 @@ const escapeHtml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
  * x-themecontrol picks the theme when it is clicked; x-ignore keeps WB's
  * native-button enhancement off it.
  */
-function card(t) {
+function card(t, eol) {
   const name = escapeHtml(t.name);
   const tag = t.tone === 'light' ? '☀️ Light' : '🌙 Dark';
   return [
@@ -67,7 +67,7 @@ function card(t) {
     `        <span class="theme-card__tag">${tag}</span>`,
     '      </span>',
     '    </button>',
-  ].join('\n');
+  ].join(eol);
 }
 
 const START = '<!-- generated:theme-cards:start -- scripts/build-themes-page.mjs writes this; do not edit by hand -->';
@@ -90,7 +90,10 @@ export function renderThemesPage(html, classified) {
   out = replaceOnce(out, /(id="themes-stats-dark" value=")\d+(")/, `$1${dark}$2`, '#themes-stats-dark');
   out = replaceOnce(out, /(id="themes-stats-light" value=")\d+(")/, `$1${light}$2`, '#themes-stats-light');
   out = replaceOnce(out, /(<h2 class="section-title" id="themes-grid-title">All )\d+( Themes<\/h2>)/, `$1${total}$2`, 'the grid title (#themes-grid-title)');
-  const cards = `${START}\n${classified.map(card).join('\n')}\n    ${END}`;
+  // Written with the page's own line endings: a Windows checkout has CRLF,
+  // and a page that only differs in them is not stale.
+  const eol = html.includes('\r\n') ? '\r\n' : '\n';
+  const cards = `${START}${eol}${classified.map((t) => card(t, eol)).join(eol)}${eol}    ${END}`;
   out = replaceOnce(out, /<!-- generated:theme-cards:start[^>]*-->[\s\S]*?<!-- generated:theme-cards:end -->/, () => cards, 'the generated:theme-cards markers');
   return out;
 }
