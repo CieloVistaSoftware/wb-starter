@@ -8,21 +8,13 @@
  */
 export const VERSION = {
   "version": "1.0.0",
-  "commit": "0b359f0",
-  "builtAt": "2026-10-03T01:12:47.027Z",
-  "branch": "claude/beautiful-cerf-1c0a1u",
-  "dirty": true,
-  "dirtyFiles": [
-    ".claude/CLAUDE.md",
-    ".claude/settings.json",
-    ".github/ISSUE_TEMPLATE/bug.md",
-    ".github/workflows/ci-compliance.yml",
-    ".github/workflows/ci-tests.yml"
-  ],
-  "dirtyCount": 250,
+  "commit": "ad60702f",
+  "builtAt": "2026-10-03T01:08:40.680Z",
+  "branch": "main",
+  "dirty": false,
   "ahead": 0,
   "behind": 0,
-  "upstream": "origin/claude/beautiful-cerf-1c0a1u",
-  "release": null,
-  "sinceRelease": null
+  "upstream": "origin/main",
+  "release": "1.0.89",
+  "sinceRelease": 21
 };
