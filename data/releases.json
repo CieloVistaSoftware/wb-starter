@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.125",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Record which commit a test run measured</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">#961</a>",
+          "issues": [
+            961
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.124",
       "date": "2026-10-03",
       "summary": "",
