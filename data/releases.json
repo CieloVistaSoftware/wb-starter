@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.118",
+      "date": "2026-10-02",
+      "summary": "Fix: a release&#39;s date is the calendar date in one timezone (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1288\" target=\"_blank\" rel=\"noopener\">PR 1288</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1287\" target=\"_blank\" rel=\"noopener\">#1287</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A release&#39;s date is the calendar date in one timezone, not the committer&#39;s local one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1287\" target=\"_blank\" rel=\"noopener\">#1287</a>",
+          "issues": [
+            1287
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.117",
       "date": "2026-10-02",
       "summary": "",
@@ -21,7 +35,7 @@
     },
     {
       "version": "1.0.116",
-      "date": "2026-10-03",
+      "date": "2026-10-02",
       "summary": "Fix: server.js moves to the next port instead of crashing when PORT is taken (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1289\" target=\"_blank\" rel=\"noopener\">PR 1289</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1286\" target=\"_blank\" rel=\"noopener\">#1286</a>",
       "items": [
         {
@@ -35,7 +49,7 @@
     },
     {
       "version": "1.0.115",
-      "date": "2026-10-03",
+      "date": "2026-10-02",
       "summary": "Themes page lists all 50 themes; serve finds a free port; x-clock names the valid variants (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1228\" target=\"_blank\" rel=\"noopener\">PR 1228</a>)",
       "items": [
         {
@@ -137,7 +151,7 @@
     },
     {
       "version": "1.0.114",
-      "date": "2026-10-03",
+      "date": "2026-10-02",
       "summary": "",
       "items": [
         {
@@ -151,7 +165,7 @@
     },
     {
       "version": "1.0.113",
-      "date": "2026-10-03",
+      "date": "2026-10-02",
       "summary": "",
       "items": [
         {
@@ -165,7 +179,7 @@
     },
     {
       "version": "1.0.112",
-      "date": "2026-10-03",
+      "date": "2026-10-02",
       "summary": "",
       "items": [
         {
@@ -190,7 +204,7 @@
     },
     {
       "version": "1.0.110",
-      "date": "2026-10-03",
+      "date": "2026-10-02",
       "summary": "Refactor: remove duplicated behavior copies and repeated blocks ( phase 2) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1281\" target=\"_blank\" rel=\"noopener\">PR 1281</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a>",
       "items": [
         {
@@ -204,7 +218,7 @@
     },
     {
       "version": "1.0.109",
-      "date": "2026-10-03",
+      "date": "2026-10-02",
       "summary": "Feat(behaviors): every behavior shows at least 5 varied examples (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1280\" target=\"_blank\" rel=\"noopener\">PR 1280</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/997\" target=\"_blank\" rel=\"noopener\">#997</a>",
       "items": [
         {
