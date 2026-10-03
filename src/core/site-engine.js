@@ -587,7 +587,7 @@ export default class WBSite {
       main.innerHTML = this.render404(pageId);
       return;
     }
-    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><span x-spinner label="Loading the page" id="mainSpinner"></span></div><p id="mainLoadingText">Loading...</p></div>`;
+    main.innerHTML = `<div class="page__loading" id="mainPageLoading"><span x-spinner id="mainSpinner" label="Loading page"></span><p id="mainLoadingText">Loading...</p></div>`;
     // Optimization: Don't await scan here to start fetch immediately. MutationObserver handles injection.
     // WB.scan(main); 
     
