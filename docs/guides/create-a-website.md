@@ -39,7 +39,7 @@ npm install
 npm start
 ```
 
-Open **http://localhost:3000**. You get a Home page and an About page, a menu, a theme switcher, and a working behavior: the button on the home page ripples when you click it.
+Open **http://localhost:3000**. If something else already has port 3000, `npm start` does not stop: it takes the next free port (3001, 3002, ...) and prints the address to open. Use the address it prints. You get a Home page and an About page, a menu, a theme switcher, and a working behavior: the button on the home page ripples when you click it.
 
 `npm start` runs `wb-starter serve`. It serves your folder, with the wb-starter runtime underneath. Your own files always win: if you create a file with the same path as one of wb-starter's, yours is the one served.
 
@@ -134,14 +134,14 @@ Your pages are untouched. Only the runtime underneath them changes. What each re
 |---|---|
 | `npm create wb-starter my-site` | Create a new site in `my-site\` |
 | `npm install` | Install wb-starter into the site |
-| `npm start` | Serve the site at http://localhost:3000 |
-| `npm start -- --port 8080` | Serve it on another port |
+| `npm start` | Serve the site at http://localhost:3000, or the next free port if 3000 is taken |
+| `npm start -- --port 8080` | Start from another port (8080, or the next free one after it) |
 | `npm run build` | Write the static site to `dist\` |
 | `npm update wb-starter` | Move to the newest wb-starter release |
 
 ## Troubleshooting
 
 - **"already exists and is not empty":** the folder is taken. Pick a new name, or empty the folder first.
-- **Port 3000 is in use:** run `npm start -- --port 8080`.
+- **Port 3000 is in use:** nothing to do. You do not need to kill the other server: `npm start` moves to the next free port and prints the address. If you want a particular range, run `npm start -- --port 8080`.
 - **A page shows "not found":** check that `pageToLoad` in `config/site.json` matches the file name in `pages\` exactly (without `.html`).
 - **An `x-*` attribute does nothing:** check its spelling against the Behaviors page. Behaviors load as they come into view, so scroll to the element.
