@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.128",
+      "date": "2026-10-03",
+      "summary": "Fix: every local test run gets a port of its own, or refuses to start (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1312\" target=\"_blank\" rel=\"noopener\">PR 1312</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1073\" target=\"_blank\" rel=\"noopener\">#1073</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Every local test run gets a port of its own, or refuses to start</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1073\" target=\"_blank\" rel=\"noopener\">#1073</a>",
+          "issues": [
+            1073
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.127",
       "date": "2026-10-03",
       "summary": "Fix: test:async hands Playwright its arguments verbatim, so a --grep with | or spaces runs (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1310\" target=\"_blank\" rel=\"noopener\">PR 1310</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1194\" target=\"_blank\" rel=\"noopener\">#1194</a>",
