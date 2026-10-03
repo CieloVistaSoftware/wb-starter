@@ -6,6 +6,22 @@
   ],
   "releases": [
     {
+      "version": "1.0.126",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Fix the card hover test flake and the spinner teaching hint on site pages</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1307\" target=\"_blank\" rel=\"noopener\">#1307</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1309\" target=\"_blank\" rel=\"noopener\">#1309</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1308\" target=\"_blank\" rel=\"noopener\">#1308</a>",
+          "issues": [
+            1307,
+            1309,
+            1308
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.125",
       "date": "2026-10-03",
       "summary": "",
