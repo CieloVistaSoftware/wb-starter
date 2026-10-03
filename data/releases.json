@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.135",
+      "date": "2026-10-03",
+      "summary": "Img + figure: width and height now set their size (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1324\" target=\"_blank\" rel=\"noopener\">PR 1324</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Showcase rows for width/height must look different</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Park the img/figure width+height work (PR)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1324\" target=\"_blank\" rel=\"noopener\">#1324</a>",
+          "issues": [
+            1324
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Width and height now size images and figures</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.134",
       "date": "2026-10-03",
       "summary": "",
