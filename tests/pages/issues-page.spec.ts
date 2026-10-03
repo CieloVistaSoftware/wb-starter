@@ -1,12 +1,17 @@
 import { test, expect } from '../fixtures/offline';
 
+// #1349: the service worker is BLOCKED, which is the actual fix for what the
+// comment below was reaching for. sw.js proxies every GET the page makes, and
+// Playwright cannot route a service worker's requests — not with page.route and
+// not with context.route either. Moving these to context.route did not make the
+// fixture answer; it only moved where it failed to. The 503 "Offline and not
+// cached" described below is the worker's own cache-miss response, and with the
+// worker out of the picture it cannot happen. (The context routes are left as
+// they are: they work equally well once nothing answers ahead of them.)
+test.use({ serviceWorkers: 'block' });
+
 test.describe('Issues page', () => {
   test('shows the current active count from status:in-progress labels', async ({ page, context }) => {
-    // CONTEXT routes, not page routes: sw.js (registered by src/main.js)
-    // proxies every GET, and a service worker's own fetch is only seen by
-    // context.route(). With page.route() the fixture never answered -- the
-    // worker's request fell through to the offline fixture, was blocked, and
-    // sw.js answered 503 "Offline and not cached".
     //
     // And the page asks the dev server FIRST (#1045: /api/issues proxies an
     // authenticated `gh`). Where `gh` works that serves the live list and the

@@ -1,5 +1,11 @@
 import { test, expect } from '../fixtures/offline';
 
+// #1349: /api/error-log/append is a POST and sw.js only claims GETs, so the
+// counter below did see the appends. Blocked anyway: this spec counts requests,
+// and a test that counts must not share the page with something that can make
+// requests of its own.
+test.use({ serviceWorkers: 'block' });
+
 test('expected fixture errors stay out of the persistent error log', async ({ page }) => {
   let appendRequests = 0;
   await page.route('**/api/error-log/append', async route => {

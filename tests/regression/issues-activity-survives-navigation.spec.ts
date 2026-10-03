@@ -26,6 +26,16 @@ import { test, expect } from '../fixtures/offline';
  * certain instead of occasional.
  */
 
+// #1349 — THIS IS THE SPEC THE BUG WAS PROVED ON. Blocking the worker is the
+// fix; the note below is kept because it records the wrong turn. sw.js answers
+// the page's GETs itself and Playwright cannot route a service worker's
+// requests, so NO matcher form fires: glob, RegExp and both predicate shapes
+// were registered at once and none of them was consulted, while
+// page.on('request') logged the request going out and the panel filled with
+// live server data (300 closed / 239 opened). The predicate did not fix it;
+// the race against the worker claiming the page did.
+test.use({ serviceWorkers: 'block' });
+
 // A PREDICATE, not a glob. The glob form did not match and the mock never
 // fired -- the first run of this spec failed on the intercepted poll below
 // rather than on the defect, which is the poll doing its job (#863).

@@ -42,6 +42,18 @@
 
 import { test, expect, type Page } from '../fixtures/offline';
 
+/**
+ * #1349: "every media URL here is intercepted with page.route and ABORTED" is
+ * the premise of all three tests, and it needs the worker gone. sw.js answers
+ * the page's GETs itself and Playwright cannot route a service worker's
+ * requests, so on a claimed page the media request went out for real — the
+ * remote host is a .test domain that resolves nowhere and the local fixture
+ * directory does not exist, so the failure still happened, but by whatever
+ * error class the network produced rather than the one this spec chose. The
+ * error-log route is a POST and was always honoured.
+ */
+test.use({ serviceWorkers: 'block' });
+
 const REMOTE = 'https://media.unreachable-1115.test';
 const LOCAL_DIR = '/tests/fixtures/unreachable-1115';
 
