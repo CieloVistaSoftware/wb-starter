@@ -148,6 +148,31 @@ test('npm start (wb-starter serve) serves the site on the wb-starter runtime', a
   expect((await fetch(base + 'pages/behaviors.html')).status).toBe(404);
 });
 
+test('npm start moves to the next free port when its port is taken', async () => {
+  // John, 2026-10-01: a fresh `npm create wb-starter my-site` then `npm start`
+  // crashed with an unhandled EADDRINUSE because something already had 3000.
+  const taken = await freePort();
+  const blocker = net.createServer();
+  await new Promise<void>((resolve) => blocker.listen(taken, resolve));
+  const bin = path.join(site, 'node_modules', 'wb-starter', 'scripts', 'wb-starter.mjs');
+  const child = spawn(process.execPath, [bin, 'serve'], { cwd: site, env: { ...process.env, PORT: String(taken) }, stdio: ['ignore', 'pipe', 'pipe'] });
+  try {
+    let out = '';
+    const url = await new Promise<string>((resolve, reject) => {
+      child.stdout!.on('data', (d) => { out += d; const m = out.match(/http:\/\/localhost:(\d+)\//); if (m) resolve(m[0]); });
+      child.once('exit', (code) => reject(new Error(`serve exited ${code} before listening: ${out}`)));
+    });
+    expect(out).toContain(`port ${taken} is in use`);
+    expect(url).not.toBe(`http://localhost:${taken}/`);
+    expect((await fetch(url)).status).toBe(200);
+  } finally {
+    const exited = new Promise((resolve) => child.once('exit', resolve));
+    child.kill();
+    await exited;
+    await new Promise((resolve) => blocker.close(resolve));
+  }
+});
+
 test('npm run build writes a static site that works without wb-starter running', async ({ page }) => {
   execFileSync(NPM, ['run', 'build'], { cwd: site, stdio: 'pipe', shell: process.platform === 'win32' });
   const dist = path.join(site, 'dist');

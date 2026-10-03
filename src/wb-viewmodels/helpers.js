@@ -622,23 +622,39 @@ export function countdown(element, options = {}) {
   };
 }
 
+// The faces helpers.css styles, in the order the docs and schema list them.
+const CLOCK_VARIANTS = ['digital', 'led', 'analog'];
+
+/**
+ * One of CLOCK_VARIANTS for whatever the author wrote (#1229). The values were
+ * used raw: in the playground, typing variant="analogue" left a newline and
+ * indentation in the value and classList.add() threw InvalidCharacterError on
+ * every keystroke. Whitespace and case are forgiven, and "analogue" (the word
+ * the docs used) means analog. Anything else renders digital, and the warning
+ * says which values would have worked.
+ */
+function clockVariant(raw) {
+  const wanted = String(raw ?? '').trim().toLowerCase();
+  if (!wanted) return 'digital';
+  if (wanted === 'analogue') return 'analog';
+  if (CLOCK_VARIANTS.includes(wanted)) return wanted;
+  const near = CLOCK_VARIANTS.find((v) => wanted.startsWith(v) || v.startsWith(wanted));
+  console.warn(
+    `[x-clock] variant="${wanted}" is not a clock face -- use one of: ${CLOCK_VARIANTS.join(', ')}` +
+      `${near ? ` (did you mean "${near}"?)` : ''}. Showing digital.`
+  );
+  return 'digital';
+}
+
 /**
  * Clock - Live clock with VARIANTS (digital, led, analog)
  * Helper Attribute: [x-clock]
  */
 export function clock(element, options = {}) {
-  // #1229: the values were used raw. In the playground, typing
-  // variant="analogue" left a newline and indentation in the value and
-  // classList.add() threw InvalidCharacterError on every keystroke. Every
-  // value is trimmed and lowercased, and only the faces helpers.css defines
-  // are used; "analogue" (the word the docs used) means analog.
-  const FACES = ['digital', 'led', 'analog'];
-  const rawVariant = String(options.variant || element.getAttribute('variant') || '').trim().toLowerCase();
-  const variant = rawVariant === 'analogue' ? 'analog' : (FACES.includes(rawVariant) ? rawVariant : 'digital');
   const rawFormat = String(options.format || element.getAttribute('format') || '').trim();
   const config = {
     ...options,
-    variant,
+    variant: clockVariant(options.variant || element.getAttribute('variant')),
     format: rawFormat === '12' ? '12' : '24',
     showSeconds: String(options.showSeconds ?? element.getAttribute('show-seconds') ?? '').trim() !== 'false',
   };

@@ -104,10 +104,40 @@ function serve(siteDir, port) {
     });
     fs.createReadStream(file).pipe(res);
   });
-  server.listen(port, () => {
-    console.log(`\n  wb-starter: serving ${siteDir}\n  → http://localhost:${port}/\n`);
-  });
+  listenFrom(server, port, siteDir);
   return server;
+}
+
+// How many ports past the asked-for one serve tries before giving up.
+const PORT_ATTEMPTS = 20;
+
+/**
+ * Listen on `port`, or the next free port after it. A second site, or any
+ * other dev server, already on 3000 is the common case, and crashing with an
+ * unhandled EADDRINUSE told a new user nothing about what to do.
+ */
+function listenFrom(server, port, siteDir, attempt = 0) {
+  const tryPort = port + attempt;
+  const onError = (err) => {
+    server.off('listening', onListening);
+    if (err.code === 'EADDRINUSE' && attempt + 1 < PORT_ATTEMPTS) {
+      listenFrom(server, port, siteDir, attempt + 1);
+      return;
+    }
+    const reason = err.code === 'EADDRINUSE'
+      ? `ports ${port}-${tryPort} are all in use`
+      : `could not listen on port ${tryPort} (${err.code || err.message})`;
+    console.error(`\n✖ wb-starter: ${reason}.\n  Pick another: npm start -- --port 8080\n`);
+    process.exit(1);
+  };
+  const onListening = () => {
+    server.off('error', onError);
+    if (attempt > 0) console.log(`\n  wb-starter: port ${port} is in use, using ${tryPort} instead.`);
+    console.log(`\n  wb-starter: serving ${siteDir}\n  → http://localhost:${tryPort}/\n`);
+  };
+  server.once('error', onError);
+  server.once('listening', onListening);
+  server.listen(tryPort);
 }
 
 function build(siteDir, outDir) {
