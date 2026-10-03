@@ -1,11 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import { readFileSync } from 'fs';
-// #961: MUST be an import. This file is loaded as an ES module (package.json
-// says "type": "module"), where `require` is not defined — so findFreePort()'s
-// `require('child_process')` threw a ReferenceError on every single run, was
-// swallowed by its own `catch`, and the function returned its fallback. See
-// its comment below.
-import { execFileSync } from 'child_process';
+// #1073: the free-port lookup lives in scripts/lib/free-port.mjs, where
+// scripts/test-free-port.mjs runs it — and this config — at node level.
+import { claimFreePort } from './scripts/lib/free-port.mjs';
 
 // tests/compliance/ has grown to 79 files (~2 min for a full run) — running
 // the whole thing on every iteration wastes time when only one area is
@@ -93,7 +90,8 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
 //
 // So isolation is now the default and 3000 is the opt-in:
 //
-//   local  -> 3310, always its own fresh server, never adopts a stranger
+//   local  -> a port claimed for this run alone (below), always its own fresh
+//             server, never adopts a stranger
 //   CI     -> 3000 + reuse, exactly as before (ci-tests.yml starts the server
 //             itself and server-smoke.yml curls localhost:3000/health)
 //
@@ -109,41 +107,44 @@ const complianceCategories: Record<string, string[]> = JSON.parse(
 // the socket, and use it. Done in a child process because this config is
 // evaluated synchronously and net.listen is not.
 //
-// If that ever fails, fall back to a fixed port rather than crashing the run —
-// a suite on a possibly-busy port is still better than no suite.
+// MEASURED 2026-09-08 (#961): for a long time none of that happened. `require`
+// is not defined in an ES module, the probe threw ReferenceError on every run, a
+// silent `catch` swallowed it, and EVERY local run got a fixed fallback 3310.
+// Six consecutive runs served from :3310 and the seventh died with
+// "http://localhost:3310 is already used" against a leftover server.
 //
-// MEASURED 2026-09-08 (#961): none of that was happening. `require` is not
-// defined in an ES module, so the call below threw ReferenceError on every run,
-// the `catch` swallowed it, and EVERY local run got the fixed fallback 3310 —
-// the exact "a fixed port is still a port someone else can be using" hazard the
-// paragraph above says it is avoiding. Six consecutive runs this session all
-// served from :3310, and the seventh died with "http://localhost:3310 is
-// already used" against a leftover server from the sixth. A gate that has never
-// been seen to work is not evidence of anything
-// (docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md).
+// #1073 finishes the job, because getting the probe to run was not enough:
 //
-// The fallback stays, but it is now genuinely a fallback.
-function findFreePort(): number {
-  try {
-    const out = execFileSync(process.execPath, ['-e',
-      "const s=require('net').createServer();s.listen(0,'127.0.0.1',()=>{" +
-      "process.stdout.write(String(s.address().port));s.close()});"
-    ], { encoding: 'utf8', timeout: 5000 });
-    const port = Number(out.trim());
-    if (port > 0) return port;
-  } catch { /* fall through */ }
-  return 3310;
+//   - NO FIXED FALLBACK. If no isolated port can be had, loading this config
+//     throws and says why. scripts/test-async.mjs deliberately lets a suite and
+//     two single-spec runs share the machine, so a fixed port is shared BY
+//     DESIGN: a run on it dies with "already used" or tests a stranger's server.
+//     A run that refuses to start is honest; that is not.
+//   - THE PORT IS CLAIMED, NOT JUST PROBED. The probe only proves the port was
+//     free at that instant; webServer binds it seconds later, and a second run
+//     probing in between can be handed the same number. claimFreePort() records
+//     the port in the machine-wide coordination dir (~/.wb-starter/ports) under
+//     this process's pid, skips ports another live run holds, and reaps claims
+//     whose owner died. The claim is released when this process exits.
+//
+// Proven by scripts/test-free-port.mjs (npm run test:free-port).
+function pickTestPort(): number {
+  const pinned = Number(process.env.WB_TEST_PORT);
+  if (pinned) return pinned;
+  if (process.env.CI) return 3000;
+  const claim = claimFreePort();
+  process.on('exit', () => claim.release());
+  return claim.port;
 }
 
-const TEST_PORT = Number(process.env.WB_TEST_PORT)
-  || (process.env.CI ? 3000 : findFreePort());
+const TEST_PORT = pickTestPort();
 
 // PIN IT. This config is evaluated MORE THAN ONCE per run — the main process
 // loads it, and so does every worker process — so a function that returns a
 // fresh random port each time hands each worker a DIFFERENT baseURL while
 // `webServer` started exactly one server, on the main process's port.
 //
-// Measured 2026-09-08, the first time findFreePort() actually ran (#1079):
+// Measured 2026-09-08, the first time the free-port probe actually ran (#1079):
 //   net::ERR_CONNECTION_REFUSED at http://localhost:64148/pages/home.html
 //   net::ERR_CONNECTION_REFUSED at http://localhost:64149/pages/home.html
 //   net::ERR_CONNECTION_REFUSED at http://localhost:64150/public/fix-viewer.html
@@ -151,9 +152,8 @@ const TEST_PORT = Number(process.env.WB_TEST_PORT)
 //
 // Writing the choice back into the environment makes the FIRST evaluation the
 // only one that decides: every later evaluation, in this process or in a worker
-// forked from it, takes the `Number(process.env.WB_TEST_PORT)` branch above.
-// A fixed fallback port was consistent by accident; this is consistent on
-// purpose, and still free.
+// forked from it, takes the WB_TEST_PORT branch of pickTestPort() and claims
+// nothing — the claim stays with the process that made it.
 process.env.WB_TEST_PORT = String(TEST_PORT);
 
 export default defineConfig({
