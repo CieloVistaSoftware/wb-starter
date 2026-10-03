@@ -2,6 +2,34 @@
 
 ## 🅿️ PARKING LOT
 
+**Updated 2026-10-03.** Session `claude/fervent-noether-ydmxea`: 1.0 release finished, npm published, John's local-only commits ported.
+
+**Release line:** **main** = v1.0.110 · **live site** = v1.0.110 · no open PR from this session · **your local** = pulled to 83962ae3 on 2026-10-01; pull again for v1.0.110.
+
+**Task:** finish 1.0.0 (tag, GitHub release, npm) and bring John's 23 commits that existed only on his PC onto main.
+
+**Done and verified:**
+- **npm:** `wb-starter@1.0.0` and `create-wb-starter@1.0.0` are published under `johnpeters7`, by hand from the `v1.0.0` tag with security-key 2FA and `--auth-type=web`. Checked from the public registry: `npm create wb-starter my-site`, then `npm install` (installed wb-starter 1.0.0), then `wb-starter serve` returned HTTP 200 "My Site".
+- **GitHub:** tag and GitHub release for `v1.0.0`, plus GitHub releases for v4.0.2–4.0.5, all from `.github/workflows/release.yml` (#1182; PRs #1223, #1224).
+- **John's local commits:** 23 were only on his PC (backup branch `backup-local-main-2026-09-30`, a95ee148). 16 were ported in PR #1227, merged; 7 were already done another way on main. Each is listed in the PR.
+- **Docs:** `docs/guides/create-a-website.md` (PR #1225). The hand-publishing steps (2FA security key, `--auth-type=web`, the staged `0.0.0-stage` placeholder) were given to John as `publish-1.0.0-to-npm.md`. They are not in the repo yet.
+
+**Files touched (all merged):** `.github/workflows/release.yml`, `scripts/release-notes.mjs`,
+`tests/regression/release-notes.spec.ts`, `docs/guides/create-a-website.md`, `docs/manifest.json`,
+`packages/create-wb-starter/README.md`, `tests/regression/create-wb-starter-new-site.spec.ts`,
+`tests/regression/variants-render-differently.spec.ts`, plus the 16 ported commits in #1227.
+
+**Next steps (none started):**
+1. **npm Trusted Publishing.** `release.yml` still publishes with `NPM_TOKEN`. npm no longer lets a token skip 2FA for publishing, and the account's 2FA is a security key, so that step will keep getting 403. Switch it to Trusted Publishing: `permissions: id-token: write` and no token. Each package also needs **npmjs.com → package → Settings → Trusted Publisher → GitHub Actions**, repo `CieloVistaSoftware/wb-starter`, workflow `release.yml`. That npm setting is John's to do.
+2. **#962:** 390 `waitForTimeout(` calls are left in `tests/`. Next are the `settled(page)` helper with measured deadlines, then the ratchet down to 0.
+3. **Watch:** `variants-render-differently` x-snow `showButton=false` "never finished rendering". Seen once on Windows CI (PR #1227, 694586fa). Passed 20 of 20 locally at 4 workers. If Nightly shows it again, root-cause it.
+4. **Cleanup:** delete the `backup-local-main-2026-09-30` branch once John agrees. Everything on it is on main or listed as superseded in #1227.
+5. **#1226:** see every doc by creation date. Filed, not started.
+
+**Open questions:** none.
+
+---
+
 **Updated 2026-10-02.** Build process changed (John's decision).
 
 - Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.
