@@ -105,8 +105,17 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       const labelBefore = btn.textContent!.trim();
       const original = { height: getComputedStyle(target!).height, overflow: getComputedStyle(target!).overflow };
 
+      // A GENUINE grant: resolve AND put the element in the top layer. #738
+      // made the behavior check `document.fullscreenElement === target` before
+      // committing, so a bare resolve is (correctly) refused now -- faking only
+      // the promise would be testing the refusal path, not this one.
       const origRequest = Element.prototype.requestFullscreen;
-      Element.prototype.requestFullscreen = function () { return Promise.resolve(); };
+      Element.prototype.requestFullscreen = function (this: Element) {
+        Object.defineProperty(document, 'fullscreenElement', {
+          configurable: true, get: () => this,
+        });
+        return Promise.resolve();
+      };
 
       btn.onclick!(new MouseEvent('click'));
       await sleep(400);
@@ -132,6 +141,9 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       };
 
       // Coming back out restores what was saved (#720's guarantee).
+      Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true, get: () => null,
+      });
       document.dispatchEvent(new Event('fullscreenchange'));
       await sleep(300);
 
@@ -152,5 +164,84 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
     expect(result.applied.label, 'granted: the button offers the way out').toContain('Exit');
     expect(result.afterExit.height, 'and leaving restores the original height').toBe(result.original.height);
     expect(result.afterExit.overflow, 'and the original overflow').toBe(result.original.overflow);
+  });
+});
+
+test.describe('#738 — the label follows the browser, never a guess', () => {
+  test('a resolve that did not actually go fullscreen must not say Exit', async ({ page }) => {
+    await openExample(page);
+
+    const result = await page.evaluate(async () => {
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
+      const target = document.querySelector(btn.getAttribute('target')!) as HTMLElement;
+      const labelBefore = btn.textContent!.trim();
+
+      const errors: string[] = [];
+      const origError = console.error;
+      console.error = (...a: any[]) => { errors.push(a.join(' ')); origError(...a); };
+
+      // Resolve WITHOUT the browser entering fullscreen -- the state John hit:
+      // the button read "Exit Fullscreen" while document.fullscreenElement was
+      // null, so the next click took the ENTER branch and exit never ran.
+      let requests = 0;
+      const origRequest = Element.prototype.requestFullscreen;
+      Element.prototype.requestFullscreen = function () { requests++; return Promise.resolve(); };
+
+      btn.onclick!(new MouseEvent('click'));
+      await sleep(400);
+      const labelAfter = btn.textContent!.trim();
+
+      Element.prototype.requestFullscreen = origRequest;
+      console.error = origError;
+
+      return {
+        labelBefore,
+        labelAfter,
+        requests,
+        hasClass: target.classList.contains('x-fullscreen-target'),
+        reported: errors.some((e) => e.includes('[WB:fullscreen]') && e.includes('not the fullscreen element')),
+        fullscreenElement: document.fullscreenElement ? 'set' : 'null',
+      };
+    });
+
+    expect(result.fullscreenElement, 'the premise: nothing is actually fullscreen').toBe('null');
+    expect(result.requests, 'the click did ask for fullscreen').toBe(1);
+    expect(result.labelAfter, 'the button must not offer an exit that cannot work')
+      .toBe(result.labelBefore);
+    expect(result.labelAfter, 'and must not say Exit while nothing is fullscreen').not.toContain('Exit');
+    expect(result.hasClass, 'nothing may be stretched').toBe(false);
+    expect(result.reported, 'the mismatch must be reported').toBe(true);
+  });
+
+  test('leaving by Escape resets the label', async ({ page }) => {
+    await openExample(page);
+
+    const label = await page.evaluate(async () => {
+      const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+      const btn = document.getElementById('behaviors-live-fullscreen') as HTMLElement;
+      const target = document.querySelector(btn.getAttribute('target')!) as HTMLElement;
+
+      // The browser really did enter fullscreen on our target...
+      Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true, get: () => target,
+      });
+      document.dispatchEvent(new Event('fullscreenchange'));
+      await sleep(200);
+      const whileIn = btn.textContent!.trim();
+
+      // ...then Escape: fullscreenchange fires with NO click involved.
+      Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true, get: () => null,
+      });
+      document.dispatchEvent(new Event('fullscreenchange'));
+      await sleep(200);
+
+      return { whileIn, afterEscape: btn.textContent!.trim(), labelAttr: btn.getAttribute('label') };
+    });
+
+    expect(label.whileIn, 'in fullscreen the button offers the way out').toContain('Exit');
+    expect(label.afterEscape, 'Escape must put the label back -- no click happens').not.toContain('Exit');
+    expect(label.afterEscape, 'and back to the configured label').toBe(label.labelAttr!.trim());
   });
 });
