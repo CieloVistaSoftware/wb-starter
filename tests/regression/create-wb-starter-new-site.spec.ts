@@ -148,6 +148,37 @@ test('npm start (wb-starter serve) serves the site on the wb-starter runtime', a
   expect((await fetch(base + 'pages/behaviors.html')).status).toBe(404);
 });
 
+test('npm start moves to the next free port when its port is taken (#1282)', async () => {
+  // John, 2026-10-01: a fresh `npm create wb-starter my-site` then `npm start`
+  // crashed with an unhandled EADDRINUSE because something already had 3000.
+  // A real server holds the port serve is asked for, as another dev server on
+  // 3000 would.
+  const taken = await freePort();
+  const blocker = net.createServer();
+  await new Promise<void>((resolve) => blocker.listen(taken, resolve));
+  const bin = path.join(site, 'node_modules', 'wb-starter', 'scripts', 'wb-starter.mjs');
+  const child = spawn(process.execPath, [bin, 'serve'], { cwd: site, env: { ...process.env, PORT: String(taken) }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const exited = new Promise((resolve) => child.once('exit', resolve));
+  try {
+    let out = '';
+    let err = '';
+    child.stderr!.on('data', (d) => { err += d; });
+    const url = await new Promise<string>((resolve, reject) => {
+      child.stdout!.on('data', (d) => { out += d; const m = out.match(/http:\/\/localhost:\d+\//); if (m) resolve(m[0]); });
+      child.once('exit', (code) => reject(new Error(`serve exited ${code} before listening:\n${out}${err}`)));
+    });
+    const used = Number(new URL(url).port);
+    expect(used, 'serve moved past the taken port').toBeGreaterThan(taken);
+    expect(out).toContain(`port ${taken} is in use, using ${used} instead.`);
+    expect((await fetch(url)).status).toBe(200);
+  } finally {
+    // Without the fix serve has already crashed; only a running one is killed.
+    if (child.exitCode === null && child.signalCode === null) child.kill();
+    await exited;
+    await new Promise((resolve) => blocker.close(resolve));
+  }
+});
+
 test('npm run build writes a static site that works without wb-starter running', async ({ page }) => {
   execFileSync(NPM, ['run', 'build'], { cwd: site, stdio: 'pipe', shell: process.platform === 'win32' });
   const dist = path.join(site, 'dist');

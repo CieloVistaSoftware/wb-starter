@@ -220,13 +220,29 @@ export function fullscreen(element, options = {}) {
   // written back; removing a class restores whatever the target had.
   const TARGET_CLASS = 'x-fullscreen-target';
 
+  // #738 -- John, with the button reading "Exit Fullscreen": "neither fullscreen
+  // or exit work". Both directions looked broken for ONE reason: the label was
+  // set from the request's outcome instead of the browser's actual state. Once
+  // it said "Exit" while document.fullscreenElement was null, the next click
+  // took the ENTER branch again (the exit branch is gated on fullscreenElement),
+  // so exiting became unreachable.
+  //
+  // The label now comes only from document.fullscreenElement, read on
+  // fullscreenchange. That also covers Escape, which fires the event with no
+  // click at all.
+  const syncLabel = () => {
+    element.textContent = targetEl && document.fullscreenElement === targetEl
+      ? '✕ Exit Fullscreen'
+      : config.label;
+  };
+
   // Handle fullscreen change events to restore styles
   const handleFullscreenChange = () => {
     if (!document.fullscreenElement) {
       // Exiting fullscreen - restore original styles
       if (targetEl) targetEl.classList.remove(TARGET_CLASS);
-      element.textContent = '⛶ Fullscreen';
     }
+    syncLabel();
   };
   
   document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -261,8 +277,19 @@ export function fullscreen(element, options = {}) {
 
     Promise.resolve(request)
       .then(() => {
+        // #738: resolving is not the same as being fullscreen. Check the real
+        // state before committing anything -- a resolve that did not put THIS
+        // element in the top layer would otherwise leave a stretched panel and
+        // a button offering an exit that cannot work.
+        if (document.fullscreenElement !== targetEl) {
+          console.error('[WB:fullscreen] request resolved but',
+            JSON.stringify(config.target || 'documentElement'),
+            'is not the fullscreen element -- leaving everything as it was');
+          syncLabel();
+          return;
+        }
         targetEl.classList.add(TARGET_CLASS);
-        element.textContent = '✕ Exit Fullscreen';
+        syncLabel();
       })
       .catch((err) => {
         // Nothing was changed, so there is nothing to undo -- but SAY why.
@@ -271,7 +298,7 @@ export function fullscreen(element, options = {}) {
         // swallowing it left the reader with no way to tell them apart.
         console.error(`[WB:fullscreen] request rejected: ${err && err.name}: ${err && err.message}`);
         targetEl.classList.remove(TARGET_CLASS);
-        element.textContent = config.label;
+        syncLabel();
       });
   };
 

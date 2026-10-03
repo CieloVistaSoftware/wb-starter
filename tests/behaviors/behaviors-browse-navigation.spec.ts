@@ -276,11 +276,17 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
 
       // requestFullscreen needs a user gesture, which a scripted click has not
       // got — so spy on it to prove WHERE it was requested, then drive the
-      // restore path the behavior listens for.
+      // restore path the behavior listens for. #738: the stub must be a
+      // GENUINE grant -- it puts the element in the top layer as well as
+      // resolving, because the behavior now reads document.fullscreenElement
+      // rather than trusting the resolve.
       let requestedOn: string | null = null;
       const original = Element.prototype.requestFullscreen;
       Element.prototype.requestFullscreen = function (this: Element) {
         requestedOn = this.id || this.tagName;
+        Object.defineProperty(document, 'fullscreenElement', {
+          configurable: true, get: () => this,
+        });
         return Promise.resolve();
       };
       btn.click();
@@ -292,6 +298,9 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
         sized: wrapper.classList.contains('x-fullscreen-target'),
         overflow: cs.overflowY,
       };
+      Object.defineProperty(document, 'fullscreenElement', {
+        configurable: true, get: () => null,
+      });
       document.dispatchEvent(new Event('fullscreenchange'));   // fullscreenElement is null → exit path
       await sleep(300);
       const after = wrapper.getBoundingClientRect();
