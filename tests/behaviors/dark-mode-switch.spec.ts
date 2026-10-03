@@ -13,24 +13,18 @@ test('Dark Mode switch toggles data-theme between dark and light', async ({ page
   await setupBehaviorTest(page);
   await setupTestContainer(page, '<div x-switch theme-control label="Dark Mode"></div>');
 
-  const r = await page.evaluate(async () => {
-    const root = document.documentElement;
-    root.setAttribute('data-theme', 'dark');
-    const sw = document.querySelector('#test-container [x-switch][theme-control]') as HTMLElement;
-    const inp = sw.querySelector('input') as HTMLInputElement;
+  const root = page.locator('html');
+  const sw = page.locator('#test-container [x-switch][theme-control]');
+  await page.evaluate(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
     // re-sync initial state to current theme
-    inp.checked = true;
-
-    const start = root.getAttribute('data-theme');
-    sw.click(); // -> off -> light
-    await new Promise((r) => setTimeout(r, 120));
-    const afterOff = root.getAttribute('data-theme');
-    sw.click(); // -> on -> dark
-    await new Promise((r) => setTimeout(r, 120));
-    const afterOn = root.getAttribute('data-theme');
-    return { start, afterOff, afterOn };
+    (document.querySelector('#test-container [x-switch][theme-control] input') as HTMLInputElement).checked = true;
   });
 
-  expect(r.afterOff, `turning Dark Mode OFF did not switch to light (got ${r.afterOff})`).toBe('light');
-  expect(r.afterOn, `turning Dark Mode ON did not switch to dark (got ${r.afterOn})`).toBe('dark');
+  // The theme changes in the switch's own handler. Each step is polled rather
+  // than read after a fixed 120ms sleep, which a loaded CI runner outran.
+  await sw.evaluate((el) => (el as HTMLElement).click()); // -> off -> light
+  await expect(root, 'turning Dark Mode OFF did not switch to light').toHaveAttribute('data-theme', 'light');
+  await sw.evaluate((el) => (el as HTMLElement).click()); // -> on -> dark
+  await expect(root, 'turning Dark Mode ON did not switch to dark').toHaveAttribute('data-theme', 'dark');
 });
