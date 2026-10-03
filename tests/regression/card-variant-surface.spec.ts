@@ -56,15 +56,15 @@ test.describe('.x-card variant surface (cards demo page)', () => {
     const bordered = cardFor(page, 'bordered');
     await buildInView(bordered);
 
-    const before = await bordered.evaluate((el) => getComputedStyle(el).border);
+    // card.css gives cards `transition: all 0.2s`, so the border animates in
+    // from 0px as the bordered style applies. Each read is polled until it
+    // settles: a single read on a loaded runner can land mid-animation and
+    // see "0px" (#1307).
+    const border = () => bordered.evaluate((el) => getComputedStyle(el).border);
+    await expect.poll(border).toContain('2px');
+    const before = await border();
     await bordered.hover();
     await page.mouse.move(0, 0); // move away to fire mouseleave
-    // Wait out the card's own 0.2s transition (card.css) rather than read
-    // mid-animation.
-    await page.waitForTimeout(300);
-    const after = await bordered.evaluate((el) => getComputedStyle(el).border);
-
-    expect(after).toBe(before);
-    expect(after).toContain('2px');
+    await expect.poll(border).toBe(before);
   });
 });
