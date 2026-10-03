@@ -6,8 +6,110 @@
   ],
   "releases": [
     {
-      "version": "1.0.114",
+      "version": "1.0.115",
       "date": "2026-10-02",
+      "summary": "Themes page lists all 50 themes; serve finds a free port; x-clock names the valid variants (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1228\" target=\"_blank\" rel=\"noopener\">PR 1228</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The button-click sweep survives a navigating example, in 2 parts</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1290\" target=\"_blank\" rel=\"noopener\">#1290</a>",
+          "issues": [
+            1290
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Six cross-reference images still 404 on main; the theme-card test waits for the page CSS</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The overlay extension lives in archive/x-overlay-ext</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1292\" target=\"_blank\" rel=\"noopener\">#1292</a>",
+          "issues": [
+            1292
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Img.md size examples and the sub-path image floor, after</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1293\" target=\"_blank\" rel=\"noopener\">#1293</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1122\" target=\"_blank\" rel=\"noopener\">#1122</a>",
+          "issues": [
+            1293,
+            1122
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Main&#39;s compliance CI after -- absolute media URLs, offline Wikimedia</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1293\" target=\"_blank\" rel=\"noopener\">#1293</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1122\" target=\"_blank\" rel=\"noopener\">#1122</a>",
+          "issues": [
+            1293,
+            1122
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Keep the behavior-overlay extension, outside the site template</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1292\" target=\"_blank\" rel=\"noopener\">#1292</a>",
+          "issues": [
+            1292
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Drop a stray Chrome extension from the site template</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1292\" target=\"_blank\" rel=\"noopener\">#1292</a>",
+          "issues": [
+            1292
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Two regression tests no longer time out on the Windows runner</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1290\" target=\"_blank\" rel=\"noopener\">#1290</a>",
+          "issues": [
+            1290
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The themes page generator keeps the page&#39;s own line endings</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1025\" target=\"_blank\" rel=\"noopener\">#1025</a>",
+          "issues": [
+            1025
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The Themes page lists all 50 themes, written from one registry</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1025\" target=\"_blank\" rel=\"noopener\">#1025</a>",
+          "issues": [
+            1025
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Drop version stamps the local test run wrote into pages and demos</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>List the create-a-website guide in the docs manifest</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-clock checks its variant and says which values work</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1229\" target=\"_blank\" rel=\"noopener\">#1229</a>",
+          "issues": [
+            1229
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The create-a-website behavior example is a live x-demo</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/813\" target=\"_blank\" rel=\"noopener\">#813</a>",
+          "issues": [
+            813
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Wb-starter serve: use the next free port when 3000 is taken</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.114",
+      "date": "2026-10-03",
       "summary": "",
       "items": [
         {
