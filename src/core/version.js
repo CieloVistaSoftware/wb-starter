@@ -8,21 +8,13 @@
  */
 export const VERSION = {
   "version": "1.0.0",
-  "commit": "f0ed18ca",
-  "builtAt": "2026-10-03T01:42:51.974Z",
+  "commit": "d15f39e7",
+  "builtAt": "2026-10-03T03:11:44.769Z",
   "branch": "main",
-  "dirty": true,
-  "dirtyFiles": [
-    "data/schema-index.json",
-    "demos/autoinject.html",
-    "demos/playground.html",
-    "demos/site/cards.html",
-    "docs/WB_BEHAVIOR_SYSTEM.md"
-  ],
-  "dirtyCount": 34,
+  "dirty": false,
   "ahead": 0,
   "behind": 0,
   "upstream": "origin/main",
   "release": "1.0.89",
-  "sinceRelease": 21
+  "sinceRelease": 25
 };

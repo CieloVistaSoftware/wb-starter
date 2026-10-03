@@ -271,8 +271,8 @@
       "<div x-cardimage fit=\"cover\">fit=cover</div>",
       "<div x-cardimage title=\"Test Title\">With title attribute</div>",
       "<div x-cardimage variant=\"default\">Variant: default</div>",
-      "<div x-cardimage src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Photo\"></div>",
-      "<div x-cardimage src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></div>"
+      "<div x-cardimage src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Photo\"></div>",
+      "<div x-cardimage src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></div>"
     ],
     "matrix": {
       "combinations": [
