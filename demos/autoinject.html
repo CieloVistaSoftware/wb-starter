@@ -4,8 +4,8 @@
   <meta id="autoinject-meta-3" charset="UTF-8">
   <meta id="autoinject-meta-4" name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="autoinject-title-5">WB Auto-Inject Demo</title>
-  <link id="autoinject-link-6" rel="stylesheet" href="../src/styles/themes.css?v=1.0.134">
-  <link id="autoinject-link-7" rel="stylesheet" href="../src/styles/site.css?v=1.0.134">
+  <link id="autoinject-link-6" rel="stylesheet" href="../src/styles/themes.css?v=1.0.135">
+  <link id="autoinject-link-7" rel="stylesheet" href="../src/styles/site.css?v=1.0.135">
   <style id="autoinject-style-9">
     body {
       padding: 2rem;
@@ -780,8 +780,8 @@
     <div id="autoinject-div-190" class="value-prop">
       <h4 id="autoinject-h4-191">Value Added:</h4>
       <ul id="autoinject-ul-192">
-        <li id="autoinject-li-193"><strong id="autoinject-strong-194">Value Display:</strong> Shows the current numeric value (if <code id="autoinject-code-195">show-value</code>).</li>
-        <li id="autoinject-li-196"><strong id="autoinject-strong-197">Min/Max Labels:</strong> Displays start and end values (if <code id="autoinject-code-198">show-labels</code>).</li>
+        <li id="autoinject-li-193"><strong id="autoinject-strong-194">Value Display:</strong> Shows the current numeric value (if <code id="autoinject-code-195">showValue</code>).</li>
+        <li id="autoinject-li-196"><strong id="autoinject-strong-197">Min/Max Labels:</strong> Displays start and end values (if <code id="autoinject-code-198">showLabels</code>).</li>
         <li id="autoinject-li-199"><strong id="autoinject-strong-200">Styling:</strong> Custom track and thumb styling.</li>
       </ul>
     </div>
@@ -798,9 +798,9 @@
         min="0" 
         max="100" 
         value="75" 
-        show-value 
-        show-labels 
-        value-suffix="%" 
+        showValue 
+        showLabels 
+        valueSuffix="%" 
         style="width: 100%">
     </div>
 
@@ -808,8 +808,8 @@
       <label id="autoinject-label-hue">Color Hue (Custom Style):</label>
       <div id="autoinject-div-hue-row" style="display: flex; align-items: center; gap: 1rem;">
         <input id="autoinject-input-hue" type="range" min="0" max="360" value="0" 
-          show-value 
-          value-suffix="°"
+          showValue 
+          valueSuffix="°"
           style="width: 33vw; height: 10px; border-radius: 5px; appearance: none; background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);"
           oninput="const color = `hsl(${this.value}, 100%, 50%)`; document.getElementById('hue-swatch').style.backgroundColor = color; document.getElementById('hue-value').textContent = color;">
         <div id="hue-swatch" style="width: 32px; height: 32px; border-radius: 50%; background: red; border: 2px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
@@ -831,9 +831,9 @@
   type="range"
   min="0"
   max="100"
-  show-value
-  show-labels
-  value-suffix="%"&gt;
+  showValue
+  showLabels
+  valueSuffix="%"&gt;
 
 &lt;!-- Hue Slider with Swatch --&gt;
 &lt;div style="display: flex; gap: 1rem"&gt;
@@ -841,8 +841,8 @@
     type="range"
     min="0"
     max="360"
-    show-value
-    value-suffix="°"
+    showValue
+    valueSuffix="°"
     style="background: linear-gradient(...)"
     oninput="this.nextElementSibling.style.background = `hsl(${this.value}, 100%, 50%)`"&gt;
   &lt;div style="width: 30px; height: 30px; background: red"&gt;&lt;/div&gt;

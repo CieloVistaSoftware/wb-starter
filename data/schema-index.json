@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T02:09:15.304Z",
+  "generatedAt": "2026-10-03T23:33:13.212Z",
   "count": 160,
   "schemas": [
     {
@@ -6193,36 +6193,82 @@
       "file": "range.schema.json",
       "name": "range",
       "title": "Range",
-      "description": "Styles a native range input, keeping it a real form control.",
+      "description": "Slider with a live value display and min/max bound labels. input[type=\"range\"] IS this behavior, so there is no attribute to add.",
       "tag": "x-range",
       "baseClass": "x-range",
       "properties": {
-        "value-prefix": {
-          "type": "string",
-          "description": "Read by range().",
-          "default": "this is the value prefix"
-        },
-        "value-suffix": {
-          "type": "string",
-          "description": "Read by range().",
-          "default": "this is the value suffix"
-        },
-        "show-value": {
+        "showValue": {
           "type": "boolean",
-          "description": "Read by range(). Bare attribute.",
+          "description": "Show the current value above the slider",
           "default": false
         },
-        "show-labels": {
+        "showLabels": {
           "type": "boolean",
-          "description": "Read by range(). Bare attribute.",
+          "description": "Show the min and max bounds below the slider",
           "default": false
+        },
+        "valuePrefix": {
+          "type": "string",
+          "description": "Text before the value, such as a currency symbol",
+          "default": ""
+        },
+        "valueSuffix": {
+          "type": "string",
+          "description": "Text after the value, such as a unit",
+          "default": ""
         }
       },
-      "matrix": [],
+      "matrix": [
+        {
+          "showValue": "absent"
+        },
+        {
+          "showValue": "bare"
+        },
+        {
+          "showValue": "true"
+        },
+        {
+          "showValue": "false"
+        },
+        {
+          "showLabels": "absent"
+        },
+        {
+          "showLabels": "bare"
+        },
+        {
+          "showLabels": "true"
+        },
+        {
+          "showLabels": "false"
+        },
+        {
+          "showValue": "bare",
+          "valuePrefix": "$"
+        },
+        {
+          "showValue": "bare",
+          "valueSuffix": "%"
+        },
+        {
+          "showValue": "bare",
+          "valuePrefix": "$",
+          "valueSuffix": " USD"
+        },
+        {
+          "showValue": "bare",
+          "showLabels": "bare"
+        }
+      ],
       "_metadata": {
-        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+        "category": "forms",
+        "icon": "🎚️",
+        "since": "1.0.0",
+        "status": "stable",
+        "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), then expanded by hand (#1140)",
         "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-        "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+        "note": "The generated version named these show-value, show-labels, value-prefix and value-suffix, because the generator reads attribute names out of getAttribute/hasAttribute calls and range.js spelled them with dashes. #1140 converted the code to readFlag/readAttr and the names to camelCase (#1125). The generator never overwrites an existing schema, so this hand-expansion stands."
       }
     },
     {
@@ -8641,7 +8687,7 @@
         },
         {
           "src": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm",
-          "poster": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg"
+          "poster": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg"
         },
         {
           "src": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm",
