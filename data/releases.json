@@ -6,8 +6,22 @@
   ],
   "releases": [
     {
-      "version": "1.0.116",
+      "version": "1.0.117",
       "date": "2026-10-02",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Stop stray artifacts reaching a commit from the scaffolding template</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1295\" target=\"_blank\" rel=\"noopener\">#1295</a>",
+          "issues": [
+            1295
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.116",
+      "date": "2026-10-03",
       "summary": "Fix: server.js moves to the next port instead of crashing when PORT is taken (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1289\" target=\"_blank\" rel=\"noopener\">PR 1289</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1286\" target=\"_blank\" rel=\"noopener\">#1286</a>",
       "items": [
         {
