@@ -27,8 +27,12 @@ const DOCS = readdirSync('docs/behaviors')
   .filter((f) => f.endsWith('.md'))
   .filter((f) => LOCAL_IMAGE.test(readFileSync(`docs/behaviors/${f}`, 'utf8')));
 
+// The floor only guards against a filter that silently matches nothing. #1122
+// ("NO LOCAL IMAGES") moves examples to remote media on purpose, so this set
+// shrinks over time (8 docs on 2026-10-03, from more than 10). When it reaches
+// 0 this test has nothing left to check and can go.
 test('docs with local example images exist to check', () => {
-  expect(DOCS.length, 'a filter that matches nothing proves nothing (#863)').toBeGreaterThan(10);
+  expect(DOCS.length, 'a filter that matches nothing proves nothing (#863)').toBeGreaterThan(0);
 });
 
 for (const doc of DOCS) {
