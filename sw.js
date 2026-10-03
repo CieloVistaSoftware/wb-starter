@@ -13,7 +13,7 @@
  * to control the whole site without relying on server config we don't have.
  */
 
-const CACHE_VERSION = 'x-cache-v3';
+const CACHE_VERSION = 'x-cache-v4';
 
 // App root derived from THIS worker's location, so precache URLs resolve
 // under any base — domain root locally or /wb-starter/ on GitHub Pages.
@@ -99,7 +99,7 @@ self.addEventListener('fetch', event => {
         // instead of failing or genuinely retrying. `event.request.mode`
         // is 'navigate' only for real navigations, never for fetch()/XHR --
         // gate the index.html fallback on that so a non-navigation miss
-        // falls through to the "not cached" Response below instead.
+        // falls through to the network error below instead.
         .then(cached => {
           if (cached) return cached;
           if (event.request.mode === 'navigate') return caches.match(BASE + 'index.html');
@@ -110,11 +110,15 @@ self.addEventListener('fetch', event => {
         // mismatch) — respondWith() throws "Failed to convert value to
         // 'Response'" on undefined and takes the whole fetch down with it.
         // Always resolve to a real Response, even offline with no cache.
-        .then(cached => cached || new Response('Offline and not cached', {
-          status: 503,
-          statusText: 'Service Unavailable',
-          headers: { 'Content-Type': 'text/plain' }
-        }))
+        //
+        // #891: and that Response must say what happened. This used to be a
+        // manufactured `503 Service Unavailable`, a status only a SERVER can
+        // send — so a dead dev server, or a request the browser itself refused
+        // before a byte left the machine, read as a live, unhealthy server and
+        // sent everyone to server.js. What happened is that the network fetch
+        // failed, and Response.error() is exactly that: the page's fetch()
+        // rejects with a TypeError, as it would with no worker at all.
+        .then(cached => cached || Response.error())
     )
   );
 });
