@@ -15,6 +15,7 @@
 import { mkdtemp, rm, writeFile, readdir, readFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
+import { performance } from "perf_hooks";
 import { createGuards } from "./lib/test-lock.mjs";
 
 let passed = 0;
@@ -385,14 +386,21 @@ async function testSubscriberGivesUpAtItsDeadline() {
     await holder.acquireSuiteLock(new Date().toISOString(), "stuck holder");
     await holder.bindSuiteLock(process.pid, {});
 
-    const began = Date.now();
+    const began = performance.now();
     const outcome = await Promise.race([
       subscriber.acquireSuiteLockOnRelease(new Date().toISOString(), "subscriber", null, { timeoutMs: 300 }),
       new Promise((r) => setTimeout(() => r("never returned"), 3000)),
     ]);
     check("it returns a refusal naming the holder, not the lock",
       typeof outcome === "string" && outcome.includes("agent-A"), `got: ${JSON.stringify(outcome)}`);
-    check("and returns at the deadline, not before", Date.now() - began >= 300, `${Date.now() - began}ms`);
+    // A timer may fire a millisecond or so before the wall clock has advanced by its
+    // full duration (the event loop schedules against a cached clock), so CI measured
+    // 299ms against a 300ms deadline (#1296). This check exists to catch a subscriber
+    // that gives up at once or far too soon, so it asks for the deadline minus a small
+    // named slop, not for an exact lower bound the platform does not promise.
+    const TIMER_SLOP_MS = 5;
+    const waited = performance.now() - began;
+    check("and returns at the deadline, not before", waited >= 300 - TIMER_SLOP_MS, `${waited.toFixed(1)}ms`);
     const held = await holder.readLock();
     check("the holder's lock is untouched", held && held.pid === process.pid, JSON.stringify(held));
   });
