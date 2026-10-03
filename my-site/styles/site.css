@@ -1,9 +1,0 @@
-/* Your site's own styles. Loaded after wb-starter's, so anything here wins.
-   Use the theme tokens (var(--text-primary), var(--bg-secondary), ...) and
-   your site follows the theme switcher. */
-
-.home-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1rem;
-}
