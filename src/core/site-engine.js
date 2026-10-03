@@ -9,6 +9,59 @@ import { setRule } from './dynamic-style.js';
 /** Old page ids that now render another page (URL is rewritten to the new id). */
 const PAGE_ALIASES = { 'whats-new': 'releases' };
 
+// #390: new spec -- auto-hide-on-scroll is a mobile-landscape-only
+// behavior. Landscape phones are short (~320-430px tall); that's where
+// a fixed 64px header eating vertical space actually hurts. Landscape
+// TABLETS/desktops are much taller, so max-height (not max-width) is
+// the right discriminator between "phone, sideways" and "anything
+// wider-screened, sideways." Outside this condition the bar just
+// stays put, same as before this feature existed.
+const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
+
+/**
+ * Hide `bar` (add `hiddenClass`) while #siteBody scrolls down and show it on
+ * scroll-up, in mobile landscape only. initStickyHeader() (#390) and
+ * initStickyFooter() (#393) each carried this whole listener pair (#883).
+ * `onResize` runs first on every resize.
+ */
+function hideOnLandscapeScroll(body, bar, hiddenClass, onResize) {
+  let lastScrollY = body.scrollTop;
+  const threshold = 50; // Min scroll to trigger
+
+  body.addEventListener('scroll', () => {
+    if (!isMobileLandscape()) return;
+    const currentScrollY = body.scrollTop;
+
+    // Don't hide if near top
+    if (currentScrollY < threshold) {
+      bar.classList.remove(hiddenClass);
+      lastScrollY = currentScrollY;
+      return;
+    }
+
+    // Scrolling Down -> Hide (maximizes screen area while reading)
+    if (currentScrollY > lastScrollY + 10) {
+      bar.classList.add(hiddenClass);
+    }
+    // Scrolling Up -> Show
+    else if (currentScrollY < lastScrollY - 10) {
+      bar.classList.remove(hiddenClass);
+    }
+
+    lastScrollY = currentScrollY;
+  }, { passive: true });
+
+  // Leaving mobile-landscape (rotate to portrait, resize a desktop
+  // window, ...) must not leave the bar stuck hidden with no more
+  // scroll events available to un-hide it.
+  window.addEventListener('resize', () => {
+    if (onResize) onResize();
+    if (!isMobileLandscape()) {
+      bar.classList.remove(hiddenClass);
+    }
+  });
+}
+
 export default class WBSite {
   constructor() {
     this.config = null;
@@ -366,49 +419,7 @@ export default class WBSite {
     const header = document.getElementById('siteHeader');
     if (!body || !header) return;
 
-    // #390: new spec -- auto-hide-on-scroll is a mobile-landscape-only
-    // behavior. Landscape phones are short (~320-430px tall); that's where
-    // a fixed 64px header eating vertical space actually hurts. Landscape
-    // TABLETS/desktops are much taller, so max-height (not max-width) is
-    // the right discriminator between "phone, sideways" and "anything
-    // wider-screened, sideways." Outside this condition the header just
-    // stays put, same as before this feature existed.
-    const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
-
-    let lastScrollY = body.scrollTop;
-    const threshold = 50; // Min scroll to trigger
-
-    body.addEventListener('scroll', () => {
-      if (!isMobileLandscape()) return;
-      const currentScrollY = body.scrollTop;
-
-      // Don't hide if near top
-      if (currentScrollY < threshold) {
-        header.classList.remove('site__header--hidden');
-        lastScrollY = currentScrollY;
-        return;
-      }
-
-      // Scrolling Down -> Hide (maximizes screen area while reading)
-      if (currentScrollY > lastScrollY + 10) {
-        header.classList.add('site__header--hidden');
-      }
-      // Scrolling Up -> Show
-      else if (currentScrollY < lastScrollY - 10) {
-        header.classList.remove('site__header--hidden');
-      }
-
-      lastScrollY = currentScrollY;
-    }, { passive: true });
-
-    // Leaving mobile-landscape (rotate to portrait, resize a desktop
-    // window, ...) must not leave the header stuck hidden with no more
-    // scroll events available to un-hide it.
-    window.addEventListener('resize', () => {
-      if (!isMobileLandscape()) {
-        header.classList.remove('site__header--hidden');
-      }
-    });
+    hideOnLandscapeScroll(body, header, 'site__header--hidden');
   }
 
   // #393: same collapse-on-mobile-landscape-scroll treatment as
@@ -420,9 +431,7 @@ export default class WBSite {
     const footer = document.getElementById('siteFooter');
     if (!body || !footer) return;
 
-    const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-height: 500px)').matches;
-
-    // Unlike the header's fixed 64px (site.css `.site__header { height: 64px }`),
+// Unlike the header's fixed 64px (site.css `.site__header { height: 64px }`),
     // the footer's height is NOT a constant -- renderFooter() makes the social
     // links and additional footer links optional per-site config, so its real
     // height varies. Measure it and hand the value to CSS as a custom property
@@ -435,42 +444,9 @@ export default class WBSite {
     };
     syncFooterHeight();
 
-    let lastScrollY = body.scrollTop;
-    const threshold = 50; // Min scroll to trigger
-
-    body.addEventListener('scroll', () => {
-      if (!isMobileLandscape()) return;
-      const currentScrollY = body.scrollTop;
-
-      // Don't hide if near top
-      if (currentScrollY < threshold) {
-        footer.classList.remove('site__footer--hidden');
-        lastScrollY = currentScrollY;
-        return;
-      }
-
-      // Scrolling Down -> Hide (maximizes screen area while reading)
-      if (currentScrollY > lastScrollY + 10) {
-        footer.classList.add('site__footer--hidden');
-      }
-      // Scrolling Up -> Show
-      else if (currentScrollY < lastScrollY - 10) {
-        footer.classList.remove('site__footer--hidden');
-      }
-
-      lastScrollY = currentScrollY;
-    }, { passive: true });
-
-    // Leaving mobile-landscape must not leave the footer stuck hidden with no
-    // more scroll events available to un-hide it. Also re-measure -- rotating
-    // or resizing can change which optional footer content wraps, changing
-    // its height.
-    window.addEventListener('resize', () => {
-      syncFooterHeight();
-      if (!isMobileLandscape()) {
-        footer.classList.remove('site__footer--hidden');
-      }
-    });
+    // Re-measure on resize -- rotating or resizing can change which optional
+    // footer content wraps, changing its height.
+    hideOnLandscapeScroll(body, footer, 'site__footer--hidden', syncFooterHeight);
   }
 
   // #636: John, screenshot -- filtering pages/behaviors.html's search box

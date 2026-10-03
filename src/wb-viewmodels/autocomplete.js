@@ -1,3 +1,4 @@
+import { wrapInput } from '../core/wrap-input.js';
 // Standalone autocomplete behavior extracted from enhancements.js
 //
 // `x-autocomplete` goes on a REAL <input> — it's a void element and can't
@@ -5,18 +6,8 @@
 // new <input> into it. Wrap the real input in a container (same approach as
 // search.js) and add the suggestion list as a sibling, positioned below it.
 export function autocomplete(element, options = {}) {
-  const isInput = element.tagName === 'INPUT';
-  const wrapper = document.createElement('div');
-  wrapper.className = 'x-autocomplete';
-  element.parentNode.insertBefore(wrapper, element);
-  wrapper.appendChild(element);
-
-  const input = isInput ? element : document.createElement('input');
-  if (!isInput) {
-    input.type = 'text';
-    wrapper.appendChild(input);
-  }
-  input.classList.add('x-autocomplete__input');
+  const { wrapper, input } = wrapInput(element, 'x-autocomplete');
+  const isInput = input === element;
 
   const list = document.createElement('ul');
   list.className = 'x-autocomplete__list';

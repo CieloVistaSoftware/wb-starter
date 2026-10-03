@@ -1156,8 +1156,28 @@ const WB = {
       attributeFilter.push(`${prefix}-${name}`);
     });
 
+    // Inject each known behavior named in el's x-behavior list. The observer
+    // runs this and injectShorthand() on an added node and on its matching
+    // descendants; each site had its own copy (#883).
+    const injectBehaviorList = (el) => {
+      (el.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean).forEach(name => {
+        if (knownBehaviors.has(name)) WB.inject(el, name);
+      });
+    };
+    // Inject the behavior each {prefix}-* shorthand attribute on el names.
+    const injectShorthand = (el) => {
+      Array.from(el.attributes).forEach(attr => {
+        if (!attr.name.startsWith(`${prefix}-`)) return;
+        const behaviorName = attr.name.substring(prefix.length + 1);
+        if (knownBehaviors.has(behaviorName)) {
+          const options = attr.value ? { config: attr.value } : {};
+          WB.inject(el, behaviorName, options);
+        }
+      });
+    };
+
     const observer = new MutationObserver(mutations => {
-      dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length} mutations`);
+dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length} mutations`);
       for (const mutation of mutations) {
         // Handle added nodes
         for (const node of mutation.addedNodes) {
@@ -1195,34 +1215,13 @@ const WB = {
           // attribute already set, on itself and on any descendant, since
           // the "attributes"-mutation branch below only fires for VALUE
           // CHANGES on nodes already in the tree.
-          if (el.hasAttribute('x-behavior')) {
-            (el.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean).forEach(name => {
-              if (knownBehaviors.has(name)) WB.inject(el, name);
-            });
-          }
+          if (el.hasAttribute('x-behavior')) injectBehaviorList(el);
           el.querySelectorAll?.('[x-behavior]').forEach(descendant => {
-            const descEl = /** @type {HTMLElement} */ (descendant);
-            (descEl.getAttribute('x-behavior') || '').split(/\s+/).filter(Boolean).forEach(name => {
-              if (knownBehaviors.has(name)) WB.inject(descEl, name);
-            });
+            injectBehaviorList(/** @type {HTMLElement} */ (descendant));
           });
 
           // Shorthand ({prefix}-*)
-          Array.from(el.attributes).forEach(attr => {
-            if (attr.name.startsWith(`${prefix}-`)) {
-              const rawName = attr.name.substring(prefix.length + 1);
-              let behaviorName = null;
-                
-              if (knownBehaviors.has(rawName)) {
-                behaviorName = rawName;
-              }
-
-              if (behaviorName) {
-                const options = attr.value ? { config: attr.value } : {};
-                WB.inject(el, behaviorName, options);
-              }
-            }
-          });
+          injectShorthand(el);
 
           // Auto-inject (only if no explicit behaviors)
           const autoBehavior = getAutoInjectBehavior(el);
@@ -1253,22 +1252,9 @@ const WB = {
             
           if (selectors.length > 0) {
             el.querySelectorAll(selectors.join(',')).forEach(descendant => {
-              const descEl = /** @type {HTMLElement} */ (descendant);
-              Array.from(descEl.attributes).forEach(attr => {
-                if (attr.name.startsWith(`${prefix}-`)) {
-                  const rawName = attr.name.substring(prefix.length + 1);
-                  let behaviorName = null;
-                  if (knownBehaviors.has(rawName)) {
-                    behaviorName = rawName;
-                  }
-                  if (behaviorName) {
-                    const options = attr.value ? { config: attr.value } : {};
-                    WB.inject(descEl, behaviorName, options);
-                  }
-                }
-              });
+              injectShorthand(/** @type {HTMLElement} */ (descendant));
             });
-          }
+}
 
           // Auto-inject descendants. Unconditional per-element check (see
           // scan()'s matching comment above) -- `variant` triggers the

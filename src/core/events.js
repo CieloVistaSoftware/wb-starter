@@ -13,7 +13,7 @@
 // stack-trace parsing and toast-style presentation below -- as an
 // *additional* presentation layer on top of one shared error store, instead
 // of a second system that can drift out of sync with the first.
-import { logError, getErrors as getLoggedErrors, clearErrors as clearLoggedErrors } from './error-logger.js';
+import { logError, getErrors as getLoggedErrors, clearErrors as clearLoggedErrors, escapeHtml } from './error-logger.js';
 
 let errorContainer = null;
 let lastInteraction = { from: 'System', to: 'Idle', timestamp: 0 };
@@ -366,17 +366,6 @@ function showToast(level, message, data = {}) {
   }, duration);
   
   return toast;
-}
-
-/**
- * Escape HTML for safe display
- */
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
 
 /**

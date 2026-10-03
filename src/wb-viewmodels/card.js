@@ -1,5 +1,6 @@
 import { readFlag, readAttr, readOption } from '../core/read-attr.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
+import { dragStartPoint } from '../core/drag-start.js';
 /**
  * Card Behavior + Variants
  * -----------------------------------------------------------------------------
@@ -2612,12 +2613,11 @@ export function carddraggable(element, options = {}) {
   };
 
   const onMouseDown = (e) => {
-    if (e.button !== 0) return; // Left click only
-    e.preventDefault(); // Prevent text selection
+    const point = dragStartPoint(e);
+    if (!point) return;
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    // Read the current CSS left/top values, NOT offsetLeft/offsetTop
+    ({ x: startX, y: startY } = point);
+// Read the current CSS left/top values, NOT offsetLeft/offsetTop
     // offsetLeft includes the element's normal flow position which causes
     // a massive jump when applied back as left/top on a relative element
     initialLeft = getCurrentLeft();

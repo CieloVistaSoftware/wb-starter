@@ -32,19 +32,9 @@
  *   <article  data-title="Hello">Content</article>
  */
 
-export { 
-  init, 
-  loadSchemas, 
-  loadSchemaFile,
-  registerSchema, 
-  getSchema,
-  getMethods,
-  bindMethods,
-  processElement, 
-  scan,
-  startObserver
-} from './schema-builder.js';
-
-import SchemaBuilder from './schema-builder.js';
-
-export default SchemaBuilder;
+// Re-export schema-builder.js whole. Its named exports are exactly the API
+// (init, loadSchemas, loadSchemaFile, registerSchema, getSchema, getMethods,
+// bindMethods, processElement, scan, startObserver); listing them again here
+// repeated its default-export list word for word (#883).
+export * from './schema-builder.js';
+export { default } from './schema-builder.js';

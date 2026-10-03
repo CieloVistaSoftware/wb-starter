@@ -610,9 +610,10 @@ export async function clearErrors() {
 }
 
 /**
- * Helper to escape HTML
+ * Helper to escape HTML. Exported for events.js's toasts, which carried an
+ * identical copy (#883).
  */
-function escapeHtml(str) {
+export function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')

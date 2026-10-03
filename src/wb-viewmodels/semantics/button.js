@@ -38,17 +38,20 @@ const ICONS = {
 // --- Self-contained CSS (injected once per document) ---
 const STYLE_ID = 'x-button-styles';
 const BUTTON_CSS = `
-/* x-button: tag + attribute selectors — no JS classes needed */
-x-button {
-  display: inline-flex; align-items: center; justify-content: center;
+/* x-button: tag + attribute selectors — no JS classes needed. The base rule
+   and focus ring also serve the native <button> opt-in (.x-button) below;
+   it repeated both word for word (#883). */
+x-button,
+.x-button {
+display: inline-flex; align-items: center; justify-content: center;
   gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 6px);
   font-weight: 500; cursor: pointer; transition: all 0.2s ease;
   line-height: 1.5; text-decoration: none; user-select: none;
   font-family: inherit; font-size: inherit; color: inherit;
   background: var(--bg-secondary, #2a2a2a); padding: 1rem 1rem;
 }
-x-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
-x-button[disabled] { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+x-button:focus-visible, .x-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
+x-button[disabled]{ opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
 /* Sizes */
 x-button[size="xs"] { padding: 1rem 0.5rem; font-size: 0.75rem; }
@@ -84,16 +87,8 @@ x-button .x-button__icon svg { width: 1em; height: 1em; }
 x-button .x-button__spinner { display: inline-block; animation: x-btn-spin 1s linear infinite; }
 @keyframes x-btn-spin { to { transform: rotate(360deg); } }
 
-/* Native <button> opt-in styling (for auto-injected plain buttons) */
-.x-button {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 0.5rem; border: 1px solid transparent; border-radius: var(--radius-md, 6px);
-  font-weight: 500; cursor: pointer; transition: all 0.2s ease;
-  line-height: 1.5; text-decoration: none; user-select: none;
-  font-family: inherit; font-size: inherit; color: inherit;
-  background: var(--bg-secondary, #2a2a2a); padding: 1rem 1rem;
-}
-.x-button:focus-visible { outline: 2px solid var(--primary, #6366f1); outline-offset: 2px; }
+/* Native <button> opt-in styling (for auto-injected plain buttons); the base
+   rule and focus ring are shared with x-button at the top. */
 /* #669: icon-only collapses to a square around its icon; full-width spans its
    container. Both were declared in the schema with no implementation. */
 .x-button--icon-only { padding: 1rem; aspect-ratio: 1; }
