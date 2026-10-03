@@ -310,9 +310,9 @@ async function runMonitor(args) {
    * from the header serve-with-log.mjs writes — playwright.config.ts picks a
    * free port inside the Playwright process, where this monitor cannot see it.
    */
-  const applyClassification = (exitCode) => {
+  const applyClassification = (exitCode, total) => {
     const port = Number(process.env.WB_TEST_PORT) || readServerLogPort(serverLog);
-    const run = classifyRun({ exitCode, failures: status.failures, port });
+    const run = classifyRun({ exitCode, failures: status.failures, port, total });
     status.failures = run.failures;
     status.serverDown = run.serverDown;
     status.testFailed = run.testFailed;
@@ -513,7 +513,19 @@ function extractErrors(text) {
     // every failure is the run's own server refusing connections: the run
     // measured the server's absence, not the code. `failed` stays Playwright's
     // own total; `testFailed` and `serverDown` split it.
-    status.state = applyClassification(exitCode).state;
+    // #1091: a run that collected nothing is "no-tests", never passed/failed.
+    // The count is KNOWN to be zero only when Playwright said so, or printed a
+    // summary that adds up to zero -- an unparsed summary also reads 0 here, and
+    // that is "unknown", not "none".
+    const output = stdout + stderr;
+    const summaryParsed = summary.passed !== null || summary.failed !== null || summary.skipped !== null;
+    const knownTotal = /No tests found/i.test(output) ? 0 : (summaryParsed ? status.total : undefined);
+    status.state = applyClassification(exitCode, knownTotal).state;
+    if (status.state === "no-tests") {
+      status.noTestsReason = /No tests found/i.test(output)
+        ? "Playwright found no tests matching the spec/filter -- nothing was checked."
+        : "The run finished with zero tests collected -- nothing was checked.";
+    }
 
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));
