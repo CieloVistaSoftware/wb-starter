@@ -48,6 +48,11 @@ test('docs with example images exist to check', () => {
 
 for (const doc of DOCS) {
   test(`${doc}: every example image loads in the doc viewer under /wb-starter/`, async ({ page, baseURL }) => {
+    // The waits below add up to more than the default 30s (20s load, a frame
+    // per element scrolled, 15s idle, 15s image poll), so an image-heavy doc
+    // under full-suite load ran out of time, not out of correctness (#1302,
+    // #341: the budget has to be bigger than the thing it is timing).
+    test.setTimeout(90_000);
     const mount = await mountUnderSubPath(baseURL!);
     try {
       const failed: string[] = [];
