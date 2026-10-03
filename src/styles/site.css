@@ -1943,8 +1943,12 @@ section[id] {
    MOBILE READABILITY + FLUENT NAV (#293)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Responsive images everywhere — scale to the column, never overflow. */
-img { max-width: 100%; height: auto; }
+/* Responsive images everywhere — scale to the column, never overflow.
+   height:auto only when the author gave no height: any CSS height beats the
+   HTML height attribute, so a blanket height:auto threw away every
+   <img height="50"> and recomputed it from the natural ratio (#1327). */
+img { max-width: 100%; }
+img:not([height]) { height: auto; }
 
 /* Code blocks scroll inside their own box, never widen the page. pre.js gives
    .x-pre this once it runs, but a <pre> it has not reached yet (lazy
