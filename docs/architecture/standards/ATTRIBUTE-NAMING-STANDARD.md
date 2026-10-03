@@ -398,22 +398,47 @@ Extensions use `x-` prefix with optional value:
 
 | Format | Use For | Example |
 |--------|---------|--------|
-| **kebab-case** | Multi-word attributes | `trend-value`, `per-page`, `background-image` |
+| **camelCase** | Multi-word attributes | `trendValue`, `perPage`, `backgroundImage` |
 | **lowercase** | Single words | `heading`, `variant`, `size` |
-| **Avoid camelCase** | Never in HTML attributes | ~~`trendValue`~~ |
+| **No dash, ever** | The only dash is the `x-` behavior prefix | `x-autosize` yes, ~~`trend-value`~~ no |
+
+**This table said the opposite until 2026-10-03, and that is why the codebase is split.**
+
+John, on the six identical `x-cardhero headingLevel` demo rows (#1124): *"no attribute
+other than for the name x-autosize, etc. have em dash"*. And earlier, on #1117:
+*"DO NOT USE file-type Use fileType"*. One spelling, camelCase.
+
+The old rule mandated kebab-case and forbade camelCase outright, so everyone who
+wrote a dash was obeying the documented standard. Measured 2026-10-03: the schemas
+declare 78 camelCase attributes against 42 of our own kebab ones -- and 14 of those
+42 were added in the three weeks AFTER #1125 was filed, because only the issue
+changed and this table did not.
+
+**Why a dash silently breaks the attribute.** The HTML parser lowercases attribute
+names, so an authored `headingLevel="1"` is stored as `headinglevel`. A literal
+`getAttribute('heading-level')` can never match it, returns null, and the code falls
+through to its default with no error at all. That is #1124 exactly: all six declared
+values rendered `h3` and the demo rows were identical.
+
+**So read attributes with `readAttr()`** from `src/core/read-attr.js`, never a raw
+`getAttribute`. It tries `headingLevel`, `heading-level`, `data-heading-level` and
+dataset, so the authored spelling cannot miss.
+
+`aria-*` and `data-*` are HTML platform attributes and keep their dashes. This rule
+is about the ones we invent.
 
 ```html
 <!-- ✅ CORRECT -->
 <div
   x-cardstats
-  trend-value="+5%"
-  per-page="10">
-</div>
-<!-- ❌ WRONG -->
-<div
-  x-cardstats
   trendValue="+5%"
   perPage="10">
+</div>
+<!-- ❌ WRONG -- the dash never matches, see above -->
+<div
+  x-cardstats
+  trend-value="+5%"
+  per-page="10">
 </div>
 ```
 
