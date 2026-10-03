@@ -20,7 +20,8 @@
  */
 
 import { writeFile, readFile, unlink, mkdir, readdir } from "fs/promises";
-import { watch } from "fs";
+import { watch, readFileSync } from "fs";
+import { spawnSync } from "child_process";
 import { join } from "path";
 import { homedir, freemem } from "os";
 
@@ -57,6 +58,82 @@ export function isProcessRunning(pid) {
   }
 }
 
+// ─── PROCESS IDENTITY (#1040) ──────────────────────────────────────
+//
+// A PID is a number the OS reuses. isProcessRunning(pid) answers "is SOME
+// process alive with this number", not "is the process that took this lock
+// still alive" -- so when a holder died and Windows handed its PID to an
+// unrelated process, the lock read as held forever and every run on the
+// machine was refused. Every record that names a PID now also records that
+// process's start time, read from the OS when the lock is taken. A recycled
+// PID is a different process with a different start time, and cannot fake it.
+
+/** Start times only change by death + recycle, so a short cache only ever errs toward "still held". */
+const IDENTITY_TTL_MS = 10_000;
+const identityCache = new Map();
+
+/** The OS's start-time stamp for a process, or null when it cannot be read. */
+function readProcessStart(pid) {
+  if (!Number.isInteger(pid) || pid <= 0) return null;
+  if (process.platform === "linux") {
+    try {
+      // Field 22 (starttime, clock ticks since boot). The command name in
+      // field 2 can contain spaces and parens, so split after the LAST ")".
+      const stat = readFileSync(`/proc/${pid}/stat`, "utf-8");
+      const fields = stat.slice(stat.lastIndexOf(")") + 2).split(" ");
+      return fields[19] ? `linux:${fields[19]}` : null;
+    } catch {
+      return null;
+    }
+  }
+  if (process.platform === "win32") {
+    // A process this user cannot query (StartTime is null) yields no output:
+    // "cannot tell", which keeps the PID-only answer rather than stealing.
+    const r = spawnSync(
+      "powershell.exe",
+      ["-NoProfile", "-NonInteractive", "-Command",
+        `$p = Get-Process -Id ${pid} -ErrorAction SilentlyContinue; ` +
+        "if ($p -and $p.StartTime) { $p.StartTime.ToFileTimeUtc() }"],
+      { encoding: "utf-8", windowsHide: true, timeout: 30_000 }
+    );
+    const out = (r.stdout || "").trim();
+    return /^\d+$/.test(out) ? `win32:${out}` : null;
+  }
+  const r = spawnSync("ps", ["-o", "lstart=", "-p", String(pid)], { encoding: "utf-8", timeout: 30_000 });
+  const out = (r.stdout || "").trim();
+  return out ? `ps:${out}` : null;
+}
+
+/**
+ * A stamp that identifies one process for its whole life: the PID plus when it
+ * started. null when the OS will not say (the caller then falls back to PID only).
+ */
+export function processIdentity(pid) {
+  const hit = identityCache.get(pid);
+  // This process cannot be recycled while it is the one asking.
+  if (hit && (pid === process.pid || Date.now() - hit.at < IDENTITY_TTL_MS)) return hit.value;
+  const value = readProcessStart(pid);
+  if (value !== null) identityCache.set(pid, { value, at: Date.now() });
+  return value;
+}
+
+/**
+ * Is the process that `recordedStart` was recorded for still alive as `pid`?
+ * A record without a start (written before #1040, or where the OS would not
+ * say) keeps the old PID-only meaning, so nothing live is ever robbed of a lock.
+ *
+ * @param {number} pid
+ * @param {string|null|undefined} recordedStart
+ * @param {(pid: number) => boolean} [isAlive]
+ * @param {(pid: number) => string|null} [identityOf]
+ */
+export function isSameProcess(pid, recordedStart, isAlive = isProcessRunning, identityOf = processIdentity) {
+  if (!pid || !isAlive(pid)) return false;
+  if (!recordedStart) return true;
+  const now = identityOf(pid);
+  return now === null || now === recordedStart;
+}
+
 /**
  * Builds the guard set for one worktree.
  *
@@ -67,6 +144,7 @@ export function isProcessRunning(pid) {
  * @param {number} [opts.minFreeMb]       0 disables the memory floor.
  * @param {() => number} [opts.freeMemBytes] Injectable, so tests can simulate pressure.
  * @param {(pid: number) => boolean} [opts.isAlive] Injectable liveness check.
+ * @param {(pid: number) => string|null} [opts.identityOf] Injectable process-identity read (#1040).
  */
 export function createGuards(opts) {
   const root = opts.root;
@@ -76,6 +154,9 @@ export function createGuards(opts) {
   const minFreeMb = opts.minFreeMb === undefined ? defaultMinFreeMb() : opts.minFreeMb;
   const freeMemBytes = opts.freeMemBytes || freemem;
   const isAlive = opts.isAlive || isProcessRunning;
+  const identityOf = opts.identityOf || processIdentity;
+  /** The record's holder is the SAME process that took it -- not a recycled PID (#1040). */
+  const holderAlive = (held) => !!held && isSameProcess(held.pid, held.pidStart, isAlive, identityOf);
   // One re-check per hold, for a holder that died WITHOUT releasing: that
   // produces no filesystem event, so without this a subscriber would be
   // stranded. It is a single timer, not a poll -- nothing runs while it waits.
@@ -114,7 +195,7 @@ export function createGuards(opts) {
   async function liveSuite() {
     const held = await readJson(lockFile);
     if (!held) return null;                       // absent or unreadable: not live
-    if (held.pid) return isAlive(held.pid) ? held : null;
+    if (held.pid) return holderAlive(held) ? held : null;
     const ageMs = Date.now() - new Date(held.startedAt).getTime();
     return ageMs >= 0 && ageMs < CLAIM_GRACE_MS ? held : null;
   }
@@ -126,7 +207,7 @@ export function createGuards(opts) {
     const live = [];
     for (const name of entries) {
       const held = await readJson(join(slotDir, name));
-      if (held && held.pid && isAlive(held.pid)) live.push(held);
+      if (held && held.pid && holderAlive(held)) live.push(held);
     }
     return live;
   }
@@ -174,7 +255,7 @@ export function createGuards(opts) {
         continue;
       }
 
-      if (held.pid && isAlive(held.pid)) {
+      if (held.pid && holderAlive(held)) {
         return (
           `Tests already running (PID: ${held.pid}, started: ${held.startedAt})\n` +
           `   Holder: ${held.root || "unknown worktree"}\n` +
@@ -196,7 +277,7 @@ export function createGuards(opts) {
         }
       }
 
-      console.log(`⚠️  Stale lock (holder ${held.pid || "n/a"} dead). Clearing.`);
+      console.log(`⚠️  Stale lock (holder ${held.pid || "n/a"} dead, or its PID now belongs to another process). Clearing.`);
       await removeLock();
     }
 
@@ -208,7 +289,7 @@ export function createGuards(opts) {
     const held = (await readJson(lockFile)) || {};
     await writeFile(
       lockFile,
-      JSON.stringify({ ...held, ...extra, pid: monitorPid, root }, null, 2)
+      JSON.stringify({ ...held, ...extra, pid: monitorPid, pidStart: identityOf(monitorPid), root }, null, 2)
     );
   }
 
@@ -225,6 +306,7 @@ export function createGuards(opts) {
     if (await liveSuite()) return null;
     const payload = () => JSON.stringify({
       pid: process.pid,
+      pidStart: identityOf(process.pid),
       root,
       specFile,
       startedAt: new Date().toISOString(),
@@ -241,7 +323,7 @@ export function createGuards(opts) {
 
       // Occupied — reap it if the holder is gone, then retry this slot once.
       const held = await readJson(slot);
-      if (!held || !held.pid || !isAlive(held.pid)) {
+      if (!held || !held.pid || !holderAlive(held)) {
         try { await unlink(slot); } catch (e) { /* lost the race, fine */ }
         try {
           await writeFile(slot, payload(), { flag: "wx" });
@@ -277,7 +359,7 @@ export function createGuards(opts) {
   async function bindSlot(slotPath, monitorPid, specFile, startedAt) {
     await writeFile(
       slotPath,
-      JSON.stringify({ pid: monitorPid, root, specFile, startedAt }, null, 2)
+      JSON.stringify({ pid: monitorPid, pidStart: identityOf(monitorPid), root, specFile, startedAt }, null, 2)
     );
   }
 

@@ -35,7 +35,7 @@ import { spawn } from "child_process";
 import { writeFile, readFile, mkdir } from "fs/promises";
 import { join, dirname, basename } from "path";
 import { fileURLToPath } from "url";
-import { createGuards, isProcessRunning } from "./lib/test-lock.mjs";
+import { createGuards, isSameProcess, processIdentity } from "./lib/test-lock.mjs";
 import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
 import { classifyRun, readServerLogPort } from "./lib/server-down.mjs";
 
@@ -131,11 +131,13 @@ async function runStop() {
 
   const killed = [];
   // Kill Playwright first, then monitor
-  if (lock.playwrightPid && isProcessRunning(lock.playwrightPid)) {
+  // Kill only the processes this lock recorded -- a PID alone may since have
+  // been recycled onto something unrelated (#1040).
+  if (isSameProcess(lock.playwrightPid, lock.playwrightPidStart)) {
     killProcess(lock.playwrightPid);
     killed.push(`Playwright (PID: ${lock.playwrightPid})`);
   }
-  if (lock.pid && isProcessRunning(lock.pid)) {
+  if (isSameProcess(lock.pid, lock.pidStart)) {
     killProcess(lock.pid);
     killed.push(`Monitor (PID: ${lock.pid})`);
   }
@@ -331,6 +333,7 @@ async function runMonitor(args) {
   if (mode === "suite") {
     await guards.bindSuiteLock(process.pid, {
       playwrightPid: proc.pid,
+      playwrightPidStart: processIdentity(proc.pid),
       startedAt: status.startedAt,
       command: status.command,
     });
