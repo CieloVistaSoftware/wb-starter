@@ -1,4 +1,5 @@
 import { setRule, clearRules } from '../core/dynamic-style.js';
+import { dragStartPoint } from '../core/drag-start.js';
 
 /**
  * Draggable Behavior
@@ -110,14 +111,11 @@ export function draggable(element, options = {}) {
   };
 
   const onMouseDown = (e) => {
-    if (e.button !== 0) return; // Left click only
-    
-    e.preventDefault();
+    const point = dragStartPoint(e);
+    if (!point) return;
     isDragging = true;
-    
-    startX = e.clientX;
-    startY = e.clientY;
-    // #390: was element.offsetLeft/offsetTop (position within the
+    ({ x: startX, y: startY } = point);
+// #390: was element.offsetLeft/offsetTop (position within the
     // offsetParent, from normal document flow) -- but this element is
     // `position: relative` (forced below the constructor's computedStyle
     // check), where style.left/top are offsets FROM the normal flow

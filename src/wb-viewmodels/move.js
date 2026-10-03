@@ -98,34 +98,43 @@ function swapElements(el1, el2, animate = true) {
 }
 
 /**
- * Move Up - Swap with element above (in grid) or previous sibling (in list)
- * Helper Attribute: [x-moveup]
+ * Wire a move button: on click, swap the button's moveable parent with the
+ * item at the index pickTarget(currentIndex, columns) returns, when that index
+ * is in range. The four direction behaviors differ only in that index; each
+ * carried its own copy of the handler (#883).
  */
-export function moveup(button) {
+function bindMoveButton(button, pickTarget) {
   if (!button) return;
-  
+
   const handler = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const item = findMoveableParent(button);
     if (!item) return;
-    
+
     const container = item.parentElement;
     const { columns, items } = getGridInfo(container);
     const currentIndex = items.indexOf(item);
-    
-    // In a grid, move up means swap with item `columns` positions before
-    // In a list (1 column), just swap with previous
-    const targetIndex = columns > 1 ? currentIndex - columns : currentIndex - 1;
-    
+    const targetIndex = pickTarget(currentIndex, columns);
+
     if (targetIndex >= 0 && targetIndex < items.length) {
       swapElements(item, items[targetIndex]);
     }
   };
-  
+
   button.addEventListener('click', handler);
   return () => button.removeEventListener('click', handler);
+}
+
+/**
+ * Move Up - Swap with element above (in grid) or previous sibling (in list)
+ * Helper Attribute: [x-moveup]
+ */
+export function moveup(button) {
+  // In a grid, move up means swap with item `columns` positions before
+  // In a list (1 column), just swap with previous
+  return bindMoveButton(button, (i, columns) => (columns > 1 ? i - columns : i - 1));
 }
 
 /**
@@ -133,28 +142,7 @@ export function moveup(button) {
  * Helper Attribute: [x-movedown]
  */
 export function movedown(button) {
-  if (!button) return;
-
-  const handler = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const item = findMoveableParent(button);
-    if (!item) return;
-
-    const container = item.parentElement;
-    const { columns, items } = getGridInfo(container);
-    const currentIndex = items.indexOf(item);
-
-    const targetIndex = columns > 1 ? currentIndex + columns : currentIndex + 1;
-
-    if (targetIndex >= 0 && targetIndex < items.length) {
-      swapElements(item, items[targetIndex]);
-    }
-  };
-
-  button.addEventListener('click', handler);
-  return () => button.removeEventListener('click', handler);
+  return bindMoveButton(button, (i, columns) => (columns > 1 ? i + columns : i + 1));
 }
 
 /**
@@ -162,26 +150,7 @@ export function movedown(button) {
  * Helper Attribute: [x-moveleft]
  */
 export function moveleft(button) {
-  if (!button) return;
-
-  const handler = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const item = findMoveableParent(button);
-    if (!item) return;
-
-    const container = item.parentElement;
-    const { items } = getGridInfo(container);
-    const currentIndex = items.indexOf(item);
-
-    if (currentIndex > 0) {
-      swapElements(item, items[currentIndex - 1]);
-    }
-  };
-
-  button.addEventListener('click', handler);
-  return () => button.removeEventListener('click', handler);
+  return bindMoveButton(button, (i) => i - 1);
 }
 
 /**
@@ -189,26 +158,7 @@ export function moveleft(button) {
  * Move Right - Swap with next sibling
  */
 export function moveright(button) {
-  if (!button) return;
-
-  const handler = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const item = findMoveableParent(button);
-    if (!item) return;
-
-    const container = item.parentElement;
-    const { items } = getGridInfo(container);
-    const currentIndex = items.indexOf(item);
-
-    if (currentIndex < items.length - 1) {
-      swapElements(item, items[currentIndex + 1]);
-    }
-  };
-
-  button.addEventListener('click', handler);
-  return () => button.removeEventListener('click', handler);
+  return bindMoveButton(button, (i) => i + 1);
 }
 
 /**

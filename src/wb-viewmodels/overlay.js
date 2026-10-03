@@ -749,6 +749,43 @@ export function sheet(element, options = {}) {
 }
 
 /**
+ * Open the modal dialog confirm() and prompt() share (#883 -- each built it by
+ * hand): a box with a title, `bodyHTML`, and Cancel/OK buttons. Cancel and OK
+ * close it and fire wb:{kind}:cancel / wb:{kind}:ok on `element`; OK's detail
+ * is getDetail(), read before the dialog closes. A backdrop click just closes.
+ */
+function openDialog(element, kind, { title, bodyHTML, cancelText, okText, getDetail }) {
+  const overlay = document.createElement('div');
+  // .x-overlay-dialog* in overlays.css -- formerly cssText + style="" (#779).
+  overlay.className = 'x-overlay-dialog';
+  overlay.innerHTML = `
+      <div class="x-overlay-dialog__box">
+        <h3 class="x-overlay-dialog__title">${title}</h3>
+        ${bodyHTML}
+        <div class="x-overlay-dialog__actions">
+          <button class="cancel x-overlay-dialog__cancel">${cancelText}</button>
+          <button class="ok x-overlay-dialog__ok">${okText}</button>
+        </div>
+      </div>
+    `;
+
+  overlay.querySelector('.cancel').onclick = () => {
+    overlay.remove();
+    element.dispatchEvent(new CustomEvent(`wb:${kind}:cancel`, { bubbles: true }));
+  };
+
+  overlay.querySelector('.ok').onclick = () => {
+    const detail = getDetail ? getDetail() : undefined;
+    overlay.remove();
+    element.dispatchEvent(new CustomEvent(`wb:${kind}:ok`, { bubbles: true, detail }));
+  };
+
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+  return overlay;
+}
+
+/**
  * Helper Attribute: [x-confirm]
  * Confirm - Confirmation dialog
  */
@@ -765,33 +802,12 @@ export function confirm(element, options = {}) {
 
   element.onclick = (e) => {
     e.preventDefault();
-    
-    const overlay = document.createElement('div');
-    // .x-overlay-dialog* in overlays.css -- formerly cssText + style="" (#779).
-    overlay.className = 'x-overlay-dialog';
-    overlay.innerHTML = `
-      <div class="x-overlay-dialog__box">
-        <h3 class="x-overlay-dialog__title">${config.title}</h3>
-        <div class="x-overlay-dialog__message">${config.message}</div>
-        <div class="x-overlay-dialog__actions">
-          <button class="cancel x-overlay-dialog__cancel">${config.cancelText}</button>
-          <button class="ok x-overlay-dialog__ok">${config.confirmText}</button>
-        </div>
-      </div>
-    `;
-    
-    overlay.querySelector('.cancel').onclick = () => {
-      overlay.remove();
-      element.dispatchEvent(new CustomEvent('wb:confirm:cancel', { bubbles: true }));
-    };
-    
-    overlay.querySelector('.ok').onclick = () => {
-      overlay.remove();
-      element.dispatchEvent(new CustomEvent('wb:confirm:ok', { bubbles: true }));
-    };
-    
-    overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
-    document.body.appendChild(overlay);
+    openDialog(element, 'confirm', {
+      title: config.title,
+      bodyHTML: `<div class="x-overlay-dialog__message">${config.message}</div>`,
+      cancelText: config.cancelText,
+      okText: config.confirmText
+    });
   };
 
   return () => element.classList.remove('x-confirm-trigger');
@@ -814,42 +830,23 @@ export function prompt(element, options = {}) {
 
   element.onclick = (e) => {
     e.preventDefault();
-    
-    const overlay = document.createElement('div');
-    // .x-overlay-dialog* in overlays.css -- formerly cssText + style="" (#779).
-    overlay.className = 'x-overlay-dialog';
-    overlay.innerHTML = `
-      <div class="x-overlay-dialog__box">
-        <h3 class="x-overlay-dialog__title">${config.title}</h3>
-        ${config.message ? `<div class="x-overlay-dialog__message x-overlay-dialog__message--prompt">${config.message}</div>` : ''}
-        <input type="text" class="x-overlay-dialog-input" placeholder="${config.placeholder}" value="${config.defaultValue}">
-        <div class="x-overlay-dialog__actions">
-          <button class="cancel x-overlay-dialog__cancel">Cancel</button>
-          <button class="ok x-overlay-dialog__ok">OK</button>
-        </div>
-      </div>
-    `;
-    
-    const input = overlay.querySelector('input');
-    
-    overlay.querySelector('.cancel').onclick = () => {
-      overlay.remove();
-      element.dispatchEvent(new CustomEvent('wb:prompt:cancel', { bubbles: true }));
-    };
-    
-    overlay.querySelector('.ok').onclick = () => {
-      const value = input.value;
-      overlay.remove();
-      element.dispatchEvent(new CustomEvent('wb:prompt:ok', { bubbles: true, detail: { value } }));
-    };
-    
+
+    let input;
+    const overlay = openDialog(element, 'prompt', {
+      title: config.title,
+      bodyHTML: `${config.message ? `<div class="x-overlay-dialog__message x-overlay-dialog__message--prompt">${config.message}</div>` : ''}
+        <input type="text" class="x-overlay-dialog-input" placeholder="${config.placeholder}" value="${config.defaultValue}">`,
+      cancelText: 'Cancel',
+      okText: 'OK',
+      getDetail: () => ({ value: input.value })
+    });
+    input = overlay.querySelector('input');
+
     input.onkeydown = (e) => {
       if (e.key === 'Enter') overlay.querySelector('.ok').click();
       if (e.key === 'Escape') overlay.querySelector('.cancel').click();
     };
-    
-    overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
-    document.body.appendChild(overlay);
+
     input.focus();
     input.select();
   };
