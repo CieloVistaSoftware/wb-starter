@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.127",
+      "date": "2026-10-03",
+      "summary": "Fix: test:async hands Playwright its arguments verbatim, so a --grep with | or spaces runs (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1310\" target=\"_blank\" rel=\"noopener\">PR 1310</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1194\" target=\"_blank\" rel=\"noopener\">#1194</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Test:async hands Playwright its arguments verbatim, so a --grep with | or spaces runs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1194\" target=\"_blank\" rel=\"noopener\">#1194</a>",
+          "issues": [
+            1194
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.126",
       "date": "2026-10-03",
       "summary": "",
