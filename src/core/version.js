@@ -8,13 +8,13 @@
  */
 export const VERSION = {
   "version": "1.0.132",
-  "commit": "36fa8872",
-  "builtAt": "2026-10-03T19:14:57.009Z",
-  "branch": "claude/beautiful-cerf-1c0a1u",
+  "commit": "31cdf1e4",
+  "builtAt": "2026-10-03T20:44:28.203Z",
+  "branch": "main",
   "dirty": false,
   "ahead": 0,
   "behind": 0,
-  "upstream": "origin/claude/beautiful-cerf-1c0a1u",
-  "release": "1.0.89",
-  "sinceRelease": 43
+  "upstream": "origin/main",
+  "release": "1.0.132",
+  "sinceRelease": 0
 };
