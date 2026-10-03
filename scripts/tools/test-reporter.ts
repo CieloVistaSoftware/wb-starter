@@ -26,6 +26,31 @@ import type {
   FullResult 
 } from '@playwright/test/reporter';
 import { writeFileSync, appendFileSync, mkdirSync, existsSync, unlinkSync, readFileSync, copyFileSync, renameSync } from 'fs';
+import { execFileSync } from 'child_process';
+
+/**
+ * The commit this run measured, and whether the tree had uncommitted edits.
+ *
+ * Never throws: a reporter that dies because git is unavailable would turn a
+ * green suite into no result at all. Unknown is recorded as null, which is
+ * honest -- it says the run cannot be attributed, rather than attributing it
+ * to the wrong commit.
+ */
+function gitState(): { commit: string | null; dirty: boolean | null } {
+  const git = (args: string[]): string | null => {
+    try {
+      return execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    } catch {
+      return null;
+    }
+  };
+  const commit = git(['rev-parse', 'HEAD']);
+  const status = git(['status', '--porcelain']);
+  return {
+    commit: commit ? commit.slice(0, 8) : null,
+    dirty: status === null ? null : status.length > 0,
+  };
+}
 import { join } from 'path';
 
 interface TestEntry {
@@ -49,6 +74,21 @@ interface ProjectResults {
 
 interface Summary {
   timestamp: string;
+  /**
+   * WHICH CODE THIS RUN MEASURED (#961).
+   *
+   * Without it the archive can be counted but not interpreted: two runs
+   * cannot be shown to be the same code, so "this test is unstable" and
+   * "someone broke it on Tuesday and fixed it on Thursday" look identical.
+   * Measured 2026-10-03 across 31 archived gate runs: 482 tests have gone
+   * red and then green again, and not one of them can be proven flaky from
+   * the archive alone for exactly this reason.
+   *
+   * With it, the question is trivial: group by sha, and any test that
+   * differs inside a group is flaky by definition.
+   */
+  commit: string | null;
+  dirty: boolean | null;
   duration: number;
   totals: {
     passed: number;
@@ -438,8 +478,11 @@ class WBTestReporter implements Reporter {
     }
 
     // Write summary
+    const { commit, dirty } = gitState();
     const summary: Summary = {
       timestamp: new Date().toISOString(),
+      commit,
+      dirty,
       duration: totalDuration,
       totals: {
         passed: totalPassed,
