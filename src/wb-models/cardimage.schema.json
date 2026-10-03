@@ -271,42 +271,42 @@
       "<div x-cardimage fit=\"cover\">fit=cover</div>",
       "<div x-cardimage title=\"Test Title\">With title attribute</div>",
       "<div x-cardimage variant=\"default\">Variant: default</div>",
-      "<div x-cardimage src=\"photo.jpg\" alt=\"Photo\"></div>",
-      "<div x-cardimage src=\"photo.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></div>"
+      "<div x-cardimage src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" alt=\"Photo\"></div>",
+      "<div x-cardimage src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" title=\"Beautiful Scene\" subtitle=\"Nature photography\"></div>"
     ],
     "matrix": {
       "combinations": [
         {
-          "src": "/images/placeholder.svg"
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg/1280px-Fishing_Boats_-_Howth_Harbour_%28288805840%29.jpg"
         },
         {
-          "src": "/images/placeholder.svg",
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg/1280px-Aerial_View%2C_A_coastline_of_Hailing_Island%2C_Yangjiang_City.jpg",
           "alt": "Description"
         },
         {
-          "src": "/images/placeholder.svg",
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Golden_Gate_Bridge_at_sunset_1.jpg/1280px-Golden_Gate_Bridge_at_sunset_1.jpg",
           "title": "Title"
         },
         {
-          "src": "/images/placeholder.svg",
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg/1280px-Stormy_sunset_over_Waimakariri_River_basin%2C_New_Zealand.jpg",
           "title": "Title",
           "subtitle": "Subtitle"
         },
         {
-          "src": "/images/placeholder.svg",
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg",
           "caption": "Photo by John"
         },
         {
-          "src": "/images/placeholder.svg",
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg",
           "aspect": "1/1"
         },
         {
-          "src": "/images/placeholder.svg",
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Utah_Dunes_Landscape_-_West_Desert_District.jpg/1280px-Utah_Dunes_Landscape_-_West_Desert_District.jpg",
           "position": "bottom",
           "title": "Title"
         },
         {
-          "src": "/images/placeholder.svg",
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg",
           "variant": "elevated"
         }
       ]

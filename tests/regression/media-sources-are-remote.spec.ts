@@ -33,7 +33,11 @@ import { fileURLToPath } from 'url';
 // derive it the same way.
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
-const SCAN_DIRS = ['src', 'demos', 'pages'];
+// docs/ IS SCANNED (#1122). It was not, and docs/behaviors/*.md is exactly where
+// people copy examples from -- 24 of the original 69 lived there, including the
+// x-cardimage example John pointed at. Either hole alone let the defect through,
+// which is why both are closed in the same change.
+const SCAN_DIRS = ['src', 'demos', 'pages', 'docs'];
 const SCAN_EXT = new Set(['.html', '.js', '.json', '.md']);
 
 /** Historical prose is a record of what happened; it is not an example. */
@@ -45,7 +49,17 @@ const EXEMPT_FILES = [
   /[\/]tests?[\/]/,
 ];
 
-const MEDIA_EXT = String.raw`mp3|mp4|wav|ogg|oga|webm|m4a|aac|flac|mov`;
+// IMAGES ARE MEDIA (#1122). John: "NO LOCAL IMAGES".
+//
+// This list held audio and video only, so src="images/placeholder.svg" was
+// invisible to the one gate that exists to enforce #762. Not a distinction
+// anyone intended: a gap. 69 local sources went through it in September, were
+// fixed, and had regrown to 45 by October because nothing failed in between.
+//
+// The doc viewer resolves a relative path against /public/, so each of those is
+// a 404 that media-load-retry.js turns into an uncaught throw -- three error-log
+// entries per image, and error-log-empty.spec.ts fails on a non-empty log.
+const MEDIA_EXT = String.raw`mp3|mp4|wav|ogg|oga|webm|m4a|aac|flac|mov|svg|png|jpe?g|gif|webp|avif`;
 
 /**
  * A media path that is NOT absolute http(s) or a data:/blob: URI.

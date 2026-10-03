@@ -49,7 +49,7 @@
   },
   "usage": {
     "basic": "<div x-stack>\n  <span>Item one</span>\n  <span>Item two</span>\n</div>",
-    "card": "<div x-stack gap=\"0.25rem\" bg=\"#1a2f4e\" pad=\"0 0 0.75rem\" radius=\"8px\">\n  <img src=\"photo.jpg\" style=\"width:100%;height:180px;object-fit:cover;border-radius:8px 8px 0 0;display:block\">\n  <span style=\"padding:0.5rem 1rem 0;display:block\">Card Title</span>\n  <span style=\"padding:0 1rem;display:block\">Subtitle text</span>\n</div>",
+    "card": "<div x-stack gap=\"0.25rem\" bg=\"#1a2f4e\" pad=\"0 0 0.75rem\" radius=\"8px\">\n  <img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg\" style=\"width:100%;height:180px;object-fit:cover;border-radius:8px 8px 0 0;display:block\">\n  <span style=\"padding:0.5rem 1rem 0;display:block\">Card Title</span>\n  <span style=\"padding:0 1rem;display:block\">Subtitle text</span>\n</div>",
     "notes": [
       "Images inside a card-style stack should use border-radius:8px 8px 0 0 to match the top corners of the stack.",
       "When using bg+radius, set pad to bottom-only (e.g. '0 0 0.75rem') so the image bleeds to the top and side edges.",

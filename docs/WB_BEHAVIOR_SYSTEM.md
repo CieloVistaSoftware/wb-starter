@@ -112,7 +112,7 @@ Use standard semantic HTML elements (Auto-Inject):
 <img
   lazy
   zoomable
-  src="images/placeholder.svg"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   alt="Photo">
 <form
   ajax

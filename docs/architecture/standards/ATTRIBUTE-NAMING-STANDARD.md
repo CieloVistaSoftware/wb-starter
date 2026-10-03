@@ -805,7 +805,7 @@ name         attribute with DIFFERENT meaning?
   trend-value="+12%">
 </div>
 <div x-cardimage
-  src="images/placeholder.svg"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   alt="Description"
   heading="Photo Title"
   loading="lazy">
@@ -822,7 +822,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <span x-badge variant="success">Active</div>
 <span x-avatar
-  src="images/placeholder.svg"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg"
   alt="John Doe"
   size="lg"
   status="online">
@@ -882,7 +882,7 @@ name         attribute with DIFFERENT meaning?
 ```html
 <video
   src="https://www.w3schools.com/html/mov_bbb.mp4"
-  poster="images/placeholder.svg"
+  poster="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   controls
   autoplay
   muted>
@@ -892,8 +892,8 @@ name         attribute with DIFFERENT meaning?
   columns="4"
   gap="1rem"
   images='[
-  {"src": "1.jpg", "alt": "Photo 1"},
-  {"src": "2.jpg", "alt": "Photo 2"}
+  {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg/1280px-Panoramic_Overview_from_Glacier_Point_over_Yosemite_Valley_2013_Alternative.jpg", "alt": "Photo 1"},
+  {"src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Tip_of_the_fjord-Abstract.jpg/1280px-Tip_of_the_fjord-Abstract.jpg", "alt": "Photo 2"}
 ]'>
 </div>
 ```
@@ -932,7 +932,7 @@ name         attribute with DIFFERENT meaning?
 </div>
 <!-- Lazy loading -->
 <img
-  src="images/placeholder.svg"
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
   x-lazy
   x-placeholder="blur">
 <!-- Draggable + Resizable -->

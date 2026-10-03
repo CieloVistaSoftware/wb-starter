@@ -6,8 +6,8 @@
 
 <div x-demo>
 <article x-cardvideo
-  src="https://www.w3schools.com/html/mov_bbb.mp4"
-  poster="/images/placeholder.svg"
+  src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm"
+  poster="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg"
   title="Behaviors in 90 seconds"
   description="What replaced the behavior base class, and why."></article>
 </div>
@@ -16,7 +16,7 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `src` | `string` | `https://www.w3schools.com/html/mov_bbb.mp4` | Video source URL |
+| `src` | `string` | `https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm` | Video source URL |
 | `poster` | `string` | `#` | Poster image URL |
 | `title` | `string` | — | Video title |
 | `description` | `string` | — | Video description |

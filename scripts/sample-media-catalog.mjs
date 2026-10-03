@@ -195,6 +195,28 @@ export function localFor(rawUrl) {
     if (/\/movie\.mp4$/.test(u.pathname)) return 'video/background-loop.webm';
     return null;
   }
+  // Wikimedia Commons (#1122). DEMOS-AND-DOCS section 29 now names this host for
+  // sample media, because an example captioned 'Fishing boats at the harbour wall'
+  // has to SHOW fishing boats -- picsum returns a different random photo per
+  // request, which teaches nothing and cannot be asserted on.
+  //
+  // The site keeps the real URL; tests get a generated stand-in like every other
+  // host here. Keying on the full pathname gives each distinct image its own
+  // stand-in, so the four gallery slots stay four different pictures offline too.
+  if (host === 'upload.wikimedia.org') {
+    if (/\.(mp3|ogg|oga|wav|flac|m4a|aac)$/i.test(u.pathname)) return 'audio/sunny-arpeggio.mp3';
+    if (/\.(webm|ogv|mp4|mov)$/i.test(u.pathname)) return 'video/sample-clip.webm';
+    // A Commons thumbnail ends in '<width>px-<name>' and states NO height, so the
+    // stand-in's shape has to be assumed. 16:9 is the right assumption here: the
+    // sizing examples in docs/behaviors/img.md declare 960x540 and 240x135, and a
+    // geometry assertion measures whatever the fixture serves. With a 3:2 stand-in
+    // those examples rendered 240x160 and the doc's own claim failed -- the test
+    // was measuring the fixture, not the example. The images those docs point at
+    // are 16:9 too, so offline and live now agree.
+    const last = parts[parts.length - 1] || '';
+    const w = Number((/^(\d+)px-/.exec(last) || [])[1]) || 1280;
+    return photoFor(u.pathname, w, Math.round((w * 9) / 16));
+  }
   if (host === 'cdn.pixabay.com' && /\.mp4$/.test(u.pathname)) return 'video/background-loop.webm';
   if (host === 'interactive-examples.mdn.mozilla.net' && /\.mp4$/.test(u.pathname)) return 'video/sample-clip.webm';
   return null;
