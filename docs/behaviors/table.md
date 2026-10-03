@@ -59,8 +59,8 @@ No attribute name carries a dash — only the `x-` behavior prefix does (#1125).
 Write the attribute to switch it on and leave it out to switch it off:
 
 ```html
-<table striped>                      <!-- on  -->
-<table>                              <!-- off -->
+<table striped headers="A,B" rows='[["1","2"]]'></table>   <!-- on  -->
+<table headers="A,B" rows='[["1","2"]]'></table>           <!-- off -->
 ```
 
 `striped="false"` and `striped="0"` also mean off. Until #1344 they meant **on** for `striped`, `bordered`, `compact`, `copyable`, `selectable` and `searchable`, because the behavior only asked whether the attribute was present — so markup that said "false" did the opposite of what it said.
