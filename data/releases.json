@@ -6,6 +6,17 @@
   ],
   "releases": [
     {
+      "version": "1.0.132",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>1.0.132 — publish wb-starter to npm, the first release since 1.0.0</strong>"
+        }
+      ]
+    },
+    {
       "version": "1.0.131",
       "date": "2026-10-03",
       "summary": "",

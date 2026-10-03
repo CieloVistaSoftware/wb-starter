@@ -103,7 +103,12 @@ test.describe('every playground hero lays out', () => {
     test.describe(`at ${width}px`, () => {
       let rows: Row[];
 
-      test.beforeAll(async ({ browser }) => {
+      test.beforeAll(async ({ browser }, testInfo) => {
+        // The sweep builds and measures all 120 heroes, and each worker runs
+        // its own. On a loaded Windows runner one took longer than the default
+        // 30s hook timeout ("beforeAll hook timeout of 30000ms exceeded",
+        // PR #1328) while another worker's sweep at the same width finished.
+        testInfo.setTimeout(120_000);
         const page = await newOfflinePage(browser);
         rows = await sweep(page, width);
         await page.close();
