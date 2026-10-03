@@ -28,17 +28,23 @@ test.describe('site-wide click confirmation (#456)', () => {
       document.body.append(button, card, link);
     });
 
+    // Each click is checked by ITS OWN toast, not by the total on the page:
+    // confirmation toasts dismiss themselves after 2s, so on a slow runner
+    // the first one is gone before the third click is checked (CI, PR #1228).
+    const toastFor = (id: string) => page.locator('.x-toast', { hasText: `Clicked: ${id}` });
+
     await page.locator('#click-confirm-button').click();
-    await expect(page.locator('.x-toast')).toHaveCount(1);
-    await expect(page.locator('.x-toast')).toContainText('Clicked: click-confirm-button');
+    await expect(toastFor('click-confirm-button')).toHaveCount(1);
 
     await page.locator('#click-confirm-card').click();
-    await expect(page.locator('.x-toast')).toHaveCount(2);
-    await expect(page.locator('.x-toast').last()).toContainText('Clicked: click-confirm-card');
+    await expect(toastFor('click-confirm-card')).toHaveCount(1);
 
     await page.locator('#click-confirm-link').click();
-    await expect(page.locator('.x-toast')).toHaveCount(2);
     await expect(page).toHaveURL(/#click-confirm-target$/);
+    // The confirmation is deferred one tick (click-confirm.js); give it that
+    // tick, then require that the anchor raised none.
+    await page.evaluate(() => new Promise((r) => setTimeout(r, 50)));
+    await expect(page.locator('.x-toast', { hasText: /Clicked: (click-confirm-link|Navigate)/ })).toHaveCount(0);
   });
 
   test('does not duplicate an explicit x-toast confirmation', async ({ page }) => {
