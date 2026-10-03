@@ -66,6 +66,8 @@ test.describe('.x-card tooltip -- themed hover text (#283)', () => {
 
     await card.hover();
     await page.waitForTimeout(300); // longer than tooltip.js's 200ms show delay
-    await expect(page.locator('.x-tooltip')).toHaveCount(0);
+    // Only a tooltip for THIS card counts. The fixture's other cards do have
+    // themed tooltips, and the pointer can cross one on its way here (#1302).
+    await expect(page.locator('.x-tooltip', { hasText: 'Just a heading' })).toHaveCount(0);
   });
 });
