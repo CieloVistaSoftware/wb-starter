@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.131",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Duplicate-code ceiling for, and x-typewriter variants wait for typing to finish</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1313\" target=\"_blank\" rel=\"noopener\">#1313</a>",
+          "issues": [
+            883,
+            1313
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.130",
       "date": "2026-10-03",
       "summary": "Fix: overlap sweep waits for idle and animation signals, not 800 ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1314\" target=\"_blank\" rel=\"noopener\">PR 1314</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1306\" target=\"_blank\" rel=\"noopener\">#1306</a>",
