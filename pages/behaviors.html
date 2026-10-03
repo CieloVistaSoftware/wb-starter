@@ -72,6 +72,12 @@
          display:none no matter what was clicked. -->
     <div id="behaviors-live" class="behaviors-live" hidden aria-live="polite">
       <header class="behaviors-live__head">
+        <!-- #1138 -- John, on a Samsung phone: "there's no room for showing the
+             behavior". Below the stacking breakpoint the list and the example
+             take turns instead of stacking: picking a behavior shows its
+             example on the whole screen, and this returns to the list. CSS
+             hides it on wide screens, where both are already side by side. -->
+        <button id="behaviors-live-back" class="behaviors-live__back" type="button">&#8592; Behaviors</button>
         <span id="behaviors-live-token" class="behaviors-live__token"></span>
         <!-- The code-theme picker used to sit here (#1012). Moved down to sit
              directly above the code it recolours -- #1018. -->
@@ -917,6 +923,27 @@
     // column. Below that width the panel stacks BELOW the results list rather
     // than beside it, which is the only case where revealing it is correct.
     const STACKED = matchMedia('(max-width: 60rem)');
+
+    // #1138 -- list OR example, never both, below the breakpoint.
+    // Stacked, the example rendered under a 184-row list, beneath a sticky
+    // header and a sticky search panel: on a 360x800 phone it was reached by
+    // scrolling and then shown in what was left of the screen. The browse row
+    // carries which half is showing; CSS acts on it only below 60rem, so the
+    // wide two-column layout never sees the attribute.
+    const browseEl = document.querySelector('.behaviors-browse');
+    function setView(view) {
+      if (browseEl) browseEl.dataset.view = view;
+    }
+    setView('list');
+    document.getElementById('behaviors-live-back')?.addEventListener('click', () => {
+      setView('list');
+      // Back to the row that was open, so the reader continues where they were.
+      const current = resultsEl.querySelector('[aria-current="true"]');
+      if (current) current.scrollIntoView({ block: 'center' });
+    });
+    // Searching is choosing, and choosing happens in the list.
+    input?.addEventListener('focus', () => setView('list'));
+
     const liveToken = document.getElementById('behaviors-live-token');
     const liveNote = document.getElementById('behaviors-live-note');
     const liveStage = document.getElementById('behaviors-live-stage');
@@ -3003,6 +3030,7 @@
       // re-lays out the panel while the animation would still be running, and
       // the browser cancels a smooth scroll on that churn -- measured landing
       // back at scrollTop 0 every time.
+      if (reveal) setView('detail');   // #1138
       if (reveal && STACKED.matches) {
         liveEl.scrollIntoView({ block: 'start' });
       }
@@ -3076,6 +3104,31 @@
         });
         gone.observe(document.body, { childList: true, subtree: true });
       }
+    }
+
+    // #1138 -- the header move is a wide-screen decision. On a phone the site
+    // header wraps, and these four controls became a whole extra header row
+    // pinned over every screen. Stacked, API, Docs and Fullscreen go back
+    // where they started -- the example's own header, which is only on screen
+    // while there IS an example -- and the strip (AutoScroll, a desktop tour)
+    // is hidden by CSS. Still MOVED, never cloned, for the reason above.
+    if (tools) {
+      const liveHead = liveEl.querySelector('.behaviors-live__head');
+      const livePanels = liveEl.querySelector('.behaviors-live__panels');
+      const placeTools = () => {
+        if (!liveEl.isConnected) { STACKED.removeEventListener('change', placeTools); return; }
+        const api = document.getElementById('behaviors-live-api');
+        const doc = document.getElementById('behaviors-live-doc');
+        const fs = document.getElementById('behaviors-live-fullscreen');
+        if (STACKED.matches) {
+          if (livePanels) { if (api) livePanels.appendChild(api); if (doc) livePanels.appendChild(doc); }
+          if (liveHead && fs) liveHead.appendChild(fs);
+        } else {
+          for (const el of [api, doc, fs]) if (el) tools.insertBefore(el, autoBtn && autoBtn.parentNode === tools ? autoBtn : null);
+        }
+      };
+      placeTools();
+      STACKED.addEventListener('change', placeTools);
     }
 
     if (autoBtn) {
@@ -3277,6 +3330,7 @@
         showLive(rowToken.textContent.trim().split(/\s+/)[0], btn.dataset.variant || '');
         // #686: same reveal as the branch above -- stacked, the panel is below
         // the fold and the render is invisible without it.
+        setView('detail');   // #1138
         if (STACKED.matches) liveEl.scrollIntoView({ block: 'start' });
       }
     });

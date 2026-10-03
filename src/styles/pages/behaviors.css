@@ -262,9 +262,13 @@ section h3 {
 }
 
   /* MOBILE-FIRST: Responsive overrides for behaviors page */
+  /* #1138 -- `header` and `header h1` were in these lists. A bare element
+     selector with !important on a page stylesheet hit EVERY header while this
+     page was open: the site header (its 18px padding on a phone), the example
+     panel's own header, and any <header> a behavior example renders. They
+     were for the page heading #774 removed. */
   @media (max-width: 600px) {
     .stats-grid,
-    header,
     .nav-links,
     .section-note,
     .demo-row,
@@ -279,9 +283,6 @@ section h3 {
     .demo-row {
       grid-template-columns: 1fr !important;
       gap: 1rem !important;
-    }
-    header h1 {
-      font-size: 1.2rem !important;
     }
     .nav-links a {
       font-size: 1rem !important;
@@ -2268,4 +2269,196 @@ body:has(#behaviors-live-doc[open]) #behaviors-live-doc-body {
    lower one would be unreachable. */
 body:has(#behaviors-live-api[open]) #behaviors-live-doc-body {
   display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   #1138 — PHONE: THE LIST AND THE EXAMPLE TAKE TURNS
+   John, on a Samsung A55 (360x800): "there's no room for showing the
+   behavior", and on 2026-09-13: "The most important space is showing the
+   demo. 2ndly the ability to filter/choose what to show."
+
+   Measured before: sticky header 239px + sticky search 172px = 51% of the
+   screen pinned, the 184-row list in a 430px box scrolling inside the page
+   scroller, and the example below all of it.
+
+   Below the stacking breakpoint the page is master/detail instead:
+     list view   -- compact search, then the whole list in the page's one scroll
+     detail view -- the example alone, its header carrying Back/API/Docs/
+                    Fullscreen; search and list are out of the way
+   behaviors.html sets .behaviors-browse[data-view]; nothing here applies
+   above 60rem, so the wide side-by-side workspace is untouched (§10).
+   ═══════════════════════════════════════════════════════════════════════════ */
+.behaviors-live__back {
+  display: none;
+}
+
+@media (max-width: 60rem) {
+  /* AutoScroll walks every entry beside the list -- a wide-screen tour. API,
+     Docs and Fullscreen were moved out of this strip into the example header. */
+  #behaviors-header-tools {
+    display: none;
+  }
+
+  .behaviors-browse[data-view="list"] > .behaviors-live,
+  .behaviors-browse[data-view="detail"] > .behaviors-search-results,
+  .behaviors-workspace:has(.behaviors-browse[data-view="detail"]) > .behaviors-search {
+    display: none;
+  }
+
+  .behaviors-browse[data-view="detail"] {
+    margin-top: 0;
+  }
+
+  /* One scroll: the page. The list's own scroller made a thumb swipe drive
+     whichever box it landed on. */
+  .behaviors-browse > .behaviors-search-results {
+    max-height: none;
+    overflow: visible;
+  }
+
+  /* Search and count on one row, the filter on a second -- the filter's border
+     and legend cost a row of their own for a word the radios already say. */
+  .behaviors-search {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs, 0.25rem) var(--space-sm, 0.5rem);
+    margin-top: 0;
+  }
+
+  /* The input is wrapped by the x-input behavior at runtime; the wrapper is
+     the flex item that has to share the row with the count. */
+  .behaviors-search > .x-input__wrapper {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .behaviors-search input[type="search"] {
+    min-height: 2.75rem;
+  }
+
+  .behaviors-form-filter {
+    flex: 1 1 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    gap: var(--space-md, 1rem);
+  }
+
+  .behaviors-form-filter__legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  /* Touch first: every control is a ~44px target (MOBILE-FIRST). */
+  .behaviors-form-filter label,
+  .behaviors-live__back,
+  .behaviors-live__head summary,
+  .behaviors-live__head .behaviors-live__fullscreen,
+  .behaviors-search-results__row {
+    min-height: 2.75rem;
+  }
+
+  /* IDs: themes.css gives every button 1rem padding at (0,1,1), which a
+     single class loses to -- the same fight #behaviors-header-tools settled
+     the same way. */
+  #behaviors-live-back,
+  #behaviors-live-fullscreen,
+  #behaviors-live .behaviors-live__head summary {
+    padding: 0 var(--space-sm, 0.5rem);
+  }
+
+  /* Back in the example header, Docs is a chip beside API again. #666 flattened
+     it to a top-border-only divider when it was a full-width section (the
+     #behaviors-live-doc.behaviors-live__doc rule above); as a chip that left it
+     with no sides. Same box as API. */
+  #behaviors-live #behaviors-live-doc {
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+  }
+
+  .behaviors-live__back {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    background: var(--bg-elevated, var(--bg-secondary));
+    color: var(--text-primary);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  /* The ID because a <header> is auto-injected as x-header, whose
+     space-between flung Docs to the far edge and pushed Fullscreen onto a
+     third row; header.css is injected at runtime, after this sheet. */
+  #behaviors-live .behaviors-live__head {
+    justify-content: flex-start;
+    gap: var(--space-sm, 0.5rem);
+    padding: var(--space-sm, 0.5rem);
+  }
+
+  /* Back and the token on one row, API/Docs/Fullscreen on the next. The note
+     ("Visual style variant") was a third row; Docs says the same at length. */
+  .behaviors-live__head .behaviors-live__note {
+    display: none;
+  }
+
+  .behaviors-live__head .behaviors-live__fullscreen {
+    margin-left: 0;
+  }
+
+  /* Every pixel of width goes to the example. The panel sits in main's
+     1rem gutter, and the stage added 1.25rem more each side: a 360px phone
+     left a 286px stage for a card whose own floor is 315px, so it was cut
+     off at the panel edge. A wider example (size="lg" is 420px by design)
+     scrolls sideways rather than being clipped. */
+  .site__main:has(#behaviors-workspace) {
+    padding-inline: var(--space-sm, 0.5rem);
+  }
+
+  .behaviors-live__stage {
+    padding: var(--space-sm, 0.5rem);
+    overflow-x: auto;
+  }
+
+  /* The token names what is showing; it takes the rest of the Back row. */
+  .behaviors-live__head .behaviors-live__token {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* The site header on a phone: one row. It wrapped to three (menu + logo +
+   version, the tools strip, Theme) and stays pinned, so every row of it is a
+   row the example does not get. The logo icon still links home; the word
+   beside it and the "Theme:" label are what the narrow row cannot afford. */
+@media (max-width: 40rem) {
+  body:has(#behaviors-workspace) .header__logo-text,
+  body:has(#behaviors-workspace) #headerThemeControl label {
+    display: none;
+  }
+
+  /* Measured at 360px: 27px gaps and an 18px-padded, 55px-tall version
+     badge pushed Theme onto a second row. */
+  body:has(#behaviors-workspace) .site__header,
+  body:has(#behaviors-workspace) .header__left {
+    flex-wrap: nowrap;
+    gap: var(--space-sm, 0.5rem);
+  }
+
+  body:has(#behaviors-workspace) #headerVersion {
+    padding: 0 var(--space-sm, 0.5rem);
+    min-height: 2.75rem;
+  }
+
+  body:has(#behaviors-workspace) #headerThemeControl select {
+    max-width: 7rem;
+    min-height: 2.75rem;
+  }
 }
