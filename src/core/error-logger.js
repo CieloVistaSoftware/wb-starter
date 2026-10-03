@@ -629,6 +629,40 @@ function updateErrorCount() {
   if (countEl) countEl.textContent = errors.length;
 }
 
+/**
+ * #1291 -- a stopped server is one error, not one per file.
+ *
+ * An element's `error` event carries no status, so "the file is missing" and
+ * "nothing is listening" looked identical here, and a page left open on a
+ * stopped server logged every stylesheet and image it asked for as its own
+ * broken file: nine rows, nine files that all existed.
+ *
+ * So ask the server before blaming the file. HEAD, because sw.js only
+ * intercepts GET -- the answer comes from the network, not the worker's cache
+ * or the 503 it manufactures (#891). No response at all means the server is
+ * unreachable: one entry, which every further failure counts on rather than
+ * adding rows to. A response means the server is there and the file is what
+ * failed: it is named, with the status the server gave.
+ */
+async function reportResourceFailure(tag, src) {
+  let status;
+  try {
+    status = (await fetch(src, { method: 'HEAD', cache: 'no-store' })).status;
+  } catch {
+    logError(`Server unreachable: ${location.origin} -- page assets cannot load`, {
+      module: 'resource-load',
+      source: location.origin,
+      details: { reason: 'server-unreachable', firstSrc: src },
+    });
+    return;
+  }
+  logError(`${tag} failed to load: ${src}`, {
+    module: 'resource-load',
+    source: src,
+    details: { src, status },
+  });
+}
+
 let globalHandlerInstalled = false;
 
 /**
@@ -702,11 +736,7 @@ export function setupGlobalErrorHandler() {
         return;   // not a resolvable URL; nothing useful to record
       }
 
-      logError(`${el.tagName.toLowerCase()} failed to load: ${src || '(no src)'}`, {
-        module: 'resource-load',
-        source: src,
-        details: { src },
-      });
+      reportResourceFailure(el.tagName.toLowerCase(), src);
       return;
     }
     logError(event.message, {
