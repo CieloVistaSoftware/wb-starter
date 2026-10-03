@@ -1851,12 +1851,44 @@
     },
     "x-img": {
       "source": "<img src=\"/images/placeholder.svg\" alt=\"Prime lens on a wooden desk\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "width only: height follows the photo",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" alt=\"Dachshund puppy, 240 pixels wide\">"
+        },
+        {
+          "label": "width + height: cropped to that shape",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"240\" alt=\"Dachshund puppy, cropped to 240 by 240\">"
+        },
+        {
+          "label": "wide banner from width + height",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"480\" height=\"120\" alt=\"Dachshund puppy, cropped to a 4:1 banner\">"
+        },
+        {
+          "label": "aspect-ratio instead of height",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"200\" aspect-ratio=\"3/4\" alt=\"Dachshund puppy, cropped to portrait\">"
+        }
+      ]
     },
     "x-figure": {
       "source": "<figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
       "alternates": [
         "<div x-figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "figure width in pixels",
+          "source": "<figure width=\"320\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>The whole figure is 320 pixels wide.</figcaption>\n</figure>"
+        },
+        {
+          "label": "figure width as a CSS length",
+          "source": "<figure width=\"50%\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>Half the width of its container.</figcaption>\n</figure>"
+        },
+        {
+          "label": "square image inside a figure",
+          "source": "<figure width=\"240\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"240\" alt=\"Dachshund puppy, cropped square\">\n  <figcaption>The img's width + height set the shape.</figcaption>\n</figure>"
+        }
       ]
     },
     "x-vimeo": {

@@ -36,6 +36,24 @@
       "type": "boolean",
       "description": "Clicking the image opens it full-size in a lightbox. Bare attribute.",
       "default": false
+    },
+    "width": {
+      "type": "number",
+      "description": "Width in pixels (the native attribute). On its own the height follows the photo's shape. With `height`, the two numbers set the shape too: the image is cropped to it (`object-fit: cover`), never stretched. It still shrinks to fit a narrower container and keeps that shape.",
+      "default": 0,
+      "examples": [
+        240,
+        960
+      ]
+    },
+    "height": {
+      "type": "number",
+      "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspect-ratio` wins over the pair.",
+      "default": 0,
+      "examples": [
+        135,
+        240
+      ]
     }
   },
   "$view": [],

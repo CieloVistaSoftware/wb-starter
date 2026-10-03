@@ -1,11 +1,17 @@
 /**
- * Figure - Enhanced figure with caption positioning and zoom
+ * Figure - Enhanced figure with caption positioning, zoom and width
  * Custom Tag: <figure>, or auto-injected onto native <figure>
  *
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...).
  */
 import { openLightbox } from './img.js';
+import { setRule } from '../../core/dynamic-style.js';
+
+/** width="240" means 240px; any other CSS length ("20rem", "50%") is kept. */
+function toCssLength(value) {
+  return /^\d+(\.\d+)?$/.test(value) ? `${value}px` : value;
+}
 
 export function figure(element, options = {}) {
   const config = {
@@ -14,10 +20,19 @@ export function figure(element, options = {}) {
     lightbox: options.lightbox ?? (element.getAttribute('lightbox') !== 'false'),
     captionPosition: options.captionPosition || element.getAttribute('caption-position') || 'bottom',
     caption: options.caption || element.getAttribute('caption'),
+    width: options.width || element.getAttribute('width') || '',
     ...options
   };
 
   element.classList.add('x-figure');
+
+  // <figure> has no native width attribute, so width="" is this behavior's.
+  // The image inside already shrinks to fit (img { max-width: 100% }), and
+  // the caption wraps at the same width. max-width keeps a wide figure
+  // inside a narrow container. A runtime value, so a generated rule (#779).
+  if (config.width) {
+    setRule(element, 'size', { width: toCssLength(String(config.width)), maxWidth: '100%' });
+  }
 
   let caption = element.querySelector('figcaption');
   if (config.caption) {
@@ -57,6 +72,7 @@ export function figure(element, options = {}) {
 
   return () => {
     element.classList.remove('x-figure', 'x-figure--overlay');
+    setRule(element, 'size', null);
     if (img) { img.onclick = null; img.classList.remove('x-figure__zoomable'); }
   };
 }

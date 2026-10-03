@@ -5,15 +5,19 @@
  * control the img size?" The answer is HTML's own width/height and the
  * aspect-ratio attribute, not a size enum -- so the doc shows each, and this
  * holds the doc to its claims: 240px wide, fills its container, square.
+ *
+ * John, 2026-10-03: "why isn't figure and image able to set width height?"
+ * width + height together now set the shape too (img.js), so the doc gained a
+ * 240 by 240 example between "fills" and the aspect-ratio crop.
  */
 import { test, expect } from '../fixtures/offline';
 
-test('img.md size examples: fixed 240px, fills its container, square crop', async ({ page }) => {
+test('img.md size examples: fixed 240px, fills its container, width+height crop, aspect-ratio crop', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/public/doc-viewer.html?file=' + encodeURIComponent('docs/behaviors/img.md'));
   const imgs = page.locator('[x-demo] img[alt^="Dachshund puppy"]');
-  await expect(imgs).toHaveCount(3);
-  for (let i = 0; i < 3; i++) {
+  await expect(imgs).toHaveCount(4);
+  for (let i = 0; i < 4; i++) {
     await imgs.nth(i).scrollIntoViewIfNeeded();
     await expect.poll(() => imgs.nth(i).evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
   }
@@ -32,7 +36,11 @@ test('img.md size examples: fixed 240px, fills its container, square crop', asyn
   expect(fill.w, 'and actually fills it').toBeGreaterThanOrEqual(fill.hostW - 2);
   expect(Math.abs(fill.w / fill.h - 16 / 9), 'keeping its proportions').toBeLessThan(0.02);
 
-  const square = await box(2);
+  const pair = await box(2);
+  expect(pair.w, 'width="240" height="240"').toBe(240);
+  expect(pair.h, 'the pair crops the 16:9 photo square, not height: auto').toBe(240);
+
+  const square = await box(3);
   expect(square.w).toBe(200);
   expect(square.h, 'aspect-ratio="1/1" crops it square').toBe(200);
 });
