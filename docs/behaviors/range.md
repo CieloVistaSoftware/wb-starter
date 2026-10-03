@@ -22,12 +22,14 @@ A plain `<input type="range">` gets this behavior automatically; there is no att
 </div>
 
 ### Configuration Options
+Attribute names are camelCase, with no dash (#1125). The older `show-value` spelling still works, so existing markup isn't broken, but new markup should use the names below.
+
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `show-value` | Boolean | `false` | Show current value above slider. |
-| `show-labels` | Boolean | `false` | Show min/max labels below slider. |
-| `value-prefix` | String | `''` | Prefix for value (e.g., "$"). |
-| `value-suffix` | String | `''` | Suffix for value (e.g., "%"). |
+| `showValue` | Boolean | `false` | Show the current value above the slider. `showValue="false"` turns it off. |
+| `showLabels` | Boolean | `false` | Show the min and max values below the slider. |
+| `valuePrefix` | String | `''` | Text before the value (e.g., "$"). |
+| `valueSuffix` | String | `''` | Text after the value (e.g., "%"). |
 
 ## 3. Examples
 
@@ -37,8 +39,8 @@ A slider showing the percentage value.
 <div x-demo>
 <input
   type="range"
-  show-value="true"
-  value-suffix="%"
+  showValue
+  valueSuffix="%"
   min="0"
   max="100">
 </div>
@@ -49,9 +51,9 @@ A slider with currency formatting and bounds.
 <div x-demo>
 <input
   type="range"
-  show-value="true"
-  show-labels="true"
-  value-prefix="$"
+  showValue
+  showLabels
+  valuePrefix="$"
   min="10"
   max="1000">
 </div>

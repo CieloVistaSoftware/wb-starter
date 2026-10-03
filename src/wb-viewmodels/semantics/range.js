@@ -1,8 +1,27 @@
 /**
  * Range - Enhanced <input type="range"> element
- * Adds value display, min/max labels, step indicators
- * Helper Attribute: [x-behavior="range"]
+ * Adds value display, min/max labels, step indicators.
+ * <input type="range"> IS the behavior (auto-injected); <div x-range> builds one.
+ * Attributes: showValue, showLabels, valuePrefix, valueSuffix (#1140).
  */
+import { readFlag, readAttr } from '../../core/read-attr.js';
+
+/**
+ * #1140: one reader for both hosts. camelCase names (the no-dash rule, #1125);
+ * readFlag/readAttr also accept the legacy show-value spelling, so existing
+ * markup keeps working, and readFlag reads showValue="false" as OFF -- the
+ * hasAttribute() this replaces turned the display ON for any value at all.
+ */
+function rangeOptions(host, options) {
+  return {
+    showValue: options.showValue ?? readFlag(host, 'showValue'),
+    showLabels: options.showLabels ?? readFlag(host, 'showLabels'),
+    valuePrefix: options.valuePrefix || readAttr(host, 'valuePrefix'),
+    valueSuffix: options.valueSuffix || readAttr(host, 'valueSuffix'),
+    ...options,
+  };
+}
+
 export function range(element, options = {}) {
   // Any element can carry an x-* behavior (the premise input.js builds on for
   // <div x-input>). <div x-range show-value> used to warn "must be an <input
@@ -20,27 +39,14 @@ export function range(element, options = {}) {
       element.textContent = '';
       element.appendChild(input);
     }
-    return range(input, {
-      showValue: options.showValue ?? element.hasAttribute('show-value'),
-      showLabels: options.showLabels ?? element.hasAttribute('show-labels'),
-      valuePrefix: options.valuePrefix || element.getAttribute('value-prefix') || '',
-      valueSuffix: options.valueSuffix || element.getAttribute('value-suffix') || '',
-      ...options,
-    });
+    return range(input, rangeOptions(element, options));
   }
   if (element.type !== 'range') {
     console.warn('[range] An <input> host must be type="range"');
     return () => {};
   }
 
-  // v3: plain attributes only — no legacy data-* fallback.
-  const config = {
-    showValue: options.showValue ?? element.hasAttribute('show-value'),
-    showLabels: options.showLabels ?? element.hasAttribute('show-labels'),
-    valuePrefix: options.valuePrefix || element.getAttribute('value-prefix') || '',
-    valueSuffix: options.valueSuffix || element.getAttribute('value-suffix') || '',
-    ...options
-  };
+  const config = rangeOptions(element, options);
 
   element.classList.add('x-range');
 

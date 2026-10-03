@@ -9,25 +9,25 @@
     "type": "range"
   },
   "properties": {
-    "value-prefix": {
-      "type": "string",
-      "description": "Read by range().",
-      "default": "this is the value prefix"
-    },
-    "value-suffix": {
-      "type": "string",
-      "description": "Read by range().",
-      "default": "this is the value suffix"
-    },
-    "show-value": {
+    "showValue": {
       "type": "boolean",
-      "description": "Read by range(). Bare attribute.",
+      "description": "Shows the current value in an <output> above the slider. showValue=\"false\" turns it off.",
       "default": false
     },
-    "show-labels": {
+    "showLabels": {
       "type": "boolean",
-      "description": "Read by range(). Bare attribute.",
+      "description": "Shows the min and max values below the slider.",
       "default": false
+    },
+    "valuePrefix": {
+      "type": "string",
+      "description": "Text before the shown value, e.g. \"$\".",
+      "default": ""
+    },
+    "valueSuffix": {
+      "type": "string",
+      "description": "Text after the shown value, e.g. \"%\".",
+      "default": ""
     }
   },
   "$view": [],
@@ -38,9 +38,11 @@
   },
   "test": {
     "setup": [
-      "<input type=\"range\" x-range>",
-      "<input type=\"range\" x-range show-value>",
-      "<input type=\"range\" x-range show-labels>"
+      "<input type=\"range\">",
+      "<input type=\"range\" showValue>",
+      "<input type=\"range\" showLabels>",
+      "<input type=\"range\" showValue valueSuffix=\"%\">",
+      "<input type=\"range\" showValue=\"false\">"
     ]
   },
   "_metadata": {

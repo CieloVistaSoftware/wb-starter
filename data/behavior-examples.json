@@ -2559,15 +2559,15 @@
       "examples": [
         {
           "label": "percentage readout",
-          "source": "<input type=\"range\" min=\"0\" max=\"100\" value=\"72\" show-value value-suffix=\"%\">"
+          "source": "<input type=\"range\" min=\"0\" max=\"100\" value=\"72\" showValue valueSuffix=\"%\">"
         },
         {
           "label": "price readout",
-          "source": "<input type=\"range\" min=\"0\" max=\"500\" value=\"120\" show-value value-prefix=\"$\">"
+          "source": "<input type=\"range\" min=\"0\" max=\"500\" value=\"120\" showValue valuePrefix=\"$\">"
         },
         {
           "label": "min/max labels and readout",
-          "source": "<input type=\"range\" min=\"1\" max=\"10\" value=\"3\" show-labels show-value>"
+          "source": "<input type=\"range\" min=\"1\" max=\"10\" value=\"3\" showLabels showValue>"
         }
       ]
     },
