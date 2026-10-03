@@ -127,3 +127,19 @@ data/inline-style-audit.json
 # committed by accident on 2026-10-02 by a git add -A that swept untracked
 # files; generated output belongs nowhere near the tree it was generated from.
 /my-site/
+
+# The scaffolding template is what every new project receives, so anything
+# loose in it is copied into real user projects. On 2026-10-02 it held an
+# archive.zip, a test-site.zip, a packed wb-overlay-ext.crx, a stray
+# root-cause-test.log and an unreferenced wb-overlay-ext/ source tree -- none
+# of it written by any script here, all of it untracked. A git add -A swept
+# part of it into a commit and turned main red, because the extension writes
+# inline styles and no-inline-styles.spec.ts holds the template to the same
+# standard as the repo.
+#
+# Ignored BY ARTIFACT TYPE, not by directory, so genuine template source added
+# to files/, src/ or tests/ later is still tracked normally.
+/packages/create-wb-starter/template/**/*.zip
+/packages/create-wb-starter/template/**/*.crx
+/packages/create-wb-starter/template/**/*.log
+/packages/create-wb-starter/template/src/wb-overlay-ext/
