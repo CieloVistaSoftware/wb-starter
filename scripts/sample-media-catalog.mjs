@@ -195,6 +195,17 @@ export function localFor(rawUrl) {
     if (/\/movie\.mp4$/.test(u.pathname)) return 'video/background-loop.webm';
     return null;
   }
+  if (host === 'upload.wikimedia.org' || host === 'thumb.wikimedia.org') {
+    // Wikimedia Commons (#1122 replaced local media with it). A video is the
+    // sample clip; an image is a photo whose width comes from the thumbnail's
+    // "/1280px-" segment, taken as 3:2 since Commons URLs carry no height.
+    if (/\.(webm|mp4|ogv)$/i.test(u.pathname)) return 'video/sample-clip.webm';
+    if (/\.(jpe?g|png|gif|webp)$/i.test(u.pathname)) {
+      const w = Number((/\/(\d+)px-/.exec(u.pathname) || [])[1]) || 1200;
+      return photoFor(parts[parts.length - 1], w, (w * 2) / 3);
+    }
+    return null;
+  }
   if (host === 'cdn.pixabay.com' && /\.mp4$/.test(u.pathname)) return 'video/background-loop.webm';
   if (host === 'interactive-examples.mdn.mozilla.net' && /\.mp4$/.test(u.pathname)) return 'video/sample-clip.webm';
   return null;
