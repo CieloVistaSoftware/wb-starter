@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.121",
+      "date": "2026-10-03",
+      "summary": "Click the expandable card only once it is ready (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1305\" target=\"_blank\" rel=\"noopener\">PR 1305</a>)",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Click the expandable card only once it is ready</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1304\" target=\"_blank\" rel=\"noopener\">#1304</a>",
+          "issues": [
+            1304
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.120",
       "date": "2026-10-03",
       "summary": "Two regression tests that only fail under the release gate&#39;s load (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1303\" target=\"_blank\" rel=\"noopener\">PR 1303</a>)",
