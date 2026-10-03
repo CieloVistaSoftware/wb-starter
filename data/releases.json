@@ -6,8 +6,22 @@
   ],
   "releases": [
     {
-      "version": "1.0.115",
+      "version": "1.0.116",
       "date": "2026-10-02",
+      "summary": "Fix: server.js moves to the next port instead of crashing when PORT is taken (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1289\" target=\"_blank\" rel=\"noopener\">PR 1289</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1286\" target=\"_blank\" rel=\"noopener\">#1286</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Server.js moves to the next port instead of crashing when PORT is taken</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1286\" target=\"_blank\" rel=\"noopener\">#1286</a>",
+          "issues": [
+            1286
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.115",
+      "date": "2026-10-03",
       "summary": "Themes page lists all 50 themes; serve finds a free port; x-clock names the valid variants (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1228\" target=\"_blank\" rel=\"noopener\">PR 1228</a>)",
       "items": [
         {
