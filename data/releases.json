@@ -6,6 +6,38 @@
   ],
   "releases": [
     {
+      "version": "1.0.109",
+      "date": "2026-10-02",
+      "summary": "Feat(behaviors): every behavior shows at least 5 varied examples (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1280\" target=\"_blank\" rel=\"noopener\">PR 1280</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/997\" target=\"_blank\" rel=\"noopener\">#997</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Do not mark line numbers placed while the code is still on one row</strong>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Stop retrying an image or video that has left the document</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/997\" target=\"_blank\" rel=\"noopener\">#997</a>",
+          "issues": [
+            997
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>List name matches before option-only matches in search</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/997\" target=\"_blank\" rel=\"noopener\">#997</a>",
+          "issues": [
+            997
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Every behavior shows at least 5 varied examples</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/997\" target=\"_blank\" rel=\"noopener\">#997</a>",
+          "issues": [
+            997
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.108",
       "date": "2026-10-02",
       "summary": "Refactor(card): fold duplicated card.js blocks into shared helpers (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1278\" target=\"_blank\" rel=\"noopener\">PR 1278</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a>",
