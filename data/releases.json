@@ -6,8 +6,33 @@
   ],
   "releases": [
     {
-      "version": "1.0.110",
+      "version": "1.0.112",
       "date": "2026-10-02",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Untrack my-site/, which is scaffolder output and not source</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.111",
+      "date": "2026-10-02",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Media sources are remote, and the gate can finally see images</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1122\" target=\"_blank\" rel=\"noopener\">#1122</a>",
+          "issues": [
+            1122
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.110",
+      "date": "2026-10-03",
       "summary": "Refactor: remove duplicated behavior copies and repeated blocks ( phase 2) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1281\" target=\"_blank\" rel=\"noopener\">PR 1281</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a>",
       "items": [
         {
