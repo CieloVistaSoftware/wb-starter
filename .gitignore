@@ -120,3 +120,10 @@ data/inline-style-audit.json
 # the root (repo-layout.spec.ts; John, 2026-09-29: "NO .txt files in root").
 /*.txt
 /*.log
+
+# Scaffolder OUTPUT, not source. scripts/wb-starter.mjs documents
+#   npm create wb-starter my-site
+# so running it in the repo root leaves a whole generated site behind. It was
+# committed by accident on 2026-10-02 by a git add -A that swept untracked
+# files; generated output belongs nowhere near the tree it was generated from.
+/my-site/

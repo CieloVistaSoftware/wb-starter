@@ -11,7 +11,7 @@ import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
  * 
  * Usage:
  *   <div x-drawer  data-target="#menu">Open Menu</button>
- *   <a href="img.jpg" x-lightbox>View Image</a>
+ *   <a href="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg" x-lightbox>View Image</a>
  * -----------------------------------------------------------------------------
  * All overlays show visual feedback when their trigger is clicked
  */

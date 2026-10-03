@@ -1,0 +1,31 @@
+{
+  "name": "wb-starter Behavior Overlay",
+  "description": "Overlay that maps rendered wb-starter behaviors to their underlying models.",
+  "version": "0.1.0",
+  "manifest_version": 3,
+
+  "permissions": [],
+
+  "host_permissions": [
+    "http://localhost/*",
+    "http://localhost:3000/*",
+    "http://www.localhost.com/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost/*",
+        "http://localhost:3000/*",
+        "http://www.localhost.com/*"
+      ],
+      "js": ["contentScript.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_title": "wb-starter Overlay"
+  }
+}

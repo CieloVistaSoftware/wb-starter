@@ -228,12 +228,12 @@ Bug found: Audio src goes to wrong place
 test('Audio: src goes to dataset.src NOT native src attribute', async ({ page }) => {
   // Setup
   await page.evaluate(() => {
-    window.add({ n: 'Audio', b: 'audio', d: { src: 'test.mp3' } });
+    window.add({ n: 'Audio', b: 'audio', d: { src: 'https://upload.wikimedia.org/wikipedia/commons/6/69/Lo-fi_by_PetroVenus.mp3' } });
   });
   
   // Verify dataset has src
   const datasetSrc = await element.evaluate(el => el.dataset.src);
-  expect(datasetSrc).toBe('test.mp3');
+  expect(datasetSrc).toBe('https://upload.wikimedia.org/wikipedia/commons/6/69/Lo-fi_by_PetroVenus.mp3');
   
   // Verify native src is NOT set on div
   const nativeSrc = await element.getAttribute('src');

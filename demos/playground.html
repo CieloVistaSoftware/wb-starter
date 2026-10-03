@@ -10,8 +10,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playground — WB</title>
-  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.110">
-  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.110">
+  <link rel="stylesheet" href="../src/styles/themes.css?v=1.0.112">
+  <link rel="stylesheet" href="../src/styles/site.css?v=1.0.112">
   <style>
     /* 1200px is a prose measure, and this page is a tool, not an article.
        Capped there, the preview pane was 562px on a 1280px window -- half a
@@ -635,7 +635,7 @@
         (i, v, s) => `<article title="#${i} elevated" variant="${v}" elevated footer="Elevated">Body ${i}</article>`,
         (i, v, s) => `<article title="#${i} hoverable" variant="${v}" tooltip="Hover text for #${i}">Hover me — ${LOREM}</article>`,
         (i, v, s) => `<article title="#${i} ${v}" variant="${v}">Title + body only, no footer. ${i}</article>`,
-        (i, v, s) => `<article x-cardimage title="#${i} image card" subtitle="cardimage" src="../images/placeholder-scene.svg">Image card body ${i}</article>`,
+        (i, v, s) => `<article x-cardimage title="#${i} image card" subtitle="cardimage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg">Image card body ${i}</article>`,
         (i, v, s) => `<article x-cardpricing title="Plan #${i}" price="$${i}9" variant="${v}">Feature A · Feature B · Feature C</article>`,
         (i, v, s) => `<article x-cardprofile title="Person #${i}" subtitle="Role ${s}" variant="${v}">${LOREM}</article>`,
       ];
@@ -787,7 +787,7 @@
         "<article x-cardfile filename=\"quarterly-report.pdf\" file-type=\"pdf\" size=\"2.4 MB\" date=\"2026-08-14\" href=\"#\"></article>",
         "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real behaviors.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md\"\n  height=\"320px\"></section>",
         "<article x-cardhorizontal\n  image=\"../images/placeholder-city.svg\"\n  image-alt=\"Pine trail at dawn\"\n  image-position=\"start\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate \u00b7 3h\"></article>",
-        "<article x-cardimage\n  src=\"../images/placeholder-forest.svg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
+        "<article x-cardimage\n  src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg/1280px-Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg\"\n  alt=\"Fishing boats at the harbour wall\"\n  title=\"Harbour at first light\"\n  caption=\"Shot on the 6am walk-around.\"></article>",
         "<article x-cardlink\n  href=\"#\"\n  title=\"Attribute naming standard\"\n  description=\"Why every attribute is kebab-case, and what breaks when it is not.\"\n  badge=\"Standard\"></article>",
         "<article x-cardminimizable\n  title=\"Build log\"\n  content=\"tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.\"></article>",
         "<aside x-cardnotification\n  variant=\"warning\"\n  title=\"Certificate expires in 6 days\"\n  message=\"Renew before 26 Aug or the staging domain will start failing TLS.\"\n  dismissible></aside>",
@@ -798,7 +798,7 @@
         "<article x-cardprofile\n  name=\"Grace Hopper\"\n  role=\"Compiler pioneer\"\n  avatar=\"../images/placeholder-waves.svg\"\n  bio=\"Wrote the first compiler, then spent a career arguing that people should not have to write machine code.\"></article>",
         "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
         "<article x-cardtestimonial\n  quote=\"We deleted the build step and shipped faster the same week.\"\n  author=\"Katherine Johnson\"\n  role=\"Platform lead\"\n  avatar=\"../images/placeholder-city.svg\"\n  rating=\"5\"></article>",
-        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"../images/placeholder-forest.svg\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the behavior base class, and why.\"></article>",
+        "<article x-cardvideo\n  src=\"https://www.w3schools.com/html/mov_bbb.mp4\"\n  poster=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg/1280px-Aerial_view_of_path_and_trees%2C_Monsanto_Forest_Park%2C_Lisbon%2C_Portugal_julesvernex2.jpg\"\n  title=\"Behaviors in 90 seconds\"\n  description=\"What replaced the behavior base class, and why.\"></article>",
 
         // Attention/animation effects (button — most of these are click-triggered)
         '<button x-ripple>Ripple</button>',
@@ -827,7 +827,7 @@
         '<button x-prompt prompt-title="Your name" prompt-message="What should we call you?">Ask</button>',
         '<button x-popover popover-title="Info" popover-content="Extra detail shown on click." position="top">Popover</button>',
         '<button x-drawer drawer-title="Settings" drawer-content="Drawer content goes here." position="right">Open Drawer</button>',
-        '<img x-lightbox width="200" src="../images/placeholder-sunrise.svg" alt="Click to enlarge">',
+        '<img x-lightbox width="200" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg" alt="Click to enlarge">',
         '<button x-tooltip="Shown on hover, not on click" position="top">Hover me</button>',
 
         // Feedback

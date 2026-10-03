@@ -6,7 +6,7 @@
 
 <div x-demo>
 <div x-avatar name="Ada Lovelace" size="lg" status="online"></div>
-<div x-avatar src="../../images/placeholder.svg" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
+<div x-avatar src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ada_Lovelace_portrait.jpg/1280px-Ada_Lovelace_portrait.jpg" alt="Ada Lovelace" name="Ada Lovelace" size="lg"></div>
 </div>
 
 ## Attributes

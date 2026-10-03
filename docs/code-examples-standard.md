@@ -254,7 +254,7 @@ multi-attribute tag onto one line.
   controls
   width="300"
   src="https://www.w3schools.com/html/mov_bbb.mp4"
-  poster="/images/placeholder.svg">
+  poster="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg">
 </video>
 ```
 

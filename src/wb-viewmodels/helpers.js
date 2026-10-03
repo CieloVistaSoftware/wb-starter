@@ -8,7 +8,7 @@ import { setRule, clearRules } from '../core/dynamic-style.js';
  * Includes lazy loading, printing, sharing, full screen, and clipboard operations.
  * 
  * Usage:
- *   <div x-lazy data-src="img.jpg"></div>
+ *   <div x-lazy data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"></div>
  *   <button x-copy data-target="#code">Copy</button>
  * -----------------------------------------------------------------------------
  * Fixed implementations for all utilities
