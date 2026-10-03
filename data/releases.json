@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.123",
+      "date": "2026-10-03",
+      "summary": "Fix: a stopped server is one error, not one per file (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1301\" target=\"_blank\" rel=\"noopener\">PR 1301</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1291\" target=\"_blank\" rel=\"noopener\">#1291</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A stopped server is one error, not one per file</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1291\" target=\"_blank\" rel=\"noopener\">#1291</a>",
+          "issues": [
+            1291
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.122",
       "date": "2026-10-03",
       "summary": "Fix: the lock guard no longer demands an exact wall-clock lower bound from a timer (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1298\" target=\"_blank\" rel=\"noopener\">PR 1298</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1296\" target=\"_blank\" rel=\"noopener\">#1296</a>",
