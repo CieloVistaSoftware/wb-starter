@@ -274,6 +274,7 @@ jobs:
           npm run test:lock-guards
           npm run test:gate-guards
           npm run test:suite-env
+          npm run test:free-port
           npm run test:ship-rollback
           npm run test:staged-control-bytes
           npm run test:playwright-launch
