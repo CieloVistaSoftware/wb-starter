@@ -58,12 +58,14 @@ test.describe('#1032 testOrigin is causal; the port is only context', () => {
       return {
         real: { testOrigin: real.testOrigin, testServer: real.testServer },
         fixture: { testOrigin: fixture.testOrigin, testServer: fixture.testServer },
-        copyable: document.getElementById('x-error-list') !== null,
+        url: location.href,
       };
     });
-    // Playwright serves this page from its own port, so both carry the context...
-    expect(logged.real.testServer).toBe(true);
-    expect(logged.fixture.testServer).toBe(true);
+    // testServer is whatever the port says -- ephemeral locally, 3000 in CI --
+    // so it is checked against the page's own URL, not assumed.
+    const expectedServer = isTestServer({ url: logged.url });
+    expect(logged.real.testServer).toBe(expectedServer);
+    expect(logged.fixture.testServer).toBe(expectedServer);
     // ...but only the fixture is a fixture.
     expect(logged.real.testOrigin, 'a real crash during a run is still a real crash').toBe(false);
     expect(logged.fixture.testOrigin).toBe(true);
