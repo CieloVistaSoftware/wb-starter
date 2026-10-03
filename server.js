@@ -1567,4 +1567,7 @@ function onListening(p) {
   }
 }
 
-tryListen(port, 20);
+// Number(port): `port` is the STRING from process.env.PORT, and tryListen's retry
+// does `p + 1` -- on a string that is concatenation ('59175' -> '591751'), which
+// listen() rejects with ERR_SOCKET_BAD_PORT (#1286).
+tryListen(Number(port), 20);
