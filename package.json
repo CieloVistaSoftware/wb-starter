@@ -32,6 +32,7 @@
     "test:ship-rollback": "node scripts/test-ship-rollback.mjs",
     "test:staged-control-bytes": "node scripts/test-staged-control-bytes.mjs",
     "test:suite-env": "node scripts/test-suite-env.mjs",
+    "test:free-port": "node scripts/test-free-port.mjs",
     "test:summary-parse": "node scripts/test-summary-parse.mjs",
     "check:behavior-examples": "node scripts/build-behavior-examples.mjs --check",
     "audit:page-fragments": "node scripts/audit-page-fragments.mjs",

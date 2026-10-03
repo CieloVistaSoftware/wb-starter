@@ -56,6 +56,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
 import { classifyFailure } from '../scripts/lib/server-down.mjs';
 import { NO_VERDICT_EXIT } from '../scripts/lib/gate-exit.mjs';
+import { claimFreePort } from '../scripts/lib/free-port.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '..');
@@ -561,13 +562,19 @@ async function runGate(port) {
   return { failures, serverDown };
 }
 
+// #1073: the same claimed port playwright.config.ts uses, so a gate and a
+// concurrent test run can never be handed the same number. The claim belongs
+// to this process and is released when it exits. On failure, say why and leave
+// the choice to playwright.config.ts, which claims (or refuses) on its own.
 function freePort() {
-  const out = spawnSync(process.execPath, [
-    '-e',
-    "const net=require('net');const s=net.createServer();s.listen(0,'127.0.0.1',()=>{const p=s.address().port;s.close(()=>console.log(p));});",
-  ], { encoding: 'utf8' });
-  const p = parseInt((out.stdout || '').trim(), 10);
-  return Number.isFinite(p) ? p : null;
+  try {
+    const claim = claimFreePort();
+    process.on('exit', () => claim.release());
+    return claim.port;
+  } catch (e) {
+    console.error(`   (no private port: ${e.message.split('\n')[0]})`);
+    return null;
+  }
 }
 
 // ── run ──────────────────────────────────────────────────────────────────────
