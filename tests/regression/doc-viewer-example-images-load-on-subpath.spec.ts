@@ -21,13 +21,28 @@ import { test, expect } from '../fixtures/offline';
 import { readdirSync, readFileSync } from 'node:fs';
 import { mountUnderSubPath } from '../helpers/sub-path';
 
-const LOCAL_IMAGE = /\s(?:src|image|avatar|cover|poster|background)="(?!https?:|\/\/)[^"]*\.(?:svg|png|jpe?g|gif|webp)"/;
+// ANY example image, not only a local one (#1122).
+//
+// This filter used to require a LOCAL path, because in September every doc had
+// one and the bug was the viewer mis-resolving it. #1122 then made media remote
+// for real, which emptied the filter -- and the guard below correctly refused to
+// pass on an empty set (#863: a filter that matches nothing proves nothing).
+//
+// Deleting this spec was the wrong answer: what it actually proves is that every
+// example image RENDERS in the doc viewer under the deployed sub-path, and that
+// is just as true of a remote URL. The per-doc test below already inspects every
+// #content img regardless of host. So the filter widens and the guard stays.
+//
+// Local paths are now forbidden outright by
+// tests/regression/media-sources-are-remote.spec.ts, which is the right place
+// for that rule -- one invariant, one gate.
+const EXAMPLE_IMAGE = /\s(?:src|image|avatar|cover|poster|background)="[^"]*\.(?:svg|png|jpe?g|gif|webp)"/;
 
 const DOCS = readdirSync('docs/behaviors')
   .filter((f) => f.endsWith('.md'))
-  .filter((f) => LOCAL_IMAGE.test(readFileSync(`docs/behaviors/${f}`, 'utf8')));
+  .filter((f) => EXAMPLE_IMAGE.test(readFileSync(`docs/behaviors/${f}`, 'utf8')));
 
-test('docs with local example images exist to check', () => {
+test('docs with example images exist to check', () => {
   expect(DOCS.length, 'a filter that matches nothing proves nothing (#863)').toBeGreaterThan(10);
 });
 

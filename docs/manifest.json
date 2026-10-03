@@ -76,7 +76,7 @@
           "file": "standards/DEMOS-AND-DOCS-STANDARDS.md",
           "title": "Demos & Documentation Standards",
           "description": "Rules for how every demo and .md doc shows behaviors and code: x-demo, one code sample per rendered element, vertical + highlighted code, no horizontal scrollbars, themed Markdown, composition over inheritance, mobile-first.",
-          "modified": "2026-09-13"
+          "modified": "2026-10-02"
         },
         {
           "file": "AI.md",
@@ -106,7 +106,7 @@
           "file": "behavior-cross-reference.md",
           "title": "Behavior Cross-Reference",
           "description": "Relationships between every behavior",
-          "modified": "2026-10-01"
+          "modified": "2026-10-02"
         },
         {
           "file": "audio.md",
@@ -292,7 +292,7 @@
           "file": "behaviors/avatar.md",
           "title": "Avatar",
           "description": "x-avatar renders a round (or shaped) picture from src, and falls back to initials taken from name when there is no image or it fails to load.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/badge.md",
@@ -370,7 +370,7 @@
           "file": "behaviors/cardimage.md",
           "title": "Image Card",
           "description": "x-cardimage renders a card led by an image from src, with a title, subtitle and caption under it.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/cardlink.md",
@@ -436,7 +436,7 @@
           "file": "behaviors/cardvideo.md",
           "title": "Video Card",
           "description": "x-cardvideo renders a card with a video player from src (with poster shown before playback) above a title and description.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/center.md",
@@ -622,7 +622,7 @@
           "file": "behaviors/figure.md",
           "title": "Figure",
           "description": "A plain <figure> gets image handling: clicking the image opens it in a lightbox (write lightbox=\"false\" to stop that), caption sets the <figcaption> text,…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/file.md",
@@ -694,7 +694,7 @@
           "file": "behaviors/frame.md",
           "title": "Frame",
           "description": "x-frame holds its first child to an aspect ratio: it sets --x-frame-ratio from ratio (default 16/9) and makes the child fill the frame.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/fullscreen.md",
@@ -706,7 +706,7 @@
           "file": "behaviors/gallery.md",
           "title": "Gallery",
           "description": "x-gallery lays the images inside it out as a grid of columns (or fixed-size tiles with size), and clicking any image opens it full-size in a lightbox you…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/glass.md",
@@ -760,7 +760,7 @@
           "file": "behaviors/img.md",
           "title": "Img",
           "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspect-ratio reserves its box so the page…",
-          "modified": "2026-09-28"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/input.md",
@@ -790,7 +790,7 @@
           "file": "behaviors/lightbox.md",
           "title": "Lightbox",
           "description": "x-lightbox makes the element open the image at src full-screen over a dark backdrop when clicked; clicking the backdrop closes it.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/list.md",
@@ -814,7 +814,7 @@
           "file": "behaviors/masonry.md",
           "title": "Masonry",
           "description": "x-masonry flows its children into columns like a newspaper, so items of different heights pack without gaps.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/mdhtml.md",
@@ -934,7 +934,7 @@
           "file": "behaviors/ratio.md",
           "title": "Ratio",
           "description": "x-ratio gives the element a fixed aspect ratio from ratio (16:9, 4x3 or 1/1 all work) and makes a direct image, video or iframe child cover it.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/reel.md",
@@ -1168,7 +1168,7 @@
           "file": "behaviors/video.md",
           "title": "Video",
           "description": "A plain <video> gets native controls and inline playback on phones by default; autoplay works only together with muted, and poster sets the image shown…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-02"
         },
         {
           "file": "behaviors/vimeo.md",
@@ -1210,7 +1210,7 @@
           "file": "code-examples-standard.md",
           "title": "Code Examples Standard",
           "description": "Formatting rules for code examples",
-          "modified": "2026-09-29"
+          "modified": "2026-10-02"
         }
       ]
     },
@@ -1222,7 +1222,7 @@
           "file": "testing-strategy.md",
           "title": "Testing Strategy",
           "description": "How to test WB behaviors",
-          "modified": "2026-08-26"
+          "modified": "2026-10-02"
         },
         {
           "file": "test-schema-standard.md",
@@ -1312,7 +1312,7 @@
           "file": "audits/X-USAGE-AUDIT.md",
           "title": "X USAGE AUDIT",
           "description": "Documentation for X USAGE AUDIT",
-          "modified": "2026-09-29"
+          "modified": "2026-10-02"
         },
         {
           "file": "audits/HOST-CHILD-DISPATCH-AUDIT.md",
@@ -1522,7 +1522,7 @@
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
           "title": "Attribute Naming Standard",
           "description": "Standards for attribute naming conventions",
-          "modified": "2026-10-01"
+          "modified": "2026-10-02"
         },
         {
           "file": "architecture/standards/ERROR-MESSAGE.md",
@@ -1576,7 +1576,7 @@
           "file": "WB_BEHAVIOR_SYSTEM.md",
           "title": "WB Behavior System",
           "description": "Core behavior system documentation",
-          "modified": "2026-09-08"
+          "modified": "2026-10-02"
         },
         {
           "file": "architecture/WB-PREFIX-AUDIT.md",

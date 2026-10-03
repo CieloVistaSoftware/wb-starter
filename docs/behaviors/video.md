@@ -5,7 +5,7 @@ A plain `<video>` gets native `controls` and inline playback on phones by defaul
 ## Usage
 
 <div x-demo>
-<video src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm" poster="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg" controls></video>
+<video src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Staircase_Falls_timelapse_Yosemite_CA_2023-07-13_07-23-07_1.webm" poster="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reflections_in_Lake_Alpine%2C_Alpine_County.jpg/1280px-Reflections_in_Lake_Alpine%2C_Alpine_County.jpg" controls></video>
 </div>
 
 No attribute needed on `<video>`. Don't add `x-video` to it (#746).
