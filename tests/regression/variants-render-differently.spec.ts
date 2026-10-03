@@ -473,6 +473,24 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
           unrendered.push(`${label} (a video or audio never loaded, played or failed)`);
           continue;
         }
+        // x-typewriter types with timers, not animations, so finish() below
+        // cannot end it: read early, "custom cursor" and "long sentence" were
+        // both still near-empty and fingerprinted alike. Wait until no
+        // typewriter's text has grown across 400ms (the slowest example types
+        // a character every 150ms).
+        const typed = () => Array.from(stage.querySelectorAll('.x-typewriter')).map((el) => (el.textContent || '').length).join(',');
+        let lastTyped = typed();
+        let typingSettled = !lastTyped;
+        for (const end = performance.now() + 15_000; !typingSettled && performance.now() < end;) {
+          await new Promise((r) => setTimeout(r, 400));
+          const now = typed();
+          typingSettled = now === lastTyped;
+          lastTyped = now;
+        }
+        if (!typingSettled) {
+          unrendered.push(`${label} (a typewriter never finished typing)`);
+          continue;
+        }
         // Freeze every animation at its start and let finite transitions end,
         // so the reading is the option's look, not a moment in its motion.
         const anims = stage.getAnimations({ subtree: true });

@@ -6,6 +6,157 @@
   ],
   "releases": [
     {
+      "version": "1.0.139",
+      "date": "2026-10-03",
+      "summary": "Fix: the Issues activity spec can run -- its mock reaches the page, and its link exists (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1348\" target=\"_blank\" rel=\"noopener\">PR 1348</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Issues activity spec can run -- its mock reaches the page, and its link exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1118
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.138",
+      "date": "2026-10-03",
+      "summary": "Fix: a recycled PID no longer wedges the machine-wide test lock (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1318\" target=\"_blank\" rel=\"noopener\">PR 1318</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Start the stranger after the holder dies, as a real recycle does</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+          "issues": [
+            1040
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A recycled PID no longer wedges the machine-wide test lock</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+          "issues": [
+            1040
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.137",
+      "date": "2026-10-03",
+      "summary": "Test: an &lt;audio&gt; that failed before x-audio attached is still reported (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1323\" target=\"_blank\" rel=\"noopener\">PR 1323</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1136\" target=\"_blank\" rel=\"noopener\">#1136</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>An &lt;audio&gt; that failed before x-audio attached is still reported</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1136\" target=\"_blank\" rel=\"noopener\">#1136</a>",
+          "issues": [
+            1136
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.136",
+      "date": "2026-10-03",
+      "summary": "Fix: wb- prefix audit counts only files git tracks (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1317\" target=\"_blank\" rel=\"noopener\">PR 1317</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Wb- prefix audit counts only files git tracks, so local caches can&#39;t fail the gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+          "issues": [
+            1300
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.135",
+      "date": "2026-10-03",
+      "summary": "Img + figure: width and height now set their size (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1324\" target=\"_blank\" rel=\"noopener\">PR 1324</a>)",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Showcase rows for width/height must look different</strong>"
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Park the img/figure width+height work (PR)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1324\" target=\"_blank\" rel=\"noopener\">#1324</a>",
+          "issues": [
+            1324
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Width and height now size images and figures</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.134",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Restore the page-loading markup my rebase clobbered</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.133",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A source-level spinner scan, and the activity-loader guard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1309\" target=\"_blank\" rel=\"noopener\">#1309</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1309,
+            1118
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.132",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>1.0.132 — publish wb-starter to npm, the first release since 1.0.0</strong>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.131",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Duplicate-code ceiling for, and x-typewriter variants wait for typing to finish</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1313\" target=\"_blank\" rel=\"noopener\">#1313</a>",
+          "issues": [
+            883,
+            1313
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.130",
+      "date": "2026-10-03",
+      "summary": "Fix: overlap sweep waits for idle and animation signals, not 800 ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1314\" target=\"_blank\" rel=\"noopener\">PR 1314</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1306\" target=\"_blank\" rel=\"noopener\">#1306</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Overlap sweep waits for the page&#39;s own idle and animation signals, not 800 ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1306\" target=\"_blank\" rel=\"noopener\">#1306</a>",
+          "issues": [
+            1306
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.129",
       "date": "2026-10-03",
       "summary": "Fix: dark-mode-switch waits for the runtime and the theme change, not 120 ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1315\" target=\"_blank\" rel=\"noopener\">PR 1315</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1299\" target=\"_blank\" rel=\"noopener\">#1299</a>",

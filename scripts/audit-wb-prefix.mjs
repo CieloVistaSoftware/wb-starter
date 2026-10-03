@@ -26,6 +26,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 
 const ARGS = process.argv.slice(2);
 const flag = (n) => ARGS.includes(n);
@@ -34,50 +35,66 @@ const ROOT = (() => {
   return i >= 0 && ARGS[i + 1] ? path.resolve(ARGS[i + 1]) : process.cwd();
 })();
 
-const SKIP_DIRS = new Set([
-  'node_modules', '.git', 'out', 'dist', 'coverage', 'test-results',
-  'playwright-report', '.claude', 'vendor', 'lib',
-  // Captured test-runner output, not source. These files record what a
-  // past run PRINTED -- including failure text that quotes the very tags
-  // this audit forbids. Counting a recorded quotation as a surviving tag
-  // makes the gate fail for reporting a problem accurately.
-  'test-single',
-  // Runtime logs: what the app WROTE while tests ran, not source. An error
-  // message quoting a tag landed here and counted as a live <wb-*> tag in CI.
-  'error-log-archive',
-]);
-
-// #960: the same rule, for FILES. data/test-results.json (7,080 wb- refs) and
-// data/test-status.json (1,108) are run artifacts sitting beside the already
-// skipped data/test-results/ DIRECTORY. Counting them made PACKAGE/MODULE/CLASS
-// track how much failure text the PREVIOUS run happened to capture -- the
-// ceilings passed after a small run and failed after a large one with no source
-// change between. A gate whose answer depends on its own exhaust is not a gate.
+// #1300: the audit counts SOURCE, and the repo already defines source: the
+// files git tracks. It used to walk the disk and exclude generated files by
+// name, one deny-list entry per file that broke the gate (#960 added four).
+// Every new cache broke it again -- data/fixes-cache.json and
+// data/issues-cache.json (gitignored copies of GitHub issue text quoting
+// <wb-select> and friends) pushed TAG to 700 in a local tree while CI, on a
+// fresh checkout, passed. The answer depended on what earlier runs left on disk.
+// Listing tracked files instead makes every gitignored artifact invisible,
+// including the ones nobody has written yet.
 //
-// data/priority-gate.json is the same kind of file: a snapshot of open GitHub
-// issue titles and bodies written by scripts/build-priority-gate.mjs. Issues
-// ABOUT the removed tags quote them ("<wb-select> ..."); that is a recorded
-// quotation of a bug report, not a tag anything renders, and it changes every
-// time the manifest is refreshed from GitHub with no source change at all.
-const SKIP_FILES = new Set([
-  'test-results.json',
-  'test-status.json',
-  'priority-gate.json',
-  'errors.json',
-]);
+// What remains below excludes TRACKED content on purpose:
+//   .claude/             agent configuration (CLAUDE.md, settings), not project source
+//   lib/                 scripts/lib and src/lib (vendored highlight.js etc.), excluded
+//                        since the audit was written in 4.0.0
+//   priority-gate.json   data/priority-gate.json is committed, but it is a snapshot of
+//                        open GitHub issue text written by build-priority-gate.mjs;
+//                        issues ABOUT the removed tags quote them, and it changes on
+//                        every refresh with no source change at all
+const EXCLUDE_DIRS = new Set(['.claude', 'lib']);
+const EXCLUDE_FILES = new Set(['priority-gate.json']);
+
+// Only for the no-git fallback (a downstream site passed with --dir that is not
+// a repo): there is no .gitignore answer, so skip what is never source.
+const WALK_SKIP_DIRS = new Set(['node_modules', '.git', 'out', 'dist', 'coverage', 'vendor']);
+
 const EXT = /\.(js|mjs|cjs|ts|tsx|css|html|json|md|yml|yaml)$/;
+
+const excluded = (rel) => {
+  const parts = rel.split('/');
+  return EXCLUDE_FILES.has(parts[parts.length - 1])
+    || parts.slice(0, -1).some((d) => EXCLUDE_DIRS.has(d));
+};
 
 function walk(dir, out = []) {
   let entries;
   try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
   for (const e of entries) {
-    if (SKIP_DIRS.has(e.name)) continue;
+    if (WALK_SKIP_DIRS.has(e.name)) continue;
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walk(p, out);
-    else if (SKIP_FILES.has(e.name)) continue;
     else if (EXT.test(e.name)) out.push(p);
   }
   return out;
+}
+
+// Tracked plus staged files, relative to ROOT. null when git is missing or ROOT
+// is not inside a work tree -- only then does the audit fall back to the walk.
+function trackedFiles() {
+  let raw;
+  try {
+    raw = execFileSync('git', ['ls-files', '-z', '--cached'], {
+      cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'],
+    });
+  } catch { return null; }
+  return raw.split('\0').filter((f) => f && EXT.test(f)).map((f) => path.join(ROOT, f));
+}
+
+function sourceFiles() {
+  const all = trackedFiles() ?? walk(ROOT);
+  return all.filter((f) => !excluded(path.relative(ROOT, f).split(path.sep).join('/')));
 }
 
 // Order matters: first match wins, most specific first.
@@ -94,7 +111,7 @@ const tokens = Object.fromEntries(CATEGORIES.map(([c]) => [c, new Map()]));
 const files = Object.fromEntries(CATEGORIES.map(([c]) => [c, new Map()]));
 const tagSites = [];
 
-for (const file of walk(ROOT)) {
+for (const file of sourceFiles()) {
   let text;
   try { text = fs.readFileSync(file, 'utf8'); } catch { continue; }
   if (!text.includes('wb-')) continue;
