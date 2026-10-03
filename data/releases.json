@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.136",
+      "date": "2026-10-03",
+      "summary": "Fix: wb- prefix audit counts only files git tracks (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1317\" target=\"_blank\" rel=\"noopener\">PR 1317</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Wb- prefix audit counts only files git tracks, so local caches can&#39;t fail the gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+          "issues": [
+            1300
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.135",
       "date": "2026-10-03",
       "summary": "Img + figure: width and height now set their size (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1324\" target=\"_blank\" rel=\"noopener\">PR 1324</a>)",
