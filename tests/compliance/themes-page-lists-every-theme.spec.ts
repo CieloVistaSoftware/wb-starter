@@ -53,13 +53,14 @@ test('a card previews its own theme, and clicking it switches the site to that t
   await page.goto('/?page=themes');
   const card = page.locator('#theme-card-ocean');
   await expect(card).toBeVisible();
-  // The card renders in its own theme: its swatch is that theme's --primary.
-  const [swatch, oceanPrimary] = await card.evaluate((el) => [
-    getComputedStyle(el.querySelector('.theme-card__colors span')!).backgroundColor,
-    getComputedStyle(el).getPropertyValue('--primary').trim(),
-  ]);
+  // The card renders in its own theme: it carries ocean's --primary, and its
+  // first swatch is painted with it. Polled: the page's stylesheet is loaded
+  // with the page, so on a slow runner the first read can precede it.
+  const oceanPrimary = await card.evaluate((el) => getComputedStyle(el).getPropertyValue('--primary').trim());
   expect(oceanPrimary, 'the card does not carry the ocean theme').not.toBe('');
-  expect(swatch).not.toBe('rgba(0, 0, 0, 0)');
+  await expect
+    .poll(() => card.evaluate((el) => getComputedStyle(el.querySelector('.theme-card__colors span')!).backgroundColor))
+    .not.toBe('rgba(0, 0, 0, 0)');
 
   await card.click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'ocean');
