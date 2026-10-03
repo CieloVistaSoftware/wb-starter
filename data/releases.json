@@ -6,8 +6,22 @@
   ],
   "releases": [
     {
-      "version": "1.0.112",
+      "version": "1.0.113",
       "date": "2026-10-02",
+      "summary": "",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Register the remote media with the offline fixture, and repair two bugs of my own</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1122\" target=\"_blank\" rel=\"noopener\">#1122</a>",
+          "issues": [
+            1122
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.112",
+      "date": "2026-10-03",
       "summary": "",
       "items": [
         {

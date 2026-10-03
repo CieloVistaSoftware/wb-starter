@@ -61,8 +61,12 @@ export const SAMPLE_MEDIA_HOSTS = new Set([
   'picsum.photos', 'fastly.picsum.photos', 'i.pravatar.cc', 'placehold.co', 'images.unsplash.com',
   'ui-avatars.com', 'archive.org', 'files.freemusicarchive.org', 'soundhelix.com', 'incompetech.com',
   'w3schools.com', 'interactive-examples.mdn.mozilla.net', 'cdn.pixabay.com',
-  // Wikimedia Commons, which #1122 moved the site's media to.
-  'upload.wikimedia.org', 'thumb.wikimedia.org',
+  // #1122: DEMOS-AND-DOCS section 29 names Wikimedia Commons for sample media,
+  // because an example captioned 'Fishing boats at the harbour wall' has to show
+  // fishing boats. localFor() maps it like every other host here; without the
+  // hostname in THIS set that mapping is never consulted and the request is
+  // aborted as an unexpected external call.
+  'upload.wikimedia.org',
 ]);
 
 type CacheEntry = { file: string; contentType: string; status: number };
