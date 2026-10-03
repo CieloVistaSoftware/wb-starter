@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.133",
+      "date": "2026-10-03",
+      "summary": "",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A source-level spinner scan, and the activity-loader guard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1309\" target=\"_blank\" rel=\"noopener\">#1309</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1309,
+            1118
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.132",
       "date": "2026-10-03",
       "summary": "",
