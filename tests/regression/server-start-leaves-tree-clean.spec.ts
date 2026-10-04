@@ -30,20 +30,35 @@ test('npm start stamps locally, leaving tracked files as they were (#1131)', () 
 // docs/manifest.json over its CRLF checkout, so both showed modified after
 // every start although no doc had changed.
 const MANIFESTS = ['data/docs-manifest.json', 'docs/manifest.json'];
-const manifestStatus = () => execFileSync('git', ['status', '--porcelain', '--', ...MANIFESTS], { encoding: 'utf8' });
 
-test('the docs-manifest step leaves an unchanged docs tree clean (#1452)', () => {
+// #1476: compared as DATA, minus the git-derived "modified" dates. Those come
+// from each doc's last commit, so a PR that edits a doc moves them, and main's
+// stamp workflow writes them after merge -- the committed copy is one commit
+// behind by design, and a pre-commit hook cannot know a date that does not
+// exist yet. Everything #1452 was about (reordering, line-ending rewrites, any
+// other content change) still differs here.
+const withoutDates = (text: string): unknown => JSON.parse(text, (key, value) => (key === 'modified' ? undefined : value));
+const committed = (file: string) => execFileSync('git', ['show', `HEAD:${file}`], { encoding: 'utf8' });
+
+test('the docs-manifest step reproduces the committed manifests (#1452, #1476)', () => {
   const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
   expect(pkg.scripts.start, 'npm start runs the manifest step').toContain('update-docs-manifest.js');
 
-  // Clean, not merely unchanged: the server this suite runs against was itself
-  // started by npm start, so an "unchanged" check compared dirty with dirty and
-  // passed against the bug. Clean is right whenever no doc has been edited,
-  // which is the precondition, checked first so a failure says which it was.
+  // Uncommitted doc edits legitimately change the manifests; say so first.
   const docEdits = execFileSync('git', ['status', '--porcelain', '--', 'docs', ':!docs/manifest.json'], { encoding: 'utf8' });
   expect(docEdits, 'precondition: no uncommitted doc edits, or the manifests may legitimately change').toBe('');
-  execFileSync(process.execPath, ['scripts/update-docs-manifest.js'], { encoding: 'utf8' });
-  expect(manifestStatus(), 'the manifest step modified tracked files on an unchanged docs tree').toBe('');
+
+  const before = MANIFESTS.map((f) => fs.readFileSync(f, 'utf8'));
+  try {
+    execFileSync(process.execPath, ['scripts/update-docs-manifest.js'], { encoding: 'utf8' });
+    for (const f of MANIFESTS) {
+      expect(withoutDates(fs.readFileSync(f, 'utf8')), `${f}: the manifest step produced different content from the committed file`)
+        .toEqual(withoutDates(committed(f)));
+    }
+  } finally {
+    // Leave the tree exactly as the test found it.
+    MANIFESTS.forEach((f, i) => fs.writeFileSync(f, before[i]));
+  }
 });
 
 test('the dev server serves the local stamp as src/core/version.js (#1131)', async ({ page }) => {

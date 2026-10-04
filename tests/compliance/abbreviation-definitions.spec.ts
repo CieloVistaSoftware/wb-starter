@@ -113,20 +113,21 @@ test.describe('Abbreviation Definition Compliance', () => {
   
   test('all project abbreviations must be defined on first use in docs', () => {
     const mdFiles = [...getMarkdownFiles(DOCS_DIR), ...(fileExists(README_FILE) ? [README_FILE] : [])];
+    // #1092: with no markdown files the scan below checks nothing
+    expect(mdFiles.length, 'no markdown files found under docs/ or README.md, so nothing was checked').toBeGreaterThan(0);
     const allViolations: Violation[] = [];
-    
+
     for (const filePath of mdFiles) {
       const content = readFile(filePath);
       const violations = checkAbbreviationDefinitions(content, path.relative(ROOT, filePath));
       allViolations.push(...violations);
     }
-    
-    if (allViolations.length > 0) {
-      const report = allViolations.map(v => 
-        `  ${v.file}:${v.line}\n    Found: "${v.abbreviation}"\n    Expected: "${v.expectedFormat}"`
-      ).join('\n\n');
-      expect(allViolations, `\nAbbreviation Violations:\n${report}`).toEqual([]);
-    }
+
+    // #1092: assert unconditionally; the if() only built the report text
+    const report = allViolations.map(v =>
+      `  ${v.file}:${v.line}\n    Found: "${v.abbreviation}"\n    Expected: "${v.expectedFormat}"`
+    ).join('\n\n');
+    expect(allViolations, `\nAbbreviation Violations:\n${report}`).toEqual([]);
   });
   
   test('known abbreviations list is complete', () => {
