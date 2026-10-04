@@ -535,6 +535,15 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
   semantic equivalent, and it is how a behavior is placed on a host that is not its native tag (see
   `docs/behaviors/table.md`'s "On a different element"). It means the semantic-HTML form is the
   *primary* presentation, not an afterthought, and should never need an `x-*` attribute to work.
+- **No duplicate x-behaviors on any tag** (John, 2026-09-13, #1141). A tag that `nativeMap` in
+  `src/core/tag-map.js` already maps to behavior B never also carries `x-B`: no `x-range` on a range
+  input, no `x-password` on a password input, no `x-card` on an `<article>`, no `x-button` on a
+  `<button>`, no `x-form` on a `<form>`. The behavior name is not always the tag name (`article` is the
+  card), so judge by `nativeMap`, not by spelling. A *different* behavior (`x-colorpicker` on a range input)
+  or a variant (`x-cardimage` on an `<article>`) is an opt-in, not a duplicate. Enforced across demos,
+  pages, docs, README, `src/` markup and JSON models, the create-wb-starter template and the generated
+  examples by `tests/compliance/no-redundant-x-attribute.spec.ts`, which reads every `nativeMap` entry
+  (typed inputs included) through `tests/base.ts`.
 
 ## Enforcement & references
 
@@ -554,7 +563,7 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
 | 29 (no placeholder assets) | `tests/compliance/docs-live-media-assets-exist.spec.ts`, `tests/compliance/x-audio-has-resolvable-src.spec.ts` |
 | 30 (broken media throws) | `src/wb-viewmodels/card.js` (`cardhero`/`cardhorizontal`/`cardoverlay`/`cardimage` probe pattern), `src/wb-viewmodels/semantics/audio.js` |
 | 31 (kebab-case attributes) | `tests/regression/cardhorizontal-attribute-casing-tolerance.spec.ts` (reference pattern for tolerant reading) |
-| 32 (autoInject on, favor semantic HTML) | `src/core/config.js` (`autoInject: true` default), `tests/compliance/no-redundant-x-attribute-on-native-tag.spec.ts` |
+| 32 (autoInject on, favor semantic HTML) | `src/core/config.js` (`autoInject: true` default), `tests/compliance/no-redundant-x-attribute.spec.ts` |
 
 Open work to bring existing surfaces to this standard: #246 (behaviors-showcase selects),
 #247 (behaviors-showcase mobile nav), #248 (no horizontal scrollbars), and the remaining
