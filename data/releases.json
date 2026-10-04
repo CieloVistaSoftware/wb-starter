@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.248",
+      "date": "2026-10-04",
+      "summary": "Fix: a slow doc never lands under a behavior picked after it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1489\" target=\"_blank\" rel=\"noopener\">PR 1489</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1488\" target=\"_blank\" rel=\"noopener\">#1488</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A slow doc never lands under a behavior picked after it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1488\" target=\"_blank\" rel=\"noopener\">#1488</a>",
+          "issues": [
+            1488
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.247",
       "date": "2026-10-04",
       "summary": "Test: delete a copied spec and two always-true placeholders (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1492\" target=\"_blank\" rel=\"noopener\">PR 1492</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1463\" target=\"_blank\" rel=\"noopener\">#1463</a>",
