@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.247",
+      "date": "2026-10-04",
+      "summary": "Test: delete a copied spec and two always-true placeholders (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1492\" target=\"_blank\" rel=\"noopener\">PR 1492</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1463\" target=\"_blank\" rel=\"noopener\">#1463</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delete the copied compliance spec and two always-true placeholders</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1463\" target=\"_blank\" rel=\"noopener\">#1463</a>",
+          "issues": [
+            1463
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.246",
       "date": "2026-10-04",
       "summary": "Test: poll the issues-page green-bar style (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1486\" target=\"_blank\" rel=\"noopener\">PR 1486</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1485\" target=\"_blank\" rel=\"noopener\">#1485</a>",
