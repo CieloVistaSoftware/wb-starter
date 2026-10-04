@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.228",
+      "date": "2026-10-04",
+      "summary": "Test: generated demos respect content models (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1454\" target=\"_blank\" rel=\"noopener\">PR 1454</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1062\" target=\"_blank\" rel=\"noopener\">#1062</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No generated demo puts bare text inside a host that cannot hold it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1062\" target=\"_blank\" rel=\"noopener\">#1062</a>",
+          "issues": [
+            1062
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.227",
       "date": "2026-10-04",
       "summary": "Test: doc coverage waits for each panel; a slow 404 is missing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1450\" target=\"_blank\" rel=\"noopener\">PR 1450</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1035\" target=\"_blank\" rel=\"noopener\">#1035</a>",
