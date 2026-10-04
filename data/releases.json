@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.144",
+      "date": "2026-10-03",
+      "summary": "Fix: the open API/Docs toggle glows green; hover no longer looks the same (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1356\" target=\"_blank\" rel=\"noopener\">PR 1356</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1110\" target=\"_blank\" rel=\"noopener\">#1110</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The open API/Docs toggle glows green; hover no longer looks the same</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1110\" target=\"_blank\" rel=\"noopener\">#1110</a>",
+          "issues": [
+            1110
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.143",
       "date": "2026-10-03",
       "summary": "Fix: a suite refused by running singles keeps its place, so it is not starved (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1350\" target=\"_blank\" rel=\"noopener\">PR 1350</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1321\" target=\"_blank\" rel=\"noopener\">#1321</a>",
