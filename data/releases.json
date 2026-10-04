@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.223",
+      "date": "2026-10-04",
+      "summary": "Fix: zero lint errors, and the bugs the noise hid (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1441\" target=\"_blank\" rel=\"noopener\">PR 1441</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1237\" target=\"_blank\" rel=\"noopener\">#1237</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Validator keeps the canonical verb: validate() checks the form, validate(input) one field</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1237\" target=\"_blank\" rel=\"noopener\">#1237</a>",
+          "issues": [
+            1237
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The repository lints with zero errors; the real bugs under the noise are fixed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1237\" target=\"_blank\" rel=\"noopener\">#1237</a>",
+          "issues": [
+            1237
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.222",
       "date": "2026-10-04",
       "summary": "Fix: home.html is hand-authored; generator won&#39;t overwrite it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1445\" target=\"_blank\" rel=\"noopener\">PR 1445</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1143\" target=\"_blank\" rel=\"noopener\">#1143</a>",
