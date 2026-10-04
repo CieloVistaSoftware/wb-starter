@@ -23,8 +23,7 @@
         "rect",
         "card"
       ],
-      "default": "text",
-      "appliesClass": "x-skeleton--{{value}}"
+      "default": "text"
     },
     "lines": {
       "type": "number",

@@ -45,8 +45,7 @@
         "bordered",
         "filled"
       ],
-      "default": "default",
-      "appliesClass": "x-details--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

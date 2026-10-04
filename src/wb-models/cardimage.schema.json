@@ -68,8 +68,7 @@
         "left",
         "right"
       ],
-      "default": "top",
-      "appliesClass": "x-card-image--{{value}}"
+      "default": "top"
     },
     "fit": {
       "type": "string",
@@ -100,8 +99,7 @@
         "bordered",
         "minimal"
       ],
-      "default": "default",
-      "appliesClass": "x-card-image--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

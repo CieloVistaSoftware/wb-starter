@@ -65,8 +65,7 @@
     "featured": {
       "type": "boolean",
       "description": "Highlight as featured",
-      "default": false,
-      "appliesClass": "x-product--featured"
+      "default": false
     },
     "variant": {
       "type": "string",
@@ -77,8 +76,7 @@
         "horizontal",
         "minimal"
       ],
-      "default": "default",
-      "appliesClass": "x-product--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

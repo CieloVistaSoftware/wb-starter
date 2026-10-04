@@ -59,8 +59,7 @@
         "dark",
         "transparent"
       ],
-      "default": "default",
-      "appliesClass": "x-navbar--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

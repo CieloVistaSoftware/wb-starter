@@ -73,7 +73,7 @@
         "gradient"
       ],
       "default": "default",
-      "appliesClass": "x-hero--{{value}}"
+      "appliesClass": "x-cardhero--{{value}}"
     },
     "xalign": {
       "type": "string",
@@ -84,19 +84,18 @@
         "right"
       ],
       "default": "center",
-      "appliesClass": "x-hero--xalign-{{value}}"
+      "appliesClass": "x-card--xalign-{{value}}"
     },
     "overlay": {
       "type": "boolean",
       "description": "Show gradient overlay for text readability",
-      "default": true,
-      "appliesClass": "x-hero--overlay"
+      "default": true
     },
     "fullHeight": {
       "type": "boolean",
       "description": "Make hero full viewport height",
       "default": false,
-      "appliesClass": "x-hero--full"
+      "appliesClass": "x-cardhero--full-height"
     },
     "headingLevel": {
       "type": "string",

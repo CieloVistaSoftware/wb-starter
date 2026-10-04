@@ -40,7 +40,7 @@
         "down",
         "neutral"
       ],
-      "appliesClass": "x-stats--trend-{{value}}",
+      "appliesClass": "x-card__stats-trend--{{value}}",
       "default": ""
     },
     "trendValue": {
@@ -57,8 +57,7 @@
         "large",
         "minimal"
       ],
-      "default": "default",
-      "appliesClass": "x-stats--{{value}}"
+      "default": "default"
     },
     "color": {
       "type": "string",

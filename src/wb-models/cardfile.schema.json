@@ -57,8 +57,7 @@
         "compact",
         "elevated"
       ],
-      "default": "default",
-      "appliesClass": "x-card-file--{{value}}"
+      "default": "default"
     },
     "hoverText": {
       "type": "string",

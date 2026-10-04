@@ -40,7 +40,7 @@
         "bottom"
       ],
       "default": "bottom",
-      "appliesClass": "x-card-overlay--{{value}}"
+      "appliesClass": "x-card--overlay-{{value}}"
     },
     "xalign": {
       "type": "string",
@@ -50,14 +50,12 @@
         "center",
         "right"
       ],
-      "default": "left",
-      "appliesClass": "x-card-overlay--xalign-{{value}}"
+      "default": "left"
     },
     "gradient": {
       "type": "boolean",
       "description": "Show gradient overlay for text readability",
-      "default": true,
-      "appliesClass": "x-card-overlay--gradient"
+      "default": true
     },
     "height": {
       "type": "string",
@@ -74,7 +72,7 @@
         "blur"
       ],
       "default": "default",
-      "appliesClass": "x-card-overlay--{{value}}"
+      "appliesClass": "x-card__overlay-content--{{value}}"
     }
   },
   "$view": [
