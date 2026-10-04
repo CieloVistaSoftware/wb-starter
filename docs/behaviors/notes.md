@@ -5,7 +5,7 @@
 ## Usage
 
 <div x-demo>
-<aside x-notes position="end" default-width="280px">
+<aside x-notes position="right" default-width="280px">
   <p>Notes stay pinned beside the content while you scroll.</p>
 </aside>
 </div>

@@ -5,7 +5,7 @@
 ## Usage
 
 <div x-demo>
-<aside x-drawer-layout position="start" width="220px" min-width="64px">
+<aside x-drawer-layout position="left" width="220px" min-width="64px">
   <nav>
     <a href="#">Overview</a>
     <a href="#">Runs</a>
