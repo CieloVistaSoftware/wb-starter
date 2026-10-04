@@ -23,6 +23,14 @@ import {
  * by page.route, or is a path that does not exist.
  */
 
+// #1349: Part 2 drives a real browser, and every media response it relies on is
+// synthesized by page.route. sw.js answers the page's GETs itself and Playwright
+// cannot route a service worker's requests, so those synthesized responses only
+// arrived while the worker had not yet claimed the page — and a request the
+// worker claims is also a request the listeners under test see differently.
+// Blocked, so what this spec classifies is what this spec served.
+test.use({ serviceWorkers: 'block' });
+
 // ── Parameter space ─────────────────────────────────────────────────────────
 
 const ORIGIN = 'http://localhost:4173';

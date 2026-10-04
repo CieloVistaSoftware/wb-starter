@@ -208,6 +208,10 @@ test.describe('R3: attributes that were declared and inert', () => {
     // A real file the dev server actually serves, not page.route(): route
     // interception did not fire for this fetch, and mocking it would have
     // tested the mock rather than the code path an author uses.
+    // (WHY it did not fire: #1349 — sw.js answers the page's GETs itself and
+    // Playwright cannot route a service worker's requests. A mock here would
+    // have worked with test.use({ serviceWorkers: 'block' }). Serving a real
+    // file is still the better test, so nothing changes here.)
     const host = await mount(page, `<div id="ar2" x-articles source="/demos/fixtures/articles.json"></div>`);
     await expect(host.locator('#ar2 .x-articles__list > article')).toHaveCount(3, { timeout: 10000 });
     await expect(host.locator('#ar2')).not.toHaveAttribute('aria-busy', 'true');

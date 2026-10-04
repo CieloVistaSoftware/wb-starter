@@ -20,6 +20,14 @@ import { test, expect } from '../fixtures/offline';
  * file removed from a release does the same thing on a perfectly healthy site.
  */
 
+// #1349: this test COUNTS attempts inside its route handler, so a request the
+// route never sees is an attempt that never happened. sw.js answers the page's
+// GETs itself and Playwright cannot route a service worker's requests, so on a
+// claimed page `attempts` stayed near empty and
+// "toBeLessThanOrEqual(early)" compared nothing to nothing — the shape of a
+// test that passes hardest when it is working least (#863).
+test.use({ serviceWorkers: 'block' });
+
 test('a permanently failing module is not retried forever', async ({ page }) => {
   await page.goto('/?page=demos');
   await page.waitForFunction(() => (window as any).WB, null, { timeout: 20000 });

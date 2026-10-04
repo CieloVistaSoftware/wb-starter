@@ -13,6 +13,21 @@
 
 ---
 
+**Updated 2026-10-03.** On branch `claude/ecstatic-newton-1g1f17`, PR #1324.
+
+**Task:** John: "why isn't figure and image able to set width height? we have no examples of this in behaviors."
+
+**Files touched:** `src/wb-viewmodels/semantics/img.js`, `src/wb-viewmodels/semantics/figure.js`,
+`src/wb-models/img.schema.json`, `src/wb-models/figure.schema.json`, `data/schema-index.json`,
+`data/behavior-examples.json`, `docs/behaviors/img.md`, `docs/behaviors/figure.md`,
+`tests/behaviors/img-figure-width-height.spec.ts` (new), `tests/regression/img-doc-size-examples.spec.ts`.
+
+**Last action:** `<img width height>` together now set the image's shape (cropped, like `aspect-ratio`);
+`height` alone was dead under `img { height: auto }`. `<figure width="">` is new (px or any CSS length,
+capped at its container). Schemas, docs and behaviors-page examples list both.
+
+**Next step:** John reviews PR #1324.
+
 **Updated 2026-10-01 (late night).** On branch `claude/nifty-darwin-8mf277`, added to PR #1238.
 
 **Task:** markdown link audit. John: "write a test that proves all links in all of our .md documents work, consider it an audit which 1) Identifies failures and the 2) Fixed them the tests are then rerun to prove things."

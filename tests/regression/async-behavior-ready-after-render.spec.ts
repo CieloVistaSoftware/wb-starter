@@ -20,6 +20,13 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+// #1349: "marked.js is held back here" only happens if the hold is reachable.
+// sw.js answers the page's GETs itself and Playwright cannot route a service
+// worker's requests, so the 1500ms delay below was skipped whenever the worker
+// had claimed the page — and then the render was no longer reliably slower than
+// the stamp, which is the one thing this spec needs to be true.
+test.use({ serviceWorkers: 'block' });
+
 test('x-ready and WB.whenIdle() wait for an async behavior to finish rendering', async ({ page }) => {
   await page.goto('/');
   await page.route(/marked(\.min)?\.js/, async (route) => {

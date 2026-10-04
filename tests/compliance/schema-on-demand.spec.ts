@@ -1,6 +1,13 @@
 import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 
+// #1349: the whole premise of this spec is that index.json is UNAVAILABLE. The
+// 404 below is a page.route, sw.js answers the page's GETs itself, and
+// Playwright cannot route a service worker's requests — so whenever the worker
+// had claimed the page the real index.json was served and this test proved
+// only that the normal path works. Blocked, the 404 actually happens.
+test.use({ serviceWorkers: 'block' });
+
 // Verifies that WB will fetch an individual schema file on-demand when index.json is unavailable.
 test('schema builder should process [x-cardhero] when index.json is missing (on-demand fetch)', async ({ page }) => {
   // Stub index.json to simulate it being missing/unavailable
