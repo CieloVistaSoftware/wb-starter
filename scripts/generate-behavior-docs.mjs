@@ -68,9 +68,18 @@ export function schemaFor(docName) {
   return readJson(path.join(MODELS, `${docName}.schema.json`));
 }
 
-/** `variant` -> `variant` | `iconPosition` -> `icon-position` (§31: kebab-case). */
+/**
+ * The attribute name IS the schema's property name (#1344).
+ *
+ * This used to kebab-case it -- `pageSize` was documented as `page-size` --
+ * following a §31 that mandated kebab-case. That rule was reversed: no
+ * attribute name carries a dash, only the `x-` behavior prefix does (#1125),
+ * and ATTRIBUTE-NAMING-STANDARD.md §"camelCase" names the camelCase spelling
+ * canonical. Kebab-casing here meant every generated doc taught the forbidden
+ * spelling of every multi-word option, and the doc is what people copy from.
+ */
 function attrName(prop) {
-  return prop.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+  return prop;
 }
 
 export function attributesTable(schema) {
