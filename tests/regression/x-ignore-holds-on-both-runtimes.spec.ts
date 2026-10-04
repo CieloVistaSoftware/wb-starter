@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * #1168 -- x-ignore opts an element out of every behavior, on both runtimes.
@@ -28,6 +29,10 @@ for (const { runtime, url } of CASES) {
     page.on('console', (m) => navigations.push(`+${Date.now() - t0}ms console.${m.type()} ${m.text().slice(0, 120)}`));
     await page.goto(url);
     await page.waitForFunction(() => typeof (window as any).WB?.scan === 'function', null, { timeout: 30_000 });
+    // #1466: on index.html the site is still booting when WB.scan exists -- the
+    // #1442 recurrence probed at 498ms while site.init() finished at 594ms.
+    // wbIdle() now waits for the boot (window.WBSite) before WB.settled().
+    await wbIdle(page, { timeout: 30_000 });
     const result = await page.evaluate(async () => {
       const WB = (window as any).WB;
       const host = document.createElement('div');

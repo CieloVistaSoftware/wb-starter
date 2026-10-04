@@ -755,6 +755,21 @@ export async function wbIdle(
     undefined,
     { timeout }
   );
+  // #1466: on the site shell (index.html, any ?page=) WB can be idle while the
+  // site is still booting -- src/main.js runs site.init(), then WB.init()'s
+  // scan, then navigateTo(currentPage), and only then publishes
+  // window.WBSite. WB.settled() alone resolved inside that window: CI read the
+  // nav with zero items at 473ms, tapped the hamburger before init finished
+  // (#1456) and probed a page still booting (#1442). Wait for the site's own
+  // "booted" fact first; the first navigation's injections are then settled
+  // below. Pages without the shell (#app) have no boot to wait for.
+  await page.waitForFunction(
+    () => !document.getElementById('app') || 'WBSite' in window,
+    undefined,
+    { timeout }
+  ).catch((err: Error) => {
+    throw new Error(`wbIdle: the site shell never finished booting (window.WBSite was not published within ${timeout}ms) -- ${err.message}`);
+  });
   await page.evaluate((t) => (window as any).WB.settled({ timeout: t }), timeout);
 }
 
