@@ -1942,23 +1942,14 @@ export function cardfile(element, options = {}) {
   const filename = readOption(element, options, 'filename');
   const config = {
     filename,
-    // cardfile.schema.json declares this property as `fileType` (HTML
-    // attribute `file-type`, per project convention) -- reading the bare
-    // `type` attribute never matched any real markup (every demo/doc author
-    // used file-type=), so every card silently fell back to the generic
-    // 'file' icon regardless of its declared type. `type` kept as a
-    // fallback in case something out there authored it that way already.
-    //
-    // #1117: the filename decides. `fileType` survives ONLY as an explicit
-    // override for what a name cannot express -- a `.bin` that really is a
-    // video, a name with no extension at all -- so an author who states it
-    // still wins, and no ordinary file needs it. Note the old `|| 'file'`
-    // default is gone: hardcoding it here meant the derivation could never
-    // run.
-    type: options.type
-      || readAttr(element, 'fileType') || element.getAttribute('file-type')
-      || readAttr(element, 'type') || element.getAttribute('type')
-      || cardFileTypeFromName(filename),
+    // #1119 -- John: "why are you keeping file-type? get rid of it. use only
+    // filenames." #1117 derived the icon from the filename but kept
+    // `fileType` as an override, which left two ways to say one thing -- and
+    // the override is what let an example contradict itself (#1113: "WHY ARE
+    // THERE TWO FILETYPES"). The filename decides, full stop: no fileType,
+    // file-type or type attribute is read. A name the table cannot classify
+    // gets the generic file icon, which is the honest answer.
+    type: cardFileTypeFromName(filename),
     size: readOption(element, options, 'size'),
     date: readOption(element, options, 'date'),
     downloadable: readDefaultOnFlag(element, options, 'downloadable'),
