@@ -97,8 +97,11 @@ test.describe('Issues page', () => {
     await expect(now.locator('.issue-now')).toHaveText('● Working on it now');
     await expect(page.locator('.issues-row').first()).toHaveAttribute('number', '517');
     await expect(page.locator('.issues-row[number="515"]')).not.toHaveClass(/issues-row--now/);
-    const bg = await now.evaluate((el) => getComputedStyle(el).boxShadow);
-    expect(bg, 'a green bar marks the row').toMatch(/inset/);
+    // #1485: polled, not read once -- the row gets its class before the page's
+    // stylesheet has necessarily applied, and a single read on a slow runner
+    // saw no bar yet.
+    await expect.poll(() => now.evaluate((el) => getComputedStyle(el).boxShadow),
+      { message: 'a green bar marks the row' }).toMatch(/inset/);
 
     // ...and says what is happening now, what is next, and when it was said.
     const note = now.locator('.issue-now-note');
