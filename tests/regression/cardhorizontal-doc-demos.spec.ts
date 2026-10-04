@@ -1,5 +1,7 @@
 import { test, expect, Page, Locator } from '../fixtures/offline';
 import { demoWidthsSettled } from '../base';
+import fs from 'node:fs';
+import path from 'node:path';
 
 /**
  * docs/behaviors/cardhorizontal.md: John asked for unit tests on
@@ -47,7 +49,25 @@ import { demoWidthsSettled } from '../base';
 
 const DOC_FILE = 'docs/behaviors/cardhorizontal.md';
 const DOC_URL = `/public/doc-viewer.html?file=${encodeURIComponent(DOC_FILE)}`;
-const EXPECTED_DEMO_COUNT = 5;
+
+/**
+ * #1196: this was a hard-coded 5. When 4.0.0 regenerated the doc down to two
+ * examples, every test here died at the count wait, all five were filed as
+ * known failures, and the spec tested nothing for weeks. The count is read
+ * from the doc: live x-cardhorizontal markup outside code fences.
+ */
+function liveCardCount(): number {
+  const md = fs.readFileSync(path.join(process.cwd(), DOC_FILE), 'utf8');
+  const prose = md.replace(/^(```|~~~)[\s\S]*?^\1/gm, '');
+  return (prose.match(/<[a-z][a-z0-9-]*\s[^>]*?\bx-cardhorizontal\b/g) || []).length;
+}
+const EXPECTED_DEMO_COUNT = liveCardCount();
+// The tests below cover five claims by position; fewer demos means the doc
+// lost one of them, which must fail here with that message, not as a timeout.
+test.beforeAll(() => {
+  expect(EXPECTED_DEMO_COUNT, `${DOC_FILE} must keep a live demo for each of the five claims tested here`)
+    .toBeGreaterThanOrEqual(5);
+});
 
 async function gotoDoc(page: Page): Promise<void> {
   await page.goto(DOC_URL, { waitUntil: 'domcontentloaded' });
