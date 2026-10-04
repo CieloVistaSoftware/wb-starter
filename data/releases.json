@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.208",
+      "date": "2026-10-04",
+      "summary": "Test: cardhorizontal spec counts demos from the doc (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1424\" target=\"_blank\" rel=\"noopener\">PR 1424</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1196\" target=\"_blank\" rel=\"noopener\">#1196</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Cardhorizontal doc spec reads its demo count from the doc</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1196\" target=\"_blank\" rel=\"noopener\">#1196</a>",
+          "issues": [
+            1196
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.207",
       "date": "2026-10-04",
       "summary": "Fix: drop the schema builder&#39;s dead wb- tag handling (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1423\" target=\"_blank\" rel=\"noopener\">PR 1423</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1170\" target=\"_blank\" rel=\"noopener\">#1170</a>",
