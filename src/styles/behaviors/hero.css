@@ -567,3 +567,41 @@ x-cardhero.x-cardhero--full-height, [x-cardhero].x-cardhero--full-height{
   min-height: 100vh;
   min-height: 100svh;
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+   variant="cosmic" (hero.schema.json variant enum) -- deep space with nebula.
+
+   #1222: these rules lived only in x-signature.css, which nothing loads, so
+   the variant looked like the default hero -- and because the runtime adds a
+   declared modifier only when a loaded stylesheet defines it, the
+   .x-hero--cosmic class was never even applied. They live here now, in the
+   file behavior-css-manifest.js loads with the hero behavior, and stand on
+   their own: the ::before layer is positioned here rather than by
+   x-signature.css's base hero rules, and every colour comes from the theme
+   (--hue-primary), so the space-black end no longer hardcodes #0a0a0f.
+   `.x-hero.x-hero--cosmic` (0,2,0), placed after it, outranks the default
+   `[x-hero]:not([data-variant])` gradient above (0,2,0) by order; a bare
+   `.x-hero--cosmic` (0,1,0) lost to it.
+   ───────────────────────────────────────────────────────────────────── */
+.x-hero.x-hero--cosmic {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at bottom, hsla(var(--hue-primary), 60%, 12%, 1) 0%, hsla(var(--hue-primary), 30%, 4%, 1) 100%);
+  color: var(--text-on-accent);
+}
+
+.x-hero.x-hero--cosmic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0px, transparent 40%),
+    radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0px, transparent 40%),
+    radial-gradient(at 50% 50%, hsla(var(--hue-primary), calc(var(--saturation-primary) * 1%), calc(var(--lightness-primary) * 1%), 0.2) 0px, transparent 50%);
+}
+
+.x-hero.x-hero--cosmic > * {
+  position: relative;
+  z-index: 1;
+}
