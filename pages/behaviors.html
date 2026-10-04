@@ -2076,6 +2076,9 @@
         if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^(?:\.{1,2}\/|\/)/, '');
         if (src) out.push(` src="${src}"`);
       }
+      // #1154: a radio's variant colours its checked dot and nothing else, so
+      // an unchecked example of every variant looks the same. Show it checked.
+      if (behavior === 'radio') out.push(' checked');
       return out.join('');
     }
     function generatedExample(attr, variant, label, prop, isBool) {

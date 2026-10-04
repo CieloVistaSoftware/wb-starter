@@ -11,18 +11,20 @@
   "properties": {
     "label": {
       "type": "string",
-      "description": "Read by radio().",
+      "description": "Text shown beside the radio; the radio is wrapped in a <label> so the text is clickable.",
       "default": "this is the label"
     },
     "variant": {
       "type": "string",
-      "description": "Read by radio().",
-      "default": "this is the variant"
+      "description": "Colour of the checked dot. default keeps the theme's primary colour.",
+      "enum": ["default", "success", "warning", "danger", "info"],
+      "default": "default"
     },
     "size": {
       "type": "string",
-      "description": "Read by radio().",
-      "default": "this is the size"
+      "description": "Size of the radio.",
+      "enum": ["sm", "md", "lg"],
+      "default": "md"
     }
   },
   "$view": [],
