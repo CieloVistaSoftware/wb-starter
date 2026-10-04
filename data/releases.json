@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.157",
+      "date": "2026-10-03",
+      "summary": "Test: a failing layout or stagelight test prints every navigation its page made (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1373\" target=\"_blank\" rel=\"noopener\">PR 1373</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A failing layout or stagelight test prints every navigation its page made</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+          "issues": [
+            1311
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.156",
       "date": "2026-10-03",
       "summary": "Fix: a file card&#39;s type comes from its filename, and nothing else (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1366\" target=\"_blank\" rel=\"noopener\">PR 1366</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1119\" target=\"_blank\" rel=\"noopener\">#1119</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1113\" target=\"_blank\" rel=\"noopener\">#1113</a>",
