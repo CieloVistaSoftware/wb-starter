@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.226",
+      "date": "2026-10-04",
+      "summary": "Fix: templates pass only keys their behavior declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1449\" target=\"_blank\" rel=\"noopener\">PR 1449</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1142\" target=\"_blank\" rel=\"noopener\">#1142</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Templates pass only keys their behavior declares</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1142\" target=\"_blank\" rel=\"noopener\">#1142</a>",
+          "issues": [
+            1142
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.225",
       "date": "2026-10-04",
       "summary": "Fix: delete the 20 dead WB-* tagName checks (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1448\" target=\"_blank\" rel=\"noopener\">PR 1448</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1068\" target=\"_blank\" rel=\"noopener\">#1068</a>",
