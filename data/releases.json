@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.204",
+      "date": "2026-10-04",
+      "summary": "Fix: scroll memory uses #siteBody (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1419\" target=\"_blank\" rel=\"noopener\">PR 1419</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1186\" target=\"_blank\" rel=\"noopener\">#1186</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Scroll memory saves and restores #siteBody, the real scroll container</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1186\" target=\"_blank\" rel=\"noopener\">#1186</a>",
+          "issues": [
+            1186
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.203",
       "date": "2026-10-04",
       "summary": "Test: guard the data-wb rejection&#39;s advice (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1415\" target=\"_blank\" rel=\"noopener\">PR 1415</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1192\" target=\"_blank\" rel=\"noopener\">#1192</a>",
