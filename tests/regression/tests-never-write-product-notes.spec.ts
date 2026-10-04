@@ -19,6 +19,10 @@ test('saving a note during a test run leaves data/notes.json byte-identical', as
   const before = fs.existsSync(PRODUCT) ? fs.readFileSync(PRODUCT) : null;
   const content = `Guard note for #1174 ${Date.now()}`;
   const res = await request.post('/api/notes/append', {
+    // Belt and braces: a server WITHOUT the #1174 gate (an older checkout)
+    // still skips issue creation for the test-harness Referer. This spec's
+    // first red run, against main, filed a real issue (#1409) without it.
+    headers: { Referer: '/demos/test-harness.html' },
     data: { note: { id: `note-1174-${Date.now()}`, page: 'test', content, createdAt: new Date().toISOString() } },
   });
   expect(res.ok()).toBe(true);
