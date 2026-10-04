@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.174",
+      "date": "2026-10-04",
+      "summary": "Fix: the duplicate-stage error was the test&#39;s own probe, written to the real log (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1380\" target=\"_blank\" rel=\"noopener\">PR 1380</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1033\" target=\"_blank\" rel=\"noopener\">#1033</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The mocking spec blocks the service worker</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1033\" target=\"_blank\" rel=\"noopener\">#1033</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a>",
+          "issues": [
+            1033,
+            1349
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The duplicate-stage error was this test&#39;s own probe, written to the real log</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1033\" target=\"_blank\" rel=\"noopener\">#1033</a>",
+          "issues": [
+            1033
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.173",
       "date": "2026-10-04",
       "summary": "Fix: failures leave evidence: a light trace per failure, every failed request logged (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1385\" target=\"_blank\" rel=\"noopener\">PR 1385</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1112\" target=\"_blank\" rel=\"noopener\">#1112</a>",
