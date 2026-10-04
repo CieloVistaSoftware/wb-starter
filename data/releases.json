@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.173",
+      "date": "2026-10-04",
+      "summary": "Fix: failures leave evidence: a light trace per failure, every failed request logged (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1385\" target=\"_blank\" rel=\"noopener\">PR 1385</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1112\" target=\"_blank\" rel=\"noopener\">#1112</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Shared-context specs opt out of the per-test trace; the guard holds them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1112\" target=\"_blank\" rel=\"noopener\">#1112</a>",
+          "issues": [
+            1112
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Failures leave evidence: a light trace per failure, every failed request logged</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1112\" target=\"_blank\" rel=\"noopener\">#1112</a>",
+          "issues": [
+            1112
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.172",
       "date": "2026-10-04",
       "summary": "The In Progress tab stops lying: status:in-progress finally has a release path (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1335\" target=\"_blank\" rel=\"noopener\">PR 1335</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1330\" target=\"_blank\" rel=\"noopener\">#1330</a>",
