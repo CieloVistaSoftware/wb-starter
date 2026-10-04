@@ -27,6 +27,10 @@ test('a failing test keeps its Playwright trace', () => {
   const mode = typeof trace === 'string' ? trace : trace?.mode;
   expect(mode, "trace is 'off': a failure would leave no requests, statuses or DOM snapshots").not.toBe('off');
   expect(['on', 'retain-on-failure', 'retain-on-first-failure']).toContain(mode);
+  // #1406: Playwright records the network only when snapshots are on; with
+  // them off the trace kept no URLs, the one thing #1112 needed it for.
+  const snapshots = typeof trace === 'string' ? true : trace?.snapshots !== false;
+  expect(snapshots, 'snapshots off means the trace records no network requests').toBe(true);
 });
 
 test('CI uploads the traces and the server log of a failed run', () => {

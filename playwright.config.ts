@@ -216,16 +216,21 @@ export default defineConfig({
     //   WB_TRACE=on npm run test:async -- <spec>
     // then: npx playwright show-trace test-results/<dir>/trace.zip
     //
-    // #1112: and by default every failing test now keeps a LIGHT trace --
-    // actions, network (every URL and status) and console, no DOM snapshots or
-    // screenshots. "Failed to load resource: ... 500 ()" names no URL; this
-    // trace does. The full trace was measured before choosing: retaining it
-    // for every test turned permutation-compliance from 156/156 in 383 s into
-    // 20 failures in the first 44, most of them "Tearing down context exceeded
-    // the test timeout" -- writing snapshots, not testing. WB_TRACE still
-    // selects the full trace for one run.
+    // #1112: and by default every failing test now keeps a trace -- actions,
+    // network (every URL and status), console and DOM snapshots; no
+    // screenshots or sources. "Failed to load resource: ... 500 ()" names no
+    // URL; this trace does. Measured on permutation-compliance (156 tests):
+    // off 383 s; everything on (screenshots + sources too) 20 failures in the
+    // first 44, "Tearing down context exceeded the test timeout"; this mode
+    // 156/156 in 353 s.
+    //
+    // #1406: snapshots stay ON. Playwright starts its network recorder only
+    // when snapshots are on (playwright-core tracing.js: `if
+    // (options.snapshots) this._harTracer.start(...)`), so the first version,
+    // snapshots off, kept a 0-byte network log -- no URLs at all.
+    // WB_TRACE still selects the full trace for one run.
     trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure')
-      || { mode: 'retain-on-failure', snapshots: false, screenshots: false, sources: false },
+      || { mode: 'retain-on-failure', snapshots: true, screenshots: false, sources: false },
     // #1362: no service worker unless a spec asks for one. A worker answers a
     // page's fetch before page.route sees it, so with 'allow' as the default
     // every new spec that mocks the network was born broken unless its author
