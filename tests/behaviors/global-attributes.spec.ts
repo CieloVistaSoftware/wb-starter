@@ -57,15 +57,27 @@ test.describe('Global Attributes', () => {
       '<button ripple>Click me</button>'
     );
 
-    // Click to trigger ripple
+    // #1480: the wave removes itself config.duration (~600ms) after it is
+    // created (ripple.js), so looking for it AFTER the click raced its own
+    // lifetime -- a slow CI runner checked after it was gone. Record its
+    // creation instead, with an observer armed before the click.
+    await element.evaluate((el) => {
+      (window as any).__waveSeen = false;
+      new MutationObserver((records) => {
+        for (const r of records) {
+          for (const n of r.addedNodes) {
+            // ripple.js (createRipple) creates a <span class="x-ripple__wave">,
+            // not ".x-ripple-effect" -- that class never existed (#354).
+            if (n instanceof Element && n.classList.contains('x-ripple__wave')) (window as any).__waveSeen = true;
+          }
+        }
+      }).observe(el, { childList: true, subtree: true });
+    });
+
     await element.click();
 
-    // Check for the ripple effect element that should be created.
-    // ripple.js (createRipple) creates a <span class="[x-ripple]__wave">, not
-    // ".x-ripple-effect" -- that class has never existed anywhere in the
-    // codebase; this assertion was stale (#354).
-    const rippleEffect = element.locator('.x-ripple__wave');
-    await expect(rippleEffect).toBeAttached();
+    await expect.poll(() => element.page().evaluate(() => (window as any).__waveSeen),
+      { message: 'clicking the ripple element never created an .x-ripple__wave' }).toBe(true);
   });
 
   test('badge global attribute applies badge styles', async ({ page }) => {
