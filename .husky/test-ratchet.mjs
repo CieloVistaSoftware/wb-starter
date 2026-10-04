@@ -54,6 +54,10 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
+// The `ws` package, not the global: CI runs this on Node 20, which has no
+// global WebSocket, so every inspector query failed there with "WebSocket is
+// not defined" and a stall report could name no running test (#1199).
+import WebSocket from 'ws';
 import { classifyFailure } from '../scripts/lib/server-down.mjs';
 import { NO_VERDICT_EXIT } from '../scripts/lib/gate-exit.mjs';
 import { claimFreePort } from '../scripts/lib/free-port.mjs';
