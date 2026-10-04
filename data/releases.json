@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.209",
+      "date": "2026-10-04",
+      "summary": "Fix: no catalogue entry for the renamed x-image (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1425\" target=\"_blank\" rel=\"noopener\">PR 1425</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1151\" target=\"_blank\" rel=\"noopener\">#1151</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Drop the x-image catalogue entry; catalogue keys must name registered behaviors</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1151\" target=\"_blank\" rel=\"noopener\">#1151</a>",
+          "issues": [
+            1151
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.208",
       "date": "2026-10-04",
       "summary": "Test: cardhorizontal spec counts demos from the doc (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1424\" target=\"_blank\" rel=\"noopener\">PR 1424</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1196\" target=\"_blank\" rel=\"noopener\">#1196</a>",
