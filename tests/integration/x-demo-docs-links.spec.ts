@@ -204,13 +204,17 @@ test.describe('[x-demo] Docs: links resolve to real docs (#262)', () => {
     page,
     baseURL,
   }) => {
+    test.setTimeout(120_000); // building ~280 cards, then resolving every badge's doc (#1412)
     await page.goto('/tests/fixtures/cards-permutation-matrix.html', { waitUntil: 'domcontentloaded' });
     await expect
       .poll(() => page.locator('[x-demo] .x-demo__grid').count(), { timeout: 30000 })
       .toBeGreaterThan(0);
+    // #1412: wait for the count asserted below, not for the first badge. The
+    // fixture eager-scans ~280 cards and badges appear as each demo builds, so
+    // reading right after the first one caught 11 of 65 on main CI.
     await expect
-      .poll(() => page.locator('.x-demo__card-doc-link').count(), { timeout: 30000 })
-      .toBeGreaterThan(0);
+      .poll(() => page.locator('.x-demo__card-doc-link').count(), { timeout: 60000 })
+      .toBeGreaterThanOrEqual(65);
     const links = await page.$$eval('.x-demo__card-doc-link', READ_LINKS);
     // Every one of the 65 <div x-demo> blocks on this page wraps a card, so this
     // must produce a real per-instance badge count, not just a nonzero one.

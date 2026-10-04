@@ -124,7 +124,10 @@ const SIGTERM_GRACE_MS = 30_000;
 // schema-viewer: its own project (playwright.config.ts), so no gate ran it and
 // it failed for every schema, unnoticed, until someone opened the page. Its
 // 29 tests take ~1 minute; a page nobody measures is a page that rots.
-const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer'];
+// integration (#1176): it ran in CI but only as a report, so a red
+// integration test could ship for weeks. Gated once it was measured green on
+// main (371 passed) and its one flake was fixed (#1412).
+const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer', 'integration'];
 
 /**
  * The gate's projects, narrowable by WB_GATE_PROJECTS (#1163).
