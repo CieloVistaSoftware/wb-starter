@@ -11281,7 +11281,7 @@
         "expect": {
           "hasClass": [
             "x-table",
-            "x-table--hoverable"
+            "x-table--hover"
           ]
         }
       },
@@ -11296,7 +11296,7 @@
             "x-table"
           ],
           "notHasClass": [
-            "x-table--hoverable"
+            "x-table--hover"
           ]
         }
       },
@@ -11386,7 +11386,7 @@
           "hasClass": [
             "x-table",
             "x-table--striped",
-            "x-table--hoverable",
+            "x-table--hover",
             "x-table--compact",
             "x-table--bordered"
           ]
