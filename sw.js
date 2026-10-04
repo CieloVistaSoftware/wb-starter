@@ -28,7 +28,18 @@ const STATIC_ASSETS = [
   BASE + 'config/site.json'
 ];
 
+// #1108: on a development origin this worker keeps NO cache. main.js no longer
+// registers it there and removes one an older build left behind -- but an
+// unregistered worker keeps controlling the page it already has until that
+// page is gone, and its fetch handler kept writing every response into
+// x-cache-v4 AFTER the cleanup had deleted it. CI caught it (the cache was
+// back within the same load). A worker that never writes a cache on localhost
+// cannot refill one. Fetches are still handled network-first, so the specs
+// that exercise this worker on localhost (503s, range requests) still run it.
+const DEVELOPMENT_ORIGIN = ['localhost', '127.0.0.1', '[::1]'].includes(self.location.hostname);
+
 self.addEventListener('install', event => {
+  if (DEVELOPMENT_ORIGIN) { event.waitUntil(self.skipWaiting()); return; }
   event.waitUntil(
     caches.open(CACHE_VERSION).then(cache => {
       return cache.addAll(STATIC_ASSETS).catch(() => {});
@@ -73,7 +84,7 @@ self.addEventListener('fetch', event => {
   // (offline) — the cache is never allowed to shadow a live response.
   event.respondWith(
     fetch(event.request).then(response => {
-      if (response.ok && response.status !== 206) {
+      if (response.ok && response.status !== 206 && !DEVELOPMENT_ORIGIN) {
         const clone = response.clone();
         caches.open(CACHE_VERSION)
           .then(cache => cache.put(event.request, clone))
