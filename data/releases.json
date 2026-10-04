@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.240",
+      "date": "2026-10-04",
+      "summary": "Test: one injectAndScan helper that waits on WB, not a clock (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1478\" target=\"_blank\" rel=\"noopener\">PR 1478</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/983\" target=\"_blank\" rel=\"noopener\">#983</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>One injectAndScan helper that waits on WB, not a clock</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/983\" target=\"_blank\" rel=\"noopener\">#983</a>",
+          "issues": [
+            983
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.239",
       "date": "2026-10-04",
       "summary": "Fix: a test server never live-reloads the pages it serves (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1475\" target=\"_blank\" rel=\"noopener\">PR 1475</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
