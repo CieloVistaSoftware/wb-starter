@@ -1561,6 +1561,10 @@
         }
         docCache.set(behavior, md);
       }
+      // #1488: the fetch above is async. If the reader picked another behavior
+      // meanwhile, that selection replaced the panel and owns it now -- writing
+      // here would put THIS doc under THAT behavior's name. Drop the render.
+      if (liveDocBody !== fresh) return;
       liveDoc.hidden = false;
       // #774: the qualified label ("Button Documentation") was right when
       // this panel sat alone at the BOTTOM of the column, far from anything
@@ -1584,8 +1588,8 @@
         // 116 of 143 behaviors with no .md the whole panel silently vanished --
         // indistinguishable from the feature being broken. Say so instead,
         // matching how the Events panel states its own empty case.
-        liveDocBody.className = 'behaviors-live__doc-body behaviors-live__doc-body--empty';
-        liveDocBody.textContent = 'No doc yet for ' + behavior + '.';
+        fresh.className = 'behaviors-live__doc-body behaviors-live__doc-body--empty';
+        fresh.textContent = 'No doc yet for ' + behavior + '.';
         return;
       }
 
@@ -1596,15 +1600,15 @@
       // the browser to have HTML-escaped the raw markdown first. Assigning raw
       // markdown via innerHTML double-escapes it (the pattern pages/issues.html
       // documents for the same reason).
-      liveDocBody.textContent = rootRelativeAssetsInMarkdown(md);
+      fresh.textContent = rootRelativeAssetsInMarkdown(md);
       try {
         const mod = await import(siteRoot() + 'src/core/wb-lazy.js');
         const WB = mod.default || mod.WB || window.WB;
         // autoLiveRender:false -- a doc that ILLUSTRATES a <wb-*> example must
         // not have that example promoted into a live, fetching element inside
         // this panel; the running example above is the live one.
-        if (WB && WB.inject) await WB.inject(liveDocBody, 'mdhtml', { autoLiveRender: false });
-        namespaceDocIds(liveDocBody);
+        if (WB && WB.inject) await WB.inject(fresh, 'mdhtml', { autoLiveRender: false });
+        namespaceDocIds(fresh);
       } catch (err) {
         console.warn('[behaviors] could not render doc for ' + behavior, err);
       }
