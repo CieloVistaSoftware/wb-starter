@@ -195,7 +195,7 @@ export function fullscreen(element, options = {}) {
   };
 
   element.classList.add('x-fullscreen');
-  
+
   // Make it VISIBLE!
   if (!element.textContent.trim()) {
     element.textContent = config.label;
@@ -220,19 +220,51 @@ export function fullscreen(element, options = {}) {
   // written back; removing a class restores whatever the target had.
   const TARGET_CLASS = 'x-fullscreen-target';
 
-  // Handle fullscreen change events to restore styles
-  const handleFullscreenChange = () => {
-    if (!document.fullscreenElement) {
-      // Exiting fullscreen - restore original styles
+  // #738 -- the label to go BACK to is whatever the button actually reads once
+  // it is wired, not the config default. A button with its own inner text
+  // ("Expand") keeps it; config.label would have silently replaced it with
+  // "Fullscreen" the first time anyone left fullscreen.
+  const IDLE_LABEL = element.textContent;
+  const EXIT_LABEL = '✕ Exit Fullscreen';
+
+  // #738 -- the ONE question this behavior is allowed to ask about state.
+  // Not "did the request resolve", not "what did I last write on the button":
+  // is this target the document's fullscreen element, right now.
+  const isFullscreen = () => !!targetEl && document.fullscreenElement === targetEl;
+
+  // #738 -- John, with a screenshot of the button reading "Exit Fullscreen":
+  // "neither fullscreen or exit work". One cause for both halves. The label
+  // used to be written from the REQUEST'S OUTCOME, so any resolve that did not
+  // actually put the target in the top layer left the button reading "Exit"
+  // while document.fullscreenElement was null -- and the exit branch is gated
+  // on document.fullscreenElement, so the next click took the ENTER branch
+  // again. Exit became unreachable, which from the outside is "neither works".
+  //
+  // The label is now derived, never decided. Both branches live here, so the
+  // button cannot drift from the browser however the state changed -- the
+  // button, Escape, or the browser's own chrome. Idempotent on purpose: it is
+  // safe to call from the event and again from the request's verification.
+  const syncToFullscreenState = () => {
+    if (isFullscreen()) {
+      targetEl.classList.add(TARGET_CLASS);
+      element.textContent = EXIT_LABEL;
+    } else {
       if (targetEl) targetEl.classList.remove(TARGET_CLASS);
-      element.textContent = '⛶ Fullscreen';
+      element.textContent = IDLE_LABEL;
     }
   };
-  
-  document.addEventListener('fullscreenchange', handleFullscreenChange);
-  
+
+  // Escape (and the browser's own exit chrome) fire `fullscreenchange` with no
+  // click at all. A label managed inside the click handler goes out of sync the
+  // first time anyone presses it, which is why this is the only writer.
+  document.addEventListener('fullscreenchange', syncToFullscreenState);
+
   element.onclick = () => {
-    if (document.fullscreenElement) {
+    // Gated on the TARGET, not on "something is fullscreen": the action the
+    // button takes has to be the action its label is offering. If some other
+    // element holds fullscreen, this button still reads "Fullscreen" and must
+    // request -- not exit a panel it never opened.
+    if (isFullscreen()) {
       document.exitFullscreen();
       return;
     }
@@ -261,8 +293,20 @@ export function fullscreen(element, options = {}) {
 
     Promise.resolve(request)
       .then(() => {
-        targetEl.classList.add(TARGET_CLASS);
-        element.textContent = '✕ Exit Fullscreen';
+        // #738 -- RESOLVING IS NOT BEING FULLSCREEN. Per spec the
+        // `fullscreenchange` event fires before this promise settles, so a
+        // genuine grant has already been picked up by the listener above and
+        // this is a verification step, not the thing that applies the state.
+        // A resolve with the target NOT in the top layer is the exact case
+        // that produced a lying button: say so, and leave the button and the
+        // target reading the truth instead of the request's say-so.
+        if (!isFullscreen()) {
+          console.error(
+            '[WB:fullscreen] request resolved but the target is not the fullscreen element',
+            JSON.stringify(config.target)
+          );
+        }
+        syncToFullscreenState();
       })
       .catch((err) => {
         // Nothing was changed, so there is nothing to undo -- but SAY why.
@@ -270,13 +314,12 @@ export function fullscreen(element, options = {}) {
         // permissions policy" and "this element cannot be fullscreened", and
         // swallowing it left the reader with no way to tell them apart.
         console.error(`[WB:fullscreen] request rejected: ${err && err.name}: ${err && err.message}`);
-        targetEl.classList.remove(TARGET_CLASS);
-        element.textContent = config.label;
+        syncToFullscreenState();
       });
   };
 
   return () => {
-    document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    document.removeEventListener('fullscreenchange', syncToFullscreenState);
     if (targetEl) targetEl.classList.remove(TARGET_CLASS);
     element.classList.remove('x-fullscreen');
   };
