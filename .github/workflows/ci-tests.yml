@@ -55,7 +55,8 @@ jobs:
   #
   # The gated projects run the SAME ratchet as before, narrowed to one project
   # with WB_GATE_PROJECTS (#1163): same register, same reporters, same worker
-  # count. integration and base are still reported, not enforced (#1044).
+  # count. base is still reported, not enforced (#1044); integration is gated
+  # since #1176.
   # fail-fast: false, or the first red category would cancel the rest and
   # leave them unmeasured, which is the #1044 skipped-steps defect again.
   test:
@@ -68,7 +69,7 @@ jobs:
           - { project: regression, gated: true }
           - { project: behaviors, gated: true }
           - { project: schema-viewer, gated: true }
-          - { project: integration, gated: false }
+          - { project: integration, gated: true }
           - { project: base, gated: false }
     # #1218 -- John: "the only reason Linux is a part is that it's what you
     # use internally." The site is built, served and shipped from Windows, so
@@ -190,7 +191,7 @@ jobs:
         run: node .husky/test-ratchet.mjs
         continue-on-error: false
 
-      # integration and base are NOT in the ratchet's project list, so no
+      # base is NOT in the ratchet's project list (integration is, since #1176), so no
       # baseline exists for them and neither gate has ever measured them — the
       # steps above were skipped on every run. Reported, not enforced, until
       # they have a register of their own: enforcing an unmeasured project would

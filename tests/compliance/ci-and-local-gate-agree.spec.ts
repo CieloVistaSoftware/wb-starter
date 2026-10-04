@@ -281,12 +281,14 @@ test.describe('CI runs one check per test category', () => {
   const matrixRow = (project: string) =>
     new RegExp(`-\\s*\\{\\s*project:\\s*${project},\\s*gated:\\s*(true|false)\\s*\\}`).exec(ci)?.[1];
 
-  test('every gated project is its own gated job, and integration and base are reported', () => {
+  test('every gated project is its own gated job, and base is reported', () => {
     expect(GATED.length, `${RATCHET} ALL_PROJECTS could not be read`).toBeGreaterThan(0);
     for (const project of GATED) {
       expect(matrixRow(project), `${CI} has no gated matrix job for ${project}`).toBe('true');
     }
-    for (const project of ['integration', 'base']) {
+    // integration is gated since #1176 (it is in ALL_PROJECTS above).
+    expect(GATED, 'integration must be gated (#1176)').toContain('integration');
+    for (const project of ['base']) {
       expect(matrixRow(project), `${CI} has no report job for ${project}`).toBe('false');
     }
   });
