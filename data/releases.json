@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.235",
+      "date": "2026-10-04",
+      "summary": "Fix: every appliesClass names a class that is applied and styled (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1469\" target=\"_blank\" rel=\"noopener\">PR 1469</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1429\" target=\"_blank\" rel=\"noopener\">#1429</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Every appliesClass names a class the behavior adds and a stylesheet styles</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1429\" target=\"_blank\" rel=\"noopener\">#1429</a>",
+          "issues": [
+            1429
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.234",
       "date": "2026-10-04",
       "summary": "Test: renderVariant waits for the picked example to apply (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1460\" target=\"_blank\" rel=\"noopener\">PR 1460</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1457\" target=\"_blank\" rel=\"noopener\">#1457</a>",
