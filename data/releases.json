@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.171",
+      "date": "2026-10-04",
+      "summary": "Fix: the registries spec waits for the list to fill, not its first row; one guard for the rule (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1391\" target=\"_blank\" rel=\"noopener\">PR 1391</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1390\" target=\"_blank\" rel=\"noopener\">#1390</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The registries spec waits for the list to fill, not its first row; one guard for the rule</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1390\" target=\"_blank\" rel=\"noopener\">#1390</a>",
+          "issues": [
+            1390
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.170",
       "date": "2026-10-04",
       "summary": "Fix: table options read through readFlag/readAttr, docs match the schema (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1354\" target=\"_blank\" rel=\"noopener\">PR 1354</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1344\" target=\"_blank\" rel=\"noopener\">#1344</a>",
