@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.177",
+      "date": "2026-10-04",
+      "summary": "Fix: a commit on an issue branch must cite that issue (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1395\" target=\"_blank\" rel=\"noopener\">PR 1395</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A commit on an issue branch must cite that issue</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",
+          "issues": [
+            1336
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.176",
       "date": "2026-10-04",
       "summary": "Fix: error entries outlive their page; duplicate-id reports locate each copy (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1394\" target=\"_blank\" rel=\"noopener\">PR 1394</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1340\" target=\"_blank\" rel=\"noopener\">#1340</a>",
