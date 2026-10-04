@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
+import { isLegacySyntaxFixture } from '../utils/legacy-syntax-fixtures';
 
 /**
  * COMPLIANCE GATE: demo files must use plain v3 attributes, not deprecated
@@ -30,23 +31,11 @@ import * as path from 'path';
  */
 const ROOT = process.cwd();
 const ALLOWED = new Set<string>(['data-theme', 'data-code-width', 'data-x-expected-errors']);
-// Demos that intentionally contain legacy syntax to verify it still works,
-// or whose data-* usage isn't WB behavior config at all (#321 follow-up):
-//   - wizard.html: marked obsolete (#337, wizard.spec.ts fully skipped) --
-//     its data-tab is the wizard's own vanilla-JS tab switcher, not a WB
-//     behavior attribute, and the page isn't taught as a live syntax
-//     example anymore.
-//   - registry-browser.html: data-label is a plain CSS attr() responsive-
-//     table label (`content: attr(data-label)`), never read by any WB
-//     behavior -- unrelated to the deprecated-config-syntax this gate
-//     exists to catch.
-//   - wb-views-demo.html: data-wbv-for / data-wbv-template / data-wbv-no-autocode
-//     are read by that page's OWN vanilla script (details.dataset.wbvTemplate,
-//     details.dataset.wbvFor, hasAttribute('data-wbv-no-autocode')) on plain
-//     <details> / <example-block> elements. No WB behavior reads them, so they
-//     teach nobody deprecated WB config syntax -- same category as wizard.html's
-//     data-tab and registry-browser.html's data-label (#697).
-const EXCLUDE = new Set<string>(['legacy-syntax-check.html', 'wizard.html', 'registry-browser.html', 'wb-views-demo.html']);
+// The demo that contains legacy syntax on purpose is exempt by PATH, from
+// tests/utils/legacy-syntax-fixtures.ts (#1173). This used to be a set of
+// bare file names, so it also covered any other file with the same name.
+// wizard.html, registry-browser.html and wb-views-demo.html were on it too
+// (#321, #337, #697); none of them exists in the repo any more.
 const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
 
 function walk(dir: string, out: string[]): void {
@@ -56,7 +45,7 @@ function walk(dir: string, out: string[]): void {
     if (SKIP_DIRS.has(e.name)) continue;
     const abs = path.join(dir, e.name);
     if (e.isDirectory()) walk(abs, out);
-    else if (e.name.endsWith('.html') && !EXCLUDE.has(e.name)) out.push(path.relative(ROOT, abs).replace(/\\/g, '/'));
+    else if (e.name.endsWith('.html') && !isLegacySyntaxFixture(path.relative(ROOT, abs))) out.push(path.relative(ROOT, abs).replace(/\\/g, '/'));
   }
 }
 
