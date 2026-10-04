@@ -1955,8 +1955,10 @@ img { max-width: 100%; height: auto; }
    shape and still scales with the width -- and it is what img.js already
    sets once it runs; this makes the same thing true before or without it.
    A browser without typed attr() drops the declaration and keeps today's
-   natural-ratio behavior. */
-img[width][height] {
+   natural-ratio behavior. An explicit aspect-ratio="" still wins: img.js
+   applies it, so this rule leaves those images alone, and :where() keeps its
+   weight (0,1,1) under img.js's generated rules. */
+img:where([width][height]):not([aspect-ratio]) {
   aspect-ratio: attr(width type(<number>)) / attr(height type(<number>));
   object-fit: cover;
 }
