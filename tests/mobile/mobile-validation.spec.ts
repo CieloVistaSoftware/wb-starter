@@ -53,11 +53,12 @@ test('every validated page exists', () => {
 // Takes full-page screenshots for visual review
 // ═══════════════════════════════════════════════════════════════
 for (const pg of PAGES) {
-  test(`screenshot: ${pg.title}`, async ({ page }) => {
-    // A full-page capture in WebKit on the Windows CI runner took longer than
-    // the default 30s for Home (the first CI run of the iPhone project, #1432);
-    // locally it is a few seconds. The test measures nothing about time.
-    test.setTimeout(90_000);
+  test(`screenshot: ${pg.title}`, async ({ page, browserName }) => {
+    // A full-page WebKit capture of Home never finished on the Windows CI
+    // runner -- the screenshot call itself hit its 30s timeout twice (#1432),
+    // while locally it takes a few seconds. These captures are for visual
+    // review, so WebKit takes the viewport and Chromium the full page.
+    const fullPage = browserName !== 'webkit';
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
     await page.waitForTimeout(1500); // let animations/lazy-load settle
 
@@ -68,7 +69,7 @@ for (const pg of PAGES) {
     // first -- and measuring the height first races a page still growing, so
     // the limit itself decides: past it, the capture is viewport height.
     try {
-      await page.screenshot({ path: screenshotPath, fullPage: true, animations: 'disabled' });
+      await page.screenshot({ path: screenshotPath, fullPage, animations: 'disabled' });
     } catch (err) {
       if (!/larger than 32767 pixels/.test(String(err))) throw err;
       await page.screenshot({ path: screenshotPath, animations: 'disabled' });
