@@ -153,7 +153,6 @@
     "tests/compliance/proposed-css-architecture.spec.ts": 1,
     "tests/compliance/schema-validation.spec.ts": 1,
     "tests/compliance/source-schema-compliance.spec.ts": 2,
-    "tests/compliance/stock-indicator-spacing.spec.ts": 2,
     "tests/compliance/terminology-wb-starter.spec.ts": 1,
     "tests/compliance/terminology.spec.ts": 1,
     "tests/regression/article-code.spec.ts": 3,

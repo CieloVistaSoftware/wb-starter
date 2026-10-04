@@ -36,7 +36,6 @@ const SITE_CSS = 'src/styles/site.css';
  * belongs in the manifest instead.
  */
 const INTENTIONALLY_UNREACHABLE: Record<string, string> = {
-  'stock.css': 'confirmed orphaned — no behavior, tag or markup anywhere references .x-stock',
   'enhancements.css': 'holds the inline styles of src/wb-viewmodels/enhancements.js, a legacy module nothing imports (#779) — its behaviors live in their own modules',
 };
 

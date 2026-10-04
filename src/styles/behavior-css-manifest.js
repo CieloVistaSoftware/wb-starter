@@ -21,8 +21,6 @@
  * duplication, not a mistake to fix here) — both must load together.
  *
  * Intentionally NOT in this manifest:
- *   - stock.css: confirmed orphaned — no behavior, tag, or markup anywhere
- *     in the repo references `.x-stock`/`data-wb="stock"`.
  *   - layout.css, ui-utils.css: kept as unconditional imports in site.css
  *     (see the comment there) rather than JIT-loaded — both are small
  *     (<1.5KB) and layout.css's real content (.x-grid--alt-rows) is needed

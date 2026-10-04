@@ -7,8 +7,8 @@
  * called from WB.inject()'s single dispatch point right before a behavior
  * first runs — see src/styles/behavior-css-manifest.js for the full
  * behaviorName -> file mapping and the reasoning behind what's excluded
- * (stock.css: confirmed orphaned, zero references anywhere in the repo;
- * modal.css was dead too and is deleted, #1190).
+ * (modal.css and stock.css styled behaviors that no longer exist and are
+ * deleted, #1190 and #1172).
  *
  * layout.css and ui-utils.css stay here as unconditional imports: both are
  * under 1.5KB, and layout.css's real content (.x-grid--alt-rows) backs

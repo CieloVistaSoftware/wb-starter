@@ -50,7 +50,6 @@ These files already exist in `src/styles/behaviors/`:
 | `details.css` | 1.5 KB | Details/accordion |
 | `footer.css` | 1.4 KB | Site footer |
 | `audio.css` | 11.7 KB | Audio player |
-| `stock.css` | 0.6 KB | Stock ticker |
 | **Total** | **48.5 KB** | **10 behavior groups** |
 
 ---
