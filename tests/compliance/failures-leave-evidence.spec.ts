@@ -36,6 +36,29 @@ test('CI uploads the traces and the server log of a failed run', () => {
   expect(ci, 'data/test-results (which holds server.log) is not uploaded').toMatch(/path:\s*data\/test-results\//);
 });
 
+test('a spec that shares one browser context across tests opts out of the per-test trace', () => {
+  // Playwright stops a context's trace at the end of EACH test; a context built
+  // once in beforeAll and shared fails the second test with "Tracing is already
+  // stopping" (PR #1385's CI: five sweep specs, every test, in milliseconds).
+  const dir = path.join(ROOT, 'tests');
+  const specs: string[] = [];
+  const walk = (d: string) => {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.spec.ts')) specs.push(p);
+    }
+  };
+  walk(dir);
+  const missing = specs.filter((f) => {
+    const s = fs.readFileSync(f, 'utf8');
+    const shares = /beforeAll\s*\(/.test(s) && /\b(newOfflinePage|newOfflineContext|browser\.newContext|browser\.newPage)\s*\(/.test(s);
+    return shares && !/test\.use\(\{\s*trace:/.test(s);
+  }).map((f) => path.relative(ROOT, f));
+  expect(specs.length).toBeGreaterThan(100);
+  expect(missing, 'shared-context specs without a trace opt-out').toEqual([]);
+});
+
 function freePort(): Promise<number> {
   return new Promise((resolve) => {
     const s = net.createServer().listen(0, () => { const p = (s.address() as net.AddressInfo).port; s.close(() => resolve(p)); });
@@ -43,6 +66,11 @@ function freePort(): Promise<number> {
 }
 
 test.describe('the server logs every failed response', () => {
+  // One server for the block. In parallel mode each test ran beforeAll in its
+  // own worker and spawned its own server; under load one did not answer
+  // inside the 30 s default and the test failed on startup, not on the log.
+  test.describe.configure({ mode: 'serial' });
+  test.setTimeout(90_000);
   let server: ChildProcess | null = null;
   let out = '';
   let base = '';
