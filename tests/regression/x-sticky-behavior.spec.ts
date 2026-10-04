@@ -115,8 +115,23 @@ async function scrollPastAndSettle(page, locator, extra = 400) {
  */
 async function topWithinContainingBlock(locator) {
   return locator.evaluate((el) => {
-    const cb = el.closest('.x-demo__grid') || document.documentElement;
-    return el.getBoundingClientRect().top - cb.getBoundingClientRect().top;
+    // #1495: the REAL containing block of a position:fixed element -- the
+    // nearest ancestor that establishes one (contain layout/paint, a
+    // transform/filter/perspective, will-change of those), else the viewport.
+    // It used to be `.x-demo__grid || document.documentElement`: before x-demo
+    // had wrapped its content in the grid, the fallback was the DOCUMENT, whose
+    // top sits at -scrollY, so a correctly stuck element measured the scroll
+    // distance (CI: 5889).
+    const makesBlock = (n: Element) => {
+      const cs = getComputedStyle(n);
+      return /\b(layout|paint|strict|content)\b/.test(cs.contain)
+        || cs.transform !== 'none' || cs.filter !== 'none' || cs.perspective !== 'none'
+        || /\b(transform|filter|perspective)\b/.test(cs.willChange);
+    };
+    let cb: Element | null = el.parentElement;
+    while (cb && cb !== document.documentElement && !makesBlock(cb)) cb = cb.parentElement;
+    const cbTop = cb && cb !== document.documentElement ? cb.getBoundingClientRect().top : 0;
+    return el.getBoundingClientRect().top - cbTop;
   });
 }
 
