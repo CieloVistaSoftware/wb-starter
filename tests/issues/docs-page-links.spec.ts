@@ -70,15 +70,17 @@ test.describe('Docs Page Links', () => {
     const pageLinks = page.locator('.docs-card[href*="/pages/"]');
     const count = await pageLinks.count();
 
-    if (count > 0) {
-      // Check first link
-      const firstLink = pageLinks.first();
-      const href = await firstLink.getAttribute('href');
-      console.log(`First page link href: ${href}`);
+    // #1092: page links come only from docs/manifest.json entries with a "page"
+    // key, and today there are none. Report SKIPPED, not a vacuous PASS.
+    test.skip(count === 0, 'docs/manifest.json has no "page" entries, so the docs page renders no page links');
 
-      // Verify href format
-      expect(href).toMatch(/^\/pages\/.+\.html$/);
-    }
+    // Check first link
+    const firstLink = pageLinks.first();
+    const href = await firstLink.getAttribute('href');
+    console.log(`First page link href: ${href}`);
+
+    // Verify href format
+    expect(href).toMatch(/^\/pages\/.+\.html$/);
   });
 
   test('search input exists and is functional', async ({ page }) => {

@@ -26,6 +26,10 @@
  * reads what renders in the live panel -- the same authored example a reader
  * sees. showBehavior() fails if the behavior has no row, so a block cannot
  * silently measure nothing again.
+ *
+ * #1092: showBehavior() proves the ROW exists, not that the example rendered
+ * the part a test measures. Each test now asserts its subject is present before
+ * measuring it, instead of an if() that skipped every expect() and passed.
  */
 
 import { test, expect } from '../fixtures/offline';
@@ -47,42 +51,45 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     test('drawer-layout should have [x-drawer-layout] class', async ({ page }) => {
       await showBehavior(page, 'x-drawer-layout');
       const dl = page.locator(`${EX} [x-drawer-layout]`).first();
-      if (await dl.count() > 0) {
-        await expect(dl).toHaveClass(/x-drawer-layout/);
+      // #1092: the example must render a [x-drawer-layout] element to check
+      expect(await dl.count(), 'the x-drawer-layout example renders no [x-drawer-layout] element').toBeGreaterThan(0);
+      await expect(dl).toHaveClass(/x-drawer-layout/);
+    });
+
+    // #1092: these three named a demo that no longer exists
+    // (.x-drawer-layout__content, .x-drawer-layout__toggle, "Main Content"),
+    // so behind their if() guards they had checked nothing since it went. The
+    // example is now <aside x-drawer-layout> holding its own <nav> links, and
+    // the toggle layouts.js creates is .x-drawer-toggle (layouts.js drawerLayout).
+    test('drawer links are not cut off by the drawer', async ({ page }) => {
+      await showBehavior(page, 'x-drawer-layout');
+      const drawer = page.locator(`${EX} [x-drawer-layout]`).first();
+      const links = drawer.locator('a');
+      expect(await links.count(), 'the x-drawer-layout example has no links in its drawer').toBeGreaterThan(0);
+      const dBox = await drawer.boundingBox();
+      expect(dBox, 'the drawer has no layout box (not displayed)').not.toBeNull();
+      for (const link of await links.all()) {
+        const box = await link.boundingBox();
+        expect(box, 'a drawer link has no layout box').not.toBeNull();
+        expect(box!.width, 'a drawer link collapsed to zero width').toBeGreaterThan(0);
+        expect(box!.x + box!.width, 'a drawer link runs past the drawer edge').toBeLessThanOrEqual(dBox!.x + dBox!.width + 1);
       }
     });
 
-    test('drawer text should not be cut off', async ({ page }) => {
+    test('drawer toggle button does not overlap the drawer links', async ({ page }) => {
       await showBehavior(page, 'x-drawer-layout');
-      const main = page.locator(`${EX} [x-drawer-layout] .x-drawer-layout__content`).first();
-      if (await main.count() > 0) {
-        const box = await main.boundingBox();
-        expect(box).not.toBeNull();
-        if (box) expect(box.width).toBeGreaterThan(100);
-      }
-    });
-
-    test('drawer toggle button should not overlap content text', async ({ page }) => {
-      await showBehavior(page, 'x-drawer-layout');
-      const toggle = page.locator(`${EX} [x-drawer-layout] .x-drawer-layout__toggle`).first();
-      const content = page.locator(`${EX} [x-drawer-layout] .x-drawer-layout__content`).first();
-      if (await toggle.count() > 0 && await content.count() > 0) {
-        const tBox = await toggle.boundingBox();
-        const cBox = await content.boundingBox();
-        if (tBox && cBox) {
-          // Toggle should not overlap content text area
-          expect(tBox.x + tBox.width).toBeLessThanOrEqual(cBox.x + 5);
-        }
-      }
-    });
-
-    test('"Main Content" text should be fully visible', async ({ page }) => {
-      await showBehavior(page, 'x-drawer-layout');
-      const main = page.locator(EX).getByText('Main Content').first();
-      if (await main.count() > 0) {
-        await expect(main).toBeVisible();
-        const box = await main.boundingBox();
-        expect(box).not.toBeNull();
+      const toggle = page.locator(`${EX} .x-drawer-toggle`).first();
+      expect(await toggle.count(), 'x-drawer-layout created no .x-drawer-toggle').toBeGreaterThan(0);
+      const tBox = await toggle.boundingBox();
+      expect(tBox, '.x-drawer-toggle has no layout box (not displayed)').not.toBeNull();
+      const links = page.locator(`${EX} [x-drawer-layout] a`);
+      expect(await links.count(), 'the x-drawer-layout example has no links in its drawer').toBeGreaterThan(0);
+      for (const link of await links.all()) {
+        const b = await link.boundingBox();
+        expect(b, 'a drawer link has no layout box').not.toBeNull();
+        const overlaps = tBox!.x < b!.x + b!.width && b!.x < tBox!.x + tBox!.width
+          && tBox!.y < b!.y + b!.height && b!.y < tBox!.y + tBox!.height;
+        expect(overlaps, `the toggle covers the link "${await link.textContent()}"`).toBe(false);
       }
     });
   });
@@ -93,17 +100,17 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     test('dropdown should have [x-dropdown] class', async ({ page }) => {
       await showBehavior(page, 'x-dropdown');
       const dd = page.locator(`${EX} [x-dropdown]`).first();
-      if (await dd.count() > 0) {
-        await expect(dd).toHaveClass(/x-dropdown/);
-      }
+      // #1092: the example must render a [x-dropdown] element to check
+      expect(await dd.count(), 'the x-dropdown example renders no [x-dropdown] element').toBeGreaterThan(0);
+      await expect(dd).toHaveClass(/x-dropdown/);
     });
 
     test('dropdown should create a trigger button', async ({ page }) => {
       await showBehavior(page, 'x-dropdown');
       const trigger = page.locator(`${EX} .x-dropdown__trigger`).first();
-      if (await trigger.count() > 0) {
-        await expect(trigger).toBeVisible();
-      }
+      // #1092: creating the trigger IS the claim; its absence must fail
+      expect(await trigger.count(), 'x-dropdown created no .x-dropdown__trigger').toBeGreaterThan(0);
+      await expect(trigger).toBeVisible();
     });
 
     test('dropdown should create a menu container', async ({ page }) => {
@@ -115,32 +122,33 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     test('dropdown menu should be hidden initially', async ({ page }) => {
       await showBehavior(page, 'x-dropdown');
       const menu = page.locator(`${EX} .x-dropdown__menu`).first();
-      if (await menu.count() > 0) {
-        await expect(menu).not.toBeVisible();
-      }
+      // #1092: a missing menu is not a hidden menu
+      expect(await menu.count(), 'x-dropdown created no .x-dropdown__menu').toBeGreaterThan(0);
+      await expect(menu).not.toBeVisible();
     });
 
     test('dropdown should NOT show raw links without trigger', async ({ page }) => {
       await showBehavior(page, 'x-dropdown');
       // If dropdown is working, raw <a> children should be inside a menu, not loose
       const dd = page.locator(`${EX} [x-dropdown]`).first();
-      if (await dd.count() > 0) {
-        const directLinks = await dd.evaluate(el => {
-          return Array.from(el.children).filter(c => c.tagName === 'A' && !c.closest('.x-dropdown__menu')).length;
-        });
-        expect(directLinks).toBe(0);
-      }
+      // #1092: no [x-dropdown] element means zero loose links for the wrong reason
+      expect(await dd.count(), 'the x-dropdown example renders no [x-dropdown] element').toBeGreaterThan(0);
+      const directLinks = await dd.evaluate(el => {
+        return Array.from(el.children).filter(c => c.tagName === 'A' && !c.closest('.x-dropdown__menu')).length;
+      });
+      expect(directLinks).toBe(0);
     });
 
     test('clicking dropdown trigger should open menu', async ({ page }) => {
       await showBehavior(page, 'x-dropdown');
       const trigger = page.locator(`${EX} .x-dropdown__trigger`).first();
       const menu = page.locator(`${EX} .x-dropdown__menu`).first();
-      if (await trigger.count() > 0 && await menu.count() > 0) {
-        await trigger.click();
-        await page.waitForTimeout(300);
-        await expect(menu).toBeVisible();
-      }
+      // #1092: both the trigger and the menu must exist to test opening
+      expect(await trigger.count(), 'x-dropdown created no .x-dropdown__trigger').toBeGreaterThan(0);
+      expect(await menu.count(), 'x-dropdown created no .x-dropdown__menu').toBeGreaterThan(0);
+      await trigger.click();
+      await page.waitForTimeout(300);
+      await expect(menu).toBeVisible();
     });
   });
 
@@ -150,36 +158,36 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     test('toggle button should have visible background color', async ({ page }) => {
       await showBehavior(page, 'x-toggle');
       const toggle = page.locator(`${EX} [x-toggle]`).first();
-      if (await toggle.count() > 0) {
-        const bg = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
-        // Should not be transparent or white-on-white
-        expect(bg).not.toBe('rgba(0, 0, 0, 0)');
-      }
+      // #1092: the example must render a [x-toggle] element to measure
+      expect(await toggle.count(), 'the x-toggle example renders no [x-toggle] element').toBeGreaterThan(0);
+      const bg = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
+      // Should not be transparent or white-on-white
+      expect(bg).not.toBe('rgba(0, 0, 0, 0)');
     });
 
     test('toggle button should maintain styling after click', async ({ page }) => {
       await showBehavior(page, 'x-toggle');
       const toggle = page.locator(`${EX} [x-toggle]`).first();
-      if (await toggle.count() > 0) {
-        const bgBefore = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
-        await toggle.click();
-        await page.waitForTimeout(300);
-        const bgAfter = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
-        // Background should still be a real color (not transparent)
-        expect(bgAfter).not.toBe('rgba(0, 0, 0, 0)');
-      }
+      // #1092: the example must render a [x-toggle] element to click
+      expect(await toggle.count(), 'the x-toggle example renders no [x-toggle] element').toBeGreaterThan(0);
+      const bgBefore = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
+      await toggle.click();
+      await page.waitForTimeout(300);
+      const bgAfter = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
+      // Background should still be a real color (not transparent)
+      expect(bgAfter).not.toBe('rgba(0, 0, 0, 0)');
     });
 
     test('toggle button text should be visible (not white on white)', async ({ page }) => {
       await showBehavior(page, 'x-toggle');
       const toggle = page.locator(`${EX} [x-toggle]`).first();
-      if (await toggle.count() > 0) {
-        const { color, bg } = await toggle.evaluate(el => {
-          const s = window.getComputedStyle(el);
-          return { color: s.color, bg: s.backgroundColor };
-        });
-        expect(color).not.toBe(bg);
-      }
+      // #1092: the example must render a [x-toggle] element to measure
+      expect(await toggle.count(), 'the x-toggle example renders no [x-toggle] element').toBeGreaterThan(0);
+      const { color, bg } = await toggle.evaluate(el => {
+        const s = window.getComputedStyle(el);
+        return { color: s.color, bg: s.backgroundColor };
+      });
+      expect(color).not.toBe(bg);
     });
   });
 
@@ -189,39 +197,39 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     test('masonry should have [x-masonry] class', async ({ page }) => {
       await showBehavior(page, 'x-masonry');
       const m = page.locator(`${EX} [x-masonry]`).first();
-      if (await m.count() > 0) {
-        await expect(m).toHaveClass(/x-masonry/);
-      }
+      // #1092: the example must render a [x-masonry] element to check
+      expect(await m.count(), 'the x-masonry example renders no [x-masonry] element').toBeGreaterThan(0);
+      await expect(m).toHaveClass(/x-masonry/);
     });
 
     test('masonry should have column-count CSS applied', async ({ page }) => {
       await showBehavior(page, 'x-masonry');
       const m = page.locator(`${EX} .x-masonry`).first();
-      if (await m.count() > 0) {
-        const cc = await m.evaluate(el => window.getComputedStyle(el).columnCount);
-        expect(parseInt(cc)).toBeGreaterThanOrEqual(2);
-      }
+      // #1092: no .x-masonry element means the behavior never applied its class
+      expect(await m.count(), 'the x-masonry example has no .x-masonry element').toBeGreaterThan(0);
+      const cc = await m.evaluate(el => window.getComputedStyle(el).columnCount);
+      expect(parseInt(cc)).toBeGreaterThanOrEqual(2);
     });
 
     test('masonry children should have break-inside: avoid', async ({ page }) => {
       await showBehavior(page, 'x-masonry');
       const child = page.locator(`${EX} .x-masonry > *`).first();
-      if (await child.count() > 0) {
-        const bi = await child.evaluate(el => window.getComputedStyle(el).breakInside);
-        expect(bi).toBe('avoid');
-      }
+      // #1092: there must be a masonry item to measure
+      expect(await child.count(), 'the x-masonry example has no .x-masonry items').toBeGreaterThan(0);
+      const bi = await child.evaluate(el => window.getComputedStyle(el).breakInside);
+      expect(bi).toBe('avoid');
     });
 
     test('masonry items should be distributed across columns', async ({ page }) => {
       await showBehavior(page, 'x-masonry');
       const children = page.locator(`${EX} .x-masonry > *`);
-      if (await children.count() >= 2) {
-        const positions = await children.evaluateAll(els =>
-          els.slice(0, 4).map(el => el.getBoundingClientRect().left)
-        );
-        const unique = new Set(positions.map(p => Math.round(p)));
-        expect(unique.size).toBeGreaterThanOrEqual(2);
-      }
+      // #1092: distribution across columns needs at least two items
+      expect(await children.count(), 'the x-masonry example has fewer than 2 .x-masonry items').toBeGreaterThanOrEqual(2);
+      const positions = await children.evaluateAll(els =>
+        els.slice(0, 4).map(el => el.getBoundingClientRect().left)
+      );
+      const unique = new Set(positions.map(p => Math.round(p)));
+      expect(unique.size).toBeGreaterThanOrEqual(2);
     });
   });
 
@@ -231,38 +239,38 @@ test.describe('Behaviors Showcase Visual Tests', () => {
     test('tabs should have [x-tabs] class', async ({ page }) => {
       await showBehavior(page, 'x-tabs');
       const tabs = page.locator(`${EX} [x-tabs]`).first();
-      if (await tabs.count() > 0) {
-        await expect(tabs).toHaveClass(/x-tabs/);
-      }
+      // #1092: the example must render a [x-tabs] element to check
+      expect(await tabs.count(), 'the x-tabs example renders no [x-tabs] element').toBeGreaterThan(0);
+      await expect(tabs).toHaveClass(/x-tabs/);
     });
 
     test('tab buttons should have reasonable height/padding', async ({ page }) => {
       await showBehavior(page, 'x-tabs');
       const btn = page.locator(`${EX} .x-tabs__nav button`).first();
-      if (await btn.count() > 0) {
-        const h = await btn.evaluate(el => el.getBoundingClientRect().height);
-        expect(h).toBeLessThanOrEqual(60);
-        expect(h).toBeGreaterThanOrEqual(24);
-      }
+      // #1092: there must be a tab button to measure
+      expect(await btn.count(), 'x-tabs created no .x-tabs__nav button').toBeGreaterThan(0);
+      const h = await btn.evaluate(el => el.getBoundingClientRect().height);
+      expect(h).toBeLessThanOrEqual(60);
+      expect(h).toBeGreaterThanOrEqual(24);
     });
 
     test('tabs navigation should exist', async ({ page }) => {
       await showBehavior(page, 'x-tabs');
       const nav = page.locator(`${EX} .x-tabs__nav`).first();
-      if (await nav.count() > 0) {
-        await expect(nav).toBeVisible();
-      }
+      // #1092: existence IS the claim; its absence must fail
+      expect(await nav.count(), 'x-tabs created no .x-tabs__nav').toBeGreaterThan(0);
+      await expect(nav).toBeVisible();
     });
 
     test('clicking tab should switch content', async ({ page }) => {
       await showBehavior(page, 'x-tabs');
       const buttons = page.locator(`${EX} .x-tabs__nav button`);
-      if (await buttons.count() >= 2) {
-        await buttons.nth(1).click();
-        await page.waitForTimeout(300);
-        const active = await buttons.nth(1).getAttribute('aria-selected');
-        expect(active).toBe('true');
-      }
+      // #1092: switching needs at least two tabs
+      expect(await buttons.count(), 'x-tabs created fewer than 2 .x-tabs__nav buttons').toBeGreaterThanOrEqual(2);
+      await buttons.nth(1).click();
+      await page.waitForTimeout(300);
+      const active = await buttons.nth(1).getAttribute('aria-selected');
+      expect(active).toBe('true');
     });
   });
 
@@ -273,6 +281,8 @@ test.describe('Behaviors Showcase Visual Tests', () => {
       await showBehavior(page, 'x-mdhtml');
       const codeBlocks = page.locator(`${EX} pre, ${EX} code, ${EX} [x-mdhtml]`);
       const count = await codeBlocks.count();
+      // #1092: an empty loop finds no overflow; require blocks to scan
+      expect(count, 'the x-mdhtml example renders no code blocks to scan').toBeGreaterThan(0);
 
       const overflows: string[] = [];
       for (let i = 0; i < Math.min(10, count); i++) {
@@ -333,29 +343,19 @@ test.describe('Behaviors Showcase Visual Tests', () => {
 
   // ── Known Issues Detection ─────────────────────────────────────────────
 
-  test('KNOWN ISSUE: drawer-layout toggle overlaps text', async ({ page }) => {
-    await showBehavior(page, 'x-drawer-layout');
-    const toggle = page.locator(`${EX} .x-drawer-layout__toggle`).first();
-    const content = page.locator(`${EX} .x-drawer-layout__content p`).first();
-    if (await toggle.count() > 0 && await content.count() > 0) {
-      const tBox = await toggle.boundingBox();
-      const cBox = await content.boundingBox();
-      if (tBox && cBox) {
-        expect(tBox.x + tBox.width).toBeLessThanOrEqual(cBox.x + 2);
-      }
-    }
-  });
+  // #1092: "KNOWN ISSUE: drawer-layout toggle overlaps text" duplicated the
+  // Drawer Layout overlap test above against the same vanished demo; removed.
 
   test('KNOWN ISSUE: toggle button loses styling', async ({ page }) => {
     await showBehavior(page, 'x-toggle');
     const toggle = page.locator(`${EX} [x-toggle]`).first();
-    if (await toggle.count() > 0) {
-      await toggle.click();
-      await page.waitForTimeout(300);
-      const bg = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
-      // Should NOT become black or transparent after click
-      expect(bg).not.toBe('rgb(0, 0, 0)');
-      expect(bg).not.toBe('rgba(0, 0, 0, 0)');
-    }
+    // #1092: the example must render a [x-toggle] element to click
+    expect(await toggle.count(), 'the x-toggle example renders no [x-toggle] element').toBeGreaterThan(0);
+    await toggle.click();
+    await page.waitForTimeout(300);
+    const bg = await toggle.evaluate(el => window.getComputedStyle(el).backgroundColor);
+    // Should NOT become black or transparent after click
+    expect(bg).not.toBe('rgb(0, 0, 0)');
+    expect(bg).not.toBe('rgba(0, 0, 0, 0)');
   });
 });

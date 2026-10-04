@@ -179,9 +179,10 @@ test.describe('Badge — Sizes', () => {
 
     const xsBox = await page.locator('#sz-xs').boundingBox();
     const lgBox = await page.locator('#sz-lg').boundingBox();
-    if (xsBox && lgBox) {
-      expect(lgBox.height).toBeGreaterThanOrEqual(xsBox.height);
-    }
+    // #1092: an unrendered badge has no box, and the old if() then PASSED.
+    expect(xsBox, 'the XS badge rendered no layout box').not.toBeNull();
+    expect(lgBox, 'the LG badge rendered no layout box').not.toBeNull();
+    expect(lgBox!.height).toBeGreaterThanOrEqual(xsBox!.height);
   });
 });
 
