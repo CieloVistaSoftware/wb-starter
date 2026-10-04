@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.141",
+      "date": "2026-10-03",
+      "summary": "Test: a schema with no $view keeps the author&#39;s live children (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1339\" target=\"_blank\" rel=\"noopener\">PR 1339</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1149\" target=\"_blank\" rel=\"noopener\">#1149</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A schema with no $view keeps the author&#39;s live children</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1149\" target=\"_blank\" rel=\"noopener\">#1149</a>",
+          "issues": [
+            1149
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.140",
+      "date": "2026-10-03",
+      "summary": "Fix: &quot;test fixture&quot; means a fixture caused it, not that a test server served the page (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1322\" target=\"_blank\" rel=\"noopener\">PR 1322</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1032\" target=\"_blank\" rel=\"noopener\">#1032</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Check testServer against the page&#39;s own port, not an assumed ephemeral one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1032\" target=\"_blank\" rel=\"noopener\">#1032</a>",
+          "issues": [
+            1032
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>&quot;test fixture&quot; now means a fixture caused it, not that a test server served the page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1032\" target=\"_blank\" rel=\"noopener\">#1032</a>",
+          "issues": [
+            1032
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.139",
       "date": "2026-10-03",
       "summary": "Fix: the Issues activity spec can run -- its mock reaches the page, and its link exists (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1348\" target=\"_blank\" rel=\"noopener\">PR 1348</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
