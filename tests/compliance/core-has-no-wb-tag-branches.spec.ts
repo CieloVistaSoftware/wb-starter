@@ -25,17 +25,27 @@ function codeFiles(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-test('src/core has no branch or key for a wb- tag (#1170)', () => {
-  const files = codeFiles(path.join(process.cwd(), 'src', 'core'));
-  expect(files.length, 'the scan found src/core').toBeGreaterThan(20);
-  const hits: string[] = [];
-  for (const file of files) {
-    fs.readFileSync(file, 'utf8').split(/\r?\n/).forEach((line, i) => {
-      if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
-      for (const [what, re] of DEAD_FORMS) {
-        if (re.test(line)) hits.push(`${path.relative(process.cwd(), file).split(path.sep).join('/')}:${i + 1} ${what}`);
-      }
-    });
-  }
-  expect(hits, 'dead wb- tag handling in src/core').toEqual([]);
-});
+// #1422: the same leftovers lived in src/wb-viewmodels -- an uppercase
+// tagName test (startsWith('WB-')) and a regex that harvested wb- tags from
+// demo source -- so both directories are scanned, for both spellings.
+DEAD_FORMS.push(
+  ['branches on an uppercase WB- tagName', /startsWith\(\s*['"]WB-['"]\s*\)/],
+  ['matches a wb- tag with a regex', /\/<wb-/],
+);
+
+for (const dir of ['src/core', 'src/wb-viewmodels']) {
+  test(`${dir} has no branch or key for a wb- tag (#1170, #1422)`, () => {
+    const files = codeFiles(path.join(process.cwd(), ...dir.split('/')));
+    expect(files.length, `the scan found ${dir}`).toBeGreaterThan(20);
+    const hits: string[] = [];
+    for (const file of files) {
+      fs.readFileSync(file, 'utf8').split(/\r?\n/).forEach((line, i) => {
+        if (/^\s*(\/\/|\*|\/\*)/.test(line)) return;
+        for (const [what, re] of DEAD_FORMS) {
+          if (re.test(line)) hits.push(`${path.relative(process.cwd(), file).split(path.sep).join('/')}:${i + 1} ${what}`);
+        }
+      });
+    }
+    expect(hits, `dead wb- tag handling in ${dir}`).toEqual([]);
+  });
+}
