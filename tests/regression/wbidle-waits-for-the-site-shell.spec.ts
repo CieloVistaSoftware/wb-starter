@@ -34,6 +34,20 @@ test('wbIdle() returns only after the site shell has booted (#1466)', async ({ p
   expect(state.navItems, 'the nav had no items when wbIdle() returned').toBeGreaterThan(0);
 });
 
+test('a nested #app is content, not the site shell (#1490)', async ({ page }) => {
+  // mdhtml rendered a fetched index.html into the harness, nesting its
+  // <div id="app"> inside the test container; wbIdle waited 15s for WBSite.
+  await page.goto('/demos/test-harness.html');
+  await page.evaluate(() => {
+    const host = document.createElement('div');
+    host.innerHTML = '<div id="app" class="site">rendered content, not the shell</div>';
+    document.body.appendChild(host);
+  });
+  const t0 = Date.now();
+  await wbIdle(page, { timeout: 15000 });
+  expect(Date.now() - t0, 'wbIdle waited for a site boot on a page that has no site shell').toBeLessThan(10000);
+});
+
 test('wbIdle() on a page without the site shell does not wait for one (#1466)', async ({ page }) => {
   await page.goto('/demos/test-harness.html');
   const t0 = Date.now();
