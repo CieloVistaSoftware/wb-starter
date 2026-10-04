@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.186",
+      "date": "2026-10-04",
+      "summary": "Fix: publish the behaviors example generator after its tag map, not before (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1338\" target=\"_blank\" rel=\"noopener\">PR 1338</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The example generator is published after its tag map, not before</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a>",
+          "issues": [
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.185",
+      "date": "2026-10-04",
+      "summary": "Take main out of the red: the guard spec was mocking nothing (a service worker answered first) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1351\" target=\"_blank\" rel=\"noopener\">PR 1351</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Mock the issue list too, and assert the nav target exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1118
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.184",
       "date": "2026-10-04",
       "summary": "Fix: a gate stall names the test that is running, and stops listing dead inspector sessions (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1326\" target=\"_blank\" rel=\"noopener\">PR 1326</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1199\" target=\"_blank\" rel=\"noopener\">#1199</a>",
