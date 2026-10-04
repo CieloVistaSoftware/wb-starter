@@ -16,6 +16,16 @@ const CASES = [
 for (const { runtime, url } of CASES) {
   test(`${runtime}: <span x-chip x-ignore> stays a plain span; <span x-chip> becomes a chip`, async ({ page }) => {
     test.setTimeout(60_000);
+    // #1442: on some CI runs the page navigated after init and this evaluate
+    // died with "Execution context was destroyed"; the trace showed no second
+    // document request and nothing reproduces locally. Every main-frame
+    // navigation and load is recorded, so a recurrence names its cause in the
+    // failure message instead of leaving a guess. Evidence only: no retry.
+    const t0 = Date.now();
+    const navigations: string[] = [];
+    page.on('framenavigated', (f) => { if (f === page.mainFrame()) navigations.push(`+${Date.now() - t0}ms navigated ${f.url()}`); });
+    page.on('load', () => navigations.push(`+${Date.now() - t0}ms load`));
+    page.on('console', (m) => navigations.push(`+${Date.now() - t0}ms console.${m.type()} ${m.text().slice(0, 120)}`));
     await page.goto(url);
     await page.waitForFunction(() => typeof (window as any).WB?.scan === 'function', null, { timeout: 30_000 });
     const result = await page.evaluate(async () => {
@@ -35,6 +45,8 @@ for (const { runtime, url } of CASES) {
       };
       host.remove();
       return out;
+    }).catch((err: Error) => {
+      throw new Error(`${err.message}\n\nWhat the page did (#1442):\n${navigations.join('\n')}\nurl now: ${page.url()}`);
     });
     expect(result.controlIsChip, 'control: the chip behavior must apply at all, or this test proves nothing').toBe(true);
     expect(result.ignoredClasses, 'x-ignore must keep the chip behavior off').not.toContain('x-chip');
