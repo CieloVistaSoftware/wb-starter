@@ -20,7 +20,7 @@
  * completely fine while the site was broken; only the request tells the truth.
  */
 
-import { test, expect } from '../fixtures/offline';
+import { test, expect, type Page } from '../fixtures/offline';
 import { readFileSync } from 'node:fs';
 
 import { mountUnderSubPath, PREFIX } from '../helpers/sub-path';
@@ -35,16 +35,18 @@ function referencesAnAsset(value: unknown): boolean {
   return false;
 }
 
-test('behaviour examples load their assets when the site is served under a sub-path', async ({ page, baseURL }) => {
-  // One page load plus every asset-bearing row, each through a prefix-stripping
-  // proxy. #1056 merged the second behaviour registry into the page, so ~39 more
-  // rows now EXIST to be found and clicked — rows this test was silently
-  // skipping before, because the page could not list them. The work grew for a
-  // good reason and test.slow()'s 90s stopped being enough; the budget follows
-  // the coverage rather than the coverage being trimmed to fit the budget.
-  test.setTimeout(240_000);
-  const mount = await mountUnderSubPath(baseURL!);
+// Which rows to exercise is DERIVED, never listed. The first version of this
+// test hand-listed nine behaviours and PASSED -- while the deployed site was
+// still 404ing on every x-cardportfolio row, because that name was not on the
+// list. Any catalogue entry whose example references a root-absolute asset is
+// a row that must be checked, forever, including ones added tomorrow.
+const ASSET_ROWS: string[] = Object.entries(
+  JSON.parse(readFileSync(new URL('../../data/behavior-examples.json', import.meta.url), 'utf8')).examples as Record<string, unknown>,
+).filter(([, entry]) => referencesAnAsset(entry)).map(([token]) => token);
 
+/** Load the behaviors page through the sub-path proxy, collecting every 404. */
+async function openUnderSubPath(page: Page, baseURL: string) {
+  const mount = await mountUnderSubPath(baseURL);
   const notFound: string[] = [];
   page.on('response', (r) => {
     if (r.status() !== 404) return;
@@ -54,91 +56,93 @@ test('behaviour examples load their assets when the site is served under a sub-p
     if (/favicon/i.test(r.url())) return;
     notFound.push(r.url());
   });
+  await page.goto(mount.base + '?page=behaviors', { waitUntil: 'domcontentloaded' });
+  await page.waitForSelector('.behaviors-search-results__row', { timeout: 20_000 });
+  return { mount, notFound };
+}
 
+// #1482: this was ONE serial sweep over every row in a single 240s budget,
+// and the work grows with the catalogue (#1056 added ~39 rows; the budget had
+// already been raised from 90s once). On a slow CI runner it ran out of time
+// with nothing wrong. Now each row is its own test with its own budget, and
+// the 300ms sleep after each click is a wait for the picked example to apply.
+test('the catalogue still has asset-bearing rows, and the page lists them (#1047, #1482)', async ({ page, baseURL }) => {
+  expect(
+    ASSET_ROWS.length,
+    'No catalogue entry was found to reference an asset. The DERIVATION is broken, ' +
+    'which would silently reduce these tests to checking nothing.',
+  ).toBeGreaterThan(5);
+  const { mount } = await openUnderSubPath(page, baseURL!);
   try {
-    await page.goto(mount.base + '?page=behaviors', { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('.behaviors-search-results__row', { timeout: 20_000 });
-    await page.waitForTimeout(1000);
-
-    // Which rows to exercise is DERIVED, never listed. The first version of this
-    // test hand-listed nine behaviours and PASSED — while the deployed site was
-    // still 404ing on every x-cardportfolio row, because that name was not on
-    // the list. A gate whose coverage is a list someone typed is only as good as
-    // that person's memory, which is the same failure as the attribute
-    // allowlist this test exists to protect.
-    //
-    // So: any catalogue entry whose example references a root-absolute asset is
-    // a row that must be checked, forever, including ones added tomorrow.
-    const catalogue = JSON.parse(
-      readFileSync(new URL('../../data/behavior-examples.json', import.meta.url), 'utf8'),
-    );
-    const assetRows = Object.entries(catalogue.examples as Record<string, unknown>)
-      .filter(([, entry]) => referencesAnAsset(entry))
-      .map(([token]) => token);
-
+    const listed: string[] = await page.evaluate(() =>
+      [...document.querySelectorAll('.behaviors-search-results__token')].map((s) => (s.textContent || '').trim()));
+    const missing = ASSET_ROWS.filter((t) => !listed.includes(t));
+    // A token with no row is skipped by its own test below, which is correct
+    // for one -- but if MOST had no row, these tests would check almost nothing.
     expect(
-      assetRows.length,
-      'No catalogue entry was found to reference an asset. The DERIVATION is broken, ' +
-      'which would silently reduce this test to checking nothing.',
-    ).toBeGreaterThan(5);
-
-    const exercised: string[] = [];
-    for (const token of assetRows) {
-      const hit = await page.evaluate((t) => {
-        const span = [...document.querySelectorAll('.behaviors-search-results__token')]
-          .find((s) => (s.textContent || '').trim() === t);
-        if (!span) return false;
-        (span.closest('button') as HTMLElement | null)?.click();
-        return true;
-      }, token);
-      if (hit) {
-        exercised.push(token);
-        await page.waitForTimeout(300);
-      }
-    }
-
-    // A token with no matching row is skipped silently, which is correct —
-    // but if MOST of them were skipped, this test clicked almost nothing and
-    // would report green on the page's initial state alone. Say so instead.
-    expect(
-      exercised.length,
-      `Only ${exercised.length} of ${assetRows.length} asset-bearing behaviours had a row to click ` +
-      `(${assetRows.filter((t) => !exercised.includes(t)).join(', ')}). ` +
-      'Either the row markup changed or the catalogue and the page have drifted apart; ' +
-      'either way this test is no longer exercising what it claims to.',
-    ).toBeGreaterThanOrEqual(Math.ceil(assetRows.length * 0.7));
-
-    // Nothing rendered anywhere may point at the ORIGIN root.
-    const rootAbsolute = await page.evaluate((prefix) => {
-      const out: string[] = [];
-      const ATTRS = ['src', 'poster', 'image', 'avatar', 'cover', 'thumbnail', 'background', 'logo'];
-      document.querySelectorAll('*').forEach((e) => {
-        for (const a of ATTRS) {
-          const v = e.getAttribute(a);
-          if (!v) continue;
-          if (v.startsWith('/') && !v.startsWith('//') && !v.startsWith(prefix + '/')) {
-            out.push(`<${e.tagName.toLowerCase()} ${a}="${v.split('?')[0]}">`);
-          }
-        }
-      });
-      return [...new Set(out)];
-    }, PREFIX);
-
-    expect(
-      rootAbsolute,
-      'These resolve against the ORIGIN root, not the deployed sub-path, so they 404 for\n' +
-      'every visitor while looking correct on localhost. Re-root them through siteRoot().',
-    ).toEqual([]);
-
-    expect(
-      [...new Set(notFound)],
-      'Requests that 404 when the site is served under /wb-starter/ — exactly what the\n' +
-      'deployed site does. A green run at "/" proves nothing about this.',
-    ).toEqual([]);
+      ASSET_ROWS.length - missing.length,
+      `Only ${ASSET_ROWS.length - missing.length} of ${ASSET_ROWS.length} asset-bearing behaviours have a row ` +
+      `(${missing.join(', ')}). Either the row markup changed or the catalogue and the page have drifted apart.`,
+    ).toBeGreaterThanOrEqual(Math.ceil(ASSET_ROWS.length * 0.7));
   } finally {
     await mount.close();
   }
 });
+
+for (const token of ASSET_ROWS) {
+  test(`${token} loads its assets when the site is served under a sub-path (#1047)`, async ({ page, baseURL }) => {
+    const { mount, notFound } = await openUnderSubPath(page, baseURL!);
+    try {
+      const hit = await page.evaluate((t) => {
+        const span = [...document.querySelectorAll('.behaviors-search-results__token')]
+          .find((s) => (s.textContent || '').trim() === t);
+        if (!span) return false;
+        (window as any).__subpathPrevious = document.querySelector('#behaviors-live-example > *');
+        (span.closest('button') as HTMLElement | null)?.click();
+        return true;
+      }, token);
+      test.skip(!hit, `${token} has no row on the page (the coverage test above bounds how many may be missing)`);
+
+      // The picked example is in the panel and its behavior applied -- a
+      // signal, not the old 300ms guess (#1457's shape). An example that never
+      // applies still has its requests checked below.
+      await page.waitForFunction(() => {
+        const el = document.querySelector('#behaviors-live-example > *');
+        return !!el && el !== (window as any).__subpathPrevious && el.hasAttribute('x-ready');
+      }, null, { timeout: 15_000 }).catch(() => {});
+      await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15_000 })).catch(() => {});
+
+      // Nothing rendered anywhere may point at the ORIGIN root.
+      const rootAbsolute = await page.evaluate((prefix) => {
+        const out: string[] = [];
+        const ATTRS = ['src', 'poster', 'image', 'avatar', 'cover', 'thumbnail', 'background', 'logo'];
+        document.querySelectorAll('*').forEach((e) => {
+          for (const a of ATTRS) {
+            const v = e.getAttribute(a);
+            if (!v) continue;
+            if (v.startsWith('/') && !v.startsWith('//') && !v.startsWith(prefix + '/')) {
+              out.push(`<${e.tagName.toLowerCase()} ${a}="${v.split('?')[0]}">`);
+            }
+          }
+        });
+        return [...new Set(out)];
+      }, PREFIX);
+
+      expect(
+        rootAbsolute,
+        'These resolve against the ORIGIN root, not the deployed sub-path, so they 404 for\n' +
+        'every visitor while looking correct on localhost. Re-root them through siteRoot().',
+      ).toEqual([]);
+      expect(
+        [...new Set(notFound)],
+        'Requests that 404 when the site is served under /wb-starter/ -- exactly what the\n' +
+        'deployed site does. A green run at "/" proves nothing about this.',
+      ).toEqual([]);
+    } finally {
+      await mount.close();
+    }
+  });
+}
 
 /**
  * THE DOC PANEL IS A SECOND WAY THE SAME MARKUP REACHES THE PAGE
