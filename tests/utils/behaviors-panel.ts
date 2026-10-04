@@ -71,22 +71,35 @@ export async function renderVariant(page: Page, token: string, variant: string |
     { timeout: 15000 },
   ).catch(() => { /* fall through to the explicit assertion below */ });
 
-  const picked = await page.evaluate(({ t, v }) => {
+  const picked = await page.evaluate(({ t, v, root }) => {
     const row = [...document.querySelectorAll('.behaviors-search-results__row')]
       .find((r) => (r.getAttribute('data-label') === t || r.getAttribute('data-browse-token') === t)
                 && r.getAttribute('data-variant') === v) as HTMLElement | undefined;
     if (!row) return false;
+    // #1457: mark what is showing now, so the wait below cannot be satisfied
+    // by the previous variant's example while the new one is still coming.
+    (window as any).__rvPrevious = new Set(document.querySelectorAll(`${root} > *`));
     row.click();
     return true;
-  }, { t: token, v: variant });
+  }, { t: token, v: variant, root: EXAMPLE_ROOT });
 
   expect(picked, `no ${token} row with variant "${variant}" in the browse list`).toBe(true);
+  // #1457: wait for the example to be APPLIED, not merely present. This used
+  // to wait for "any child" and then sleep 250ms; on a starved CI runner the
+  // sleep ran out first and the variant specs measured raw, unstyled markup
+  // (x-alert info/success/warning read as one bare <div>). The root carries
+  // x-ready once WB has applied its behavior; WB.settled() then covers the
+  // work that application started (#962).
   await page.waitForFunction(
-    (sel) => !!document.querySelector(`${sel} > *`),
+    (sel) => {
+      const previous: Set<Element> = (window as any).__rvPrevious || new Set();
+      const el = document.querySelector(`${sel} > *`);
+      return !!el && !previous.has(el) && el.hasAttribute('x-ready');
+    },
     EXAMPLE_ROOT,
-    { timeout: 10000 },
+    { timeout: 15000 },
   );
-  await page.waitForTimeout(250);
+  await page.evaluate(() => (window as any).WB?.settled?.({ timeout: 15000 }));
 }
 
 /** The rendered example's root element — never a list row. */
