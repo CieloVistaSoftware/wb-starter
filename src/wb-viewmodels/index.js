@@ -387,6 +387,27 @@ export function getCacheStats() {
 // Export behaviorModules for WB.behaviors compatibility
 export { behaviorModules };
 
+/**
+ * The registry key a behavior name read from HTML refers to, or null.
+ *
+ * The HTML parser lowercases attribute names, so a camelCase key written as
+ * x-drawerLayout arrives as x-drawerlayout. Exact key first, then the key
+ * whose lowercase form matches. Used by behavior-markup.js (#1169) to decide
+ * whether markup reaches a behavior.
+ * @param {string} name - e.g. 'drawerlayout' (from x-drawerlayout) or 'ripple'
+ * @returns {string|null}
+ */
+const KEY_BY_LOWERCASE = new Map();
+for (const key of Object.keys(behaviorModules)) {
+  const lower = key.toLowerCase();
+  if (!KEY_BY_LOWERCASE.has(lower)) KEY_BY_LOWERCASE.set(lower, key);
+}
+export function resolveBehaviorName(name) {
+  if (typeof name !== 'string' || !name) return null;
+  if (Object.prototype.hasOwnProperty.call(behaviorModules, name)) return name;
+  return KEY_BY_LOWERCASE.get(name.toLowerCase()) || null;
+}
+
 // For backward compatibility - proxy object that lazy loads
 export const behaviors = new Proxy({}, {
   get(target, prop) {

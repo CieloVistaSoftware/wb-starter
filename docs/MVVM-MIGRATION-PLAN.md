@@ -41,7 +41,7 @@ Migrate all 41+ components to MVVM architecture using schema-driven DOM generati
 
 Users provide simple attribute values. The schema defines how those values become DOM structure. **Users should never need to know component internals.**
 
-```html
+```html-static
 <!-- ✅ CLEAN: User just sets values -->
 <div x-hero
   title="Explore"

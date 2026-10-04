@@ -77,7 +77,7 @@
 
 ### Cards (ALL variants)
 
-```html
+```html-static
 <!-- CORRECT -->
 <article>
   <header class="x-card__header">
@@ -98,7 +98,7 @@
 
 ### Modals/Dialogs
 
-```html
+```html-static
 <!-- CORRECT -->
 <dialog x-modal>
   <header class="x-modal__header">
@@ -120,7 +120,7 @@
 
 ### Navigation
 
-```html
+```html-static
 <!-- CORRECT -->
 <nav x-navbar>
   <ul>

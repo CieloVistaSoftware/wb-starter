@@ -35,7 +35,7 @@ We use a strict hierarchy: `Foundation > Themes > Behaviors`.
 
 **The Rule:** In HTML code examples and demos, every attribute gets its own line. No exceptions.
 
-```html
+```html-static
 <!-- ✅ Correct -->
 <button
   type="button"

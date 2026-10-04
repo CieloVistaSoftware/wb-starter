@@ -16,7 +16,7 @@ Users provide simple attribute values. The schema defines how those values becom
 
 ### The Principle
 
-```html
+```html-static
 <!-- ✅ CLEAN: User just sets values -->
 <div x-hero
   title="Explore the Universe"
@@ -192,7 +192,7 @@ These native attributes have meanings that **conflict** with typical behavior us
 > convention, not every shipped behavior. Tracked under #222 (docs-wide
 > attribute-naming audit).
 
-```html
+```html-static
 <!-- BAD: Creates browser tooltip, not a heading -->
 <div x-cardpricing title="Pro Plan">
   <!-- GOOD: Use 'heading' or behavior-specific name -->
@@ -203,7 +203,7 @@ These native attributes have meanings that **conflict** with typical behavior us
 **Why:** Native `title` creates a browser tooltip on hover. Using it for heading text causes unintended tooltips.
 
 ### ❌ `type` - DO NOT USE for variants
-```html
+```html-static
 <!-- BAD: Collides with input/button type -->
 <div x-alert type="warning">
   <!-- GOOD: Use 'variant' for styling variants -->
@@ -213,7 +213,7 @@ These native attributes have meanings that **conflict** with typical behavior us
 **Why:** Native `type` has specific meaning on `<input>`, `<button>`, `<script>`, `<style>`. Using it for variants causes confusion.
 
 ### ❌ `content` - AVOID
-```html
+```html-static
 <!-- BAD: Conflicts with meta content, CSS content -->
 <article content="Body text">
   <!-- GOOD: Use children or a specific attribute -->
@@ -231,7 +231,7 @@ These native attributes have meanings that **conflict** with typical behavior us
 ```
 
 ### ❌ `style` - DO NOT USE
-```html
+```html-static
 <!-- BAD: Conflicts with inline styles -->
 <article style="minimal">
   <!-- GOOD: Use 'variant' -->
@@ -239,7 +239,7 @@ These native attributes have meanings that **conflict** with typical behavior us
 ```
 
 ### ❌ `class` - DO NOT USE
-```html
+```html-static
 <!-- BAD: Conflicts with CSS classes -->
 <div x-cardnotification class="warning">
   <!-- GOOD: Use 'variant' -->
@@ -346,14 +346,14 @@ Use `data-*` attributes for complex data (arrays, objects, external sources):
 ```
 
 ### External Data
-```html
+```html-static
 <!-- Load from URL -->
 <table src="/api/users.json">
   <div src="/api/metrics.json">
 ```
 
 ### Embedded JSON (for large data)
-```html
+```html-static
 <table>
   <script type="application/json">
     {
@@ -427,7 +427,7 @@ dataset, so the authored spelling cannot miss.
 `aria-*` and `data-*` are HTML platform attributes and keep their dashes. This rule
 is about the ones we invent.
 
-```html
+```html-static
 <!-- ✅ CORRECT -->
 <div
   x-cardstats
@@ -463,7 +463,7 @@ is about the ones we invent.
 
 Boolean attributes follow HTML5 convention - **presence = true, absence = false**:
 
-```html
+```html-static
 <!-- ✅ CORRECT: Boolean present = true -->
 <div x-cardpricing featured> <!-- featured = true -->
   <div x-alert dismissible> <!-- dismissible = true -->
@@ -983,7 +983,7 @@ When adding new behaviors or attributes:
 
 ### Prohibited Patterns
 
-```html
+```html-static
 <!-- ❌ NEVER DO THIS -->
 <article title="Heading"> <!-- Use heading -->
   <div x-alert type="warning"> <!-- Use variant -->

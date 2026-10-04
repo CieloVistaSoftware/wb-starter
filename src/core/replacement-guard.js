@@ -22,8 +22,11 @@
 import { behaviorModules } from '../wb-viewmodels/index.js';
 import { logError } from './error-logger.js';
 
-/** Framework directives that are not behaviors. */
-const DIRECTIVES = new Set(['behavior', 'eager', 'hydrated', 'ignore', 'cloak']);
+/**
+ * Framework directives that are not behaviors. Exported so behavior-markup.js
+ * (#1169) reads the same list instead of keeping a second one.
+ */
+export const DIRECTIVES = new Set(['behavior', 'eager', 'hydrated', 'ignore', 'cloak']);
 
 /**
  * The family a behavior belongs to, DERIVED — never restated.

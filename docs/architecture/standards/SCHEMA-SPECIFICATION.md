@@ -203,7 +203,7 @@ Page schemas include test sections for layout validation:
 
 Users provide simple attribute values. The schema defines how those values become DOM structure. **Users should never need to know behavior internals.**
 
-```html
+```html-static
 <!-- ✅ CLEAN: User just sets values -->
 <div x-hero
   title="Explore"
@@ -582,7 +582,7 @@ Private: .wb-{behavior}__-{name}   ← Note the dash prefix
 ```
 
 **Rendered:**
-```html
+```html-static
 <article>
   <header class="x-card__header"> <!-- Public: stable -->
     <h3 class="x-card__title">Hello</h3> <!-- Public: stable -->

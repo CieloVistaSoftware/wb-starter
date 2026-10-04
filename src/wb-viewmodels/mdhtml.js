@@ -20,6 +20,7 @@ import { readOption } from '../core/read-attr.js';
  */
 import { logError } from '../core/error-logger.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
+import { isLiveExample, highlightLanguage } from '../core/behavior-markup.js';
 
 /**
  * Is the page going away?
@@ -492,14 +493,10 @@ export async function mdhtml(element, options = {}) {
     // read-only syntax-highlighted TEXT (the x-pre/x-code marking below
     // makes them look nice but never actually renders the component), so
     // a reader had to take the markup on faith instead of seeing it work.
-    // Only convert a block that's UNAMBIGUOUSLY real, renderable component
-    // markup -- language must be html, and it must contain at least one
-    // element that's either a <wb-*> tag or carries an x-* attribute (the
-    // two conventions WB.scan() actually dispatches on). A plain <div>/
-    // <table>/etc. structural example, or a non-html language block (js,
-    // bash, ...), is left as a normal read-only code sample -- converting
-    // those would either do nothing (no WB tag to enhance) or render
-    // unrelated markup as if it were a real demo.
+    // Only convert a block that reaches a behavior (isLiveExample(), #1169,
+    // below). A plain <div>/<p> structural example, a non-html block (js,
+    // bash, ...) or an html-static illustration (#1197) stays read-only
+    // text -- converting those would render markup as if it were a demo.
     //
     // demo.js's own code-panel generation falls back to the live element's
     // innerHTML when its page-source fetch can't find a match (expected
@@ -509,25 +506,19 @@ export async function mdhtml(element, options = {}) {
     if (config.autoLiveRender) element.querySelectorAll('pre > code').forEach(code => {
         const pre = code.parentElement;
         if (pre.closest('x-demo, [x-demo]')) return; // already inside a real x-demo block
-        const isHtmlLang = /\blanguage-html\b/.test(code.className) || (!code.className && /^\s*</.test(code.textContent || ''));
-        if (!isHtmlLang) return;
-
         const raw = code.textContent || '';
-        // Full-document boilerplate (a "here's how to set up your own
-        // index.html" illustration -- V3-GUIDE.md's own example, complete
-        // with <head><link href="src/styles/..."></head>) can contain a
-        // real <wb-*> tag deep inside without being a live-renderable
-        // SNIPPET itself. Setting that whole thing as innerHTML still
-        // parses and instantiates its <link>/<script> tags as real
-        // elements -- the browser fetches their href/src exactly as if
-        // they were genuine page resources, with paths that were only ever
-        // meant to be read as illustrative text now resolving (usually
-        // wrongly) against doc-viewer.html's own location. Confirmed live:
-        // V3-GUIDE.md's boilerplate <link href="src/styles/themes.css">
-        // 404'd at /public/src/styles/themes.css. Document-level tags are
-        // the unambiguous signal this is a whole-file illustration, not a
-        // component snippet.
-        if (/<\s*(!doctype|html|head|body)\b/i.test(raw)) return;
+        // #1169: ONE question -- does this fence reach a behavior? -- answered
+        // by isLiveExample() (src/core/behavior-markup.js) from the registries
+        // the runtime dispatches on: a semantic tag nativeMap maps (<article>,
+        // <details>, input[type="range"]), an x-{name} attribute whose behavior
+        // exists, a semantic property attribute (tooltip=, badge=). The local copy
+        // here keyed on "<wb-* tag or x-* attribute", so an example written the
+        // 4.x way, as plain semantic HTML, never went live. isLiveExample() also
+        // refuses a non-html language, a whole-document illustration (its
+        // <link>/<script> would load against the viewer's location: V3-GUIDE.md's
+        // themes.css 404) and an html-static illustration fence (#1197).
+        const language = (code.className.match(/\blanguage-([\w-]+)/) || [])[1] || (code.className ? '?' : '');
+        if (!isLiveExample({ language, source: raw })) return;
         let tpl;
         try {
             tpl = document.createElement('template');
@@ -535,12 +526,6 @@ export async function mdhtml(element, options = {}) {
         } catch (e) {
             return; // never break the doc over a malformed example
         }
-        const isRenderable = Array.from(tpl.content.querySelectorAll('*')).some(
-            // #1422: only x-* attributes; a wb- tag cannot exist since 4.0.0.
-            (el) => Array.from(el.attributes).some((a) => a.name.startsWith('x-'))
-        );
-        if (!isRenderable) return;
-
         // A content-free example still renders: the behavior fills itself in from
         // its schema and teaches what to set (teachByExample in wb-lazy). This
         // used to bail out here, leaving <div x-cardhero>…</div> as a code block
@@ -635,7 +620,16 @@ export async function mdhtml(element, options = {}) {
         // Check if it has a code block with language class
         const code = el.querySelector('code');
         if (code) {
-            // Extract language from class (e.g., "language-js")
+            // Extract language from class (e.g., "language-js").
+            //
+            // #1197: an illustration fence (html-static) is highlighted as the
+            // language it illustrates. The live-render pass has already refused
+            // it, so the class is swapped here for the highlighters that read it:
+            // pre/code below and hljs in the viewer, which knows no html-static.
+            const fenced = (code.className.match(/\blanguage-([\w-]+)/) || [])[1];
+            if (fenced && highlightLanguage(fenced) !== fenced) {
+                code.classList.replace(`language-${fenced}`, `language-${highlightLanguage(fenced)}`);
+            }
             const langMatch = code.className.match(/language-(\w+)/);
             if (langMatch) {
                 el.dataset.language = langMatch[1];

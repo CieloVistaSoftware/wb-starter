@@ -33,22 +33,23 @@ for real AND auto-generates the formatted code sample (with copy button) from it
 source of truth, always in sync, never a hand-typed sample that silently drifts from what
 actually renders.
 
-```html
-<!-- ❌ WRONG — static, never rendered, can drift from reality -->
+❌ **Wrong** — static, never rendered, can drift from reality:
 
+````html-static
 ```html
 <article title="Hello" variant="elevated">
   <p>It just works.</p>
 </article>
 ```
+````
 
-<!-- ✅ CORRECT — live, rendered, code sample auto-generated from the real markup -->
+✅ **Correct** — live, rendered, the code sample generated from the real markup:
+
 <div x-demo>
 <article title="Hello" variant="elevated">
   <p>It just works.</p>
 </article>
 </div>
-```
 
 The only exception: a block illustrating something that genuinely isn't renderable in
 isolation — a CSS-only snippet, a JS-only snippet, an accessibility attribute reference
