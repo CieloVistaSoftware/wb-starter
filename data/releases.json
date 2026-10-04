@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.169",
+      "date": "2026-10-04",
+      "summary": "Test: an anchor jump lands on a built section, not raw markup (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1382\" target=\"_blank\" rel=\"noopener\">PR 1382</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1100\" target=\"_blank\" rel=\"noopener\">#1100</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>An anchor jump lands on a built section; red with the observer neutered</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1100\" target=\"_blank\" rel=\"noopener\">#1100</a>",
+          "issues": [
+            1100
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.168",
       "date": "2026-10-04",
       "summary": "Fix: a lone hero in an x-demo is full width without being told (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1388\" target=\"_blank\" rel=\"noopener\">PR 1388</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1387\" target=\"_blank\" rel=\"noopener\">#1387</a>",
