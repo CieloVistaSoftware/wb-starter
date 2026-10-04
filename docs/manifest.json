@@ -1156,7 +1156,7 @@
           "file": "behaviors/typewriter.md",
           "title": "Typewriter",
           "description": "x-typewriter types the element's text (or text) out one character at a time, speed milliseconds apart, with a blinking cursor unless cursor=\"false\".",
-          "modified": "2026-09-27"
+          "modified": "2026-10-04"
         },
         {
           "file": "behaviors/ul.md",
