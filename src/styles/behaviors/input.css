@@ -150,6 +150,30 @@ input.x-radio {
   cursor: pointer;
 }
 
+input.x-radio { margin: 0; vertical-align: middle; }
+
+/* Radio variants and sizes (#1154). radio.js used to inject these as bare
+   .x-radio--success / .x-radio--sm rules, which input.x-radio above and
+   input[type="radio"] below (both 0,1,1) always beat, so every declared
+   variant and size rendered as the default. Two classes (0,2,1) win wherever
+   the rules sit. Theme colours only. */
+input.x-radio.x-radio--success { accent-color: var(--success-color); }
+input.x-radio.x-radio--warning { accent-color: var(--warning-color); }
+input.x-radio.x-radio--danger { accent-color: var(--danger-color); }
+input.x-radio.x-radio--info { accent-color: var(--info-color); }
+input.x-radio.x-radio--sm { width: 0.9em; height: 0.9em; }
+input.x-radio.x-radio--lg { width: 1.5em; height: 1.5em; }
+
+/* The <label> radio.js wraps a radio in when it is given label text. */
+.x-radio-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+}
+
 /* Range */
 .x-range {
   width: 100%;

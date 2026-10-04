@@ -129,6 +129,9 @@ const VISUAL_PROPS = [
   // tell two options apart -- but WHICH motion runs, and how fast, is what a
   // reader sees: a spinner's speed, a shimmer switched off.
   'animation-name', 'animation-duration',
+  // The colour of a checked radio's dot, a checkbox's tick and a range's
+  // fill: all a radio's variants change (#1154).
+  'accent-color',
 ];
 
 /**

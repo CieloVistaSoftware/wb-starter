@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.211">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.214">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -2077,6 +2077,9 @@
         if (src && !/^(https?:)?\/\//.test(src)) src = siteRoot() + src.replace(/^(?:\.{1,2}\/|\/)/, '');
         if (src) out.push(` src="${src}"`);
       }
+      // #1154: a radio's variant colours its checked dot and nothing else, so
+      // an unchecked example of every variant looks the same. Show it checked.
+      if (behavior === 'radio') out.push(' checked');
       return out.join('');
     }
     function generatedExample(attr, variant, label, prop, isBool) {

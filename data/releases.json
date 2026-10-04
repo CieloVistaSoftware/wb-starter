@@ -6,6 +6,48 @@
   ],
   "releases": [
     {
+      "version": "1.0.214",
+      "date": "2026-10-04",
+      "summary": "Chore: delete the dead schema-tests generator and output (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1431\" target=\"_blank\" rel=\"noopener\">PR 1431</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1430\" target=\"_blank\" rel=\"noopener\">#1430</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delete the pre-4.0.0 schema-tests generator and its unread output; npm scripts must run real files</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1430\" target=\"_blank\" rel=\"noopener\">#1430</a>",
+          "issues": [
+            1430
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.213",
+      "date": "2026-10-04",
+      "summary": "Test: every project gated or excluded with a reason (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1434\" target=\"_blank\" rel=\"noopener\">PR 1434</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1189\" target=\"_blank\" rel=\"noopener\">#1189</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Every Playwright project is gated or excluded with a reason; views joins the gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1189\" target=\"_blank\" rel=\"noopener\">#1189</a>",
+          "issues": [
+            1189
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.212",
+      "date": "2026-10-04",
+      "summary": "Fix: radio variants and sizes declared, styled and shown (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1428\" target=\"_blank\" rel=\"noopener\">PR 1428</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1154\" target=\"_blank\" rel=\"noopener\">#1154</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Radio variants and sizes are declared, styled and shown; &lt;div x-radio&gt; builds a real radio</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1154\" target=\"_blank\" rel=\"noopener\">#1154</a>",
+          "issues": [
+            1154
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.211",
       "date": "2026-10-04",
       "summary": "Fix: table schema names x-table--hover (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1427\" target=\"_blank\" rel=\"noopener\">PR 1427</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1353\" target=\"_blank\" rel=\"noopener\">#1353</a>",
