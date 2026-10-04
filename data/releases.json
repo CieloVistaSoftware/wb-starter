@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.229",
+      "date": "2026-10-04",
+      "summary": "Fix: publish the example generator after its seed data (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1451\" target=\"_blank\" rel=\"noopener\">PR 1451</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1337\" target=\"_blank\" rel=\"noopener\">#1337</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Publish the example generator after its seed data, not just the tag map</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1337\" target=\"_blank\" rel=\"noopener\">#1337</a>",
+          "issues": [
+            1337
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.228",
       "date": "2026-10-04",
       "summary": "Test: generated demos respect content models (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1454\" target=\"_blank\" rel=\"noopener\">PR 1454</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1062\" target=\"_blank\" rel=\"noopener\">#1062</a>",
