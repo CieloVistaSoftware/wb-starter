@@ -47,7 +47,16 @@ export function video(element, options = {}) {
   if (config.poster) videoEl.poster = config.poster;
   if (config.playsinline) videoEl.playsInline = true;
 
-  const retryCleanup = config.src ? attachVideoLoadRetry(videoEl) : null;
+  // #1342: config.src reads the src ATTRIBUTE only, so a <video x-video> whose
+  // source is given by <source> children -- the normal multi-codec form, and
+  // the form the HTML spec exists to support -- left this null. No listener,
+  // no retry, no report: that failure was not slow, it was permanent silence,
+  // indistinguishable from a video the author never added. <source> children
+  // are live in our own content (pages/hero-variants.html, demos/autoinject.html),
+  // and every source is remote by standing decision (#762), so every one of
+  // them is a network dependency that can fail.
+  const hasSource = !!config.src || !!videoEl.querySelector('source[src]');
+  const retryCleanup = hasSource ? attachVideoLoadRetry(videoEl) : null;
 
   element.wbVideo = {
     play: () => videoEl.play(),
