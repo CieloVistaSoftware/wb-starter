@@ -7,13 +7,19 @@
  *  - Returning to a page you've already visited restores the scroll position
  *    you left it at.
  *
- * The window is the scroll container and scroll memory lives on the in-memory
- * site-engine instance, so navigation must be SPA (clicking nav links), never a
+ * #siteBody is the scroll container (.site is 100dvh, overflow hidden; #1186),
+ * and scroll memory lives on the in-memory site-engine instance, so navigation must be SPA (clicking nav links), never a
  * full reload — a reload would reset the memory.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import fs from 'node:fs';
 
-const LINKS = ['home', 'components', 'behaviors', 'themes', 'docs', 'about'];
+// #1432: read from the site's own menu. A hard-coded list kept 'components',
+// which 4.0.0 removed, so 14 tests failed on "nav link not found" and the
+// pages added since (releases, issues, ...) were never checked.
+const LINKS: string[] = JSON.parse(fs.readFileSync('config/site.json', 'utf8'))
+  .navigationMenu.map((item: { pageToLoad?: string }) => item.pageToLoad)
+  .filter((id: unknown): id is string => typeof id === 'string' && id.length > 0);
 
 async function clickNav(page: Page, id: string) {
   // The links live in the off-canvas drawer on mobile (not pointer-actionable),
@@ -45,10 +51,13 @@ async function scrollState(page: Page) {
     }) || null;
     const top = first ? first.getBoundingClientRect().top : null;
     return {
-      scrollY: window.scrollY,
+      scrollY: document.getElementById('siteBody')!.scrollTop,
       headerBottom: Math.round(headerBottom),
       contentTop: top != null ? Math.round(top) : null,
       mainPaddingTop: Math.round(parseFloat(getComputedStyle(main).paddingTop)),
+      // 1rem as this page computes it: the root font is not 16px on every
+      // device (18px on the phone profiles), so a literal 16 is not 1rem.
+      oneRem: Math.round(parseFloat(getComputedStyle(document.documentElement).fontSize)),
     };
   });
 }
@@ -68,23 +77,32 @@ test.describe('Nav link scroll behavior', () => {
       // "1rem down from the top" = the content area starts 1rem below the sticky
       // header. That gap is .site__main's top padding (1rem); each page's first
       // element then sits at/below it (never clipped under the header).
-      expect(s.mainPaddingTop, `${id}: content area must start 1rem (16px) below the header`).toBe(16);
+      // The Behaviors page halves it on a phone on purpose: its example has to
+      // start right under the header (src/styles/pages/behaviors.css, "Main's
+      // 1rem top padding sat between the header and the example").
+      const gap = id === 'behaviors' ? s.oneRem / 2 : s.oneRem;
+      expect(s.mainPaddingTop, `${id}: content area must start ${gap}px below the header`).toBe(Math.round(gap));
       expect(s.contentTop!, `${id}: content must not be clipped under the sticky header`).toBeGreaterThanOrEqual(s.headerBottom - 1);
     });
 
     test(`returning to "${id}" restores the prior scroll position`, async ({ page }) => {
       await clickNav(page, id);
-      await page.evaluate(() => window.scrollTo(0, 400));
+      await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 400; });
       await page.waitForTimeout(150);
-      const before = await page.evaluate(() => window.scrollY);
+      const before = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
       test.skip(before < 50, `${id}: page too short to scroll; restore N/A`);
 
-      const other = id === 'home' ? 'components' : 'home';
+      const other = id === 'home' ? LINKS.find((l) => l !== 'home')! : 'home';
       await clickNav(page, other);
       await clickNav(page, id);
 
-      const after = await page.evaluate(() => window.scrollY);
-      expect(after, `${id}: returning should restore scroll near ${before}, got ${after}`).toBeGreaterThanOrEqual(before - 24);
+      // Polled, not read once after a fixed sleep: a page that builds
+      // asynchronously (Behaviors loads its catalogue first) is restored as it
+      // grows, and under a parallel run that took longer than the sleep (#1432).
+      await expect.poll(
+        () => page.evaluate(() => document.getElementById('siteBody')!.scrollTop),
+        { timeout: 15000, message: `${id}: returning should restore scroll near ${before}` },
+      ).toBeGreaterThanOrEqual(before - 24);
     });
   }
 });

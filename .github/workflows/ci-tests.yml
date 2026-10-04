@@ -72,6 +72,8 @@ jobs:
           - { project: integration, gated: true }
           - { project: views, gated: true }
           - { project: performance, gated: true }
+          - { project: mobile-validation-pixel, gated: true }
+          - { project: mobile-validation-iphone, gated: true }
           - { project: base, gated: false }
     # #1218 -- John: "the only reason Linux is a part is that it's what you
     # use internally." The site is built, served and shipped from Windows, so
@@ -135,8 +137,9 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       # --with-deps installs Linux system packages; Windows needs none.
+      # The iPhone 12 profile runs in WebKit (#1432); only its row needs it.
       - name: Install Playwright browsers
-        run: npx playwright install chromium
+        run: npx playwright install chromium ${{ matrix.project == 'mobile-validation-iphone' && 'webkit' || '' }}
 
       - name: Start server
         run: |

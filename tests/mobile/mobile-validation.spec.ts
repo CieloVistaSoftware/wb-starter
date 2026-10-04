@@ -33,23 +33,49 @@ function getScreenshotDir(): string {
 // ═══════════════════════════════════════════════════════════════
 const PAGES = [
   { name: 'home',            url: '/pages/home.html',              title: 'Home Page' },
-  { name: 'components',      url: '/pages/behaviors.html',        title: 'Components Page' },
+  { name: 'behaviors',       url: '/pages/behaviors.html',        title: 'Behaviors Page' },
   { name: 'docs',            url: '/pages/docs.html',              title: 'Docs Page' },
-  { name: 'card-demo',       url: '/demos/behaviors-card-code.html', title: 'Card Behaviors Demo' },
+  // #1432: was /demos/behaviors-card-code.html, deleted in d4278513, so every
+  // check on it ran against the server's 404 page ("must have a viewport meta").
+  { name: 'card-demo',       url: '/demos/site/cards.html',        title: 'Cards Demo' },
   { name: 'ai-permutation',  url: '/pages/ai-permutation-test.html', title: 'AI Permutation Test' },
 ];
+
+// Every page listed here exists in the repo. The list once named a deleted
+// demo, and every check on it measured the 404 page instead (#1432).
+test('every validated page exists', () => {
+  const missing = PAGES.filter((pg) => !fs.existsSync(path.join(process.cwd(), pg.url.replace(/^\//, '')))).map((pg) => pg.url);
+  expect(missing, 'pages in PAGES that are not in the repo').toEqual([]);
+});
 
 // ═══════════════════════════════════════════════════════════════
 // TEST 1: SCREENSHOT CAPTURE
 // Takes full-page screenshots for visual review
 // ═══════════════════════════════════════════════════════════════
 for (const pg of PAGES) {
-  test(`screenshot: ${pg.title}`, async ({ page }) => {
+  test(`screenshot: ${pg.title}`, async ({ page, browserName }) => {
+    // A WebKit capture of Home never finishes on the Windows CI runner -- full
+    // page or viewport, the screenshot call hits its 30s timeout (three runs,
+    // #1432), while locally it takes a few seconds. These captures are images
+    // for visual review, not checks; the overflow, viewport-meta and JS-error
+    // checks below run on both devices. #1439 traces why WebKit stalls.
+    test.skip(browserName === 'webkit', 'WebKit screenshots stall on the CI runner (#1439)');
+    const fullPage = true;
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
     await page.waitForTimeout(1500); // let animations/lazy-load settle
 
     const screenshotPath = path.join(getScreenshotDir(), `${pg.name}.png`);
-    await page.screenshot({ path: screenshotPath, fullPage: true });
+    // Chromium refuses a capture taller than 32767px, and the Behaviors page
+    // on a phone is taller than that (#1432). The top of the page is enough to
+    // review. A clip does not help -- fullPage still renders the whole page
+    // first -- and measuring the height first races a page still growing, so
+    // the limit itself decides: past it, the capture is viewport height.
+    try {
+      await page.screenshot({ path: screenshotPath, fullPage, animations: 'disabled' });
+    } catch (err) {
+      if (!/larger than 32767 pixels/.test(String(err))) throw err;
+      await page.screenshot({ path: screenshotPath, animations: 'disabled' });
+    }
 
     // Verify screenshot was created and has content
     const stat = fs.statSync(screenshotPath);
