@@ -1,5 +1,5 @@
 {
-  "$comment": "Lock permutations (#1106). Exhaustive: 9 x 2 = 18 cases.",
+  "$comment": "Lock permutations (#1106, identity states added in #1040). Exhaustive: 12 x 2 = 24 cases.",
   "parameters": {
     "existing": {
       "description": "What already holds the machine when a run arrives.",
@@ -66,6 +66,27 @@
           "setup": "one single slot, dead pid",
           "blocksSuite": false,
           "blocksSingle": false
+        },
+        {
+          "id": "suite-recycled-pid",
+          "edge": "identity",
+          "setup": "suite lock whose pid is ALIVE but belongs to another process (#1040)",
+          "blocksSuite": false,
+          "blocksSingle": false
+        },
+        {
+          "id": "single-recycled-pid",
+          "edge": "identity",
+          "setup": "one single slot whose pid is ALIVE but belongs to another process (#1040)",
+          "blocksSuite": false,
+          "blocksSingle": false
+        },
+        {
+          "id": "suite-unidentifiable-ancient",
+          "edge": "ceiling",
+          "setup": "suite lock, pid alive, start time unreadable, older than the hold ceiling (#1040)",
+          "blocksSuite": false,
+          "blocksSingle": false
         }
       ]
     },
@@ -91,6 +112,7 @@
       "A suite needs it empty of live runs.",
       "A single needs no live suite and a free slot.",
       "Dead, expired or unreadable holders are not live runs.",
+      "A holder is a process, not a PID: a live PID whose start time is not the recorded one is not a live run, and a holder that cannot be identified at all counts only until the hold ceiling.",
       "A run that cannot proceed is notified on release; it never polls."
     ],
     "outcome": "(arriving === 'suite' ? existing.blocksSuite : existing.blocksSingle) ? 'notified' : 'proceeds'"

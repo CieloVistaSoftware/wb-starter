@@ -38,9 +38,9 @@
   },
   "test": {
     "setup": [
-      "<input type=\"range\" x-range>",
-      "<input type=\"range\" x-range show-value>",
-      "<input type=\"range\" x-range show-labels>"
+      "<input type=\"range\">",
+      "<input type=\"range\" show-value>",
+      "<input type=\"range\" show-labels>"
     ]
   },
   "_metadata": {

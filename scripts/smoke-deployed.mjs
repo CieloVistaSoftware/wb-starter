@@ -18,6 +18,9 @@
  * confident, meaningless pass.
  */
 import { execSync, spawnSync } from 'child_process';
+import { pagesDeployState } from './lib/pages-deploy-state.mjs';
+import { playwrightInvocation } from './lib/playwright-launch.mjs';
+import { parsePlaywrightSummary } from './lib/playwright-summary.mjs';
 
 /*
  * The published URL lives HERE, in the repo, under version control.
@@ -41,14 +44,23 @@ const REPO = 'CieloVistaSoftware/wb-starter';
 const POLL_MS = 15_000;
 const MAX_WAIT_MS = 10 * 60_000;
 
-function pagesStatus() {
+// #1361: judged by the Actions run that deploys main's head commit, not by the
+// legacy builds list, which records every cancelled (superseded) duplicate build
+// as "errored" and so reported a healthy deploy as broken.
+function gh(args) {
+  return execSync(`gh ${args}`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+}
+
+function deployStatus() {
   try {
-    return JSON.parse(
-      execSync(`gh api repos/${REPO}/pages/builds/latest`, {
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'ignore'],
-      })
-    );
+    const head = gh(`api repos/${REPO}/commits/main --jq .sha`).trim();
+    // "pages build and deployment" is GitHub's built-in dynamic workflow, which
+    // `gh run list --workflow` cannot address by name -- list main's runs and
+    // filter by name instead.
+    const runs = JSON.parse(gh(
+      `run list --repo ${REPO} --branch main --limit 60 --json name,headSha,status,conclusion`
+    )).filter((r) => r.name === 'pages build and deployment');
+    return pagesDeployState(runs, head);
   } catch {
     return null; // gh missing or unauthenticated — not fatal, just skip the wait
   }
@@ -58,40 +70,62 @@ async function waitForBuild() {
   const started = Date.now();
   let last = '';
   while (Date.now() - started < MAX_WAIT_MS) {
-    const s = pagesStatus();
+    const s = deployStatus();
     if (!s) {
-      console.log('⚠️  could not read Pages build status (gh unavailable) — smoking anyway');
+      console.log('⚠️  could not read the Pages deploy status (gh unavailable) — smoking anyway');
       return;
     }
-    if (s.status !== last) {
-      console.log(`   Pages build: ${s.status} @ ${String(s.commit).slice(0, 8)}`);
-      last = s.status;
+    if (s.state + s.detail !== last) {
+      console.log(`   Pages deploy: ${s.state} (${s.detail})`);
+      last = s.state + s.detail;
     }
-    if (s.status === 'built') return;
-    if (s.status === 'errored') {
-      console.error(`\n❌ Pages build ERRORED: ${s.error?.message || '(no message)'}`);
+    if (s.state === 'built') return;
+    if (s.state === 'errored') {
+      console.error(`\n❌ Pages deploy FAILED: ${s.detail}`);
       process.exit(1);
     }
     await new Promise((r) => setTimeout(r, POLL_MS));
   }
-  console.error('\n❌ Pages build did not reach "built" within 10 minutes.');
+  console.error('\n❌ The Pages deploy for main\'s head did not finish within 10 minutes.');
   process.exit(1);
 }
 
 console.log(`\n🔥 Deployed smoke — ${url}\n`);
 if (!skipWait) await waitForBuild();
 
-const res = spawnSync(
-  'npx',
-  ['playwright', 'test', 'site-smoke', '--project=compliance', '--reporter=line'],
-  // SMOKE_BASE_URL is a process-local handoff to the spec, set for this child
-  // only. It is deliberately NOT a system environment variable: those hold
-  // secrets, and a public URL is not one.
-  { stdio: 'inherit', env: { ...process.env, SMOKE_BASE_URL: url }, shell: true }
-);
+// No shell (#1194): Playwright's own CLI through the current node, arguments
+// as an array. SMOKE_BASE_URL is a process-local handoff to the spec, set for
+// this child only -- deliberately NOT a system environment variable: those hold
+// secrets, and a public URL is not one. With it set, playwright.config.ts
+// starts no local server (#1364): this run tests the deployed site only.
+const { command, args } = playwrightInvocation(['playwright', 'test', 'site-smoke', '--project=compliance', '--reporter=line']);
+const res = spawnSync(command, args, {
+  env: { ...process.env, SMOKE_BASE_URL: url },
+  encoding: 'utf8',
+  maxBuffer: 64 * 1024 * 1024,
+});
+process.stdout.write(res.stdout || '');
+process.stderr.write(res.stderr || '');
 
-if (res.status === 0) {
+// #1364: only a smoke test that RAN and failed means the deployed site is
+// broken. A run that never got to test anything -- Playwright missing, the
+// config failing to load, a local setup error -- used to print the same
+// "THE DEPLOYED SITE IS BROKEN" over a healthy site.
+// The line reporter redraws its status with terminal cursor codes, so its final
+// "6 passed" arrives prefixed by ESC sequences; strip them before parsing.
+const ANSI = new RegExp(String.fromCharCode(27) + '\\[[0-9;]*[A-Za-z]', 'g');
+const summary = parsePlaywrightSummary(`${res.stdout || ''}\n${res.stderr || ''}`.replace(ANSI, ''));
+const ranTests = summary.passed !== null || summary.failed !== null;
+
+if (res.status === 0 && ranTests) {
   console.log(`\n✅ The deployed site boots. ${url}\n`);
+} else if (!ranTests) {
+  console.error(
+    `\n⚠️  THE SMOKE TEST DID NOT RUN — nothing was checked against ${url}.\n` +
+      `   This is a problem on THIS machine, not evidence about the deployed site.\n` +
+      `   Exit ${res.status}${res.error ? ` (${res.error.message})` : ''}. Try \`npm ci\`, then run this again.\n`
+  );
+  process.exit(2);
 } else {
   console.error(
     `\n❌ THE DEPLOYED SITE IS BROKEN — ${url}\n` +

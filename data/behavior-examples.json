@@ -48,20 +48,20 @@
       ]
     },
     "x-password": {
-      "source": "<input type=\"password\" x-password placeholder=\"Password with toggle\">",
+      "source": "<input type=\"password\" placeholder=\"Password with toggle\">",
       "alternates": [],
       "examples": [
         {
           "label": "toggle and strength",
-          "source": "<input type=\"password\" x-password toggle strength value=\"correct horse battery\">"
+          "source": "<input type=\"password\" toggle strength value=\"correct horse battery\">"
         },
         {
           "label": "weak value",
-          "source": "<input type=\"password\" x-password strength value=\"1234\">"
+          "source": "<input type=\"password\" strength value=\"1234\">"
         },
         {
           "label": "new-password field",
-          "source": "<input type=\"password\" x-password toggle placeholder=\"Choose a new password\" autocomplete=\"new-password\">"
+          "source": "<input type=\"password\" toggle placeholder=\"Choose a new password\" autocomplete=\"new-password\">"
         }
       ]
     },
@@ -1161,8 +1161,7 @@
         "<article x-cardfile filename=\"product-walkthrough.mp4\" size=\"58 MB\" date=\"2026-06-12\" href=\"#\"></article>",
         "<article x-cardfile filename=\"interview-recording.m4a\" size=\"12 MB\" date=\"2026-05-04\" href=\"#\"></article>",
         "<article x-cardfile filename=\"release-assets.zip\" size=\"104 MB\" date=\"2026-09-01\" href=\"#\"></article>",
-        "<article x-cardfile filename=\"sensor-capture.bin\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>",
-        "<article x-cardfile filename=\"sensor-capture.bin\" file-type=\"video\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>"
+        "<article x-cardfile filename=\"sensor-capture.bin\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>"
       ]
     },
     "x-cardhero": {
@@ -1851,12 +1850,44 @@
     },
     "x-img": {
       "source": "<img src=\"/images/placeholder.svg\" alt=\"Prime lens on a wooden desk\">",
-      "alternates": []
+      "alternates": [],
+      "examples": [
+        {
+          "label": "width only: height follows the photo",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" alt=\"Dachshund puppy, 240 pixels wide\">"
+        },
+        {
+          "label": "width + height: cropped to 3:2",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"160\" alt=\"Dachshund puppy, cropped to 240 by 160\">"
+        },
+        {
+          "label": "wide banner from width + height",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"480\" height=\"120\" alt=\"Dachshund puppy, cropped to a 4:1 banner\">"
+        },
+        {
+          "label": "aspect-ratio instead of height",
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"200\" aspect-ratio=\"3/4\" alt=\"Dachshund puppy, cropped to portrait\">"
+        }
+      ]
     },
     "x-figure": {
       "source": "<figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</figure>",
       "alternates": [
         "<div x-figure>\n  <img src=\"/images/placeholder.svg\" alt=\"Suspension bridge in fog\">\n  <figcaption>The 6am crossing, before the fog lifted.</figcaption>\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "figure width in pixels",
+          "source": "<figure width=\"320\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>The whole figure is 320 pixels wide.</figcaption>\n</figure>"
+        },
+        {
+          "label": "figure width as a CSS length",
+          "source": "<figure width=\"50%\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" alt=\"Dachshund puppy\">\n  <figcaption>Half the width of its container.</figcaption>\n</figure>"
+        },
+        {
+          "label": "square image inside a figure",
+          "source": "<figure width=\"240\">\n  <img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"240\" height=\"240\" alt=\"Dachshund puppy, cropped square\">\n  <figcaption>The img's width + height set the shape.</figcaption>\n</figure>"
+        }
       ]
     },
     "x-vimeo": {

@@ -58,8 +58,23 @@ const PATTERNS = [
   '',
 ];
 
+/**
+ * What the fake CLI recorded, or null if it recorded nothing readable.
+ *
+ * #1367: the shell:true control below hands cmd.exe patterns containing & and |,
+ * which it splits into two commands running at once. Both can write the
+ * recorder file, and a shorter write over a longer one leaves something like
+ * ["test","--grep","amp"]nt","%PATH%","sign"] -- unparseable. That is exactly a
+ * mangled launch, which the control counts; parsing it unguarded crashed the
+ * whole gate self-test instead. An unreadable recording is "not what was sent".
+ */
 function read() {
-  return existsSync(recorded) ? JSON.parse(readFileSync(recorded, 'utf8')) : null;
+  if (!existsSync(recorded)) return null;
+  try {
+    return JSON.parse(readFileSync(recorded, 'utf8'));
+  } catch {
+    return null;
+  }
 }
 
 try {

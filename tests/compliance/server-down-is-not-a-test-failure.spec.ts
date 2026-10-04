@@ -63,7 +63,9 @@ const ASSERTION =
 test.describe('#1074 server output is captured and server-down is not a test failure', () => {
   test('playwright.config.ts starts the dev server through the log wrapper', () => {
     const config = fs.readFileSync(path.join(REPO, 'playwright.config.ts'), 'utf8');
-    const block = config.match(/webServer:\s*\{([\s\S]*?)\n\s{2}\},/);
+    // #1364: a deployed smoke run (SMOKE_BASE_URL) starts no local server, so the
+    // block may be guarded by exactly that condition -- and only that one.
+    const block = config.match(/webServer:\s*(?:process\.env\.SMOKE_BASE_URL\s*\?\s*undefined\s*:\s*)?\{([\s\S]*?)\n\s{2}\},/);
     expect(block, 'no webServer block found in playwright.config.ts').not.toBeNull();
     const command = (block![1].match(/command:\s*['"`]([^'"`]+)['"`]/) || [])[1] || '';
     expect(
@@ -152,6 +154,25 @@ test.describe('#1074 server output is captured and server-down is not a test fai
     const green = classifyRun({ exitCode: 0, failures: [], port: 3310 });
     expect(green.state).toBe('passed');
     expect(green.reliable).toBe(true);
+
+    // #1091 / #1069: a run that collected nothing checked nothing. Playwright
+    // exits 0 on an empty spec file and 1 on "No tests found"; neither is a
+    // pass, and neither is a broken suite.
+    const emptyFile = classifyRun({ exitCode: 0, failures: [], port: 3310, total: 0 });
+    expect(emptyFile.state, 'exit 0 with zero tests is not a pass').toBe('no-tests');
+    const noMatch = classifyRun({ exitCode: 1, failures: [], port: 3310, total: 0 });
+    expect(noMatch.state, '"No tests found" is not a failed suite').toBe('no-tests');
+    // An UNKNOWN total (summary not parsed) must not be read as zero.
+    const unknown = classifyRun({ exitCode: 0, failures: [], port: 3310, total: undefined });
+    expect(unknown.state, 'an unknown total leaves the exit-code rules alone').toBe('passed');
+    const counted = classifyRun({ exitCode: 0, failures: [], port: 3310, total: 12 });
+    expect(counted.state).toBe('passed');
+  });
+
+  test('test-async.mjs reports a run that collected nothing as no-tests (#1091)', () => {
+    const src = fs.readFileSync(path.join(REPO, 'scripts', 'test-async.mjs'), 'utf8');
+    expect(src, 'the known total must reach the classifier').toMatch(/applyClassification\(\s*exitCode\s*,\s*knownTotal\s*\)/);
+    expect(src, '"No tests found" must count as a known zero').toMatch(/No tests found/);
   });
 
   test('test-async.mjs writes the classification and the server log path into its status file', () => {

@@ -16,6 +16,13 @@ import { test, expect, type Page } from '../fixtures/offline';
 
 const FIXTURE = '/tests/fixtures/blank.html';
 
+// #1349: the whole first test is "no response at all, including the logger's
+// own probe". sw.js answers the page's GETs itself and Playwright cannot route
+// a service worker's requests, so a claimed page got the real server's 404 for
+// /gone/* instead of a refused connection — a DIFFERENT error class from the
+// one under test, and the reason this spec's verdict moved with timing.
+test.use({ serviceWorkers: 'block' });
+
 type Logged = { message: string; count: number; status?: number };
 
 /** Boot the logger on a blank page, add `markup`, return what it logged once it settles. */

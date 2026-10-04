@@ -3,7 +3,7 @@
  * Logs errors to data/errors.json and displays them on screen
  */
 
-import { computeSignature, firstMeaningfulFrame, isTestOrigin } from './error-signature.js';
+import { computeSignature, firstMeaningfulFrame, isTestOrigin, isTestServer } from './error-signature.js';
 
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
@@ -136,6 +136,8 @@ function initErrorDisplay() {
     Signature: ${e.signature}`;
       if (e.testOrigin) text += `
     Origin: test fixture, not the app`;
+      else if (e.testServer) text += `
+    Context: logged during a test run -- not a fixture, so treat it as real`;
       if (e.solution) text += `
     Solution: ${e.solution}`;
       if (e.to) text += `\n    To: ${e.to}`;
@@ -343,6 +345,8 @@ export async function logError(message, details = {}) {
     remedy: known ? known.remedy || null : null,
     verify: known ? known.verify || null : null,
     testOrigin: isTestOrigin({ message, url: window.location.href, details }),
+    // #1032: context only -- a test server was serving the page. Never a verdict.
+    testServer: isTestServer({ url: window.location.href }),
     // #442: optional fields below are only ever populated by callers routed
     // through events.js's Events.error()/log() (source/level/module/line/
     // etc., extracted from a parsed stack trace) -- direct logError() callers
@@ -512,13 +516,24 @@ export function isLocalOnly() {
   return !serverLogging;
 }
 
+/** Bytes under the browsers' 64 KB keepalive body cap, with headroom. */
+const KEEPALIVE_LIMIT = 60000;
+
 async function appendErrorToLog(error) {
   if (serverLogging) {
     try {
+      // #1340: keepalive, so the entry survives the page that raised it. A
+      // plain fetch is cancelled when the page navigates or closes, and an
+      // error raised just before that (a boot fault, a probe that tears the
+      // page down) showed on screen and reached no log -- #1340's doubled
+      // shell left no trace anywhere. Browsers cap keepalive bodies at 64 KB,
+      // so an oversized entry (a huge stack) goes without it, as before.
+      const body = JSON.stringify({ error });
       const response = await fetch(apiUrl('api/error-log/append'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error })
+        body,
+        keepalive: body.length < KEEPALIVE_LIMIT,
       });
       if (response.ok) return;
 

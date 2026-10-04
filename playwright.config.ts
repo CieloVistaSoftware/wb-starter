@@ -215,7 +215,17 @@ export default defineConfig({
     // the exact step instead of guessed at.
     //   WB_TRACE=on npm run test:async -- <spec>
     // then: npx playwright show-trace test-results/<dir>/trace.zip
-    trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure') || 'off',
+    //
+    // #1112: and by default every failing test now keeps a LIGHT trace --
+    // actions, network (every URL and status) and console, no DOM snapshots or
+    // screenshots. "Failed to load resource: ... 500 ()" names no URL; this
+    // trace does. The full trace was measured before choosing: retaining it
+    // for every test turned permutation-compliance from 156/156 in 383 s into
+    // 20 failures in the first 44, most of them "Tearing down context exceeded
+    // the test timeout" -- writing snapshots, not testing. WB_TRACE still
+    // selects the full trace for one run.
+    trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure')
+      || { mode: 'retain-on-failure', snapshots: false, screenshots: false, sources: false },
     // #961 experiment: src/main.js:133 registers sw.js, which is network-first
     // with a CACHE FALLBACK — when a fetch fails it silently serves a cached
     // copy rather than failing. A service worker also does not control the
@@ -242,7 +252,11 @@ export default defineConfig({
   // used"). When no server is running (e.g. a CI job), Playwright
   // still starts one via `command`. A WB_TEST_PORT override never reuses --
   // see the #518 comment above.
-  webServer: {
+  // #1364: a deployed smoke run (SMOKE_BASE_URL set, scripts/smoke-deployed.mjs)
+  // tests the published site and needs no local server. Starting one anyway
+  // made that check depend on this machine's node_modules for nothing -- and
+  // when it could not start, the deployed site was blamed.
+  webServer: process.env.SMOKE_BASE_URL ? undefined : {
     // #1074: through scripts/serve-with-log.mjs, not `npm start` directly.
     // Playwright discards webServer stdout by default, so when the server died
     // mid-run nothing recorded why — only the ERR_CONNECTION_REFUSED failures

@@ -21,7 +21,7 @@
   },
   "test": {
     "setup": [
-      "<form x-form id='test-form' action='/api/test' method='POST'><input name='a' value='1'><button type='submit'>Submit</button></form>"
+      "<form id='test-form' action='/api/test' method='POST'><input name='a' value='1'><button type='submit'>Submit</button></form>"
     ],
     "permutations": [
       { "ajax": true, "validate": true },

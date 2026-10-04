@@ -7,14 +7,14 @@
  * this would dirty the working tree for no reason.
  */
 export const VERSION = {
-  "version": "1.0.0",
-  "commit": "47167766",
-  "builtAt": "2026-10-03T18:10:16.766Z",
+  "version": "1.0.132",
+  "commit": "e24c7915",
+  "builtAt": "2026-10-04T06:56:33.459Z",
   "branch": "main",
   "dirty": false,
   "ahead": 0,
   "behind": 0,
   "upstream": "origin/main",
-  "release": "1.0.89",
-  "sinceRelease": 39
+  "release": "1.0.132",
+  "sinceRelease": 48
 };
