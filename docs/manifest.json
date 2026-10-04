@@ -40,7 +40,7 @@
           "file": "claude/TIER1-LAWS.md",
           "title": "Tier 1 Laws",
           "description": "Core architectural laws and principles",
-          "modified": "2026-10-03"
+          "modified": "2026-10-04"
         },
         {
           "file": "claude/TIER2-DOMAIN-GUIDES.md",
@@ -52,7 +52,7 @@
           "file": "linkedin-standards-article.md",
           "title": "Linkedin Standards Article",
           "description": "Documentation for Linkedin Standards Article",
-          "modified": "2026-07-01"
+          "modified": "2026-10-04"
         },
         {
           "file": "linkedin-framework-agnostic.md",
@@ -1090,7 +1090,7 @@
           "file": "behaviors/table.md",
           "title": "Table",
           "description": "A plain <table> gets sortable column headers, and can be filled from attributes: headers for the column names and rows for the data as JSON.",
-          "modified": "2026-10-03"
+          "modified": "2026-10-04"
         },
         {
           "file": "behaviors/tabs.md",
@@ -1210,7 +1210,7 @@
           "file": "code-examples-standard.md",
           "title": "Code Examples Standard",
           "description": "Formatting rules for code examples",
-          "modified": "2026-10-03"
+          "modified": "2026-10-04"
         }
       ]
     },
@@ -1330,7 +1330,7 @@
           "file": "MVVM-MIGRATION-PLAN.md",
           "title": "MVVM MIGRATION PLAN",
           "description": "Documentation for MVVM MIGRATION PLAN",
-          "modified": "2026-09-27"
+          "modified": "2026-10-04"
         },
         {
           "file": "MVVM-MIGRATION.md",
@@ -1516,13 +1516,13 @@
           "file": "architecture/proposals/remove-wb-prefix-authoring-surface.md",
           "title": "Proposal: Drop the wb- Tag Prefix from the Authoring Surface",
           "description": "Proposal to author behaviors as plain HTML plus an x-* attribute instead of wb-* custom tags, keeping the wb- prefix internal to CSS/registry naming",
-          "modified": "2026-09-27"
+          "modified": "2026-10-04"
         },
         {
           "file": "architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
           "title": "Attribute Naming Standard",
           "description": "Standards for attribute naming conventions",
-          "modified": "2026-10-03"
+          "modified": "2026-10-04"
         },
         {
           "file": "architecture/standards/ERROR-MESSAGE.md",
@@ -1534,7 +1534,7 @@
           "file": "architecture/standards/SCHEMA-SPECIFICATION.md",
           "title": "Schema Specification",
           "description": "Detailed schema specification standard",
-          "modified": "2026-08-26"
+          "modified": "2026-10-04"
         },
         {
           "file": "claude/SCHEMAS-GUIDE.md",
@@ -1564,7 +1564,7 @@
           "file": "semantic-standard.md",
           "title": "Semantic Standard",
           "description": "Semantic HTML standard documentation",
-          "modified": "2026-09-24"
+          "modified": "2026-10-04"
         },
         {
           "file": "wbservices.md",

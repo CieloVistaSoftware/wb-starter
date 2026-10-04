@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.218",
+      "date": "2026-10-04",
+      "summary": "Fix: semantic doc examples render live; illustrations never do (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1438\" target=\"_blank\" rel=\"noopener\">PR 1438</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1169\" target=\"_blank\" rel=\"noopener\">#1169</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1197\" target=\"_blank\" rel=\"noopener\">#1197</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Table.md on/off syntax fence is an illustration (html-static)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1169\" target=\"_blank\" rel=\"noopener\">#1169</a>",
+          "issues": [
+            1169
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The registry decides which doc fences render live; illustrations are html-static</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1169\" target=\"_blank\" rel=\"noopener\">#1169</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1197\" target=\"_blank\" rel=\"noopener\">#1197</a>",
+          "issues": [
+            1169,
+            1197
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.217",
       "date": "2026-10-04",
       "summary": "Fix: PR descriptions must cite their branch&#39;s issue (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1440\" target=\"_blank\" rel=\"noopener\">PR 1440</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",
