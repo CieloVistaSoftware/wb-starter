@@ -536,7 +536,8 @@ export async function mdhtml(element, options = {}) {
             return; // never break the doc over a malformed example
         }
         const isRenderable = Array.from(tpl.content.querySelectorAll('*')).some(
-            (el) => el.tagName.toLowerCase().startsWith('wb-') || Array.from(el.attributes).some((a) => a.name.startsWith('x-'))
+            // #1422: only x-* attributes; a wb- tag cannot exist since 4.0.0.
+            (el) => Array.from(el.attributes).some((a) => a.name.startsWith('x-'))
         );
         if (!isRenderable) return;
 

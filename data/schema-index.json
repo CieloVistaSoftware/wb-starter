@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T14:32:19.893Z",
+  "generatedAt": "2026-10-04T15:11:38.407Z",
   "count": 160,
   "schemas": [
     {
@@ -7810,7 +7810,7 @@
           "type": "boolean",
           "description": "Hover effect on rows",
           "default": true,
-          "appliesClass": "x-table--hoverable",
+          "appliesClass": "x-table--hover",
           "visual": false,
           "visualReason": "Highlights the row under the pointer. Only hovering shows it (#773)."
         },
