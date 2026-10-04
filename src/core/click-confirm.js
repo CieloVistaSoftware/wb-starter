@@ -58,15 +58,18 @@ function toastVariantFor(el) {
   // x-button--warning CLASS during processSchema(), but never reflects
   // the attribute itself back (confirmed live: a rendered <button>'s
   // variant attribute is gone, only its class survives). Read the variant
-  // out of the wb-*--{variant} class instead of the (absent) attribute.
+  // out of the x-*--{variant} class instead of the (absent) attribute.
+  // #1193: this read wb-*--, which 4.0.0 renamed to x-*--, so every toast
+  // fell back to info. Behavior names can contain dashes (x-card-hero--).
   const withVariant = el.hasAttribute('variant') ? el : el.closest('[variant]');
   const attrVariant = withVariant?.getAttribute('variant');
   if (attrVariant && TOAST_VARIANTS.has(attrVariant)) return attrVariant;
 
   const classed = el.closest('[class*="--"]');
-  const classMatch = classed?.className.match(/\bwb-\w+--(\w+)\b/);
-  const classVariant = classMatch?.[1];
-  return classVariant && TOAST_VARIANTS.has(classVariant) ? classVariant : 'info';
+  // Every modifier, not just the first: a size class (x-button--small) can
+  // come before the variant one.
+  const modifiers = [...(classed?.className.matchAll(/\bx-[\w-]+?--(\w+)\b/g) ?? [])].map((m) => m[1]);
+  return modifiers.find((m) => TOAST_VARIANTS.has(m)) ?? 'info';
 }
 
 function labelFor(el) {
