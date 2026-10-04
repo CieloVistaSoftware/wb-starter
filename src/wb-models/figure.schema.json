@@ -32,6 +32,16 @@
         "Golden Gate, seen from Battery Spencer at dusk — the lights just coming on.",
         "Morning commute"
       ]
+    },
+    "width": {
+      "type": "string",
+      "description": "Width of the whole figure, image and caption together. A bare number is pixels (`width=\"320\"`); any CSS length works (`20rem`, `50%`). Capped at the container's width. For the image's height or shape, set `width`+`height` or `aspect-ratio` on the `<img>`.",
+      "default": "",
+      "examples": [
+        "240",
+        "20rem",
+        "50%"
+      ]
     }
   },
   "$view": [],

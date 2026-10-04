@@ -1351,16 +1351,42 @@ details[open] > .behaviors-live__doc-summary::before {
   transform: rotate(90deg);
 }
 
+/* Hover and OPEN are two states, and used to share one rule, so the button
+   that opened a panel looked exactly like one the pointer was resting on.
+   John (#1110): "When clicked on, put a green glow." Green means live/active
+   and is not used by hover; it comes from the theme's --success-color, so
+   every theme supplies its own green and no colour is written here. */
+.behaviors-live__api-summary,
+.behaviors-live__doc-summary {
+  border-radius: 0.375rem;
+  transition: box-shadow 140ms ease-out, color 140ms ease-out;
+}
+
 .behaviors-live__api-summary:hover,
-.behaviors-live__doc-summary:hover,
+.behaviors-live__doc-summary:hover {
+  color: var(--color-primary);
+}
+
+/* The toggles live in #behaviors-header-tools, whose own rule
+   (#behaviors-header-tools > details > summary) sets the text colour with an ID,
+   so the open state must carry the ID too or it loses. Traced 2026-10-03: the
+   older glow (.behaviors-live__panels > details[open], #772) matched nothing
+   once the toggles moved into the header -- the open chip had no glow at all. */
+#behaviors-header-tools > details[open] > .behaviors-live__api-summary,
+#behaviors-header-tools > details[open] > .behaviors-live__doc-summary,
 details[open] > .behaviors-live__api-summary,
 details[open] > .behaviors-live__doc-summary {
-  color: var(--color-primary);
+  color: var(--success-color);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--success-color) 70%, transparent),
+    0 0 0.75rem 0.1rem color-mix(in srgb, var(--success-color) 45%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .behaviors-live__api-summary::before,
-  .behaviors-live__doc-summary::before { transition: none; }
+  .behaviors-live__doc-summary::before,
+  .behaviors-live__api-summary,
+  .behaviors-live__doc-summary { transition: none; }
 }
 
 /* Keep the whole control strip on ONE line (#774).

@@ -22,6 +22,13 @@ import { test, expect } from '../fixtures/offline';
  * PNG — the test verifies wiring (src plumbed through, overlay renders),
  * not that a third-party image host is reachable/fast.
  */
+// #1349: the picsum.photos mock is a page.route, sw.js answers the page's GETs
+// itself, and Playwright cannot route a service worker's requests — so on a
+// claimed page the 1x1 PNG was not what the overlay got. The offline fixture
+// stands a real image in behind it, so nothing left the machine either way, but
+// the test was no longer measuring what it says it measures.
+test.use({ serviceWorkers: 'block' });
+
 const ONE_PX_PNG = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
   'base64'
