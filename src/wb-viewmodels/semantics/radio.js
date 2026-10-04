@@ -2,58 +2,46 @@ import { readAttr } from '../../core/read-attr.js';
 /**
  * Radio - Enhanced <input type="radio"> element
  * Adds visual enhancements, labels, radio groups
- * Helper Attribute: [x-behavior="radio"]
+ * Written as a plain <input type="radio"> (it IS the behavior), or x-radio.
+ * Attributes: label, variant, size -- declared in src/wb-models/radio.schema.json.
  */
 
-let stylesInjected = false;
-function injectStyles() {
-  if (stylesInjected) return;
-  const style = document.createElement('style');
-  style.textContent = `
-    .x-radio-wrapper {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-      user-select: none;
-      vertical-align: middle;
-    }
-    
-    .x-radio {
-      accent-color: var(--primary, #6366f1);
-      width: 1.125rem;
-      height: 1.125rem;
-      cursor: pointer;
-      margin: 0;
-      vertical-align: middle;
-    }
-
-    /* Variants */
-    .x-radio--success { accent-color: var(--success-color, #22c55e); }
-    .x-radio--warning { accent-color: var(--warning-color, #f59e0b); }
-    .x-radio--danger { accent-color: var(--danger-color, #ef4444); }
-    .x-radio--info { accent-color: var(--info-color, #3b82f6); }
-
-    /* Sizes */
-    .x-radio--sm { width: 0.875rem; height: 0.875rem; }
-    .x-radio--lg { width: 1.5rem; height: 1.5rem; }
-  `;
-  document.head.appendChild(style);
-  stylesInjected = true;
-}
+// Styles live in src/styles/behaviors/input.css (loaded for radio by the
+// behavior CSS manifest). They used to be injected from here, where the
+// variant and size rules lost to input.css's input.x-radio (#1154).
 
 export function radio(element, options = {}) {
-  if (element.tagName !== 'INPUT' || element.type !== 'radio') {
-    console.warn('[radio] Element must be an <input type="radio">');
+  // Any element can carry an x-* behavior. <div x-radio variant="success">
+  // used to warn and do nothing, so every attribute-form row on the behaviors
+  // page was the same bare div (#1154). On a container host, build the real
+  // radio inside it and enhance that, reading the host's options -- the same
+  // approach range.js takes for <div x-range>.
+  if (element.tagName !== 'INPUT') {
+    let input = element.querySelector(':scope > input[type="radio"], :scope > .x-radio-wrapper > input[type="radio"]');
+    if (!input) {
+      input = document.createElement('input');
+      input.type = 'radio';
+      for (const attr of ['name', 'value', 'checked', 'disabled']) {
+        if (element.hasAttribute(attr)) input.setAttribute(attr, element.getAttribute(attr));
+      }
+      element.textContent = '';
+      element.appendChild(input);
+    }
+    const hostOptions = {};
+    for (const key of ['label', 'variant', 'size']) {
+      const value = element.getAttribute(key);
+      if (value) hostOptions[key] = value;
+    }
+    return radio(input, { ...hostOptions, ...options });
+  }
+  if (element.type !== 'radio') {
+    console.warn('[radio] An <input> host must be type="radio"');
     return () => {};
   }
 
-  // Inject styles
-  injectStyles();
-
   const config = {
     label: options.label || element.getAttribute('label') || readAttr(element, 'label') || '',
-    variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || '',
+    variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || 'default',
     size: options.size || element.getAttribute('size') || readAttr(element, 'size') || 'md',
     ...options
   };
@@ -82,8 +70,9 @@ export function radio(element, options = {}) {
     element.classList.add(`x-radio--${config.size}`);
   }
 
-  // Apply visual variant
-  if (config.variant) {
+  // Apply visual variant. 'default' (the schema's default, #1154) is the
+  // theme's primary colour, which .x-radio already has -- no class for it.
+  if (config.variant && config.variant !== 'default') {
     element.classList.add(`x-radio--${config.variant}`);
   }
 

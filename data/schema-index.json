@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T14:22:17.342Z",
+  "generatedAt": "2026-10-04T15:11:38.407Z",
   "count": 160,
   "schemas": [
     {
@@ -6157,18 +6157,30 @@
       "properties": {
         "label": {
           "type": "string",
-          "description": "Read by radio().",
+          "description": "Text shown beside the radio; the radio is wrapped in a <label> so the text is clickable.",
           "default": "this is the label"
         },
         "variant": {
           "type": "string",
-          "description": "Read by radio().",
-          "default": "this is the variant"
+          "description": "Colour of the checked dot. default keeps the theme's primary colour.",
+          "enum": [
+            "default",
+            "success",
+            "warning",
+            "danger",
+            "info"
+          ],
+          "default": "default"
         },
         "size": {
           "type": "string",
-          "description": "Read by radio().",
-          "default": "this is the size"
+          "description": "Size of the radio.",
+          "enum": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
         }
       },
       "matrix": [],
