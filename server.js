@@ -1419,7 +1419,7 @@ app.post("/api/save-image", (req, res) => {
       return res.status(400).json({ error: 'dataUrl must be a base64 image data URL' });
     }
 
-    const safePath = path.normalize(location).replace(/^(\.\.[\/\\])+/, '');
+    const safePath = path.normalize(location).replace(/^(\.\.[/\\])+/, '');
     const fullPath = path.join(rootDir, safePath);
 
     if (!fullPath.startsWith(rootDir)) {
@@ -1449,7 +1449,7 @@ app.post("/api/save", (req, res) => {
       return res.status(400).json({ error: 'Missing location or data' });
     }
 
-    const safePath = path.normalize(location).replace(/^(\.\.[\/\\])+/, '');
+    const safePath = path.normalize(location).replace(/^(\.\.[/\\])+/, '');
     const fullPath = path.join(rootDir, safePath);
     
     if (!fullPath.startsWith(rootDir)) {

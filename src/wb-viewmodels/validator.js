@@ -158,7 +158,9 @@ export function validator(element, options = {}) {
   // Expose methods
   element.wbValidator = {
     validate: validateAll,
-    validate: (input) => showError(input, validateInput(input)),
+    // #1237: this was a second `validate` key, which silently replaced the
+    // one above -- so validate() with no argument ran showError(undefined).
+    validateInput: (input) => showError(input, validateInput(input)),
     reset: () => getInputs().forEach(clearError),
     addRule: (name, fn) => { rules[name] = fn; }
   };

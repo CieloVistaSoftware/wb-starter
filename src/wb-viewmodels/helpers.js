@@ -771,7 +771,9 @@ export function relativetime(element, options = {}) {
   update();
   const timerInterval = setInterval(update, config.refresh);
 
-  return () => { clearInterval(interval); element.classList.remove('x-relativetime'); };
+  // #1237: cleared `interval`, a name that does not exist here, so teardown
+  // threw a ReferenceError and the timer kept running after the element went.
+  return () => { clearInterval(timerInterval); element.classList.remove('x-relativetime'); };
 }
 
 /**

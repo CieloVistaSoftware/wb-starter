@@ -27,7 +27,7 @@ test('demos/site/overlays.html: [x-drawer] panel uses a real theme background, n
   expect(bg, 'drawer panel must not fall back to literal white').not.toBe('rgb(255, 255, 255)');
 });
 
-test('no CSS file references the nonexistent --bg-surface variable', async ({}) => {
+test('no CSS file references the nonexistent --bg-surface variable', async () => {
   // Shell `grep` isn't reliably available via execSync in this environment
   // (confirmed: "'grep' is not recognized" on this Windows dev box) -- a
   // caught non-zero exit was being misread as "no matches found" instead

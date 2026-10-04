@@ -55,7 +55,7 @@ function updateMdFromJson(){
   for (const id of ids){
     const fixed = issues[id].fixed === true ? "true" : "false";
     // replace a row that contains the id and a Fixed column value
-    const re = new RegExp("(\\|\\s*" + id.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&") + "\\s*\\|\\s*)(true|false)(\\s*\\|)", "g");
+    const re = new RegExp("(\\|\\s*" + id.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&") + "\\s*\\|\\s*)(true|false)(\\s*\\|)", "g");
     const before = md;
     md = md.replace(re, (_, a, b, c) => `${a}${fixed}${c}`);
     if (md !== before) mdChanged = true;

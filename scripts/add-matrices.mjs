@@ -42,10 +42,10 @@ const matrices = {
     { label: 'Default checkbox' },
     { label: 'Checked', checked: true },
     { label: 'Disabled', disabled: true },
-    { label: 'Primary variant', variant: 'primary', label: 'Primary' },
+    { variant: 'primary', label: 'Primary' },
     { label: 'Success variant', variant: 'success', checked: true },
-    { label: 'Small', size: 'sm', label: 'Small checkbox' },
-    { label: 'Large', size: 'lg', label: 'Large checkbox' }
+    { size: 'sm', label: 'Small checkbox' },
+    { size: 'lg', label: 'Large checkbox' }
   ],
   'input': [
     { label: 'Text Input', placeholder: 'Enter text...' },

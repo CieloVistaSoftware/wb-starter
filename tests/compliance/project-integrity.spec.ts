@@ -22,7 +22,7 @@ function getRegisteredBehaviors(): Set<string> {
   const match = content.match(/const behaviorModules = ({[\s\S]*?});/);
   if (match) {
     const cleanBody = match[1].replace(/\/\/.*$/gm, '');
-    const entryRegex = /['"]?([a-zA-Z0-9_\-\/]+)['"]?\s*:\s*['"]/g;
+    const entryRegex = /['"]?([a-zA-Z0-9_\-/]+)['"]?\s*:\s*['"]/g;
     let keyMatch;
     
     while ((keyMatch = entryRegex.exec(cleanBody)) !== null) {

@@ -40,7 +40,8 @@ test.describe('x-countdown honors to="..." as the target date (#376)', () => {
 
     const first = (await el.textContent())?.trim();
     expect(first, 'must not be stuck at 00:00 when counting down to a multi-year-future date').not.toBe('00:00');
-    expect(el, 'a live countdown must never carry the complete marker class').not.toHaveClass(/x-countdown--complete/);
+    // #1237: not awaited, this assertion was never actually checked.
+    await expect(el, 'a live countdown must never carry the complete marker class').not.toHaveClass(/x-countdown--complete/);
 
     // A target this far out (months away) must render in "<N>d HH:MM:SS"
     // form. This is the assertion that actually catches the bug: countdown()

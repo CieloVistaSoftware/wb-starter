@@ -381,6 +381,29 @@
     }
 
     // Render preview panel
+    /**
+     * A preview must satisfy the schema's required properties. audio's first
+     * test.setup is <audio>Basic audio content</audio> while its schema marks
+     * src required (default: a remote sample), so the preview logged "x-audio:
+     * no src provided" every time it was shown -- hidden for months because the
+     * spec that counts those errors never awaited its listener (#1237). A
+     * required property the example leaves out gets its schema default, the
+     * way the constructed example below already applies defaults.
+     */
+    function withRequiredDefaults(html, schema) {
+      const tpl = document.createElement('template');
+      tpl.innerHTML = html;
+      const el = tpl.content.firstElementChild;
+      if (!el) return html;
+      for (const [key, prop] of Object.entries(schema.properties || {})) {
+        if (!prop || prop.required !== true || prop.default == null || typeof prop.default === 'object') continue;
+        if (el.hasAttribute(key)) continue;
+        if (typeof prop.default === 'boolean') { if (prop.default) el.setAttribute(key, ''); }
+        else el.setAttribute(key, String(prop.default));
+      }
+      return tpl.innerHTML;
+    }
+
     function renderPreview() {
       const panel = document.getElementById('previewPanel');
       
@@ -403,8 +426,8 @@
       
       // Strategy 1: Use test setup if available
       if (schema.test && schema.test.setup && schema.test.setup.length > 0) {
-        exampleHTML = schema.test.setup[0];
-      } 
+        exampleHTML = withRequiredDefaults(schema.test.setup[0], schema);
+      }
       // Strategy 2: Construct from semantic element / properties
       else {
         let tagName = 'div';

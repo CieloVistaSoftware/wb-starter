@@ -14,7 +14,7 @@ files.forEach(file => {
   const filePath = path.join(cardsDir, file);
   let content = fs.readFileSync(filePath, 'utf-8');
   
-  const regex = /(#{2,3} [^\r\n]+)(\r?\n\s*)\`\`\`html\r?\n([\s\S]+?)\r?\n\`\`\`/g;
+  const regex = /(#{2,3} [^\r\n]+)(\r?\n\s*)```html\r?\n([\s\S]+?)\r?\n```/g;
   
   let updated = false;
   const newContent = content.replace(regex, (match, header, spacing, code) => {
