@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.182",
+      "date": "2026-10-04",
+      "summary": "Test: port&#39;s remaining test fixes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1399\" target=\"_blank\" rel=\"noopener\">PR 1399</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1283\" target=\"_blank\" rel=\"noopener\">#1283</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1209\" target=\"_blank\" rel=\"noopener\">#1209</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Port&#39;s remaining test fixes: own-tooltip lookup, per-panel wait, corrected stale notes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1283\" target=\"_blank\" rel=\"noopener\">#1283</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1209\" target=\"_blank\" rel=\"noopener\">#1209</a>",
+          "issues": [
+            1283,
+            1209
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.181",
       "date": "2026-10-04",
       "summary": "Fix: CI checks out the committed bytes; 41 file-scanning specs stop passing on nothing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1398\" target=\"_blank\" rel=\"noopener\">PR 1398</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1205\" target=\"_blank\" rel=\"noopener\">#1205</a>",
