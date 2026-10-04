@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.150",
+      "date": "2026-10-03",
+      "summary": "Fix: cards-are-never-too-narrow gets a budget bigger than its work, and waits on idle (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1365\" target=\"_blank\" rel=\"noopener\">PR 1365</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1360\" target=\"_blank\" rel=\"noopener\">#1360</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Cards-are-never-too-narrow gets a budget bigger than its work, and waits on idle, not 800ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1360\" target=\"_blank\" rel=\"noopener\">#1360</a>",
+          "issues": [
+            1360
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.149",
       "date": "2026-10-03",
       "summary": "Fix: localhost runs no service worker; a failed fetch is a network error, not a fake 503 (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1355\" target=\"_blank\" rel=\"noopener\">PR 1355</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1108\" target=\"_blank\" rel=\"noopener\">#1108</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/891\" target=\"_blank\" rel=\"noopener\">#891</a>",
