@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.211",
+      "date": "2026-10-04",
+      "summary": "Fix: table schema names x-table--hover (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1427\" target=\"_blank\" rel=\"noopener\">PR 1427</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1353\" target=\"_blank\" rel=\"noopener\">#1353</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Table schema names the hover class the table really gets</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1353\" target=\"_blank\" rel=\"noopener\">#1353</a>",
+          "issues": [
+            1353
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.210",
       "date": "2026-10-04",
       "summary": "Fix: viewmodels drop their dead wb- tag handling (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1426\" target=\"_blank\" rel=\"noopener\">PR 1426</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1422\" target=\"_blank\" rel=\"noopener\">#1422</a>",
