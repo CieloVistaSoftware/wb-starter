@@ -10,42 +10,12 @@
 import { test, expect } from '../fixtures/offline';
 
 test.describe('Code Panel Width Compliance (Standard §28)', () => {
-  test('demos with short code snippets use data-code-width="narrow"', async ({ page }) => {
-    await page.goto('/demos/site/content.html');
-
-    // Find all x-demo elements with short code snippets
-    const shortDemos = page.locator('[x-demo]');
-    const count = await shortDemos.count();
-
-    // Check for demos that should have narrow width
-    const narrowPatterns = [
-      '.x-link',      // Single line link styling
-      '.x-badge',     // Short badge component
-      '.x-button',    // Single button example
-      'class="wb-',    // Other single-line examples
-    ];
-
-    for (let i = 0; i < Math.min(count, 20); i++) {
-      const demo = shortDemos.nth(i);
-      const innerHTML = await demo.evaluate((el) => el.innerHTML);
-
-      // Check if this looks like a short snippet
-      const isShortSnippet =
-        innerHTML.includes('<a ') && innerHTML.includes('class="x-link"') ||
-        innerHTML.length < 200; // Simple heuristic: under 200 chars
-
-      if (isShortSnippet) {
-        const codeWidth = await demo.getAttribute('data-code-width');
-        // Should have explicit width setting, preferably 'narrow' for short snippets
-        if (codeWidth) {
-          expect(
-            ['narrow', 'normal', 'wide', 'full'].includes(codeWidth!),
-            `Invalid data-code-width value: ${codeWidth}`
-          ).toBe(true);
-        }
-      }
-    }
-  });
+  // #1092: "demos with short code snippets use data-code-width=narrow" is gone.
+  // It looked for CSS selectors ('.x-link', '.x-badge') in each demo's
+  // innerHTML, which holds markup (class="x-link"), so no demo ever matched
+  // and its one assertion -- that a width, if set, is a valid preset -- never
+  // ran. That check is the next test's, over every demo. §28 makes
+  // data-code-width optional, so there is no short-snippet rule to enforce.
 
   test('all data-code-width attributes use valid presets', async ({ page }) => {
     await page.goto('/demos/site/content.html');
@@ -69,52 +39,37 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
   test('code panel max-width CSS variable is applied correctly', async ({ page }) => {
     await page.goto('/demos/site/content.html');
 
-    const demoNarrow = page.locator('[x-demo][data-code-width="narrow"]').first();
-    if (await demoNarrow.isVisible()) {
-      // x-demo builds its code panel when it injects -- on this lazy page,
-      // once it nears the viewport -- so bring it there and read the panel
-      // once it exists, not before.
-      await demoNarrow.scrollIntoViewIfNeeded();
-      const codePanel = demoNarrow.locator('.x-demo__code');
-      await expect(codePanel).toBeAttached({ timeout: 15000 });
-      const maxWidth = await codePanel.evaluate((el) => {
-        return window.getComputedStyle(el).maxWidth;
-      });
+    // #1092: each preset was checked only "if" a demo with that preset was
+    // visible. content.html has one (narrow, the Link demo) and none for
+    // normal or wide, so two of the three checks never ran. Author one demo per
+    // preset, the way a page does, and measure the code panel each one builds.
+    // (Switching data-code-width on an already-built demo is not how an author
+    // uses it, and it stalled this test.)
+    const presets: Array<[string, string]> = [
+      ['narrow', '400px'], // narrow should be 400px
+      ['normal', '600px'], // normal should be 600px
+      ['wide', '800px'],   // wide should be 800px
+    ];
+    await page.evaluate((list) => {
+      for (const [preset] of list) {
+        const demo = document.createElement('div');
+        demo.setAttribute('x-demo', '');
+        demo.setAttribute('columns', '1');
+        demo.setAttribute('data-code-width', preset);
+        demo.id = `code-width-${preset}`;
+        demo.innerHTML = '<a href="#" class="x-link">Styled Link</a>';
+        document.body.appendChild(demo);
+      }
+    }, presets);
 
-      // narrow should be 400px
-      expect(maxWidth).toContain('400px');
-    }
-
-    const demoNormal = page.locator('[x-demo][data-code-width="normal"]').first();
-    if (await demoNormal.isVisible()) {
-      // x-demo builds its code panel when it injects -- on this lazy page,
-      // once it nears the viewport -- so bring it there and read the panel
-      // once it exists, not before.
-      await demoNormal.scrollIntoViewIfNeeded();
-      const codePanel = demoNormal.locator('.x-demo__code');
-      await expect(codePanel).toBeAttached({ timeout: 15000 });
-      const maxWidth = await codePanel.evaluate((el) => {
-        return window.getComputedStyle(el).maxWidth;
-      });
-
-      // normal should be 600px
-      expect(maxWidth).toContain('600px');
-    }
-
-    const demoWide = page.locator('[x-demo][data-code-width="wide"]').first();
-    if (await demoWide.isVisible()) {
-      // x-demo builds its code panel when it injects -- on this lazy page,
-      // once it nears the viewport -- so bring it there and read the panel
-      // once it exists, not before.
-      await demoWide.scrollIntoViewIfNeeded();
-      const codePanel = demoWide.locator('.x-demo__code');
-      await expect(codePanel).toBeAttached({ timeout: 15000 });
-      const maxWidth = await codePanel.evaluate((el) => {
-        return window.getComputedStyle(el).maxWidth;
-      });
-
-      // wide should be 800px
-      expect(maxWidth).toContain('800px');
+    for (const [preset, expected] of presets) {
+      const demo = page.locator(`#code-width-${preset}`);
+      // x-demo builds its code panel when it nears the viewport.
+      await demo.scrollIntoViewIfNeeded();
+      const codePanel = demo.locator('.x-demo__code');
+      await expect(codePanel, `the ${preset} demo never built its code panel`).toBeAttached({ timeout: 15000 });
+      const maxWidth = await codePanel.evaluate((el) => window.getComputedStyle(el).maxWidth);
+      expect(maxWidth, `data-code-width="${preset}" code panel max-width`).toContain(expected);
     }
   });
 

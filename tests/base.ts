@@ -762,9 +762,14 @@ export async function wbIdle(
   // nav with zero items at 473ms, tapped the hamburger before init finished
   // (#1456) and probed a page still booting (#1442). Wait for the site's own
   // "booted" fact first; the first navigation's injections are then settled
-  // below. Pages without the shell (#app) have no boot to wait for.
+  // below. Pages without the shell have no boot to wait for.
+  //
+  // #1490: the shell is `body > #app` exactly, as index.html authors it. A
+  // nested #app is content, not the shell -- mdhtml rendering a fetched
+  // index.html into the test harness put one there, and a bare
+  // getElementById('app') made wbIdle wait 15s for a boot that never comes.
   await page.waitForFunction(
-    () => !document.getElementById('app') || 'WBSite' in window,
+    () => !document.querySelector('body > #app') || 'WBSite' in window,
     undefined,
     { timeout }
   ).catch((err: Error) => {

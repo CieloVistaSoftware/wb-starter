@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { wbIdle } from '../base';
 
 /**
  * #209: a popover opening/closing was invisible to assistive tech — no role,
@@ -13,6 +14,9 @@ import { test, expect } from '../fixtures/offline';
 test('popover announces itself to assistive tech via ARIA (#209)', async ({ page }) => {
   await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !!(window as any).WB, { timeout: 20000 });
+  // #1481: WB exists long before the site shell has booted; probing in that
+  // window lost the context in CI (#1442 shape). wbIdle() waits for the boot.
+  await wbIdle(page, { timeout: 30000 });
 
   await page.evaluate(async () => {
     document.querySelectorAll('#aria-pop, body > div.x-popover').forEach((e) => e.remove());

@@ -40,15 +40,20 @@ test.describe('ATTRIBUTE-NAMING-STANDARD.md shows no custom-element tags (#255, 
     const md = fs.readFileSync(DOC_PATH, 'utf8');
     const lines = md.split('\n');
     let currentSection = '';
+    let checked = 0;
     lines.forEach((line, i) => {
       if (/^## /.test(line)) currentSection = line.trim();
       if (line.includes('x-behavior="')) {
+        checked++;
         expect(
           currentSection,
           `line ${i + 1} uses x-behavior="…" outside the migration section:\n${line}`
         ).toBe('## Migration from Legacy Syntax');
       }
     });
+    // #1092: the migration section shows the legacy form on purpose; if no line
+    // matched, the doc or the pattern changed and the placement rule checked nothing
+    expect(checked, 'no x-behavior="…" line found in the doc, so its placement was never checked').toBeGreaterThan(0);
   });
 
   test('doc-viewer renders the file without a 404 or missing-content error', async ({ page }) => {

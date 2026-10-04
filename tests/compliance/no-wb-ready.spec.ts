@@ -32,6 +32,11 @@ function findJsFiles(dir) {
 test.describe('No x-ready pollution', () => {
   const files = findJsFiles(SRC_DIR);
 
+  // #1092: with no behavior files the per-file tests below are never generated
+  test('behavior source files were found to scan', () => {
+    expect(files.length, `no .js files found under ${SRC_DIR}, so nothing was checked`).toBeGreaterThan(0);
+  });
+
   for (const file of files) {
     test(`${path.relative(SRC_DIR, file)} - no x-ready`, () => {
       const content = fs.readFileSync(file, 'utf8');
@@ -44,10 +49,9 @@ test.describe('No x-ready pollution', () => {
         }
       });
 
-      if (violations.length > 0) {
-        const report = violations.map(v => `  Line ${v.line}: ${v.text}`).join('\n');
-        expect(violations.length, `x-ready found in ${file}:\n${report}`).toBe(0);
-      }
+      // #1092: assert unconditionally; the if() only built the report text
+      const report = violations.map(v => `  Line ${v.line}: ${v.text}`).join('\n');
+      expect(violations.length, `x-ready found in ${file}:\n${report}`).toBe(0);
     });
   }
 });
