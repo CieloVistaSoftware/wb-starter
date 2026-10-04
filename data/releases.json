@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.197",
+      "date": "2026-10-04",
+      "summary": "Fix: the panel hit test aims at the visible part of the pane, not its off-screen centre (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1411\" target=\"_blank\" rel=\"noopener\">PR 1411</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1175\" target=\"_blank\" rel=\"noopener\">#1175</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The panel hit test aims at the visible part of the pane, not its off-screen centre</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1175\" target=\"_blank\" rel=\"noopener\">#1175</a>",
+          "issues": [
+            1175
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.196",
       "date": "2026-10-04",
       "summary": "Fix: remove the inert scrollProgress stub; every camelCase behavior must be reachable (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1408\" target=\"_blank\" rel=\"noopener\">PR 1408</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1195\" target=\"_blank\" rel=\"noopener\">#1195</a>",
