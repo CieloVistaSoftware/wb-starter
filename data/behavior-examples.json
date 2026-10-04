@@ -405,13 +405,6 @@
         }
       ]
     },
-    "x-image": {
-      "source": "<img src=\"/images/placeholder.svg\" alt=\"Lazy loaded\" lazy class=\"demo-image\">",
-      "alternates": [
-        "<img src=\"/images/placeholder.svg\" alt=\"Zoomable\" zoomable class=\"demo-image\">",
-        "<div x-image src=\"/images/placeholder.svg\" alt=\"Lazy loaded\" lazy class=\"demo-image\"></div>"
-      ]
-    },
     "x-gallery": {
       "source": "<div x-gallery columns=\"4\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 1\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 2\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 3\">\r\n        <img src=\"/images/placeholder.svg\" alt=\"Gallery 4\">\r\n      </div>",
       "alternates": []
