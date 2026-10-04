@@ -6,6 +6,49 @@
   ],
   "releases": [
     {
+      "version": "1.0.220",
+      "date": "2026-10-04",
+      "summary": "Fix: phone specs green and gated; scroll restore and audio overflow fixed (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1435\" target=\"_blank\" rel=\"noopener\">PR 1435</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1432\" target=\"_blank\" rel=\"noopener\">#1432</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Skip WebKit review screenshots on CI-stalling capture; checks still run on both devices</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1432\" target=\"_blank\" rel=\"noopener\">#1432</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a>",
+          "issues": [
+            1432,
+            1439
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>WebKit review screenshots capture the viewport; the full-page capture hangs on the CI runner</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1432\" target=\"_blank\" rel=\"noopener\">#1432</a>",
+          "issues": [
+            1432
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Screenshot tests get a budget for a full-page WebKit capture on CI; animations frozen</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1432\" target=\"_blank\" rel=\"noopener\">#1432</a>",
+          "issues": [
+            1432
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The four phone specs pass and join the gate; audio row no longer widens a phone</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1432\" target=\"_blank\" rel=\"noopener\">#1432</a>",
+          "issues": [
+            1432
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Scroll restore survives async pages and anchoring; Behaviors load no longer resets it; nav-scroll spec reads the real menu</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1432\" target=\"_blank\" rel=\"noopener\">#1432</a>",
+          "issues": [
+            1432
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.219",
       "date": "2026-10-04",
       "summary": "Test: record what navigates the page in the x-ignore test (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1443\" target=\"_blank\" rel=\"noopener\">PR 1443</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1442\" target=\"_blank\" rel=\"noopener\">#1442</a>",
