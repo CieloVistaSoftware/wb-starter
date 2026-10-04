@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.189",
+      "date": "2026-10-04",
+      "summary": "Fix: pre, code and textarea are opaque to the demo pretty-printer (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1331\" target=\"_blank\" rel=\"noopener\">PR 1331</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1015\" target=\"_blank\" rel=\"noopener\">#1015</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Name serializeOpaque&#39;s locals childTag/childAttrs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1015\" target=\"_blank\" rel=\"noopener\">#1015</a>",
+          "issues": [
+            1015
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Pre, code and textarea are opaque to the demo pretty-printer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1015\" target=\"_blank\" rel=\"noopener\">#1015</a>",
+          "issues": [
+            1015
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.188",
       "date": "2026-10-04",
       "summary": "Fix: a test-async run always ends with a terminal state, even when its monitor dies (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1402\" target=\"_blank\" rel=\"noopener\">PR 1402</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1316\" target=\"_blank\" rel=\"noopener\">#1316</a>",
