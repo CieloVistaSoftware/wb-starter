@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.249",
+      "date": "2026-10-04",
+      "summary": "Test: showcase setup is one boot-aware wait, no fixed sleeps (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1494\" target=\"_blank\" rel=\"noopener\">PR 1494</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1473\" target=\"_blank\" rel=\"noopener\">#1473</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Showcase setup is one boot-aware wait, no fixed sleeps, a budget that fits</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1473\" target=\"_blank\" rel=\"noopener\">#1473</a>",
+          "issues": [
+            1473
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.248",
       "date": "2026-10-04",
       "summary": "Fix: a slow doc never lands under a behavior picked after it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1489\" target=\"_blank\" rel=\"noopener\">PR 1489</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1488\" target=\"_blank\" rel=\"noopener\">#1488</a>",
