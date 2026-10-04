@@ -400,7 +400,12 @@ export function notes(element, options = {}) {
   const viewSavedNotes = async () => {
     let savedData = { notes: [] };
     try {
-      const res = await fetch(config.savePath, { cache: 'no-store' });
+      // Read from where saves go (#1174): /api/notes/append writes the server's
+      // notes store, which is not the static file under test, so reading the
+      // file showed notes the server never saved. A static host (the deployed
+      // site) has no /api/notes, so fall back to the file there.
+      let res = await fetch('/api/notes', { cache: 'no-store' });
+      if (!res.ok) res = await fetch(config.savePath, { cache: 'no-store' });
       if (res.ok) savedData = await res.json();
     } catch (e) {
       const raw = localStorage.getItem(NOTES_STORAGE_KEY + '-file');

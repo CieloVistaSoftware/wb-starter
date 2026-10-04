@@ -141,7 +141,7 @@ jobs:
           # root (docs/standards/REPO-LAYOUT.md; repo-layout.spec.ts failed on
           # a root server.pid).
           mkdir -p data/test-results
-          node server.js > data/test-results/server.log 2>&1 &
+          WB_TEST_SERVER=1 node server.js > data/test-results/server.log 2>&1 &
           echo $! > data/test-results/server.pid
           # Wait for server to be ready
           for i in {1..30}; do
