@@ -6,6 +6,98 @@
   ],
   "releases": [
     {
+      "version": "1.0.231",
+      "date": "2026-10-04",
+      "summary": "Fix: boot navigation no longer closes a menu opened during startup (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1458\" target=\"_blank\" rel=\"noopener\">PR 1458</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1456\" target=\"_blank\" rel=\"noopener\">#1456</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The boot navigation no longer closes a menu the reader opened during startup</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1456\" target=\"_blank\" rel=\"noopener\">#1456</a>",
+          "issues": [
+            1456
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.230",
+      "date": "2026-10-04",
+      "summary": "Fix: old server logs are compressed, never deleted (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1455\" target=\"_blank\" rel=\"noopener\">PR 1455</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1130\" target=\"_blank\" rel=\"noopener\">#1130</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Old server logs are compressed, never deleted, and every run says what it did</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1130\" target=\"_blank\" rel=\"noopener\">#1130</a>",
+          "issues": [
+            1130
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.229",
+      "date": "2026-10-04",
+      "summary": "Fix: publish the example generator after its seed data (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1451\" target=\"_blank\" rel=\"noopener\">PR 1451</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1337\" target=\"_blank\" rel=\"noopener\">#1337</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Publish the example generator after its seed data, not just the tag map</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1337\" target=\"_blank\" rel=\"noopener\">#1337</a>",
+          "issues": [
+            1337
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.228",
+      "date": "2026-10-04",
+      "summary": "Test: generated demos respect content models (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1454\" target=\"_blank\" rel=\"noopener\">PR 1454</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1062\" target=\"_blank\" rel=\"noopener\">#1062</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No generated demo puts bare text inside a host that cannot hold it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1062\" target=\"_blank\" rel=\"noopener\">#1062</a>",
+          "issues": [
+            1062
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.227",
+      "date": "2026-10-04",
+      "summary": "Test: doc coverage waits for each panel; a slow 404 is missing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1450\" target=\"_blank\" rel=\"noopener\">PR 1450</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1035\" target=\"_blank\" rel=\"noopener\">#1035</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Block the service worker in the doc-coverage spec, which now mocks a slow 404</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1035\" target=\"_blank\" rel=\"noopener\">#1035</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a>",
+          "issues": [
+            1035,
+            1349
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Doc coverage waits for each panel to fill; a slow 404 is missing, not documented</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1035\" target=\"_blank\" rel=\"noopener\">#1035</a>",
+          "issues": [
+            1035
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.226",
+      "date": "2026-10-04",
+      "summary": "Fix: templates pass only keys their behavior declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1449\" target=\"_blank\" rel=\"noopener\">PR 1449</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1142\" target=\"_blank\" rel=\"noopener\">#1142</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Templates pass only keys their behavior declares</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1142\" target=\"_blank\" rel=\"noopener\">#1142</a>",
+          "issues": [
+            1142
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.225",
       "date": "2026-10-04",
       "summary": "Fix: delete the 20 dead WB-* tagName checks (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1448\" target=\"_blank\" rel=\"noopener\">PR 1448</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1068\" target=\"_blank\" rel=\"noopener\">#1068</a>",

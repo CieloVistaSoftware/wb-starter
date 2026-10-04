@@ -40,6 +40,7 @@ import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
 import { classifyRun, readServerLogPort } from "./lib/server-down.mjs";
 import { playwrightInvocation } from "./lib/playwright-launch.mjs";
 import { installDeathGuards } from "./lib/run-status.mjs";
+import { retireServerLogs, describeRetirement } from "./lib/retire-server-logs.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -319,6 +320,10 @@ async function runMonitor(args) {
     : `${basename(specFile, ".spec.ts")}-${runStamp}.log`;
   const serverLog = process.env.WB_SERVER_LOG || join(DATA_DIR, "test-server-logs", serverLogName);
   status.serverLog = serverLog;
+  // #1130: the folder is bounded by compressing old logs, never by deleting
+  // them -- see scripts/lib/retire-server-logs.mjs. What it did is recorded
+  // in the status file, so a run always says it.
+  status.serverLogRetention = describeRetirement(retireServerLogs(join(DATA_DIR, "test-server-logs")));
 
   /**
    * Split failures into "our own server was unreachable" and real test results

@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.225">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.231">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -422,6 +422,16 @@
     let markTagMapReady;
     const tagMapReady = new Promise((resolve) => { markTagMapReady = resolve; });
 
+    // #1337: the second dependency. seedAttributes() fills in src= and friends
+    // from data/schema-index.json, which arrives two fetches after the tag map.
+    // Published on the tag map alone, an early caller got `<div x-avatar>` and a
+    // later one `<div x-avatar src="...">` -- 5 of 212 behaviors answered by
+    // call time. Settled (loaded or failed) once that fetch has, so a failed
+    // index still publishes, the same answer every time.
+    let markSeedDataReady;
+    const seedDataReady = new Promise((resolve) => { markSeedDataReady = resolve; });
+    const examplesReady = Promise.all([tagMapReady, seedDataReady]).then(() => {});
+
     // #666: one row per VARIANT, not one per behavior -- John: "add one entry
     // for each variant too... show the behavior name and all possible variants
     // (one per row so user can see them all)". A behavior with no declared
@@ -702,6 +712,7 @@
             }
           })
           .catch(() => {})
+          .then(() => { markSeedDataReady(); })
           .then(() => {
             // Through applyFilter, not renderBrowseAll directly: the count is
             // rendered from allEntries, which is empty until this async load
@@ -718,6 +729,8 @@
       // answering from an empty map -- and a caller waiting for it would
       // otherwise just time out with nothing to read.
       .catch((err) => {
+        // Whatever failed, the seed data is as loaded as it will get.
+        markSeedDataReady();
         if (!nativeByBehavior) {
           console.warn('[behaviors] tag-map.js did not load; the example generator is not published', err);
         }
@@ -2203,8 +2216,10 @@
     //
     // __wbBehaviorsReady is the explicit form of the same guarantee, for a
     // caller that would rather await than poll.
-    window.__wbBehaviorsReady = tagMapReady;
-    tagMapReady.then(() => {
+    //
+    // #1337: and after the seed data, for the same reason -- see seedDataReady.
+    window.__wbBehaviorsReady = examplesReady;
+    examplesReady.then(() => {
       window.__wbGeneratedExample = generatedExample;
     });
 
@@ -2849,7 +2864,7 @@
     // #1153: same gate as __wbGeneratedExample, for the same reason -- this
     // reaches the generator for any row with no authored example, and
     // withOption() consults the same nativeMap index to find the host tag.
-    tagMapReady.then(() => {
+    examplesReady.then(() => {
       window.__wbExampleSource = (token, form, prop, variant, isBool, exampleIndex, label) => {
         const { source } = exampleSourceFor(token, form, prop, variant, isBool, exampleIndex);
         return source || generatedExample(token, variant, label || '', prop, isBool);
