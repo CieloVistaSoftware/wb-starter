@@ -1,11 +1,49 @@
 /**
- * Range - Enhanced <input type="range"> element
- * Adds value display, min/max labels, step indicators
- * Helper Attribute: [x-behavior="range"]
+ * Range — enhanced <input type="range"> slider
+ *
+ * Adds a live value display and min/max bound labels.
+ *
+ * `type="range"` IS this behavior (tag-map.js:46), so there is no attribute to
+ * add. `x-range` exists for a non-input host only.
+ *
+ * Options are read with readFlag/readAttr (#1140). They used to be read with
+ * a bare `hasAttribute('show-value')`, which had two consequences:
+ *
+ *   showValue="false"  turned the value display ON, because hasAttribute is
+ *                      true for any value including the string "false" — the
+ *                      #747 trap, and the docs taught show-value="true", so
+ *                      an author copying it and flipping it got the opposite
+ *                      of what the markup said;
+ *   showValue          was unreadable, because only the dashed spelling was
+ *                      ever looked up, while the rule is that no attribute
+ *                      name carries a dash — only the x- behavior prefix does
+ *                      (#1125).
+ *
+ * readFlag/readAttr accept the camelCase name, still read the dashed and
+ * data-* spellings for anything already written, and treat "false" and "0" as
+ * false.
  */
+import { readFlag, readAttr } from '../../core/read-attr.js';
+
+/**
+ * Read this behavior's four options off a host element.
+ *
+ * Both hosts need the same reading — the container host passes them down to
+ * the input it builds — and it was the one duplicated block where the two
+ * could drift apart.
+ */
+function optionsFrom(element, options = {}) {
+  return {
+    showValue: options.showValue ?? readFlag(element, 'showValue'),
+    showLabels: options.showLabels ?? readFlag(element, 'showLabels'),
+    valuePrefix: options.valuePrefix ?? readAttr(element, 'valuePrefix', ''),
+    valueSuffix: options.valueSuffix ?? readAttr(element, 'valueSuffix', ''),
+  };
+}
+
 export function range(element, options = {}) {
   // Any element can carry an x-* behavior (the premise input.js builds on for
-  // <div x-input>). <div x-range show-value> used to warn "must be an <input
+  // <div x-input>). <div x-range showValue> used to warn "must be an <input
   // type=range>" and do nothing, so every option row of the attribute form on
   // the behaviors page rendered the same bare div. On a container host, build
   // the real slider inside it and enhance that, reading the host's options.
@@ -20,13 +58,7 @@ export function range(element, options = {}) {
       element.textContent = '';
       element.appendChild(input);
     }
-    return range(input, {
-      showValue: options.showValue ?? element.hasAttribute('show-value'),
-      showLabels: options.showLabels ?? element.hasAttribute('show-labels'),
-      valuePrefix: options.valuePrefix || element.getAttribute('value-prefix') || '',
-      valueSuffix: options.valueSuffix || element.getAttribute('value-suffix') || '',
-      ...options,
-    });
+    return range(input, { ...optionsFrom(element, options), ...options });
   }
   if (element.type !== 'range') {
     console.warn('[range] An <input> host must be type="range"');
@@ -34,13 +66,7 @@ export function range(element, options = {}) {
   }
 
   // v3: plain attributes only — no legacy data-* fallback.
-  const config = {
-    showValue: options.showValue ?? element.hasAttribute('show-value'),
-    showLabels: options.showLabels ?? element.hasAttribute('show-labels'),
-    valuePrefix: options.valuePrefix || element.getAttribute('value-prefix') || '',
-    valueSuffix: options.valueSuffix || element.getAttribute('value-suffix') || '',
-    ...options
-  };
+  const config = { ...optionsFrom(element, options), ...options };
 
   element.classList.add('x-range');
 

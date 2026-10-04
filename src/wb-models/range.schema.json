@@ -1,51 +1,124 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "range.schema.json",
   "title": "Range",
-  "description": "Styles a native range input, keeping it a real form control.",
+  "description": "Slider with a live value display and min/max bound labels. input[type=\"range\"] IS this behavior, so there is no attribute to add.",
   "schemaFor": "range",
+  "baseClass": "x-range",
   "semanticElement": {
     "tagName": "input",
-    "type": "range"
+    "typeAttribute": "range",
+    "implicitRole": "slider"
+  },
+  "compliance": {
+    "baseClass": "x-range",
+    "supportLevel": "stable",
+    "accessibility": "high"
   },
   "properties": {
-    "value-prefix": {
-      "type": "string",
-      "description": "Read by range().",
-      "default": "this is the value prefix"
-    },
-    "value-suffix": {
-      "type": "string",
-      "description": "Read by range().",
-      "default": "this is the value suffix"
-    },
-    "show-value": {
+    "showValue": {
       "type": "boolean",
-      "description": "Read by range(). Bare attribute.",
+      "description": "Show the current value above the slider",
       "default": false
     },
-    "show-labels": {
+    "showLabels": {
       "type": "boolean",
-      "description": "Read by range(). Bare attribute.",
+      "description": "Show the min and max bounds below the slider",
       "default": false
+    },
+    "valuePrefix": {
+      "type": "string",
+      "description": "Text before the value, such as a currency symbol",
+      "default": ""
+    },
+    "valueSuffix": {
+      "type": "string",
+      "description": "Text after the value, such as a unit",
+      "default": ""
     }
+  },
+  "nativeProperties": {
+    "description": "min, max, step, value, name and disabled are the element's own HTML attributes. The behavior reads min and max for the bound labels but does not define them.",
+    "attributes": ["min", "max", "step", "value", "name", "disabled"]
   },
   "$view": [],
   "$methods": {},
-  "$cssAPI": {},
-  "compliance": {
-    "baseClass": "x-range"
+  "$cssAPI": {
+    "--x-range-gap": {
+      "default": "0.5rem",
+      "description": "Gap between the slider, its value and its labels"
+    },
+    "--x-range-value-size": {
+      "default": "0.875rem",
+      "description": "Value text font size"
+    },
+    "--x-range-value-color": {
+      "default": "var(--text-primary)",
+      "description": "Value text color"
+    },
+    "--x-range-label-size": {
+      "default": "0.75rem",
+      "description": "Bound label font size"
+    },
+    "--x-range-label-color": {
+      "default": "var(--text-secondary)",
+      "description": "Bound label text color"
+    }
+  },
+  "accessibility": {
+    "role": "slider",
+    "ariaValueMin": "native, from min",
+    "ariaValueMax": "native, from max",
+    "ariaValueNow": "native, from value",
+    "note": "The value display is an <output>, so a change is announced without the author wiring aria-live."
   },
   "test": {
+    "functional": true,
     "setup": [
-      "<input type=\"range\">",
-      "<input type=\"range\" show-value>",
-      "<input type=\"range\" show-labels>"
-    ]
+      "<input type=\"range\" min=\"0\" max=\"100\" value=\"50\">",
+      "<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" showValue>",
+      "<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" showLabels>",
+      "<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" showValue showLabels>",
+      "<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" showValue valueSuffix=\"%\">",
+      "<input type=\"range\" min=\"10\" max=\"1000\" value=\"250\" showValue showLabels valuePrefix=\"$\">",
+      "<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" showValue=\"false\">",
+      "<input type=\"range\" min=\"0\" max=\"100\" value=\"50\" showLabels=\"false\">"
+    ],
+    "matrix": {
+      "description": "Each boolean is exercised in all four author states — absent, bare, \"true\" and \"false\" — because \"false\" used to switch the display ON (#1140).",
+      "combinations": [
+        { "showValue": "absent" },
+        { "showValue": "bare" },
+        { "showValue": "true" },
+        { "showValue": "false" },
+        { "showLabels": "absent" },
+        { "showLabels": "bare" },
+        { "showLabels": "true" },
+        { "showLabels": "false" },
+        { "showValue": "bare", "valuePrefix": "$" },
+        { "showValue": "bare", "valueSuffix": "%" },
+        { "showValue": "bare", "valuePrefix": "$", "valueSuffix": " USD" },
+        { "showValue": "bare", "showLabels": "bare" }
+      ]
+    },
+    "site": {
+      "page": "forms",
+      "tag": "x-range",
+      "renders": true,
+      "baseClass": "x-range",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
   },
   "_metadata": {
-    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716)",
+    "category": "forms",
+    "icon": "🎚️",
+    "since": "1.0.0",
+    "status": "stable",
+    "generatedBy": "scripts/generate-behavior-schemas.mjs (#716), then expanded by hand (#1140)",
     "derivedFrom": "the behavior implementation — every property here is one the code actually reads",
-    "note": "Expand by hand: enums, richer descriptions and accessibility notes cannot be read from source."
+    "note": "The generated version named these show-value, show-labels, value-prefix and value-suffix, because the generator reads attribute names out of getAttribute/hasAttribute calls and range.js spelled them with dashes. #1140 converted the code to readFlag/readAttr and the names to camelCase (#1125). The generator never overwrites an existing schema, so this hand-expansion stands."
   }
 }
