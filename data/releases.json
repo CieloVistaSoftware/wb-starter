@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.155",
+      "date": "2026-10-03",
+      "summary": "Fix: every-declared-attribute waits for injection idle, not 120ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1372\" target=\"_blank\" rel=\"noopener\">PR 1372</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1066\" target=\"_blank\" rel=\"noopener\">#1066</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Every-declared-attribute waits for injection idle, not 120ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1066\" target=\"_blank\" rel=\"noopener\">#1066</a>",
+          "issues": [
+            1066
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.154",
+      "date": "2026-10-03",
+      "summary": "Fix: the deployed-smoke gate judges the real deploy run, so a cancelled duplicate is not &#39;ERRORED&#39; (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1363\" target=\"_blank\" rel=\"noopener\">PR 1363</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1361\" target=\"_blank\" rel=\"noopener\">#1361</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The deployed-smoke gate judges the real deploy run, so a cancelled duplicate is not &quot;ERRORED&quot;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1361\" target=\"_blank\" rel=\"noopener\">#1361</a>",
+          "issues": [
+            1361
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.153",
       "date": "2026-10-03",
       "summary": "Fix: the releases search test types what the page shows, not raw HTML with entities (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1370\" target=\"_blank\" rel=\"noopener\">PR 1370</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1369\" target=\"_blank\" rel=\"noopener\">#1369</a>",
