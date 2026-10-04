@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.245",
+      "date": "2026-10-04",
+      "summary": "Test: one sub-path asset test per catalogue row (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1487\" target=\"_blank\" rel=\"noopener\">PR 1487</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1482\" target=\"_blank\" rel=\"noopener\">#1482</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>One sub-path asset test per catalogue row, not one 240s sweep</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1482\" target=\"_blank\" rel=\"noopener\">#1482</a>",
+          "issues": [
+            1482
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.244",
       "date": "2026-10-04",
       "summary": "Test: wbIdle&#39;s site shell is body &gt; #app, not any #app (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1491\" target=\"_blank\" rel=\"noopener\">PR 1491</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1490\" target=\"_blank\" rel=\"noopener\">#1490</a>",
