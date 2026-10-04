@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.214",
+      "date": "2026-10-04",
+      "summary": "Chore: delete the dead schema-tests generator and output (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1431\" target=\"_blank\" rel=\"noopener\">PR 1431</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1430\" target=\"_blank\" rel=\"noopener\">#1430</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delete the pre-4.0.0 schema-tests generator and its unread output; npm scripts must run real files</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1430\" target=\"_blank\" rel=\"noopener\">#1430</a>",
+          "issues": [
+            1430
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.213",
       "date": "2026-10-04",
       "summary": "Test: every project gated or excluded with a reason (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1434\" target=\"_blank\" rel=\"noopener\">PR 1434</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1189\" target=\"_blank\" rel=\"noopener\">#1189</a>",
