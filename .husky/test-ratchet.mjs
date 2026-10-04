@@ -127,7 +127,28 @@ const SIGTERM_GRACE_MS = 30_000;
 // integration (#1176): it ran in CI but only as a report, so a red
 // integration test could ship for weeks. Gated once it was measured green on
 // main (371 passed) and its one flake was fixed (#1412).
-const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer', 'integration'];
+// views (#1189): its three specs ran in no gate; measured green on main
+// (6 passed) and gated.
+const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer', 'integration', 'views'];
+
+// #1189: every Playwright project is either in ALL_PROJECTS or here, with
+// the reason it is not gated. tests/compliance/every-project-is-gated-or-
+// explained.spec.ts fails on a project that is in neither, so a new project
+// cannot quietly run in no gate. A red project waiting to be gated names its
+// issue; move it to ALL_PROJECTS when that issue closes.
+// eslint-disable-next-line no-unused-vars -- read by the compliance spec above
+const NOT_GATED = {
+  base: 'reported only (#1044); both its specs also run in the gated behaviors project',
+  functional: 'its one spec, behaviors/functional-runner.spec.ts, also runs in the gated behaviors project',
+  firefox: 'reruns behaviors-project specs in Firefox; the gate runs Chromium, cross-browser runs on demand (npm run test:browsers)',
+  webkit: 'reruns behaviors-project specs in WebKit; the gate runs Chromium, cross-browser runs on demand (npm run test:browsers)',
+  'mobile-chrome': 'reruns behaviors-project specs on a Pixel 5 profile; cross-browser runs on demand (npm run test:browsers)',
+  'mobile-safari': 'reruns behaviors-project specs on an iPhone 12 profile; cross-browser runs on demand (npm run test:browsers)',
+  deployed: 'tests the published site, not the checkout; run after a push by npm run test:smoke:deployed (Law 17)',
+  'mobile-validation-pixel': 'red on main (27 failures across both devices); gate it once #1432 is fixed',
+  'mobile-validation-iphone': 'red on main (27 failures across both devices); gate it once #1432 is fixed',
+  performance: 'red on main, and its time budgets depend on machine load; gate it once #1433 is fixed',
+};
 
 /**
  * The gate's projects, narrowable by WB_GATE_PROJECTS (#1163).
