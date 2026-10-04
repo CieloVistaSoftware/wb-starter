@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.183",
+      "date": "2026-10-04",
+      "summary": "Fix: service workers are blocked by default; deployed checks and the one worker spec keep theirs (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1400\" target=\"_blank\" rel=\"noopener\">PR 1400</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1362\" target=\"_blank\" rel=\"noopener\">#1362</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The two other specs that register sw.js opt in; the guard names any that do not</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1362\" target=\"_blank\" rel=\"noopener\">#1362</a>",
+          "issues": [
+            1362
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Service workers are blocked by default; the deployed checks and the one worker spec keep theirs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1362\" target=\"_blank\" rel=\"noopener\">#1362</a>",
+          "issues": [
+            1362
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.182",
       "date": "2026-10-04",
       "summary": "Test: port&#39;s remaining test fixes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1399\" target=\"_blank\" rel=\"noopener\">PR 1399</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1283\" target=\"_blank\" rel=\"noopener\">#1283</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1209\" target=\"_blank\" rel=\"noopener\">#1209</a>",
