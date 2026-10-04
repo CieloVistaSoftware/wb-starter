@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.213",
+      "date": "2026-10-04",
+      "summary": "Test: every project gated or excluded with a reason (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1434\" target=\"_blank\" rel=\"noopener\">PR 1434</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1189\" target=\"_blank\" rel=\"noopener\">#1189</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Every Playwright project is gated or excluded with a reason; views joins the gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1189\" target=\"_blank\" rel=\"noopener\">#1189</a>",
+          "issues": [
+            1189
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.212",
       "date": "2026-10-04",
       "summary": "Fix: radio variants and sizes declared, styled and shown (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1428\" target=\"_blank\" rel=\"noopener\">PR 1428</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1154\" target=\"_blank\" rel=\"noopener\">#1154</a>",
