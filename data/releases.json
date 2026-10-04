@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.250",
+      "date": "2026-10-04",
+      "summary": "Test: record the ripple wave&#39;s creation, don&#39;t race its removal (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1483\" target=\"_blank\" rel=\"noopener\">PR 1483</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1480\" target=\"_blank\" rel=\"noopener\">#1480</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Record the ripple wave&#39;s creation instead of racing its removal</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1480\" target=\"_blank\" rel=\"noopener\">#1480</a>",
+          "issues": [
+            1480
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.249",
       "date": "2026-10-04",
       "summary": "Test: showcase setup is one boot-aware wait, no fixed sleeps (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1494\" target=\"_blank\" rel=\"noopener\">PR 1494</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1473\" target=\"_blank\" rel=\"noopener\">#1473</a>",
