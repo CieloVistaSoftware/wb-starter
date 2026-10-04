@@ -57,6 +57,15 @@ A refusal is not an error to route around. **Wait and retry.** Do not raise the
 env overrides, do not call `npx playwright test` directly, and do not delete the
 lock file to get past it.
 
+**A holder is a process, not a PID (#1040).** The lock records its holder's PID
+*and* that process's start time, because operating systems hand PID numbers out
+again: a lock whose PID went to an unrelated process used to read as held
+forever, naming a stranger, until someone cleared the file by hand. So a
+refusal naming a live PID means the run really is still there. A holder the OS
+will not identify at all — or a lock written before this — is believed only up
+to `WB_LOCK_MAX_HOLD_MS` (default 2h, longer than any real suite), so nothing
+can wedge the machine and you never need to clear the lock yourself.
+
 Why this is a law: one 8-worker suite alone takes this box from ~1.4 GB free to
 ~120 MB. Before the fix each worktree had its own private lock, so five agents
 each launched a full suite believing they were alone — and the whole machine

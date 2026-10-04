@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T23:33:13.212Z",
+  "generatedAt": "2026-10-04T08:19:14.509Z",
   "count": 160,
   "schemas": [
     {
@@ -2789,6 +2789,16 @@
             "Golden Gate, seen from Battery Spencer at dusk — the lights just coming on.",
             "Morning commute"
           ]
+        },
+        "width": {
+          "type": "string",
+          "description": "Width of the whole figure, image and caption together. A bare number is pixels (`width=\"320\"`); any CSS length works (`20rem`, `50%`). Capped at the container's width. For the image's height or shape, set `width`+`height` or `aspect-ratio` on the `<img>`.",
+          "default": "",
+          "examples": [
+            "240",
+            "20rem",
+            "50%"
+          ]
         }
       },
       "matrix": [],
@@ -2819,23 +2829,18 @@
       "properties": {
         "filename": {
           "type": "string",
-          "description": "File name. Its extension also picks the icon (#1117) -- `architecture-diagram.png` renders the image icon with no second attribute to write.",
+          "description": "File name. Its extension picks the icon (#1117, #1119) -- `architecture-diagram.png` renders the image icon. There is no fileType attribute: the filename is the only way to say what kind of file it is.",
           "required": true,
-          "default": "this is the filename"
-        },
-        "fileType": {
-          "type": "string",
-          "description": "OVERRIDE for the icon family, which is normally derived from the filename's extension (#1117). Only set this when the name cannot say it -- an extensionless name, or a `.bin` that really is a video. Setting it to something the extension contradicts is honoured but produces a self-contradicting example (#1114).",
-          "enum": [
-            "pdf",
-            "doc",
-            "image",
-            "video",
-            "audio",
-            "zip",
-            "file"
-          ],
-          "default": "file"
+          "default": "this is the filename",
+          "examples": [
+            "quarterly-report.pdf",
+            "meeting-notes.docx",
+            "architecture-diagram.png",
+            "product-walkthrough.mp4",
+            "interview-recording.m4a",
+            "release-assets.zip",
+            "sensor-capture.bin"
+          ]
         },
         "size": {
           "type": "string",
@@ -2903,11 +2908,6 @@
         },
         {
           "filename": "sensor-capture.bin",
-          "size": "31 MB"
-        },
-        {
-          "filename": "sensor-capture.bin",
-          "fileType": "video",
           "size": "31 MB"
         }
       ],
@@ -4322,6 +4322,16 @@
           "type": "boolean",
           "description": "Clicking the image opens it full-size in a lightbox. Bare attribute.",
           "default": false
+        },
+        "width": {
+          "type": "number",
+          "description": "Width in pixels (the native attribute). On its own the height follows the photo's shape. With `height`, the two numbers set the shape too: the image is cropped to it (`object-fit: cover`), never stretched. It still shrinks to fit a narrower container and keeps that shape.",
+          "default": 0
+        },
+        "height": {
+          "type": "number",
+          "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspect-ratio` wins over the pair.",
+          "default": 0
         }
       },
       "matrix": [],

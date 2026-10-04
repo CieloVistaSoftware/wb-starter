@@ -117,12 +117,26 @@ export function computeSignature({ message, module: mod, level, stack, code } = 
  * the retry logic reports failure. Nothing is broken. Merging that into the log
  * a person reads makes five real-looking errors out of a passing test, so it is
  * marked rather than hidden -- hiding it would be its own way of lying.
+ *
+ * #1032: ONLY the fixture markers answer that question. This used to return
+ * true for any localhost port >= 3100 as well -- but Playwright serves the app
+ * itself from such a port, so every error in every run, real crashes included,
+ * was badged "raised by a test fixture, not by the app" and dropped by
+ * apply-error-remedies.mjs (100 of 100 in one archived run). Where the page was
+ * served is context, not cause: see isTestServer().
  */
 export function isTestOrigin({ message, url, details } = {}) {
   const haystack = `${message || ''} ${url || ''} ${(details && details.src) || ''}`;
-  if (/definitely-missing|__test__|\btest-fixture\b/i.test(haystack)) return true;
-  // Playwright's servers run on ephemeral ports; the app's own does not.
-  const port = (haystack.match(/localhost:(\d+)/) || [])[1];
-  if (port && Number(port) >= 3100) return true;
-  return false;
+  return /definitely-missing|__test__|\btest-fixture\b/i.test(haystack);
+}
+
+/**
+ * Was a test server serving the page? Playwright's servers run on ephemeral
+ * ports; the app's own does not. This says WHEN the error happened -- during a
+ * run -- and nothing about whether it is real, so nothing may suppress, filter
+ * or discount an error on this alone (#1032).
+ */
+export function isTestServer({ url } = {}) {
+  const port = (String(url || '').match(/^https?:\/\/(?:localhost|127\.0\.0\.1):(\d+)/) || [])[1];
+  return !!port && Number(port) >= 3100;
 }

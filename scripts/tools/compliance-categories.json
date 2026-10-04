@@ -90,6 +90,7 @@
     "error-log-empty.spec.ts",
     "cross-browser-support.spec.ts",
     "playwright-if-tests.spec.ts",
-    "sw-audio-range-request.spec.ts"
+    "sw-audio-range-request.spec.ts",
+    "mocked-specs-block-the-service-worker.spec.ts"
   ]
 }

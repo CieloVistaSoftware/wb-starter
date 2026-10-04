@@ -17,6 +17,10 @@
  * missing — which is the same failure mode as the attribute allowlist in #1047
  * and the hand-listed rows in the first draft of the sub-path gate. The point is
  * that this test cannot go stale without failing.
+ *
+ * It is the ONLY guard for this rule (#1390): a second spec checking the
+ * lazy-only subset the same way (behaviors-list-includes-lazy-only-attributes)
+ * was folded in and deleted.
  */
 
 import { test, expect } from '../fixtures/offline';
@@ -53,8 +57,14 @@ test('every registered behaviour has a row on the behaviours page', async ({ pag
   ).toBeGreaterThan(100);
 
   await page.goto(`${baseURL}/?page=behaviors`, { waitUntil: 'domcontentloaded' });
-  await page.waitForSelector('.behaviors-search-results__row', { timeout: 20_000 });
-  await page.waitForTimeout(1000);
+  // #1390: wait for the list to be POPULATED, not for its first row to be
+  // visible. waitForSelector judged the first of 1316 rows, which can be
+  // hidden, and timed out with the whole list present (PR #1354's CI). The
+  // fixed 1000 ms sleep after it guessed at "done"; the count says it.
+  await expect.poll(
+    () => page.locator('.behaviors-search-results__row').count(),
+    { timeout: 30_000, message: 'the Behaviors list never populated' },
+  ).toBeGreaterThan(100);
 
   // Rows are labelled by what the reader would TYPE, which for an auto-injected
   // behaviour is its semantic host (`dialog`, not `x-dialog`). So a behaviour

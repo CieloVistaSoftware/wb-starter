@@ -23,6 +23,18 @@
  */
 import { test, expect, Page } from '../fixtures/offline';
 
+/**
+ * #1349: the error-log route is a POST, which sw.js passes through, so the
+ * COUNTING half worked. The module route is a GET, which it does not: sw.js
+ * answers the page's GETs itself and Playwright cannot route a service
+ * worker's requests, so on a claimed page button.js was fetched for real (it
+ * exists and loads fine) and the simulated failure never happened at all. This
+ * spec then failed on "Logged 0", which reads as a regression in the memoizing
+ * code and is nothing of the kind. Its verdict was a race against the worker
+ * claiming the page; blocked, there is no race.
+ */
+test.use({ serviceWorkers: 'block' });
+
 // Trailing `**` is required: a cache-busted retry appends `?x-retry=<ts>`
 // (src/wb-viewmodels/index.js's loadModule(), #513), and without the
 // wildcard that query string makes the URL no longer match this glob -- the

@@ -35,7 +35,7 @@ import { spawn } from "child_process";
 import { writeFile, readFile, mkdir } from "fs/promises";
 import { join, dirname, basename } from "path";
 import { fileURLToPath } from "url";
-import { createGuards, isProcessRunning } from "./lib/test-lock.mjs";
+import { createGuards, isSameProcess, processIdentity } from "./lib/test-lock.mjs";
 import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
 import { classifyRun, readServerLogPort } from "./lib/server-down.mjs";
 import { playwrightInvocation } from "./lib/playwright-launch.mjs";
@@ -132,11 +132,13 @@ async function runStop() {
 
   const killed = [];
   // Kill Playwright first, then monitor
-  if (lock.playwrightPid && isProcessRunning(lock.playwrightPid)) {
+  // Kill only the processes this lock recorded -- a PID alone may since have
+  // been recycled onto something unrelated (#1040).
+  if (isSameProcess(lock.playwrightPid, lock.playwrightPidStart)) {
     killProcess(lock.playwrightPid);
     killed.push(`Playwright (PID: ${lock.playwrightPid})`);
   }
-  if (lock.pid && isProcessRunning(lock.pid)) {
+  if (isSameProcess(lock.pid, lock.pidStart)) {
     killProcess(lock.pid);
     killed.push(`Monitor (PID: ${lock.pid})`);
   }
@@ -204,6 +206,14 @@ async function runLauncher(args) {
         console.error(
           `❌ A suite holds the machine (PID ${suite.pid}, ${suite.command || "suite"}, ` +
           `from ${suite.root || "unknown worktree"}). A single run cannot share it.`
+        );
+        process.exit(1);
+      }
+      const waiting = await guards.readReservation();
+      if (waiting) {
+        console.error(
+          `❌ A suite is waiting for the machine (${waiting.command || "suite"}, from ` +
+          `${waiting.root || "unknown worktree"}). New single runs wait until it has run (#1321).`
         );
         process.exit(1);
       }
@@ -308,9 +318,9 @@ async function runMonitor(args) {
    * from the header serve-with-log.mjs writes — playwright.config.ts picks a
    * free port inside the Playwright process, where this monitor cannot see it.
    */
-  const applyClassification = (exitCode) => {
+  const applyClassification = (exitCode, total) => {
     const port = Number(process.env.WB_TEST_PORT) || readServerLogPort(serverLog);
-    const run = classifyRun({ exitCode, failures: status.failures, port });
+    const run = classifyRun({ exitCode, failures: status.failures, port, total });
     status.failures = run.failures;
     status.serverDown = run.serverDown;
     status.testFailed = run.testFailed;
@@ -335,6 +345,7 @@ async function runMonitor(args) {
   if (mode === "suite") {
     await guards.bindSuiteLock(process.pid, {
       playwrightPid: proc.pid,
+      playwrightPidStart: processIdentity(proc.pid),
       startedAt: status.startedAt,
       command: status.command,
     });
@@ -510,7 +521,19 @@ function extractErrors(text) {
     // every failure is the run's own server refusing connections: the run
     // measured the server's absence, not the code. `failed` stays Playwright's
     // own total; `testFailed` and `serverDown` split it.
-    status.state = applyClassification(exitCode).state;
+    // #1091: a run that collected nothing is "no-tests", never passed/failed.
+    // The count is KNOWN to be zero only when Playwright said so, or printed a
+    // summary that adds up to zero -- an unparsed summary also reads 0 here, and
+    // that is "unknown", not "none".
+    const output = stdout + stderr;
+    const summaryParsed = summary.passed !== null || summary.failed !== null || summary.skipped !== null;
+    const knownTotal = /No tests found/i.test(output) ? 0 : (summaryParsed ? status.total : undefined);
+    status.state = applyClassification(exitCode, knownTotal).state;
+    if (status.state === "no-tests") {
+      status.noTestsReason = /No tests found/i.test(output)
+        ? "Playwright found no tests matching the spec/filter -- nothing was checked."
+        : "The run finished with zero tests collected -- nothing was checked.";
+    }
 
     try {
       await writeFile(statusFile, JSON.stringify(status, null, 2));

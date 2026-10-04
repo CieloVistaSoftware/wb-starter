@@ -39,6 +39,18 @@
 import { test, expect, type Page } from '../fixtures/offline';
 
 /**
+ * #1349 — AND THE PIN ABOVE ONLY WORKS WITH THE WORKER OUT OF THE WAY.
+ * sw.js (registered by src/main.js on every page load) answers the page's own
+ * GETs with its own fetch(), and Playwright cannot route a service worker's
+ * requests. So `/api/fixes` and `data/fixes.json` were pinned in this file and
+ * NOT pinned in the browser: whether the fixture applied depended on whether
+ * the worker had claimed the page yet. That is the same git-dependent,
+ * 14/28-then-0/28 flapping the header blames on the endpoint — with a second
+ * cause underneath it.
+ */
+test.use({ serviceWorkers: 'block' });
+
+/**
  * A fixed traced payload: the primary path, independent of git.
  *
  * The field names MIRROR the live endpoint and are not invented. Taken from
