@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.217",
+      "date": "2026-10-04",
+      "summary": "Fix: PR descriptions must cite their branch&#39;s issue (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1440\" target=\"_blank\" rel=\"noopener\">PR 1440</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A PR description must cite the issue its branch is named for</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",
+          "issues": [
+            1336
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.216",
       "date": "2026-10-04",
       "summary": "Fix: performance specs measure the site and join the gate (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1437\" target=\"_blank\" rel=\"noopener\">PR 1437</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1433\" target=\"_blank\" rel=\"noopener\">#1433</a>",
