@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.179",
+      "date": "2026-10-04",
+      "summary": "Fix: the live-reload client connects to the server&#39;s own port (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1396\" target=\"_blank\" rel=\"noopener\">PR 1396</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1333\" target=\"_blank\" rel=\"noopener\">#1333</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The live-reload client connects to the server&#39;s own port, and says connected only when it is</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1333\" target=\"_blank\" rel=\"noopener\">#1333</a>",
+          "issues": [
+            1333
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.178",
       "date": "2026-10-04",
       "summary": "Fix: the playground hero sweep waits for 120 built heroes, not 3 seconds (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1393\" target=\"_blank\" rel=\"noopener\">PR 1393</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1392\" target=\"_blank\" rel=\"noopener\">#1392</a>",
