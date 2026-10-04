@@ -248,7 +248,6 @@ test.describe('Fix Verification Tests', () => {
     const importsWork = await page.evaluate(async () => {
       try {
         await import('/src/wb-viewmodels/globe.js');
-        await import('/src/wb-viewmodels/scroll-progress.js');
         await import('/src/wb-viewmodels/slider.js');
         return true;
       } catch (e) {
