@@ -1534,12 +1534,28 @@ app.use((req, res, next) => {
 // Bind to the preferred port, falling through to the next free one when
 // it's taken (up to +20) instead of killing the current occupant -- see the
 // PORT POLICY comment at the top of this file.
+//
+// #1135: ONLY when no port was asked for. A caller that sets PORT (Playwright's
+// webServer, test-async, a person) is waiting on THAT port: falling through to
+// the next one left it waiting forever, or worse, talking to whatever already
+// held the port -- another worktree's server -- so a whole suite ran against
+// the wrong tree. An explicitly requested port that is busy is a hard error
+// that names it.
+const PORT_WAS_REQUESTED = Boolean(process.env.PORT);
+
 function tryListen(p, attemptsLeft) {
   const server = app.listen(p, () => onListening(p));
   server.on('error', (err) => {
     if (err.code === 'EADDRINUSE' && attemptsLeft > 0) {
       console.log(`[port] :${p} in use -- trying :${p + 1}`);
       tryListen(p + 1, attemptsLeft - 1);
+    } else if (err.code === 'EADDRINUSE') {
+      console.error(
+        `[port] :${p} is already in use, and PORT=${p} was requested explicitly, so this server ` +
+        `will not move to another port (#1135): whoever asked for :${p} would be talking to ` +
+        `the process that holds it. Free the port, or start without PORT to let it pick.`
+      );
+      process.exit(1);
     } else {
       throw err;
     }
@@ -1570,4 +1586,4 @@ function onListening(p) {
 // Number(port): `port` is the STRING from process.env.PORT, and tryListen's retry
 // does `p + 1` -- on a string that is concatenation ('59175' -> '591751'), which
 // listen() rejects with ERR_SOCKET_BAD_PORT (#1286).
-tryListen(Number(port), 20);
+tryListen(Number(port), PORT_WAS_REQUESTED ? 0 : 20);
