@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.176",
+      "date": "2026-10-04",
+      "summary": "Fix: error entries outlive their page; duplicate-id reports locate each copy (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1394\" target=\"_blank\" rel=\"noopener\">PR 1394</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1340\" target=\"_blank\" rel=\"noopener\">#1340</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Error entries outlive their page; duplicate-id reports locate each copy</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1340\" target=\"_blank\" rel=\"noopener\">#1340</a>",
+          "issues": [
+            1340
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.175",
       "date": "2026-10-04",
       "summary": "Fix: &lt;img width height&gt; keeps its shape with or without img.js, and still scales (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1389\" target=\"_blank\" rel=\"noopener\">PR 1389</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1327\" target=\"_blank\" rel=\"noopener\">#1327</a>",
