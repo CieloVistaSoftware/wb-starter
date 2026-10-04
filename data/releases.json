@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.143",
+      "date": "2026-10-03",
+      "summary": "Fix: a suite refused by running singles keeps its place, so it is not starved (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1350\" target=\"_blank\" rel=\"noopener\">PR 1350</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1321\" target=\"_blank\" rel=\"noopener\">#1321</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A suite refused by running singles keeps its place, so it is not starved</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1321\" target=\"_blank\" rel=\"noopener\">#1321</a>",
+          "issues": [
+            1321
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.142",
       "date": "2026-10-03",
       "summary": "Test: guards for two fixes that landed without one (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1346\" target=\"_blank\" rel=\"noopener\">PR 1346</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1148\" target=\"_blank\" rel=\"noopener\">#1148</a>",
