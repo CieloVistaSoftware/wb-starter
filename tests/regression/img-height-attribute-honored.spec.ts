@@ -4,8 +4,11 @@
  * John: in the playground, <img width height> and <figure><img width height>
  * would not take the height. site.css had `img { max-width: 100%; height: auto }`
  * (#293), and any CSS height beats the HTML height attribute, so height="50"
- * on a 240x150 image rendered 62.5px tall. Now height:auto applies only to an
- * <img> with no height attribute.
+ * on a 240x150 image rendered 62.5px tall. The playground turns autoInject off,
+ * so img.js (which turns width+height into an aspect ratio) never runs there.
+ * site.css now gives every <img width height> that ratio itself, so the shape
+ * holds with or without the behavior -- and, unlike dropping height:auto, it
+ * still scales when squeezed (img-doc-size-examples.spec.ts holds that half).
  */
 import { test, expect } from '../fixtures/offline';
 

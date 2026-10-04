@@ -1943,12 +1943,23 @@ section[id] {
    MOBILE READABILITY + FLUENT NAV (#293)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Responsive images everywhere — scale to the column, never overflow.
-   height:auto only when the author gave no height: any CSS height beats the
-   HTML height attribute, so a blanket height:auto threw away every
-   <img height="50"> and recomputed it from the natural ratio (#1327). */
-img { max-width: 100%; }
-img:not([height]) { height: auto; }
+/* Responsive images everywhere — scale to the column, never overflow. */
+img { max-width: 100%; height: auto; }
+
+/* #1327: width + height together are the author's SHAPE. height:auto above
+   beats the height attribute, so <img width="100" height="50"> of a 240x150
+   picture rendered 100x62.5 wherever the img behavior does not run (the
+   playground turns autoInject off). Turning height:auto off for them instead
+   (PR #1345) broke the other half: a 960x540 image squeezed into a narrower
+   column kept height 540 and distorted. A ratio does both -- it fixes the
+   shape and still scales with the width -- and it is what img.js already
+   sets once it runs; this makes the same thing true before or without it.
+   A browser without typed attr() drops the declaration and keeps today's
+   natural-ratio behavior. */
+img[width][height] {
+  aspect-ratio: attr(width type(<number>)) / attr(height type(<number>));
+  object-fit: cover;
+}
 
 /* Code blocks scroll inside their own box, never widen the page. pre.js gives
    .x-pre this once it runs, but a <pre> it has not reached yet (lazy
