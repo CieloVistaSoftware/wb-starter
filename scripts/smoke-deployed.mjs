@@ -18,6 +18,7 @@
  * confident, meaningless pass.
  */
 import { execSync, spawnSync } from 'child_process';
+import { pagesDeployState } from './lib/pages-deploy-state.mjs';
 
 /*
  * The published URL lives HERE, in the repo, under version control.
@@ -41,14 +42,23 @@ const REPO = 'CieloVistaSoftware/wb-starter';
 const POLL_MS = 15_000;
 const MAX_WAIT_MS = 10 * 60_000;
 
-function pagesStatus() {
+// #1361: judged by the Actions run that deploys main's head commit, not by the
+// legacy builds list, which records every cancelled (superseded) duplicate build
+// as "errored" and so reported a healthy deploy as broken.
+function gh(args) {
+  return execSync(`gh ${args}`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+}
+
+function deployStatus() {
   try {
-    return JSON.parse(
-      execSync(`gh api repos/${REPO}/pages/builds/latest`, {
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'ignore'],
-      })
-    );
+    const head = gh(`api repos/${REPO}/commits/main --jq .sha`).trim();
+    // "pages build and deployment" is GitHub's built-in dynamic workflow, which
+    // `gh run list --workflow` cannot address by name -- list main's runs and
+    // filter by name instead.
+    const runs = JSON.parse(gh(
+      `run list --repo ${REPO} --branch main --limit 60 --json name,headSha,status,conclusion`
+    )).filter((r) => r.name === 'pages build and deployment');
+    return pagesDeployState(runs, head);
   } catch {
     return null; // gh missing or unauthenticated — not fatal, just skip the wait
   }
@@ -58,23 +68,23 @@ async function waitForBuild() {
   const started = Date.now();
   let last = '';
   while (Date.now() - started < MAX_WAIT_MS) {
-    const s = pagesStatus();
+    const s = deployStatus();
     if (!s) {
-      console.log('⚠️  could not read Pages build status (gh unavailable) — smoking anyway');
+      console.log('⚠️  could not read the Pages deploy status (gh unavailable) — smoking anyway');
       return;
     }
-    if (s.status !== last) {
-      console.log(`   Pages build: ${s.status} @ ${String(s.commit).slice(0, 8)}`);
-      last = s.status;
+    if (s.state + s.detail !== last) {
+      console.log(`   Pages deploy: ${s.state} (${s.detail})`);
+      last = s.state + s.detail;
     }
-    if (s.status === 'built') return;
-    if (s.status === 'errored') {
-      console.error(`\n❌ Pages build ERRORED: ${s.error?.message || '(no message)'}`);
+    if (s.state === 'built') return;
+    if (s.state === 'errored') {
+      console.error(`\n❌ Pages deploy FAILED: ${s.detail}`);
       process.exit(1);
     }
     await new Promise((r) => setTimeout(r, POLL_MS));
   }
-  console.error('\n❌ Pages build did not reach "built" within 10 minutes.');
+  console.error('\n❌ The Pages deploy for main\'s head did not finish within 10 minutes.');
   process.exit(1);
 }
 
