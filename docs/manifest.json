@@ -592,7 +592,7 @@
           "file": "behaviors/drawerLayout.md",
           "title": "Drawer Layout",
           "description": "x-drawer-layout makes a sidebar collapsible: a toggle shrinks it from width to min-width and back.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-04"
         },
         {
           "file": "behaviors/dropdown.md",
@@ -748,7 +748,7 @@
           "file": "behaviors/hero.md",
           "title": "Hero",
           "description": "x-hero styles a section as a page hero: large centred heading and lead text on a full-width band.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-04"
         },
         {
           "file": "behaviors/icon.md",
@@ -838,7 +838,7 @@
           "file": "behaviors/notes.md",
           "title": "Notes",
           "description": "x-notes adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-04"
         },
         {
           "file": "behaviors/notify.md",

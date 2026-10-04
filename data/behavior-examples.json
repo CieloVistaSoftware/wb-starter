@@ -1308,7 +1308,7 @@
       ]
     },
     "x-hero": {
-      "source": "<div x-hero variant=\"centered\">\n  <h1>Ship the markup, not the toolchain</h1>\n  <p>Behaviors decorate real elements in light DOM — no build, no shadow roots.</p>\n</div>",
+      "source": "<div x-hero>\n  <h1>Ship the markup, not the toolchain</h1>\n  <p>Behaviors decorate real elements in light DOM — no build, no shadow roots.</p>\n</div>",
       "alternates": [],
       "examples": [
         {
@@ -1762,7 +1762,7 @@
       "alternates": []
     },
     "x-span": {
-      "source": "<span x-span variant=\"muted\">Last run 4 minutes ago</span>",
+      "source": "<span x-span variant=\"secondary\">Last run 4 minutes ago</span>",
       "alternates": []
     },
     "x-repeater": {
@@ -1954,7 +1954,7 @@
       ]
     },
     "x-notes": {
-      "source": "<aside x-notes position=\"end\" default-width=\"280px\">\n  <p>Notes stay pinned beside the content while you scroll.</p>\n</aside>",
+      "source": "<aside x-notes position=\"right\" default-width=\"280px\">\n  <p>Notes stay pinned beside the content while you scroll.</p>\n</aside>",
       "alternates": [],
       "examples": [
         {
@@ -2244,28 +2244,28 @@
       ]
     },
     "x-drawer-layout": {
-      "source": "<aside x-drawer-layout position=\"start\" width=\"220px\" min-width=\"64px\">\n  <nav><a href=\"#\">Overview</a><a href=\"#\">Runs</a><a href=\"#\">Settings</a></nav>\n</aside>",
+      "source": "<aside x-drawer-layout position=\"left\" width=\"220px\" min-width=\"64px\">\n  <nav><a href=\"#\">Overview</a><a href=\"#\">Runs</a><a href=\"#\">Settings</a></nav>\n</aside>",
       "alternates": [],
       "examples": [
         {
           "label": "wide drawer",
-          "source": "<aside x-drawer-layout position=\"start\" width=\"320px\" min-width=\"64px\">\n  <nav><a href=\"#\">Inbox</a><a href=\"#\">Starred</a><a href=\"#\">Sent</a><a href=\"#\">Archive</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"320px\" min-width=\"64px\">\n  <nav><a href=\"#\">Inbox</a><a href=\"#\">Starred</a><a href=\"#\">Sent</a><a href=\"#\">Archive</a></nav>\n</aside>"
         },
         {
           "label": "narrow drawer",
-          "source": "<aside x-drawer-layout position=\"start\" width=\"140px\" min-width=\"48px\">\n  <nav><a href=\"#\">Home</a><a href=\"#\">Search</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"140px\" min-width=\"48px\">\n  <nav><a href=\"#\">Home</a><a href=\"#\">Search</a></nav>\n</aside>"
         },
         {
           "label": "right side",
-          "source": "<aside x-drawer-layout position=\"end\" width=\"220px\" min-width=\"64px\">\n  <p>Details panel on the right.</p>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"right\" width=\"220px\" min-width=\"64px\">\n  <p>Details panel on the right.</p>\n</aside>"
         },
         {
           "label": "with a heading",
-          "source": "<aside x-drawer-layout position=\"start\" width=\"260px\" min-width=\"64px\">\n  <h3>Projects</h3>\n  <nav><a href=\"#\">wb-starter</a><a href=\"#\">docs-site</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"260px\" min-width=\"64px\">\n  <h3>Projects</h3>\n  <nav><a href=\"#\">wb-starter</a><a href=\"#\">docs-site</a></nav>\n</aside>"
         },
         {
           "label": "icons only",
-          "source": "<aside x-drawer-layout position=\"start\" width=\"72px\" min-width=\"48px\">\n  <nav><a href=\"#\">🏠</a><a href=\"#\">🔍</a><a href=\"#\">⚙️</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"72px\" min-width=\"48px\">\n  <nav><a href=\"#\">🏠</a><a href=\"#\">🔍</a><a href=\"#\">⚙️</a></nav>\n</aside>"
         }
       ]
     },
