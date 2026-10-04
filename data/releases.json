@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.232",
+      "date": "2026-10-04",
+      "summary": "Fix: docs manifests rewritten only on a real change (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1453\" target=\"_blank\" rel=\"noopener\">PR 1453</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1452\" target=\"_blank\" rel=\"noopener\">#1452</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The docs manifests are rewritten only on a real change, in a machine-independent order</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1452\" target=\"_blank\" rel=\"noopener\">#1452</a>",
+          "issues": [
+            1452
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.231",
       "date": "2026-10-04",
       "summary": "Fix: boot navigation no longer closes a menu opened during startup (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1458\" target=\"_blank\" rel=\"noopener\">PR 1458</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1456\" target=\"_blank\" rel=\"noopener\">#1456</a>",
