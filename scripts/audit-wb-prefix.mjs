@@ -26,7 +26,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { execFileSync } from 'child_process';
+import { sourceFiles } from './lib/source-files.mjs';
 
 const ARGS = process.argv.slice(2);
 const flag = (n) => ARGS.includes(n);
@@ -35,67 +35,20 @@ const ROOT = (() => {
   return i >= 0 && ARGS[i + 1] ? path.resolve(ARGS[i + 1]) : process.cwd();
 })();
 
-// #1300: the audit counts SOURCE, and the repo already defines source: the
-// files git tracks. It used to walk the disk and exclude generated files by
-// name, one deny-list entry per file that broke the gate (#960 added four).
-// Every new cache broke it again -- data/fixes-cache.json and
-// data/issues-cache.json (gitignored copies of GitHub issue text quoting
-// <wb-select> and friends) pushed TAG to 700 in a local tree while CI, on a
-// fresh checkout, passed. The answer depended on what earlier runs left on disk.
-// Listing tracked files instead makes every gitignored artifact invisible,
-// including the ones nobody has written yet.
-//
-// What remains below excludes TRACKED content on purpose:
-//   .claude/             agent configuration (CLAUDE.md, settings), not project source
-//   lib/                 scripts/lib and src/lib (vendored highlight.js etc.), excluded
-//                        since the audit was written in 4.0.0
-//   priority-gate.json   data/priority-gate.json is committed, but it is a snapshot of
-//                        open GitHub issue text written by build-priority-gate.mjs;
-//                        issues ABOUT the removed tags quote them, and it changes on
-//                        every refresh with no source change at all
-const EXCLUDE_DIRS = new Set(['.claude', 'lib']);
-const EXCLUDE_FILES = new Set(['priority-gate.json']);
-
-// Only for the no-git fallback (a downstream site passed with --dir that is not
-// a repo): there is no .gitignore answer, so skip what is never source.
-const WALK_SKIP_DIRS = new Set(['node_modules', '.git', 'out', 'dist', 'coverage', 'vendor']);
-
 const EXT = /\.(js|mjs|cjs|ts|tsx|css|html|json|md|yml|yaml)$/;
 
-const excluded = (rel) => {
-  const parts = rel.split('/');
-  return EXCLUDE_FILES.has(parts[parts.length - 1])
-    || parts.slice(0, -1).some((d) => EXCLUDE_DIRS.has(d));
-};
-
-function walk(dir, out = []) {
-  let entries;
-  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
-  for (const e of entries) {
-    if (WALK_SKIP_DIRS.has(e.name)) continue;
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) walk(p, out);
-    else if (EXT.test(e.name)) out.push(p);
-  }
-  return out;
-}
-
-// Tracked plus staged files, relative to ROOT. null when git is missing or ROOT
-// is not inside a work tree -- only then does the audit fall back to the walk.
-function trackedFiles() {
-  let raw;
-  try {
-    raw = execFileSync('git', ['ls-files', '-z', '--cached'], {
-      cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'],
-    });
-  } catch { return null; }
-  return raw.split('\0').filter((f) => f && EXT.test(f)).map((f) => path.join(ROOT, f));
-}
-
-function sourceFiles() {
-  const all = trackedFiles() ?? walk(ROOT);
-  return all.filter((f) => !excluded(path.relative(ROOT, f).split(path.sep).join('/')));
-}
+// #1300: the file list is git's, not the filesystem's. Six generated files had
+// been added to a per-name deny-list one at a time as each one broke this gate
+// (#960, #1027), and data/fixes-cache.json + data/issues-cache.json broke it
+// again -- 700 "surviving component tags" that were GitHub issue text quoting
+// the tags this audit removed. The repo already says what source is: the files
+// git tracks, minus data/ (output, by TIER1-LAWS §12 -- which is where all six
+// lived, including the one that is tracked on purpose).
+//
+// The first pass at this (94a4226b) listed `--cached` alone and kept a
+// three-name deny-list. Both are fixed here, in scripts/lib/source-files.mjs,
+// so any other scanner can ask for "source" instead of growing its own list.
+const { files: FILES, source: FILE_SOURCE } = sourceFiles({ root: ROOT, ext: EXT });
 
 // Order matters: first match wins, most specific first.
 const CATEGORIES = [
@@ -111,9 +64,12 @@ const tokens = Object.fromEntries(CATEGORIES.map(([c]) => [c, new Map()]));
 const files = Object.fromEntries(CATEGORIES.map(([c]) => [c, new Map()]));
 const tagSites = [];
 
-for (const file of sourceFiles()) {
+let filesRead = 0;
+
+for (const file of FILES) {
   let text;
   try { text = fs.readFileSync(file, 'utf8'); } catch { continue; }
+  filesRead++;
   if (!text.includes('wb-')) continue;
   const rel = path.relative(ROOT, file).split(path.sep).join('/');
   const IS_CODE = /\.(js|mjs|cjs|ts|tsx)$/.test(file);
@@ -160,6 +116,12 @@ const total = Object.values(counts).reduce((a, b) => a + b, 0);
 const pad = (s, n) => String(s).padEnd(n);
 
 console.log(`\nwb- prefix audit — ${ROOT}\n`);
+// The scan's own size, reported in the machine-readable block, so a gate can
+// assert a floor on it. An audit that read nothing reports TAG 0 and every
+// ceiling met -- a perfect score that means the scanner broke, which is how
+// the zeroed site-generator-result.json kept 57 tests dormant (#837).
+console.log(`${pad('SCANNED', 10)} ${pad(filesRead, 8)} files, listed by ${FILE_SOURCE}`);
+console.log('');
 console.log(`${pad('CATEGORY', 10)} ${pad('HITS', 8)} ${pad('DISTINCT', 9)} FILES`);
 console.log('-'.repeat(52));
 for (const [cat] of CATEGORIES) {
@@ -191,6 +153,18 @@ if (flag('--files')) {
     [...files[cat]].sort((a, b) => b[1] - a[1]).slice(0, 15)
       .forEach(([f, n]) => console.log(`  ${pad(n, 6)} ${f}`));
   }
+}
+
+// A scan that read nothing is a broken scanner, not a clean repo. Fail loudly
+// rather than hand back TAG 0 and let every ceiling pass vacuously.
+if (filesRead === 0) {
+  console.error(
+    `audit-wb-prefix.mjs read 0 files under ${ROOT} (listed by ${FILE_SOURCE}).\n`
+    + 'Nothing was scanned, so the counts above mean nothing. If this is a git\n'
+    + 'work tree, check that `git ls-files` works here; if it is not, check that\n'
+    + '--dir points at a directory that actually holds source.',
+  );
+  process.exit(2);
 }
 
 // A component tag is a defect, not a style preference.
