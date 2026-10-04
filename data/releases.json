@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.201",
+      "date": "2026-10-04",
+      "summary": "Fix: x-timeline keeps hand-written entries (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1417\" target=\"_blank\" rel=\"noopener\">PR 1417</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1188\" target=\"_blank\" rel=\"noopener\">#1188</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-timeline keeps hand-written entries; only items or plain text are rebuilt</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1188\" target=\"_blank\" rel=\"noopener\">#1188</a>",
+          "issues": [
+            1188
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.200",
       "date": "2026-10-04",
       "summary": "Fix: .gitignore holds patterns, not pasted npm output (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1416\" target=\"_blank\" rel=\"noopener\">PR 1416</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1191\" target=\"_blank\" rel=\"noopener\">#1191</a>",
