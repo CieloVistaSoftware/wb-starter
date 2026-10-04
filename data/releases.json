@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.233",
+      "date": "2026-10-04",
+      "summary": "Test: playground setup waits for every input to apply (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1461\" target=\"_blank\" rel=\"noopener\">PR 1461</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1459\" target=\"_blank\" rel=\"noopener\">#1459</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Playground setup waits for WB.settled, not one counter proxy</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1459\" target=\"_blank\" rel=\"noopener\">#1459</a>",
+          "issues": [
+            1459
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.232",
       "date": "2026-10-04",
       "summary": "Fix: docs manifests rewritten only on a real change (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1453\" target=\"_blank\" rel=\"noopener\">PR 1453</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1452\" target=\"_blank\" rel=\"noopener\">#1452</a>",
