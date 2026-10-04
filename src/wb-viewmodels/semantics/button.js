@@ -165,7 +165,7 @@ function applyLabel(element) {
   }
 }
 
-// #620: icon/loading rendering, factored out of the `isCustom` branch below
+// #620: icon/loading rendering, factored out of the old custom-tag branch
 // so a native <button icon="..." loading> gets the exact same treatment as
 // <button icon="..." loading> instead of silently doing nothing. Native
 // <button size="..." variant="..."> already worked identically to
@@ -203,9 +203,8 @@ function applyIconAndLoading(element, options) {
     // styled purely via the `[loading]` attribute selector) -- opacity/cursor
     // for it lives on `.x-button[loading]` in BUTTON_CSS above, which
     // matches a native button fine since it already carries `.x-button`;
-    // `disabled` additionally blocks activation the same way the `isCustom`
-    // branch's onActivate/onKeydown guards already do for <button>.
-    if (element.tagName !== 'WB-BUTTON') element.disabled = true;
+    // `disabled` additionally blocks activation.
+    element.disabled = true;
   }
 
   if (icon && !loading) {
@@ -229,8 +228,6 @@ function applyIconAndLoading(element, options) {
 export function button(element, options = {}) {
   ensureStyles(element.ownerDocument);
 
-  const isCustom = element.tagName === 'WB-BUTTON';
-
   // #344: button.schema.json's interactions section always documented
   // "wb:button:click" as the event this behavior fires, but nothing in this
   // file ever dispatched it (only the native "click" event existed) and the
@@ -243,59 +240,6 @@ export function button(element, options = {}) {
     if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
     element.dispatchEvent(new CustomEvent('wb:button:click', { bubbles: true, detail: { originalEvent: e } }));
   };
-
-  if (isCustom) {
-    // <button> — CSS targets the tag directly. No inner button, no classes.
-    // JS only handles label text, icon injection, and loading state.
-    applyLabel(element);
-    applyIconAndLoading(element, options);
-
-    // Make it focusable and clickable
-    if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
-    element.setAttribute('role', 'button');
-
-    // A real <button> activates on Enter and Space for free; role="button"
-    // on a non-native element gets neither -- the WAI-ARIA button pattern
-    // requires wiring both explicitly. Space is also prevented on keydown
-    // (matching native <button>) so it doesn't scroll the page.
-    //
-    // Uses dispatchEvent(MouseEvent) rather than element.click(): confirmed
-    // live that <button>'s customElements.define() is unexpectedly owned
-    // by the unrelated "WB Views" system (src/wb-views/views-registry.json
-    // has its own view literally named "button", and wb-views.js's
-    // registerViewAsElement() auto-claims the x-button tag for it --
-    // see docs/audits/HOST-CHILD-DISPATCH-AUDIT.md). That class's own
-    // element.click() silently no-ops; dispatchEvent() does not go through
-    // whatever click() does internally, so it isn't affected.
-    const synthesizeClick = () => {
-      element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-    };
-    const onKeydown = (e) => {
-      if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        synthesizeClick();
-      } else if (e.key === ' ' || e.key === 'Spacebar') {
-        e.preventDefault();
-      }
-    };
-    const onKeyup = (e) => {
-      if (element.hasAttribute('disabled') || element.getAttribute('aria-disabled') === 'true') return;
-      if (e.key === ' ' || e.key === 'Spacebar') {
-        e.preventDefault();
-        synthesizeClick();
-      }
-    };
-    element.addEventListener('keydown', onKeydown);
-    element.addEventListener('keyup', onKeyup);
-    element.addEventListener('click', onActivate);
-
-    return () => {
-      element.removeEventListener('keydown', onKeydown);
-      element.removeEventListener('keyup', onKeyup);
-      element.removeEventListener('click', onActivate);
-    };
-  }
 
   // Native <button> — add .x-button class for styling
   // Skip if already styled by another system

@@ -170,7 +170,7 @@ const config = {
   // pattern rather than silently hiding the element).
   const hasTriggerAttrs = element.hasAttribute('modal-content') || element.hasAttribute('modal-title') ||
     readFlag(element, 'modal-content') || readFlag(element, 'modal-title');
-  if (element.tagName === 'WB-MODAL' || hasTriggerAttrs) {
+  if (hasTriggerAttrs) {
     // TRIGGER mode: <dialog modal-title="…" modal-content="…">Open Modal</dialog>
     // is a visible button — its text is the label and clicking it opens a dialog
     // built from the attributes. (Previously x-modal was always hidden with only a

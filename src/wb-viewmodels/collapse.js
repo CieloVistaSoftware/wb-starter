@@ -134,8 +134,6 @@ export function collapse(element, options = {}) {
  * Emits: wb:accordion:ready, wb:accordion:toggle
  * -----------------------------------------------------------------------------
  */
-let _accordionDeprecationWarned = false;
-
 function buildAccordionItem(element, title, contentHtml, open) {
   const item = document.createElement('div');
   item.className = 'x-accordion-item' + (open ? ' open' : '');
@@ -197,11 +195,6 @@ export function accordion(element, options = {}) {
     // wipe item innerHTML and reset any open state / rebind handlers.
     if (element.dataset.wbHydrated === '1') {
       return () => element.classList.remove('x-accordion');
-    }
-
-    if (element.tagName === 'WB-ACCORDION' && !_accordionDeprecationWarned) {
-      _accordionDeprecationWarned = true;
-      console.warn('[x-accordion] is deprecated — use the semantic <details>/<summary> element instead.');
     }
 
     // v3: plain `accordion-title` is canonical; data-* accepted for back-compat.
@@ -293,20 +286,8 @@ export function accordion(element, options = {}) {
       };
     }
 
-    // <div x-accordion> with no titled children — single form:
-    // <div x-accordion title="Q">answer</div>
-    if (element.tagName === 'WB-ACCORDION') {
-      const title = element.getAttribute('title') || '';
-      const content = element.innerHTML;
-      element.innerHTML = '';
-      element.classList.add('x-accordion');
-      element.appendChild(buildAccordionItem(element, title, content, element.hasAttribute('open')));
-      element.dataset.wbHydrated = '1';
-      return () => element.classList.remove('x-accordion');
-    }
-
     // The host itself carries the panel title — single form without the
-    // <wb-accordion> tag: <div x-accordion accordion-title="Q">answer</div>.
+    // custom tag: <div x-accordion accordion-title="Q">answer</div>.
     // Same spellings (and precedence) the child form accepts above; before
     // this, a titled host silently fell through to a plain collapse and the
     // title was dropped.
