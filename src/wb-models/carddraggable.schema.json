@@ -60,8 +60,7 @@
         "default",
         "elevated"
       ],
-      "default": "default",
-      "appliesClass": "x-card-draggable--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

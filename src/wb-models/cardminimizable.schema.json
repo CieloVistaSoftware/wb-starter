@@ -30,7 +30,7 @@
       "type": "boolean",
       "description": "Initial minimized state",
       "default": false,
-      "appliesClass": "x-card-minimizable--minimized"
+      "appliesClass": "x-card--minimized"
     },
     "variant": {
       "type": "string",
@@ -39,8 +39,7 @@
         "elevated",
         "bordered"
       ],
-      "default": "default",
-      "appliesClass": "x-card-minimizable--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

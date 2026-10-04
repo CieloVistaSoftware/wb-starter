@@ -32,8 +32,7 @@
         "left",
         "right"
       ],
-      "default": "left",
-      "appliesClass": "x-card-horizontal--image-{{value}}"
+      "default": "left"
     },
     "imageWidth": {
       "type": "string",
@@ -59,8 +58,7 @@
         "bordered",
         "minimal"
       ],
-      "default": "default",
-      "appliesClass": "x-card-horizontal--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

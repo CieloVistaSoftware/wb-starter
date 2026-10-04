@@ -54,8 +54,7 @@
     "autosize": {
       "type": "boolean",
       "description": "Auto-resize to content",
-      "default": false,
-      "appliesClass": "x-textarea--autosize"
+      "default": false
     },
     "disabled": {
       "type": "boolean",

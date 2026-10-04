@@ -45,8 +45,7 @@
         "xl",
         "2xl"
       ],
-      "default": "md",
-      "appliesClass": "x-avatar--{{value}}"
+      "default": "md"
     },
     "shape": {
       "type": "string",
@@ -55,8 +54,7 @@
         "square",
         "rounded"
       ],
-      "default": "circle",
-      "appliesClass": "x-avatar--{{value}}"
+      "default": "circle"
     },
     "status": {
       "type": "string",
@@ -73,8 +71,7 @@
     "bordered": {
       "type": "boolean",
       "description": "Show border",
-      "default": false,
-      "appliesClass": "x-avatar--bordered"
+      "default": false
     }
   },
   "$view": [],

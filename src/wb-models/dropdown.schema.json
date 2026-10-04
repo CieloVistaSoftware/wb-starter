@@ -24,7 +24,7 @@
         "top-end"
       ],
       "default": "bottom-start",
-      "appliesClass": "x-dropdown--{{value}}",
+      "appliesClass": "x-dropdown__menu--{{value}}",
       "visibleWhen": "open",
       "visualReason": "Places the menu, which is on screen only once opened (#773)."
     },

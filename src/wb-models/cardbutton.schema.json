@@ -53,8 +53,7 @@
         "elevated",
         "bordered"
       ],
-      "default": "default",
-      "appliesClass": "x-card-button--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

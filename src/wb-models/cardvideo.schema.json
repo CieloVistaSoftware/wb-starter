@@ -81,8 +81,7 @@
         "bordered",
         "elevated"
       ],
-      "default": "default",
-      "appliesClass": "x-card-video--{{value}}"
+      "default": "default"
     }
   },
   "$view": [
