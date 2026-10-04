@@ -23,6 +23,10 @@ import { test, expect, type Page } from '../fixtures/offline';
 
 const NO_DOC = /^No doc yet for (.+)\.$/;
 
+// #1349: the slow-404 test mocks the network, and sw.js would otherwise answer
+// a doc request from its cache before the route ever saw it.
+test.use({ serviceWorkers: 'block' });
+
 async function openShowcase(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 30000 });
