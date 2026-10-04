@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.238",
+      "date": "2026-10-04",
+      "summary": "Fix: examples use only option values their behavior declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1470\" target=\"_blank\" rel=\"noopener\">PR 1470</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1467\" target=\"_blank\" rel=\"noopener\">#1467</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Regenerate docs/manifest.json for the three edited docs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1467\" target=\"_blank\" rel=\"noopener\">#1467</a>",
+          "issues": [
+            1467
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Examples use only option values their behavior declares</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1467\" target=\"_blank\" rel=\"noopener\">#1467</a>",
+          "issues": [
+            1467
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.237",
       "date": "2026-10-04",
       "summary": "Test: wbIdle waits for the site shell to finish booting (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1474\" target=\"_blank\" rel=\"noopener\">PR 1474</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1466\" target=\"_blank\" rel=\"noopener\">#1466</a>",
