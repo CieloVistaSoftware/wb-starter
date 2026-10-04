@@ -166,8 +166,13 @@ const watchDir = (dir) => {
   if (!fs.existsSync(dir)) return;
 
   // Allow consumers (CI) to disable watching entirely
-  if (process.env.CI === 'true' || process.env.DISABLE_WATCH === 'true') {
-    console.log(`[Watch] skipping fs.watch for ${dir} (CI or DISABLE_WATCH)`);
+  // #1311: nor for a test server (WB_TEST_SERVER=1, set by playwright.config
+  // for every server a run starts). Tests write files outside the ignore list
+  // -- the #1131 stamp test writes .local/ -- and the broadcast reloaded every
+  // open page, so a page mid-measurement in another worker died with
+  // "Execution context was destroyed". A test run serves a fixed tree.
+  if (process.env.CI === 'true' || process.env.DISABLE_WATCH === 'true' || process.env.WB_TEST_SERVER === '1') {
+    console.log(`[Watch] skipping fs.watch for ${dir} (CI, DISABLE_WATCH or a test server)`);
     return;
   }
 
