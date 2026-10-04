@@ -17,12 +17,18 @@ import { test, expect, Page } from '../fixtures/offline';
 import { pickBehavior } from '../helpers/behaviors-page';
 import { wbIdle } from '../base';
 
+// #1473: setup is a page load, the site's boot, and (in several blocks) a
+// pickBehavior() that waits for the full list -- more than the default 30s can
+// hold on a loaded runner. The budget covers the setup it actually does, as
+// behaviors-showcase-visual's already does.
+test.describe.configure({ timeout: 90_000 });
+
 test.describe('Behaviors Showcase Page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=behaviors');
-    await page.waitForFunction(() => (window as any).WB && (window as any).WB.behaviors, { timeout: 20000 });
-    await page.waitForFunction(() => (window as any).WBSite && (window as any).WBSite.currentPage, { timeout: 20000 });
-    await page.waitForTimeout(1000); // components still need render/highlight time after app-ready
+    // #1473: one boot-aware wait (#1466: WBSite published, then WB.settled())
+    // instead of three waits and a fixed 1s "render/highlight time" sleep.
+    await wbIdle(page, { timeout: 30_000 });
   });
 
   test.describe('Page Structure', () => {
@@ -216,7 +222,6 @@ test.describe('Behaviors Showcase Page', () => {
       
       // Click the dropdown
       await dropdown.click();
-      await page.waitForTimeout(200);
       
       // Check if menu is visible
       const menu = dropdown.locator('.x-dropdown__menu, .x-dropdown-menu');
@@ -291,7 +296,6 @@ test.describe('Behaviors Showcase Page', () => {
       // Click second tab
       const secondTab = tabContainer.locator('.x-tabs__tab').nth(1);
       await secondTab.click();
-      await page.waitForTimeout(100);
       
       // Second panel should be visible
       const secondPanel = tabContainer.locator('.x-tabs__panel').nth(1);
@@ -361,11 +365,9 @@ test.describe('Behaviors Showcase Page', () => {
       
       // Click toggle
       await toggleButton.click();
-      await page.waitForTimeout(100);
-      
-      // Class should be toggled
-      const hasActiveAfter = await target.evaluate(el => el.classList.contains('active'));
-      expect(hasActiveAfter).not.toBe(hasActiveInitially);
+
+      // Class should be toggled -- polled, not read once 100ms later (#1473).
+      await expect.poll(() => target.evaluate(el => el.classList.contains('active'))).not.toBe(hasActiveInitially);
     });
   });
 
