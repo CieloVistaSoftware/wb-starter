@@ -340,11 +340,17 @@ app.get('/pages/:page', (req, res, next) => {
   <!-- Live Reload Client -->
   <script>
     (function() {
-      const ws = new WebSocket('ws://' + window.location.hostname + ':3001');
+      // #1333: the server's OWN live-reload port (port + 1, see WS_PORT), not
+      // a hardcoded 3001. #518 derived the server side and left this one:
+      // on any other port the page either reached nothing or the main
+      // checkout's socket, and reloaded for the wrong tree's changes.
+      const ws = new WebSocket('ws://' + window.location.hostname + ':${WS_PORT}');
       ws.onmessage = (msg) => {
         if (msg.data === 'reload') window.location.reload();
       };
-      console.log('Live Reload connected');
+      // Said when it is true, not unconditionally before the socket opened.
+      ws.onopen = () => console.log('Live Reload connected (port ${WS_PORT})');
+      ws.onerror = () => console.warn('Live Reload unavailable: nothing answered on port ${WS_PORT}');
     })();
   </script>
 </head>
