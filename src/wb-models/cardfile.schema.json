@@ -17,23 +17,9 @@
   "properties": {
     "filename": {
       "type": "string",
-      "description": "File name. Its extension also picks the icon (#1117) -- `architecture-diagram.png` renders the image icon with no second attribute to write.",
+      "description": "File name. Its extension picks the icon (#1117, #1119) -- `architecture-diagram.png` renders the image icon. There is no fileType attribute: the filename is the only way to say what kind of file it is.",
       "required": true,
       "default": "this is the filename"
-    },
-    "fileType": {
-      "type": "string",
-      "description": "OVERRIDE for the icon family, which is normally derived from the filename's extension (#1117). Only set this when the name cannot say it -- an extensionless name, or a `.bin` that really is a video. Setting it to something the extension contradicts is honoured but produces a self-contradicting example (#1114).",
-      "enum": [
-        "pdf",
-        "doc",
-        "image",
-        "video",
-        "audio",
-        "zip",
-        "file"
-      ],
-      "default": "file"
     },
     "size": {
       "type": "string",
@@ -173,7 +159,6 @@
       "<div x-cardfile filename=\"interview-recording.m4a\">filename=interview-recording.m4a</div>",
       "<div x-cardfile filename=\"release-assets.zip\">filename=release-assets.zip</div>",
       "<div x-cardfile filename=\"sensor-capture.bin\">filename=sensor-capture.bin</div>",
-      "<div x-cardfile filename=\"sensor-capture.bin\" file-type=\"video\">fileType=video overrides the extension</div>",
       "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"default\">variant=default</div>",
       "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"compact\">variant=compact</div>",
       "<div x-cardfile filename=\"quarterly-report.pdf\" variant=\"elevated\">variant=elevated</div>",
@@ -210,11 +195,6 @@
         },
         {
           "filename": "sensor-capture.bin",
-          "size": "31 MB"
-        },
-        {
-          "filename": "sensor-capture.bin",
-          "fileType": "video",
           "size": "31 MB"
         }
       ]
