@@ -15,9 +15,23 @@ export function timeline(element, options = {}) {
   // select those by class.
   element.classList.add('x-timeline');
 
-  const authoredItems = (element._wbOriginalSlot || element.textContent || '').trim();
-  const itemsAttr = element.getAttribute('items') || authoredItems;
-  const items = itemsAttr.split(',').map((s) => s.trim()).filter(Boolean);
+  // What the author wrote inside, as HTML. The schema builder has usually
+  // replaced it by now and kept the original in _wbOriginalSlot; '' there
+  // means the author wrote nothing, so the stamped placeholder in
+  // innerHTML must not be read as authored markup.
+  const authored = (element._wbOriginalSlot ?? element.innerHTML ?? '').trim();
+  const itemsAttr = element.getAttribute('items');
+
+  // #1188: hand-written entries (an <article> with a real <time>, as
+  // time.md shows) stay as written. Only an items attribute or plain
+  // comma-separated text is rebuilt into .x-timeline-item divs.
+  if (!itemsAttr && /<[a-z]/i.test(authored)) {
+    if (element.innerHTML.trim() !== authored) element.innerHTML = authored;
+    element.items = [];
+    return () => element.classList.remove('x-timeline');
+  }
+
+  const items = (itemsAttr || authored).split(',').map((s) => s.trim()).filter(Boolean);
   element.items = items;
 
   if (items.length) {
