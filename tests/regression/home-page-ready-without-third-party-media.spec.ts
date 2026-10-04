@@ -21,6 +21,13 @@ import { gotoSettled } from '../base';
 
 const HOME_URL = '/pages/home.html';
 
+// #1349: the first test exists to PROVE the fixture is real ("networkidle never
+// arrives"). sw.js answers the page's GETs itself and Playwright cannot route a
+// service worker's requests, so on a claimed page the archive.org stall was
+// never held and the proof-of-fixture test was proving the opposite — the real
+// host's latency. Blocked, the stall is the test's own.
+test.use({ serviceWorkers: 'block' });
+
 test.describe('#1087: home page readiness does not wait on third-party media', () => {
   test.beforeEach(async ({ page }) => {
     // Never fulfilled: the request stays in flight, as a stalled server's would.

@@ -2,6 +2,13 @@ import { expect, test } from '../fixtures/offline';
 
 const HARNESS = '/demos/test-harness.html';
 
+// #1349: both tests assert an exact request COUNT taken inside the route
+// handler (toBe(2), toBe(3)). sw.js answers the page's GETs itself and
+// Playwright cannot route a service worker's requests, so a request the worker
+// claimed was invisible here and the count came up short for a reason that has
+// nothing to do with the loader's retry or its failure cache.
+test.use({ serviceWorkers: 'block' });
+
 test.describe('module loader resolution and failure caching (#512, #513)', () => {
   test('retries a transient semantic-module fetch and resolves the behavior', async ({ page }) => {
     let requests = 0;

@@ -60,6 +60,13 @@ import { test, expect, type Route } from '../fixtures/offline';
 const FIXTURE_PATH = 'docs/__regression__/doc-viewer-end-key-force-build.md';
 const BLOCKS = 6;
 
+// #1349: both halves of this spec are page.route — the fixture doc (a path that
+// exists nowhere on disk) and the held demo.css that creates the un-built state
+// the force-build is tested against. sw.js answers the page's GETs itself and
+// Playwright cannot route a service worker's requests, so a claimed page 404s
+// the doc or sails past the hold. Blocked, the fixture is the fixture.
+test.use({ serviceWorkers: 'block' });
+
 const MARKDOWN = [
   '# End-key force-build fixture',
   '',

@@ -71,6 +71,19 @@ import { test, expect, type Page, type Route } from '../fixtures/offline';
  * completion flag.
  */
 
+/**
+ * #1349: the `forced` test holds the boot's FIRST button.css request at the
+ * network layer. sw.js answers the page's GETs itself and Playwright cannot
+ * route a service worker's requests, so on a claimed page the hold was never
+ * reached — which is the likeliest explanation for the measurement recorded
+ * below ("no second button.css request ever reached the network or this route,
+ * no CDP requestWillBeSent"): the worker had it, from its own cache, and
+ * neither the route nor the request event could see it. The `repeated` test is
+ * worse off still: every repetition after the first ran against a page the
+ * worker already controlled, so 38 trials were not 38 of the same trial.
+ */
+test.use({ serviceWorkers: 'block' });
+
 /** The content setContent drops in: one plain <button> the runtime must build. */
 const CONTENT = `
   <button id="autoBtn">Auto</button>

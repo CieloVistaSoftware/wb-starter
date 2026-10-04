@@ -32,6 +32,12 @@ import { test, expect } from '../fixtures/offline';
  * shape /api/issues returns. The page also moved to a table since: rows are
  * `tr.issues-row[number]`, and clicking the row opens its expander.
  */
+// #1349: sw.js answers the page's GETs itself and Playwright cannot route a
+// service worker's requests — with the worker live, /api/issues reached the
+// real, gh-backed server and the canned #527 row below never appeared, so the
+// row wait could only time out or measure somebody else's issue list.
+test.use({ serviceWorkers: 'block' });
+
 const ISSUE_527 = {
   number: 527,
   title: 'mdhtml auto-scan promotes illustrative examples in issue bodies',
@@ -52,12 +58,14 @@ const ISSUE_527 = {
 
 test('pages/issues.html never fetches the fake illustrative path embedded in issue #527\'s own body', async ({ page }) => {
   const fetched: string[] = [];
-  // On the context, so a fetch the service worker makes is counted too.
+  // On the context, so a fetch from any page in it is counted.
   page.context().on('request', (req) => {
     if (req.url().includes('/docs/guide.md')) fetched.push(req.url());
   });
-  // context.route, not page.route: with sw.js registered the fetch can be made
-  // by the service worker, and only context routes see a worker's requests.
+  // #1349: the route is on the context, which does NOT make a service worker's
+  // requests visible — that was the misreading. Playwright cannot route a
+  // worker's requests at all, by either method; the worker is blocked at the
+  // top of this file instead, and only then does this fixture answer.
   await page.context().route('**/api/issues', (route) =>
     route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ issues: [ISSUE_527], source: 'live' }) })
   );

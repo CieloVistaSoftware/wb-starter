@@ -10,6 +10,14 @@ import { test, expect } from '../fixtures/offline';
  * audioEl.error on attach. This holds that path: the failure is complete
  * (audio.error set) before WB ever sees the element.
  */
+// #1349: "fails instantly, every time: no retry can rescue it" is a page.route
+// abort. sw.js answers the page's GETs itself and Playwright cannot route a
+// service worker's requests, so on a claimed page the .mp3 request went to the
+// real server, which 404s a path that does not exist — the audio still failed,
+// but as a decoded 404 rather than the instant, unrescuable abort this spec
+// says it uses. Blocked, the failure is the one described.
+test.use({ serviceWorkers: 'block' });
+
 test('an authored <audio> that already failed is reported when x-audio attaches', async ({ page }) => {
   test.setTimeout(30_000);
   const pageErrors: string[] = [];
