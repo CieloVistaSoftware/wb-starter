@@ -28,14 +28,23 @@ test.describe('cards are never too narrow', () => {
   let rows: Row[];
 
   test.beforeAll(async ({ browser }) => {
+    // #1360: everything this spec measures happens here -- navigation, a wait
+    // for WB, an eager scan of the whole page, and a walk over every element --
+    // and a hook gets the default 30s. Under full-suite load that ran out
+    // ("page.evaluate: Test ended") and failed a PR that changed no CSS. The
+    // budget has to be bigger than the work it times (#1302, #341).
+    test.setTimeout(120_000);
     const page = await newOfflinePage(browser);
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/demos/site/cards.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
     // Cards below the fold initialise on scroll under the lazy runtime.
+    // Wait for the runtime to say it is done, not for a fixed 800ms: a guess
+    // that is long enough at idle is too short under load.
     await page.evaluate(async () => {
-      await (window as any).WB.scan(document.body, { eager: true });
-      await new Promise((r) => setTimeout(r, 800));
+      const WB = (window as any).WB;
+      await WB.scan(document.body, { eager: true });
+      if (typeof WB.whenIdle === 'function') await WB.whenIdle({ timeout: 30000 });
     });
 
     rows = await page.evaluate(() => {
