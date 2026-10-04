@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.224",
+      "date": "2026-10-04",
+      "summary": "Fix: same-origin is an exact origin match (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1446\" target=\"_blank\" rel=\"noopener\">PR 1446</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1132\" target=\"_blank\" rel=\"noopener\">#1132</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Same-origin means the exact origin, not a prefix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1132\" target=\"_blank\" rel=\"noopener\">#1132</a>",
+          "issues": [
+            1132
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.223",
       "date": "2026-10-04",
       "summary": "Fix: zero lint errors, and the bugs the noise hid (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1441\" target=\"_blank\" rel=\"noopener\">PR 1441</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1237\" target=\"_blank\" rel=\"noopener\">#1237</a>",
