@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.147",
+      "date": "2026-10-03",
+      "summary": "Fix: already-failed media is noticed, and a &lt;video&gt; with &lt;source&gt; children is watched at all (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1359\" target=\"_blank\" rel=\"noopener\">PR 1359</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1342\" target=\"_blank\" rel=\"noopener\">#1342</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A media element that already failed is noticed, and a &lt;video&gt; with &lt;source&gt; children is watched at all</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1342\" target=\"_blank\" rel=\"noopener\">#1342</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/371\" target=\"_blank\" rel=\"noopener\">#371</a>",
+          "issues": [
+            1342,
+            371
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.146",
       "date": "2026-10-03",
       "summary": "Fix: a spec that mocks the network must block the service worker (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1357\" target=\"_blank\" rel=\"noopener\">PR 1357</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a>",
