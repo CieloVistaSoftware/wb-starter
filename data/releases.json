@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.142",
+      "date": "2026-10-03",
+      "summary": "Test: guards for two fixes that landed without one (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1346\" target=\"_blank\" rel=\"noopener\">PR 1346</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1148\" target=\"_blank\" rel=\"noopener\">#1148</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Guards for two fixes that landed in b31bd387 without one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1148\" target=\"_blank\" rel=\"noopener\">#1148</a>",
+          "issues": [
+            1153,
+            1148
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.141",
       "date": "2026-10-03",
       "summary": "Test: a schema with no $view keeps the author&#39;s live children (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1339\" target=\"_blank\" rel=\"noopener\">PR 1339</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1149\" target=\"_blank\" rel=\"noopener\">#1149</a>",
