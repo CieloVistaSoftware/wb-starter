@@ -25,7 +25,9 @@ import { test, expect } from '../fixtures/offline';
  */
 test.describe('cardimage image actually loads, not just has a src attribute (#cardimage-lazy)', () => {
   test('a valid src does not get permanently marked "Image unavailable" for staying off-screen', async ({ page }) => {
-    test.setTimeout(75000); // deliberately outlasts the ~27.5s pre-fix give-up window
+    // Outlasts the ~27.5s pre-fix give-up window, plus up to 45s for the eager
+    // scan to build the card on a slow runner (#1325).
+    test.setTimeout(120_000);
     // Deliberately do NOT scroll to the section -- reproduces the reported
     // failure exactly: the retry clock starts the instant cardimage() runs
     // (eager site-generator scan), regardless of scroll position, so an
@@ -40,6 +42,12 @@ test.describe('cardimage image actually loads, not just has a src attribute (#ca
     await expect(section, 'the matrix fixture should still have the Image Card section').toHaveCount(1);
     const firstCard = section.locator('[x-cardimage]').first();
     const img = firstCard.locator('img');
+    // #1325: wait for the card to be BUILT before asking for its <img>. The
+    // fixture eager-scans all ~280 cards on load; on a slow CI runner the scan
+    // had not reached this one inside the 5s default, so "must render a real
+    // <img>" failed on a card that simply was not built yet. x-ready is the
+    // card's own settled signal; a card that never builds still fails here.
+    await expect(firstCard, 'the cardimage was never built').toHaveAttribute('x-ready', '', { timeout: 45_000 });
     await expect(img, 'cardimage must render a real <img>').toHaveCount(1);
 
     // Confirm the URL itself is genuinely valid -- this proves any
