@@ -728,6 +728,15 @@ const WB = {
       return null;
     }
 
+    // #1168: x-ignore opts an element out of EVERY behavior, here as in
+    // wb.js's inject(). This runtime honoured it only for native auto-inject,
+    // so <span x-chip x-ignore> became a chip on every lazy page (the demos and
+    // the behaviors page) while wb.js left it alone. inject() is the choke
+    // point the scan loops, lazyInject and direct callers all reach.
+    if (element.hasAttribute('x-ignore')) {
+      return null;
+    }
+
     // Check if behavior exists
     if (!hasBehavior(behaviorName)) {
       console.warn(`[WB] Unknown behavior: ${behaviorName}`);
