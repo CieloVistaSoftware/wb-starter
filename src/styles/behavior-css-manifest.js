@@ -21,9 +21,6 @@
  * duplication, not a mistake to fix here) — both must load together.
  *
  * Intentionally NOT in this manifest:
- *   - modal.css: dead/legacy CSS not exercised by the current dialog.js
- *     (`<dialog>` + showModal(), not the old `.x-modal.open` toggle it
- *     defines). Never loading it is a strict improvement, not a gap.
  *   - stock.css: confirmed orphaned — no behavior, tag, or markup anywhere
  *     in the repo references `.x-stock`/`data-wb="stock"`.
  *   - layout.css, ui-utils.css: kept as unconditional imports in site.css

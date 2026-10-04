@@ -167,7 +167,7 @@ src/
     ├── site.css                 # Site-wide styles
     └── components/              # Per-component CSS (auto-loaded)
         ├── card.css
-        ├── modal.css
+        ├── dialog.css
         └── ...
 ```
 
