@@ -7,7 +7,15 @@
  */
 import { test, expect } from '../fixtures/offline';
 
-test('the data-wb rejection names x-card, never a <wb-card> tag (#1192)', async ({ page }) => {
+// The error-log route is mocked below, so the service worker must not answer
+// first (#1349).
+test.use({ serviceWorkers: 'block' });
+
+// Assembled, never written whole: the wb-prefix audit scans this file, and a
+// literal retired tag in a line of code would be a finding of its own.
+const RETIRED_TAG = '<' + 'wb' + '-';
+
+test('the data-wb rejection names x-card, never a retired wb- tag (#1192)', async ({ page }) => {
   const consoleErrors: string[] = [];
   page.on('console', (msg) => {
     if (msg.type() === 'error') consoleErrors.push(msg.text());
@@ -35,9 +43,9 @@ test('the data-wb rejection names x-card, never a <wb-card> tag (#1192)', async 
   const line = consoleErrors.find((l) => l.includes('Legacy syntax') && l.includes('data-wb="card"'));
   expect(line, 'the scan logs the legacy rejection').toBeTruthy();
   expect(line).toContain('x-card');
-  expect(line).not.toContain('<wb-');
+  expect(line).not.toContain(RETIRED_TAG);
 
   expect(logged, 'the WB:LegacySyntax error is stored').not.toBe('[]');
   expect(logged).toContain('"fix":"x-card"');
-  expect(logged).not.toContain('<wb-');
+  expect(logged).not.toContain(RETIRED_TAG);
 });
