@@ -25,6 +25,27 @@ test('npm start stamps locally, leaving tracked files as they were (#1131)', () 
   expect(fs.existsSync('.local/src/core/version.js'), 'the local stamp was written').toBe(true);
 });
 
+// #1452: npm start's next step, the docs manifests. On Windows it reordered
+// data/docs-manifest.json (directory order is the filesystem's) and rewrote
+// docs/manifest.json over its CRLF checkout, so both showed modified after
+// every start although no doc had changed.
+const MANIFESTS = ['data/docs-manifest.json', 'docs/manifest.json'];
+const manifestStatus = () => execFileSync('git', ['status', '--porcelain', '--', ...MANIFESTS], { encoding: 'utf8' });
+
+test('the docs-manifest step leaves an unchanged docs tree clean (#1452)', () => {
+  const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+  expect(pkg.scripts.start, 'npm start runs the manifest step').toContain('update-docs-manifest.js');
+
+  // Clean, not merely unchanged: the server this suite runs against was itself
+  // started by npm start, so an "unchanged" check compared dirty with dirty and
+  // passed against the bug. Clean is right whenever no doc has been edited,
+  // which is the precondition, checked first so a failure says which it was.
+  const docEdits = execFileSync('git', ['status', '--porcelain', '--', 'docs', ':!docs/manifest.json'], { encoding: 'utf8' });
+  expect(docEdits, 'precondition: no uncommitted doc edits, or the manifests may legitimately change').toBe('');
+  execFileSync(process.execPath, ['scripts/update-docs-manifest.js'], { encoding: 'utf8' });
+  expect(manifestStatus(), 'the manifest step modified tracked files on an unchanged docs tree').toBe('');
+});
+
 test('the dev server serves the local stamp as src/core/version.js (#1131)', async ({ page }) => {
   // The test makes its own stamp: CI starts the server with node server.js,
   // not npm start, so no stamp step has run there.
