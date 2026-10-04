@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.239",
+      "date": "2026-10-04",
+      "summary": "Fix: a test server never live-reloads the pages it serves (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1475\" target=\"_blank\" rel=\"noopener\">PR 1475</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The watches-by-default control clears WB_TEST_SERVER too</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+          "issues": [
+            1311
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A test server never live-reloads the pages it serves</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+          "issues": [
+            1311
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.238",
       "date": "2026-10-04",
       "summary": "Fix: examples use only option values their behavior declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1470\" target=\"_blank\" rel=\"noopener\">PR 1470</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1467\" target=\"_blank\" rel=\"noopener\">#1467</a>",
