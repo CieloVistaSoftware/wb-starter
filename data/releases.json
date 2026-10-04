@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.252",
+      "date": "2026-10-04",
+      "summary": "Test: build the code-panel preset demos explicitly (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1498\" target=\"_blank\" rel=\"noopener\">PR 1498</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1497\" target=\"_blank\" rel=\"noopener\">#1497</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Build the authored preset demos with WB.scan, not lazy injection</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1497\" target=\"_blank\" rel=\"noopener\">#1497</a>",
+          "issues": [
+            1497
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.251",
       "date": "2026-10-04",
       "summary": "Test: measure a stuck element against its real containing block (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1496\" target=\"_blank\" rel=\"noopener\">PR 1496</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1495\" target=\"_blank\" rel=\"noopener\">#1495</a>",
