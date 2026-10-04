@@ -62,7 +62,12 @@ test.describe('#1135 an explicitly requested port is honoured or refused, never 
       // can report listening a moment before EADDRINUSE arrives for the same
       // port (probe, 2026-10-03: both lines, then exit 1). What matters is that
       // it never moves to ANOTHER port and that it exits.
-      expect(srv.output(), 'it must not try another port').not.toMatch(/trying :\d+/);
+      expect(srv.output(), 'it must not try another port').not.toMatch(/trying :\S+/);
+      // #1286, carried from server-port-retry-is-numeric.spec.ts (removed): the env
+      // PORT is a string, and the retry's `p + 1` once concatenated it ('59175' + 1
+      // -> '591751', ERR_SOCKET_BAD_PORT). An explicit PORT no longer retries at
+      // all, so that path is gone -- this holds that it stays gone.
+      expect(srv.output(), 'no malformed-port crash (#1286)').not.toContain('ERR_SOCKET_BAD_PORT');
       expect(srv.output(), 'and must not end up serving one').not.toMatch(new RegExp(`running at http://localhost:(?!${port}\\b)\\d+`));
     } finally {
       holder.close();
