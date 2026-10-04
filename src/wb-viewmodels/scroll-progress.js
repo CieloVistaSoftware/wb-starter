@@ -3,7 +3,7 @@
  * -----------------------------------------------------------------------------
  * Shows scroll progress on the element.
  * 
- * Helper Attribute: [x-scroll-progress]
+ * Helper Attribute: [x-scrollProgress]  (the class it adds is x-scroll-progress)
  * -----------------------------------------------------------------------------
  */
 export function scrollProgress(element, options = {}) {

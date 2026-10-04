@@ -306,6 +306,11 @@ export const extensionMap = {
   // from plain 'x-drawer' above (slide-out panel + backdrop triggered by a
   // click). Easy to conflate by name, not the same thing.
   'x-drawer-layout': 'drawerLayout',
+  // #1195: registered as scrollProgress, and nothing mapped an attribute to it,
+  // so <div x-scrollProgress> did nothing. Attribute selectors match HTML
+  // attribute names case-insensitively, so this camelCase entry also matches
+  // the lowercase name the parser stores.
+  'x-scrollProgress': 'scrollProgress',
   'x-dropdown': 'dropdown',
   'x-gallery': 'gallery',
   'x-toast': 'toast',
