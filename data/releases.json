@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.192",
+      "date": "2026-10-04",
+      "summary": "Range options are camelCase, schema-declared, and &quot;false&quot; means false (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1341\" target=\"_blank\" rel=\"noopener\">PR 1341</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1140\" target=\"_blank\" rel=\"noopener\">#1140</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Convert the range call sites too — demos and the examples data</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1140\" target=\"_blank\" rel=\"noopener\">#1140</a>",
+          "issues": [
+            1140
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Range options are camelCase, schema-declared, and &quot;false&quot; means false</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1140\" target=\"_blank\" rel=\"noopener\">#1140</a>",
+          "issues": [
+            1140
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.191",
       "date": "2026-10-04",
       "summary": "Fix: the commit-message spec imports its module once (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1404\" target=\"_blank\" rel=\"noopener\">PR 1404</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1403\" target=\"_blank\" rel=\"noopener\">#1403</a>",
