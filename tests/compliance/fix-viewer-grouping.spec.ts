@@ -18,6 +18,15 @@
 
 import { test, expect, type Locator } from '../fixtures/offline';
 
+/**
+ * #1349 — the pin described above never reached the browser on its own. sw.js
+ * answers the page's GETs itself and Playwright cannot route a service
+ * worker's requests, so `/api/fixes` went to the real, git-derived endpoint
+ * whenever the worker had claimed the page. Blocking it is what makes "pinned
+ * EMPTY here" true.
+ */
+test.use({ serviceWorkers: 'block' });
+
 const FIXES = {
   metadata: { version: '1.0.0' },
   fixes: {

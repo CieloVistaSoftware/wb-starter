@@ -99,13 +99,20 @@ test.describe('Examples render clean', () => {
                  `${(r as HTMLElement).dataset.variant ? ' / ' + (r as HTMLElement).dataset.variant : ''}`,
         })));
 
+    // #1111: each example must FINISH rendering before the next click. A fixed
+    // 120ms let every click abort the previous row's in-flight requests -- an
+    // aborted fetch is exactly what produces "499 Client Closed Request" -- and
+    // the error then surfaced under whichever row was selected by that time, so
+    // a different innocent example was accused on every run. WB.whenIdle() is
+    // the runtime's own "nothing left to build" signal.
     for (const { i, label } of rows) {
       const before = errors.length;
-      await page.evaluate((idx) => {
+      await page.evaluate(async (idx) => {
         const row = document.querySelectorAll('.behaviors-search-results__row')[idx] as HTMLElement;
         row?.click();
+        const WB = (window as any).WB;
+        if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 15000 });
       }, i);
-      await page.waitForTimeout(120);
       for (const e of errors.slice(before)) perExample.push(`${label}: ${e}`);
     }
 
@@ -130,7 +137,8 @@ test.describe('Examples render clean', () => {
       const WB = (window as any).WB;
       for (const row of rows) {
         (row as HTMLElement).click();
-        await new Promise((r) => setTimeout(r, 110));
+        // #1111: let the example finish before the next click aborts it.
+        if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 15000 });
       }
       // getErrors() is exported by error-logger.js and re-exported on WB in
       // builds that expose it; fall back to the stored log if not.

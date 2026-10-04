@@ -12,6 +12,16 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+/**
+ * #1349: "each case serves a stamp of its own" is a page.route on version.js.
+ * sw.js answers the page's GETs itself and Playwright cannot route a service
+ * worker's requests, so on a claimed page the badge read the CHECKOUT's own
+ * stamp — the one thing the header says must not decide these assertions — and
+ * "41 commits past v1.0.0 reads v1.0.41" became a statement about whatever
+ * this tree happens to be stamped as. Blocked, the served stamp is the stamp.
+ */
+test.use({ serviceWorkers: 'block' });
+
 const stamp = (ahead: number, extra: Record<string, unknown> = {}) => `export const VERSION = ${JSON.stringify({
   version: '4.0.5', commit: 'abc1234', builtAt: '2026-09-28T12:00:00.000Z',
   branch: 'main', dirty: false, ahead, behind: 0, upstream: 'origin/main',

@@ -105,13 +105,36 @@ const DOCS = globSync('docs/**/*.md', { cwd: ROOT, ignore: ['docs/_today/**'] })
   .filter((f) => hasWbDemo(path.join(ROOT, f)))
   .sort();
 
+// A page fragment opened directly redirects itself into the app
+// (`location.replace(root + '?page=' + ...)`), so a "direct" audit of it lands
+// on the app route, where its demos are hidden by design. Those were skipped
+// silently on every run; once the skip became a failure (#1024) they showed up
+// as "did not render". They are audited through their app route and the doc
+// viewer, not here.
+const redirectsIntoApp = (file: string) => {
+  try {
+    return /location\.replace\([^)]*\?page=/.test(fs.readFileSync(file, 'utf8'));
+  } catch {
+    return false;
+  }
+};
+
 const HTML_PAGES = [
   ...globSync('demos/**/*.html', { cwd: ROOT, posix: true }),
   ...globSync('pages/**/*.html', { cwd: ROOT, posix: true }),
 ]
   .map(toPosix)
   .filter((f) => hasWbDemo(path.join(ROOT, f)))
+  .filter((f) => !redirectsIntoApp(path.join(ROOT, f)))
   .sort();
+
+// #1024 / #863: a list that matched nothing would make this whole file report
+// green on zero checks. The lists are deterministic (globSync + sort); this
+// holds that they are also non-trivial.
+test('the audit has pages to audit', () => {
+  expect(DOCS.length, 'no docs with <div x-demo> found -- the audit would check nothing').toBeGreaterThan(10);
+  expect(HTML_PAGES.length, 'no demo/page .html with <div x-demo> found -- the audit would check nothing').toBeGreaterThan(5);
+});
 
 const NARROW_TOLERANCE_PX = 2; // sub-pixel rounding only
 const LINE_HEIGHT_TOLERANCE_PX = 3; // sub-pixel rounding only
@@ -137,6 +160,24 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
   await page.goto(url, { waitUntil: 'domcontentloaded' });
 
   const demos = page.locator('[x-demo]');
+
+  // #1024: first wait for the page to say it has RENDERED (the doc viewer marks
+  // #content with x-mdhtml--loaded; a plain page reaches the load event), then
+  // decide. A page whose "<div x-demo" is only inside a code fence has no live
+  // demo -- it used to sit through the whole 20s visibility wait below before
+  // concluding that, which under load pushed it past the 30s test budget and
+  // turned a legitimate skip into a timeout.
+  const isViewer = url.includes('doc-viewer.html');
+  await (isViewer
+    ? page.waitForSelector('#content.x-mdhtml--loaded', { state: 'attached', timeout: 20000 })
+    : page.waitForLoadState('load', { timeout: 20000 })
+  ).catch(() => { /* judged below, with the page's real state */ });
+  if ((await demos.count()) === 0) {
+    const loaded = await page.evaluate((viewer) => viewer
+      ? !!document.querySelector('#content.x-mdhtml--loaded')
+      : document.readyState === 'complete', isViewer);
+    if (loaded) return [];
+  }
   // Doc-viewer/mdhtml renders markdown asynchronously (fetch + parse), so
   // <div x-demo> tags don't exist in the DOM immediately after
   // domcontentloaded -- wait for the first one to actually appear (this
@@ -146,7 +187,27 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
   try {
     await expect(demos.first()).toBeVisible({ timeout: 20000 });
   } catch {
-    return [];
+    // #1024: this used to `return []`, which the caller turned into test.skip
+    // -- so a page that FAILED to render under load was reported as "-" and
+    // counted as neither pass nor fail, and each run collected a different
+    // number of results. Tell the two cases apart instead:
+    //   rendered, but no live demo  -> legitimately nothing to audit (the
+    //                                  file's "<div x-demo" is inside a code
+    //                                  fence, which hasWbDemo's grep counts)
+    //   never finished rendering    -> a failure, saying so
+    const state = await page.evaluate(() => ({
+      viewerLoaded: !!document.querySelector('#content.x-mdhtml--loaded'),
+      isViewer: !!document.getElementById('content') && location.pathname.endsWith('doc-viewer.html'),
+      readyState: document.readyState,
+      demosInDom: document.querySelectorAll('[x-demo]').length,
+    }));
+    const rendered = state.isViewer ? state.viewerLoaded : state.readyState === 'complete';
+    if (rendered && state.demosInDom === 0) return [];
+    throw new Error(
+      `${url} did not render its demos within 20s (#1024): ` +
+      `${state.isViewer ? `doc-viewer loaded=${state.viewerLoaded}` : `readyState=${state.readyState}`}, ` +
+      `[x-demo] in DOM=${state.demosInDom}, none visible. A page that never renders is a failure, not a skip.`
+    );
   }
   const demoCount = await demos.count();
   // The work here is per block: every demo is scrolled into view so the lazy
@@ -173,6 +234,28 @@ async function collectPanelReports(page: import('@playwright/test').Page, url: s
       // best-effort -- fall through and audit whatever already built/rendered
     }
   }
+
+  // #1024: blocks after the first EAGER_BUILD_COUNT are built lazily, and the
+  // gutter wait below is "vacuously satisfied" by a demo with no panel YET --
+  // so under load a doc whose panels had not been created read as "no panels"
+  // and was skipped (7 skips one run, 10 the next). Wait for the runtime to
+  // report every injection settled before deciding what exists.
+  await page.evaluate(async (budget) => {
+    const WB = (window as any).WB;
+    if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: budget });
+  }, Math.min(30000, 5000 + demoCount * 100));
+  // whenIdle() alone was not enough (skips still drifted 11 / 8 / 4 across
+  // three runs): demo.js builds deferred blocks outside the injection tracker.
+  // Its own markers say when a block is done -- it adds the `x-demo` class when
+  // it builds the element, and a code panel carries `x-demo__code--pending`
+  // until it is ready. Wait until every block is built and nothing is pending.
+  await page.waitForFunction(() => {
+    const blocks = Array.from(document.querySelectorAll('[x-demo]'));
+    return blocks.every((b) => b.classList.contains('x-demo'))
+      && !document.querySelector('.x-demo__code--pending');
+  }, null, { timeout: Math.min(30000, 5000 + demoCount * 100) }).catch(() => {
+    // Best effort: the audit below still runs and reports what exists.
+  });
 
   // Deterministic wait, not a fixed timeout: pre.js positions each
   // line-number's `top` via a double-rAF-deferred measurement pass. Poll

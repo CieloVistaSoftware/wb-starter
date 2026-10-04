@@ -28,6 +28,13 @@ import { test, expect } from '@playwright/test';
  * (compliance/error-log-empty.spec.ts).
  */
 
+// #1349: the error-log route is a POST and sw.js only claims GETs, so the
+// swallow below did work and data/errors.json stayed empty. Blocked anyway —
+// this spec imports the runtime's three registries out of the live page, and
+// a module served from the worker's cache is not necessarily the module in the
+// tree under test.
+test.use({ serviceWorkers: 'block' });
+
 const CONTROL = [
   'x-eager', 'x-ignore', 'x-error', 'x-ready', 'x-schema',
   'x-hydrated', 'x-docs', 'x-teaching-example', 'x-autosize-init', 'x-',

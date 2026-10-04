@@ -28,6 +28,14 @@ An image has no `size` option. It is sized the way HTML already sizes images, wh
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg" width="960" height="540" alt="Dachshund puppy, shrunk to fit its container">
 </div>
 
+**Set a different shape with `width` and `height`.** When both are set, they decide the shape as well as the size. The image is cropped to that shape (`object-fit: cover`), never stretched. Here the same 16:9 photo is shown at 240 by 240.
+
+<div x-demo>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg" width="240" height="240" alt="Dachshund puppy, cropped to 240 by 240 pixels">
+</div>
+
+`height` on its own does nothing: the site's `img { height: auto }` overrides it, so the height comes from the width and the photo's shape. Always set it together with `width`.
+
 **Change its shape with `aspect-ratio`.** The image is cropped to that shape rather than stretched (`object-fit: cover`). Here a 16:9 photo is shown square.
 
 <div x-demo>
@@ -42,6 +50,8 @@ Inside a card, let the card size the image: give the card a `size` and leave the
 | --- | --- | --- | --- |
 | `placeholder` | `string` | — | Image shown while the real `src` loads. Replaced the moment the real image decodes. |
 | `fallback` | `string` | — | Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty. |
+| `width` | `number` | — | Width in pixels (the native attribute). On its own the height follows the photo's shape. With `height`, the two set the shape too and the image is cropped to it. Still shrinks to fit a narrower container. |
+| `height` | `number` | — | Height in pixels (the native attribute). Takes effect only together with `width`; on its own the site's `img { height: auto }` overrides it. An explicit `aspect-ratio` wins over the pair. |
 | `aspect-ratio` | `string` | — | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
 | `lazy` | `boolean` | `false` | Sets `loading="lazy"`, so the browser defers fetching until the image nears the viewport. Bare attribute. |
 | `data-lazy` | `boolean` | `false` | The `data-` spelling of `lazy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `lazy`. |

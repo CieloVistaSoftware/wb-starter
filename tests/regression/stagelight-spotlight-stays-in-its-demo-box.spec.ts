@@ -1,5 +1,9 @@
 import { test, expect, Page } from '../fixtures/offline';
 import { elementReady } from '../base';
+import { traceNavigations } from '../helpers/navigation-trace';
+
+// #1311: a failure here prints every main-frame navigation the page made.
+traceNavigations(test);
 
 /**
  * #647: loading demos/playground.html darkened the ENTIRE page with a

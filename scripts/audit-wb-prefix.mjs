@@ -26,6 +26,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { sourceFiles } from './lib/source-files.mjs';
 
 const ARGS = process.argv.slice(2);
 const flag = (n) => ARGS.includes(n);
@@ -34,51 +35,20 @@ const ROOT = (() => {
   return i >= 0 && ARGS[i + 1] ? path.resolve(ARGS[i + 1]) : process.cwd();
 })();
 
-const SKIP_DIRS = new Set([
-  'node_modules', '.git', 'out', 'dist', 'coverage', 'test-results',
-  'playwright-report', '.claude', 'vendor', 'lib',
-  // Captured test-runner output, not source. These files record what a
-  // past run PRINTED -- including failure text that quotes the very tags
-  // this audit forbids. Counting a recorded quotation as a surviving tag
-  // makes the gate fail for reporting a problem accurately.
-  'test-single',
-  // Runtime logs: what the app WROTE while tests ran, not source. An error
-  // message quoting a tag landed here and counted as a live <wb-*> tag in CI.
-  'error-log-archive',
-]);
-
-// #960: the same rule, for FILES. data/test-results.json (7,080 wb- refs) and
-// data/test-status.json (1,108) are run artifacts sitting beside the already
-// skipped data/test-results/ DIRECTORY. Counting them made PACKAGE/MODULE/CLASS
-// track how much failure text the PREVIOUS run happened to capture -- the
-// ceilings passed after a small run and failed after a large one with no source
-// change between. A gate whose answer depends on its own exhaust is not a gate.
-//
-// data/priority-gate.json is the same kind of file: a snapshot of open GitHub
-// issue titles and bodies written by scripts/build-priority-gate.mjs. Issues
-// ABOUT the removed tags quote them ("<wb-select> ..."); that is a recorded
-// quotation of a bug report, not a tag anything renders, and it changes every
-// time the manifest is refreshed from GitHub with no source change at all.
-const SKIP_FILES = new Set([
-  'test-results.json',
-  'test-status.json',
-  'priority-gate.json',
-  'errors.json',
-]);
 const EXT = /\.(js|mjs|cjs|ts|tsx|css|html|json|md|yml|yaml)$/;
 
-function walk(dir, out = []) {
-  let entries;
-  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
-  for (const e of entries) {
-    if (SKIP_DIRS.has(e.name)) continue;
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) walk(p, out);
-    else if (SKIP_FILES.has(e.name)) continue;
-    else if (EXT.test(e.name)) out.push(p);
-  }
-  return out;
-}
+// #1300: the file list is git's, not the filesystem's. Six generated files had
+// been added to a per-name deny-list one at a time as each one broke this gate
+// (#960, #1027), and data/fixes-cache.json + data/issues-cache.json broke it
+// again -- 700 "surviving component tags" that were GitHub issue text quoting
+// the tags this audit removed. The repo already says what source is: the files
+// git tracks, minus data/ (output, by TIER1-LAWS §12 -- which is where all six
+// lived, including the one that is tracked on purpose).
+//
+// The first pass at this (94a4226b) listed `--cached` alone and kept a
+// three-name deny-list. Both are fixed here, in scripts/lib/source-files.mjs,
+// so any other scanner can ask for "source" instead of growing its own list.
+const { files: FILES, source: FILE_SOURCE } = sourceFiles({ root: ROOT, ext: EXT });
 
 // Order matters: first match wins, most specific first.
 const CATEGORIES = [
@@ -94,9 +64,12 @@ const tokens = Object.fromEntries(CATEGORIES.map(([c]) => [c, new Map()]));
 const files = Object.fromEntries(CATEGORIES.map(([c]) => [c, new Map()]));
 const tagSites = [];
 
-for (const file of walk(ROOT)) {
+let filesRead = 0;
+
+for (const file of FILES) {
   let text;
   try { text = fs.readFileSync(file, 'utf8'); } catch { continue; }
+  filesRead++;
   if (!text.includes('wb-')) continue;
   const rel = path.relative(ROOT, file).split(path.sep).join('/');
   const IS_CODE = /\.(js|mjs|cjs|ts|tsx)$/.test(file);
@@ -143,6 +116,12 @@ const total = Object.values(counts).reduce((a, b) => a + b, 0);
 const pad = (s, n) => String(s).padEnd(n);
 
 console.log(`\nwb- prefix audit — ${ROOT}\n`);
+// The scan's own size, reported in the machine-readable block, so a gate can
+// assert a floor on it. An audit that read nothing reports TAG 0 and every
+// ceiling met -- a perfect score that means the scanner broke, which is how
+// the zeroed site-generator-result.json kept 57 tests dormant (#837).
+console.log(`${pad('SCANNED', 10)} ${pad(filesRead, 8)} files, listed by ${FILE_SOURCE}`);
+console.log('');
 console.log(`${pad('CATEGORY', 10)} ${pad('HITS', 8)} ${pad('DISTINCT', 9)} FILES`);
 console.log('-'.repeat(52));
 for (const [cat] of CATEGORIES) {
@@ -174,6 +153,18 @@ if (flag('--files')) {
     [...files[cat]].sort((a, b) => b[1] - a[1]).slice(0, 15)
       .forEach(([f, n]) => console.log(`  ${pad(n, 6)} ${f}`));
   }
+}
+
+// A scan that read nothing is a broken scanner, not a clean repo. Fail loudly
+// rather than hand back TAG 0 and let every ceiling pass vacuously.
+if (filesRead === 0) {
+  console.error(
+    `audit-wb-prefix.mjs read 0 files under ${ROOT} (listed by ${FILE_SOURCE}).\n`
+    + 'Nothing was scanned, so the counts above mean nothing. If this is a git\n'
+    + 'work tree, check that `git ls-files` works here; if it is not, check that\n'
+    + '--dir points at a directory that actually holds source.',
+  );
+  process.exit(2);
 }
 
 // A component tag is a defect, not a style preference.

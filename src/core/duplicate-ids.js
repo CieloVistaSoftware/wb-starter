@@ -38,6 +38,16 @@ export function findDuplicateIds(root = document) {
     .sort((a, b) => b.count - a.count);
 }
 
+/** `body > div#app.site > …` -- up to six ancestors, enough to tell two mounts apart. */
+function pathOf(el) {
+  const parts = [];
+  for (let n = el; n && n.nodeType === 1 && parts.length < 6; n = n.parentElement) {
+    const cls = typeof n.className === 'string' && n.className.trim() ? '.' + n.className.trim().split(/\s+/)[0] : '';
+    parts.unshift(`${n.tagName.toLowerCase()}${n.id ? '#' + n.id : ''}${cls}`);
+  }
+  return parts.join(' > ');
+}
+
 /**
  * Check the document and raise a logged runtime error if anything is doubled.
  * @param {string} when - what had just happened, so the log says where to look
@@ -66,6 +76,16 @@ export function reportDuplicateIds(when = 'render') {
       when,
       duplicates: duplicates.slice(0, 25),
       total: duplicates.length,
+      // #1340: WHERE each copy lives, and in what kind of page. "#app x2"
+      // alone could not say whether the shell was mounted twice, injected
+      // into a page under test, or framed by a probe -- and with no copy
+      // locations there was nothing to trace once the tab was gone.
+      copies: duplicates.slice(0, 5).map(({ id }) => ({
+        id,
+        at: Array.from(document.querySelectorAll('[id]')).filter((el) => el.id === id).map(pathOf),
+      })),
+      framed: window.top !== window,
+      url: window.location.href,
     });
   } catch (err) {
     // Never let the detector be the thing that breaks the page.
