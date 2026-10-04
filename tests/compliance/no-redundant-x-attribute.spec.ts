@@ -34,24 +34,15 @@
 import { test, expect } from '../fixtures/offline';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join, relative, extname } from 'path';
+import { nativeRules, nativeBehaviorOf, typeAttrOf } from '../base';
 
 const root = process.cwd();
 
-/** Bare-tag entries of tag-map.js's nativeMap: tag → behavior. */
-function nativeMap(): Record<string, string> {
-  const src = readFileSync(join(root, 'src/core/tag-map.js'), 'utf8');
-  const block = src.match(/export const nativeMap = \{([\s\S]*?)\n\};/);
-  if (!block) throw new Error('nativeMap not found in tag-map.js');
-  const out: Record<string, string> = {};
-  for (const m of block[1].matchAll(/'([^']+)':\s*'([^']+)'/g)) {
-    // Selector keys (input[type="checkbox"]) have no single tag to compare a
-    // bare `<tag x-attr>` against; the plain-tag entries are this rule.
-    if (/^[a-z][a-z0-9]*$/.test(m[1])) out[m[1]] = m[2];
-  }
-  return out;
-}
-
-const MAP = nativeMap();
+// The tag->behavior rule is tests/base.ts's nativeRules(): EVERY nativeMap
+// entry, typed inputs included (#1141). Plain tags alone let
+// <input type="range" x-range> and <input type="password" x-password> through,
+// because their behavior is not their tag's name.
+const RULES = nativeRules();
 
 /**
  * Comments are not markup. A comment that DOCUMENTS the anti-pattern — and
@@ -75,7 +66,7 @@ function offendersIn(html: string): string[] {
   html = stripComments(html);
   const bad: string[] = [];
   for (const m of html.matchAll(/<([a-zA-Z][a-zA-Z0-9]*)((?:\s[^<>]*?)?)(\/?>)/gs)) {
-    const behavior = MAP[m[1].toLowerCase()];
+    const behavior = nativeBehaviorOf(m[1], typeAttrOf(m[2]));
     if (!behavior) continue;
     if (new RegExp(`\\sx-${behavior}(?=[\\s/>=]|$)`).test(m[2])) {
       bad.push(`<${m[1]} … x-${behavior}>`);
@@ -101,16 +92,32 @@ function walk(dir: string, exts: string[], acc: string[] = []): string[] {
 test.describe('No redundant x-{behavior} attribute', () => {
   test('the tag→behavior map parsed — the rule is not silently empty', () => {
     // A rule that matches nothing passes every time and protects nothing.
-    expect(Object.keys(MAP).length).toBeGreaterThan(5);
-    expect(MAP['figure'], 'figure should map to the figure behavior').toBe('figure');
+    expect(RULES.length).toBeGreaterThan(5);
+    expect(nativeBehaviorOf('figure', null), 'figure should map to the figure behavior').toBe('figure');
+    // #1141: typed inputs and article are part of the rule, not skipped.
+    expect(nativeBehaviorOf('input', 'range')).toBe('range');
+    expect(nativeBehaviorOf('input', 'password')).toBe('password');
+    expect(nativeBehaviorOf('article', null)).toBe('card');
+    expect(offendersIn('<input type="range" x-range>')).toHaveLength(1);
+    expect(offendersIn('<input x-password type="password">')).toHaveLength(1);
+    expect(offendersIn('<article x-card>')).toHaveLength(1);
+    expect(offendersIn('<input type="range" x-colorpicker>'), 'a different behavior is an opt-in').toHaveLength(0);
+    expect(offendersIn('<article x-cardimage>'), 'a variant is not a duplicate').toHaveLength(0);
+    expect(offendersIn('<ul x-ul>'), 'ul is not in nativeMap; x-ul is how it opts in').toHaveLength(0);
   });
 
   test('no authored source writes x-{behavior} on that behavior\'s own element', () => {
+    // #1141: README, the src/ markup strings and the create-wb-starter
+    // template are copied from as much as docs are; they held most of the
+    // duplicates this gate could not see.
     const files = [
       ...walk(join(root, 'pages'), ['.html']),
       ...walk(join(root, 'demos'), ['.html']),
-      ...walk(join(root, 'docs'), ['.md']),
+      ...walk(join(root, 'docs'), ['.md', '.html']),
+      ...walk(join(root, 'src'), ['.html', '.js']),
+      ...walk(join(root, 'packages/create-wb-starter/template'), ['.html', '.md', '.js']),
       join(root, 'index.html'),
+      join(root, 'README.md'),
     ];
 
     const failures: string[] = [];
@@ -124,10 +131,15 @@ test.describe('No redundant x-{behavior} attribute', () => {
 
     // The seeded example data is JSON-encoded HTML; scan its raw text so the
     // escaped markup is covered by the same rule.
-    const dataFile = join(root, 'data/behavior-examples.json');
-    const raw = readFileSync(dataFile, 'utf8').replace(/\\"/g, '"').replace(/\\n/g, '\n');
-    for (const bad of offendersIn(raw)) {
-      failures.push(`${relative(root, dataFile)}: ${bad}`);
+    const jsonFiles = [
+      join(root, 'data/behavior-examples.json'),
+      ...walk(join(root, 'src/wb-models'), ['.json']),
+    ];
+    for (const dataFile of jsonFiles) {
+      const raw = readFileSync(dataFile, 'utf8').replace(/\\"/g, '"').replace(/\\n/g, '\n');
+      for (const bad of offendersIn(raw)) {
+        failures.push(`${relative(root, dataFile)}: ${bad}`);
+      }
     }
 
     expect(failures, `Redundant dispatch attributes:\n  ${failures.join('\n  ')}`).toEqual([]);

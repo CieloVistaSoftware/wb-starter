@@ -215,8 +215,8 @@ already-upgraded element. Where the attribute names the *same* behavior the tag
 already implies, that is redundant and the runtime says so:
 
 ```text
-<article x-card> says the same thing twice: <article> already IS the card
-behavior, so the x-card attribute adds nothing. Drop it and keep <article>.
+An <article> carrying x-card says the same thing twice: <article> already IS
+the card behavior, so the x-card attribute adds nothing. Drop it and keep <article>.
 ```
 
 `<article x-cardimage>` is **not** redundant — the tag gives you a card and the
@@ -228,7 +228,7 @@ decorates a card, it does not replace one.
 | You write | What happens |
 |---|---|
 | `<input type="range">` | auto-injects the `range` behavior |
-| `<input type="range" x-range>` | redundant — the tag already says range; the audits flag it, so drop `x-range` |
+| `<input type="range">` plus `x-range` | redundant — the tag already says range; the audits flag it, so drop `x-range` |
 | `<input type="range" x-colorpicker>` | a *different* explicit behavior wins; auto-injection stands down |
 | `<article x-cardhero size="lg" variant="glass">` | behavior applied, then configured by attributes |
 | `<button variant="primary">` | injects **even when auto-injection is off** — `variant` is unambiguous intent |

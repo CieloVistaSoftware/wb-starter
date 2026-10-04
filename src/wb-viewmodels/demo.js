@@ -310,7 +310,7 @@ function findWbComponents(html) {
 // longer a prefix to strip -- the attribute name IS the behavior name.
 // Requires a preceding whitespace (not `<`) so it never matches a leading
 // slice of an `<x-foo>` CUSTOM ELEMENT TAG name, same anchoring approach as
-// no-redundant-x-attribute-on-native-tag.spec.ts's `(^|\s)x-${tag}` check.
+// no-redundant-x-attribute.spec.ts's whitespace-anchored `\sx-${behavior}` check.
 function findXBehaviors(html) {
     const regex = /(?:^|\s)x-([a-z][a-z0-9]*)(?=[\s=/>]|$)/gi;
     const matches = [];
