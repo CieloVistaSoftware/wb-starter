@@ -72,6 +72,22 @@ export function isProcessRunning(pid) {
 const IDENTITY_TTL_MS = 10_000;
 const identityCache = new Map();
 
+/**
+ * Longest a holder whose identity cannot be PROVEN is believed (#1040).
+ *
+ * Two records still answer PID-only: one written before identities existed, and
+ * one naming a process the OS will not describe (StartTime unreadable, no
+ * shell). PID-only is exactly the answer a recycled PID can fake, so believing
+ * it without end leaves the one wedge this fix exists to remove — the machine
+ * refusing every run, naming a stranger, until a human clears the file. The
+ * ceiling is longer than any real suite, so it never robs a live run, and
+ * finite, so nothing holds the machine for good.
+ */
+export function defaultMaxHoldMs() {
+  const raw = process.env.WB_LOCK_MAX_HOLD_MS;
+  return raw === undefined || raw === "" ? 2 * 60 * 60 * 1000 : Number(raw);
+}
+
 /** The OS's start-time stamp for a process, or null when it cannot be read. */
 function readProcessStart(pid) {
   if (!Number.isInteger(pid) || pid <= 0) return null;
@@ -145,6 +161,7 @@ export function isSameProcess(pid, recordedStart, isAlive = isProcessRunning, id
  * @param {() => number} [opts.freeMemBytes] Injectable, so tests can simulate pressure.
  * @param {(pid: number) => boolean} [opts.isAlive] Injectable liveness check.
  * @param {(pid: number) => string|null} [opts.identityOf] Injectable process-identity read (#1040).
+ * @param {number} [opts.maxHoldMs] Ceiling for a holder whose identity cannot be proven; 0 disables it.
  */
 export function createGuards(opts) {
   const root = opts.root;
@@ -155,8 +172,40 @@ export function createGuards(opts) {
   const freeMemBytes = opts.freeMemBytes || freemem;
   const isAlive = opts.isAlive || isProcessRunning;
   const identityOf = opts.identityOf || processIdentity;
+  const maxHoldMs = opts.maxHoldMs === undefined ? defaultMaxHoldMs() : opts.maxHoldMs;
+
+  /**
+   * A holder that answered PID-only is past the point where believing it is
+   * safer than clearing it. Longer than any real suite; an undated record is
+   * treated as past it, because nothing about it can be checked at all.
+   */
+  const heldPastCeiling = (held) => {
+    if (!(maxHoldMs > 0)) return false;
+    const claimedAt = Date.parse(held.startedAt);
+    if (!Number.isFinite(claimedAt)) return true;
+    return Date.now() - claimedAt >= maxHoldMs;
+  };
+
   /** The record's holder is the SAME process that took it -- not a recycled PID (#1040). */
-  const holderAlive = (held) => !!held && isSameProcess(held.pid, held.pidStart, isAlive, identityOf);
+  const holderAlive = (held) => {
+    if (!held || !isSameProcess(held.pid, held.pidStart, isAlive, identityOf)) return false;
+    // Proven: a recorded start time that the OS still agrees with.
+    if (held.pidStart && identityOf(held.pid) !== null) return true;
+    // Unproven, so believed only up to the ceiling — never indefinitely.
+    return !heldPastCeiling(held);
+  };
+
+  /** Which of the three ways a holder stopped counting, for the log a human reads. */
+  const staleReason = (held) => {
+    if (!held || !held.pid) return "no holder recorded";
+    if (!isAlive(held.pid)) return `holder ${held.pid} is dead`;
+    if (held.pidStart && identityOf(held.pid) !== null) {
+      return `PID ${held.pid} now belongs to another process`;
+    }
+    const age = Date.now() - Date.parse(held.startedAt);
+    return `holder ${held.pid} could not be identified and the lock is ` +
+      (Number.isFinite(age) ? `${Math.round(age / 60000)} min old` : "undated");
+  };
   // One re-check per hold, for a holder that died WITHOUT releasing: that
   // produces no filesystem event, so without this a subscriber would be
   // stranded. It is a single timer, not a poll -- nothing runs while it waits.
@@ -323,7 +372,7 @@ export function createGuards(opts) {
         }
       }
 
-      console.log(`⚠️  Stale lock (holder ${held.pid || "n/a"} dead, or its PID now belongs to another process). Clearing.`);
+      console.log(`⚠️  Stale lock (${staleReason(held)}). Clearing.`);
       await removeLock();
     }
 
