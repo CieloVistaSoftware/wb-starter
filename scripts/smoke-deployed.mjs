@@ -19,6 +19,8 @@
  */
 import { execSync, spawnSync } from 'child_process';
 import { pagesDeployState } from './lib/pages-deploy-state.mjs';
+import { playwrightInvocation } from './lib/playwright-launch.mjs';
+import { parsePlaywrightSummary } from './lib/playwright-summary.mjs';
 
 /*
  * The published URL lives HERE, in the repo, under version control.
@@ -91,17 +93,39 @@ async function waitForBuild() {
 console.log(`\n🔥 Deployed smoke — ${url}\n`);
 if (!skipWait) await waitForBuild();
 
-const res = spawnSync(
-  'npx',
-  ['playwright', 'test', 'site-smoke', '--project=compliance', '--reporter=line'],
-  // SMOKE_BASE_URL is a process-local handoff to the spec, set for this child
-  // only. It is deliberately NOT a system environment variable: those hold
-  // secrets, and a public URL is not one.
-  { stdio: 'inherit', env: { ...process.env, SMOKE_BASE_URL: url }, shell: true }
-);
+// No shell (#1194): Playwright's own CLI through the current node, arguments
+// as an array. SMOKE_BASE_URL is a process-local handoff to the spec, set for
+// this child only -- deliberately NOT a system environment variable: those hold
+// secrets, and a public URL is not one. With it set, playwright.config.ts
+// starts no local server (#1364): this run tests the deployed site only.
+const { command, args } = playwrightInvocation(['playwright', 'test', 'site-smoke', '--project=compliance', '--reporter=line']);
+const res = spawnSync(command, args, {
+  env: { ...process.env, SMOKE_BASE_URL: url },
+  encoding: 'utf8',
+  maxBuffer: 64 * 1024 * 1024,
+});
+process.stdout.write(res.stdout || '');
+process.stderr.write(res.stderr || '');
 
-if (res.status === 0) {
+// #1364: only a smoke test that RAN and failed means the deployed site is
+// broken. A run that never got to test anything -- Playwright missing, the
+// config failing to load, a local setup error -- used to print the same
+// "THE DEPLOYED SITE IS BROKEN" over a healthy site.
+// The line reporter redraws its status with terminal cursor codes, so its final
+// "6 passed" arrives prefixed by ESC sequences; strip them before parsing.
+const ANSI = new RegExp(String.fromCharCode(27) + '\\[[0-9;]*[A-Za-z]', 'g');
+const summary = parsePlaywrightSummary(`${res.stdout || ''}\n${res.stderr || ''}`.replace(ANSI, ''));
+const ranTests = summary.passed !== null || summary.failed !== null;
+
+if (res.status === 0 && ranTests) {
   console.log(`\n✅ The deployed site boots. ${url}\n`);
+} else if (!ranTests) {
+  console.error(
+    `\n⚠️  THE SMOKE TEST DID NOT RUN — nothing was checked against ${url}.\n` +
+      `   This is a problem on THIS machine, not evidence about the deployed site.\n` +
+      `   Exit ${res.status}${res.error ? ` (${res.error.message})` : ''}. Try \`npm ci\`, then run this again.\n`
+  );
+  process.exit(2);
 } else {
   console.error(
     `\n❌ THE DEPLOYED SITE IS BROKEN — ${url}\n` +

@@ -63,7 +63,9 @@ const ASSERTION =
 test.describe('#1074 server output is captured and server-down is not a test failure', () => {
   test('playwright.config.ts starts the dev server through the log wrapper', () => {
     const config = fs.readFileSync(path.join(REPO, 'playwright.config.ts'), 'utf8');
-    const block = config.match(/webServer:\s*\{([\s\S]*?)\n\s{2}\},/);
+    // #1364: a deployed smoke run (SMOKE_BASE_URL) starts no local server, so the
+    // block may be guarded by exactly that condition -- and only that one.
+    const block = config.match(/webServer:\s*(?:process\.env\.SMOKE_BASE_URL\s*\?\s*undefined\s*:\s*)?\{([\s\S]*?)\n\s{2}\},/);
     expect(block, 'no webServer block found in playwright.config.ts').not.toBeNull();
     const command = (block![1].match(/command:\s*['"`]([^'"`]+)['"`]/) || [])[1] || '';
     expect(
