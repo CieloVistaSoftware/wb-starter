@@ -157,10 +157,17 @@ export function validator(element, options = {}) {
 
   // Expose methods
   element.wbValidator = {
-    validate: validateAll,
-    // #1237: this was a second `validate` key, which silently replaced the
-    // one above -- so validate() with no argument ran showError(undefined).
-    validateInput: (input) => showError(input, validateInput(input)),
+    // #1237: there were two `validate` keys, and the second (one input)
+    // silently replaced the first (the whole form), so validate() with no
+    // argument ran showError(undefined). One method now does both, under the
+    // canonical verb (#782): validate() checks the form, validate(input) one
+    // field. Both return whether it is valid.
+    validate: (input) => {
+      if (!input) return validateAll();
+      const fieldErrors = validateInput(input);
+      showError(input, fieldErrors);
+      return fieldErrors.length === 0;
+    },
     reset: () => getInputs().forEach(clearError),
     addRule: (name, fn) => { rules[name] = fn; }
   };
