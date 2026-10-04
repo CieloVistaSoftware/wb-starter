@@ -68,6 +68,8 @@ export default class WBSite {
     this.currentPage = 'home';
     this.navCollapsed = false;
     this.mobileNavOpen = false;
+    // #1456: false until the boot navigation has run; see navigateTo().
+    this._navigatedOnce = false;
   }
 
   /**
@@ -552,10 +554,15 @@ export default class WBSite {
       this._scrollMemory[this.currentPage] = siteBody.scrollTop;
     }
 
-    // Close mobile nav when navigating
-    if (window.innerWidth <= 768) {
+    // Close mobile nav when navigating -- a reader who tapped a link in the
+    // open menu wants it out of the way. #1456: not on the FIRST navigation,
+    // which main.js runs at boot and no tap caused. It used to close a menu the
+    // reader had opened while the site was still starting (traced: toggle at
+    // 1450ms, this close at 1552ms, the tap simply lost).
+    if (this._navigatedOnce && window.innerWidth <= 768) {
       this.closeMobileNav();
     }
+    this._navigatedOnce = true;
 
     let main_notFound = false;
     
