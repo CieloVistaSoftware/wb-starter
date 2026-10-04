@@ -221,14 +221,19 @@ export default defineConfig({
     //   WB_TRACE=on npm run test:async -- <spec>
     // then: npx playwright show-trace test-results/<dir>/trace.zip
     //
-    // #1112: and by default every failing test now keeps a LIGHT trace --
-    // actions, network (every URL and status) and console, no DOM snapshots or
-    // screenshots. "Failed to load resource: ... 500 ()" names no URL; this
-    // trace does. The full trace was measured before choosing: retaining it
-    // for every test turned permutation-compliance from 156/156 in 383 s into
-    // 20 failures in the first 44, most of them "Tearing down context exceeded
-    // the test timeout" -- writing snapshots, not testing. WB_TRACE still
-    // selects the full trace for one run.
+    // #1112: and by default every failing test keeps a light trace -- actions
+    // and console; no snapshots, screenshots or sources. The full trace turned
+    // permutation-compliance from 156/156 in 383 s into 20 failures in the
+    // first 44 ("Tearing down context exceeded the test timeout").
+    //
+    // #1406: this trace records NO network: Playwright starts its network
+    // recorder only with snapshots on (playwright-core tracing.js: `if
+    // (options.snapshots) this._harTracer.start(...)`). Snapshots on was
+    // measured too -- 156/156 locally, but on CI it timed out heavy specs and
+    // clashed with specs' own route mocks ("Route is already handled!", PR
+    // #1407). So the network is recorded by the offline fixture instead: a
+    // failing test's output folder gets network.txt, every response and failed
+    // request with its URL. WB_TRACE still selects the full trace for one run.
     trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure')
       || { mode: 'retain-on-failure', snapshots: false, screenshots: false, sources: false },
     // #1362: no service worker unless a spec asks for one. A worker answers a
