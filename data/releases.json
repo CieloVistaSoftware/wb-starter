@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.199",
+      "date": "2026-10-04",
+      "summary": "Fix: click toast takes the button&#39;s variant again (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1414\" target=\"_blank\" rel=\"noopener\">PR 1414</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1193\" target=\"_blank\" rel=\"noopener\">#1193</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Click toast reads the x-*--variant class 4.0.0 renamed; guard against retired wb-*-- patterns</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1193\" target=\"_blank\" rel=\"noopener\">#1193</a>",
+          "issues": [
+            1193
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.198",
       "date": "2026-10-04",
       "summary": "Test: gate integration; fix the badge-count flake (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1413\" target=\"_blank\" rel=\"noopener\">PR 1413</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1176\" target=\"_blank\" rel=\"noopener\">#1176</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1412\" target=\"_blank\" rel=\"noopener\">#1412</a>",
