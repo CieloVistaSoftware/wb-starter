@@ -6,6 +6,97 @@
   ],
   "releases": [
     {
+      "version": "1.0.173",
+      "date": "2026-10-04",
+      "summary": "Fix: failures leave evidence: a light trace per failure, every failed request logged (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1385\" target=\"_blank\" rel=\"noopener\">PR 1385</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1112\" target=\"_blank\" rel=\"noopener\">#1112</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Shared-context specs opt out of the per-test trace; the guard holds them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1112\" target=\"_blank\" rel=\"noopener\">#1112</a>",
+          "issues": [
+            1112
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Failures leave evidence: a light trace per failure, every failed request logged</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1112\" target=\"_blank\" rel=\"noopener\">#1112</a>",
+          "issues": [
+            1112
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.172",
+      "date": "2026-10-04",
+      "summary": "The In Progress tab stops lying: status:in-progress finally has a release path (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1335\" target=\"_blank\" rel=\"noopener\">PR 1335</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1330\" target=\"_blank\" rel=\"noopener\">#1330</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Status:in-progress can now be released, so the In Progress tab stops lying</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1330\" target=\"_blank\" rel=\"noopener\">#1330</a>",
+          "issues": [
+            1330
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.171",
+      "date": "2026-10-04",
+      "summary": "Fix: the registries spec waits for the list to fill, not its first row; one guard for the rule (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1391\" target=\"_blank\" rel=\"noopener\">PR 1391</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1390\" target=\"_blank\" rel=\"noopener\">#1390</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The registries spec waits for the list to fill, not its first row; one guard for the rule</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1390\" target=\"_blank\" rel=\"noopener\">#1390</a>",
+          "issues": [
+            1390
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.170",
+      "date": "2026-10-04",
+      "summary": "Fix: table options read through readFlag/readAttr, docs match the schema (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1354\" target=\"_blank\" rel=\"noopener\">PR 1354</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1344\" target=\"_blank\" rel=\"noopener\">#1344</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Close the table tags in the bare-boolean example</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1344\" target=\"_blank\" rel=\"noopener\">#1344</a>",
+          "issues": [
+            1344
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Record the table.md change in docs/_today</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1344\" target=\"_blank\" rel=\"noopener\">#1344</a>",
+          "issues": [
+            1344
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Table options read through readFlag/readAttr, docs match the schema</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1344\" target=\"_blank\" rel=\"noopener\">#1344</a>",
+          "issues": [
+            1344
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.169",
+      "date": "2026-10-04",
+      "summary": "Test: an anchor jump lands on a built section, not raw markup (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1382\" target=\"_blank\" rel=\"noopener\">PR 1382</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1100\" target=\"_blank\" rel=\"noopener\">#1100</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>An anchor jump lands on a built section; red with the observer neutered</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1100\" target=\"_blank\" rel=\"noopener\">#1100</a>",
+          "issues": [
+            1100
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.168",
       "date": "2026-10-04",
       "summary": "Fix: a lone hero in an x-demo is full width without being told (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1388\" target=\"_blank\" rel=\"noopener\">PR 1388</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1387\" target=\"_blank\" rel=\"noopener\">#1387</a>",

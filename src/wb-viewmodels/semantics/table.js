@@ -1,10 +1,29 @@
-import { readFlag } from '../../core/read-attr.js';
+import { readFlag, readAttr, readNumber } from '../../core/read-attr.js';
 import { createToast } from '../feedback.js';
 
 /**
- * Table - Enhanced <table> element
- * Adds sorting, striping, hover effects, and more
- * Helper Attribute: [x-behavior="table"]
+ * Table — enhanced <table> element
+ *
+ * Adds sortable headers, striping, row hover, search, selection, copy and
+ * pagination. A plain <table> IS this behavior (tag-map.js), so there is no
+ * attribute to add; `x-table` exists for a non-table host only.
+ *
+ * Options are read with readFlag/readAttr/readNumber (#1344). They used to be
+ * read with a bare `hasAttribute()`, which had two consequences:
+ *
+ *   striped="false"   turned striping ON, because hasAttribute is true for ANY
+ *                     value including the string "false" — the #747 trap. Six
+ *                     options had it (striped, bordered, compact, copyable,
+ *                     selectable, searchable) while paginated/sortable/hoverable
+ *                     checked `!== 'false'` correctly, so the same file did it
+ *                     right three times and wrong six times;
+ *   pageSize          was looked up as `page-size` first, and the docs taught
+ *                     that dashed spelling, while the rule is that no attribute
+ *                     name carries a dash — only the x- behavior prefix does
+ *                     (#1125). The schema has always said `pageSize`.
+ *
+ * readFlag/readAttr accept the camelCase name, still read the dashed and data-*
+ * spellings for anything already written, and treat "false" and "0" as false.
  */
 /**
  * Compare two cell values by what they ARE, not by what parseFloat makes of them.
@@ -85,36 +104,46 @@ function compareCells(a, b) {
   return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
 }
 
-export function table(element, options = {}) {
-  const config = {
-    striped: options.striped ?? (element.hasAttribute('striped') || readFlag(element, 'striped')),
-    // #669: the schema publishes `hoverable`, this only ever read `hover`, so
-    // the documented name silently did nothing. Accept both.
-    hover: options.hover ?? (
-      element.getAttribute('hover') !== 'false' &&
-      element.getAttribute('hoverable') !== 'false'
-    ),
+/**
+ * Read this behavior's options off the host element (#1344).
+ *
+ * One place, one reader per option, each named exactly as
+ * src/wb-models/table.schema.json declares it. The defaults here ARE the
+ * schema's defaults — `sortable` and `hoverable` are true, everything else is
+ * false — so `readFlag(el, name, fallback)` and the schema cannot disagree.
+ *
+ * `hover` is deliberately NOT read (#1344). It was an undeclared second name
+ * for `hoverable`, which is the spelling the schema declares and
+ * docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md names as canonical.
+ */
+function optionsFrom(element, options = {}) {
+  return {
+    striped: options.striped ?? readFlag(element, 'striped'),
+    hoverable: options.hoverable ?? readFlag(element, 'hoverable', true),
     // #669: paginated and pageSize were declared and read NOWHERE, so
     // <table paginated> produced no pagination at all -- exactly what John
-    // reported. pageSize accepts the schema spelling and the hyphenated one.
-    paginated: options.paginated ?? (
-      element.hasAttribute('paginated') && element.getAttribute('paginated') !== 'false'
-    ),
-    pageSize: Number(
-      options.pageSize ?? element.getAttribute('page-size') ?? element.getAttribute('pagesize') ?? 10
-    ) || 10,
-    bordered: options.bordered ?? element.hasAttribute('bordered'),
-    compact: options.compact ?? element.hasAttribute('compact'),
-    sortable: options.sortable ?? (element.getAttribute('sortable') !== 'false'),
+    // reported.
+    paginated: options.paginated ?? readFlag(element, 'paginated'),
+    // #1344: the schema says `pageSize`. readNumber reads that, the dashed
+    // `page-size` the old docs taught, and `data-page-size` — and never
+    // returns NaN. `|| 10` keeps pageSize="0" from dividing by zero in the
+    // pager.
+    pageSize: Number(options.pageSize ?? readNumber(element, 'pageSize', 10)) || 10,
+    bordered: options.bordered ?? readFlag(element, 'bordered'),
+    compact: options.compact ?? readFlag(element, 'compact'),
+    sortable: options.sortable ?? readFlag(element, 'sortable', true),
     // #669: the schema publishes `filterable`; this only read `searchable`.
-    searchable: options.searchable ?? (
-      element.hasAttribute('searchable') ||
-      (element.hasAttribute('filterable') && element.getAttribute('filterable') !== 'false')
-    ),
-    copyable: options.copyable ?? element.hasAttribute('copyable'),
-    selectable: options.selectable ?? element.hasAttribute('selectable'),
-    ...options
+    // The schema declares searchable as `aliasOf: filterable`, so either name
+    // switches the one filter input on.
+    searchable: options.searchable
+      ?? (readFlag(element, 'searchable') || readFlag(element, 'filterable')),
+    copyable: options.copyable ?? readFlag(element, 'copyable'),
+    selectable: options.selectable ?? readFlag(element, 'selectable'),
   };
+}
+
+export function table(element, options = {}) {
+  const config = { ...optionsFrom(element, options), ...options };
 
   const tableEl = element.querySelector('table') || element;
   // Detect an existing search input in either of the two places it can
@@ -136,7 +165,7 @@ export function table(element, options = {}) {
   // <table searchable> (no schema involvement for native tags at all).
   // Confirmed live: `searchable` rendered no search box on every documented
   // example. Build one here, the same self-sufficient pattern every other
-  // boolean attribute in this file already uses (striped/hover/bordered/
+  // boolean attribute in this file already uses (striped/hoverable/bordered/
   // compact all render their own effect with no author-supplied markup).
   if (config.searchable && !searchInput) {
     searchInput = document.createElement('input');
@@ -188,9 +217,15 @@ export function table(element, options = {}) {
   // rendered empty: behavior attached, classed x-table--striped, containing
   // nothing at all. Requiring the author to hand-write the sections that the
   // attributes exist to fill defeats the point of the attributes.
-  const wantsAttributeBuild =
-    (element.getAttribute('headers') && element.getAttribute('rows')) ||
-    (element.getAttribute('data') && element.getAttribute('columns'));
+  //
+  // #1344: through readAttr like every other option, so one reader covers the
+  // whole schema rather than four of its properties going round the side.
+  const headersAttr = readAttr(element, 'headers', '');
+  const rowsAttr = readAttr(element, 'rows', '');
+  const dataAttr = readAttr(element, 'data', '');
+  const columnsAttr = readAttr(element, 'columns', '');
+
+  const wantsAttributeBuild = (headersAttr && rowsAttr) || (dataAttr && columnsAttr);
   if (wantsAttributeBuild && !theadForBuild) {
     theadForBuild = document.createElement('thead');
     tableElForBuild.appendChild(theadForBuild);
@@ -201,11 +236,6 @@ export function table(element, options = {}) {
   }
 
   if (theadForBuild && tbodyForBuild && !tbodyForBuild.querySelector('tr')) {
-    const headersAttr = element.getAttribute('headers');
-    const rowsAttr = element.getAttribute('rows');
-    const dataAttr = element.getAttribute('data');
-    const columnsAttr = element.getAttribute('columns');
-
     if (headersAttr && rowsAttr) {
       try {
         const headers = headersAttr.split(',').map(h => h.trim());
@@ -259,7 +289,7 @@ export function table(element, options = {}) {
   // tag can never match a `.x-table` tag selector).
   tableEl.classList.add('x-table');
   if (config.striped) tableEl.classList.add('x-table--striped');
-  if (config.hover) tableEl.classList.add('x-table--hover');
+  if (config.hoverable) tableEl.classList.add('x-table--hover');
   if (config.bordered) tableEl.classList.add('x-table--bordered');
   if (config.compact) tableEl.classList.add('x-table--compact');
 
@@ -309,14 +339,20 @@ export function table(element, options = {}) {
         // Falls back to textContent, so every existing table sorts exactly as
         // it did.
         //
-        // Law 11: a PLAIN attribute, read with getAttribute -- not `data-` and
-        // not `.dataset`. The first version of this used `data-sort-value` and
+        // Law 11: a PLAIN attribute -- not `data-` and not `.dataset`. The
+        // first version of this used `data-sort-value` and
         // `cell.dataset.sortValue`, which is the exact pattern the law forbids
         // on behavior elements.
+        //
+        // #1344: the name is `sortValue`. It was written `sort-value`, the
+        // second dashed name in this file, and no attribute name carries a
+        // dash -- only the x- behavior prefix does (#1125). readAttr reads the
+        // camelCase name AND the dashed one, so cells already marked up with
+        // `sort-value` keep sorting exactly as they did.
         const keyOf = (row) => {
           const cell = row.children[colIndex];
           if (!cell) return '';
-          return (cell.getAttribute('sort-value') ?? cell.textContent ?? '').trim();
+          return (readAttr(cell, 'sortValue', '') || cell.textContent || '').trim();
         };
 
         dataRows.sort((a, b) => {
