@@ -48,7 +48,6 @@
     "scripts/generate-icons.js": 2,
     "scripts/generate-page.mjs": 2,
     "scripts/generate-parts-intellisense.js": 1,
-    "scripts/generate-schema-tests.js": 2,
     "scripts/generate-site-tests.mjs": 1,
     "scripts/generate-site.mjs": 4,
     "scripts/generate-wb-tests.mjs": 1,
