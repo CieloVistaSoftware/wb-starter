@@ -169,7 +169,7 @@ function isPortInUse(port) {
             resolve(false);
         });
         
-        socket.on('error', (err) => {
+        socket.on('error', () => {
             socket.destroy();
             resolve(false); // Connection failed, so port is likely free
         });

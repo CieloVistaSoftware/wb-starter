@@ -21,7 +21,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
   
   test('CSS Normalize is loaded', async ({ page }) => {
     // Check that normalize.css stylesheet is present (at least one)
-    const normalizeLink = await page.locator('link[href*="normalize.css"]');
+    const normalizeLink = page.locator('link[href*="normalize.css"]');
     const count = await normalizeLink.count();
     expect(count).toBeGreaterThanOrEqual(1);
   });
@@ -179,7 +179,7 @@ test.describe('Cross-Browser Support Infrastructure', () => {
   // ═══════════════════════════════════════════════════════════════
   
   test('Safari fixes CSS is loaded', async ({ page }) => {
-    const safariFixesLink = await page.locator('link[href*="safari-fixes.css"]');
+    const safariFixesLink = page.locator('link[href*="safari-fixes.css"]');
     await expect(safariFixesLink).toHaveCount(1);
   });
 

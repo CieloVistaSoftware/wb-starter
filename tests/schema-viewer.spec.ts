@@ -27,7 +27,7 @@ test.describe('Schema Viewer Rendering Tests', () => {
     });
 
     // Store errors for later check
-    page.context().addInitScript(() => {
+    await page.context().addInitScript(() => {
       (window as any).testErrors = [];
       const originalError = console.error;
       console.error = (...args) => {

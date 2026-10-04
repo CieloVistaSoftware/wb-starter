@@ -4,6 +4,26 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
+// #1237: each environment's globals, declared. Without these, every console,
+// process and Buffer in server.js, .husky/ and scripts/ was an "undefined
+// variable" -- 550 of 659 errors -- and the real errors were invisible under
+// them. Explicit lists in this file's style; `globals` is only a transitive
+// dependency.
+const NODE_GLOBALS = {
+  console: 'readonly', process: 'readonly', Buffer: 'readonly', URL: 'readonly',
+  URLSearchParams: 'readonly', setTimeout: 'readonly', clearTimeout: 'readonly',
+  setInterval: 'readonly', clearInterval: 'readonly', setImmediate: 'readonly',
+  clearImmediate: 'readonly', queueMicrotask: 'readonly', structuredClone: 'readonly',
+  globalThis: 'readonly', fetch: 'readonly', AbortController: 'readonly',
+  TextEncoder: 'readonly', TextDecoder: 'readonly', performance: 'readonly',
+};
+// sw.js runs in a ServiceWorkerGlobalScope: no window, no document.
+const SERVICE_WORKER_GLOBALS = {
+  self: 'readonly', caches: 'readonly', clients: 'readonly', fetch: 'readonly',
+  Request: 'readonly', Response: 'readonly', URL: 'readonly', console: 'readonly',
+  setTimeout: 'readonly', clearTimeout: 'readonly', Promise: 'readonly',
+};
+
 export default [
   {
     ignores: [
@@ -17,9 +37,18 @@ export default [
       // Recorded third-party CDN responses served by the offline test
       // fixture (tests/fixtures/offline/README.md) -- not our code.
       'tests/fixtures/offline/**',
+      // #1237: retired code, kept for reference. .gitignore already says so;
+      // it was linted only because its files are still tracked (255 errors).
+      'archive/**',
+      // Vendored Highlight.js 11.11.1 build (BSD-3), not our code.
+      'src/lib/highlight.js',
     ],
   },
   js.configs.recommended,
+  // #1237: an empty catch is how this codebase says "best effort, and a
+  // failure here changes nothing" (a missing optional file, a stat on a path
+  // that may be gone). Any other empty block is still an error.
+  { rules: { 'no-empty': ['error', { allowEmptyCatch: true }] } },
   {
     files: ['src/**/*.js', 'scripts/**/*.{js,mjs}', 'tests/**/*.{js,ts}'],
     languageOptions: {
@@ -58,12 +87,50 @@ export default [
         clearInterval: 'readonly',
         queueMicrotask: 'readonly',
         process: 'readonly',
+        // #1237: browser APIs src/ uses that this list was missing.
+        NodeFilter: 'readonly',
+        performance: 'readonly',
+        CSS: 'readonly',
+        Image: 'readonly',
+        HTMLImageElement: 'readonly',
+        HTMLVideoElement: 'readonly',
+        HTMLAudioElement: 'readonly',
+        FormData: 'readonly',
+        AbortController: 'readonly',
+        FileReader: 'readonly',
+        Response: 'readonly',
+        alert: 'readonly',
       },
     },
     rules: {
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-undef': 'error',
     },
+  },
+
+  // ── Node (#1237) ──────────────────────────────────────────────────────────
+  {
+    files: [
+      'server.js', 'server/**/*.js', 'mcp-server/**/*.js',
+      '.husky/**/*.{js,mjs}', 'scripts/**/*.{js,mjs,cjs}', 'packages/**/*.{js,mjs}',
+      'eslint.config.js',
+    ],
+    languageOptions: { ecmaVersion: 'latest', sourceType: 'module', globals: NODE_GLOBALS },
+    rules: { 'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }] },
+  },
+  // The VS Code extension is CommonJS, as the extension host loads it.
+  {
+    files: ['vscode/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'commonjs',
+      globals: { ...NODE_GLOBALS, require: 'readonly', module: 'writable', exports: 'writable', __dirname: 'readonly' },
+    },
+  },
+  // ── Service worker (#1237) ────────────────────────────────────────────────
+  {
+    files: ['sw.js'],
+    languageOptions: { ecmaVersion: 'latest', sourceType: 'script', globals: SERVICE_WORKER_GLOBALS },
   },
 
   // ── Type-aware linting for the .ts test suite (issue #840) ─────────────────

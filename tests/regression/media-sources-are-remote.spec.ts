@@ -44,9 +44,9 @@ const SCAN_EXT = new Set(['.html', '.js', '.json', '.md']);
 const EXEMPT_FILES = [
   /releases\.html$/,
   /CHANGELOG/i,
-  /[\/]data[\/]/,          // generated indexes, rebuilt from the sources above
+  /[/]data[/]/,          // generated indexes, rebuilt from the sources above
   /node_modules/,
-  /[\/]tests?[\/]/,
+  /[/]tests?[/]/,
 ];
 
 // IMAGES ARE MEDIA (#1122). John: "NO LOCAL IMAGES".

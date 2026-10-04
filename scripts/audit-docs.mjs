@@ -57,12 +57,12 @@ const DEAD_SUBJECTS = [
   {
     name: 'components',
     re: /\bcomponents?\b/i,
-    strong: new RegExp(OLD_OPEN + '[a-z-]+|pages/components\.html|docs/components/'),
+    strong: new RegExp(OLD_OPEN + '[a-z-]+|pages/components\\.html|docs/components/'),
   },
   {
     name: 'wb-views',
     re: /wb-views/,
-    strong: new RegExp('src/wb-views|wb-views\.js|' + OLD_OPEN + 'view\b'),
+    strong: new RegExp('src/wb-views|wb-views\\.js|' + OLD_OPEN + 'view\\b'),
   },
 ];
 
@@ -137,7 +137,7 @@ for (const file of walk(DOCS)) {
   // the removed vocabulary while being entirely current, and a count-based
   // rule archived both. A doc is only ABOUT a dead thing if it says so in its
   // filename or its title.
-  const heading = (/^#\s+(.+)$/m.exec(text) || [, ''])[1];
+  const heading = (/^#\s+(.+)$/m.exec(text) || ['', ''])[1];
   const deadSubjects = [];
   for (const s of DEAD_SUBJECTS) {
     if (!s.strong.test(text)) continue;

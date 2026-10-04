@@ -49,9 +49,9 @@ function analyzeFile(filePath) {
     if (!trimmed || trimmed.startsWith('//') || trimmed.startsWith('*')) continue;
     
     // Track function entry - match various patterns
-    const funcMatch = trimmed.match(/^(?:export\s+)?(?:async\s+)?(?:function|const|let)\s+(\w+)\s*[=(\{]/);
+    const funcMatch = trimmed.match(/^(?:export\s+)?(?:async\s+)?(?:function|const|let)\s+(\w+)\s*[=({]/);
     if (funcMatch && trimmed.includes('function') || (trimmed.includes('=') && trimmed.includes('('))) {
-      const possibleFunc = trimmed.match(/(?:function|const|let)\s+(\w+)\s*(?:=.*)?[\(\{]/);
+      const possibleFunc = trimmed.match(/(?:function|const|let)\s+(\w+)\s*(?:=.*)?[({]/);
       if (possibleFunc && trimmed.includes('{')) {
         currentFunction = possibleFunc[1];
         braceDepth = 0;

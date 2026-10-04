@@ -103,7 +103,7 @@ const SOURCE_PATTERNS: Array<{ re: RegExp; what: string }> = [
   { re: /\.style\.cssText\s*=/g, what: 'cssText assignment' },
   { re: /\.style\.[a-zA-Z][\w]*\s*=(?!=)/g, what: 'style property assignment' },
   { re: /\.setAttribute\(\s*['"]style['"]/g, what: "setAttribute('style', …)" },
-  { re: /Object\.assign\(\s*[\w.$\[\]'"]+\.style\s*,/g, what: 'Object.assign onto .style' },
+  { re: /Object\.assign\(\s*[\w.$[\]'"]+\.style\s*,/g, what: 'Object.assign onto .style' },
   { re: /\.style\.setProperty\(/g, what: 'setProperty (custom properties included)' },
 ];
 

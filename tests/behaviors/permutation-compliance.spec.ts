@@ -448,18 +448,21 @@ async function runAssertions(page: Page, element: Locator, assertions: Assertion
             if (!expected && count > 0) errors.push(`${assertions.selector} should not exist`);
           }
           break;
-        case 'hasClass':
+        case 'hasClass': {
           const hasClass = await selector.evaluate((el: Element, cls: string) => el.classList.contains(cls), expected);
           if (!hasClass) errors.push(`Should have class "${expected}"`);
           break;
-        case 'notHasClass':
+        }
+        case 'notHasClass': {
           const notHasClass = await selector.evaluate((el: Element, cls: string) => !el.classList.contains(cls), expected);
           if (!notHasClass) errors.push(`Should not have class "${expected}"`);
           break;
-        case 'textContains':
+        }
+        case 'textContains': {
           const text = await selector.textContent();
           if (!text?.includes(expected)) errors.push(`Text should contain "${expected}", got "${text}"`);
           break;
+        }
         case 'allValues':
           // Check that all elements matching the selector have the expected value
           if (assertions.selector && assertions.selector !== 'element') {
