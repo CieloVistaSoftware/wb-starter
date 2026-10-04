@@ -8,7 +8,6 @@
     "header-footer-full-width.spec.ts",
     "hero-no-nested-sections.spec.ts",
     "no-scrollbars.spec.ts",
-    "stock-indicator-spacing.spec.ts",
     "dark-mode-fallbacks.spec.ts",
     "dark-mode.spec.ts",
     "site-nav-default-hidden.spec.ts"
