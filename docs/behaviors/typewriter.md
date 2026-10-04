@@ -14,6 +14,6 @@
 | --- | --- | --- | --- |
 | `speed` | `string` | `50` | Milliseconds between characters. Defaults to `50` — lower is faster. |
 | `text` | `string` | — | Text to type out. Falls back to the element's existing `textContent`, so it can be left off when the content is already in the markup. |
-| `cursor` | `string` | — | Show the blinking cursor. On unless set to `"false"`. |
+| `cursor` | `boolean` | `true` | Show the blinking caret. `cursor="false"` turns it off; it is a caret, not a character. |
 
 <sub>Schema: [`typewriter.schema.json`](../../src/wb-models/typewriter.schema.json)</sub>
