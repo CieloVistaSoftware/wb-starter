@@ -158,34 +158,6 @@ function initDemoInteractions(container) {
 }
 
 /**
- * Get all behaviors demonstrated on the page
- * @returns {Object} Object with customElements and xBehaviors arrays
- */
-export function getBehaviorInventory() {
-  const customElements = new Set();
-  const xBehaviors = new Set();
-  
-  document.querySelectorAll('*').forEach(el => {
-    // Custom elements (wb-*)
-    if (el.tagName.toLowerCase().startsWith('wb-')) {
-      customElements.add(el.tagName.toLowerCase());
-    }
-    
-    // x-* behaviors
-    Array.from(el.attributes).forEach(attr => {
-      if (attr.name.startsWith('x-')) {
-        xBehaviors.add(attr.name);
-      }
-    });
-  });
-  
-  return {
-    customElements: Array.from(customElements).sort(),
-    xBehaviors: Array.from(xBehaviors).sort()
-  };
-}
-
-/**
  * Scroll to a specific section by ID
  * @param {string} sectionId - The section ID to scroll to
  */

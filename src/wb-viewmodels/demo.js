@@ -287,41 +287,11 @@ function findGeneratedBehaviorDoc(index, name) {
     return null;
 }
 
-// Find the doc file (relative to docs/) for a component name: the generated
-// per-behavior page first (docs/behaviors/<comp>.md), then a basename match in
-// the curated manifest. Returns null when no doc exists.
-//
-// #842: the `wb-${comp}.md` candidate here was stale -- the docs tree holds no
-// wb-*.md file at all any more, the filenames are `<name>.md` / `x-<name>.md`.
-function findDocFile(manifest, comp, index) {
-    const generated = findGeneratedBehaviorDoc(index, comp);
-    if (generated) return generated;
-    if (!manifest || !Array.isArray(manifest.categories)) return null;
-    const names = [`${comp}.md`, `x-${comp}.md`];
-    for (const cat of manifest.categories) {
-        for (const d of cat.docs || []) {
-            const base = String(d.file || '').split('/').pop().toLowerCase();
-            if (names.includes(base)) return d.file;
-        }
-    }
-    return null;
-}
-
-function findWbComponents(html) {
-    const regex = /<wb-([a-z0-9-]+)/gi;
-    const matches = [];
-    let match;
-    while ((match = regex.exec(html)) !== null) {
-        matches.push(match[1]);
-    }
-    return [...new Set(matches)]; // unique
-}
-
 // John, live: "when looking at the behaviors there are no links to the x-*
-// docs. for the behaviors." -- findWbComponents above only matches literal
-// <wb-*> TAGS, so a demo decorating a plain native element (e.g.
+// docs. for the behaviors." -- the old wb-* component lookup only matched literal
+// tags, so a demo decorating a plain native element (e.g.
 // `<button x-ripple>`, pages/behaviors.html's whole "Buttons"/"Inputs"/
-// "Feedback" sections) never produced ANY doc link -- sharedComponents
+// "Feedback" sections) never produced ANY doc link -- the component list
 // stayed empty and the whole "Docs:" line was skipped. Matches both
 // documented behavior syntaxes from docs/behaviors-reference.md: decoration
 // (`x-ripple`). Morphing (`x-as-card`) was removed in #783, so there is no
@@ -663,48 +633,10 @@ export async function demo(element, options = {}) {
     // see the comment above that block for why (#586: it used to run before
     // `<pre>` existed, which could lock in a too-narrow width on cards.html).
 
-    // Add doc links. (#262: the old '?page=docs#wb-…' hrefs were
-    // dead on EVERY surface — page-relative, so inside the doc-viewer they hit
-    // doc-viewer.html?page=docs, and pages/docs.html has no #wb-* anchors anyway.)
-    // Link each component to its REAL doc opened in the doc-viewer, resolved from
-    // docs/manifest.json. Components with no doc get NO link — never a dead link.
-    //
-    // #388/#390: any wb-* child of the grid gets its OWN top-right link
-    // (attachInstanceDocLink above) instead of being folded into the
-    // generic shared line — a multi-instance demo used to read as one
-    // detached caption under the whole group, not tied to any individual
-    // element. Originally card-only (#388); generalized to every wb-*
-    // component (#390) so a page like demos/site/overlays.html
-    // (dialog/drawer/dropdown, no cards at all) gets the same per-instance
-    // placement instead of falling back to the shared line. Only things
-    // that never resolve to a real wb-* element in the grid (a plain
-    // <button x-tooltip> decorated element, for instance) still use the
-    // shared-line fallback below.
-    const allComponents = findWbComponents(rawBlock);
-    // x-cardlink used to be excluded here: its own behavior (card.js
-    // cardlink()) already stretches a real <a href> over the ENTIRE card
-    // (deliberately, for native right-click/middle-click support -- see
-    // that function's own comment), and a doc-link badge added on top
-    // looked like it would fight the stretched anchor for clicks. Turned
-    // out not to matter: the badge's own z-index (demo.css
-    // .x-demo__card-doc-link, z-index:5 vs the stretched anchor's default
-    // auto) keeps it independently clickable in its own small corner --
-    // confirmed live, both anchors reachable. Re-included per explicit
-    // request: "put all links on the card itself, upper right hand
-    // corner" -- no carve-outs, every card including cardlink gets one.
-    // #434: querySelectorAll('*'), not grid.children -- a wb-* component
-    // wrapped inside a plain <div> (e.g. bundled alongside a stylesheet
-    // link/script as a self-contained "view source" example) is a real,
-    // documented component just as much as a direct grid child, but
-    // grid.children only sees the wrapping <div>, silently falling through
-    // to the deprecated shared "Docs: x-x" line below the grid instead of
-    // its own per-instance corner badge (confirmed live: pages/home.html's
-    // hero cardhero, nested one <div> deep).
-    const perInstanceChildren = Array.from(grid.querySelectorAll('*')).filter(
-        (child) => child.tagName && child.tagName.startsWith('WB-')
-    );
-    const perInstanceComps = new Set(perInstanceChildren.map((el) => el.tagName.slice(3).toLowerCase()));
-    const sharedComponents = allComponents.filter((comp) => !perInstanceComps.has(comp));
+    // Add doc links: a corner badge per element that carries an x-* behavior,
+    // per native subject, and a shared "Docs:" line for the rest. #1422: the
+    // wb-* component path (per-instance badges for WB-* tags, a shared line of
+    // wb-<name> labels) is gone -- no wb- tag can exist since 4.0.0.
     const xBehaviors = sourceUnavailable ? findLiveXBehaviors(grid) : findXBehaviors(rawBlock);
     // A demo's subject can also be a plain semantic element that tag-map
     // decorates on its own -- `<article title="...">` IS a card (nativeMap
@@ -721,7 +653,7 @@ export async function demo(element, options = {}) {
         ))
         .map((child) => ({ el: child, name: getNativeBehavior(child) }))
         .filter(({ name }) => name);
-    if (perInstanceChildren.length > 0 || sharedComponents.length > 0 || xBehaviors.length > 0 || nativeSubjects.length > 0) {
+    if (xBehaviors.length > 0 || nativeSubjects.length > 0) {
         // Deterministic: await the (cached) manifest and build the links inline —
         // a floating .then() left empty divs when init raced page load.
         // #842: the generated docs index rides along in the same await — both
@@ -732,13 +664,6 @@ export async function demo(element, options = {}) {
             loadDocsIndex().catch(() => null),
         ]);
         const root = siteRoot();
-
-        perInstanceChildren.forEach((hostEl) => {
-            const comp = hostEl.tagName.slice(3).toLowerCase(); // WB-CARDHERO -> cardhero
-            const file = findDocFile(manifest, comp, docsIndex);
-            if (!file) return; // never a dead link
-            attachInstanceDocLink(hostEl, file, `wb-${comp}`, root, element);
-        });
 
         // John (reported repeatedly): pages/behaviors.html's demos are
         // native elements decorated with an x-* ATTRIBUTE (<button
@@ -771,14 +696,11 @@ export async function demo(element, options = {}) {
             attachInstanceDocLink(el, behaviorDoc, `x-${name}`, root, element);
         });
 
-        const linkedComponents = sharedComponents
-            .map((comp) => ({ label: `wb-${comp}`, file: findDocFile(manifest, comp, docsIndex) }))
-            .filter((x) => x.file);
         const linkedBehaviors = xBehaviors
             .filter((name) => !resolvedXBehaviorNames.has(name))
             .map((name) => ({ label: `x-${name}`, file: findBehaviorDocFile(manifest, name, docsIndex) }))
             .filter((x) => x.file);
-        const linked = [...linkedComponents, ...linkedBehaviors];
+        const linked = linkedBehaviors;
         if (linked.length) {
             const linksDiv = document.createElement('div');
             linksDiv.className = 'x-demo__links';
