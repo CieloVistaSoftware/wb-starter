@@ -1203,7 +1203,7 @@
     const wsEl = document.getElementById('behaviors-workspace') || resultsEl;
     const TWO_COL = matchMedia('(min-width: 60.0625rem)');
     let syncQueued = false;
-    let pendingScrollReset = false;   // set by a selection, honoured once settled
+    let pendingScrollReset = false;   // false | 'panel' | 'page': set by a selection, honoured once settled
     // #992 — John: "just make a container that always contains the selected
     // content, always rerender that container on all selections."
     //
@@ -1276,9 +1276,10 @@
       // later insertion scrolls the container after a synchronous reset has run.
       // Only on selection; a plain resize must not yank the reader to the top.
       if (pendingScrollReset) {
+        const resetPage = pendingScrollReset === 'page';
         pendingScrollReset = false;
         liveEl.scrollTop = 0;
-        if (scrollerEl) scrollerEl.scrollTop = 0;
+        if (scrollerEl && resetPage) scrollerEl.scrollTop = 0;
       }
       // Law 18 -- NO POLLING. Only this code knows when the layout is settled,
       // so it says so. Waiters listen instead of sleeping.
@@ -2998,7 +2999,7 @@
       if (d && !d.open) d.open = true;
     }
 
-    function selectRow(row, { focus = true, reveal = false } = {}) {
+    function selectRow(row, { focus = true, reveal = false, resetPage = true } = {}) {
       if (!row) return;
       revealRow(row);   // #995: selecting inside a collapsed group opens it
       rowsInOrder().forEach((r) => r.removeAttribute('aria-current'));
@@ -3033,7 +3034,9 @@
       // false, so nothing ever set it and the guard never ran -- shipped that
       // way. Setting it here, which is the one place that knows a selection
       // happened.
-      pendingScrollReset = true;   // requested here, honoured once layout settles
+      // requested here, honoured once layout settles. 'panel' resets only the
+      // example panel; 'page' also puts #siteBody back to the top (#1432).
+      pendingScrollReset = resetPage ? 'page' : 'panel';
       // John, several times: "when clicking the left, (nav), the content must
       // show in exact same position as shown here."
       //
@@ -3435,7 +3438,10 @@
         if (first) {
           // focus:false -- stealing focus on load would move the caret out of
           // the search box before the reader has typed anything.
-          selectRow(first, { focus: false, reveal: false });
+          // resetPage:false -- the reset-to-top is for a reader's own pick. On
+          // load it raced the site's scroll restore and threw a returning
+          // reader back to the top about half the time (#1432).
+          selectRow(first, { focus: false, reveal: false, resetPage: false });
           return;
         }
         if (++tries < 40) setTimeout(pick, 100);

@@ -688,12 +688,44 @@ export default class WBSite {
       // Reset now so the new page never opens at the old page's offset, then
       // restore once it has its height.
       scroller.scrollTop = 0;
-      requestAnimationFrame(() => {
-        scroller.scrollTop = targetY;
-        // Re-apply once more after lazy content settles so a tall restore isn't clamped.
-        setTimeout(() => { scroller.scrollTop = targetY; }, 60);
-      });
+      this._restoreScroll(scroller, targetY);
     }
+  }
+
+  /**
+   * Put #siteBody back at targetY once the page is tall enough to hold it.
+   *
+   * #1432: this used to re-apply once 60ms after the next frame. A page that
+   * builds asynchronously (the Behaviors page loads its catalogue first) was
+   * still too short then, so the restore clamped to 0 and the position was
+   * lost. Now it re-applies each time the content resizes, and lets go when
+   * the reader scrolls themselves or another navigation starts.
+   */
+  _restoreScroll(scroller, targetY) {
+    this._stopScrollRestore?.();
+    if (!targetY) return;
+    // #main grows as the page builds; #siteBody's first child is the nav backdrop.
+    const content = document.getElementById('main') || scroller;
+    let observer = null;
+    const userEvents = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+    const stop = () => {
+      observer?.disconnect();
+      userEvents.forEach((type) => scroller.removeEventListener(type, stop));
+      if (this._stopScrollRestore === stop) this._stopScrollRestore = null;
+    };
+    // Not released when the target is first reached: content that keeps
+    // arriving above it makes the browser's scroll anchoring move the page on
+    // (measured: restored to 400, then carried to 1767 with no script writing
+    // scrollTop). Every resize re-applies, until the reader scrolls themselves
+    // or another navigation starts.
+    const apply = () => { scroller.scrollTop = targetY; };
+    this._stopScrollRestore = stop;
+    userEvents.forEach((type) => scroller.addEventListener(type, stop, { passive: true }));
+    if (typeof ResizeObserver === 'function') {
+      observer = new ResizeObserver(apply);
+      observer.observe(content);
+    }
+    requestAnimationFrame(apply);
   }
 
   render404(pageId) {
