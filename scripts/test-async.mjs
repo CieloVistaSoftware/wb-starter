@@ -209,6 +209,14 @@ async function runLauncher(args) {
         );
         process.exit(1);
       }
+      const waiting = await guards.readReservation();
+      if (waiting) {
+        console.error(
+          `❌ A suite is waiting for the machine (${waiting.command || "suite"}, from ` +
+          `${waiting.root || "unknown worktree"}). New single runs wait until it has run (#1321).`
+        );
+        process.exit(1);
+      }
       console.error(
         `❌ All ${guards.maxParallelSingle} single-run slots are busy machine-wide.`
       );

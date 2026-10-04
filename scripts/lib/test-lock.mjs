@@ -72,6 +72,22 @@ export function isProcessRunning(pid) {
 const IDENTITY_TTL_MS = 10_000;
 const identityCache = new Map();
 
+/**
+ * Longest a holder whose identity cannot be PROVEN is believed (#1040).
+ *
+ * Two records still answer PID-only: one written before identities existed, and
+ * one naming a process the OS will not describe (StartTime unreadable, no
+ * shell). PID-only is exactly the answer a recycled PID can fake, so believing
+ * it without end leaves the one wedge this fix exists to remove — the machine
+ * refusing every run, naming a stranger, until a human clears the file. The
+ * ceiling is longer than any real suite, so it never robs a live run, and
+ * finite, so nothing holds the machine for good.
+ */
+export function defaultMaxHoldMs() {
+  const raw = process.env.WB_LOCK_MAX_HOLD_MS;
+  return raw === undefined || raw === "" ? 2 * 60 * 60 * 1000 : Number(raw);
+}
+
 /** The OS's start-time stamp for a process, or null when it cannot be read. */
 function readProcessStart(pid) {
   if (!Number.isInteger(pid) || pid <= 0) return null;
@@ -145,6 +161,7 @@ export function isSameProcess(pid, recordedStart, isAlive = isProcessRunning, id
  * @param {() => number} [opts.freeMemBytes] Injectable, so tests can simulate pressure.
  * @param {(pid: number) => boolean} [opts.isAlive] Injectable liveness check.
  * @param {(pid: number) => string|null} [opts.identityOf] Injectable process-identity read (#1040).
+ * @param {number} [opts.maxHoldMs] Ceiling for a holder whose identity cannot be proven; 0 disables it.
  */
 export function createGuards(opts) {
   const root = opts.root;
@@ -155,8 +172,40 @@ export function createGuards(opts) {
   const freeMemBytes = opts.freeMemBytes || freemem;
   const isAlive = opts.isAlive || isProcessRunning;
   const identityOf = opts.identityOf || processIdentity;
+  const maxHoldMs = opts.maxHoldMs === undefined ? defaultMaxHoldMs() : opts.maxHoldMs;
+
+  /**
+   * A holder that answered PID-only is past the point where believing it is
+   * safer than clearing it. Longer than any real suite; an undated record is
+   * treated as past it, because nothing about it can be checked at all.
+   */
+  const heldPastCeiling = (held) => {
+    if (!(maxHoldMs > 0)) return false;
+    const claimedAt = Date.parse(held.startedAt);
+    if (!Number.isFinite(claimedAt)) return true;
+    return Date.now() - claimedAt >= maxHoldMs;
+  };
+
   /** The record's holder is the SAME process that took it -- not a recycled PID (#1040). */
-  const holderAlive = (held) => !!held && isSameProcess(held.pid, held.pidStart, isAlive, identityOf);
+  const holderAlive = (held) => {
+    if (!held || !isSameProcess(held.pid, held.pidStart, isAlive, identityOf)) return false;
+    // Proven: a recorded start time that the OS still agrees with.
+    if (held.pidStart && identityOf(held.pid) !== null) return true;
+    // Unproven, so believed only up to the ceiling — never indefinitely.
+    return !heldPastCeiling(held);
+  };
+
+  /** Which of the three ways a holder stopped counting, for the log a human reads. */
+  const staleReason = (held) => {
+    if (!held || !held.pid) return "no holder recorded";
+    if (!isAlive(held.pid)) return `holder ${held.pid} is dead`;
+    if (held.pidStart && identityOf(held.pid) !== null) {
+      return `PID ${held.pid} now belongs to another process`;
+    }
+    const age = Date.now() - Date.parse(held.startedAt);
+    return `holder ${held.pid} could not be identified and the lock is ` +
+      (Number.isFinite(age) ? `${Math.round(age / 60000)} min old` : "undated");
+  };
   // One re-check per hold, for a holder that died WITHOUT releasing: that
   // produces no filesystem event, so without this a subscriber would be
   // stranded. It is a single timer, not a poll -- nothing runs while it waits.
@@ -164,6 +213,9 @@ export function createGuards(opts) {
 
   const lockFile = join(globalDir, "test.lock");
   const slotDir = join(globalDir, "single-slots");
+  // #1321: a suite waiting for the machine. See liveReservation().
+  const reservationFile = join(globalDir, "suite-waiting.json");
+  const reserveTtlMs = opts.reserveTtlMs === undefined ? 3 * 60 * 1000 : opts.reserveTtlMs;
 
   async function ensureDirs() {
     await mkdir(globalDir, { recursive: true });
@@ -212,6 +264,46 @@ export function createGuards(opts) {
     return live;
   }
 
+  // A WAITING SUITE KEEPS ITS PLACE (#1321).
+  //
+  // A suite may start only on an empty machine, and a single run only needs a
+  // free slot. Singles are short and keep arriving from every worktree, so at the
+  // moment a refused suite tried again there was almost always one running: two
+  // compliance runs were refused for over two hours while singles came and went.
+  //
+  // So a refused suite leaves a reservation, and no NEW single is admitted while
+  // it is fresh. The singles already running finish; the next suite attempt finds
+  // the machine empty. Freshness is a time window, not a PID: test-async.mjs's
+  // launcher refuses and exits (its caller retries), so a PID-owned reservation
+  // would die with every attempt. Each refused attempt refreshes it -- retrying
+  // callers every few seconds, waiting callers (hold-machine.mjs) at least once
+  // per staleCheckMs -- and a suite that gives up simply stops refreshing it.
+
+  /** A suite has been refused within reserveTtlMs and is still trying. */
+  async function liveReservation() {
+    const r = await readJson(reservationFile);
+    if (!r || !r.since) return null;
+    const ageMs = Date.now() - new Date(r.since).getTime();
+    return ageMs >= 0 && ageMs < reserveTtlMs ? r : null;
+  }
+
+  async function reserveForSuite(command) {
+    const current = await liveReservation();
+    // One suite keeps the place at a time; a second waiting suite refreshes the
+    // first's window rather than taking it over, so neither starves the other.
+    const record = current && current.root !== root
+      ? { ...current, since: new Date().toISOString() }
+      : { root, command, since: new Date().toISOString() };
+    try { await writeFile(reservationFile, JSON.stringify(record, null, 2)); } catch { /* best effort */ }
+  }
+
+  async function clearReservation() {
+    const r = await readJson(reservationFile);
+    if (r && r.root === root) {
+      try { await unlink(reservationFile); } catch { /* already gone */ }
+    }
+  }
+
   /** @returns {string|null} an error message when memory is too tight. */
   function checkMemory() {
     if (!(minFreeMb > 0)) return null;
@@ -233,9 +325,11 @@ export function createGuards(opts) {
 
     const singles = await liveSingles();
     if (singles.length) {
+      await reserveForSuite(command);
       return (
         `${singles.length} single-spec run(s) already hold the machine:\n` +
-        singles.map((h) => `   ${h.specFile || "?"} (PID ${h.pid}, ${h.root})`).join("\n")
+        singles.map((h) => `   ${h.specFile || "?"} (PID ${h.pid}, ${h.root})`).join("\n") +
+        `\n   This suite is now reserved: no new single run starts until it has had the machine (#1321).`
       );
     }
     const payload = JSON.stringify({ pid: null, root, startedAt, command }, null, 2);
@@ -243,6 +337,7 @@ export function createGuards(opts) {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         await writeFile(lockFile, payload, { flag: "wx" });
+        await clearReservation();
         return null;
       } catch (e) {
         if (e.code !== "EEXIST") throw e;
@@ -277,7 +372,7 @@ export function createGuards(opts) {
         }
       }
 
-      console.log(`⚠️  Stale lock (holder ${held.pid || "n/a"} dead, or its PID now belongs to another process). Clearing.`);
+      console.log(`⚠️  Stale lock (${staleReason(held)}). Clearing.`);
       await removeLock();
     }
 
@@ -304,6 +399,8 @@ export function createGuards(opts) {
     // as "every slot is busy" -- the caller is held, and is told why by
     // describeSingleSlots() / readLock().
     if (await liveSuite()) return null;
+    // A waiting suite keeps its place (#1321): no new single until it has run.
+    if (await liveReservation()) return null;
     const payload = () => JSON.stringify({
       pid: process.pid,
       pidStart: identityOf(process.pid),
@@ -460,6 +557,8 @@ export function createGuards(opts) {
       const denied = await acquireSuiteLock(startedAt, command);
       return { got: denied === null, why: denied };
     }, onHeld, timeoutMs);
+    // A suite that gave up must not keep holding new single runs back.
+    if (!r.got) await clearReservation();
     return r.got ? null : r.why;
   }
 
@@ -469,6 +568,11 @@ export function createGuards(opts) {
     if (suite) {
       return `A suite holds the machine (PID ${suite.pid || "starting"}, ${suite.command || "suite"}, ` +
         `from ${suite.root || "unknown worktree"}). A single run cannot share it.`;
+    }
+    const waiting = await liveReservation();
+    if (waiting) {
+      return `A suite is waiting for the machine (${waiting.command || "suite"}, from ` +
+        `${waiting.root || "unknown worktree"}). New single runs wait until it has run (#1321).`;
     }
     return `All ${maxParallelSingle} single-run slots are busy machine-wide:\n` +
       (await describeSingleSlots()).join("\n");
@@ -501,6 +605,8 @@ export function createGuards(opts) {
     findOwnSlot,
     releaseSlot,
     readLock: () => readJson(lockFile),
+    reservationFile,
+    readReservation: liveReservation,
     acquireSuiteLockOnRelease,
     acquireSingleSlotOnRelease,
   };

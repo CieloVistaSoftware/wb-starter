@@ -7,6 +7,12 @@ import { wbIdle } from '../base';
  * why. On localhost, a click that does not update must SAY why: no endpoint,
  * test-mode server, refused pull or failed request alike.
  */
+// #1349: /api/update-to-latest is a POST and sw.js only claims GETs, so the
+// three answers below did reach the page. Blocked anyway: a spec that clicks a
+// button and reads the dialog it produces must not have a second thing on the
+// page able to answer the click's request.
+test.use({ serviceWorkers: 'block' });
+
 async function clickBadge(page: import('@playwright/test').Page, answer: (route: import('@playwright/test').Route) => Promise<void>) {
   await page.route('**/api/update-to-latest', answer);
   await page.goto('/');
