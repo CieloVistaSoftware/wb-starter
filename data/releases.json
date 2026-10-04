@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.227",
+      "date": "2026-10-04",
+      "summary": "Test: doc coverage waits for each panel; a slow 404 is missing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1450\" target=\"_blank\" rel=\"noopener\">PR 1450</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1035\" target=\"_blank\" rel=\"noopener\">#1035</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Block the service worker in the doc-coverage spec, which now mocks a slow 404</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1035\" target=\"_blank\" rel=\"noopener\">#1035</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a>",
+          "issues": [
+            1035,
+            1349
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Doc coverage waits for each panel to fill; a slow 404 is missing, not documented</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1035\" target=\"_blank\" rel=\"noopener\">#1035</a>",
+          "issues": [
+            1035
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.226",
       "date": "2026-10-04",
       "summary": "Fix: templates pass only keys their behavior declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1449\" target=\"_blank\" rel=\"noopener\">PR 1449</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1142\" target=\"_blank\" rel=\"noopener\">#1142</a>",
