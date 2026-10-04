@@ -60,9 +60,6 @@ const dlog = (...args) => { if (WB_DEBUG) _wbClog(...args); };
 /** @type {Map<string, Object>} Schema name → parsed schema */
 const schemaRegistry = new Map();
 
-/** @type {Map<string, string>} Tag name → schema name (x-card-profile → cardprofile) */
-const tagToSchema = new Map();
-
 /** @type {WeakSet<HTMLElement>} Track processed elements */
 const processedElements = new WeakSet();
 
@@ -127,12 +124,10 @@ export function registerSchema(schema, filename) {
   const name = schema.behavior || filename.replace('.schema.json', '');
   
   schemaRegistry.set(name, schema);
-  
-  // Map tag name: x-card-profile → cardprofile
-  const tagName = `wb-${name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()}`;
-  tagToSchema.set(tagName, name);
-  
-  dlog(`[Schema Builder] Registered: ${name} → <${tagName}>`);
+
+  // #1170: no tag-name map. It keyed every schema by a wb- tag that 4.0.0
+  // removed, so no lookup could ever hit it; schemas are found by name.
+  dlog(`[Schema Builder] Registered: ${name}`);
 }
 
 /**
@@ -217,21 +212,12 @@ export async function loadSchemaFile(filePath, basePath = DEFAULT_SCHEMA_BASE) {
 }
 
 /**
- * Get schema by name or tag
+ * Get schema by name
  */
 export function getSchema(identifier) {
   if (!identifier || typeof identifier !== 'string') return null;
   
-  if (schemaRegistry.has(identifier)) {
-    return schemaRegistry.get(identifier);
-  }
-  
-  const byTag = tagToSchema.get(identifier.toLowerCase());
-  if (byTag) {
-    return schemaRegistry.get(byTag);
-  }
-  
-  return null;
+  return schemaRegistry.get(identifier) ?? null;
 }
 
 // =============================================================================
@@ -1072,23 +1058,17 @@ function detectSchema(element) {
  * Scan DOM for elements to process
  */
 export function scan(root = document.body) {
+  // #1170: no wb-* tag branch. No element can carry a wb- tag name since
+  // 4.0.0 (no-unimplemented-elements.spec.ts enforces zero), and its
+  // `tag !== 'x-view'` half was rename residue that could never be false.
   for (const el of root.querySelectorAll('*')) {
-    const tag = el.tagName.toLowerCase();
-
-    // Process wb-* tags (not x-view)
-    if (tag.startsWith('wb-') && tag !== 'x-view') {
-      processElement(el);
-      continue;
-    }
-
     // Process x-behavior elements
     if (el.hasAttribute('x-behavior')) {
       processElement(el);
       continue;
     }
 
-    // Process x-{name} attribute elements (dual-maintained alongside wb-*
-    // tags -- see detectXAttributeSchema()'s comment).
+    // Process x-{name} attribute elements (see detectXAttributeSchema()).
     if (detectXAttributeSchema(el)) {
       processElement(el);
     }
@@ -1108,12 +1088,6 @@ export function startObserver() {
     for (const mutation of mutations) {
       for (const node of mutation.addedNodes) {
         if (node.nodeType !== Node.ELEMENT_NODE) continue;
-        
-        const tag = node.tagName?.toLowerCase();
-
-        if (tag?.startsWith('wb-') && tag !== 'x-view') {
-          processElement(node);
-        }
 
         if (node.hasAttribute?.('x-behavior')) {
           processElement(node);
