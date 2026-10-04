@@ -202,7 +202,6 @@ const behaviorModules = {
   resizable: 'resizable',
   globe: 'globe',
   scrollalong: 'scrollalong',
-  scrollProgress: 'scroll-progress',
   slider: 'slider',
   sticky: 'sticky',
   grid: 'layouts', flex: 'layouts', container: 'layouts', stack: 'layouts',

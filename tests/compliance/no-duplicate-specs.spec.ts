@@ -166,7 +166,6 @@ test('no spec file appears in more than one npm-test project', async () => {
         'components/progressbar.spec.ts',
         'components/resizable.spec.ts',
         'components/ripple.spec.ts',
-        'components/scroll-progress.spec.ts',
         'components/slider.spec.ts',
         'components/span.spec.ts',
         'components/stagelight.spec.ts',
