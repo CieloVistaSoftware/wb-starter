@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T19:11:00.282Z",
+  "generatedAt": "2026-10-04T01:28:44.387Z",
   "count": 160,
   "schemas": [
     {
@@ -2829,23 +2829,18 @@
       "properties": {
         "filename": {
           "type": "string",
-          "description": "File name. Its extension also picks the icon (#1117) -- `architecture-diagram.png` renders the image icon with no second attribute to write.",
+          "description": "File name. Its extension picks the icon (#1117, #1119) -- `architecture-diagram.png` renders the image icon. There is no fileType attribute: the filename is the only way to say what kind of file it is.",
           "required": true,
-          "default": "this is the filename"
-        },
-        "fileType": {
-          "type": "string",
-          "description": "OVERRIDE for the icon family, which is normally derived from the filename's extension (#1117). Only set this when the name cannot say it -- an extensionless name, or a `.bin` that really is a video. Setting it to something the extension contradicts is honoured but produces a self-contradicting example (#1114).",
-          "enum": [
-            "pdf",
-            "doc",
-            "image",
-            "video",
-            "audio",
-            "zip",
-            "file"
-          ],
-          "default": "file"
+          "default": "this is the filename",
+          "examples": [
+            "quarterly-report.pdf",
+            "meeting-notes.docx",
+            "architecture-diagram.png",
+            "product-walkthrough.mp4",
+            "interview-recording.m4a",
+            "release-assets.zip",
+            "sensor-capture.bin"
+          ]
         },
         "size": {
           "type": "string",
@@ -2913,11 +2908,6 @@
         },
         {
           "filename": "sensor-capture.bin",
-          "size": "31 MB"
-        },
-        {
-          "filename": "sensor-capture.bin",
-          "fileType": "video",
           "size": "31 MB"
         }
       ],
