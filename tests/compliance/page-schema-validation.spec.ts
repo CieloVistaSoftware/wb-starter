@@ -160,10 +160,10 @@ test.describe('Page Schema — Section Structure ($defs/pageSection)', () => {
       });
 
       test(`${label} — columns in range 1-6 (if present)`, () => {
-        if (section.columns !== undefined) {
-          expect(section.columns).toBeGreaterThanOrEqual(1);
-          expect(section.columns).toBeLessThanOrEqual(6);
-        }
+        // #1092: columns is optional; report SKIPPED, not a vacuous PASS, when absent
+        test.skip(section.columns === undefined, 'section declares no "columns", nothing to range-check');
+        expect(section.columns).toBeGreaterThanOrEqual(1);
+        expect(section.columns).toBeLessThanOrEqual(6);
       });
 
       if (section.tag) {
@@ -371,6 +371,7 @@ test.describe('Inventory', () => {
     console.log(`\n📊 Schema Inventory:`);
     console.log(`   Page schemas (*.page.json): ${pageFiles.length}`);
     console.log(`   Site schemas (*.site.json): ${siteFiles.length}\n`);
-    expect(true).toBe(true);
+    // #1092: with no page schemas every per-file describe above generates no tests
+    expect(pageFiles.length, `no *.page.json files found in ${PAGES_DIR}, so nothing was validated`).toBeGreaterThan(0);
   });
 });

@@ -133,37 +133,45 @@ test.describe('Behaviors Showcase Page', () => {
       // Get the sidebar text element
       const sidebarText = drawerCard.locator('.demo-area [x-drawer-layout] > div:first-child');
       const toggleButton = drawerCard.locator('.x-drawer-toggle');
-      
-      if (await toggleButton.count() > 0) {
-        const sidebarRect = await sidebarText.boundingBox();
-        const buttonRect = await toggleButton.boundingBox();
-        
-        if (sidebarRect && buttonRect) {
-          // Button should not overlap the text content area significantly
-          const overlap = Math.max(0, 
-            Math.min(sidebarRect.x + sidebarRect.width, buttonRect.x + buttonRect.width) - 
-            Math.max(sidebarRect.x, buttonRect.x)
-          );
-          
-          // Allow some overlap for the button itself but text should be visible
-          expect(overlap).toBeLessThan(sidebarRect.width * 0.3);
-        }
-      }
+
+      // #1092: this used to sit entirely inside if(count > 0) and PASS with
+      // zero assertions. #666 removed every .behavior-card from this page and
+      // the schema has no drawer-layout demo (see the skip note on 'Dropdown
+      // Behavior' below), so say so in the report instead of passing.
+      test.skip(await toggleButton.count() === 0, 'no drawer-layout demo card on /?page=behaviors (#666 removed .behavior-card)');
+
+      const sidebarRect = await sidebarText.boundingBox();
+      const buttonRect = await toggleButton.boundingBox();
+      expect(sidebarRect, 'the drawer sidebar text has no layout box').not.toBeNull();
+      expect(buttonRect, 'the drawer toggle button has no layout box').not.toBeNull();
+
+      // Button should not overlap the text content area significantly
+      const overlap = Math.max(0,
+        Math.min(sidebarRect!.x + sidebarRect!.width, buttonRect!.x + buttonRect!.width) -
+        Math.max(sidebarRect!.x, buttonRect!.x)
+      );
+
+      // Allow some overlap for the button itself but text should be visible
+      expect(overlap).toBeLessThan(sidebarRect!.width * 0.3);
     });
 
     test('all "Main Content" text is fully visible', async ({ page }) => {
       const mainContentTexts = await page.locator(':text("Main Content")').all();
-      
+
+      // #1092: the loop ran over nothing and PASSED. "Main Content" was the
+      // old drawer-layout demo's text; pages/behaviors.html no longer has it.
+      test.skip(mainContentTexts.length === 0, 'no "Main Content" demo text on /?page=behaviors (old drawer-layout demo removed by #666)');
+
       for (const text of mainContentTexts) {
         const parent = text.locator('..').first();
         const parentBox = await parent.boundingBox();
         const textBox = await text.boundingBox();
-        
-        if (parentBox && textBox) {
-          // Text should be within parent bounds
-          expect(textBox.x).toBeGreaterThanOrEqual(parentBox.x - 1);
-          expect(textBox.x + textBox.width).toBeLessThanOrEqual(parentBox.x + parentBox.width + 1);
-        }
+        expect(parentBox, '"Main Content" parent has no layout box').not.toBeNull();
+        expect(textBox, '"Main Content" text has no layout box').not.toBeNull();
+
+        // Text should be within parent bounds
+        expect(textBox!.x).toBeGreaterThanOrEqual(parentBox!.x - 1);
+        expect(textBox!.x + textBox!.width).toBeLessThanOrEqual(parentBox!.x + parentBox!.width + 1);
       }
     });
   });
@@ -212,12 +220,10 @@ test.describe('Behaviors Showcase Page', () => {
       
       // Check if menu is visible
       const menu = dropdown.locator('.x-dropdown__menu, .x-dropdown-menu');
-      if (await menu.count() > 0) {
-        await expect(menu).toBeVisible();
-      } else {
-        // If no menu, the dropdown behavior might not be working
-        console.warn('No dropdown menu found - behavior may not be initialized');
-      }
+      // #1092: a missing menu used to console.warn and PASS -- a dropdown
+      // with no menu is exactly the failure this test exists to catch.
+      expect(await menu.count(), 'the dropdown rendered no menu -- behavior not initialized').toBeGreaterThan(0);
+      await expect(menu).toBeVisible();
     });
   });
 
@@ -267,13 +273,15 @@ test.describe('Behaviors Showcase Page', () => {
 
     test('tab buttons are properly sized (not too tall)', async ({ page }) => {
       const tabButtons = await page.locator('#behaviors-live-example .x-tabs__tab').all();
-      
+      // #1092: precondition -- the x-tabs example must have generated buttons,
+      // or the loop below checks nothing and passes.
+      expect(tabButtons.length, 'the x-tabs example rendered no .x-tabs__tab buttons').toBeGreaterThan(0);
+
       for (const button of tabButtons) {
         const box = await button.boundingBox();
-        if (box) {
-          // Tab buttons should not be excessively tall (max 60px reasonable)
-          expect(box.height).toBeLessThan(80);
-        }
+        expect(box, 'a tab button has no layout box').not.toBeNull();
+        // Tab buttons should not be excessively tall (max 60px reasonable)
+        expect(box!.height).toBeLessThan(80);
       }
     });
 
@@ -308,31 +316,30 @@ test.describe('Behaviors Showcase Page', () => {
       const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text("Drawer"))');
       const toggleButton = drawerCard.locator('.x-drawer-toggle');
       
-      if (await toggleButton.count() > 0) {
-        await expect(toggleButton).toBeVisible();
-        
-        // Button should be clickable
-        const box = await toggleButton.boundingBox();
-        expect(box).toBeTruthy();
-        expect(box.width).toBeGreaterThan(10);
-        expect(box.height).toBeGreaterThan(10);
-      }
+      // #1092: precondition, unconditional -- was if(count > 0) and passed empty.
+      expect(await toggleButton.count(), 'the drawer demo rendered no .x-drawer-toggle').toBeGreaterThan(0);
+      await expect(toggleButton).toBeVisible();
+
+      // Button should be clickable
+      const box = await toggleButton.boundingBox();
+      expect(box).toBeTruthy();
+      expect(box!.width).toBeGreaterThan(10);
+      expect(box!.height).toBeGreaterThan(10);
     });
 
     test('sidebar content is readable when drawer is open', async ({ page }) => {
       const drawerCard = page.locator('.behavior-card:has(.behavior-title:has-text("Drawer"))');
       const sidebarText = drawerCard.locator(':text("Sidebar")').first();
       
-      if (await sidebarText.count() > 0) {
-        // Text should be visible
-        await expect(sidebarText).toBeVisible();
-        
-        // Check that text is not clipped
-        const box = await sidebarText.boundingBox();
-        if (box) {
-          expect(box.width).toBeGreaterThan(20); // Text should have reasonable width
-        }
-      }
+      // #1092: precondition, unconditional -- was if(count > 0) and passed empty.
+      expect(await sidebarText.count(), 'the drawer demo has no "Sidebar" text').toBeGreaterThan(0);
+      // Text should be visible
+      await expect(sidebarText).toBeVisible();
+
+      // Check that text is not clipped
+      const box = await sidebarText.boundingBox();
+      expect(box, 'the "Sidebar" text has no layout box').not.toBeNull();
+      expect(box!.width).toBeGreaterThan(20); // Text should have reasonable width
     });
   });
 
@@ -445,14 +452,20 @@ test.describe('Behaviors Showcase Page', () => {
     });
 
     test('line numbers column is narrow', async ({ page }) => {
-      const lineNumbers = await page.locator('.x-pre__line-numbers').all();
-      
+      // A gutter inside a collapsed or hidden panel exists but has no layout
+      // box -- there is no width to measure, so only displayed gutters count.
+      const lineNumbers = await page.locator('.x-pre__line-numbers').filter({ visible: true }).all();
+
+      // #1092: the loop ran over nothing and PASSED. Since #666 this page
+      // renders no code until a behavior is picked, so a gutter may be absent
+      // by design -- report SKIPPED, not PASSED, when there is none to measure.
+      test.skip(lineNumbers.length === 0, 'no displayed x-pre line-number gutter on /?page=behaviors before a behavior is picked (#666)');
+
       for (const ln of lineNumbers) {
         const box = await ln.boundingBox();
-        if (box) {
-          // Line numbers column should be narrow (max 50px)
-          expect(box.width).toBeLessThan(50);
-        }
+        expect(box, 'an x-pre line-number gutter has no layout box').not.toBeNull();
+        // Line numbers column should be narrow (max 50px)
+        expect(box!.width).toBeLessThan(50);
       }
     });
   });
