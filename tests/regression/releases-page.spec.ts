@@ -84,8 +84,15 @@ test.describe('Releases page (#1182)', () => {
   test('search narrows the list to matching items', async ({ page }) => {
     await page.goto('/?page=releases');
     await expect(page.locator('#releases-list')).toHaveAttribute('rendered', '1', { timeout: 15_000 });
-    // A term taken from the data, so the test follows the content.
-    const term = data.releases[0].items[0].html.replace(/<[^>]+>/g, '').trim().slice(0, 16).toLowerCase();
+    // A term taken from what the page RENDERS, so the test follows the content
+    // and searches for something a reader could actually type (#1369). It used
+    // to come from the raw HTML in data/releases.json, which keeps entities:
+    // "Keep&#39;s block" made the term "keep&#39;s block" while the page shows
+    // "Keep's block", so nothing matched and the test failed on main whenever
+    // the newest release item contained an apostrophe, quote or ampersand.
+    const firstText = (await page.locator('#releases-list .releases__item').first().textContent()) || '';
+    const term = firstText.replace(/\s+/g, ' ').trim().slice(0, 16).toLowerCase();
+    expect(term.length, 'the first release item rendered no text to search for').toBeGreaterThan(3);
     await page.fill('#releases-search', term);
     const visible = page.locator('#releases-list .releases__item:visible');
     await expect(visible.first()).toBeVisible();

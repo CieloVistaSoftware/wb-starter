@@ -29,6 +29,12 @@ import { test, expect } from '../fixtures/offline';
 // A PREDICATE, not a glob. The glob form did not match and the mock never
 // fired -- the first run of this spec failed on the intercepted poll below
 // rather than on the defect, which is the poll doing its job (#863).
+//
+// #1349, read this before changing the matcher again: the matcher was never the
+// problem. The same route was registered four ways at once -- string glob,
+// RegExp, a url.pathname predicate and a String(url) predicate -- and NONE of
+// them fired, while page.on('request') logged the request going out. The
+// predicate below is fine, but what made the mock apply is the blocked worker.
 const ACTIVITY = (url: URL) => url.pathname.endsWith('/api/activity');
 
 // THE SERVICE WORKER IS BLOCKED, or the mock is never what the page receives.

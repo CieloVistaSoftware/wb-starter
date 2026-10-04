@@ -8,12 +8,43 @@
 <article x-cardfile filename="quarterly-report.pdf" size="2.4 MB" date="2026-08-14" href="#"></article>
 </div>
 
+## One example per file type
+
+The icon comes from the filename's extension; there is no separate type attribute to write, or to get out of step with the name. An extension the table does not know gets the generic file icon.
+
+<div x-demo>
+<article x-cardfile filename="quarterly-report.pdf" size="2.4 MB"></article>
+</div>
+
+<div x-demo>
+<article x-cardfile filename="meeting-notes.docx" size="480 KB"></article>
+</div>
+
+<div x-demo>
+<article x-cardfile filename="architecture-diagram.png" size="2.4 MB"></article>
+</div>
+
+<div x-demo>
+<article x-cardfile filename="product-walkthrough.mp4" size="58 MB"></article>
+</div>
+
+<div x-demo>
+<article x-cardfile filename="interview-recording.m4a" size="12 MB"></article>
+</div>
+
+<div x-demo>
+<article x-cardfile filename="release-assets.zip" size="104 MB"></article>
+</div>
+
+<div x-demo>
+<article x-cardfile filename="sensor-capture.bin" size="31 MB"></article>
+</div>
+
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `filename` | `string` | — | File name. Its extension picks the icon (#1117). |
-| `file-type` | `pdf` · `doc` · `image` · `video` · `audio` · `zip` · `file` | derived from `filename` | OVERRIDE only. The icon normally comes from the filename's extension; set this when the name cannot say the type (no extension, or a `.bin` that really is a video). Contradicting the extension is honoured, but produces a self-contradicting example (#1114). |
+| `filename` | `string` | — | File name. Its extension picks the icon, and it is the only way to say what kind of file it is (#1119). |
 | `size` | `string` | — | File size (e.g., 2.4 MB) |
 | `date` | `string` | — | File date |
 | `href` | `string` | `#` | Download URL |

@@ -6,6 +6,17 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 
 ---
 
+## 2026-10-03 — doc changes in flight
+
+- `docs/behaviors/table.md` (#1344) — attribute table corrected to the schema's
+  `pageSize` (it taught `page-size`), booleans documented bare, `sortValue`
+  documented, and a note on what `"false"` means now that six of the booleans
+  stopped treating it as "on". `scripts/generate-behavior-docs.mjs` was
+  kebab-casing every schema property name into the generated table, which is
+  where the dashed name came from for every behavior; fixed there too.
+
+---
+
 ## Priority 1 — Showcase Page: Match Tests to Reality (54 failures)
 
 ### behaviors-showcase-definitive.spec.ts (32 → 15 failures)

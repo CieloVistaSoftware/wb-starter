@@ -147,7 +147,6 @@ When you need to override auto-injection or apply behaviors to non-semantic elem
   type="checkbox"
   id="agree"
   name="terms"
-  x-checkbox
   checked>
 ```
 

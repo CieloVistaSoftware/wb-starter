@@ -182,6 +182,30 @@ function attachLoadRetry(el, config) {
   el.addEventListener('error', onError);
   config.successEvents.forEach(evt => el.addEventListener(evt, onSuccess));
 
+  // #1342 -- the same timing #1136 fixed in audio.js, now for the shared helper.
+  //
+  // A media element starts fetching the moment it is parsed; the lazy runtime
+  // (#491) only enhances it much later. The one 'error' event does not queue,
+  // so by the time the listener above exists the failure can already be over
+  // and done with. Nothing below read the element's CURRENT state, so an
+  // already-failed element was not noticed until the first checkTimeoutMs
+  // (4s) elapsed, and only then started walking the retry ladder -- roughly
+  // 25-30s of a dead player or broken image saying nothing (the ~28s symptom
+  // recorded on #371).
+  //
+  // config.isReady() answers the positive half of that question; alreadyFailed()
+  // answers the negative half, and it belongs next to isReady rather than as a
+  // check each caller has to remember separately -- img.js had one, video.js
+  // did not, and only inside its fallback branch at that.
+  //
+  // retry() is exactly what onError does, which is the point: the error event
+  // already happened, it just happened early. A transient failure still gets
+  // its full ladder of retries; a real one reaches giveUp() one whole readiness
+  // window sooner, and -- the part that matters -- it is being watched at all.
+  const alreadyFailed = typeof config.alreadyFailed === 'function'
+    ? config.alreadyFailed(el)
+    : false;
+
   // Native loading="lazy" defers the actual network fetch until the
   // browser decides the element is near the viewport -- if the check/retry
   // clock starts immediately regardless, an off-screen-but-perfectly-valid
@@ -191,7 +215,13 @@ function attachLoadRetry(el, config) {
   // again even once scrolled into view. Gate the clock on real
   // intersection first when the element opted into lazy loading.
   let lazyGate = null;
-  if (el.loading === 'lazy' && typeof IntersectionObserver !== 'undefined') {
+  if (alreadyFailed) {
+    // No lazy gate either: the fetch demonstrably already happened and
+    // already failed, so there is no "no request was ever made" race left
+    // to wait for -- that was the only reason for the gate.
+    console.warn(`[WB:media-retry] ${config.label} had ALREADY failed before this behavior attached -- ${traceLabel(el)} src=${config.currentSrc(el)}`, el.error || '');
+    retry();
+  } else if (el.loading === 'lazy' && typeof IntersectionObserver !== 'undefined') {
     lazyGate = new IntersectionObserver((entries) => {
       if (entries.some(e => e.isIntersecting)) {
         lazyGate.disconnect();
@@ -220,6 +250,25 @@ export function attachVideoLoadRetry(videoEl, options = {}) {
     currentSrc: (el) => el.currentSrc || el.src,
     // HAVE_CURRENT_DATA (2) or higher means a real frame is available.
     isReady: (el) => el.readyState >= 2 && !el.error,
+    // #1342: already settled the other way -- the same one-line question
+    // audio.js asks (if (audioEl.error) onMediaError();). Covers a src
+    // attribute that already failed.
+    //
+    // NOT also networkState === NETWORK_NO_SOURCE (3), which #1342 proposed:
+    // setting that state is the FIRST step of resource selection, before any
+    // fetch begins, so a healthy <video> whose src was just assigned reads 3
+    // for a moment -- and card.js's cardvideo attaches in exactly that moment.
+    // Every good video would have been branded already-failed and needlessly
+    // refetched.
+    //
+    // A <source>-children failure is therefore NOT caught here, and cannot be:
+    // measured in x-video-source-children-failure-is-reported.spec.ts, a
+    // <source>'s error event fires AT the <source>, does not bubble, and leaves
+    // the <video>'s own error null -- resource selection just stops in
+    // NETWORK_NO_SOURCE and tells the element nothing. The readiness clock
+    // below is what detects that one. Slower, but it reports, which is the
+    // whole of #1342's priority:1 half.
+    alreadyFailed: (el) => !!el.error,
     reload: (el) => el.load(),
   });
 }
@@ -234,6 +283,12 @@ export function attachImageLoadRetry(imgEl, options = {}) {
     failedEvent: 'wb:image:load-failed',
     currentSrc: (el) => el.currentSrc || el.src,
     isReady: (el) => el.complete && el.naturalWidth > 0,
+    // #1342: the check img.js already had, but only in its config.fallback
+    // branch -- a plain <img x-img> came through here and got the delayed
+    // path. `complete` with a zero naturalWidth is the standard way to spot
+    // an <img> that already failed; the src guard keeps a srcless <img>
+    // (complete, naturalWidth 0, never requested anything) out of it.
+    alreadyFailed: (el) => el.complete && el.naturalWidth === 0 && !!el.getAttribute('src'),
     // <img> has no .load() -- re-assigning the identical src string doesn't
     // reliably force a fresh request (browsers may no-op on an unchanged
     // value even after a failure). Cache-bust with a query param instead.

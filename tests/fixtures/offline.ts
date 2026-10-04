@@ -23,6 +23,24 @@
  * tests/compliance/no-external-requests.spec.ts fails on any blocked URL, so a
  * gap in the cache shows up as a named URL, never as a flaky network error.
  *
+ * ONE THING THIS FIXTURE CANNOT DO (#1349). src/main.js registers sw.js on
+ * every page load, and Playwright cannot route a service worker's requests --
+ * not through page.route and NOT through the context.route above. A request the
+ * worker makes on the page's behalf is never offered to the handler below, so
+ * for as long as the worker controls the page this fixture is not in the loop
+ * either: an external URL it would have blocked goes out, and a spec's own
+ * mock is answered by the real server instead.
+ *
+ * A spec that mocks therefore has to take the worker out of the picture with
+ *
+ *   test.use({ serviceWorkers: 'block' });
+ *
+ * which tests/compliance/mocked-specs-block-the-service-worker.spec.ts
+ * enforces. It is NOT set here, for every importer at once, on purpose: this
+ * fixture is imported by nearly every spec in the repo, so doing it here is a
+ * global default flip by the back door (playwright.config.ts:228 is the front
+ * door) and belongs in its own, measured change.
+ *
  * Usage: import { test, expect } from '<relative>/fixtures/offline' instead of
  * '@playwright/test'. Everything @playwright/test exports is re-exported.
  * A spec that makes its own context uses newOfflineContext / newOfflinePage.

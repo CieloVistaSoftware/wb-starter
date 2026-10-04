@@ -21,7 +21,12 @@ test.describe('Global Attributes', () => {
       '<button tooltip="Global Tooltip">Hover me</button>'
     );
 
-    const tooltip = page.locator('.x-tooltip');
+    // The tooltip THIS button owns, not any `.x-tooltip` on the page: the page
+    // behind the test container has its own tooltip demo, and a pointer landing
+    // there showed that one's text instead (#1283, ported from #1209 d8541de3).
+    const tooltipId = await element.getAttribute('aria-describedby');
+    expect(tooltipId, 'tooltip behavior did not link a tooltip to the button').toBeTruthy();
+    const tooltip = page.locator(`#${tooltipId}`);
     // index.html keeps building lazy sections above #test-container after
     // boot, which can slide the button out from under a parked pointer -- a
     // real mouseleave, so the tip correctly hides. Re-hover until it holds:
