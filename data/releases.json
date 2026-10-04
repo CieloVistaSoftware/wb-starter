@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.172",
+      "date": "2026-10-04",
+      "summary": "The In Progress tab stops lying: status:in-progress finally has a release path (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1335\" target=\"_blank\" rel=\"noopener\">PR 1335</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1330\" target=\"_blank\" rel=\"noopener\">#1330</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Status:in-progress can now be released, so the In Progress tab stops lying</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1330\" target=\"_blank\" rel=\"noopener\">#1330</a>",
+          "issues": [
+            1330
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.171",
       "date": "2026-10-04",
       "summary": "Fix: the registries spec waits for the list to fill, not its first row; one guard for the rule (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1391\" target=\"_blank\" rel=\"noopener\">PR 1391</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1390\" target=\"_blank\" rel=\"noopener\">#1390</a>",
