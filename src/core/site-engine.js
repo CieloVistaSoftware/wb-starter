@@ -543,10 +543,13 @@ export default class WBSite {
     }
 
     // Remember the scroll position of the page we're leaving so returning to it
-    // restores where the user was. The window is the scroll container.
-    if (this.currentPage) {
+    // restores where the user was. #siteBody is the scroll container, not the
+    // window: .site is 100dvh with overflow hidden (site.css), so window.scrollY
+    // is always 0 here (#1186, the same trap #390 found in initStickyHeader).
+    const siteBody = document.getElementById('siteBody');
+    if (this.currentPage && siteBody) {
       this._scrollMemory = this._scrollMemory || {};
-      this._scrollMemory[this.currentPage] = window.scrollY;
+      this._scrollMemory[this.currentPage] = siteBody.scrollTop;
     }
 
     // Close mobile nav when navigating
@@ -680,11 +683,17 @@ export default class WBSite {
     // header. Done on the next frame so the page has its height before we scroll.
     const rememberedY = (this._scrollMemory || {})[pageId];
     const targetY = rememberedY != null ? rememberedY : 0;
-    requestAnimationFrame(() => {
-      window.scrollTo(0, targetY);
-      // Re-apply once more after lazy content settles so a tall restore isn't clamped.
-      setTimeout(() => window.scrollTo(0, targetY), 60);
-    });
+    const scroller = document.getElementById('siteBody');
+    if (scroller) {
+      // Reset now so the new page never opens at the old page's offset, then
+      // restore once it has its height.
+      scroller.scrollTop = 0;
+      requestAnimationFrame(() => {
+        scroller.scrollTop = targetY;
+        // Re-apply once more after lazy content settles so a tall restore isn't clamped.
+        setTimeout(() => { scroller.scrollTop = targetY; }, 60);
+      });
+    }
   }
 
   render404(pageId) {
