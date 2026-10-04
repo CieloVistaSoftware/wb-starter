@@ -54,10 +54,20 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
-// The `ws` package, not the global: CI runs this on Node 20, which has no
-// global WebSocket, so every inspector query failed there with "WebSocket is
-// not defined" and a stall report could name no running test (#1199).
-import WebSocket from 'ws';
+/**
+ * A WebSocket client for the inspector query, or null (#1199).
+ *
+ * CI runs on Node 20, which has no global WebSocket, so every query there
+ * failed with "WebSocket is not defined". The global is used where Node has
+ * one; otherwise the `ws` package. It is imported lazily, not at the top:
+ * scripts/test-gate-guards.mjs runs a COPY of this file in a temp directory
+ * with no node_modules, and a static import failed every ratchet check there.
+ * With neither available the query is skipped and the report says so.
+ */
+async function webSocketClient() {
+  if (typeof globalThis.WebSocket === 'function') return globalThis.WebSocket;
+  try { return (await import('ws')).default; } catch { return null; }
+}
 import { classifyFailure } from '../scripts/lib/server-down.mjs';
 import { NO_VERDICT_EXIT } from '../scripts/lib/gate-exit.mjs';
 import { claimFreePort } from '../scripts/lib/free-port.mjs';
@@ -364,6 +374,10 @@ async function runGate(port) {
   async function grabStacks() {
     const urls = [...inspectorUrls];
     if (!urls.length) return { error: 'no inspector url appeared on stderr' };
+    const WebSocket = await webSocketClient();
+    if (!WebSocket) {
+      return { error: `inspector not queried: Node ${process.version} has no WebSocket and the ws package is not installed here` };
+    }
 
     const EXPR = `(() => {
       const r = process.report.getReport();
