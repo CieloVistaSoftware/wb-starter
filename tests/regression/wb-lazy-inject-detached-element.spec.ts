@@ -28,6 +28,13 @@ import { test, expect } from '../fixtures/offline';
 
 const BASE = process.env.WB_BASE || '';
 
+// #1349: the 500ms delay on search.js IS the race this spec reproduces — the
+// window in which the element can be removed mid-import. sw.js answers the
+// page's GETs itself and Playwright cannot route a service worker's requests,
+// so on a claimed page the module arrived at full speed, the window closed,
+// and the test passed without ever reproducing #297.
+test.use({ serviceWorkers: 'block' });
+
 test('WB.inject() does not crash when its element is removed mid-import', async ({ page }) => {
   // The crash is caught internally by inject()'s own try/catch (which logs
   // it via Events.error() and marks x-error="true") rather than escaping as

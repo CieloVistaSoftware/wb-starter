@@ -2,7 +2,7 @@ import { readFlag } from '../../core/read-attr.js';
 import { setRule } from '../../core/dynamic-style.js';
 /**
  * Image - Enhanced <img> element
- * Adds lazy loading, zoom/lightbox, fallback, aspect ratio
+ * Adds lazy loading, zoom/lightbox, fallback, aspect ratio, width+height shape
  * Helper Attribute: [x-image]
  *
  * Migrated from the old media.js grab-bag file (image()) to match this
@@ -25,6 +25,18 @@ export function img(element, options = {}) {
     aspectRatio: options.aspectRatio || element.getAttribute('aspect-ratio') || '',
     ...options
   };
+
+  // width + height together set the image's shape. The site's
+  // `img { height: auto }` (normalize.css, site.css) beats the height
+  // attribute, so on its own height only reserved space until the photo
+  // loaded, then the photo's real shape won and the height was ignored.
+  // Both numbers now become the aspect ratio, cropped like aspect-ratio="".
+  // An explicit aspect-ratio="" still wins.
+  if (!config.aspectRatio) {
+    const width = Number(element.getAttribute('width'));
+    const height = Number(element.getAttribute('height'));
+    if (width > 0 && height > 0) config.aspectRatio = `${width}/${height}`;
+  }
 
   element.classList.add('x-img');
 

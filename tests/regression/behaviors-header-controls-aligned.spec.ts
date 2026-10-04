@@ -30,6 +30,13 @@ import { wbIdle } from '../base';
 
 const STRIP = '#behaviors-header-tools';
 
+// #1349: /api/update-to-latest is a POST and sw.js only claims GETs, so the
+// fake endpoint in the last test did apply. Everything ELSE this page loads
+// went through the worker, which means the geometry measured here was taken on
+// a page whose assets may have come from the worker's cache rather than the
+// server under test. Blocked: one page, one source.
+test.use({ serviceWorkers: 'block' });
+
 test.describe('behaviors header control strip alignment (#1004)', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
