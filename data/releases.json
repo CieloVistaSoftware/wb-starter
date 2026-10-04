@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.190",
+      "date": "2026-10-04",
+      "summary": "Fix: the fullscreen label follows document.fullscreenElement, not the request (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1329\" target=\"_blank\" rel=\"noopener\">PR 1329</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/738\" target=\"_blank\" rel=\"noopener\">#738</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The fullscreen round trip grants fullscreen the way a browser does</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/738\" target=\"_blank\" rel=\"noopener\">#738</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/720\" target=\"_blank\" rel=\"noopener\">#720</a>",
+          "issues": [
+            738,
+            720
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The fullscreen label follows document.fullscreenElement, not the request</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/738\" target=\"_blank\" rel=\"noopener\">#738</a>",
+          "issues": [
+            738
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.189",
       "date": "2026-10-04",
       "summary": "Fix: pre, code and textarea are opaque to the demo pretty-printer (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1331\" target=\"_blank\" rel=\"noopener\">PR 1331</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1015\" target=\"_blank\" rel=\"noopener\">#1015</a>",
