@@ -48,20 +48,20 @@
       ]
     },
     "x-password": {
-      "source": "<input type=\"password\" x-password placeholder=\"Password with toggle\">",
+      "source": "<input type=\"password\" placeholder=\"Password with toggle\">",
       "alternates": [],
       "examples": [
         {
           "label": "toggle and strength",
-          "source": "<input type=\"password\" x-password toggle strength value=\"correct horse battery\">"
+          "source": "<input type=\"password\" toggle strength value=\"correct horse battery\">"
         },
         {
           "label": "weak value",
-          "source": "<input type=\"password\" x-password strength value=\"1234\">"
+          "source": "<input type=\"password\" strength value=\"1234\">"
         },
         {
           "label": "new-password field",
-          "source": "<input type=\"password\" x-password toggle placeholder=\"Choose a new password\" autocomplete=\"new-password\">"
+          "source": "<input type=\"password\" toggle placeholder=\"Choose a new password\" autocomplete=\"new-password\">"
         }
       ]
     },
