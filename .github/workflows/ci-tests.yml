@@ -108,6 +108,15 @@ jobs:
       DISABLE_WATCH: 'true'
     
     steps:
+      # #1205: check out the bytes git stores. On windows-latest git's default
+      # core.autocrlf=true wrote every text file with CRLF, and the 41 specs that
+      # scan files with \n-shaped patterns (a fence regex, split('\n')) matched
+      # nothing and passed without checking anything -- md-wb-demo-required found
+      # html fences in 103 of 178 behavior docs on LF and in 0 on CRLF.
+      # Repo blobs are LF, so CI now reads exactly what is committed.
+      - name: Check out with the repository's own line endings
+        run: git config --global core.autocrlf false
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
