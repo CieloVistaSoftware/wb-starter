@@ -1,5 +1,11 @@
 import { test, expect, Page, newOfflinePage } from '../fixtures/offline';
 
+// #1112: one browser context is built in beforeAll and shared by every test
+// below. Playwright stops a context's trace at the end of EACH test, so a
+// shared context fails the second test with "Tracing is already stopping".
+// The default light trace is off for this file; WB_TRACE still forces one.
+test.use({ trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure') || 'off' });
+
 /**
  * Every card behavior obeys the layout standard.
  *

@@ -176,15 +176,21 @@ app.use((req, res, next) => {
 });
 
 // Request logging (for debugging)
+//
+// #1112: this logged .js requests only, so a 500 on a doc, an image or an
+// /api route -- the "Failed to load resource: ... 500 ()" that names no URL
+// and blocked a release -- never reached the log a failing test leaves
+// behind (data/test-server-logs/). Every failed response and every API call
+// is logged now, whatever the path; module loads stay logged as before.
 app.use((req, res, next) => {
-  if (req.path.endsWith('.js')) {
-    res.on('finish', () => {
-      if (res.statusCode !== 304) {
-          const referer = req.headers['referer'] || 'unknown';
-          console.log(`[Request] ${req.method} ${req.path} (${res.statusCode}) [Referer: ${referer}]`);
-      }
-    });
-  }
+  res.on('finish', () => {
+    const status = res.statusCode;
+    if (status === 304) return;
+    if (status >= 400 || req.path.endsWith('.js') || req.path.startsWith('/api/')) {
+      const referer = req.headers['referer'] || 'unknown';
+      console.log(`[Request] ${req.method} ${req.path} (${status}) [Referer: ${referer}]`);
+    }
+  });
   next();
 });
 
