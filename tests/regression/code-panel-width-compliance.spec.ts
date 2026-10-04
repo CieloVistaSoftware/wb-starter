@@ -50,7 +50,11 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
       ['normal', '600px'], // normal should be 600px
       ['wide', '800px'],   // wide should be 800px
     ];
-    await page.evaluate((list) => {
+    // #1497: build them explicitly -- relying on lazy auto-injection to notice
+    // appended demos left one unbuilt in CI. Same as inject-and-scan.ts (#983).
+    await page.waitForFunction(() => typeof (window as any).WB?.scan === 'function', null, { timeout: 15000 });
+    await page.evaluate(async (list) => {
+      const added: Element[] = [];
       for (const [preset] of list) {
         const demo = document.createElement('div');
         demo.setAttribute('x-demo', '');
@@ -59,7 +63,9 @@ test.describe('Code Panel Width Compliance (Standard §28)', () => {
         demo.id = `code-width-${preset}`;
         demo.innerHTML = '<a href="#" class="x-link">Styled Link</a>';
         document.body.appendChild(demo);
+        added.push(demo);
       }
+      for (const demo of added) await (window as any).WB.scan(demo, { eager: true });
     }, presets);
 
     for (const [preset, expected] of presets) {
