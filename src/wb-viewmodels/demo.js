@@ -59,9 +59,11 @@ export function formatHtml(raw) {
         el.childNodes.forEach((n) => {
             if (n.nodeType === 3) { s += n.textContent; return; } // verbatim
             if (n.nodeType !== 1) return;
-            const t = n.tagName.toLowerCase();
-            const a = Array.from(n.attributes).map((x) => ' ' + attrStr(x)).join('');
-            s += VOID.has(t) ? `<${t}${a} />` : `<${t}${a}>${serializeOpaque(n)}</${t}>`;
+            const childTag = n.tagName.toLowerCase();
+            const childAttrs = Array.from(n.attributes).map((x) => ' ' + attrStr(x)).join('');
+            s += VOID.has(childTag)
+                ? `<${childTag}${childAttrs} />`
+                : `<${childTag}${childAttrs}>${serializeOpaque(n)}</${childTag}>`;
         });
         return s;
     };
