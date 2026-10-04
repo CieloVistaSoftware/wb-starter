@@ -60,6 +60,9 @@ test.describe('#1200 -- the gate\'s throwaway server does not arm a live-reload 
     const env = { ...process.env, PORT: '0' };
     delete env.CI;
     delete env.DISABLE_WATCH;
+    // #1311: a test server never watches, and playwright.config marks this
+    // whole run as one (WB_TEST_SERVER=1) -- clear it to get the dev default.
+    delete env.WB_TEST_SERVER;
     const { output, proc } = await runServer(env);
     try {
       expect(output, 'without CI or DISABLE_WATCH set, the watcher must be armed -- otherwise the first test above proves nothing').not.toContain('[Watch] skipping fs.watch');

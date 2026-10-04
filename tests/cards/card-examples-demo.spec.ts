@@ -484,10 +484,11 @@ test.describe('Mobile Responsive', () => {
     // On mobile should be column or wrap
     // If still row, image width should be reasonable
     const img = card.locator('img');
+    // #1092: the image must be rendered, or there is no width to check
+    await expect(img, 'the horizontal card renders no visible image on mobile').toBeVisible({ timeout: 10000 });
     const imgBox = await img.boundingBox();
-    if (imgBox) {
-      expect(imgBox.width).toBeLessThanOrEqual(375);
-    }
+    expect(imgBox, 'the horizontal card image has no bounding box on mobile').not.toBeNull();
+    expect(imgBox!.width).toBeLessThanOrEqual(375);
   });
 
   test('hero card text is readable on mobile', async ({ page }) => {

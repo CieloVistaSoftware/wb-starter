@@ -6,6 +6,97 @@
   ],
   "releases": [
     {
+      "version": "1.0.244",
+      "date": "2026-10-04",
+      "summary": "Test: wbIdle&#39;s site shell is body &gt; #app, not any #app (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1491\" target=\"_blank\" rel=\"noopener\">PR 1491</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1490\" target=\"_blank\" rel=\"noopener\">#1490</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>WbIdle&#39;s site shell is body &gt; #app, not any #app</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1490\" target=\"_blank\" rel=\"noopener\">#1490</a>",
+          "issues": [
+            1490
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.243",
+      "date": "2026-10-04",
+      "summary": "Test: popover-aria waits for the site to boot before probing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1484\" target=\"_blank\" rel=\"noopener\">PR 1484</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1481\" target=\"_blank\" rel=\"noopener\">#1481</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Popover-aria waits for the site to boot before probing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1481\" target=\"_blank\" rel=\"noopener\">#1481</a>",
+          "issues": [
+            1481
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.242",
+      "date": "2026-10-04",
+      "summary": "Test: no test passes by skipping all of its assertions (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1479\" target=\"_blank\" rel=\"noopener\">PR 1479</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1092\" target=\"_blank\" rel=\"noopener\">#1092</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No test passes by skipping all of its assertions</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1092\" target=\"_blank\" rel=\"noopener\">#1092</a>",
+          "issues": [
+            1092
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.241",
+      "date": "2026-10-04",
+      "summary": "Test: manifest check ignores git-derived modified dates (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1477\" target=\"_blank\" rel=\"noopener\">PR 1477</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1476\" target=\"_blank\" rel=\"noopener\">#1476</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The manifest check ignores git-derived modified dates</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1476\" target=\"_blank\" rel=\"noopener\">#1476</a>",
+          "issues": [
+            1476
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.240",
+      "date": "2026-10-04",
+      "summary": "Test: one injectAndScan helper that waits on WB, not a clock (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1478\" target=\"_blank\" rel=\"noopener\">PR 1478</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/983\" target=\"_blank\" rel=\"noopener\">#983</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>One injectAndScan helper that waits on WB, not a clock</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/983\" target=\"_blank\" rel=\"noopener\">#983</a>",
+          "issues": [
+            983
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.239",
+      "date": "2026-10-04",
+      "summary": "Fix: a test server never live-reloads the pages it serves (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1475\" target=\"_blank\" rel=\"noopener\">PR 1475</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The watches-by-default control clears WB_TEST_SERVER too</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+          "issues": [
+            1311
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A test server never live-reloads the pages it serves</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
+          "issues": [
+            1311
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.238",
       "date": "2026-10-04",
       "summary": "Fix: examples use only option values their behavior declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1470\" target=\"_blank\" rel=\"noopener\">PR 1470</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1467\" target=\"_blank\" rel=\"noopener\">#1467</a>",

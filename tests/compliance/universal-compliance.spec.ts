@@ -26,6 +26,8 @@ test.describe('Universal Compliance', () => {
       await wbIdle(page);
       for (const el of spec.elements) {
         const locator = page.locator(el.selector);
+        // #1092: each spec row must declare a check, or it would silently assert nothing
+        expect(Boolean(el.required || el.minCount), `${el.description} (${el.selector}) declares neither required nor minCount`).toBe(true);
         if (el.required) {
           await expect(locator, `${el.description} (${el.selector})`).toBeVisible();
         }

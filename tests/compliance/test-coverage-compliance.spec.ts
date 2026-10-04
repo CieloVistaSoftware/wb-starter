@@ -271,9 +271,9 @@ test.describe('Test Coverage Summary', () => {
     
     console.log(`📝 TEST FILES: ${uiTests.length + regressionTests.length + complianceTests.length} total`);
     console.log('═══════════════════════════════════════════════════════\n');
-    
-    if (registry) {
-      expect(registry.metadata.untestedBugs, 'NO UNTESTED BUGS').toBe(0);
-    }
+
+    // #1092: the registry is required (see "Bug registry must exist"); a missing one must fail, not pass
+    expect(registry, `bug registry ${BUG_REGISTRY} is missing or unreadable, so untested bugs were not counted`).not.toBeNull();
+    expect(registry!.metadata.untestedBugs, 'NO UNTESTED BUGS').toBe(0);
   });
 });

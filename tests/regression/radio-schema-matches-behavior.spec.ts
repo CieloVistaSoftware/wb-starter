@@ -33,6 +33,8 @@ test('every declared radio variant and size is applied, and default adds nothing
   await page.waitForFunction(() => Boolean((window as any).WB));
   const variants: string[] = schema.properties.variant.enum;
   const sizes: string[] = schema.properties.size.enum;
+  // #1092: the loops below assert once per enum value; an empty enum would check nothing
+  expect(variants?.length && sizes?.length, 'radio.schema.json declares no variant or size enum, so nothing was applied').toBeGreaterThan(0);
   const classes = await page.evaluate(async ({ variants, sizes }) => {
     const host = document.createElement('div');
     for (const v of variants) host.insertAdjacentHTML('beforeend', `<input type="radio" name="v" data-case="variant:${v}" variant="${v}">`);

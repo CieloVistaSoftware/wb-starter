@@ -410,59 +410,76 @@ async function runSteps(page: Page, steps: Step[]): Promise<void> {
 }
 
 /**
- * Assert expectations on page
+ * Assert expectations on page.
+ *
+ * #1092: returns how many assertions it actually made. Every check below is
+ * optional, so a schema row whose `expect` names nothing this function knows
+ * (an empty object, a typo'd key, or only the unimplemented
+ * positionYUnchanged) asserted nothing and the generated test PASSED. The
+ * callers add this count to their own and fail when the total is zero.
  */
 async function assertExpectations(
-  page: Page, 
-  expect_: TestExpectation, 
+  page: Page,
+  expect_: TestExpectation,
   behavior: string,
   testName: string
-): Promise<void> {
+): Promise<number> {
+  let asserted = 0;
   const selector = resolveSelector(expect_.selector);
-  
+
   // Merge nested checks into top level for easier processing
   const checks = expect_.checks || {};
   const merged = { ...expect_, ...checks };
-  
+
   // Visibility checks
   if (merged.visible === true) {
     await expect(page.locator(selector).first(), `${testName}: ${selector} should be visible`).toBeVisible();
+    asserted++;
   }
   if (merged.visible === false || merged.hidden === true) {
     await expect(page.locator(selector).first(), `${testName}: ${selector} should be hidden`).toBeHidden();
+    asserted++;
   }
-  
+
   // Existence check
   if (merged.exists === true) {
     await expect(page.locator(selector).first(), `${testName}: ${selector} should exist`).toBeAttached();
+    asserted++;
   }
   if (merged.exists === false) {
     await expect(page.locator(selector), `${testName}: ${selector} should not exist`).toHaveCount(0);
+    asserted++;
   }
-  
+
   // Class checks
   if (merged.hasClass) {
     const classes = Array.isArray(merged.hasClass) ? merged.hasClass : [merged.hasClass];
     for (const cls of classes) {
       await expect(page.locator(selector).first(), `${testName}: should have class ${cls}`).toHaveClass(new RegExp(cls));
+      asserted++;
     }
   }
   if (merged.notClass || merged.notHasClass) {
     const classes = Array.isArray(merged.notClass || merged.notHasClass) ? (merged.notClass || merged.notHasClass) : [merged.notClass || merged.notHasClass];
     for (const cls of classes) {
-      if (cls) await expect(page.locator(selector).first(), `${testName}: should NOT have class ${cls}`).not.toHaveClass(new RegExp(cls));
+      if (cls) {
+        await expect(page.locator(selector).first(), `${testName}: should NOT have class ${cls}`).not.toHaveClass(new RegExp(cls));
+        asserted++;
+      }
     }
   }
-  
+
   // Text content check
   if (merged.textContains) {
     await expect(page.locator(selector).first(), `${testName}: should contain text`).toContainText(merged.textContains);
+    asserted++;
   }
-  
+
   // Attribute checks
   if (merged.attribute) {
     for (const [attr, value] of Object.entries(merged.attribute)) {
       await expect(page.locator(selector).first(), `${testName}: should have ${attr}="${value}"`).toHaveAttribute(attr, value);
+      asserted++;
     }
   }
   
@@ -478,10 +495,11 @@ async function assertExpectations(
         const num = parseFloat(value.substring(2));
         const poll = expect.poll(async () => parseFloat(await styleOf(prop)),
           { message: `${testName}: style.${prop} should be ${op} ${num}` });
-        if (op === '<=') await poll.toBeLessThanOrEqual(num);
-        if (op === '>=') await poll.toBeGreaterThanOrEqual(num);
+        if (op === '<=') { await poll.toBeLessThanOrEqual(num); asserted++; }
+        if (op === '>=') { await poll.toBeGreaterThanOrEqual(num); asserted++; }
       } else {
         await expect.poll(() => styleOf(prop), { message: `${testName}: style.${prop} should be ${value}` }).toBe(value);
+        asserted++;
       }
     }
   }
@@ -490,6 +508,7 @@ async function assertExpectations(
   if (merged.styleContains) {
     for (const [prop, value] of Object.entries(merged.styleContains)) {
       await expect.poll(() => styleOf(prop), { message: `${testName}: style.${prop} should contain ${value}` }).toContain(value);
+      asserted++;
     }
   }
 
@@ -498,11 +517,13 @@ async function assertExpectations(
     if (typeof merged.focused === 'string') {
         const focusedSelector = resolveSelector(merged.focused);
         await expect(page.locator(focusedSelector).first(), `${testName}: ${focusedSelector} should be focused`).toBeFocused();
+        asserted++;
     } else if (merged.focused === true) {
         await expect(page.locator(selector).first(), `${testName}: should be focused`).toBeFocused();
+        asserted++;
     }
   }
-  
+
   // Checked state
   if (merged.checked !== undefined) {
     const control = await controlSelector(page, expect_.selector);
@@ -511,12 +532,14 @@ async function assertExpectations(
     } else {
       await expect(page.locator(control).first(), `${testName}: should not be checked`).not.toBeChecked();
     }
+    asserted++;
   }
-  
+
   // Value check
   if (merged.value !== undefined) {
     const control = await controlSelector(page, expect_.selector);
     await expect(page.locator(control).first(), `${testName}: should have value`).toHaveValue(merged.value);
+    asserted++;
   }
 
   // Position checks (for drag)
@@ -524,7 +547,18 @@ async function assertExpectations(
      // This is hard to check without history, but we can check if top is same as initial?
      // Or maybe we just check if it's 0 or something?
      // For now, let's skip or implement if we can track it.
+     // #1092: deliberately NOT counted in `asserted` -- it checks nothing.
   }
+
+  return asserted;
+}
+
+/**
+ * #1092: the precondition every generated test ends with. A schema row that
+ * produced zero assertions is a test that cannot fail; say which row it was.
+ */
+function expectRowAsserted(asserted: number, behavior: string, category: string, name: string): void {
+  expect(asserted, `${behavior} ${category} "${name}": the schema row asserted nothing -- its expect names no check this runner implements`).toBeGreaterThan(0);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -589,15 +623,19 @@ for (const { file, schema } of schemasWithTests) {
             await afterAction(page);
             
             // Check event fired
+            let asserted = 0;
             if (btn.expect.event) {
               // Polled: search fires wb:search after its 300ms debounce, so a
               // fixed 100ms wait read "never fired" for an event that was due.
               await expect.poll(() => page.evaluate(() => (window as any).__eventFired__),
                 { message: `Event ${btn.expect.event} should fire`, timeout: 3000 }).toBe(true);
+              asserted++;
             }
-            
+
             // Check other expectations
-            await assertExpectations(page, btn.expect, behavior, btn.name);
+            asserted += await assertExpectations(page, btn.expect, behavior, btn.name);
+            // #1092: a row whose checks were all optional-and-absent passed empty.
+            expectRowAsserted(asserted, behavior, 'buttons', btn.name);
           });
         }
       });
@@ -637,14 +675,18 @@ for (const { file, schema } of schemasWithTests) {
             await afterAction(page);
             
             // Check event fired
+            let asserted = 0;
             if (interaction.expect.event) {
               // Polled: search fires wb:search after its 300ms debounce, so a
               // fixed 100ms wait read "never fired" for an event that was due.
               await expect.poll(() => page.evaluate(() => (window as any).__eventFired__),
                 { message: `Event ${interaction.expect.event} should fire`, timeout: 3000 }).toBe(true);
+              asserted++;
             }
-            
-            await assertExpectations(page, interaction.expect, behavior, interaction.name);
+
+            asserted += await assertExpectations(page, interaction.expect, behavior, interaction.name);
+            // #1092: a row whose checks were all optional-and-absent passed empty.
+            expectRowAsserted(asserted, behavior, 'interactions', interaction.name);
           });
         }
       });
@@ -696,14 +738,18 @@ for (const { file, schema } of schemasWithTests) {
             await afterAction(page);
             
             // Check event
+            let asserted = 0;
             if (kb.expect.event) {
               // Polled: search fires wb:search after its 300ms debounce, so a
               // fixed 100ms wait read "never fired" for an event that was due.
               await expect.poll(() => page.evaluate(() => (window as any).__eventFired__),
                 { message: `Event ${kb.expect.event} should fire on ${kb.key}`, timeout: 3000 }).toBe(true);
+              asserted++;
             }
-            
-            await assertExpectations(page, kb.expect, behavior, kb.name);
+
+            asserted += await assertExpectations(page, kb.expect, behavior, kb.name);
+            // #1092: a row whose checks were all optional-and-absent passed empty.
+            expectRowAsserted(asserted, behavior, 'keyboard', kb.name);
           });
         }
       });
@@ -724,16 +770,18 @@ for (const { file, schema } of schemasWithTests) {
             await page.hover(selector);
             await afterAction(page);
             
-            await assertExpectations(page, hv.expect, behavior, hv.name);
-            
+            let asserted = await assertExpectations(page, hv.expect, behavior, hv.name);
+
             // Test unhover if specified
             if (hv.unhover) {
               // Move mouse away
               await page.mouse.move(0, 0);
               await afterAction(page);
-              
-              await assertExpectations(page, hv.unhover, behavior, `${hv.name} (unhover)`);
+
+              asserted += await assertExpectations(page, hv.unhover, behavior, `${hv.name} (unhover)`);
             }
+            // #1092: a row whose checks were all optional-and-absent passed empty.
+            expectRowAsserted(asserted, behavior, 'hover', hv.name);
           });
         }
       });
@@ -759,25 +807,29 @@ for (const { file, schema } of schemasWithTests) {
               await afterAction(page);
             }
             
-            await assertExpectations(page, vis.expect, behavior, vis.name);
-            
+            let asserted = await assertExpectations(page, vis.expect, behavior, vis.name);
+
             // Additional checks array
             if (vis.checks?.length) {
               for (const check of vis.checks) {
                 const checkSelector = resolveSelector(check.selector);
-                
+
                 if (check.style && check.notEmpty) {
                   const value = await page.locator(checkSelector).first().evaluate((el, prop) => {
                     return getComputedStyle(el).getPropertyValue(prop);
                   }, check.style);
                   expect(value, `${vis.name}: ${checkSelector}.${check.style} should not be empty`).toBeTruthy();
+                  asserted++;
                 }
-                
+
                 if (check.hasClass) {
                   await expect(page.locator(checkSelector).first()).toHaveClass(new RegExp(check.hasClass));
+                  asserted++;
                 }
               }
             }
+            // #1092: a row whose checks were all optional-and-absent passed empty.
+            expectRowAsserted(asserted, behavior, 'visual', vis.name);
           });
         }
       });
@@ -806,9 +858,11 @@ for (const { file, schema } of schemasWithTests) {
             
             await afterAction(page);
             
-            if (dismiss.expect) {
-              await assertExpectations(page, dismiss.expect, behavior, dismiss.name);
-            }
+            // #1092: a dismiss row with no `expect` used to skip this and PASS
+            // with zero assertions. Every row must say what dismissed means.
+            expect(dismiss.expect, `${behavior} dismiss "${dismiss.name}": the schema row has no expect`).toBeTruthy();
+            const asserted = await assertExpectations(page, dismiss.expect!, behavior, dismiss.name);
+            expectRowAsserted(asserted, behavior, 'dismiss', dismiss.name);
           });
         }
       });
@@ -892,12 +946,16 @@ for (const { file, schema } of schemasWithTests) {
             await afterAction(page);
             
             // Verify event did NOT fire
+            let asserted = 0;
             if (dis.expect.event === null) {
               const eventFired = await page.evaluate(() => (window as any).__eventFired__);
               expect(eventFired, 'Event should NOT fire on disabled element').toBe(false);
+              asserted++;
             }
-            
-            await assertExpectations(page, dis.expect, behavior, dis.name);
+
+            asserted += await assertExpectations(page, dis.expect, behavior, dis.name);
+            // #1092: a row whose checks were all optional-and-absent passed empty.
+            expectRowAsserted(asserted, behavior, 'disabled', dis.name);
           });
         }
       });

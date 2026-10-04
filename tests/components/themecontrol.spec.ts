@@ -3,40 +3,8 @@
  * Auto-generated baseline — verifies render + no console errors
  * Source: src/wb-viewmodels/themecontrol.js
  */
-import { test, expect, Page } from '../fixtures/offline';
-
-const BASE_URL = '/demos/test-harness.html';
-
-async function waitForWB(page: Page) {
-  await page.goto(BASE_URL);
-  await page.waitForFunction(
-    () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
-    { timeout: 10000 }
-  );
-  await page.waitForTimeout(100);
-}
-
-async function injectAndScan(page: Page, html: string) {
-  await waitForWB(page);
-  
-  await page.evaluate((h: string) => {
-    const container = document.createElement('div');
-    container.id = 'test-container';
-    container.innerHTML = h;
-    
-    // Force eager loading
-    const elements = container.querySelectorAll('.x-ready');
-    elements.forEach(el => el.setAttribute('', ''));
-    
-    document.body.appendChild(container);
-  }, html);
-  
-  await page.evaluate(async () => {
-    await (window as any).WB.scan(document.getElementById('test-container'));
-  });
-  
-  await page.waitForTimeout(500);
-}
+import { test, expect } from '../fixtures/offline';
+import { injectAndScan } from '../helpers/inject-and-scan';
 
 test.describe('themecontrol Behavior', () => {
 

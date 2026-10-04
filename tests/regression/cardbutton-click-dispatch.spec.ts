@@ -37,12 +37,22 @@ test.describe('[x-cardbutton] click dispatch (cards demo page)', () => {
     await page.goto('/demos/site/cards.html');
     await page.waitForSelector('[x-cardbutton]');
 
-    const hrefButtons = await page.locator('[x-cardbutton] .x-card__btn[href]').count();
-    // Not every cardbutton demo uses *Href, but at least confirm the branch
-    // path renders an <a> (not a <button>) whenever it does.
-    if (hrefButtons > 0) {
-      const tag = await page.locator('[x-cardbutton] .x-card__btn[href]').first().evaluate((el) => el.tagName);
-      expect(tag).toBe('A');
-    }
+    // #1092: this used to look for an existing *Href button on the demo and assert
+    // only if one was there. No cardbutton on demos/site/cards.html sets
+    // primaryHref, so it asserted nothing and passed. Build the subject instead:
+    // run cardbutton() on a fresh element with primaryHref, and check what it renders.
+    const result = await page.evaluate(async () => {
+      const { cardbutton } = await import('/src/wb-viewmodels/card.js');
+      const host = document.createElement('article');
+      host.setAttribute('x-cardbutton', '');
+      document.body.append(host);
+      cardbutton(host, { title: 'Linked', primary: 'Open', primaryHref: '/demos/site/cards.html#linked' });
+      const btn = host.querySelector('.x-card__btn--primary');
+      return btn ? { tagName: btn.tagName, href: btn.getAttribute('href') } : null;
+    });
+
+    expect(result, 'cardbutton() with primaryHref rendered no primary button').not.toBeNull();
+    expect(result!.tagName).toBe('A');
+    expect(result!.href).toBe('/demos/site/cards.html#linked');
   });
 });
