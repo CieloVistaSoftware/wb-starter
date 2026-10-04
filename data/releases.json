@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.159",
+      "date": "2026-10-03",
+      "summary": "Fix: the code-panel audit stops hiding render failures as skips; results are the same every run (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1377\" target=\"_blank\" rel=\"noopener\">PR 1377</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1024\" target=\"_blank\" rel=\"noopener\">#1024</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The code-panel audit stops hiding render failures as skips; results are the same every run</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1024\" target=\"_blank\" rel=\"noopener\">#1024</a>",
+          "issues": [
+            1024
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.158",
       "date": "2026-10-03",
       "summary": "Fix: code-highlight waits for highlighted blocks, not a fixed 2.5s (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1375\" target=\"_blank\" rel=\"noopener\">PR 1375</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1374\" target=\"_blank\" rel=\"noopener\">#1374</a>",
