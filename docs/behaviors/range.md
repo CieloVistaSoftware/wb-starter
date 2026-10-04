@@ -24,10 +24,22 @@ A plain `<input type="range">` gets this behavior automatically; there is no att
 ### Configuration Options
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `show-value` | Boolean | `false` | Show current value above slider. |
-| `show-labels` | Boolean | `false` | Show min/max labels below slider. |
-| `value-prefix` | String | `''` | Prefix for value (e.g., "$"). |
-| `value-suffix` | String | `''` | Suffix for value (e.g., "%"). |
+| `showValue` | Boolean | `false` | Show current value above slider. |
+| `showLabels` | Boolean | `false` | Show min/max labels below slider. |
+| `valuePrefix` | String | `''` | Prefix for value (e.g., "$"). |
+| `valueSuffix` | String | `''` | Suffix for value (e.g., "%"). |
+
+No attribute name carries a dash — only the `x-` behavior prefix does (#1125). These were `show-value`, `show-labels`, `value-prefix` and `value-suffix` until #1140; the old spellings are still read, so existing markup keeps working, but write the camelCase ones.
+
+### Booleans are bare
+Write the attribute to switch it on and leave it out to switch it off:
+
+```html
+<input type="range" showValue>          <!-- on  -->
+<input type="range">                    <!-- off -->
+```
+
+`showValue="false"` and `showValue="0"` also mean off. Until #1140 they meant **on**, because the behavior only asked whether the attribute was present — so markup that said "false" did the opposite of what it said.
 
 ## 3. Examples
 
@@ -37,8 +49,8 @@ A slider showing the percentage value.
 <div x-demo>
 <input
   type="range"
-  show-value="true"
-  value-suffix="%"
+  showValue
+  valueSuffix="%"
   min="0"
   max="100">
 </div>
@@ -49,12 +61,14 @@ A slider with currency formatting and bounds.
 <div x-demo>
 <input
   type="range"
-  show-value="true"
-  show-labels="true"
-  value-prefix="$"
+  showValue
+  showLabels
+  valuePrefix="$"
   min="10"
   max="1000">
 </div>
 
 ## 4. Why It Works
 The behavior wraps the input in a container and injects an `<output>` element for the value and `<span>` elements for the labels. It attaches an `input` event listener to the range slider to update the text content of the `<output>` element in real-time.
+
+Options are read through `readFlag` / `readAttr` (`src/core/read-attr.js`), which is why the camelCase name, the older dashed name and a `data-` prefixed name all work, and why `"false"` is false.
