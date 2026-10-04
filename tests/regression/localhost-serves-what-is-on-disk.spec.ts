@@ -16,7 +16,7 @@
  * Anything standing between the two fails it.
  */
 import { test, expect, type Page } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -27,7 +27,10 @@ test.use({ serviceWorkers: 'allow' });
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 
 function commitOnDisk(): string {
-  const source = readFileSync(join(ROOT, 'src/core/version.js'), 'utf8');
+  // The file the dev server serves: npm start's local stamp when there is one
+  // (.local/, #1131), otherwise the tracked file.
+  const local = join(ROOT, '.local/src/core/version.js');
+  const source = readFileSync(existsSync(local) ? local : join(ROOT, 'src/core/version.js'), 'utf8');
   const match = source.match(/"commit":\s*"([^"]+)"/);
   if (!match) throw new Error('src/core/version.js has no "commit" field');
   return match[1];
