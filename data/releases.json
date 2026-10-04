@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.219",
+      "date": "2026-10-04",
+      "summary": "Test: record what navigates the page in the x-ignore test (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1443\" target=\"_blank\" rel=\"noopener\">PR 1443</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1442\" target=\"_blank\" rel=\"noopener\">#1442</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The x-ignore wb.js test names what navigated the page if it fails again</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1442\" target=\"_blank\" rel=\"noopener\">#1442</a>",
+          "issues": [
+            1442
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.218",
       "date": "2026-10-04",
       "summary": "Fix: semantic doc examples render live; illustrations never do (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1438\" target=\"_blank\" rel=\"noopener\">PR 1438</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1169\" target=\"_blank\" rel=\"noopener\">#1169</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1197\" target=\"_blank\" rel=\"noopener\">#1197</a>",
