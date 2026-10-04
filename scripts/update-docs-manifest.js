@@ -10,12 +10,31 @@ const ROOT = path.resolve(__dirname, '..');
 const DOCS_DIR = path.join(ROOT, 'docs');
 const OUTPUT_FILE = path.join(ROOT, 'data', 'docs-manifest.json');
 
+// #1452: an order that does not depend on the machine. readdirSync() returns the
+// filesystem's order -- case-insensitive on NTFS, byte order on Linux -- and
+// byCategory inherits it, so a Windows `npm start` reordered 168 lines of a
+// tracked file in which nothing had changed. Directory entries are sorted by
+// code point (what CI's Linux already produced); the flat list keeps its
+// committed collation, named explicitly so no default locale can change it.
+const byCodePoint = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+
+// #1452: write only when the content really differs. The comparison ignores
+// line endings: a Windows checkout holds CRLF, this script emits LF, and a
+// plain !== called every file changed -- git status then reported it modified
+// although git diff showed nothing.
+function writeIfChanged(file, text) {
+  const current = fs.existsSync(file) ? fs.readFileSync(file, 'utf-8').replace(/\r\n/g, '\n') : null;
+  if (current === text) return false;
+  fs.writeFileSync(file, text);
+  return true;
+}
+
 function getMarkdownFiles(dir, basePath = '') {
   const results = [];
   
   if (!fs.existsSync(dir)) return results;
   
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const entries = fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => byCodePoint(a.name, b.name));
   
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
@@ -104,9 +123,8 @@ function stampCuratedDates() {
     }
   }
   const updated = JSON.stringify(curated, null, 2) + '\n';
-  // Written only on a real change, so an unchanged tree stays clean (#1071).
-  if (updated !== text) {
-    fs.writeFileSync(CURATED_MANIFEST, updated);
+  // Written only on a real change, so an unchanged tree stays clean (#1071, #1452).
+  if (writeIfChanged(CURATED_MANIFEST, updated)) {
     console.log('Updated doc dates in docs/manifest.json');
   }
 }
@@ -142,7 +160,7 @@ function generateManifest() {
     totalFiles: files.length,
     categories: Object.keys(byCategory).sort(),
     byCategory,
-    files: files.sort((a, b) => a.path.localeCompare(b.path))
+    files: files.sort((a, b) => a.path.localeCompare(b.path, 'en'))
   };
   
   // Ensure data directory exists
@@ -151,7 +169,7 @@ function generateManifest() {
     fs.mkdirSync(dataDir, { recursive: true });
   }
   
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(manifest, null, 2));
+  writeIfChanged(OUTPUT_FILE, JSON.stringify(manifest, null, 2));
   
   console.log(`Generated manifest with ${files.length} files in ${Object.keys(byCategory).length} categories`);
   console.log(`Output: ${OUTPUT_FILE}`);
