@@ -216,7 +216,9 @@
   <script>
     async function loadData() {
       try {
-        const res = await fetch('/data/performance-results.json');
+        // #1433: live results are per-worker files the server merges with the
+        // history in data/performance-results.json.
+        const res = await fetch('/api/performance-results');
         const data = await res.json();
         
         // Process data for charts
