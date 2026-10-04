@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.175",
+      "date": "2026-10-04",
+      "summary": "Fix: &lt;img width height&gt; keeps its shape with or without img.js, and still scales (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1389\" target=\"_blank\" rel=\"noopener\">PR 1389</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1327\" target=\"_blank\" rel=\"noopener\">#1327</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>An explicit aspect-ratio still wins over the width/height pair</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1327\" target=\"_blank\" rel=\"noopener\">#1327</a>",
+          "issues": [
+            1327
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>&lt;img width height&gt; keeps its shape with or without img.js, and still scales</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1327\" target=\"_blank\" rel=\"noopener\">#1327</a>",
+          "issues": [
+            1327
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>&lt;img height&gt; applies even before the img behavior runs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1327\" target=\"_blank\" rel=\"noopener\">#1327</a>",
+          "issues": [
+            1327
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.174",
       "date": "2026-10-04",
       "summary": "Fix: the duplicate-stage error was the test&#39;s own probe, written to the real log (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1380\" target=\"_blank\" rel=\"noopener\">PR 1380</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1033\" target=\"_blank\" rel=\"noopener\">#1033</a>",
