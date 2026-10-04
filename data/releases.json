@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.181",
+      "date": "2026-10-04",
+      "summary": "Fix: CI checks out the committed bytes; 41 file-scanning specs stop passing on nothing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1398\" target=\"_blank\" rel=\"noopener\">PR 1398</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1205\" target=\"_blank\" rel=\"noopener\">#1205</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>CI checks out the committed bytes; 41 file-scanning specs stop passing on nothing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1205\" target=\"_blank\" rel=\"noopener\">#1205</a>",
+          "issues": [
+            1205
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.180",
       "date": "2026-10-04",
       "summary": "Fix: the live-reload port tells a browser what it is and where the site is (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1397\" target=\"_blank\" rel=\"noopener\">PR 1397</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1334\" target=\"_blank\" rel=\"noopener\">#1334</a>",
