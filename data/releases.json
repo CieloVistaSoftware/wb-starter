@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.160",
+      "date": "2026-10-03",
+      "summary": "Fix: the deployed smoke starts no local server, and only a test that ran and failed means &#39;broken&#39; (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1376\" target=\"_blank\" rel=\"noopener\">PR 1376</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1364\" target=\"_blank\" rel=\"noopener\">#1364</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The config guard accepts the SMOKE_BASE_URL-guarded webServer block, and only that guard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1364\" target=\"_blank\" rel=\"noopener\">#1364</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1074\" target=\"_blank\" rel=\"noopener\">#1074</a>",
+          "issues": [
+            1364,
+            1074
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The deployed smoke starts no local server, and only a smoke test that ran and failed means &#39;broken&#39;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1364\" target=\"_blank\" rel=\"noopener\">#1364</a>",
+          "issues": [
+            1364
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.159",
       "date": "2026-10-03",
       "summary": "Fix: the code-panel audit stops hiding render failures as skips; results are the same every run (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1377\" target=\"_blank\" rel=\"noopener\">PR 1377</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1024\" target=\"_blank\" rel=\"noopener\">#1024</a>",
