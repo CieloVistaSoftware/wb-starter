@@ -33,6 +33,13 @@ DEAD_FORMS.push(
   ['matches a wb- tag with a regex', /\/<wb-/],
 );
 
+// #1068: the third spelling -- an exact tagName comparison
+// (tagName === 'WB-MODAL', tagName !== 'WB-BUTTON'). wb.js processSchema
+// carried eleven of them, plus button, dialog and collapse.
+DEAD_FORMS.push(
+  ['compares tagName to a WB- tag', /tagName\s*[!=]==?\s*['"]WB-/i],
+);
+
 for (const dir of ['src/core', 'src/wb-viewmodels']) {
   test(`${dir} has no branch or key for a wb- tag (#1170, #1422)`, () => {
     const files = codeFiles(path.join(process.cwd(), ...dir.split('/')));
