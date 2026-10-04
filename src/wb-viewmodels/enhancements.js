@@ -14,7 +14,7 @@
  * exactly once and every name this module ever exported keeps working.
  *
  * Usage:
- *   <form x-form data-ajax>...</form>
+ *   <form data-ajax>...</form>
  *   <input x-password>
  */
 import { form } from './form.js';

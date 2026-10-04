@@ -6,6 +6,83 @@
   ],
   "releases": [
     {
+      "version": "1.0.168",
+      "date": "2026-10-04",
+      "summary": "Fix: a lone hero in an x-demo is full width without being told (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1388\" target=\"_blank\" rel=\"noopener\">PR 1388</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1387\" target=\"_blank\" rel=\"noopener\">#1387</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A lone hero in an x-demo is full width without being told</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1387\" target=\"_blank\" rel=\"noopener\">#1387</a>",
+          "issues": [
+            1387
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.167",
+      "date": "2026-10-04",
+      "summary": "Fix: x-hero variant=cosmic is styled: its rules load with the hero behavior (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1386\" target=\"_blank\" rel=\"noopener\">PR 1386</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1222\" target=\"_blank\" rel=\"noopener\">#1222</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>X-hero variant=cosmic is styled: its rules load with the hero behavior</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1222\" target=\"_blank\" rel=\"noopener\">#1222</a>",
+          "issues": [
+            1222
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.166",
+      "date": "2026-10-04",
+      "summary": "Fix: no duplicate x-behaviors on any tag: one gate, one nativeMap reader, typed inputs included (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1381\" target=\"_blank\" rel=\"noopener\">PR 1381</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1141\" target=\"_blank\" rel=\"noopener\">#1141</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>One gate, one nativeMap reader, typed inputs included</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1141\" target=\"_blank\" rel=\"noopener\">#1141</a>",
+          "issues": [
+            1141
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>No duplicate x-behaviors on any tag; the gate reads its rule from nativeMap</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1141\" target=\"_blank\" rel=\"noopener\">#1141</a>",
+          "issues": [
+            1141
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.165",
+      "date": "2026-10-04",
+      "summary": "Fix: the wb- prefix audit counts source, not what a run left on disk (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1332\" target=\"_blank\" rel=\"noopener\">PR 1332</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The wb- prefix audit counts source, not what a run left on disk</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+          "issues": [
+            1300
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.164",
+      "date": "2026-10-04",
+      "summary": "Fix: the example sweep judges the settled look, not a frame of the checkbox fade-in (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1384\" target=\"_blank\" rel=\"noopener\">PR 1384</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1383\" target=\"_blank\" rel=\"noopener\">#1383</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The example sweep judges the settled look, not a frame of the checkbox fade-in</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1383\" target=\"_blank\" rel=\"noopener\">#1383</a>",
+          "issues": [
+            1383
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.163",
       "date": "2026-10-03",
       "summary": "Test: every lazy-only behavior has a row on the Behaviors page (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1379\" target=\"_blank\" rel=\"noopener\">PR 1379</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1056\" target=\"_blank\" rel=\"noopener\">#1056</a>",
