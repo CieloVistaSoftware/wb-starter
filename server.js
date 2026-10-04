@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import compression from 'compression';
 import { WebSocketServer } from 'ws';
+import { createServer as createHttpServer } from 'http';
 import { exec, execSync, execFile, execFileSync } from 'child_process';
 import { promisify } from 'util';
 
@@ -46,9 +47,32 @@ const rootDir = __dirname;
 // bottom of this file). Nothing gets killed.
 
 // === LIVE RELOAD SYSTEM ===
+// #1334: the reload port answers a plain HTTP request with what it is. A bare
+// WebSocketServer replied "Upgrade Required" and nothing else -- John opened
+// :3001 and had to ask what it meant ("Upgrade" reads as "update your
+// software"). Still a 426, so a client sees the right status; now it also
+// says which program answered, what the port is for, and where the site is.
+let sitePort = Number(port);   // updated by onListening() if the site moved
+const reloadHttp = createHttpServer((req, res) => {
+  res.writeHead(426, { 'Content-Type': 'text/plain; charset=utf-8', Upgrade: 'websocket' });
+  res.end(
+    `This is wb-starter's live-reload WebSocket (port ${WS_PORT}).\n` +
+    'It tells an open page to refresh when a file changes; it is not a page.\n\n' +
+    `The site is at http://localhost:${sitePort}\n`,
+  );
+});
 let wss;
 try {
-  wss = new WebSocketServer({ port: WS_PORT });
+  wss = new WebSocketServer({ server: reloadHttp });
+  reloadHttp.on('error', (e) => {
+    if (e.code === 'EADDRINUSE') {
+      console.log(`[Live Reload] Port ${WS_PORT} is busy. Live reload will be disabled for this session.`);
+      wss = null;
+    } else {
+      console.error('[Live Reload] Server error:', e);
+    }
+  });
+  reloadHttp.listen(WS_PORT);
   wss.on('error', (e) => {
     if (e.code === 'EADDRINUSE') {
       console.log(`[Live Reload] Port ${WS_PORT} is busy. Live reload will be disabled for this session.`);
@@ -1600,6 +1624,7 @@ function tryListen(p, attemptsLeft) {
 }
 
 function onListening(p) {
+  sitePort = p;
   console.log(`WB Starter running at http://localhost:${p}`);
   if (ENABLE_COLLAB) {
     console.log(`Collab Server running at ws://localhost:${WS_PORT}/collab`);
