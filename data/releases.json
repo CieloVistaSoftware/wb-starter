@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.168",
+      "date": "2026-10-04",
+      "summary": "Fix: a lone hero in an x-demo is full width without being told (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1388\" target=\"_blank\" rel=\"noopener\">PR 1388</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1387\" target=\"_blank\" rel=\"noopener\">#1387</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A lone hero in an x-demo is full width without being told</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1387\" target=\"_blank\" rel=\"noopener\">#1387</a>",
+          "issues": [
+            1387
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.167",
       "date": "2026-10-04",
       "summary": "Fix: x-hero variant=cosmic is styled: its rules load with the hero behavior (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1386\" target=\"_blank\" rel=\"noopener\">PR 1386</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1222\" target=\"_blank\" rel=\"noopener\">#1222</a>",
