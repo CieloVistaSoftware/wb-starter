@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.161",
+      "date": "2026-10-03",
+      "summary": "Fix: examples-render-without-errors waits for each example to finish, so it stops accusing innocent ones (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1371\" target=\"_blank\" rel=\"noopener\">PR 1371</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1111\" target=\"_blank\" rel=\"noopener\">#1111</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Examples-render-without-errors waits for each example to finish, so it stops accusing innocent ones</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1111\" target=\"_blank\" rel=\"noopener\">#1111</a>",
+          "issues": [
+            1111
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.160",
       "date": "2026-10-03",
       "summary": "Fix: the deployed smoke starts no local server, and only a test that ran and failed means &#39;broken&#39; (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1376\" target=\"_blank\" rel=\"noopener\">PR 1376</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1364\" target=\"_blank\" rel=\"noopener\">#1364</a>",
