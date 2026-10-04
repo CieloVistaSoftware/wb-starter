@@ -27,15 +27,22 @@ test('a failing test keeps its Playwright trace', () => {
   const mode = typeof trace === 'string' ? trace : trace?.mode;
   expect(mode, "trace is 'off': a failure would leave no requests, statuses or DOM snapshots").not.toBe('off');
   expect(['on', 'retain-on-failure', 'retain-on-first-failure']).toContain(mode);
-  // #1406: Playwright records the network only when snapshots are on; with
-  // them off the trace kept no URLs, the one thing #1112 needed it for.
-  const snapshots = typeof trace === 'string' ? true : trace?.snapshots !== false;
-  expect(snapshots, 'snapshots off means the trace records no network requests').toBe(true);
+});
+
+test('a failing test records every request it made (network.txt), since the trace does not (#1406)', () => {
+  // Playwright records network only with snapshots on, and the default trace
+  // keeps them off (they cost CI timeouts and route-mock clashes, PR #1407).
+  // The offline fixture logs every response and failed request instead.
+  const fixture = fs.readFileSync(path.join(ROOT, 'tests/fixtures/offline.ts'), 'utf8');
+  expect(fixture).toMatch(/context\.on\('response'/);
+  expect(fixture).toMatch(/context\.on\('requestfailed'/);
+  expect(fixture, 'written only for a failing test, into its output folder').toMatch(/testInfo\.status !== testInfo\.expectedStatus[\s\S]{0,200}outputPath\('network\.txt'\)/);
 });
 
 test('CI uploads the traces and the server log of a failed run', () => {
   const ci = fs.readFileSync(path.join(ROOT, '.github/workflows/ci-tests.yml'), 'utf8');
-  expect(ci, 'the trace zips are not uploaded').toMatch(/path:\s*data\/playwright-output\/\*\*\/\*\.zip/);
+  expect(ci, 'the trace zips are not uploaded').toMatch(/data\/playwright-output\/\*\*\/\*\.zip/);
+  expect(ci, 'a failing test\'s network.txt is not uploaded (#1406)').toMatch(/data\/playwright-output\/\*\*\/network\.txt/);
   expect(ci, 'the server log is not kept').toMatch(/node server\.js > data\/test-results\/server\.log/);
   expect(ci, 'data/test-results (which holds server.log) is not uploaded').toMatch(/path:\s*data\/test-results\//);
 });

@@ -48,7 +48,7 @@
  * and need the real network.
  */
 import { test as base, type Browser, type BrowserContext, type BrowserContextOptions, type Page, type Route, type TestInfo } from '@playwright/test';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname, extname } from 'path';
 import { fileURLToPath } from 'url';
 import { localFor } from '../../scripts/sample-media-catalog.mjs';
@@ -303,6 +303,23 @@ export const test = base.extend<OfflineFixtures>({
   context: async ({ context, offlineBlocked }, use, testInfo) => {
     void offlineBlocked; // created first, so the list outlives the context
     await routeOffline(context, testInfo);
+    // #1406: every request this test's browser made, kept in case it fails.
+    // The default trace cannot carry this -- Playwright records network only
+    // with DOM snapshots on, and snapshots on CI cost timeouts and a
+    // "Route is already handled" clash with specs' own mocks (PR #1407). A
+    // line per response/failure is cheap, and a failing test's network.txt
+    // names the URL a "Failed to load resource: ... ()" never does.
+    const network: string[] = [];
+    const MAX = 5000;
+    const add = (line: string) => { if (network.length < MAX) network.push(line); };
+    context.on('response', (r) => add(`${r.status()} ${r.request().method()} ${r.url()}`));
+    context.on('requestfailed', (r) => add(`FAILED (${r.failure()?.errorText || 'unknown'}) ${r.method()} ${r.url()}`));
     await use(context);
+    if (testInfo.status !== testInfo.expectedStatus && network.length) {
+      const file = testInfo.outputPath('network.txt');
+      mkdirSync(dirname(file), { recursive: true });
+      writeFileSync(file, network.join('\n') + (network.length >= MAX ? `\n... capped at ${MAX} lines\n` : '\n'));
+      await testInfo.attach('network', { path: file, contentType: 'text/plain' });
+    }
   },
 });
