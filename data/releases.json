@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.153",
+      "date": "2026-10-03",
+      "summary": "Fix: the releases search test types what the page shows, not raw HTML with entities (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1370\" target=\"_blank\" rel=\"noopener\">PR 1370</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1369\" target=\"_blank\" rel=\"noopener\">#1369</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The releases search test types what the page shows, not raw HTML with entities</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1369\" target=\"_blank\" rel=\"noopener\">#1369</a>",
+          "issues": [
+            1369
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.152",
       "date": "2026-10-03",
       "summary": "Fix: the launch test counts an unreadable recording as mangled instead of crashing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1368\" target=\"_blank\" rel=\"noopener\">PR 1368</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1367\" target=\"_blank\" rel=\"noopener\">#1367</a>",
