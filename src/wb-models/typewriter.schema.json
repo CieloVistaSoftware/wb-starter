@@ -16,9 +16,9 @@
       "default": "this is the text"
     },
     "cursor": {
-      "type": "string",
-      "description": "Show the blinking cursor. On unless set to `\"false\"`.",
-      "default": "this is the cursor"
+      "type": "boolean",
+      "description": "Show the blinking caret while typing. On by default; cursor=\"false\" turns it off. It is a caret, not a character: its look comes from the stylesheet.",
+      "default": true
     }
   },
   "$view": [],

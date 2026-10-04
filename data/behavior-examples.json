@@ -1926,8 +1926,8 @@
           "source": "<h2 x-typewriter speed=\"60\">Hello, world.</h2>"
         },
         {
-          "label": "custom cursor",
-          "source": "<p x-typewriter speed=\"45\" cursor=\"▌\">Block cursor at the end.</p>"
+          "label": "without a caret",
+          "source": "<p x-typewriter speed=\"45\" cursor=\"false\">Typed without a caret.</p>"
         },
         {
           "label": "long sentence",
