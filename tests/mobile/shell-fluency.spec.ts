@@ -11,7 +11,7 @@ import { test, expect } from '../fixtures/offline';
 
 const PAGES = [
   { name: 'home', url: '/?page=home' },
-  { name: 'components', url: '/?page=behaviors' },
+  { name: 'behaviors', url: '/?page=behaviors' },
   { name: 'docs', url: '/?page=docs' },
 ];
 
@@ -31,22 +31,34 @@ test.describe('Mobile shell fluency (real SPA, not fragments)', () => {
       ).toBeLessThanOrEqual(m.clientWidth + 1);
     });
 
-    test(`sidebar is off-canvas (hidden, not just fixed) on mobile: ${pg.name}`, async ({ page }) => {
+    // #1432: this used to demand an off-canvas drawer (position:fixed,
+    // translated off the left edge). 75350e4e (#293) replaced that on phones
+    // with an in-flow menu, hidden until the hamburger opens it, so the test
+    // failed on every page while the nav worked as designed. It now checks
+    // that design: closed takes no space, open sits in the flow below the
+    // header and fits the screen.
+    test(`phone nav is hidden until toggled, then in flow and on screen: ${pg.name}`, async ({ page }) => {
       await page.goto(pg.url);
       const nav = page.locator('.site__nav');
       await nav.waitFor({ state: 'attached', timeout: 15000 });
-      await page.waitForTimeout(700); // let the drawer settle off-screen
+      await expect(nav, `${pg.name}: closed nav takes no space`).toHaveCSS('display', 'none');
+
+      // The shell wires the toggle when it has loaded its first page.
+      await page.waitForFunction(() => Boolean((window as any).WBSite?.currentPage), null, { timeout: 15000 });
+      await page.locator('#navToggle').click();
+      await expect(nav, `${pg.name}: the toggle opens it`).toHaveClass(/site__nav--mobile-open/);
       const box = await nav.evaluate((el) => {
         const r = el.getBoundingClientRect();
-        return { right: r.right, position: getComputedStyle(el).position };
+        const header = document.querySelector('.site__header')!.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        return { position: cs.position, display: cs.display, left: r.left, right: r.right, top: r.top,
+          headerBottom: header.bottom, viewport: document.documentElement.clientWidth };
       });
-      expect(box.position, `${pg.name}: sidebar must be position:fixed`).toBe('fixed');
-      // The closed drawer must be translated OFF the left edge — not a visible
-      // strip overlapping content (the #165 regression).
-      expect(
-        box.right,
-        `${pg.name}: closed sidebar drawer must be off-screen (right<=1), was ${Math.round(box.right)}`
-      ).toBeLessThanOrEqual(1);
+      expect(box.display, `${pg.name}: open nav is shown`).not.toBe('none');
+      expect(box.position, `${pg.name}: open nav is in the flow (#293), not a drawer`).toBe('static');
+      expect(box.left, `${pg.name}: open nav starts at the left edge`).toBeGreaterThanOrEqual(-1);
+      expect(box.right, `${pg.name}: open nav fits the screen`).toBeLessThanOrEqual(box.viewport + 1);
+      expect(box.top, `${pg.name}: open nav sits below the header`).toBeGreaterThanOrEqual(box.headerBottom - 1);
     });
   }
 });

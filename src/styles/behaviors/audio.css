@@ -730,6 +730,10 @@ audio.x-audio__native--hidden {
 }
 .x-audio__master > .x-audio__master-vol {
   flex: 1;
+  /* A range input will not shrink below its intrinsic width as a flex item
+     (min-width: auto), so on a 390px phone this row pushed its value label
+     12-20px past the screen edge while the player built (#1432). */
+  min-width: 0;
   height: 0.5rem;
   cursor: pointer;
 }
