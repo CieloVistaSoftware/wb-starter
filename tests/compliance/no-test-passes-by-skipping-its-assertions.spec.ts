@@ -19,8 +19,7 @@ import ts from 'typescript';
 const REVIEWED: Record<string, { count: number; why: string }> = {
   'tests/behaviors/functional-runner.spec.ts': { count: 5, why: 'every generated test ends in expectRowAsserted(), which fails a row that asserted nothing (#1092)' },
   'tests/behaviors/button-permutations.spec.ts': { count: 1, why: 'both target branches assert in full; an empty TARGETS list fails its own enum test' },
-  'tests/compliance/page-compliance.spec.ts': { count: 1, why: 'every spec row must declare required or minCount, asserted unconditionally (#1092)' },
-  'tests/compliance/universal-compliance.spec.ts': { count: 1, why: 'same body as page-compliance.spec.ts' },
+  'tests/compliance/page-compliance.spec.ts': { count: 1, why: 'every spec row must declare required or minCount, asserted unconditionally (#1092)' },
   'tests/demos/broken-requests-classification.spec.ts': { count: 2, why: 'oracle rows: an unconditional expect.soft runs before the branch, over fixed lists whose size is asserted' },
 };
 
