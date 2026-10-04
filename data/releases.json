@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.205",
+      "date": "2026-10-04",
+      "summary": "Test: exemptions name one file each, by path (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1420\" target=\"_blank\" rel=\"noopener\">PR 1420</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1173\" target=\"_blank\" rel=\"noopener\">#1173</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Legacy-syntax exemptions name one file each, by path</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1173\" target=\"_blank\" rel=\"noopener\">#1173</a>",
+          "issues": [
+            1173
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.204",
       "date": "2026-10-04",
       "summary": "Fix: scroll memory uses #siteBody (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1419\" target=\"_blank\" rel=\"noopener\">PR 1419</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1186\" target=\"_blank\" rel=\"noopener\">#1186</a>",
