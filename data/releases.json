@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.152",
+      "date": "2026-10-03",
+      "summary": "Fix: the launch test counts an unreadable recording as mangled instead of crashing (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1368\" target=\"_blank\" rel=\"noopener\">PR 1368</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1367\" target=\"_blank\" rel=\"noopener\">#1367</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The launch test counts an unreadable recording as mangled instead of crashing</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1367\" target=\"_blank\" rel=\"noopener\">#1367</a>",
+          "issues": [
+            1367
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.151",
       "date": "2026-10-03",
       "summary": "Fix: a server told which port to use never quietly moves to another (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1358\" target=\"_blank\" rel=\"noopener\">PR 1358</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1135\" target=\"_blank\" rel=\"noopener\">#1135</a>",
