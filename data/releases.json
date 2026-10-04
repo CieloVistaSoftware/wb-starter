@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.242",
+      "date": "2026-10-04",
+      "summary": "Test: no test passes by skipping all of its assertions (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1479\" target=\"_blank\" rel=\"noopener\">PR 1479</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1092\" target=\"_blank\" rel=\"noopener\">#1092</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No test passes by skipping all of its assertions</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1092\" target=\"_blank\" rel=\"noopener\">#1092</a>",
+          "issues": [
+            1092
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.241",
       "date": "2026-10-04",
       "summary": "Test: manifest check ignores git-derived modified dates (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1477\" target=\"_blank\" rel=\"noopener\">PR 1477</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1476\" target=\"_blank\" rel=\"noopener\">#1476</a>",
