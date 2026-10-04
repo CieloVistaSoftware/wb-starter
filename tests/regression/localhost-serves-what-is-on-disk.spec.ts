@@ -20,6 +20,10 @@ import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// This spec registers sw.js itself to reproduce what an older build left
+// behind; workers are blocked by default (#1362), so it opts in.
+test.use({ serviceWorkers: 'allow' });
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 
 function commitOnDisk(): string {

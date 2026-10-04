@@ -23,6 +23,10 @@
 import { test, expect } from '@playwright/test';
 import { createServer, type Server, type AddressInfo } from 'node:net';
 
+// This spec registers sw.js itself to test the worker's own network handling;
+// workers are blocked by default (#1362), so it opts in.
+test.use({ serviceWorkers: 'allow' });
+
 let deadServer: Server;
 let deadOrigin: string;
 

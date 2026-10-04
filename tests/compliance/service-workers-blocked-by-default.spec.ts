@@ -17,6 +17,25 @@ test('the default blocks service workers', () => {
   expect(test.info().project.use.serviceWorkers, 'a mocking spec would be silently unmocked').toBe('block');
 });
 
+test('every spec that registers a worker opts in, so blocking never hangs it', () => {
+  // PR #1400's first CI run: two specs that register sw.js themselves timed
+  // out at 30s once the default blocked them. Name them instead.
+  const missing: string[] = [];
+  const walk = (dir: string) => {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) { if (e.name !== 'deployed') walk(p); continue; }
+      if (!e.name.endsWith('.spec.ts')) continue;
+      const s = fs.readFileSync(p, 'utf8');
+      if (/serviceWorker\.register\(/.test(s) && !/test\.use\(\{\s*serviceWorkers:\s*'allow'/.test(s)) {
+        missing.push(path.relative(ROOT, p));
+      }
+    }
+  };
+  walk(path.join(ROOT, 'tests'));
+  expect(missing, 'specs that register a service worker without opting in').toEqual([]);
+});
+
 test('the deployed project keeps the worker it ships', () => {
   const cfg = fs.readFileSync(path.join(ROOT, 'playwright.config.ts'), 'utf8').replace(/\r\n/g, '\n');
   const deployed = cfg.slice(cfg.indexOf("name: 'deployed'"), cfg.indexOf("name: 'deployed'") + 400);
