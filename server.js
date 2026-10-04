@@ -452,6 +452,33 @@ app.use((req, res, next) => {
 // ============================================
 // MARKDOWN API - GET /api/markdown?file=path
 // ============================================
+// PERFORMANCE RESULTS - GET /api/performance-results (#1433)
+// The perf specs append one JSON line per result to a per-process file under
+// data/test-results/performance/ (untracked). This merges those with the
+// frozen history in data/performance-results.json for
+// public/performance-dashboard.html, oldest first, the last 1000.
+app.get('/api/performance-results', (req, res) => {
+  const results = [];
+  try {
+    const history = path.join(rootDir, 'data', 'performance-results.json');
+    if (fs.existsSync(history)) results.push(...JSON.parse(fs.readFileSync(history, 'utf8')));
+  } catch (e) {
+    console.warn('[performance-results] history unreadable:', e.message);
+  }
+  const dir = path.join(rootDir, 'data', 'test-results', 'performance');
+  if (fs.existsSync(dir)) {
+    for (const name of fs.readdirSync(dir).filter((n) => n.endsWith('.jsonl'))) {
+      for (const line of fs.readFileSync(path.join(dir, name), 'utf8').split('\n')) {
+        if (!line.trim()) continue;
+        try { results.push(JSON.parse(line)); } catch { /* a line cut short by a killed worker */ }
+      }
+    }
+  }
+  results.sort((a, b) => String(a.timestamp).localeCompare(String(b.timestamp)));
+  res.set('Cache-Control', 'no-store');
+  res.json(results.slice(-1000));
+});
+
 app.get('/api/markdown', (req, res) => {
   const file = req.query.file;
   if (!file) {
