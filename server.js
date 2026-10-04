@@ -869,23 +869,16 @@ function headSha(rootDir) {
   }
 }
 
-app.get('/api/fixes', async (req, res) => {
-  const head = headSha(rootDir);
-  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+// #1054: served stale-while-revalidate. The cache is keyed on HEAD, and every
+// push to main moves HEAD, so the first visit after any merge used to pay the
+// full cold computation (measured 27 s, 5 MB on 2026-10-04) with a blank Fix
+// Viewer meanwhile. Now a stale cache is served at once (X-Fixes-Cache: stale)
+// and refreshed in the background; only a server with no cache at all computes
+// while the visitor waits. One refresh runs at a time, and a concurrent caller
+// joins it instead of starting another.
+let fixesRefresh = null;
 
-  if (head && !('refresh' in req.query)) {
-    try {
-      const cached = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-      const fresh = cached.head === head && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS;
-      if (fresh && cached.payload) {
-        res.set('Cache-Control', 'no-store');
-        res.set('X-Fixes-Cache', 'hit');
-        res.json(cached.payload);
-        return;
-      }
-    } catch { /* no cache, unreadable, or a shape from an older build — recompute */ }
-  }
-
+async function computeFixes(head) {
   const US = String.fromCharCode(31);
   const RS = String.fromCharCode(30);
   const NL = String.fromCharCode(10);
@@ -1032,7 +1025,39 @@ app.get('/api/fixes', async (req, res) => {
       console.warn('[Fixes] could not write cache:', err.message);
     }
   }
+  return payload;
+}
 
+function refreshFixes(head) {
+  if (!fixesRefresh) {
+    fixesRefresh = computeFixes(head)
+      .catch((err) => { console.warn('[Fixes] refresh failed:', err && err.message); return null; })
+      .finally(() => { fixesRefresh = null; });
+  }
+  return fixesRefresh;
+}
+
+app.get('/api/fixes', async (req, res) => {
+  const head = headSha(rootDir);
+  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+  let cached = null;
+  try { cached = JSON.parse(fs.readFileSync(cachePath, 'utf8')); } catch { /* no cache yet, or an older shape */ }
+  const fresh = !!(cached && cached.payload && head && cached.head === head
+    && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS);
+
+  if (!('refresh' in req.query) && cached && cached.payload) {
+    res.set('Cache-Control', 'no-store');
+    res.set('X-Fixes-Cache', fresh ? 'hit' : 'stale');
+    res.json(cached.payload);
+    if (!fresh) refreshFixes(head);
+    return;
+  }
+
+  const payload = await refreshFixes(head);
+  if (!payload) {
+    res.status(500).json({ error: 'could not compute the fixes list; see the server log' });
+    return;
+  }
   res.set('Cache-Control', 'no-store');
   res.set('X-Fixes-Cache', 'miss');
   res.json(payload);

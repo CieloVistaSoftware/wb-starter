@@ -6,6 +6,48 @@
   ],
   "releases": [
     {
+      "version": "1.0.164",
+      "date": "2026-10-04",
+      "summary": "Fix: the example sweep judges the settled look, not a frame of the checkbox fade-in (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1384\" target=\"_blank\" rel=\"noopener\">PR 1384</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1383\" target=\"_blank\" rel=\"noopener\">#1383</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The example sweep judges the settled look, not a frame of the checkbox fade-in</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1383\" target=\"_blank\" rel=\"noopener\">#1383</a>",
+          "issues": [
+            1383
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.163",
+      "date": "2026-10-03",
+      "summary": "Test: every lazy-only behavior has a row on the Behaviors page (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1379\" target=\"_blank\" rel=\"noopener\">PR 1379</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1056\" target=\"_blank\" rel=\"noopener\">#1056</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Every lazy-only behavior has a row on the Behaviors page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1056\" target=\"_blank\" rel=\"noopener\">#1056</a>",
+          "issues": [
+            1056
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.162",
+      "date": "2026-10-03",
+      "summary": "Fix: /api/fixes serves a stale cache at once and refreshes it in the background (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1378\" target=\"_blank\" rel=\"noopener\">PR 1378</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1054\" target=\"_blank\" rel=\"noopener\">#1054</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>/api/fixes serves a stale cache at once and refreshes it in the background</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1054\" target=\"_blank\" rel=\"noopener\">#1054</a>",
+          "issues": [
+            1054
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.161",
       "date": "2026-10-03",
       "summary": "Fix: examples-render-without-errors waits for each example to finish, so it stops accusing innocent ones (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1371\" target=\"_blank\" rel=\"noopener\">PR 1371</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1111\" target=\"_blank\" rel=\"noopener\">#1111</a>",

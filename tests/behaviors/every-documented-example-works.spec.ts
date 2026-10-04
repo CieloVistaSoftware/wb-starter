@@ -100,6 +100,20 @@ test('every documented behavior example renders something', async ({ page }) => 
         threw = String(e?.message || e);
       }
       await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      // #1383: judge the SETTLED look, not a frame of a transition. A bare
+      // <input type="checkbox"> is already on screen when checkbox.js injects
+      // its style, and `transition: all 0.2s` animates its border and
+      // background in from 0 and transparent. Two frames on a busy CI runner
+      // can land before any progress, so it measured 18x18 with no border and
+      // no background -- "NOTHING" -- while passing everywhere else. Finite
+      // transitions/animations are awaited; infinite ones (spinners, pulses)
+      // never finish and are not waited on.
+      const finite = host.getAnimations({ subtree: true })
+        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity);
+      await Promise.race([
+        Promise.all(finite.map((a) => a.finished.catch(() => {}))),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
 
       // The element the sample is really about: first child that carries an
       // x- attribute, else the first element.
