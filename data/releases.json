@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.188",
+      "date": "2026-10-04",
+      "summary": "Fix: a test-async run always ends with a terminal state, even when its monitor dies (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1402\" target=\"_blank\" rel=\"noopener\">PR 1402</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1316\" target=\"_blank\" rel=\"noopener\">#1316</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A test-async run always ends with a terminal state, even when its monitor dies</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1316\" target=\"_blank\" rel=\"noopener\">#1316</a>",
+          "issues": [
+            1316
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.187",
       "date": "2026-10-04",
       "summary": "Fix: the cardimage lazy-load test waits for the card to be built before asking for its img (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1401\" target=\"_blank\" rel=\"noopener\">PR 1401</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1325\" target=\"_blank\" rel=\"noopener\">#1325</a>",
