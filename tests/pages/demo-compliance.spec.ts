@@ -54,10 +54,10 @@ for (const file of demoFiles) {
     // markup.
     test('if it uses x-* behaviors, it must import WB', () => {
       const usesWB = /<[a-z][\w-]*\s[^>]*\bx-[a-z][\w-]*(?=[\s=>/])/i.test(html);
-      if (usesWB) {
-        const hasImport = /wb-lazy\.js|wb\.js/i.test(html);
-        expect(hasImport).toBeTruthy();
-      }
+      // #1092: a demo with no x-* behaviors has nothing to check; report SKIPPED, not PASSED
+      test.skip(!usesWB, `${file} uses no x-* behaviors, so it need not import WB`);
+      const hasImport = /wb-lazy\.js|wb\.js/i.test(html);
+      expect(hasImport, `${file} uses x-* behaviors but imports neither wb-lazy.js nor wb.js`).toBeTruthy();
     });
   });
 }
