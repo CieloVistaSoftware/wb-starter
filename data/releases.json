@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.200",
+      "date": "2026-10-04",
+      "summary": "Fix: .gitignore holds patterns, not pasted npm output (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1416\" target=\"_blank\" rel=\"noopener\">PR 1416</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1191\" target=\"_blank\" rel=\"noopener\">#1191</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Pasted npm output in .gitignore goes back into its comment; guard against terminal output as patterns</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1191\" target=\"_blank\" rel=\"noopener\">#1191</a>",
+          "issues": [
+            1191
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.199",
       "date": "2026-10-04",
       "summary": "Fix: click toast takes the button&#39;s variant again (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1414\" target=\"_blank\" rel=\"noopener\">PR 1414</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1193\" target=\"_blank\" rel=\"noopener\">#1193</a>",
