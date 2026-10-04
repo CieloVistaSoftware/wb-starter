@@ -6,6 +6,184 @@
   ],
   "releases": [
     {
+      "version": "1.0.147",
+      "date": "2026-10-03",
+      "summary": "Fix: already-failed media is noticed, and a &lt;video&gt; with &lt;source&gt; children is watched at all (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1359\" target=\"_blank\" rel=\"noopener\">PR 1359</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1342\" target=\"_blank\" rel=\"noopener\">#1342</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A media element that already failed is noticed, and a &lt;video&gt; with &lt;source&gt; children is watched at all</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1342\" target=\"_blank\" rel=\"noopener\">#1342</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/371\" target=\"_blank\" rel=\"noopener\">#371</a>",
+          "issues": [
+            1342,
+            371
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.146",
+      "date": "2026-10-03",
+      "summary": "Fix: a spec that mocks the network must block the service worker (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1357\" target=\"_blank\" rel=\"noopener\">PR 1357</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Keep&#39;s block, not a second copy of it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1348\" target=\"_blank\" rel=\"noopener\">#1348</a>",
+          "issues": [
+            1349,
+            1348
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A spec that mocks the network must block the service worker</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a>",
+          "issues": [
+            1349
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.145",
+      "date": "2026-10-03",
+      "summary": "Fix: bound the one holder a recycled PID can still fake — the hold ceiling (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1347\" target=\"_blank\" rel=\"noopener\">PR 1347</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Bound the one holder a recycled PID can still fake — the hold ceiling</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+          "issues": [
+            1040
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.144",
+      "date": "2026-10-03",
+      "summary": "Fix: the open API/Docs toggle glows green; hover no longer looks the same (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1356\" target=\"_blank\" rel=\"noopener\">PR 1356</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1110\" target=\"_blank\" rel=\"noopener\">#1110</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The open API/Docs toggle glows green; hover no longer looks the same</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1110\" target=\"_blank\" rel=\"noopener\">#1110</a>",
+          "issues": [
+            1110
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.143",
+      "date": "2026-10-03",
+      "summary": "Fix: a suite refused by running singles keeps its place, so it is not starved (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1350\" target=\"_blank\" rel=\"noopener\">PR 1350</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1321\" target=\"_blank\" rel=\"noopener\">#1321</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A suite refused by running singles keeps its place, so it is not starved</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1321\" target=\"_blank\" rel=\"noopener\">#1321</a>",
+          "issues": [
+            1321
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.142",
+      "date": "2026-10-03",
+      "summary": "Test: guards for two fixes that landed without one (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1346\" target=\"_blank\" rel=\"noopener\">PR 1346</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1148\" target=\"_blank\" rel=\"noopener\">#1148</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Guards for two fixes that landed in b31bd387 without one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1148\" target=\"_blank\" rel=\"noopener\">#1148</a>",
+          "issues": [
+            1153,
+            1148
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.141",
+      "date": "2026-10-03",
+      "summary": "Test: a schema with no $view keeps the author&#39;s live children (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1339\" target=\"_blank\" rel=\"noopener\">PR 1339</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1149\" target=\"_blank\" rel=\"noopener\">#1149</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A schema with no $view keeps the author&#39;s live children</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1149\" target=\"_blank\" rel=\"noopener\">#1149</a>",
+          "issues": [
+            1149
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.140",
+      "date": "2026-10-03",
+      "summary": "Fix: &quot;test fixture&quot; means a fixture caused it, not that a test server served the page (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1322\" target=\"_blank\" rel=\"noopener\">PR 1322</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1032\" target=\"_blank\" rel=\"noopener\">#1032</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Check testServer against the page&#39;s own port, not an assumed ephemeral one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1032\" target=\"_blank\" rel=\"noopener\">#1032</a>",
+          "issues": [
+            1032
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>&quot;test fixture&quot; now means a fixture caused it, not that a test server served the page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1032\" target=\"_blank\" rel=\"noopener\">#1032</a>",
+          "issues": [
+            1032
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.139",
+      "date": "2026-10-03",
+      "summary": "Fix: the Issues activity spec can run -- its mock reaches the page, and its link exists (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1348\" target=\"_blank\" rel=\"noopener\">PR 1348</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The Issues activity spec can run -- its mock reaches the page, and its link exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1118
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.138",
+      "date": "2026-10-03",
+      "summary": "Fix: a recycled PID no longer wedges the machine-wide test lock (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1318\" target=\"_blank\" rel=\"noopener\">PR 1318</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Start the stranger after the holder dies, as a real recycle does</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+          "issues": [
+            1040
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A recycled PID no longer wedges the machine-wide test lock</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+          "issues": [
+            1040
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.137",
+      "date": "2026-10-03",
+      "summary": "Test: an &lt;audio&gt; that failed before x-audio attached is still reported (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1323\" target=\"_blank\" rel=\"noopener\">PR 1323</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1136\" target=\"_blank\" rel=\"noopener\">#1136</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>An &lt;audio&gt; that failed before x-audio attached is still reported</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1136\" target=\"_blank\" rel=\"noopener\">#1136</a>",
+          "issues": [
+            1136
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.136",
       "date": "2026-10-03",
       "summary": "Fix: wb- prefix audit counts only files git tracks (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1317\" target=\"_blank\" rel=\"noopener\">PR 1317</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",

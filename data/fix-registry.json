@@ -32,7 +32,7 @@
       "notes": "Not mechanically fixable: whether the answer is to write the missing document, correct the link, or remove the reference is a judgement, and guessing wrong writes a file nobody wanted."
     },
     "media-load-retry|error|image failed to load after <n> attempt(s): <url> - the file is missing or unreachable.": {
-      "analysis": "The image genuinely did not load after the retry budget. When the URL is a test fixture on an ephemeral port this is a passing test proving the retry logic reports failure — not a fault.",
+      "analysis": "The image genuinely did not load after the retry budget. When the URL is a test fixture (details.testOrigin, set only for definitely-missing-* style fixture names -- never for the port alone, #1032) this is a passing test proving the retry logic reports failure — not a fault.",
       "solution": "Check isTestOrigin first. If test-origin, it is expected and must not be counted as a defect. Otherwise the asset is missing: fix the path or add the file.",
       "fixable": false,
       "remedy": null,
@@ -41,7 +41,7 @@
       "notes": "definitely-missing-image.png on port 3310 comes from image-failures-raise-runtime-errors.spec.ts:53. Marked as test-origin rather than hidden — hiding it would be its own way of lying about what happened."
     },
     "media-load-retry|error|video failed to load after <n> attempt(s): <el> -- the file is missing or unreachable.": {
-      "analysis": "A <video> did not load after its retry budget. When the URL is a test fixture on an ephemeral port this is the retry logic correctly reporting failure, not a defect -- check details.testOrigin first, exactly as the image variant of this signature does. Otherwise the file is genuinely missing: on 2026-09-05 it was public/demo.mp4, a placeholder path referenced by docs/behavior-cross-reference.md and never present in the repo, which logged two entries on every visit to that page.",
+      "analysis": "A <video> did not load after its retry budget. When the URL is a test fixture (details.testOrigin, set only for definitely-missing-* style fixture names -- never for the port alone, #1032) this is the retry logic correctly reporting failure, not a defect -- check details.testOrigin first, exactly as the image variant of this signature does. Otherwise the file is genuinely missing: on 2026-09-05 it was public/demo.mp4, a placeholder path referenced by docs/behavior-cross-reference.md and never present in the repo, which logged two entries on every visit to that page.",
       "solution": "Resolve the src against the repo. If it is a bare invented filename (demo.mp4, video.mp4, movie.mp4), point it at the sample the rest of the docs already use: https://www.w3schools.com/html/mov_bbb.mp4. If it names a file that should exist, add the file or correct the path.",
       "fixable": false,
       "remedy": null,
