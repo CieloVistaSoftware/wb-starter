@@ -1,5 +1,7 @@
-import { test, expect, Page } from '../fixtures/offline';
-import { wbIdle } from '../base';
+import { test, expect } from '../fixtures/offline';
+import { injectAndScan } from '../helpers/inject-and-scan';
+
+const INJECT = { containerId: 'darkmode-test-container', scrollIntoView: true };
 
 /**
  * x-darkmode with target="self" (found broken while redoing
@@ -14,42 +16,23 @@ import { wbIdle } from '../base';
  * the demo previously used data-theme="dark" etc., which is likewise never
  * read.
  */
-const BASE_URL = '/demos/test-harness.html';
-
-async function injectAndScan(page: Page, html: string) {
-  await page.goto(BASE_URL);
-  await page.waitForFunction(
-    () => (window as any).WB && (window as any).WB.behaviors && Object.keys((window as any).WB.behaviors).length > 0,
-    { timeout: 10000 }
-  );
-  await page.evaluate((h: string) => {
-    const container = document.createElement('div');
-    container.id = 'darkmode-test-container';
-    container.innerHTML = h;
-    document.body.appendChild(container);
-  }, html);
-  await page.locator('#darkmode-test-container').scrollIntoViewIfNeeded();
-  await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('darkmode-test-container')));
-  await wbIdle(page);
-}
-
 test.describe('x-darkmode target="self"', () => {
   test('applies the theme attribute to the element itself', async ({ page }) => {
-    await injectAndScan(page, '<div id="dm" x-darkmode target="self" theme="cyberpunk">card</div>');
+    await injectAndScan(page, '<div id="dm" x-darkmode target="self" theme="cyberpunk">card</div>', INJECT);
     const el = page.locator('#dm');
     await expect(el).toHaveAttribute('data-theme', 'cyberpunk');
     await expect(el).toHaveClass(/x-darkmode/);
   });
 
   test('stays forced even after the global theme changes', async ({ page }) => {
-    await injectAndScan(page, '<div id="dm2" x-darkmode target="self" theme="dark">card</div>');
+    await injectAndScan(page, '<div id="dm2" x-darkmode target="self" theme="dark">card</div>', INJECT);
     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'sunset'));
     await expect(page.locator('#dm2')).toHaveAttribute('data-theme', 'dark');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'sunset');
   });
 
   test('target="html" (unchanged) still themes the root, not the element', async ({ page }) => {
-    await injectAndScan(page, '<div id="dm3" x-darkmode theme="forest">card</div>');
+    await injectAndScan(page, '<div id="dm3" x-darkmode theme="forest">card</div>', INJECT);
     await expect(page.locator('#dm3')).not.toHaveAttribute('data-theme', 'forest');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'forest');
   });
