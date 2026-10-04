@@ -71,6 +71,7 @@ jobs:
           - { project: schema-viewer, gated: true }
           - { project: integration, gated: true }
           - { project: views, gated: true }
+          - { project: performance, gated: true }
           - { project: mobile-validation-pixel, gated: true }
           - { project: mobile-validation-iphone, gated: true }
           - { project: base, gated: false }

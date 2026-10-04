@@ -129,9 +129,11 @@ const SIGTERM_GRACE_MS = 30_000;
 // main (371 passed) and its one flake was fixed (#1412).
 // views (#1189): its three specs ran in no gate; measured green on main
 // (6 passed) and gated.
+// performance (#1433): its timings are now read from the page's own clock
+// and its sizes from the wire, so they measure the page, not the runner.
 // mobile-validation-pixel / -iphone (#1432): 27 failures, every one a stale
 // spec or a real phone bug, fixed; then 2 runs green on both devices.
-const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer', 'integration', 'views', 'mobile-validation-pixel', 'mobile-validation-iphone'];
+const ALL_PROJECTS = ['compliance', 'regression', 'behaviors', 'schema-viewer', 'integration', 'views', 'performance', 'mobile-validation-pixel', 'mobile-validation-iphone'];
 
 // #1189: every Playwright project is either in ALL_PROJECTS or here, with
 // the reason it is not gated. tests/compliance/every-project-is-gated-or-
@@ -147,7 +149,6 @@ const NOT_GATED = {
   'mobile-chrome': 'reruns behaviors-project specs on a Pixel 5 profile; cross-browser runs on demand (npm run test:browsers)',
   'mobile-safari': 'reruns behaviors-project specs on an iPhone 12 profile; cross-browser runs on demand (npm run test:browsers)',
   deployed: 'tests the published site, not the checkout; run after a push by npm run test:smoke:deployed (Law 17)',
-  performance: 'red on main, and its time budgets depend on machine load; gate it once #1433 is fixed',
 };
 
 /**

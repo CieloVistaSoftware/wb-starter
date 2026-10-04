@@ -452,6 +452,33 @@ app.use((req, res, next) => {
 // ============================================
 // MARKDOWN API - GET /api/markdown?file=path
 // ============================================
+// PERFORMANCE RESULTS - GET /api/performance-results (#1433)
+// The perf specs append one JSON line per result to a per-process file under
+// data/test-results/performance/ (untracked). This merges those with the
+// frozen history in data/performance-results.json for
+// public/performance-dashboard.html, oldest first, the last 1000.
+app.get('/api/performance-results', (req, res) => {
+  const results = [];
+  try {
+    const history = path.join(rootDir, 'data', 'performance-results.json');
+    if (fs.existsSync(history)) results.push(...JSON.parse(fs.readFileSync(history, 'utf8')));
+  } catch (e) {
+    console.warn('[performance-results] history unreadable:', e.message);
+  }
+  const dir = path.join(rootDir, 'data', 'test-results', 'performance');
+  if (fs.existsSync(dir)) {
+    for (const name of fs.readdirSync(dir).filter((n) => n.endsWith('.jsonl'))) {
+      for (const line of fs.readFileSync(path.join(dir, name), 'utf8').split('\n')) {
+        if (!line.trim()) continue;
+        try { results.push(JSON.parse(line)); } catch { /* a line cut short by a killed worker */ }
+      }
+    }
+  }
+  results.sort((a, b) => String(a.timestamp).localeCompare(String(b.timestamp)));
+  res.set('Cache-Control', 'no-store');
+  res.json(results.slice(-1000));
+});
+
 app.get('/api/markdown', (req, res) => {
   const file = req.query.file;
   if (!file) {
@@ -574,6 +601,23 @@ app.get('/data/errors.json', (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+// #1131: `npm start` writes this checkout's stamp to the ignored .local/ tree
+// (scripts/stamp-version.js --local) instead of the tracked file, so starting
+// the server no longer dirties the working tree. In development the local
+// copy is what the badge reads; production serves the committed file.
+const LOCAL_OVERRIDES = new Set(['/src/core/version.js']);
+if (!isProduction) {
+  app.use((req, res, next) => {
+    if (!LOCAL_OVERRIDES.has(req.path)) return next();
+    const localFile = path.join(rootDir, '.local', req.path);
+    if (!fs.existsSync(localFile)) return next();
+    res.set('Cache-Control', 'no-store');
+    res.type('application/javascript');
+    // .local is a dot-directory, which sendFile refuses by default.
+    res.sendFile(localFile, { dotfiles: 'allow' });
+  });
+}
 
 app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
