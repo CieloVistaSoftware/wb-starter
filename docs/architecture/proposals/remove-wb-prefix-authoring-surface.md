@@ -93,7 +93,7 @@ attribute matching a registered schema?* This is the same convention native-tag 
 already use (`x-ripple`, `x-password`, etc.) — composite behaviors stop being a separate
 authoring mental model.
 
-```html
+```html-static
 <!-- Today -->
 <article elevated title="...">...</article>
 

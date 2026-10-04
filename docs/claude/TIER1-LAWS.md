@@ -166,7 +166,7 @@ If a test isn't in one of these directories, it won't run. Check `playwright.con
 - Never spread dataset properties
 - See `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` for the full naming spec
 
-```html
+```html-static
 <!-- ❌ WRONG: data-message / data-type, and type for what is a variant -->
 <!-- ✅ CORRECT -->
 <div x-alert variant="warning" message="Check input"></div>

@@ -51,6 +51,24 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
 > **Not yet migrated.** 1,374 `<div x-demo>` are still in the tree (#917). New examples
 > should follow the rule above.
 
+## 1a. An ` ```html ` fence that reaches a behavior renders live; illustrations are ` ```html-static `
+
+The doc-viewer renders an ` ```html ` fence as a live demo when its markup reaches a
+behavior — a semantic tag the runtime maps (`<article>`, `<details>`,
+`<input type="range">`), an `x-*` attribute whose behavior exists, or a semantic property
+attribute (`tooltip=`). `src/core/behavior-markup.js` `isLiveExample()` decides, for the
+viewer and the tests alike (#1169).
+
+Markup that must **never** run — BAD / WRONG / NEVER examples, generated "DOM becomes"
+output, a fence quoting another fence — is fenced ` ```html-static `. It is highlighted as
+HTML and never rendered (#1197). One hyphenated word: the Markdown renderer keeps only the
+first word of the info string, so `html static` would arrive as `html` and run.
+
+- Put good and bad markup in separate fences, so the good one can stay live.
+- A plain structural `<div>`/`<p>` example reaches no behavior and stays text; no marker
+  needed.
+- Enforced by `tests/regression/docs-illustrations-never-render-live.spec.ts`.
+
 ## 2. One code sample per rendered element (strict 1:1)
 
 - **Never** show more than one code sample for a single rendered element.

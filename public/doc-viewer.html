@@ -165,6 +165,7 @@
     import { mdhtml } from '../src/wb-viewmodels/mdhtml.js';
     import hljs from '../src/lib/highlight.js';
     import { demo } from '../src/wb-viewmodels/demo.js';
+    import { reachesBehavior } from '../src/core/behavior-markup.js';
     // This page calls mdhtml() directly rather than going through a real
     // <div x-mdhtml> tag + WB.inject() — the normal path that would trigger
     // JIT behavior-CSS loading (src/core/style-loader.js). Load it
@@ -374,16 +375,18 @@
     });
 
     // Scroll to hash after load and apply highlighting
-    // True if the rendered doc embeds live WB content: any <wb-*> custom element
-    // or x-* behavior attribute. Lets authors drop a <div x-demo>…</div> (or any
-    // <button variant="…">, x-ripple, …) straight into a .md and have it render.
+    // True if the rendered doc embeds live WB content: any element that reaches
+    // a behavior. Lets authors drop a <div x-demo>…</div>, an <article>, a
+    // <button variant="…"> or an x-ripple straight into a .md and have it render.
+    //
+    // #1169: this was its own copy of the question mdhtml.js asks of every
+    // fence, keyed on "<wb-* tag or x-* attribute". 4.0.0 removed the wb- tags
+    // and made the semantic element the behavior, so a doc whose only live
+    // markup was semantic (<article>, <details>) never loaded the runtime.
+    // Both now call src/core/behavior-markup.js.
     function docHasWbContent(root) {
       if (!root) return false;
-      for (const el of root.querySelectorAll('*')) {
-        if (el.tagName.toLowerCase().startsWith('wb-')) return true;
-        for (const attr of el.attributes) if (attr.name.toLowerCase().startsWith('x-')) return true;
-      }
-      return false;
+      return Array.from(root.querySelectorAll('*')).some(reachesBehavior);
     }
 
     // #466: End scrolled short of the real page bottom. Root cause (confirmed
@@ -538,7 +541,7 @@
     document.addEventListener('wb:mdhtml:loaded', async () => {
       // Render live WB content embedded in the doc: authors drop a
       // <div x-demo>…</div> (which shows the live control AND its source) — or any
-      // <wb-*> / x-* markup — straight into the .md and it renders. WB is loaded
+      // markup that reaches a behavior — straight into the .md and it renders. WB is loaded
       // lazily, ONLY when a doc actually contains live content, so plain docs pay
       // nothing and a framework failure can't break plain doc rendering.
       const docEl = document.getElementById('content');

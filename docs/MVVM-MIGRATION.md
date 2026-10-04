@@ -57,7 +57,7 @@ WB v3.0 uses **Light DOM exclusively**. No Shadow DOM.
 - Screen readers understand content
 - Query selectors work as expected
 
-```html
+```html-static
 <!-- User writes this -->
 <article title="Hello">Content</article>
 <!-- DOM becomes (Light DOM) -->
@@ -111,7 +111,7 @@ Every component is defined by a JSON schema that serves as the single source of 
 > **Attribute name = what it is for**  
 > **Schema = where it goes**
 
-```html
+```html-static
 <!-- ✅ CLEAN: User sets attributes -->
 <article
   title="Hello"
