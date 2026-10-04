@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.165",
+      "date": "2026-10-04",
+      "summary": "Fix: the wb- prefix audit counts source, not what a run left on disk (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1332\" target=\"_blank\" rel=\"noopener\">PR 1332</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The wb- prefix audit counts source, not what a run left on disk</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1300\" target=\"_blank\" rel=\"noopener\">#1300</a>",
+          "issues": [
+            1300
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.164",
       "date": "2026-10-04",
       "summary": "Fix: the example sweep judges the settled look, not a frame of the checkbox fade-in (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1384\" target=\"_blank\" rel=\"noopener\">PR 1384</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1383\" target=\"_blank\" rel=\"noopener\">#1383</a>",
