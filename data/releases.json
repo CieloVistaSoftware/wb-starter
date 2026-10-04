@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.202",
+      "date": "2026-10-04",
+      "summary": "Fix: delete dead modal.css (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1418\" target=\"_blank\" rel=\"noopener\">PR 1418</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1190\" target=\"_blank\" rel=\"noopener\">#1190</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Delete dead modal.css and its allow-list entry</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1190\" target=\"_blank\" rel=\"noopener\">#1190</a>",
+          "issues": [
+            1190
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.201",
       "date": "2026-10-04",
       "summary": "Fix: x-timeline keeps hand-written entries (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1417\" target=\"_blank\" rel=\"noopener\">PR 1417</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1188\" target=\"_blank\" rel=\"noopener\">#1188</a>",
