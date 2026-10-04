@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.191",
+      "date": "2026-10-04",
+      "summary": "Fix: the commit-message spec imports its module once (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1404\" target=\"_blank\" rel=\"noopener\">PR 1404</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1403\" target=\"_blank\" rel=\"noopener\">#1403</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The commit-message spec imports its module once, so workers stop racing the transform cache</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1403\" target=\"_blank\" rel=\"noopener\">#1403</a>",
+          "issues": [
+            1403
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.190",
       "date": "2026-10-04",
       "summary": "Fix: the fullscreen label follows document.fullscreenElement, not the request (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1329\" target=\"_blank\" rel=\"noopener\">PR 1329</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/738\" target=\"_blank\" rel=\"noopener\">#738</a>",
