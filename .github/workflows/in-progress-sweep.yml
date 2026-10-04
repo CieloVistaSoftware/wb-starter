@@ -1,0 +1,84 @@
+name: In progress sweep
+
+# THE HOLE THIS CLOSES (#1330)
+#
+# `status:in-progress` is the one status label in this repo with an apply path
+# and no release path. A session puts it on when it starts an issue; taking it
+# off depends on that same session living to the end. Sessions end early, and
+# every one that does leaves its label behind permanently.
+#
+# Measured 2026-10-03: twelve issues carried the label, zero were being worked
+# on, seven had never had a status comment at all, and the newest commit
+# touching any of them was ~21 hours old. The In Progress tab on the issues
+# page reads that label directly, so it claimed twelve active issues when the
+# true number was zero. John looked at it, saw nothing moving, and asked for a
+# button to show what is actually being worked on — the button was there, and
+# lying.
+#
+# Hourly, because the tab's whole value is being true when he looks at it, and
+# he looks at it at unpredictable times. A daily sweep would leave a full day
+# in which it can be as wrong as it was.
+on:
+  schedule:
+    - cron: '7 * * * *'            # every hour, at :07
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: 'Hours of silence before a label is released'
+        required: false
+        default: '6'
+      dry-run:
+        description: 'Report what would be released, change nothing'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  issues: write
+  contents: read
+
+# A second run while one is mid-sweep would read labels the first is in the
+# middle of removing, and comment twice on the same issue.
+concurrency:
+  group: in-progress-sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    name: release status:in-progress where nobody is working
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sweep
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node scripts/sweep-in-progress.mjs \
+            --hours "${{ github.event.inputs.hours || '6' }}" \
+            ${{ github.event.inputs.dry-run == 'true' && '--dry-run' || '' }} \
+            --json > sweep.json
+          cat sweep.json
+
+      # The number is the point, not the exit code: a run saying "4 labelled,
+      # 4 alive, released 0" is the evidence the tab is telling the truth.
+      - name: Record what it found
+        if: always()
+        run: |
+          node -e "
+            const fs = require('fs');
+            let r;
+            try { r = JSON.parse(fs.readFileSync('sweep.json', 'utf8')); }
+            catch { fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## In progress sweep\n\nThe sweep produced no report — it failed before writing one.\n'); process.exit(0); }
+            const row = (x) => '| #' + x.number + ' | ' + (x.quietHours === null ? 'no signal' : x.quietHours + ' h') + ' | ' + x.signal + ' | ' + (x.error ? 'FAILED: ' + x.error : '') + ' |';
+            const table = (rows) => '| issue | quiet for | freshest signal | |\n|---|---|---|---|\n' + rows.map(row).join('\n') + '\n';
+            let out = '## In progress sweep\n\n';
+            out += '**' + r.scanned + '** labelled \`status:in-progress\`, **' + r.alive.length + '** alive, **' + r.released.length + '** released (threshold: ' + r.hours + ' h of silence).\n\n';
+            if (r.released.length) out += '### Released\n\n' + table(r.released) + '\n';
+            if (r.alive.length) out += '### Still being worked on\n\n' + table(r.alive) + '\n';
+            if (!r.scanned) out += 'Nothing is labelled in progress.\n';
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, out);
+          "
