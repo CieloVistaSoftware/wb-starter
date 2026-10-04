@@ -217,6 +217,19 @@ if (dryRun) {
   console.log(html);
   console.log(`--- Would write to: ${outputPath} ---`);
 } else {
+  // #1143: never overwrite a page someone wrote by hand. pages/home.html
+  // still said "generated from home-page.schema.json" long after it was
+  // edited by hand into twice the generated length, so running this would have
+  // silently thrown those edits away. A page this script may replace says so on
+  // its first line; anything else is refused unless --force.
+  if (fs.existsSync(outputPath) && !args.includes('--force')) {
+    const firstLine = fs.readFileSync(outputPath, 'utf8').split(/\r?\n/)[0];
+    if (!/generated from \S+\.schema\.json/.test(firstLine)) {
+      console.error(`❌ ${outputPath} is not marked as generated (its first line does not say "generated from <schema>.json").`);
+      console.error('   It is hand-authored; regenerating would discard it. Use --dry-run to compare, or --force to overwrite.');
+      process.exit(1);
+    }
+  }
   const dir = path.dirname(outputPath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(outputPath, html, 'utf8');
