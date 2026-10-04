@@ -3,6 +3,9 @@ import { WB_DOC_MAP } from './demo-docmap.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
 import { hasBehavior } from './index.js';
 import { getNativeBehavior } from '../core/tag-map.js';
+
+/** Behaviors that fill their row by nature: a demo holding only one of them is full width (#1387). */
+const FULL_BLEED_BEHAVIORS = ['hero', 'cardhero'];
 /**
  * Demo Container Behavior
  * -----------------------------------------------------------------------------
@@ -519,6 +522,15 @@ export async function demo(element, options = {}) {
     // whose one child is deliberately full-bleed (e.g. a page hero) rather
     // than a small widget that should collapse to its own content width.
     if (element.hasAttribute('full-width')) {
+        element.classList.add('x-demo--full-width');
+    }
+    // #1387: ...and do it unasked when that one child is full-bleed BY NATURE.
+    // A hero asks for width:100% of the very track that shrink-to-fit sizes
+    // from it, so both collapse -- interactive.html's two hero examples
+    // measured 206px in a 1052px section. `full-width` only ever helped where
+    // someone remembered to write it (see the measuring comment below).
+    const lone = element.children.length === 1 ? element.children[0] : null;
+    if (lone && FULL_BLEED_BEHAVIORS.some((name) => lone.hasAttribute(`x-${name}`) || lone.localName === `x-${name}`)) {
         element.classList.add('x-demo--full-width');
     }
 
