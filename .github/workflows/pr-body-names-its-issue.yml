@@ -1,0 +1,33 @@
+name: PR description names its issue
+
+# #1336: parallel agents share one scratchpad. A PR body written to a file with
+# an obvious name can be overwritten by another agent before
+# `gh pr create --body-file` reads it, and the PR then describes someone else's
+# change -- well-formed, so nothing fails. The branch already names the issue
+# (claude/fix-1336-x); a description that never cites it is that swap, or the
+# wrong branch. The commit-msg hook makes the same check for commits.
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  pr-body:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Passed through env, never interpolated into the script: a PR body is
+      # untrusted text.
+      - name: The description cites the branch's issue
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: node scripts/check-pr-body-issue.mjs
