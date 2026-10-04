@@ -57,11 +57,16 @@ export function classifyFailure(error, port) {
  *   failed      at least one failure that is a real test result
  *   unreliable  non-zero exit and EVERY recorded failure is server-down — the
  *               run measured the server's absence, not the code
+ *   no-tests    the run collected nothing (#1091, #1069). Not a pass and not a
+ *               failure: Playwright exits 0 on an empty file and 1 on "No tests
+ *               found", so exit code alone scored "checked nothing" as success
+ *               or as a broken suite. Only when the caller KNOWS the count is 0
+ *               (`total === 0`); an unknown total leaves the rules above alone.
  *
  * reliable is false whenever any failure is server-down: the tests that failed
  * that way never ran, so the pass/fail totals are incomplete either way.
  */
-export function classifyRun({ exitCode, failures, port }) {
+export function classifyRun({ exitCode, failures, port, total }) {
   const categorized = (failures || []).map((f) => ({
     ...f,
     category: classifyFailure(f && f.error, port),
@@ -70,7 +75,8 @@ export function classifyRun({ exitCode, failures, port }) {
   const testFailed = categorized.length - serverDown;
 
   let state;
-  if (exitCode === 0) state = "passed";
+  if (total === 0) state = "no-tests";
+  else if (exitCode === 0) state = "passed";
   else if (serverDown > 0 && testFailed === 0) state = "unreliable";
   else state = "failed";
 

@@ -869,23 +869,16 @@ function headSha(rootDir) {
   }
 }
 
-app.get('/api/fixes', async (req, res) => {
-  const head = headSha(rootDir);
-  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+// #1054: served stale-while-revalidate. The cache is keyed on HEAD, and every
+// push to main moves HEAD, so the first visit after any merge used to pay the
+// full cold computation (measured 27 s, 5 MB on 2026-10-04) with a blank Fix
+// Viewer meanwhile. Now a stale cache is served at once (X-Fixes-Cache: stale)
+// and refreshed in the background; only a server with no cache at all computes
+// while the visitor waits. One refresh runs at a time, and a concurrent caller
+// joins it instead of starting another.
+let fixesRefresh = null;
 
-  if (head && !('refresh' in req.query)) {
-    try {
-      const cached = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-      const fresh = cached.head === head && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS;
-      if (fresh && cached.payload) {
-        res.set('Cache-Control', 'no-store');
-        res.set('X-Fixes-Cache', 'hit');
-        res.json(cached.payload);
-        return;
-      }
-    } catch { /* no cache, unreadable, or a shape from an older build — recompute */ }
-  }
-
+async function computeFixes(head) {
   const US = String.fromCharCode(31);
   const RS = String.fromCharCode(30);
   const NL = String.fromCharCode(10);
@@ -1032,7 +1025,39 @@ app.get('/api/fixes', async (req, res) => {
       console.warn('[Fixes] could not write cache:', err.message);
     }
   }
+  return payload;
+}
 
+function refreshFixes(head) {
+  if (!fixesRefresh) {
+    fixesRefresh = computeFixes(head)
+      .catch((err) => { console.warn('[Fixes] refresh failed:', err && err.message); return null; })
+      .finally(() => { fixesRefresh = null; });
+  }
+  return fixesRefresh;
+}
+
+app.get('/api/fixes', async (req, res) => {
+  const head = headSha(rootDir);
+  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+  let cached = null;
+  try { cached = JSON.parse(fs.readFileSync(cachePath, 'utf8')); } catch { /* no cache yet, or an older shape */ }
+  const fresh = !!(cached && cached.payload && head && cached.head === head
+    && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS);
+
+  if (!('refresh' in req.query) && cached && cached.payload) {
+    res.set('Cache-Control', 'no-store');
+    res.set('X-Fixes-Cache', fresh ? 'hit' : 'stale');
+    res.json(cached.payload);
+    if (!fresh) refreshFixes(head);
+    return;
+  }
+
+  const payload = await refreshFixes(head);
+  if (!payload) {
+    res.status(500).json({ error: 'could not compute the fixes list; see the server log' });
+    return;
+  }
   res.set('Cache-Control', 'no-store');
   res.set('X-Fixes-Cache', 'miss');
   res.json(payload);
@@ -1534,12 +1559,28 @@ app.use((req, res, next) => {
 // Bind to the preferred port, falling through to the next free one when
 // it's taken (up to +20) instead of killing the current occupant -- see the
 // PORT POLICY comment at the top of this file.
+//
+// #1135: ONLY when no port was asked for. A caller that sets PORT (Playwright's
+// webServer, test-async, a person) is waiting on THAT port: falling through to
+// the next one left it waiting forever, or worse, talking to whatever already
+// held the port -- another worktree's server -- so a whole suite ran against
+// the wrong tree. An explicitly requested port that is busy is a hard error
+// that names it.
+const PORT_WAS_REQUESTED = Boolean(process.env.PORT);
+
 function tryListen(p, attemptsLeft) {
   const server = app.listen(p, () => onListening(p));
   server.on('error', (err) => {
     if (err.code === 'EADDRINUSE' && attemptsLeft > 0) {
       console.log(`[port] :${p} in use -- trying :${p + 1}`);
       tryListen(p + 1, attemptsLeft - 1);
+    } else if (err.code === 'EADDRINUSE') {
+      console.error(
+        `[port] :${p} is already in use, and PORT=${p} was requested explicitly, so this server ` +
+        `will not move to another port (#1135): whoever asked for :${p} would be talking to ` +
+        `the process that holds it. Free the port, or start without PORT to let it pick.`
+      );
+      process.exit(1);
     } else {
       throw err;
     }
@@ -1570,4 +1611,4 @@ function onListening(p) {
 // Number(port): `port` is the STRING from process.env.PORT, and tryListen's retry
 // does `p + 1` -- on a string that is concatenation ('59175' -> '591751'), which
 // listen() rejects with ERR_SOCKET_BAD_PORT (#1286).
-tryListen(Number(port), 20);
+tryListen(Number(port), PORT_WAS_REQUESTED ? 0 : 20);

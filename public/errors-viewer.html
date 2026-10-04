@@ -355,7 +355,7 @@
             <div class="error-title">
               <span class="badge badge-${error.level || 'error'}">${error.level || 'ERROR'}</span>
               <span class="source-badge">${escapeHtml(error.source || error.to || error.module || 'unattributed')}</span>
-              ${error.testOrigin ? '<span class="source-badge" title="raised by a test fixture, not by the app">test</span>' : ''}
+              ${error.testOrigin ? '<span class="source-badge" title="raised by a test fixture, not by the app">test fixture</span>' : (error.testServer ? '<span class="source-badge" title="logged while a test server was serving the page; not caused by a fixture, so it is a real error">during test run</span>' : '')}
               ${error.fixable ? '<span class="source-badge" style="background:var(--success-color,#16a34a);color:#fff;" title="a known mechanical remedy exists">fixable</span>' : ''}
               <span>${escapeHtml(error.message)}</span>
             </div>

@@ -16,6 +16,7 @@ import { mkdtemp, rm, writeFile, readdir, readFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { performance } from "perf_hooks";
+import { spawn } from "child_process";
 import { createGuards } from "./lib/test-lock.mjs";
 
 let passed = 0;
@@ -35,12 +36,35 @@ function check(name, condition, detail) {
 /** A PID that is certainly not running, for simulating a dead holder. */
 const DEAD_PID = 0x7ffffffe;
 
+/**
+ * A PID that is ALIVE and is not the holder: the OS handed the dead holder's
+ * number to someone else (#1040). The hard half of that bug — a dead PID is
+ * caught by process.kill(pid, 0), a recycled one never is.
+ */
+const RECYCLED_PID = 0x7ffffffd;
+
+/** Alive, but the OS will not say when it started (StartTime unreadable). */
+const UNVERIFIABLE_PID = 0x7ffffffc;
+
+/** What a record claims its holder was, for the arranged identity states. */
+const HOLDER_IDENTITY = "test:the-holder";
+
+const HOUR_MS = 60 * 60 * 1000;
+
+/** One identity source for the arranged states, as the real OS read is. */
+function fakeIdentityOf(pid) {
+  if (pid === RECYCLED_PID) return "test:a-stranger";   // not HOLDER_IDENTITY
+  if (pid === UNVERIFIABLE_PID) return null;            // "cannot tell"
+  return `test:pid-${pid}`;                             // every other PID is itself
+}
+
 /** Simulates two worktrees of the same repo sharing one coordination dir. */
 function twoWorktrees(globalDir, overrides = {}) {
   const base = {
     globalDir,
     minFreeMb: 0, // memory floor tested separately
     isAlive: (pid) => pid !== DEAD_PID,
+    identityOf: fakeIdentityOf,
     ...overrides,
   };
   return [
@@ -279,6 +303,28 @@ async function arrange(state, holder) {
       await holder.bindSlot(slot, DEAD_PID, "tests/held.spec.ts", iso(0));
       return;
     }
+    case "suite-recycled-pid":
+      // The PID is alive; the identity recorded with it is not that process's.
+      await writeFile(lockFile, JSON.stringify({
+        pid: RECYCLED_PID, pidStart: HOLDER_IDENTITY,
+        root: "C:/other", startedAt: iso(HOUR_MS), command: "x",
+      }));
+      return;
+    case "single-recycled-pid": {
+      const slot = await holder.acquireSingleSlot("tests/held.spec.ts");
+      await writeFile(slot, JSON.stringify({
+        pid: RECYCLED_PID, pidStart: HOLDER_IDENTITY,
+        root: "C:/other", specFile: "tests/held.spec.ts", startedAt: iso(HOUR_MS),
+      }));
+      return;
+    }
+    case "suite-unidentifiable-ancient":
+      // Alive, unreadable start time: PID-only, so believed only to the ceiling.
+      await writeFile(lockFile, JSON.stringify({
+        pid: UNVERIFIABLE_PID, pidStart: HOLDER_IDENTITY,
+        root: "C:/other", startedAt: iso(3 * HOUR_MS), command: "x",
+      }));
+      return;
     default:
       throw new Error(`schema declares an existing state with no arrangement: ${state.id}`);
   }
@@ -429,6 +475,215 @@ async function testSingleSubscriberIsNotifiedOnRelease() {
   });
 }
 
+// ─── A RECYCLED PID IS NOT THE HOLDER (#1040) ──────────────────────
+// Liveness used to be process.kill(pid, 0) alone: "is SOME process alive with
+// this number". When a holder dies and the OS hands its PID to an unrelated
+// process, that check calls the lock held forever and every run on the machine
+// is refused. These tests use the REAL liveness check -- no injected isAlive --
+// and real processes, all against a temp lock directory, never ~/.wb-starter.
+
+/** Starts a real, unrelated, long-lived process. */
+function startIdleProcess() {
+  const child = spawn(process.execPath, ["-e", "setInterval(() => {}, 1 << 30)"], {
+    stdio: "ignore",
+    windowsHide: true,
+  });
+  return child;
+}
+
+async function stopProcess(child) {
+  if (child.exitCode !== null || child.signalCode !== null) return;
+  const exited = new Promise((r) => child.once("exit", r));
+  child.kill();
+  await exited;
+}
+
+/**
+ * How long the simulated holder runs. A recycled PID can only go to a process
+ * started AFTER the holder died, so the stranger must start later than the
+ * holder by more than the coarsest start-time clock this runs on: Linux counts
+ * /proc starttime in 10ms ticks, and `ps -o lstart` has 1s resolution. CI
+ * caught the first version spawning both inside one tick.
+ */
+const HOLDER_LIFETIME_MS = 1100;
+
+/**
+ * Binds `bind` to a real holder process, lets that holder run and die, then
+ * starts an unrelated process and gives the holder's record its PID -- exactly
+ * what the file looks like after the OS recycles the dead holder's PID.
+ * @returns the stranger, which the caller must stop.
+ */
+async function recycleOntoStranger(file, bind) {
+  const holder = startIdleProcess();
+  try {
+    await bind(holder.pid);
+    await new Promise((r) => setTimeout(r, HOLDER_LIFETIME_MS));
+  } finally {
+    await stopProcess(holder);
+  }
+  const stranger = startIdleProcess();
+  const record = JSON.parse(await readFile(file, "utf-8"));
+  record.pid = stranger.pid;
+  await writeFile(file, JSON.stringify(record, null, 2));
+  return stranger;
+}
+
+async function testRecycledPidDoesNotWedgeTheSuiteLock() {
+  console.log("\nA suite lock whose PID now belongs to an unrelated live process is reclaimed:");
+
+  let stranger = null;
+  try {
+    await withTempDir(async (dir) => {
+      const opts = { globalDir: dir, minFreeMb: 0, maxParallelSingle: 1 };
+      const a = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-A" });
+      const b = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-B" });
+
+      await a.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
+      stranger = await recycleOntoStranger(a.lockFile, (pid) => a.bindSuiteLock(pid, { command: "npx playwright test" }));
+
+      const single = await b.acquireSingleSlot("tests/arriving.spec.ts");
+      check("a single run is not held by the recycled PID", single !== null, `got: ${single}`);
+      if (single) await b.releaseSlot(single);
+
+      const denied = await b.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
+      check("a suite reclaims the lock from the recycled PID", denied === null, denied);
+      const held = await b.readLock();
+      check("the lock now records the new holder", held && held.root && held.root.includes("agent-B"), JSON.stringify(held));
+    });
+  } finally {
+    if (stranger) await stopProcess(stranger);
+  }
+}
+
+async function testRecycledPidDoesNotWedgeASingleSlot() {
+  console.log("\nA single-run slot whose PID now belongs to an unrelated live process is reaped:");
+
+  let stranger = null;
+  try {
+    await withTempDir(async (dir) => {
+      const opts = { globalDir: dir, minFreeMb: 0, maxParallelSingle: 1 };
+      const a = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-A" });
+      const b = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-B" });
+
+      const slot = await a.acquireSingleSlot("tests/held.spec.ts");
+      stranger = await recycleOntoStranger(slot, (pid) => a.bindSlot(slot, pid, "tests/held.spec.ts", new Date().toISOString()));
+
+      const denied = await b.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
+      check("a suite is not held by the recycled slot", denied === null, denied);
+      await b.removeLock();
+
+      const next = await b.acquireSingleSlot("tests/arriving.spec.ts");
+      check("a single run reaps the recycled slot", next !== null, `got: ${next}`);
+    });
+  } finally {
+    if (stranger) await stopProcess(stranger);
+  }
+}
+
+async function testLiveHolderIsStillHonoured() {
+  console.log("\nThe real holder, alive and unchanged, still holds the lock:");
+
+  const holder = startIdleProcess();
+  try {
+    await withTempDir(async (dir) => {
+      const opts = { globalDir: dir, minFreeMb: 0, maxParallelSingle: 1 };
+      const a = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-A" });
+      const b = createGuards({ ...opts, root: "C:/repo/.claude/worktrees/agent-B" });
+
+      await a.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
+      await a.bindSuiteLock(holder.pid, { command: "npx playwright test" });
+      const denied = await b.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
+      check("a suite is refused while the real holder runs",
+        typeof denied === "string" && denied.includes("already running"), `got: ${JSON.stringify(denied)}`);
+      check("a single run is held while the real holder runs",
+        (await b.acquireSingleSlot("tests/arriving.spec.ts")) === null);
+
+      // A lock written before the identity was recorded (no pidStart) keeps the
+      // old PID-only meaning, so a run already holding the machine when this
+      // change lands is not robbed of it.
+      const legacy = await a.readLock();
+      delete legacy.pidStart;
+      await writeFile(a.lockFile, JSON.stringify(legacy, null, 2));
+      const legacyDenied = await b.acquireSuiteLock(new Date().toISOString(), "npx playwright test");
+      check("a legacy lock with a live PID is still honoured",
+        typeof legacyDenied === "string" && legacyDenied.includes("already running"), `got: ${JSON.stringify(legacyDenied)}`);
+    });
+  } finally {
+    await stopProcess(holder);
+  }
+}
+
+// ─── AND WHEN IDENTITY CANNOT BE PROVEN AT ALL (#1040) ─────────────
+// isSameProcess answers PID-only for a record with no pidStart, and for one
+// naming a process the OS will not describe. That is the right answer during
+// the transition -- it never robs a live run -- but PID-only is exactly what a
+// recycled PID fakes, so believing it without end leaves the wedge in place:
+// the machine refusing every run, naming a stranger, until a human clears the
+// file. The ceiling is how long that answer is worth believing.
+async function testUnidentifiableHolderIsBelievedButNotForever() {
+  console.log("\nA holder the OS will not identify is believed, but not forever:");
+
+  await withTempDir(async (dir) => {
+    const [, b] = twoWorktrees(dir, { maxHoldMs: 2 * HOUR_MS });
+    const lockOf = (ageMs, extra = {}) => JSON.stringify({
+      pid: UNVERIFIABLE_PID, pidStart: HOLDER_IDENTITY,
+      root: "C:/repo/.claude/worktrees/agent-A",
+      startedAt: new Date(Date.now() - ageMs).toISOString(),
+      command: "npx playwright test", ...extra,
+    }, null, 2);
+
+    await writeFile(b.lockFile, lockOf(10 * 60 * 1000));
+    const fresh = await b.acquireSuiteLock(new Date().toISOString(), "arriving");
+    check("a 10-minute-old unidentifiable holder still holds the machine",
+      typeof fresh === "string" && fresh.includes("already running"), `got: ${JSON.stringify(fresh)}`);
+
+    await writeFile(b.lockFile, lockOf(3 * HOUR_MS));
+    const ancient = await b.acquireSuiteLock(new Date().toISOString(), "arriving");
+    check("past the ceiling it is stale, so no human has to clear it", ancient === null, ancient);
+  });
+}
+
+async function testLegacyLockIsHonouredThenCeilinged() {
+  console.log("\nA lock written before identities existed: honoured, then ceilinged:");
+
+  await withTempDir(async (dir) => {
+    const [, b] = twoWorktrees(dir, { maxHoldMs: 2 * HOUR_MS });
+    // No pidStart at all, and a live PID: PID-only, the pre-#1040 format.
+    const legacy = (ageMs) => JSON.stringify({
+      pid: process.pid,
+      root: "C:/repo/.claude/worktrees/agent-A",
+      startedAt: new Date(Date.now() - ageMs).toISOString(),
+      command: "npx playwright test",
+    }, null, 2);
+
+    await writeFile(b.lockFile, legacy(5 * 60 * 1000));
+    const fresh = await b.acquireSuiteLock(new Date().toISOString(), "arriving");
+    check("a fresh legacy lock is not robbed of the machine",
+      typeof fresh === "string" && fresh.includes("already running"), `got: ${JSON.stringify(fresh)}`);
+
+    await writeFile(b.lockFile, legacy(3 * HOUR_MS));
+    const ancient = await b.acquireSuiteLock(new Date().toISOString(), "arriving");
+    check("a legacy lock older than the ceiling is cleared", ancient === null, ancient);
+  });
+}
+
+async function testTheCeilingNeverRobsAProvenHolder() {
+  console.log("\nThe ceiling never touches a holder whose identity is proven:");
+
+  await withTempDir(async (dir) => {
+    const [a, b] = twoWorktrees(dir, { maxHoldMs: 1 });   // ceiling already passed
+    await a.acquireSuiteLock(new Date(Date.now() - 4 * HOUR_MS).toISOString(), "holder");
+    await a.bindSuiteLock(process.pid, { command: "a very long suite" });
+
+    const held = await a.readLock();
+    check("the holder's identity is recorded", held && !!held.pidStart, JSON.stringify(held));
+
+    const denied = await b.acquireSuiteLock(new Date().toISOString(), "arriving");
+    check("a four-hour suite that is provably still running keeps the machine",
+      typeof denied === "string" && denied.includes("already running"), `got: ${JSON.stringify(denied)}`);
+  });
+}
+
 // ─── MEMORY FLOOR ──────────────────────────────────────────────────
 async function testMemoryFloor() {
   console.log("\nMemory floor refuses to launch on a starved machine:");
@@ -465,6 +720,54 @@ async function testMemoryFloor() {
   });
 }
 
+// ─── #1321: A WAITING SUITE IS NOT STARVED ─────────────────────────
+async function testWaitingSuiteIsNotStarved() {
+  console.log("\nA suite refused by running singles keeps its place (#1321):");
+
+  await withTempDir(async (dir) => {
+    const [a, b] = twoWorktrees(dir, { maxParallelSingle: 2 });
+
+    const running = await a.acquireSingleSlot("tests/running.spec.ts");
+    check("a single run is on the machine", running !== null);
+
+    const refused = await b.acquireSuiteLock(new Date().toISOString(), "suite B");
+    check("a suite arriving now is refused", typeof refused === "string", refused);
+    check("the refusal says the suite is now reserved", /reserved/.test(refused || ""), refused);
+
+    // The defect: a free slot used to admit this, and singles kept arriving.
+    const arriving = await a.acquireSingleSlot("tests/arriving.spec.ts");
+    check("a NEW single is held back while the suite waits", arriving === null, `got: ${arriving}`);
+
+    await a.releaseSlot(running);
+    const taken = await b.acquireSuiteLock(new Date().toISOString(), "suite B");
+    check("once the running single finishes, the waiting suite gets the machine", taken === null, taken);
+    check("taking the machine clears the reservation", (await b.readReservation()) === null);
+    await b.removeLock();
+
+    const after = await a.acquireSingleSlot("tests/after.spec.ts");
+    check("after the suite, singles are admitted again", after !== null);
+  });
+
+  await withTempDir(async (dir) => {
+    const [a, b] = twoWorktrees(dir, { maxParallelSingle: 2, reserveTtlMs: 50 });
+    await a.acquireSingleSlot("tests/running.spec.ts");
+    await b.acquireSuiteLock(new Date().toISOString(), "suite B");
+    await new Promise((r) => setTimeout(r, 120));
+    const late = await a.acquireSingleSlot("tests/late.spec.ts");
+    check("a reservation nobody refreshes expires: singles flow again", late !== null, `got: ${late}`);
+  });
+
+  await withTempDir(async (dir) => {
+    const [a, b] = twoWorktrees(dir, { maxParallelSingle: 2, staleCheckMs: 50 });
+    await a.acquireSingleSlot("tests/running.spec.ts");
+    const why = await b.acquireSuiteLockOnRelease(new Date().toISOString(), "suite B", null, { timeoutMs: 100 });
+    check("a waiting suite that reaches its deadline gives up", typeof why === "string", why);
+    check("a suite that gave up leaves no reservation behind", (await b.readReservation()) === null);
+    const next = await a.acquireSingleSlot("tests/next.spec.ts");
+    check("so singles are not held back by a suite that left", next !== null, `got: ${next}`);
+  });
+}
+
 // ─── RUN ───────────────────────────────────────────────────────────
 console.log("🔒 test-lock guards — regression tests for #651");
 
@@ -482,7 +785,14 @@ await testSubscriberIsNotifiedOnRelease();
 await testSubscriberIsNotStrandedByADeadHolder();
 await testSubscriberGivesUpAtItsDeadline();
 await testSingleSubscriberIsNotifiedOnRelease();
+await testRecycledPidDoesNotWedgeTheSuiteLock();
+await testRecycledPidDoesNotWedgeASingleSlot();
+await testLiveHolderIsStillHonoured();
+await testUnidentifiableHolderIsBelievedButNotForever();
+await testLegacyLockIsHonouredThenCeilinged();
+await testTheCeilingNeverRobsAProvenHolder();
 await testMemoryFloor();
+await testWaitingSuiteIsNotStarved();
 
 console.log(`\n${failed === 0 ? "✅" : "❌"} ${passed} passed, ${failed} failed`);
 process.exit(failed === 0 ? 0 : 1);

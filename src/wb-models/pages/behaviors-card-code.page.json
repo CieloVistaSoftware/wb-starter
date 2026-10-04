@@ -117,9 +117,9 @@
       "tag": "x-cardfile",
       "columns": 3,
       "demos": [
-        { "tag": "x-cardfile", "attrs": { "filename": "report.pdf", "file-type": "pdf", "size": "2.4 MB", "href": "/files/report.pdf" } },
-        { "tag": "x-cardfile", "attrs": { "filename": "photo.jpg", "file-type": "image", "size": "1.8 MB", "date": "Feb 10, 2026" } },
-        { "tag": "x-cardfile", "attrs": { "filename": "archive.zip", "file-type": "zip", "size": "45 MB", "href": "/files/archive.zip" } }
+        { "tag": "x-cardfile", "attrs": { "filename": "report.pdf", "size": "2.4 MB", "href": "/files/report.pdf" } },
+        { "tag": "x-cardfile", "attrs": { "filename": "photo.jpg", "size": "1.8 MB", "date": "Feb 10, 2026" } },
+        { "tag": "x-cardfile", "attrs": { "filename": "archive.zip", "size": "45 MB", "href": "/files/archive.zip" } }
       ]
     },
     {

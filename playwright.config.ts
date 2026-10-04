@@ -242,7 +242,11 @@ export default defineConfig({
   // used"). When no server is running (e.g. a CI job), Playwright
   // still starts one via `command`. A WB_TEST_PORT override never reuses --
   // see the #518 comment above.
-  webServer: {
+  // #1364: a deployed smoke run (SMOKE_BASE_URL set, scripts/smoke-deployed.mjs)
+  // tests the published site and needs no local server. Starting one anyway
+  // made that check depend on this machine's node_modules for nothing -- and
+  // when it could not start, the deployed site was blamed.
+  webServer: process.env.SMOKE_BASE_URL ? undefined : {
     // #1074: through scripts/serve-with-log.mjs, not `npm start` directly.
     // Playwright discards webServer stdout by default, so when the server died
     // mid-run nothing recorded why — only the ERR_CONNECTION_REFUSED failures
