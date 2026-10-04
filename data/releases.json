@@ -6,6 +6,41 @@
   ],
   "releases": [
     {
+      "version": "1.0.194",
+      "date": "2026-10-04",
+      "summary": "Fix: test runs never write into the product&#39;s notes; 307 test notes removed (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1410\" target=\"_blank\" rel=\"noopener\">PR 1410</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1174\" target=\"_blank\" rel=\"noopener\">#1174</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The guard sends the test-harness Referer so an ungated server files no issue</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1174\" target=\"_blank\" rel=\"noopener\">#1174</a>",
+          "issues": [
+            1174
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Test runs never write into the product&#39;s notes; 307 test notes removed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1174\" target=\"_blank\" rel=\"noopener\">#1174</a>",
+          "issues": [
+            1174
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.193",
+      "date": "2026-10-04",
+      "summary": "Fix: wb-lazy&#39;s inject() honours x-ignore, as wb.js&#39;s does (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1405\" target=\"_blank\" rel=\"noopener\">PR 1405</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1168\" target=\"_blank\" rel=\"noopener\">#1168</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Wb-lazy&#39;s inject() honours x-ignore, as wb.js&#39;s does</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1168\" target=\"_blank\" rel=\"noopener\">#1168</a>",
+          "issues": [
+            1168
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.192",
       "date": "2026-10-04",
       "summary": "Range options are camelCase, schema-declared, and &quot;false&quot; means false (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1341\" target=\"_blank\" rel=\"noopener\">PR 1341</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1140\" target=\"_blank\" rel=\"noopener\">#1140</a>",

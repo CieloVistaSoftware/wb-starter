@@ -1293,7 +1293,13 @@ app.post("/api/error-log/clear", (req, res) => {
 // write HERE, synchronously, in one request handler, is atomic per request
 // with no explicit lock needed (Node never interleaves a handler that has
 // no `await` between its read and its write).
-const NOTES_REL_PATH = 'data/notes.json';
+// #1174: a server started for tests keeps notes out of the product's data.
+// data/notes.json is tracked (it is a person's saved work), and the notes
+// specs save 'Test note content ...' through this route on every run -- 4.0.5
+// shipped 147 of them. Under test (WB_TEST_SERVER=1, set by playwright.config
+// and CI's server step) notes go to the ignored data/test-results/ instead.
+const UNDER_TEST = process.env.WB_TEST_SERVER === '1';
+const NOTES_REL_PATH = UNDER_TEST ? 'data/test-results/notes-under-test.json' : 'data/notes.json';
 
 function readNotesLog() {
   const fullPath = path.join(rootDir, NOTES_REL_PATH);
@@ -1380,7 +1386,7 @@ app.post("/api/notes/append", (req, res) => {
     // test note. The test harness is the only real-world caller whose
     // Referer ever contains this path.
     const isTestHarness = (req.headers.referer || '').includes('/demos/test-harness.html');
-    const issueUrl = isTestHarness ? null : createIssueFromNote(note);
+    const issueUrl = isTestHarness || UNDER_TEST ? null : createIssueFromNote(note);
     note.issueUrl = issueUrl;
 
     notes.push(note);
