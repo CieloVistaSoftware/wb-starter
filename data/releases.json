@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.149",
+      "date": "2026-10-03",
+      "summary": "Fix: localhost runs no service worker; a failed fetch is a network error, not a fake 503 (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1355\" target=\"_blank\" rel=\"noopener\">PR 1355</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1108\" target=\"_blank\" rel=\"noopener\">#1108</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/891\" target=\"_blank\" rel=\"noopener\">#891</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The service worker keeps no cache on a development origin</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1108\" target=\"_blank\" rel=\"noopener\">#1108</a>",
+          "issues": [
+            1108
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Localhost runs no service worker, and a failed fetch is a network error, not a fake 503</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1108\" target=\"_blank\" rel=\"noopener\">#1108</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/891\" target=\"_blank\" rel=\"noopener\">#891</a>",
+          "issues": [
+            1108,
+            891
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.148",
+      "date": "2026-10-03",
+      "summary": "Fix: a run that collected no tests says &quot;no-tests&quot;, not passed or failed (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1352\" target=\"_blank\" rel=\"noopener\">PR 1352</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1091\" target=\"_blank\" rel=\"noopener\">#1091</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1069\" target=\"_blank\" rel=\"noopener\">#1069</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A run that collected no tests says &quot;no-tests&quot;, not passed or failed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1091\" target=\"_blank\" rel=\"noopener\">#1091</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1069\" target=\"_blank\" rel=\"noopener\">#1069</a>",
+          "issues": [
+            1091,
+            1069
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.147",
       "date": "2026-10-03",
       "summary": "Fix: already-failed media is noticed, and a &lt;video&gt; with &lt;source&gt; children is watched at all (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1359\" target=\"_blank\" rel=\"noopener\">PR 1359</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1342\" target=\"_blank\" rel=\"noopener\">#1342</a>",
