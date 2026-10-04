@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T00:41:37.578Z",
+  "generatedAt": "2026-10-04T01:28:44.387Z",
   "count": 160,
   "schemas": [
     {
@@ -2831,7 +2831,16 @@
           "type": "string",
           "description": "File name. Its extension picks the icon (#1117, #1119) -- `architecture-diagram.png` renders the image icon. There is no fileType attribute: the filename is the only way to say what kind of file it is.",
           "required": true,
-          "default": "this is the filename"
+          "default": "this is the filename",
+          "examples": [
+            "quarterly-report.pdf",
+            "meeting-notes.docx",
+            "architecture-diagram.png",
+            "product-walkthrough.mp4",
+            "interview-recording.m4a",
+            "release-assets.zip",
+            "sensor-capture.bin"
+          ]
         },
         "size": {
           "type": "string",

@@ -1161,8 +1161,7 @@
         "<article x-cardfile filename=\"product-walkthrough.mp4\" size=\"58 MB\" date=\"2026-06-12\" href=\"#\"></article>",
         "<article x-cardfile filename=\"interview-recording.m4a\" size=\"12 MB\" date=\"2026-05-04\" href=\"#\"></article>",
         "<article x-cardfile filename=\"release-assets.zip\" size=\"104 MB\" date=\"2026-09-01\" href=\"#\"></article>",
-        "<article x-cardfile filename=\"sensor-capture.bin\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>",
-        "<article x-cardfile filename=\"product-walkthrough.mp4\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>"
+        "<article x-cardfile filename=\"sensor-capture.bin\" size=\"31 MB\" date=\"2026-09-08\" href=\"#\"></article>"
       ]
     },
     "x-cardhero": {
