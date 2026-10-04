@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.195",
+      "date": "2026-10-04",
+      "summary": "Fix: a failing test records every request it made (network.txt); the trace cannot (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1407\" target=\"_blank\" rel=\"noopener\">PR 1407</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1406\" target=\"_blank\" rel=\"noopener\">#1406</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Record a failing test&#39;s network in the fixture; snapshots back off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1406\" target=\"_blank\" rel=\"noopener\">#1406</a>",
+          "issues": [
+            1406
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The failure trace keeps snapshots on, because Playwright records network only with them</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1406\" target=\"_blank\" rel=\"noopener\">#1406</a>",
+          "issues": [
+            1406
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.194",
       "date": "2026-10-04",
       "summary": "Fix: test runs never write into the product&#39;s notes; 307 test notes removed (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1410\" target=\"_blank\" rel=\"noopener\">PR 1410</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1174\" target=\"_blank\" rel=\"noopener\">#1174</a>",
