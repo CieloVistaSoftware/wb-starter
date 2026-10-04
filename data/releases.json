@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.222",
+      "date": "2026-10-04",
+      "summary": "Fix: home.html is hand-authored; generator won&#39;t overwrite it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1445\" target=\"_blank\" rel=\"noopener\">PR 1445</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1143\" target=\"_blank\" rel=\"noopener\">#1143</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Home.html is hand-authored and says so; the generator never overwrites a page not marked generated</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1143\" target=\"_blank\" rel=\"noopener\">#1143</a>",
+          "issues": [
+            1143
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.221",
       "date": "2026-10-04",
       "summary": "Fix: typewriter cursor is on/off, and the docs say so (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1444\" target=\"_blank\" rel=\"noopener\">PR 1444</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1320\" target=\"_blank\" rel=\"noopener\">#1320</a>",
