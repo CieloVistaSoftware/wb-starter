@@ -76,15 +76,26 @@ for (const [label, panelId, bodyId] of [
 
     // Covering is not only about the rectangle: the panel must actually be ON
     // TOP. A correctly sized box painted underneath the example is still the
-    // bug. Hit-test the pane's centre.
-    const topmostIsPanel = await page.evaluate(({ sel, paneSel }) => {
+    // bug. Hit-test the centre of the part of the pane that is ON SCREEN
+    // (#1175): elementFromPoint returns null for a point outside the viewport,
+    // and the pane's height follows the loaded example, so its own centre was
+    // sometimes below the fold -- 3 of 18 runs "hit nothing" with the panel
+    // visible and on top. No on-screen part at all is its own failure.
+    const probe = await page.evaluate(({ sel, paneSel }) => {
+      // No scrolling: moving the page here pushed the panel's own summary out
+      // from under the pointer, and the close click after this waited forever.
+      // The visible part of the pane is what a reader sees anyway.
       const p = document.querySelector(paneSel)!.getBoundingClientRect();
-      const el = document.elementFromPoint(Math.round(p.left + p.width / 2), Math.round(p.top + p.height / 2));
+      const left = Math.max(p.left, 0), right = Math.min(p.right, window.innerWidth);
+      const top = Math.max(p.top, 0), bottom = Math.min(p.bottom, window.innerHeight);
+      if (right <= left || bottom <= top) return { onScreen: false, topmost: false };
+      const el = document.elementFromPoint(Math.round((left + right) / 2), Math.round((top + bottom) / 2));
       const panel = document.querySelector(sel)!;
-      return !!el && (el === panel || panel.contains(el));
+      return { onScreen: true, topmost: !!el && (el === panel || panel.contains(el)) };
     }, { sel: bodyId, paneSel: PANE });
 
-    expect(topmostIsPanel, `${label} must be the topmost element at the centre of the pane`).toBe(true);
+    expect(probe.onScreen, `${label}: no part of the pane is on screen to hit-test`).toBe(true);
+    expect(probe.topmost, `${label} must be the topmost element over the visible pane`).toBe(true);
 
     // And it closes again from the same control, which is the only way back.
     await summary.click();
