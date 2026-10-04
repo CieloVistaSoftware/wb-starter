@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.237",
+      "date": "2026-10-04",
+      "summary": "Test: wbIdle waits for the site shell to finish booting (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1474\" target=\"_blank\" rel=\"noopener\">PR 1474</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1466\" target=\"_blank\" rel=\"noopener\">#1466</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>WbIdle waits for the site shell to boot before WB.settled</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1466\" target=\"_blank\" rel=\"noopener\">#1466</a>",
+          "issues": [
+            1466
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.236",
       "date": "2026-10-04",
       "summary": "Fix: a closing comment&#39;s cited fix must be this issue&#39;s PR (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1471\" target=\"_blank\" rel=\"noopener\">PR 1471</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",
