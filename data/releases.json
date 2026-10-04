@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.187",
+      "date": "2026-10-04",
+      "summary": "Fix: the cardimage lazy-load test waits for the card to be built before asking for its img (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1401\" target=\"_blank\" rel=\"noopener\">PR 1401</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1325\" target=\"_blank\" rel=\"noopener\">#1325</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The cardimage lazy-load test waits for the card to be built before asking for its img</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1325\" target=\"_blank\" rel=\"noopener\">#1325</a>",
+          "issues": [
+            1325
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.186",
       "date": "2026-10-04",
       "summary": "Fix: publish the behaviors example generator after its tag map, not before (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1338\" target=\"_blank\" rel=\"noopener\">PR 1338</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a>",
