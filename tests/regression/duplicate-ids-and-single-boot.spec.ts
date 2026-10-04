@@ -75,6 +75,10 @@ test.describe('#724 — the site boots exactly once', () => {
 });
 
 test.describe('#730 — a duplicate id is a runtime error', () => {
+  // The probe's report is mocked below; a worker answering first would let it
+  // reach the real log anyway (#1349).
+  test.use({ serviceWorkers: 'block' });
+
   test('an injected duplicate is detected and reported as an error', async ({ page }) => {
     // #1033 -- this test's deliberate duplicate used to reach the REAL error
     // log: "Duplicate element id(s) probe: #behaviors-live-stage x2" sat in
