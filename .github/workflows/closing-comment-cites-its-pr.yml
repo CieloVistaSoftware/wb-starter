@@ -1,0 +1,47 @@
+name: Closing comment cites its own PR
+
+# #1336: parallel agents share one scratchpad. A closing comment written to a
+# file with an obvious name can be overwritten by another agent before
+# `gh issue comment --body-file` reads it, and the issue then names someone
+# else's PR and someone else's validating test -- well-formed, so nothing
+# fails. A comment that says "Fixed in <PR>" is checked against that PR's own
+# description, which must cite this issue (#1440 makes every PR do so). A
+# mismatch is answered on the issue, where the next reader will see it.
+on:
+  issue_comment:
+    types: [created, edited]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  comment-cites-pr:
+    # Issue comments only; a PR's own conversation is not a closing record.
+    if: ${{ !github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Passed through env, never interpolated into the script: a comment is
+      # untrusted text.
+      - name: Every PR cited as the fix closes this issue
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ github.token }}
+          REPORT_FILE: ${{ runner.temp }}/comment-cites-pr.md
+        run: node scripts/check-comment-cites-pr.mjs
+
+      - name: Say so on the issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPORT_FILE: ${{ runner.temp }}/comment-cites-pr.md
+        run: gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file "$REPORT_FILE"
