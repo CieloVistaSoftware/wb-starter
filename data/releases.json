@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.234",
+      "date": "2026-10-04",
+      "summary": "Test: renderVariant waits for the picked example to apply (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1460\" target=\"_blank\" rel=\"noopener\">PR 1460</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1457\" target=\"_blank\" rel=\"noopener\">#1457</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>RenderVariant waits for the picked example to apply, not 250ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1457\" target=\"_blank\" rel=\"noopener\">#1457</a>",
+          "issues": [
+            1457
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.233",
       "date": "2026-10-04",
       "summary": "Test: playground setup waits for every input to apply (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1461\" target=\"_blank\" rel=\"noopener\">PR 1461</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1459\" target=\"_blank\" rel=\"noopener\">#1459</a>",
