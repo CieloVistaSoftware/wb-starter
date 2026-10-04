@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.231",
+      "date": "2026-10-04",
+      "summary": "Fix: boot navigation no longer closes a menu opened during startup (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1458\" target=\"_blank\" rel=\"noopener\">PR 1458</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1456\" target=\"_blank\" rel=\"noopener\">#1456</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The boot navigation no longer closes a menu the reader opened during startup</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1456\" target=\"_blank\" rel=\"noopener\">#1456</a>",
+          "issues": [
+            1456
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.230",
       "date": "2026-10-04",
       "summary": "Fix: old server logs are compressed, never deleted (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1455\" target=\"_blank\" rel=\"noopener\">PR 1455</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1130\" target=\"_blank\" rel=\"noopener\">#1130</a>",
