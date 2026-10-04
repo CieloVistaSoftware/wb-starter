@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.215",
+      "date": "2026-10-04",
+      "summary": "Fix: starting the site no longer rewrites tracked files (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1436\" target=\"_blank\" rel=\"noopener\">PR 1436</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1131\" target=\"_blank\" rel=\"noopener\">#1131</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The served-stamp test makes its own local stamp (CI starts node server.js, not npm start)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1131\" target=\"_blank\" rel=\"noopener\">#1131</a>",
+          "issues": [
+            1131
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Npm start stamps into .local/, not tracked files; main keeps the docs manifests current</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1131\" target=\"_blank\" rel=\"noopener\">#1131</a>",
+          "issues": [
+            1131
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.214",
       "date": "2026-10-04",
       "summary": "Chore: delete the dead schema-tests generator and output (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1431\" target=\"_blank\" rel=\"noopener\">PR 1431</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1430\" target=\"_blank\" rel=\"noopener\">#1430</a>",
