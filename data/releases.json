@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.207",
+      "date": "2026-10-04",
+      "summary": "Fix: drop the schema builder&#39;s dead wb- tag handling (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1423\" target=\"_blank\" rel=\"noopener\">PR 1423</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1170\" target=\"_blank\" rel=\"noopener\">#1170</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Schema builder drops its dead wb- tag map and branches; guard src/core</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1170\" target=\"_blank\" rel=\"noopener\">#1170</a>",
+          "issues": [
+            1170
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.206",
+      "date": "2026-10-04",
+      "summary": "Fix: delete orphaned stock.css (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1421\" target=\"_blank\" rel=\"noopener\">PR 1421</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1172\" target=\"_blank\" rel=\"noopener\">#1172</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Delete the orphaned stock.css and the two specs that only measured it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1172\" target=\"_blank\" rel=\"noopener\">#1172</a>",
+          "issues": [
+            1172
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.205",
       "date": "2026-10-04",
       "summary": "Test: exemptions name one file each, by path (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1420\" target=\"_blank\" rel=\"noopener\">PR 1420</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1173\" target=\"_blank\" rel=\"noopener\">#1173</a>",
