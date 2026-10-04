@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import compression from 'compression';
 import { WebSocketServer } from 'ws';
+import { createServer as createHttpServer } from 'http';
 import { exec, execSync, execFile, execFileSync } from 'child_process';
 import { promisify } from 'util';
 
@@ -46,9 +47,32 @@ const rootDir = __dirname;
 // bottom of this file). Nothing gets killed.
 
 // === LIVE RELOAD SYSTEM ===
+// #1334: the reload port answers a plain HTTP request with what it is. A bare
+// WebSocketServer replied "Upgrade Required" and nothing else -- John opened
+// :3001 and had to ask what it meant ("Upgrade" reads as "update your
+// software"). Still a 426, so a client sees the right status; now it also
+// says which program answered, what the port is for, and where the site is.
+let sitePort = Number(port);   // updated by onListening() if the site moved
+const reloadHttp = createHttpServer((req, res) => {
+  res.writeHead(426, { 'Content-Type': 'text/plain; charset=utf-8', Upgrade: 'websocket' });
+  res.end(
+    `This is wb-starter's live-reload WebSocket (port ${WS_PORT}).\n` +
+    'It tells an open page to refresh when a file changes; it is not a page.\n\n' +
+    `The site is at http://localhost:${sitePort}\n`,
+  );
+});
 let wss;
 try {
-  wss = new WebSocketServer({ port: WS_PORT });
+  wss = new WebSocketServer({ server: reloadHttp });
+  reloadHttp.on('error', (e) => {
+    if (e.code === 'EADDRINUSE') {
+      console.log(`[Live Reload] Port ${WS_PORT} is busy. Live reload will be disabled for this session.`);
+      wss = null;
+    } else {
+      console.error('[Live Reload] Server error:', e);
+    }
+  });
+  reloadHttp.listen(WS_PORT);
   wss.on('error', (e) => {
     if (e.code === 'EADDRINUSE') {
       console.log(`[Live Reload] Port ${WS_PORT} is busy. Live reload will be disabled for this session.`);
@@ -176,15 +200,21 @@ app.use((req, res, next) => {
 });
 
 // Request logging (for debugging)
+//
+// #1112: this logged .js requests only, so a 500 on a doc, an image or an
+// /api route -- the "Failed to load resource: ... 500 ()" that names no URL
+// and blocked a release -- never reached the log a failing test leaves
+// behind (data/test-server-logs/). Every failed response and every API call
+// is logged now, whatever the path; module loads stay logged as before.
 app.use((req, res, next) => {
-  if (req.path.endsWith('.js')) {
-    res.on('finish', () => {
-      if (res.statusCode !== 304) {
-          const referer = req.headers['referer'] || 'unknown';
-          console.log(`[Request] ${req.method} ${req.path} (${res.statusCode}) [Referer: ${referer}]`);
-      }
-    });
-  }
+  res.on('finish', () => {
+    const status = res.statusCode;
+    if (status === 304) return;
+    if (status >= 400 || req.path.endsWith('.js') || req.path.startsWith('/api/')) {
+      const referer = req.headers['referer'] || 'unknown';
+      console.log(`[Request] ${req.method} ${req.path} (${status}) [Referer: ${referer}]`);
+    }
+  });
   next();
 });
 
@@ -334,11 +364,17 @@ app.get('/pages/:page', (req, res, next) => {
   <!-- Live Reload Client -->
   <script>
     (function() {
-      const ws = new WebSocket('ws://' + window.location.hostname + ':3001');
+      // #1333: the server's OWN live-reload port (port + 1, see WS_PORT), not
+      // a hardcoded 3001. #518 derived the server side and left this one:
+      // on any other port the page either reached nothing or the main
+      // checkout's socket, and reloaded for the wrong tree's changes.
+      const ws = new WebSocket('ws://' + window.location.hostname + ':${WS_PORT}');
       ws.onmessage = (msg) => {
         if (msg.data === 'reload') window.location.reload();
       };
-      console.log('Live Reload connected');
+      // Said when it is true, not unconditionally before the socket opened.
+      ws.onopen = () => console.log('Live Reload connected (port ${WS_PORT})');
+      ws.onerror = () => console.warn('Live Reload unavailable: nothing answered on port ${WS_PORT}');
     })();
   </script>
 </head>
@@ -869,23 +905,16 @@ function headSha(rootDir) {
   }
 }
 
-app.get('/api/fixes', async (req, res) => {
-  const head = headSha(rootDir);
-  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+// #1054: served stale-while-revalidate. The cache is keyed on HEAD, and every
+// push to main moves HEAD, so the first visit after any merge used to pay the
+// full cold computation (measured 27 s, 5 MB on 2026-10-04) with a blank Fix
+// Viewer meanwhile. Now a stale cache is served at once (X-Fixes-Cache: stale)
+// and refreshed in the background; only a server with no cache at all computes
+// while the visitor waits. One refresh runs at a time, and a concurrent caller
+// joins it instead of starting another.
+let fixesRefresh = null;
 
-  if (head && !('refresh' in req.query)) {
-    try {
-      const cached = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-      const fresh = cached.head === head && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS;
-      if (fresh && cached.payload) {
-        res.set('Cache-Control', 'no-store');
-        res.set('X-Fixes-Cache', 'hit');
-        res.json(cached.payload);
-        return;
-      }
-    } catch { /* no cache, unreadable, or a shape from an older build — recompute */ }
-  }
-
+async function computeFixes(head) {
   const US = String.fromCharCode(31);
   const RS = String.fromCharCode(30);
   const NL = String.fromCharCode(10);
@@ -1032,7 +1061,39 @@ app.get('/api/fixes', async (req, res) => {
       console.warn('[Fixes] could not write cache:', err.message);
     }
   }
+  return payload;
+}
 
+function refreshFixes(head) {
+  if (!fixesRefresh) {
+    fixesRefresh = computeFixes(head)
+      .catch((err) => { console.warn('[Fixes] refresh failed:', err && err.message); return null; })
+      .finally(() => { fixesRefresh = null; });
+  }
+  return fixesRefresh;
+}
+
+app.get('/api/fixes', async (req, res) => {
+  const head = headSha(rootDir);
+  const cachePath = path.join(rootDir, FIXES_CACHE_REL_PATH);
+  let cached = null;
+  try { cached = JSON.parse(fs.readFileSync(cachePath, 'utf8')); } catch { /* no cache yet, or an older shape */ }
+  const fresh = !!(cached && cached.payload && head && cached.head === head
+    && (Date.now() - Date.parse(cached.cachedAt)) < FIXES_TTL_MS);
+
+  if (!('refresh' in req.query) && cached && cached.payload) {
+    res.set('Cache-Control', 'no-store');
+    res.set('X-Fixes-Cache', fresh ? 'hit' : 'stale');
+    res.json(cached.payload);
+    if (!fresh) refreshFixes(head);
+    return;
+  }
+
+  const payload = await refreshFixes(head);
+  if (!payload) {
+    res.status(500).json({ error: 'could not compute the fixes list; see the server log' });
+    return;
+  }
   res.set('Cache-Control', 'no-store');
   res.set('X-Fixes-Cache', 'miss');
   res.json(payload);
@@ -1534,12 +1595,28 @@ app.use((req, res, next) => {
 // Bind to the preferred port, falling through to the next free one when
 // it's taken (up to +20) instead of killing the current occupant -- see the
 // PORT POLICY comment at the top of this file.
+//
+// #1135: ONLY when no port was asked for. A caller that sets PORT (Playwright's
+// webServer, test-async, a person) is waiting on THAT port: falling through to
+// the next one left it waiting forever, or worse, talking to whatever already
+// held the port -- another worktree's server -- so a whole suite ran against
+// the wrong tree. An explicitly requested port that is busy is a hard error
+// that names it.
+const PORT_WAS_REQUESTED = Boolean(process.env.PORT);
+
 function tryListen(p, attemptsLeft) {
   const server = app.listen(p, () => onListening(p));
   server.on('error', (err) => {
     if (err.code === 'EADDRINUSE' && attemptsLeft > 0) {
       console.log(`[port] :${p} in use -- trying :${p + 1}`);
       tryListen(p + 1, attemptsLeft - 1);
+    } else if (err.code === 'EADDRINUSE') {
+      console.error(
+        `[port] :${p} is already in use, and PORT=${p} was requested explicitly, so this server ` +
+        `will not move to another port (#1135): whoever asked for :${p} would be talking to ` +
+        `the process that holds it. Free the port, or start without PORT to let it pick.`
+      );
+      process.exit(1);
     } else {
       throw err;
     }
@@ -1547,6 +1624,7 @@ function tryListen(p, attemptsLeft) {
 }
 
 function onListening(p) {
+  sitePort = p;
   console.log(`WB Starter running at http://localhost:${p}`);
   if (ENABLE_COLLAB) {
     console.log(`Collab Server running at ws://localhost:${WS_PORT}/collab`);
@@ -1570,4 +1648,4 @@ function onListening(p) {
 // Number(port): `port` is the STRING from process.env.PORT, and tryListen's retry
 // does `p + 1` -- on a string that is concatenation ('59175' -> '591751'), which
 // listen() rejects with ERR_SOCKET_BAD_PORT (#1286).
-tryListen(Number(port), 20);
+tryListen(Number(port), PORT_WAS_REQUESTED ? 0 : 20);

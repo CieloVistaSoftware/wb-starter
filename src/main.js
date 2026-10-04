@@ -22,6 +22,7 @@ import { VERSION } from './core/version.js';
 import { versionNumber } from './core/version-number.js';
 import { traceStatusLabel } from './core/debug-trace.js';
 import { reportDuplicateIds } from './core/duplicate-ids.js';
+import { isDevelopmentOrigin, releaseDevelopmentOrigin } from './core/service-worker.js';
 
 /**
  * Initialize the wb-starter application
@@ -125,7 +126,18 @@ if (document.readyState === 'loading') {
 // (manifest.json sets display:standalone) actually checks for fresh code on
 // each load instead of relying solely on the OS webview's own cache
 // heuristics, which can hold stale assets far longer than a browser tab.
-if ('serviceWorker' in navigator) {
+//
+// #1108: never on a development origin. A worker on localhost served a
+// four-day-old version.js while the dev server served the current one, and
+// `cache: 'no-store'` cannot see past it. On localhost the browser shows what is
+// on disk, and a registration an older build left behind is removed with its
+// caches — otherwise it outlives the change that stops creating it.
+// See src/core/service-worker.js.
+if ('serviceWorker' in navigator && isDevelopmentOrigin()) {
+  window.addEventListener('load', () => {
+    releaseDevelopmentOrigin();
+  });
+} else if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     // Derive both the script URL and its scope from wherever main.js
     // actually loaded from, rather than hardcoding a path — correct on

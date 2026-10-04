@@ -19,7 +19,7 @@ import { test, expect, Page } from '../fixtures/offline';
 async function loadSite(page: Page) {
   await page.goto('/?page=behaviors');
   await page.waitForSelector('#behaviors-search', { timeout: 30000 });
-  await page.waitForTimeout(1200);
+  await page.evaluate(() => (window as any).WB?.whenIdle?.({ timeout: 20000 }));
 }
 
 test.describe('#724 — the site boots exactly once', () => {
@@ -75,7 +75,21 @@ test.describe('#724 — the site boots exactly once', () => {
 });
 
 test.describe('#730 — a duplicate id is a runtime error', () => {
+  // The probe's report is mocked below; a worker answering first would let it
+  // reach the real log anyway (#1349).
+  test.use({ serviceWorkers: 'block' });
+
   test('an injected duplicate is detected and reported as an error', async ({ page }) => {
+    // #1033 -- this test's deliberate duplicate used to reach the REAL error
+    // log: "Duplicate element id(s) probe: #behaviors-live-stage x2" sat in
+    // data/errors.json after every suite and was chased for weeks as a page
+    // that rendered its stage twice. The report is caught here instead, which
+    // also proves the half the console check cannot: it is sent to the log.
+    const logged: string[] = [];
+    await page.route('**/api/error-log/append', async (route) => {
+      logged.push(route.request().postData() || '');
+      await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+    });
     await loadSite(page);
 
     const result = await page.evaluate(async () => {
@@ -104,6 +118,10 @@ test.describe('#730 — a duplicate id is a runtime error', () => {
       'it must be a console.error naming the id — a warning gets scrolled past',
     ).toBe(true);
     expect(result.afterRemoval, 'and clean again once the duplicate is gone').toEqual([]);
+    await expect.poll(
+      () => logged.filter((b) => b.includes('probe') && b.includes('behaviors-live-stage')).length,
+      { message: 'the duplicate must be sent to the Error Log (and caught here, not written)' },
+    ).toBe(1);
   });
 
   test('the detector never breaks the page', async ({ page }) => {

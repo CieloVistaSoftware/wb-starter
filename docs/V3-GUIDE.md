@@ -230,7 +230,6 @@ need a custom tag:
 <!-- forms -->
 <input
   type="password"
-  x-password
   placeholder="Password with toggle">
 </div>
 

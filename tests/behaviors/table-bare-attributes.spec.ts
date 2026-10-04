@@ -35,8 +35,12 @@ test.describe('<table> bare striped/hover attributes', () => {
     await expect(page.locator('#t2')).not.toHaveClass(/x-table--striped/);
   });
 
-  test('bare hover="false" disables hover (was checking dataset.hover, which bare attributes never populate)', async ({ page }) => {
-    await setup(page, '<table id="t3" x-behavior="table" hover="false"><thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>');
+  // #1344: the attribute is `hoverable`, the name the schema declares and
+  // ATTRIBUTE-NAMING-STANDARD.md names as canonical. This test used to say
+  // `hover="false"` -- an undeclared second name for the same option, read
+  // nowhere but here, which is why it was dropped rather than published.
+  test('hoverable="false" disables hover (was checking dataset.hover, which bare attributes never populate)', async ({ page }) => {
+    await setup(page, '<table id="t3" x-behavior="table" hoverable="false"><thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>');
     await expect(page.locator('#t3')).not.toHaveClass(/x-table--hover/);
   });
 });

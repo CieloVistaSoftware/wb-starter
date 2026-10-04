@@ -54,9 +54,24 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync } from 'node:child_process';
+/**
+ * A WebSocket client for the inspector query, or null (#1199).
+ *
+ * CI runs on Node 20, which has no global WebSocket, so every query there
+ * failed with "WebSocket is not defined". The global is used where Node has
+ * one; otherwise the `ws` package. It is imported lazily, not at the top:
+ * scripts/test-gate-guards.mjs runs a COPY of this file in a temp directory
+ * with no node_modules, and a static import failed every ratchet check there.
+ * With neither available the query is skipped and the report says so.
+ */
+async function webSocketClient() {
+  if (typeof globalThis.WebSocket === 'function') return globalThis.WebSocket;
+  try { return (await import('ws')).default; } catch { return null; }
+}
 import { classifyFailure } from '../scripts/lib/server-down.mjs';
 import { NO_VERDICT_EXIT } from '../scripts/lib/gate-exit.mjs';
 import { claimFreePort } from '../scripts/lib/free-port.mjs';
+import { readInFlight, describeInFlight } from '../scripts/lib/in-flight-tests.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(HERE, '..');
@@ -294,6 +309,7 @@ async function runGate(port) {
   let lastTest = '(none yet)';
   const inspectorUrls = new Set();
   let stallId = null;
+  let stallInFlight = [];
 
   const tee = (stream, out) => {
     let carry = '';
@@ -305,6 +321,12 @@ async function runGate(port) {
         const line = raw.replace(ANSI, '');
         const dbg = line.match(/Debugger listening on (ws:\/\/\S+)/);
         if (dbg) inspectorUrls.add(dbg[1]);
+        // #1199: a process that has exited prints 'Debugger ending on <url>'. Keeping its
+        // URL meant a stall near the end of a 50-minute run queried dozens of dead
+        // sessions and printed one 'connection failed' line for each, burying the one
+        // live process that was actually stuck.
+        const gone = line.match(/Debugger ending on (ws:\/\/\S+)/);
+        if (gone) inspectorUrls.delete(gone[1]);
         const header = line.match(COLLECTED);
         if (header) {
           collected = Number(header[1]);
@@ -352,6 +374,10 @@ async function runGate(port) {
   async function grabStacks() {
     const urls = [...inspectorUrls];
     if (!urls.length) return { error: 'no inspector url appeared on stderr' };
+    const WebSocket = await webSocketClient();
+    if (!WebSocket) {
+      return { error: `inspector not queried: Node ${process.version} has no WebSocket and the ws package is not installed here` };
+    }
 
     const EXPR = `(() => {
       const r = process.report.getReport();
@@ -411,6 +437,9 @@ async function runGate(port) {
     // every stall, destroying the evidence from the run before.
     const id = Date.now();
     const signature = 'test-ratchet.mjs|error|gate-stalled';
+    // #1199: what is running NOW. 'last test seen' is the last to FINISH, which by
+    // definition is not the one that is stuck.
+    const inFlight = readInFlight(REPO, started);
     const evidence = {
       id,
       signature,
@@ -418,6 +447,8 @@ async function runGate(port) {
       at: new Date().toISOString(),
       testsSeen: acks,
       lastTest,
+      inFlight: inFlight.tests,
+      inFlightNote: inFlight.note,
       silentForSeconds: Math.round(quietMs / 1000),
       elapsedSeconds: Math.round((Date.now() - started) / 1000),
       port: port || 'default',
@@ -438,16 +469,26 @@ async function runGate(port) {
     console.error(`\n\u{1F6D1} GATE STALLED - ${reason}`);
     console.error(`   error id       : ${id}`);
     console.error(`   signature      : ${signature}`);
-    console.error(`   last test seen : ${lastTest}`);
+    if (inFlight.tests.length) {
+      console.error(`   running now    : ${inFlight.tests.length} test(s), longest first:`);
+      for (const t of inFlight.tests.slice(0, 12)) console.error(`       ${describeInFlight(t)}`);
+      if (inFlight.tests.length > 12) console.error(`       ... and ${inFlight.tests.length - 12} more in the evidence file`);
+    } else {
+      console.error(`   running now    : unknown - ${inFlight.note}`);
+    }
+    console.error(`   last test seen : ${lastTest} (the last to FINISH, not the stuck one)`);
     console.error(`   tests seen     : ${acks}`);
     console.error(`   silent for     : ${Math.round(quietMs / 1000)}s`);
     console.error(`   elapsed        : ${Math.round((Date.now() - started) / 1000)}s`);
     if (stack?.processes?.length) {
+      const unreachable = stack.processes.filter((proc) => proc.error);
+      if (unreachable.length) {
+        // One line, not one per session: the reasons are in the evidence file.
+        const reasons = [...new Set(unreachable.map((proc) => proc.error))].join('; ');
+        console.error(`   inspector      : ${unreachable.length} of ${stack.processes.length} session(s) gave no report (${reasons})`);
+      }
       for (const proc of stack.processes) {
-        if (proc.error) {
-          console.error(`   pid ?          : no report - ${proc.error}`);
-          continue;
-        }
+        if (proc.error) continue;
         console.error(`   pid ${proc.pid} stack:`);
         for (const line of (proc.js || []).slice(0, 10)) console.error(`       ${line}`);
         if (proc.waitingOn?.length) {
@@ -491,7 +532,9 @@ async function runGate(port) {
 
       // Stack BEFORE any signal: a terminated process has no stack to give.
       const stack = await grabStacks();
-      stallId = captureEvidence(reason, stack).id;
+      const evidence = captureEvidence(reason, stack);
+      stallId = evidence.id;
+      stallInFlight = evidence.inFlight || [];
 
       // SIGINT first. Playwright handles it: it names the tests still running
       // and flushes its report and trace. SIGTERM skips all of that, and
@@ -519,7 +562,9 @@ async function runGate(port) {
     return {
       failures: null,
       why: `${outcome.reason}. That is a HANG, not a result. The gate stopped after ` +
-        `${acks} test(s), last: ${lastTest}. Error id ${stallId}, evidence: data/gate-evidence/stall-${stallId}.json`,
+        `${acks} test(s), last to finish: ${lastTest}. ` +
+        (stallInFlight.length ? `Running when it stopped: ${stallInFlight.slice(0, 3).map(describeInFlight).join(' | ')}. ` : '') +
+        `Error id ${stallId}, evidence: data/gate-evidence/stall-${stallId}.json`,
     };
   }
 

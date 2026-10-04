@@ -1,5 +1,6 @@
 import { VERSION } from '../core/version.js';
 import { versionNumber } from '../core/version-number.js';
+import { removeServiceWorkers } from '../core/service-worker.js';
 
 /**
  * Release — the ONE place any element displays the site's release/build
@@ -40,18 +41,7 @@ function formatBuiltAtCentral(isoString) {
 }
 
 async function clearCacheAndReload() {
-  try {
-    if (window.caches) {
-      const keys = await caches.keys();
-      await Promise.all(keys.map((k) => caches.delete(k)));
-    }
-    if (navigator.serviceWorker) {
-      const regs = await navigator.serviceWorker.getRegistrations();
-      await Promise.all(regs.map((r) => r.unregister()));
-    }
-  } catch (err) {
-    console.warn('[x-release] clear-cache partial failure:', err && err.message);
-  }
+  await removeServiceWorkers('[x-release]');
   // A plain location.reload() bypasses Cache Storage/the service worker
   // (both cleared above) but not the browser's own HTTP disk cache --
   // force a genuinely new URL so nothing is served from cache.

@@ -12,7 +12,19 @@ test.describe('#183 — code blocks highlight', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=behaviors');
     await page.waitForSelector('#mainPage-behaviors', { timeout: 20000 });
-    await page.waitForTimeout(2500); // demo build + highlight.js
+    // #1374: wait for the state the tests assert, not a fixed 2.5s. Under load
+    // the demos and highlight.js were still building when the count ran
+    // ("Expected > 5, Received 4"). First the runtime's own idle signal, then
+    // the highlighted, tokenised blocks themselves.
+    await page.evaluate(async () => {
+      const WB = (window as any).WB;
+      if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 20000 });
+    });
+    await expect
+      .poll(() => page.evaluate(() =>
+        [...document.querySelectorAll('pre code.hljs, code.language-html.hljs')]
+          .filter((c) => c.querySelector('[class^="hljs-"]')).length), { timeout: 20000 })
+      .toBeGreaterThan(5);
   });
 
   test('demo code blocks carry the hljs class and token spans', async ({ page }) => {

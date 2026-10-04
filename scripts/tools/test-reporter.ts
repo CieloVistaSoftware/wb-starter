@@ -217,6 +217,43 @@ class WBTestReporter implements Reporter {
   private resultsLivePath: string = '';
   private failureCount: number = 0;
   private previousFailures: Set<string> = new Set();
+  // #1199: the tests running right now, so a stall report can name the one that
+  // is stuck. The list reporter prints a line when a test ENDS and never when it
+  // begins, so the gate's watchdog could only ever name the last test to finish.
+  // Shape and reader: scripts/lib/in-flight-tests.mjs.
+  private inFlight: Map<string, { worker: number; project: string; file: string; title: string; startedAt: number }> = new Map();
+  private inFlightPath: string = '';
+  private inFlightTimer: NodeJS.Timeout | null = null;
+
+  private writeInFlight() {
+    if (!this.inFlightPath) return;
+    try {
+      writeFileSync(this.inFlightPath, JSON.stringify({
+        runStartedAt: this.startTime,
+        updatedAt: Date.now(),
+        running: [...this.inFlight.values()],
+      }) + '\n');
+    } catch { /* evidence for a stall must never fail a run */ }
+  }
+
+  // Coalesced: thousands of tests begin and end, and the file only has to be
+  // current to within a quarter second to name a test that has been stuck for minutes.
+  private scheduleInFlightWrite() {
+    if (this.inFlightTimer) return;
+    this.inFlightTimer = setTimeout(() => { this.inFlightTimer = null; this.writeInFlight(); }, 250);
+    this.inFlightTimer.unref?.();
+  }
+
+  onTestBegin(test: TestCase, result: TestResult) {
+    this.inFlight.set(`${test.id}#${result.retry}`, {
+      worker: result.workerIndex,
+      project: test.parent.project()?.name || 'default',
+      file: test.location.file.replace(/\\/g, '/').split('/tests/')[1] || test.location.file,
+      title: test.title,
+      startedAt: result.startTime.getTime(),
+    });
+    this.scheduleInFlightWrite();
+  }
 
   onBegin(config: FullConfig, suite: Suite) {
     this.startTime = Date.now();
@@ -225,6 +262,12 @@ class WBTestReporter implements Reporter {
     mkdirSync(this.outDir, { recursive: true });
 
     // Initialize live failure log (clear previous)
+    // Start this run's in-flight record empty: a file from the previous run must
+    // never be read as this run's stuck test.
+    this.inFlightPath = join(this.outDir, 'in-flight.json');
+    this.inFlight.clear();
+    this.writeInFlight();
+
     this.failureLogPath = join(this.outDir, 'failures-live.log');
     if (existsSync(this.failureLogPath)) {
       unlinkSync(this.failureLogPath);
@@ -281,6 +324,9 @@ class WBTestReporter implements Reporter {
   }
 
   onTestEnd(test: TestCase, result: TestResult) {
+    this.inFlight.delete(`${test.id}#${result.retry}`);
+    this.scheduleInFlightWrite();
+
     const projectName = test.parent.project()?.name || 'default';
     const project = this.projectResults.get(projectName);
     
@@ -440,6 +486,11 @@ class WBTestReporter implements Reporter {
 
   async onEnd(result: FullResult) {
     const totalDuration = Date.now() - this.startTime;
+
+    // The run is over: nothing is in flight, and the file says so.
+    this.inFlight.clear();
+    if (this.inFlightTimer) { clearTimeout(this.inFlightTimer); this.inFlightTimer = null; }
+    this.writeInFlight();
 
     // Calculate totals
     let totalPassed = 0;

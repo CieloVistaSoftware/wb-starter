@@ -1,0 +1,5 @@
+#!/bin/sh
+# WB Starter commit-msg hook (#1336): a commit on an issue branch must cite
+# that issue. Catches a message file another agent overwrote in the shared
+# scratchpad -- git commit -F accepts any well-formed file, so nothing else does.
+node scripts/check-commit-issue.mjs "$1" || exit 1

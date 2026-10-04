@@ -215,17 +215,31 @@ export default defineConfig({
     // the exact step instead of guessed at.
     //   WB_TRACE=on npm run test:async -- <spec>
     // then: npx playwright show-trace test-results/<dir>/trace.zip
-    trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure') || 'off',
-    // #961 experiment: src/main.js:133 registers sw.js, which is network-first
-    // with a CACHE FALLBACK — when a fetch fails it silently serves a cached
-    // copy rather than failing. A service worker also does not control the
-    // FIRST page load, only later ones, which matches the measured signature:
-    // 18 of 19 failures occurred on a later repeat, never the first.
     //
-    // WB_BLOCK_SW=1 takes the worker out of the picture so we can see whether
-    // the flapping stops. The default stays 'allow' — this measures rather than
-    // quietly changing what every run exercises.
-    serviceWorkers: process.env.WB_BLOCK_SW ? 'block' : 'allow',
+    // #1112: and by default every failing test now keeps a LIGHT trace --
+    // actions, network (every URL and status) and console, no DOM snapshots or
+    // screenshots. "Failed to load resource: ... 500 ()" names no URL; this
+    // trace does. The full trace was measured before choosing: retaining it
+    // for every test turned permutation-compliance from 156/156 in 383 s into
+    // 20 failures in the first 44, most of them "Tearing down context exceeded
+    // the test timeout" -- writing snapshots, not testing. WB_TRACE still
+    // selects the full trace for one run.
+    trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure')
+      || { mode: 'retain-on-failure', snapshots: false, screenshots: false, sources: false },
+    // #1362: no service worker unless a spec asks for one. A worker answers a
+    // page's fetch before page.route sees it, so with 'allow' as the default
+    // every new spec that mocks the network was born broken unless its author
+    // knew to opt out (#1349 found 24). Of 684 specs exactly one needs the
+    // worker (tests/compliance/sw-audio-range-request.spec.ts) and it opts in.
+    //
+    // This changes nothing the site does under test: since #1108 main.js never
+    // registers sw.js on localhost/127.0.0.1/[::1] and removes any old one, so
+    // 'allow' and 'block' were already the same for every test-server page --
+    // which is also why the WB_BLOCK_SW with/without measurement #961 asked for
+    // no longer has two states to compare, and the switch is gone. Where the
+    // worker IS part of what ships -- the deployed site (`deployed` project
+    // below, and the deployed smoke via SMOKE_BASE_URL) -- it stays allowed.
+    serviceWorkers: process.env.SMOKE_BASE_URL ? 'allow' : 'block',
     // A click on a hidden element waits for it to become visible. With no
     // action timeout that wait silently eats the whole test budget -- 90s in
     // remaining-coverage, where 7 tests timed out on rows inside a collapsed
@@ -242,7 +256,11 @@ export default defineConfig({
   // used"). When no server is running (e.g. a CI job), Playwright
   // still starts one via `command`. A WB_TEST_PORT override never reuses --
   // see the #518 comment above.
-  webServer: {
+  // #1364: a deployed smoke run (SMOKE_BASE_URL set, scripts/smoke-deployed.mjs)
+  // tests the published site and needs no local server. Starting one anyway
+  // made that check depend on this machine's node_modules for nothing -- and
+  // when it could not start, the deployed site was blamed.
+  webServer: process.env.SMOKE_BASE_URL ? undefined : {
     // #1074: through scripts/serve-with-log.mjs, not `npm start` directly.
     // Playwright discards webServer stdout by default, so when the server died
     // mid-run nothing recorded why — only the ERR_CONNECTION_REFUSED failures
@@ -387,6 +405,8 @@ export default defineConfig({
       name: 'deployed',
       testDir: './tests/deployed',
       testMatch: '**/*.spec.ts',
+      // The shipped site registers its worker; this project checks what ships (#1362).
+      use: { serviceWorkers: 'allow' },
     },
 
     {

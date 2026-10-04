@@ -89,7 +89,8 @@
     "lint:baseline": "node .husky/lint-ratchet.mjs --baseline",
     "lint:ratchet": "node .husky/lint-ratchet.mjs --all",
     "lint:staged": "node .husky/lint-ratchet.mjs --staged",
-    "test:collection": "node scripts/check-test-collection.mjs"
+    "test:collection": "node scripts/check-test-collection.mjs",
+    "test:pages-deploy-state": "node scripts/test-pages-deploy-state.mjs"
   },
   "scripts-info": {
     "start": "Start site (pull latest main, stamp version, update docs manifest, then run express server)",

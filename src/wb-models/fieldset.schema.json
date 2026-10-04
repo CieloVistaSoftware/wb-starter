@@ -18,7 +18,7 @@
   },
   "test": {
     "setup": [
-      "<fieldset x-fieldset id='test-fieldset'><legend>Legend</legend><input></fieldset>"
+      "<fieldset id='test-fieldset'><legend>Legend</legend><input></fieldset>"
     ]
   }
 }
