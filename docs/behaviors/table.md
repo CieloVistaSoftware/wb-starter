@@ -58,7 +58,7 @@ No attribute name carries a dash — only the `x-` behavior prefix does (#1125).
 
 Write the attribute to switch it on and leave it out to switch it off:
 
-```html
+```html-static
 <table striped headers="A,B" rows='[["1","2"]]'></table>   <!-- on  -->
 <table headers="A,B" rows='[["1","2"]]'></table>           <!-- off -->
 ```
