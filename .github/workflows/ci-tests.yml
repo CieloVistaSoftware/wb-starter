@@ -70,6 +70,7 @@ jobs:
           - { project: behaviors, gated: true }
           - { project: schema-viewer, gated: true }
           - { project: integration, gated: true }
+          - { project: views, gated: true }
           - { project: base, gated: false }
     # #1218 -- John: "the only reason Linux is a part is that it's what you
     # use internally." The site is built, served and shipped from Windows, so
