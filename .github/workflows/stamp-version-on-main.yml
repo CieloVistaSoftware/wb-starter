@@ -47,6 +47,11 @@ jobs:
         run: |
           git fetch --tags --force
           node scripts/stamp-version.js
+          # #1131: the docs manifests' "modified" dates come from git history,
+          # so the committed copies fell behind main and every local npm start
+          # rewrote them. Refreshed here with the rest of the stamp, a clean
+          # checkout of main regenerates them byte-identical.
+          node scripts/update-docs-manifest.js
           # John: "A release has no meaning if i can't read about the content."
           # Add this version's entry (its PR title, its commits, their issue
           # links) to data/releases.json, which the Releases page renders.

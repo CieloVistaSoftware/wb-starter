@@ -142,3 +142,7 @@ data/inline-style-audit.json
 /packages/create-wb-starter/template/**/*.crx
 /packages/create-wb-starter/template/**/*.log
 /packages/create-wb-starter/template/src/wb-overlay-ext/
+
+# #1131: npm start writes this checkout's version stamp here, not into the
+# tracked src/core/version.js; server.js serves it in development.
+/.local/

@@ -575,6 +575,23 @@ app.get('/data/errors.json', (req, res) => {
   }
 });
 
+// #1131: `npm start` writes this checkout's stamp to the ignored .local/ tree
+// (scripts/stamp-version.js --local) instead of the tracked file, so starting
+// the server no longer dirties the working tree. In development the local
+// copy is what the badge reads; production serves the committed file.
+const LOCAL_OVERRIDES = new Set(['/src/core/version.js']);
+if (!isProduction) {
+  app.use((req, res, next) => {
+    if (!LOCAL_OVERRIDES.has(req.path)) return next();
+    const localFile = path.join(rootDir, '.local', req.path);
+    if (!fs.existsSync(localFile)) return next();
+    res.set('Cache-Control', 'no-store');
+    res.type('application/javascript');
+    // .local is a dot-directory, which sendFile refuses by default.
+    res.sendFile(localFile, { dotfiles: 'allow' });
+  });
+}
+
 app.use(express.static(rootDir, cacheConfig));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.text({ limit: '10mb' }));
