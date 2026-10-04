@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.246",
+      "date": "2026-10-04",
+      "summary": "Test: poll the issues-page green-bar style (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1486\" target=\"_blank\" rel=\"noopener\">PR 1486</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1485\" target=\"_blank\" rel=\"noopener\">#1485</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Poll the green-bar style instead of reading it once</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1485\" target=\"_blank\" rel=\"noopener\">#1485</a>",
+          "issues": [
+            1485
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.245",
       "date": "2026-10-04",
       "summary": "Test: one sub-path asset test per catalogue row (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1487\" target=\"_blank\" rel=\"noopener\">PR 1487</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1482\" target=\"_blank\" rel=\"noopener\">#1482</a>",
