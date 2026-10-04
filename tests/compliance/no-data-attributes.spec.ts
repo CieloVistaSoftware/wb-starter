@@ -1,6 +1,7 @@
 import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
+import { isLegacySyntaxFixture } from '../utils/legacy-syntax-fixtures';
 
 /**
  * COMPLIANCE GATE (#224): ZERO data-* attributes on the live surface.
@@ -57,12 +58,11 @@ const ROOT = process.cwd();
 // cover was the one it skipped. It is clean today (0 data-* attributes), so
 // removing the exemption costs nothing and starts protecting it.
 //
-// Fixtures below stay: their whole purpose is exercising legacy syntax, so they
-// must CONTAIN it. Same exclusion demos-no-legacy-data-attrs.spec.ts applies;
-// this list was missing them, so the two gates disagreed (#895).
-const ARCHIVED = new Set([
-  'legacy-syntax-check.html', 'wizard.html', 'registry-browser.html', 'wb-views-demo.html',
-]);
+// The legacy-syntax fixtures stay exempt: their whole purpose is exercising
+// legacy syntax, so they must CONTAIN it. They are named by PATH in
+// tests/utils/legacy-syntax-fixtures.ts, shared with
+// demos-no-legacy-data-attrs.spec.ts so the two gates agree (#895), and no
+// longer by bare file name, the same collision as above (#1173).
 const SKIP_DIRS = new Set(['node_modules', '.git', 'data', 'test-results', '.playwright-artifacts', 'coverage', 'dist', 'out']);
 
 function walk(dir: string, exts: string[], out: string[]): void {
@@ -72,7 +72,7 @@ function walk(dir: string, exts: string[], out: string[]): void {
     if (SKIP_DIRS.has(e.name)) continue;
     const abs = path.join(dir, e.name);
     if (e.isDirectory()) { walk(abs, exts, out); }
-    else if (exts.some((x) => e.name.endsWith(x)) && !ARCHIVED.has(e.name)) {
+    else if (exts.some((x) => e.name.endsWith(x)) && !isLegacySyntaxFixture(path.relative(ROOT, abs))) {
       out.push(path.relative(ROOT, abs).replace(/\\/g, '/'));
     }
   }

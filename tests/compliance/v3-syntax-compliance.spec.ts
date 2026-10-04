@@ -21,20 +21,16 @@
 import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
+import { isLegacySyntaxFixture } from '../utils/legacy-syntax-fixtures';
 
 const PAGES_DIR = 'pages';
 const DEMOS_DIR = 'demos';
 const PUBLIC_DIR = 'public';
 
-// Files that are allowed to use data-wb (legacy demos, documentation)
-const LEGACY_ALLOWED = [
-  // The strict-mode fixture: it carries data-wb ON PURPOSE so
-  // strict-mode-runtime.spec.ts can prove the runtime rejects it.
-  'legacy-syntax-check.html',
-  'data-x-demo.html',
-  'migration-guide.html',
-  'legacy-syntax.html'
-];
+// Files allowed to use data-wb: only the pages that carry it on purpose,
+// named by path in tests/utils/legacy-syntax-fixtures.ts (#1173). This list
+// used to match by bare file name, and data-x-demo.html, migration-guide.html
+// and legacy-syntax.html exist nowhere in the repo.
 
 interface SyntaxViolation {
   file: string;
@@ -47,10 +43,8 @@ function scanHtmlFile(filePath: string): SyntaxViolation[] {
   const violations: SyntaxViolation[] = [];
   const content = fs.readFileSync(filePath, 'utf-8');
   const lines = content.split('\n');
-  const fileName = path.basename(filePath);
-  
   // Skip allowed legacy files
-  if (LEGACY_ALLOWED.includes(fileName)) {
+  if (isLegacySyntaxFixture(path.relative(process.cwd(), path.resolve(filePath)))) {
     return violations;
   }
   

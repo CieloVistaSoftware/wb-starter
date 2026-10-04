@@ -6,6 +6,7 @@ import { test, expect } from '../fixtures/offline';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { isLegacySyntaxFixture } from '../utils/legacy-syntax-fixtures';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,8 +28,8 @@ function findHtmlFiles(dir: string, files: string[] = []): string[] {
         findHtmlFiles(fullPath, files);
       }
     } else if (entry.name.endsWith('.html')) {
-      // Exclude tests that intentionally error
-      if (!entry.name.includes('legacy-syntax-check.html')) {
+      // Exclude the pages that intentionally error, by path (#1173)
+      if (!isLegacySyntaxFixture(path.relative(projectRoot, fullPath))) {
         files.push(fullPath);
       }
     }

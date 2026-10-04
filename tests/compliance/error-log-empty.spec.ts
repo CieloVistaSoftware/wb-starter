@@ -11,6 +11,7 @@
 
 import { test, expect } from '../fixtures/offline';
 import { readJson, PATHS } from '../base';
+import { isLegacySyntaxFixtureUrl } from '../utils/legacy-syntax-fixtures';
 import * as path from 'path';
 
 interface ErrorEntry {
@@ -52,8 +53,9 @@ test.describe('Error Log Compliance', () => {
     
     let errors = data.errors || [];
     
-    // Ignore expected errors from compliance tests
-    errors = errors.filter(e => !e.url?.includes('legacy-syntax-check.html'));
+    // Ignore expected errors from the pages that raise them on purpose, by
+    // path: a substring match covered any page with that name (#1173)
+    errors = errors.filter(e => !isLegacySyntaxFixtureUrl(e.url));
 
     // #1115: no media exemption here, on purpose. An unreachable THIRD-PARTY
     // media host (demo media is remote by rule, #762) is classified where it
