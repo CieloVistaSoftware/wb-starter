@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.196",
+      "date": "2026-10-04",
+      "summary": "Fix: remove the inert scrollProgress stub; every camelCase behavior must be reachable (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1408\" target=\"_blank\" rel=\"noopener\">PR 1408</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1195\" target=\"_blank\" rel=\"noopener\">#1195</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Remove the inert scrollProgress stub instead of advertising it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1195\" target=\"_blank\" rel=\"noopener\">#1195</a>",
+          "issues": [
+            1195
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-scrollProgress reaches the scrollProgress behavior; every camelCase behavior must be reachable</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1195\" target=\"_blank\" rel=\"noopener\">#1195</a>",
+          "issues": [
+            1195
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.195",
       "date": "2026-10-04",
       "summary": "Fix: a failing test records every request it made (network.txt); the trace cannot (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1407\" target=\"_blank\" rel=\"noopener\">PR 1407</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1406\" target=\"_blank\" rel=\"noopener\">#1406</a>",
