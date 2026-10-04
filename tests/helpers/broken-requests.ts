@@ -39,7 +39,14 @@ export interface FailedRequestFacts {
 
 /** True when `url` is served by the dev server at `origin`. No origin means nothing is same-origin. */
 export function isSameOrigin(url: string, origin: string): boolean {
-  return Boolean(origin) && url.startsWith(origin);
+  if (!origin) return false;
+  // #1132: exact scheme + host + port. A prefix test counted
+  // http://localhost:41730 as http://localhost:4173.
+  try {
+    return new URL(url).origin === new URL(origin).origin;
+  } catch {
+    return false; // an unparseable URL is not ours
+  }
 }
 
 /** The one failure that is normal browser behaviour: a media fetch cancelled after buffering. */

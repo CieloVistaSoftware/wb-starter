@@ -72,6 +72,10 @@ const ORIGIN_CASES = [
   { name: 'cross-origin host',      origin: ORIGIN, url: 'https://www.w3schools.com/html/horse.mp3',     same: false },
   { name: 'cross-origin port',      origin: ORIGIN, url: 'http://localhost:4999/demos/audio.mp3',         same: false },
   { name: 'cross-origin scheme',    origin: ORIGIN, url: 'https://localhost:4173/demos/audio.mp3',        same: false },
+  // #1132: another port that starts with this one's digits. A prefix match
+  // counted http://localhost:41730 as http://localhost:4173.
+  { name: 'cross-origin, shared port prefix', origin: ORIGIN, url: 'http://localhost:41730/demos/audio.mp3', same: false },
+  { name: 'unparseable url',        origin: ORIGIN, url: 'not a url',                                    same: false },
   { name: 'no baseURL',             origin: '',     url: `${ORIGIN}/demos/audio.mp3`,                    same: false },
 ] as const;
 
@@ -89,7 +93,8 @@ function oracleReportsFailure(type: string, errorText: string, same: boolean): b
 test.describe('#1116 requestfailed classification -- full parameter space', () => {
   test('the space has the size it was designed with', () => {
     // A list quietly shrinking to the cases that pass is a check that stopped looking.
-    expect(RESOURCE_TYPES.length * ERROR_TEXTS.length * ORIGIN_CASES.length).toBe(13 * 16 * 6);
+    // 8 origin cases: #1132 added the shared-port-prefix and unparseable rows.
+    expect(RESOURCE_TYPES.length * ERROR_TEXTS.length * ORIGIN_CASES.length).toBe(13 * 16 * 8);
   });
 
   for (const oc of ORIGIN_CASES) {
