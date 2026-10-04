@@ -26,6 +26,9 @@ test('npm start stamps locally, leaving tracked files as they were (#1131)', () 
 });
 
 test('the dev server serves the local stamp as src/core/version.js (#1131)', async ({ page }) => {
+  // The test makes its own stamp: CI starts the server with node server.js,
+  // not npm start, so no stamp step has run there.
+  execFileSync(process.execPath, ['scripts/stamp-version.js', '--local'], { encoding: 'utf8' });
   const res = await page.request.get('/src/core/version.js');
   expect(res.ok()).toBe(true);
   expect(await res.text(), 'served version.js is the .local copy').toBe(fs.readFileSync('.local/src/core/version.js', 'utf8'));
