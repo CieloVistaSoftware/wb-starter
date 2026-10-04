@@ -1,4 +1,5 @@
 import { test, expect, Locator } from '../fixtures/offline';
+import { openPlaygroundInputs } from '../helpers/playground';
 
 // label() (src/wb-viewmodels/label.js) only assigns element.id lazily, the
 // first time IT runs -- an async, dynamic-imported behavior injection, not
@@ -28,17 +29,10 @@ async function waitForAssignedId(locator: Locator): Promise<string> {
  * <input> those behaviors tried to append as a child).
  */
 test.describe('Playground: 20 inputs with x-behaviors example set', () => {
+  // #1459: the setup lives in tests/helpers/playground.ts, so its guard
+  // (playground-waits-for-every-input.spec.ts) drives exactly this.
   test.beforeEach(async ({ page }) => {
-    await page.goto('/demos/playground.html', { waitUntil: 'networkidle' });
-    await page.selectOption('#pg-examples', 'inputs');
-    await page.waitForFunction(() => document.querySelectorAll('#pg-preview input').length > 0, { timeout: 15000 });
-    // counter.js puts the "N/max" readout on a sibling <span class="[x-counter]">,
-    // never on the input itself — wait for that span's text to confirm the
-    // whole example set has actually finished enhancing.
-    await page.waitForFunction(() => {
-      const spans = document.querySelectorAll('#pg-preview .x-counter');
-      return spans.length >= 2 && [...spans].some((el) => el.textContent === '0/50');
-    }, { timeout: 20000 });
+    await openPlaygroundInputs(page);
   });
 
   test('all 20 examples parse as valid elements with zero x-error markers', async ({ page }) => {
