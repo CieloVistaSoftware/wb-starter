@@ -3,7 +3,11 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
+// One static import for the file (#1403): each test used to await import()
+// this module, and two parallel workers writing Playwright's transform cache
+// for it at once failed with EPERM on Windows CI.
+import { branchIssue, checkMessage } from '../../scripts/lib/commit-issue-match.mjs';
 
 /**
  * #1336 -- a commit on an issue branch names that issue.
@@ -15,8 +19,10 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
  */
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
+// One worker loads the module once (#1403).
+test.describe.configure({ mode: 'serial' });
+
 test('the branch issue is read from every branch shape the repo uses', async () => {
-  const { branchIssue } = await import(pathToFileURL(path.join(ROOT, 'scripts/lib/commit-issue-match.mjs')).href);
   expect(branchIssue('claude/fix-1336-commit-names-branch-issue')).toBe(1336);
   expect(branchIssue('fix/1327-img-height')).toBe(1327);
   expect(branchIssue('claude/test-1056-lazy-only-rows')).toBe(1056);
@@ -25,7 +31,6 @@ test('the branch issue is read from every branch shape the repo uses', async () 
 });
 
 test('the #1336 swap is refused; honest messages pass', async () => {
-  const { checkMessage } = await import(pathToFileURL(path.join(ROOT, 'scripts/lib/commit-issue-match.mjs')).href);
   const branch = 'claude/fix-1015-something';
   expect(checkMessage('fix(#1300): wb- prefix audit counts tracked files', branch).ok, 'the 2026-10-03 swap').toBe(false);
   expect(checkMessage('fix(#1015): the real fix', branch).ok).toBe(true);

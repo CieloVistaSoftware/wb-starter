@@ -105,8 +105,20 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
       const labelBefore = btn.textContent!.trim();
       const original = { height: getComputedStyle(target!).height, overflow: getComputedStyle(target!).overflow };
 
+      // #738 -- this stub used to resolve and grant NOTHING, which the behavior
+      // now (correctly) refuses: a resolve with the target not in the top layer
+      // is the exact case that produced a button reading "Exit Fullscreen" over
+      // a null document.fullscreenElement. So the test was exercising the
+      // REFUSAL path while claiming to test the grant. A genuine grant is
+      // resolve AND the target becoming document.fullscreenElement.
+      let current: Element | null = null;
+      Object.defineProperty(document, 'fullscreenElement', { configurable: true, get: () => current });
       const origRequest = Element.prototype.requestFullscreen;
-      Element.prototype.requestFullscreen = function () { return Promise.resolve(); };
+      Element.prototype.requestFullscreen = function () {
+        current = this;
+        document.dispatchEvent(new Event('fullscreenchange'));
+        return Promise.resolve();
+      };
 
       btn.onclick!(new MouseEvent('click'));
       await sleep(400);
@@ -131,7 +143,10 @@ test.describe('#733 — a refused fullscreen changes nothing', () => {
         label: btn.textContent!.trim(),
       };
 
-      // Coming back out restores what was saved (#720's guarantee).
+      // Coming back out restores what was saved (#720's guarantee). The state
+      // drops first -- the event alone, with the target still reported as
+      // fullscreen, is not an exit (#738).
+      current = null;
       document.dispatchEvent(new Event('fullscreenchange'));
       await sleep(300);
 

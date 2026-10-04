@@ -39,6 +39,7 @@ import { createGuards, isSameProcess, processIdentity } from "./lib/test-lock.mj
 import { parsePlaywrightSummary } from "./lib/playwright-summary.mjs";
 import { classifyRun, readServerLogPort } from "./lib/server-down.mjs";
 import { playwrightInvocation } from "./lib/playwright-launch.mjs";
+import { installDeathGuards } from "./lib/run-status.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -296,6 +297,13 @@ async function runMonitor(args) {
   } catch (e) {
     status = makeStatus(startTime, cmdArgs, specFile);
   }
+
+  // #1316: this run ends with a terminal state no matter how the monitor ends.
+  // A throw in the async close handler used to kill the process before it
+  // wrote anything, freezing the file at "running". monitorPid lets a reader
+  // tell a hard-killed monitor (no handler runs at all) from a live one.
+  status.monitorPid = process.pid;
+  installDeathGuards(statusFile, () => status);
 
   // The launcher keyed our slot to this PID before exiting; hold onto it so we
   // can free it the moment Playwright is done (#651).

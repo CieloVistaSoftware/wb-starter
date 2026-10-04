@@ -6,6 +6,105 @@
   ],
   "releases": [
     {
+      "version": "1.0.190",
+      "date": "2026-10-04",
+      "summary": "Fix: the fullscreen label follows document.fullscreenElement, not the request (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1329\" target=\"_blank\" rel=\"noopener\">PR 1329</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/738\" target=\"_blank\" rel=\"noopener\">#738</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The fullscreen round trip grants fullscreen the way a browser does</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/738\" target=\"_blank\" rel=\"noopener\">#738</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/720\" target=\"_blank\" rel=\"noopener\">#720</a>",
+          "issues": [
+            738,
+            720
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The fullscreen label follows document.fullscreenElement, not the request</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/738\" target=\"_blank\" rel=\"noopener\">#738</a>",
+          "issues": [
+            738
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.189",
+      "date": "2026-10-04",
+      "summary": "Fix: pre, code and textarea are opaque to the demo pretty-printer (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1331\" target=\"_blank\" rel=\"noopener\">PR 1331</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1015\" target=\"_blank\" rel=\"noopener\">#1015</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Name serializeOpaque&#39;s locals childTag/childAttrs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1015\" target=\"_blank\" rel=\"noopener\">#1015</a>",
+          "issues": [
+            1015
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Pre, code and textarea are opaque to the demo pretty-printer</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1015\" target=\"_blank\" rel=\"noopener\">#1015</a>",
+          "issues": [
+            1015
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.188",
+      "date": "2026-10-04",
+      "summary": "Fix: a test-async run always ends with a terminal state, even when its monitor dies (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1402\" target=\"_blank\" rel=\"noopener\">PR 1402</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1316\" target=\"_blank\" rel=\"noopener\">#1316</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A test-async run always ends with a terminal state, even when its monitor dies</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1316\" target=\"_blank\" rel=\"noopener\">#1316</a>",
+          "issues": [
+            1316
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.187",
+      "date": "2026-10-04",
+      "summary": "Fix: the cardimage lazy-load test waits for the card to be built before asking for its img (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1401\" target=\"_blank\" rel=\"noopener\">PR 1401</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1325\" target=\"_blank\" rel=\"noopener\">#1325</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The cardimage lazy-load test waits for the card to be built before asking for its img</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1325\" target=\"_blank\" rel=\"noopener\">#1325</a>",
+          "issues": [
+            1325
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.186",
+      "date": "2026-10-04",
+      "summary": "Fix: publish the behaviors example generator after its tag map, not before (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1338\" target=\"_blank\" rel=\"noopener\">PR 1338</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The example generator is published after its tag map, not before</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1153\" target=\"_blank\" rel=\"noopener\">#1153</a>",
+          "issues": [
+            1153
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.185",
+      "date": "2026-10-04",
+      "summary": "Take main out of the red: the guard spec was mocking nothing (a service worker answered first) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1351\" target=\"_blank\" rel=\"noopener\">PR 1351</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Mock the issue list too, and assert the nav target exists</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1118\" target=\"_blank\" rel=\"noopener\">#1118</a>",
+          "issues": [
+            1118
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.184",
       "date": "2026-10-04",
       "summary": "Fix: a gate stall names the test that is running, and stops listing dead inspector sessions (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1326\" target=\"_blank\" rel=\"noopener\">PR 1326</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1199\" target=\"_blank\" rel=\"noopener\">#1199</a>",

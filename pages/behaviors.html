@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.184">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.190">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -407,6 +407,21 @@
     const schemaByName = new Map();
     let exampleCatalogue = {};
 
+    // #1153: the example generator reads tag-map's nativeMap, which arrives by
+    // a dynamic import -- i.e. no earlier than the microtask AFTER this script
+    // finishes evaluating. The generator used to be published on `window` from
+    // inside that same evaluation, so "the function exists" never implied "its
+    // map is loaded": every caller that waited only for the function was
+    // answered from the empty placeholder map, which says "no behavior has a
+    // native host", and got `<details x-details>`, `<figure x-figure>`,
+    // `<input x-input>` -- the duplication #1141 forbids.
+    //
+    // So the dependency is awaited before the entry points exist. Ordering is
+    // then a fact about the page, not a race a caller has to guess at: nothing
+    // outside this script can reach a lookup before the map is in.
+    let markTagMapReady;
+    const tagMapReady = new Promise((resolve) => { markTagMapReady = resolve; });
+
     // #666: one row per VARIANT, not one per behavior -- John: "add one entry
     // for each variant too... show the behavior name and all possible variants
     // (one per row so user can see them all)". A behavior with no declared
@@ -543,13 +558,18 @@
         // values would silently collapse them.
         extensionMap = mod.extensionMap;
         nativeMap = mod.nativeMap || {};
-        // semanticHostFor() caches a behavior->tag index built from nativeMap.
-        // Anything that ran the generator before this import resolved built it
-        // from the EMPTY placeholder map and kept it forever, so every
-        // auto-injected behavior afterwards rendered as <figure x-figure>,
-        // <details x-details>, ... (#753's defect, via a stale cache). Drop it
-        // so the next call indexes the real map.
-        nativeByBehavior = null;
+        // #1153: the behavior->host-tag index is built HERE, where the map
+        // arrives, instead of lazily on first lookup. A lazy build is built by
+        // whichever caller happens to be first, and the first caller used to
+        // precede this line -- so the index was an index of `{}` and every
+        // auto-injected behavior rendered as <figure x-figure>, <details
+        // x-details>, ... (#753's defect, via a cache of an unloaded
+        // dependency). Built at the point of arrival, there is no "before" for
+        // it to be built in.
+        buildNativeByBehavior();
+        // Both maps the generator needs are now in, so the public entry points
+        // below may be published.
+        markTagMapReady();
         // #783: morphing (x-as-{name}) was removed from the framework, so
         // there is nothing left to filter out here. The guard that kept it
         // off this list lives on as a regression test —
@@ -692,7 +712,16 @@
             if (footerCount) footerCount.textContent = String(allEntries.length);
           });
       })
-      .catch(() => {}); // browse-all list just stays empty; typed search still works
+      // browse-all list just stays empty; typed search still works.
+      // #1153: say so, loudly. If tag-map.js never arrives, nativeMap is
+      // unknown, so the example generator stays unpublished rather than
+      // answering from an empty map -- and a caller waiting for it would
+      // otherwise just time out with nothing to read.
+      .catch((err) => {
+        if (!nativeByBehavior) {
+          console.warn('[behaviors] tag-map.js did not load; the example generator is not published', err);
+        }
+      });
 
     // #642: John, "the search box says there are 69 items from
     // that search but there is no content. I want an element that has 69
@@ -1841,7 +1870,8 @@
     const OPEN_TAG_RE = /<([a-zA-Z][\w-]*)((?:\s+[^\s"'>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'>]+))?)*)\s*\/?>/g;
     function hostTagSpan(src, attr) {
       const behavior = extensionMap[attr] || attr.replace(/^x-/, '');
-      semanticHostFor(behavior);   // fills nativeByBehavior
+      // #1153: the index is built where nativeMap arrives, so this is a plain
+      // read -- no lookup is needed here to populate it.
       const nativeTag = nativeByBehavior && nativeByBehavior[behavior];
       const carriesAttr = new RegExp('\\s' + escapeRe(attr) + '(?=[\\s=/]|$)', 'i');
       let first = null;
@@ -1938,18 +1968,31 @@
     //      which is what makes x-article render a real <article>
     //   3. otherwise <div>, the neutral fallback
     let nativeByBehavior = null;
+    /**
+     * Index nativeMap as behavior -> host tag. Called once, from the import
+     * handler that assigns nativeMap (#1153) -- never lazily from a lookup. A
+     * lazily built index is built from whatever the map happens to hold when
+     * the first caller arrives, and null until then, which is the whole bug:
+     * there is no value this function can return for an unloaded map that is
+     * not a lie, so it is not allowed to run against one.
+     */
+    function buildNativeByBehavior() {
+      const index = {};
+      for (const [selector, beh] of Object.entries(nativeMap || {})) {
+        // nativeMap keys are selectors ('input[type="checkbox"]'); only the
+        // bare-tag ones are usable as a host element name.
+        if (/^[a-z][a-z0-9-]*$/.test(selector) && !index[beh]) index[beh] = selector;
+      }
+      nativeByBehavior = index;
+    }
     function semanticHostFor(behavior) {
-      // Only cache once nativeMap has arrived; an index of the empty
-      // placeholder would answer "no native host" for everything.
-      if (!nativeByBehavior && Object.keys(nativeMap || {}).length) {
-        nativeByBehavior = {};
-        for (const [selector, beh] of Object.entries(nativeMap || {})) {
-          // nativeMap keys are selectors ('input[type="checkbox"]'); only the
-          // bare-tag ones are usable as a host element name.
-          if (/^[a-z][a-z0-9-]*$/.test(selector) && !nativeByBehavior[beh]) {
-            nativeByBehavior[beh] = selector;
-          }
-        }
+      // Unreachable from outside: every public entry point is published after
+      // tagMapReady. Loud rather than silently wrong if an internal lookup is
+      // ever wired ahead of the import again -- that call cannot know whether
+      // `behavior` has a native host, and answering "it has none" is what
+      // emitted <details x-details>.
+      if (!nativeByBehavior) {
+        console.warn(`[behaviors] #1153: semanticHostFor(${behavior}) ran before tag-map.js loaded; its answer ignores nativeMap`);
       }
       if (nativeByBehavior && nativeByBehavior[behavior]) return nativeByBehavior[behavior];
       // A real HTML element with this name? createElement returns
@@ -2110,8 +2153,12 @@
       // `<figure x-figure>` -- the duplication the comment above says must not
       // be emitted. Whether the host auto-injects is a fact about the tag->
       // behavior map, not about whether someone wrote a label, so ask the map:
-      // nativeByBehavior is already built from tag-map's nativeMap by
-      // semanticHostFor(), which ran above to pick this very host.
+      // nativeByBehavior is tag-map's nativeMap, indexed by behavior where the
+      // map arrives (#1153) -- so it is loaded whenever this function is
+      // reachable, and `false` here means "no native host", never "not loaded
+      // yet". That distinction was the defect: an unloaded map answered the
+      // same as a loaded one with no entry, and sent <details> down the
+      // attribute branch.
       const autoInjected = !!(nativeByBehavior && nativeByBehavior[behavior] === host);
       const isNative = (label && label !== attr) || autoInjected;
       if (isNative) {
@@ -2142,7 +2189,20 @@
     // rule, which is worse than no test. Calling the generator directly is
     // deterministic and checks the same output. Read-only: it builds a string
     // and touches no state.
-    window.__wbGeneratedExample = generatedExample;
+    //
+    // #1153: published after tagMapReady, not during script evaluation. The
+    // generator cannot answer honestly about native hosts before tag-map.js is
+    // in, so until then there is nothing to publish. A caller that waits for
+    // the function therefore gets the loaded answer by construction, and no
+    // longer has to wait for some unrelated proxy for the import -- the
+    // rendered list -- to guess that the map arrived.
+    //
+    // __wbBehaviorsReady is the explicit form of the same guarantee, for a
+    // caller that would rather await than poll.
+    window.__wbBehaviorsReady = tagMapReady;
+    tagMapReady.then(() => {
+      window.__wbGeneratedExample = generatedExample;
+    });
 
 
     // #675 -- John: "all elements must have an id in the showcase".
@@ -2782,10 +2842,15 @@
       const raw = sourceFor(token, form);
       return { source: raw ? withOption(raw, token, prop, variant, isBool) : raw, authored: null };
     }
-    window.__wbExampleSource = (token, form, prop, variant, isBool, exampleIndex, label) => {
-      const { source } = exampleSourceFor(token, form, prop, variant, isBool, exampleIndex);
-      return source || generatedExample(token, variant, label || '', prop, isBool);
-    };
+    // #1153: same gate as __wbGeneratedExample, for the same reason -- this
+    // reaches the generator for any row with no authored example, and
+    // withOption() consults the same nativeMap index to find the host tag.
+    tagMapReady.then(() => {
+      window.__wbExampleSource = (token, form, prop, variant, isBool, exampleIndex, label) => {
+        const { source } = exampleSourceFor(token, form, prop, variant, isBool, exampleIndex);
+        return source || generatedExample(token, variant, label || '', prop, isBool);
+      };
+    });
     window.__wbVariantsFor = (attr, form) => variantsFor(attr, form).map((o) => ({ ...o }));
 
     async function renderLive(token, variant, label, prop, isBool, form, exampleIndex) {
