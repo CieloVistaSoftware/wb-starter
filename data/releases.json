@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.230",
+      "date": "2026-10-04",
+      "summary": "Fix: old server logs are compressed, never deleted (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1455\" target=\"_blank\" rel=\"noopener\">PR 1455</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1130\" target=\"_blank\" rel=\"noopener\">#1130</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Old server logs are compressed, never deleted, and every run says what it did</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1130\" target=\"_blank\" rel=\"noopener\">#1130</a>",
+          "issues": [
+            1130
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.229",
       "date": "2026-10-04",
       "summary": "Fix: publish the example generator after its seed data (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1451\" target=\"_blank\" rel=\"noopener\">PR 1451</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1337\" target=\"_blank\" rel=\"noopener\">#1337</a>",
