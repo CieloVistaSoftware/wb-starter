@@ -226,16 +226,20 @@ export default defineConfig({
     // selects the full trace for one run.
     trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure')
       || { mode: 'retain-on-failure', snapshots: false, screenshots: false, sources: false },
-    // #961 experiment: src/main.js:133 registers sw.js, which is network-first
-    // with a CACHE FALLBACK — when a fetch fails it silently serves a cached
-    // copy rather than failing. A service worker also does not control the
-    // FIRST page load, only later ones, which matches the measured signature:
-    // 18 of 19 failures occurred on a later repeat, never the first.
+    // #1362: no service worker unless a spec asks for one. A worker answers a
+    // page's fetch before page.route sees it, so with 'allow' as the default
+    // every new spec that mocks the network was born broken unless its author
+    // knew to opt out (#1349 found 24). Of 684 specs exactly one needs the
+    // worker (tests/compliance/sw-audio-range-request.spec.ts) and it opts in.
     //
-    // WB_BLOCK_SW=1 takes the worker out of the picture so we can see whether
-    // the flapping stops. The default stays 'allow' — this measures rather than
-    // quietly changing what every run exercises.
-    serviceWorkers: process.env.WB_BLOCK_SW ? 'block' : 'allow',
+    // This changes nothing the site does under test: since #1108 main.js never
+    // registers sw.js on localhost/127.0.0.1/[::1] and removes any old one, so
+    // 'allow' and 'block' were already the same for every test-server page --
+    // which is also why the WB_BLOCK_SW with/without measurement #961 asked for
+    // no longer has two states to compare, and the switch is gone. Where the
+    // worker IS part of what ships -- the deployed site (`deployed` project
+    // below, and the deployed smoke via SMOKE_BASE_URL) -- it stays allowed.
+    serviceWorkers: process.env.SMOKE_BASE_URL ? 'allow' : 'block',
     // A click on a hidden element waits for it to become visible. With no
     // action timeout that wait silently eats the whole test budget -- 90s in
     // remaining-coverage, where 7 tests timed out on rows inside a collapsed
@@ -401,6 +405,8 @@ export default defineConfig({
       name: 'deployed',
       testDir: './tests/deployed',
       testMatch: '**/*.spec.ts',
+      // The shipped site registers its worker; this project checks what ships (#1362).
+      use: { serviceWorkers: 'allow' },
     },
 
     {

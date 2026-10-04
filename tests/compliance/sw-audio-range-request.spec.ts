@@ -8,6 +8,11 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+// The one spec that needs the service worker: it registers sw.js itself and
+// tests the worker's own range-request handling. Workers are blocked by
+// default (#1362).
+test.use({ serviceWorkers: 'allow' });
+
 test.describe('service worker: audio range requests do not throw unhandled rejections', () => {
   test('playing demos/sample.wav produces no console errors', async ({ page }) => {
     const pageErrors: string[] = [];
