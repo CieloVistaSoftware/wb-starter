@@ -275,12 +275,20 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
       const stageBefore = stage.getBoundingClientRect();
 
       // requestFullscreen needs a user gesture, which a scripted click has not
-      // got — so spy on it to prove WHERE it was requested, then drive the
-      // restore path the behavior listens for.
+      // got — so spy on it to prove WHERE it was requested, and grant it the
+      // way a browser does: the target BECOMES document.fullscreenElement and
+      // `fullscreenchange` fires. Since #738 the behavior applies the
+      // fullscreen sizing only when the target really is the fullscreen
+      // element; a request that merely resolved is the lying-button bug, so a
+      // spy that only resolved no longer counts as fullscreen.
       let requestedOn: string | null = null;
+      let fsEl: Element | null = null;
+      Object.defineProperty(document, 'fullscreenElement', { configurable: true, get: () => fsEl });
       const original = Element.prototype.requestFullscreen;
       Element.prototype.requestFullscreen = function (this: Element) {
         requestedOn = this.id || this.tagName;
+        fsEl = this;
+        document.dispatchEvent(new Event('fullscreenchange'));
         return Promise.resolve();
       };
       btn.click();
@@ -292,8 +300,10 @@ test.describe('#720 — the stage can go fullscreen and come back unchanged', ()
         sized: wrapper.classList.contains('x-fullscreen-target'),
         overflow: cs.overflowY,
       };
-      document.dispatchEvent(new Event('fullscreenchange'));   // fullscreenElement is null → exit path
+      fsEl = null;                                              // leave fullscreen → exit path
+      document.dispatchEvent(new Event('fullscreenchange'));
       await sleep(300);
+      delete (document as any).fullscreenElement;               // back to the real getter
       const after = wrapper.getBoundingClientRect();
       const stageAfter = stage.getBoundingClientRect();
 
