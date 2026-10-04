@@ -156,6 +156,11 @@ const TEST_PORT = pickTestPort();
 // nothing — the claim stays with the process that made it.
 process.env.WB_TEST_PORT = String(TEST_PORT);
 
+// #1174: every server a test run starts -- the webServer below and any a spec
+// spawns with { ...process.env } -- is a test server: it writes no product data
+// (data/notes.json) and files no GitHub issues from notes.
+process.env.WB_TEST_SERVER = '1';
+
 export default defineConfig({
   testDir: './tests',
   // #1038: NOT './data/test-results'. Playwright CLEARS outputDir at the start
@@ -274,7 +279,7 @@ export default defineConfig({
     reuseExistingServer: !!process.env.CI && TEST_PORT === 3000,
     timeout: 60000,
     // Never pop a browser when Playwright starts the dev server for tests.
-    env: { WB_NO_OPEN: '1', PORT: String(TEST_PORT) },
+    env: { WB_NO_OPEN: '1', PORT: String(TEST_PORT), WB_TEST_SERVER: '1' },
   },
   
   projects: [
