@@ -54,11 +54,13 @@ test('every validated page exists', () => {
 // ═══════════════════════════════════════════════════════════════
 for (const pg of PAGES) {
   test(`screenshot: ${pg.title}`, async ({ page, browserName }) => {
-    // A full-page WebKit capture of Home never finished on the Windows CI
-    // runner -- the screenshot call itself hit its 30s timeout twice (#1432),
-    // while locally it takes a few seconds. These captures are for visual
-    // review, so WebKit takes the viewport and Chromium the full page.
-    const fullPage = browserName !== 'webkit';
+    // A WebKit capture of Home never finishes on the Windows CI runner -- full
+    // page or viewport, the screenshot call hits its 30s timeout (three runs,
+    // #1432), while locally it takes a few seconds. These captures are images
+    // for visual review, not checks; the overflow, viewport-meta and JS-error
+    // checks below run on both devices. #1439 traces why WebKit stalls.
+    test.skip(browserName === 'webkit', 'WebKit screenshots stall on the CI runner (#1439)');
+    const fullPage = true;
     await page.goto(pg.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
     await page.waitForTimeout(1500); // let animations/lazy-load settle
 
