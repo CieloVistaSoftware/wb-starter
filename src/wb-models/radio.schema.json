@@ -33,7 +33,7 @@
   },
   "test": {
     "setup": [
-      "<input type=\"radio\" x-radio>"
+      "<input type=\"radio\">"
     ]
   },
   "_metadata": {

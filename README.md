@@ -228,7 +228,7 @@ decorates a card, it does not replace one.
 | You write | What happens |
 |---|---|
 | `<input type="range">` | auto-injects the `range` behavior |
-| `<input type="range" x-range>` | same behavior — naming it explicitly is not a conflict |
+| `<input type="range" x-range>` | redundant — the tag already says range; the audits flag it, so drop `x-range` |
 | `<input type="range" x-colorpicker>` | a *different* explicit behavior wins; auto-injection stands down |
 | `<article x-cardhero size="lg" variant="glass">` | behavior applied, then configured by attributes |
 | `<button variant="primary">` | injects **even when auto-injection is off** — `variant` is unambiguous intent |

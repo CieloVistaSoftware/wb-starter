@@ -38,7 +38,7 @@
     "name": "label",
     "type": "modifier",
     "category": "inputs",
-    "description": "Generates an associated <label> from an x-label=\"text\" attribute on a form control; also enhances a plain <label x-label> with required/optional styling.",
+    "description": "Generates an associated <label> from an x-label=\"text\" attribute on a form control; also enhances a plain <label> with required/optional styling.",
     "src": "src/wb-viewmodels/label.js"
   },
   "test": {

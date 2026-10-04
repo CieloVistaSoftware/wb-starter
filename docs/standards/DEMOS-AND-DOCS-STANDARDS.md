@@ -535,6 +535,14 @@ auto-injection happens first, then `x-demo` runs on the already-injected element
   semantic equivalent, and it is how a behavior is placed on a host that is not its native tag (see
   `docs/behaviors/table.md`'s "On a different element"). It means the semantic-HTML form is the
   *primary* presentation, not an afterthought, and should never need an `x-*` attribute to work.
+- **No duplicate x-behaviors on any tag** (John, 2026-09-13, #1141). A tag that `nativeMap` in
+  `src/core/tag-map.js` already maps to behavior B never also carries `x-B`: not
+  `<input type="range" x-range>`, `<input type="password" x-password>`, `<article x-card>`,
+  `<button x-button>` or `<form x-form>`. The behavior name is not always the tag name (`article` is the
+  card), so judge by `nativeMap`, not by spelling. A *different* behavior (`<input type="range" x-colorpicker>`)
+  or a variant (`<article x-cardimage>`) is an opt-in, not a duplicate. Enforced across demos, pages, docs,
+  README, `src/` markup and JSON models, and the create-wb-starter template by
+  `tests/compliance/no-redundant-x-attribute-on-native-tag.spec.ts`, which reads the rule from `nativeMap`.
 
 ## Enforcement & references
 
