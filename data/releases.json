@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.216",
+      "date": "2026-10-04",
+      "summary": "Fix: performance specs measure the site and join the gate (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1437\" target=\"_blank\" rel=\"noopener\">PR 1437</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1433\" target=\"_blank\" rel=\"noopener\">#1433</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Performance specs measure the page and the wire, log without corrupting, and join the gate</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1433\" target=\"_blank\" rel=\"noopener\">#1433</a>",
+          "issues": [
+            1433
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.215",
       "date": "2026-10-04",
       "summary": "Fix: starting the site no longer rewrites tracked files (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1436\" target=\"_blank\" rel=\"noopener\">PR 1436</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1131\" target=\"_blank\" rel=\"noopener\">#1131</a>",
