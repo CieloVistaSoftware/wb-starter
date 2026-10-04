@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.212",
+      "date": "2026-10-04",
+      "summary": "Fix: radio variants and sizes declared, styled and shown (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1428\" target=\"_blank\" rel=\"noopener\">PR 1428</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1154\" target=\"_blank\" rel=\"noopener\">#1154</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Radio variants and sizes are declared, styled and shown; &lt;div x-radio&gt; builds a real radio</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1154\" target=\"_blank\" rel=\"noopener\">#1154</a>",
+          "issues": [
+            1154
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.211",
       "date": "2026-10-04",
       "summary": "Fix: table schema names x-table--hover (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1427\" target=\"_blank\" rel=\"noopener\">PR 1427</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1353\" target=\"_blank\" rel=\"noopener\">#1353</a>",
