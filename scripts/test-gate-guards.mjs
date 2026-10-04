@@ -181,6 +181,23 @@ if (mode === 'finished-then-quiet') {
       JSON.stringify({ timestamp: new Date().toISOString(), failures: [] }));
     process.exit(0);
   }, Number(process.env.WB_FAKE_PW_QUIET_MS));
+} else if (mode === 'silent-in-flight' || mode === 'silent-stale-in-flight') {
+  // #1199: a wedged run whose reporter recorded what was running, and whose stderr
+  // shows an inspector session that has since exited (listening, then ending).
+  const stale = mode === 'silent-stale-in-flight';
+  const now = Date.now();
+  mkdirSync('data/test-results', { recursive: true });
+  writeFileSync('data/test-results/in-flight.json', JSON.stringify({
+    runStartedAt: stale ? 1000 : now,
+    updatedAt: now,
+    running: [
+      { worker: 1, project: 'compliance', file: 'quick.spec.ts', title: 'a test that began a moment ago', startedAt: now - 2000 },
+      { worker: 3, project: 'compliance', file: 'x-timeline-display-block.spec.ts', title: 'the test that is stuck', startedAt: now - 188000 },
+    ],
+  }));
+  console.error('Debugger listening on ws://127.0.0.1:1/dead-session');
+  console.error('Debugger ending on ws://127.0.0.1:1/dead-session');
+  setInterval(() => {}, 1000);
 } else if (mode === 'silent') {
   // A wedged run: alive, printing nothing, with a worker of its own.
   const worker = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'],
@@ -286,6 +303,43 @@ const silentRun = () => ratchetCase(
     }
     return checks;
   }
+);
+
+/**
+ * #1199: a stall names the test that is RUNNING, not the last one to finish.
+ *
+ * The 2026-09-19 report named test 7863, which had completed, and then printed 55
+ * identical "connection failed" lines from inspector sessions of workers that had
+ * already exited. Neither said what was stuck.
+ */
+const stallNamesRunningTest = () => ratchetCase(
+  'Ratchet: a stall names the test that is running, longest first, with no dead-session noise (#1199)',
+  { WB_FAKE_PW_MODE: 'silent-in-flight', WB_GATE_ACK_MIN: '0.05' },
+  90_000,
+  async (r, out) => {
+    const stuckAt = out.indexOf('the test that is stuck');
+    const quickAt = out.indexOf('a test that began a moment ago');
+    return [
+      ['it returns on its own', !r.boundHit, `still running after ${r.ms}ms\n${tail(out)}`],
+      ['it names the stuck test and its worker', /x-timeline-display-block\.spec\.ts > the test that is stuck\s+\(worker 3, running 1\d\ds\)/.test(out), tail(out, 25)],
+      ['it lists the longest-running test first', stuckAt !== -1 && quickAt !== -1 && stuckAt < quickAt, tail(out, 25)],
+      ['it says last-to-finish is not the stuck one', /last test seen : .*\(the last to FINISH, not the stuck one\)/.test(out), tail(out, 25)],
+      ['the HANG verdict carries the running test too', /Running when it stopped: .*the test that is stuck/.test(out), tail(out, 25)],
+      ['a session that already exited is not queried or reported', !out.includes('connection failed') && !out.includes('no report'), tail(out, 25)],
+    ];
+  }
+);
+
+/** A file left by an earlier run is not this run's stuck test (#1199). */
+const stallIgnoresStaleInFlight = () => ratchetCase(
+  'Ratchet: an in-flight file from an earlier run is never named as the stuck test (#1199)',
+  { WB_FAKE_PW_MODE: 'silent-stale-in-flight', WB_GATE_ACK_MIN: '0.05' },
+  90_000,
+  async (r, out) => [
+    ['it returns on its own', !r.boundHit, `still running after ${r.ms}ms\n${tail(out)}`],
+    ['it does not name the stale test', !out.includes('the test that is stuck'), tail(out, 25)],
+    ['it says plainly that it does not know what was running', /running now {4}: unknown - the in-flight file is from an earlier run/.test(out), tail(out, 25)],
+  ]
 );
 
 /**
@@ -708,6 +762,8 @@ if (!existsSync(LIST_REPORTER)) {
 // Independent fixtures, private lock dirs: safe to run side by side.
 const sections = await Promise.all([
   silentRun(),
+  stallNamesRunningTest(),
+  stallIgnoresStaleInFlight(),
   endlessRun(),
   narrowedRun(),
   unknownProjectRefused(),

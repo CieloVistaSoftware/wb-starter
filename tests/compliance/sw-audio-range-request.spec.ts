@@ -8,6 +8,11 @@
  */
 import { test, expect } from '../fixtures/offline';
 
+// The one spec that needs the service worker: it registers sw.js itself and
+// tests the worker's own range-request handling. Workers are blocked by
+// default (#1362).
+test.use({ serviceWorkers: 'allow' });
+
 test.describe('service worker: audio range requests do not throw unhandled rejections', () => {
   test('playing demos/sample.wav produces no console errors', async ({ page }) => {
     const pageErrors: string[] = [];
@@ -20,17 +25,15 @@ test.describe('service worker: audio range requests do not throw unhandled rejec
     await page.goto('/');
     await page.waitForSelector('#mainPage-home', { timeout: 20000 });
 
-    // Fresh SW registration so this test exercises the current sw.js, not a
-    // stale one from a prior run against the same dev server.
+    // #1108: main.js never registers sw.js on a development origin, and the
+    // test origin is localhost, so register the real worker here. sw.js's
+    // activate calls clients.claim(), so this page becomes controlled without
+    // a reload — a reload would hand the page to main.js, which removes it.
     await page.evaluate(async () => {
-      const regs = await navigator.serviceWorker.getRegistrations();
-      await Promise.all(regs.map((r) => r.unregister()));
-      const keys = await caches.keys();
-      await Promise.all(keys.map((k) => caches.delete(k)));
+      await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+      await navigator.serviceWorker.ready;
     });
-    await page.reload();
-    await page.waitForSelector('#mainPage-home', { timeout: 20000 });
-    await page.waitForFunction(() => !!navigator.serviceWorker.controller, { timeout: 10000 });
+    await page.waitForFunction(() => !!navigator.serviceWorker.controller, undefined, { timeout: 10000 });
 
     const audio = page.locator('audio').first();
     await expect(audio).toBeAttached();

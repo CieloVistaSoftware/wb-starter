@@ -1,5 +1,11 @@
 import { test, expect, newOfflinePage } from '../fixtures/offline';
 
+// #1112: one browser context is built in beforeAll and shared by every test
+// below. Playwright stops a context's trace at the end of EACH test, so a
+// shared context fails the second test with "Tracing is already stopping".
+// The default light trace is off for this file; WB_TRACE still forces one.
+test.use({ trace: (process.env.WB_TRACE as 'on' | 'off' | 'retain-on-failure') || 'off' });
+
 /**
  * EVERY hero in the playground lays out properly. All 120 of them.
  *
@@ -48,7 +54,15 @@ async function sweep(page: any, width: number): Promise<Row[]> {
   await page.waitForFunction(() => (window as any).WB, { timeout: 20000 });
   // The 120 heroes only exist once this example is chosen.
   await page.selectOption('#pg-examples', 'heroes-120');
-  await page.waitForTimeout(3000);
+  // #1392: wait for the heroes to be BUILT, not for 3 s to pass. A hero is
+  // measured only once it has its content column, and the sweep silently
+  // skips the rest -- on a loaded runner 3 s built none and it measured 0.
+  await page.waitForFunction(() => {
+    const heroes = document.querySelectorAll('#pg-preview [x-cardhero]');
+    const built = document.querySelectorAll('#pg-preview [x-cardhero] .x-card__hero-content');
+    return heroes.length > 100 && built.length >= heroes.length;
+  }, null, { timeout: 90_000 });
+  await page.evaluate(() => (window as any).WB?.whenIdle?.({ timeout: 20_000 }));
 
   return page.evaluate((_minShare: number) => {
     const rows: any[] = [];

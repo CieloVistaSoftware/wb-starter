@@ -384,29 +384,52 @@ export function isBlackWhiteTransparency(match: string, content: string, matchIn
  * implies it, and for a type-1 behavior on its own element an added x-audio is
  * redundant (#746). Checks that demand an `x-{name}`/`<wb-*>` marker in every
  * setup string predate auto-injection and reported that correct form as a
- * mismatch. Only plain tag selectors are returned; `input[type="radio"]`-style
- * keys are not a tag a setup string can start with.
+ * mismatch.
+ *
+ * #1141: EVERY entry is read, typed inputs included. Plain tags alone missed
+ * `input[type="range"]` -> range, `input[type="password"]` -> password,
+ * checkbox and radio, so `<input type="range">` was not recognised as the
+ * range behavior's own host and `<input type="range" x-range>` was not
+ * recognised as a duplicate.
  */
-let NATIVE_HOSTS: Map<string, string[]> | null = null;
-export function nativeHostsFor(behavior: string): string[] {
-  if (!NATIVE_HOSTS) {
-    NATIVE_HOSTS = new Map();
+export type NativeRule = { tag: string; type: string | null; behavior: string };
+let NATIVE_RULES: NativeRule[] | null = null;
+export function nativeRules(): NativeRule[] {
+  if (!NATIVE_RULES) {
     const src = fs.readFileSync(path.join(ROOT, 'src/core/tag-map.js'), 'utf-8');
     const block = src.match(/export const nativeMap = \{([\s\S]*?)\n\};/);
     if (!block) throw new Error('nativeMap not found in src/core/tag-map.js');
-    for (const m of block[1].matchAll(/^\s*'([a-z][a-z0-9]*)'\s*:\s*'([a-z0-9-]+)'/gm)) {
-      const list = NATIVE_HOSTS.get(m[2]) || [];
-      list.push(m[1]);
-      NATIVE_HOSTS.set(m[2], list);
+    NATIVE_RULES = [];
+    for (const m of block[1].matchAll(/^\s*'([^']+)'\s*:\s*'([a-z0-9-]+)'/gm)) {
+      const sel = m[1].match(/^([a-z][a-z0-9]*)(?:\[type="([a-z-]+)"\])?$/);
+      if (!sel) throw new Error(`nativeMap selector the tests cannot read: ${m[1]} -- teach tests/base.ts, never skip it`);
+      NATIVE_RULES.push({ tag: sel[1], type: sel[2] || null, behavior: m[2] });
     }
   }
-  return NATIVE_HOSTS.get(behavior) || [];
+  return NATIVE_RULES;
 }
 
-/** True when `html`'s root element is a native tag that auto-injects `behavior`. */
+/**
+ * The behavior a native element auto-injects, resolved as getNativeBehavior()
+ * does: first matching entry wins, so a typed input beats the plain `input`.
+ */
+export function nativeBehaviorOf(tag: string, type: string | null | undefined): string | null {
+  const t = tag.toLowerCase();
+  const ty = (type || '').toLowerCase();
+  for (const r of nativeRules()) if (r.tag === t && (!r.type || r.type === ty)) return r.behavior;
+  return null;
+}
+
+/** The `type` attribute value in an opening tag's attribute text, if any. */
+export function typeAttrOf(attrs: string): string | null {
+  const m = /(?:^|\s)type\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>/]+))/i.exec(attrs);
+  return m ? (m[1] ?? m[2] ?? m[3]) : null;
+}
+
+/** True when `html`'s root element is a native host that auto-injects `behavior`. */
 export function usesNativeHost(html: string, behavior: string): boolean {
-  const root = /^\s*<([a-z][a-z0-9]*)[\s>/]/i.exec(html);
-  return !!root && nativeHostsFor(behavior).includes(root[1].toLowerCase());
+  const root = /^\s*<([a-z][a-z0-9]*)((?:\s[^<>]*?)?)\/?>/i.exec(html);
+  return !!root && nativeBehaviorOf(root[1], typeAttrOf(root[2] || '')) === behavior;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

@@ -100,17 +100,17 @@ test.describe('#1117 — the cardfile icon is derived from the filename', () => 
     });
   }
 
-  test('an explicit fileType still overrides a contradicting extension', async ({ page }) => {
-    // The documented escape hatch: a .bin that really is a video. Existing
-    // fixtures depend on this path (cards-permutation-matrix.html drives
-    // file-type= against a filename with no extension at all).
+  // #1119 superseded #1117's escape hatch. John: "why are you keeping
+  // file-type? get rid of it. use only filenames." These two cases used to
+  // assert the override; they now assert it is gone -- the filename decides.
+  test('a file-type attribute no longer overrides the extension (#1119)', async ({ page }) => {
     const got = await renderCardfile(page, 'filename="sensor-capture.bin" file-type="video"');
-    expect(got.icon, 'the authored fileType must win over the extension').toBe(ICON.video);
+    expect(got.icon, 'file-type is not read: a .bin is a generic file').toBe(ICON.file);
   });
 
-  test('fileType alone still works when the filename cannot say the type', async ({ page }) => {
+  test('a file-type attribute alone does not set the icon (#1119)', async ({ page }) => {
     const got = await renderCardfile(page, 'filename="Sample filename" file-type="image"');
-    expect(got.icon).toBe(ICON.image);
+    expect(got.icon, 'a name with no extension gets the generic icon, whatever file-type says').toBe(ICON.file);
   });
 });
 

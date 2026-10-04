@@ -122,13 +122,16 @@ test.describe('HTML Validity', () => {
     const count = await codePanels.count();
     expect(count, 'no x-demo code panels rendered').toBeGreaterThan(0);
 
+    // Wait for each panel's FINISHED text (#1283, ported from #1209 1708fdb2).
+    // A one-shot textContent() raced x-demo building the panel: a panel read
+    // mid-render was either skipped by a length check or judged on half its
+    // markup. A panel that never shows markup still fails.
     for (let i = 0; i < Math.min(count, 5); i++) {
-      const codeText = await codePanels.nth(i).textContent();
-      if (codeText && codeText.length > 50) {
-        expect(/<[a-z][^>]*>/i.test(codeText), `code panel ${i} lacks HTML tags`).toBe(true);
-        if (codeText.includes('<tr>')) {
-          expect(codeText.split('\n').length, `table code panel ${i} should be multi-line`).toBeGreaterThan(3);
-        }
+      const panel = codePanels.nth(i);
+      await expect(panel, `code panel ${i} lacks HTML tags`).toHaveText(/<[a-z][^>]*>/i, { timeout: 10_000 });
+      const codeText = (await panel.textContent()) || '';
+      if (codeText.includes('<tr>')) {
+        expect(codeText.split('\n').length, `table code panel ${i} should be multi-line`).toBeGreaterThan(3);
       }
     }
   });

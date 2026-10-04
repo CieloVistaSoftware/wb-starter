@@ -1,6 +1,10 @@
 import { test, expect, type Page } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { globSync } from 'glob';
+import { traceNavigations } from '../helpers/navigation-trace';
+
+// #1311: a failure here prints every main-frame navigation the page made.
+traceNavigations(test);
 
 /**
  * docs/standards/DEMOS-AND-DOCS-STANDARDS.md §2 and §13, enforced project-wide

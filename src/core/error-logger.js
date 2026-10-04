@@ -516,13 +516,24 @@ export function isLocalOnly() {
   return !serverLogging;
 }
 
+/** Bytes under the browsers' 64 KB keepalive body cap, with headroom. */
+const KEEPALIVE_LIMIT = 60000;
+
 async function appendErrorToLog(error) {
   if (serverLogging) {
     try {
+      // #1340: keepalive, so the entry survives the page that raised it. A
+      // plain fetch is cancelled when the page navigates or closes, and an
+      // error raised just before that (a boot fault, a probe that tears the
+      // page down) showed on screen and reached no log -- #1340's doubled
+      // shell left no trace anywhere. Browsers cap keepalive bodies at 64 KB,
+      // so an oversized entry (a huge stack) goes without it, as before.
+      const body = JSON.stringify({ error });
       const response = await fetch(apiUrl('api/error-log/append'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error })
+        body,
+        keepalive: body.length < KEEPALIVE_LIMIT,
       });
       if (response.ok) return;
 

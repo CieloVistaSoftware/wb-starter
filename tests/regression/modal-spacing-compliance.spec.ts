@@ -44,19 +44,15 @@
  *     `h2 { margin-bottom >= 1rem }` can never pass either, so the measured
  *     distance is asserted instead.
  *
- * KNOWN FAILURE — see the last test
+ * THE LAST TEST, AND THE ANIMATION
  * ---------------------------------
- * The final test is red against a real product defect found while writing this
- * file, not against the test. dialog.js creates a native <header>, WB's
- * autoInject gives it the `header` behavior, and `.x-header`'s
- * `padding: 0 1.5rem` (src/styles/behaviors/header.css) overrides
- * `.x-dialog__header`'s `padding: 1rem 1.5rem`. The dialog header therefore has
- * ZERO vertical padding; it only looks correct because `.x-header` also brings
- * `min-height: 60px`, which happens to leave room for a single-line title. Give
- * the dialog a title that wraps and the text sits flush against the header
- * edges — measured at 0.74px above and 0.86px below. Fixing it means touching
- * src/, which is outside this change; the test names the defect rather than
- * being weakened to accommodate it.
+ * The last test was written red against a real defect: `.x-header`'s
+ * `padding: 0 1.5rem` beat `.x-dialog__header`'s `padding: 1rem 1.5rem`, so a
+ * wrapping title sat flush against the header edges (0.74px above, 0.86px
+ * below). header.css now pads `.x-header` 1rem vertically (§13), and it passes.
+ * What kept it intermittent was measurement: `.x-dialog` opens with a 0.3s
+ * x-scale-in, and rects were read mid-animation; openDialog() waits for it.
+ * (#1283, the stale KNOWN FAILURE note corrected as in #1209's c2017f21.)
  */
 
 import { test, expect, type Page, type Locator } from '../fixtures/offline';
@@ -333,13 +329,10 @@ test.describe('Modal spacing compliance — the shipped x-dialog', () => {
   });
 
   test('a title that wraps still keeps 1rem above and below it', async ({ page }) => {
-    // KNOWN RED — this names a real product defect, not a test defect. See the
-    // file header: WB's autoInject puts `.x-header` on the <header> dialog.js
-    // creates, and header.css's `padding: 0 1.5rem` beats dialog.css's
-    // `padding: 1rem 1.5rem`. The dialog header has no vertical padding at all;
-    // a single-line title only looks right because `.x-header` also carries
-    // `min-height: 60px`. As soon as the title wraps, min-height stops
-    // governing and the text goes flush to the edges.
+    // Guards the defect in the file header: a wrapping title used to sit flush
+    // against the header edges because `.x-header`'s padding beat the dialog
+    // header's. A single-line title hid it behind `.x-header`'s 60px
+    // min-height; a wrapping one is the case that shows it.
     const dialog = await openDialog(page, 'sm', WRAPPING_TITLE);
 
     const header = dialog.locator('.x-dialog__header');

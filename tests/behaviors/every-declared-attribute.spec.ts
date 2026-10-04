@@ -226,7 +226,13 @@ async function ignoredAttributes(page: Page, b: Behavior): Promise<string[]> {
     // left:-9999px, so without it the IntersectionObserver never fires and
     // NOTHING is ever injected.
     if (WB?.scan) await WB.scan(host, { eager: true });
-    await new Promise((r) => setTimeout(r, 120));
+    // #1066: wait for the runtime to say every injection has finished, not a
+    // fixed 120ms. The fixed wait was long enough at idle and too short under
+    // full-suite load, so x-relativetime (which renders and then re-renders on
+    // an interval) was compared half-built and failed only when workers
+    // contended. WB.whenIdle() is the signal #962 asked for.
+    if (typeof WB?.whenIdle === 'function') await WB.whenIdle({ timeout: 15000 });
+    else await new Promise((r) => setTimeout(r, 120));
 
     // Compare the rendered element with the attribute REMOVED from the
     // comparison, so the attribute's own presence in outerHTML is not what
