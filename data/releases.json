@@ -6,6 +6,29 @@
   ],
   "releases": [
     {
+      "version": "1.0.156",
+      "date": "2026-10-03",
+      "summary": "Fix: a file card&#39;s type comes from its filename, and nothing else (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1366\" target=\"_blank\" rel=\"noopener\">PR 1366</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1119\" target=\"_blank\" rel=\"noopener\">#1119</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1113\" target=\"_blank\" rel=\"noopener\">#1113</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Seven filename examples keep cardfile at five-plus rows;&#39;s override tests now assert the override is gone</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1119\" target=\"_blank\" rel=\"noopener\">#1119</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1117\" target=\"_blank\" rel=\"noopener\">#1117</a>",
+          "issues": [
+            1119,
+            1117
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A file card&#39;s type comes from its filename, and nothing else</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1119\" target=\"_blank\" rel=\"noopener\">#1119</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1113\" target=\"_blank\" rel=\"noopener\">#1113</a>",
+          "issues": [
+            1119,
+            1113
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.155",
       "date": "2026-10-03",
       "summary": "Fix: every-declared-attribute waits for injection idle, not 120ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1372\" target=\"_blank\" rel=\"noopener\">PR 1372</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1066\" target=\"_blank\" rel=\"noopener\">#1066</a>",
