@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.145",
+      "date": "2026-10-03",
+      "summary": "Fix: bound the one holder a recycled PID can still fake — the hold ceiling (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1347\" target=\"_blank\" rel=\"noopener\">PR 1347</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Bound the one holder a recycled PID can still fake — the hold ceiling</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1040\" target=\"_blank\" rel=\"noopener\">#1040</a>",
+          "issues": [
+            1040
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.144",
       "date": "2026-10-03",
       "summary": "Fix: the open API/Docs toggle glows green; hover no longer looks the same (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1356\" target=\"_blank\" rel=\"noopener\">PR 1356</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1110\" target=\"_blank\" rel=\"noopener\">#1110</a>",
