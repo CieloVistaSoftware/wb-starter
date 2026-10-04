@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.151",
+      "date": "2026-10-03",
+      "summary": "Fix: a server told which port to use never quietly moves to another (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1358\" target=\"_blank\" rel=\"noopener\">PR 1358</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1135\" target=\"_blank\" rel=\"noopener\">#1135</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Fold the port-retry guard into the explicit-port spec; remove the superseded one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1135\" target=\"_blank\" rel=\"noopener\">#1135</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1286\" target=\"_blank\" rel=\"noopener\">#1286</a>",
+          "issues": [
+            1135,
+            1286
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A server told which port to use never quietly moves to another</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1135\" target=\"_blank\" rel=\"noopener\">#1135</a>",
+          "issues": [
+            1135
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.150",
       "date": "2026-10-03",
       "summary": "Fix: cards-are-never-too-narrow gets a budget bigger than its work, and waits on idle (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1365\" target=\"_blank\" rel=\"noopener\">PR 1365</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1360\" target=\"_blank\" rel=\"noopener\">#1360</a>",
