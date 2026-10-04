@@ -72,8 +72,7 @@
     "striped": {
       "type": "boolean",
       "description": "Show striped pattern",
-      "default": false,
-      "appliesClass": "x-progress--striped"
+      "default": false
     },
     "indeterminate": {
       "type": "boolean",

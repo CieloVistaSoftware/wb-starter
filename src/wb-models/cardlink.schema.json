@@ -60,8 +60,7 @@
         "minimal",
         "glass"
       ],
-      "default": "default",
-      "appliesClass": "x-card-link--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

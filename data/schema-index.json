@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T17:38:26.870Z",
+  "generatedAt": "2026-10-04T19:42:06.759Z",
   "count": 160,
   "schemas": [
     {
@@ -339,8 +339,7 @@
             "xl",
             "2xl"
           ],
-          "default": "md",
-          "appliesClass": "x-avatar--{{value}}"
+          "default": "md"
         },
         "shape": {
           "type": "string",
@@ -349,8 +348,7 @@
             "square",
             "rounded"
           ],
-          "default": "circle",
-          "appliesClass": "x-avatar--{{value}}"
+          "default": "circle"
         },
         "status": {
           "type": "string",
@@ -367,8 +365,7 @@
         "bordered": {
           "type": "boolean",
           "description": "Show border",
-          "default": false,
-          "appliesClass": "x-avatar--bordered"
+          "default": false
         }
       },
       "matrix": [
@@ -934,7 +931,7 @@
           "type": "boolean",
           "description": "Full width button",
           "default": false,
-          "appliesClass": "x-button--full"
+          "appliesClass": "x-button--full-width"
         },
         "iconOnly": {
           "type": "boolean",
@@ -1060,8 +1057,7 @@
             "elevated",
             "bordered"
           ],
-          "default": "default",
-          "appliesClass": "x-card-button--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -1168,7 +1164,7 @@
             "auto"
           ],
           "default": "auto",
-          "appliesClass": "x-card--{value}"
+          "appliesClass": "x-card--{{value}}"
         },
         "tooltip": {
           "type": "string",
@@ -2210,8 +2206,7 @@
             "bordered",
             "filled"
           ],
-          "default": "default",
-          "appliesClass": "x-details--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -2415,8 +2410,7 @@
             "default",
             "elevated"
           ],
-          "default": "default",
-          "appliesClass": "x-card-draggable--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -2503,8 +2497,7 @@
             "overlay",
             "push"
           ],
-          "default": "overlay",
-          "appliesClass": "x-drawer--{{value}}"
+          "default": "overlay"
         }
       },
       "matrix": [
@@ -2543,7 +2536,7 @@
             "right"
           ],
           "default": "left",
-          "appliesClass": "x-drawer-layout--{{value}}"
+          "appliesClass": "x-drawer-toggle--{{value}}"
         },
         "width": {
           "type": "string",
@@ -2596,7 +2589,7 @@
             "top-end"
           ],
           "default": "bottom-start",
-          "appliesClass": "x-dropdown--{{value}}",
+          "appliesClass": "x-dropdown__menu--{{value}}",
           "visibleWhen": "open",
           "visualReason": "Places the menu, which is on screen only once opened (#773)."
         },
@@ -2681,8 +2674,7 @@
         "expanded": {
           "type": "boolean",
           "description": "Initial expanded state",
-          "default": false,
-          "appliesClass": "x-card-expandable--expanded"
+          "default": false
         },
         "maxHeight": {
           "type": "string",
@@ -2701,8 +2693,7 @@
             "elevated",
             "bordered"
           ],
-          "default": "default",
-          "appliesClass": "x-card-expandable--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -2869,8 +2860,7 @@
             "compact",
             "elevated"
           ],
-          "default": "default",
-          "appliesClass": "x-card-file--{{value}}"
+          "default": "default"
         },
         "hoverText": {
           "type": "string",
@@ -3641,7 +3631,7 @@
             "gradient"
           ],
           "default": "default",
-          "appliesClass": "x-hero--{{value}}"
+          "appliesClass": "x-cardhero--{{value}}"
         },
         "xalign": {
           "type": "string",
@@ -3652,19 +3642,18 @@
             "right"
           ],
           "default": "center",
-          "appliesClass": "x-hero--xalign-{{value}}"
+          "appliesClass": "x-card--xalign-{{value}}"
         },
         "overlay": {
           "type": "boolean",
           "description": "Show gradient overlay for text readability",
-          "default": true,
-          "appliesClass": "x-hero--overlay"
+          "default": true
         },
         "fullHeight": {
           "type": "boolean",
           "description": "Make hero full viewport height",
           "default": false,
-          "appliesClass": "x-hero--full"
+          "appliesClass": "x-cardhero--full-height"
         },
         "headingLevel": {
           "type": "string",
@@ -4053,8 +4042,7 @@
             "left",
             "right"
           ],
-          "default": "left",
-          "appliesClass": "x-card-horizontal--image-{{value}}"
+          "default": "left"
         },
         "imageWidth": {
           "type": "string",
@@ -4080,8 +4068,7 @@
             "bordered",
             "minimal"
           ],
-          "default": "default",
-          "appliesClass": "x-card-horizontal--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -4205,8 +4192,7 @@
             "left",
             "right"
           ],
-          "default": "top",
-          "appliesClass": "x-card-image--{{value}}"
+          "default": "top"
         },
         "fit": {
           "type": "string",
@@ -4237,8 +4223,7 @@
             "bordered",
             "minimal"
           ],
-          "default": "default",
-          "appliesClass": "x-card-image--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -4671,8 +4656,7 @@
             "minimal",
             "glass"
           ],
-          "default": "default",
-          "appliesClass": "x-card-link--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -4867,7 +4851,7 @@
           "type": "boolean",
           "description": "Initial minimized state",
           "default": false,
-          "appliesClass": "x-card-minimizable--minimized"
+          "appliesClass": "x-card--minimized"
         },
         "variant": {
           "type": "string",
@@ -4876,8 +4860,7 @@
             "elevated",
             "bordered"
           ],
-          "default": "default",
-          "appliesClass": "x-card-minimizable--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -5010,8 +4993,7 @@
             "dark",
             "transparent"
           ],
-          "default": "default",
-          "appliesClass": "x-navbar--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -5264,7 +5246,7 @@
             "bottom"
           ],
           "default": "bottom",
-          "appliesClass": "x-card-overlay--{{value}}"
+          "appliesClass": "x-card--overlay-{{value}}"
         },
         "xalign": {
           "type": "string",
@@ -5274,14 +5256,12 @@
             "center",
             "right"
           ],
-          "default": "left",
-          "appliesClass": "x-card-overlay--xalign-{{value}}"
+          "default": "left"
         },
         "gradient": {
           "type": "boolean",
           "description": "Show gradient overlay for text readability",
-          "default": true,
-          "appliesClass": "x-card-overlay--gradient"
+          "default": true
         },
         "height": {
           "type": "string",
@@ -5298,7 +5278,7 @@
             "blur"
           ],
           "default": "default",
-          "appliesClass": "x-card-overlay--{{value}}"
+          "appliesClass": "x-card__overlay-content--{{value}}"
         }
       },
       "matrix": [
@@ -5774,8 +5754,7 @@
             "elevated",
             "minimal"
           ],
-          "default": "default",
-          "appliesClass": "x-pricing--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -5901,8 +5880,7 @@
         "featured": {
           "type": "boolean",
           "description": "Highlight as featured",
-          "default": false,
-          "appliesClass": "x-product--featured"
+          "default": false
         },
         "variant": {
           "type": "string",
@@ -5913,8 +5891,7 @@
             "horizontal",
             "minimal"
           ],
-          "default": "default",
-          "appliesClass": "x-product--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [
@@ -6017,8 +5994,7 @@
         "striped": {
           "type": "boolean",
           "description": "Show striped pattern",
-          "default": false,
-          "appliesClass": "x-progress--striped"
+          "default": false
         },
         "indeterminate": {
           "type": "boolean",
@@ -6813,20 +6789,17 @@
         "searchable": {
           "type": "boolean",
           "description": "Enable search",
-          "default": false,
-          "appliesClass": "x-select--searchable"
+          "default": false
         },
         "clearable": {
           "type": "boolean",
           "description": "Enable clear button",
-          "default": false,
-          "appliesClass": "x-select--clearable"
+          "default": false
         },
         "multiple": {
           "type": "boolean",
           "description": "Allow multiple selection",
-          "default": false,
-          "appliesClass": "x-select--multiple"
+          "default": false
         },
         "disabled": {
           "type": "boolean",
@@ -7007,8 +6980,7 @@
             "rect",
             "card"
           ],
-          "default": "text",
-          "appliesClass": "x-skeleton--{{value}}"
+          "default": "text"
         },
         "lines": {
           "type": "number",
@@ -7468,7 +7440,7 @@
             "down",
             "neutral"
           ],
-          "appliesClass": "x-stats--trend-{{value}}",
+          "appliesClass": "x-card__stats-trend--{{value}}",
           "default": ""
         },
         "trendValue": {
@@ -7485,8 +7457,7 @@
             "large",
             "minimal"
           ],
-          "default": "default",
-          "appliesClass": "x-stats--{{value}}"
+          "default": "default"
         },
         "color": {
           "type": "string",
@@ -8021,8 +7992,7 @@
             "minimal",
             "centered"
           ],
-          "default": "default",
-          "appliesClass": "x-testimonial--{{value}}"
+          "default": "default"
         },
         "size": {
           "type": "string",
@@ -8033,7 +8003,7 @@
             "lg"
           ],
           "default": "md",
-          "appliesClass": "x-testimonial--{{value}}"
+          "appliesClass": "x-card--{{value}}"
         }
       },
       "matrix": [
@@ -8132,8 +8102,7 @@
         "autosize": {
           "type": "boolean",
           "description": "Auto-resize to content",
-          "default": false,
-          "appliesClass": "x-textarea--autosize"
+          "default": false
         },
         "disabled": {
           "type": "boolean",
@@ -8695,8 +8664,7 @@
             "bordered",
             "elevated"
           ],
-          "default": "default",
-          "appliesClass": "x-card-video--{{value}}"
+          "default": "default"
         }
       },
       "matrix": [

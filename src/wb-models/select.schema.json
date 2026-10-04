@@ -43,20 +43,17 @@
     "searchable": {
       "type": "boolean",
       "description": "Enable search",
-      "default": false,
-      "appliesClass": "x-select--searchable"
+      "default": false
     },
     "clearable": {
       "type": "boolean",
       "description": "Enable clear button",
-      "default": false,
-      "appliesClass": "x-select--clearable"
+      "default": false
     },
     "multiple": {
       "type": "boolean",
       "description": "Allow multiple selection",
-      "default": false,
-      "appliesClass": "x-select--multiple"
+      "default": false
     },
     "disabled": {
       "type": "boolean",

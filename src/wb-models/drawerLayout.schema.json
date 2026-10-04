@@ -21,7 +21,7 @@
         "right"
       ],
       "default": "left",
-      "appliesClass": "x-drawer-layout--{{value}}"
+      "appliesClass": "x-drawer-toggle--{{value}}"
     },
     "width": {
       "type": "string",

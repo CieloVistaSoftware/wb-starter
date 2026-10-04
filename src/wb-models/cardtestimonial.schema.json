@@ -54,8 +54,7 @@
         "minimal",
         "centered"
       ],
-      "default": "default",
-      "appliesClass": "x-testimonial--{{value}}"
+      "default": "default"
     },
     "size": {
       "type": "string",
@@ -66,7 +65,7 @@
         "lg"
       ],
       "default": "md",
-      "appliesClass": "x-testimonial--{{value}}"
+      "appliesClass": "x-card--{{value}}"
     }
   },
   "$view": [

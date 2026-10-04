@@ -68,8 +68,7 @@
         "overlay",
         "push"
       ],
-      "default": "overlay",
-      "appliesClass": "x-drawer--{{value}}"
+      "default": "overlay"
     }
   },
   "$view": [

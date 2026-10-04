@@ -31,10 +31,11 @@ test.describe('site nav reachability across widths (#276)', () => {
     await page.goto('/?page=behaviors', { waitUntil: 'domcontentloaded' });
     await wbIdle(page);
     await page.setViewportSize({ width: 375, height: 800 });
-    await page.waitForTimeout(400);
+    // #1456: wait for the site to finish booting (main.js publishes WBSite
+    // after the first navigation) instead of sleeping 400ms and hoping.
+    await page.waitForFunction(() => 'WBSite' in window, undefined, { timeout: 30000 });
 
     await page.click('#navToggle');
-    await page.waitForTimeout(400);
 
     const nav = page.locator('.site__nav');
     await expect(nav).toBeVisible();

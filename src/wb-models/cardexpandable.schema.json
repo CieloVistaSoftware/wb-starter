@@ -29,8 +29,7 @@
     "expanded": {
       "type": "boolean",
       "description": "Initial expanded state",
-      "default": false,
-      "appliesClass": "x-card-expandable--expanded"
+      "default": false
     },
     "maxHeight": {
       "type": "string",
@@ -49,8 +48,7 @@
         "elevated",
         "bordered"
       ],
-      "default": "default",
-      "appliesClass": "x-card-expandable--{{value}}"
+      "default": "default"
     }
   },
   "$view": [

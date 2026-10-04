@@ -100,7 +100,7 @@
       "type": "boolean",
       "description": "Full width button",
       "default": false,
-      "appliesClass": "x-button--full"
+      "appliesClass": "x-button--full-width"
     },
     "iconOnly": {
       "type": "boolean",

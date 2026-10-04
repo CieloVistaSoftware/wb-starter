@@ -67,8 +67,7 @@
         "elevated",
         "minimal"
       ],
-      "default": "default",
-      "appliesClass": "x-pricing--{{value}}"
+      "default": "default"
     }
   },
   "$view": [
