@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.158",
+      "date": "2026-10-03",
+      "summary": "Fix: code-highlight waits for highlighted blocks, not a fixed 2.5s (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1375\" target=\"_blank\" rel=\"noopener\">PR 1375</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1374\" target=\"_blank\" rel=\"noopener\">#1374</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Code-highlight waits for highlighted blocks, not a fixed 2.5s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1374\" target=\"_blank\" rel=\"noopener\">#1374</a>",
+          "issues": [
+            1374
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.157",
       "date": "2026-10-03",
       "summary": "Test: a failing layout or stagelight test prints every navigation its page made (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1373\" target=\"_blank\" rel=\"noopener\">PR 1373</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1311\" target=\"_blank\" rel=\"noopener\">#1311</a>",
