@@ -41,7 +41,7 @@
     },
     "closeOnBackdrop": {
       "type": "boolean",
-      "description": "Close on backdrop click",
+      "description": "Close when the user clicks outside the dialog. The backdrop is the dimmed area the browser paints over the rest of the page while a modal is open (::backdrop); clicking it dismisses the dialog. Set closeOnBackdrop=\"false\" to require a deliberate close.",
       "default": true,
       "visual": false,
       "visualReason": "Whether a click on the backdrop closes the dialog. Only that click shows it (#773)."
@@ -253,7 +253,10 @@
       "<dialog variant=\"default\">variant=default</dialog>",
       "<dialog variant=\"centered\">variant=centered</dialog>",
       "<dialog variant=\"fullscreen\">variant=fullscreen</dialog>",
-      "<dialog close-on-backdrop>with closeOnBackdrop</dialog>",
+      "<dialog closeOnBackdrop>with closeOnBackdrop</dialog>",
+      "<dialog closeOnBackdrop=\"false\">closeOnBackdrop off</dialog>",
+      "<dialog closeOnEscape=\"false\">closeOnEscape off</dialog>",
+      "<dialog showClose=\"false\">showClose off</dialog>",
       "<dialog title=\"Test Title\">With title attribute</dialog>"
     ],
     "matrix": {

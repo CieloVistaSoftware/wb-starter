@@ -1,4 +1,4 @@
-import { readFlag } from '../../core/read-attr.js';
+import { readAttr, readFlag, hasAuthoredAttr } from '../../core/read-attr.js';
 /**
  * WB Dialog Behavior - Semantic dialog modal
  * 
@@ -33,25 +33,48 @@ function addCloseButton(header, show) {
   return closeBtn;
 }
 
-export function dialog(element, options = {}) {
-const config = {
-    title: options.title || element.getAttribute('title') || element.getAttribute('modal-title') || element.dataset.dialogTitle || element.dataset.modalTitle || 'Dialog',
-    content: options.content || element.getAttribute('content') || element.getAttribute('modal-content') || element.dataset.dialogContent || element.dataset.modalContent || '',
-    size: options.size || element.getAttribute('size') || element.getAttribute('modal-size') || element.dataset.dialogSize || element.dataset.modalSize || 'md',
+/**
+ * Every option this behavior accepts, read ONCE, under the name
+ * dialog.schema.json declares (#747).
+ *
+ * The three booleans went through `readFlag` already (#1005), so `"false"`
+ * parsed as false -- and `showClose="false"` still showed the close button,
+ * because the NAME read was the dashed one. `readFlag(element, 'show-close')`
+ * looked up `show-close` and `data-show-close`; the `showClose` the schema
+ * declares and the issue's own markup uses was never looked for, so it fell
+ * back to the default: ON. The name was the bug, not the value parse.
+ *
+ * The fallbacks below ARE the schema's defaults (all three booleans true), so
+ * the reader and the schema cannot drift. The older dashed spellings keep
+ * working: readAttr/readFlag read the kebab form too, by design.
+ *
+ * `modalTitle`/`modalContent`/`modalSize` are the legacy trigger names, kept
+ * because docs/behaviors/modal.md and modal.schema.json still teach them; they
+ * are read here under the camelCase spelling for the same reason.
+ */
+function optionsFrom(element, options = {}) {
+  return {
+    title: options.title || readAttr(element, 'title') || readAttr(element, 'modalTitle')
+      || readAttr(element, 'dialogTitle') || 'Dialog',
+    content: options.content || readAttr(element, 'content') || readAttr(element, 'modalContent')
+      || readAttr(element, 'dialogContent') || '',
+    size: options.size || readAttr(element, 'size') || readAttr(element, 'modalSize')
+      || readAttr(element, 'dialogSize') || 'md',
     // Schema declares variant: default/centered/fullscreen (appliesClass:
     // x-dialog--{{value}}), but this was never read anywhere -- every
     // variant produced an identical dialog (confirmed live: "Centered" and
     // "Fullscreen" demo triggers opened the exact same default-positioned,
     // default-sized dialog).
-    variant: options.variant || element.getAttribute('variant') || 'default',
-    // Declared in dialog.schema.json and documented in docs/behaviors/dialog.md
-    // (all default true) but read by no code (#1005). readFlag so that
-    // `close-on-backdrop="false"` really means off -- the #747 trap.
-    closeOnBackdrop: options.closeOnBackdrop ?? readFlag(element, 'close-on-backdrop', true),
-    closeOnEscape: options.closeOnEscape ?? readFlag(element, 'close-on-escape', true),
-    showClose: options.showClose ?? readFlag(element, 'show-close', true),
+    variant: options.variant || readAttr(element, 'variant') || 'default',
+    closeOnBackdrop: options.closeOnBackdrop ?? readFlag(element, 'closeOnBackdrop', true),
+    closeOnEscape: options.closeOnEscape ?? readFlag(element, 'closeOnEscape', true),
+    showClose: options.showClose ?? readFlag(element, 'showClose', true),
     ...options
   };
+}
+
+export function dialog(element, options = {}) {
+  const config = optionsFrom(element, options);
 
   // Internal function to create and show the dialog
   const createAndShowDialog = (titleText, contentHtml, sizeVal, variantVal = 'default') => {
@@ -142,7 +165,7 @@ const config = {
       });
     }
     
-    // ESC key handled automatically by <dialog>; `close-on-escape="false"`
+    // ESC key handled automatically by <dialog>; `closeOnEscape="false"`
     // cancels the native 'cancel' event so Escape leaves it open.
     if (!config.closeOnEscape) {
       dialogEl.addEventListener('cancel', (e) => e.preventDefault());
@@ -168,8 +191,16 @@ const config = {
   // MARKUP is the root cause, but the gate should degrade gracefully too,
   // matching audio.js/lightbox.js's established plain-first/data-fallback
   // pattern rather than silently hiding the element).
-  const hasTriggerAttrs = element.hasAttribute('modal-content') || element.hasAttribute('modal-title') ||
-    readFlag(element, 'modal-content') || readFlag(element, 'modal-title');
+  //
+  // hasAuthoredAttr asks only whether the author wrote the attribute, in any
+  // accepted spelling -- which is the actual question here, and the reason
+  // this is not readFlag: a gate that calls readFlag reads `modal-title` as a
+  // FLAG, so `modal-title="false"` would have meant "no title attribute".
+  // It also covers the camelCase spelling, which neither the plain nor the
+  // data- lookup did: <button x-dialog modalTitle="…" modalContent="…"> fell
+  // straight through this gate and opened a dialog titled "Dialog" with the
+  // trigger's own label as its body (#747, #1125).
+  const hasTriggerAttrs = hasAuthoredAttr(element, 'modalContent') || hasAuthoredAttr(element, 'modalTitle');
   if (hasTriggerAttrs) {
     // TRIGGER mode: <dialog modal-title="…" modal-content="…">Open Modal</dialog>
     // is a visible button — its text is the label and clicking it opens a dialog
@@ -286,8 +317,8 @@ const config = {
     const closeDialog = () => element.close();
     if (closeBtn) closeBtn.addEventListener('click', closeDialog);
 
-    // #1005: close-on-backdrop / close-on-escape / show-close are now read
-    // (config above), so the `close-on-backdrop="false"` sample stays inert
+    // #1005: closeOnBackdrop / closeOnEscape / showClose are now read
+    // (config above), so the `closeOnBackdrop="false"` sample stays inert
     // while the default gets the documented backdrop-close. A click whose
     // target is the <dialog> itself landed on the ::backdrop, since every
     // child sits inside header/body.
