@@ -15,9 +15,9 @@
 
 <div id="releases-hero" class="page__hero">
   <h1>Releases</h1>
-  <p id="releases-hero-note">What each version added, fixed and changed. Every push to <code>main</code> is a minor version
-  (1.0.N, the number on the version badge), lists what it contains with links to its issues, and deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>,
-  so the newest release below is what this site is running.</p>
+  <p id="releases-hero-note">Each commit to <code>main</code> is a new release (1.0.N, the number on the version badge),
+  and it deploys straight to <a href="https://cielovistasoftware.github.io/wb-starter/" target="_blank" rel="noopener">cielovistasoftware.github.io/wb-starter</a>,
+  so the newest release below is what this site is running. Each one says what the issue was, what to do to see the change, and what changed, with links to its issues.</p>
   <input type="search" id="releases-search" class="releases-search" placeholder="Search releases…" aria-label="Search releases">
 </div>
 
@@ -67,6 +67,8 @@
       html += `<section id="${id}" class="releases__release" version="${r.version}">`;
       html += `<h2 class="releases__version">${r.version} <span class="releases__date">${r.date || ''}</span> ${latest}</h2>`;
       if (r.summary) html += `<p id="${id}-summary" class="releases__summary">${r.summary}</p>`;
+      // #1533: what to do to see the change, under the summary of the issue.
+      if (r.seeIt) html += `<p id="${id}-see-it" class="releases__see-it"><strong>See it:</strong> ${r.seeIt}</p>`;
       html += itemsHtml(r.items || [], id) + '</section>';
     });
     if ((data.history || []).length) {
@@ -90,7 +92,10 @@
       li.hidden = !!term && !li.textContent.toLowerCase().includes(term);
     }
     for (const block of host.querySelectorAll('.releases__group, .releases__release, .releases__dated, .releases__history')) {
-      block.hidden = !!term && !block.querySelector('.releases__item:not([hidden])');
+      // A release also matches on its summary and "See it" line (#1533).
+      const own = [...block.querySelectorAll(':scope > .releases__summary, :scope > .releases__see-it')]
+        .some((p) => p.textContent.toLowerCase().includes(term));
+      block.hidden = !!term && !own && !block.querySelector('.releases__item:not([hidden])');
     }
   }
   if (search) search.addEventListener('input', applySearch);
