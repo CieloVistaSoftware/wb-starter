@@ -283,6 +283,18 @@ function generateComponentSections(schema) {
     const demos = schema.test.matrix.combinations.map(combo => {
       const attrs = {};
       for (const [key, val] of Object.entries(combo)) {
+        // #1525: a false matrix value is a combination demonstrating an option
+        // turned OFF. Dropping it (the emitter's rule for false) rendered
+        // dialog's "No Close" with a close button. When the option is on by
+        // default, OFF must be written out -- name="false", which the behaviors
+        // read as off since #747. When it is off by default, false IS the
+        // default, so it stays unwritten and {x:false} still dedupes with {}.
+        // Written in the schema's own camelCase (#1125), not kebab: the dashed
+        // spelling everywhere else in this generator is #1526.
+        if (val === false) {
+          if (props[key]?.default === true) attrs[key] = 'false';
+          continue;
+        }
         attrs[camelToKebab(key)] = val;
       }
       return buildDemo(schema, tag, attrs);
