@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.262",
+      "date": "2026-10-04",
+      "summary": "Fix: deterministic search index, regenerated on every push to main (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1514\" target=\"_blank\" rel=\"noopener\">PR 1514</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1503\" target=\"_blank\" rel=\"noopener\">#1503</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Deterministic search index, regenerated on every push to main</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1503\" target=\"_blank\" rel=\"noopener\">#1503</a>",
+          "issues": [
+            1503
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.261",
       "date": "2026-10-04",
       "summary": "Test: wait for both buttons before comparing sizes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1513\" target=\"_blank\" rel=\"noopener\">PR 1513</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1468\" target=\"_blank\" rel=\"noopener\">#1468</a>",
