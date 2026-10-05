@@ -290,6 +290,37 @@ land — and never tell John it is live when you have only checked the origin.
 
 ---
 
+## 18. A Body File Is Checked Before git Or gh Reads It — Help It
+
+Parallel agents share ONE scratchpad directory. On 2026-10-03 two of them wrote
+a commit message to the same `commit-msg.txt`, and a #1015 fix was committed
+carrying the #1300 agent's message (#1336). `git commit -F` accepted it; a
+person reading the output caught it.
+
+Four mechanisms now stand between that and a published artefact:
+
+| mechanism | when | what it judges |
+|---|---|---|
+| `.claude/settings.json` PreToolUse Bash → `scripts/check-body-file-handoff.mjs` | before git/gh runs | the file's BYTES, against what you wrote |
+| `.husky/commit-msg` → `scripts/check-commit-issue.mjs` | at commit | the message cites the branch's issue |
+| `.github/workflows/pr-body-names-its-issue.yml` | on the PR | the description cites the branch's issue |
+| `.github/workflows/closing-comment-cites-its-pr.yml` | on the comment | the PR a closing comment names closes THIS issue |
+
+The first one blocks the command and tells you what changed. You do not have to
+remember it — but it compares against a record made when a file is written
+**with the Write/Edit tool**, so:
+
+- **A body file written by a shell heredoc has no record, and fails open.**
+- So keep naming them with the issue number: `commit-msg-1336.txt`,
+  `pr-body-1336.md`, `comment-1336.md`. Never `commit-msg.txt`.
+- A refusal is evidence, not an obstacle. Re-read the file, rewrite it under a
+  unique name, run the command again. Never pass `--no-verify` to get past it.
+
+Guard test: `npm run test:body-file-handoff` (it replays the 2026-10-03
+collision and requires the refusal).
+
+---
+
 ## Known Broken Areas (Don't Touch Without John's Direction)
 
 - **Schema viewer** — Schema dropdown doesn't populate. Known issue, not a priority.

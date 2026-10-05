@@ -1,6 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/check-body-file-handoff.mjs",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Bash",
@@ -20,6 +32,11 @@
           {
             "type": "command",
             "command": "node scripts/check-written-control-bytes.mjs",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "node scripts/record-body-file-write.mjs",
             "timeout": 15
           }
         ]
