@@ -140,3 +140,28 @@ export function isTestServer({ url } = {}) {
   const port = (String(url || '').match(/^https?:\/\/(?:localhost|127\.0\.0\.1):(\d+)/) || [])[1];
   return !!port && Number(port) >= 3100;
 }
+
+/**
+ * Two log entries are the same occurrence when everything a reader would use
+ * to tell them apart is equal (#1010 -- John: "only true if everything is the
+ * same"). Deliberately NOT the signature, which masks paths and numbers.
+ * Shared by the browser (error-logger.js, within one page load) and the server
+ * (scripts/lib/error-log-merge.mjs, across page loads -- #1029).
+ */
+export function isSameOccurrence(a, b) {
+  if (!a || !b) return false;
+  return (
+    a.message === b.message &&
+    a.level === b.level &&
+    a.source === b.source &&
+    a.module === b.module &&
+    a.line === b.line &&
+    a.column === b.column &&
+    a.function === b.function &&
+    a.to === b.to &&
+    a.url === b.url &&
+    (a.details && a.details.src) === (b.details && b.details.src) &&
+    (a.details && a.details.reason) === (b.details && b.details.reason) &&
+    a.stack === b.stack
+  );
+}

@@ -1,0 +1,77 @@
+{
+  "title": "WB Starter: just write HTML",
+  "width": 1920,
+  "height": 1080,
+  "scenes": [
+    {
+      "narration": "[curious] What if building a website meant… just writing HTML? No bundler. No build step. No framework to learn. Just HTML.",
+      "show": { "type": "card", "title": "Just HTML?", "code": "<article>\n  <h3>Hello</h3>\n  <p>That's the whole API.</p>\n</article>" }
+    },
+    {
+      "narration": "That's the idea behind WB Starter. WB stands for Web Behaviors. And the whole pitch fits in one sentence: you write HTML5 — that is the entire API. [pause] Let me explain why that matters.",
+      "show": { "type": "card", "title": "WB Starter", "subtitle": "You write HTML5. That is the entire API.", "items": ["No bundler", "No build step", "No framework"] }
+    },
+    {
+      "narration": "Every popular framework makes the same trade. To get components, you give up HTML. React turns your markup into JSX and a build pipeline. Vue and Angular add their own template languages and compilers. Web Components hide your markup behind custom tags and shadow roots that your CSS can't even reach. Every one of them is a new vocabulary… a toolchain… and a dependency tree you now have to maintain. [sighs] And none of it is what the browser actually runs.",
+      "show": { "type": "card", "title": "Every framework makes the same trade", "items": ["React → JSX and a build pipeline", "Vue, Angular → templates and compilers", "Web Components → shadow roots your CSS can't reach"] }
+    },
+    {
+      "narration": "WB makes the opposite trade. Here's the key insight: the browser already has the components.",
+      "show": { "type": "card", "title": "The browser already has the components." }
+    },
+    {
+      "narration": "An article tag? That's a card. A dialog tag? That's a modal. Details and summary? That's an accordion. Nav, table, form, progress — the browser ships all of them, every browser understands them, and you already know them.",
+      "show": {
+        "type": "demo",
+        "html": "<article><h3>An article is a card</h3><p>No component library. Just the tag.</p></article>\n<details><summary>Details is an accordion</summary><p>It opens and closes on its own.</p></details>\n<progress value=\"65\" max=\"100\"></progress>",
+        "actions": [{ "click": "summary" }]
+      }
+    },
+    {
+      "narration": "So WB doesn't replace those elements. It adds the capability they're missing… and then gets out of the way.",
+      "show": { "type": "card", "title": "WB adds what's missing", "subtitle": "…and then gets out of the way." }
+    },
+    {
+      "narration": "[excited] Here's how it works. A behavior is just a plain function. It takes an element, adds something to it — a class, some structure, a keyboard handler — and hands back a way to clean up. No classes inheriting from classes. No component tree. Just composition.",
+      "show": { "type": "card", "title": "Composition, not inheritance", "code": "export function ripple(element) {\n  element.classList.add('x-ripple');\n  element.addEventListener('pointerdown', spread);\n  return () => element.removeEventListener('pointerdown', spread);\n}" }
+    },
+    {
+      "narration": "Want a card you can drag, with a ripple when you press it? Write an article tag, and add two attributes: x-draggable and x-ripple. That's it. And when you open the browser's inspector, you see the article you wrote. Not a wrapper. Not a shadow root. HTML5 in… HTML5 out.",
+      "show": {
+        "type": "demo",
+        "html": "<article x-draggable x-ripple id=\"dragCard\"><h3>Drag me</h3><p>A card you can drag, with a ripple on press.</p></article>",
+        "actions": [{ "click": "#dragCard" }, { "drag": "#dragCard", "by": [260, 60] }],
+        "showHtml": "#dragCard"
+      }
+    },
+    {
+      "narration": "Because it's real HTML, you get things for free. Your CSS reaches everything. Accessibility is native — a dialog really is a dialog. With JavaScript turned off, it's still a working HTML document. And there's no build step, so the files you write are the files that get served.",
+      "show": { "type": "card", "title": "Real HTML, for free", "items": ["✓ Your CSS reaches everything", "✓ Native accessibility", "✓ Works with JavaScript off", "✓ No build step"] }
+    },
+    {
+      "narration": "[pause] Now, here's the part I find really interesting. WB Starter was built by AI. The runtime, every behavior, the stylesheets, the documentation, and the entire test suite were written by Claude, from Anthropic — directed by John Peters of Cielo Vista Software. John sets the standards and reviews the work. Claude writes the code, writes the tests that prove it, files the issues, and fixes them.",
+      "show": { "type": "card", "title": "Built by AI, with Claude", "subtitle": "Directed by John Peters · Cielo Vista Software" }
+    },
+    {
+      "narration": "And the standard is strict: nothing ships on a claim — only on a passing test.",
+      "show": { "type": "card", "title": "Nothing ships on a claim.", "subtitle": "Only on a passing test." }
+    },
+    {
+      "narration": "We're talking more than eight thousand automated tests. A hundred and sixty-seven behavior schemas. Over a hundred behavior modules. And those tests don't just check that some class got applied. They measure what you actually see on screen: that a large dialog really is wider than a medium one… that every option of every behavior looks different from its siblings… and that nothing spills off a phone screen.",
+      "show": { "type": "card", "title": "Every claim is tested", "items": ["8,523 automated tests", "167 behavior schemas", "106 behavior modules"] }
+    },
+    {
+      "narration": "Every behavior is described by a schema, and that schema is the single source of truth. The docs, the examples, and many of the tests are generated from it — so the documentation can't drift away from what the code really does.",
+      "show": { "type": "page", "path": "?page=behaviors", "scroll": true }
+    },
+    {
+      "narration": "[pause] So if you're tired of learning a new framework every year… [laughs] maybe the answer is the one you already know.",
+      "show": { "type": "page", "path": "?page=home", "scroll": true }
+    },
+    {
+      "narration": "Try it yourself at cielovistasoftware dot github dot io, slash wb-starter. Write HTML. Add behavior. Ship it.",
+      "caption": "Try it yourself at cielovistasoftware.github.io/wb-starter. Write HTML. Add behavior. Ship it.",
+      "show": { "type": "card", "title": "Write HTML. Add behavior. Ship it.", "subtitle": "cielovistasoftware.github.io/wb-starter" }
+    }
+  ]
+}

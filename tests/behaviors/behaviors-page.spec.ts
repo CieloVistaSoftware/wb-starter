@@ -239,7 +239,9 @@ test.describe('Behaviors page — Navigation', () => {
     await loadBrowse(page);
     const acc = await show(page, { token: 'x-accordion', ready: '.x-accordion' });
     await expect(acc).toHaveClass(/x-accordion/);
-    expect(await page.locator('x-accordian').count()).toBe(0); // misspelling gone
+    // The legacy misspelled TAG (#857): the 4.0.0 rename made this `x-accordian`,
+    // a tag nothing could ever produce, so it guarded nothing.
+    expect(await page.locator('wb-accordian').count()).toBe(0); // misspelling gone
     await expect(acc).not.toHaveAttribute('x-error', 'true');
   });
 
