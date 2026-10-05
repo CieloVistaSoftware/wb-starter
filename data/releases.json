@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.259",
+      "date": "2026-10-04",
+      "summary": "Test: wait for the drawer to open, not 300ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1510\" target=\"_blank\" rel=\"noopener\">PR 1510</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1493\" target=\"_blank\" rel=\"noopener\">#1493</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Wait for the drawer to open instead of sleeping 300ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1493\" target=\"_blank\" rel=\"noopener\">#1493</a>",
+          "issues": [
+            1493
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.258",
       "date": "2026-10-04",
       "summary": "Fix: re-scroll until the notification card is built, and prove it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1509\" target=\"_blank\" rel=\"noopener\">PR 1509</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1319\" target=\"_blank\" rel=\"noopener\">#1319</a>",
