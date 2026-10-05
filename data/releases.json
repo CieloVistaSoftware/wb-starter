@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.261",
+      "date": "2026-10-04",
+      "summary": "Test: wait for both buttons before comparing sizes (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1513\" target=\"_blank\" rel=\"noopener\">PR 1513</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1468\" target=\"_blank\" rel=\"noopener\">#1468</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Wait for both buttons to apply before comparing their sizes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1468\" target=\"_blank\" rel=\"noopener\">#1468</a>",
+          "issues": [
+            1468
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.260",
       "date": "2026-10-04",
       "summary": "Fix: a test run reserves PORT and PORT+1, which its server binds (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1512\" target=\"_blank\" rel=\"noopener\">PR 1512</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1472\" target=\"_blank\" rel=\"noopener\">#1472</a>",
