@@ -14,6 +14,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { readGitDates } from './lib/git-dates.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,6 +49,8 @@ const CONFIG = {
 };
 
 const VERBOSE = process.argv.includes('--verbose');
+// #1503: one pass over history for every source directory.
+const GIT_DATES = readGitDates(ROOT, ['pages', 'docs', 'demos']);
 
 /**
  * Strip HTML tags and normalize whitespace
@@ -147,7 +150,8 @@ function scanDirectory(dir, type, urlPattern) {
     return documents;
   }
   
-  const files = fs.readdirSync(fullPath, { recursive: true });
+  // #1503: code-point order, not the filesystem's (NTFS and ext4 differ).
+  const files = fs.readdirSync(fullPath, { recursive: true }).map(String).sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   
   for (const file of files) {
     const filePath = path.join(fullPath, file);
@@ -171,7 +175,9 @@ function scanDirectory(dir, type, urlPattern) {
         content: stripHtml(content).slice(0, 5000), // Limit content length
         keywords: extractKeywords(content),
         type,
-        modified: stat.mtime.toISOString()
+        // #1503: the last COMMIT date, never the mtime -- a checkout stamps
+        // every mtime, so the index changed on every machine and every run.
+        modified: GIT_DATES?.get(`${dir}/${file.replace(/\\/g, '/')}`) ?? null
       };
       
       documents.push(doc);
@@ -256,7 +262,6 @@ async function generate() {
   
   // Create output
   const output = {
-    $generated: new Date().toISOString(),
     $version: '1.0.0',
     $stats: stats,
     documents,
@@ -266,7 +271,12 @@ async function generate() {
   // Write file
   const outputPath = path.join(ROOT, CONFIG.output);
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
+  // #1503: no `$generated` timestamp (the #1071 reasoning), and written only
+  // on a real change with line endings normalised (the #1452 reasoning), so
+  // an unchanged tree regenerates byte-identical.
+  const text = JSON.stringify(output, null, 2);
+  const current = fs.existsSync(outputPath) ? fs.readFileSync(outputPath, 'utf-8').replace(/\r\n/g, '\n') : null;
+  if (current !== text) fs.writeFileSync(outputPath, text);
   
   console.log(`\n✅ Search index generated!`);
   console.log(`   Documents: ${stats.totalDocuments}`);

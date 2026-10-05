@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { execFileSync } from 'child_process';
+import { readGitDates as readGitDatesFrom } from './lib/git-dates.mjs';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -77,25 +77,8 @@ const CURATED_MANIFEST = path.join(DOCS_DIR, 'manifest.json');
 // Returns null when git cannot give a true answer -- no git, not a repo, or a
 // shallow clone, where every file older than the cut-off would wrongly carry
 // the newest commit's date. The recorded dates are then left as they are.
-function readGitDates() {
-  const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] });
-  try {
-    if (git('rev-parse', '--is-shallow-repository').trim() === 'true') return null;
-    // One pass over history, newest commit first: the first time a path
-    // appears is its latest commit.
-    const log = git('log', '--format=%x00%cs', '--name-only', '--', 'docs', 'pages');
-    const dates = new Map();
-    let date = '';
-    for (const line of log.split('\n')) {
-      if (line.startsWith('\0')) { date = line.slice(1); continue; }
-      const file = line.trim();
-      if (file && !dates.has(file)) dates.set(file, date);
-    }
-    return dates;
-  } catch {
-    return null;
-  }
-}
+// #1503: the git-history read is shared with generate-search-index.js.
+const readGitDates = () => readGitDatesFrom(ROOT, ['docs', 'pages']);
 
 // The repo path an entry of docs/manifest.json points at, or null for an
 // external link. Mirrors how pages/docs.html builds each card's link.
