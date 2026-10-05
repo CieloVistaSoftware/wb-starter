@@ -1194,5 +1194,8 @@
   "1550": "Rendering a doc that uses x-lazy requests a nonexistent lazy.schema.json: 404 plus ENOENT in every CI log",
   "1551": "doc-viewer-back-restores-docs-list fails ~3 in 10: Playwright's click re-scrolls after the baseline is read; the page restores correctly",
   "1553": "Dates and times show in the viewer's zone; John wants every one in US Central (CST/CDT)",
-  "1557": "A missing /src/wb-models/*.json prints an ENOENT stack trace and leaks the server path in the 404"
+  "1557": "A missing /src/wb-models/*.json prints an ENOENT stack trace and leaks the server path in the 404",
+  "1560": "doc-viewer-links: a link check failed with ECONNRESET from the local test server on CI",
+  "1566": "live-reload-client-uses-the-servers-port: its own server.js never answered on Windows CI, and the test threw away the output that would say why",
+  "1568": "Live Error Log Viewer: Clear Log cannot clear anything on GitHub Pages (\"Failed to clear errors\"), and the errors stay"
 }
