@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.280",
+      "date": "2026-10-05",
+      "summary": "Three versions on the Releases page (1.0.277, 1.0.278, 1.0.279) said nothing about how to see their change, which failed the release check on main and blocked every open PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1563\" target=\"_blank\" rel=\"noopener\">PR 1563</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>See it lines for 1.0.277-1.0.279, which left main red</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a>",
+          "issues": [
+            1533
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/release-lines.spec.ts --project=regression</code>, then open Releases (?page=releases) and read 1.0.278. Before: the test failed with &quot;1.0.279, 1.0.278, 1.0.277: there is no See it line&quot;, and those versions showed no steps. Now: the test passes and 1.0.278 says to put a square x-frame, a top caption and a limit=2 switcher on a page, and what each looked like before and after."
+    },
+    {
       "version": "1.0.279",
       "date": "2026-10-05",
       "summary": "Behaviors page: no example shows a card&#39;s featured marker with custom text <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1542\" target=\"_blank\" rel=\"noopener\">#1542</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1543\" target=\"_blank\" rel=\"noopener\">#1543</a>",
