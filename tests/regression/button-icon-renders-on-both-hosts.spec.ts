@@ -36,8 +36,8 @@ const ICONS = ['star', 'download', 'check', 'search'];
 
 type Row = {
   icon: string;
-  attr: { svg: boolean; iconSpan: boolean; classes: string[] };
-  native: { svg: boolean; iconSpan: boolean; classes: string[] };
+  attr: { svg: boolean; iconSpan: boolean; classes: string[]; iconDisplay: string; svgIsOneEm: boolean };
+  native: { svg: boolean; iconSpan: boolean; classes: string[]; iconDisplay: string; svgIsOneEm: boolean };
 };
 
 test.describe('button icon parity across authoring forms', () => {
@@ -66,6 +66,23 @@ test.describe('button icon parity across authoring forms', () => {
             svg: !!el.querySelector('svg'),
             iconSpan: !!el.querySelector('.x-button__icon'),
             classes: Array.from(el.classList).sort(),
+            // #741: the icon rules were scoped to the x-button TAG, so on a
+            // native <button class="x-button"> the span got no inline-flex
+            // and the svg no 1em sizing.
+            // A flex item's inline-flex computes as `flex` (blockification),
+            // so either counts; `block` is the unstyled default.
+            iconDisplay: (() => {
+              const s = el.querySelector('.x-button__icon');
+              if (!s) return '';
+              const cs = getComputedStyle(s);
+              return `${cs.display}/${cs.alignItems}`;
+            })(),
+            svgIsOneEm: (() => {
+              const svg = el.querySelector('.x-button__icon svg') as SVGElement | null;
+              if (!svg) return false;
+              const em = parseFloat(getComputedStyle(svg).fontSize);
+              return Math.abs(svg.getBoundingClientRect().width - em) < 0.5;
+            })(),
           };
         };
         out.push({ icon, attr: read(`attr-${icon}`), native: read(`native-${icon}`) });
@@ -90,6 +107,17 @@ test.describe('button icon parity across authoring forms', () => {
     // Guards the fix from being "made both forms equally broken".
     const missing = rows.filter((r) => !r.native.svg).map((r) => `icon="${r.icon}"`);
     expect(missing, '<button icon="…"> rendered no icon').toEqual([]);
+  });
+
+  test('both forms lay the icon out as a centred flex box with a 1em svg (#741)', () => {
+    const wrong: string[] = [];
+    for (const r of rows) {
+      for (const [form, data] of [['attr', r.attr], ['native', r.native]] as const) {
+        if (!/^(inline-)?flex\/center$/.test(data.iconDisplay)) wrong.push(`${form} icon="${r.icon}": icon display/align ${data.iconDisplay || '(no span)'}`);
+        if (!data.svgIsOneEm) wrong.push(`${form} icon="${r.icon}": svg is not 1em wide`);
+      }
+    }
+    expect(wrong, 'the icon styling reached only one authoring form').toEqual([]);
   });
 
   test('neither form invents a modifier class from the icon name', () => {

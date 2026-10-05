@@ -526,7 +526,7 @@
           "file": "behaviors/countdown.md",
           "title": "Countdown",
           "description": "x-countdown shows the time left until date (or to), or for a fixed number of seconds, and updates it every second until it reaches zero, when…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/counter.md",
@@ -946,7 +946,7 @@
           "file": "behaviors/relativetime.md",
           "title": "Relativetime",
           "description": "x-relativetime replaces the element's text with how long ago date was — \"3 days ago\", \"Just now\" — and recomputes it every refresh milliseconds.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/repeater.md",
@@ -1408,7 +1408,7 @@
           "file": "standards/RELEASE-PROCESS.md",
           "title": "Release Process Standards",
           "description": "Every version number this project shows anyone MUST be traceable to a written list of what it contains.",
-          "modified": "2026-10-02"
+          "modified": "2026-10-05"
         }
       ]
     },

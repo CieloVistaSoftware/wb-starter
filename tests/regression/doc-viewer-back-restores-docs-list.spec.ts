@@ -30,12 +30,24 @@ test('filter, open a doc, Back to Docs: same filter, same scroll, same tab', asy
   await expect.poll(() => cards.count()).toBeGreaterThan(12);
   const target = cards.nth(10);
   await target.scrollIntoViewIfNeeded();
-  const scrolledTo = await listScroll(page);
-  expect(scrolledTo, 'the list must actually be scrolled for this to prove anything').toBeGreaterThan(200);
+  const href = await target.getAttribute('href');
 
   // Open it. A new tab is the defect: Back would then act in the wrong tab.
+  // #1551: the position is read in the SAME task that clicks. A separate read
+  // followed by Playwright's click() was stale ~3 runs in 10: when a click
+  // attempt is intercepted, Playwright re-scrolls the card to the top before
+  // clicking, the page saves (and later restores) THAT position, and the test
+  // compared it with the earlier number. The click itself is queued for the
+  // next task so the navigation does not destroy this evaluate mid-call.
   const popup = context.waitForEvent('page', { timeout: 3000 }).catch(() => null);
-  await target.click();
+  const clickedAt = await target.evaluate((card) => {
+    const sb = document.getElementById('siteBody')!;
+    const at = { scroll: sb.scrollTop, offset: card.getBoundingClientRect().top - sb.getBoundingClientRect().top };
+    setTimeout(() => (card as HTMLElement).click(), 0);
+    return at;
+  });
+  const scrolledTo = clickedAt.scroll;
+  expect(scrolledTo, 'the list must actually be scrolled for this to prove anything').toBeGreaterThan(200);
   expect(await popup, 'a doc opens in the same tab, so Back returns to this list').toBeNull();
   await expect(page).toHaveURL(/doc-viewer\.html\?file=/);
   await expect(page.locator('#back-to-docs')).toBeVisible();
@@ -49,9 +61,19 @@ test('filter, open a doc, Back to Docs: same filter, same scroll, same tab', asy
   const unfiltered = await page.$$eval('#behaviors-sections li:not([hidden])',
     (lis) => lis.filter((li) => !(li as HTMLElement).dataset.search?.includes('behavior')).length);
   expect(unfiltered, 'chips shown that do not match the filter').toBe(0);
-  await expect.poll(() => listScroll(page), { message: 'the scroll position survives' })
-    .toBeGreaterThan(scrolledTo - 40);
-  expect(await listScroll(page)).toBeLessThan(scrolledTo + 40);
+  // The promise is "the card you opened is where it was on screen", which is
+  // what the page saves (its offset) -- and the raw scroll follows from it.
+  // Polled both ways: the page re-places the card while the sections above it
+  // settle, so one read could land mid-settle.
+  const cardOffset = () => page.evaluate((h) => {
+    const c = [...document.querySelectorAll('a.docs-card')].find((a) => a.getAttribute('href') === h);
+    const sb = document.getElementById('siteBody');
+    return c && sb ? c.getBoundingClientRect().top - sb.getBoundingClientRect().top : Number.NaN;
+  }, href);
+  await expect.poll(async () => Math.abs((await cardOffset()) - clickedAt.offset),
+    { message: `the card returns to where it was on screen (${Math.round(clickedAt.offset)}px down)` }).toBeLessThan(40);
+  await expect.poll(async () => Math.abs((await listScroll(page)) - scrolledTo),
+    { message: `the scroll position survives (${Math.round(scrolledTo)})` }).toBeLessThan(40);
 });
 
 test('a viewer opened directly still offers a way to the docs list', async ({ page }) => {

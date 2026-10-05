@@ -146,3 +146,8 @@ data/inline-style-audit.json
 # #1131: npm start writes this checkout's version stamp here, not into the
 # tracked src/core/version.js; server.js serves it in development.
 /.local/
+
+# make-video (scripts/make-video.mjs): the narration you drop in and the
+# videos it renders are large binaries -- kept locally, never committed.
+data/video/audio/
+data/video/out/
