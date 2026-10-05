@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.287",
+      "date": "2026-10-05",
+      "summary": "A dropdown with a label was styled as a trigger on its host as well as its button, so the host grew to the menu&#39;s width. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1545\" target=\"_blank\" rel=\"noopener\">PR 1545</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/702\" target=\"_blank\" rel=\"noopener\">#702</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/702\" target=\"_blank\" rel=\"noopener\">#702</a>",
+          "issues": [
+            702
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The host is styled as a trigger only when it is one</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/702\" target=\"_blank\" rel=\"noopener\">#702</a>",
+          "issues": [
+            702
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick dropdown and compare position=&quot;bottom-start&quot; with position=&quot;bottom-end&quot;. Before: both menus opened in nearly the same place, 2px apart. Now: one hangs from the host&#39;s left edge and the other from its right edge."
+    },
+    {
       "version": "1.0.286",
       "date": "2026-10-05",
       "summary": "Cardimage position=&quot;left&quot; and &quot;right&quot; once rendered no image (#877); card.js was fixed, but no test held it. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1541\" target=\"_blank\" rel=\"noopener\">PR 1541</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/877\" target=\"_blank\" rel=\"noopener\">#877</a>",
