@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.278",
+      "date": "2026-10-05",
+      "summary": "Seven declared options render exactly like the default: x-frame ratio, x-icon size, x-release version, x-figure caption-position, x-grid alt-rows, x-switcher limit, radio variant/size (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1546\" target=\"_blank\" rel=\"noopener\">PR 1546</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1279\" target=\"_blank\" rel=\"noopener\">#1279</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Frame ratio, figure caption-position=top and switcher limit change what renders</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1279\" target=\"_blank\" rel=\"noopener\">#1279</a>",
+          "issues": [
+            1279
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.277",
       "date": "2026-10-05",
       "summary": "doc-viewer-back-restores-docs-list fails ~3 in 10: Playwright&#39;s click re-scrolls after the baseline is read; the page restores correctly (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1552\" target=\"_blank\" rel=\"noopener\">PR 1552</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1551\" target=\"_blank\" rel=\"noopener\">#1551</a>",
