@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.256",
+      "date": "2026-10-04",
+      "summary": "Test: build the Studio EQ demo explicitly (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1508\" target=\"_blank\" rel=\"noopener\">PR 1508</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1499\" target=\"_blank\" rel=\"noopener\">#1499</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Build the Studio EQ demo with WB.scan, not scroll-and-hope</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1499\" target=\"_blank\" rel=\"noopener\">#1499</a>",
+          "issues": [
+            1499
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.255",
       "date": "2026-10-04",
       "summary": "Docs(_today): PR is merged (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1506\" target=\"_blank\" rel=\"noopener\">PR 1506</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1324\" target=\"_blank\" rel=\"noopener\">#1324</a>",
