@@ -6,6 +6,105 @@
   ],
   "releases": [
     {
+      "version": "1.0.276",
+      "date": "2026-10-05",
+      "summary": "Typing in the Demos page search hid every section, the matching ones too, and clearing it did not bring them back. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1532\" target=\"_blank\" rel=\"noopener\">PR 1532</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/559\" target=\"_blank\" rel=\"noopener\">#559</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/866\" target=\"_blank\" rel=\"noopener\">#866</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/887\" target=\"_blank\" rel=\"noopener\">#887</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1029\" target=\"_blank\" rel=\"noopener\">#1029</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1226\" target=\"_blank\" rel=\"noopener\">#1226</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1240\" target=\"_blank\" rel=\"noopener\">#1240</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1139\" target=\"_blank\" rel=\"noopener\">#1139</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1097\" target=\"_blank\" rel=\"noopener\">#1097</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1018\" target=\"_blank\" rel=\"noopener\">#1018</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1019\" target=\"_blank\" rel=\"noopener\">#1019</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Clamp the pre&#39;s width before pre() runs, not after</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/559\" target=\"_blank\" rel=\"noopener\">#559</a>",
+          "issues": [
+            559
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Steps for 1.0.273-1.0.275, which main stamped meanwhile</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a>",
+          "issues": [
+            1533
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The Demos search no longer hides every section; dead tag selectors fixed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",
+          "issues": [
+            857
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-animate animation=&quot;slideOut&quot; plays an animation</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/866\" target=\"_blank\" rel=\"noopener\">#866</a>",
+          "issues": [
+            866
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every version says how to recreate the change by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a>",
+          "issues": [
+            1533
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A card title is the card&#39;s colour, not the page&#39;s or green</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/887\" target=\"_blank\" rel=\"noopener\">#887</a>",
+          "issues": [
+            887
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>One row for a fault that repeats across page loads</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1029\" target=\"_blank\" rel=\"noopener\">#1029</a>",
+          "issues": [
+            1029
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>See every doc sorted by the date it was created</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1226\" target=\"_blank\" rel=\"noopener\">#1226</a>",
+          "issues": [
+            1226
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>A Schema link opens colour-coded JSON, not plain text</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1240\" target=\"_blank\" rel=\"noopener\">#1240</a>",
+          "issues": [
+            1240
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Hold the version fixes that already landed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1139\" target=\"_blank\" rel=\"noopener\">#1139</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1097\" target=\"_blank\" rel=\"noopener\">#1097</a>",
+          "issues": [
+            1139,
+            1097
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Time examples need no page class; the search counter names its unit</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1018\" target=\"_blank\" rel=\"noopener\">#1018</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1019\" target=\"_blank\" rel=\"noopener\">#1019</a>",
+          "issues": [
+            1018,
+            1019
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Each version says what the issue was and how to see the change</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
+          "issues": [
+            1533,
+            1534
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Npm run make-video turns a narration MP3 into a finished video</strong>"
+        }
+      ],
+      "seeIt": "Open Demos (?page=demos), type &quot;card behaviors&quot;, then clear the box. Before: every section vanished and stayed gone (0 of 11). Now: Card Behaviors stays, the rest hide, and clearing shows all 11 again."
+    },
+    {
       "version": "1.0.275",
       "date": "2026-10-05",
       "summary": "The generated iconPosition demos on demos/site/forms.html had no icon, so they showed nothing; with #793&#39;s new runtime error they now also failed the error-log compliance check (4 entries from that page). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1539\" target=\"_blank\" rel=\"noopener\">PR 1539</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
@@ -60,7 +159,7 @@
     {
       "version": "1.0.272",
       "date": "2026-10-05",
-      "summary": "Fix: a matrix combination that turns a default-on option off is demonstrated off (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1531\" target=\"_blank\" rel=\"noopener\">PR 1531</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1525\" target=\"_blank\" rel=\"noopener\">#1525</a>",
+      "summary": "generated demos cannot show an option turned off: a false matrix value is dropped, not written as =&quot;false&quot; (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1531\" target=\"_blank\" rel=\"noopener\">PR 1531</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1525\" target=\"_blank\" rel=\"noopener\">#1525</a>",
       "items": [
         {
           "kind": "fixed",
