@@ -1,5 +1,9 @@
 import { test, expect } from '../fixtures/offline';
 
+// The route below holds a page fragment; a live service worker would answer
+// it first and the hold would never apply (#1349).
+test.use({ serviceWorkers: 'block' });
+
 /**
  * #1519: the newest navigation wins. navigateTo() awaited the page fragment,
  * its text and its CSS, then wrote #main unconditionally. A navigation that
