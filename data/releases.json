@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.270",
+      "date": "2026-10-05",
+      "summary": "Test: dialog samples wait for x-ready and dialog.open, not 2.1s of clock (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1528\" target=\"_blank\" rel=\"noopener\">PR 1528</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1515\" target=\"_blank\" rel=\"noopener\">#1515</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Dialog samples wait for x-ready and dialog.open, not 2.1s of clock</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1515\" target=\"_blank\" rel=\"noopener\">#1515</a>",
+          "issues": [
+            1515
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.269",
       "date": "2026-10-05",
       "summary": "Fix: span window dots are styled by their own x-span--&lt;variant&gt; class (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1523\" target=\"_blank\" rel=\"noopener\">PR 1523</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1464\" target=\"_blank\" rel=\"noopener\">#1464</a>",
