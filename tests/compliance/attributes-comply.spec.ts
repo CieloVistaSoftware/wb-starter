@@ -28,7 +28,8 @@ const { behaviors, undeclared, duplicateDefinitions, totals } = auditAll();
 const CEILING = {
   R1: 0,   // AUTHORABLE — extinct, keep it that way
   R2: 0,   // SINGULAR   — fixed: 15 data- duplicates collapsed
-  R3: 11,  // CONSUMED   — declared, documented, inert (the #861 residue)
+  R3: 2,   // CONSUMED   — declared, documented, inert (the #861 residue). #1526: was 11;
+           //              8 of them were read via readAttr, which the audit could not see.
   R4: 100, // DECLARED   — read by code, declared by no schema
   R5: 0,   // CENTRAL    — aliases live in the registry, never inline
   R6: 6,   // DISTINCT   — one behavior defined by two schema files
