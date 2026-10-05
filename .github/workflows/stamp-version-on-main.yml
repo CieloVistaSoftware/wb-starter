@@ -52,6 +52,11 @@ jobs:
           # rewrote them. Refreshed here with the rest of the stamp, a clean
           # checkout of main regenerates them byte-identical.
           node scripts/update-docs-manifest.js
+          # #1503: the search index went stale for the same reason -- nothing
+          # regenerated it, and it held 112 hits for docs that no longer exist.
+          # Deterministic since #1503 (commit dates, sorted, no timestamp), so
+          # an unchanged main regenerates it byte-identical.
+          node scripts/generate-search-index.js
           # John: "A release has no meaning if i can't read about the content."
           # Add this version's entry (its PR title, its commits, their issue
           # links) to data/releases.json, which the Releases page renders.
