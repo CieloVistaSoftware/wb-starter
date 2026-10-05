@@ -263,6 +263,18 @@
         const href = a.getAttribute('href');
         if (!href || href.startsWith('#') || /^[a-z][a-z0-9+.-]*:/i.test(href)) return; // anchors / scheme (http:, mailto:)
         if (/\.md(#.*)?$/i.test(href)) return; // .md → handled by the click interceptor
+        // #1240: a .json link (every behavior doc's "Schema: x.schema.json")
+        // opened the raw file as plain text. Open it in this viewer instead,
+        // which shows JSON colour-coded; a real URL, so a new tab works too.
+        if (/\.json$/i.test(href)) {
+          const target = base(href);
+          if (target.origin === SITE_ROOT.origin && target.pathname.startsWith(SITE_ROOT.pathname)) {
+            const viewer = new URL(window.location.pathname, window.location.origin);
+            viewer.searchParams.set('file', decodeURIComponent(target.pathname.slice(SITE_ROOT.pathname.length)));
+            a.href = viewer.href;
+            return;
+          }
+        }
         a.href = base(href).href;
       });
       // `poster` is here because a <video poster="…"> is a request like any
@@ -608,7 +620,15 @@
         // rendered a 404 page as content instead of reporting a missing file —
         // caught by behaviors/doc-viewer.spec.ts, which exists for exactly that.
         if (!resp.ok) throw new Error(`${resp.status} for ${fileUrl}`);
-        const raw = await resp.text();
+        let raw = await resp.text();
+        // #1240: a .json file is shown, not rendered as markdown: its name as
+        // the heading, then the JSON pretty-printed in a ```json fence, which
+        // the highlighting pass below colours like every other code block.
+        if (/\.json$/i.test(file)) {
+          let pretty = raw;
+          try { pretty = JSON.stringify(JSON.parse(raw), null, 2); } catch { /* show it as written */ }
+          raw = `# ${decodeURIComponent(file).split('/').pop()}\n\n\`${file}\`\n\n\`\`\`json\n${pretty}\n\`\`\`\n`;
+        }
         // #1183: a RELATIVE media path is relative to the doc's own folder
         // (docs/behaviors/x.md writes ../../images/x.svg), but the browser
         // resolves it against THIS page, /…/public/doc-viewer.html -- which on

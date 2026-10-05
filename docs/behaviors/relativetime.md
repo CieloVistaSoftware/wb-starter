@@ -5,7 +5,7 @@
 ## Usage
 
 <div x-demo>
-<span x-relativetime date="2025-01-01" class="time-display">Jan 1, 2025</span>
+<span x-relativetime date="2025-01-01">Jan 1, 2025</span>
 </div>
 
 ## Attributes

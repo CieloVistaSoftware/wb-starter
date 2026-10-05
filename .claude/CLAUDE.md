@@ -122,12 +122,48 @@ John, 2026-10-02: "you trigger the merges when the tests indicate to do it."
 - **Any red check blocks the merge**, even one Claude believes the PR did not cause. Claude fixes it, or fixes the flaky test, and lets CI answer again. A merge is never argued past a red check.
 - After merging, report with the release line (above) and say when the change is live.
 
+## Release lines — every PR says what the issue was and how to see it
+
+John, 2026-10-05: "This page tells me nothing. one of these lines should be a
+summary of the issue, the other what to do to see the change" (#1533). Each commit
+to `main` is a new release, and the Releases page shows these two lines from your
+commit message. Put both in a commit of every PR:
+
+```
+Summary: <what was wrong or missing, in plain English>
+See it: <what to do>. Before: <what you saw>. Now: <what you see>.
+```
+
+The See it line lets a reader recreate the change by hand (John: "tell the user
+what to do to manually recreate this ... I don't do anything manually that's your
+job"). A test-only change names the command and what it printed before and after;
+"No visible change" is refused. The "PR says what the issue was and how to see the
+change" check fails a PR without them, or whose See it line has no action, no
+`Before:`/`Now:`, or repeats the Summary. See `docs/standards/RELEASE-PROCESS.md` §3a.
+
+## Worktrees — leave nothing on John's machine
+
+John, 2026-10-05: "I want all the folders cleaned after all the merges are complete,
+don't leave artifacts on my computer" (#1534). A session that works in a worktree
+(`C:\Users\jwpmi\Downloads\AI\wb-NNNN`) removes it as soon as its PR merges, before
+it reports done:
+
+1. **Unlink the `node_modules` junction first** (`cmd /c rmdir node_modules` inside the
+   worktree). Never delete through it: it points at the real checkout's
+   `node_modules` (#1129).
+2. `git worktree remove <path>` from the main checkout.
+3. `git branch -D <branch>`, then `git worktree prune`.
+
+A worktree whose PR is still open stays. At **park**, every worktree whose branch is
+merged is removed the same way, so nothing is left overnight.
+
 ## End of Session — "park"
 
 When John says **"park"**:
 
 1. Update the 🅿️ PARKING LOT in `docs/_today/CURRENT-STATUS.md` (task, files touched, last action, next step, open questions).
 2. Merge the day's finished PRs into `main`.
+2a. Remove every worktree whose branch is merged (see **Worktrees** above).
 3. Trigger the **Nightly** test run: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST).
 
 Nightly runs the full suite on main against the known-failures register. A new failure files one `priority:2` issue linking the run. It does not release: the version number is counted from the last tag.

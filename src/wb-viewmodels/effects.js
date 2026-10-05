@@ -35,10 +35,12 @@ function kebab(name) {
  * keyframe is `x-rubberband`, a single word. Listed rather than special-cased
  * so the next mismatch is one line, not another branch.
  *
- * `slideOut` needs no alias: the four x-slide-out-{dir} keyframes it builds
- * now exist in styles/behaviors/effects.css. They did not when this note was
- * written, which made slideout() a dead control (#866) -- it set an
- * animation-name matching nothing and rendered nothing, silently.
+ * `slideOut` needs no alias: effects.css defines the bare `x-slide-out` it
+ * kebab-cases to (x-animate animation="slideOut") and the four
+ * x-slide-out-{dir} keyframes slideout() builds. Neither existed once, which
+ * made both dead controls (#866) -- an animation-name matching nothing
+ * renders nothing, silently. tests/behaviors/effects-actions.spec.ts now
+ * plays every declared animationType.
  */
 const KEYFRAME_ALIASES = { 'rubber-band': 'rubberband' };
 

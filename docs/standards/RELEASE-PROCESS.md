@@ -78,6 +78,44 @@ Shipping any one of those without the others is the defect this document exists 
 since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and
 `scripts/release.mjs` gate 2 refuses a release the file does not name.
 
+## 3a. Every version says what the issue was and how to see the change
+
+John, 2026-10-05, on the Releases page: "This page tells me nothing. one of these
+lines should be a summary of the issue, the other what to do to see the change"
+(#1533). Each commit to `main` is a new release, and each one shows:
+
+1. **The issue, in plain English.** The commit's `Summary:` line. Without one, the
+   title of the issue the commit cites (cached in `data/issue-titles.json`), and only
+   then the PR title.
+2. **How to recreate the change by hand.** Where to go, what to do, what you saw
+   **Before:** and what you see **Now:**. John, 2026-10-05: "still not good enough,
+   tell the user what to do to manually recreate this", and "I don't do anything
+   manually that's your job": Claude writes these lines, John never does. The
+   commit's `See it:` line, or `data/release-see-it.json` for that version (the
+   backfill, written from each issue's own observed/detect/evidence fields; it wins
+   over the commit line, so a weak line can be fixed later).
+3. **What changed.** The commit subjects, as before.
+
+So every PR carries both lines in one of its commit messages:
+
+```
+fix(dialog): showClose="false" now hides the close button (#747)
+
+Summary: A dialog with showClose="false" still showed its close button.
+See it: Open Behaviors, pick dialog, set showClose to false and open it. Before: the ✕ was still there. Now: the dialog opens with no ✕.
+```
+
+A test-only or tooling change still gets steps: the command and what it printed.
+
+```
+See it: Run `npx playwright test tests/regression/x.spec.ts --project=regression`. Before: xs and xl both read 16px. Now: xs is 12px, xl 20px.
+```
+
+"No visible change" is never enough. `.github/workflows/pr-release-notes.yml`
+(`scripts/check-release-notes.mjs`) fails a PR none of whose commits carries both
+lines, and a `See it:` line that does not start with what to do, has no `Before:` and
+`Now:`, or repeats the Summary (`seeItProblems()` in `scripts/lib/release-item.mjs`).
+
 ## 4. Releases are keyed by version, not by date
 
 A date cannot be tested; a version can. Each entry is keyed by release number, with the date

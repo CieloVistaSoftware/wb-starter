@@ -16,6 +16,7 @@ import { promisify } from 'util';
 const execFileAsync = promisify(execFile);
 import { marked } from 'marked';
 import { updateToLatest } from './scripts/lib/pull-latest.mjs';
+import { mergeIntoLog } from './scripts/lib/error-log-merge.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -859,13 +860,10 @@ app.post("/api/error-log/append", (req, res) => {
     // so it identifies the row to UPDATE. Message and source are checked too,
     // because `id` is Date.now() and two pages can start an error in the same
     // millisecond.
-    const sameRow = (e) =>
-      e && e.id === incoming.id && e.message === incoming.message && e.source === incoming.source;
-
-    const at = current.errors.findIndex(sameRow);
-    const all = at === -1
-      ? [...current.errors, incoming]
-      : current.errors.map((e, i) => (i === at ? incoming : e));
+    // A later PAGE LOAD sends the same fault under a new id; that is a repeat
+    // too, merged by the browser's own same-occurrence rule
+    // (scripts/lib/error-log-merge.mjs).
+    const all = mergeIntoLog(current.errors, incoming);
 
     // The cap used to be a bare `.slice(-100)`: entry 101 pushed entry 1 out of
     // existence with nothing recorded anywhere. Under a 30-day retention rule
