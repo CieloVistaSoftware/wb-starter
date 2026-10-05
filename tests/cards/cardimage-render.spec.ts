@@ -70,9 +70,11 @@ test.describe('[x-cardimage] Rendering', () => {
   // card must paint the ratio it asked for, and a card that asked for nothing
   // must paint the documented default.
   test('[x-cardimage] figures paint the aspect ratio their markup asked for', async ({ page }) => {
-    // Only top/bottom positions build a figure at all -- cardimage() has no
-    // left/right branch. Excluding them by SELECTOR rather than by an
-    // `if (count > 0)` guard: a guard is indistinguishable from a pass when
+    // Top/bottom only. Left/right DO build a figure now (card.js puts it in
+    // its own grid column, #877), but a side image fills that column's height,
+    // so the aspect ratio is not the box to measure there -- the test below
+    // holds that they render their image. Excluded by SELECTOR rather than by
+    // an `if (count > 0)` guard: a guard is indistinguishable from a pass when
     // the locator matches nothing, which is what #863 was about.
     const cards = page.locator(
       '[x-cardimage][src]:not([position="left"]):not([position="right"])'
@@ -128,6 +130,20 @@ test.describe('[x-cardimage] Rendering', () => {
       + 'the attribute is absent).\n'
       + wrong.map((r) => `  asked ${r.asked} -> got ${r.got}`).join('\n'),
     ).toEqual([]);
+  });
+
+  // #877: "cardimage position=left/right renders no image". cardimage() had no
+  // left/right branch, so those cards rendered text only. They now build the
+  // figure; this holds both positions to an <img> with the card's own src.
+  test('[x-cardimage] left and right positions render their image (#877)', async ({ page }) => {
+    for (const position of ['left', 'right']) {
+      const card = page.locator(`[x-cardimage][position="${position}"][src]`).first();
+      await expect(card, `cards.html has no position="${position}" card to check`).toHaveCount(1);
+      await buildInView(card);
+      const img = card.locator('figure img, .x-card__figure img').first();
+      await expect(img, `position="${position}" rendered no image`).toBeAttached({ timeout: 20000 });
+      expect(await img.getAttribute('src')).toBe(await card.getAttribute('src'));
+    }
   });
 
   test('[x-cardvideo] should have video elements', async ({ page }) => {
