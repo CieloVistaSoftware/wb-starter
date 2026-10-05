@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.279",
+      "date": "2026-10-05",
+      "summary": "Behaviors page: no example shows a card&#39;s featured marker with custom text <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1542\" target=\"_blank\" rel=\"noopener\">#1542</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1543\" target=\"_blank\" rel=\"noopener\">#1543</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Behaviors page shows a card&#39;s featured marker with custom text</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1542\" target=\"_blank\" rel=\"noopener\">#1542</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1543\" target=\"_blank\" rel=\"noopener\">#1543</a>",
+          "issues": [
+            1542,
+            1543
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.278",
       "date": "2026-10-05",
       "summary": "Seven declared options render exactly like the default: x-frame ratio, x-icon size, x-release version, x-figure caption-position, x-grid alt-rows, x-switcher limit, radio variant/size (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1546\" target=\"_blank\" rel=\"noopener\">PR 1546</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1279\" target=\"_blank\" rel=\"noopener\">#1279</a>",
