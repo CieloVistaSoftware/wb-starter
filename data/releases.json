@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.268",
+      "date": "2026-10-05",
+      "summary": "",
+      "items": [
+        {
+          "kind": "added",
+          "html": "<strong>Issues page: &quot;Working on now (N)&quot; tab and a Copy button</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1501\" target=\"_blank\" rel=\"noopener\">#1501</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1502\" target=\"_blank\" rel=\"noopener\">#1502</a>",
+          "issues": [
+            1501,
+            1502
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.267",
       "date": "2026-10-05",
       "summary": "Fix: showClose=&quot;false&quot; means off; dialog reads the names its schema declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1527\" target=\"_blank\" rel=\"noopener\">PR 1527</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/747\" target=\"_blank\" rel=\"noopener\">#747</a>",
