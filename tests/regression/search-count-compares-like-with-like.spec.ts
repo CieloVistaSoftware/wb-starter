@@ -54,6 +54,10 @@ test('the search counter measures rows against rows, not rows against behaviours
     'ratio is meaningless — one behaviour can contribute a dozen rows.',
   ).toBe(rowsUnfiltered);
 
+  // #1019's done-when: the unit is named, so "of 767" is not read against the
+  // header's "184 behaviors".
+  expect(label, 'the counter names what it counts').toMatch(/Showing \d+ of \d+ examples/);
+
   // And the filter has to have done something, or both numbers could agree
   // while proving nothing.
   expect(

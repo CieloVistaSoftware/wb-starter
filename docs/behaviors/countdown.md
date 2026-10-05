@@ -5,7 +5,7 @@
 ## Usage
 
 <div x-demo>
-<div x-countdown to="2027-12-31" class="time-display"></div>
+<div x-countdown to="2027-12-31"></div>
 </div>
 
 ## Attributes
