@@ -255,15 +255,22 @@ function getModifierClass(schema, modifier) {
  */
 function extractData(element, schema) {
   const data = {};
+  // #1526: <x logoHref="..."> -- the canonical camelCase spelling (#1125) --
+  // reaches the DOM lowercased (logohref), so camel-casing the dashed form was
+  // not enough: the key never matched logoHref, the schema default won, and
+  // the behavior then found its parts already built. Each key is mapped onto
+  // the schema's own property name, case-insensitively.
+  const propByLower = new Map(Object.keys(schema.properties || {}).map((p) => [p.toLowerCase(), p]));
+  const canonical = (key) => propByLower.get(key.toLowerCase()) || key;
   
   // Get all data-* attributes AND direct attributes
   for (const attr of element.attributes) {
     if (attr.name.startsWith('data-') && attr.name !== 'x-behavior') {
-      const key = attr.name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      const key = canonical(attr.name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase()));
       data[key] = parseValue(attr.value);
     } else if (!['class', 'style', 'id', 'x-behavior'].includes(attr.name)) {
       // Direct attributes (for web component style)
-      const key = attr.name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      const key = canonical(attr.name.replace(/-([a-z])/g, (_, c) => c.toUpperCase()));
       data[key] = parseValue(attr.value);
     }
   }

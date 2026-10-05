@@ -1,4 +1,4 @@
-import { readFlag } from '../core/read-attr.js';
+import { readFlag, readAttr } from '../core/read-attr.js';
 import { setRule, clearRulesIn } from '../core/dynamic-style.js';
 /**
  * Navigation Behaviors
@@ -49,7 +49,7 @@ function splitItem(item, fallback) {
 export function navbar(element, options = {}) {
   const config = {
     brand: options.brand || element.getAttribute('brand') || '',
-    brandHref: options.brandHref || element.getAttribute('brand-href') || '/',
+    brandHref: options.brandHref || readAttr(element, 'brandHref', '/'),
     logo: options.logo || element.getAttribute('logo') || '',
     logoSize: options.logoSize || element.getAttribute('logo-size') || '32',
     tagline: options.tagline || element.getAttribute('tagline') || '',
