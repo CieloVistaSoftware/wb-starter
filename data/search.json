@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5834
+    "totalWords": 5841
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.266\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.266\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.267\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.267\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-05"
@@ -1753,12 +1753,16 @@
         {
           "level": 2,
           "text": "Delete branch?"
+        },
+        {
+          "level": 2,
+          "text": "Confirm the merge"
         }
       ],
-      "content": "# Dialog A plain ` ` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width. ## Usage Open the dialog Delete branch? fix/706-dropdown will be removed. This cannot be undone. No attribute needed on ` `. Don't add `x-dialog` to it (#746). On another element, write `x-dialog`: ```html Delete branch… ``` ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | `string` | — | Dialog title | | `content` | `string` | — | Dialog body content | | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` | | | `close-on-backdrop` | `boolean` | `true` | Close on backdrop click | | `close-on-escape` | `boolean` | `true` | Close on Escape key | | `show-close` | `boolean` | `true` | Show close button | | `variant` | `default` · `centered` · `fullscreen` | `default` | | ## Events - `wb:dialog:open` — Dialog opened - `wb:dialog:close` — Dialog closed - `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop) ## Methods - `open()` — Opens the dialog - `close()` — Closes the dialog - `toggle()` — Toggles the dialog - `isOpen()` — Returns open state - `setContent()` — Updates dialog content - `setTitle()` — Updates dialog title ## Accessibility - **role** — dialog - **ariaModal** — true - **ariaLabelledBy** — dialog title id Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)",
+      "content": "# Dialog A plain ` ` gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click. Open it with `showModal()`; `size` sets the width. ## Usage Open the dialog Delete branch? fix/706-dropdown will be removed. This cannot be undone. No attribute needed on ` `. Don't add `x-dialog` to it (#746). On another element, write `x-dialog`: ```html Delete branch… ``` ` ` opts out ([escape hatches](../escape-hatches.md)). ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | `string` | — | Dialog title | | `content` | `string` | — | Dialog body content | | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` | | | `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). | | `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape | | `showClose` | `boolean` | `true` | Show the × button in the header | | `variant` | `default` · `centered` · `fullscreen` | `default` | | These three are on by default, so you only ever write them to turn something **off**: ```html Confirm the merge Escape still gets you out. ``` ### What `\"false\"` means `\"false\"` and `\"0\"` turn a boolean option off. The attribute being present is not what switches it on — its value is read: ```html ``` This is worth spelling out because it used to be untrue: `showClose=\"false\"` showed the close button anyway (#747). The old dashed spellings (`show-close`, `close-on-backdrop`, `close-on-escape`) are still read, so pages already written keep working — but no attribute name carries a dash, so the camelCase names above are the ones to write (#1125). Leaving an authored ` ` with every exit turned off is a trap: Escape and the backdrop are not visible affordances, so with `showClose=\"false\"` the only way out must be a button you put in the markup yourself. ## Events - `wb:dialog:open` — Dialog opened - `wb:dialog:close` — Dialog closed - `wb:dialog:cancel` — Dialog cancelled (Escape/backdrop) ## Methods - `open()` — Opens the dialog - `close()` — Closes the dialog - `toggle()` — Toggles the dialog - `isOpen()` — Returns open state - `setContent()` — Updates dialog content - `setTitle()` — Updates dialog title ## Accessibility - **role** — dialog - **ariaModal** — true - **ariaLabelledBy** — dialog title id Schema: [`dialog.schema.json`](../../src/wb-models/dialog.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-04"
     },
     {
       "id": "docs/behaviors/dl",
@@ -6256,7 +6260,7 @@
       "demos/index",
       "demos/site/index"
     ],
-    "266": [
+    "267": [
       "pages/home"
     ],
     "268": [
@@ -6466,6 +6470,9 @@
       "docs/behaviors/textarea",
       "docs/behaviors/video"
     ],
+    "747": [
+      "docs/behaviors/dialog"
+    ],
     "752": [
       "docs/behaviors/code",
       "docs/behaviors/img",
@@ -6606,6 +6613,7 @@
       "docs/behaviors/cardfile"
     ],
     "1125": [
+      "docs/behaviors/dialog",
       "docs/behaviors/range",
       "docs/behaviors/table"
     ],
@@ -8345,6 +8353,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
+      "docs/behaviors/dialog",
       "docs/behaviors/fadein",
       "docs/behaviors/flash",
       "docs/behaviors/flip",
@@ -9182,6 +9191,7 @@
       "docs/behaviors/confirm",
       "docs/behaviors/copybutton",
       "docs/behaviors/countdown",
+      "docs/behaviors/dialog",
       "docs/behaviors/frame",
       "docs/behaviors/glass",
       "docs/behaviors/img",
@@ -9732,6 +9742,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
       "docs/behaviors/collapse",
+      "docs/behaviors/dialog",
       "docs/behaviors/pagination",
       "docs/behaviors/table",
       "docs/claude/PAGE-GENERATION",
@@ -11734,6 +11745,7 @@
       "docs/behaviors/copybutton",
       "docs/behaviors/cover",
       "docs/behaviors/data",
+      "docs/behaviors/dialog",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
       "docs/behaviors/flash",
@@ -11894,6 +11906,7 @@
       "docs/behaviors/collapse",
       "docs/behaviors/container",
       "docs/behaviors/details",
+      "docs/behaviors/dialog",
       "docs/behaviors/dl",
       "docs/behaviors/drawerLayout",
       "docs/behaviors/dropdown",
@@ -12007,6 +12020,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
+      "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/img",
@@ -12588,6 +12602,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behavior-cross-reference",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/header",
       "docs/behaviors/img",
@@ -12996,6 +13011,7 @@
       "docs/behaviors/address",
       "docs/behaviors/card",
       "docs/behaviors/demo",
+      "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/globe",
       "docs/behaviors/hero",
@@ -13332,6 +13348,7 @@
       "docs/behaviors/center",
       "docs/behaviors/codecontrol",
       "docs/behaviors/darkmode",
+      "docs/behaviors/dialog",
       "docs/behaviors/form",
       "docs/behaviors/fullscreen",
       "docs/behaviors/header",
@@ -13645,6 +13662,7 @@
       "docs/behaviors/cardfile",
       "docs/behaviors/cardprofile",
       "docs/behaviors/counter",
+      "docs/behaviors/dialog",
       "docs/behaviors/img",
       "docs/behaviors/radio",
       "docs/behaviors/reel",
@@ -14213,6 +14231,7 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/accordion",
       "docs/behaviors/center",
+      "docs/behaviors/dialog",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/formrow",
       "docs/behaviors/inputgroup",
@@ -14331,6 +14350,7 @@
       "docs/behaviors/codecontrol",
       "docs/behaviors/collapse",
       "docs/behaviors/copybutton",
+      "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/error",
       "docs/behaviors/fadein",
@@ -15056,6 +15076,7 @@
       "docs/behaviors/codecontrol",
       "docs/behaviors/copybutton",
       "docs/behaviors/details",
+      "docs/behaviors/dialog",
       "docs/behaviors/dl",
       "docs/behaviors/fieldset",
       "docs/behaviors/floatinglabel",
@@ -15161,6 +15182,7 @@
       "docs/behaviors/autosize",
       "docs/behaviors/carddraggable",
       "docs/behaviors/confirm",
+      "docs/behaviors/dialog",
       "docs/behaviors/dl",
       "docs/behaviors/draggable",
       "docs/behaviors/masked",
@@ -16290,6 +16312,7 @@
       "docs/behaviors/cardoverlay",
       "docs/behaviors/codecontrol",
       "docs/behaviors/cover",
+      "docs/behaviors/dialog",
       "docs/behaviors/header",
       "docs/behaviors/pre",
       "docs/behaviors/relativetime",
@@ -16676,6 +16699,7 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardvideo",
+      "docs/behaviors/dialog",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/grid",
       "docs/behaviors/pagination",
@@ -17049,6 +17073,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/address",
       "docs/behaviors/card",
+      "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/img",
       "docs/behaviors/range",
@@ -19354,6 +19379,7 @@
       "docs/NOTES-V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/auto-injection",
+      "docs/behaviors/dialog",
       "docs/behaviors/modal",
       "docs/behaviors/notes",
       "docs/container-pattern",
@@ -21576,6 +21602,7 @@
       "docs/behaviors/address",
       "docs/behaviors/blockquote",
       "docs/behaviors/data",
+      "docs/behaviors/dialog",
       "docs/behaviors/pagination",
       "docs/behaviors/time",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -21815,6 +21842,7 @@
       "docs/behaviors/container",
       "docs/behaviors/countdown",
       "docs/behaviors/data",
+      "docs/behaviors/dialog",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/grid",
       "docs/behaviors/list",
@@ -22323,6 +22351,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/cover",
+      "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/glass",
       "docs/behaviors/range",
@@ -23171,6 +23200,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/confetti",
+      "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/glass",
       "docs/behaviors/table",
@@ -24042,6 +24072,7 @@
       "pages/privacy",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/inline-editing",
       "docs/linkedin-update-article",
@@ -24937,6 +24968,7 @@
       "docs/behaviors/cardfile",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardminimizable",
+      "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/img",
@@ -25013,6 +25045,7 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/chip",
       "docs/behaviors/copybutton",
+      "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/fix-card",
       "docs/behaviors/pagination",
@@ -25547,6 +25580,7 @@
       "docs/audio",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/clock",
+      "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/pagination",
       "docs/behaviors/scrollable",
@@ -26254,6 +26288,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
       "docs/behaviors/data",
+      "docs/behaviors/dialog",
       "docs/behaviors/img",
       "docs/behaviors/pre",
       "docs/behaviors/range",
@@ -26718,6 +26753,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audio",
       "docs/behaviors-reference",
+      "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/fullscreen",
       "docs/behaviors/masked",
@@ -27844,6 +27880,7 @@
     "being": [
       "docs/AI",
       "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/behaviors/dialog",
       "docs/behaviors/scrollalong",
       "docs/behaviors/x-copybutton",
       "docs/inline-editing",
@@ -28780,6 +28817,7 @@
     "merge": [
       "docs/BRANCH_PROTECTION",
       "docs/behaviors/address",
+      "docs/behaviors/dialog",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes"
     ],
@@ -32179,7 +32217,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/auto-injection",
       "docs/behavior-cross-reference",
-      "docs/behaviors/dialog",
       "docs/behaviors/dl",
       "docs/behaviors/drawer",
       "docs/behaviors/kbd",
@@ -34197,6 +34234,7 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/confirm",
       "docs/behaviors/countdown",
+      "docs/behaviors/dialog",
       "docs/behaviors/drawerLayout",
       "docs/behaviors/error",
       "docs/behaviors/floatinglabel",
@@ -34596,6 +34634,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
       "docs/audio",
+      "docs/behaviors/dialog",
       "docs/behaviors/range",
       "docs/behaviors/table",
       "docs/behaviors/truncate",
@@ -34919,6 +34958,7 @@
       "docs/auto-injection",
       "docs/behaviors/carddraggable",
       "docs/behaviors/cardhero",
+      "docs/behaviors/dialog",
       "docs/behaviors/notes",
       "docs/behaviors/sidebarlayout",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -35006,6 +35046,7 @@
     "trap": [
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behavior-cross-reference",
+      "docs/behaviors/dialog",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "alone": [
@@ -35206,6 +35247,7 @@
     ],
     "anyway": [
       "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/behaviors/dialog",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "mechanical": [
@@ -35239,7 +35281,8 @@
     ],
     "turned": [
       "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/dialog"
     ],
     "textually": [
       "docs/architecture/WB-PREFIX-AUDIT"
@@ -35595,6 +35638,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
       "docs/behaviors/container",
+      "docs/behaviors/dialog",
       "docs/behaviors/draggable",
       "docs/behaviors/table",
       "docs/claude/PAGE-GENERATION",
@@ -35641,6 +35685,7 @@
     "camelcase": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/audio",
+      "docs/behaviors/dialog",
       "docs/behaviors/range",
       "docs/behaviors/table",
       "docs/claude/PAGE-GENERATION"
@@ -35736,6 +35781,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/confetti",
+      "docs/behaviors/dialog",
       "docs/linkedin-update-article",
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
@@ -36102,6 +36148,7 @@
       "docs/behaviors/codecontrol",
       "docs/behaviors/container",
       "docs/behaviors/darkmode",
+      "docs/behaviors/dialog",
       "docs/behaviors/hero",
       "docs/behaviors/switcher",
       "docs/behaviors/toggle",
@@ -36475,6 +36522,7 @@
     ],
     "old": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/dialog",
       "docs/behaviors/glass",
       "docs/behaviors/range",
       "docs/behaviors/x-copybutton",
@@ -36748,7 +36796,8 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
     ],
     "leaving": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/dialog"
     ],
     "registering": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -38718,6 +38767,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/autocomplete",
       "docs/behaviors/container",
+      "docs/behaviors/dialog",
       "docs/behaviors/tags",
       "docs/behaviors/toast",
       "docs/claude/TIER1-LAWS",
@@ -39219,6 +39269,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behavior-cross-reference",
       "docs/behaviors/confirm",
+      "docs/behaviors/dialog",
       "docs/behaviors/steps",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
@@ -39441,6 +39492,7 @@
     ],
     "option": [
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/dialog",
       "docs/behaviors/dl",
       "docs/behaviors/icon",
       "docs/behaviors/img",
@@ -40131,6 +40183,7 @@
     ],
     "ones": [
       "docs/behaviors/accordion",
+      "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/range",
       "docs/claude/TOOLING-INVENTORY",
@@ -40166,6 +40219,7 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/center",
       "docs/behaviors/codecontrol",
+      "docs/behaviors/dialog",
       "docs/behaviors/glass",
       "docs/behaviors/move",
       "docs/behaviors/range",
@@ -40811,6 +40865,7 @@
     ],
     "rest": [
       "docs/behaviors/audio",
+      "docs/behaviors/dialog",
       "docs/behaviors/flex",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/scrollalong",
@@ -41401,6 +41456,7 @@
     "clicks": [
       "docs/behaviors/button",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/notify",
       "docs/search"
@@ -41736,6 +41792,7 @@
     ],
     "turn": [
       "docs/behaviors/cardhorizontal",
+      "docs/behaviors/dialog",
       "docs/behaviors/flip",
       "docs/behaviors/span",
       "docs/linkedin-framework-agnostic",
@@ -42463,6 +42520,7 @@
     ],
     "spelling": [
       "docs/behaviors/code",
+      "docs/behaviors/dialog",
       "docs/behaviors/img",
       "docs/behaviors/list",
       "docs/behaviors/pre",
@@ -43083,12 +43141,72 @@
       "docs/home-page",
       "docs/standards/ERROR-LOG-RETENTION"
     ],
+    "closeonbackdrop": [
+      "docs/behaviors/dialog"
+    ],
+    "dimmed": [
+      "docs/behaviors/dialog"
+    ],
+    "paints": [
+      "docs/behaviors/dialog",
+      "docs/behaviors/rainbow"
+    ],
+    "closeonescape": [
+      "docs/behaviors/dialog"
+    ],
+    "presses": [
+      "docs/behaviors/dialog",
+      "docs/search"
+    ],
+    "showclose": [
+      "docs/behaviors/dialog",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+    ],
     "fullscreen": [
       "docs/behaviors/dialog",
       "docs/behaviors/fullscreen",
       "docs/behaviors/video",
       "docs/standards/CSS-CLASS-CONVENTION",
       "demos/site/overlays"
+    ],
+    "untrue": [
+      "docs/behaviors/dialog"
+    ],
+    "showed": [
+      "docs/behaviors/dialog"
+    ],
+    "dashed": [
+      "docs/behaviors/dialog",
+      "docs/behaviors/fill",
+      "docs/behaviors/range",
+      "docs/behaviors/table",
+      "docs/container-pattern",
+      "docs/inline-editing",
+      "demos/frameworks"
+    ],
+    "spellings": [
+      "docs/behaviors/dialog",
+      "docs/behaviors/range"
+    ],
+    "dash": [
+      "docs/behaviors/dialog",
+      "docs/behaviors/range",
+      "docs/behaviors/table",
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "exit": [
+      "docs/behaviors/dialog",
+      "docs/behaviors/toast",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
+    ],
+    "affordances": [
+      "docs/behaviors/dialog"
+    ],
+    "yourself": [
+      "docs/behaviors/dialog",
+      "docs/behaviors/modal",
+      "docs/claude/TIER1-LAWS",
+      "demos/autoinject"
     ],
     "cancelled": [
       "docs/behaviors/dialog"
@@ -43382,14 +43500,6 @@
     ],
     "filelist": [
       "docs/behaviors/file"
-    ],
-    "dashed": [
-      "docs/behaviors/fill",
-      "docs/behaviors/range",
-      "docs/behaviors/table",
-      "docs/container-pattern",
-      "docs/inline-editing",
-      "demos/frameworks"
     ],
     "hugs": [
       "docs/behaviors/fill"
@@ -44057,11 +44167,6 @@
     "gfm": [
       "docs/behaviors/mdhtml"
     ],
-    "yourself": [
-      "docs/behaviors/modal",
-      "docs/claude/TIER1-LAWS",
-      "demos/autoinject"
-    ],
     "reorders": [
       "docs/behaviors/move"
     ],
@@ -44358,9 +44463,6 @@
       "docs/behaviors/rainbow",
       "docs/behaviors/x-effects"
     ],
-    "paints": [
-      "docs/behaviors/rainbow"
-    ],
     "cycles": [
       "docs/behaviors/rainbow",
       "docs/linkedin-update-article"
@@ -44416,14 +44518,6 @@
       "docs/behaviors/range"
     ],
     "valuesuffix": [
-      "docs/behaviors/range"
-    ],
-    "dash": [
-      "docs/behaviors/range",
-      "docs/behaviors/table",
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
-    "spellings": [
       "docs/behaviors/range"
     ],
     "asked": [
@@ -45262,10 +45356,6 @@
     ],
     "exiting": [
       "docs/behaviors/toast"
-    ],
-    "exit": [
-      "docs/behaviors/toast",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "sr": [
       "docs/behaviors/toggle"
@@ -48378,9 +48468,6 @@
     "bookmark": [
       "docs/search"
     ],
-    "presses": [
-      "docs/search"
-    ],
     "isloading": [
       "docs/search"
     ],
@@ -48937,9 +49024,6 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "yaml": [
-      "docs/standards/ISSUE-SIGNATURE-BLOCK"
-    ],
-    "showclose": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "inert": [

@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.267",
+      "date": "2026-10-05",
+      "summary": "Fix: showClose=&quot;false&quot; means off; dialog reads the names its schema declares (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1527\" target=\"_blank\" rel=\"noopener\">PR 1527</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/747\" target=\"_blank\" rel=\"noopener\">#747</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>ShowClose=&quot;false&quot; means off; dialog reads the names its schema declares</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/747\" target=\"_blank\" rel=\"noopener\">#747</a>",
+          "issues": [
+            747
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.266",
       "date": "2026-10-05",
       "summary": "Fix: newest navigation wins; scroll placed when the page appears (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1520\" target=\"_blank\" rel=\"noopener\">PR 1520</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1462\" target=\"_blank\" rel=\"noopener\">#1462</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1519\" target=\"_blank\" rel=\"noopener\">#1519</a>",

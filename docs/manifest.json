@@ -568,7 +568,7 @@
           "file": "behaviors/dialog.md",
           "title": "Dialog",
           "description": "A plain <dialog> gets a styled header with its first heading as the title, a close button, and closing on Escape and on a backdrop click.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-04"
         },
         {
           "file": "behaviors/dl.md",
