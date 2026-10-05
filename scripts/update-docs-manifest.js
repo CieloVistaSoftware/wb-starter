@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { readGitDates as readGitDatesFrom } from './lib/git-dates.mjs';
+import { readGitDates as readGitDatesFrom, readGitCreated } from './lib/git-dates.mjs';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -116,6 +116,19 @@ function generateManifest() {
   console.log('Scanning docs directory...');
   
   const files = getMarkdownFiles(DOCS_DIR);
+
+  // #1226: every doc's creation date, for the Docs page's "By date created"
+  // view. From git (the commit that first added it); without full history the
+  // dates already recorded are kept, so a shallow clone never rewrites them.
+  const created = readGitCreated(ROOT, ['docs']);
+  let recorded = new Map();
+  try {
+    recorded = new Map(JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf-8')).files.map((f) => [f.path, f.created]));
+  } catch { /* first run: nothing recorded yet */ }
+  for (const file of files) {
+    const date = (created && created.get(file.path)) || recorded.get(file.path);
+    if (date) file.created = date;
+  }
   
   // Group by category
   const byCategory = {};

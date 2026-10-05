@@ -36,3 +36,37 @@ export function readGitDates(root, paths) {
     return null;
   }
 }
+
+/**
+ * The date each file was CREATED: the commit that first added it, carried
+ * through renames (#1226 -- John: "I want to be able to see all docs by
+ * creation date somehow").
+ *
+ * One pass over history, oldest first. An add records its path's date; a
+ * rename hands the old path's date to the new one, so a moved doc keeps the
+ * day it was written. Same refusal as readGitDates for a shallow clone, whose
+ * cut-off commit would look like every old file's birthday.
+ *
+ * @param {string} root repository root
+ * @param {string[]} paths directories to read history for
+ * @returns {Map<string, string> | null} repo-relative path -> YYYY-MM-DD
+ */
+export function readGitCreated(root, paths) {
+  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 256 * 1024 * 1024 });
+  try {
+    if (git('rev-parse', '--is-shallow-repository').trim() === 'true') return null;
+    const log = git('log', '--reverse', '-M', '--diff-filter=AR', '--name-status', '--format=%x00%cs', '--', ...paths);
+    const created = new Map();
+    let date = '';
+    for (const line of log.split('\n')) {
+      if (line.startsWith('\0')) { date = line.slice(1); continue; }
+      const [status, from, to] = line.split('\t');
+      if (!status) continue;
+      if (status === 'A' && from && !created.has(from)) created.set(from, date);
+      else if (status.startsWith('R') && to) created.set(to, created.get(from) || date);
+    }
+    return created;
+  } catch {
+    return null;
+  }
+}
