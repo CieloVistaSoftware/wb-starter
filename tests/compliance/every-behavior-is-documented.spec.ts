@@ -37,47 +37,15 @@ import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { reachableBehaviors as reachableBehaviorsIn } from '../../scripts/lib/behavior-inventory.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const DOCS = path.join(ROOT, 'docs', 'behaviors');
 
-/**
- * Reachable behaviors as { token, name } — and the distinction is the whole
- * point.
- *
- * tag-map.js maps a SELECTOR to a BEHAVIOR:
- *
- *   'x-drawer-layout': 'drawerLayout'    <- kebab selector, camelCase module
- *   'button':          'button'
- *
- * The doc file is named for the behavior (the VALUE); the authoring token comes
- * from the selector (the KEY). The first draft of this gate looked docs up by
- * key and reported `x-drawer-layout` (and a since-removed alias) as
- * undocumented. Both were documented. False accusations, caught by opening the
- * files instead of trusting the count.
- */
-function reachableBehaviors(): Array<{ token: string; name: string; autoInjected: boolean }> {
-  const src = fs.readFileSync(path.join(ROOT, 'src', 'core', 'tag-map.js'), 'utf8');
-  const out = new Map<string, { token: string; name: string; autoInjected: boolean }>();
-  for (const m of src.matchAll(/^\s*'([^']+)'\s*:\s*'([^']+)'/gm)) {
-    const [, key, value] = m;
-    // A typed input variant is a host selector, not a behavior with its own doc.
-    if (key.includes('[type=')) continue;
-    // A key WITHOUT the x- prefix is a tag: <button> injects `button` on its own.
-    // A key WITH it is opted into by attribute and has no tag that implies it.
-    const autoInjected = !/^\[?x-/.test(key);
-    const name = value.trim();
-    // A tag is named by the behavior it injects: <article> injects card, so the
-    // attribute a reader types for it elsewhere is x-card, not x-article.
-    const token = autoInjected
-      ? name.toLowerCase()
-      : key.replace(/^\[/, '').replace(/\]$/, '').replace(/^x-/, '').toLowerCase();
-    if (!/^[a-z][a-z0-9-]*$/.test(token)) continue;
-    if (!/^[a-zA-Z][a-zA-Z0-9.-]*$/.test(name)) continue;
-    out.set(`${token}|${name}`, { token, name, autoInjected });
-  }
-  return [...out.values()].sort((a, b) => a.name.localeCompare(b.name));
-}
+// Reachable behaviors as { token, name }: the token from tag-map's KEY, the doc
+// name from its VALUE. Shared with the cross-reference generator (#1099), so
+// the two cannot disagree about what "every behavior" means.
+const reachableBehaviors = () => reachableBehaviorsIn(ROOT);
 
 /**
  * Fenced code blocks only — what a doc TEACHES, not what it discusses.
