@@ -5,6 +5,8 @@ import { preloadCssForHtml } from './style-loader.js';
 import { VERSION } from './version.js';
 import { versionNumber } from './version-number.js';
 import { setRule } from './dynamic-style.js';
+// Sets window.WBTime for the classic <script>s in pages/*.html (#1553).
+import './central-time.js';
 
 /** Old page ids that now render another page (URL is rewritten to the new id). */
 const PAGE_ALIASES = { 'whats-new': 'releases' };

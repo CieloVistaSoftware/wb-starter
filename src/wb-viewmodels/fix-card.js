@@ -3,6 +3,7 @@ import { composeCard } from './card.js';
 import { readAttr } from '../core/read-attr.js';
 import { mdhtml } from './mdhtml.js';
 import { ensureBehaviorCss } from '../core/style-loader.js';
+import { centralDate } from '../core/central-time.js';
 
 /**
  * Fix Card Component
@@ -53,7 +54,7 @@ function renderFixCard(host, card, fix) {
     statusClass = 'status-failed'; // Or status-test-missing if preferred, but CSS uses status-failed
   }
 
-  const dateStr = new Date(fix.date).toLocaleDateString();
+  const dateStr = centralDate(fix.date);
   
   const hasCause = fix.cause && fix.cause.trim().length > 0;
   const isMissingBehavior = fix.errorSignature && fix.errorSignature.includes('Unknown behavior');

@@ -7,17 +7,13 @@
  * local commit -05:00, so two releases an hour apart could land on different
  * days and the newer one could look older.
  *
- * US Central, because that is where the owner reads the page and where the
- * version badge already shows its time.
+ * US Central, because that is where the owner reads the page, and every date
+ * the site shows is Central (src/core/central-time.js, #1553).
  */
-export const RELEASE_TZ = 'America/Chicago';
+import { TIME_ZONE, centralDay } from '../../src/core/central-time.js';
 
-const FORMAT = new Intl.DateTimeFormat('en-CA', {
-  timeZone: RELEASE_TZ,
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-});
+/** The site's one display zone (src/core/central-time.js, #1553). */
+export const RELEASE_TZ = TIME_ZONE;
 
 /** 'YYYY-MM-DD' for the instant `iso` names, in RELEASE_TZ. Throws on anything unreadable. */
 export function releaseDate(iso) {
@@ -25,5 +21,5 @@ export function releaseDate(iso) {
   if (Number.isNaN(instant.getTime())) {
     throw new Error(`release date: cannot read "${iso}" as a date`);
   }
-  return FORMAT.format(instant);
+  return centralDay(instant);
 }

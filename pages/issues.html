@@ -139,7 +139,8 @@
     return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
-  const fmtDate = (iso) => new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  // #1553: Central, via src/core/central-time.js (site-engine loads it).
+  const fmtDate = (iso) => WBTime.date(iso);
 
   // John: "When these buttons are clicked add a count of those issues and
   // the date ranges here." Uses createdAt for open issues (when they were
@@ -610,7 +611,7 @@
     return until;
   }
 
-  const fmtTime = (ms) => new Date(ms).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  const fmtTime = (ms) => WBTime.clock(ms);
 
   function showCached(cache, until) {
     allIssues = cache.issues || [];

@@ -4,6 +4,7 @@
  */
 
 import { computeSignature, firstMeaningfulFrame, isTestOrigin, isTestServer, isSameOccurrence } from './error-signature.js';
+import { centralDateTime, centralTime } from './central-time.js';
 
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
@@ -151,7 +152,7 @@ function initErrorDisplay() {
       return text;
     }).join('\n\n');
     
-    const header = `=== ${errors.length} Error(s) at ${new Date().toLocaleString()} ===\nPage: ${window.location.href}\n\n`;
+    const header = `=== ${errors.length} Error(s) at ${centralDateTime()} ===\nPage: ${window.location.href}\n\n`;
     
     // #1000 -- John: "copy doesn't copy". There was no fallback: one call to
     // navigator.clipboard, and the entire recovery was a button label that
@@ -389,7 +390,7 @@ export async function logError(message, details = {}) {
   const item = document.createElement('div');
   item.className = 'x-error-display__item';
   
-  const time = new Date(error.timestamp).toLocaleTimeString();
+  const time = centralTime(error.timestamp);
   let detailsHtml = '';
   if (error.module || details.file) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--file">📁 ${error.module || details.file}:${error.line || '?'}</div>`;
   if (error.to) detailsHtml += `<div class="x-error-display__meta x-error-display__meta--to">➡️ To: ${escapeHtml(error.to)}</div>`;

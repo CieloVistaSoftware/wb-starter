@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5840
+    "totalWords": 5832
   },
   "documents": [
     {
@@ -199,10 +199,10 @@
           "text": "' + escapeText(entry.title) + '"
         }
       ],
-      "content": "📖 Documentation Browse all documentation, guides, and research papers. 🔍 Sort documents Newest first By category Loading documentation...",
+      "content": "📖 Documentation Browse all documentation, guides, and research papers. 🔍 Sort documents Newest first By date created (every doc) By category Loading documentation...",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-03"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/features",
@@ -229,7 +229,7 @@
       "content": "✨ Features Everything you need to build modern websites, with zero build step. Why WB Starter? No webpack, no npm install, no build process. Just open index.html and start editing. Change your site structure in site.json. Navigation, footer, branding - all in one place. 50 beautiful themes with full CSS variable support. Switch themes without page reload. Responsive layout that works on any screen size. Collapsible nav for mobile devices. Works with standard HTML elements. No custom elements or Shadow DOM complexity. Standard browser DevTools work perfectly. Inspect elements, edit styles, no magic. Behavior Categories 🃏 Cards (18 types) card, cardimage, cardvideo, cardbutton, cardhero, cardprofile, cardpricing, cardstats, cardtestimonial, cardproduct, cardnotification, cardfile, cardlink, cardhorizontal, cardoverlay, carddraggable, cardexpandable, cardminimizable 🎯 UI Behaviors (7) modal, tooltip, dropdown, accordion, tabs, collapse, mdhtml 📢 Feedback (10) toast, badge, progress, spinner, avatar, chip, alert, skeleton, divider, breadcrumb 🧭 Navigation (8) navbar, sidebar, menu, pagination, steps, treeview, backtotop, anchor 📊 Data Display (10) table, list, desclist, timeline, stat, empty, code, json, diff, kbd 🖼️ Media (10) image, gallery, video, audio, youtube, vimeo, embed, figure, carousel, ratio 📋 Forms (30) input, textarea, select, checkbox, radio, switch, range, colorpicker, datepicker, timepicker, file, otp, rating, tags, autocomplete, form, fieldset, label, help, error, inputgroup, formrow, stepper, search, password, masked, counter, floatinglabel, validator, autosize ✨ Animation (25) animate, fadein, fadeout, slidein, slideout, zoomin, zoomout, bounce, shake, pulse, flip, rotate, swing, tada, wobble, jello, heartbeat, flash, rubberband, typewriter, countup, parallax, reveal, marquee, confetti",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-03"
+      "modified": "2026-10-02"
     },
     {
       "id": "pages/hero-variants",
@@ -452,7 +452,7 @@
           "text": "${h.label}"
         }
       ],
-      "content": "Releases What each version added, fixed and changed. Every push to main is a minor version (1.0.N, the number on the version badge), lists what it contains with links to its issues, and deploys straight to cielovistasoftware.github.io/wb-starter , so the newest release below is what this site is running. Loading releases…",
+      "content": "Releases Each commit to main is a new release (1.0.N, the number on the version badge), and it deploys straight to cielovistasoftware.github.io/wb-starter , so the newest release below is what this site is running. Each one says what the issue was, what to do to see the change, and what changed, with links to its issues. Loading releases…",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-05"
@@ -674,7 +674,7 @@
       "content": "Release announcement: Local test gating and PR policy Summary ------- We now enforce a fast local test gate: `npm test` runs Tier‑1 (compliance) by default and must pass **before** commits or opening PRs. PRs opened with failing Tier‑1 checks will be labeled `needs-tests` and closed by maintainers if they are not converted to Draft and fixed. What changed ------------ - `npm test` runs Tier‑1 only (fast, local) - `npm run test:ci` runs the full-suite (CI / explicit local) - A fast **Tier‑1** GitHub Actions job has been added to run on PRs - A PR labeler will mark PRs with failing Tier‑1 as `needs-tests` and comment remediation steps - CONTRIBUTING.md and committing-fixes.md updated with the new gate and exception workflow Who this affects ----------------- All contributors. After pulling these changes run: ```bash npm install npm run prepare # installs git hooks ``` Short announcement (copy for Slack / Teams) ------------------------------------------ :information_source: Team — new test gating policy: please run `npm test` and ensure Tier‑1 passes **before** committing or opening PRs. If you need to iterate while debugging, open a **Draft** PR and document the failing test(s. ) If you'd like, I can post this to the repo's default channel and open a follow-up issue to track rollout and exemptions.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/BRANCH_PROTECTION",
@@ -975,7 +975,7 @@
       "content": "# Auto Injection (Preview) ## Overview **Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-behavior` attributes to every element, you simply write standard, semantic HTML, and WB \"wakes up\" the elements at runtime. This approach promotes: 1. **Cleaner Markup**: No proprietary attributes cluttering your HTML. 2. **Semantic Correctness**: Encourages the use of proper tags (` `, ` `, ` `). 3. **Accessibility**: Semantic elements are inherently more accessible. 4. **Portability**: Your HTML remains standard and works (without behavior) even if JS fails. --- ## How It Works When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior. ### Precedence Rule **Auto Injection is additive.** It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple` or `x-as-card`). If you want to **prevent** Auto Injection for a specific element, you must use the `ignore` attribute. ```html gets 'button' behavior (auto) AND 'ripple' behavior (explicit) --> Click Me gets 'card' behavior (auto) AND 'hero' behavior (explicit) --> ... will NOT become a WB Navbar --> ... ``` --- ## Mapping Reference The following HTML elements are automatically mapped to WB behaviors: ### Structure & Layout | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `card` | Becomes a card behavior | | ` ` | `navbar` | Becomes a responsive navigation bar | | ` ` | `sidebar` | Becomes a sidebar/drawer | | ` ` | `table` | Adds sorting and responsive styling | | ` ` | `details` | Enhances the expand/collapse animation | | ` ` | `dialog` | Adds modal management and backdrop | ### Forms | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `form` | Adds validation and AJAX handling | | ` ` | *varies* | `checkbox`, `radio`, `range`, or generic `input` styling | | ` ` | `select` | Custom dropdown styling | | ` ` | `textarea` | Auto-resizing text area | | ` ` | `button` | Ripple effects and loading states | | ` ` | `fieldset` | Group styling | | ` ` | `label` | Enhanced label interactions | ### Media & Text | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `image` | Lazy loading and fade-in | | ` ` | `video` | Custom player controls | | ` ` | `audio` | Custom audio player | | ` ` | `code` | Inline code styling | | ` ` | `pre` | Code block with copy button | | ` ` | `kbd` | Keyboard key styling | | ` ` | `mark` | Highlight styling | | ` ` | `progress` | Animated progress bar | --- ## Examples ### 1. Card Behavior **Explicit (Shorthand):** ```html Title Content ``` **Implicit (Auto Injection):** ```html Title Content ``` ### 2. Navigation Bar **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Home About ``` ### 3. Modal Dialog **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Settings × ... ``` --- ## Opting Out If you want to use a semantic element *without* the WB behavior, add the `ignore` attribute. ```html will NOT become a WB Navbar --> Just a link ``` ## Overriding If you want to use a semantic element but apply a *different* behavior, simply use the explicit syntax. ```html Welcome ```",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behavior-cross-reference",
@@ -1103,7 +1103,7 @@
       "content": "# WB-Starter Behaviors Cross-Reference A complete reference of all WB Behaviors with accurate documentation of what each behavior adds. --- ## What is a Behavior? A **behavior** is a JavaScript function that decorates an HTML element by adding: - CSS classes (styling hooks) - Inline styles (visual enhancement) - Event listeners (interactivity) - ARIA attributes (accessibility) - Data attributes (state tracking) A behavior does **NOT** change what the element fundamentally is - it enhances it. --- ## Auto-Injection Rules With `autoInject: true` in `config/site.json`, semantic elements are automatically decorated. ### Decoration vs Morphing | Type | Rule | Example | |------|------|---------| | **Decoration** | Behavior name = element name | ` ` → `button` behavior | | **Morphing** | Behavior name ≠ element name | ` ` → `card` behavior | --- ## Decorating Behaviors (Same Name) These behaviors enhance the element while preserving its identity. --- ### button **Module:** `semantics/button.js` **Element:** ` ` **What it adds:** - Class: ` `, `x-button--{variant}`, `x-button--{size}` - Styles: padding, border-radius, cursor, font-weight, transitions - Variants: primary, secondary, success, danger, warning, ghost, link, outline - Sizes: xs, sm, md, lg, xl - Loading state with spinner - Icon support (left/right position) - Click handler with toast feedback **Data attributes:** - `variant` - Button style (primary, secondary, etc.) - `size` - Button size (xs, sm, md, lg, xl) - `icon` - Icon character - `icon-position` - left or right - `loading` - Show loading spinner - `disabled` - Disable button **Examples:** Basic buttons - auto-styled: Default Primary Submit Form Reset All variants: Primary Secondary Success Danger Warning Ghost Link Style Outline All sizes: Extra Small Small Medium (default) Large Extra Large With icons: Save Delete Next Back States: Saving... Disabled Combined (variant + size + icon together): Complete Purchase Delete Item Confirm Order **Button Group Example:** Cancel Save Draft Publish --- ### input **Module:** `semantics/input.js` **Element:** ` ` **What it adds:** - Wrapper div: ` ` - Class on input: `x-input__field` - Styles: border, border-radius, background, color, padding - Sizes: xs, sm, md, lg, xl - Variants: success (green border), error (red border) - Prefix/suffix text support - Clearable button (×) **Data attributes:** - `variant` - success or error - `size` - xs, sm, md, lg, xl - `clearable` - Add clear button - `prefix` - Text before input - `suffix` - Text after input **Examples:** Basic inputs - auto-styled: All sizes: Validation states: With prefix/suffix: Clearable: Combined (size + prefix + clearable together): **Form Field Examples:** Login form: Email Password Sign In Price input: Product Price Search with icon: --- ### details **Module:** `semantics/details.js` **Element:** ` ` **What it adds:** - Class: ` ` - Styles: border, border-radius, overflow, background - Summary styling: flex layout, padding, background, cursor - Custom toggle icon (▼) with rotation animation - `toggle` event dispatches `wb:details:toggle` custom event - Programmatic API: `element.wbDetails.toggle()`, `.open()`, `.close()`, `.isOpen` **Data attributes:** - `open` - Start expanded - `animated` - Enable/disable animation (default: true) **Native behavior preserved:** Open/close toggle, summary click, keyboard access, Escape key **Examples:** Basic collapsible: What is WB Behaviors? WB Behaviors is a behavior-based UI library that enhances semantic HTML. Starts open: Important Notice This section is expanded by default so users see it immediately. FAQ section: How do I install WB Behaviors? Run npm install wb-starter in your project directory. Does it work with React? Yes! WB behaviors can be applied to any HTML element, including those rendered by React. Is it accessible? Absolutely. WB uses native HTML elements and adds ARIA attributes where needed. Nested details: Product Categories Electronics Phones Laptops Tablets Clothing Shirts Pants Shoes With rich content: View Code Example function greet(name) { return `Hello, ${name}!`; } Settings panel: Advanced Settings Enable notifications Dark mode Theme Default Ocean Forest **Accordion Pattern (multiple details):** Step 1: Create Account Fill out the registration form with your email and password. Step 2: Verify Email Check your inbox and click the verification link. Step 3: Complete Profile Add your name, photo, and preferences. --- ### dialog **Module:** `semantics/dialog.js` **Element:** ` ` **What it adds:** - Class: ` ` - Backdrop styling - Close button styling - Open/close animations - Custom events **Native behavior preserved:** `showModal()`, `close()`, `form[method=dialog]`, focus trap, Escape key **Examples:** The `dialog` behavior only decorates a **real, already-open** ` ` in place (see the Auto-Injection demo above) — it does not wire up a show/hide trigger. For a self-contained trigger button that builds and opens a dialog on click wit",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-03"
+      "modified": "2026-10-02"
     },
     {
       "id": "docs/behaviors-reference",
@@ -1176,7 +1176,7 @@
       "content": "# articles Wraps a set of article-like children in a grid/list/masonry layout, with an optional heading and static pagination controls. Implemented by `articles()` in [src/wb-viewmodels/article.js](../../src/wb-viewmodels/article.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-articles` | | Attribute form | ` ` | | Behavior function | `articles()` — `src/wb-viewmodels/article.js` | | Pairs with | ` ` children, each of which is a [card](../behaviors/card.md) | | Semantic element | ` ` (schema default; the behavior itself doesn't add a role) | | Root CSS Class | ` ` | | Category | Layout | | Schema | [articles.schema.json](../../src/wb-models/articles.schema.json) — declares extra `limit`/`source` properties the JS never reads; only the attributes below actually do anything | ## Properties | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `layout` | string | `\"grid\"` | `grid`, `list`, or `masonry` — sets `.x-articles--{layout}` on the inner list wrapper | | `columns` | number | `\"3\"` | Column count for `grid`/`masonry` layouts, applied as the `--x-articles-columns` CSS custom property | | `title` | string | `\"\"` | Optional heading rendered above the list in a `.x-articles__header` | | `pagination` | boolean | `false` | Renders a static Previous/Page 1/Next control strip below the list — **no actual paging logic**, the buttons don't do anything and Previous is always `disabled` | ## Usage Each child is a plain ` `. An ` ` is a card, so every child gets its title, byline and body from the [card](../behaviors/card.md) behavior with no attribute needed. ### Grid layout TypeScript transforms JavaScript development with type safety: generics, unions, interfaces, and decorators. Master modern React with Hooks — useState, useEffect, useContext, and custom hooks for cleaner behaviors. ### List layout Build RESTful APIs with proper versioning, pagination, error handling, and documentation. Unit tests, integration tests, end-to-end tests, and performance testing for reliable software. ### Masonry layout Break monoliths into independently deployable services with service discovery and circuit breakers. Redux, Zustand, Recoil, and context patterns — choosing the right fit for your app's complexity. Core Web Vitals, Lighthouse, and Real User Monitoring for finding and fixing bottlenecks. ### With pagination controls AWS, Azure, and Google Cloud services, pricing models, and when to use each. Images, containers, registries, and compose for microservices. ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | `.x-articles` | Always | Base marker class | | `.x-articles__header` | `title` set | Wraps the ` ` heading | | `.x-articles__list` | Always | The container that actually holds the (moved) children | | `.x-articles--{grid,list,masonry}` | Always, per `layout` | Sets the actual layout mode (CSS grid columns / flex column / CSS columns) | | `.x-articles__pagination` | `pagination` | Wraps the Previous/label/Next controls | | `.x-articles__page-label` | `pagination` | The static \"Page 1\" text | ## Events `articles()` does not dispatch any custom events. - [Demo](../../demos/site/content.html#articles-articles-list-behavior) - [Schema](../../src/wb-models/articles.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behaviors/aside",
@@ -1671,7 +1671,7 @@
       "content": "# Countdown `x-countdown` shows the time left until `date` (or `to`), or for a fixed number of `seconds`, and updates it every second until it reaches zero, when `wb:countdown:complete` fires. Put it on an empty ` ` or ` `. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `seconds` | `string` | `0` | A fixed duration in seconds, used instead of an absolute `date`. | | `format` | `string` | `auto` | How the remaining time is rendered. `auto` (default) drops units that are zero. | | `date` | `string` | — | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. | | `to` | `string` | — | Alias of `date`, read only when `date` is absent. | ## Events - `wb:countdown:complete` — The countdown reached zero. Schema: [`countdown.schema.json`](../../src/wb-models/countdown.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/counter",
@@ -2350,7 +2350,7 @@
       "content": "# Password Behavior A password ` ` gets a show/hide button, and with `strength` a meter that rates the password as it is typed. `type=\"password\"` already says which behavior this is, so there is nothing to add: the runtime applies it to every password input (#1185). Writing `x-password` as well is redundant and the page audits flag it. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `toggle` | `boolean` | `false` | Show/hide password toggle | | `strength` | `boolean` | `false` | Show password strength meter | Schema: [`password.schema.json`](../../src/wb-models/password.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behaviors/popover",
@@ -2493,7 +2493,7 @@
       "content": "# Relativetime `x-relativetime` replaces the element's text with how long ago `date` was — \"3 days ago\", \"Just now\" — and recomputes it every `refresh` milliseconds. Keep the absolute date in the markup as the fallback text. ## Usage Jan 1, 2025 ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `datetime` | `string` | — | Alias of `date`, read only when `date` is absent. | | `refresh` | `string` | `60000` | How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute. | | `date` | `string` | — | The timestamp to describe. `datetime` is accepted as an alias; `date` is read first. | Schema: [`relativetime.schema.json`](../../src/wb-models/relativetime.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/release",
@@ -2636,7 +2636,7 @@
       "content": "# skeleton A shimmering placeholder block for loading states — a single line, multiple stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in [src/wb-viewmodels/feedback.js](../../src/wb-viewmodels/feedback.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-skeleton` | | Attribute form | ` ` | | Behavior function | `skeleton()` — `src/wb-viewmodels/feedback.js` | | Semantic element | ` ` | | Root CSS Class | none added by JS — `skeleton.css` styles the ` ` **tag** directly, so `x-skeleton` on any other element gets no shimmer styling from the base rule (only the `.x-skeleton--{variant}` modifier class is added) | | Category | Feedback | | Schema | [skeleton.schema.json](../../src/wb-models/skeleton.schema.json) — declares an `animated` property (default `true`); `animated=\"false\"` adds `.x-skeleton--static`, which stops the shimmer | ## Properties | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `variant` | string | `\"text\"` | `text`, `circle`, `rect` (schema also lists `card`, but no CSS rule styles that value differently from the default block) | | `lines` | number | `1` | For `variant=\"text\"` only — when greater than 1, replaces the block with that many stacked ` ` line placeholders (the last one rendered narrower for realism) | | `width` | string (CSS value) | none | Applied as inline `element.style.width` | | `height` | string (CSS value) | none | Applied as inline `element.style.height` | ## Usage ### Single line ### Multiple lines ### Circle (e.g. an avatar placeholder) ### Rectangle (e.g. an image placeholder) > `x-skeleton` on a non-` ` element still runs `skeleton()`, but only > gets the `.x-skeleton--{variant}` modifier class — the shimmer gradient and > sizing come from `skeleton.css`'s `x-skeleton { ... }` **tag** selector, which > a different tag never matches. Use the ` ` custom tag to get the > full visual, not `x-skeleton` on an arbitrary element. ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | ` ` (tag selector, not a class) | the host is a literal ` ` | Base shimmering block: gradient background, `1rem` height, animated | | `.x-skeleton--{variant}` | Always | `text`/`circle`/`rect` modifier | | `x-skeleton[variant=\"circle\"]` | `variant=\"circle\"` | 1:1 aspect ratio, fully rounded | | `x-skeleton[variant=\"rect\"]` | `variant=\"rect\"` | Sharp-ish corners (`4px` radius), height comes from the `height` attribute | | `x-skeleton > span` | `variant=\"text\"` and `lines > 1` | Each stacked line gets its own shimmer; the last line is narrower (`60%` width) | ## Events `skeleton()` does not dispatch any custom events. - [Demo](../../demos/site/feedback.html#skeleton-skeleton) - [Schema](../../src/wb-models/skeleton.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-26"
+      "modified": "2026-09-25"
     },
     {
       "id": "docs/behaviors/slidein",
@@ -2872,7 +2872,7 @@
       "content": "# ` ` Element The ` ` element represents a specific period in time. In WB-Starter, it's used for timestamps, dates, and durations in cards and content. ## Semantic Meaning - Machine-readable datetime with human-readable display - The `datetime` attribute contains ISO 8601 format - Can represent: dates, times, durations, date ranges ## `datetime` Attribute Formats | Type | Format | Example | |------|--------|---------| | Date | `YYYY-MM-DD` | `2024-12-15` | | Time | `HH:MM:SS` | `14:30:00` | | DateTime | `YYYY-MM-DDTHH:MM:SS` | `2024-12-15T14:30:00` | | With timezone | `YYYY-MM-DDTHH:MM:SSZ` | `2024-12-15T14:30:00Z` | | Duration | `P[n]Y[n]M[n]DT[n]H[n]M[n]S` | `PT2H30M` | | Year-Month | `YYYY-MM` | `2024-12` | | Year | `YYYY` | `2024` | | Week | `YYYY-W[n]` | `2024-W50` | ## WB Behaviors Using ` ` ### 1. Card File (`cardfile`) `x-cardfile` builds its own metadata line from the `date`/`size` attributes. **Note:** it renders `date` as plain text inside `.x-card__file-meta`, not a real ` ` element. ### 2. Card Notification (`cardnotification`) **Not achievable as a live demo:** `cardnotification`'s real attribute API (`variant`/`title`/`message`/`dismissible`) has no date/time field, and hand-authored children like the ` ` below are discarded — the behavior rebuilds its content from attributes only (see [`aside.md`](./aside.md)). Shown here as illustrative markup only; it will render without a timestamp. ```html is dropped --> 2 hours ago ``` ### 3. Timeline Behavior `x-timeline` only adds the `.x-timeline` class hook — it doesn't rebuild children, so hand-authored markup (including real ` ` elements) renders as-is. January 2024 Project Started ### 4. Relative Time Behavior (`relativetime`) `x-relativetime` computes its own live \"time ago\" text from `datetime` (or `date`) on load and refreshes it periodically — the element's own content is replaced, so the text below is illustrative only; the real rendered demo recomputes it live. ## Accessibility Considerations | Attribute | Purpose | |-----------|---------| | `datetime` | Machine-readable for screen readers | | Content | Human-readable display | | `aria-label` | Override if display is ambiguous | ## Example: Blog Post Metadata Understanding Semantic HTML By John Doe December 15, 2024 8 min read Last updated: December 18, 2024 at 2:30 PM ## CSS Styling ```css time { /* Often used inline, no special styling needed */ } time.x-card__file-date, time.x-card__notif-time { font-size: 0.75rem; color: var(--text-muted); } time.x-timeline__date { font-weight: 600; color: var(--primary); } /* Relative time with auto-update */ time[x-relativetime] { /* Will be updated by JavaScript */ } ``` ## JavaScript: Relative Time Updates ```javascript // Update relative times periodically function updateRelativeTimes() { document.querySelectorAll('time[datetime]').forEach(el => { const datetime = new Date(el.getAttribute('datetime')); const now = new Date(); const diff = now - datetime; // Format as relative time const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' }); if (diff < 60000) { el.textContent = 'just now'; } else if (diff < 3600000) { el.textContent = rtf.format(-Math.floor(diff / 60000), 'minute'); } else if (diff < 86400000) { el.textContent = rtf.format(-Math.floor(diff / 3600000), 'hour'); } else { el.textContent = rtf.format(-Math.floor(diff / 86400000), 'day'); } }); } // Update every minute setInterval(updateRelativeTimes, 60000); ``` ## Best Practices 1. **Always include `datetime`** - Even if display is relative 2. **Use ISO 8601** - Standard format for `datetime` attribute 3. **Localize display** - Use `Intl.DateTimeFormat` for human text 4. **Consider timezones** - Include timezone in `datetime` when relevant 5. **Durations** - Use ISO 8601 duration format (PT2H30M)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behaviors/timeline",
@@ -3185,7 +3185,7 @@
       "content": "# TIER 2 — DOMAIN GUIDES (Read When Working In That Area) **Only load these when the task touches this domain.** **Don't read all of these every session — that defeats the purpose.** --- ## 🔧 CORE ARCHITECTURE Read when: modifying `src/core/`, behavior registration, behavior system, or WB.js | File | What It Covers | |------|---------------| | `docs/standards/V3-STANDARDS.md` | **THE** v3 spec — naming, file structure, syntax, BEM classes | | `docs/architecture.md` | Overall architecture overview | | `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` | Why `x-*` for behaviors, clean names for properties | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec | | `docs/WB_BEHAVIOR_SYSTEM.md` | How behaviors attach to elements | | `docs/auto-injection.md` | How CSS/JS auto-loading works | | `docs/container-pattern.md` | Container behavior pattern | | `docs/escape-hatches.md` | How to override framework defaults | | `docs/architecture/proposals/proposed-custom-elements.md` | Custom elements proposals | | `docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md` | X-prefix migration history | --- ## 🧩 BEHAVIORS Read when: working on a specific behavior — an `x-*` attribute or an auto-injected semantic element | File | What It Covers | |------|---------------| | `docs/behaviors/README.md` | Behavior catalog overview | | `docs/behaviors/cards/` | 20+ card variant specs (card, cardhero, cardimage, etc.) | | `docs/behaviors/semantic/` | Semantic HTML wrappers (address, article, aside, blockquote, etc.) | | `docs/behaviors/semantics/` | Form/interactive elements (button, checkbox, dialog, input, etc.) | | `docs/behaviors/effects/` | Visual effects (confetti, fireworks, snow) | | `docs/behaviors/feedback/` | Feedback behaviors | | `docs/behaviors/forms/` | Form behaviors | | `docs/behaviors/layout/` | Layout behaviors | | `docs/behaviors/navigation/` | Navigation behaviors | | `docs/behaviors/demo/` | Demo and showcase behaviors | | `docs/behaviors/drawer.md` | Drawer behavior | | `docs/behaviors/tabs.md` | Tabs behavior | | `docs/behaviors-reference.md` | All behaviors cross-reference | | `docs/behavior-cross-reference.md` | Behavior ↔ behavior mapping | | `docs/properties.md` | Behavior property patterns | --- ## 🧪 TESTING Read when: writing tests, fixing test failures, or modifying test infrastructure | File | What It Covers | |------|---------------| | `docs/testing-strategy.md` | Overall test approach and philosophy | | `docs/testing-runbook.md` | Step-by-step test procedures | | `docs/builder-testing.md` | Builder-specific test rules | | `docs/test-schema-standard.md` | How to test schemas | | `docs/schema-test-value.md` | Test value conventions for schemas | | `docs/ANNOUNCE_TEST_POLICY.md` | Test policy announcement | | `data/FUNCTIONAL-TEST-ANALYSIS.md` | Analysis of test gaps | | `docs/compliance/iso-42001-alignment.md` | Compliance alignment | | `docs/audits/X-USAGE-AUDIT.md` | X-usage audit | --- ## 📐 SCHEMAS & MVVM Read when: modifying schemas, schema-builder, or MVVM migration work | File | What It Covers | |------|---------------| | **`docs/claude/SCHEMAS-GUIDE.md`** | **⭐ START HERE — Claude's guide to schemas: rules, mistakes to avoid, test workflow** | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Full v3.0 schema spec with complete examples | | `docs/schema.md` | Schema system overview | | `docs/schema-first-architecture.md` | Schema-first design philosophy | | `docs/schema.migration.md` | Schema migration patterns | | `docs/MVVM-MIGRATION.md` | MVVM migration overview | | `docs/MVVM-MIGRATION-PLAN.md` | MVVM migration detailed plan | | `docs/architecture/WBVIEWS.md` | WB Views system ($view in schemas) | | `docs/wb-parts-spec.md` | ` ` template system | | `docs/property-viewer.md` | Property viewer panel | --- ## 🎨 CSS & STYLES Read when: modifying CSS files, style extraction, or theme work | File | What It Covers | |------|---------------| | `docs/css-standards.md` | CSS naming and organization rules | | `docs/styles.md` | Style system overview | | `docs/themes.md` | Theme system and CSS variables | | `docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md` | Current CSS migration status | | `docs/_today/CSS-OWNERSHIP-MIGRATION.md` | (legacy) CSS migration status | --- ## 📄 PAGE GENERATION Read when: generating demo pages, creating showcases, working with `.page.json` schemas, or running `auto-showcase.mjs` | File | What It Covers | |------|---------------| | `docs/claude/PAGE-GENERATION.md` | Full pipeline guide — validate, generate, auto-showcase | Scripts: `scripts/validate-page-schema.mjs`, `scripts/generate-page.mjs`, `scripts/auto-showcase.mjs` --- ## 🔌 MCP & TOOLING Read when: MCP server issues, npm scripts, or dev tooling | File | What It Covers | |------|---------------| | `docs/mcp.md` | MCP server documentation | | `mcp-server/README.md` | MCP server setup and API | | `docs/DATA-FILES.md` | What lives in `data/` and why | | `docs/INTELLI",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/claude/TIER3-REFERENCE",
@@ -3207,7 +3207,7 @@
       "content": "# Tooling Inventory — What This Repo Already Has **Read this before writing any new tooling.** Every entry here was already built, and at least three of them have been reinvented by someone who didn't know they existed. The reinvention is not a style problem. A second mechanism measuring the same thing drifts from the first, and then the two disagree with nobody noticing — which is exactly how `#923` ended up with five copies of one rule and `#951` with a duplicated label rule that lost a branch. --- ## Machine-readable test output Produced by `scripts/tools/test-reporter.ts`, installed as a reporter in `playwright.config.ts`. It runs on **every** Playwright invocation — you never need to add `--reporter=json`. | file | what it holds | |---|---| | `data/test-results/failures.json` | every failure: `{project, title, file, line, error}` — **this is the one you want** | | `data/test-results/ .json` | per-project detail | | `data/test-status.json` | live status while a run is in flight: `state`, `passed`, `failed`, `currentFile`, `failures[]` | | `data/test-results/failures-live.log` | human-readable running log | > Do **not** add Playwright's own `json` reporter to get at failures. It was > tried; `PLAYWRIGHT_JSON_OUTPUT_NAME` produced nothing and the gate reported > \"the suite never ran\" for a run that had never been launched. The reporter > above already writes what you need, and using it keeps the ratchet and the > rest of the tooling agreeing on what a failure *is*. ## Running tests - `npm_test_async` MCP tool → launches asynchronously; poll `data/test-status.json`. **Law 4: never run Playwright synchronously.** One suite run at a time, machine-wide. - Single spec: pass a filter, e.g. `npm_test_async { filter: \"sticky\" }`. The filter is a path regex — `|` will be eaten by the shell, so run one at a time. ## Gates, and the baselines they ratchet against All three are **ratchets**: they fail on *new* problems, never on the mere existence of old ones. A gate too strict to pass gets bypassed, and the `--no-verify` habit takes every other check down with it (`#840`). | gate | script | baseline | fails when | |---|---|---|---| | Lint | `.husky/lint-ratchet.mjs` | `.husky/lint-baseline.json` | a file you touched has *more* problems than recorded | | Tests | `.husky/test-ratchet.mjs` | `data/test-baseline-failures.json` | a failure appears that is **not** in the register | | `wb-` prefix | `scripts/audit-wb-prefix.mjs` | ceilings in `tests/compliance/wb-prefix-cannot-return.spec.ts` | a category grows past its ceiling | Baselines **only ever shrink**. A repaired test is removed automatically so it can never rot again. Never raise a ceiling to make a build pass — that is the moment the gate stops meaning anything. Where each gate runs (since 2026-10-02): - **Commit hook** — fast checks only (~30s), none of which CI runs: version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright, no counter, no every-10th run. - **PR CI** (`.github/workflows/ci-tests.yml`) — one Playwright check per category on windows-latest, plus the \"Gate scripts self-test\" job. Information, not a merge gate. - **Nightly** (`.github/workflows/nightly.yml`) — the full suite on `main` through the test ratchet. A new failure files one `priority:2` issue linking the run. It does not release; the badge number (`v1.0.41`) is counted from the last tag. ## Reading attributes in a behavior `src/core/read-attr.js` — use these, do not hand-roll a `??` chain: - `readAttr(el, name, fallback = '')` — string. **Returns `''`, not `null`, when absent**, so `readAttr(...) ?? 'default'` is dead code. This caused #946. - `readNumber(el, name, fallback = 0)` — number, never `NaN`. - `readFlag(el, name)` — boolean. ## Audits and one-off analysis Check `scripts/` before writing a new analysis script — there are ~100 of them. Notable: `audit-wb-prefix.mjs`, `audit-inline-styles`, `run-regression-tests.js`. --- ## The rule this file exists to serve Before building tooling, spend thirty seconds: ```bash ls scripts/ | grep -i grep -rn \" \" --include=*.ts --include=*.mjs . ``` The repo usually already has it.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-01"
     },
     {
       "id": "docs/code-examples-standard",
@@ -3287,7 +3287,7 @@
       "content": "# How to Create a Website with wb-starter This guide takes you from nothing to a published website in about five minutes. You write plain HTML, and wb-starter supplies the behaviors (`x-*` attributes), the theme, the navigation and the page loading. There is no build step while you work. ## What you need - **Node.js 18 or later.** Check it with `node --version`. - A terminal: PowerShell, Windows Terminal, or the one built into VS Code. ## 1. Create the site ```powershell npm create wb-starter my-site ``` `my-site` is the folder it creates. To give the site a display name that differs from the folder name, add `--name`: ```powershell npm create wb-starter my-site -- --name \"Cielo Vista Software\" ``` > `pnpm create wb-starter my-site` works the same way. ### What `npm create wb-starter` actually does npm sees `create wb-starter`, downloads the small package **`create-wb-starter`** (about 5 kB), and runs it. It: 1. makes the `my-site` folder with a starter site in it; 2. writes your site's name into the header, title and footer; 3. writes a `package.json` whose only dependency is **`wb-starter`**, the framework itself. `create-wb-starter` only runs once. Your site never depends on it. ## 2. Install and run it ```powershell Set-Location my-site npm install npm start ``` Open **http://localhost:3000**. If something else already has port 3000, `npm start` does not stop: it takes the next free port (3001, 3002, ...) and prints the address to open. Use the address it prints. You get a Home page and an About page, a menu, a theme switcher, and a working behavior: the button on the home page ripples when you click it. `npm start` runs `wb-starter serve`. It serves your folder, with the wb-starter runtime underneath. Your own files always win: if you create a file with the same path as one of wb-starter's, yours is the one served. ## 3. What is in the folder ```text my-site/ index.html the page shell (you rarely edit this) config/site.json site name, menu, header, footer, page title, theme pages/home.html one HTML file per page pages/about.html styles/site.css your own styles package.json private; depends on wb-starter README.md .gitignore ``` wb-starter itself lives in `node_modules/wb-starter`. It is a dependency, not a copy, so your folder holds only your site. ## 4. Edit a page Open `pages/home.html` and change the text, then refresh the browser. There is nothing to rebuild. Pages are plain HTML. To give an element a behavior, add an `x-*` attribute: Click me The full list of behaviors, with a live example of each, is on the wb-starter site's **Behaviors** page. ## 5. Add a page 1. Create `pages/contact.html`: ```html Contact How to reach us. ``` 2. Add it to `navigationMenu` in `config/site.json`: ```json { \"menuItemId\": \"contact\", \"menuItemText\": \"Contact\", \"menuItemEmoji\": \"✉️\", \"pageToLoad\": \"contact\" } ``` 3. Refresh the browser. **Contact** is now in the menu. `pageToLoad` is the file name in `pages/` without `.html`. ## 6. Change the look and the settings Everything site-wide is in `config/site.json`: | Setting | What it does | |---|---| | `branding.companyName` | The name in the header | | `branding.colorTheme` | The starting theme, such as `\"dark\"` or `\"light\"` | | `headerSettings.displayThemeSwitcher` | Show or hide the theme switcher | | `footerSettings.footerCopyrightText` | The footer text | | `searchEngineOptimization.pageTitle` | The browser tab title | Put your own CSS in `styles/site.css`. ## 7. Publish it ```powershell npm run build ``` This runs `wb-starter build`, which writes a complete static copy of the site to **`dist\\`**: your pages plus the parts of the wb-starter runtime they use. Upload `dist\\` to any static host: - **GitHub Pages:** push `dist\\` to a `gh-pages` branch, or publish it with a GitHub Pages action. The build already includes the `.nojekyll` file GitHub Pages needs. - **Netlify, Cloudflare Pages, Azure Static Web Apps, any web server:** upload the contents of `dist\\`. `dist\\` does not need Node.js or wb-starter to run. It is only files. ## 8. Get new wb-starter releases ```powershell npm update wb-starter ``` Your pages are untouched. Only the runtime underneath them changes. What each release added and fixed is on the wb-starter site's **Releases** page. ## Commands at a glance | Command | What it does | |---|---| | `npm create wb-starter my-site` | Create a new site in `my-site\\` | | `npm install` | Install wb-starter into the site | | `npm start` | Serve the site at http://localhost:3000, or the next free port if 3000 is taken | | `npm start -- --port 8080` | Start from another port (8080, or the next free one after it) | | `npm run build` | Write the static site to `dist\\` | | `npm update wb-starter` | Move to the newest wb-starter release | ## Troubleshooting - **\"already exists and is not empty\":** the folder is taken. Pick a new name, or empty the folder first. - **Port 3000 is in use:** nothing to do. You do not need to kill the other server: `npm start` moves to the",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-01"
     },
     {
       "id": "docs/guides/search-index",
@@ -3356,7 +3356,7 @@
       "content": "# WB-Starter Documentation > A comprehensive behavior library featuring 41+ custom behaviors, Harmonic Color System, and Light DOM architecture. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - [Schema-First Architecture](./schema-first-architecture.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Schema-First Audit Report](./schema-first-audit-report.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/inline-editing",
@@ -3422,7 +3422,7 @@
       "content": "# NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀 Purpose: centralize the precise, copy-paste-safe `npx` and Playwright commands used in this repo and list the common mistakes to STOP repeating. ## Quick checks before running tests ⚠️ - Start the dev server: `npm start` (wait for \"Listening\" log). - Start MCP if tests require it: `npm run start:mcp` and verify with `npm run mcp:healthcheck`. - Ensure you're in the project root (where `package.json` lives). --- ## Common, PowerShell-safe commands (copy-paste) 🔧 - Run a single test by name (pattern matching): npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --trace=on - Run an entire spec file: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' --timeout=120000 - Run a single test by file + line-number (Playwright): npx playwright test tests/behaviors/ui/builder-api.spec.ts:42 - Run Playwright with debug UI: npx playwright test --ui - Run only failed tests from the previous run: npx playwright test --repeat-each 1 --max-failures=1 - Helpful flags: --timeout=120000 # increase default (ms) --trace=on # captures trace for failing tests -g 'pattern' # test-title grep (simple substring is safest) --- ## PowerShell quoting & common pitfalls (short) 🧩 - Use single quotes around file paths and `-g` patterns to avoid PowerShell interpreting parentheses or `$`. - DO NOT use unsupported flags (example: `-q` is not a Playwright option). - If Playwright reports \"No tests found\", double-check the -g pattern and quoting; try a looser substring (e.g. `-g 'remove'`). --- ## Why commands fail (root causes) — and how to stop them ✅ - Wrong CLI flag (typo) → read the error (\"unknown option\") and remove the flag. - Overly specific grep pattern → use a simpler substring or escape special chars. - Required services not running (dev server / MCP) → start them first. - Quoting mistakes in PowerShell → prefer single quotes around test paths/patterns. --- ## Troubleshooting checklist (follow in order) 🧭 1. Are you in the repo root? `pwd` / check `package.json` exists. 2. Is the dev server up? `npm start` → wait for \"Listening\". 3. Is MCP required & healthy? `npm run start:mcp` then `npm run mcp:healthcheck`. 4. Run a simple smoke test: `npx playwright test tests/behaviors/ui/builder-api.spec.ts -g 'add()'` 5. If \"No tests found\": relax `-g` to a substring and re-run. 6. If a test times out: increase `--timeout` and enable `--trace=on`. --- ## Examples (copy-paste) 📋 - Single failing test with trace (recommended): npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --trace=on - Run the whole builder API file: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' --timeout=120000 - Start server + run one test (two commands): npm start npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --- ## Recommended CI settings (for maintainers) 🏷️ - Use explicit file-level runs in CI for flaky areas: `npx playwright test tests/behaviors/ui/builder-api.spec.ts -g 'remove' --trace=on`. - Gate PR merges on `--trace=on` for failing tests to capture artifacts. --- ## Short \"STOP\" checklist (read before you run) ✋ - Stop: adding unknown CLI flags (check the error first). - Stop: over-anchored `-g` patterns — use simple substrings. - Stop: running tests without the dev server or MCP when required. --- If you want, I can: add this to the repo README, open a PR that enforces `--trace=on` for failures, and run the failing Builder test now (with trace).",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/pce-candidates",
@@ -3510,7 +3510,7 @@
       "content": "# COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT The value of schema tests once again proves itself in this age of wild horse A.I. getting loose. The following errors below were found in less than 10 seconds. We found schema errors which affect code, tests, and fixes. We use schema to generate code, including .js, .css and .html. But then we apply what it says regarding test permuations to write our tests in associations with our .md doc specifications. All bases covered, including how to write a bug, how to analze it, and fix it. Then the tests are fixed if they are the issue, and finally the code winds up self-correcting. This list of errors took 20 minutes to fix. All the tests were updated automatically and ═══════════════════════════════════════════════════════════════════ ### SCHEMA STRUCTURE ISSUES | Issue | Fixed | |-------|:-----:| | ❌ behavior.schema.json: Missing \"compliance\" section | ✅ | | ❌ behavior.schema.json: Missing \"test\" section | ✅ | | ❌ behaviors-showcase.schema.json: Missing \"compliance\" section | ✅ | | ❌ behaviors-showcase.schema.json: Missing \"test\" section | ✅ | | ❌ confetti.schema.json: test.matrix missing | ✅ | | ❌ details.schema.json: test.matrix missing | ✅ | | ❌ fireworks.schema.json: test.matrix missing | ✅ | | ❌ footer.schema.json: test.matrix missing | ✅ | | ❌ header.schema.json: test.matrix missing | ✅ | | ❌ navbar.schema.json: Missing \"test\" section | ✅ | | ❌ rating.schema.json: test.matrix missing | ✅ | | ❌ scrollalong.schema.json: test.matrix missing | ✅ | | ❌ snow.schema.json: test.matrix missing | ✅ | | ❌ sticky.schema.json: test.matrix missing | ✅ | | ❌ switch.schema.json: test.matrix missing | ✅ | | ❌ table.schema.json: test.matrix missing | ✅ | ### MISSING FUNCTIONS | Issue | Fixed | |-------|:-----:| | ❌ behavior: No exported function found | ✅ | | ❌ behaviors-showcase: No exported function found | ✅ | ### MISSING ROOT CSS CLASS ASSIGNMENTS | Issue | Fixed | |-------|:-----:| | ❌ checkbox: Doesn't add \"x-checkbox-input\" | ✅ | | ❌ dropdown: Doesn't add \"x-dropdown\" | ✅ | ### MISSING CRITICAL STYLES | Issue | Fixed | |-------|:-----:| | ❌ cardhero: Missing style.border | ✅ | | ❌ cardprofile: Missing style.border | ✅ | ### HEADING LEVEL ISSUES | Issue | Fixed | |-------|:-----:| | ❌ cardhero: Must create h3 for title | ✅ | ### MISSING REQUIRED ELEMENTS | Issue | Fixed | |-------|:-----:| | ❌ carddraggable: Should create main for main.x-card__main | ✅ | | ❌ cardexpandable: Should create header for header.x-card__header | ✅ | | ❌ cardexpandable: Should create main for main.x-card__expandable-content | ✅ | | ❌ cardexpandable: Should create footer for footer.x-card__footer | ✅ | | ❌ cardnotification: Should create main for main.x-card__notification-content | ✅ | | ❌ cardportfolio: Should create header for header | ✅ | | ❌ cardprofile: Should create figure for figure.x-card__profile-avatar | ✅ | | ❌ cardprofile: Should create header for header | ✅ | | ❌ cardtestimonial: Should create footer for footer.x-card__footer | ✅ | | ❌ cardvideo: Should create figure for figure.x-card__figure | ✅ | | ❌ dropdown: Should create button for .x-dropdown-trigger | ✅ | | ❌ dropdown: Should create div for .x-dropdown-menu | ✅ | | ❌ notes: Should create header for .x-notes__header | ✅ | | ❌ notes: Should create textarea for .x-notes__textarea | ✅ | | ❌ notes: Should create footer for .x-notes__footer | ✅ |",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/schema",
@@ -3627,7 +3627,7 @@
       "content": "# Error Log Retention — 30 Days **Rule, from John (2026-09-05):** *\"all of our error logs must stay on the system for 30 days.\"* Stated after a session in which the test suite destroyed 26+ real errors he was reading, silently, seventeen times over (#1027). ## The rule 1. **No code deletes an error log.** Anything that clears, caps, resets or rotates one must ARCHIVE the entries first and print where they went. 2. **Archives live for at least 30 days**, on the machine, in `data/error-log-archive/`. They are never removed automatically — not by a test run, not by a build, not by a cleanup task. 3. **Removing an archive is a deliberate, announced act.** `scripts/prune-error-archives.mjs` is the only thing that deletes one. It is a dry run without `--confirm`, refuses any window shorter than 30 days, and names every file it removes with its age and entry count. 4. **An agent does not delete a log at all** — including archives it created itself, and including ones that look like test data. See `CLAUDE.md` (in `.claude/`, which the site does not serve) and the session rule: a log is evidence, and whether it looks like junk is not the deleter's call. ## Where the entries live | Path | What it is | Cleared by | Archived first? | |---|---|---|---| | `data/errors.json` | the live runtime log the viewer reads | test reporter `onBegin`, `/api/error-log/clear`, the 100-entry cap | yes — all three (#1027) | | `data/error-log-archive/errors- [-reason].json` | every batch removed from the live log | nothing automatic | n/a | `data/error-log-archive/` is gitignored: the archives are machine-local forensics, not repo content. \"On the system\" is the requirement, not \"in git\". ## Reasons recorded on an archive - `cleared-from-viewer` — someone pressed **Clear Log** in the errors viewer. - `overflow` — the live log hit its 100-entry cap and the oldest entries rolled off. Before #1027 these were dropped by a bare `.slice(-100)` and lost. - *(no suffix)* — a test run cleared the log at `onBegin` (#562's clean slate). ## Checking ```bash node scripts/prune-error-archives.mjs # what exists, what is in-window, deletes nothing ``` The test reporter prints one line per wipe, e.g. ``` [WBTestReporter] data/errors.json held 26 error(s); archived to data/error-log-archive/errors-2026-09-05T22-40-42-996Z.json before clearing it for this run. ``` If that line is absent on a run that cleared a non-empty log, the archive failed — and it says so instead of proceeding quietly.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -3646,10 +3646,10 @@
       "title": "RELEASE-PROCESS",
       "description": null,
       "headings": [],
-      "content": "# Release Process Standards **Every version number this project shows anyone MUST be traceable to a written list of what it contains.** A version number is a promise that a specific, testable thing shipped. If you cannot answer \"what is in 3.0.61?\" by reading one page, the number is noise. This exists because it was broken. Between 2026-08-19 and 2026-08-20 the version went 3.0.36 → 3.0.60 — 24 bumps, 16 of them in one day — with the last What's New entry dated 2026-08-19. The result could not be tested: given a version number there was no way to learn what was in it, and given a build no way to know its number was unique. --- ## The number on the badge (since 2026-10-02) John: \"I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple.\" The version badge shows the last release tag with its patch moved on by the **pushes to main** since it: `v1.0.89` + 3 pushes reads **`v1.0.92`**. John, 2026-10-02: \"count pushes not commits\" -- counting commits made it jump by three per push. A push is one first-parent commit on main; the stamp workflow's own `chore(version): stamp` commit belongs to the push it stamps (`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89` commit (`ANCHOR` in that file), so it never went backwards; a release tag cut after it takes over. It is counted by git from the tag (`scripts/stamp-version.js`), so the same commit shows the same number on port 3000 and on the live site. Every version is listed on the Releases page with what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks; local edits or being behind GitHub are said in its tooltip. A release (below) is still cut deliberately with `npm run ship` and resets the count to its new tag. ## 1. One number per release, never per commit A release number changes **once, on `main`, when something is being released**. It does not change on every commit. The failure mode this replaces: `.husky/pre-commit` ran `npm version patch` on every commit. Because branch commits bump and squash-merges collapse them, the numbers that reached `main` were both **ambiguous** and **phantom**: | Symptom | Actual measurement | |---|---| | One number, several builds | `3.0.55` = two commits (#722, #733); `3.0.44` = three; `3.0.35` = ~40 | | Numbers that never shipped | `3.0.56`, `3.0.58`, `3.0.59`, `3.0.60` — feature branches only | | Working copy ahead of reality | local read `3.0.60` while `main` was `3.0.57` | Neither is testable. Both are prevented by bumping once, on `main`. ## 2. Cache-busting is a different job — give it its own stamp The `?v=` query strings in `index.html` genuinely must change on every commit, or browsers serve stale assets. **That need is what drove the per-commit bump, and it does not require the semver version.** - `?v=` and any other cache-bust token use the **commit hash or a build counter**. Change freely, every commit, no ceremony. - `package.json` `version` is the **release number**. Changes only under rule 1. `scripts/stamp-version.js` already writes both; it must stop taking the cache-bust value from the semver version. ## 3. A release is not done until the Releases page names it `data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what the site says is live, so it is the only thing anyone can test against. (Until 1.0 this was the hand-edited What's New page, now in the `archive/` folder; `?page=whats-new` still forwards to `?page=releases`.) A release commit MUST contain, together, in one commit: 1. the `version` bump in `package.json` and `package-lock.json` 2. the stamped `src/core/version.js` 3. a `data/releases.json` entry **whose `version` is that exact version number**, listing what it added, fixed and changed Shipping any one of those without the others is the defect this document exists to prevent. `npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and `scripts/release.mjs` gate 2 refuses a release the file does not name. ## 4. Releases are keyed by version, not by date A date cannot be tested; a version can. Each entry is keyed by release number, with the date as secondary: ```json { \"version\": \"1.0.0\", \"date\": \"2026-09-29\", \"summary\": \"\", \"items\": [ { \"kind\": \"fixed\", \"html\": \" Releases replace What's New #1182 (as a link)\", \"issues\": [1182] } ] } ``` Work that is live but not yet in a numbered release may sit in an `unreleased` block; the next release folds it in, so it can never be shown in place of a version (#1182). Work from before numbered releases is under `history`, by date, never as a version. If a number was consumed but never deployed, **say so explicitly** so nobody hunts for it. ## 5. Every issue reference is a link Refs like `#727` are written as real anchors to `https://github.com/CieloVistaSoftware/wb-starter/issues/727`, `target=\"_blank\"`, `rel=\"noopene",
+      "content": "# Release Process Standards **Every version number this project shows anyone MUST be traceable to a written list of what it contains.** A version number is a promise that a specific, testable thing shipped. If you cannot answer \"what is in 3.0.61?\" by reading one page, the number is noise. This exists because it was broken. Between 2026-08-19 and 2026-08-20 the version went 3.0.36 → 3.0.60 — 24 bumps, 16 of them in one day — with the last What's New entry dated 2026-08-19. The result could not be tested: given a version number there was no way to learn what was in it, and given a build no way to know its number was unique. --- ## The number on the badge (since 2026-10-02) John: \"I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple.\" The version badge shows the last release tag with its patch moved on by the **pushes to main** since it: `v1.0.89` + 3 pushes reads **`v1.0.92`**. John, 2026-10-02: \"count pushes not commits\" -- counting commits made it jump by three per push. A push is one first-parent commit on main; the stamp workflow's own `chore(version): stamp` commit belongs to the push it stamps (`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89` commit (`ANCHOR` in that file), so it never went backwards; a release tag cut after it takes over. It is counted by git from the tag (`scripts/stamp-version.js`), so the same commit shows the same number on port 3000 and on the live site. Every version is listed on the Releases page with what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks; local edits or being behind GitHub are said in its tooltip. A release (below) is still cut deliberately with `npm run ship` and resets the count to its new tag. ## 1. One number per release, never per commit A release number changes **once, on `main`, when something is being released**. It does not change on every commit. The failure mode this replaces: `.husky/pre-commit` ran `npm version patch` on every commit. Because branch commits bump and squash-merges collapse them, the numbers that reached `main` were both **ambiguous** and **phantom**: | Symptom | Actual measurement | |---|---| | One number, several builds | `3.0.55` = two commits (#722, #733); `3.0.44` = three; `3.0.35` = ~40 | | Numbers that never shipped | `3.0.56`, `3.0.58`, `3.0.59`, `3.0.60` — feature branches only | | Working copy ahead of reality | local read `3.0.60` while `main` was `3.0.57` | Neither is testable. Both are prevented by bumping once, on `main`. ## 2. Cache-busting is a different job — give it its own stamp The `?v=` query strings in `index.html` genuinely must change on every commit, or browsers serve stale assets. **That need is what drove the per-commit bump, and it does not require the semver version.** - `?v=` and any other cache-bust token use the **commit hash or a build counter**. Change freely, every commit, no ceremony. - `package.json` `version` is the **release number**. Changes only under rule 1. `scripts/stamp-version.js` already writes both; it must stop taking the cache-bust value from the semver version. ## 3. A release is not done until the Releases page names it `data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what the site says is live, so it is the only thing anyone can test against. (Until 1.0 this was the hand-edited What's New page, now in the `archive/` folder; `?page=whats-new` still forwards to `?page=releases`.) A release commit MUST contain, together, in one commit: 1. the `version` bump in `package.json` and `package-lock.json` 2. the stamped `src/core/version.js` 3. a `data/releases.json` entry **whose `version` is that exact version number**, listing what it added, fixed and changed Shipping any one of those without the others is the defect this document exists to prevent. `npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and `scripts/release.mjs` gate 2 refuses a release the file does not name. ## 3a. Every version says what the issue was and how to see the change John, 2026-10-05, on the Releases page: \"This page tells me nothing. one of these lines should be a summary of the issue, the other what to do to see the change\" (#1533). Each commit to `main` is a new release, and each one shows: 1. **The issue, in plain English.** The commit's `Summary:` line. Without one, the title of the issue the commit cites (cached in `data/issue-titles.json`), and only then the PR title. 2. **How to recreate the change by hand.** Where to go, what to do, what you saw **Before:** and what you see **Now:**. John, 2026-10-05: \"still not good enough, tell the user what to do to manually recreate this\", and \"I don't do anything manually that's your job\": Claude writes these lines, John never does. The commit's `See it:` line, or `data/release-see-it.json` for that ",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/standards/REPO-LAYOUT",
@@ -3660,7 +3660,7 @@
       "content": "# Repo Layout Where every file in wb-starter goes. Enforced by `tests/compliance/repo-layout.spec.ts`; a file that breaks a rule fails the gate. John, 2026-09-29: \"follow our standards for file name, folder placement etc. Move unused files by putting them into an archive folder, no loose scripts, they all must go in proper folder. Same goes with .png files. NO .txt files in root. Only 1 .html file in root. No .md docs but readme in root.\" ## The root Only the site's entry points and project configuration: | File | Why it is at the root | |---|---| | `index.html` | The one page at the root: the site's entry point. | | `sw.js` | A service worker's scope is its own folder, so it must sit at the site root (CieloVistaStandards `build-deploy.md`, rule 2). | | `manifest.json` | The web app manifest `index.html` links. | | `server.js` | `npm start` runs it. | | `README.md` | The only `.md` at the root. | | `LICENSE`, `.gitignore`, `.nojekyll`, `.mcp.json` | Read from the root by GitHub, git, Pages and Claude. | | `package.json`, `package-lock.json`, `eslint.config.js`, `tsconfig.json`, `jsconfig.json`, `playwright.config.ts`, `global.d.ts` | Tool configuration, read from the root. | Never at the root: `.txt` or `.log` files (test output belongs in `data/test-results/` or nowhere; `.gitignore` ignores `/*.txt` and `/*.log`), any other `.html`, scripts, images, or other `.md` docs. `CLAUDE.md` lives in `.claude/` and `CONTRIBUTING.md` in `.github/`, locations Claude Code and GitHub both read. ## Folders | Kind of file | Goes in | |---|---| | Scripts (`.mjs`, `.cjs`, `.ps1`, `.py`, `.sh`) | `scripts/`, or beside the code that runs them (`src/`, `tests/`, `server/`, `.husky/`, `.github/`) | | Images (`.png`, `.jpg`, …) | `images/` (content) or `assets/` (icons, favicons) | | Test media and test pages | `tests/fixtures/` | | Standalone tool pages (doc viewer, error viewer, …) | `public/` | | Site pages | `pages/` | | Demos | `demos/` | | Docs | `docs/`; standards in `docs/standards/` | | Sample downloads for the file-card demos | `files/` | ## Names kebab-case: `repo-layout.spec.ts`, `npx-commands.md`. Exceptions: files named after a behavior's public identifier (`drawerLayout.schema.json` — renaming the file renames the behavior), fixture copies of CDN files (their names are the upstream URLs), and conventional names (`README.md`, `LICENSE`, `CODEOWNERS`). ## Unused files Move them to `archive/`, keeping their original path (a one-off script in `scripts/` moves to the same name under `archive/scripts/`). Nothing is deleted, and nothing in `archive/` is loaded, tested or shipped. `archive/` is still in the public repo: archiving does not make a file private.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/standards/V3-STANDARDS",
@@ -5786,7 +5786,6 @@
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/cardpricing",
       "docs/claude/TIER3-REFERENCE",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
     ],
     "30": [
@@ -6440,9 +6439,6 @@
     "722": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "727": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
     "733": [
       "docs/standards/RELEASE-PROCESS"
     ],
@@ -6624,9 +6620,6 @@
     "1169": [
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
-    "1182": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
     "1185": [
       "docs/behaviors/password"
     ],
@@ -6642,6 +6635,9 @@
     ],
     "1344": [
       "docs/behaviors/table"
+    ],
+    "1533": [
+      "docs/standards/RELEASE-PROCESS"
     ],
     "2000": [
       "docs/behaviors/copybutton",
@@ -7064,7 +7060,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -7153,7 +7148,6 @@
       "docs/schema.migration",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -8028,6 +8022,7 @@
       "docs/linkedin-update-article",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/RELEASE-PROCESS",
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/site/content",
@@ -9111,7 +9106,6 @@
       "docs/performance",
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "demos/frameworks",
@@ -9851,7 +9845,6 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/site/content",
@@ -10694,7 +10687,8 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "tells": [
-      "pages/ai-permutation-test"
+      "pages/ai-permutation-test",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "exactly": [
       "pages/ai-permutation-test",
@@ -11991,8 +11985,7 @@
       "docs/behaviors/video",
       "docs/behaviors/x-copybutton",
       "docs/code-examples-standard",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "displayed": [
       "pages/ai-permutation-test",
@@ -12053,6 +12046,7 @@
       "pages/behaviors",
       "pages/features",
       "pages/home",
+      "pages/releases",
       "docs/AI",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -13162,6 +13156,7 @@
       "docs/behaviors/truncate",
       "docs/code-examples-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/RELEASE-PROCESS",
       "demos/landing-page-showcase"
     ],
     "via": [
@@ -13944,6 +13939,7 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "docs/wbservices",
       "demos/frameworks"
     ],
@@ -15203,6 +15199,7 @@
       "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/testing-strategy"
     ],
     "jump": [
@@ -15264,6 +15261,7 @@
     ],
     "commit": [
       "pages/behaviors",
+      "pages/releases",
       "docs/behaviors/release",
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
@@ -15348,6 +15346,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "demos/frameworks",
       "demos/standalone"
@@ -15584,7 +15583,6 @@
     ],
     "contains": [
       "pages/behaviors",
-      "pages/releases",
       "docs/AI",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/behaviors/cover",
@@ -16583,7 +16581,6 @@
     ],
     "added": [
       "pages/behaviors",
-      "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/NOTES-V3-GUIDE",
@@ -16728,7 +16725,6 @@
       "docs/compliance/iso-42001-alignment",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS",
       "demos/schema-first-architecture"
     ],
     "appear": [
@@ -17444,7 +17440,6 @@
       "docs/behaviors/fill",
       "docs/behaviors/grid",
       "docs/behaviors/vimeo",
-      "docs/standards/RELEASE-PROCESS",
       "demos/autoinject"
     ],
     "monday": [
@@ -18323,6 +18318,54 @@
       "pages/releases",
       "docs/guides/create-a-website"
     ],
+    "date": [
+      "pages/docs",
+      "docs/BRANCH_PROTECTION",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/card",
+      "docs/behaviors/cardfile",
+      "docs/behaviors/code",
+      "docs/behaviors/countdown",
+      "docs/behaviors/input",
+      "docs/behaviors/mark",
+      "docs/behaviors/relativetime",
+      "docs/behaviors/table",
+      "docs/behaviors/time",
+      "docs/compliance/iso-42001-alignment",
+      "docs/properties",
+      "docs/semantic-standard",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "demos/autoinject"
+    ],
+    "created": [
+      "pages/docs",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/behaviors/colorpicker",
+      "docs/behaviors/toast",
+      "docs/semantic-audit",
+      "docs/standards/ERROR-LOG-RETENTION"
+    ],
+    "doc": [
+      "pages/docs",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/card",
+      "docs/claude/README",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/search-index",
+      "docs/mcp",
+      "docs/schema-test-value",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/REPO-LAYOUT"
+    ],
     "category": [
       "pages/docs",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -18497,6 +18540,7 @@
     ],
     "change": [
       "pages/features",
+      "pages/releases",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -18661,7 +18705,6 @@
       "docs/pce-candidates",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/testing-strategy",
@@ -20379,6 +20422,7 @@
     ],
     "see": [
       "pages/hero-variants",
+      "pages/releases",
       "pages/themes",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -20431,6 +20475,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -21290,7 +21335,6 @@
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "docs/testing-runbook"
     ],
@@ -21514,7 +21558,6 @@
       "docs/home-page",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "docs/themes",
       "demos/code",
@@ -21872,7 +21915,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/cardoverlay",
       "docs/behaviors/notes",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
     ],
     "wrapper": [
@@ -22108,6 +22150,7 @@
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/RELEASE-PROCESS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "demos/code",
@@ -22696,7 +22739,6 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook",
       "docs/wbservices",
       "demos/frameworks",
@@ -23021,14 +23063,12 @@
       "docs/properties",
       "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
       "demos/site/cards",
       "demos/standalone"
     ],
     "rel": [
       "pages/home",
-      "docs/performance",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/performance"
     ],
     "stylesheet": [
       "pages/home",
@@ -23284,11 +23324,11 @@
       "docs/schema-test-value",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
     ],
     "issue": [
       "pages/issues",
+      "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -23642,7 +23682,6 @@
       "docs/behaviors/fill",
       "docs/behaviors/floatinglabel",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
     ],
     "labels": [
@@ -23692,6 +23731,7 @@
     "new": [
       "pages/links",
       "pages/newpage",
+      "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
       "docs/IMPROVEMENTS",
@@ -24473,87 +24513,20 @@
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook"
     ],
-    "version": [
+    "release": [
       "pages/releases",
-      "docs/AI",
-      "docs/IMPROVEMENTS",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/dl",
-      "docs/behaviors/header",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/behaviors/ol",
+      "docs/behaviors/rainbow",
       "docs/behaviors/release",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
-      "docs/guides/search-index",
-      "docs/linkedin-framework-agnostic",
-      "docs/linkedin-standards-article",
-      "docs/pce-candidates",
-      "docs/properties",
-      "docs/schema",
+      "docs/linkedin-update-article",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "fixed": [
-      "pages/releases",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/BRANCH_PROTECTION",
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/cluster",
-      "docs/behaviors/countdown",
-      "docs/behaviors/gallery",
-      "docs/behaviors/grid",
-      "docs/behaviors/ratio",
-      "docs/behaviors/reel",
-      "docs/behaviors/sidebarlayout",
-      "docs/behaviors/stagelight",
-      "docs/behaviors/toast",
-      "docs/guides/create-a-website",
-      "docs/schema-test-value",
-      "docs/schema",
-      "docs/semantic-audit",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
-      "demos/layout-test"
-    ],
-    "changed": [
-      "pages/releases",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/behaviors/audio",
-      "docs/behaviors/card",
-      "docs/behaviors/flash",
-      "docs/behaviors/move",
-      "docs/behaviors/notes",
-      "docs/behaviors/rating",
-      "docs/behaviors/select",
-      "docs/behaviors/table",
-      "docs/behaviors/tabs",
-      "docs/behaviors/toast",
-      "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/testing-runbook"
-    ],
-    "push": [
-      "pages/releases",
-      "docs/behaviors/drawer",
-      "docs/behaviors/fill",
-      "docs/guides/create-a-website",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/site/overlays"
-    ],
-    "minor": [
-      "pages/releases"
+      "docs/standards/V3-STANDARDS"
     ],
     "number": [
       "pages/releases",
@@ -24614,17 +24587,30 @@
       "docs/test-schema-standard",
       "docs/testing-strategy"
     ],
-    "lists": [
+    "version": [
       "pages/releases",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors-reference",
-      "docs/behaviors/resizable",
-      "docs/behaviors/skeleton",
-      "docs/behaviors/ul",
-      "docs/performance",
-      "docs/property-viewer",
-      "docs/semantic-standard"
+      "docs/AI",
+      "docs/IMPROVEMENTS",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/dl",
+      "docs/behaviors/header",
+      "docs/behaviors/release",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/guides/search-index",
+      "docs/linkedin-framework-agnostic",
+      "docs/linkedin-standards-article",
+      "docs/pce-candidates",
+      "docs/properties",
+      "docs/schema",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "deploys": [
       "pages/releases",
@@ -24641,26 +24627,10 @@
       "pages/releases",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/fill",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/behaviors/fill"
     ],
     "io": [
       "pages/releases"
-    ],
-    "release": [
-      "pages/releases",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/behaviors/ol",
-      "docs/behaviors/rainbow",
-      "docs/behaviors/release",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/linkedin-update-article",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/V3-STANDARDS"
     ],
     "running": [
       "pages/releases",
@@ -24678,6 +24648,40 @@
       "docs/performance",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-strategy"
+    ],
+    "says": [
+      "pages/releases",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/card",
+      "docs/behaviors/cardhorizontal",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/password",
+      "docs/claude/PAGE-GENERATION",
+      "docs/schema-test-value",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-runbook"
+    ],
+    "changed": [
+      "pages/releases",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/behaviors/audio",
+      "docs/behaviors/card",
+      "docs/behaviors/flash",
+      "docs/behaviors/move",
+      "docs/behaviors/notes",
+      "docs/behaviors/rating",
+      "docs/behaviors/select",
+      "docs/behaviors/table",
+      "docs/behaviors/tabs",
+      "docs/behaviors/toast",
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-runbook"
     ],
     "succeed": [
       "pages/services"
@@ -25546,7 +25550,6 @@
       "docs/home-page",
       "docs/inline-editing",
       "docs/search",
-      "docs/standards/RELEASE-PROCESS",
       "docs/test-schema-standard"
     ],
     "harmonics": [
@@ -26650,6 +26653,7 @@
       "docs/linkedin-standards-article",
       "docs/properties",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "demos/landing-page-showcase"
     ],
@@ -26726,7 +26730,6 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "demos/site/content"
     ],
@@ -27149,6 +27152,7 @@
       "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "demos/charity-food",
       "demos/standalone"
@@ -27545,7 +27549,6 @@
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
       "docs/claude/TIER3-REFERENCE",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/styles"
     ],
@@ -27597,6 +27600,7 @@
       "docs/behaviors/img",
       "docs/claude/TIER1-LAWS",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/RELEASE-PROCESS",
       "demos/autoinject"
     ],
     "difference": [
@@ -27723,13 +27727,15 @@
       "demos/site/overlays"
     ],
     "enough": [
-      "docs/AI"
+      "docs/AI",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "good": [
       "docs/AI",
       "docs/behaviors/bounce",
       "docs/behaviors/dl",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "reliable": [
       "docs/AI",
@@ -27862,6 +27868,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "demos/mdhtml-pre-debug",
       "demos/pre-debug"
     ],
@@ -28132,6 +28139,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/npx-commands",
+      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
     ],
     "summary": [
@@ -28260,6 +28268,33 @@
       "docs/behavior-cross-reference",
       "docs/claude/TIER3-REFERENCE",
       "docs/test-schema-standard"
+    ],
+    "fixed": [
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/BRANCH_PROTECTION",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/cluster",
+      "docs/behaviors/countdown",
+      "docs/behaviors/gallery",
+      "docs/behaviors/grid",
+      "docs/behaviors/ratio",
+      "docs/behaviors/reel",
+      "docs/behaviors/sidebarlayout",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/toast",
+      "docs/guides/create-a-website",
+      "docs/schema-test-value",
+      "docs/schema",
+      "docs/semantic-audit",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "demos/layout-test"
     ],
     "ci": [
       "docs/ANNOUNCE_TEST_POLICY",
@@ -28650,28 +28685,6 @@
       "docs/testing-strategy",
       "demos/site/content"
     ],
-    "date": [
-      "docs/BRANCH_PROTECTION",
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/audits/X-USAGE-AUDIT",
-      "docs/behaviors/card",
-      "docs/behaviors/cardfile",
-      "docs/behaviors/code",
-      "docs/behaviors/countdown",
-      "docs/behaviors/input",
-      "docs/behaviors/mark",
-      "docs/behaviors/relativetime",
-      "docs/behaviors/table",
-      "docs/behaviors/time",
-      "docs/compliance/iso-42001-alignment",
-      "docs/properties",
-      "docs/semantic-standard",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/autoinject"
-    ],
     "optional": [
       "docs/BRANCH_PROTECTION",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -28723,7 +28736,6 @@
       "docs/container-pattern",
       "docs/performance",
       "docs/schema.migration",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS"
     ],
     "owner": [
@@ -31400,7 +31412,6 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/inline-editing",
-      "docs/standards/RELEASE-PROCESS",
       "docs/test-schema-standard",
       "demos/site/forms",
       "demos/site/interactive"
@@ -31985,6 +31996,7 @@
       "docs/code-examples-standard",
       "docs/guides/create-a-website",
       "docs/linkedin-standards-article",
+      "docs/standards/RELEASE-PROCESS",
       "demos/landing-page-showcase",
       "demos/layout-test"
     ],
@@ -32840,7 +32852,6 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/standards/RELEASE-PROCESS",
       "demos/autoinject",
       "demos/charity-food",
       "demos/code",
@@ -32929,8 +32940,7 @@
       "docs/claude/README",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
-      "docs/inline-editing",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/inline-editing"
     ],
     "drawer": [
       "docs/NOTES-V3-GUIDE",
@@ -33009,6 +33019,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/schema",
       "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/wbservices"
     ],
@@ -34654,7 +34665,8 @@
     ],
     "cached": [
       "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/pce-candidates"
+      "docs/pce-candidates",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "others": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -35197,8 +35209,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/claude/TOOLING-INVENTORY",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "renaming": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -35320,15 +35331,6 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "demos/site/content"
-    ],
-    "created": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/behaviors/colorpicker",
-      "docs/behaviors/toast",
-      "docs/semantic-audit",
-      "docs/standards/ERROR-LOG-RETENTION"
     ],
     "02": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -35589,8 +35591,7 @@
     "consumed": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behaviors/stagelight",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/behaviors/stagelight"
     ],
     "scanner": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -36298,21 +36299,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-runbook"
     ],
-    "says": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/card",
-      "docs/behaviors/cardhorizontal",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/password",
-      "docs/claude/PAGE-GENERATION",
-      "docs/schema-test-value",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/testing-runbook"
-    ],
     "codebase": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/linkedin-framework-agnostic",
@@ -36446,21 +36432,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/claude/TIER3-REFERENCE",
       "docs/compliance/iso-42001-alignment"
-    ],
-    "doc": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/card",
-      "docs/claude/README",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/guides/search-index",
-      "docs/mcp",
-      "docs/schema-test-value",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/REPO-LAYOUT"
     ],
     "weekend": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -36620,6 +36591,17 @@
     "reframed": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
+    "lists": [
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors-reference",
+      "docs/behaviors/resizable",
+      "docs/behaviors/skeleton",
+      "docs/behaviors/ul",
+      "docs/performance",
+      "docs/property-viewer",
+      "docs/semantic-standard"
+    ],
     "unaffected": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/switcher"
@@ -36748,7 +36730,6 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/styles"
     ],
@@ -36978,8 +36959,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/demo",
       "docs/behaviors/pagination",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "around": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -37878,7 +37858,8 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/inline-editing",
-      "docs/standards/ERROR-LOG-RETENTION"
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "principle": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -38963,8 +38944,7 @@
       "docs/behaviors/cardlink",
       "docs/behaviors/cardvideo",
       "docs/behaviors/fill",
-      "docs/behaviors/sidebarlayout",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/behaviors/sidebarlayout"
     ],
     "injector": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
@@ -39550,7 +39530,8 @@
     "manually": [
       "docs/auto-injection",
       "docs/escape-hatches",
-      "docs/schema-first-audit-report"
+      "docs/schema-first-audit-report",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "adding": [
       "docs/auto-injection",
@@ -40851,7 +40832,8 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
-      "docs/semantic-standard"
+      "docs/semantic-standard",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "dismissibility": [
       "docs/behaviors/aside"
@@ -41419,8 +41401,7 @@
       "docs/behaviors/button",
       "docs/behaviors/cardlink",
       "docs/card",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "mouse": [
       "docs/behaviors/button",
@@ -41594,8 +41575,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardfile",
       "docs/linkedin-update-article",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "waterproof": [
       "docs/behaviors/card"
@@ -42011,7 +41991,8 @@
       "docs/behaviors/cardportfolio"
     ],
     "english": [
-      "docs/behaviors/cardportfolio"
+      "docs/behaviors/cardportfolio",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "spanish": [
       "docs/behaviors/cardportfolio"
@@ -43316,6 +43297,13 @@
     "filters": [
       "docs/behaviors/drawer",
       "docs/behaviors/table"
+    ],
+    "push": [
+      "docs/behaviors/drawer",
+      "docs/behaviors/fill",
+      "docs/guides/create-a-website",
+      "docs/standards/RELEASE-PROCESS",
+      "demos/site/overlays"
     ],
     "shrinks": [
       "docs/behaviors/drawerLayout",
@@ -47128,7 +47116,8 @@
       "docs/linkedin-update-article"
     ],
     "recreate": [
-      "docs/home-page"
+      "docs/home-page",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "375px": [
       "docs/home-page"
@@ -49182,29 +49171,15 @@
     "forwards": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "keyed": [
+    "3a": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "unreleased": [
+    "cites": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "folds": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "deployed": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "hunts": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "refs": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "anchors": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "noopene": [
-      "docs/standards/RELEASE-PROCESS"
+    "saw": [
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-strategy"
     ],
     "putting": [
       "docs/standards/REPO-LAYOUT"
@@ -49514,9 +49489,6 @@
       "docs/testing-strategy"
     ],
     "rootcause": [
-      "docs/testing-strategy"
-    ],
-    "saw": [
       "docs/testing-strategy"
     ],
     "affectedcomponents": [
