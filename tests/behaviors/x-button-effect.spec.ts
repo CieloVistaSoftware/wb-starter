@@ -68,14 +68,19 @@ test.describe('<button> size -- computed dimensions actually differ', () => {
       <button id="s-xs" variant="primary" size="xs">XS</button>
       <button id="s-xl" variant="primary" size="xl">XL</button>
     `);
-    const xs = await page.locator('#s-xs').evaluate(el => {
+    // #1468: measured once, 400ms after the scan, both buttons once read the
+    // same unstyled 16px -- the button behavior had not applied its size
+    // class yet. Wait for both to be applied, then poll the measurement.
+    await expect(page.locator('#s-xs')).toHaveAttribute('x-ready', '');
+    await expect(page.locator('#s-xl')).toHaveAttribute('x-ready', '');
+    const measure = (id: string) => page.locator(id).evaluate(el => {
       const cs = getComputedStyle(el);
       return { fontSize: parseFloat(cs.fontSize), height: el.getBoundingClientRect().height };
     });
-    const xl = await page.locator('#s-xl').evaluate(el => {
-      const cs = getComputedStyle(el);
-      return { fontSize: parseFloat(cs.fontSize), height: el.getBoundingClientRect().height };
-    });
+    await expect.poll(async () => (await measure('#s-xl')).fontSize - (await measure('#s-xs')).fontSize,
+      { message: 'size="xl" must have a larger font than size="xs"' }).toBeGreaterThan(0);
+    const xs = await measure('#s-xs');
+    const xl = await measure('#s-xl');
     expect(xl.fontSize).toBeGreaterThan(xs.fontSize);
     expect(xl.height).toBeGreaterThan(xs.height);
   });
