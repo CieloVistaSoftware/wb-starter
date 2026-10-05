@@ -14,6 +14,13 @@
  * The last test holds a gap found on the way: `unrecorded-test` was returned by
  * assess() but missing from STATES, so its counter read NaN and the summary
  * never printed it.
+ *
+ * See it by hand: Run `npx playwright test
+ * tests/regression/issue-state-credits-only-a-spec-that-names-the-issue.spec.ts
+ * --project=regression`. Before: a spec that never mentions #N still counted
+ * as N's test, and the unrecorded-test state was missing from STATES (its
+ * counter read NaN). Now: such an issue reads test-unrelated, and all 5 tests
+ * pass.
  */
 import { test, expect } from '../fixtures/offline';
 import { readFileSync } from 'fs';
