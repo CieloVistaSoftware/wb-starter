@@ -1607,9 +1607,17 @@ app.post("/api/rename-page", (req, res) => {
 app.use((req, res, next) => {
   const ext = path.extname(req.path).toLowerCase();
 
-  // Allow .json files from /src/wb-models/ to be served
+  // Allow .json files from /src/wb-models/ to be served.
+  //
+  // A missing one is an ordinary 404, not an error: teach-by-example.js asks
+  // for `<behavior>.schema.json` to learn whether a behavior HAS a schema, and
+  // desclist, empty and json do not. Handing a missing path to sendFile sent
+  // ENOENT to Express's default error handler, which printed a stack trace on
+  // every such request and put the server's own file path in the response.
   if (ext === '.json' && req.path.startsWith('/src/wb-models/')) {
-    return res.sendFile(path.join(rootDir, req.path));
+    const filePath = path.join(rootDir, req.path);
+    if (fs.existsSync(filePath)) return res.sendFile(filePath);
+    return res.status(404).send(`File not found: ${req.path}`);
   }
 
   // Explicit .html file requests must point at a real file. Falling back to the
