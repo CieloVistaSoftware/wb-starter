@@ -6,6 +6,98 @@
   ],
   "releases": [
     {
+      "version": "1.0.259",
+      "date": "2026-10-04",
+      "summary": "Test: wait for the drawer to open, not 300ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1510\" target=\"_blank\" rel=\"noopener\">PR 1510</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1493\" target=\"_blank\" rel=\"noopener\">#1493</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Wait for the drawer to open instead of sleeping 300ms</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1493\" target=\"_blank\" rel=\"noopener\">#1493</a>",
+          "issues": [
+            1493
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.258",
+      "date": "2026-10-04",
+      "summary": "Fix: re-scroll until the notification card is built, and prove it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1509\" target=\"_blank\" rel=\"noopener\">PR 1509</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1319\" target=\"_blank\" rel=\"noopener\">#1319</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Re-scroll until the notification card is built, and prove it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1319\" target=\"_blank\" rel=\"noopener\">#1319</a>",
+          "issues": [
+            1319
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.257",
+      "date": "2026-10-04",
+      "summary": "Ask every run whether the site shell mounted twice — it does not reproduce (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1505\" target=\"_blank\" rel=\"noopener\">PR 1505</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1340\" target=\"_blank\" rel=\"noopener\">#1340</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Cover the duplicate that actually happened 44 times</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1340\" target=\"_blank\" rel=\"noopener\">#1340</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1507\" target=\"_blank\" rel=\"noopener\">#1507</a>",
+          "issues": [
+            1340,
+            1507
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Ask every run whether the site shell mounted twice</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1340\" target=\"_blank\" rel=\"noopener\">#1340</a>",
+          "issues": [
+            1340
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.256",
+      "date": "2026-10-04",
+      "summary": "Test: build the Studio EQ demo explicitly (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1508\" target=\"_blank\" rel=\"noopener\">PR 1508</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1499\" target=\"_blank\" rel=\"noopener\">#1499</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Build the Studio EQ demo with WB.scan, not scroll-and-hope</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1499\" target=\"_blank\" rel=\"noopener\">#1499</a>",
+          "issues": [
+            1499
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.255",
+      "date": "2026-10-04",
+      "summary": "Docs(_today): PR is merged (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1506\" target=\"_blank\" rel=\"noopener\">PR 1506</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1324\" target=\"_blank\" rel=\"noopener\">#1324</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>PR is merged</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1324\" target=\"_blank\" rel=\"noopener\">#1324</a>",
+          "issues": [
+            1324
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.254",
+      "date": "2026-10-04",
+      "summary": "Chore: delete data/templates.json (its reader, the Builder, is gone) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1504\" target=\"_blank\" rel=\"noopener\">PR 1504</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1447\" target=\"_blank\" rel=\"noopener\">#1447</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delete data/templates.json -- its reader, the Builder, is gone</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1447\" target=\"_blank\" rel=\"noopener\">#1447</a>",
+          "issues": [
+            1447
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.253",
       "date": "2026-10-04",
       "summary": "Fix: cardproduct compact is actually compact (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1500\" target=\"_blank\" rel=\"noopener\">PR 1500</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1465\" target=\"_blank\" rel=\"noopener\">#1465</a>",

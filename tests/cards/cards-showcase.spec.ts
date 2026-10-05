@@ -515,11 +515,122 @@ test.describe('Cards Showcase Page', () => {
       const variants = ['info', 'success', 'warning', 'error'];
 
       for (const variant of variants) {
-        await visitAll(page.locator(`[x-cardnotification][variant="${variant}"]`), 1);
+        // #1319: buildInView, NOT visitAll(..., 1).
+        //
+        // visitAll scrolls ONCE and then the assertion waits passively. On this
+        // ~39,000px page the layout keeps settling while it loads, so a scroll
+        // can land and a reflow can then push the card back outside the lazy
+        // observer's 1200px build margin (#491) before the observer looks.
+        // Nothing scrolls to it again, so it is never built and the 15s wait
+        // ends on a count of 0 -- the CI failure in #1319, on a pull request
+        // that touched only a compliance spec.
+        //
+        // buildInView re-scrolls EVERY FRAME until the host is x-ready, so a
+        // reflow cannot strand it. Same mirror-image fix as #1304, which made
+        // a click wait for readiness instead of assuming it.
+        await buildInView(page.locator(`[x-cardnotification][variant="${variant}"]`));
         const card = page.locator(`.x-notification[x-cardnotification][variant="${variant}"]`);
         await expect(card, `variant="${variant}" should be demonstrated`).not.toHaveCount(0);
         await expect(card.first()).toBeVisible();
       }
+    });
+
+    /**
+     * #1319 REGRESSION GUARD -- do not simplify this to one scroll.
+     *
+     * Reproduces the CI failure deterministically instead of waiting for it to
+     * recur under load. A rAF loop strands the card: the moment it comes within
+     * the lazy observer's 1200px build margin it grows a tall spacer above it,
+     * so the observer samples it already out of range and never builds it.
+     *
+     * The ordering is specified, not lucky: "update the rendering" runs the
+     * animation frame callbacks BEFORE "update intersection observations", so a
+     * mutation made in a rAF callback is what the observer sees that frame.
+     *
+     * It strands STRANDS times and then stops. One scroll followed by a passive
+     * wait is therefore permanently stranded (the old form, seen red: `18 x
+     * locator resolved to 0 elements`, the same signature as CI run
+     * 37143165831); a visit that re-scrolls every frame outlives the strands
+     * and builds the card.
+     *
+     * `overflow-anchor: none` is load-bearing. Chrome's scroll anchoring
+     * compensates the scroll offset when content above the viewport grows, so
+     * the card does not actually move and the reflow is a no-op -- which is why
+     * the reproduction attempt recorded on #1319 ("a 30,000px spacer prepended
+     * synchronously inside the first scroll event: 62 passed") concluded the
+     * mechanism was not real. It is; anchoring was hiding it.
+     *
+     * The two assertions at the end are load-bearing too: without them this
+     * guard could pass having never stranded anything, which is the
+     * stops-checking-but-still-reports-success failure mode.
+     */
+    test('notification variant is built even when a reflow strands it after the scroll', async ({ page }) => {
+      const authored = page.locator('[x-cardnotification][variant="info"]').first();
+      await authored.waitFor({ state: 'attached' });
+      await expect(authored, 'the card must start unbuilt for this guard to mean anything')
+        .not.toHaveAttribute('x-ready', '', { timeout: 1000 });
+
+      // Two strands of 10,000px, not three of 40,000px: 10,000px is already
+      // eight times the observer's 1200px margin, and the cheapest document
+      // that still proves the point is the one to build. The first version grew
+      // this page to ~160,000px and read layout every frame for the whole test,
+      // and the next test's page.goto() timed out behind it.
+      const STRANDS = 2;
+      const STRAND_PX = 10000;
+      await authored.evaluate((el, { strands, strandPx }) => {
+        const w = window as unknown as { __wb1319?: number[] };
+        w.__wb1319 = [];
+
+        // Scroll anchoring OFF. Chrome compensates the scroll offset when
+        // content above the viewport grows, which keeps the card exactly where
+        // it was and un-strands it -- measured: the first attempt at this guard
+        // passed with the old one-scroll form for precisely that reason.
+        document.documentElement.style.overflowAnchor = 'none';
+
+        const spacer = document.createElement('div');
+        spacer.id = 'wb-1319-strand';
+        spacer.style.cssText = 'display:block;width:100%;height:0;overflow-anchor:none';
+        let root: Element = el;
+        while (root.parentElement && root.parentElement !== document.body) root = root.parentElement;
+        root.parentElement?.insertBefore(spacer, root);
+
+        let used = 0;
+        const tick = () => {
+          // Stops as soon as the strands are spent (or the card builds): after
+          // that this loop has nothing left to do, and a per-frame layout read
+          // on a page this tall is not free.
+          if (used >= strands || el.hasAttribute('x-ready')) return;
+          const r = el.getBoundingClientRect();
+          const near = r.top < window.innerHeight + 1300 && r.bottom > -1300;
+          if (near) {
+            used += 1;
+            spacer.style.height = `${used * strandPx}px`;
+            // Record where the card ended up, so the test can prove the strand
+            // really pushed it outside the 1200px build margin.
+            w.__wb1319!.push(el.getBoundingClientRect().top - window.innerHeight);
+          }
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }, { strands: STRANDS, strandPx: STRAND_PX });
+
+      await buildInView(authored);
+
+      const card = page.locator('.x-notification[x-cardnotification][variant="info"]');
+      await expect(card, 'the stranded card must still end up built').not.toHaveCount(0);
+
+      // GUARD INTEGRITY: prove the strand really happened and really put the
+      // card outside the lazy observer's 1200px build margin. Without this the
+      // test could pass having stranded nothing -- the
+      // stops-checking-but-still-reports-success failure mode.
+      const strandDistances: number[] = await page.evaluate(
+        () => (window as unknown as { __wb1319?: number[] }).__wb1319 ?? []
+      );
+      expect(strandDistances.length, 'the stranding reflow never fired').toBeGreaterThan(0);
+      expect(
+        Math.max(...strandDistances),
+        `the strand never left the build margin (distances below the fold: ${strandDistances.join(', ')})`
+      ).toBeGreaterThan(1200);
     });
 
     test('notification card has role alert', async ({ page }) => {

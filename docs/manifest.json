@@ -1447,12 +1447,6 @@
           "modified": "2026-08-26"
         },
         {
-          "file": "templates.md",
-          "title": "Templates",
-          "description": "Documentation for Templates",
-          "modified": "2026-08-26"
-        },
-        {
           "file": "schema-first-architecture.md",
           "title": "Schema-first-architecture",
           "description": "Documentation for Schema-first-architecture",
@@ -1546,7 +1540,7 @@
           "file": "claude/TIER3-REFERENCE.md",
           "title": "Tier 3 Reference",
           "description": "Tier 3 reference documentation",
-          "modified": "2026-09-29"
+          "modified": "2026-10-04"
         },
         {
           "file": "container-pattern.md",
