@@ -17,8 +17,10 @@
  *     (scripts/lib/push-count.mjs -- pushes, not commits);
  *   - its summary says what the issue was: the commit's `Summary:` line, else
  *     the title of the issue it cites, else the merge's PR title (#1533);
- *   - its `seeIt` says what to do to see the change: the commit's `See it:`
- *     line, else "No visible change" for a version of only tests/tooling;
+ *   - its `seeIt` says how to recreate the change by hand -- what to do, what
+ *     you saw Before, what you see Now: data/release-see-it.json for that
+ *     version, else the commit's `See it:` line when seeItProblems() passes it
+ *     (#1533). Kept entries (history, tags) take their steps from the file too;
  *   - its items are the non-merge commits it brought, linked to their issues
  *     (scripts/lib/release-item.mjs).
  *
@@ -32,7 +34,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { esc, issueLinks, itemFor, releaseNotes, noVisibleChange } from './lib/release-item.mjs';
+import { esc, issueLinks, itemFor, releaseNotes, seeItProblems } from './lib/release-item.mjs';
 import { issueTitles } from './lib/issue-titles.mjs';
 import { ANCHOR, STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
 import { releaseDate } from './lib/release-date.mjs';
@@ -40,6 +42,10 @@ import { releaseDate } from './lib/release-date.mjs';
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data', 'releases.json');
 const CHECK_ONLY = process.argv.includes('--check');
+// How to recreate each version by hand, written from its issue's own body (#1533).
+const STEPS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'release-see-it.json'), 'utf8'));
+/** A steps line as HTML: escaped, `code` spans kept as code (commands, file names). */
+const stepsHtml = (text) => esc(text.charAt(0).toUpperCase() + text.slice(1)).replace(/`([^`]+)`/g, '<code>$1</code>');
 // --check reads the cached titles only, so it is repeatable offline.
 const TITLES = issueTitles(ROOT, { refresh: !CHECK_ONLY });
 
@@ -96,7 +102,6 @@ spine.forEach((c, i) => {
   const items = [];
   const titles = [];
   const seen = new Set();
-  const subjects = [];
   const bodies = [];
   let notes = { summary: null, seeIt: null };
   for (const p of pending) {
@@ -112,7 +117,6 @@ spine.forEach((c, i) => {
     for (const b of brought) {
       if (STAMP.test(b.subject) || seen.has(b.subject)) continue;
       seen.add(b.subject);
-      subjects.push(b.subject);
       bodies.push(b.body);
       const theirs = releaseNotes(b.body);
       notes = { summary: notes.summary || theirs.summary, seeIt: notes.seeIt || theirs.seeIt };
@@ -144,9 +148,11 @@ spine.forEach((c, i) => {
       return `${esc(upper(text))} (${prLink(t.pr)})${own.length ? ' ' + issueLinks(own) : ''}`;
     }).join(' · ');
   }
-  const seeIt = notes.seeIt ? esc(upper(notes.seeIt)) : noVisibleChange(subjects);
-  const entry = { version: versionOf(count), date: releaseDate(last.date), summary, items };
-  if (seeIt) entry.seeIt = seeIt;
+  const version = versionOf(count);
+  const own = notes.seeIt && !seeItProblems(notes.seeIt, notes.summary).length ? notes.seeIt : null;
+  const steps = STEPS[version] || own;
+  const entry = { version, date: releaseDate(last.date), summary, items };
+  if (steps) entry.seeIt = stepsHtml(steps);
   entries.push(entry);
 });
 
@@ -180,7 +186,10 @@ if (CHECK_ONLY) {
 const data = JSON.parse(fs.readFileSync(DATA, 'utf8'));
 const generated = new RegExp(`^${maj}\\.${min}\\.(\\d+)$`);
 const isGenerated = (v) => { const m = String(v).match(generated); return !!m && Number(m[1]) > pat; };
-const kept = data.releases.filter((r) => !isGenerated(r.version));
+const kept = data.releases.filter((r) => !isGenerated(r.version)).map((r) => {
+  const steps = STEPS[r.version];
+  return steps ? { ...r, seeIt: stepsHtml(steps) } : r;
+});
 data.releases = [...entries, ...kept];
 fs.writeFileSync(DATA, JSON.stringify(data, null, 2) + '\n');
 console.log(`[release-versions] wrote ${entries.length} version(s) since ${start.release}; newest ${entries[0] ? entries[0].version : '(none)'}`);

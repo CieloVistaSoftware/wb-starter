@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { releaseNotes, noVisibleChange } from '../../scripts/lib/release-item.mjs';
+import { releaseNotes, seeItProblems } from '../../scripts/lib/release-item.mjs';
 import { checkReleaseNotes } from '../../scripts/check-release-notes.mjs';
 
 /**
@@ -13,8 +13,14 @@ import { checkReleaseNotes } from '../../scripts/check-release-notes.mjs';
  * Every version printed its PR title and then the same sentence again as its
  * only item (62 of 202 on 2026-10-05). Now each version leads with what the
  * issue was (the commit's `Summary:` line, else the cited issue's title) and
- * what to do to see the change (`See it:`, else "No visible change" for a
- * version of tests and tooling). A PR check requires the two lines.
+ * how to recreate the change by hand (`See it:`). A PR check requires the two
+ * lines.
+ *
+ * John, the same day, on 1.0.262 and 1.0.261: "still not good enough, tell the
+ * user what to do to manually recreate this" -- and "I don't do anything
+ * manually that's your job". Every version, old ones included, now says what
+ * to do, what you saw Before and what you see Now (data/release-see-it.json,
+ * written from each issue's body). "No visible change" is refused.
  */
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'releases.json'), 'utf8'));
@@ -27,17 +33,44 @@ test('a commit message carries the two release lines', () => {
   expect(releaseNotes('fix: x\n\nNo lines here.')).toEqual({ summary: null, seeIt: null });
 });
 
-test('a version of only tests and tooling says there is nothing to see', () => {
-  expect(noVisibleChange(['test: a', 'test(x): b'])).toBe('No visible change: this version only changes the tests.');
-  expect(noVisibleChange(['test: a', 'ci: b'])).toMatch(/^No visible change/);
-  expect(noVisibleChange(['test: a', 'fix: b'])).toBeNull();
-  expect(noVisibleChange(['Issues page: a tab'])).toBeNull();
+test('a See it line says what to do, what you saw before and what you see now', () => {
+  const good = 'Run `npx playwright test tests/x.spec.ts`. Before: xs and xl both read 16px. Now: xs is 12px, xl 20px.';
+  expect(seeItProblems(good)).toEqual([]);
+  expect(seeItProblems('Open Search and type "dialog". Before: 112 dead hits. Now: every result opens a page.')).toEqual([]);
+  // A short lead-in may set the scene before the step.
+  expect(seeItProblems('In a worktree without node_modules, run `npm test`. Before: it failed. Now: it runs.')).toEqual([]);
+  // The lines John rejected.
+  expect(seeItProblems('No visible change: this version only changes the tests.').join()).toMatch(/No visible change/);
+  expect(seeItProblems('Behaviors page looks right now.').join()).toMatch(/what to do/);
+  expect(seeItProblems('Open the Error Log: one row, count 2.').join()).toMatch(/Before:/);
+  expect(seeItProblems('Open it. Before: a. Now: b.', 'Open it. Before: a. Now: b.').join()).toMatch(/repeats the Summary/);
+  expect(seeItProblems(null).join()).toMatch(/no See it/);
 });
 
-test('the PR check wants both lines, in one commit', () => {
-  expect(checkReleaseNotes(['feat: x\n\nSummary: a\nSee it: b']).ok).toBe(true);
-  expect(checkReleaseNotes(['feat: x\n\nSummary: a', 'test: y\n\nSee it: b']).ok).toBe(false);
+test('the PR check wants both lines in one commit, and a See it line that can be followed', () => {
+  const steps = 'Open Releases. Before: each version repeated its title. Now: each says how to see it.';
+  expect(checkReleaseNotes([`feat: x\n\nSummary: a\nSee it: ${steps}`]).ok).toBe(true);
+  expect(checkReleaseNotes(['feat: x\n\nSummary: a', `test: y\n\nSee it: ${steps}`]).ok).toBe(false);
   expect(checkReleaseNotes(['feat: x']).ok).toBe(false);
+  const vague = checkReleaseNotes(['test: x\n\nSummary: a\nSee it: No visible change: tests only.']);
+  expect(vague.ok).toBe(false);
+  expect(vague.problems.join()).toMatch(/No visible change/);
+});
+
+test('every version, old ones included, says how to recreate it by hand', () => {
+  const bad = data.releases
+    .map((r: { version: string, summary: string, seeIt?: string }) => ({ v: r.version, p: seeItProblems(r.seeIt ? text(r.seeIt) : null, text(r.summary)) }))
+    .filter((r: { p: string[] }) => r.p.length)
+    .map((r: { v: string, p: string[] }) => `${r.v}: ${r.p.join('; ')}`);
+  expect(bad, 'versions whose See it line cannot be followed').toEqual([]);
+});
+
+test('the two versions John pointed at are no longer generic', () => {
+  for (const version of ['1.0.262', '1.0.261']) {
+    const v = data.releases.find((r: { version: string }) => r.version === version);
+    expect(v?.seeIt, `${version} has a See it line`).toBeTruthy();
+    expect(text(v.seeIt)).not.toMatch(/No visible change/);
+  }
 });
 
 test('a version that cites an issue leads with what the issue was, not its PR title again', () => {
@@ -46,7 +79,7 @@ test('a version that cites an issue leads with what the issue was, not its PR ti
   expect(v, '1.0.271 is listed').toBeTruthy();
   expect(text(v.summary)).toContain(titles['1522']);
   expect(text(v.summary)).not.toContain('reads the markup stored in config/*.json (PR');
-  expect(v.seeIt).toBe('No visible change: this version only changes the tests.');
+  expect(seeItProblems(text(v.seeIt))).toEqual([]);
 });
 
 test('no generated version repeats its summary as its only item any more', () => {

@@ -13,6 +13,18 @@
 
 ---
 
+**Updated 2026-10-05 (later).** See it = steps to recreate (#1533).
+
+**Task:** John, on 1.0.262 and 1.0.261: "still not good enough, tell the user what to do to manually recreate this", and "I don't do anything manually that's your job".
+
+**Files touched:** `data/release-see-it.json` (new: steps for all 241 versions, written from each issue's body), `data/releases.json`, `scripts/lib/release-item.mjs` (`seeItProblems()` replaces `noVisibleChange()`), `scripts/release-versions.mjs`, `scripts/check-release-notes.mjs`, `docs/standards/RELEASE-PROCESS.md` (§3a), `.claude/CLAUDE.md`, `tests/regression/release-lines.spec.ts`.
+
+**Last action:** every version's See it line says what to do, then `Before:` and `Now:`. A test-only change names the command and what it printed. The PR check refuses "No visible change", a line with no action or no Before/Now, and one that repeats the Summary.
+
+**Next step:** a version stamped after this one takes its steps from its commit's `See it:` line; add a `data/release-see-it.json` entry to correct one.
+
+---
+
 **Updated 2026-10-05.** Releases page and session rules (#1533, #1534), and `npm run make-video` (#1535, PR #1532).
 
 **Task:** John on the Releases page: "This page tells me nothing. one of these lines should be a summary of the issue, the other what to do to see the change", plus "change the text … to indicate that each commit is a new release" and "don't leave artifacts on my computer".

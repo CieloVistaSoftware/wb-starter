@@ -131,12 +131,15 @@ commit message. Put both in a commit of every PR:
 
 ```
 Summary: <what was wrong or missing, in plain English>
-See it: <what to do on the site to see the change>
+See it: <what to do>. Before: <what you saw>. Now: <what you see>.
 ```
 
-A change nobody can see says so: `See it: No visible change: tests only.` The
-"PR says what the issue was and how to see the change" check fails a PR without
-them. See `docs/standards/RELEASE-PROCESS.md` §3a.
+The See it line lets a reader recreate the change by hand (John: "tell the user
+what to do to manually recreate this ... I don't do anything manually that's your
+job"). A test-only change names the command and what it printed before and after;
+"No visible change" is refused. The "PR says what the issue was and how to see the
+change" check fails a PR without them, or whose See it line has no action, no
+`Before:`/`Now:`, or repeats the Summary. See `docs/standards/RELEASE-PROCESS.md` §3a.
 
 ## Worktrees — leave nothing on John's machine
 

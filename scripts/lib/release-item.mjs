@@ -58,23 +58,33 @@ export function releaseNotes(message = '') {
   return { summary: line('Summary'), seeIt: line('See it') };
 }
 
-/** Commit types that change nothing a visitor of the site can see. */
-const INVISIBLE = {
-  test: 'this version only changes the tests',
-  ci: 'this version only changes the CI workflows',
-  chore: 'this version only changes project tooling',
-  build: 'this version only changes the build tooling',
-  refactor: 'the code was reorganised; the site behaves the same',
-  style: 'this version only changes code formatting',
-};
+/** The verbs a "See it" line starts with: it is something the reader does. */
+const ACTION = /^(open|run|type|click|go to|reload|resize|search|load|drag|press|hover|visit|scroll|select|navigate|start|toggle|switch|tab|view|read|check|compare|watch|push|merge|make|commit|edit|create|set|add|remove|delete|install|build|call|paste|copy|drop|fill|submit|turn|enable|disable|put|place|look at|file|stage|label|reproduce|serve|use|try)\b/i;
+/** A lead-in that sets the scene before the step: "In a worktree without node_modules, run …". */
+const LEAD_IN = /^(in|on|at|after|with|from|using|when|without|before running)\b[^,]*,\s*/i;
 
 /**
- * "No visible change: …" when every subject is an invisible type, else null:
- * a release made only of tests still answers "how do I see it?".
+ * What is wrong with a "See it" line, or [] when it is good enough (#1533).
+ *
+ * John, 2026-10-05, on the first version of these lines: "still not good
+ * enough, tell the user what to do to manually recreate this" -- and "I don't
+ * do anything manually that's your job". A reader recreates the change by
+ * hand: where to go, what to do, what they saw Before and what they see Now.
+ * "No visible change" is never enough; a test-only change names the command
+ * to run and what it printed before and after.
+ *
+ * @param {string|null} seeIt
+ * @param {string|null} [summary]
+ * @returns {string[]}
  */
-export function noVisibleChange(subjects) {
-  const types = subjects.map((s) => (String(s).match(/^([a-z]+)(\([^)]*\))?!?:/) || [])[1]);
-  if (!types.length || types.some((t) => !t || !INVISIBLE[t])) return null;
-  const kinds = [...new Set(types)];
-  return `No visible change: ${kinds.length === 1 ? INVISIBLE[kinds[0]] : 'this version only changes tests and tooling'}.`;
+export function seeItProblems(seeIt, summary = null) {
+  const text = String(seeIt || '').replace(/<[^>]+>/g, '').trim();
+  if (!text) return ['there is no See it line'];
+  const problems = [];
+  if (/^no visible change/i.test(text)) problems.push('it says "No visible change" instead of how to recreate the change');
+  else if (!ACTION.test(text.replace(LEAD_IN, ''))) problems.push('it does not start with what to do (Open, Run, Type, Click, …)');
+  if (!/\bBefore:/.test(text) || !/\bNow:/.test(text)) problems.push('it does not say what you saw "Before:" and what you see "Now:"');
+  const plain = (s) => String(s || '').replace(/<[^>]+>/g, '').replace(/[^a-z0-9]+/gi, ' ').trim().toLowerCase();
+  if (summary && plain(text) === plain(summary)) problems.push('it repeats the Summary');
+  return problems;
 }
