@@ -350,6 +350,22 @@ x-spinner div,
   align-items: center;
 }
 
+/* #795: the header mark. It used to be a 1024x1024, 1,577,322-byte PNG painted
+   at 32 CSS pixels -- ~1.5 MB fetched on every page load, ~4 MB decoded, and
+   the heaviest asset on the page, which is why it was also the first thing to
+   lose a race and land in the error log as "failed to load after 5 attempts".
+   It is now an inline SVG: nothing is fetched at all, it is sharp at any DPR,
+   and `currentColor` means the theme supplies the colour instead of a baked-in
+   bitmap. The size that used to live in a style="" attribute inside
+   config/site.json -- a place no gate could see -- lives here. The <svg>
+   carries width/height="32" as well, so the header reserves the box before
+   CSS arrives and nothing shifts. */
+.header__logo-mark {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
 .header__logo:hover {
   color: var(--primary);
 }

@@ -486,8 +486,28 @@ first word of the info string, so `html static` would arrive as `html` and run.
   not. That is the whole lesson of #1115: rewrite the rule or the defect comes back.
 - Never invent a local path unless the file is actually committed to the repo at that exact path — verify
   with a file-existence check, not by eye.
+- **SITE CHROME IS NOT SAMPLE MEDIA, AND IT IS NOT AN EXCUSE EITHER (#795).** The
+  rules above are about the media an *example* shows. The header logo, the favicon
+  and any other mark the site wears are not examples, so "point it at Wikimedia" is
+  the wrong answer — a brand mark is not a stock photo, and
+  `tests/compliance/no-external-requests.spec.ts` requires the site to render with
+  nothing escaping to the internet. Neither is "commit a smaller PNG": that is still
+  a local image. **A mark is vector, and it is INLINE** — an `<svg>` in the markup or
+  in the config string, coloured with `currentColor` so the theme supplies the value.
+  Inline means zero bytes over the wire and no second request to lose a race.
+  The header logo was a 1,577,322-byte 1024x1024 PNG painted at 32 CSS pixels for
+  months, because this section only ever spoke about examples and nobody read it as
+  covering the header.
+- **Size the mark in CSS, never in a `style=""` attribute** — and be aware that an
+  HTML fragment living inside `config/*.json` is invisible to
+  `tests/regression/no-inline-styles.spec.ts`, which scans `.js`/`.mjs`/`.html`. That
+  is where #795's sizing hid. Give the mark a class and a stylesheet rule, and give
+  the element `width`/`height` attributes so the header reserves its box and nothing
+  shifts when the mark lands.
 - Test: `tests/compliance/docs-live-media-assets-exist.spec.ts` (markdown docs),
-  `tests/compliance/x-audio-has-resolvable-src.spec.ts` (audio specifically, all `.html`/`.md`).
+  `tests/compliance/x-audio-has-resolvable-src.spec.ts` (audio specifically, all `.html`/`.md`),
+  `tests/regression/header-logo-is-not-a-megabyte.spec.ts` (#795 — a 100 KB ceiling on
+  every image the site serves, asserted in bytes and reported in bytes).
 
 ## 30. Broken media must throw + log — never fail silently
 

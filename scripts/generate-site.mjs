@@ -67,7 +67,10 @@ function loadJSON(path) {
  */
 const URL_VALUED_PROPS = /^(image|background|src|avatar|poster|thumbnail|cover)$/i;
 const PLACEHOLDER_IMAGE = '/images/dachshund-puppy-image-960x540.jpg';
-const PLACEHOLDER_LOGO = '/images/wb.png';
+// #795: was '/images/wb.png' -- a 1.5 MB 1024x1024 bitmap, pulled in by every
+// generated demo page that documents a `logo` prop, to draw a mark a few dozen
+// pixels tall. The site's own icon is a 166-byte vector and is already served.
+const PLACEHOLDER_LOGO = '/assets/icons/favicon.svg';
 
 function samplePropValue(propName, propDef) {
   if (propDef && propDef.default) return propDef.default;
