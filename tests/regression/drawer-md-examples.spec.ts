@@ -132,8 +132,14 @@ test.describe('drawer.md: "JavaScript API" snippet -- programmatic drawer() call
       document.body.appendChild(button);
       mod.drawer(button, { title: 'My Drawer', content: 'Content here', position: 'left' });
       button.click();
-      await new Promise((r) => setTimeout(r, 300));
-      const panel = document.querySelector('.x-drawer__panel--open');
+      // #1493: the panel gets x-drawer__panel--open inside requestAnimationFrame
+      // (overlay.js show()). A fixed 300ms sleep lost that race on a busy CI
+      // runner, where frames come late; wait for the panel itself (5s cap).
+      const deadline = performance.now() + 5000;
+      let panel: Element | null = null;
+      while (!(panel = document.querySelector('.x-drawer__panel--open')) && performance.now() < deadline) {
+        await new Promise((r) => setTimeout(r, 25));
+      }
       return {
         panelFound: !!panel,
         text: panel ? panel.textContent : null,
