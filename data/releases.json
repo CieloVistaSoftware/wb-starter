@@ -8,7 +8,7 @@
     {
       "version": "1.0.275",
       "date": "2026-10-05",
-      "summary": "Fix(input): iconPosition reaches the div builder, and a position with no icon is an error (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1539\" target=\"_blank\" rel=\"noopener\">PR 1539</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
+      "summary": "The generated iconPosition demos on demos/site/forms.html had no icon, so they showed nothing; with #793&#39;s new runtime error they now also failed the error-log compliance check (4 entries from that page). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1539\" target=\"_blank\" rel=\"noopener\">PR 1539</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
       "items": [
         {
           "kind": "fixed",
@@ -24,12 +24,13 @@
             793
           ]
         }
-      ]
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick input and choose iconPosition=end. Before: no icon appeared, and an input with iconPosition but no icon rendered nothing and reported nothing. Now: the icon sits after the field, and an input with iconPosition and no icon carries x-error=&quot;icon-position-without-icon&quot; and shows in the Error Log."
     },
     {
       "version": "1.0.274",
       "date": "2026-10-05",
-      "summary": "Fix(button): icon layout reaches every button, not only an &lt;x-button&gt; tag (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1548\" target=\"_blank\" rel=\"noopener\">PR 1548</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/741\" target=\"_blank\" rel=\"noopener\">#741</a>",
+      "summary": "The button icon&#39;s layout rules were written for the x-button TAG, so on &lt;div x-button&gt; and native &lt;button&gt; (the forms everyone writes) the icon span was display:block and was not centred with the label. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1548\" target=\"_blank\" rel=\"noopener\">PR 1548</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/741\" target=\"_blank\" rel=\"noopener\">#741</a>",
       "items": [
         {
           "kind": "fixed",
@@ -38,12 +39,13 @@
             741
           ]
         }
-      ]
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick button and open an icon example such as <code>&lt;button x-button variant=&quot;secondary&quot; icon=&quot;download&quot;&gt;</code>. Before: that native button got no class, no variant, no size and no icon, and the icon span sat 16x21 above the label. Now: it renders the download icon centred beside the label with the secondary style."
     },
     {
       "version": "1.0.273",
       "date": "2026-10-05",
-      "summary": "Fix: camelCase options build like dashed ones; the audit sees readAttr (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1537\" target=\"_blank\" rel=\"noopener\">PR 1537</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a>",
+      "summary": "the Behaviors page teaches the dashed attribute spelling for every behavior (same cause as #1344) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1537\" target=\"_blank\" rel=\"noopener\">PR 1537</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a>",
       "items": [
         {
           "kind": "fixed",
@@ -52,7 +54,8 @@
             1526
           ]
         }
-      ]
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick dialog and read the code for the showClose option. Before: the page taught the dashed <code>show-close</code>, though the schema declares <code>showClose</code>, for every multi-word option of every behavior. Now: the code shows <code>showClose</code>, the schema spelling, and the dashed form still works."
     },
     {
       "version": "1.0.272",
