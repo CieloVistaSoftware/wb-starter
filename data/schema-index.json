@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T19:42:06.759Z",
+  "generatedAt": "2026-10-05T22:54:01.212Z",
   "count": 160,
   "schemas": [
     {
@@ -2263,7 +2263,7 @@
         },
         "closeOnBackdrop": {
           "type": "boolean",
-          "description": "Close on backdrop click",
+          "description": "Close when the user clicks outside the dialog. The backdrop is the dimmed area the browser paints over the rest of the page while a modal is open (::backdrop); clicking it dismisses the dialog. Set closeOnBackdrop=\"false\" to require a deliberate close.",
           "default": true,
           "visual": false,
           "visualReason": "Whether a click on the backdrop closes the dialog. Only that click shows it (#773)."
@@ -3335,7 +3335,7 @@
       "file": "glow.schema.json",
       "name": "glow",
       "title": "Glow",
-      "description": "x-glow gives the element a pulsing halo in color, which defaults to the theme's primary colour.",
+      "description": "x-glow gives the element a halo in color, which defaults to the theme's primary colour: a pulsing ring around the box, or with target=\"text\" a steady glow around the letters.",
       "tag": "x-glow",
       "baseClass": "x-glow",
       "properties": {
@@ -3350,6 +3350,15 @@
             "#06b6d4",
             "#ec4899"
           ]
+        },
+        "target": {
+          "type": "string",
+          "enum": [
+            "box",
+            "text"
+          ],
+          "default": "box",
+          "description": "What glows. \"box\" haloes the element's rectangle and pulses; \"text\" haloes the letters with a steady text-shadow, for headings. The pulse stops when the reader prefers reduced motion."
         }
       },
       "matrix": [],

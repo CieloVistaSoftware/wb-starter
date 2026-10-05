@@ -639,12 +639,16 @@ export function glow(element, options = {}) {
   // colour travels, as a generated rule. Teardown removes both, so a
   // destroyed glow actually stops glowing.
   const color = options.color || element.getAttribute('color');
+  // #816: target="text" glows the letters (text-shadow, steady); the default
+  // "box" haloes the element and pulses. Both are classes in effects.css.
+  const target = (options.target || element.getAttribute('target') || 'box') === 'text' ? 'text' : 'box';
   element.classList.add('x-glow');
+  if (target === 'text') element.classList.add('x-glow--text');
   if (color) setRule(element, 'glow', { '--glow-color': color });
 
   const releasePress = addPressFeedback(element);
 
-  return () => { releasePress(); clearRules(element); element.classList.remove('x-glow'); };
+  return () => { releasePress(); clearRules(element); element.classList.remove('x-glow', 'x-glow--text'); };
 }
 
 /**
