@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.264",
+      "date": "2026-10-04",
+      "summary": "Fix: the header logo is an inline SVG, not a 1.5 MB PNG (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1518\" target=\"_blank\" rel=\"noopener\">PR 1518</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/795\" target=\"_blank\" rel=\"noopener\">#795</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The header logo is an inline SVG, not a 1.5 MB PNG</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/795\" target=\"_blank\" rel=\"noopener\">#795</a>",
+          "issues": [
+            795
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.263",
       "date": "2026-10-04",
       "summary": "Fix: refuse a body file whose bytes changed since this agent wrote it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1511\" target=\"_blank\" rel=\"noopener\">PR 1511</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",
