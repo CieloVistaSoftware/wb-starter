@@ -15,8 +15,12 @@
  *     like the stamp (that is the commit the live site serves);
  *   - its number is the badge's: tag patch + pushes since the tag
  *     (scripts/lib/push-count.mjs -- pushes, not commits);
- *   - its summary is the merge's PR title; its items are the non-merge commits
- *     it brought, linked to their issues (scripts/lib/release-item.mjs).
+ *   - its summary says what the issue was: the commit's `Summary:` line, else
+ *     the title of the issue it cites, else the merge's PR title (#1533);
+ *   - its `seeIt` says what to do to see the change: the commit's `See it:`
+ *     line, else "No visible change" for a version of only tests/tooling;
+ *   - its items are the non-merge commits it brought, linked to their issues
+ *     (scripts/lib/release-item.mjs).
  *
  * Generated entries replace every 1.0.N (N > 0) already in the file; tagged
  * releases (1.0.0, 4.x) and history are left alone. Re-running is a no-op.
@@ -28,13 +32,16 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { esc, issueLinks, itemFor } from './lib/release-item.mjs';
+import { esc, issueLinks, itemFor, releaseNotes, noVisibleChange } from './lib/release-item.mjs';
+import { issueTitles } from './lib/issue-titles.mjs';
 import { ANCHOR, STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
 import { releaseDate } from './lib/release-date.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DATA = path.join(ROOT, 'data', 'releases.json');
 const CHECK_ONLY = process.argv.includes('--check');
+// --check reads the cached titles only, so it is repeatable offline.
+const TITLES = issueTitles(ROOT, { refresh: !CHECK_ONLY });
 
 const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).trim();
 const NUL = String.fromCharCode(0);
@@ -89,10 +96,15 @@ spine.forEach((c, i) => {
   const items = [];
   const titles = [];
   const seen = new Set();
+  const subjects = [];
+  const bodies = [];
+  let notes = { summary: null, seeIt: null };
   for (const p of pending) {
     if (STAMP.test(p.subject)) continue;
     const prTitle = p.subject.match(/^Merge (?:PR|pull request) #(\d+)[: ](?:from \S+\s*)?(.*)$/i);
     if (prTitle) titles.push({ pr: Number(prTitle[1]), title: (prTitle[2] || p.body.split('\n')[0] || '').trim() });
+    const own = releaseNotes(p.body);
+    notes = { summary: notes.summary || own.summary, seeIt: notes.seeIt || own.seeIt };
     // The commits this one brought: the merge's own branch side, or itself.
     const brought = p.subject.startsWith('Merge ')
       ? commits('--no-merges', `${p.sha}^1..${p.sha}`)
@@ -100,6 +112,10 @@ spine.forEach((c, i) => {
     for (const b of brought) {
       if (STAMP.test(b.subject) || seen.has(b.subject)) continue;
       seen.add(b.subject);
+      subjects.push(b.subject);
+      bodies.push(b.body);
+      const theirs = releaseNotes(b.body);
+      notes = { summary: notes.summary || theirs.summary, seeIt: notes.seeIt || theirs.seeIt };
       items.push(itemFor(b.subject, b.body));
     }
   }
@@ -107,13 +123,51 @@ spine.forEach((c, i) => {
   if (!items.length) return;
 
   const prLink = (n) => `<a href="https://github.com/CieloVistaSoftware/wb-starter/pull/${n}" target="_blank" rel="noopener">PR ${n}</a>`;
-  const summary = titles.map((t) => {
-    const refs = [...new Set((t.title.match(/#(\d{2,5})/g) || []).map((m) => Number(m.slice(1))))];
-    const text = t.title.replace(/\s*\((?:#\d+[,\s/]*)+\)|\s*#\d+\b/g, '').trim();
-    return `${esc(text.charAt(0).toUpperCase() + text.slice(1))} (${prLink(t.pr)})${refs.length ? ' ' + issueLinks(refs) : ''}`;
-  }).join(' · ');
-  entries.push({ version: versionOf(count), date: releaseDate(last.date), summary, items });
+  const upper = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+  // Every issue the version cites: in its PR titles and in its commits.
+  const refs = [...new Set([
+    ...titles.flatMap((t) => (t.title.match(/#(\d{2,5})/g) || []).map((m) => Number(m.slice(1)))),
+    ...items.flatMap((i) => i.issues || []),
+  ])];
+  const prs = titles.map((t) => prLink(t.pr)).join(', ');
+  const tail = `${prs ? ` (${prs})` : ''}${refs.length ? ' ' + issueLinks(refs) : ''}`;
+  const named = refs.map((n) => TITLES[n]).filter(Boolean);
+  let summary;
+  if (notes.summary) summary = esc(upper(notes.summary)) + tail;
+  // An issue title is shown as written: capitalising it turned "x-dialog: …" into "X-dialog".
+  else if (named.length) summary = named.map((t) => esc(t)).join(' · ') + tail;
+  else if (explains(bodies)) summary = esc(explains(bodies)) + tail;
+  else {
+    summary = titles.map((t) => {
+      const own = [...new Set((t.title.match(/#(\d{2,5})/g) || []).map((m) => Number(m.slice(1))))];
+      const text = t.title.replace(/\s*\((?:#\d+[,\s/]*)+\)|\s*#\d+\b/g, '').trim();
+      return `${esc(upper(text))} (${prLink(t.pr)})${own.length ? ' ' + issueLinks(own) : ''}`;
+    }).join(' · ');
+  }
+  const seeIt = notes.seeIt ? esc(upper(notes.seeIt)) : noVisibleChange(subjects);
+  const entry = { version: versionOf(count), date: releaseDate(last.date), summary, items };
+  if (seeIt) entry.seeIt = seeIt;
+  entries.push(entry);
 });
+
+/**
+ * The first paragraph of a commit body, when there is no issue to name: in
+ * this repo it is where the commit says what was wrong. Trailers, sign-offs
+ * and "Fixes #N" lines are not an explanation.
+ */
+function explains(bodyList) {
+  for (const body of bodyList) {
+    const para = String(body || '').split(/\n\s*\n/)
+      .map((p) => p.replace(/\s*\n\s*/g, ' ').trim())
+      .find((p) => p && !/^(Co-Authored-By|Claude-Session|Signed-off-by|Summary|See it|Fixes|Closes|Refs?)\b/i.test(p) && !/^[-*#|`]/.test(p));
+    if (!para) continue;
+    if (para.length <= 300) return para;
+    const cut = para.slice(0, 300);
+    const end = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('." '));
+    return end > 80 ? cut.slice(0, end + 1) : `${cut.slice(0, cut.lastIndexOf(' '))}…`;
+  }
+  return null;
+}
 
 entries.reverse(); // newest first, as the page lists them
 

@@ -13,6 +13,18 @@
 
 ---
 
+**Updated 2026-10-05.** Releases page and session rules (#1533, #1534), and `npm run make-video` (#1535, PR #1532).
+
+**Task:** John on the Releases page: "This page tells me nothing. one of these lines should be a summary of the issue, the other what to do to see the change", plus "change the text … to indicate that each commit is a new release" and "don't leave artifacts on my computer".
+
+**Files touched:** `scripts/release-versions.mjs`, `scripts/lib/release-item.mjs`, `scripts/lib/issue-titles.mjs` (new), `scripts/check-release-notes.mjs` (new), `.github/workflows/pr-release-notes.yml` (new), `.github/workflows/stamp-version-on-main.yml`, `data/releases.json`, `data/issue-titles.json` (new), `pages/releases.html`, `src/styles/pages/releases.css`, `docs/standards/RELEASE-PROCESS.md` (§3a), `.claude/CLAUDE.md` (release lines, worktrees), `tests/regression/release-lines.spec.ts` (new).
+
+**Last action:** each version now shows the issue (commit `Summary:` line, else the cited issue's title, else the commit body), then **See it:** (commit `See it:` line, else "No visible change" for tests/tooling), then what changed. A new PR check requires both lines. Worktrees are removed when their PR merges, junction first.
+
+**Next step:** work the open issues.
+
+---
+
 **Updated 2026-10-03.** Merged as PR #1324 (merge commit `af651f5`).
 
 **Task:** John: "why isn't figure and image able to set width height? we have no examples of this in behaviors."

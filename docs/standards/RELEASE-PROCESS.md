@@ -78,6 +78,33 @@ Shipping any one of those without the others is the defect this document exists 
 since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and
 `scripts/release.mjs` gate 2 refuses a release the file does not name.
 
+## 3a. Every version says what the issue was and how to see the change
+
+John, 2026-10-05, on the Releases page: "This page tells me nothing. one of these
+lines should be a summary of the issue, the other what to do to see the change"
+(#1533). Each commit to `main` is a new release, and each one shows:
+
+1. **The issue, in plain English.** The commit's `Summary:` line. Without one, the
+   title of the issue the commit cites (cached in `data/issue-titles.json`), and only
+   then the PR title.
+2. **What to do to see the change.** The commit's `See it:` line. A version made only
+   of `test:`/`ci:`/`chore:`/`build:`/`refactor:`/`style:` commits says "No visible
+   change" on its own.
+3. **What changed.** The commit subjects, as before.
+
+So every PR carries both lines in one of its commit messages:
+
+```
+fix(dialog): showClose="false" now hides the close button (#747)
+
+Summary: A dialog with showClose="false" still showed its close button.
+See it: Behaviors → dialog → showClose=false; the dialog opens with no ✕.
+```
+
+A change nobody can see says so: `See it: No visible change: tests only.`
+`.github/workflows/pr-release-notes.yml` (`scripts/check-release-notes.mjs`) fails a
+PR none of whose commits carries both.
+
 ## 4. Releases are keyed by version, not by date
 
 A date cannot be tested; a version can. Each entry is keyed by release number, with the date
