@@ -6,6 +6,22 @@
   ],
   "releases": [
     {
+      "version": "1.0.279",
+      "date": "2026-10-05",
+      "summary": "Behaviors page: no example shows a card&#39;s featured marker with custom text <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1542\" target=\"_blank\" rel=\"noopener\">#1542</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1543\" target=\"_blank\" rel=\"noopener\">#1543</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Behaviors page shows a card&#39;s featured marker with custom text</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1542\" target=\"_blank\" rel=\"noopener\">#1542</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1543\" target=\"_blank\" rel=\"noopener\">#1543</a>",
+          "issues": [
+            1542,
+            1543
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick card and look through its examples. Before: no row showed a featured marker with your own text -- the only featured row was the bare flag, and every featuredTone row printed the default word &quot;Featured&quot;, though <code>featured=&quot;Deal of the week&quot;</code> has worked since #886. Now: a &quot;featured with your own text&quot; row in both the &lt;article&gt; and &lt;div x-card&gt; forms shows the marker reading &quot;Deal of the week&quot;."
+    },
+    {
       "version": "1.0.278",
       "date": "2026-10-05",
       "summary": "Seven declared options render exactly like the default: x-frame ratio, x-icon size, x-release version, x-figure caption-position, x-grid alt-rows, x-switcher limit, radio variant/size (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1546\" target=\"_blank\" rel=\"noopener\">PR 1546</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1279\" target=\"_blank\" rel=\"noopener\">#1279</a>",
@@ -17,7 +33,8 @@
             1279
           ]
         }
-      ]
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/declared-options-change-what-renders.spec.ts --project=regression</code>, or put <code>&lt;div x-frame ratio=&quot;1/1&quot;&gt;</code> around an image, <code>&lt;figure x-figure caption=&quot;Above&quot; caption-position=&quot;top&quot;&gt;</code> and <code>&lt;div x-switcher limit=&quot;2&quot;&gt;</code> with three children on a page. Before: the frame kept the image&#39;s own shape (its rules were in card.css, which loads only for cards), the caption stayed below the image, and the three items stayed in one row. Now: the frame is square, the caption sits above the image, and the items stack one per row."
     },
     {
       "version": "1.0.277",
@@ -31,7 +48,8 @@
             1551
           ]
         }
-      ]
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/doc-viewer-back-restores-docs-list.spec.ts --project=regression --repeat-each=10</code>. Before: about 3 runs in 10 failed with the list returned ~230px &quot;too far&quot; (1084 vs 853), because Playwright&#39;s click re-scrolled the card to the top after the test had read the position; the page itself restored correctly. Now: the position is read in the same task as the click and all runs pass (30 of 30)."
     },
     {
       "version": "1.0.276",
