@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5833
+    "totalWords": 5847
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.278\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.278\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.280\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.280\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-05"
@@ -1536,10 +1536,10 @@
       "title": "clock",
       "description": null,
       "headings": [],
-      "content": "# Clock `x-clock` shows the current time in the element and updates it every second. `format=\"12\"` switches to a 12-hour clock with AM/PM, `show-seconds=\"false\"` drops the seconds, and `variant=\"led\"` gives a green seven-segment look. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `digital` · `led` · `analog` | `digital` | Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial; `analogue` is accepted). Any other value renders `digital` and logs a warning naming these three. | | `format` | `24` · `12` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. | | `show-seconds` | `true` · `false` | `true` | Show the seconds field. On unless set to `\"false\"`. | Schema: [`clock.schema.json`](../../src/wb-models/clock.schema.json)",
+      "content": "# Clock `x-clock` shows the current time in the element and updates it every second. `format=\"12\"` switches to a 12-hour clock with AM/PM, `show-seconds=\"false\"` drops the seconds, and `variant=\"led\"` gives a green seven-segment look. It shows US Central time (CDT/CST) unless `timezone` names another zone, or `timezone=\"local\"` asks for the visitor's own. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `digital` · `led` · `analog` | `digital` | Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial; `analogue` is accepted). Any other value renders `digital` and logs a warning naming these three. | | `format` | `24` · `12` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. | | `show-seconds` | `true` · `false` | `true` | Show the seconds field. On unless set to `\"false\"`. | | `timezone` | IANA zone · `local` | `America/Chicago` | The time zone the clock shows, e.g. `America/New_York`, or `local` for the visitor's own. An unknown name logs a warning and shows Central. | Schema: [`clock.schema.json`](../../src/wb-models/clock.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/cluster",
@@ -2044,11 +2044,16 @@
       "url": "/docs/behaviors/glow",
       "title": "glow",
       "description": null,
-      "headings": [],
-      "content": "# Glow `x-glow` gives the element a pulsing halo in `color`, which defaults to the theme's primary colour. Use it sparingly to pull attention to one control. ## Usage Start trial ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `color` | `string` | `var(--primary, #6366f1)` | Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it. | Schema: [`glow.schema.json`](../../src/wb-models/glow.schema.json)",
+      "headings": [
+        {
+          "level": 3,
+          "text": "Night mode"
+        }
+      ],
+      "content": "# Glow `x-glow` gives the element a halo in `color`, which defaults to the theme's primary colour: a pulsing ring around the box, or with `target=\"text\"` a steady glow around the letters. Use it sparingly to pull attention to one control or one heading. ## Usage Start trial A glowing heading: the letters glow, not the line box, and it holds steady. Night mode The box glow pulses; a reader who prefers reduced motion gets the glow without the pulse. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `target` | `box` \\| `text` | `box` | What glows. `box` haloes the element's rectangle and pulses; `text` haloes the letters with a steady text-shadow, for headings. | | `color` | `string` | `var(--primary, #6366f1)` | Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it. | Schema: [`glow.schema.json`](../../src/wb-models/glow.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/grid",
@@ -6268,11 +6273,11 @@
     "275": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
-    "278": [
-      "pages/home"
-    ],
     "279": [
       "docs/claude/TIER1-LAWS"
+    ],
+    "280": [
+      "pages/home"
     ],
     "283": [
       "docs/behaviors/card",
@@ -8753,6 +8758,7 @@
       "docs/V3-GUIDE",
       "docs/behaviors/card",
       "docs/behaviors/cardnotification",
+      "docs/behaviors/glow",
       "docs/behaviors/hero",
       "docs/behaviors/truncate",
       "docs/claude/TIER1-LAWS",
@@ -10273,6 +10279,7 @@
       "docs/behaviors/darkmode",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
+      "docs/behaviors/glow",
       "docs/behaviors/stagelight",
       "docs/behaviors/ul",
       "docs/behaviors/x-darkmode",
@@ -15070,6 +15077,7 @@
       "docs/behaviors/cardstats",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/checkbox",
+      "docs/behaviors/clock",
       "docs/behaviors/codecontrol",
       "docs/behaviors/copybutton",
       "docs/behaviors/details",
@@ -15153,6 +15161,7 @@
       "pages/behaviors",
       "docs/behaviors/card",
       "docs/behaviors/cardminimizable",
+      "docs/behaviors/glow",
       "docs/behaviors/move",
       "docs/behaviors/reel",
       "docs/behaviors/release",
@@ -15300,6 +15309,7 @@
     ],
     "headings": [
       "pages/behaviors",
+      "docs/behaviors/glow",
       "docs/behaviors/table",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/guides/search-index",
@@ -15652,6 +15662,7 @@
       "docs/behaviors/fill",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/frame",
+      "docs/behaviors/glow",
       "docs/behaviors/ratio",
       "docs/behaviors/x-effects",
       "docs/behaviors/x-enhancements",
@@ -16051,6 +16062,7 @@
       "docs/behaviors/fill",
       "docs/behaviors/frame",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/img",
       "docs/behaviors/otp",
       "docs/behaviors/repeater",
@@ -18790,6 +18802,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/codecontrol",
       "docs/behaviors/fieldset",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/img",
       "docs/behaviors/masked",
@@ -20316,6 +20329,7 @@
     ],
     "pulse": [
       "pages/features",
+      "docs/behaviors/glow",
       "docs/behaviors/pulse",
       "docs/behaviors/x-effects"
     ],
@@ -21586,6 +21600,7 @@
       "docs/behaviors/cardportfolio",
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
+      "docs/behaviors/clock",
       "docs/behaviors/codecontrol",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
@@ -22223,6 +22238,7 @@
       "docs/behaviors/cover",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
+      "docs/behaviors/glow",
       "docs/behaviors/hero",
       "docs/behaviors/popover",
       "docs/behaviors/prompt",
@@ -23754,6 +23770,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/card",
       "docs/behaviors/cardproduct",
+      "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/collapse",
       "docs/behaviors/move",
@@ -23915,6 +23932,7 @@
       "docs/MVVM-MIGRATION",
       "docs/behaviors/blockquote",
       "docs/behaviors/button",
+      "docs/behaviors/clock",
       "docs/behaviors/copybutton",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
@@ -27339,6 +27357,7 @@
       "docs/behaviors/footer",
       "docs/behaviors/fullscreen",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/header",
       "docs/behaviors/help",
@@ -27849,6 +27868,7 @@
       "docs/behaviors/data",
       "docs/behaviors/footer",
       "docs/behaviors/formrow",
+      "docs/behaviors/glow",
       "docs/behaviors/ol",
       "docs/behaviors/popover",
       "docs/behaviors/pre",
@@ -28124,6 +28144,7 @@
     "local": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
+      "docs/behaviors/clock",
       "docs/behaviors/input",
       "docs/mcp",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -31399,6 +31420,7 @@
       "docs/behaviors/countdown",
       "docs/behaviors/darkmode",
       "docs/behaviors/fullscreen",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/print",
       "docs/behaviors/scrollalong",
@@ -33494,6 +33516,7 @@
       "docs/behaviors/footer",
       "docs/behaviors/form",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/header",
       "docs/behaviors/img",
       "docs/behaviors/input",
@@ -35639,6 +35662,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
+      "docs/behaviors/clock",
       "docs/behaviors/container",
       "docs/behaviors/dialog",
       "docs/behaviors/draggable",
@@ -36558,6 +36582,7 @@
     "asks": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
+      "docs/behaviors/clock",
       "docs/behaviors/prompt"
     ],
     "moves": [
@@ -36975,6 +37000,7 @@
       "docs/behaviors/flip",
       "docs/behaviors/frame",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/input",
       "docs/behaviors/searchfield",
       "docs/behaviors/stagelight",
@@ -38642,6 +38668,7 @@
     "unknown": [
       "docs/audio",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/clock",
       "docs/behaviors/progress",
       "docs/claude/PAGE-GENERATION",
       "docs/npx-commands"
@@ -42380,6 +42407,27 @@
     "segment": [
       "docs/behaviors/clock"
     ],
+    "central": [
+      "docs/behaviors/clock",
+      "docs/wbservices"
+    ],
+    "cdt": [
+      "docs/behaviors/clock"
+    ],
+    "cst": [
+      "docs/behaviors/clock"
+    ],
+    "timezone": [
+      "docs/behaviors/clock",
+      "docs/behaviors/time"
+    ],
+    "zone": [
+      "docs/behaviors/clock",
+      "docs/container-pattern"
+    ],
+    "visitor": [
+      "docs/behaviors/clock"
+    ],
     "digital": [
       "docs/behaviors/clock"
     ],
@@ -42394,6 +42442,19 @@
     ],
     "analogue": [
       "docs/behaviors/clock"
+    ],
+    "iana": [
+      "docs/behaviors/clock"
+    ],
+    "america": [
+      "docs/behaviors/clock"
+    ],
+    "chicago": [
+      "docs/behaviors/clock"
+    ],
+    "york": [
+      "docs/behaviors/clock",
+      "demos/schema-first-architecture"
     ],
     "lays": [
       "docs/behaviors/cluster",
@@ -43753,6 +43814,17 @@
     "treat": [
       "docs/behaviors/globe"
     ],
+    "ring": [
+      "docs/behaviors/glow",
+      "docs/behaviors/spinner"
+    ],
+    "steady": [
+      "docs/behaviors/glow"
+    ],
+    "letters": [
+      "docs/behaviors/glow",
+      "docs/behaviors/ol"
+    ],
     "sparingly": [
       "docs/behaviors/glow"
     ],
@@ -43764,6 +43836,37 @@
     ],
     "trial": [
       "docs/behaviors/glow"
+    ],
+    "glowing": [
+      "docs/behaviors/glow"
+    ],
+    "night": [
+      "docs/behaviors/glow"
+    ],
+    "pulses": [
+      "docs/behaviors/glow"
+    ],
+    "prefers": [
+      "docs/behaviors/glow"
+    ],
+    "reduced": [
+      "docs/behaviors/glow",
+      "docs/performance",
+      "docs/pricecard"
+    ],
+    "motion": [
+      "docs/behaviors/glow"
+    ],
+    "glows": [
+      "docs/behaviors/glow"
+    ],
+    "haloes": [
+      "docs/behaviors/glow"
+    ],
+    "rectangle": [
+      "docs/behaviors/glow",
+      "docs/behaviors/skeleton",
+      "docs/themes"
     ],
     "6366f1": [
       "docs/behaviors/glow"
@@ -44292,9 +44395,6 @@
       "docs/behaviors/ol"
     ],
     "numerals": [
-      "docs/behaviors/ol"
-    ],
-    "letters": [
       "docs/behaviors/ol"
     ],
     "respects": [
@@ -44870,10 +44970,6 @@
     "shimmering": [
       "docs/behaviors/skeleton"
     ],
-    "rectangle": [
-      "docs/behaviors/skeleton",
-      "docs/themes"
-    ],
     "shimmer": [
       "docs/behaviors/skeleton"
     ],
@@ -44945,9 +45041,6 @@
       "docs/behaviors/spinner",
       "docs/behaviors/steps",
       "docs/behaviors/timeline"
-    ],
-    "ring": [
-      "docs/behaviors/spinner"
     ],
     "speed": [
       "docs/behaviors/spinner",
@@ -45229,9 +45322,6 @@
       "docs/behaviors/time"
     ],
     "15t14": [
-      "docs/behaviors/time"
-    ],
-    "timezone": [
       "docs/behaviors/time"
     ],
     "ssz": [
@@ -46762,9 +46852,6 @@
     "offcanvas": [
       "docs/container-pattern"
     ],
-    "zone": [
-      "docs/container-pattern"
-    ],
     "exceeded": [
       "docs/container-pattern"
     ],
@@ -48003,10 +48090,6 @@
     ],
     "informs": [
       "docs/performance"
-    ],
-    "reduced": [
-      "docs/performance",
-      "docs/pricecard"
     ],
     "thrashing": [
       "docs/performance"
@@ -49561,9 +49644,6 @@
     "hsl": [
       "docs/themes"
     ],
-    "central": [
-      "docs/wbservices"
-    ],
     "bootstrapper": [
       "docs/wbservices"
     ],
@@ -49978,9 +50058,6 @@
       "demos/schema-first-architecture"
     ],
     "vendetti": [
-      "demos/schema-first-architecture"
-    ],
-    "york": [
       "demos/schema-first-architecture"
     ],
     "elena": [

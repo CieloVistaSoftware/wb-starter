@@ -1115,6 +1115,18 @@
       "source": "<article title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>",
       "alternates": [
         "<div x-card title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
+      ],
+      "examples": [
+        {
+          "label": "featured with your own text",
+          "form": "semantic",
+          "source": "<article featured=\"Deal of the week\" featured-tone=\"success\" title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>"
+        },
+        {
+          "label": "featured with your own text",
+          "form": "attribute",
+          "source": "<div x-card featured=\"Deal of the week\" featured-tone=\"success\" title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
+        }
       ]
     },
     "x-cardbutton": {
