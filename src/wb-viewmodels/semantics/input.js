@@ -1,5 +1,20 @@
-import { readAttr } from '../../core/read-attr.js';
+import { readAttr, hasAuthoredAttr } from '../../core/read-attr.js';
 import { logError } from '../../core/error-logger.js';
+
+/**
+ * #793 -- John: "This should be a runtime error. No Icon". An iconPosition
+ * with no icon has nothing to position, and rendering nothing said nothing.
+ * Report it the established way: logError() plus an x-error marker a test or
+ * a reader can see.
+ */
+function reportIconPositionWithoutIcon(element, icon) {
+  if (icon || !hasAuthoredAttr(element, 'iconPosition')) return;
+  element.setAttribute('x-error', 'icon-position-without-icon');
+  logError(
+    `[WB:input] <${element.tagName.toLowerCase()}> sets iconPosition but has no icon, so there is nothing to position.`,
+    { element: element.outerHTML.slice(0, 200), attributes: ['iconPosition'] }
+  );
+}
 /**
  * Input - Enhanced <input> element
  * Adds clearable, prefix/suffix, validation variants
@@ -67,8 +82,12 @@ export function input(element, options = {}) {
     const inputType = element.getAttribute('input-type') || element.getAttribute('inputType') || 'text';
     const helper = element.getAttribute('helper') || '';
     const error = element.getAttribute('error') || '';
-    const icon = element.getAttribute('icon') || '';
-    const iconPosition = element.getAttribute('icon-position') || 'start';
+    const icon = readAttr(element, 'icon');
+    // #793: readAttr, not getAttribute('icon-position'). The Behaviors page
+    // writes the schema key, `iconPosition="end"`, which lands in the DOM as
+    // `iconposition` and never matched the kebab spelling.
+    const iconPosition = readAttr(element, 'iconPosition', 'start');
+    reportIconPositionWithoutIcon(element, icon);
     const clearable = element.hasAttribute('clearable');
     const disabled = element.hasAttribute('disabled');
     const readonly = element.hasAttribute('readonly');
@@ -232,6 +251,8 @@ export function input(element, options = {}) {
     const wanted = readAttr(element, 'input-type');
     if (wanted && element.getAttribute('type') !== wanted) element.setAttribute('type', wanted);
   }
+
+  reportIconPositionWithoutIcon(element, readAttr(element, 'icon'));
 
   const BUILDER_ONLY = ['label', 'helper', 'error', 'input-type', 'inputtype'];
   const asked = BUILDER_ONLY.filter((a) => element.hasAttribute(a));

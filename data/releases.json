@@ -6,6 +6,55 @@
   ],
   "releases": [
     {
+      "version": "1.0.275",
+      "date": "2026-10-05",
+      "summary": "Fix(input): iconPosition reaches the div builder, and a position with no icon is an error (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1539\" target=\"_blank\" rel=\"noopener\">PR 1539</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>IconPosition variant demos carry the icon they position</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
+          "issues": [
+            793
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>IconPosition reaches the div builder, and a position with no icon is an error</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
+          "issues": [
+            793
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.274",
+      "date": "2026-10-05",
+      "summary": "Fix(button): icon layout reaches every button, not only an &lt;x-button&gt; tag (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1548\" target=\"_blank\" rel=\"noopener\">PR 1548</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/741\" target=\"_blank\" rel=\"noopener\">#741</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Icon layout reaches every button, not only an &lt;x-button&gt; tag</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/741\" target=\"_blank\" rel=\"noopener\">#741</a>",
+          "issues": [
+            741
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.273",
+      "date": "2026-10-05",
+      "summary": "Fix: camelCase options build like dashed ones; the audit sees readAttr (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1537\" target=\"_blank\" rel=\"noopener\">PR 1537</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>CamelCase options build like dashed ones; the audit sees readAttr</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a>",
+          "issues": [
+            1526
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.272",
       "date": "2026-10-05",
       "summary": "Fix: a matrix combination that turns a default-on option off is demonstrated off (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1531\" target=\"_blank\" rel=\"noopener\">PR 1531</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1525\" target=\"_blank\" rel=\"noopener\">#1525</a>",
