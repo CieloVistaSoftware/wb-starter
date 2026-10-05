@@ -46,6 +46,38 @@ async function openBehaviors(page: any) {
   );
 }
 
+/**
+ * Click the first row of the dialog group and wait until its <dialog> is in the
+ * stage AND dialog.js has run on it (x-ready). #1515: this was a 600ms sleep
+ * for the group and a 1500ms one for the sample; on a loaded runner the sample
+ * was read half-enhanced -- no header yet, so "the heading was not moved" and
+ * "the dialog never opened" -- on a PR that touched nothing dialog-related.
+ */
+async function showFirstDialogSample(page: any) {
+  const clicked = await page.evaluate(() => {
+    const g = [...document.querySelectorAll('details')].find((d) =>
+      /dialog/i.test((d.querySelector('summary') || {}).textContent || '')
+    ) as HTMLDetailsElement | undefined;
+    const row = g?.querySelector('.behaviors-search-results__row') as HTMLElement | null;
+    if (!g || !row) return false;
+    g.open = true;
+    (window as any).__dialogBefore = document.querySelector('.behaviors-live__stage dialog');
+    row.click();
+    return true;
+  });
+  expect(clicked, 'the behaviors page has no dialog group with a row to click').toBe(true);
+  await page.waitForFunction(() => {
+    const dlg = document.querySelector('.behaviors-live__stage dialog');
+    return !!dlg && dlg !== (window as any).__dialogBefore && dlg.hasAttribute('x-ready');
+  }, undefined, { timeout: 15_000 }).catch(async () => {
+    const state = await page.evaluate(() => {
+      const dlg = document.querySelector('.behaviors-live__stage dialog');
+      return dlg ? `a <dialog> is in the stage, x-ready=${dlg.hasAttribute('x-ready')}` : 'no <dialog> in the stage';
+    });
+    throw new Error(`the first dialog sample never finished building: ${state}`);
+  });
+}
+
 test.describe('dialog samples: visible close, section 13 spacing (#1005)', () => {
   test('every dialog sample has a visible close control and a padded body', async ({ page }) => {
     // A sweep needs a sweep's budget. This walks EVERY dialog sample — 11 rows —
@@ -61,8 +93,9 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
       const groups = [...document.querySelectorAll('details')].filter((d) =>
         /dialog/i.test((d.querySelector('summary') || {}).textContent || '')
       ) as HTMLDetailsElement[];
+      // The rows are already in the DOM (openBehaviors waited for them); opening
+      // the group only shows them. #1515: a 700ms sleep followed, for nothing.
       for (const g of groups) g.open = true;
-      await new Promise((r) => setTimeout(r, 700));
 
       const rows = groups.flatMap((g) => [...g.querySelectorAll('.behaviors-search-results__row')]);
       const out: any[] = [];
@@ -188,7 +221,6 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
             }
           }
           if (!dlg.open) notes.push('the dialog never opened, so nothing below was measurable');
-          await sleep(120);
         }
 
         const close = dlg.querySelector('.x-dialog__close') as HTMLElement | null;
@@ -223,7 +255,8 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
             notes.push('close() threw, so the next sample was measured under an open modal: '
               + ((err as Error) || {}).message);
           }
-          await sleep(80);
+          // close() is synchronous: dlg.open is false the moment it returns.
+          if (dlg.open) notes.push('close() returned with the dialog still open');
         }
 
         out.push({ label, rendered: true, closeOptedOut, hasClose: !!close, closeVisible, hasBody: !!body, pad, padOk, notes });
@@ -282,37 +315,30 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
   test('the close button actually closes the dialog', async ({ page }) => {
     // A close glyph that is present but inert would satisfy every assertion above.
     await openBehaviors(page);
+    await showFirstDialogSample(page);
 
-    const result = await page.evaluate(async () => {
-      const g = [...document.querySelectorAll('details')].find((d) =>
-        /dialog/i.test((d.querySelector('summary') || {}).textContent || '')
-      ) as HTMLDetailsElement | undefined;
-      if (!g) return { ran: false };
-      g.open = true;
-      await new Promise((r) => setTimeout(r, 600));
-      const row = g.querySelector('.behaviors-search-results__row') as HTMLElement | null;
-      if (!row) return { ran: false };
-      row.click();
-      await new Promise((r) => setTimeout(r, 1500));
-
-      const dlg = document.querySelector('.behaviors-live__stage dialog') as HTMLDialogElement | null;
-      if (!dlg) return { ran: false };
-      try {
-        dlg.showModal();
-      } catch {
-        /* may already be open */
-      }
-      await new Promise((r) => setTimeout(r, 300));
-      const openedBefore = dlg.open;
-      const btn = dlg.querySelector('.x-dialog__close') as HTMLElement | null;
-      if (btn) btn.click();
-      await new Promise((r) => setTimeout(r, 400));
-      return { ran: true, openedBefore, openAfter: dlg.open };
+    await page.evaluate(() => {
+      const dlg = document.querySelector('.behaviors-live__stage dialog') as HTMLDialogElement;
+      if (!dlg.open) dlg.showModal();
     });
+    // #1515: waits on dialog.open itself, not 300ms / 400ms of clock.
+    await page.waitForFunction(
+      () => (document.querySelector('.behaviors-live__stage dialog') as HTMLDialogElement).open,
+      undefined,
+      { timeout: 5000 },
+    ).catch(() => { throw new Error('the dialog never opened, so closing proves nothing'); });
 
-    test.skip(!result.ran, 'no dialog sample rendered here');
-    expect(result.openedBefore, 'the dialog never opened, so closing proves nothing').toBe(true);
-    expect(result.openAfter, 'clicking the close button left the dialog open').toBe(false);
+    const hasClose = await page.evaluate(() => {
+      const btn = document.querySelector('.behaviors-live__stage dialog .x-dialog__close') as HTMLElement | null;
+      if (btn) btn.click();
+      return !!btn;
+    });
+    expect(hasClose, 'the opened dialog has no .x-dialog__close to click').toBe(true);
+    await page.waitForFunction(
+      () => !(document.querySelector('.behaviors-live__stage dialog') as HTMLDialogElement).open,
+      undefined,
+      { timeout: 5000 },
+    ).catch(() => { throw new Error('clicking the close button left the dialog open'); });
   });
 
   test('authored content survives the enhancement', async ({ page }) => {
@@ -320,19 +346,10 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
     // becomes a clone or a re-render, ids and handlers go missing - the failure
     // mode that made the fieldset toggle dead in #999.
     await openBehaviors(page);
+    await showFirstDialogSample(page);
 
-    const kept = await page.evaluate(async () => {
-      const g = [...document.querySelectorAll('details')].find((d) =>
-        /dialog/i.test((d.querySelector('summary') || {}).textContent || '')
-      ) as HTMLDetailsElement | undefined;
-      if (!g) return null;
-      g.open = true;
-      await new Promise((r) => setTimeout(r, 600));
-      const row = g.querySelector('.behaviors-search-results__row') as HTMLElement | null;
-      if (row) row.click();
-      await new Promise((r) => setTimeout(r, 1500));
-      const dlg = document.querySelector('.behaviors-live__stage dialog');
-      if (!dlg) return null;
+    const kept = await page.evaluate(() => {
+      const dlg = document.querySelector('.behaviors-live__stage dialog')!;
       const heading = dlg.querySelector(
         '.x-dialog__header h1, .x-dialog__header h2, .x-dialog__header h3'
       );
@@ -345,7 +362,6 @@ test.describe('dialog samples: visible close, section 13 spacing (#1005)', () =>
       };
     });
 
-    test.skip(!kept, 'no dialog sample rendered here');
     expect(kept!.headingInHeader, 'the authored heading was not moved into the dialog header').toBe(true);
     expect(kept!.headingText, 'the authored heading lost its text').toBeTruthy();
     expect(kept!.bodyText.length, 'the authored body content did not survive').toBeGreaterThan(0);
