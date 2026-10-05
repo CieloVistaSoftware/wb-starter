@@ -98,8 +98,9 @@ test.describe('Fix Verification Tests', () => {
     // element being hidden). Every real usage (pages/behaviors.html,
     // pages/behaviors.html) uses the <audio> wrapper tag instead, where
     // the internal <audio> is a separate hidden child and the custom UI
-    // stays visible. demos/audio.mp3 is a real local asset.
-    await mount(page, `<audio id="test-eq" src="/demos/audio.mp3" show-eq controls></audio>`);
+    // stays visible. A local fixture keeps it off the network (#762: no media
+    // ships in demos/).
+    await mount(page, `<audio id="test-eq" src="/tests/fixtures/media/sample.wav" show-eq controls></audio>`);
 
     // Scoped to the mount container -- the real homepage (loaded by
     // beforeEach's goto('/')) has its own <audio show-eq> too, and an
