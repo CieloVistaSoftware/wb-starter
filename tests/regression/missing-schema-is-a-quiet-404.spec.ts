@@ -25,6 +25,7 @@ test.describe('missing /src/wb-models/*.json', () => {
   test('an existing schema is still served', async ({ request }) => {
     const res = await request.get('/src/wb-models/button.schema.json');
     expect(res.status()).toBe(200);
-    expect((await res.json()).title || (await res.json()).$id).toBeTruthy();
+    const schema = await res.json();
+    expect(schema.title || schema.$id, 'the served schema must be the real file').toBeTruthy();
   });
 });
