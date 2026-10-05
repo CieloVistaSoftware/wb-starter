@@ -107,7 +107,8 @@ function initSmoothScroll(container) {
  * Add copy functionality to code examples
  */
 function initCodeCopy(container) {
-  container.querySelectorAll('x-mdhtml').forEach(mdhtml => {
+  // `[x-mdhtml]`, not the tag `x-mdhtml` the 4.0.0 rename left, which matches nothing (#857).
+  container.querySelectorAll('[x-mdhtml]').forEach(mdhtml => {
     // Check if copy button already exists
     if (mdhtml.querySelector('.code-copy-btn')) return;
     
@@ -176,7 +177,7 @@ export function scrollToSection(sectionId) {
  * @param {HTMLElement} demoContainer - The demo container element
  */
 export function toggleCode(demoContainer) {
-  const codeBlock = demoContainer.querySelector('x-mdhtml');
+  const codeBlock = demoContainer.querySelector('[x-mdhtml]');
   if (codeBlock) {
     codeBlock.classList.toggle('collapsed');
   }
