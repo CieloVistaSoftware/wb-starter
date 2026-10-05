@@ -6,6 +6,35 @@
   ],
   "releases": [
     {
+      "version": "1.0.281",
+      "date": "2026-10-05",
+      "summary": "The behavior cross-reference called itself a complete reference of all behaviors while its sections covered about a quarter of them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1554\" target=\"_blank\" rel=\"noopener\">PR 1554</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines for the cross-reference inventory</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Phrase the generated row count so the prose-count gate does not misread it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The cross-reference opens with a generated inventory of every behavior</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        }
+      ],
+      "seeIt": "Open <code>docs/behavior-cross-reference.md</code> in the doc viewer. Before: it opened &quot;A complete reference of all WB Behaviors&quot; and most behaviors appeared nowhere in it. Now: it opens with an inventory table listing every behavior the runtime can reach, how each is written, its reference page, and whether a section below covers it."
+    },
+    {
       "version": "1.0.280",
       "date": "2026-10-05",
       "summary": "Three versions on the Releases page (1.0.277, 1.0.278, 1.0.279) said nothing about how to see their change, which failed the release check on main and blocked every open PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1563\" target=\"_blank\" rel=\"noopener\">PR 1563</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a>",
