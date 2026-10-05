@@ -13,7 +13,7 @@
 
 ---
 
-**Updated 2026-10-03.** On branch `claude/ecstatic-newton-1g1f17`, PR #1324.
+**Updated 2026-10-03.** Merged as PR #1324 (merge commit `af651f5`).
 
 **Task:** John: "why isn't figure and image able to set width height? we have no examples of this in behaviors."
 
@@ -26,7 +26,7 @@
 `height` alone was dead under `img { height: auto }`. `<figure width="">` is new (px or any CSS length,
 capped at its container). Schemas, docs and behaviors-page examples list both.
 
-**Next step:** John reviews PR #1324.
+**Next step:** none. Merged 2026-10-03 with all 14 checks green.
 
 **Updated 2026-10-01 (late night).** On branch `claude/nifty-darwin-8mf277`, added to PR #1238.
 
