@@ -40,11 +40,12 @@ test.describe('AutoScroll tests every behavior in the nav (#1536)', () => {
       const groups = [...document.querySelectorAll('#behaviors-search-results details')] as HTMLDetailsElement[];
       for (const g of groups) g.open = false;
       groups[0].open = true;
-      await new Promise((r) => setTimeout(r, 300));
 
+      // runAutoScroll() opens every group before its first await, so read the
+      // groups and stop the tour in this same task. A sleep here let the tour
+      // run on a loaded runner and starve this evaluate past the test timeout.
       const btn = document.getElementById('behaviors-autoscroll') as HTMLElement;
       btn.click();
-      await new Promise((r) => setTimeout(r, 1500));
       const openAfter = groups.filter((d) => d.open).length;
       btn.click(); // stop the tour
       return { total: groups.length, openAfter };
