@@ -28,6 +28,7 @@ import { test, expect } from '../fixtures/offline';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { DOC, START, END, loadRegistries, withInventory } from '../../scripts/generate-behavior-inventory.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -90,5 +91,29 @@ test.describe('Behavior docs match the map', () => {
       `neither reference doc — nobody can find a behavior that is not written ` +
       `down:\n  ` + undocumented.join('\n  '),
     ).toEqual([]);
+  });
+
+  // #1099: the cross-reference opened "A complete reference of all WB
+  // Behaviors" and covered 50 of 185. Its behavior LIST is now generated from
+  // tag-map.js and wb-lazy.js; these hold it to the registries.
+  test('the cross-reference inventory is what the generator writes (#1099)', async () => {
+    const doc = read(DOC);
+    expect(doc.includes(START) && doc.includes(END), `${DOC} lost its INVENTORY markers`).toBe(true);
+    expect(
+      withInventory(doc, await loadRegistries()) === doc,
+      `${DOC}'s behavior inventory is out of date. Run: node scripts/generate-behavior-inventory.mjs`,
+    ).toBe(true);
+  });
+
+  test('every registered behavior has a row in the cross-reference inventory (#1099)', async () => {
+    const doc = read(DOC);
+    const block = doc.slice(doc.indexOf(START), doc.indexOf(END));
+    const { attributes, semantic } = await loadRegistries();
+    const missing = [...attributes, ...semantic]
+      .map(([name]) => name)
+      .filter((name) => !block.includes(`| \`${name.replace(/\|/g, '\\|')}\` |`));
+    expect(missing, 'registered but absent from the inventory:\n  ' + missing.join('\n  ')).toEqual([]);
+    expect(doc, 'the doc must not claim completeness for prose that is not complete')
+      .not.toContain('A complete reference of all WB Behaviors');
   });
 });

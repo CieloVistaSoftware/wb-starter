@@ -6,6 +6,12 @@ Generated: 2026-02-16 from test suite results (2443 passed, 262 failed, 25 skipp
 
 ---
 
+## 2026-10-05 — doc changes in flight
+
+- `docs/behavior-cross-reference.md` (#1099) — no longer claims to be complete;
+  its behavior inventory is generated from tag-map.js + wb-lazy.js by
+  `scripts/generate-behavior-inventory.mjs` (187 rows, undocumented ones marked).
+
 ## 2026-10-03 — doc changes in flight
 
 - `docs/behaviors/table.md` (#1344) — attribute table corrected to the schema's
