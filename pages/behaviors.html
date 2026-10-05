@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.280">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.285">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -3154,7 +3154,7 @@
       autoBtn.className = 'behaviors-live__autoscroll';
       autoBtn.type = 'button';
       autoBtn.setAttribute('aria-pressed', 'false');
-      autoBtn.title = 'AutoScroll — walk every entry. Right-click to set the delay.';
+      autoBtn.title = 'AutoScroll — test every entry in the nav. Right-click to set the delay.';
       tools.appendChild(autoBtn);
 
       const ws = document.getElementById('behaviors-workspace');
@@ -3210,11 +3210,13 @@
 
       // Advance on the page's own signal, with a ceiling so one behavior that
       // never settles cannot hang the tour. The timeout is a backstop, not the
-      // clock.
+      // clock. Resolves true when the entry settled, false when the ceiling hit.
+      const SETTLE_CEILING_MS = 4000;
       const settled = () => new Promise((resolve) => {
-        const done = () => { clearTimeout(t); resolve(); };
-        const t = setTimeout(done, 4000);
-        document.addEventListener('wb:layout-settled', done, { once: true });
+        const done = (ok) => { clearTimeout(t); document.removeEventListener('wb:layout-settled', onSettled); resolve(ok); };
+        const onSettled = () => done(true);
+        const t = setTimeout(() => done(false), SETTLE_CEILING_MS);
+        document.addEventListener('wb:layout-settled', onSettled, { once: true });
       });
 
       const stop = (why) => {
@@ -3235,42 +3237,111 @@
         if (running && e.target.closest('.behaviors-search-results__row')) stop('you picked a row');
       }, { capture: true });
 
+      // #1536 -- the report shown when a tour ends or is stopped. Built from
+      // text nodes, never innerHTML: an error message is page data.
+      let report = null;
+      const closeReport = () => { if (report) { report.remove(); report = null; } };
+      const rowName = (row) => {
+        const label = row.dataset.label || row.textContent.trim();
+        return row.dataset.variant ? label + ' · ' + row.dataset.variant : label;
+      };
+
+      function showReport(results, total, finished) {
+        closeReport();
+        const failed = results.filter((r) => r.errors.length || !r.settled);
+        report = document.createElement('div');
+        report.className = 'behaviors-live__autoscroll-report';
+        report.setAttribute('role', 'status');
+        report.dataset.total = String(total);
+        report.dataset.tested = String(results.length);
+        report.dataset.failed = String(failed.length);
+
+        const head = document.createElement('div');
+        head.className = 'behaviors-live__autoscroll-report-head';
+        const title = document.createElement('strong');
+        title.textContent = (finished ? 'Tested all ' + total : 'Stopped after ' + results.length + ' of ' + total) +
+          ' entries: ' + (results.length - failed.length) + ' passed, ' + failed.length + ' failed';
+        const close = document.createElement('button');
+        close.type = 'button';
+        close.className = 'behaviors-live__autoscroll-report-close';
+        close.setAttribute('aria-label', 'Close the AutoScroll report');
+        close.textContent = '×';
+        close.addEventListener('click', closeReport);
+        head.append(title, close);
+        report.append(head);
+
+        if (failed.length) {
+          const list = document.createElement('ol');
+          list.className = 'behaviors-live__autoscroll-report-list';
+          for (const f of failed) {
+            const li = document.createElement('li');
+            const open = document.createElement('button');
+            open.type = 'button';
+            open.className = 'behaviors-live__autoscroll-report-item';
+            const name = document.createElement('span');
+            name.className = 'behaviors-live__autoscroll-report-name';
+            name.textContent = rowName(f.row);
+            const why = document.createElement('span');
+            why.className = 'behaviors-live__autoscroll-report-why';
+            why.textContent = f.errors.length
+              ? f.errors[0] + (f.errors.length > 1 ? ' (+' + (f.errors.length - 1) + ' more)' : '')
+              : 'never finished rendering (no wb:layout-settled within ' + SETTLE_CEILING_MS / 1000 + ' s)';
+            open.append(name, why);
+            open.addEventListener('click', () => { if (f.row.isConnected) selectRow(f.row); });
+            li.append(open);
+            list.append(li);
+          }
+          report.append(list);
+        }
+        autoBtn.parentElement.appendChild(report);
+      }
+
+      // #1536 -- John: "Change autoscroll so it tests every behavior in the nav."
+      //
+      // Every group is opened and every entry is visited from the top, whatever
+      // was open or selected before. This replaces #1004's "tour only the groups
+      // you expanded": a test that covers what happened to be open is not a
+      // test of the nav.
+      //
+      // An entry FAILS when anything is logged through logError() while it is
+      // the one on screen (wb:error-logged, from error-logger.js -- uncaught
+      // errors and rejections go through logError() too), or when it never
+      // sends wb:layout-settled. The window for an entry runs from its
+      // selection to the next one, so an error raised after it settles still
+      // counts against it.
       async function runAutoScroll() {
         running = true;
         setLabel();
+        closeReport();
 
-        // John: "if autoscroll is pressed after a details control is expanded
-        // only show those items expanded."
-        //
-        // An expanded group is a statement of intent -- you opened `dialog` and
-        // `button` because those are what you want to look at. Forcing all 70
-        // open would throw that away and start a 767-entry tour instead of the
-        // handful asked for.
-        //
-        // Expanding all is still right when NOTHING is open: without it the
-        // tour would visit ~156 collapsed group headers and show none of the
-        // options underneath them (#995), which is what "expand all groups"
-        // originally asked for. So the rule is: honour a selection if one
-        // exists, otherwise fall back to everything.
-        const groups = [...resultsEl.querySelectorAll('details')];
-        const chosen = groups.filter((d) => d.open);
-        if (!chosen.length) { for (const d of groups) d.open = true; }
+        for (const d of resultsEl.querySelectorAll('details')) d.open = true;
         await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
         const rows = rowsInOrder();
-        const current = resultsEl.querySelector('[aria-current="true"]');
-        let i = current ? Math.max(0, rows.indexOf(current)) : 0;
-
-        for (; running && i < rows.length; i++) {
-          const row = rows[i];
-          if (!row || !row.isConnected) continue;
-          const wait = settled();
-          selectRow(row, { focus: false });
-          await wait;
-          if (!running) break;
-          if (delayMs) await new Promise((r) => setTimeout(r, delayMs));
+        const results = [];
+        let current = null;
+        const onError = (e) => { if (current) current.errors.push((e.detail && e.detail.message) || 'error'); };
+        window.addEventListener('wb:error-logged', onError);
+        try {
+          for (const row of rows) {
+            if (!running) break;
+            if (!row.isConnected) continue;
+            current = { row, errors: [], settled: false };
+            results.push(current);
+            const wait = settled();
+            selectRow(row, { focus: false });
+            current.settled = await wait;
+            if (!running) break;
+            if (delayMs) await new Promise((r) => setTimeout(r, delayMs));
+          }
+        } finally {
+          window.removeEventListener('wb:error-logged', onError);
+          current = null;
         }
-        if (running) stop('reached the end (' + rows.length + ' entries)');
+        const finished = running;
+        const failedCount = results.filter((r) => r.errors.length || !r.settled).length;
+        if (running) stop('tested ' + rows.length + ' entries, ' + failedCount + ' failed');
+        showReport(results, rows.length, finished);
       }
 
       autoBtn.addEventListener('click', () => {

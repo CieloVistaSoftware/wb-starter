@@ -6,6 +6,130 @@
   ],
   "releases": [
     {
+      "version": "1.0.285",
+      "date": "2026-10-05",
+      "summary": "Pages asked the server for schema files that do not exist (x-lazy and 50 others), filling every CI log with a 404 and an ENOENT error. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1561\" target=\"_blank\" rel=\"noopener\">PR 1561</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1550\" target=\"_blank\" rel=\"noopener\">#1550</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Release lines for the schema-request fix</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1550\" target=\"_blank\" rel=\"noopener\">#1550</a>",
+          "issues": [
+            1550
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Ask only for schemas the index lists; one shared index loader</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1550\" target=\"_blank\" rel=\"noopener\">#1550</a>",
+          "issues": [
+            1550
+          ]
+        }
+      ],
+      "seeIt": "Open <code>public/doc-viewer.html?file=docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md</code> with the network panel open, filtered to &quot;schema.json&quot;. Before: <code>/src/wb-models/lazy.schema.json</code> returned 404 and the server printed &quot;Error: ENOENT ... lazy.schema.json&quot;. Now: no schema request fails; only schemas the index lists are asked for."
+    },
+    {
+      "version": "1.0.284",
+      "date": "2026-10-05",
+      "summary": "AutoScroll on the Behaviors page only showed each entry: it reported nothing and toured only the groups you had opened. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1538\" target=\"_blank\" rel=\"noopener\">PR 1538</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read AutoScroll&#39;s open groups without sleeping</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+          "issues": [
+            1536
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+          "issues": [
+            1536
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>AutoScroll tests every behavior in the nav</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1536\" target=\"_blank\" rel=\"noopener\">#1536</a>",
+          "issues": [
+            1536
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors) and click AutoScroll in the header. Before: it toured only the groups you had opened and ended without a word. Now: it opens every group, walks all 1,333 entries and ends with &quot;Tested all 1333 entries: N passed, M failed&quot;, naming each failure."
+    },
+    {
+      "version": "1.0.283",
+      "date": "2026-10-05",
+      "summary": "The issue state engine credited #1075 with a spec that never mentions 1075, so &quot;has a test&quot; stopped meaning &quot;has a test for this&quot;. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1540\" target=\"_blank\" rel=\"noopener\">PR 1540</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1090\" target=\"_blank\" rel=\"noopener\">#1090</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Say in the spec how to see by hand</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1090\" target=\"_blank\" rel=\"noopener\">#1090</a>",
+          "issues": [
+            1090
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Never credit a spec to an issue it does not mention</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1090\" target=\"_blank\" rel=\"noopener\">#1090</a>",
+          "issues": [
+            1090
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/issue-state-credits-only-a-spec-that-names-the-issue.spec.ts --project=regression</code>. Before: a spec that never mentions #N still counted as N&#39;s test, and the unrecorded-test state was missing from STATES (its counter read NaN). Now: such an issue reads test-unrelated, and all 5 tests pass."
+    },
+    {
+      "version": "1.0.282",
+      "date": "2026-10-05",
+      "summary": "The live site&#39;s version badge once showed an asterisk (&quot;uncommitted changes&quot;) and named the wrong commit, because the version file was written on a developer&#39;s machine. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1562\" target=\"_blank\" rel=\"noopener\">PR 1562</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1067\" target=\"_blank\" rel=\"noopener\">#1067</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines for the deployed-version guard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1067\" target=\"_blank\" rel=\"noopener\">#1067</a>",
+          "issues": [
+            1067
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>A clean checkout stamps dirty:false and names the commit it builds</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1067\" target=\"_blank\" rel=\"noopener\">#1067</a>",
+          "issues": [
+            1067
+          ]
+        }
+      ],
+      "seeIt": "Open https://cielovistasoftware.github.io/wb-starter/src/core/version.js. Before: the deployed badge read &quot;v4.0.2 *&quot; with dirty: true and a parent commit from the committer&#39;s machine. Now: it reads dirty: false, branch main, and the commit it names is the code that was deployed."
+    },
+    {
+      "version": "1.0.281",
+      "date": "2026-10-05",
+      "summary": "The behavior cross-reference called itself a complete reference of all behaviors while its sections covered about a quarter of them. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1554\" target=\"_blank\" rel=\"noopener\">PR 1554</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Release lines for the cross-reference inventory</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Phrase the generated row count so the prose-count gate does not misread it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The cross-reference opens with a generated inventory of every behavior</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1099\" target=\"_blank\" rel=\"noopener\">#1099</a>",
+          "issues": [
+            1099
+          ]
+        }
+      ],
+      "seeIt": "Open <code>docs/behavior-cross-reference.md</code> in the doc viewer. Before: it opened &quot;A complete reference of all WB Behaviors&quot; and most behaviors appeared nowhere in it. Now: it opens with an inventory table listing every behavior the runtime can reach, how each is written, its reference page, and whether a section below covers it."
+    },
+    {
       "version": "1.0.280",
       "date": "2026-10-05",
       "summary": "Three versions on the Releases page (1.0.277, 1.0.278, 1.0.279) said nothing about how to see their change, which failed the release check on main and blocked every open PR. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1563\" target=\"_blank\" rel=\"noopener\">PR 1563</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a>",
