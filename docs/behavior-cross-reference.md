@@ -6,7 +6,7 @@ What each WB behavior adds to the element it decorates. The **inventory** below 
 
 ## Inventory: every behavior
 
-**161 behaviors**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
+Rows: **161**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked "undocumented" exists and works; it has no reference page yet.
 
 | Behavior | Written as | Reference | Detailed below |
 |---|---|---|---|

@@ -60,7 +60,11 @@ export function buildInventory(doc) {
     '',
     '## Inventory: every behavior',
     '',
-    `**${sorted.length} behaviors**, read from ${code('src/core/tag-map.js')} and ${code('src/core/wb-lazy.js')}. ` +
+    // Not phrased "N behaviors": behavior-docs-match-the-map.spec.ts polices
+    // that shape against tag-map.js alone, and this count also includes
+    // wb-lazy.js's attribute-only behaviors (#666). This number is generated
+    // and --check keeps it current, so it cannot go stale the way prose did.
+    `Rows: **${sorted.length}**, read from ${code('src/core/tag-map.js')} and ${code('src/core/wb-lazy.js')}. ` +
       `${documented} have a reference page in ${code('docs/behaviors/')}; ${detailed} also have a detailed section in this document. ` +
       'A behavior marked "undocumented" exists and works; it has no reference page yet.',
     '',
