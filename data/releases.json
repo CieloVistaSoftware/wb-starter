@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.275",
+      "date": "2026-10-05",
+      "summary": "Fix(input): iconPosition reaches the div builder, and a position with no icon is an error (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1539\" target=\"_blank\" rel=\"noopener\">PR 1539</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>IconPosition variant demos carry the icon they position</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
+          "issues": [
+            793
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>IconPosition reaches the div builder, and a position with no icon is an error</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/793\" target=\"_blank\" rel=\"noopener\">#793</a>",
+          "issues": [
+            793
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.274",
       "date": "2026-10-05",
       "summary": "Fix(button): icon layout reaches every button, not only an &lt;x-button&gt; tag (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1548\" target=\"_blank\" rel=\"noopener\">PR 1548</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/741\" target=\"_blank\" rel=\"noopener\">#741</a>",
