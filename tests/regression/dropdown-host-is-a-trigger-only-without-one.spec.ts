@@ -11,6 +11,11 @@ import { test, expect } from '../fixtures/offline';
  *
  * The class belongs only to a host whose own text IS the trigger (no label,
  * no element children). Both halves are held here.
+ *
+ * See it by hand: Open Behaviors (?page=behaviors), pick dropdown and compare
+ * position="bottom-start" with position="bottom-end". Before: both menus
+ * opened in nearly the same place, 2px apart. Now: one hangs from the host's
+ * left edge and the other from its right edge.
  */
 test.describe('x-dropdown host styling (#702)', () => {
   test('a host with a built trigger is not padded as one, and start/end visibly differ', async ({ page }) => {
