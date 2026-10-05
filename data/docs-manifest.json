@@ -1,5 +1,5 @@
 {
-  "totalFiles": 274,
+  "totalFiles": 273,
   "categories": [
     "_today",
     "architecture",
@@ -257,12 +257,6 @@
         "path": "docs/styles.md",
         "title": "Class Naming & Semantics",
         "name": "styles",
-        "category": "root"
-      },
-      {
-        "path": "docs/templates.md",
-        "title": "Templates Reference",
-        "name": "templates",
         "category": "root"
       },
       {
@@ -3270,12 +3264,6 @@
       "path": "docs/styles.md",
       "title": "Class Naming & Semantics",
       "name": "styles",
-      "category": "root"
-    },
-    {
-      "path": "docs/templates.md",
-      "title": "Templates Reference",
-      "name": "templates",
       "category": "root"
     },
     {

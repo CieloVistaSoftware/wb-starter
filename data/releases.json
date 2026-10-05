@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.254",
+      "date": "2026-10-04",
+      "summary": "Chore: delete data/templates.json (its reader, the Builder, is gone) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1504\" target=\"_blank\" rel=\"noopener\">PR 1504</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1447\" target=\"_blank\" rel=\"noopener\">#1447</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Delete data/templates.json -- its reader, the Builder, is gone</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1447\" target=\"_blank\" rel=\"noopener\">#1447</a>",
+          "issues": [
+            1447
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.253",
       "date": "2026-10-04",
       "summary": "Fix: cardproduct compact is actually compact (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1500\" target=\"_blank\" rel=\"noopener\">PR 1500</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1465\" target=\"_blank\" rel=\"noopener\">#1465</a>",
