@@ -16,17 +16,8 @@ export function span(element, options = {}) {
   const variant = options.variant || readAttr(element, 'variant');
   
   if (variant) {
-    // Map simplified variants to full class names if needed
-    // or just add x-span--variant
+    // One class per variant, styled by span.css -- the window dots included
+    // (#1464: they used to need a second x-window-dot class from site.css).
     element.classList.add(`x-span--${variant}`);
-    
-    // Specific support for window dots
-    if (['red', 'yellow', 'green', 'dot'].includes(variant)) {
-        element.classList.add('x-window-dot');
-    }
-    
-    if (['red', 'yellow', 'green'].includes(variant)) {
-        element.classList.add(`x-window-dot--${variant}`);
-    }
   }
 }

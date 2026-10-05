@@ -25,13 +25,9 @@ function cssFiles(dir: string, out: string[] = []): string[] {
 
 /**
  * Known, filed exceptions -- each names its issue and goes when that closes.
- * #1464: span's red/yellow/green/dot variants get x-span--<v> from span.js but
- * are drawn by x-window-dot--*; one variant list carries two meanings.
+ * (#1464's four span variants were the last; span.css now styles them.)
  */
-const FILED: Record<string, string> = {
-  'span.variant=red': '#1464', 'span.variant=yellow': '#1464',
-  'span.variant=green': '#1464', 'span.variant=dot': '#1464',
-};
+const FILED: Record<string, string> = {};
 
 function jsFiles(dir: string, out: string[] = []): string[] {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {

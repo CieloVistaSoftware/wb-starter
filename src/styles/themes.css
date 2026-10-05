@@ -117,7 +117,14 @@
   --success-color: hsl(142, 71%, 45%);
   --warning-color: hsl(45, 93%, 47%);
   --danger-color: hsl(0, 84%, 60%);
-  
+
+  /* Window-control dots -- <span x-span variant="red|yellow|green"> (#1464).
+     The conventional title-bar colours, so a mock window reads as one in
+     every theme. Moved here from site.css, which held them as literals. */
+  --window-dot-red: #ff5f56;
+  --window-dot-yellow: #ffbd2e;
+  --window-dot-green: #27ca40;
+
   /* Alert backgrounds (10% opacity tints) */
   --alert-info-bg: hsla(217, 91%, 60%, 0.1);
   --alert-success-bg: hsla(142, 71%, 45%, 0.1);
