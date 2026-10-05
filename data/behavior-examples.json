@@ -963,42 +963,42 @@
       "alternates": []
     },
     "x-countdown": {
-      "source": "<div x-countdown to=\"2027-12-31\" class=\"time-display\"></div>",
+      "source": "<div x-countdown to=\"2027-12-31\"></div>",
       "alternates": [],
       "examples": [
         {
           "label": "ninety seconds",
-          "source": "<div x-countdown seconds=\"90\" class=\"time-display\"></div>"
+          "source": "<div x-countdown seconds=\"90\"></div>"
         },
         {
           "label": "one hour",
-          "source": "<div x-countdown seconds=\"3600\" class=\"time-display\"></div>"
+          "source": "<div x-countdown seconds=\"3600\"></div>"
         },
         {
           "label": "custom format",
-          "source": "<div x-countdown seconds=\"7265\" format=\"HH h MM m SS s\" class=\"time-display\"></div>"
+          "source": "<div x-countdown seconds=\"7265\" format=\"HH h MM m SS s\"></div>"
         },
         {
           "label": "days to a date",
-          "source": "<div x-countdown date=\"2030-01-01\" format=\"DD days, HH:MM:SS\" class=\"time-display\"></div>"
+          "source": "<div x-countdown date=\"2030-01-01\" format=\"DD days, HH:MM:SS\"></div>"
         },
         {
           "label": "ten seconds",
-          "source": "<div x-countdown seconds=\"10\" class=\"time-display\"></div>"
+          "source": "<div x-countdown seconds=\"10\"></div>"
         }
       ]
     },
     "x-relativetime": {
-      "source": "<span x-relativetime date=\"2025-01-01\" class=\"time-display\">Jan 1, 2025</span>",
+      "source": "<span x-relativetime date=\"2025-01-01\">Jan 1, 2025</span>",
       "alternates": [],
       "examples": [
         {
           "label": "years ago",
-          "source": "<span x-relativetime date=\"2019-06-01\" class=\"time-display\">Jun 1, 2019</span>"
+          "source": "<span x-relativetime date=\"2019-06-01\">Jun 1, 2019</span>"
         },
         {
           "label": "a few days ago",
-          "source": "<span x-relativetime date=\"2026-09-28\" class=\"time-display\">Sep 28, 2026</span>"
+          "source": "<span x-relativetime date=\"2026-09-28\">Sep 28, 2026</span>"
         },
         {
           "label": "in a sentence",
@@ -1006,11 +1006,11 @@
         },
         {
           "label": "invalid date",
-          "source": "<span x-relativetime date=\"not-a-date\" class=\"time-display\">?</span>"
+          "source": "<span x-relativetime date=\"not-a-date\">?</span>"
         },
         {
           "label": "a minute ago",
-          "source": "<span x-relativetime date=\"2026-10-02T00:00:00Z\" class=\"time-display\">today</span>"
+          "source": "<span x-relativetime date=\"2026-10-02T00:00:00Z\">today</span>"
         }
       ]
     },

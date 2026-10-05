@@ -940,7 +940,9 @@
       const shown = rows.length;
       countEl.textContent = q === ''
         ? `${allEntries.length} behaviors`
-        : `Showing ${shown} of ${totalRowCount}`;
+        // #1019: rows are examples (one per option), not behaviors -- name the
+        // unit, or "of 767" reads against the header's "184 behaviors".
+        : `Showing ${shown} of ${totalRowCount} examples`;
 
       // #666 — John: "why does search not fill the first thing it finds with
       // the search item e.g. button". Typing narrowed the list but rendered

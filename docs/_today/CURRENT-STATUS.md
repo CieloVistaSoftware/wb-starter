@@ -21,6 +21,8 @@
 
 **Last action:** each version now shows the issue (commit `Summary:` line, else the cited issue's title, else the commit body), then **See it:** (commit `See it:` line, else "No visible change" for tests/tooling), then what changed. A new PR check requires both lines. Worktrees are removed when their PR merges, junction first.
 
+Also #1018 (page-only `class="time-display"` removed from the x-countdown/x-relativetime examples and `docs/behaviors/countdown.md`, `docs/behaviors/relativetime.md`) and #1019 (the search counter names its unit: "Showing N of 767 examples").
+
 **Next step:** work the open issues.
 
 ---
