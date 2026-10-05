@@ -43,10 +43,9 @@ test.describe('doc-viewer.html code panels are never narrower than their own con
 
       const demos = page.locator('[x-demo]');
       await expect(demos.first()).toBeVisible({ timeout: 20000 });
-      // Let shrink-to-fit's rAF-scheduled measurement settle -- and then wait
-      // for every demo to have committed it (demoWidthsSettled: until then
-      // demo.css holds the panel at the 50vw cap, whatever it will commit).
-      await page.waitForTimeout(500);
+      // Wait for every demo to have committed its width (demoWidthsSettled:
+      // until then demo.css holds the panel at the 50vw cap, whatever it will
+      // commit). #984: no lead-in sleep; the helper waits for idle first.
       await demoWidthsSettled(page);
 
       const count = await demos.count();
