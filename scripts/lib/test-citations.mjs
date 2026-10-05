@@ -39,3 +39,20 @@ export function issuesNamedInTestTitles(text) {
   }
   return out;
 }
+
+/**
+ * #1090, the other half: never credit a spec to an issue it does not mention.
+ *
+ * #1075's `test:` field named scan-awaits-auto-injected-behaviors.spec.ts, a
+ * file with zero occurrences of "1075" -- both issues were fixed in one commit,
+ * and the spec belonged to its sibling. The field is the issue's own claim, so
+ * any mention of `#1075` in the file (title, header, comment) is enough to
+ * back it; none at all means the claim points at the wrong spec.
+ *
+ * @param {string} text  the spec file's source
+ * @param {number} issue
+ * @returns {boolean}
+ */
+export function specMentionsIssue(text, issue) {
+  return new RegExp(`#${Number(issue)}(?!\\d)`).test(String(text ?? ''));
+}
