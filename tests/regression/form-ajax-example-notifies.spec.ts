@@ -18,6 +18,12 @@
  *   button label         "action: /api/demo-form · successMessage: Sent —
  *                        check the events panel below." -- the form's own
  *                        attributes, written over the button's text
+ *
+ * See it by hand: Run `npx playwright test
+ * tests/regression/form-ajax-example-notifies.spec.ts --project=regression`.
+ * Before: 4 tests, none of which checked when validation runs. Now: 5 tests;
+ * the new one types a bad email, expects no red mark until the field loses
+ * focus, and fails if typing alone marks it invalid.
  */
 import { test, expect, Page } from '../fixtures/offline';
 
