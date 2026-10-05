@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.271",
+      "date": "2026-10-05",
+      "summary": "Test: the no-inline-styles gate reads the markup stored in config/*.json (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1529\" target=\"_blank\" rel=\"noopener\">PR 1529</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1522\" target=\"_blank\" rel=\"noopener\">#1522</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The no-inline-styles gate reads the markup stored in config/*.json</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1522\" target=\"_blank\" rel=\"noopener\">#1522</a>",
+          "issues": [
+            1522
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.270",
       "date": "2026-10-05",
       "summary": "Test: dialog samples wait for x-ready and dialog.open, not 2.1s of clock (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1528\" target=\"_blank\" rel=\"noopener\">PR 1528</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1515\" target=\"_blank\" rel=\"noopener\">#1515</a>",
