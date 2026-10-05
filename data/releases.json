@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.260",
+      "date": "2026-10-04",
+      "summary": "Fix: a test run reserves PORT and PORT+1, which its server binds (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1512\" target=\"_blank\" rel=\"noopener\">PR 1512</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1472\" target=\"_blank\" rel=\"noopener\">#1472</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A test run reserves PORT and PORT+1 -- its server binds both</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1472\" target=\"_blank\" rel=\"noopener\">#1472</a>",
+          "issues": [
+            1472
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.259",
       "date": "2026-10-04",
       "summary": "Test: wait for the drawer to open, not 300ms (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1510\" target=\"_blank\" rel=\"noopener\">PR 1510</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1493\" target=\"_blank\" rel=\"noopener\">#1493</a>",
