@@ -1,0 +1,55 @@
+{
+  "title": "WB Starter in 60 seconds",
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "narration": "[curious] What if building a website meant… just writing HTML?",
+      "show": { "type": "card", "title": "Just HTML?", "code": "<article>\n  <h3>Hello</h3>\n</article>" }
+    },
+    {
+      "narration": "No bundler. No build step. No framework.",
+      "show": { "type": "card", "title": "No more:", "items": ["✗ bundler", "✗ build step", "✗ framework"] }
+    },
+    {
+      "narration": "That's WB Starter. You write HTML5 — that's the whole API.",
+      "show": { "type": "card", "title": "WB Starter", "subtitle": "You write HTML5. That's the API." }
+    },
+    {
+      "narration": "Here's the trick: the browser already has the components. An article is a card. A dialog is a modal. Details is an accordion.",
+      "show": {
+        "type": "demo",
+        "html": "<article><h3>An article is a card</h3><p>Just the tag.</p></article>\n<details><summary>Details is an accordion</summary><p>Opens on its own.</p></details>",
+        "actions": [{ "click": "summary" }]
+      }
+    },
+    {
+      "narration": "WB just adds what they're missing. [excited] Want a card you can drag, with a ripple? Add two attributes. Done.",
+      "show": {
+        "type": "demo",
+        "html": "<article x-draggable x-ripple id=\"dragCard\"><h3>Drag me</h3><p>x-draggable x-ripple</p></article>",
+        "actions": [{ "click": "#dragCard" }, { "drag": "#dragCard", "by": [0, 260] }]
+      }
+    },
+    {
+      "narration": "Open the inspector — it's still your article. No wrapper. No shadow root. HTML in… HTML out.",
+      "show": {
+        "type": "demo",
+        "html": "<article x-draggable x-ripple id=\"dragCard\"><h3>Drag me</h3><p>Still an article.</p></article>",
+        "showHtml": "#dragCard"
+      }
+    },
+    {
+      "narration": "[pause] And here's the wild part: the whole thing was built by AI. Claude wrote the code, the docs, and over eight thousand tests — and nothing ships without a passing test.",
+      "show": { "type": "card", "title": "Built by AI, with Claude", "items": ["8,523 tests", "Nothing ships without a passing test"] }
+    },
+    {
+      "narration": "So maybe the framework you need… [laughs] is the one you already know.",
+      "show": { "type": "page", "path": "?page=home", "scroll": true }
+    },
+    {
+      "narration": "WB Starter. Link in the description.",
+      "show": { "type": "card", "title": "WB Starter", "subtitle": "cielovistasoftware.github.io/wb-starter" }
+    }
+  ]
+}

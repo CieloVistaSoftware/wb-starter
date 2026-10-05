@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5840
+    "totalWords": 5833
   },
   "documents": [
     {
@@ -199,10 +199,10 @@
           "text": "' + escapeText(entry.title) + '"
         }
       ],
-      "content": "📖 Documentation Browse all documentation, guides, and research papers. 🔍 Sort documents Newest first By category Loading documentation...",
+      "content": "📖 Documentation Browse all documentation, guides, and research papers. 🔍 Sort documents Newest first By date created (every doc) By category Loading documentation...",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-03"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/features",
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.275\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.275\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.278\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.278\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-05"
@@ -452,7 +452,7 @@
           "text": "${h.label}"
         }
       ],
-      "content": "Releases What each version added, fixed and changed. Every push to main is a minor version (1.0.N, the number on the version badge), lists what it contains with links to its issues, and deploys straight to cielovistasoftware.github.io/wb-starter , so the newest release below is what this site is running. Loading releases…",
+      "content": "Releases Each commit to main is a new release (1.0.N, the number on the version badge), and it deploys straight to cielovistasoftware.github.io/wb-starter , so the newest release below is what this site is running. Each one says what the issue was, what to do to see the change, and what changed, with links to its issues. Loading releases…",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-05"
@@ -1671,7 +1671,7 @@
       "content": "# Countdown `x-countdown` shows the time left until `date` (or `to`), or for a fixed number of `seconds`, and updates it every second until it reaches zero, when `wb:countdown:complete` fires. Put it on an empty ` ` or ` `. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `seconds` | `string` | `0` | A fixed duration in seconds, used instead of an absolute `date`. | | `format` | `string` | `auto` | How the remaining time is rendered. `auto` (default) drops units that are zero. | | `date` | `string` | — | Target date/time to count down to. `to` is accepted as an alias; `date` is read first. | | `to` | `string` | — | Alias of `date`, read only when `date` is absent. | ## Events - `wb:countdown:complete` — The countdown reached zero. Schema: [`countdown.schema.json`](../../src/wb-models/countdown.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/counter",
@@ -2493,7 +2493,7 @@
       "content": "# Relativetime `x-relativetime` replaces the element's text with how long ago `date` was — \"3 days ago\", \"Just now\" — and recomputes it every `refresh` milliseconds. Keep the absolute date in the markup as the fallback text. ## Usage Jan 1, 2025 ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `datetime` | `string` | — | Alias of `date`, read only when `date` is absent. | | `refresh` | `string` | `60000` | How often the text is recomputed, in milliseconds. Defaults to `60000` — once a minute. | | `date` | `string` | — | The timestamp to describe. `datetime` is accepted as an alias; `date` is read first. | Schema: [`relativetime.schema.json`](../../src/wb-models/relativetime.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/release",
@@ -3646,10 +3646,10 @@
       "title": "RELEASE-PROCESS",
       "description": null,
       "headings": [],
-      "content": "# Release Process Standards **Every version number this project shows anyone MUST be traceable to a written list of what it contains.** A version number is a promise that a specific, testable thing shipped. If you cannot answer \"what is in 3.0.61?\" by reading one page, the number is noise. This exists because it was broken. Between 2026-08-19 and 2026-08-20 the version went 3.0.36 → 3.0.60 — 24 bumps, 16 of them in one day — with the last What's New entry dated 2026-08-19. The result could not be tested: given a version number there was no way to learn what was in it, and given a build no way to know its number was unique. --- ## The number on the badge (since 2026-10-02) John: \"I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple.\" The version badge shows the last release tag with its patch moved on by the **pushes to main** since it: `v1.0.89` + 3 pushes reads **`v1.0.92`**. John, 2026-10-02: \"count pushes not commits\" -- counting commits made it jump by three per push. A push is one first-parent commit on main; the stamp workflow's own `chore(version): stamp` commit belongs to the push it stamps (`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89` commit (`ANCHOR` in that file), so it never went backwards; a release tag cut after it takes over. It is counted by git from the tag (`scripts/stamp-version.js`), so the same commit shows the same number on port 3000 and on the live site. Every version is listed on the Releases page with what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks; local edits or being behind GitHub are said in its tooltip. A release (below) is still cut deliberately with `npm run ship` and resets the count to its new tag. ## 1. One number per release, never per commit A release number changes **once, on `main`, when something is being released**. It does not change on every commit. The failure mode this replaces: `.husky/pre-commit` ran `npm version patch` on every commit. Because branch commits bump and squash-merges collapse them, the numbers that reached `main` were both **ambiguous** and **phantom**: | Symptom | Actual measurement | |---|---| | One number, several builds | `3.0.55` = two commits (#722, #733); `3.0.44` = three; `3.0.35` = ~40 | | Numbers that never shipped | `3.0.56`, `3.0.58`, `3.0.59`, `3.0.60` — feature branches only | | Working copy ahead of reality | local read `3.0.60` while `main` was `3.0.57` | Neither is testable. Both are prevented by bumping once, on `main`. ## 2. Cache-busting is a different job — give it its own stamp The `?v=` query strings in `index.html` genuinely must change on every commit, or browsers serve stale assets. **That need is what drove the per-commit bump, and it does not require the semver version.** - `?v=` and any other cache-bust token use the **commit hash or a build counter**. Change freely, every commit, no ceremony. - `package.json` `version` is the **release number**. Changes only under rule 1. `scripts/stamp-version.js` already writes both; it must stop taking the cache-bust value from the semver version. ## 3. A release is not done until the Releases page names it `data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what the site says is live, so it is the only thing anyone can test against. (Until 1.0 this was the hand-edited What's New page, now in the `archive/` folder; `?page=whats-new` still forwards to `?page=releases`.) A release commit MUST contain, together, in one commit: 1. the `version` bump in `package.json` and `package-lock.json` 2. the stamped `src/core/version.js` 3. a `data/releases.json` entry **whose `version` is that exact version number**, listing what it added, fixed and changed Shipping any one of those without the others is the defect this document exists to prevent. `npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and `scripts/release.mjs` gate 2 refuses a release the file does not name. ## 4. Releases are keyed by version, not by date A date cannot be tested; a version can. Each entry is keyed by release number, with the date as secondary: ```json { \"version\": \"1.0.0\", \"date\": \"2026-09-29\", \"summary\": \"\", \"items\": [ { \"kind\": \"fixed\", \"html\": \" Releases replace What's New #1182 (as a link)\", \"issues\": [1182] } ] } ``` Work that is live but not yet in a numbered release may sit in an `unreleased` block; the next release folds it in, so it can never be shown in place of a version (#1182). Work from before numbered releases is under `history`, by date, never as a version. If a number was consumed but never deployed, **say so explicitly** so nobody hunts for it. ## 5. Every issue reference is a link Refs like `#727` are written as real anchors to `https://github.com/CieloVistaSoftware/wb-starter/issues/727`, `target=\"_blank\"`, `rel=\"noopene",
+      "content": "# Release Process Standards **Every version number this project shows anyone MUST be traceable to a written list of what it contains.** A version number is a promise that a specific, testable thing shipped. If you cannot answer \"what is in 3.0.61?\" by reading one page, the number is noise. This exists because it was broken. Between 2026-08-19 and 2026-08-20 the version went 3.0.36 → 3.0.60 — 24 bumps, 16 of them in one day — with the last What's New entry dated 2026-08-19. The result could not be tested: given a version number there was no way to learn what was in it, and given a build no way to know its number was unique. --- ## The number on the badge (since 2026-10-02) John: \"I want port 3000 to show 1.0.what the latest push is e.g. 1.0.41 simple.\" The version badge shows the last release tag with its patch moved on by the **pushes to main** since it: `v1.0.89` + 3 pushes reads **`v1.0.92`**. John, 2026-10-02: \"count pushes not commits\" -- counting commits made it jump by three per push. A push is one first-parent commit on main; the stamp workflow's own `chore(version): stamp` commit belongs to the push it stamps (`scripts/lib/push-count.mjs`). The count carries on from main's `stamp v1.0.89` commit (`ANCHOR` in that file), so it never went backwards; a release tag cut after it takes over. It is counted by git from the tag (`scripts/stamp-version.js`), so the same commit shows the same number on port 3000 and on the live site. Every version is listed on the Releases page with what it contains (`scripts/release-versions.mjs`, run by the stamp workflow). The badge shows the number only, no marks; local edits or being behind GitHub are said in its tooltip. A release (below) is still cut deliberately with `npm run ship` and resets the count to its new tag. ## 1. One number per release, never per commit A release number changes **once, on `main`, when something is being released**. It does not change on every commit. The failure mode this replaces: `.husky/pre-commit` ran `npm version patch` on every commit. Because branch commits bump and squash-merges collapse them, the numbers that reached `main` were both **ambiguous** and **phantom**: | Symptom | Actual measurement | |---|---| | One number, several builds | `3.0.55` = two commits (#722, #733); `3.0.44` = three; `3.0.35` = ~40 | | Numbers that never shipped | `3.0.56`, `3.0.58`, `3.0.59`, `3.0.60` — feature branches only | | Working copy ahead of reality | local read `3.0.60` while `main` was `3.0.57` | Neither is testable. Both are prevented by bumping once, on `main`. ## 2. Cache-busting is a different job — give it its own stamp The `?v=` query strings in `index.html` genuinely must change on every commit, or browsers serve stale assets. **That need is what drove the per-commit bump, and it does not require the semver version.** - `?v=` and any other cache-bust token use the **commit hash or a build counter**. Change freely, every commit, no ceremony. - `package.json` `version` is the **release number**. Changes only under rule 1. `scripts/stamp-version.js` already writes both; it must stop taking the cache-bust value from the semver version. ## 3. A release is not done until the Releases page names it `data/releases.json` is the changelog, and `pages/releases.html` renders it. It is what the site says is live, so it is the only thing anyone can test against. (Until 1.0 this was the hand-edited What's New page, now in the `archive/` folder; `?page=whats-new` still forwards to `?page=releases`.) A release commit MUST contain, together, in one commit: 1. the `version` bump in `package.json` and `package-lock.json` 2. the stamped `src/core/version.js` 3. a `data/releases.json` entry **whose `version` is that exact version number**, listing what it added, fixed and changed Shipping any one of those without the others is the defect this document exists to prevent. `npm run ship` does all three: `scripts/release-entry.mjs` writes the entry from the commits since the last tag (`feat:` → added, `fix:` → fixed, anything else → changed), and `scripts/release.mjs` gate 2 refuses a release the file does not name. ## 3a. Every version says what the issue was and how to see the change John, 2026-10-05, on the Releases page: \"This page tells me nothing. one of these lines should be a summary of the issue, the other what to do to see the change\" (#1533). Each commit to `main` is a new release, and each one shows: 1. **The issue, in plain English.** The commit's `Summary:` line. Without one, the title of the issue the commit cites (cached in `data/issue-titles.json`), and only then the PR title. 2. **How to recreate the change by hand.** Where to go, what to do, what you saw **Before:** and what you see **Now:**. John, 2026-10-05: \"still not good enough, tell the user what to do to manually recreate this\", and \"I don't do anything manually that's your job\": Claude writes these lines, John never does. The commit's `See it:` line, or `data/release-see-it.json` for that ",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/standards/REPO-LAYOUT",
@@ -5786,7 +5786,6 @@
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/cardpricing",
       "docs/claude/TIER3-REFERENCE",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
     ],
     "30": [
@@ -6267,8 +6266,10 @@
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
     "275": [
-      "pages/home",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
+    ],
+    "278": [
+      "pages/home"
     ],
     "279": [
       "docs/claude/TIER1-LAWS"
@@ -6438,9 +6439,6 @@
       "docs/behaviors/select"
     ],
     "722": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "727": [
       "docs/standards/RELEASE-PROCESS"
     ],
     "733": [
@@ -6624,9 +6622,6 @@
     "1169": [
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
-    "1182": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
     "1185": [
       "docs/behaviors/password"
     ],
@@ -6642,6 +6637,9 @@
     ],
     "1344": [
       "docs/behaviors/table"
+    ],
+    "1533": [
+      "docs/standards/RELEASE-PROCESS"
     ],
     "2000": [
       "docs/behaviors/copybutton",
@@ -7064,7 +7062,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -7153,7 +7150,6 @@
       "docs/schema.migration",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
@@ -8028,6 +8024,7 @@
       "docs/linkedin-update-article",
       "docs/semantic-standard",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/RELEASE-PROCESS",
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/site/content",
@@ -9111,7 +9108,6 @@
       "docs/performance",
       "docs/semantic-audit",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/test-schema-standard",
       "demos/frameworks",
@@ -9851,7 +9847,6 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "demos/frameworks",
       "demos/landing-page-showcase",
       "demos/site/content",
@@ -10694,7 +10689,8 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "tells": [
-      "pages/ai-permutation-test"
+      "pages/ai-permutation-test",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "exactly": [
       "pages/ai-permutation-test",
@@ -11991,8 +11987,7 @@
       "docs/behaviors/video",
       "docs/behaviors/x-copybutton",
       "docs/code-examples-standard",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "displayed": [
       "pages/ai-permutation-test",
@@ -12053,6 +12048,7 @@
       "pages/behaviors",
       "pages/features",
       "pages/home",
+      "pages/releases",
       "docs/AI",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -13162,6 +13158,7 @@
       "docs/behaviors/truncate",
       "docs/code-examples-standard",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/RELEASE-PROCESS",
       "demos/landing-page-showcase"
     ],
     "via": [
@@ -13944,6 +13941,7 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "docs/wbservices",
       "demos/frameworks"
     ],
@@ -15203,6 +15201,7 @@
       "docs/schema-first-architecture",
       "docs/search",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/testing-strategy"
     ],
     "jump": [
@@ -15264,6 +15263,7 @@
     ],
     "commit": [
       "pages/behaviors",
+      "pages/releases",
       "docs/behaviors/release",
       "docs/claude/TIER3-REFERENCE",
       "docs/claude/TOOLING-INVENTORY",
@@ -15348,6 +15348,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "demos/frameworks",
       "demos/standalone"
@@ -15584,7 +15585,6 @@
     ],
     "contains": [
       "pages/behaviors",
-      "pages/releases",
       "docs/AI",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/behaviors/cover",
@@ -16583,7 +16583,6 @@
     ],
     "added": [
       "pages/behaviors",
-      "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/NOTES-V3-GUIDE",
@@ -16728,7 +16727,6 @@
       "docs/compliance/iso-42001-alignment",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS",
       "demos/schema-first-architecture"
     ],
     "appear": [
@@ -17444,7 +17442,6 @@
       "docs/behaviors/fill",
       "docs/behaviors/grid",
       "docs/behaviors/vimeo",
-      "docs/standards/RELEASE-PROCESS",
       "demos/autoinject"
     ],
     "monday": [
@@ -18323,6 +18320,54 @@
       "pages/releases",
       "docs/guides/create-a-website"
     ],
+    "date": [
+      "pages/docs",
+      "docs/BRANCH_PROTECTION",
+      "docs/INTELLISENSE-TOOLTIPS",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/card",
+      "docs/behaviors/cardfile",
+      "docs/behaviors/code",
+      "docs/behaviors/countdown",
+      "docs/behaviors/input",
+      "docs/behaviors/mark",
+      "docs/behaviors/relativetime",
+      "docs/behaviors/table",
+      "docs/behaviors/time",
+      "docs/compliance/iso-42001-alignment",
+      "docs/properties",
+      "docs/semantic-standard",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "demos/autoinject"
+    ],
+    "created": [
+      "pages/docs",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/behaviors/colorpicker",
+      "docs/behaviors/toast",
+      "docs/semantic-audit",
+      "docs/standards/ERROR-LOG-RETENTION"
+    ],
+    "doc": [
+      "pages/docs",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/card",
+      "docs/claude/README",
+      "docs/claude/SCHEMAS-GUIDE",
+      "docs/claude/TIER3-REFERENCE",
+      "docs/guides/search-index",
+      "docs/mcp",
+      "docs/schema-test-value",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/REPO-LAYOUT"
+    ],
     "category": [
       "pages/docs",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -18497,6 +18542,7 @@
     ],
     "change": [
       "pages/features",
+      "pages/releases",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/solidjscomparison",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -18661,7 +18707,6 @@
       "docs/pce-candidates",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/styles",
       "docs/testing-strategy",
@@ -20379,6 +20424,7 @@
     ],
     "see": [
       "pages/hero-variants",
+      "pages/releases",
       "pages/themes",
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -20431,6 +20477,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -21290,7 +21337,6 @@
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "docs/testing-runbook"
     ],
@@ -21514,7 +21560,6 @@
       "docs/home-page",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "docs/themes",
       "demos/code",
@@ -21872,7 +21917,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/cardoverlay",
       "docs/behaviors/notes",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
     ],
     "wrapper": [
@@ -22108,6 +22152,7 @@
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/semantic-standard",
+      "docs/standards/RELEASE-PROCESS",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "demos/code",
@@ -22696,7 +22741,6 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook",
       "docs/wbservices",
       "demos/frameworks",
@@ -23021,14 +23065,12 @@
       "docs/properties",
       "docs/schema-first-audit-report",
       "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
       "demos/site/cards",
       "demos/standalone"
     ],
     "rel": [
       "pages/home",
-      "docs/performance",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/performance"
     ],
     "stylesheet": [
       "pages/home",
@@ -23284,11 +23326,11 @@
       "docs/schema-test-value",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
     ],
     "issue": [
       "pages/issues",
+      "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -23642,7 +23684,6 @@
       "docs/behaviors/fill",
       "docs/behaviors/floatinglabel",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT"
     ],
     "labels": [
@@ -23692,6 +23733,7 @@
     "new": [
       "pages/links",
       "pages/newpage",
+      "pages/releases",
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
       "docs/IMPROVEMENTS",
@@ -24473,87 +24515,20 @@
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook"
     ],
-    "version": [
+    "release": [
       "pages/releases",
-      "docs/AI",
-      "docs/IMPROVEMENTS",
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/dl",
-      "docs/behaviors/header",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/behaviors/ol",
+      "docs/behaviors/rainbow",
       "docs/behaviors/release",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/guides/create-a-website",
-      "docs/guides/search-index",
-      "docs/linkedin-framework-agnostic",
-      "docs/linkedin-standards-article",
-      "docs/pce-candidates",
-      "docs/properties",
-      "docs/schema",
+      "docs/linkedin-update-article",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "fixed": [
-      "pages/releases",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/BRANCH_PROTECTION",
-      "docs/MVVM-MIGRATION-PLAN",
-      "docs/NOTES-V3-GUIDE",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/architecture/proposals/proposed-custom-elements",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/cluster",
-      "docs/behaviors/countdown",
-      "docs/behaviors/gallery",
-      "docs/behaviors/grid",
-      "docs/behaviors/ratio",
-      "docs/behaviors/reel",
-      "docs/behaviors/sidebarlayout",
-      "docs/behaviors/stagelight",
-      "docs/behaviors/toast",
-      "docs/guides/create-a-website",
-      "docs/schema-test-value",
-      "docs/schema",
-      "docs/semantic-audit",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
       "docs/standards/RELEASE-PROCESS",
-      "demos/layout-test"
-    ],
-    "changed": [
-      "pages/releases",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/behaviors/audio",
-      "docs/behaviors/card",
-      "docs/behaviors/flash",
-      "docs/behaviors/move",
-      "docs/behaviors/notes",
-      "docs/behaviors/rating",
-      "docs/behaviors/select",
-      "docs/behaviors/table",
-      "docs/behaviors/tabs",
-      "docs/behaviors/toast",
-      "docs/semantic-standard",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/testing-runbook"
-    ],
-    "push": [
-      "pages/releases",
-      "docs/behaviors/drawer",
-      "docs/behaviors/fill",
-      "docs/guides/create-a-website",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/site/overlays"
-    ],
-    "minor": [
-      "pages/releases"
+      "docs/standards/V3-STANDARDS"
     ],
     "number": [
       "pages/releases",
@@ -24614,17 +24589,30 @@
       "docs/test-schema-standard",
       "docs/testing-strategy"
     ],
-    "lists": [
+    "version": [
       "pages/releases",
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/solidjscomparison",
-      "docs/behaviors-reference",
-      "docs/behaviors/resizable",
-      "docs/behaviors/skeleton",
-      "docs/behaviors/ul",
-      "docs/performance",
-      "docs/property-viewer",
-      "docs/semantic-standard"
+      "docs/AI",
+      "docs/IMPROVEMENTS",
+      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
+      "docs/architecture/proposals/v4-golden-ratio-layout-spec",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/dl",
+      "docs/behaviors/header",
+      "docs/behaviors/release",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/committing-fixes",
+      "docs/guides/create-a-website",
+      "docs/guides/search-index",
+      "docs/linkedin-framework-agnostic",
+      "docs/linkedin-standards-article",
+      "docs/pce-candidates",
+      "docs/properties",
+      "docs/schema",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "deploys": [
       "pages/releases",
@@ -24641,26 +24629,10 @@
       "pages/releases",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/fill",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/behaviors/fill"
     ],
     "io": [
       "pages/releases"
-    ],
-    "release": [
-      "pages/releases",
-      "docs/ANNOUNCE_TEST_POLICY",
-      "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/behaviors/ol",
-      "docs/behaviors/rainbow",
-      "docs/behaviors/release",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/committing-fixes",
-      "docs/guides/create-a-website",
-      "docs/linkedin-update-article",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/standards/V3-STANDARDS"
     ],
     "running": [
       "pages/releases",
@@ -24678,6 +24650,40 @@
       "docs/performance",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-strategy"
+    ],
+    "says": [
+      "pages/releases",
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/card",
+      "docs/behaviors/cardhorizontal",
+      "docs/behaviors/checkbox",
+      "docs/behaviors/password",
+      "docs/claude/PAGE-GENERATION",
+      "docs/schema-test-value",
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-runbook"
+    ],
+    "changed": [
+      "pages/releases",
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/behaviors/audio",
+      "docs/behaviors/card",
+      "docs/behaviors/flash",
+      "docs/behaviors/move",
+      "docs/behaviors/notes",
+      "docs/behaviors/rating",
+      "docs/behaviors/select",
+      "docs/behaviors/table",
+      "docs/behaviors/tabs",
+      "docs/behaviors/toast",
+      "docs/semantic-standard",
+      "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-runbook"
     ],
     "succeed": [
       "pages/services"
@@ -25546,7 +25552,6 @@
       "docs/home-page",
       "docs/inline-editing",
       "docs/search",
-      "docs/standards/RELEASE-PROCESS",
       "docs/test-schema-standard"
     ],
     "harmonics": [
@@ -26650,6 +26655,7 @@
       "docs/linkedin-standards-article",
       "docs/properties",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "demos/landing-page-showcase"
     ],
@@ -26726,7 +26732,6 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS",
       "docs/styles",
       "demos/site/content"
     ],
@@ -27149,6 +27154,7 @@
       "docs/schema-first-audit-report",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/standards/CSS-CLASS-CONVENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "demos/charity-food",
       "demos/standalone"
@@ -27545,7 +27551,6 @@
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
       "docs/claude/TIER3-REFERENCE",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS",
       "docs/styles"
     ],
@@ -27597,6 +27602,7 @@
       "docs/behaviors/img",
       "docs/claude/TIER1-LAWS",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/RELEASE-PROCESS",
       "demos/autoinject"
     ],
     "difference": [
@@ -27723,13 +27729,15 @@
       "demos/site/overlays"
     ],
     "enough": [
-      "docs/AI"
+      "docs/AI",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "good": [
       "docs/AI",
       "docs/behaviors/bounce",
       "docs/behaviors/dl",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "reliable": [
       "docs/AI",
@@ -27862,6 +27870,7 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
       "demos/mdhtml-pre-debug",
       "demos/pre-debug"
     ],
@@ -28132,6 +28141,7 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/npx-commands",
+      "docs/standards/RELEASE-PROCESS",
       "docs/testing-runbook"
     ],
     "summary": [
@@ -28260,6 +28270,33 @@
       "docs/behavior-cross-reference",
       "docs/claude/TIER3-REFERENCE",
       "docs/test-schema-standard"
+    ],
+    "fixed": [
+      "docs/ANNOUNCE_TEST_POLICY",
+      "docs/BRANCH_PROTECTION",
+      "docs/MVVM-MIGRATION-PLAN",
+      "docs/NOTES-V3-GUIDE",
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/architecture/proposals/proposed-custom-elements",
+      "docs/architecture/standards/SCHEMA-SPECIFICATION",
+      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/cluster",
+      "docs/behaviors/countdown",
+      "docs/behaviors/gallery",
+      "docs/behaviors/grid",
+      "docs/behaviors/ratio",
+      "docs/behaviors/reel",
+      "docs/behaviors/sidebarlayout",
+      "docs/behaviors/stagelight",
+      "docs/behaviors/toast",
+      "docs/guides/create-a-website",
+      "docs/schema-test-value",
+      "docs/schema",
+      "docs/semantic-audit",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK",
+      "docs/standards/RELEASE-PROCESS",
+      "demos/layout-test"
     ],
     "ci": [
       "docs/ANNOUNCE_TEST_POLICY",
@@ -28650,28 +28687,6 @@
       "docs/testing-strategy",
       "demos/site/content"
     ],
-    "date": [
-      "docs/BRANCH_PROTECTION",
-      "docs/INTELLISENSE-TOOLTIPS",
-      "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
-      "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/audits/X-USAGE-AUDIT",
-      "docs/behaviors/card",
-      "docs/behaviors/cardfile",
-      "docs/behaviors/code",
-      "docs/behaviors/countdown",
-      "docs/behaviors/input",
-      "docs/behaviors/mark",
-      "docs/behaviors/relativetime",
-      "docs/behaviors/table",
-      "docs/behaviors/time",
-      "docs/compliance/iso-42001-alignment",
-      "docs/properties",
-      "docs/semantic-standard",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "demos/autoinject"
-    ],
     "optional": [
       "docs/BRANCH_PROTECTION",
       "docs/INTELLISENSE-TOOLTIPS",
@@ -28723,7 +28738,6 @@
       "docs/container-pattern",
       "docs/performance",
       "docs/schema.migration",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/V3-STANDARDS"
     ],
     "owner": [
@@ -31400,7 +31414,6 @@
       "docs/container-pattern",
       "docs/escape-hatches",
       "docs/inline-editing",
-      "docs/standards/RELEASE-PROCESS",
       "docs/test-schema-standard",
       "demos/site/forms",
       "demos/site/interactive"
@@ -31985,6 +31998,7 @@
       "docs/code-examples-standard",
       "docs/guides/create-a-website",
       "docs/linkedin-standards-article",
+      "docs/standards/RELEASE-PROCESS",
       "demos/landing-page-showcase",
       "demos/layout-test"
     ],
@@ -32840,7 +32854,6 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/standards/RELEASE-PROCESS",
       "demos/autoinject",
       "demos/charity-food",
       "demos/code",
@@ -32929,8 +32942,7 @@
       "docs/claude/README",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
-      "docs/inline-editing",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/inline-editing"
     ],
     "drawer": [
       "docs/NOTES-V3-GUIDE",
@@ -33009,6 +33021,7 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/schema",
       "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/wbservices"
     ],
@@ -34654,7 +34667,8 @@
     ],
     "cached": [
       "docs/architecture/WB-PREFIX-AUDIT",
-      "docs/pce-candidates"
+      "docs/pce-candidates",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "others": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -35197,8 +35211,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/claude/TOOLING-INVENTORY",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/CSS-CLASS-CONVENTION"
     ],
     "renaming": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -35320,15 +35333,6 @@
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/claude/TIER3-REFERENCE",
       "demos/site/content"
-    ],
-    "created": [
-      "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/behaviors/colorpicker",
-      "docs/behaviors/toast",
-      "docs/semantic-audit",
-      "docs/standards/ERROR-LOG-RETENTION"
     ],
     "02": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -35589,8 +35593,7 @@
     "consumed": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behaviors/stagelight",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/behaviors/stagelight"
     ],
     "scanner": [
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -36298,21 +36301,6 @@
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
       "docs/testing-runbook"
     ],
-    "says": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/card",
-      "docs/behaviors/cardhorizontal",
-      "docs/behaviors/checkbox",
-      "docs/behaviors/password",
-      "docs/claude/PAGE-GENERATION",
-      "docs/schema-test-value",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ERROR-LOG-RETENTION",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
-      "docs/testing-runbook"
-    ],
     "codebase": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/linkedin-framework-agnostic",
@@ -36446,21 +36434,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/claude/TIER3-REFERENCE",
       "docs/compliance/iso-42001-alignment"
-    ],
-    "doc": [
-      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
-      "docs/behaviors/card",
-      "docs/claude/README",
-      "docs/claude/SCHEMAS-GUIDE",
-      "docs/claude/TIER3-REFERENCE",
-      "docs/guides/search-index",
-      "docs/mcp",
-      "docs/schema-test-value",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/CSS-CLASS-CONVENTION",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/REPO-LAYOUT"
     ],
     "weekend": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
@@ -36620,6 +36593,17 @@
     "reframed": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface"
     ],
+    "lists": [
+      "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors-reference",
+      "docs/behaviors/resizable",
+      "docs/behaviors/skeleton",
+      "docs/behaviors/ul",
+      "docs/performance",
+      "docs/property-viewer",
+      "docs/semantic-standard"
+    ],
     "unaffected": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/switcher"
@@ -36748,7 +36732,6 @@
       "docs/standards/CSS-CLASS-CONVENTION",
       "docs/standards/ERROR-LOG-RETENTION",
       "docs/standards/ISSUE-SIGNATURE-BLOCK",
-      "docs/standards/RELEASE-PROCESS",
       "docs/standards/REPO-LAYOUT",
       "docs/styles"
     ],
@@ -36978,8 +36961,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/demo",
       "docs/behaviors/pagination",
-      "docs/standards/DEMOS-AND-DOCS-STANDARDS",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "around": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -37878,7 +37860,8 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/inline-editing",
-      "docs/standards/ERROR-LOG-RETENTION"
+      "docs/standards/ERROR-LOG-RETENTION",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "principle": [
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -38963,8 +38946,7 @@
       "docs/behaviors/cardlink",
       "docs/behaviors/cardvideo",
       "docs/behaviors/fill",
-      "docs/behaviors/sidebarlayout",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/behaviors/sidebarlayout"
     ],
     "injector": [
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT"
@@ -39550,7 +39532,8 @@
     "manually": [
       "docs/auto-injection",
       "docs/escape-hatches",
-      "docs/schema-first-audit-report"
+      "docs/schema-first-audit-report",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "adding": [
       "docs/auto-injection",
@@ -40851,7 +40834,8 @@
       "docs/guides/search-index",
       "docs/home-page",
       "docs/inline-editing",
-      "docs/semantic-standard"
+      "docs/semantic-standard",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "dismissibility": [
       "docs/behaviors/aside"
@@ -41419,8 +41403,7 @@
       "docs/behaviors/button",
       "docs/behaviors/cardlink",
       "docs/card",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "mouse": [
       "docs/behaviors/button",
@@ -41594,8 +41577,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardfile",
       "docs/linkedin-update-article",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/RELEASE-PROCESS"
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL"
     ],
     "waterproof": [
       "docs/behaviors/card"
@@ -42011,7 +41993,8 @@
       "docs/behaviors/cardportfolio"
     ],
     "english": [
-      "docs/behaviors/cardportfolio"
+      "docs/behaviors/cardportfolio",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "spanish": [
       "docs/behaviors/cardportfolio"
@@ -43316,6 +43299,13 @@
     "filters": [
       "docs/behaviors/drawer",
       "docs/behaviors/table"
+    ],
+    "push": [
+      "docs/behaviors/drawer",
+      "docs/behaviors/fill",
+      "docs/guides/create-a-website",
+      "docs/standards/RELEASE-PROCESS",
+      "demos/site/overlays"
     ],
     "shrinks": [
       "docs/behaviors/drawerLayout",
@@ -47128,7 +47118,8 @@
       "docs/linkedin-update-article"
     ],
     "recreate": [
-      "docs/home-page"
+      "docs/home-page",
+      "docs/standards/RELEASE-PROCESS"
     ],
     "375px": [
       "docs/home-page"
@@ -49182,29 +49173,15 @@
     "forwards": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "keyed": [
+    "3a": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "unreleased": [
+    "cites": [
       "docs/standards/RELEASE-PROCESS"
     ],
-    "folds": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "deployed": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "hunts": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "refs": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "anchors": [
-      "docs/standards/RELEASE-PROCESS"
-    ],
-    "noopene": [
-      "docs/standards/RELEASE-PROCESS"
+    "saw": [
+      "docs/standards/RELEASE-PROCESS",
+      "docs/testing-strategy"
     ],
     "putting": [
       "docs/standards/REPO-LAYOUT"
@@ -49514,9 +49491,6 @@
       "docs/testing-strategy"
     ],
     "rootcause": [
-      "docs/testing-strategy"
-    ],
-    "saw": [
       "docs/testing-strategy"
     ],
     "affectedcomponents": [
