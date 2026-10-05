@@ -21,14 +21,19 @@ const LINKS: string[] = JSON.parse(fs.readFileSync('config/site.json', 'utf8'))
   .navigationMenu.map((item: { pageToLoad?: string }) => item.pageToLoad)
   .filter((id: unknown): id is string => typeof id === 'string' && id.length > 0);
 
-async function clickNav(page: Page, id: string) {
+/** Navigates; returns #siteBody's scrollTop at the instant of the click (#1462). */
+async function clickNav(page: Page, id: string): Promise<number> {
   // The links live in the off-canvas drawer on mobile (not pointer-actionable),
   // so dispatch the link's own click — it still fires the SPA's navigation
-  // handler exactly as a user tap would.
-  await page.evaluate((p) => {
+  // handler exactly as a user tap would. The scroll offset is read in the same
+  // task as the click: that is the moment the site remembers, and a page still
+  // building can move between a separate read and the click.
+  const leftAt = await page.evaluate((p) => {
     const link = document.querySelector(`.nav__item[href="?page=${p}"]`) as HTMLElement;
     if (!link) throw new Error('nav link not found: ' + p);
+    const y = document.getElementById('siteBody')!.scrollTop;
     link.click();
+    return y;
   }, id);
   await page.waitForFunction(
     (p) => (window as any).WBSite?.currentPage === p && !!document.querySelector(`#mainPage-${p}`),
@@ -36,7 +41,14 @@ async function clickNav(page: Page, id: string) {
     { timeout: 15000 }
   );
   await page.waitForTimeout(1000); // let the page render to full height + scroll settle
+  return leftAt;
 }
+
+// #1462: three navigations (15s + 1s each) and a 15s restore poll is 63s of
+// named waits. Under the default 30s test timeout a slow step died as an
+// anonymous "Test timeout of 30000ms exceeded" before its own wait could say
+// which step it was.
+const RETURN_TEST_BUDGET = 3 * (15000 + 1000) + 15000 + 10000;
 
 async function scrollState(page: Page) {
   return page.evaluate(() => {
@@ -86,23 +98,32 @@ test.describe('Nav link scroll behavior', () => {
     });
 
     test(`returning to "${id}" restores the prior scroll position`, async ({ page }) => {
+      test.setTimeout(RETURN_TEST_BUDGET);
       await clickNav(page, id);
       await page.evaluate(() => { document.getElementById('siteBody')!.scrollTop = 400; });
       await page.waitForTimeout(150);
-      const before = await page.evaluate(() => document.getElementById('siteBody')!.scrollTop);
-      test.skip(before < 50, `${id}: page too short to scroll; restore N/A`);
 
       const other = id === 'home' ? LINKS.find((l) => l !== 'home')! : 'home';
-      await clickNav(page, other);
+      const before = await clickNav(page, other);
+      test.skip(before < 50, `${id}: page too short to scroll; restore N/A`);
+      const remembered = await page.evaluate((p) => (window as any).WBSite._scrollMemory?.[p], id);
+      expect(remembered, `${id}: the site must remember the offset it was left at`).toBe(before);
       await clickNav(page, id);
 
       // Polled, not read once after a fixed sleep: a page that builds
       // asynchronously (Behaviors loads its catalogue first) is restored as it
       // grows, and under a parallel run that took longer than the sleep (#1432).
+      const state = () => page.evaluate(() => {
+        const sb = document.getElementById('siteBody')!;
+        return `scrollTop ${sb.scrollTop}, scrollHeight ${sb.scrollHeight}, clientHeight ${sb.clientHeight}`;
+      });
       await expect.poll(
         () => page.evaluate(() => document.getElementById('siteBody')!.scrollTop),
         { timeout: 15000, message: `${id}: returning should restore scroll near ${before}` },
-      ).toBeGreaterThanOrEqual(before - 24);
+      ).toBeGreaterThanOrEqual(before - 24).catch(async (e) => {
+        // #1462: CI once read 0 for the full 15s. Say what the page looked like.
+        throw new Error(`${e.message}\n(${id} at failure: ${await state()})`);
+      });
     });
   }
 });

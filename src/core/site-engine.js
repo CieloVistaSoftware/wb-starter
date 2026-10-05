@@ -592,9 +592,16 @@ export default class WBSite {
     }
     this.currentPage = pageId;
     this.updateActiveNav();
+    // #1519: only the newest navigation may write #main or the scroll. Each
+    // await below can resolve after a newer navigation has started (a slow
+    // fragment, its CSS, the scan); the last to FINISH used to win the screen,
+    // painting a page the reader had already moved on from.
+    const navSeq = this._navSeq = (this._navSeq || 0) + 1;
+    const superseded = () => navSeq !== this._navSeq;
     const main = document.getElementById('main');
     if (main_notFound) {
       main.innerHTML = this.render404(pageId);
+      this._placeScroll(pageId);
       return;
     }
     main.innerHTML = `<div class="page__loading" id="mainPageLoading"><span x-spinner id="mainSpinner" label="Loading page"></span><p id="mainLoadingText">Loading...</p></div>`;
@@ -618,6 +625,7 @@ export default class WBSite {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
+      if (superseded()) return;
       if (res.ok) {
         // A page fragment that needs to show the release number uses
         // <span x-release> (or <div x-release>) -- src/wb-viewmodels/release.js
@@ -635,7 +643,13 @@ export default class WBSite {
         // regression the old render-blocking @import chain never had
         // (#342 follow-up; see style-loader.js's preloadCssForHtml doc).
         await preloadCssForHtml(html);
+        if (superseded()) return;
         main.innerHTML = `<div class="page page--${pageId}" data-page="${pageId}" id="mainPage-${pageId}">${html}</div>`;
+        // #1462: place the scroll the moment the page is on screen. This ran
+        // after the awaited scan below, so a reader who scrolled the visible
+        // page during the scan was snapped back to the top when it finished,
+        // and that 0 became the offset remembered for the page.
+        this._placeScroll(pageId);
         
         // Execute any scripts in the loaded page
         const scripts = main.querySelectorAll('script');
@@ -660,6 +674,7 @@ export default class WBSite {
         if (window.WB) {
           try { await window.WB.scan(main); } catch { /* a broken behavior must not stop navigation */ }
         }
+        if (superseded()) return;
 
         // #730 -- John: "if all elements on the page have an id then duplicate
         // work would have a run time error." Checked AFTER the old page has been
@@ -673,16 +688,23 @@ export default class WBSite {
           .catch(() => { /* the detector is never allowed to break a render */ });
       } else {
         main.innerHTML = this.render404(pageId);
+        this._placeScroll(pageId);
       }
     } catch (e) {
       if (loadingTimerId && window.WBLoadingManager) {
         window.WBLoadingManager.stopMonitoring(loadingTimerId);
       }
+      if (superseded()) return;
       main.innerHTML = this.render404(pageId);
+      this._placeScroll(pageId);
     }
-    // Optimization: MutationObserver handles injection automatically
-    // WB.scan(main);
+  }
 
+  /**
+   * Put #siteBody where this page was left (or at the top on a first visit).
+   * Called as the page's content is written to #main (#1462).
+   */
+  _placeScroll(pageId) {
     // Restore scroll: returning to a previously-visited page lands the user where
     // they left off; a first visit goes to the top. The "1rem down from the top"
     // gap below the sticky header is layout (.site__main padding-top: 1rem), not a
