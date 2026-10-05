@@ -77,11 +77,8 @@ async function gotoDoc(page: Page): Promise<void> {
   }, { timeout: 15000 });
   const cards = page.locator('[x-cardhorizontal]');
   await expect(cards).toHaveCount(EXPECTED_DEMO_COUNT, { timeout: 15000 });
-  // Let shrink-to-fit's rAF-scheduled code-panel measurement settle (same
-  // wait used by doc-viewer-code-panel-not-narrow.spec.ts for this exact
-  // demo.js code path).
-  await page.waitForTimeout(500);
-  // ...and then until every demo has COMMITTED its width. Until it does,
+  // Until every demo has COMMITTED its width (#984: no lead-in sleep; the
+  // helper waits for the runtime to go idle first). Until it does,
   // demo.css caps the code panel at 50vw, and demos 2-4 have a card wider
   // than that (~800px at 1280): read inside the 500ms above -- the photo not
   // yet decoded, so nothing committed -- demo 2 was "649px of content in a
