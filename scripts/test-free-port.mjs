@@ -123,9 +123,12 @@ if (lib) {
     const isAlive = (pid) => alive.has(pid);
 
     const a = lib.claimFreePort({ dir, pid: 111, probe: seq(40001), isAlive });
-    const b = lib.claimFreePort({ dir, pid: 222, probe: seq(40001, 40001, 40002), isAlive });
-    check(a.port === 40001 && b.port === 40002,
+    const b = lib.claimFreePort({ dir, pid: 222, probe: seq(40001, 40001, 40002, 40003), isAlive });
+    check(a.port === 40001 && b.port === 40003,
       'when the OS hands two live runs the same port, the second one moves on', `a=${a.port} b=${b.port}`);
+    // #1472: a server binds PORT and PORT+1 (live reload). 40002 is run a's
+    // live-reload port, so b must not be handed it either.
+    check(b.port !== 40002, "a live run's PORT+1 (its live-reload port) is never handed out", `b=${b.port}`);
 
     let threw = null;
     let got = null;
@@ -153,6 +156,21 @@ if (lib) {
 
     const real = lib.probeFreePort();
     check(Number.isInteger(real) && real > 0 && real < 65536, 'the real OS probe returns a usable port', String(real));
+
+    // #1472: the real probe must never return a port whose PORT+1 is taken.
+    // Hold a port's neighbour open, then probe repeatedly; none may be it.
+    const { createServer } = await import('node:net');
+    const hold = createServer();
+    await new Promise((r) => hold.listen(0, r));
+    const held = hold.address().port;
+    const bad = [];
+    for (let i = 0; i < 15; i++) { const p = lib.probeFreePort(); if (p + 1 === held) bad.push(p); }
+    await new Promise((r) => hold.close(r));
+    // A real collision is unlikely by chance; the deterministic half is below.
+    check(bad.length === 0, 'the real probe never returns a port whose PORT+1 is held', bad.join(','));
+    const src = readFileSync(join(ROOT, 'scripts', 'lib', 'free-port.mjs'), 'utf8');
+    check(/bind\(p \+ 1\)/.test(src) && !/listen\(0, '127\.0\.0\.1'/.test(src),
+      'the probe binds PORT+1 too, on the default host the server uses (#1472)');
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
