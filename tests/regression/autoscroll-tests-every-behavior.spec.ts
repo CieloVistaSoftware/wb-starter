@@ -11,6 +11,11 @@
  *
  * This replaces autoscroll-honours-expanded-groups.spec.ts, which pinned the
  * #1004 rule that John's new instruction retires.
+ *
+ * See it by hand: Open Behaviors (?page=behaviors) and click AutoScroll in the
+ * header. Before: it toured only the groups you had opened and ended without a
+ * word. Now: it opens every group, walks all 1,333 entries and ends with
+ * "Tested all 1333 entries: N passed, M failed", naming each failure.
  */
 
 import { test, expect } from '../fixtures/offline';
