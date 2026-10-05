@@ -9,6 +9,13 @@ import { test, expect } from '../fixtures/offline';
  * caught it as nav-scroll reading 0 for 15s after setting 400.
  *
  * Here the scan of #main is held for 3s; the page is scrolled while it waits.
+ *
+ * #1573: the check was scrollTop === 400 afterwards, and on Windows CI it read
+ * 486. That is not the bug. The scan builds the page, so content above the
+ * reader can grow when it finishes, and Chrome's scroll anchoring then moves
+ * scrollTop DOWN to keep the same text in view (an 86px block inserted above
+ * the reader reproduces 486 exactly). The bug moves it back UP, to the top.
+ * So what must hold is: the scroll did not go back toward the top.
  */
 test('scrolling a page while it is still being built is not undone (#1462)', async ({ page }) => {
   await page.addInitScript(() => {
@@ -51,5 +58,5 @@ test('scrolling a page while it is still being built is not undone (#1462)', asy
   await page.waitForFunction(() => (window as any).__scanReleased === true, null, { timeout: 10000 });
   await page.waitForTimeout(300); // the code after the scan, and a frame
   expect(await page.evaluate(() => document.getElementById('siteBody')!.scrollTop),
-    'the reader\'s scroll must survive the scan finishing').toBe(scrolled);
+    'the scan finishing moved the reader back toward the top').toBeGreaterThanOrEqual(scrolled - 2);
 });
