@@ -81,8 +81,8 @@
   color: var(--success-color);
 }
 
-.issue-now-note__next {
-  margin-left: var(--space-sm, 0.5rem);
+.issue-now-note__line + .issue-now-note__line {
+  margin-top: 0.125rem;
 }
 
 .issue-now-note__when {
