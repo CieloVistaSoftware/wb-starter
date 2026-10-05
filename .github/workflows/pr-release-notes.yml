@@ -1,0 +1,33 @@
+name: PR says what the issue was and how to see the change
+
+# #1533 -- John, 2026-10-05, on the Releases page: "This page tells me nothing.
+# one of these lines should be a summary of the issue, the other what to do to
+# see the change." The page is generated from commit messages
+# (scripts/release-versions.mjs), so a PR must carry both lines in a commit:
+#   Summary: <what was wrong or missing>
+#   See it:  <what to do on the site to see the change>
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  release-notes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: A commit carries Summary and See it
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/check-release-notes.mjs

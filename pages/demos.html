@@ -12,7 +12,7 @@
     location.replace(root + '?page=' + m[1] + location.search.replace(/^\?/, '&') + location.hash);
   })();
 </script>
-<link rel="stylesheet" href="src/styles/pages/demos.css?v=1.0.272">
+<link rel="stylesheet" href="src/styles/pages/demos.css?v=1.0.278">
 
 <div id="demos-hero" class="page__hero">
   <h1>🎮 Demos</h1>
@@ -182,7 +182,10 @@
         // Hide the whole section (heading + inline x-demo examples included)
         // once none of its cards are showing, so search doesn't leave behind
         // an empty heading with nothing under it.
-        const sectionHasVisibleCard = Array.from(section.querySelectorAll('x-card-link')).some((c) => !c.hidden);
+        // `[x-cardlink]`, the attribute the cards carry: the 4.0.0 rename made
+        // this the tag selector `x-card-link`, which matches nothing, so every
+        // keystroke hid every section and clearing the box did not undo it (#857).
+        const sectionHasVisibleCard = Array.from(section.querySelectorAll('[x-cardlink]')).some((c) => !c.hidden);
         section.hidden = !sectionHasVisibleCard;
       });
 

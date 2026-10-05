@@ -81,10 +81,11 @@ x-button[variant="link"]:hover { text-decoration: underline; }
 /* Loading state */
 x-button[loading] { cursor: not-allowed; opacity: 0.7; }
 
-/* Icon inside button */
-x-button .x-button__icon { display: inline-flex; align-items: center; flex-shrink: 0; }
-x-button .x-button__icon svg { width: 1em; height: 1em; }
-x-button .x-button__spinner { display: inline-block; animation: x-btn-spin 1s linear infinite; }
+/* Icon inside button. #741: scoped to the x-button TAG, these matched neither
+   <div x-button> nor a native <button>, so every icon span was display:block. */
+:is(x-button, [x-button], .x-button) .x-button__icon { display: inline-flex; align-items: center; flex-shrink: 0; }
+:is(x-button, [x-button], .x-button) .x-button__icon svg { width: 1em; height: 1em; }
+:is(x-button, [x-button], .x-button) .x-button__spinner { display: inline-block; animation: x-btn-spin 1s linear infinite; }
 @keyframes x-btn-spin { to { transform: rotate(360deg); } }
 
 /* Native <button> opt-in styling (for auto-injected plain buttons); the base
