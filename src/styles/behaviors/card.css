@@ -318,6 +318,30 @@ article.x-stats.x-card--large,
   flex-shrink: 0;
 }
 
+/* cardproduct compact (#1465) -- declared in the schema, styled by nothing,
+   so "compact" rendered exactly like the default. Compact here means less
+   HEIGHT, never less padding (§13 keeps the 1rem floor): a shorter image, a
+   one-line description, a tighter price row. `.x-product--compact` is listed
+   too so the schema builder (which adds <base>--<value> only for a class a
+   stylesheet defines) puts it on the element, as the schema's site test
+   expects. */
+.x-product[variant="compact"] figure > img,
+.x-product.x-product--compact figure > img {
+  aspect-ratio: 2 / 1;
+}
+.x-product[variant="compact"] .x-card__product-desc,
+.x-product.x-product--compact .x-card__product-desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+}
+.x-product[variant="compact"] .x-card__price-wrap,
+.x-product.x-product--compact .x-card__price-wrap {
+  margin: 0.5rem 0;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    TYPOGRAPHY
    ═══════════════════════════════════════════════════════════════════════════ */
