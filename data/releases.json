@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.269",
+      "date": "2026-10-05",
+      "summary": "Fix: span window dots are styled by their own x-span--&lt;variant&gt; class (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1523\" target=\"_blank\" rel=\"noopener\">PR 1523</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1464\" target=\"_blank\" rel=\"noopener\">#1464</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Span window dots are styled by their own x-span--&lt;variant&gt; class</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1464\" target=\"_blank\" rel=\"noopener\">#1464</a>",
+          "issues": [
+            1464
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.268",
       "date": "2026-10-05",
       "summary": "",
