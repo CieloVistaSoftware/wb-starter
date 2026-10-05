@@ -4,10 +4,10 @@
   "$stats": {
     "sources": {
       "pages": 20,
-      "docs": 189,
+      "docs": 188,
       "demos": 30
     },
-    "totalDocuments": 239,
+    "totalDocuments": 238,
     "totalWords": 5222
   },
   "documents": [
@@ -1784,17 +1784,6 @@
       "description": null,
       "headings": [],
       "content": "# Class Naming & Semantics ## Prime Directive: Generic, Reusable, Semantic - **Only use generic, reusable class names** for all layout and component styling. Examples: `.hero`, `.section`, `.features`, `.feature-grid`. - **HTML5 semantic elements** (e.g., ` `, ` `, ` `, ` `, ` `) must be used for all page structure. Avoid generic ` ` for major page regions. - **Prohibited:** - Page-specific, BEM, or context-coupled class names (e.g., `home-hero`, `page__feature`, `about-section`, `main-content--dark`). - `.wb-*` classes in global CSS or markup. These are reserved strictly for internal styles within custom elements (e.g., ` `). Do **not** use `.wb-*` classes in any global stylesheet or outside their component's shadow scope. - **No BEM or OOCSS prefixes**: Do not use double underscores, double hyphens, or page/component prefixes in class names. - **Component classes**: Custom elements (e.g., ` `) may use internal classes prefixed with their tag (e.g., `.x-demo-feature`), but these must not leak into global or page-level markup or CSS. - **Rationale:** This ensures maximum reusability, maintainability, and clarity across all pages and components. **Example (Correct):** ```html ... ``` **Example (Incorrect):** ```html ... ``` **Schema Enforcement:** ...existing code... **Example (Correct):** ```html ... ``` **Example (Incorrect):** ```html ... ``` **Schema Enforcement:** - All schemas (e.g., `home-page.schema.json`) must require only generic, reusable class names and HTML5 semantic elements for page structure. - Validation will fail if any page-specific, BEM, or context-coupled class is used. --- # WB Style Constitution & Golden Rules > **\"One Time, One Place for All Style Rules\"** This document serves as the supreme law for styling in the WB-Starter library. It consolidates rules from `css-standards.md` and `themes.md` while establishing strict behavioral integrity guidelines. --- ## 🚨 The Prime Directive: The Isolation Rule **Behaviors must NEVER modify global layout containers or styles outside their direct scope.** * **Violation Example:** The `scrollalong` behavior modified `.site__body` (a global container) to enable sticky positioning, which broke the entire app shell layout. * **Correct Approach:** A behavior should only modify the specific element it is attached to. If a behavior requires a specific global layout to function, it is likely incompatible with the current architecture or requires a dedicated layout component, not a side-effect. **Rule:** If your style or behavior touches `body`, `html`, `.site`, `.site__body`, or `.site__main`, **STOP**. You are likely breaking the architecture. --- ## 🏛️ The Three Pillars of WB Styling ### 1. Object-Oriented CSS (OOCSS) * **Principle:** Styles are layered, inherited, and never duplicated. * **Reference:** See CSS Standards for the detailed architectural layers. * **Rule:** Never import CSS in content pages (`pages/*.html`). They inherit everything from `index.html`. ### 2. The Theme System * **Principle:** All colors, spacing, and typography are defined as CSS variables in `themes.css`. * **Reference:** See [Themes Documentation](themes.md). * **Rule:** **NEVER hardcode a hex code.** Always use `var(--primary)`, `var(--bg-color)`, etc. * **Rule:** **NO ALIASES.** Do not create `--x-bg-primary` when `--bg-primary` exists. ### 3. Behavioral Integrity * **Principle:** Styles exist to *support* behavior, not wreck it. * **Rule:** A component's style must be self-contained. It should not rely on or affect the positioning of its siblings or parents (unless it is explicitly a Layout component). --- ## 📜 The Strict Rules List ### 1. No Global Side Effects (The \"Scrollalong\" Rule) As stated in the Prime Directive, components and behaviors are strictly forbidden from modifying the global DOM structure or styles of parent containers (`.site__body`, etc.). ### 2. The \"Two-File\" Foundation The `index.html` head must only load **TWO** CSS files for the foundation: 1. `src/styles/themes.css` (Variables) 2. `styles/site.css` (Layout) *All other styles are loaded on-demand by behaviors or are optional layers.* ### 3. Variable Purity * **Do:** Use `var(--text-primary)` * **Don't:** `color: #333;` (Breaks themes) * **Don't:** `:root { --my-text: var(--text-primary); }` (Creates useless aliases) ### 4. Specificity over `!important` * **Rule:** Never use `!important` to override styles. Use proper CSS specificity (classes, nesting) instead. * **Exception:** Utility classes (e.g., `.d-none !important`) or debug tools. ### 5. File Responsibility * **`themes.css`**: Variables ONLY. No layout. * **`site.css`**: Global shell layout ONLY. No component styles. * **`src/behaviors/css/*.css`**: Component styles ONLY. Grouped by function (e.g., `card.css`, `inputs.css`). --- ## 🗺️ Where Do My Styles Go? | If you are styling... | It goes in... | |-----------------------|---------------| | A new color or font size | `src/styles/themes.css` (as a variable) | | The main header or si",
-      "keywords": [],
-      "type": "doc",
-      "modified": "2026-08-07T16:32:02.823Z"
-    },
-    {
-      "id": "docs/templates",
-      "url": "/docs/templates",
-      "title": "templates",
-      "description": null,
-      "headings": [],
-      "content": "# Templates Reference > **File**: `data/templates.json` > **Schema**: `data/templates.schema.json` This document describes the structure and usage of the `templates.json` file, which powers the \"Instant Page Generation\" feature in the Builder. ## Purpose The `templates.json` file acts as a registry of pre-defined page layouts and component combinations. It allows users to quickly bootstrap new pages or sections by selecting from a categorized list of templates. ## Structure The file consists of two main sections: `categories` and `templates`. ```json { \"$schema\": \"./templates.schema.json\", \"version\": \"1.0.0\", \"description\": \"...\", \"categories\": [ ... ], \"templates\": [ ... ] } ``` ### Categories Categories define the grouping of templates in the UI. | Field | Type | Description | |-------|------|-------------| | `id` | string | Unique identifier for the category (e.g., \"landing\", \"heroes\"). | | `name` | string | Display name. | | `icon` | string | Emoji icon for the category. | | `description` | string | Brief description of what the category contains. | **Example:** ```json { \"id\": \"heroes\", \"name\": \"Hero Sections\", \"icon\": \"🦸\", \"description\": \"Hero banners and headers\" } ``` ### Templates Templates define the actual content to be generated. | Field | Type | Description | |-------|------|-------------| | `id` | string | Unique identifier for the template. | | `name` | string | Display name. | | `category` | string | Must match a category `id`. | | `description` | string | Description of the template. | | `tags` | string[] | Keywords for search/filtering. | | `components` | object[] | Array of component definitions (shorthand format). | #### Component Definition (Shorthand) Templates use a shorthand JSON format to define components: | Field | Description | Example | |-------|-------------|---------| | `b` | **Behavior** name | `\"cardhero\"` | | `t` | **Tag** name (optional, defaults to div/custom element) | `\"nav\"` | | `d` | **Data** attributes (props) | `{ \"title\": \"Hello\" }` | | `children` | Array of child components | `[ ... ]` | | `behaviors` | Array of additional behaviors | `[\"sticky\"]` | **Example Template:** ```json { \"id\": \"hero-minimal\", \"name\": \"Minimal Hero\", \"category\": \"heroes\", \"description\": \"Clean, text-focused hero\", \"tags\": [\"hero\", \"minimal\"], \"components\": [ { \"b\": \"cardhero\", \"d\": { \"title\": \"Less is More\", \"subtitle\": \"Simplicity is the ultimate sophistication\", \"variant\": \"minimal\" } } ] } ``` ## Adding a New Template 1. **Choose a Category**: Pick an existing category ID from the `categories` list. 2. **Define Components**: Construct the component tree using the shorthand format. 3. **Add to JSON**: Append your new template object to the `templates` array in `data/templates.json`. ## Usage in Builder The Builder application reads this file to populate the \"Templates\" modal or sidebar. When a user selects a template: 1. The `components` array is read. 2. The Builder converts the shorthand JSON into the internal Builder Page JSON format. 3. The components are appended to the current page or replace the current selection.",
       "keywords": [],
       "type": "doc",
       "modified": "2026-08-07T16:32:02.823Z"
@@ -6855,7 +6844,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -7009,7 +6997,6 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -7166,7 +7153,6 @@
       "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-audit",
-      "docs/templates",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
       "docs/wbservices",
@@ -7222,7 +7208,6 @@
       "docs/search",
       "docs/semantic-audit",
       "docs/styles",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -7559,7 +7544,6 @@
       "docs/search",
       "docs/semantic-audit",
       "docs/styles",
-      "docs/templates",
       "docs/testing-strategy",
       "docs/themes",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -7810,7 +7794,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/themes",
       "docs/V3-GUIDE",
@@ -8101,7 +8084,6 @@
       "docs/search",
       "docs/semantic-audit",
       "docs/styles",
-      "docs/templates",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
@@ -8190,7 +8172,6 @@
       "docs/schema",
       "docs/search",
       "docs/semantic-audit",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/themes",
@@ -8490,7 +8471,6 @@
     "read": [
       "pages/ai-docs",
       "docs/pricecard",
-      "docs/templates",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/README",
       "docs/claude/SCHEMAS-GUIDE",
@@ -8787,7 +8767,6 @@
       "pages/privacy",
       "docs/AI",
       "docs/semantic-standard",
-      "docs/templates",
       "demos/autoinject",
       "demos/site/content"
     ],
@@ -8831,7 +8810,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/themes",
@@ -8921,7 +8899,6 @@
       "docs/schema",
       "docs/schema.migration",
       "docs/styles",
-      "docs/templates",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
       "docs/claude/PAGE-GENERATION",
@@ -9286,7 +9263,6 @@
     "combinations": [
       "pages/ai-permutation-test",
       "docs/home-page",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/behaviors/x-card",
@@ -9305,7 +9281,6 @@
       "docs/schema-first-audit-report",
       "docs/schema.migration",
       "docs/styles",
-      "docs/templates",
       "docs/V3-GUIDE",
       "docs/wbservices",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -9358,7 +9333,6 @@
       "pages/ai-permutation-test",
       "docs/AI",
       "docs/home-page",
-      "docs/templates",
       "docs/wbservices",
       "docs/behaviors/x-card",
       "docs/claude/PAGE-GENERATION",
@@ -9532,7 +9506,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -9677,7 +9650,6 @@
       "pages/whats-new",
       "docs/home-page",
       "docs/linkedin-framework-agnostic",
-      "docs/templates",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
       "docs/claude/TIER3-REFERENCE",
@@ -9762,7 +9734,6 @@
     ],
     "pick": [
       "pages/ai-permutation-test",
-      "docs/templates",
       "docs/behaviors/x-themecontrol",
       "demos/landing-page-showcase",
       "demos/registry-browser"
@@ -10199,7 +10170,6 @@
       "pages/ai-permutation-test",
       "docs/audio",
       "docs/NOTES-V3-GUIDE",
-      "docs/templates",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/guides/search-index",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -10232,7 +10202,6 @@
       "docs/schema",
       "docs/schema.migration",
       "docs/search",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/themes",
@@ -10388,7 +10357,6 @@
       "docs/pce-candidates",
       "docs/schema-first-architecture",
       "docs/styles",
-      "docs/templates",
       "docs/themes",
       "docs/wb-parts-spec",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -10440,7 +10408,6 @@
       "docs/MVVM-MIGRATION",
       "docs/schema-first-architecture",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -10503,7 +10470,6 @@
       "docs/schema",
       "docs/search",
       "docs/semantic-audit",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -11730,7 +11696,6 @@
       "docs/property-viewer",
       "docs/schema.migration",
       "docs/styles",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -11990,7 +11955,6 @@
       "docs/schema.migration",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/themes",
       "docs/V3-GUIDE",
       "docs/wbservices",
@@ -12362,7 +12326,6 @@
       "docs/schema-first-architecture",
       "docs/schema",
       "docs/search",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
@@ -12458,7 +12421,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/themes",
@@ -13130,7 +13092,6 @@
       "docs/inline-editing",
       "docs/NOTES-V3-GUIDE",
       "docs/schema-first-architecture",
-      "docs/templates",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/label",
       "docs/behaviors/x-grid",
@@ -13229,7 +13190,6 @@
       "docs/schema-first-architecture",
       "docs/search",
       "docs/styles",
-      "docs/templates",
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors/x-audio",
       "docs/claude/README",
@@ -13476,7 +13436,6 @@
       "docs/schema.migration",
       "docs/search",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-runbook",
       "docs/testing-strategy",
@@ -13844,7 +13803,6 @@
       "pages/components",
       "docs/property-viewer",
       "docs/search",
-      "docs/templates",
       "docs/components/semantics/radio",
       "docs/components/semantics/select",
       "demos/autoinject",
@@ -14544,7 +14502,6 @@
     ],
     "selects": [
       "pages/behaviors",
-      "docs/templates",
       "docs/components/semantics/input",
       "docs/components/semantics/radio",
       "docs/components/semantics/textarea",
@@ -15810,7 +15767,6 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/themes",
       "docs/wb-parts-spec",
       "docs/architecture/WBVIEWS",
@@ -15934,7 +15890,6 @@
       "docs/properties",
       "docs/schema-first-architecture",
       "docs/styles",
-      "docs/templates",
       "docs/wb-parts-spec",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/claude/TIER1-LAWS",
@@ -16031,7 +15986,6 @@
       "docs/pce-candidates",
       "docs/properties",
       "docs/schema",
-      "docs/templates",
       "docs/architecture/WBVIEWS",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/components/mdhtml",
@@ -16223,7 +16177,6 @@
       "docs/schema",
       "docs/search",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -16427,7 +16380,6 @@
       "docs/NOTES-V3-GUIDE",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/components/components",
       "docs/components/drawer",
       "docs/components/README",
@@ -16483,7 +16435,6 @@
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
       "docs/styles",
-      "docs/templates",
       "docs/themes",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
@@ -16833,7 +16784,6 @@
       "docs/schemaTestValue",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -17054,7 +17004,6 @@
       "docs/schema",
       "docs/semantic-audit",
       "docs/styles",
-      "docs/templates",
       "docs/themes",
       "docs/behaviors/x-card",
       "docs/claude/SCHEMAS-GUIDE",
@@ -17232,7 +17181,6 @@
       "docs/schema.migration",
       "docs/search",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/themes",
       "docs/V3-GUIDE",
@@ -17853,7 +17801,6 @@
       "docs/properties",
       "docs/property-viewer",
       "docs/search",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -17894,7 +17841,6 @@
       "docs/schema.migration",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
       "docs/wbservices",
@@ -18267,7 +18213,6 @@
       "docs/pce-candidates",
       "docs/properties",
       "docs/property-viewer",
-      "docs/templates",
       "docs/themes",
       "docs/components/mdhtml",
       "docs/components/README",
@@ -18313,7 +18258,6 @@
       "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
@@ -18433,7 +18377,6 @@
       "docs/properties",
       "docs/schema-first-architecture",
       "docs/search",
-      "docs/templates",
       "docs/testing-strategy",
       "docs/wb-parts-spec",
       "docs/behaviors/autosize",
@@ -18828,7 +18771,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/V3-GUIDE",
       "docs/audits/INLINE-STYLES-AUDIT",
@@ -18903,7 +18845,6 @@
       "docs/behavior-cross-reference",
       "docs/behaviors-reference",
       "docs/MVVM-MIGRATION",
-      "docs/templates",
       "docs/architecture/WBVIEWS",
       "docs/components/mdhtml",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -19029,7 +18970,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/themes",
       "docs/V3-GUIDE",
@@ -19134,7 +19074,6 @@
       "pages/demos",
       "pages/whats-new",
       "docs/schema.migration",
-      "docs/templates",
       "docs/themes",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/claude/TIER1-LAWS",
@@ -19152,7 +19091,6 @@
       "docs/mcp",
       "docs/search",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/behaviors/x-search",
       "docs/claude/TIER1-LAWS",
       "docs/claude/TIER3-REFERENCE",
@@ -19407,7 +19345,6 @@
       "docs/schemaTestValue",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/themes",
@@ -19722,7 +19659,6 @@
       "pages/features",
       "docs/performance",
       "docs/schema-first-audit-report",
-      "docs/templates",
       "docs/wb-parts-spec",
       "docs/components/tabs",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
@@ -19959,7 +19895,6 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/linkedin-update-article",
       "docs/properties",
-      "docs/templates",
       "docs/components/components",
       "docs/components/README"
     ],
@@ -20020,7 +19955,6 @@
       "docs/pce-candidates",
       "docs/schemaTestValue",
       "docs/semantic-audit",
-      "docs/templates",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/components/README",
@@ -20306,7 +20240,6 @@
       "docs/pce-candidates",
       "docs/schema-first-audit-report",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/components/components",
       "docs/components/drawer",
       "docs/architecture/proposals/proposed-custom-elements",
@@ -20383,7 +20316,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -20804,7 +20736,6 @@
       "docs/escape-hatches",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/search",
-      "docs/templates",
       "docs/components/cards/card",
       "docs/components/cards/cardportfolio"
     ],
@@ -20813,7 +20744,6 @@
       "docs/CommittingFixes",
       "docs/pricecard",
       "docs/property-viewer",
-      "docs/templates",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/standards/V3-STANDARDS",
       "docs/components/semantics/radio",
@@ -21311,7 +21241,6 @@
       "pages/hero-variants",
       "docs/CommittingFixes",
       "docs/IMPROVEMENTS",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/behaviors/x-toggle",
       "docs/components/tabs",
@@ -21381,7 +21310,6 @@
       "docs/semantic-audit",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/wb-parts-spec",
       "docs/architecture/WBVIEWS",
@@ -21438,7 +21366,6 @@
       "docs/schema.migration",
       "docs/search",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/claude/README",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/components/components",
@@ -21462,7 +21389,6 @@
     ],
     "landing": [
       "pages/hero-variants",
-      "docs/templates",
       "demos/landing-page-showcase"
     ],
     "corporate": [
@@ -21529,7 +21455,6 @@
       "docs/schema.migration",
       "docs/schemaTestValue",
       "docs/semantic-audit",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/themes",
@@ -21655,7 +21580,6 @@
       "docs/pce-candidates",
       "docs/schemaTestValue",
       "docs/styles",
-      "docs/templates",
       "docs/audits/X-USAGE-AUDIT",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/components/layout/layout.readme",
@@ -21988,7 +21912,6 @@
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
       "docs/semantic-audit",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
@@ -22514,7 +22437,6 @@
       "docs/schema-first-architecture",
       "docs/search",
       "docs/styles",
-      "docs/templates",
       "docs/V3-GUIDE",
       "docs/wbservices",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -22698,7 +22620,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/property-viewer",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/architecture/WBVIEWS",
       "docs/behaviors/x-card",
       "docs/claude/SCHEMAS-GUIDE",
@@ -23291,7 +23212,6 @@
       "pages/themes",
       "docs/card",
       "docs/schema-first-architecture",
-      "docs/templates",
       "docs/wb-parts-spec"
     ],
     "fundamental": [
@@ -23553,7 +23473,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/compliance/iso-42001-alignment",
@@ -24096,7 +24015,6 @@
       "docs/search",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/x-copybutton",
@@ -24728,7 +24646,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
       "docs/schema-first-architecture",
-      "docs/templates",
       "docs/wb-parts-spec",
       "docs/architecture/WBVIEWS",
       "docs/behaviors/x-grid",
@@ -24952,7 +24869,6 @@
       "docs/properties",
       "docs/schema",
       "docs/search",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/x-audio",
@@ -25040,7 +24956,6 @@
       "docs/container-pattern",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
-      "docs/templates",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
     ],
     "properly": [
@@ -27638,7 +27553,6 @@
     "contains": [
       "docs/AI",
       "docs/inline-editing",
-      "docs/templates",
       "docs/themes",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
       "docs/components/cards/README",
@@ -28613,7 +28527,6 @@
       "docs/NOTES-V3-GUIDE",
       "docs/pce-candidates",
       "docs/properties",
-      "docs/templates",
       "docs/behaviors/x-themecontrol",
       "docs/behaviors/x-copybutton",
       "docs/guides/search-index",
@@ -28685,7 +28598,6 @@
       "docs/performance",
       "docs/pricecard",
       "docs/search",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/themes",
       "docs/wb-parts-spec",
@@ -28986,7 +28898,6 @@
       "docs/audio",
       "docs/behaviors-reference",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/behaviors/x-card",
       "docs/behaviors/x-grid",
       "docs/components/mdhtml",
@@ -29185,7 +29096,6 @@
       "docs/schema-first-architecture",
       "docs/semantic-standard",
       "docs/styles",
-      "docs/templates",
       "docs/architecture/WBVIEWS",
       "docs/behaviors/x-audio",
       "docs/claude/TIER3-REFERENCE",
@@ -29350,7 +29260,6 @@
       "docs/behaviors-reference",
       "docs/pce-candidates",
       "docs/performance",
-      "docs/templates",
       "docs/testing-runbook",
       "docs/testing-strategy",
       "docs/themes",
@@ -29548,7 +29457,6 @@
       "docs/Auto-Injection",
       "docs/card",
       "docs/MVVM-MIGRATION",
-      "docs/templates",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/components/cards/cards.readme"
     ],
@@ -29802,7 +29710,6 @@
       "docs/behaviors-reference",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/MVVM-MIGRATION",
-      "docs/templates",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/x-copybutton",
       "docs/components/mdhtml",
@@ -29828,7 +29735,6 @@
     ],
     "shorthand": [
       "docs/Auto-Injection",
-      "docs/templates",
       "docs/behaviors/x-grid",
       "docs/components/layout/layout.readme"
     ],
@@ -30381,7 +30287,6 @@
       "docs/schemaTestValue",
       "docs/semantic-audit",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/testing-strategy",
       "docs/audits/X-USAGE-AUDIT",
       "docs/components/demo/demo",
@@ -30399,7 +30304,6 @@
       "docs/properties",
       "docs/schema-first-architecture",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/components/README",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
@@ -30866,8 +30770,7 @@
       "demos/schema-first-architecture"
     ],
     "categorized": [
-      "docs/behaviors-reference",
-      "docs/templates"
+      "docs/behaviors-reference"
     ],
     "configurable": [
       "docs/behaviors-reference",
@@ -30935,7 +30838,6 @@
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/pce-candidates",
       "docs/styles",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
@@ -31245,7 +31147,6 @@
       "docs/NOTES-V3-GUIDE",
       "docs/performance",
       "docs/schema.migration",
-      "docs/templates",
       "docs/architecture/WBVIEWS",
       "docs/components/semantic/details",
       "docs/components/semantics/table"
@@ -31523,7 +31424,6 @@
       "docs/mcp",
       "docs/properties",
       "docs/schema.migration",
-      "docs/templates",
       "docs/behaviors/x-card",
       "docs/guides/search-index",
       "docs/components/cards/card",
@@ -31666,7 +31566,6 @@
       "docs/NOTES-V3-GUIDE",
       "docs/schema",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/components/cards/card",
       "docs/components/semantic/semantic.readme"
     ],
@@ -31864,7 +31763,6 @@
       "docs/schema-first-audit-report",
       "docs/schema",
       "docs/semantic-audit",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/V3-GUIDE",
       "docs/behaviors/x-column",
@@ -31915,7 +31813,6 @@
       "docs/MVVM-MIGRATION",
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
-      "docs/templates",
       "docs/themes",
       "docs/compliance/iso-42001-alignment",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -32127,7 +32024,6 @@
       "docs/inline-editing",
       "docs/NOTES-V3-GUIDE",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/behaviors/label",
@@ -32161,7 +32057,6 @@
       "docs/code-examples-standard",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/schema-first-architecture",
-      "docs/templates",
       "docs/claude/PAGE-GENERATION",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
@@ -32393,7 +32288,6 @@
       "docs/IMPROVEMENTS",
       "docs/schema-first-architecture",
       "docs/schema-first-audit-report",
-      "docs/templates",
       "docs/wb-parts-spec",
       "docs/architecture/WBVIEWS",
       "docs/claude/TIER3-REFERENCE",
@@ -32465,7 +32359,6 @@
       "docs/linkedin-standards-article",
       "docs/MVVM-MIGRATION",
       "docs/properties",
-      "docs/templates",
       "docs/V3-GUIDE"
     ],
     "fixing": [
@@ -32832,7 +32725,6 @@
       "docs/IMPROVEMENTS",
       "docs/performance",
       "docs/schema.migration",
-      "docs/templates",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/label",
       "docs/behaviors/x-card",
@@ -32858,7 +32750,6 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/schema-first-architecture",
       "docs/schema",
-      "docs/templates",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
       "docs/wbservices",
@@ -32908,7 +32799,6 @@
     ],
     "append": [
       "docs/container-pattern",
-      "docs/templates",
       "docs/components/semantics/progress"
     ],
     "whether": [
@@ -33007,7 +32897,6 @@
       "docs/home-page",
       "docs/INTELLISENSE-TOOLTIPS",
       "docs/properties",
-      "docs/templates",
       "docs/components/cards/cardlink",
       "docs/components/cards/cardstats",
       "docs/components/feedback/feedback.readme",
@@ -33221,12 +33110,10 @@
       "docs/components/semantics/textarea"
     ],
     "appended": [
-      "docs/container-pattern",
-      "docs/templates"
+      "docs/container-pattern"
     ],
     "child": [
       "docs/container-pattern",
-      "docs/templates",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/x-grid",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
@@ -33262,7 +33149,6 @@
       "docs/MVVM-MIGRATION",
       "docs/properties",
       "docs/schema-first-architecture",
-      "docs/templates",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -33518,7 +33404,6 @@
       "docs/property-viewer",
       "docs/schema",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/themes",
       "docs/behaviors/x-card",
       "docs/behaviors/x-collapse",
@@ -33548,7 +33433,6 @@
       "docs/MVVM-MIGRATION",
       "docs/property-viewer",
       "docs/semantic-standard",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/x-card",
@@ -33843,7 +33727,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/property-viewer",
-      "docs/templates",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "demos/landing-page-showcase"
     ],
@@ -34121,7 +34004,6 @@
       "docs/linkedin-framework-agnostic",
       "docs/pce-candidates",
       "docs/property-viewer",
-      "docs/templates",
       "docs/wb-parts-spec",
       "docs/architecture/WBVIEWS",
       "docs/components/semantics/ol",
@@ -35174,7 +35056,6 @@
     "define": [
       "docs/linkedin-framework-agnostic",
       "docs/schema-first-architecture",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/testing-strategy",
       "docs/themes",
@@ -35586,7 +35467,6 @@
     "application": [
       "docs/linkedin-standards-article",
       "docs/NOTES-V3-GUIDE",
-      "docs/templates",
       "docs/themes",
       "demos/autoinject",
       "demos/schema-first-architecture",
@@ -35891,8 +35771,7 @@
     ],
     "less": [
       "docs/linkedin-update-article",
-      "docs/schemaTestValue",
-      "docs/templates"
+      "docs/schemaTestValue"
     ],
     "overhead": [
       "docs/linkedin-update-article",
@@ -36073,7 +35952,6 @@
     ],
     "quickly": [
       "docs/mcp",
-      "docs/templates",
       "docs/testing-runbook"
     ],
     "refer": [
@@ -36657,7 +36535,6 @@
       "docs/MVVM-MIGRATION",
       "docs/performance",
       "docs/styles",
-      "docs/templates",
       "docs/behaviors/x-copybutton",
       "demos/frameworks"
     ],
@@ -36680,7 +36557,6 @@
       "docs/pce-candidates",
       "docs/pricecard",
       "docs/schema.migration",
-      "docs/templates",
       "docs/testing-strategy",
       "docs/V3-GUIDE",
       "docs/wb-parts-spec",
@@ -37521,7 +37397,6 @@
     "instant": [
       "docs/performance",
       "docs/search",
-      "docs/templates",
       "docs/guides/search-index",
       "docs/components/navigation/navigation.readme",
       "demos/autoinject"
@@ -38093,7 +37968,6 @@
     ],
     "props": [
       "docs/property-viewer",
-      "docs/templates",
       "docs/test-schema-standard",
       "docs/claude/PAGE-GENERATION",
       "demos/frameworks"
@@ -38776,7 +38650,6 @@
     ],
     "grouping": [
       "docs/semantic-standard",
-      "docs/templates",
       "docs/behaviors/x-card",
       "docs/behaviors/x-cluster",
       "docs/components/layout/layout.readme",
@@ -39183,58 +39056,27 @@
       "demos/autoinject"
     ],
     "powers": [
-      "docs/templates",
       "docs/guides/search-index"
     ],
-    "bootstrap": [
-      "docs/templates"
-    ],
-    "selecting": [
-      "docs/templates"
-    ],
-    "consists": [
-      "docs/templates"
-    ],
     "heroes": [
-      "docs/templates",
       "demos/playground"
     ],
     "brief": [
-      "docs/templates",
       "docs/testing-strategy",
       "docs/components/semantic/aside"
     ],
     "banners": [
-      "docs/templates",
       "docs/behaviors/x-card",
       "docs/components/cards/cards.index"
     ],
     "keywords": [
-      "docs/templates",
       "docs/guides/search-index"
     ],
     "filtering": [
-      "docs/templates",
       "docs/behaviors/x-search",
       "docs/components/forms/forms.readme"
     ],
-    "simplicity": [
-      "docs/templates"
-    ],
-    "ultimate": [
-      "docs/templates"
-    ],
-    "sophistication": [
-      "docs/templates"
-    ],
-    "construct": [
-      "docs/templates"
-    ],
-    "populate": [
-      "docs/templates"
-    ],
     "converts": [
-      "docs/templates",
       "docs/architecture/WBVIEWS",
       "docs/components/mdhtml"
     ],
