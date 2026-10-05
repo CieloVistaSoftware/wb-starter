@@ -94,6 +94,25 @@ test.describe('#1340 the site shell mounts once', () => {
     expect(hints, `the runtime reported duplicates:\n${hints.join('\n')}`).toEqual([]);
   });
 
+  test('the behaviors page does not duplicate its live stage', async ({ page }) => {
+    // Not John's signature, but the one the archives actually show: of the
+    // duplicate-id reports kept in data/error-log-archive, 44 are
+    // "#behaviors-live-stage x2" against 2 of "#app x2, #error-template x2".
+    // Whatever doubled the shell was rare; this one was routine.
+    const hints: string[] = [];
+    page.on('console', (m) => {
+      if (/Duplicate element id/i.test(m.text())) hints.push(m.text());
+    });
+
+    await page.goto('/?page=behaviors');
+    await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
+    await page.waitForTimeout(1500);
+
+    const dups = await duplicates(page);
+    expect(dups, `the behaviors page duplicated: ${JSON.stringify(dups)}`).toEqual([]);
+    expect(hints, `the runtime reported duplicates:\n${hints.join('\n')}`).toEqual([]);
+  });
+
   test('the detector this spec relies on can actually see a duplicate', async ({ page }) => {
     // Without this, the two tests above pass just as well when
     // findDuplicateIds is broken and returns nothing -- the #863 trap. Plant
