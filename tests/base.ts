@@ -696,8 +696,14 @@ export async function buildInView(locator: Locator, timeoutMs = 15000): Promise<
  * it landed on. The class is the product's own "measured yet?" answer, and it
  * is always cleared (media that never loads drops it after 5s). Unbuilt demos
  * (#491: the lazy runtime builds only near the viewport) never carry it.
+ *
+ * #984: the runtime goes idle first. Called straight after goto, before any
+ * demo had started, the check below held vacuously (no grid = "unbuilt") and
+ * returned at once -- which is why every caller put a sleep in front of it.
+ * Once WB is idle, every demo that is going to build now has its grid.
  */
 export async function demoWidthsSettled(page: Page, timeoutMs = 15000): Promise<void> {
+  await wbIdle(page, { timeout: timeoutMs });
   await page.waitForFunction(
     () => Array.from(document.querySelectorAll('[x-demo], x-demo')).every((d) => {
       if (d.classList.contains('x-demo--measuring')) return false;

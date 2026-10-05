@@ -6,6 +6,58 @@
   ],
   "releases": [
     {
+      "version": "1.0.266",
+      "date": "2026-10-05",
+      "summary": "Fix: newest navigation wins; scroll placed when the page appears (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1520\" target=\"_blank\" rel=\"noopener\">PR 1520</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1462\" target=\"_blank\" rel=\"noopener\">#1462</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1519\" target=\"_blank\" rel=\"noopener\">#1519</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The held-fragment spec blocks the service worker ( guard)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1462\" target=\"_blank\" rel=\"noopener\">#1462</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1519\" target=\"_blank\" rel=\"noopener\">#1519</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1349\" target=\"_blank\" rel=\"noopener\">#1349</a>",
+          "issues": [
+            1462,
+            1519,
+            1349
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Newest navigation wins; scroll placed when the page appears</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1462\" target=\"_blank\" rel=\"noopener\">#1462</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1519\" target=\"_blank\" rel=\"noopener\">#1519</a>",
+          "issues": [
+            1462,
+            1519
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.265",
+      "date": "2026-10-04",
+      "summary": "Test: wait on demo.js&#39;s settle signal, not sleeps sized to its poll (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1521\" target=\"_blank\" rel=\"noopener\">PR 1521</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/984\" target=\"_blank\" rel=\"noopener\">#984</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Wait on demo.js&#39;s settle signal, not sleeps sized to its poll</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/984\" target=\"_blank\" rel=\"noopener\">#984</a>",
+          "issues": [
+            984
+          ]
+        }
+      ]
+    },
+    {
+      "version": "1.0.264",
+      "date": "2026-10-04",
+      "summary": "Fix: the header logo is an inline SVG, not a 1.5 MB PNG (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1518\" target=\"_blank\" rel=\"noopener\">PR 1518</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/795\" target=\"_blank\" rel=\"noopener\">#795</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The header logo is an inline SVG, not a 1.5 MB PNG</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/795\" target=\"_blank\" rel=\"noopener\">#795</a>",
+          "issues": [
+            795
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.263",
       "date": "2026-10-04",
       "summary": "Fix: refuse a body file whose bytes changed since this agent wrote it (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1511\" target=\"_blank\" rel=\"noopener\">PR 1511</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1336\" target=\"_blank\" rel=\"noopener\">#1336</a>",

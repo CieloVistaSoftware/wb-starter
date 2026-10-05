@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { demoWidthsSettled } from '../base';
 
 /**
  * #586: demos/site/cards.html's <div x-demo> code panels didn't show all the
@@ -36,18 +37,13 @@ import { test, expect } from '../fixtures/offline';
  */
 test.describe('demos/site/cards.html: single-item [x-demo] code panels are never clipped', () => {
   test('cardexpandable and cardvideo code panels show all their code, no horizontal overflow', async ({ page }) => {
-    // This test's DECLARED work cannot fit Playwright's default 30s: a 20s
-    // budget waiting for __WB_DEMO_INITIALIZED__, scrolling five sections of
-    // the heaviest page in the repo (34 demos / 265 articles), then a 6s
-    // settle for demo.js's own poll-until-stable width measurement
-    // (POLL_MS=200, MAX_MS=5000 per demo). Under 8 workers it ran out of
-    // budget and reported a timeout, which read as a product failure.
-    //
-    // This is raising a budget to match work that is real and BOUNDED — not
-    // padding a race. The waits above are all capped; nothing here spins.
-    // Same precedent as cardvideo-aspect-ratio (60s), dropdown-examples
-    // (120s) and every-documented-example-works (300s).
-    test.setTimeout(90_000);
+    // The budget is the sum of this test's own named waits on the heaviest
+    // page in the repo (34 demos / 265 articles): 20s for
+    // __WB_DEMO_INITIALIZED__, 20s to build the five sections, and
+    // demoWidthsSettled's idle + settle (15s each), plus headroom. #984: it
+    // was 90s, to cover a flat 6s sleep sized to outlast demo.js's
+    // measurement; the wait is now on the class demo.js swaps when it settles.
+    test.setTimeout(20_000 + 20_000 + 2 * 15_000 + 10_000);
 
     const pageErrors: string[] = [];
     page.on('pageerror', (err) => pageErrors.push(String(err)));
@@ -58,10 +54,8 @@ test.describe('demos/site/cards.html: single-item [x-demo] code panels are never
     // The bug lives in the FIRST section on the page ("Card Gallery") --
     // its x-cardexpandable/x-cardvideo demos are among the eagerly-built
     // ones (EAGER_BUILD_COUNT=5) and reproduced on nearly every load without
-    // any scrolling. Scroll each relevant section into view anyway (cheap,
-    // and also exercises the lazy-build path for the same components
-    // further down the page) and give the width-measurement poll (up to 5s
-    // per demo.js's own MAX_MS) time to fully settle.
+    // any scrolling. The other sections are built explicitly (#984): scrolling
+    // them into view relied on the lazy IntersectionObserver firing in time.
     const sectionIds = [
       'card-gallery',
       'cardexpandable-expandable-card',
@@ -69,16 +63,16 @@ test.describe('demos/site/cards.html: single-item [x-demo] code panels are never
       'cardexpandable-toggles',
       'cardvideo-video-card',
     ];
-    for (const id of sectionIds) {
-      const section = page.locator(`#${id}`);
-      if (await section.count()) {
-        await section.scrollIntoViewIfNeeded();
+    await page.evaluate(async (ids) => {
+      const WB = (window as any).WB;
+      for (const id of ids) {
+        const section = document.getElementById(id);
+        if (section) await WB.scan(section, { eager: true });
       }
-    }
-    // Let demo.js's poll-until-stable width measurement fully settle
-    // (POLL_MS=200, up to MAX_MS=5000 per demo) for every demo just
-    // scrolled into view.
-    await page.waitForTimeout(6000);
+    }, sectionIds);
+    // Until every demo has committed its width: the class demo.js swaps when
+    // its measurement settles, not a sleep sized to its 5s worst case.
+    await demoWidthsSettled(page);
 
     expect(pageErrors, 'no uncaught page errors while building the demos above').toEqual([]);
 

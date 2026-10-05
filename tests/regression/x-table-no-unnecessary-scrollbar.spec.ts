@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/offline';
+import { demoWidthsSettled } from '../base';
 
 /**
  * #589: "x-table has a small (~8px) horizontal scrollbar on every example
@@ -24,9 +25,9 @@ test.describe('.x-table never shows an unnecessary horizontal scrollbar (#589)',
 
     const tables = page.locator('.x-table');
     await expect(tables.first()).toBeVisible({ timeout: 20000 });
-    // Let demo.js's rAF-scheduled shrink-to-fit measurement fully settle
-    // (poll-until-stable, capped at 5s in demo.js).
-    await page.waitForTimeout(5200);
+    // Until each demo commits its width (#984: the class demo.js swaps when
+    // it settles), not a 5.2s sleep sized to outlast its worst case.
+    await demoWidthsSettled(page);
 
     const count = await tables.count();
     expect(count, 'table.md should render at least one <table>').toBeGreaterThan(0);
