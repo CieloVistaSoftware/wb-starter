@@ -10,11 +10,11 @@ import path from 'node:path';
  * being demonstrated was the one that did not survive.
  *
  * An option that is on by default is turned off by writing name="false"
- * (read as off since #747). An option that is off by default needs nothing
- * written, so those are not checked here.
+ * (read as off since #747), in the schema's own camelCase spelling (#1125).
+ * An option that is off by default needs nothing written, so those are not
+ * checked here.
  */
 const root = process.cwd();
-const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
 function offCombinations() {
   const dir = path.join(root, 'src', 'wb-models');
@@ -26,7 +26,7 @@ function offCombinations() {
     for (const combo of schema.test?.matrix?.combinations || []) {
       for (const [k, v] of Object.entries(combo)) {
         if (v === false && props[k]?.default === true) {
-          out.push({ behavior: schema.schemaFor, attr: kebab(k), combo: JSON.stringify(combo) });
+          out.push({ behavior: schema.schemaFor, attr: k, combo: JSON.stringify(combo) });
         }
       }
     }

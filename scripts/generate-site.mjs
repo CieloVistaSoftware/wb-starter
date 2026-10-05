@@ -289,8 +289,10 @@ function generateComponentSections(schema) {
         // default, OFF must be written out -- name="false", which the behaviors
         // read as off since #747. When it is off by default, false IS the
         // default, so it stays unwritten and {x:false} still dedupes with {}.
+        // Written in the schema's own camelCase (#1125), not kebab: the dashed
+        // spelling everywhere else in this generator is #1526.
         if (val === false) {
-          if (props[key]?.default === true) attrs[camelToKebab(key)] = 'false';
+          if (props[key]?.default === true) attrs[key] = 'false';
           continue;
         }
         attrs[camelToKebab(key)] = val;
