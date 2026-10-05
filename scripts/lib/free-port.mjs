@@ -31,12 +31,27 @@ import { mkdirSync, openSync, writeSync, closeSync, readFileSync, unlinkSync } f
 import { join } from 'node:path';
 import { defaultGlobalDir, isProcessRunning } from './test-lock.mjs';
 
-/** ES module source for the probe child (Tier-1 Law 3: no require, not even in a -e string). */
+/**
+ * ES module source for the probe child (Tier-1 Law 3: no require, not even in a -e string).
+ *
+ * #1472: a test server binds PORT and PORT+1 (server.js WS_PORT, live reload),
+ * on the default host. The probe used to ask for one port on 127.0.0.1 only, so
+ * it could hand out a PORT whose PORT+1 another server held -- or a port free on
+ * IPv4 loopback but taken on the dual-stack default -- and the server then died
+ * with ":N is already in use". Now: bind like the server does, and accept PORT
+ * only when PORT+1 binds too (up to 20 tries).
+ */
 const PROBE_SOURCE =
   "import { createServer } from 'node:net';" +
-  "const s = createServer();" +
-  "s.on('error', (e) => { process.stderr.write(String(e && e.stack || e)); process.exit(1); });" +
-  "s.listen(0, '127.0.0.1', () => { const p = s.address().port; s.close(() => process.stdout.write(String(p))); });";
+  "const bind = (port) => new Promise((res) => { const s = createServer(); s.once('error', () => res(null)); s.listen(port, () => res(s)); });" +
+  "const close = (s) => new Promise((res) => s ? s.close(() => res()) : res());" +
+  "for (let i = 0; i < 20; i++) {" +
+  "  const a = await bind(0); if (!a) continue;" +
+  "  const p = a.address().port; const b = p < 65535 ? await bind(p + 1) : null;" +
+  "  await close(a); await close(b);" +
+  "  if (b) { process.stdout.write(String(p)); process.exit(0); }" +
+  "}" +
+  "process.stderr.write('no port whose next port was also free in 20 tries'); process.exit(1);";
 
 export function defaultPortClaimDir() {
   return join(defaultGlobalDir(), 'ports');
@@ -99,10 +114,29 @@ export function claimFreePort(opts = {}) {
   const attempts = opts.attempts || 20;
   mkdirSync(dir, { recursive: true });
 
+  // #1472: a claim on P covers P and P+1 (the server's live-reload port), so a
+  // live claim on a NEIGHBOUR rules a port out too: P+1 is that run's live
+  // reload, and a run on P-1 uses P. A dead neighbour's claim is reaped.
+  const liveNeighbour = (port) => {
+    for (const n of [port - 1, port + 1]) {
+      const f = join(dir, `${n}.claim`);
+      const holder = readClaimPid(f);
+      if (!holder) continue;
+      if (isAlive(holder)) return { port: n, holder };
+      try { unlinkSync(f); } catch { /* another run reaped it first */ }
+    }
+    return null;
+  };
+
   const skipped = [];
   for (let i = 0; i < attempts; i++) {
     const port = probe();
     const file = join(dir, `${port}.claim`);
+    const near = liveNeighbour(port);
+    if (near) {
+      skipped.push(`${port} (next to ${near.port}, claimed by live pid ${near.holder}: its server binds both)`);
+      continue;
+    }
     if (tryCreateClaim(file, pid)) {
       return {
         port,
