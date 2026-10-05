@@ -121,6 +121,7 @@ John, 2026-10-02: "you trigger the merges when the tests indicate to do it."
 - Claude merges its own PRs when **every check on the PR's current head commit is green** and there is no merge conflict. No asking first.
 - **Any red check blocks the merge**, even one Claude believes the PR did not cause. Claude fixes it, or fixes the flaky test, and lets CI answer again. A merge is never argued past a red check.
 - After merging, report with the release line (above) and say when the change is live.
+- **Then remove the worktree** (#1534). John: "I want all the folders cleaned after all the merges are complete, don't leave artifacts on my computer." Run `node scripts/clean-merged-worktrees.mjs --apply` from the main checkout. It unlinks the `node_modules` junction first (deleting through it empties the real one, #1129), removes the worktree, deletes the branch and prunes. It only touches worktrees whose branch is merged and clean; everything else is listed with the reason it was kept. Never delete a worktree folder by hand.
 
 ## End of Session — "park"
 
@@ -128,7 +129,8 @@ When John says **"park"**:
 
 1. Update the 🅿️ PARKING LOT in `docs/_today/CURRENT-STATUS.md` (task, files touched, last action, next step, open questions).
 2. Merge the day's finished PRs into `main`.
-3. Trigger the **Nightly** test run: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST).
+3. Remove every merged worktree: `node scripts/clean-merged-worktrees.mjs --apply` (#1534). Nothing merged stays on John's machine overnight; report what it kept and why.
+4. Trigger the **Nightly** test run: `gh workflow run nightly.yml --ref main` (`.github/workflows/nightly.yml`, workflow_dispatch). Backup: it also runs at 08:00 UTC (2am CST).
 
 Nightly runs the full suite on main against the known-failures register. A new failure files one `priority:2` issue linking the run. It does not release: the version number is counted from the last tag.
 
