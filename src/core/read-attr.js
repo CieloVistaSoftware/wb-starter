@@ -24,6 +24,10 @@
  * `"false"` and `"0"` read as FALSE for flags. A bare `hasAttribute()` check
  * treats `collapsible="false"` as ON, which is the opposite of what the markup
  * says — the #747 trap, where `showclose="false"` still showed the control.
+ *
+ * Parsing the value is only half of it. The attribute has to be FOUND, and
+ * which spellings get looked up used to depend on the name the CALLER passed:
+ * reading under `'show-close'` never saw `showClose`. See `spellings()`.
  */
 
 /** `iconPosition` → `icon-position`; `size` → `size`. */
@@ -37,6 +41,45 @@ function camel(name) {
 }
 
 /**
+ * Every attribute spelling that counts as `name`, highest precedence first.
+ *
+ * The camelCase spelling is in this list because the NAME a behavior passed in
+ * decided which markup it could see. `readFlag(el, 'show-close')` looked up
+ * `show-close` and `data-show-close` and never `showClose` — so
+ * `<dialog showClose="false">`, the spelling dialog.schema.json declares and
+ * ATTRIBUTE-NAMING-STANDARD.md calls canonical (#1125), matched nothing, fell
+ * back to the default and turned the close button ON. That is the half of the
+ * #747 trap nobody had named: `"false"` parsing as false is no use until the
+ * attribute is FOUND. Reading under either spelling now finds either markup,
+ * so a behavior still calling with a dashed name is correct too and no page
+ * already written breaks.
+ *
+ * `hasAttribute`/`getAttribute` lower-case their argument on an HTML element,
+ * so `showClose` here matches the `showclose` the parser actually stored.
+ */
+function spellings(name) {
+  const plain = kebab(name);
+  return [...new Set([plain, name, camel(name), `data-${plain}`])];
+}
+
+/**
+ * Is this attribute authored at all, under any accepted spelling?
+ *
+ * Presence only — the VALUE is never consulted, so `modal-title=""` counts.
+ * Use it where an author's having supplied an attribute is itself the
+ * question (dialog's trigger-vs-definition gate), never to read a flag: a
+ * flag's value is what decides, and `readFlag` is what parses it (#747).
+ *
+ * @param {Element} el
+ * @param {string} name
+ * @returns {boolean}
+ */
+export function hasAuthoredAttr(el, name) {
+  if (!el || !el.hasAttribute) return false;
+  return spellings(name).some((attr) => el.hasAttribute(attr));
+}
+
+/**
  * Read a boolean attribute. Present with no value is true; `"false"`/`"0"` is
  * false; absent falls back to `fallback`.
  *
@@ -47,8 +90,7 @@ function camel(name) {
  */
 export function readFlag(el, name, fallback = false) {
   if (!el || !el.getAttribute) return fallback;
-  const plain = kebab(name);
-  for (const attr of [plain, name, `data-${plain}`]) {
+  for (const attr of spellings(name)) {
     if (!el.hasAttribute(attr)) continue;
     const v = el.getAttribute(attr);
     // A bare attribute (`collapsible`) has the empty string as its value.
@@ -68,8 +110,7 @@ export function readFlag(el, name, fallback = false) {
  */
 export function readAttr(el, name, fallback = '') {
   if (!el || !el.getAttribute) return fallback;
-  const plain = kebab(name);
-  for (const attr of [plain, name, `data-${plain}`]) {
+  for (const attr of spellings(name)) {
     const v = el.getAttribute(attr);
     if (v !== null && v !== '') return v;
   }
@@ -116,4 +157,4 @@ export function readOption(el, options, name, attr = kebab(name)) {
   return options[name] || readAttr(el, name) || el.getAttribute(attr);
 }
 
-export default { readFlag, readAttr, readNumber, readOption };
+export default { readFlag, readAttr, readNumber, readOption, hasAuthoredAttr };

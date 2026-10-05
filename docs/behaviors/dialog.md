@@ -19,7 +19,7 @@ No attribute needed on `<dialog>`. Don't add `x-dialog` to it (#746).
 On another element, write `x-dialog`:
 
 ```html
-<button x-dialog modal-title="Delete branch?" modal-content="fix/706-dropdown will be removed. This cannot be undone.">Delete branch…</button>
+<button x-dialog modalTitle="Delete branch?" modalContent="fix/706-dropdown will be removed. This cannot be undone.">Delete branch…</button>
 ```
 
 `<dialog x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
@@ -31,10 +31,42 @@ On another element, write `x-dialog`:
 | `title` | `string` | — | Dialog title |
 | `content` | `string` | — | Dialog body content |
 | `size` | `sm` · `md` · `lg` · `xl` · `full` | `md` |  |
-| `close-on-backdrop` | `boolean` | `true` | Close on backdrop click |
-| `close-on-escape` | `boolean` | `true` | Close on Escape key |
-| `show-close` | `boolean` | `true` | Show close button |
+| `closeOnBackdrop` | `boolean` | `true` | Close when the user clicks **outside** the dialog. The *backdrop* is the dimmed area the browser paints over the rest of the page while a modal is open (`::backdrop`). |
+| `closeOnEscape` | `boolean` | `true` | Close when the user presses Escape |
+| `showClose` | `boolean` | `true` | Show the × button in the header |
 | `variant` | `default` · `centered` · `fullscreen` | `default` |  |
+
+These three are on by default, so you only ever write them to turn something
+**off**:
+
+```html
+<dialog showClose="false" closeOnBackdrop="false">
+  <h2>Confirm the merge</h2>
+  <p>Escape still gets you out.</p>
+</dialog>
+```
+
+### What `"false"` means
+
+`"false"` and `"0"` turn a boolean option off. The attribute being present is
+not what switches it on — its value is read:
+
+```html
+<dialog showClose>              <!-- on  -->
+<dialog showClose="true">       <!-- on  -->
+<dialog showClose="false">      <!-- OFF -->
+<dialog showClose="0">          <!-- OFF -->
+```
+
+This is worth spelling out because it used to be untrue: `showClose="false"`
+showed the close button anyway (#747). The old dashed spellings
+(`show-close`, `close-on-backdrop`, `close-on-escape`) are still read, so
+pages already written keep working — but no attribute name carries a dash, so
+the camelCase names above are the ones to write (#1125).
+
+Leaving an authored `<dialog>` with every exit turned off is a trap: Escape and
+the backdrop are not visible affordances, so with `showClose="false"` the only
+way out must be a button you put in the markup yourself.
 
 ## Events
 
