@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.255",
+      "date": "2026-10-04",
+      "summary": "Docs(_today): PR is merged (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1506\" target=\"_blank\" rel=\"noopener\">PR 1506</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1324\" target=\"_blank\" rel=\"noopener\">#1324</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>PR is merged</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1324\" target=\"_blank\" rel=\"noopener\">#1324</a>",
+          "issues": [
+            1324
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.254",
       "date": "2026-10-04",
       "summary": "Chore: delete data/templates.json (its reader, the Builder, is gone) (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1504\" target=\"_blank\" rel=\"noopener\">PR 1504</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1447\" target=\"_blank\" rel=\"noopener\">#1447</a>",
