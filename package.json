@@ -31,6 +31,7 @@
     "test:playwright-launch": "node scripts/test-playwright-launch.mjs",
     "test:ship-rollback": "node scripts/test-ship-rollback.mjs",
     "test:staged-control-bytes": "node scripts/test-staged-control-bytes.mjs",
+    "test:body-file-handoff": "node scripts/test-body-file-handoff.mjs",
     "test:suite-env": "node scripts/test-suite-env.mjs",
     "test:free-port": "node scripts/test-free-port.mjs",
     "test:summary-parse": "node scripts/test-summary-parse.mjs",
