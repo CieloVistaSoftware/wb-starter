@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.277",
+      "date": "2026-10-05",
+      "summary": "doc-viewer-back-restores-docs-list fails ~3 in 10: Playwright&#39;s click re-scrolls after the baseline is read; the page restores correctly (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1552\" target=\"_blank\" rel=\"noopener\">PR 1552</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1551\" target=\"_blank\" rel=\"noopener\">#1551</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read the docs-list position in the same task as the click</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1551\" target=\"_blank\" rel=\"noopener\">#1551</a>",
+          "issues": [
+            1551
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.276",
       "date": "2026-10-05",
       "summary": "Typing in the Demos page search hid every section, the matching ones too, and clearing it did not bring them back. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1532\" target=\"_blank\" rel=\"noopener\">PR 1532</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/559\" target=\"_blank\" rel=\"noopener\">#559</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1533\" target=\"_blank\" rel=\"noopener\">#1533</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/866\" target=\"_blank\" rel=\"noopener\">#866</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/887\" target=\"_blank\" rel=\"noopener\">#887</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1029\" target=\"_blank\" rel=\"noopener\">#1029</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1226\" target=\"_blank\" rel=\"noopener\">#1226</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1240\" target=\"_blank\" rel=\"noopener\">#1240</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1139\" target=\"_blank\" rel=\"noopener\">#1139</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1097\" target=\"_blank\" rel=\"noopener\">#1097</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1018\" target=\"_blank\" rel=\"noopener\">#1018</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1019\" target=\"_blank\" rel=\"noopener\">#1019</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1534\" target=\"_blank\" rel=\"noopener\">#1534</a>",
