@@ -66,6 +66,10 @@ export const conceptOf = (s) => s.toLowerCase().replace(/^data-/, '').replace(/[
  */
 const ATTR_CALL = /(?:get|has|remove|set)Attribute\(\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
 const READ_FLAG = /readFlag\(\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
+// #1526: readAttr / readNumber / hasAuthoredAttr are read-attr.js's other
+// readers. A behavior moved onto them from a raw getAttribute('brand-href')
+// was reported inert, so the audit punished the fix it exists to encourage.
+const READ_ATTR = /(?:readAttr|readNumber|hasAuthoredAttr)\(\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
 // #883: readOption(el, options, 'name'[, 'attr']) (src/core/read-attr.js) reads
 // options.name, then readAttr(el, 'name'), then el.getAttribute(attr), where
 // attr defaults to kebab(name). Both names are read off the element.
@@ -91,7 +95,7 @@ function readIndex(root = VM) {
       if (!idx.has(attr)) idx.set(attr, new Set());
       idx.get(attr).add(base);
     };
-    for (const re of [ATTR_CALL, READ_FLAG]) {
+    for (const re of [ATTR_CALL, READ_FLAG, READ_ATTR]) {
       re.lastIndex = 0;
       let m;
       while ((m = re.exec(src))) add(m[1]);

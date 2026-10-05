@@ -9,7 +9,7 @@
  * the real textarea now, see below); emits a one-time console warning.
  */
 import { setRule, clearRules } from '../../core/dynamic-style.js';
-import { readAttr, readFlag } from '../../core/read-attr.js';
+import { readAttr, readFlag, hasAuthoredAttr } from '../../core/read-attr.js';
 
 let _textareaHostDeprecationWarned = false;
 
@@ -17,7 +17,9 @@ let _textareaHostDeprecationWarned = false;
 const RESIZE_VALUES = ['none', 'vertical', 'horizontal', 'both'];
 
 /** Host attributes the enhancement below reads off the real <textarea>. */
-const ENHANCE_ATTRS = ['variant', 'size', 'autosize', 'max-length', 'show-count', 'min-rows', 'max-rows', 'resize'];
+// #1526: the schema's own names. Copied with hasAuthoredAttr/readAttr, so a
+// host written show-count or showCount (canonical, #1125) both reach the field.
+const ENHANCE_ATTRS = ['variant', 'size', 'autosize', 'maxLength', 'showCount', 'minRows', 'maxRows', 'resize'];
 
 /**
  * Copy the declared host attributes the schema $view does not bind onto the
@@ -50,7 +52,7 @@ function reflectHostAttributes(host, inner) {
   // The enhancement runs on the real field, so it has to see what the author
   // put on the host.
   for (const attr of ENHANCE_ATTRS) {
-    if (host.hasAttribute(attr)) inner.setAttribute(attr, host.getAttribute(attr));
+    if (hasAuthoredAttr(host, attr)) inner.setAttribute(attr, readAttr(host, attr, ''));
   }
 }
 
@@ -103,7 +105,7 @@ export function textarea(element, options = {}) {
     if (host.textContent && host.textContent.trim()) built.value = host.textContent.trim();
     else if (host.getAttribute('value')) built.value = host.getAttribute('value');
     ENHANCE_ATTRS.forEach((attr) => {
-      if (host.hasAttribute(attr)) built.setAttribute(attr, host.getAttribute(attr));
+      if (hasAuthoredAttr(host, attr)) built.setAttribute(attr, readAttr(host, attr, ''));
     });
     host.textContent = '';
     host.appendChild(built);
@@ -134,10 +136,10 @@ export function textarea(element, options = {}) {
 
   const config = {
     autosize: options.autosize ?? element.hasAttribute('autosize'),
-    maxLength: parseInt(options.maxLength || element.getAttribute('max-length') || '0'),
-    showCount: options.showCount ?? element.hasAttribute('show-count'),
-    minRows: parseInt(options.minRows || element.getAttribute('min-rows') || '2'),
-    maxRows: parseInt(options.maxRows || element.getAttribute('max-rows') || '10'),
+    maxLength: parseInt(options.maxLength || readAttr(element, 'maxLength', '0')),
+    showCount: options.showCount ?? readFlag(element, 'showCount'),
+    minRows: parseInt(options.minRows || readAttr(element, 'minRows', '2')),
+    maxRows: parseInt(options.maxRows || readAttr(element, 'maxRows', '10')),
     size: options.size || element.getAttribute('size') || 'md',
     resize: options.resize || readAttr(element, 'resize', 'vertical'),
     ...options
