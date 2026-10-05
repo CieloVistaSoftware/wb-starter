@@ -109,7 +109,7 @@ saying we didn't tell you what to do?" The rules exist; read them before filing.
 John, 2026-10-02: "I should be able to see what you are working on at all times
 via our issues view."
 
-1. **Before starting** work on an issue, put the `status:in-progress` label on it. The Issues page's **In Progress** tab shows exactly those issues.
+1. **Before starting** work on an issue, put the `status:in-progress` label on it. The Issues page's **Working on now (N)** tab (formerly In Progress, #1501) shows exactly those issues.
 2. **Say what is happening, at every step.** John: "How can something be in progress with old dates and no update to indicate what is next, when and why?" Post an issue comment with three lines, `**Now:** …`, `**Next:** …`, `**Why:** …`, when you start and whenever the step changes. The green row on the Issues page shows the latest one and its age; a row with none, or none for a day, shows red.
 3. **No work without an issue.** A request with no issue gets one filed first (with its Signature block), then labelled.
 4. **When the fix merges** (or the work stops), take the label off. Closing via `Fixes #N` closes it; remove the label anyway so the tab stays truthful.
