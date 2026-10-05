@@ -24,6 +24,7 @@ concurrency:
 permissions:
   contents: write
   pages: write
+  issues: read
 
 jobs:
   stamp:
@@ -44,6 +45,9 @@ jobs:
       # repo's hooks are not installed, so the stamp commit runs no hook.
       - name: Stamp
         id: stamp
+        # release-versions.mjs reads issue titles for the Releases page (#1533).
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git fetch --tags --force
           node scripts/stamp-version.js
