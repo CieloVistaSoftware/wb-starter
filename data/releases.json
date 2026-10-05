@@ -6,6 +6,20 @@
   ],
   "releases": [
     {
+      "version": "1.0.274",
+      "date": "2026-10-05",
+      "summary": "Fix(button): icon layout reaches every button, not only an &lt;x-button&gt; tag (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1548\" target=\"_blank\" rel=\"noopener\">PR 1548</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/741\" target=\"_blank\" rel=\"noopener\">#741</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Icon layout reaches every button, not only an &lt;x-button&gt; tag</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/741\" target=\"_blank\" rel=\"noopener\">#741</a>",
+          "issues": [
+            741
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.273",
       "date": "2026-10-05",
       "summary": "Fix: camelCase options build like dashed ones; the audit sees readAttr (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1537\" target=\"_blank\" rel=\"noopener\">PR 1537</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a>",
