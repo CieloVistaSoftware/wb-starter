@@ -1,6 +1,7 @@
 import { readFlag, readAttr } from '../core/read-attr.js';
 import { writeToClipboard } from './copy.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
+import { TIME_ZONE, clockParts } from '../core/central-time.js';
 /**
  * Utility Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -693,6 +694,27 @@ function clockVariant(raw) {
  * Clock - Live clock with VARIANTS (digital, led, analog)
  * Helper Attribute: [x-clock]
  */
+/**
+ * The IANA zone an x-clock shows (#1553): US Central unless `timezone` names
+ * another zone, or "local" for the visitor's own (returned as null). An
+ * unknown name logs a warning naming it and falls back to Central.
+ *
+ * @param {string|null|undefined} raw
+ * @returns {string|null}
+ */
+function clockZone(raw) {
+  const name = String(raw || '').trim();
+  if (!name) return TIME_ZONE;
+  if (name.toLowerCase() === 'local') return null;
+  try {
+    clockParts(new Date(), name);
+    return name;
+  } catch {
+    console.warn(`x-clock: timezone="${name}" is not a known time zone; showing ${TIME_ZONE}.`);
+    return TIME_ZONE;
+  }
+}
+
 export function clock(element, options = {}) {
   const rawFormat = String(options.format || element.getAttribute('format') || '').trim();
   const config = {
@@ -700,6 +722,7 @@ export function clock(element, options = {}) {
     variant: clockVariant(options.variant || element.getAttribute('variant')),
     format: rawFormat === '12' ? '12' : '24',
     showSeconds: String(options.showSeconds ?? element.getAttribute('show-seconds') ?? '').trim() !== 'false',
+    timeZone: clockZone(options.timezone || element.getAttribute('timezone')),
   };
 
   // #779: base (with #486's 1rem padding floor), led, analog and the
@@ -708,10 +731,13 @@ export function clock(element, options = {}) {
   element.classList.add('x-clock', `x-clock--${config.variant}`);
 
   const update = () => {
-    const now = new Date();
-    let hours = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+    // #1553: US Central by default (John: "x-clock should default to cst"),
+    // not the visitor's own zone; timezone="local" asks for theirs.
+    const now = config.timeZone ? clockParts(new Date(), config.timeZone) : null;
+    const local = new Date();
+    let hours = now ? now.hours : local.getHours();
+    const minutes = String(now ? now.minutes : local.getMinutes()).padStart(2, '0');
+    const seconds = String(now ? now.seconds : local.getSeconds()).padStart(2, '0');
     let suffix = '';
 
     if (config.format === '12') {

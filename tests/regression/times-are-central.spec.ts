@@ -72,3 +72,37 @@ test('a visitor in another zone still sees Central', async ({ browser }) => {
   expect(shown).toBe('5:26 PM CDT');
   await context.close();
 });
+
+/**
+ * John, 2026-10-05: "x-clock should default to cst". The clock drew the
+ * visitor's own hours (Date#getHours); it now shows Central unless
+ * `timezone` names another zone or "local".
+ */
+test('x-clock shows Central by default, wherever the visitor is', async ({ browser }) => {
+  const context = await browser.newContext({ timezoneId: 'Asia/Tokyo' });
+  const page = await context.newPage();
+  // 22:26:00 UTC = 17:26 CDT = 07:26 (next day) in Tokyo = 23:26 BST.
+  await page.clock.setFixedTime(new Date('2026-10-05T22:26:00Z'));
+  const warnings: string[] = [];
+  page.on('console', (m) => { if (m.type() === 'warning') warnings.push(m.text()); });
+  await page.goto('/demos/test-harness.html');
+  await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 20_000 });
+  const shown = await page.evaluate(async () => {
+    const host = document.createElement('div');
+    host.innerHTML =
+      '<div id="c-default" x-clock></div>' +
+      '<div id="c-local" x-clock timezone="local"></div>' +
+      '<div id="c-london" x-clock timezone="Europe/London"></div>' +
+      '<div id="c-bad" x-clock timezone="Mars/Olympus"></div>';
+    document.body.appendChild(host);
+    await (window as any).WB.scan(host, { eager: true });
+    const text = (id: string) => (document.getElementById(id)?.textContent || '').trim();
+    return { def: text('c-default'), local: text('c-local'), london: text('c-london'), bad: text('c-bad') };
+  });
+  expect(shown.def, 'default is Central').toBe('17:26:00');
+  expect(shown.local, 'timezone="local" is the visitor (Tokyo)').toBe('07:26:00');
+  expect(shown.london).toBe('23:26:00');
+  expect(shown.bad, 'an unknown zone falls back to Central').toBe('17:26:00');
+  expect(warnings.join('\n')).toContain('timezone="Mars/Olympus" is not a known time zone');
+  await context.close();
+});

@@ -61,6 +61,24 @@ export const centralClock = formatter('clock');
 /** 'Oct 5, 2026, 5:12 PM CDT'. */
 export const centralDateTime = formatter('dateTime');
 
+/**
+ * The wall-clock hours, minutes and seconds of `value` in `timeZone` (24-hour),
+ * for a live clock that draws its own digits (x-clock). Throws RangeError on
+ * an unknown zone, so the caller can say which name was wrong.
+ *
+ * @param {Date|string|number} [value]
+ * @param {string} [timeZone]
+ * @returns {{ hours: number, minutes: number, seconds: number }}
+ */
+export function clockParts(value = new Date(), timeZone = TIME_ZONE) {
+  const instant = toInstant(value) || new Date();
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone, hourCycle: 'h23', hour: '2-digit', minute: '2-digit', second: '2-digit',
+  }).formatToParts(instant);
+  const read = (type) => Number(parts.find((p) => p.type === type)?.value || 0);
+  return { hours: read('hour'), minutes: read('minute'), seconds: read('second') };
+}
+
 if (typeof window !== 'undefined') {
   window.WBTime = Object.freeze({
     TIME_ZONE,

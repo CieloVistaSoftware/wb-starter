@@ -15,11 +15,13 @@
 
 **Updated 2026-10-05, evening.** Central time (#1553) and x-glow (#816).
 
-**Files touched:** `src/core/central-time.js` (new), the displays that used `toLocale*String`, `scripts/lib/git-dates.mjs`, `scripts/lib/release-date.mjs`; `src/styles/behaviors/effects.css`, `src/wb-viewmodels/effects.js`, `src/wb-models/glow.schema.json`, `docs/behaviors/glow.md`.
+**Files touched:** `src/core/central-time.js` (new), the displays that used `toLocale*String`, `scripts/lib/git-dates.mjs`, `scripts/lib/release-date.mjs`; `src/styles/behaviors/effects.css`, `src/wb-viewmodels/effects.js`, `src/wb-models/glow.schema.json`, `docs/behaviors/glow.md`; `src/wb-viewmodels/helpers.js` (x-clock), `src/wb-models/clock.schema.json`, `docs/behaviors/clock.md`.
 
 **Last action:** every displayed date and time is US Central (CDT/CST). x-glow pulses (its keyframe never existed), `target="text"` glows the letters, and reduced motion stops the pulse.
 
-**Next step:** x-clock still shows the visitor's local time; asked John whether it should default to Central or take a `timezone` option.
+**Then:** John: "x-clock should default to cst". It does, with a `timezone` option (IANA name or `local`).
+
+**Next step:** work the open issues.
 
 ---
 

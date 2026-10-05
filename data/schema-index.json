@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T22:54:01.212Z",
+  "generatedAt": "2026-10-05T23:17:47.261Z",
   "count": 160,
   "schemas": [
     {
@@ -1601,7 +1601,7 @@
       "file": "clock.schema.json",
       "name": "clock",
       "title": "Clock",
-      "description": "x-clock shows the current time in the element and updates it every second.",
+      "description": "x-clock shows the current time in the element and updates it every second. It shows US Central time unless timezone says otherwise.",
       "tag": "x-clock",
       "baseClass": "x-clock",
       "properties": {
@@ -1632,6 +1632,17 @@
             "false"
           ],
           "default": "true"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "The time zone the clock shows: an IANA name such as `America/New_York`, or `local` for the visitor's own. Defaults to US Central (`America/Chicago`, CDT/CST). An unknown name logs a warning and shows Central.",
+          "default": "America/Chicago",
+          "examples": [
+            "America/Chicago",
+            "America/New_York",
+            "Europe/London",
+            "local"
+          ]
         }
       },
       "matrix": [],

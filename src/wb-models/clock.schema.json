@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "clock.schema.json",
   "title": "Clock",
-  "description": "x-clock shows the current time in the element and updates it every second.",
+  "description": "x-clock shows the current time in the element and updates it every second. It shows US Central time unless timezone says otherwise.",
   "schemaFor": "clock",
   "properties": {
     "variant": {
@@ -32,6 +32,17 @@
         "false"
       ],
       "default": "true"
+    },
+    "timezone": {
+      "type": "string",
+      "description": "The time zone the clock shows: an IANA name such as `America/New_York`, or `local` for the visitor's own. Defaults to US Central (`America/Chicago`, CDT/CST). An unknown name logs a warning and shows Central.",
+      "default": "America/Chicago",
+      "examples": [
+        "America/Chicago",
+        "America/New_York",
+        "Europe/London",
+        "local"
+      ]
     }
   },
   "$view": [],
@@ -44,7 +55,8 @@
     "setup": [
       "<div x-clock>Test Content</div>",
       "<div x-clock variant=\"digital\">Test Content</div>",
-      "<div x-clock format=\"24\">Test Content</div>"
+      "<div x-clock format=\"24\">Test Content</div>",
+      "<div x-clock timezone=\"Europe/London\">Test Content</div>"
     ]
   },
   "_metadata": {
