@@ -27,8 +27,16 @@
     <button type="button" class="issues-tab issues-tab--active" state="open" x-ripple>Open</button>
     <button type="button" class="issues-tab" state="closed" x-ripple>Closed</button>
     <button type="button" class="issues-tab" state="all" x-ripple>All</button>
-    <button type="button" class="issues-tab" state="in-progress" x-ripple>In Progress</button>
+    <!-- #1501 -- John: "Add a new button to show current working on issues."
+         This tab IS that button (#1330): it selects open + status:in-progress,
+         the same rows that wear the green "Working on it now" pill. A second
+         button with the same filter would be a duplicate, so the tab is named
+         after the pill and carries the count, and is recognisable at a glance. -->
+    <button type="button" class="issues-tab" state="in-progress" x-ripple>Working on now (<span id="issues-now-count">0</span>)</button>
   </div>
+  <!-- #1501 -- John: "Add a copy button too, it will copy the filtered issues."
+       Copies exactly the rows on screen (tab + search), one line per issue. -->
+  <button type="button" id="issues-copy" class="issues-workdone" x-ripple>Copy</button>
   <!-- #1046 — John: "add a button work completed when pressed i can see what
        your done". The panel below is collapsed until this is pressed, so the
        page opens on the issues themselves and the account of work is one
@@ -119,10 +127,13 @@
   const statusEl = document.getElementById('issues-status');
   const summaryEl = document.getElementById('issues-summary');
   const activeEl = document.getElementById('issues-active');
+  const nowCountEl = document.getElementById('issues-now-count');
+  const copyBtn = document.getElementById('issues-copy');
   const searchEl = document.getElementById('issues-search');
   const tabs = Array.from(document.querySelectorAll('.issues-tab'));
   let allIssues = [];
   let currentState = 'open';
+  let shownIssues = [];   // the rows render() last put on screen, in order -- what Copy copies
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -259,6 +270,7 @@
   function updateActiveCount() {
     const activeCount = allIssues.filter((issue) => issue.state === 'open' && isInProgress(issue)).length;
     activeEl.textContent = `Current Active: ${activeCount}`;
+    if (nowCountEl) nowCountEl.textContent = String(activeCount);
   }
 
   // ── fields read off the issue ─────────────────────────────────────────────
@@ -365,6 +377,7 @@
     updateSummary(filtered);
     updateSeverity(filtered);
     updateActiveCount();
+    shownIssues = filtered;
 
     if (!filtered.length) {
       tbodyEl.innerHTML = '';
@@ -494,6 +507,54 @@
     });
   });
   searchEl.addEventListener('input', render);
+
+  // ── copy ──────────────────────────────────────────────────────────────────
+  // #1501 -- one line per issue, in the order on screen:
+  //   #123 [P1] Title — open — https://github.com/.../issues/123
+  // The state word is the derived one (open / in-progress / closed), the same
+  // thing the tabs filter on.
+  function copyLine(issue) {
+    const p = priorityOf(issue);
+    const url = issue.html_url || `https://github.com/${REPO}/issues/${issue.number}`;
+    return `#${issue.number} [${p === 9 ? 'unrated' : 'P' + p}] ${issue.title} — ${stateOf(issue)} — ${url}`;
+  }
+
+  async function writeClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // No async clipboard (http, or permission refused): fall back to a
+      // selected textarea, which every browser still copies from.
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch { ok = false; }
+      ta.remove();
+      return ok;
+    }
+  }
+
+  let copyResetTimer = 0;
+  function flashCopy(text) {
+    copyBtn.textContent = text;
+    clearTimeout(copyResetTimer);
+    copyResetTimer = setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      if (!shownIssues.length) { flashCopy('Nothing to copy'); return; }
+      const n = shownIssues.length;
+      const ok = await writeClipboard(shownIssues.map(copyLine).join('\n'));
+      flashCopy(ok ? `Copied ${n} ${n === 1 ? 'issue' : 'issues'} ✓` : 'Copy failed');
+    });
+  }
 
   // ── cache ─────────────────────────────────────────────────────────────────
   //

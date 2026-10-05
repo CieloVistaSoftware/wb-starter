@@ -108,5 +108,44 @@ test.describe('Issues page', () => {
     await expect(note).toContainText('Now: step 2 of 3 — reviewing test lines');
     await expect(note).toContainText('Next: the standards docs');
     await expect(note).toContainText('5 min ago');
+
+    // #1501 -- John: "Add a new button to show current working on issues."
+    // The in-progress tab is that button: named after the green pill, carrying
+    // the same count as "Current Active", and showing only those rows.
+    const nowTab = page.locator('.issues-tab[state="in-progress"]');
+    await expect(nowTab).toHaveText('Working on now (1)');
+    await nowTab.click();
+    await expect(page.locator('.issues-row')).toHaveCount(1);
+    await expect(page.locator('.issues-row').first()).toHaveAttribute('number', '517');
+
+    // "Add a copy button too, it will copy the filtered issues" -- one line per
+    // issue. The clipboard is stubbed so the assertion reads exactly what the
+    // page wrote, on every browser, with no permission prompt in the way.
+    await page.evaluate(() => {
+      (window as unknown as { __copied: string[] }).__copied = [];
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { writeText: async (t: string) => { (window as unknown as { __copied: string[] }).__copied.push(t); } },
+      });
+    });
+    const copyBtn = page.locator('#issues-copy');
+    await copyBtn.click();
+    await expect(copyBtn).toHaveText('Copied 1 issue ✓');
+    const copied = () => page.evaluate(() => (window as unknown as { __copied: string[] }).__copied.at(-1));
+    expect(await copied()).toBe('#517 [unrated] Running job — in-progress — https://github.com/CieloVistaSoftware/wb-starter/issues/517');
+
+    // It follows the filter: All copies all three, one per line, in screen order.
+    await page.locator('.issues-tab[state="all"]').click();
+    await copyBtn.click();
+    await expect(copyBtn).toHaveText('Copied 3 issues ✓');
+    const lines = String(await copied()).split('\n');
+    expect(lines).toHaveLength(3);
+    expect(lines[0]).toMatch(/^#517 /);
+    expect(lines).toContain('#515 [P1] Important but untouched — open — https://github.com/CieloVistaSoftware/wb-starter/issues/515');
+
+    // ...and an empty filter says so rather than copying nothing.
+    await page.locator('#issues-search').fill('no issue has this title');
+    await copyBtn.click();
+    await expect(copyBtn).toHaveText('Nothing to copy');
   });
 });
