@@ -2,6 +2,11 @@
  * Card Image Rendering Test
  * =========================
  * Verifies x-cardimage actually displays images
+ *
+ * See it by hand: Open /demos/site/cards.html and scroll to the cardimage
+ * cards with position="left" and position="right". Before: both showed text
+ * with no picture (#877). Now: each shows its picture beside the text, and the
+ * new cardimage-render test fails if either loses it.
  */
 
 import { test, expect } from '../fixtures/offline';
