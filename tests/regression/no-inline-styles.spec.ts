@@ -204,6 +204,33 @@ function scanMarkup(dirs: string[]): Violation[] {
   return violations;
 }
 
+/**
+ * #1522: config/*.json can hold MARKUP -- the header logo, the social icons --
+ * which the site renders on every page. Neither scan above reads .json, so
+ * config/site.json carried an <img style=...> on every page for nine months
+ * (#795). Not every JSON string is markup, so only values that open a tag are
+ * scanned, and each is checked for the two things the Tier-1 rules forbid in
+ * markup: a style attribute and a colour literal (colours live in themes.css).
+ */
+const CONFIG_DIRS = ['config', join('packages', 'create-wb-starter', 'template', 'config')];
+const OPENS_A_TAG = /<[a-z][a-z0-9-]*[\s>/]/i;
+const COLOUR_LITERAL = /#[0-9a-f]{3,8}\b|\brgba?\(|\bhsla?\(/i;
+
+function configFragments(): Array<{ where: string; value: string }> {
+  const out: Array<{ where: string; value: string }> = [];
+  for (const dir of CONFIG_DIRS) {
+    for (const file of walk(join(ROOT, dir), ['.json'])) {
+      const rel = relative(ROOT, file).replace(/\\/g, '/');
+      const visit = (v: unknown, path: string): void => {
+        if (typeof v === 'string') { if (OPENS_A_TAG.test(v)) out.push({ where: `${rel}:${path}`, value: v }); return; }
+        if (v && typeof v === 'object') for (const [k, child] of Object.entries(v)) visit(child, `${path}.${k}`);
+      };
+      visit(JSON.parse(readFileSync(file, 'utf8')), '');
+    }
+  }
+  return out;
+}
+
 function summarise(violations: Violation[], limit = 40): string {
   const byFile: Record<string, number> = {};
   for (const v of violations) byFile[v.file] = (byFile[v.file] || 0) + 1;
@@ -242,6 +269,23 @@ test.describe('No inline styles anywhere (#779)', () => {
       violations.length,
       `${violations.length} style= attributes in authored markup.\n\n${summarise(violations)}\n`,
     ).toBe(0);
+  });
+
+  test('config: markup stored in config/*.json has no style attribute or colour literal (#1522)', () => {
+    const fragments = configFragments();
+    // #863: a scan that finds nothing must not report "all clear". The site's
+    // own config holds the header logo and the social icons as markup.
+    expect(fragments.length, 'no markup found in config/*.json -- the scan is looking in the wrong place').toBeGreaterThan(0);
+    const bad = fragments.flatMap(({ where, value }) => [
+      ...(/\sstyle\s*=/i.test(value) ? [`${where}  [style= attribute]  ${value.slice(0, 100)}`] : []),
+      ...(COLOUR_LITERAL.test(value) ? [`${where}  [colour literal]  ${value.match(COLOUR_LITERAL)![0]}`] : []),
+    ]);
+    expect(
+      bad,
+      `markup in config/*.json renders on every page, so it obeys the same rules as any page: ` +
+      `no inline style (a class and a stylesheet rule instead) and no colour literal ` +
+      `(a token from themes.css instead).\n`,
+    ).toEqual([]);
   });
 
   test('template: the copy shipped to new projects is clean too', () => {
