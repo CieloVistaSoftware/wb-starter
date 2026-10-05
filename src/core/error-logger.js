@@ -302,6 +302,12 @@ function isSameOccurrence(a, b) {
 export async function logError(message, details = {}) {
   initErrorDisplay();
 
+  // #1536 -- AutoScroll tests every behavior and needs to know which entry
+  // logged what. Announced on EVERY call, before the repeat-merge below: a
+  // repeat returns early without a new row, and the second behavior to hit a
+  // shared fault must still fail.
+  window.dispatchEvent(new CustomEvent('wb:error-logged', { detail: { message: String(message) } }));
+
   // #1010 -- provenance, signature, and the fixable verdict.
   //
   // John: "our error log for each error 1) requires analysis 2) must get a
