@@ -23,6 +23,7 @@
     <label for="docs-sort">Sort documents</label>
     <select id="docs-sort">
       <option value="newest" selected>Newest first</option>
+      <option value="created">By date created (every doc)</option>
       <option value="category">By category</option>
     </select>
   </div>
@@ -95,7 +96,7 @@
     // last pick, then the <option selected> in the markup -- the site default.
     const sortSelect = document.getElementById('docs-sort');
     const SORT_KEY = 'x-docs-sort';
-    const SORTS = ['newest', 'category'];
+    const SORTS = ['newest', 'created', 'category'];
     function initialSort() {
       const fromUrl = new URLSearchParams(window.location.search).get('sort');
       if (SORTS.includes(fromUrl)) return fromUrl;
@@ -130,7 +131,7 @@
         // Ctrl/middle-click still opens a tab for anyone who wants one.
         href = siteRoot() + 'public/doc-viewer.html?file=' + encodeURIComponent(filePath);
       }
-      const meta = [categoryName, entry.modified ? 'Updated ' + entry.modified : '']
+      const meta = [categoryName, entry.created ? 'Created ' + entry.created : entry.modified ? 'Updated ' + entry.modified : '']
         .filter(Boolean).map(escapeText).join(' \u00b7 ');
       return '<a href="' + href + '" class="docs-card"' + target + '>' +
         '<h3 class="docs-card__title">' + escapeText(entry.title) + '</h3>' +
@@ -146,7 +147,37 @@
         '</div>';
     }
 
+    // #1226 -- John: "I want to be able to see all docs by creation date
+    // somehow". Every doc in docs/, not only the curated list: read from
+    // data/docs-manifest.json, whose `created` (the commit that first added the
+    // doc, through renames) scripts/update-docs-manifest.js writes from git.
+    let allDocs = null;
+    async function loadAllDocs() {
+      try {
+        const res = await fetch(siteRoot() + 'data/docs-manifest.json');
+        allDocs = res.ok ? ((await res.json()).files || []) : [];
+      } catch { allDocs = []; }
+    }
+
+    function renderByCreated() {
+      if (!allDocs) {
+        container.innerHTML = '<p class="docs-loading">Loading every doc…</p>';
+        loadAllDocs().then(renderByCreated);
+        return;
+      }
+      const q = (searchInput ? searchInput.value : '').trim().toLowerCase();
+      const docs = allDocs
+        .filter((d) => !q || String(d.title).toLowerCase().includes(q) || String(d.path).toLowerCase().includes(q))
+        .slice()
+        .sort((a, b) => (b.created || '').localeCompare(a.created || '') || String(a.path).localeCompare(String(b.path)));
+      container.innerHTML = docs.length
+        ? sectionHtml('🗓️', 'By date created \u00b7 ' + docs.length + ' docs',
+          docs.map((d) => cardHtml({ file: d.path, title: d.title, description: d.path, created: d.created }, d.category)).join(''))
+        : '<div class="docs-empty docs-empty--search"><p class="docs-empty__icon">🔍</p><p>No results found matching your search.</p></div>';
+    }
+
     function renderDocs(manifestData) {
+      if (currentSort() === 'created') return renderByCreated();
       if (!manifestData || !manifestData.categories) {
         container.innerHTML = '<p class="docs-empty">No documentation found.</p>';
         return;

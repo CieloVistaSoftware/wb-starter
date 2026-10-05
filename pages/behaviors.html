@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.273">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.279">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -249,7 +249,9 @@
     const resultsEl = document.getElementById('behaviors-search-results');
     if (!input || !countEl || !resultsEl) return;
 
-    const demos = Array.from(document.querySelectorAll('x-demo'));
+    // `[x-demo]`: the demos are <div x-demo>; the tag selector the 4.0.0 rename
+    // left here (`x-demo`) names a tag that does not exist (#857).
+    const demos = Array.from(document.querySelectorAll('[x-demo]'));
     const total = demos.length;
 
     // John: "prefill this dropdown box with all known x- attributes" --
@@ -940,7 +942,9 @@
       const shown = rows.length;
       countEl.textContent = q === ''
         ? `${allEntries.length} behaviors`
-        : `Showing ${shown} of ${totalRowCount}`;
+        // #1019: rows are examples (one per option), not behaviors -- name the
+        // unit, or "of 767" reads against the header's "184 behaviors".
+        : `Showing ${shown} of ${totalRowCount} examples`;
 
       // #666 — John: "why does search not fill the first thing it finds with
       // the search item e.g. button". Typing narrowed the list but rendered

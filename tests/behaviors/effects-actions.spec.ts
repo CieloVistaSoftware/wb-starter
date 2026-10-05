@@ -37,6 +37,8 @@
  * elements exist (#857).
  */
 import { test, expect, Page, Locator } from '../fixtures/offline';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Effects that clickAnim() drives: attaching adds a kebab-cased x-* class and
@@ -251,6 +253,42 @@ test.describe('Behaviors page — Effects', () => {
     }
   });
 
+  test('x-slideout animates in every direction it accepts (#866)', async ({ page }) => {
+    await loadBehaviors(page);
+    await scanMarkup(
+      page,
+      ['left', 'right', 'up', 'down']
+        .map((d) => `<button id="slideout-${d}" x-slideout direction="${d}">${d}</button>`)
+        .join('')
+    );
+    for (const d of ['left', 'right', 'up', 'down']) {
+      const el = page.locator(`#slideout-${d}`);
+      await expect(el, `x-slideout direction=${d} adds .x-slide-out-${d}`).toHaveClass(
+        new RegExp(`\\bx-slide-out-${d}\\b`)
+      );
+      await expectAnimates(el, `x-slideout direction=${d}`);
+    }
+  });
+
+  /**
+   * #866: every animationType the schema declares is a spelling an author
+   * copies out of the generated docs, so each one must reach a real
+   * @keyframes. `slideOut` did not: keyframeFor() makes it `x-slide-out`, and
+   * only the four directional x-slide-out-{dir} keyframes existed.
+   */
+  test('x-animate animates every animationType the schema declares (#866)', async ({ page }) => {
+    const schema = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src', 'wb-models', 'behavior.schema.json'), 'utf8'));
+    const names = findEnum(schema, 'animationType');
+    expect(names.length, 'animationType enum found').toBeGreaterThan(10);
+    await loadBehaviors(page);
+    await scanMarkup(page, names.map((n) => `<button id="anim-${n}" x-animate animation="${n}">${n}</button>`).join(''));
+    for (const n of names) {
+      const el = page.locator(`#anim-${n}`);
+      await expect(el, `x-animate animation="${n}" attached`).toHaveClass(/\bx-animate\b/);
+      await expectAnimates(el, `x-animate animation="${n}"`);
+    }
+  });
+
   /**
    * #849: animate() defaulted to 'fadeIn', which concatenated to `x-fadeIn` —
    * a name no @keyframes defines, so <button x-animate> animated nothing while
@@ -334,3 +372,14 @@ test.describe('Behaviors page — Effects', () => {
       .toEqual([]);
   });
 });
+
+/** The enum under the first key named `key`, wherever the schema nests it. */
+function findEnum(node: unknown, key: string): string[] {
+  if (!node || typeof node !== 'object') return [];
+  for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+    if (k === key && v && typeof v === 'object' && Array.isArray((v as { enum?: unknown }).enum)) return (v as { enum: string[] }).enum;
+    const found = findEnum(v, key);
+    if (found.length) return found;
+  }
+  return [];
+}

@@ -17,277 +17,323 @@
         "path": "docs/AI.md",
         "title": "AI",
         "name": "AI",
-        "category": "root"
+        "category": "root",
+        "created": "2026-07-04"
       },
       {
         "path": "docs/ANNOUNCE_TEST_POLICY.md",
         "title": "Release announcement: Local test gating and PR policy",
         "name": "ANNOUNCE_TEST_POLICY",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-06"
       },
       {
         "path": "docs/BRANCH_PROTECTION.md",
         "title": "Branch protection: require fast Tier‑1 check",
         "name": "BRANCH_PROTECTION",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-06"
       },
       {
         "path": "docs/IMPROVEMENTS.md",
         "title": "Potential Improvements for WB-Starter",
         "name": "IMPROVEMENTS",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/INTELLISENSE-TOOLTIPS.md",
         "title": "Intellisense Tooltip Audit Report",
         "name": "INTELLISENSE-TOOLTIPS",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/MVVM-MIGRATION-PLAN.md",
         "title": "WB-Starter MVVM Migration Plan",
         "name": "MVVM-MIGRATION-PLAN",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/MVVM-MIGRATION.md",
         "title": "wb-starter v3.0 - MVVM Architecture",
         "name": "MVVM-MIGRATION",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/NOTES-V3-GUIDE.md",
         "title": "Notes Behavior v3.0 - Updates Summary",
         "name": "NOTES-V3-GUIDE",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/V3-GUIDE.md",
         "title": "wb-starter v3 — Complete Guide",
         "name": "V3-GUIDE",
-        "category": "root"
+        "category": "root",
+        "created": "2026-06-27"
       },
       {
         "path": "docs/WB_BEHAVIOR_SYSTEM.md",
         "title": "WB-Starter Behavior System - Technical Workflow",
         "name": "WB_BEHAVIOR_SYSTEM",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/audio.md",
         "title": "Audio",
         "name": "audio",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/auto-injection.md",
         "title": "Auto Injection (Preview)",
         "name": "auto-injection",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behavior-cross-reference.md",
         "title": "WB-Starter Behaviors Cross-Reference",
         "name": "behavior-cross-reference",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/behaviors-reference.md",
         "title": "WB-Starter Reference",
         "name": "behaviors-reference",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/card.md",
         "title": "Card Behavior Documentation",
         "name": "card",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/code-examples-standard.md",
         "title": "Code Examples Standard",
         "name": "code-examples-standard",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-02"
       },
       {
         "path": "docs/committing-fixes.md",
         "title": "Committing Fixes Workflow",
         "name": "committing-fixes",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-29"
       },
       {
         "path": "docs/container-pattern.md",
         "title": "Container Behaviors Pattern",
         "name": "container-pattern",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/escape-hatches.md",
         "title": "wb-starter Escape Hatches",
         "name": "escape-hatches",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-14"
       },
       {
         "path": "docs/home-page.md",
         "title": "Home Page Documentation",
         "name": "home-page",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/index.md",
         "title": "WB-Starter Documentation",
         "name": "index",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/inline-editing.md",
         "title": "Double-Click Inline Editing System",
         "name": "inline-editing",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/linkedin-framework-agnostic.md",
         "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
         "name": "linkedin-framework-agnostic",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-13"
       },
       {
         "path": "docs/linkedin-standards-article.md",
         "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
         "name": "linkedin-standards-article",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-13"
       },
       {
         "path": "docs/linkedin-update-article.md",
         "title": "Cielo Vista Software Update",
         "name": "linkedin-update-article",
-        "category": "root"
+        "category": "root",
+        "created": "2026-08-02"
       },
       {
         "path": "docs/mcp.md",
         "title": "MCP Runner & Docs Access",
         "name": "mcp",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-01"
       },
       {
         "path": "docs/npx-commands.md",
         "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
         "name": "npx-commands",
-        "category": "root"
+        "category": "root",
+        "created": "2026-09-29"
       },
       {
         "path": "docs/pce-candidates.md",
         "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
         "name": "pce-candidates",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-02"
       },
       {
         "path": "docs/performance.md",
         "title": "Performance Improvement Plan",
         "name": "performance",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-02"
       },
       {
         "path": "docs/pricecard.md",
         "title": "Price Card & PCE (Pseudo-Custom Elements) Refactor",
         "name": "pricecard",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-02"
       },
       {
         "path": "docs/properties.md",
         "title": "WB-Starter - Property System Documentation",
         "name": "properties",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/property-viewer.md",
         "title": "Property Viewer (Right Panel)",
         "name": "property-viewer",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-13"
       },
       {
         "path": "docs/schema-first-architecture.md",
         "title": "Schema-First MVVM Architecture",
         "name": "schema-first-architecture",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/schema-first-audit-report.md",
         "title": "Schema-First Architecture Audit Report",
         "name": "schema-first-audit-report",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/schema-test-value.md",
         "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
         "name": "schema-test-value",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/schema.md",
         "title": "Schema Standards for WB-Starter Behaviors & Pages",
         "name": "schema",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/schema.migration.md",
         "title": "WB-Starter Schema Migration Plan",
         "name": "schema.migration",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/search.md",
         "title": "Search Behavior Documentation",
         "name": "search",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/semantic-audit.md",
         "title": "Semantic HTML Audit Report",
         "name": "semantic-audit",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/semantic-standard.md",
         "title": "HTML5 Semantic Standard (Mandatory)",
         "name": "semantic-standard",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/styles.md",
         "title": "Class Naming & Semantics",
         "name": "styles",
-        "category": "root"
+        "category": "root",
+        "created": "2026-01-02"
       },
       {
         "path": "docs/test-schema-standard.md",
         "title": "Comprehensive Test Schema Standard",
         "name": "test-schema-standard",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/testing-runbook.md",
         "title": "Testing & CI — Runbook (developer-focused)",
         "name": "testing-runbook",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-01"
       },
       {
         "path": "docs/testing-strategy.md",
         "title": "Tiered Test Structure (Playwright Gates)",
         "name": "testing-strategy",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/themes.md",
         "title": "Theme System Documentation",
         "name": "themes",
-        "category": "root"
+        "category": "root",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/wbservices.md",
         "title": "wbservices",
         "name": "wbservices",
-        "category": "root"
+        "category": "root",
+        "created": "2026-02-14"
       }
     ],
     "_today": [
@@ -295,115 +341,134 @@
         "path": "docs/_today/021426FIXPLAN.md",
         "title": "021426FIXPLAN",
         "name": "021426FIXPLAN",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/_today/AI-COORDINATION.md",
         "title": "AI Coordination Protocol",
         "name": "AI-COORDINATION",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-06"
       },
       {
         "path": "docs/_today/ANSWERS.md",
         "title": "AI Answers",
         "name": "ANSWERS",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-06"
       },
       {
         "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
         "title": "CSS Ownership Migration Plan",
         "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/_today/CURRENT-STATUS.md",
         "title": "CURRENT HANDOFF — 2026-09-11",
         "name": "CURRENT-STATUS",
-        "category": "_today"
+        "category": "_today",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/_today/MERGE-PLAN.md",
         "title": "Merge Plan - Completed",
         "name": "MERGE-PLAN",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-10"
       },
       {
         "path": "docs/_today/PAGE-REPAIR-PLAN.md",
         "title": "PAGE REPAIR PLAN — Master Execution Guide",
         "name": "PAGE-REPAIR-PLAN",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/_today/QUESTIONS.md",
         "title": "AI Questions",
         "name": "QUESTIONS",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-06"
       },
       {
         "path": "docs/_today/REPAIR-PLAN-021526.md",
         "title": "REPAIR PLAN — Page & Demo Compliance",
         "name": "REPAIR-PLAN-021526",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
         "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
         "name": "ROOT-CAUSE-md-double-parse",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-07-04"
       },
       {
         "path": "docs/_today/TODO.md",
         "title": "---",
         "name": "TODO",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-01-02"
       },
       {
         "path": "docs/_today/audit-code-panels-v3-standards.md",
         "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
         "name": "audit-code-panels-v3-standards",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-08-13"
       },
       {
         "path": "docs/_today/audit-v3-guide-doc-viewer.md",
         "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
         "name": "audit-v3-guide-doc-viewer",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-08-08"
       },
       {
         "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
         "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
         "name": "common-errors-retrospective-2026-08-15",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-08-15"
       },
       {
         "path": "docs/_today/demos-redo-plan-268.md",
         "title": "#268 — demos/ consolidation plan (closed 2026-07-15)",
         "name": "demos-redo-plan-268",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-07-10"
       },
       {
         "path": "docs/_today/hardcoded-colors-audit.md",
         "title": "Hardcoded-Color Audit & Recommendations",
         "name": "hardcoded-colors-audit",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-07-06"
       },
       {
         "path": "docs/_today/inheritance-usage-report.md",
         "title": "\"inheritance\" usage report — `.md` files",
         "name": "inheritance-usage-report",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-07-05"
       },
       {
         "path": "docs/_today/slot-audit.md",
         "title": "\"slot\" Audit & Retirement Plan",
         "name": "slot-audit",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-07-06"
       },
       {
         "path": "docs/_today/test-audit-2026-08-14.md",
         "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
         "name": "test-audit-2026-08-14",
-        "category": "_today"
+        "category": "_today",
+        "created": "2026-08-14"
       }
     ],
     "architecture": [
@@ -411,55 +476,64 @@
         "path": "docs/architecture/WB-PREFIX-AUDIT.md",
         "title": "`wb-` Prefix Audit",
         "name": "WB-PREFIX-AUDIT",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-08-26"
       },
       {
         "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
         "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
         "name": "X-PREFIX-MIGRATION-PHASE1",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/architecture/proposals/proposed-custom-elements.md",
         "title": "> **OBSOLETE — superseded by",
         "name": "proposed-custom-elements",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/architecture/proposals/remove-wb-prefix-authoring-surface.md",
         "title": "Proposal: Drop the `wb-` Tag Prefix from the Authoring Surface",
         "name": "remove-wb-prefix-authoring-surface",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-08-08"
       },
       {
         "path": "docs/architecture/proposals/v4-golden-ratio-layout-spec.md",
         "title": "Proposal: v4 Golden-Ratio Layout Specification",
         "name": "v4-golden-ratio-layout-spec",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-08-04"
       },
       {
         "path": "docs/architecture/solidjscomparison.md",
         "title": "wb-starter compared to Solid.js",
         "name": "solidjscomparison",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-09-03"
       },
       {
         "path": "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
         "title": "WB-Starter Attribute Naming Standard",
         "name": "ATTRIBUTE-NAMING-STANDARD",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-01-10"
       },
       {
         "path": "docs/architecture/standards/ERROR-MESSAGE.md",
         "title": "ERROR-MESSAGE",
         "name": "ERROR-MESSAGE",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
         "title": "WB-Starter Schema Specification v3.0",
         "name": "SCHEMA-SPECIFICATION",
-        "category": "architecture"
+        "category": "architecture",
+        "created": "2026-01-10"
       }
     ],
     "audits": [
@@ -467,19 +541,22 @@
         "path": "docs/audits/HOST-CHILD-DISPATCH-AUDIT.md",
         "title": "Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS",
         "name": "HOST-CHILD-DISPATCH-AUDIT",
-        "category": "audits"
+        "category": "audits",
+        "created": "2026-07-18"
       },
       {
         "path": "docs/audits/INLINE-STYLES-AUDIT.md",
         "title": "Inline Styles Audit — Tier-1 Law 9 violation",
         "name": "INLINE-STYLES-AUDIT",
-        "category": "audits"
+        "category": "audits",
+        "created": "2026-07-18"
       },
       {
         "path": "docs/audits/X-USAGE-AUDIT.md",
         "title": "X-Attribute Usage Audit",
         "name": "X-USAGE-AUDIT",
-        "category": "audits"
+        "category": "audits",
+        "created": "2026-01-10"
       }
     ],
     "behaviors": [
@@ -487,1069 +564,1247 @@
         "path": "docs/behaviors/accordion.md",
         "title": "accordion",
         "name": "accordion",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/address.md",
         "title": "`<address>` Element",
         "name": "address",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/alert.md",
         "title": "Alert",
         "name": "alert",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/articles.md",
         "title": "articles",
         "name": "articles",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/aside.md",
         "title": "`<aside>` Element",
         "name": "aside",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/audio.md",
         "title": "Audio",
         "name": "audio",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/autocomplete.md",
         "title": "x-autocomplete Behavior",
         "name": "autocomplete",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/autosize.md",
         "title": "x-autosize Behavior",
         "name": "autosize",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/avatar.md",
         "title": "Avatar",
         "name": "avatar",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/badge.md",
         "title": "Badge",
         "name": "badge",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/blockquote.md",
         "title": "`<blockquote>` Element",
         "name": "blockquote",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/bounce.md",
         "title": "Bounce",
         "name": "bounce",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/breadcrumb.md",
         "title": "Breadcrumb",
         "name": "breadcrumb",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/button.md",
         "title": "Button",
         "name": "button",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/card.md",
         "title": "Card",
         "name": "card",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardbutton.md",
         "title": "Button Card",
         "name": "cardbutton",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/carddraggable.md",
         "title": "Draggable Card",
         "name": "carddraggable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardexpandable.md",
         "title": "Expandable Card",
         "name": "cardexpandable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardfile.md",
         "title": "File Card",
         "name": "cardfile",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardhero.md",
         "title": "Hero Card",
         "name": "cardhero",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardhorizontal.md",
         "title": "Horizontal Card",
         "name": "cardhorizontal",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardimage.md",
         "title": "Image Card",
         "name": "cardimage",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardlink.md",
         "title": "Link Card",
         "name": "cardlink",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardminimizable.md",
         "title": "Minimizable Card",
         "name": "cardminimizable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardnotification.md",
         "title": "Notification Card",
         "name": "cardnotification",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardoverlay.md",
         "title": "Overlay Card",
         "name": "cardoverlay",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardportfolio.md",
         "title": "Portfolio Card",
         "name": "cardportfolio",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardpricing.md",
         "title": "Pricing Card",
         "name": "cardpricing",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardproduct.md",
         "title": "Product Card",
         "name": "cardproduct",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardprofile.md",
         "title": "Card Profile",
         "name": "cardprofile",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardstats.md",
         "title": "Stats Card",
         "name": "cardstats",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardtestimonial.md",
         "title": "Testimonial Card",
         "name": "cardtestimonial",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cardvideo.md",
         "title": "Video Card",
         "name": "cardvideo",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/center.md",
         "title": "Center - wb-starter v3.0",
         "name": "center",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-05"
       },
       {
         "path": "docs/behaviors/checkbox.md",
         "title": "Checkbox",
         "name": "checkbox",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/chip.md",
         "title": "chip",
         "name": "chip",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/clock.md",
         "title": "Clock",
         "name": "clock",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/cluster.md",
         "title": "Cluster",
         "name": "cluster",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/code.md",
         "title": "Code",
         "name": "code",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/codecontrol.md",
         "title": "Code Control - wb-starter v3.0",
         "name": "codecontrol",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/collapse.md",
         "title": "Collapse",
         "name": "collapse",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/colorpicker.md",
         "title": "x-colorpicker Behavior",
         "name": "colorpicker",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/confetti.md",
         "title": "Confetti",
         "name": "confetti",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/confirm.md",
         "title": "Confirm",
         "name": "confirm",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/container.md",
         "title": "Container - wb-starter v3.0",
         "name": "container",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/behaviors/control.md",
         "title": "Control",
         "name": "control",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/copy.md",
         "title": "Copy",
         "name": "copy",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/copybutton.md",
         "title": "Copybutton",
         "name": "copybutton",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/countdown.md",
         "title": "Countdown",
         "name": "countdown",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/counter.md",
         "title": "x-counter Behavior",
         "name": "counter",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/cover.md",
         "title": "Cover - wb-starter v3.0",
         "name": "cover",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-05"
       },
       {
         "path": "docs/behaviors/darkmode.md",
         "title": "Dark Mode Toggle",
         "name": "darkmode",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/data.md",
         "title": "`<data>` Element",
         "name": "data",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/demo.md",
         "title": "Demo Container",
         "name": "demo",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/details.md",
         "title": "Details",
         "name": "details",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/dialog.md",
         "title": "Dialog",
         "name": "dialog",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/dl.md",
         "title": "DL (Description List) Behavior Design & User Guide",
         "name": "dl",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/draggable.md",
         "title": "Draggable",
         "name": "draggable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/drawer.md",
         "title": "Drawer",
         "name": "drawer",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/drawerLayout.md",
         "title": "Drawer Layout",
         "name": "drawerLayout",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/dropdown.md",
         "title": "dropdown",
         "name": "dropdown",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/error.md",
         "title": "Error Behavior",
         "name": "error",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/fadein.md",
         "title": "Fadein",
         "name": "fadein",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/fieldset.md",
         "title": "x-fieldset Behavior",
         "name": "fieldset",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/figure.md",
         "title": "Figure",
         "name": "figure",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/file.md",
         "title": "x-file Behavior",
         "name": "file",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/fill.md",
         "title": "fill — as wide as the container allows",
         "name": "fill",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-22"
       },
       {
         "path": "docs/behaviors/fireworks.md",
         "title": "Fireworks",
         "name": "fireworks",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/fix-card.md",
         "title": "Fix Card",
         "name": "fix-card",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/flash.md",
         "title": "Flash",
         "name": "flash",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/flex.md",
         "title": "Flex",
         "name": "flex",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/flip.md",
         "title": "Flip",
         "name": "flip",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/floatinglabel.md",
         "title": "x-floatinglabel Behavior",
         "name": "floatinglabel",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/footer.md",
         "title": "Footer",
         "name": "footer",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/form.md",
         "title": "Form Behavior",
         "name": "form",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/formrow.md",
         "title": "x-formrow Behavior",
         "name": "formrow",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/frame.md",
         "title": "Frame",
         "name": "frame",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-26"
       },
       {
         "path": "docs/behaviors/fullscreen.md",
         "title": "Fullscreen",
         "name": "fullscreen",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/gallery.md",
         "title": "Gallery",
         "name": "gallery",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/glass.md",
         "title": "glass — the element carries the background scene",
         "name": "glass",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-10-01"
       },
       {
         "path": "docs/behaviors/globe.md",
         "title": "Globe",
         "name": "globe",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/glow.md",
         "title": "Glow",
         "name": "glow",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/grid.md",
         "title": "x-grid",
         "name": "grid",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/header.md",
         "title": "Header",
         "name": "header",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/heartbeat.md",
         "title": "Heartbeat",
         "name": "heartbeat",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/help.md",
         "title": "x-help Behavior",
         "name": "help",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/hero.md",
         "title": "Hero",
         "name": "hero",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/icon.md",
         "title": "Icon - wb-starter v3.0",
         "name": "icon",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-05"
       },
       {
         "path": "docs/behaviors/img.md",
         "title": "Img",
         "name": "img",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/input.md",
         "title": "Input",
         "name": "input",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/inputgroup.md",
         "title": "x-inputgroup Behavior",
         "name": "inputgroup",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/jello.md",
         "title": "Jello",
         "name": "jello",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/kbd.md",
         "title": "Kbd",
         "name": "kbd",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/label.md",
         "title": "x-label Behavior",
         "name": "label",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/lightbox.md",
         "title": "Lightbox",
         "name": "lightbox",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/list.md",
         "title": "List Behavior",
         "name": "list",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-30"
       },
       {
         "path": "docs/behaviors/mark.md",
         "title": "Mark",
         "name": "mark",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/masked.md",
         "title": "x-masked Behavior",
         "name": "masked",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/masonry.md",
         "title": "Masonry",
         "name": "masonry",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/mdhtml.md",
         "title": "Markdown to HTML",
         "name": "mdhtml",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/modal.md",
         "title": "Modal",
         "name": "modal",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-26"
       },
       {
         "path": "docs/behaviors/move.md",
         "title": "Move - wb-starter v3.0",
         "name": "move",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/navbar.md",
         "title": "Navbar",
         "name": "navbar",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/notes.md",
         "title": "Notes",
         "name": "notes",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/notify.md",
         "title": "Notify",
         "name": "notify",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/ol.md",
         "title": "OL (Ordered List) Behavior Design & User Guide",
         "name": "ol",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/otp.md",
         "title": "OTP Behavior",
         "name": "otp",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/pagination.md",
         "title": "Pagination",
         "name": "pagination",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/password.md",
         "title": "Password Behavior",
         "name": "password",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/popover.md",
         "title": "Popover",
         "name": "popover",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/pre.md",
         "title": "Pre",
         "name": "pre",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/print.md",
         "title": "Print",
         "name": "print",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/progress.md",
         "title": "Progress",
         "name": "progress",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/prompt.md",
         "title": "Prompt",
         "name": "prompt",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/pulse.md",
         "title": "Pulse",
         "name": "pulse",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/radio.md",
         "title": "Radio Behavior Design & User Guide",
         "name": "radio",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/rainbow.md",
         "title": "Rainbow",
         "name": "rainbow",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/range.md",
         "title": "Range Behavior Design & User Guide",
         "name": "range",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/rating.md",
         "title": "Rating",
         "name": "rating",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/ratio.md",
         "title": "Ratio",
         "name": "ratio",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/reel.md",
         "title": "Reel - wb-starter v3.0",
         "name": "reel",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-05"
       },
       {
         "path": "docs/behaviors/relativetime.md",
         "title": "Relativetime",
         "name": "relativetime",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/release.md",
         "title": "Release - wb-starter v3.0",
         "name": "release",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/repeater.md",
         "title": "Repeater",
         "name": "repeater",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/resizable.md",
         "title": "Resizable",
         "name": "resizable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/ripple.md",
         "title": "Ripple - wb-starter v3.0",
         "name": "ripple",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/scrollable.md",
         "title": "Scrollable - wb-starter v3.0",
         "name": "scrollable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-05"
       },
       {
         "path": "docs/behaviors/scrollalong.md",
         "title": "ScrollAlong - wb-starter v3.0",
         "name": "scrollalong",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/search.md",
         "title": "Search",
         "name": "search",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/searchfield.md",
         "title": "x-searchfield Behavior",
         "name": "searchfield",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/select.md",
         "title": "Select",
         "name": "select",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/shake.md",
         "title": "Shake",
         "name": "shake",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/share.md",
         "title": "Share",
         "name": "share",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/sidebarlayout.md",
         "title": "Sidebar Layout - wb-starter v3.0",
         "name": "sidebarlayout",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-05"
       },
       {
         "path": "docs/behaviors/skeleton.md",
         "title": "skeleton",
         "name": "skeleton",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/slidein.md",
         "title": "Slidein",
         "name": "slidein",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/slider.md",
         "title": "Slider",
         "name": "slider",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/snow.md",
         "title": "Snow",
         "name": "snow",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/span.md",
         "title": "Span",
         "name": "span",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/sparkle.md",
         "title": "Sparkle",
         "name": "sparkle",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/spinner.md",
         "title": "Spinner",
         "name": "spinner",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/stack.md",
         "title": "Stack Layout Behavior",
         "name": "stack",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/stagelight.md",
         "title": "Stage Light - wb-starter v3.0",
         "name": "stagelight",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/stat.md",
         "title": "Stat",
         "name": "stat",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-26"
       },
       {
         "path": "docs/behaviors/stepper.md",
         "title": "Stepper Behavior",
         "name": "stepper",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/steps.md",
         "title": "Steps",
         "name": "steps",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/sticky.md",
         "title": "Sticky",
         "name": "sticky",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/switch.md",
         "title": "Switch",
         "name": "switch",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/switcher.md",
         "title": "Switcher - wb-starter v3.0",
         "name": "switcher",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-05"
       },
       {
         "path": "docs/behaviors/table.md",
         "title": "Table",
         "name": "table",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/tabs.md",
         "title": "Tabs",
         "name": "tabs",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/tada.md",
         "title": "Tada",
         "name": "tada",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/tags.md",
         "title": "x-tags Behavior",
         "name": "tags",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-17"
       },
       {
         "path": "docs/behaviors/textarea.md",
         "title": "Textarea",
         "name": "textarea",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/themecontrol.md",
         "title": "Theme Control",
         "name": "themecontrol",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/time.md",
         "title": "`<time>` Element",
         "name": "time",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/timeline.md",
         "title": "Timeline",
         "name": "timeline",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/toast.md",
         "title": "toast",
         "name": "toast",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-18"
       },
       {
         "path": "docs/behaviors/toggle.md",
         "title": "Toggle",
         "name": "toggle",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/tooltip.md",
         "title": "x-tooltip Behavior",
         "name": "tooltip",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/truncate.md",
         "title": "Truncate",
         "name": "truncate",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/typewriter.md",
         "title": "Typewriter",
         "name": "typewriter",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/ul.md",
         "title": "UL (Unordered List) Behavior Design & User Guide",
         "name": "ul",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2025-12-28"
       },
       {
         "path": "docs/behaviors/video.md",
         "title": "Video",
         "name": "video",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/vimeo.md",
         "title": "Vimeo",
         "name": "vimeo",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/wobble.md",
         "title": "Wobble",
         "name": "wobble",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/x-behavior.md",
         "title": "x-behavior",
         "name": "x-behavior",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/x-collapse.md",
         "title": "x-collapse",
         "name": "x-collapse",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/x-copy.md",
         "title": "x-copy",
         "name": "x-copy",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/x-copybutton.md",
         "title": "x-copybutton",
         "name": "x-copybutton",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-07-30"
       },
       {
         "path": "docs/behaviors/x-darkmode.md",
         "title": "x-darkmode",
         "name": "x-darkmode",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-07-16"
       },
       {
         "path": "docs/behaviors/x-draggable.md",
         "title": "x-draggable",
         "name": "x-draggable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/x-effects.md",
         "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
         "name": "x-effects",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/x-enhancements.md",
         "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
         "name": "x-enhancements",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/behaviors/x-resizable.md",
         "title": "x-resizable",
         "name": "x-resizable",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-07-16"
       },
       {
         "path": "docs/behaviors/x-toggle.md",
         "title": "x-toggle",
         "name": "x-toggle",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-07-16"
       },
       {
         "path": "docs/behaviors/youtube.md",
         "title": "Youtube",
         "name": "youtube",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       },
       {
         "path": "docs/behaviors/zoomin.md",
         "title": "Zoomin",
         "name": "zoomin",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-08-20"
       }
     ],
     "claude": [
@@ -1557,43 +1812,50 @@
         "path": "docs/claude/PAGE-GENERATION.md",
         "title": "Page Generation Pipeline",
         "name": "PAGE-GENERATION",
-        "category": "claude"
+        "category": "claude",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/claude/README.md",
         "title": "AI Documentation Tier System",
         "name": "README",
-        "category": "claude"
+        "category": "claude",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/claude/SCHEMAS-GUIDE.md",
         "title": "SCHEMAS — Claude's Guide to Getting It Right",
         "name": "SCHEMAS-GUIDE",
-        "category": "claude"
+        "category": "claude",
+        "created": "2026-02-17"
       },
       {
         "path": "docs/claude/TIER1-LAWS.md",
         "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
         "name": "TIER1-LAWS",
-        "category": "claude"
+        "category": "claude",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/claude/TIER2-DOMAIN-GUIDES.md",
         "title": "TIER2-DOMAIN-GUIDES",
         "name": "TIER2-DOMAIN-GUIDES",
-        "category": "claude"
+        "category": "claude",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/claude/TIER3-REFERENCE.md",
         "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
         "name": "TIER3-REFERENCE",
-        "category": "claude"
+        "category": "claude",
+        "created": "2026-02-14"
       },
       {
         "path": "docs/claude/TOOLING-INVENTORY.md",
         "title": "Tooling Inventory — What This Repo Already Has",
         "name": "TOOLING-INVENTORY",
-        "category": "claude"
+        "category": "claude",
+        "created": "2026-09-03"
       }
     ],
     "compliance": [
@@ -1601,7 +1863,8 @@
         "path": "docs/compliance/iso-42001-alignment.md",
         "title": "ISO/IEC 42001 Alignment Report",
         "name": "iso-42001-alignment",
-        "category": "compliance"
+        "category": "compliance",
+        "created": "2025-12-30"
       }
     ],
     "guides": [
@@ -1609,13 +1872,15 @@
         "path": "docs/guides/create-a-website.md",
         "title": "How to Create a Website with wb-starter",
         "name": "create-a-website",
-        "category": "guides"
+        "category": "guides",
+        "created": "2026-09-30"
       },
       {
         "path": "docs/guides/search-index.md",
         "title": "Search Index Generator",
         "name": "search-index",
-        "category": "guides"
+        "category": "guides",
+        "created": "2026-01-10"
       }
     ],
     "standards": [
@@ -1623,49 +1888,57 @@
         "path": "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md",
         "title": "A gate must be seen to fail",
         "name": "A-GATE-MUST-BE-SEEN-TO-FAIL",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-09-08"
       },
       {
         "path": "docs/standards/CSS-CLASS-CONVENTION.md",
         "title": "CSS class convention — you can name the class without reading the code",
         "name": "CSS-CLASS-CONVENTION",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-09-09"
       },
       {
         "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
         "title": "Demos & Documentation Standards",
         "name": "DEMOS-AND-DOCS-STANDARDS",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-07-05"
       },
       {
         "path": "docs/standards/ERROR-LOG-RETENTION.md",
         "title": "Error Log Retention — 30 Days",
         "name": "ERROR-LOG-RETENTION",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-09-06"
       },
       {
         "path": "docs/standards/ISSUE-SIGNATURE-BLOCK.md",
         "title": "The Signature Block",
         "name": "ISSUE-SIGNATURE-BLOCK",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-09-06"
       },
       {
         "path": "docs/standards/RELEASE-PROCESS.md",
         "title": "Release Process Standards",
         "name": "RELEASE-PROCESS",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-08-21"
       },
       {
         "path": "docs/standards/REPO-LAYOUT.md",
         "title": "Repo Layout",
         "name": "REPO-LAYOUT",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-09-29"
       },
       {
         "path": "docs/standards/V3-STANDARDS.md",
         "title": "WB-Starter v3 Standards",
         "name": "V3-STANDARDS",
-        "category": "standards"
+        "category": "standards",
+        "created": "2026-01-10"
       }
     ]
   },
@@ -1674,1639 +1947,1912 @@
       "path": "docs/_today/021426FIXPLAN.md",
       "title": "021426FIXPLAN",
       "name": "021426FIXPLAN",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/_today/AI-COORDINATION.md",
       "title": "AI Coordination Protocol",
       "name": "AI-COORDINATION",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-06"
     },
     {
       "path": "docs/_today/ANSWERS.md",
       "title": "AI Answers",
       "name": "ANSWERS",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-06"
     },
     {
       "path": "docs/_today/audit-code-panels-v3-standards.md",
       "title": "Audit: `.x-demo__code` panels on `docs/standards/V3-STANDARDS.md` via doc-viewer",
       "name": "audit-code-panels-v3-standards",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-08-13"
     },
     {
       "path": "docs/_today/audit-v3-guide-doc-viewer.md",
       "title": "Audit: `docs/V3-GUIDE.md` on `/public/doc-viewer.html`",
       "name": "audit-v3-guide-doc-viewer",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-08-08"
     },
     {
       "path": "docs/_today/common-errors-retrospective-2026-08-15.md",
       "title": "Common Errors Retrospective — week of 2026-08-08 to 2026-08-15",
       "name": "common-errors-retrospective-2026-08-15",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-08-15"
     },
     {
       "path": "docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md",
       "title": "CSS Ownership Migration Plan",
       "name": "CSS-OWNERSHIP-MIGRATION.PLAN",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/_today/CURRENT-STATUS.md",
       "title": "CURRENT HANDOFF — 2026-09-11",
       "name": "CURRENT-STATUS",
-      "category": "_today"
+      "category": "_today",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/_today/demos-redo-plan-268.md",
       "title": "#268 — demos/ consolidation plan (closed 2026-07-15)",
       "name": "demos-redo-plan-268",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-07-10"
     },
     {
       "path": "docs/_today/hardcoded-colors-audit.md",
       "title": "Hardcoded-Color Audit & Recommendations",
       "name": "hardcoded-colors-audit",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-07-06"
     },
     {
       "path": "docs/_today/inheritance-usage-report.md",
       "title": "\"inheritance\" usage report — `.md` files",
       "name": "inheritance-usage-report",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-07-05"
     },
     {
       "path": "docs/_today/MERGE-PLAN.md",
       "title": "Merge Plan - Completed",
       "name": "MERGE-PLAN",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-10"
     },
     {
       "path": "docs/_today/PAGE-REPAIR-PLAN.md",
       "title": "PAGE REPAIR PLAN — Master Execution Guide",
       "name": "PAGE-REPAIR-PLAN",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/_today/QUESTIONS.md",
       "title": "AI Questions",
       "name": "QUESTIONS",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-06"
     },
     {
       "path": "docs/_today/REPAIR-PLAN-021526.md",
       "title": "REPAIR PLAN — Page & Demo Compliance",
       "name": "REPAIR-PLAN-021526",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/_today/ROOT-CAUSE-md-double-parse.md",
       "title": "Root cause: doc-viewer collapsed multi-line code blocks (markdown double-parse)",
       "name": "ROOT-CAUSE-md-double-parse",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-07-04"
     },
     {
       "path": "docs/_today/slot-audit.md",
       "title": "\"slot\" Audit & Retirement Plan",
       "name": "slot-audit",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-07-06"
     },
     {
       "path": "docs/_today/test-audit-2026-08-14.md",
       "title": "Test audit: refs, examples, code panels, events — every .html and .md file",
       "name": "test-audit-2026-08-14",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-08-14"
     },
     {
       "path": "docs/_today/TODO.md",
       "title": "---",
       "name": "TODO",
-      "category": "_today"
+      "category": "_today",
+      "created": "2026-01-02"
     },
     {
       "path": "docs/AI.md",
       "title": "AI",
       "name": "AI",
-      "category": "root"
+      "category": "root",
+      "created": "2026-07-04"
     },
     {
       "path": "docs/ANNOUNCE_TEST_POLICY.md",
       "title": "Release announcement: Local test gating and PR policy",
       "name": "ANNOUNCE_TEST_POLICY",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-06"
     },
     {
       "path": "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md",
       "title": "x- Prefix Migration — Phase 1: Core Infrastructure",
       "name": "X-PREFIX-MIGRATION-PHASE1",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/architecture/proposals/proposed-custom-elements.md",
       "title": "> **OBSOLETE — superseded by",
       "name": "proposed-custom-elements",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/architecture/proposals/remove-wb-prefix-authoring-surface.md",
       "title": "Proposal: Drop the `wb-` Tag Prefix from the Authoring Surface",
       "name": "remove-wb-prefix-authoring-surface",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-08-08"
     },
     {
       "path": "docs/architecture/proposals/v4-golden-ratio-layout-spec.md",
       "title": "Proposal: v4 Golden-Ratio Layout Specification",
       "name": "v4-golden-ratio-layout-spec",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-08-04"
     },
     {
       "path": "docs/architecture/solidjscomparison.md",
       "title": "wb-starter compared to Solid.js",
       "name": "solidjscomparison",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-09-03"
     },
     {
       "path": "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md",
       "title": "WB-Starter Attribute Naming Standard",
       "name": "ATTRIBUTE-NAMING-STANDARD",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/architecture/standards/ERROR-MESSAGE.md",
       "title": "ERROR-MESSAGE",
       "name": "ERROR-MESSAGE",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/architecture/standards/SCHEMA-SPECIFICATION.md",
       "title": "WB-Starter Schema Specification v3.0",
       "name": "SCHEMA-SPECIFICATION",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/architecture/WB-PREFIX-AUDIT.md",
       "title": "`wb-` Prefix Audit",
       "name": "WB-PREFIX-AUDIT",
-      "category": "architecture"
+      "category": "architecture",
+      "created": "2026-08-26"
     },
     {
       "path": "docs/audio.md",
       "title": "Audio",
       "name": "audio",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/audits/HOST-CHILD-DISPATCH-AUDIT.md",
       "title": "Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS",
       "name": "HOST-CHILD-DISPATCH-AUDIT",
-      "category": "audits"
+      "category": "audits",
+      "created": "2026-07-18"
     },
     {
       "path": "docs/audits/INLINE-STYLES-AUDIT.md",
       "title": "Inline Styles Audit — Tier-1 Law 9 violation",
       "name": "INLINE-STYLES-AUDIT",
-      "category": "audits"
+      "category": "audits",
+      "created": "2026-07-18"
     },
     {
       "path": "docs/audits/X-USAGE-AUDIT.md",
       "title": "X-Attribute Usage Audit",
       "name": "X-USAGE-AUDIT",
-      "category": "audits"
+      "category": "audits",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/auto-injection.md",
       "title": "Auto Injection (Preview)",
       "name": "auto-injection",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behavior-cross-reference.md",
       "title": "WB-Starter Behaviors Cross-Reference",
       "name": "behavior-cross-reference",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/behaviors-reference.md",
       "title": "WB-Starter Reference",
       "name": "behaviors-reference",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/accordion.md",
       "title": "accordion",
       "name": "accordion",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/address.md",
       "title": "`<address>` Element",
       "name": "address",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/alert.md",
       "title": "Alert",
       "name": "alert",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/articles.md",
       "title": "articles",
       "name": "articles",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/aside.md",
       "title": "`<aside>` Element",
       "name": "aside",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/audio.md",
       "title": "Audio",
       "name": "audio",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/autocomplete.md",
       "title": "x-autocomplete Behavior",
       "name": "autocomplete",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/autosize.md",
       "title": "x-autosize Behavior",
       "name": "autosize",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/avatar.md",
       "title": "Avatar",
       "name": "avatar",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/badge.md",
       "title": "Badge",
       "name": "badge",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/blockquote.md",
       "title": "`<blockquote>` Element",
       "name": "blockquote",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/bounce.md",
       "title": "Bounce",
       "name": "bounce",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/breadcrumb.md",
       "title": "Breadcrumb",
       "name": "breadcrumb",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/button.md",
       "title": "Button",
       "name": "button",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/card.md",
       "title": "Card",
       "name": "card",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardbutton.md",
       "title": "Button Card",
       "name": "cardbutton",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/carddraggable.md",
       "title": "Draggable Card",
       "name": "carddraggable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardexpandable.md",
       "title": "Expandable Card",
       "name": "cardexpandable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardfile.md",
       "title": "File Card",
       "name": "cardfile",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardhero.md",
       "title": "Hero Card",
       "name": "cardhero",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardhorizontal.md",
       "title": "Horizontal Card",
       "name": "cardhorizontal",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardimage.md",
       "title": "Image Card",
       "name": "cardimage",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardlink.md",
       "title": "Link Card",
       "name": "cardlink",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardminimizable.md",
       "title": "Minimizable Card",
       "name": "cardminimizable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardnotification.md",
       "title": "Notification Card",
       "name": "cardnotification",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardoverlay.md",
       "title": "Overlay Card",
       "name": "cardoverlay",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardportfolio.md",
       "title": "Portfolio Card",
       "name": "cardportfolio",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardpricing.md",
       "title": "Pricing Card",
       "name": "cardpricing",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardproduct.md",
       "title": "Product Card",
       "name": "cardproduct",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardprofile.md",
       "title": "Card Profile",
       "name": "cardprofile",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardstats.md",
       "title": "Stats Card",
       "name": "cardstats",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardtestimonial.md",
       "title": "Testimonial Card",
       "name": "cardtestimonial",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cardvideo.md",
       "title": "Video Card",
       "name": "cardvideo",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/center.md",
       "title": "Center - wb-starter v3.0",
       "name": "center",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-05"
     },
     {
       "path": "docs/behaviors/checkbox.md",
       "title": "Checkbox",
       "name": "checkbox",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/chip.md",
       "title": "chip",
       "name": "chip",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/clock.md",
       "title": "Clock",
       "name": "clock",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/cluster.md",
       "title": "Cluster",
       "name": "cluster",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/code.md",
       "title": "Code",
       "name": "code",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/codecontrol.md",
       "title": "Code Control - wb-starter v3.0",
       "name": "codecontrol",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/collapse.md",
       "title": "Collapse",
       "name": "collapse",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/colorpicker.md",
       "title": "x-colorpicker Behavior",
       "name": "colorpicker",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/confetti.md",
       "title": "Confetti",
       "name": "confetti",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/confirm.md",
       "title": "Confirm",
       "name": "confirm",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/container.md",
       "title": "Container - wb-starter v3.0",
       "name": "container",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/behaviors/control.md",
       "title": "Control",
       "name": "control",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/copy.md",
       "title": "Copy",
       "name": "copy",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/copybutton.md",
       "title": "Copybutton",
       "name": "copybutton",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/countdown.md",
       "title": "Countdown",
       "name": "countdown",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/counter.md",
       "title": "x-counter Behavior",
       "name": "counter",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/cover.md",
       "title": "Cover - wb-starter v3.0",
       "name": "cover",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-05"
     },
     {
       "path": "docs/behaviors/darkmode.md",
       "title": "Dark Mode Toggle",
       "name": "darkmode",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/data.md",
       "title": "`<data>` Element",
       "name": "data",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/demo.md",
       "title": "Demo Container",
       "name": "demo",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/details.md",
       "title": "Details",
       "name": "details",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/dialog.md",
       "title": "Dialog",
       "name": "dialog",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/dl.md",
       "title": "DL (Description List) Behavior Design & User Guide",
       "name": "dl",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/draggable.md",
       "title": "Draggable",
       "name": "draggable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/drawer.md",
       "title": "Drawer",
       "name": "drawer",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/drawerLayout.md",
       "title": "Drawer Layout",
       "name": "drawerLayout",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/dropdown.md",
       "title": "dropdown",
       "name": "dropdown",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/error.md",
       "title": "Error Behavior",
       "name": "error",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/fadein.md",
       "title": "Fadein",
       "name": "fadein",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/fieldset.md",
       "title": "x-fieldset Behavior",
       "name": "fieldset",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/figure.md",
       "title": "Figure",
       "name": "figure",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/file.md",
       "title": "x-file Behavior",
       "name": "file",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/fill.md",
       "title": "fill — as wide as the container allows",
       "name": "fill",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-22"
     },
     {
       "path": "docs/behaviors/fireworks.md",
       "title": "Fireworks",
       "name": "fireworks",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/fix-card.md",
       "title": "Fix Card",
       "name": "fix-card",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/flash.md",
       "title": "Flash",
       "name": "flash",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/flex.md",
       "title": "Flex",
       "name": "flex",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/flip.md",
       "title": "Flip",
       "name": "flip",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/floatinglabel.md",
       "title": "x-floatinglabel Behavior",
       "name": "floatinglabel",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/footer.md",
       "title": "Footer",
       "name": "footer",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/form.md",
       "title": "Form Behavior",
       "name": "form",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/formrow.md",
       "title": "x-formrow Behavior",
       "name": "formrow",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/frame.md",
       "title": "Frame",
       "name": "frame",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-26"
     },
     {
       "path": "docs/behaviors/fullscreen.md",
       "title": "Fullscreen",
       "name": "fullscreen",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/gallery.md",
       "title": "Gallery",
       "name": "gallery",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/glass.md",
       "title": "glass — the element carries the background scene",
       "name": "glass",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-10-01"
     },
     {
       "path": "docs/behaviors/globe.md",
       "title": "Globe",
       "name": "globe",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/glow.md",
       "title": "Glow",
       "name": "glow",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/grid.md",
       "title": "x-grid",
       "name": "grid",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/header.md",
       "title": "Header",
       "name": "header",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/heartbeat.md",
       "title": "Heartbeat",
       "name": "heartbeat",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/help.md",
       "title": "x-help Behavior",
       "name": "help",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/hero.md",
       "title": "Hero",
       "name": "hero",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/icon.md",
       "title": "Icon - wb-starter v3.0",
       "name": "icon",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-05"
     },
     {
       "path": "docs/behaviors/img.md",
       "title": "Img",
       "name": "img",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/input.md",
       "title": "Input",
       "name": "input",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/inputgroup.md",
       "title": "x-inputgroup Behavior",
       "name": "inputgroup",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/jello.md",
       "title": "Jello",
       "name": "jello",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/kbd.md",
       "title": "Kbd",
       "name": "kbd",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/label.md",
       "title": "x-label Behavior",
       "name": "label",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/lightbox.md",
       "title": "Lightbox",
       "name": "lightbox",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/list.md",
       "title": "List Behavior",
       "name": "list",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-30"
     },
     {
       "path": "docs/behaviors/mark.md",
       "title": "Mark",
       "name": "mark",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/masked.md",
       "title": "x-masked Behavior",
       "name": "masked",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/masonry.md",
       "title": "Masonry",
       "name": "masonry",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/mdhtml.md",
       "title": "Markdown to HTML",
       "name": "mdhtml",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/modal.md",
       "title": "Modal",
       "name": "modal",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-26"
     },
     {
       "path": "docs/behaviors/move.md",
       "title": "Move - wb-starter v3.0",
       "name": "move",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/navbar.md",
       "title": "Navbar",
       "name": "navbar",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/notes.md",
       "title": "Notes",
       "name": "notes",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/notify.md",
       "title": "Notify",
       "name": "notify",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/ol.md",
       "title": "OL (Ordered List) Behavior Design & User Guide",
       "name": "ol",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/otp.md",
       "title": "OTP Behavior",
       "name": "otp",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/pagination.md",
       "title": "Pagination",
       "name": "pagination",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/password.md",
       "title": "Password Behavior",
       "name": "password",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/popover.md",
       "title": "Popover",
       "name": "popover",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/pre.md",
       "title": "Pre",
       "name": "pre",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/print.md",
       "title": "Print",
       "name": "print",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/progress.md",
       "title": "Progress",
       "name": "progress",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/prompt.md",
       "title": "Prompt",
       "name": "prompt",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/pulse.md",
       "title": "Pulse",
       "name": "pulse",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/radio.md",
       "title": "Radio Behavior Design & User Guide",
       "name": "radio",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/rainbow.md",
       "title": "Rainbow",
       "name": "rainbow",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/range.md",
       "title": "Range Behavior Design & User Guide",
       "name": "range",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/rating.md",
       "title": "Rating",
       "name": "rating",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/ratio.md",
       "title": "Ratio",
       "name": "ratio",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/reel.md",
       "title": "Reel - wb-starter v3.0",
       "name": "reel",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-05"
     },
     {
       "path": "docs/behaviors/relativetime.md",
       "title": "Relativetime",
       "name": "relativetime",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/release.md",
       "title": "Release - wb-starter v3.0",
       "name": "release",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/repeater.md",
       "title": "Repeater",
       "name": "repeater",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/resizable.md",
       "title": "Resizable",
       "name": "resizable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/ripple.md",
       "title": "Ripple - wb-starter v3.0",
       "name": "ripple",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/scrollable.md",
       "title": "Scrollable - wb-starter v3.0",
       "name": "scrollable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-05"
     },
     {
       "path": "docs/behaviors/scrollalong.md",
       "title": "ScrollAlong - wb-starter v3.0",
       "name": "scrollalong",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/search.md",
       "title": "Search",
       "name": "search",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/searchfield.md",
       "title": "x-searchfield Behavior",
       "name": "searchfield",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/select.md",
       "title": "Select",
       "name": "select",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/shake.md",
       "title": "Shake",
       "name": "shake",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/share.md",
       "title": "Share",
       "name": "share",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/sidebarlayout.md",
       "title": "Sidebar Layout - wb-starter v3.0",
       "name": "sidebarlayout",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-05"
     },
     {
       "path": "docs/behaviors/skeleton.md",
       "title": "skeleton",
       "name": "skeleton",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/slidein.md",
       "title": "Slidein",
       "name": "slidein",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/slider.md",
       "title": "Slider",
       "name": "slider",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/snow.md",
       "title": "Snow",
       "name": "snow",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/span.md",
       "title": "Span",
       "name": "span",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/sparkle.md",
       "title": "Sparkle",
       "name": "sparkle",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/spinner.md",
       "title": "Spinner",
       "name": "spinner",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/stack.md",
       "title": "Stack Layout Behavior",
       "name": "stack",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/stagelight.md",
       "title": "Stage Light - wb-starter v3.0",
       "name": "stagelight",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/stat.md",
       "title": "Stat",
       "name": "stat",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-26"
     },
     {
       "path": "docs/behaviors/stepper.md",
       "title": "Stepper Behavior",
       "name": "stepper",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/steps.md",
       "title": "Steps",
       "name": "steps",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/sticky.md",
       "title": "Sticky",
       "name": "sticky",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/switch.md",
       "title": "Switch",
       "name": "switch",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/switcher.md",
       "title": "Switcher - wb-starter v3.0",
       "name": "switcher",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-05"
     },
     {
       "path": "docs/behaviors/table.md",
       "title": "Table",
       "name": "table",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/tabs.md",
       "title": "Tabs",
       "name": "tabs",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/tada.md",
       "title": "Tada",
       "name": "tada",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/tags.md",
       "title": "x-tags Behavior",
       "name": "tags",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-17"
     },
     {
       "path": "docs/behaviors/textarea.md",
       "title": "Textarea",
       "name": "textarea",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/themecontrol.md",
       "title": "Theme Control",
       "name": "themecontrol",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/time.md",
       "title": "`<time>` Element",
       "name": "time",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/timeline.md",
       "title": "Timeline",
       "name": "timeline",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/toast.md",
       "title": "toast",
       "name": "toast",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-18"
     },
     {
       "path": "docs/behaviors/toggle.md",
       "title": "Toggle",
       "name": "toggle",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/tooltip.md",
       "title": "x-tooltip Behavior",
       "name": "tooltip",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/truncate.md",
       "title": "Truncate",
       "name": "truncate",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/typewriter.md",
       "title": "Typewriter",
       "name": "typewriter",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/ul.md",
       "title": "UL (Unordered List) Behavior Design & User Guide",
       "name": "ul",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/behaviors/video.md",
       "title": "Video",
       "name": "video",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/vimeo.md",
       "title": "Vimeo",
       "name": "vimeo",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/wobble.md",
       "title": "Wobble",
       "name": "wobble",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/x-behavior.md",
       "title": "x-behavior",
       "name": "x-behavior",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/x-collapse.md",
       "title": "x-collapse",
       "name": "x-collapse",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/x-copy.md",
       "title": "x-copy",
       "name": "x-copy",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/x-copybutton.md",
       "title": "x-copybutton",
       "name": "x-copybutton",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-07-30"
     },
     {
       "path": "docs/behaviors/x-darkmode.md",
       "title": "x-darkmode",
       "name": "x-darkmode",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-07-16"
     },
     {
       "path": "docs/behaviors/x-draggable.md",
       "title": "x-draggable",
       "name": "x-draggable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/x-effects.md",
       "title": "x-effects (x-animate, x-fadein, x-fadeout, x-slidein, x-confetti, x-typewriter)",
       "name": "x-effects",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/x-enhancements.md",
       "title": "x-enhancements (x-form, x-password, x-tags, x-file)",
       "name": "x-enhancements",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/behaviors/x-resizable.md",
       "title": "x-resizable",
       "name": "x-resizable",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-07-16"
     },
     {
       "path": "docs/behaviors/x-toggle.md",
       "title": "x-toggle",
       "name": "x-toggle",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-07-16"
     },
     {
       "path": "docs/behaviors/youtube.md",
       "title": "Youtube",
       "name": "youtube",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/behaviors/zoomin.md",
       "title": "Zoomin",
       "name": "zoomin",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-08-20"
     },
     {
       "path": "docs/BRANCH_PROTECTION.md",
       "title": "Branch protection: require fast Tier‑1 check",
       "name": "BRANCH_PROTECTION",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-06"
     },
     {
       "path": "docs/card.md",
       "title": "Card Behavior Documentation",
       "name": "card",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/claude/PAGE-GENERATION.md",
       "title": "Page Generation Pipeline",
       "name": "PAGE-GENERATION",
-      "category": "claude"
+      "category": "claude",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/claude/README.md",
       "title": "AI Documentation Tier System",
       "name": "README",
-      "category": "claude"
+      "category": "claude",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/claude/SCHEMAS-GUIDE.md",
       "title": "SCHEMAS — Claude's Guide to Getting It Right",
       "name": "SCHEMAS-GUIDE",
-      "category": "claude"
+      "category": "claude",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/claude/TIER1-LAWS.md",
       "title": "TIER 1 — LAWS (Read Every Session, No Exceptions)",
       "name": "TIER1-LAWS",
-      "category": "claude"
+      "category": "claude",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/claude/TIER2-DOMAIN-GUIDES.md",
       "title": "TIER2-DOMAIN-GUIDES",
       "name": "TIER2-DOMAIN-GUIDES",
-      "category": "claude"
+      "category": "claude",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/claude/TIER3-REFERENCE.md",
       "title": "TIER 3 — REFERENCE (Don't Read Unless Specifically Needed)",
       "name": "TIER3-REFERENCE",
-      "category": "claude"
+      "category": "claude",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/claude/TOOLING-INVENTORY.md",
       "title": "Tooling Inventory — What This Repo Already Has",
       "name": "TOOLING-INVENTORY",
-      "category": "claude"
+      "category": "claude",
+      "created": "2026-09-03"
     },
     {
       "path": "docs/code-examples-standard.md",
       "title": "Code Examples Standard",
       "name": "code-examples-standard",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-02"
     },
     {
       "path": "docs/committing-fixes.md",
       "title": "Committing Fixes Workflow",
       "name": "committing-fixes",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-29"
     },
     {
       "path": "docs/compliance/iso-42001-alignment.md",
       "title": "ISO/IEC 42001 Alignment Report",
       "name": "iso-42001-alignment",
-      "category": "compliance"
+      "category": "compliance",
+      "created": "2025-12-30"
     },
     {
       "path": "docs/container-pattern.md",
       "title": "Container Behaviors Pattern",
       "name": "container-pattern",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/escape-hatches.md",
       "title": "wb-starter Escape Hatches",
       "name": "escape-hatches",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-14"
     },
     {
       "path": "docs/guides/create-a-website.md",
       "title": "How to Create a Website with wb-starter",
       "name": "create-a-website",
-      "category": "guides"
+      "category": "guides",
+      "created": "2026-09-30"
     },
     {
       "path": "docs/guides/search-index.md",
       "title": "Search Index Generator",
       "name": "search-index",
-      "category": "guides"
+      "category": "guides",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/home-page.md",
       "title": "Home Page Documentation",
       "name": "home-page",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-17"
     },
     {
       "path": "docs/IMPROVEMENTS.md",
       "title": "Potential Improvements for WB-Starter",
       "name": "IMPROVEMENTS",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/index.md",
       "title": "WB-Starter Documentation",
       "name": "index",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/inline-editing.md",
       "title": "Double-Click Inline Editing System",
       "name": "inline-editing",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/INTELLISENSE-TOOLTIPS.md",
       "title": "Intellisense Tooltip Audit Report",
       "name": "INTELLISENSE-TOOLTIPS",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/linkedin-framework-agnostic.md",
       "title": "LinkedIn Article: The AI Architect: Why the Future of Web Tools is Framework Agnostic",
       "name": "linkedin-framework-agnostic",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-13"
     },
     {
       "path": "docs/linkedin-standards-article.md",
       "title": "LinkedIn Article: The 3 Non-Negotiable Standards of Our Front-End Architecture",
       "name": "linkedin-standards-article",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-13"
     },
     {
       "path": "docs/linkedin-update-article.md",
       "title": "Cielo Vista Software Update",
       "name": "linkedin-update-article",
-      "category": "root"
+      "category": "root",
+      "created": "2026-08-02"
     },
     {
       "path": "docs/mcp.md",
       "title": "MCP Runner & Docs Access",
       "name": "mcp",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-01"
     },
     {
       "path": "docs/MVVM-MIGRATION-PLAN.md",
       "title": "WB-Starter MVVM Migration Plan",
       "name": "MVVM-MIGRATION-PLAN",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/MVVM-MIGRATION.md",
       "title": "wb-starter v3.0 - MVVM Architecture",
       "name": "MVVM-MIGRATION",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/NOTES-V3-GUIDE.md",
       "title": "Notes Behavior v3.0 - Updates Summary",
       "name": "NOTES-V3-GUIDE",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/npx-commands.md",
       "title": "NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀",
       "name": "npx-commands",
-      "category": "root"
+      "category": "root",
+      "created": "2026-09-29"
     },
     {
       "path": "docs/pce-candidates.md",
       "title": "PCE (Pseudo-Custom Elements) - WB-Starter v3.0",
       "name": "pce-candidates",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-02"
     },
     {
       "path": "docs/performance.md",
       "title": "Performance Improvement Plan",
       "name": "performance",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-02"
     },
     {
       "path": "docs/pricecard.md",
       "title": "Price Card & PCE (Pseudo-Custom Elements) Refactor",
       "name": "pricecard",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-02"
     },
     {
       "path": "docs/properties.md",
       "title": "WB-Starter - Property System Documentation",
       "name": "properties",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/property-viewer.md",
       "title": "Property Viewer (Right Panel)",
       "name": "property-viewer",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-13"
     },
     {
       "path": "docs/schema-first-architecture.md",
       "title": "Schema-First MVVM Architecture",
       "name": "schema-first-architecture",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/schema-first-audit-report.md",
       "title": "Schema-First Architecture Audit Report",
       "name": "schema-first-audit-report",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/schema-test-value.md",
       "title": "COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT",
       "name": "schema-test-value",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/schema.md",
       "title": "Schema Standards for WB-Starter Behaviors & Pages",
       "name": "schema",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/schema.migration.md",
       "title": "WB-Starter Schema Migration Plan",
       "name": "schema.migration",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/search.md",
       "title": "Search Behavior Documentation",
       "name": "search",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-14"
     },
     {
       "path": "docs/semantic-audit.md",
       "title": "Semantic HTML Audit Report",
       "name": "semantic-audit",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/semantic-standard.md",
       "title": "HTML5 Semantic Standard (Mandatory)",
       "name": "semantic-standard",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL.md",
       "title": "A gate must be seen to fail",
       "name": "A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-09-08"
     },
     {
       "path": "docs/standards/CSS-CLASS-CONVENTION.md",
       "title": "CSS class convention — you can name the class without reading the code",
       "name": "CSS-CLASS-CONVENTION",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-09-09"
     },
     {
       "path": "docs/standards/DEMOS-AND-DOCS-STANDARDS.md",
       "title": "Demos & Documentation Standards",
       "name": "DEMOS-AND-DOCS-STANDARDS",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-07-05"
     },
     {
       "path": "docs/standards/ERROR-LOG-RETENTION.md",
       "title": "Error Log Retention — 30 Days",
       "name": "ERROR-LOG-RETENTION",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-09-06"
     },
     {
       "path": "docs/standards/ISSUE-SIGNATURE-BLOCK.md",
       "title": "The Signature Block",
       "name": "ISSUE-SIGNATURE-BLOCK",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-09-06"
     },
     {
       "path": "docs/standards/RELEASE-PROCESS.md",
       "title": "Release Process Standards",
       "name": "RELEASE-PROCESS",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-08-21"
     },
     {
       "path": "docs/standards/REPO-LAYOUT.md",
       "title": "Repo Layout",
       "name": "REPO-LAYOUT",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-09-29"
     },
     {
       "path": "docs/standards/V3-STANDARDS.md",
       "title": "WB-Starter v3 Standards",
       "name": "V3-STANDARDS",
-      "category": "standards"
+      "category": "standards",
+      "created": "2026-01-10"
     },
     {
       "path": "docs/styles.md",
       "title": "Class Naming & Semantics",
       "name": "styles",
-      "category": "root"
+      "category": "root",
+      "created": "2026-01-02"
     },
     {
       "path": "docs/test-schema-standard.md",
       "title": "Comprehensive Test Schema Standard",
       "name": "test-schema-standard",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/testing-runbook.md",
       "title": "Testing & CI — Runbook (developer-focused)",
       "name": "testing-runbook",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-01"
     },
     {
       "path": "docs/testing-strategy.md",
       "title": "Tiered Test Structure (Playwright Gates)",
       "name": "testing-strategy",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/themes.md",
       "title": "Theme System Documentation",
       "name": "themes",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/V3-GUIDE.md",
       "title": "wb-starter v3 — Complete Guide",
       "name": "V3-GUIDE",
-      "category": "root"
+      "category": "root",
+      "created": "2026-06-27"
     },
     {
       "path": "docs/WB_BEHAVIOR_SYSTEM.md",
       "title": "WB-Starter Behavior System - Technical Workflow",
       "name": "WB_BEHAVIOR_SYSTEM",
-      "category": "root"
+      "category": "root",
+      "created": "2025-12-28"
     },
     {
       "path": "docs/wbservices.md",
       "title": "wbservices",
       "name": "wbservices",
-      "category": "root"
+      "category": "root",
+      "created": "2026-02-14"
     }
   ]
 }
