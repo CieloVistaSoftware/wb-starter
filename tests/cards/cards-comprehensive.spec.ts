@@ -542,7 +542,7 @@ test.describe('Interactive Cards', () => {
         <div x-cardoverlay 
           title="Overlay Title"
           subtitle="Overlay subtitle"
-          image="/images/wb.png"
+          image="/images/dachshund-puppy-image-960x540.jpg"
           height="300px">
         </div>
       `);

@@ -2,7 +2,7 @@
   "branding": {
     "companyName": "wb-starter",
     "headerSubtitle": "Modern Native Web",
-    "headerLogoImage": "<img src='images/wb.png' alt='WB Logo' style='height: 2rem; width: auto;' />",
+    "headerLogoImage": "<svg class='header__logo-mark' width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='wb-starter logo' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='2' y='5' width='28' height='22' rx='3'/><path d='M2 11h28'/><circle cx='6' cy='8' r='1' fill='currentColor' stroke='none'/><circle cx='10' cy='8' r='1' fill='currentColor' stroke='none'/><circle cx='14' cy='8' r='1' fill='currentColor' stroke='none'/><path d='M12.5 15.5 9 19.5l3.5 4'/><path d='M18 14.8 14 24.2'/><path d='M19.5 15.5 23 19.5l-3.5 4'/></svg>",
     "browserTabIcon": "assets/icons/favicon.svg",
     "colorTheme": "dark",
     "autoInjectComponents": true,
