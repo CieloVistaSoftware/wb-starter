@@ -1407,25 +1407,6 @@ a.x-btn-glass {
 /* Floating card styles → src/styles/behaviors/card.css (migrated Phase 1) */
 
 /* =============================================================================
-   WINDOW CONTROLS (Traffic Lights)
-   ============================================================================= */
-.x-window-controls {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.x-window-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.x-window-dot--red { background: #ff5f56; }
-.x-window-dot--yellow { background: #ffbd2e; }
-.x-window-dot--green { background: #27ca40; }
-
-/* =============================================================================
    BADGE GROUP
    ============================================================================= */
 .x-badge-group {

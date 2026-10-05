@@ -11,8 +11,8 @@
  *
  * A span is inline running text, not a chip: the variant is carried by the
  * TEXT colour (a badge or chip is the component for a filled surface). The
- * red/yellow/green/dot variants are window-control dots and stay in site.css
- * (.x-window-dot), where they were before this file existed.
+ * red/yellow/green/dot variants are window-control dots, styled at the end of
+ * this file (#1464).
  */
 
 .x-span--primary   { color: var(--primary); }
@@ -21,3 +21,21 @@
 .x-span--error     { color: var(--danger-color); }
 .x-span--warning   { color: var(--warning-color); }
 .x-span--info      { color: var(--info-color); }
+
+/* #1464: the window-control dots. Their look used to hang off a second class
+   (x-window-dot, in site.css), so the schema's x-span--red/yellow/green/dot
+   named classes nothing styled. "dot" is a plain dot in the text colour. */
+.x-span--red,
+.x-span--yellow,
+.x-span--green,
+.x-span--dot {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: middle;
+}
+.x-span--red    { background: var(--window-dot-red); }
+.x-span--yellow { background: var(--window-dot-yellow); }
+.x-span--green  { background: var(--window-dot-green); }
