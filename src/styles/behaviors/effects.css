@@ -133,6 +133,16 @@ x-container.drop-target, [x-container].drop-target{
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* The directionless `slideOut` that <div x-animate animation="slideOut">
+   resolves to (keyframeFor() makes it `x-slide-out`). Only the four
+   directional keyframes existed, so the schema's own animationType value
+   animated nothing (#866). Mirrors the bare x-slide-in above: it entered from
+   the right, so it leaves to the right. */
+@keyframes x-slide-out {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
 /* #866: slideout() builds `x-slide-out-{dir}` (effects.js:125) but no such
    keyframe existed, so the behavior was a dead control -- it set an
    animation-name matching nothing and rendered nothing. An unknown

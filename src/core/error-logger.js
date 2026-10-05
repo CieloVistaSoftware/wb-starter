@@ -3,7 +3,7 @@
  * Logs errors to data/errors.json and displays them on screen
  */
 
-import { computeSignature, firstMeaningfulFrame, isTestOrigin, isTestServer } from './error-signature.js';
+import { computeSignature, firstMeaningfulFrame, isTestOrigin, isTestServer, isSameOccurrence } from './error-signature.js';
 
 const ERROR_LOG_PATH = 'data/errors.json';
 let errorContainer = null;
@@ -280,24 +280,10 @@ function lookupFix(signature) {
  * This compares everything a reader would use to tell two rows apart: the exact
  * message, where it came from, and what it was pointing at. Anything different,
  * anywhere, and it is a separate row.
+ *
+ * isSameOccurrence() lives in error-signature.js since #1029, so the server
+ * can merge repeats from separate page loads by the very same rule.
  */
-function isSameOccurrence(a, b) {
-  if (!a || !b) return false;
-  return (
-    a.message === b.message &&
-    a.level === b.level &&
-    a.source === b.source &&
-    a.module === b.module &&
-    a.line === b.line &&
-    a.column === b.column &&
-    a.function === b.function &&
-    a.to === b.to &&
-    a.url === b.url &&
-    (a.details && a.details.src) === (b.details && b.details.src) &&
-    (a.details && a.details.reason) === (b.details && b.details.reason) &&
-    a.stack === b.stack
-  );
-}
 
 export async function logError(message, details = {}) {
   initErrorDisplay();

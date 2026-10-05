@@ -87,6 +87,13 @@ function camelToKebab(str) {
 // cards, alerts...) produced the redundant "variant variants" heading.
 // Special-case it to a natural "Variants"; other property names (e.g.
 // `size`) keep the existing "{propName} variants" phrasing.
+// #793: an option that positions something needs that something, or its
+// demo shows nothing -- and input() now reports iconPosition-without-icon as a
+// runtime error. Each variant demo of these props carries its companion.
+const DEMO_COMPANIONS = {
+  iconPosition: { icon: '★' },
+};
+
 function enumSectionHeading(propName) {
   return propName === 'variant' ? 'Variants' : `${propName} variants`;
 }
@@ -316,7 +323,7 @@ function generateComponentSections(schema) {
   for (const [propName, propDef] of enumProps) {
     const attrName = camelToKebab(propName);
     const demos = propDef.enum.map(val => {
-      const attrs = { [attrName]: val };
+      const attrs = { [attrName]: val, ...(DEMO_COMPANIONS[propName] || {}) };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
           attrs[camelToKebab(rk)] = samplePropValue(rk, rv);

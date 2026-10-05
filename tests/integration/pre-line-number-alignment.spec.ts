@@ -152,11 +152,13 @@ test('pre.js line-number gutter: number tracks visible content, not leading whit
     preEl.appendChild(codeEl);
     document.body.appendChild(preEl);
 
-    pre(preEl, { showLineNumbers: true, wrap: true });
-
     // Force the deterministic split described above: a monospace, 2-char-wide
     // content box means the 2 leading spaces exactly fill line 2's first row,
     // pushing "BBBB" onto the row below on its own.
+    // Set BEFORE pre() runs. Set after it, pre.js could place line 2 for the
+    // unclamped width first; the wait below took that placement as final and
+    // read the one-row position (top 17px against "BBBB" at 134px) on a slow
+    // CI runner, 2026-10-05.
     Object.assign(preEl.style, {
       fontFamily: 'monospace',
       fontSize: '16px',
@@ -164,8 +166,9 @@ test('pre.js line-number gutter: number tracks visible content, not leading whit
       maxWidth: '2ch',
     });
 
-    // Wait for pre.js's double-rAF deferred measurement (+ a possible
-    // ResizeObserver re-fire from the width override above) to settle.
+    pre(preEl, { showLineNumbers: true, wrap: true });
+
+    // Wait for pre.js's double-rAF deferred measurement to settle.
     await new Promise((resolve) => {
       const gutter = preEl.parentElement.querySelector('.x-pre__line-numbers');
       const settle = () => {
