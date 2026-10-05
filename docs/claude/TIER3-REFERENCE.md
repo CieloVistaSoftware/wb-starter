@@ -69,7 +69,6 @@ Individual behavior docs that are only relevant if working on that exact behavio
 | `docs/audio.md` | Audio behavior |
 | `docs/search.md` | Search behavior |
 | `docs/inline-editing.md` | Inline editing feature |
-| `docs/templates.md` | Template system |
 | `demos/code.md` | Code demo notes |
 | `demos/wb-views-demo.md` | Views demo notes |
 
