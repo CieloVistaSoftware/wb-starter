@@ -43,6 +43,13 @@ export function figure(element, options = {}) {
     caption.textContent = config.caption;
   }
 
+  // #1279: "top" was declared and documented and rendered exactly like the
+  // default. A <figcaption> may be a figure's first child or its last, so the
+  // honest move is the DOM order itself, not a visual reordering.
+  if (config.captionPosition === 'top' && caption && element.firstElementChild !== caption) {
+    element.insertBefore(caption, element.firstChild);
+  }
+
   if (config.captionPosition === 'overlay') {
     element.classList.add('x-figure--overlay');
     // position:relative and the caption bar are .x-figure--overlay rules in

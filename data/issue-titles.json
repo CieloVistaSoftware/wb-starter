@@ -1187,5 +1187,12 @@
   "1530": "demos/site/*.html are hand-edited generator output: regenerating rewrites 9 of 10 pages (567+/620-) and loses their ids and images",
   "1533": "Releases page tells the reader nothing: each version shows the same sentence twice, and never what the issue was or how to see the change",
   "1534": "Worktree folders pile up in Downloads\\AI after their PRs merge: nothing says a session must remove its worktree",
-  "1535": "Making a video of the site takes a separate editor: there is no one command from a narration MP3 to a finished video"
+  "1535": "Making a video of the site takes a separate editor: there is no one command from a narration MP3 to a finished video",
+  "1536": "AutoScroll shows entries but tests none of them, and only tours the groups you opened",
+  "1542": "Behaviors page: no example shows a card's featured marker with custom text",
+  "1549": "doc-viewer-links: apiRequestContext.get read ECONNRESET in CI (one sighting, likely the keep-alive race)",
+  "1550": "Rendering a doc that uses x-lazy requests a nonexistent lazy.schema.json: 404 plus ENOENT in every CI log",
+  "1551": "doc-viewer-back-restores-docs-list fails ~3 in 10: Playwright's click re-scrolls after the baseline is read; the page restores correctly",
+  "1553": "Dates and times show in the viewer's zone; John wants every one in US Central (CST/CDT)",
+  "1557": "A missing /src/wb-models/*.json prints an ENOENT stack trace and leaks the server path in the 404"
 }

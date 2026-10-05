@@ -387,11 +387,13 @@ export function switcher(element, options = {}) {
   }, { gap: '1rem', '--x-switcher-threshold': '30rem' }));
 
   const unclassChildren = classChildren(element, 'x-switcher__item');
+  // #1279: limit was read and never used. More items than the limit stack.
+  element.classList.toggle('x-switcher--stacked', element.children.length > config.limit);
 
   return () => {
     clearRules(element);
     unclassChildren();
-    element.classList.remove('x-switcher');
+    element.classList.remove('x-switcher', 'x-switcher--stacked');
   };
 }
 
