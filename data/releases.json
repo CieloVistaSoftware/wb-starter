@@ -6,6 +6,27 @@
   ],
   "releases": [
     {
+      "version": "1.0.272",
+      "date": "2026-10-05",
+      "summary": "Fix: a matrix combination that turns a default-on option off is demonstrated off (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1531\" target=\"_blank\" rel=\"noopener\">PR 1531</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1525\" target=\"_blank\" rel=\"noopener\">#1525</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Write the off value in the schema&#39;s camelCase (showClose), not dashed</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1525\" target=\"_blank\" rel=\"noopener\">#1525</a>",
+          "issues": [
+            1525
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A matrix combination that turns a default-on option off is demonstrated off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1525\" target=\"_blank\" rel=\"noopener\">#1525</a>",
+          "issues": [
+            1525
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.271",
       "date": "2026-10-05",
       "summary": "Test: the no-inline-styles gate reads the markup stored in config/*.json (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1529\" target=\"_blank\" rel=\"noopener\">PR 1529</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1522\" target=\"_blank\" rel=\"noopener\">#1522</a>",
