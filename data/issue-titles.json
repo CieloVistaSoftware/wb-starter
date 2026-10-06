@@ -1201,5 +1201,7 @@
   "1571": "Issues page: an in-progress row shows Now and Next but never Why or how to see the fix",
   "1573": "scroll-survives-page-build fails a correct page: Chrome's scroll anchoring moves scrollTop 400→486 when the scan adds content above",
   "1577": "site-spinners-do-not-teach hangs 30s: it counts the page-loading spinner while the site boots, then waits for it after it is gone",
-  "1579": "cards.html: the first Card Gallery code panel paints at 995px and narrows to 877px when measured (the last width jump after #985)"
+  "1579": "cards.html: the first Card Gallery code panel paints at 995px and narrows to 877px when measured (the last width jump after #985)",
+  "1583": "An in-progress claim with no status note goes unflagged until John sees it red on the Issues page",
+  "1585": "Link-share preview shows the generic lightning-bolt icon instead of the wb logo"
 }

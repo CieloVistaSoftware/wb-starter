@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.303",
+      "date": "2026-10-05",
+      "summary": "The Behaviors page once wrote multi-word options squashed (fullwidth, showplaybutton), a third spelling that matched neither the schema nor the docs; the page now writes them dashed, but no test refused the squashed form, so it could come back unnoticed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1581\" target=\"_blank\" rel=\"noopener\">PR 1581</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/952\" target=\"_blank\" rel=\"noopener\">#952</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The option rows never write the squashed spelling again</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/952\" target=\"_blank\" rel=\"noopener\">#952</a>",
+          "issues": [
+            952
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/behaviors-page-options-write-kebab-attributes.spec.ts --project=regression</code>. Before: 6 tests, and the &quot;must not be written&quot; check was case-sensitive, so a page writing fullwidth passed it. Now: 8 tests, including x-button fullWidth and x-audio showPlayButton from #952; with the page made to write squashed names again they fail."
+    },
+    {
       "version": "1.0.302",
       "date": "2026-10-05",
       "summary": "Code panels used to appear at less than half their width and snap out about a second later; they now appear at their final width, and a test keeps it that way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1580\" target=\"_blank\" rel=\"noopener\">PR 1580</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/985\" target=\"_blank\" rel=\"noopener\">#985</a>",
