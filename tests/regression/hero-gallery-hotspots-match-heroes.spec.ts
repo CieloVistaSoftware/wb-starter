@@ -78,6 +78,17 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
     }
   });
 
+  // #1653 -- John: "the two buttons are acting as one". Get Started + View Docs
+  // and See a11y + Docs all opened the V3 guide, so on 20 heroes both buttons
+  // were the same link. Two buttons, two destinations.
+  test("a hero's two buttons go to two different pages", () => {
+    const same = heroes
+      .filter((h) => h.cta2 && h.cta.href === h.cta2.href)
+      .map((h) => `hero #${h.index}: "${h.cta.label}" and "${h.cta2!.label}" both -> ${h.cta.href}`);
+    expect(heroes.filter((h) => h.cta2).length, 'no two-button heroes -- the check would pass vacuously').toBeGreaterThan(0);
+    expect(same, same.join('\n')).toEqual([]);
+  });
+
   test('each hotspot sits on its button in the image', async ({ page }) => {
     // The oracle is the JPG itself, not a live re-render: CI's Windows runner
     // lays the same hero out with different fonts (a 142px "Get Started"

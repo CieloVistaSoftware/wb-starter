@@ -45,11 +45,16 @@ const BGS = [
 // would, not to a relative path that only works inside this repo.
 const SITE = 'https://cielovistasoftware.github.io/wb-starter/';
 const DV = (file) => SITE + 'public/doc-viewer.html?file=' + encodeURIComponent(file);
+// Two buttons on one hero never share a destination (#1653): Get Started and
+// View Docs both opened the V3 guide, and so did See a11y and Docs, so on 20
+// heroes the two buttons were one. "Docs" and "View Docs" open the site's
+// docs page; "See a11y" opens the doc on native elements being enhanced in
+// place, which is what that hero ("Semantics by default") is about.
 const CTA_HREF = {
-  'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
-  'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
+  'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': SITE + '?page=docs',
+  'Docs': SITE + '?page=docs', 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
   'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors-reference.md'),
-  'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
+  'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/auto-injection.md'),
   'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
   'Try the Playground': SITE + 'demos/playground.html',
 };
