@@ -1,5 +1,5 @@
 {
-  "description": "Default page settings shared by all WB showcase/demo pages. Use $extends to inherit.",
+  "description": "Default page settings shared by all WB showcase/demo pages. Name them in $extends to include them.",
   "page": {
     "lang": "en",
     "theme": "dark",
