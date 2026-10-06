@@ -16,7 +16,7 @@
  *      articles, index.html and the create-wb-starter template). Template
  *      literals are expanded: `${X_VERSION}` from a `const X_VERSION = '…'` in
  *      the same file, `${themeId}` / `${savedTheme}` to every CODE_THEMES id in
- *      src/wb-viewmodels/codecontrol.js that has no local path.
+ *      src/wb-viewmodels/codetheme.js that has no local path.
  *   2. Crawl: JS from esm.sh / jsdelivr / unpkg is scanned for import
  *      specifiers (static import, export-from, dynamic import(), and esm.sh's
  *      absolute-path imports); CSS is scanned for url(…) (Google Fonts woff2).
@@ -73,7 +73,7 @@ function* walk(p) {
 }
 
 function codeThemeIds() {
-  const src = readFileSync(join(ROOT, 'src/wb-viewmodels/codecontrol.js'), 'utf8');
+  const src = readFileSync(join(ROOT, 'src/wb-viewmodels/codetheme.js'), 'utf8');
   const block = src.slice(src.indexOf('const CODE_THEMES'), src.indexOf('];', src.indexOf('const CODE_THEMES')));
   const ids = [];
   for (const line of block.split('\n')) {

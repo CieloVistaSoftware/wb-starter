@@ -1,23 +1,23 @@
 /**
- * codecontrol Behavior Tests
+ * codetheme Behavior Tests
  * Auto-generated baseline — verifies render + no console errors
- * Source: src/wb-viewmodels/codecontrol.js
+ * Source: src/wb-viewmodels/codetheme.js
  */
 import { test, expect } from '../fixtures/offline';
 import { injectAndScan } from '../helpers/inject-and-scan';
 
-test.describe('codecontrol Behavior', () => {
+test.describe('codetheme Behavior', () => {
 
   test('renders without errors', async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<div x-codecontrol>Basic codecontrol content</div>",
-      "<div x-codecontrol>Test permutation 2</div>",
-      "<div x-codecontrol>Test permutation 3</div>",
-      "<div x-codecontrol>Test permutation 4</div>",
-      "<div x-codecontrol>Test permutation 5</div>"
+      "<div x-codetheme>Basic codetheme content</div>",
+      "<div x-codetheme>Test permutation 2</div>",
+      "<div x-codetheme>Test permutation 3</div>",
+      "<div x-codetheme>Test permutation 4</div>",
+      "<div x-codetheme>Test permutation 5</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -33,10 +33,10 @@ test.describe('codecontrol Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<div x-codecontrol>Basic codecontrol content</div>";
+    const html = "<div x-codetheme>Basic codetheme content</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-codecontrol]').first();
+    const el = page.locator('#test-container [x-codetheme]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

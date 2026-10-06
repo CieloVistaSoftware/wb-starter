@@ -43,7 +43,7 @@
     "clock.schema.json",
     "cluster.schema.json",
     "code.schema.json",
-    "codecontrol.schema.json",
+    "codetheme.schema.json",
     "collapse.schema.json",
     "colorpicker.schema.json",
     "confetti.schema.json",
@@ -277,7 +277,7 @@
         "resizable.schema.json",
         "scrollalong.schema.json",
         "toggle.schema.json",
-        "codecontrol.schema.json",
+        "codetheme.schema.json",
         "globe.schema.json"
       ]
     },

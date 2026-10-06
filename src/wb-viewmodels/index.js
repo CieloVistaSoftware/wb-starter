@@ -7,6 +7,8 @@
  * @version 2.1.1 (2025-12-21) - Fixed semantic module paths
  */
 
+import { BEHAVIOR_ALIASES } from '../core/attribute-aliases.js';
+
 // Debug logging — silent unless localStorage['x-debug'] === '1'.
 const WB_DEBUG = (() => { try { return localStorage.getItem('x-debug') === '1'; } catch (e) { return false; } })();
 const _wbClog = console.log.bind(console);
@@ -235,7 +237,7 @@ const behaviorModules = {
   ripple: 'ripple',
   darkmode: 'darkmode',
   themecontrol: 'themecontrol',
-  codecontrol: 'codecontrol',
+  codetheme: 'codetheme',
   lazy: 'helpers', print: 'helpers', share: 'helpers', fullscreen: 'helpers',
   hotkey: 'helpers', clipboard: 'helpers', scroll: 'helpers', truncate: 'helpers',
   highlight: 'helpers', external: 'helpers', countdown: 'helpers', clock: 'helpers',
@@ -246,6 +248,14 @@ const behaviorModules = {
   // Modifier: autosize
   autosize: 'autosize'
 };
+
+// A renamed behavior's old name loads the new module and runs the new
+// function (#668). The table lives in attribute-aliases.js; nothing is listed
+// here by hand.
+for (const [old, now] of Object.entries(BEHAVIOR_ALIASES)) {
+  behaviorModules[old] = behaviorModules[now];
+  exportAliases[old] = exportAliases[now] || now;
+}
 
 /**
  * Load a module dynamically (with caching)

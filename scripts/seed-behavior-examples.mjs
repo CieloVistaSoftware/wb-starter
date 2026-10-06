@@ -380,7 +380,7 @@ export const EXAMPLES = {
 
   'x-themecontrol': `<div x-themecontrol></div>`,
 
-  'x-codecontrol': `<div x-codecontrol></div>`,
+  'x-codetheme': `<div x-codetheme></div>`,
 
   // ── Positional / motion ────────────────────────────────────────────────────
   'x-articles': `<section x-articles layout="grid" columns="2" limit="4">

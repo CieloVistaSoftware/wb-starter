@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "codetheme.schema.json",
+  "title": "Code Theme",
+  "description": "Dropdown that picks a highlight.js code theme and applies it to every code block on the page at once.",
+  "schemaFor": "codetheme",
+  "compliance": {
+    "baseClass": "x-codetheme",
+    "supportLevel": "stable",
+    "accessibility": "high"
+  },
+  "properties": {},
+  "$view": [],
+  "$methods": {},
+  "$cssAPI": {},
+  "test": {
+    "setup": [
+      "<div x-codetheme>Basic codetheme content</div>",
+      "<div x-codetheme>Test permutation 2</div>",
+      "<div x-codetheme>Test permutation 3</div>",
+      "<div x-codetheme>Test permutation 4</div>",
+      "<div x-codetheme>Test permutation 5</div>"
+    ],
+    "matrix": {
+      "combinations": [
+        {}
+      ]
+    },
+    "site": {
+      "page": "content",
+      "tag": "x-codetheme",
+      "renders": true,
+      "baseClass": "x-codetheme",
+      "minInstances": 1,
+      "checkText": [],
+      "checkClasses": [],
+      "checkAttributes": []
+    }
+  }
+}

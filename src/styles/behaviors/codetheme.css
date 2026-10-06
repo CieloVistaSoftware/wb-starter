@@ -1,28 +1,28 @@
 /**
- * x-codecontrol (#779, #1021)
+ * x-codetheme (#779, #1021)
  * -----------------------------------------------------------------------------
- * Moved out of codecontrol.js, which wrote three cssText blocks onto the
- * wrapper, label and select. The size attribute is an x-codecontrol--size-*
+ * Moved out of codetheme.js, which wrote three cssText blocks onto the
+ * wrapper, label and select. The size attribute is an x-codetheme--size-*
  * class on the host rather than an inline font-size; the values are the SIZES
- * table in codecontrol.js, which stays exported for callers that read it.
- * Selectors are scoped under .x-codecontrol: the label also carries .x-label
+ * table in codetheme.js, which stays exported for callers that read it.
+ * Selectors are scoped under .x-codetheme: the label also carries .x-label
  * and the select meets input.css's native `select` rule. Each size sets the
  * label/select values directly (same (0,2,0), later) rather than through
  * custom properties: css-oop-compliance keeps custom-property definitions in
  * themes.css.
  */
-.x-codecontrol .x-codecontrol__wrapper {
+.x-codetheme .x-codetheme__wrapper {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
 }
 
-.x-codecontrol .x-codecontrol__label {
+.x-codetheme .x-codetheme__label {
   font-weight: 500;
   color: var(--text-primary, inherit);
 }
 
-.x-codecontrol .x-codecontrol__select {
+.x-codetheme .x-codetheme__select {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm, 0.25rem);
   background: var(--bg-primary);
@@ -33,44 +33,44 @@
   background-position: right 0.35rem center;
 }
 
-.x-codecontrol--size-xs .x-codecontrol__label {
+.x-codetheme--size-xs .x-codetheme__label {
   font-size: 0.65rem;
 }
 
-.x-codecontrol--size-xs .x-codecontrol__select {
+.x-codetheme--size-xs .x-codetheme__select {
   padding: 0.2rem 1.25rem 0.2rem 0.4rem;
   font-size: 0.65rem;
   min-width: 5rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
 }
 
-.x-codecontrol--size-sm .x-codecontrol__label {
+.x-codetheme--size-sm .x-codetheme__label {
   font-size: 0.75rem;
 }
 
-.x-codecontrol--size-sm .x-codecontrol__select {
+.x-codetheme--size-sm .x-codetheme__select {
   padding: 0.3rem 1.5rem 0.3rem 0.5rem;
   font-size: 0.75rem;
   min-width: 6.25rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
 }
 
-.x-codecontrol--size-md .x-codecontrol__label {
+.x-codetheme--size-md .x-codetheme__label {
   font-size: 0.875rem;
 }
 
-.x-codecontrol--size-md .x-codecontrol__select {
+.x-codetheme--size-md .x-codetheme__select {
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   font-size: 0.875rem;
   min-width: 8.75rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
 }
 
-.x-codecontrol--size-lg .x-codecontrol__label {
+.x-codetheme--size-lg .x-codetheme__label {
   font-size: 1rem;
 }
 
-.x-codecontrol--size-lg .x-codecontrol__select {
+.x-codetheme--size-lg .x-codetheme__select {
   padding: 0.625rem 2.25rem 0.625rem 1rem;
   font-size: 1rem;
   min-width: 10rem;

@@ -46,7 +46,7 @@ Rows: **161**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 ha
 | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — |
 | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — |
 | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes |
-| `codecontrol` | `x-codecontrol` | [behaviors/codecontrol.md](behaviors/codecontrol.md) | — |
+| `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — |
 | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — |
 | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — |
 | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — |
