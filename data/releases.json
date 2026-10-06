@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.317",
+      "date": "2026-10-06",
+      "summary": "The behavior is a highlight.js theme picker: its own header said so, its sync event was already x:codetheme:sync and its tests were already named code-theme-*. Only the name said &quot;code control&quot;, and the schema called it an &quot;Interactive code editor/viewer control&quot;. The module, schema, stylesheet, doc, demos, scripts and tests are now codetheme, and the schema says it picks a highlight.js theme. x-codecontrol keeps working: it is declared once in BEHAVIOR_ALIASES (src/core/attribute-aliases.js), and wb-lazy.js, the wb.js behavior registry and the CSS loader all read it from there. It is deliberately not in tag-map.js, so the inventories, reference docs and behaviors page list one behavior, not two. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1606\" target=\"_blank\" rel=\"noopener\">PR 1606</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/668\" target=\"_blank\" rel=\"noopener\">#668</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Rename x-codecontrol to x-codetheme, keep the old name as an alias</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/668\" target=\"_blank\" rel=\"noopener\">#668</a>",
+          "issues": [
+            668
+          ]
+        }
+      ],
+      "seeIt": "Open /demos/test-harness.html and add &lt;div x-codecontrol&gt;&lt;/div&gt; and &lt;div x-codetheme&gt;&lt;/div&gt;. Before: only x-codecontrol rendered the theme dropdown, and the schema described it as a code editor. Now: both render the same dropdown, and the schema says it picks a highlight.js code theme."
+    },
+    {
       "version": "1.0.316",
       "date": "2026-10-06",
       "summary": "4.0.0&#39;s prefix rename turned tag selectors like wb-card into x-card, a tag that no longer exists, so 300 selector parts in src/styles matched nothing; most were dead weight beside a working [x-card] twin, but some rules had no live selector at all, so hero cards kept animating for readers who asked for reduced motion, the loading spinner kept spinning beside &quot;Error loading&quot;, and masonry article cards sat flush with no gap. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1590\" target=\"_blank\" rel=\"noopener\">PR 1590</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",

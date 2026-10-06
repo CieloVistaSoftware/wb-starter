@@ -100,7 +100,7 @@
           "file": "behaviors-reference.md",
           "title": "Behaviors Reference",
           "description": "Complete list of all behaviors",
-          "modified": "2026-10-01"
+          "modified": "2026-10-05"
         },
         {
           "file": "behavior-cross-reference.md",
@@ -124,7 +124,7 @@
           "file": "behaviors/codetheme.md",
           "title": "Code Theme",
           "description": "Dropdown to switch the highlight.js code theme site-wide",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/help.md",
@@ -1438,7 +1438,7 @@
           "file": "pce-candidates.md",
           "title": "Pce-candidates",
           "description": "Documentation for Pce-candidates",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "pricecard.md",

@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5834
+    "totalWords": 5836
   },
   "documents": [
     {
@@ -32,7 +32,7 @@
       "content": "About Cielo Vista Software The team behind wb-starter Our Mission Cielo Vista Software builds tools that make the web simpler to write and easier to maintain. Our flagship product, wb-starter , is a zero-build, schema-first web-behavior framework: you compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no framework lock-in. Why wb-starter? ✅ Zero build — open an HTML file and it just works ✅ Composition over inheritance — stack x-* behaviors on any element ✅ Light DOM, no Shadow DOM — inspect and theme everything ✅ Schema-first — behaviors are described in data, not hand-wired ✅ Fully themeable — 20+ built-in themes, zero hardcoded colors Explore the Behaviors",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/ai-docs",
@@ -115,7 +115,7 @@
       "content": "AI Permutation Testing Find test missing attribute combos in WB behaviors. Permutation Engine Select Schema — choose a schema — ↻ Reset 🔧 Permutation Engine 📖 How to Use 📁 Project Pages 🧪 Test Results Activity Log Real-time trace of what the engine is doing and why. Step 2 — Extracted Dimensions These are the testable axes pulled from the schema's properties . Each enum or boolean becomes a dimension. Step 3 — All Test Coverage All combinations — existing from the schema plus newly generated gaps (outlined in green) . Step 4 — Missing Permutations (Gaps Found) Pairwise mode Copy All Missing as JSON Copy All as HTML Setup 💾 Save Missing to Schema Step 5 — Live Test Results 0 / 0 How to Use This Tool Schema-driven combinatorial testing — reads your behavior schemas, finds gaps in test coverage, and tells you exactly how to fix them. 1 Select a Schema Pick any *.schema.json from the dropdown. The tool fetches it live from src/wb-models/ and parses it. 2 Dimensions Are Extracted Automatically Every property with an enum array, a boolean type, or a set of defined values becomes a testable dimension. For example, variant with 7 enum values = 7 options, and any boolean property becomes a 2-value dimension (true/false). These are the axes of your test matrix. 3 Existing Coverage Is Shown The schema's test.matrix.combinations array is displayed. These are the combos you already test. The tool fingerprints each one so it can diff against what's generated. 4 Missing Permutations Are Computed Pairwise mode (default): Generates the minimum set of test cases where every pair of values across every pair of dimensions appears at least once. This catches interaction bugs (e.g., \"pill + error variant breaks layout\") while reducing test count by 80–90% vs full cartesian. Full cartesian: Every possible combination. Use this for small schemas (≤3 dimensions). For badge with 7 variants × 4 sizes × 4 booleans = 448 combos — that's too many, use pairwise. 5 Each Gap Is Explained With a Fix Every missing permutation shows: what combination is untested, why it matters (which interaction it covers), suggested HTML markup, and the JSON to paste into your schema's test matrix. 💾 Save Missing to Schema writes all missing permutations directly into the schema file — both test.matrix.combinations (JSON) and test.setup (HTML lines) — via the dev server's /api/save endpoint. One click, no copy-paste. The page auto-reloads the schema afterward so coverage stats update immediately. 6 Run All Tests Live Click ▶ Run All Tests Live to inject every missing permutation as a real DOM element right here in the browser. The runner creates each wb-* element, sets the attributes from the combo, waits for WB to initialize the behavior, then verifies 5 things: ① Element exists in DOM ② Root CSS class is present (e.g., x-badge ) ③ Each appliesClass from the schema is applied (e.g., x-badge--primary ) ④ Element has visible dimensions (not 0×0) ⑤ Element is not hidden via CSS. Failures show the expected vs. actual value and a suggested fix pointing to the specific ViewModel or CSS file to update. Project Pages Quick links to all pages in the WB-Starter project. The current page is highlighted. Live Test Results Select a schema and click ▶ Run All Tests Live in the Coverage panel to start. 0 / 0 # Status Source Description Checks Failed Details Coverage Status □ ▶ Run All Tests Live Select a schema to begin.",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/behaviors",
@@ -135,7 +135,7 @@
       "content": "at all, though, the page had no accessible name and no landmark for a screen-reader user to jump to -- and the fragment compliance gate failed on it, blocking every commit repo-wide. Hidden headings satisfy both: nothing appears on screen, the document regains its outline. --> Behaviors Search behaviors Filter Both Semantic x-attribute , deliberately not a : applyFilter() hides every `section[id]` that contains no visible , which would sweep up this panel (it holds injected markup, never a x-demo) and leave it display:none no matter what was clicked. --> &#8592; . Inside, they render in the header's flow, so opening one GREW the header and pushed the example down -- a taller box, never a cover. An earlier pass tried to satisfy the same ask with max-height: calc(100vh - 14rem), which made the box tall but left it in the header. The stay as the toggle and keep their open/closed state; the panels are positioned over .behaviors-live__body below, matched with :has(). --> API Documentation , which would drift from the real theme list the moment a theme was added. --> Events interact with the example above No events yet — click the example above and they appear here. Event handler in the header is open (CSS :has()). Same ids and classes as before, so every renderer that fills them is untouched. --> blocks now lives in data/behavior-examples.json (scripts/build-behavior-examples.mjs) and is rendered on demand by the live-preview panel above -- so the examples are still here, they are just no longer 13,000px of markup you have to scroll past to reach one. The jump-nav went with them: there is nothing below to jump to, and the selector reaches every behavior directly. -->",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/contact",
@@ -162,7 +162,7 @@
       "content": "📧 Contact Get in touch with us. We'd love to hear from you! Send a Message Name Email Subject Message Send Message Other Ways to Reach Us 123 Main Street City, State 12345 +1 (555) 123-4567 hello@example.com Monday - Friday 9:00 AM - 5:00 PM",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/demos",
@@ -182,7 +182,7 @@
       "content": "🎮 Demos Explore standalone demos and examples. 🔍 Content No demos match your search. 🃏 Card Behaviors 🔔 Feedback & Status 📝 Form Controls 🪟 Overlays & Popups 📐 Layout & Navigation 📄 Content & Media ✨ Visual Effects 🔧 Interactive & Utility 🃏 Cards & Layout This is a basic card with default styling. All features enabled. 🏗️ Narrative & Tools Forced Dark Mode — stays dark regardless of the global theme. 🎮 More Demos",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/docs",
@@ -240,7 +240,7 @@
       "content": "Hero Variants 12 stunning hero section styles. Click any to see the code. Default The Original Hero Floating orbs with gradient mesh background. The signature WB look. Get Started → Minimal Clean & Simple Subtle gradient mesh background. Professional and polished. Learn More Split Content Left Perfect for showcasing products, apps, or screenshots alongside your message. Try Free Watch Demo Particles Reach for the Stars Animated starfield with shooting stars. Great for space, tech, or gaming themes. Explore Space → Diagonal Bold Angles Dynamic diagonal cut with gradient accent. Modern and eye-catching. Get Started is position:absolute; z-index:0, always behind the x-glass-card content box's z-index:2. --> Waves Ride the Wave Animated waves at the bottom. Perfect for ocean, music, or flow-themed sites. Dive In Grid Enter the Matrix Retro-futuristic grid with horizon glow. Cyberpunk vibes. Jack In → Spotlight Center Stage Dramatic spotlight from above. Perfect for launches and announcements. Reveal → is z-index:0, always behind the x-glass-card content box's z-index:2. --> Aurora Northern Lights Mesmerizing aurora borealis effect. Magical and calming. Experience Mesh Living Colors Animated gradient mesh that breathes. Rich and immersive. Explore Card Floating Glass Content in a frosted glass card. Elegant and focused. Sign Up Cosmic Deep Space The Orion Nebula. A view into a stellar nursery. Discover Distance: 1,344 Light Years Quick Reference Variant Class Best For Default .x-hero General purpose, landing pages Minimal .x-hero--minimal Professional, corporate Split .x-hero--split Product showcases, apps Particles .x-hero--particles Tech, gaming, space themes Diagonal .x-hero--diagonal Modern, dynamic brands Waves .x-hero--waves Music, ocean, flow themes Grid .x-hero--grid Cyberpunk, retro-futurism Spotlight .x-hero--spotlight Product launches, announcements Aurora .x-hero--aurora Calm, magical, nature themes Mesh .x-hero--mesh Creative, artistic sites Card .x-hero--card Focused CTAs, signups Cosmic .x-hero--cosmic Mystery, exploration themes Add variant class to .x-hero element",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/home",
@@ -298,10 +298,10 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.316\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.316\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.317\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.317\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/issues",
@@ -325,7 +325,7 @@
       "content": "🐛 Issues Live from GitHub — open and closed, including the full issue body. Filter and search Open Closed All Working on now ( 0 ) Copy Work completed Current Active: 0 Work done loading… Nothing recorded in this window. Closed Opened Commits Issues Loading issues… : auto-injects the table behavior (tag-map.js nativeMap), and `sortable` is its own attribute, so the column sorting is the framework's — the same code #1011 taught to sort dates and versions properly. Writing a private sort here would mean this page could disagree with every other table on the site. Rows are rebuilt by render(); the behavior sorts whatever rows it finds, so filtering and sorting do not fight. The default order is set in the DATA, not by the behavior: severity first, newest first within a severity. --> Priority # Title Kind State Labels Updated",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/links",
@@ -345,7 +345,7 @@
       "content": "Interesting Links A curated list of interesting resources. Content Add New Link Add Link",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/newpage",
@@ -387,7 +387,7 @@
       "content": "Offshoring Content Offshoring refers to the practice of relocating business processes or services to another country, typically to leverage cost advantages, access specialized skills, or improve efficiency.",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/privacy",
@@ -431,7 +431,7 @@
       "content": "Privacy Policy Last updated: February 2026 Information We Collect We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support. This may include your name, email address, and any other information you choose to provide. How We Use Your Information We use the information we collect to provide, maintain, and improve our services, to communicate with you, and to personalize your experience. Information Sharing We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties. This does not include trusted third parties who assist us in operating our website or servicing you, as long as those parties agree to keep this information confidential. Data Security We implement appropriate technical and organizational measures to protect the security of your personal information. However, no method of transmission over the Internet is 100% secure. Cookies We use cookies to enhance your experience on our site. You can choose to disable cookies through your browser settings, though this may affect the functionality of some features. Your Rights You have the right to access, correct, or delete your personal data. You may also object to or restrict certain processing of your data. To exercise these rights, please contact us. Contact Us If you have questions about this Privacy Policy, please contact us at hello@acmeco.com .",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/releases",
@@ -455,7 +455,7 @@
       "content": "Releases Each commit to main is a new release (1.0.N, the number on the version badge), and it deploys straight to cielovistasoftware.github.io/wb-starter , so the newest release below is what this site is running. Each one says what the issue was, what to do to see the change, and what changed, with links to its issues. Loading releases…",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/services",
@@ -491,7 +491,7 @@
       "content": "Our Services Everything you need to succeed 🎨 Web Design Beautiful, modern interfaces crafted to engage and convert your users. Every pixel optimized for your brand. ⚙️ Development Robust, scalable applications built with modern technologies and best practices for peak performance. 🚀 Deployment Fast, secure deployment with continuous monitoring and optimization for maximum uptime and reliability. 📞 Support Comprehensive support and maintenance to keep your platform running smoothly, 24/7 availability. Ready to Get Started? Let's work together to bring your vision to life. Contact Us",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/terms",
@@ -539,7 +539,7 @@
       "content": "Terms of Service Last updated: February 2026 Acceptance of Terms By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. Use of Services You agree to use our services only for lawful purposes and in accordance with these Terms. You agree not to use our services in any way that could damage, disable, or impair the service. Intellectual Property All content, features, and functionality of our services are owned by us and are protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission. User Content You retain ownership of any content you submit through our services. By submitting content, you grant us a non-exclusive, worldwide, royalty-free license to use, display, and distribute that content in connection with our services. Limitation of Liability Our services are provided \"as is\" without warranties of any kind. We shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our services. Modifications We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting. Your continued use of our services after changes constitutes acceptance of the modified terms. Governing Law These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles. Contact Us If you have questions about these Terms of Service, please contact us at hello@acmeco.com .",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "pages/themes",
@@ -652,7 +652,7 @@
       "content": "======= >>>>>>> 9f212527 (fix: restore the page-loading markup my rebase clobbered) 🎨 Themes Showcase 50 beautiful themes powered by the Harmonic Color System (HCS) min-width: 0; max-width: 100%) -- the right contract for a grid cell, and it beats the base floor on specificity without an !important. --> Harmonic Color System Every theme is built on wave-based color mathematics for perfect harmony 🌊 Wave-Based Color Derivation Colors are derived using wave frequencies. The primary hue acts as the fundamental frequency, with secondary and accent colors as harmonics. Primary 240° Secondary 60° (+180°) Accent 210° (-30°) Color Harmony Types Used in Themes Complementary Opposite colors on the wheel (180° apart) Secondary = Primary + 180° Used in: Dark, Light Analogous Adjacent colors on the wheel (±30°) Colors = Primary ± 30° Used in: Ocean, Midnight Triadic Three colors equally spaced (120° apart) Colors = Primary + 0°, 120°, 240° Used in: Sunset, Aurora Split-Complementary Primary + two adjacent to complement Colors = Primary, (Primary+180°)±30° Used in: Forest, Twilight 📐 The Mathematics Wave Frequency Formula f = c / λ Color hue mapped to wave frequency. Primary color establishes the base frequency. Harmonic Relationship H n = H 1 × n Secondary and accent colors derived as harmonic multiples of primary. Lightness Derivation L = 50% + (amplitude × sin(θ)) Light/dark variants calculated using sine wave amplitude modulation. Implementation Example ```javascript // Harmonic Color System - Theme Generation function generateHarmonicPalette(primaryHue, harmonyType = 'complementary') { const palette = { primary: primaryHue }; switch (harmonyType) { case 'complementary': palette.secondary = (primaryHue + 180) % 360; palette.accent = (primaryHue - 30 + 360) % 360; break; case 'analogous': palette.secondary = (primaryHue + 30) % 360; palette.accent = (primaryHue - 30 + 360) % 360; break; case 'triadic': palette.secondary = (primaryHue + 120) % 360; palette.accent = (primaryHue + 240) % 360; break; case 'split-complementary': palette.secondary = (primaryHue + 150) % 360; palette.accent = (primaryHue + 210) % 360; break; } return palette; } // Example: Generate Ocean theme (Analogous Blues) const oceanPalette = generateHarmonicPalette(200, 'analogous'); // Result: { primary: 200, secondary: 230, accent: 170 } ``` All 50 Themes Click any theme card to switch to that theme Aa Dark Standard dark theme 🌙 Dark Aa Light Standard light theme ☀️ Light Aa Cyberpunk Vibrant magenta/cyan 🌙 Dark Aa Ocean Calm blues 🌙 Dark Aa Sunset Warm oranges 🌙 Dark Aa Forest Natural greens 🌙 Dark Aa Midnight Deep monochromatic blue 🌙 Dark Aa Twilight Purple-blue with warm accents 🌙 Dark Aa Sakura Elegant pink ☀️ Light Aa Arctic Ice blue ☀️ Light Aa Desert Warm sand tones ☀️ Light Aa Neon Dreams Purple neon 🌙 Dark Aa Retro Wave Retro pink/purple 🌙 Dark Aa Lavender Soft purple pastels ☀️ Light Aa Emerald Rich jewel-toned green 🌙 Dark Aa Ruby Deep red elegance 🌙 Dark Aa Golden Luxurious gold and amber 🌙 Dark Aa Slate Professional gray tones 🌙 Dark Aa Coffee Warm brown tones 🌙 Dark Aa Mint Fresh mint green ☀️ Light Aa Noir High contrast black/white 🌙 Dark Aa Aurora Northern lights inspired 🌙 Dark Aa Grape Deep purple vibes 🌙 Dark Aa Coral Dark Vibrant coral with high saturation 🌙 Dark Aa Teal Dark Rich teal with high saturation 🌙 Dark Aa Indigo Dark Deep indigo with medium saturation 🌙 Dark Aa Plum Dark Rich plum with medium saturation 🌙 Dark Aa Sage Dark Muted sage green with low saturation 🌙 Dark Aa Amber Dark Deep amber with high saturation 🌙 Dark Aa Sapphire Dark Rich sapphire blue with high saturation 🌙 Dark Aa Turquoise Dark Bright turquoise with high saturation 🌙 Dark Aa Tomato Dark Vibrant tomato red with high saturation 🌙 Dark Aa Rose Dark Deep rose pink with medium saturation 🌙 Dark Aa Copper Dark Warm copper tones with medium saturation 🌙 Dark Aa Jade Dark Deep jade green with medium saturation 🌙 Dark Aa Amethyst Dark Rich amethyst purple with medium saturation 🌙 Dark Aa Marigold Dark Bright marigold with high saturation 🌙 Dark Aa Seafoam Light Light seafoam with medium saturation ☀️ Light Aa Peony Light Light peony pink with medium saturation ☀️ Light Aa Taupe Light Warm taupe with low saturation ☀️ Light Aa Khaki Light Warm khaki with medium saturation ☀️ Light Aa Steel Light Cool steel gray with low saturation ☀️ Light Aa Moss Light Muted moss green with low saturation ☀️ Light Aa Sand Light Warm sand tones with low saturation ☀️ Light Aa Blush Light Soft blush pink with low saturation ☀️ Light Aa Sage Light Light sage green with low saturation ☀️ Light Aa Mauve Light Soft mauve purple with low saturation ☀️ Light Aa Celadon Light Light celadon green with low saturation ☀️ Light Aa Linen Light Warm linen beige with low saturation ☀️ Light Aa Pistachio Light Light pistachio with medium saturation ☀️ Light Live Preview See how behaviors look in the current theme This card adapts to the current theme color",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/AI",
@@ -1100,7 +1100,7 @@
           "text": "Card Title"
         }
       ],
-      "content": "# WB-Starter Behaviors Cross-Reference What each WB behavior adds to the element it decorates. The **inventory** below lists every behavior the runtime can reach, generated from the registries so it cannot fall behind; the sections after it describe the most-used ones in detail (#1099). ## Inventory: every behavior Rows: **161**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked \"undocumented\" exists and works; it has no reference page yet. | Behavior | Written as | Reference | Detailed below | |---|---|---|---| | `accordion` | `x-accordion` | [behaviors/accordion.md](behaviors/accordion.md) | — | | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — | | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — | | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — | | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — | | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — | | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — | | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — | | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — | | `breadcrumb` | `x-breadcrumb` | [behaviors/breadcrumb.md](behaviors/breadcrumb.md) | — | | `button` | `x-button` | [behaviors/button.md](behaviors/button.md) | yes | | `card` | `x-card` | [behaviors/card.md](behaviors/card.md) | yes | | `cardbutton` | `x-cardbutton` | [behaviors/cardbutton.md](behaviors/cardbutton.md) | — | | `carddraggable` | `x-carddraggable` | [behaviors/carddraggable.md](behaviors/carddraggable.md) | — | | `cardexpandable` | `x-cardexpandable` | [behaviors/cardexpandable.md](behaviors/cardexpandable.md) | — | | `cardfile` | `x-cardfile` | [behaviors/cardfile.md](behaviors/cardfile.md) | — | | `cardhero` | `x-cardhero` | [behaviors/cardhero.md](behaviors/cardhero.md) | — | | `cardhorizontal` | `x-cardhorizontal` | [behaviors/cardhorizontal.md](behaviors/cardhorizontal.md) | — | | `cardimage` | `x-cardimage` | [behaviors/cardimage.md](behaviors/cardimage.md) | — | | `cardlink` | `x-cardlink` | [behaviors/cardlink.md](behaviors/cardlink.md) | yes | | `cardminimizable` | `x-cardminimizable` | [behaviors/cardminimizable.md](behaviors/cardminimizable.md) | — | | `cardnotification` | `x-cardnotification` | [behaviors/cardnotification.md](behaviors/cardnotification.md) | — | | `cardoverlay` | `x-cardoverlay` | [behaviors/cardoverlay.md](behaviors/cardoverlay.md) | — | | `cardportfolio` | `x-cardportfolio` | [behaviors/cardportfolio.md](behaviors/cardportfolio.md) | — | | `cardpricing` | `x-cardpricing` | [behaviors/cardpricing.md](behaviors/cardpricing.md) | — | | `cardproduct` | `x-cardproduct` | [behaviors/cardproduct.md](behaviors/cardproduct.md) | — | | `cardprofile` | `x-cardprofile` | [behaviors/cardprofile.md](behaviors/cardprofile.md) | — | | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — | | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — | | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — | | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes | | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes | | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — | | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — | | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — | | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes | | `codecontrol` | `x-codecontrol` | [behaviors/codecontrol.md](behaviors/codecontrol.md) | — | | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — | | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — | | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — | | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — | | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes | | `control` | `x-control` | [behaviors/control.md](behaviors/control.md) | — | | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — | | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — | | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — | | `counter` | `x-counter` | [behaviors/counter.md](behaviors/counter.md) | — | | `cover` | `x-cover` | [behaviors/cover.md](behaviors/cover.md) | yes | | `darkmode` | `x-darkmode` | [behaviors/darkmode.md](behaviors/darkmode.md) | — | | `demo` | `x-demo` | [behaviors/demo.md](behaviors/demo.md) | — | | `details` | `x-details` | [behaviors/details.md](behaviors/detail",
+      "content": "# WB-Starter Behaviors Cross-Reference What each WB behavior adds to the element it decorates. The **inventory** below lists every behavior the runtime can reach, generated from the registries so it cannot fall behind; the sections after it describe the most-used ones in detail (#1099). ## Inventory: every behavior Rows: **161**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 have a reference page in `docs/behaviors/`; 29 also have a detailed section in this document. A behavior marked \"undocumented\" exists and works; it has no reference page yet. | Behavior | Written as | Reference | Detailed below | |---|---|---|---| | `accordion` | `x-accordion` | [behaviors/accordion.md](behaviors/accordion.md) | — | | `alert` | `x-alert` | [behaviors/alert.md](behaviors/alert.md) | — | | `articles` | `x-articles` | [behaviors/articles.md](behaviors/articles.md) | — | | `audio` | `x-audio` | [behaviors/audio.md](behaviors/audio.md) | — | | `autocomplete` | `x-autocomplete` | [behaviors/autocomplete.md](behaviors/autocomplete.md) | — | | `autosize` | `x-autosize` | [behaviors/autosize.md](behaviors/autosize.md) | — | | `avatar` | `x-avatar` | [behaviors/avatar.md](behaviors/avatar.md) | — | | `badge` | `x-badge` | [behaviors/badge.md](behaviors/badge.md) | — | | `bounce` | `x-bounce` | [behaviors/bounce.md](behaviors/bounce.md) | — | | `breadcrumb` | `x-breadcrumb` | [behaviors/breadcrumb.md](behaviors/breadcrumb.md) | — | | `button` | `x-button` | [behaviors/button.md](behaviors/button.md) | yes | | `card` | `x-card` | [behaviors/card.md](behaviors/card.md) | yes | | `cardbutton` | `x-cardbutton` | [behaviors/cardbutton.md](behaviors/cardbutton.md) | — | | `carddraggable` | `x-carddraggable` | [behaviors/carddraggable.md](behaviors/carddraggable.md) | — | | `cardexpandable` | `x-cardexpandable` | [behaviors/cardexpandable.md](behaviors/cardexpandable.md) | — | | `cardfile` | `x-cardfile` | [behaviors/cardfile.md](behaviors/cardfile.md) | — | | `cardhero` | `x-cardhero` | [behaviors/cardhero.md](behaviors/cardhero.md) | — | | `cardhorizontal` | `x-cardhorizontal` | [behaviors/cardhorizontal.md](behaviors/cardhorizontal.md) | — | | `cardimage` | `x-cardimage` | [behaviors/cardimage.md](behaviors/cardimage.md) | — | | `cardlink` | `x-cardlink` | [behaviors/cardlink.md](behaviors/cardlink.md) | yes | | `cardminimizable` | `x-cardminimizable` | [behaviors/cardminimizable.md](behaviors/cardminimizable.md) | — | | `cardnotification` | `x-cardnotification` | [behaviors/cardnotification.md](behaviors/cardnotification.md) | — | | `cardoverlay` | `x-cardoverlay` | [behaviors/cardoverlay.md](behaviors/cardoverlay.md) | — | | `cardportfolio` | `x-cardportfolio` | [behaviors/cardportfolio.md](behaviors/cardportfolio.md) | — | | `cardpricing` | `x-cardpricing` | [behaviors/cardpricing.md](behaviors/cardpricing.md) | — | | `cardproduct` | `x-cardproduct` | [behaviors/cardproduct.md](behaviors/cardproduct.md) | — | | `cardprofile` | `x-cardprofile` | [behaviors/cardprofile.md](behaviors/cardprofile.md) | — | | `cardstats` | `x-cardstats` | [behaviors/cardstats.md](behaviors/cardstats.md) | — | | `cardtestimonial` | `x-cardtestimonial` | [behaviors/cardtestimonial.md](behaviors/cardtestimonial.md) | — | | `cardvideo` | `x-cardvideo` | [behaviors/cardvideo.md](behaviors/cardvideo.md) | — | | `center` | `x-center` | [behaviors/center.md](behaviors/center.md) | yes | | `checkbox` | `x-checkbox` | [behaviors/checkbox.md](behaviors/checkbox.md) | yes | | `chip` | `x-chip` | [behaviors/chip.md](behaviors/chip.md) | — | | `clock` | `x-clock` | [behaviors/clock.md](behaviors/clock.md) | — | | `cluster` | `x-cluster` | [behaviors/cluster.md](behaviors/cluster.md) | — | | `code` | `x-code` | [behaviors/code.md](behaviors/code.md) | yes | | `codetheme` | `x-codetheme` | [behaviors/codetheme.md](behaviors/codetheme.md) | — | | `collapse` | `x-collapse` | [behaviors/collapse.md](behaviors/collapse.md) | — | | `colorpicker` | `x-colorpicker` | [behaviors/colorpicker.md](behaviors/colorpicker.md) | — | | `confetti` | `x-confetti` | [behaviors/confetti.md](behaviors/confetti.md) | — | | `confirm` | `x-confirm` | [behaviors/confirm.md](behaviors/confirm.md) | — | | `container` | `x-container` | [behaviors/container.md](behaviors/container.md) | yes | | `control` | `x-control` | [behaviors/control.md](behaviors/control.md) | — | | `copy` | `x-copy` | [behaviors/copy.md](behaviors/copy.md) | — | | `copybutton` | `x-copybutton` | [behaviors/copybutton.md](behaviors/copybutton.md) | — | | `countdown` | `x-countdown` | [behaviors/countdown.md](behaviors/countdown.md) | — | | `counter` | `x-counter` | [behaviors/counter.md](behaviors/counter.md) | — | | `cover` | `x-cover` | [behaviors/cover.md](behaviors/cover.md) | yes | | `darkmode` | `x-darkmode` | [behaviors/darkmode.md](behaviors/darkmode.md) | — | | `demo` | `x-demo` | [behaviors/demo.md](behaviors/demo.md) | — | | `details` | `x-details` | [behaviors/details.md](behaviors/details.md) | ",
       "keywords": [],
       "type": "doc",
       "modified": "2026-10-05"
@@ -1123,7 +1123,7 @@
       "content": "# WB-Starter Reference > **This is the cross-behavior INDEX, not the per-behavior documentation.** > Every behavior now has its own page, generated from its schema, at > `docs/behaviors/ .md` — e.g. [button](behaviors/button.md), > [ripple](behaviors/ripple.md), [tooltip](behaviors/tooltip.md). Each of those > pages opens by stating which of the two behavior types it is (decorates a > semantic element vs. adds a new capability) and how to write it. Go there for > attributes, events and examples; this page is for *browsing what exists* and > for the shared syntax/auto-injection/event rules below. > > Reach this page from an `x-demo` 📖 badge? That means the behavior has no > page of its own yet — find its row in the tables below (#842). This document lists all available behaviors in the WB Starter kit, categorized by function. --- ## What is a Behavior? A **behavior** is a JavaScript function that **enhances** an HTML element by adding: - CSS classes (styling hooks) - Inline styles (visual enhancement) - Event listeners (interactivity) - ARIA attributes (accessibility) - Data attributes (state tracking) A behavior does **NOT** change what the element fundamentally is - it enhances it. --- ## Syntax & Usage Behaviors are applied using attributes with a configurable prefix (default: `x-`). ### 1. Decoration (`x-{behavior}`) Enhances an element without changing its fundamental structure. Click Me Hover Me | Element | Behavior | Result | |---------|----------|--------| | ` ` | `button` | Button with variants, sizes, loading state | | ` ` | `table` | Table with sorting, striping, hover | | ` ` | `details` | Details with smooth animation | | ` ` | `dialog` | Dialog with backdrop, animations | | ` ` | `img` | Lazy loading, fade-in, lightbox | ### 2. Morphing (`x-as-{behavior}`) — REMOVED (#783) There is no `-as-` infix any more. A behavior that builds out a behavior's internals is applied exactly like any other: the attribute name **is** the behavior name, and on a semantic element it is injected for you. Title Content | Element | Behavior | Written as | |---------|----------|------------| | ` ` | `card` | ` ` (auto-injected) or ` ` | | ` ` | `navbar` | ` ` (auto-injected) or ` ` | | ` ` | `sidebar` | ` ` (auto-injected) or ` ` | ### 3. Configuration (Optional) If the `x-` prefix conflicts with other libraries (like Alpine.js), you can change it globally. ```javascript // In your main entry point WB.init({ prefix: 'b' // Changes syntax to b-ripple, b-card, etc. }); ``` --- ## Auto Injection Behaviors can be configured to automatically attach to standard HTML5 semantic elements. It is **on by default** (`autoInject: true` in src/core/config.js). To opt a page out, pass `{ autoInject: false }` to `WB.init()`; to opt one element out, give it `x-ignore`. When enabled, plain semantic elements like ` ` and ` ` below get the `dialog`/`img` behaviors attached automatically, with no `x-` attribute needed: Auto-decorated dialog (zero x- attributes): Auto-decorated dialog content. --- ## Categories ### 1. Semantic HTML & Forms Enhances standard HTML elements with better styling and functionality. | Behavior | Element | Type | Description | |----------|---------|------|-------------| | [`audio`](behaviors/audio.md) | ` ` | Decorate | Enhanced audio player styling | | [`video`](behaviors/video.md) | ` ` | Decorate | Enhanced video player styling | | [`img`](behaviors/img.md) | ` ` | Decorate | Lazy loading, fade-in, lightbox | | [`figure`](behaviors/figure.md) | ` ` | Decorate | Figure with caption styling | | [`table`](behaviors/table.md) | ` ` | Decorate | Sortable headers, striped rows | | [`code`](behaviors/code.md) | ` ` | Decorate | Inline code styling | | [`pre`](behaviors/pre.md) | ` ` | Decorate | Code block with copy button | | [`input`](behaviors/input.md) | ` ` | Decorate | Styled input with variants | | [`textarea`](behaviors/textarea.md) | ` ` | Decorate | Auto-resize, counter | | [`select`](behaviors/select.md) | ` ` | Decorate | Custom dropdown styling | | [`checkbox`](behaviors/checkbox.md) | ` ` | Decorate | Custom checkbox styling | | [`radio`](behaviors/radio.md) | ` ` | Decorate | Custom radio styling | | [`button`](behaviors/button.md) | ` ` | Decorate | Variants, sizes, loading state | | [`switch`](behaviors/switch.md) | ` ` | Decorate | Toggle switch UI | | [`range`](behaviors/range.md) | ` ` | Decorate | Custom track/thumb styling | | [`rating`](behaviors/rating.md) | ` ` | - | Star rating input | | [`form`](behaviors/form.md) | ` ` | Decorate | Validation UI, loading states | | [`details`](behaviors/details.md) | ` ` | Decorate | Smooth expand/collapse animation | | [`dialog`](behaviors/dialog.md) | ` ` | Decorate | Backdrop, close button, animations | | [`fieldset`](behaviors/fieldset.md) | ` ` | Decorate | Groups related form controls | | [`formrow`](behaviors/formrow.md) | ` ` | - | Form field wrapper laid out as a row | | [`inputgroup`](behaviors/inputgroup.md) | ` ` | - | Input joined with prepend",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-01"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/accordion",
@@ -1564,15 +1564,15 @@
       "modified": "2026-09-27"
     },
     {
-      "id": "docs/behaviors/codecontrol",
-      "url": "/docs/behaviors/codecontrol",
-      "title": "codecontrol",
+      "id": "docs/behaviors/codetheme",
+      "url": "/docs/behaviors/codetheme",
+      "title": "codetheme",
       "description": null,
       "headings": [],
-      "content": "# Code Control - wb-starter v3.0 A dropdown that switches the syntax-highlighting theme used by every `highlight.js` code block on the page — applies immediately on selection, and keeps every `x-codecontrol` instance on a page in sync. ## Overview | Property | Value | |----------|-------| | Behavior | `codecontrol` | | Attribute | `x-codecontrol` | | Attribute form | ` ` | | Applies to | any container element | | Category | Content | | Schema | `src/wb-models/codecontrol.schema.json` | | Source | `src/wb-viewmodels/codecontrol.js` | ## Properties | Property | Attribute | Type | Default | Description | |----------|-----------|------|---------|-------------| | `default` | `default` | string (theme id) | `\"atom-one-dark\"` | Initial theme when nothing is persisted yet | | `showLabel` | `show-label` | boolean | `true` | Shows the \"Code:\" label before the dropdown | | `showCategory` | `show-category` | boolean | `true` | Groups the dropdown's options into ` `s (Minimal/Dark/Light/Special) | | `persist` | `persist` | boolean | `true` | Saves the selected theme to `localStorage` (`x-code-theme`) and restores it on load | | `size` | `size` | `xs` \\| `sm` \\| `md` \\| `lg` | `\"md\"` | Control size (font size, padding, min-width) | ## Usage ### Default ### Small, no label ### Flat list (no category groups), non-persisting ### On a plain ` ` ## CSS Classes | Class | Applied When | Description | |-------|--------------|--------------| | `.x-codecontrol` | Always | Marker class on the host element | | `.x-codecontrol__wrapper` | Always | Inline-flex row holding the label and select | | `.x-codecontrol__label` | `show-label` is not `\"false\"` | The \"Code:\" label | | `.x-codecontrol__select` | Always | The theme ` ` dropdown | ## Events | Event | Fires when | `detail` | Bubbles | |-------|-----------|----------|---------| | `x:codetheme:change` | The active theme changes (selection or incoming sync) | `{ theme, name, category }` | Yes | ```javascript document.querySelector('[x-codecontrol]').addEventListener('x:codetheme:change', (e) => { console.log('Theme is now', e.detail.theme, e.detail.name); }); ``` Every `x-codecontrol` instance on the page also listens for a `document`-level `x:codetheme:sync` event, so selecting a theme in one instance updates every other instance (and the shared ` ` stylesheet) without a page reload. ## Methods | Method | Description | |--------|--------------| | `element.wbCodeControl.getTheme()` | Returns the current theme id | | `element.wbCodeControl.setTheme(themeId)` | Applies a theme by id programmatically | | `element.wbCodeControl.getThemes()` | Returns the full list of available themes | | `element.wbCodeControl.getThemesByCategory(category)` | Returns themes filtered by category | ## Accessibility The label is a real ` ` wrapping/preceding a native ` `, so it's keyboard-operable and announced normally by screen readers. Each ` ` carries a `title` with a short human-readable description of the theme. `show-label=\"false\"` removes the visible label text with no `aria-label` fallback — keep the label visible (or add your own `aria-label` on the container) if the control needs to be identifiable without visual context. ## Source [src/wb-viewmodels/codecontrol.js](../../src/wb-viewmodels/codecontrol.js)",
+      "content": "# Code Theme - wb-starter v3.0 A dropdown that switches the syntax-highlighting theme used by every `highlight.js` code block on the page — applies immediately on selection, and keeps every `x-codetheme` instance on a page in sync. It was called `x-codecontrol` until #668. The old attribute still works and runs the same behavior; new markup should use `x-codetheme`. ## Overview | Property | Value | |----------|-------| | Behavior | `codetheme` | | Attribute | `x-codetheme` | | Attribute form | ` ` | | Applies to | any container element | | Category | Content | | Schema | `src/wb-models/codetheme.schema.json` | | Source | `src/wb-viewmodels/codetheme.js` | ## Properties | Property | Attribute | Type | Default | Description | |----------|-----------|------|---------|-------------| | `default` | `default` | string (theme id) | `\"atom-one-dark\"` | Initial theme when nothing is persisted yet | | `showLabel` | `show-label` | boolean | `true` | Shows the \"Code:\" label before the dropdown | | `showCategory` | `show-category` | boolean | `true` | Groups the dropdown's options into ` `s (Minimal/Dark/Light/Special) | | `persist` | `persist` | boolean | `true` | Saves the selected theme to `localStorage` (`x-code-theme`) and restores it on load | | `size` | `size` | `xs` \\| `sm` \\| `md` \\| `lg` | `\"md\"` | Control size (font size, padding, min-width) | ## Usage ### Default ### Small, no label ### Flat list (no category groups), non-persisting ### On a plain ` ` ## CSS Classes | Class | Applied When | Description | |-------|--------------|--------------| | `.x-codetheme` | Always | Marker class on the host element | | `.x-codetheme__wrapper` | Always | Inline-flex row holding the label and select | | `.x-codetheme__label` | `show-label` is not `\"false\"` | The \"Code:\" label | | `.x-codetheme__select` | Always | The theme ` ` dropdown | ## Events | Event | Fires when | `detail` | Bubbles | |-------|-----------|----------|---------| | `x:codetheme:change` | The active theme changes (selection or incoming sync) | `{ theme, name, category }` | Yes | ```javascript document.querySelector('[x-codetheme]').addEventListener('x:codetheme:change', (e) => { console.log('Theme is now', e.detail.theme, e.detail.name); }); ``` Every `x-codetheme` instance on the page also listens for a `document`-level `x:codetheme:sync` event, so selecting a theme in one instance updates every other instance (and the shared ` ` stylesheet) without a page reload. ## Methods | Method | Description | |--------|--------------| | `element.wbCodeTheme.getTheme()` | Returns the current theme id | | `element.wbCodeTheme.setTheme(themeId)` | Applies a theme by id programmatically | | `element.wbCodeTheme.getThemes()` | Returns the full list of available themes | | `element.wbCodeTheme.getThemesByCategory(category)` | Returns themes filtered by category | ## Accessibility The label is a real ` ` wrapping/preceding a native ` `, so it's keyboard-operable and announced normally by screen readers. Each ` ` carries a `title` with a short human-readable description of the theme. `show-label=\"false\"` removes the visible label text with no `aria-label` fallback — keep the label visible (or add your own `aria-label` on the container) if the control needs to be identifiable without visual context. ## Source [src/wb-viewmodels/codetheme.js](../../src/wb-viewmodels/codetheme.js)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/collapse",
@@ -3435,10 +3435,10 @@
       "title": "pce-candidates",
       "description": null,
       "headings": [],
-      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions that are functionally equivalent. ## Naming Conventions ### 1. WB Namespace (Recommended) ```html ``` ### 2. Noun-First Aliases (Also Supported) ```html ``` ### 3. Behavior Attribute (Traditional) ```html ``` All three are equivalent and produce the same result. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-behavior Attribute** | Standard attribute for behavior declaration | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codecontrol` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | | ` ` | `control` | Form control wrapper | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** in `src/wb-viewmodels/mycomponent.js`: ```javascript ",
+      "content": "# PCE (Pseudo-Custom Elements) - WB-Starter v3.0 > **Version:** 3.0 > **Updated:** 2026-01-14 ## Overview PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions that are functionally equivalent. ## Naming Conventions ### 1. WB Namespace (Recommended) ```html ``` ### 2. Noun-First Aliases (Also Supported) ```html ``` ### 3. Behavior Attribute (Traditional) ```html ``` All three are equivalent and produce the same result. --- ## WB v3.0 Architecture | Feature | Description | |---------|-------------| | **Light DOM Only** | No Shadow DOM - elements enhanced in standard DOM | | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver | | **WBServices Pattern** | Dependency injection for shared services | | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class | | **x-behavior Attribute** | Standard attribute for behavior declaration | --- ## Behavior Registry ### Card Behaviors | Markup | Alternative | Behavior | Description | |------------|------------------|----------|-------------| | ` ` | ` ` | `card` | Basic card container | | ` ` | ` ` | `cardprofile` | User profiles with avatar, bio | | ` ` | ` ` | `cardhero` | Large banner/hero sections | | ` ` | ` ` | `cardstats` | Dashboard statistics | | ` ` | ` ` | `cardtestimonial` | User quotes with ratings | | ` ` | ` ` | `cardvideo` | Video content with controls | | ` ` | ` ` | `cardfile` | File download/preview | | ` ` | ` ` | `cardnotification` | Alert/Notice blocks | | ` ` | ` ` | `cardimage` | Image with title/caption | | ` ` | ` ` | `cardoverlay` | Image with text overlay | | ` ` | ` ` | `cardportfolio` | Portfolio/contact card | | ` ` | ` ` | `cardlink` | Clickable link card | | ` ` | ` ` | `cardhorizontal` | Side-by-side layout | | ` ` | - | `cardbutton` | Card with button actions | | ` ` | - | `cardexpandable` | Expandable/collapsible | | ` ` | - | `cardminimizable` | Minimizable to title bar | | ` ` | - | `carddraggable` | Draggable card | ### Layout Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `grid` | CSS Grid layout system | | ` ` | `flex` | Flexbox layout wrapper | | ` ` | `stack` | Vertical stacking layout | | ` ` | `cluster` | Horizontal cluster with wrapping | | ` ` | `container` | Centered content wrapper | | ` ` | `sidebarlayout` | Sidebar + main content | | ` ` | `center` | Center content vertically/horizontally | | ` ` | `cover` | Full viewport cover | | ` ` | `masonry` | Masonry grid layout | | ` ` | `switcher` | Responsive row/column switch | | ` ` | `reel` | Horizontal scrolling | | ` ` | `frame` | Aspect ratio container | | ` ` | `sticky` | Sticky positioning | | ` ` | `drawerLayout` | Drawer/off-canvas | ### Feedback Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `spinner` | Loading spinner | | ` ` | `avatar` | User avatar | | ` ` | `badge` | Status badge | | ` ` | `alert` | Alert/feedback message | | ` ` | `progress` | Progress bar | | ` ` | `rating` | Star rating | | ` ` | `tabs` | Tabbed interface | | ` ` | `switch` | Toggle switch | ### Other Behaviors | Tag | Behavior | Description | |-----|----------|-------------| | ` ` | `icon` | Icon display | | ` ` | `mdhtml` | Markdown to HTML | | ` ` | `codetheme` | Code theme selector | | ` ` | `collapse` | Collapsible content | | ` ` | `darkmode` | Dark mode toggle | | ` ` | `dropdown` | Dropdown menu | | ` ` | `header` | Page header | | ` ` | `footer` | Page footer | | ` ` | `globe` | 3D globe visualization | | ` ` | `stagelight` | Spotlight effect | | ` ` | `repeater` | Data repeater | | ` ` | `control` | Form control wrapper | --- ## How It Works ``` 1. Detection └── IntersectionObserver sees in viewport 2. Lookup └── customElementMappings finds: { selector: 'x-cardprofile', behavior: 'cardprofile' } 3. Dynamic Import └── import('/src/wb-viewmodels/cardprofile.js') - only if not cached 4. Hydration └── cardprofile(element, options) enhances the element in-place ``` --- ## Registry Configuration The registry is defined in `src/core/wb-lazy.js`: ```javascript const customElementMappings = [ // x-* attribute (primary) { selector: 'x-card', behavior: 'card' }, { selector: 'x-cardprofile', behavior: 'cardprofile' }, { selector: 'x-cardhero', behavior: 'cardhero' }, { selector: 'x-cardstats', behavior: 'cardstats' }, // ... // noun-first aliases { selector: 'profile-card', behavior: 'cardprofile' }, { selector: 'hero-card', behavior: 'cardhero' }, { selector: 'stats-card', behavior: 'cardstats' }, // ... ]; ``` --- ## Adding New PCE Behaviors 1. **Add mapping** to `customElementMappings` in `src/core/wb-lazy.js`: ```javascript { selector: 'x-mycomponent', behavior: 'mycomponent' }, { selector: 'my-behavior', behavior: 'mycomponent' }, // optional alias ``` 2. **Create behavior** in `src/wb-viewmodels/mycomponent.js`: ```javascript ex",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/performance",
@@ -3914,7 +3914,7 @@
       "content": "WB Auto-Inject Demo Autoinject — WB Demo Auto-Injection Demo Write standard HTML. Get enhanced, accessible, theme-aware behaviors automatically. No classes. No data attributes. Just pure HTML. Status: Initializing... Enabled via WB.init({ autoInject: true }) 🚀 The \"Zero-Config\" Form These forms are built with standard HTML tags only. No custom classes, no JavaScript initialization code. Default Theme Full Name Email Address Department Engineering Design Marketing Sales Bio Experience Level Preferences Remote Relocation Contract Type Full-time Contractor Submit Application Success Theme Username Status Active Verified Approved Verified Items Email Verified Phone Verified Save Settings Warning Theme Alert Level Priority Critical High Medium Notifications Email Alert SMS Alert Set Alerts Why this matters: Clean Code: Your HTML remains semantic and readable. Instant Theming: Try the theme switcher above. Every input adapts instantly. Future Proof: If you switch frameworks, your HTML is still valid standard HTML. Accessibility: ARIA attributes and keyboard navigation are added automatically. The Code (Default Form): ```html-static form label Full Name input type=\"text\" placeholder=\"John Doe\" required /label label Email Address input type=\"email\" placeholder=\"john@example.com\" required /label label Department select option Engineering /option option Design /option option Marketing /option option Sales /option /select /label label Bio textarea rows=\"3\" placeholder=\"Tell us about yourself...\" /textarea /label label Experience Level input type=\"range\" min=\"0\" max=\"10\" value=\"5\" /label fieldset legend Preferences /legend label input type=\"checkbox\" checked Remote /label label input type=\"checkbox\" Relocation /label /fieldset fieldset legend Contract Type /legend label input type=\"radio\" name=\"contract\" checked Full-time /label label input type=\"radio\" name=\"contract\" Contractor /label /fieldset button type=\"submit\" style=\"width: 100%;\" Submit Application /button /form ``` 1. Checkboxes Enhanced Value Added: Custom Styling: Replaces browser default with a consistent, theme-aware SVG checkmark. Wrapper: Automatically wraps input and label for better alignment. Indeterminate State: Visual support for indeterminate state. Accessibility: Maintains keyboard navigation and screen reader support. Standard HTML Standard Checkbox Checked Checkbox Disabled Checkbox Disabled Checked Variants Primary Variant Success Variant Warning Variant Danger Variant Info Variant Sizes Extra Small (xs) Small (sm) Medium (md) Large (lg) Extra Large (xl) Code: ```html-static !-- Standard -- label input type=\"checkbox\" Standard Checkbox /label label input type=\"checkbox\" checked Checked /label label input type=\"checkbox\" disabled Disabled /label !-- Variants -- label input type=\"checkbox\" variant=\"primary\" checked Primary /label label input type=\"checkbox\" variant=\"success\" checked Success /label label input type=\"checkbox\" variant=\"warning\" checked Warning /label label input type=\"checkbox\" variant=\"danger\" checked Danger /label label input type=\"checkbox\" variant=\"info\" checked Info /label !-- Sizes -- label input type=\"checkbox\" size=\"xs\" Extra Small /label label input type=\"checkbox\" size=\"sm\" Small /label label input type=\"checkbox\" size=\"md\" Medium /label label input type=\"checkbox\" size=\"lg\" Large /label label input type=\"checkbox\" size=\"xl\" Extra Large /label ``` 2. Radio Buttons Enhanced Value Added: Custom Styling: Consistent, theme-aware radio buttons. Animation: Smooth transition effects on selection. Layout: Automatic flexbox alignment with labels. Option 1 Option 2 Option 3 Code: ```html-static label input type=\"radio\" name=\"grp\" value=\"1\" Option 1 /label label input type=\"radio\" name=\"grp\" value=\"2\" checked Option 2 /label label input type=\"radio\" name=\"grp\" value=\"3\" Option 3 /label ``` 3. Select Dropdowns Enhanced Value Added: Theming: Applies site theme colors to the dropdown trigger. Clearable: Adds a clear button (x) if clearable is present. Searchable: Adds search capabilities if searchable is present. Variants: Supports variant (success, error) and size (sm, lg). Standard Select Choose a fruit: Apple Banana Cherry Date Elderberry Static Theme Variants Success (Static Green Border) ✓ Valid Option ✓ Approved ✓ Complete Error (Static Red Border) ✗ Invalid Option ✗ Rejected ✗ Failed Clearable Select Choose a topping (Clearable): Select... Chocolate Sprinkles Nuts Sizes Small Small Select Large Large Select Code: ```html-static !-- Standard -- select option Apple /option option Banana /option /select !-- Clearable -- select clearable option value=\"\" Select... /option option Chocolate /option /select !-- Static Theme Variants (visible without selection) -- select variant=\"success\" style=\"border-color: var(--success-color); background-color: var(--alert-success-bg);\" option ✓ Valid Option /option /select select variant=\"error\" style=\"border-color: var(--danger-color); background-color: var(--alert-danger-bg);\" option ✗ Invalid Op",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/charity-food",
@@ -3950,7 +3950,7 @@
       "content": "Uganda Community Food Bank - WB Charity Site 🇺🇬 Uganda Food Bank Back to Home Donate Now Serving 5,000+ Families Nourishing Our Nation Together We believe no one in Uganda should go to bed hungry. Join us in our mission to provide nutritious meals to families across the region. 🌽 Maize & Beans Urgently need posho (cornmeal) and beans as staples. 75% goal reached 🥕 Fresh Produce Partnering with local farms to bring fresh items. Fully Stocked 🤝 Volunteers We need 50 more volunteers for this weekend. Sign Up Our Programs Weekly Pantry Open every Tuesday and Thursday, providing staples to registered families. View Schedule Hot Meals Community kitchen serving hot dinner every evening at 6:00 PM. View Menu Uganda Community Food Bank Plot 42 Kampala Road Kampala, Uganda 📞 +256 772 123 456 Quick Links Donate Volunteer About Us Newsletter Stay updated with our needs. Subscribe 2026 Community Food Bank. Built with WB.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/code",
@@ -4042,7 +4042,7 @@
       "content": "Framework Integration Demo ← Back to Home Framework Agnostic Demos WB Behaviors work with any framework because they rely on standard HTML attributes. The framework handles the DOM, and WB handles the behavior. The WB Advantage Universal Compatibility Write your behavior logic once using standard HTML attributes. It works identically in React, Vue, Svelte, or plain HTML. Zero Lock-in Switching frameworks? Your UI behaviors stay the same. No need to rewrite tooltips, ripples, or validation logic. Performance First Tiny footprint. Behaviors are lazy-loaded only when needed. No heavy hydration costs for simple interactions. Progressive Enhancement Built on standard HTML. If JavaScript fails or hasn't loaded, your semantic HTML remains accessible and functional. React React Integration This button is rendered by React. The x-* behavior attributes are passed as standard props. . The live control below is React's *rendered output* -- the instructive source is the JSX-style React.createElement code in the block underneath, which 's HTML-source extraction has no way to represent (it would show this mount div/script, not the React behavior code a React developer would actually write). Both a live render AND its real source are still present, per §16 -- just not paired by specifically, which requires the two to be the same markup. --> Code used in this demo: import React, { useState, useEffect } from 'react'; import ReactDOM from 'react-dom/client'; import WB from 'x-behaviors'; const e = React.createElement; function ReactApp() { // Initialize WB when behavior mounts useEffect(() => { WB.init(); }, []); const [count, setCount] = useState(0); return e('div', { style: { padding: '1rem', border: '1px dashed #61dafb', borderRadius: '8px' } }, [ e('h3', { key: 'h3' }, `React Counter: ${count}`), e('button', { key: 'btn', className: 'x-btn-gradient', 'x-ripple': '', 'x-tooltip': 'I am a React button!', 'x-toast': '', 'message': `Count is now ${count + 1}`, 'toast-variant': 'info', onClick: () => setCount(c => c + 1) }, 'Increment + WB Magic ✨') ]); } const root = ReactDOM.createRoot(document.getElementById('react-root')); root.render(e(ReactApp)); Vue 3 Vue Integration This section is a Vue app. WB attributes are bound just like any other attribute. block below, which cannot represent 1:1. --> Vue Message: {{ message }} Reverse Message (Vue + WB) Code used in this demo: div id=\"vue-app\" div style=\"padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;\" h3 Vue Message: {{ message }} /h3 input v-model=\"message\" class=\"x-input-glass\" placeholder=\"Type here...\" style=\"margin-bottom: 1rem; width: 100%;\" button class=\"x-btn-glass\" x-ripple x-tooltip :tooltip=\"'Current length: ' + message.length\" @click=\"reverseMessage\" Reverse Message (Vue + WB) /button /div /div script import { createApp, ref, onMounted } from 'vue'; import WB from 'x-behaviors'; createApp({ setup() { // Initialize WB when behavior mounts onMounted(() => { WB.init(); }); const message = ref('Hello Vue!'); const reverseMessage = () => { message.value = message.value.split('').reverse().join(''); }; return { message, reverseMessage }; } }).mount('#vue-app'); /script Svelte Svelte Integration In Svelte, you just add the attributes to your markup. No special bindings needed. block below, AT RUNTIME, via svelte/compiler loaded from esm.sh, then mounts the real resulting Svelte behavior. This is Svelte's own real compiler output, generated in-browser instead of ahead of time by a bundler -- no server build step, same \"live render + real source, not paired by \" pattern the React/Vue sections above already use (§16), for the same reason: requires the rendered markup and its \"source\" to be identical, and compiled-Svelte-output is not 1:1 with hand-authored Svelte source. --> Code used in this demo: script import WB from 'x-behaviors'; import { onMount } from 'svelte'; onMount(() => { WB.init(); }); let count = 0; function handleClick() { count += 1; } /script h3 Svelte Count: {count} /h3 button class=\"x-btn-gradient\" x-ripple x-tooltip x-toast tooltip=\"Count: {count}\" message=\"Svelte count is now {count}\" toast-variant=\"info\" on:click={handleClick} Svelte Button /button Angular Angular Integration In Angular, use standard attribute binding. WB behaviors initialize automatically. is ANGULAR's behavior selector (see `selector: 'angular-demo'` below), not a wb-* behavior tag. The 4.0.0 tag-removal sweep rewrote it to , so bootstrapApplication() had nothing to match and threw NG05104 -- the live Angular demo rendered nothing. Leave this tag alone. --> import { Component, OnInit } from '@angular/core'; import WB from 'x-behaviors'; @Component({ selector: 'app-demo', template: ` button class=\"x-btn-gradient\" x-ripple x-tooltip [attr.x-tooltip]=\"'Count: ' + count\" (click)=\"increment()\" Angular Button /button ` }) export class DemoComponent implements OnInit { count = 0; ngOnInit() { WB.init(); } increment() { this.count++; } } SolidJS SolidJS Integration SolidJS uses ",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/hero",
@@ -4053,7 +4053,7 @@
       "content": "Hero",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/index",
@@ -4069,7 +4069,7 @@
       "content": "Demos Index — wb-starter 🎮 Demos Every demo, grouped by category — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file. 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials — 19 components · 259 demos Open Card Behaviors → 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips — 10 components · 210 demos Open Feedback & Status → 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas — 9 components · 159 demos Open Form Controls → 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content — 3 components · 28 demos Open Overlays & Popups → 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong — 9 components · 44 demos Open Layout & Navigation → 📄 Content & Media Articles, markdown rendering, audio, tables — 7 components · 38 demos Open Content & Media → ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff — 5 components · 20 demos Open Visual Effects → 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views — 8 components · 14 demos Open Interactive & Utility → 🃏 Cards & Layout Hero 🏗️ Narrative & Tools Autoinject Uganda Community Food Bank Framework Integration Demo wb-starter — Zero-build behaviors for developers Playground Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development Standalone Preview 🎮 More Demos 🧩 Multi-Behavior Demo",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/intellisense-check",
@@ -4085,7 +4085,7 @@
       "content": "IntelliSense Check IntelliSense Check Use this file to test the VS Code autocomplete. This is the content of Tab 1. This is the content of Tab 2. This is a container inside the grid.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/landing-page-showcase",
@@ -4125,7 +4125,7 @@
       "content": "wb-starter — Zero-build behaviors for developers Ship real UI. No bundler required. wb-starter is a composition-based behavior library. Drop an attribute on a semantic element — x-ripple , x-card , x-typewriter — and it just works. No React, no build step, no framework lock-in. button x-ripple x-tooltip=\"Click me\" Ship it /button Get Started See the Behaviors 100+ Behaviors 23 Themes 0 Build Step Light DOM Only Everything a landing page needs Every card below is a real x-card — no React, no build. Add x-ripple , x-tooltip , or x-fadein to any element. Behaviors compose — they don't require a base class. Every color is a CSS variable. Switch the whole page's look with one attribute — try the picker below. Your own CSS, your own selectors, and devtools reach straight into every behavior — exactly like plain HTML. Entrance animations, out of the box Click a card to play its entrance animation — no JS written for this page. Add x-fadein to any element, click it to play. Add x-slidein with a direction, click it to play. Add x-zoomin for a scale-in entrance, click it to play. Ship it anywhere Static hosting a real server — same markup either way. No build step means \"deploy\" is just \"copy the files.\" ES modules load straight from the source tree — no bundler config to maintain. The behavior library A slice of what ships in the box — every piece below is live, not a screenshot. Hover + click me A native progress element — auto-enhanced, no wrapper tag needed. What the markup actually looks like Every behavior on this page, in the same handful of lines. x-card title=\"Themeable\" variant=\"glass\" elevated Every color is a CSS variable. /x-card button x-ripple x-tooltip=\"Click me\" Ship it /button x-switch label=\"Dark mode\" checked /x-switch x-themecontrol /x-themecontrol Questions Do I need a build step? No. Every file is a plain ES module served as-is. npm start just serves the directory. Does it work without JavaScript frameworks? Yes — that's the point. No React, Vue, or Svelte required. Attributes drive behavior. Can I theme it? 23 built-in themes, all CSS variables. Pick one below and watch this whole page change. Try a different theme This entire page — cards, badges, switches, code blocks — re-themes live. Built with wb-starter — no bundler, no framework, no build step.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/layout-test",
@@ -4161,7 +4161,7 @@
       "content": "WB Layout Tags Demo Layout Tags Demo Demonstrating the new semantic layout tags. 1. Grid ( x-grid ) 1 2 3 4 5 6 2. Flex Cluster ( x-cluster ) Save Cancel Export New! 3. Stack ( x-stack ) Item 1 Item 2 Item 3 4. Sidebar Layout ( x-sidebar ) Sidebar Content Main Content Area. The sidebar stays fixed width, I take the rest. 5. Switcher ( x-switcher ) Resize window to see me switch from horizontal to vertical. A B C",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/legacy-syntax-check",
@@ -4172,7 +4172,7 @@
       "content": "Legacy Syntax Check Legacy Card syntax",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/mdhtml-pre-debug",
@@ -4196,7 +4196,7 @@
       "content": "MDHTML Pre Debug MDHTML -> Pre Debug 1. MDHTML generating Code Block ```js console.log('Generated by MDHTML'); const a = 1; const b = 2; ``` 2. MDHTML with explicit line numbers ```js // This should have line numbers function foo() { return bar(); } ```",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/multi-behavior-demo-generated",
@@ -4244,7 +4244,7 @@
       "content": "🧩 Multi-Behavior Demo 🧩 Multi-Behavior Demo Composed from multiple sources using $extends, $generate, $ref, and $include Badges — From Matrix Notifications — Matrix Combos Progress — All Enum Variants availability variants Variants size variants cardportfolio — Defaults Custom Hand-Authored Section",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/playground",
@@ -4260,7 +4260,7 @@
       "content": "Playground — WB 🧪 Playground Paste any HTML on the left — see it rendered live on the right. Native elements ( code , details , dialog …) and x-* behaviors are upgraded automatically. HTML Clear 🎴 Examples… Sample form 50 cards 120 card heroes (all permutations) 5 hero variants x-* behaviors 20 inputs with x-behaviors 50 badges 25 selects 25 switches (all different) 20 YouTube URL formats Full-width hero (500px) ⭹ Format &#x29C9; Standalone 📋 Copy Preview ↕ Sort by… live is submitted: what an endpoint would receive. --> 📮 Endpoint sees blocks used to live here, below the editor. It is a different thing from a playground -- the playground is for pasting your own markup and seeing it render -- and it was written entirely in the retired wb-* tags. The behaviors showcase is where a catalogue of examples belongs. -->",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/pre-debug",
@@ -4288,7 +4288,7 @@
       "content": "Pre Debug Pre Behavior Debug 1. Static Pre console.log('Hello World'); const x = 10; const y = 20; console.log(x + y); 2. Static Pre with Line Numbers function test() { return \"Line 1\"; } // Line 3 // Line 4 3. Double Injection Test div Test /div",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/schema-first-architecture",
@@ -4404,7 +4404,7 @@
       "content": "Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development ← Return to Project Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in Web Development Prepared for: Michael Vendetti, New York City Dr. Elena Vance Cielo Vista Research Department of Automated Engineering Abstract Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as \"hallucination.\" When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a \"lie\"—a confident assertion of correctness for structurally invalid code. This paper introduces \"Schema-First Architecture,\" a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI behaviors with high reliability. We present the three pillars of this architecture—Site, Behavior, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project. 1. Introduction The advent of generative AI has transformed software development, yet the integration of AI into frontend workflows remains fraught with inconsistency. When prompted to \"create a card,\" an LLM may generate a div with Tailwind classes in one instance, and a BEM-style structure in another [1]. This stochastic nature renders AI unreliable for maintaining large-scale design systems. Recent studies have quantified this unreliability. Kabir et al. (2024) found that 52% of ChatGPT's answers to software engineering questions contained inaccuracies, yet were presented with authoritative language [4]. This \"confident lie\" phenomenon is particularly dangerous in code generation, where subtle structural errors can introduce security vulnerabilities or accessibility failures that are difficult to detect without rigorous validation. Key Insight The root cause of AI unreliability is not the model's lack of intelligence, but the lack of contextual constraints . Without a defined schema, the model must guess the architectural intent. We propose that this problem has a structural solution: Schema-First Architecture —a methodology where JSON schemas serve as the ground truth for both human developers and AI agents. 1.1. The Determinism Gap The prevailing industry narrative focuses on \"Prompt Engineering\" and Retrieval-Augmented Generation (RAG) as primary methods for controlling AI output. These techniques are fundamentally probabilistic—they attempt to increase the likelihood of a correct response. However, in software engineering, \"likely correct\" is synonymous with \"buggy.\" We identify this as the \"Determinism Gap\" : the chasm between the stochastic nature of LLMs and the rigid requirements of a runtime environment. The Problem Prompt Engineering cannot guarantee correctness. It can only increase probability. In production systems, 95% correct means 5% broken—an unacceptable failure rate. Schema-First Architecture bridges this gap by enforcing a hard separation of concerns. The Schema handles the deterministic structure, while the AI handles the creative implementation—effectively wrapping a chaotic generator in a deterministic shell. 2. The Three Pillars Our methodology rests on three foundational schemas that serve as the \"ground truth\" for both the runtime engine and the AI agent. 2.1. The Site Schema The macroscopic structure of the application is defined not in code, but in data. The site.json file serves as the immutable source of truth for navigation, routing, and global configuration. This allows an AI to modify the entire site structure by manipulating a single JSON object, avoiding the complexities of file-system routing or behavior imports. 2.2. The Behavior Schema Every UI element is governed by a strict JSON schema defining its properties, allowed values, and accessibility requirements. This is the contract between the AI and the UI. { \"behavior\": \"card\", \"properties\": { \"variant\": { \"type\": \"string\", \"enum\": [\"default\", \"outlined\", \"elevated\"] }, \"interactive\": { \"type\": \"boolean\" } }, \"compliance\": { \"baseClass\": \"x-card\", \"requiredChildren\": { \".x-card__header\": { \"description\": \"Card header element\" } } }, \"test\": { \"functional\": { \"hover\": [...], \"keyboard\": [...], \"visual\": [...] } } } Fig 1. A Behavior Schema defining structure, properties, and test specifications. 2.3. The Semantic Schema We enforce HTML5 semantic standards as a structural constraint. Behaviors are attached to meaningful tags ( article , nav , dialog ) rather than generic containers. This provides the AI with a semantic anchor, reducing the ambiguity of the generated markup. 3. Experimental Results To validate this architecture, we implemented the WB Starter kit and subjected it to AI-driven modification tasks across multiple development phases. 3.1. Eliminating the Confident Li",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/scrollalong-test",
@@ -4415,7 +4415,7 @@
       "content": "ScrollAlong Behavior Test Scroll down to see scrollalong behavior Home About Contact Main content area",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/site/cards",
@@ -4825,7 +4825,7 @@
         },
         {
           "level": 2,
-          "text": "📦 Code Control"
+          "text": "📦 Code Theme"
         },
         {
           "level": 2,
@@ -4844,10 +4844,10 @@
           "text": "Text-Level Semantics"
         }
       ],
-      "content": "Content & Media ← Back to Index 📄 Content & Media Articles, markdown rendering, audio, tables is a card, and a plain card has no image attribute -- x-cardimage is the card with a picture. It rendered exactly like the title-only one.) --> 📄 Article Behavior Learn the fundamentals of building reusable behaviors on plain semantic HTML: one attribute on the element you already have, no build step. Grid, Flexbox and Container Queries simplify layouts that used to need JavaScript, and make responsive design the default rather than the fix. Code splitting, lazy loading, image optimization and caching: the techniques that measurably improve how fast a page feels. Explore the web platform changes that will shape the next generation of applications. This featured story carries editorial metadata and a longer introduction so its emphasis is obvious beside the standard articles. Toggles A guide to building scalable web applications with careful performance budgets and real-world examples from production systems. 📰 Articles List Behavior Type safety for JavaScript: generics, unions, interfaces and decorators. useState, useEffect, useContext and custom hooks for cleaner code. Normalization, indexing, relationships and query optimization. Versioning, pagination, error handling and documentation. Unit, integration, end-to-end and performance testing. Deployment pipelines, containers, CI/CD and infrastructure as code. Authentication, authorization, CSRF prevention and secure transport. WCAG, ARIA, keyboard navigation and semantic HTML. layout variants Break monoliths into services that scale and deploy independently, with service discovery, distributed tracing and circuit breakers. When GraphQL's exact-fit queries beat REST endpoints, and when they do not. Redux, Zustand, signals and context: matching the tool to the app. Client-side inference with TensorFlow.js, or remote models for the heavy lifting -- and how to decide between them. XSS, CSRF and injection defenses: CSP, secure headers, input validation. Core Web Vitals in the field and in the lab. Token buckets, sliding windows and fair resource allocation. Many unit tests, fewer integration tests, a handful of end-to-end tests. Toggles AWS, Azure and Google Cloud: services, pricing and when to use each. Images, containers, registries and compose. Pods, services, deployments and monitoring at scale. Event-driven functions that scale to zero. Terraform, CloudFormation and Pulumi. Metrics, logs and traces, and alerting that means something. 📝 Markdown to HTML This is example markdown to html content. This is example markdown to html content. This is example markdown to html content. 🎵 Audio This is example audio content. This is example audio content. This is example audio content. This is example audio content. Toggles This is example audio content. This is example audio content. This is example audio content. This is example audio content. 📊 Table Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Toggles Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away 📝 Notes This is example notes content. This is example notes content. This is example notes content. This is example notes content. 📦 Code Control This is example code control content. 🎬 Semantic Media Elements Enhanced media elements using standard HTML tags. Audio audio Standard Player Studio EQ Player — with 15-band graphic equalizer Video video Standard Video Background Video (Muted Loop) Image img Zoomable Image (Lightbox) Lazy Loaded with Aspect Ratio Figure figure Standard Figure A beautiful canyon view Overlay Caption Technology and Nature 🏗️ Semantic Structure Elements Enhanced structural and data elements using standard HTML tags. Table table Features: sortable columns (click header), copyable cells (click cell), searchable, striped rows. ID Name Role Status 1 Alice Smith Developer Active 2 Bob Jones Designer Active 3 Charlie Brown Manager Away Details details Detail Item 1 This is the content for i",
+      "content": "Content & Media ← Back to Index 📄 Content & Media Articles, markdown rendering, audio, tables is a card, and a plain card has no image attribute -- x-cardimage is the card with a picture. It rendered exactly like the title-only one.) --> 📄 Article Behavior Learn the fundamentals of building reusable behaviors on plain semantic HTML: one attribute on the element you already have, no build step. Grid, Flexbox and Container Queries simplify layouts that used to need JavaScript, and make responsive design the default rather than the fix. Code splitting, lazy loading, image optimization and caching: the techniques that measurably improve how fast a page feels. Explore the web platform changes that will shape the next generation of applications. This featured story carries editorial metadata and a longer introduction so its emphasis is obvious beside the standard articles. Toggles A guide to building scalable web applications with careful performance budgets and real-world examples from production systems. 📰 Articles List Behavior Type safety for JavaScript: generics, unions, interfaces and decorators. useState, useEffect, useContext and custom hooks for cleaner code. Normalization, indexing, relationships and query optimization. Versioning, pagination, error handling and documentation. Unit, integration, end-to-end and performance testing. Deployment pipelines, containers, CI/CD and infrastructure as code. Authentication, authorization, CSRF prevention and secure transport. WCAG, ARIA, keyboard navigation and semantic HTML. layout variants Break monoliths into services that scale and deploy independently, with service discovery, distributed tracing and circuit breakers. When GraphQL's exact-fit queries beat REST endpoints, and when they do not. Redux, Zustand, signals and context: matching the tool to the app. Client-side inference with TensorFlow.js, or remote models for the heavy lifting -- and how to decide between them. XSS, CSRF and injection defenses: CSP, secure headers, input validation. Core Web Vitals in the field and in the lab. Token buckets, sliding windows and fair resource allocation. Many unit tests, fewer integration tests, a handful of end-to-end tests. Toggles AWS, Azure and Google Cloud: services, pricing and when to use each. Images, containers, registries and compose. Pods, services, deployments and monitoring at scale. Event-driven functions that scale to zero. Terraform, CloudFormation and Pulumi. Metrics, logs and traces, and alerting that means something. 📝 Markdown to HTML This is example markdown to html content. This is example markdown to html content. This is example markdown to html content. 🎵 Audio This is example audio content. This is example audio content. This is example audio content. This is example audio content. Toggles This is example audio content. This is example audio content. This is example audio content. This is example audio content. 📊 Table Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Toggles Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away Name Role Status Ada Lovelace Engineer Active Grace Hopper Admiral Active Alan Turing Researcher Away 📝 Notes This is example notes content. This is example notes content. This is example notes content. This is example notes content. 📦 Code Theme This is example code theme content. 🎬 Semantic Media Elements Enhanced media elements using standard HTML tags. Audio audio Standard Player Studio EQ Player — with 15-band graphic equalizer Video video Standard Video Background Video (Muted Loop) Image img Zoomable Image (Lightbox) Lazy Loaded with Aspect Ratio Figure figure Standard Figure A beautiful canyon view Overlay Caption Technology and Nature 🏗️ Semantic Structure Elements Enhanced structural and data elements using standard HTML tags. Table table Features: sortable columns (click header), copyable cells (click cell), searchable, striped rows. ID Name Role Status 1 Alice Smith Developer Active 2 Bob Jones Designer Active 3 Charlie Brown Manager Away Details details Detail Item 1 This is the content for item ",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-03"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/site/effects",
@@ -5591,7 +5591,7 @@
       "content": "Standalone Preview — WB Nothing to preview This page renders whatever markup the URL hands it, edge to edge, so you can resize the browser and watch the element respond. A bare standalone.html with no #fragment has nothing to draw which is why you are seeing this instead of a behavior. Open it from the Playground's &#x29C9; Standalone button. It builds a self-contained link with the markup in the URL, so the result can be pasted into any browser, shared, or bookmarked. Go to the Playground",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     },
     {
       "id": "demos/test-harness",
@@ -5607,7 +5607,7 @@
       "content": "WB Test Harness WB Test Harness Lightweight page for auto-generated behavior tests.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-05"
+      "modified": "2026-10-06"
     }
   ],
   "index": {
@@ -6294,7 +6294,7 @@
       "docs/behaviors/searchfield",
       "docs/search"
     ],
-    "316": [
+    "317": [
       "pages/home"
     ],
     "320": [
@@ -6435,6 +6435,9 @@
     ],
     "660": [
       "docs/behaviors/fix-card"
+    ],
+    "668": [
+      "docs/behaviors/codetheme"
     ],
     "700": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -6910,7 +6913,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -7124,7 +7127,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/blockquote",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/data",
@@ -7435,7 +7438,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -7683,7 +7686,7 @@
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -7993,7 +7996,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/button",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/data",
       "docs/behaviors/details",
@@ -8307,6 +8310,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dl",
       "docs/behaviors/figure",
       "docs/behaviors/fill",
@@ -8454,7 +8458,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/counter",
       "docs/behaviors/cover",
       "docs/behaviors/fieldset",
@@ -8549,7 +8553,7 @@
       "docs/behaviors/chip",
       "docs/behaviors/clock",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -8684,7 +8688,7 @@
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
       "docs/behaviors/cardoverlay",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/darkmode",
       "docs/behaviors/glass",
       "docs/behaviors/hero",
@@ -8794,7 +8798,7 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/darkmode",
       "docs/behaviors/glass",
       "docs/behaviors/glow",
@@ -8815,6 +8819,7 @@
       "docs/wbservices",
       "demos/autoinject",
       "demos/landing-page-showcase",
+      "demos/site/content",
       "demos/site/interactive"
     ],
     "everything": [
@@ -9007,7 +9012,7 @@
       "docs/MVVM-MIGRATION",
       "docs/V3-GUIDE",
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/glass",
       "docs/behaviors/x-darkmode",
       "docs/claude/PAGE-GENERATION",
@@ -9411,7 +9416,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -9579,7 +9584,7 @@
       "docs/auto-injection",
       "docs/behaviors-reference",
       "docs/behaviors/autocomplete",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dropdown",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/input",
@@ -9644,6 +9649,7 @@
       "docs/behaviors/cardvideo",
       "docs/behaviors/checkbox",
       "docs/behaviors/cluster",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
       "docs/behaviors/control",
       "docs/behaviors/data",
@@ -9792,7 +9798,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/dropdown",
       "docs/behaviors/fix-card",
@@ -9826,7 +9832,7 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/button",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/dropdown",
       "docs/behaviors/file",
@@ -9956,7 +9962,7 @@
       "docs/behaviors/cardprofile",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -10047,7 +10053,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/confetti",
       "docs/behaviors/container",
@@ -10383,7 +10389,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -10768,7 +10774,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/auto-injection",
       "docs/behaviors-reference",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/select",
@@ -10844,7 +10850,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -11046,7 +11052,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -11231,7 +11237,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/dropdown",
@@ -11309,7 +11315,7 @@
       "docs/behaviors/center",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -11705,7 +11711,7 @@
       "docs/V3-GUIDE",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/behaviors/card",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dl",
       "docs/behaviors/fieldset",
       "docs/behaviors/ol",
@@ -11741,7 +11747,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/copy",
@@ -11831,7 +11837,7 @@
       "docs/behaviors/chip",
       "docs/behaviors/clock",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
       "docs/behaviors/container",
       "docs/behaviors/details",
@@ -11904,7 +11910,7 @@
       "docs/behaviors/chip",
       "docs/behaviors/clock",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/container",
       "docs/behaviors/details",
@@ -12074,7 +12080,7 @@
       "docs/behaviors/cardfile",
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardstats",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/copybutton",
       "docs/behaviors/cover",
       "docs/behaviors/darkmode",
@@ -12228,7 +12234,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -12702,7 +12708,7 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/counter",
       "docs/behaviors/cover",
@@ -12768,7 +12774,7 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/chip",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/glass",
       "docs/behaviors/icon",
@@ -12943,7 +12949,7 @@
       "docs/behaviors/cardstats",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/confirm",
       "docs/behaviors/countdown",
@@ -13006,6 +13012,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/address",
       "docs/behaviors/card",
+      "docs/behaviors/codetheme",
       "docs/behaviors/demo",
       "docs/behaviors/dialog",
       "docs/behaviors/fill",
@@ -13061,7 +13068,7 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/badge",
       "docs/behaviors/button",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/counter",
       "docs/behaviors/dl",
@@ -13342,7 +13349,7 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/cardnotification",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/darkmode",
       "docs/behaviors/dialog",
       "docs/behaviors/form",
@@ -13508,7 +13515,7 @@
     "immediately": [
       "pages/ai-permutation-test",
       "pages/terms",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/performance",
       "docs/properties",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -14054,7 +14061,7 @@
       "docs/behaviors/center",
       "docs/behaviors/chip",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
@@ -14155,7 +14162,7 @@
       "docs/behaviors/card",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/control",
@@ -14249,7 +14256,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -14336,7 +14343,7 @@
       "docs/behaviors/audio",
       "docs/behaviors/card",
       "docs/behaviors/cardminimizable",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/copybutton",
       "docs/behaviors/dialog",
@@ -14407,7 +14414,7 @@
       "docs/behaviors/cardvideo",
       "docs/behaviors/clock",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
       "docs/behaviors/dialog",
       "docs/behaviors/drawer",
@@ -14567,7 +14574,7 @@
       "docs/behaviors/cardproduct",
       "docs/behaviors/cardvideo",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/input",
       "docs/behaviors/pagination",
@@ -14741,7 +14748,7 @@
       "docs/behaviors/cardimage",
       "docs/behaviors/cardvideo",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/counter",
       "docs/behaviors/cover",
@@ -14824,7 +14831,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -15059,7 +15066,7 @@
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/checkbox",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/copybutton",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
@@ -15119,7 +15126,7 @@
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/card",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/data",
       "docs/behaviors/fieldset",
@@ -15317,7 +15324,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/autocomplete",
       "docs/behaviors/card",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/control",
       "docs/behaviors/fill",
       "docs/behaviors/icon",
@@ -15359,7 +15366,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/address",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/dropdown",
       "docs/behaviors/fullscreen",
@@ -15554,7 +15561,7 @@
     "id": [
       "pages/behaviors",
       "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dialog",
       "docs/behaviors/input",
       "docs/behaviors/label",
@@ -16300,7 +16307,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/blockquote",
       "docs/behaviors/cardoverlay",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/dialog",
       "docs/behaviors/header",
@@ -16532,7 +16539,7 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardpricing",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
       "docs/behaviors/list",
@@ -16617,7 +16624,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
@@ -16710,7 +16717,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behavior-cross-reference",
       "docs/behaviors-reference",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/control",
       "docs/behaviors/fix-card",
       "docs/compliance/iso-42001-alignment",
@@ -16732,7 +16739,7 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/carddraggable",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/counter",
       "docs/behaviors/details",
@@ -16781,7 +16788,7 @@
       "docs/behaviors/card",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -16842,7 +16849,7 @@
       "docs/behaviors/cardvideo",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confirm",
       "docs/behaviors/counter",
       "docs/behaviors/figure",
@@ -17053,6 +17060,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/address",
       "docs/behaviors/card",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dialog",
       "docs/behaviors/fill",
       "docs/behaviors/img",
@@ -17537,7 +17545,7 @@
       "docs/behaviors/center",
       "docs/behaviors/chip",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/container",
       "docs/behaviors/cover",
@@ -17768,7 +17776,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/data",
       "docs/behaviors/dropdown",
@@ -17933,7 +17941,7 @@
       "docs/behaviors/cardvideo",
       "docs/behaviors/center",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/dl",
       "docs/behaviors/grid",
@@ -18188,7 +18196,7 @@
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/cardoverlay",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/darkmode",
       "docs/behaviors/figure",
       "docs/behaviors/glass",
@@ -18353,7 +18361,7 @@
       "docs/behaviors/card",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/dropdown",
@@ -18523,7 +18531,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/file",
       "docs/behaviors/fix-card",
@@ -18758,7 +18766,7 @@
       "docs/auto-injection",
       "docs/behaviors-reference",
       "docs/behaviors/aside",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/fieldset",
       "docs/behaviors/glow",
       "docs/behaviors/grid",
@@ -18795,7 +18803,7 @@
     "reload": [
       "pages/features",
       "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/release"
     ],
     "responsive": [
@@ -18833,7 +18841,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/dialog",
       "docs/behaviors/figure",
@@ -19756,7 +19764,7 @@
       "docs/behavior-cross-reference",
       "docs/behaviors-reference",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/demo",
       "docs/behaviors/fix-card",
@@ -20130,7 +20138,7 @@
       "docs/behaviors/cardstats",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/copy",
@@ -20595,7 +20603,7 @@
       "docs/behaviors/cardstats",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/cardvideo",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/search",
       "docs/behaviors/searchfield",
       "docs/committing-fixes",
@@ -20896,7 +20904,7 @@
       "docs/behaviors/cardminimizable",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -21439,7 +21447,7 @@
       "docs/behaviors/cardproduct",
       "docs/behaviors/center",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -21529,7 +21537,7 @@
       "docs/behaviors/address",
       "docs/behaviors/center",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/fill",
       "docs/behaviors/pre",
@@ -21572,7 +21580,7 @@
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/copybutton",
@@ -21672,7 +21680,7 @@
       "docs/behaviors/center",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -21826,7 +21834,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/dialog",
       "docs/behaviors/drawer",
@@ -21868,7 +21876,7 @@
       "docs/behavior-cross-reference",
       "docs/behaviors/aside",
       "docs/behaviors/blockquote",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confirm",
       "docs/behaviors/container",
       "docs/behaviors/countdown",
@@ -21916,7 +21924,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/formrow",
       "docs/behaviors/repeater",
@@ -22104,7 +22112,7 @@
       "docs/behaviors/cardprofile",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/cardvideo",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confirm",
       "docs/behaviors/copybutton",
       "docs/behaviors/dialog",
@@ -22352,7 +22360,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/card",
       "docs/behaviors/cardportfolio",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/searchfield",
@@ -22468,7 +22476,7 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/card",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/drawerLayout",
       "docs/behaviors/fill",
@@ -22810,7 +22818,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/copybutton",
       "docs/behaviors/data",
@@ -22839,7 +22847,7 @@
       "docs/behaviors/cardlink",
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/move",
       "docs/behaviors/reel",
       "docs/behaviors/ripple",
@@ -23057,7 +23065,7 @@
       "pages/home",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/control",
       "docs/behaviors/globe",
       "docs/behaviors/move",
@@ -23351,7 +23359,7 @@
       "docs/architecture/solidjscomparison",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dl",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/glow",
@@ -23740,6 +23748,7 @@
       "docs/behaviors/cardproduct",
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/move",
       "docs/behaviors/rating",
@@ -24106,7 +24115,7 @@
     ],
     "identifiable": [
       "pages/privacy",
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "outside": [
       "pages/privacy",
@@ -24224,7 +24233,7 @@
       "pages/privacy",
       "docs/BRANCH_PROTECTION",
       "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/stagelight"
     ],
     "transmission": [
@@ -24412,7 +24421,7 @@
       "docs/behaviors/avatar",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/data",
       "docs/behaviors/dropdown",
@@ -25090,7 +25099,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/move",
       "docs/behaviors/navbar",
@@ -25157,7 +25166,7 @@
     "special": [
       "pages/terms",
       "docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/time",
       "docs/container-pattern",
       "docs/npx-commands",
@@ -25201,7 +25210,7 @@
       "docs/behaviors/cardoverlay",
       "docs/behaviors/cardvideo",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
@@ -25687,7 +25696,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/articles",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
@@ -26348,7 +26357,7 @@
     ],
     "human": [
       "docs/AI",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/time",
       "docs/claude/TOOLING-INVENTORY",
@@ -27021,7 +27030,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/blockquote",
       "docs/behaviors/cardvideo",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER3-REFERENCE",
       "docs/code-examples-standard",
@@ -27076,7 +27085,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/autocomplete",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/copybutton",
       "docs/behaviors/dropdown",
@@ -27284,7 +27293,7 @@
       "docs/behaviors/chip",
       "docs/behaviors/clock",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/confirm",
       "docs/behaviors/copy",
@@ -27976,7 +27985,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
       "docs/behaviors/figure",
@@ -28134,6 +28143,7 @@
       "docs/audio",
       "docs/behaviors/accordion",
       "docs/behaviors/cluster",
+      "docs/behaviors/codetheme",
       "docs/behaviors/darkmode",
       "docs/behaviors/drawerLayout",
       "docs/behaviors/glass",
@@ -28193,7 +28203,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/cardvideo",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/fieldset",
       "docs/behaviors/flex",
@@ -28429,7 +28439,7 @@
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardprofile",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/rainbow",
       "docs/behaviors/release",
       "docs/code-examples-standard",
@@ -28572,6 +28582,7 @@
       "docs/BRANCH_PROTECTION",
       "docs/behaviors/card",
       "docs/behaviors/code",
+      "docs/behaviors/codetheme",
       "docs/behaviors/countdown",
       "docs/behaviors/img",
       "docs/behaviors/range",
@@ -29067,7 +29078,7 @@
       "docs/behaviors/audio",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardminimizable",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/drawerLayout",
       "docs/behaviors/searchfield",
@@ -29500,7 +29511,7 @@
       "docs/behaviors/cardstats",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/countdown",
       "docs/behaviors/dialog",
       "docs/behaviors/footer",
@@ -30109,7 +30120,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/avatar",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/img",
       "docs/behaviors/pre",
@@ -30295,7 +30306,7 @@
       "docs/behaviors/cardprofile",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/data",
@@ -30518,7 +30529,7 @@
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/cardvideo",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
       "docs/behaviors/container",
       "docs/behaviors/details",
@@ -30704,7 +30715,7 @@
       "docs/behaviors/audio",
       "docs/behaviors/autocomplete",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -30863,7 +30874,7 @@
       "docs/behaviors/chip",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -31122,7 +31133,7 @@
       "docs/V3-GUIDE",
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/icon",
@@ -31322,7 +31333,7 @@
       "docs/auto-injection",
       "docs/behaviors-reference",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/pre",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/code-examples-standard",
@@ -31479,7 +31490,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/drawerLayout",
@@ -31663,7 +31674,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/glass"
     ],
     "createdwhen": [
@@ -31995,7 +32006,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audio",
       "docs/behaviors/avatar",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/img",
       "docs/behaviors/progress",
       "docs/behaviors/release",
@@ -32040,7 +32051,7 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/counter",
@@ -32254,7 +32265,7 @@
     ],
     "readers": [
       "docs/MVVM-MIGRATION",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/fieldset",
       "docs/behaviors/release",
@@ -32309,7 +32320,7 @@
       "docs/behaviors/blockquote",
       "docs/behaviors/center",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/dropdown",
@@ -32344,7 +32355,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/copybutton",
       "docs/behaviors/dropdown",
@@ -32502,7 +32513,7 @@
     "highlighting": [
       "docs/MVVM-MIGRATION",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/pre",
       "docs/escape-hatches",
       "demos/code"
@@ -32688,12 +32699,12 @@
     ],
     "persisted": [
       "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/x-darkmode"
     ],
     "localstorage": [
       "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/notes",
       "docs/behaviors/themecontrol",
       "docs/behaviors/x-darkmode",
@@ -33053,7 +33064,7 @@
       "docs/behaviors/address",
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
       "docs/behaviors/cover",
@@ -33117,7 +33128,7 @@
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardstats",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/dl",
       "docs/behaviors/fill",
@@ -33207,7 +33218,7 @@
       "docs/auto-injection",
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardproduct",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/mark",
       "docs/container-pattern",
@@ -33251,7 +33262,7 @@
     ],
     "saves": [
       "docs/NOTES-V3-GUIDE",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/notes",
       "docs/properties"
     ],
@@ -33496,7 +33507,7 @@
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardprofile",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/counter",
       "docs/behaviors/details",
@@ -33573,7 +33584,7 @@
     ],
     "normally": [
       "docs/V3-GUIDE",
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "back": [
       "docs/V3-GUIDE",
@@ -33621,7 +33632,7 @@
     "readable": [
       "docs/V3-GUIDE",
       "docs/behaviors/cardoverlay",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/glass",
       "docs/behaviors/mark",
@@ -33836,7 +33847,7 @@
     ],
     "selected": [
       "docs/V3-GUIDE",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/file",
       "docs/behaviors/prompt",
       "docs/behaviors/range",
@@ -34137,7 +34148,7 @@
       "docs/behaviors/cardexpandable",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
@@ -34189,7 +34200,7 @@
     ],
     "queryselector": [
       "docs/WB_BEHAVIOR_SYSTEM",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/dropdown",
       "docs/behaviors/move",
@@ -34300,7 +34311,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/dropdown",
       "docs/behaviors/move",
@@ -34324,7 +34335,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/blockquote",
       "docs/behaviors/cardportfolio",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/switcher",
       "docs/behaviors/table",
       "docs/card",
@@ -34382,6 +34393,7 @@
     "called": [
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/auto-injection",
+      "docs/behaviors/codetheme",
       "docs/behaviors/searchfield"
     ],
     "debug": [
@@ -34847,7 +34859,7 @@
       "docs/behaviors/alert",
       "docs/behaviors/card",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/dropdown",
@@ -35746,7 +35758,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/center",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/cover",
       "docs/behaviors/fill",
@@ -36075,7 +36087,7 @@
       "docs/behaviors/cardhero",
       "docs/behaviors/center",
       "docs/behaviors/clock",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/container",
       "docs/behaviors/darkmode",
       "docs/behaviors/dialog",
@@ -36399,7 +36411,7 @@
       "docs/behaviors/carddraggable",
       "docs/behaviors/checkbox",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dropdown",
       "docs/behaviors/glass",
       "docs/behaviors/img",
@@ -36422,6 +36434,7 @@
     ],
     "old": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dialog",
       "docs/behaviors/glass",
       "docs/behaviors/range",
@@ -36808,7 +36821,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dialog",
       "docs/behaviors/input",
       "docs/behaviors/pre",
@@ -36941,7 +36954,7 @@
       "docs/behaviors/button",
       "docs/behaviors/card",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/pre",
       "docs/behaviors/progress",
       "docs/behaviors/spinner",
@@ -36975,7 +36988,7 @@
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dialog",
       "docs/behaviors/input",
       "docs/behaviors/pre",
@@ -37133,7 +37146,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors-reference",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
       "docs/behaviors/x-effects",
@@ -37171,7 +37184,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behavior-cross-reference",
       "docs/behaviors/autocomplete",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/file",
       "docs/behaviors/move",
@@ -38591,7 +38604,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/control",
       "docs/behaviors/dl",
       "docs/behaviors/formrow",
@@ -38617,12 +38630,11 @@
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS",
       "demos/frameworks",
-      "demos/site/content",
       "demos/site/interactive"
     ],
     "instance": [
       "docs/audio",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/performance",
       "docs/schema-first-architecture",
       "docs/standards/V3-STANDARDS",
@@ -39025,9 +39037,7 @@
     ],
     "codecontrol": [
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behavior-cross-reference",
-      "docs/behaviors/codecontrol",
-      "docs/pce-candidates"
+      "docs/behaviors/codetheme"
     ],
     "accounts": [
       "docs/audits/INLINE-STYLES-AUDIT"
@@ -39118,7 +39128,7 @@
     ],
     "sync": [
       "docs/audits/INLINE-STYLES-AUDIT",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/claude/TIER1-LAWS",
       "docs/code-examples-standard",
       "docs/inline-editing",
@@ -39227,7 +39237,7 @@
       "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/colorpicker",
       "docs/behaviors/confetti",
@@ -39640,6 +39650,11 @@
       "docs/behavior-cross-reference",
       "docs/behaviors/clock"
     ],
+    "codetheme": [
+      "docs/behavior-cross-reference",
+      "docs/behaviors/codetheme",
+      "docs/pce-candidates"
+    ],
     "copybutton": [
       "docs/behavior-cross-reference",
       "docs/behaviors/copybutton",
@@ -39822,7 +39837,7 @@
     "groups": [
       "docs/behaviors-reference",
       "docs/behaviors/cluster",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/fieldset",
       "docs/behaviors/inputgroup",
       "docs/compliance/iso-42001-alignment",
@@ -39930,7 +39945,7 @@
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dialog",
       "docs/behaviors/glass",
       "docs/behaviors/move",
@@ -39998,7 +40013,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/card",
       "docs/behaviors/center",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/dropdown",
       "docs/behaviors/icon",
@@ -40090,7 +40105,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/cardproduct",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/confetti",
       "docs/behaviors/confirm",
       "docs/behaviors/copy",
@@ -40131,7 +40146,7 @@
       "docs/behaviors/accordion",
       "docs/behaviors/chip",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/dropdown",
       "docs/behaviors/move",
       "docs/behaviors/toast",
@@ -40224,7 +40239,7 @@
       "docs/behaviors/address",
       "docs/behaviors/blockquote",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/data",
       "docs/behaviors/release",
       "docs/behaviors/time",
@@ -40292,7 +40307,7 @@
       "docs/behaviors/cardnotification",
       "docs/behaviors/cardpricing",
       "docs/behaviors/chip",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/input",
       "docs/behaviors/search",
       "docs/behaviors/textarea",
@@ -40783,7 +40798,7 @@
     ],
     "filtered": [
       "docs/behaviors/autocomplete",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/table"
     ],
     "insensitively": [
@@ -40821,7 +40836,7 @@
     ],
     "bubbles": [
       "docs/behaviors/autocomplete",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
       "docs/behaviors/file",
       "docs/behaviors/move",
@@ -41201,7 +41216,7 @@
     ],
     "programmatically": [
       "docs/behaviors/button",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/escape-hatches",
       "docs/search"
     ],
@@ -41398,7 +41413,7 @@
     ],
     "operable": [
       "docs/behaviors/card",
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "offer": [
       "docs/behaviors/cardbutton"
@@ -41672,7 +41687,7 @@
     ],
     "restores": [
       "docs/behaviors/cardminimizable",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/property-viewer"
     ],
     "minimized": [
@@ -42251,7 +42266,7 @@
     "wrapping": [
       "docs/behaviors/cluster",
       "docs/behaviors/code",
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
       "docs/behaviors/flex",
       "docs/behaviors/pre",
@@ -42376,7 +42391,7 @@
       "docs/standards/ERROR-LOG-RETENTION"
     ],
     "selection": [
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/radio",
       "docs/behaviors/select",
       "docs/property-viewer",
@@ -42385,63 +42400,60 @@
       "demos/site/interactive"
     ],
     "atom": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "showlabel": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "showcategory": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "persist": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "persisting": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "holding": [
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/claude/TIER1-LAWS"
     ],
-    "codetheme": [
-      "docs/behaviors/codecontrol"
-    ],
     "incoming": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "listens": [
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/masked"
     ],
     "selecting": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
-    "wbcodecontrol": [
-      "docs/behaviors/codecontrol"
+    "wbcodetheme": [
+      "docs/behaviors/codetheme"
     ],
     "gettheme": [
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/wbservices"
     ],
     "settheme": [
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/wbservices"
     ],
     "themeid": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "getthemes": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "getthemesbycategory": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "preceding": [
-      "docs/behaviors/codecontrol"
+      "docs/behaviors/codetheme"
     ],
     "announced": [
-      "docs/behaviors/codecontrol",
+      "docs/behaviors/codetheme",
       "docs/behaviors/icon",
       "docs/behaviors/x-copybutton",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -47771,6 +47783,9 @@
       "docs/pce-candidates"
     ],
     "mycomponent": [
+      "docs/pce-candidates"
+    ],
+    "ex": [
       "docs/pce-candidates"
     ],
     "execution": [
