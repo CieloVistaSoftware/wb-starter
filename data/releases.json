@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.334",
+      "date": "2026-10-06",
+      "summary": "A test that runs the real release script timed out after 30 seconds on slow CI runners, although it allows the script 120. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1628\" target=\"_blank\" rel=\"noopener\">PR 1628</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+          "issues": [
+            1633
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>CLAUDE.md says to work open issues when idle</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1627\" target=\"_blank\" rel=\"noopener\">#1627</a>",
+          "issues": [
+            1627
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test tests/regression/release-bump-touches-only-project-version.spec.ts --project=regression. Before: on a slow runner, &quot;Test timeout of 30000ms exceeded&quot;. Now: the test waits as long as the script&#39;s own 120s budget (plus a minute), and passes (2 passed locally)."
+    },
+    {
+      "version": "1.0.333",
+      "date": "2026-10-06",
+      "summary": "A test that runs the real release script timed out after 30 seconds on slow CI runners, although it allows the script 120. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1634\" target=\"_blank\" rel=\"noopener\">PR 1634</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Release-bump spec outlasts the 120s it gives release.mjs</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1633\" target=\"_blank\" rel=\"noopener\">#1633</a>",
+          "issues": [
+            1633
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test tests/regression/release-bump-touches-only-project-version.spec.ts --project=regression. Before: on a slow runner, &quot;Test timeout of 30000ms exceeded&quot;. Now: the test waits as long as the script&#39;s own 120s budget (plus a minute), and passes (2 passed locally)."
+    },
+    {
       "version": "1.0.332",
       "date": "2026-10-06",
       "summary": "The iPhone (WebKit) test run took no review screenshots, because a capture of any page with an audio player that never loads hung until it timed out. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1629\" target=\"_blank\" rel=\"noopener\">PR 1629</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1439\" target=\"_blank\" rel=\"noopener\">#1439</a>",
