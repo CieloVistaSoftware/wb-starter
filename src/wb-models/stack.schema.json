@@ -23,7 +23,7 @@
     },
     "bg": {
       "type": "string",
-      "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
+      "description": "Background of the stack: a theme colour name (bg-primary, bg-secondary, bg-tertiary, primary, success, …) or any CSS colour (hex, rgb, hsl). Never a var(--…) token (#907).",
       "default": "this is the bg",
       "example": "#1a2f4e",
       "examples": [

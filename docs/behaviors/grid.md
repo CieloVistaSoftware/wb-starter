@@ -28,7 +28,7 @@ screens without a media query.
 | `align` | string | *(none)* | `align-items` — vertical alignment of each cell's content. |
 | `justify` | string | *(none)* | `justify-items` — horizontal alignment of each cell's content. |
 | `center` | boolean | `false` | Shorthand for `align="center" justify="center"` plus centered text — the common case of "center everything in every cell." |
-| `background` | string | *(none)* | Any CSS background value (a `var(--…)` token, not a literal color). |
+| `background` | string | *(none)* | A theme colour name (`bg-primary`, `bg-secondary`, `bg-tertiary`, `primary`, `success`, …) or any CSS colour. Never a `var(--…)` token: name the colour, not its implementation. |
 | `alt-rows` | boolean | `false` | Zebra-stripes even-position children using `var(--bg-secondary)`. |
 | `headers` | string | *(none)* | Comma-separated column labels, rendered as a header row prepended before the grid's own content. |
 
@@ -66,7 +66,7 @@ screens without a media query.
 ## Background
 
 <div x-demo>
-<div x-grid background="var(--bg-tertiary)">
+<div x-grid background="bg-tertiary">
   <div>On a themed background</div>
 </div>
 </div>

@@ -5,7 +5,7 @@
 ## Usage
 
 <div x-demo>
-<div x-stack gap="0.75rem" pad="1rem" radius="8px" bg="var(--bg-secondary)">
+<div x-stack gap="0.75rem" pad="1rem" radius="8px" bg="bg-secondary">
   <div>Queued</div>
   <div>Running</div>
   <div>Passed</div>
@@ -17,7 +17,7 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `gap` | `string` | `1rem` | CSS gap between stacked children. Accepts any valid CSS length value. |
-| `bg` | `string` | — | Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables. |
+| `bg` | `string` | — | Background of the stack: a theme colour name (`bg-primary`, `bg-secondary`, `bg-tertiary`, `primary`, `success`, …) or any CSS colour (hex, rgb, hsl). |
 | `pad` | `string` | — | CSS padding shorthand applied to the stack element. Accepts any valid CSS padding value (1–4 values). Use '0 0 0.75rem' to pad bottom only (e.g. when image bleeds to top/side edges). |
 | `radius` | `string` | — | CSS border-radius applied to the stack element. Accepts any valid CSS border-radius value. |
 
