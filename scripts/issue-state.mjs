@@ -41,7 +41,7 @@
  *   node scripts/issue-state.mjs --state ready   # list one state
  */
 import { execFileSync } from 'node:child_process';
-import { issuesNamedInTestTitles } from './lib/test-citations.mjs';
+import { issuesNamedInTestTitles, specMentionsIssue } from './lib/test-citations.mjs';
 import { readFileSync, existsSync, writeFileSync, statSync, readdirSync } from 'node:fs';
 
 const APPLY = process.argv.includes('--apply');
@@ -59,7 +59,7 @@ const git = (a) => {
 };
 
 export const STATES = [
-  'no-signature', 'triaged', 'needs-test', 'test-missing', 'unproven', 'failing',
+  'no-signature', 'triaged', 'needs-test', 'unrecorded-test', 'test-missing', 'test-unrelated', 'unproven', 'failing',
   'ready', 'stale', 'committed', 'pushed', 'regressed', 'closed-unverified', 'closed-verified',
 ];
 
@@ -317,6 +317,14 @@ export function assess(issue) {
   }
   if (command) return say('unproven', 'test is a command the suite does not run');
   if (!existsSync(spec)) return say('test-missing', 'named spec is not on disk');
+  // #1090: the test: field is a claim, and #1075's pointed at its sibling's spec
+  // -- a file that never mentions 1075. A spec that does not name the issue
+  // proves nothing about it, so say so instead of crediting it.
+  let specText = '';
+  try { specText = readFileSync(spec, 'utf8'); } catch { /* treated as silent below */ }
+  if (!specMentionsIssue(specText, issue.number)) {
+    return say('test-unrelated', `${spec} never mentions #${issue.number}`);
+  }
   // #1042: TRAVEL is decided before PROOF, because travel does not depend on the
   // last test run at all. A fix that is committed and pushed is pushed whether or
   // not its spec happened to be included in the last run.

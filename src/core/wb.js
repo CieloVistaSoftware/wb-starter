@@ -162,6 +162,7 @@ import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
 import { teachByExample } from './teach-by-example.js';
+import { loadSchemaIndex as loadSharedSchemaIndex } from './schema-index.js';
 
 // Global dev/test diagnostics: surface uncaught errors/rejections to console so Playwright traces capture them.
 try {
@@ -307,46 +308,20 @@ function getAutoInjectBehavior(element) {
  * never got its modifiers (<div x-hero variant="cosmic"> stayed plain x-hero,
  * #1147). Those calls are queued now and applied the moment it arrives.
  */
+// The index itself is loaded by schema-index.js, shared with
+// teach-by-example.js (#1550); wb.js keeps the queue of elements built before
+// it arrived.
 let schemaIndex = null;
-let schemaIndexPending = null;
 const modifiersWaitingForIndex = [];
 
 function loadSchemaIndex() {
-  if (schemaIndex || schemaIndexPending) return schemaIndexPending;
-  if (typeof fetch !== 'function') return null;
-  // schemaPath points at src/wb-models; the index sits at the SITE ROOT in
-  // data/. Resolving against document.baseURI is only correct for a document
-  // that IS at the site root: from public/doc-viewer.html it produced
-  // /wb-starter/public/data/schema-index.json — a 404 — and the same for every
-  // page under pages/, demos/ and articles/. The fetch fails silently by
-  // design ("a missing modifier class is a cosmetic delay"), so declared
-  // attributes have quietly never applied on any subdirectory page (#1053).
-  //
-  // So walk up out of the known content directories first, which is the same
-  // rule pages/behaviors.html's siteRoot() already uses. Still relative to the
-  // document, so it stays correct at "/" and under "/wb-starter/" alike.
-  let url;
-  try {
-    const root = location.pathname.replace(/(?:public|demos|pages|articles|tests\/fixtures)\/.*$/, '');
-    url = new URL('data/schema-index.json', new URL(root, location.href)).href;
-  } catch {
-    schemaIndex = {};
-    return null;
-  }
-  schemaIndexPending = fetch(url)
-    .then((r) => (r.ok ? r.json() : null))
-    .then((idx) => {
-      schemaIndex = {};
-      for (const sc of (idx && idx.schemas) || []) {
-        if (sc && sc.name) schemaIndex[sc.name] = sc;
-      }
-      for (const [element, behaviorName] of modifiersWaitingForIndex.splice(0)) {
-        try { applyDeclaredModifiers(element, behaviorName); } catch { /* never break inject */ }
-      }
-      return schemaIndex;
-    })
-    .catch(() => { schemaIndex = {}; modifiersWaitingForIndex.length = 0; return schemaIndex; });
-  return schemaIndexPending;
+  return loadSharedSchemaIndex().then((idx) => {
+    schemaIndex = idx;
+    for (const [element, behaviorName] of modifiersWaitingForIndex.splice(0)) {
+      try { applyDeclaredModifiers(element, behaviorName); } catch { /* never break inject */ }
+    }
+    return schemaIndex;
+  });
 }
 
 /** `iconPosition` -> `icon-position`, which is what the DOM carries. */

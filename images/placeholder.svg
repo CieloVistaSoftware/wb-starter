@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder image">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder image">
   <!--
     Local stand-in for the remote placeholder services the demos used to fetch
     (picsum.photos). #933: those were 249 network round-trips that failed

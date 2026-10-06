@@ -47,7 +47,6 @@ export function dropdown(element, options = {}) {
   // interactive.html), since dropdown.css's `.x-dropdown`/`.x-dropdown.open`
   // rules still select those by class.
   element.classList.add('x-dropdown');
-  element.classList.add('x-dropdown-trigger');
   // position: relative / display: inline-block were already the
   // `x-dropdown, [x-dropdown], .x-dropdown` rule in dropdown.css -- the inline
   // copies are gone (#779).
@@ -66,6 +65,12 @@ export function dropdown(element, options = {}) {
     trigger.type = 'button';
     // Styled by .x-dropdown__trigger / __chevron in dropdown.css (#779).
     trigger.innerHTML = `${config.label || 'Menu'} <span class="x-dropdown__chevron">▼</span>`;
+  } else {
+    // #702: the host is styled as a trigger ONLY when its own text is the
+    // trigger. With a real button built above, the class wrapped a padded
+    // button around that button, widening the host to the menu's width, so
+    // left:0 and right:0 -- bottom-start and bottom-end -- landed 2px apart.
+    element.classList.add('x-dropdown-trigger');
   }
 
   // Create menu
