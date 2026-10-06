@@ -38,14 +38,14 @@ test('[x-cardhorizontal] throws a catchable runtime error when its image src is 
     return await (window as any).WB.scan(container);
   });
 
-  await page.waitForTimeout(1500);
-
   // The runtime's media errors are prefixed `x-<name>:` -- the same form as
   // x-cardhero's, x-cardoverlay's and x-audio's. This used to look for
   // `[x-cardhorizontal]`, a spelling no error in src/ has ever used, so it
   // failed while the error it wanted was sitting in pageErrors -- and the
   // control test below, which checks that spelling is ABSENT, could never fail.
   const CARD_ERROR_PREFIX = 'x-cardhorizontal:';
+  // Polled until the 404 surfaces (#1516), not a 1500ms sleep.
+  await expect.poll(() => pageErrors.some((e) => e.startsWith(CARD_ERROR_PREFIX) && e.includes('does-not-exist-cardhorizontal.jpg')), { timeout: 15000 }).toBe(true);
   const cardError = pageErrors.find(
     (e) => e.startsWith(CARD_ERROR_PREFIX) && e.includes('does-not-exist-cardhorizontal.jpg')
   );

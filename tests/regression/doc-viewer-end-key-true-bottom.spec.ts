@@ -53,9 +53,8 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
     // have some when this was written. Counted, not assumed: the assertion below
     // fails loudly if that ever stops being true.
     await page.goto('/public/doc-viewer.html?file=docs/behavior-cross-reference.md', { waitUntil: 'load' });
-    await page.waitForTimeout(50);
 
-    // #1070: the 50ms above was tuned for a small doc and is not enough for the
+    // #1070: a fixed 50ms sleep here was tuned for a small doc and is not enough for the
     // markdown fetch + render of a large one, so the count ran against an empty
     // page and read 0. Wait for the FIRST block to exist — that proves the doc
     // rendered — and press End immediately after, which still reproduces the
@@ -88,16 +87,14 @@ test.describe('doc-viewer.html End key reaches the true page bottom (#466)', () 
   test('End on a plain doc with no <div x-demo> still scrolls to the bottom (no regression)', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 855 });
     await page.goto('/public/doc-viewer.html?file=docs/index.md', { waitUntil: 'load' });
-    await page.waitForTimeout(300);
+    // The doc has rendered once the page is taller than the window (#1516: not 300ms).
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight > document.documentElement.clientHeight), { timeout: 20000 }).toBe(true);
 
     await page.keyboard.press('End');
-    await page.waitForTimeout(1000);
-
-    const result = await page.evaluate(() => ({
-      scrollTop: document.documentElement.scrollTop,
-      max: document.documentElement.scrollHeight - document.documentElement.clientHeight,
-    }));
-
-    expect(Math.abs(result.max - result.scrollTop)).toBeLessThanOrEqual(5);
+    // Polled, not 1000ms: the gap to the true bottom closes as the scroll lands.
+    await expect.poll(() => page.evaluate(() => {
+      const el = document.documentElement;
+      return Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop);
+    }), { timeout: 10000 }).toBeLessThanOrEqual(5);
   });
 });

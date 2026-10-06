@@ -78,11 +78,12 @@ test('a genuinely broken src (not a CORS failure) still throws after the one COR
     await (window as any).WB.scan(container, { eager: true });
   });
 
-  await page.waitForTimeout(2000);
   // audio.js's errors begin "x-audio:" (the behavior's token). This filter
   // read '.x-audio' -- a class-selector spelling no message contains -- so
   // it could never match: a real error went unseen and a false positive
   // would have passed unnoticed.
+  // Polled until the error arrives after the CORS retry (#1516), not a 2000ms sleep.
+  await expect.poll(() => pageErrors.some((e) => e.includes('x-audio:') && e.includes('broken-audio-0-bytes.mp3')), { timeout: 15000 }).toBe(true);
   const audioError = pageErrors.find((e) => e.includes('x-audio:') && e.includes('broken-audio-0-bytes.mp3'));
   expect(audioError, `a genuinely broken file must still surface a real error after the CORS-retry gives it one more chance, got: ${JSON.stringify(pageErrors)}`).toBeTruthy();
 });

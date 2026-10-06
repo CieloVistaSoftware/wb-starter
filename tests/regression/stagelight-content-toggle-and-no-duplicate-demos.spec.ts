@@ -16,7 +16,9 @@ test.describe('[x-stagelight] renders content, builds one overlay, and toggles (
     await page.waitForFunction(() => document.querySelectorAll('[x-stagelight]').length > 0, null, {
       timeout: 30000,
     });
-    await page.waitForTimeout(2000);
+    // Schema and behavior passes are both done once WB settles (#1516: not 2000ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const texts = await page.evaluate(() =>
       [...document.querySelectorAll('[x-stagelight]')].map((e) => (e.textContent ?? '').trim())
@@ -35,7 +37,9 @@ test.describe('[x-stagelight] renders content, builds one overlay, and toggles (
     await page.waitForFunction(() => !!document.querySelector('.x-stagelight__spot'), null, {
       timeout: 30000,
     });
-    await page.waitForTimeout(1500);
+    // A racing second overlay would be built before WB settles (#1516: not 1500ms).
+    await page.waitForFunction(() => typeof (window as any).WB?.settled === 'function', null, { timeout: 15000 });
+    await page.evaluate(() => (window as any).WB.settled({ timeout: 15000 }));
 
     const counts = await page.evaluate(() => ({
       hosts: document.querySelectorAll('.x-stagelight--spotlight').length,
