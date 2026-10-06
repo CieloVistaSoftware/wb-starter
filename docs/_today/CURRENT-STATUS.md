@@ -27,6 +27,16 @@
 
 ---
 
+**Updated 2026-10-06, morning.** Last two behavior docs without a live demo (#323).
+
+**Files touched:** `docs/behaviors/label.md`, `docs/behaviors/autosize.md`, `tests/compliance/md-wb-demo-required.spec.ts`.
+
+**Last action:** both docs show their examples as live `<div x-demo>` blocks instead of static fences, and are off the gate's legacy zero-demo list so they cannot slide back.
+
+**Next step:** #682 (write the select vs x-dropdown rule), #274 (widen overlap pages).
+
+---
+
 **Updated 2026-10-06.** x-codecontrol renamed to x-codetheme (#668).
 
 **Files touched:** `src/wb-viewmodels/codetheme.js`, `src/wb-models/codetheme.schema.json`, `src/styles/behaviors/codetheme.css`, `docs/behaviors/codetheme.md` (all renamed from codecontrol), `src/core/attribute-aliases.js` (new `BEHAVIOR_ALIASES`), `src/core/tag-map.js`, `src/core/wb-lazy.js`, `src/core/style-loader.js`, `src/wb-viewmodels/index.js`, `src/styles/behavior-css-manifest.js`, `docs/manifest.json`, `docs/behavior-cross-reference.md`, `docs/behaviors-reference.md`, `docs/pce-candidates.md`, demos/pages that used the old name.
