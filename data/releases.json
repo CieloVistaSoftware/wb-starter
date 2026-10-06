@@ -6,6 +6,34 @@
   ],
   "releases": [
     {
+      "version": "1.0.355",
+      "date": "2026-10-06",
+      "summary": "On CI, under load, the x-img example re-rendered while its images were loading, so the node the spec had collected before the wait was detached when it was measured, and reading its parentElement.clientWidth threw &quot;Cannot read properties of null&quot;. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1647\" target=\"_blank\" rel=\"noopener\">PR 1647</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Example-media-fits-its-box measures the media in the example now, not a detached node</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f127e0d0962385c23f0844a32765e35becb04f2b\" target=\"_blank\" rel=\"noopener\"><code>f127e0d</code></a>",
+          "issues": [
+            790
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Stagelight, audio and setup name theme tokens; their register entries go</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ddf5897674d6b165bfd3f5ea784f7fe087fd2786\" target=\"_blank\" rel=\"noopener\"><code>ddf5897</code></a>",
+          "issues": [
+            790
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/example-media-fits-its-box.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/example-media-fits-its-box.spec.ts</a> --repeat-each=4. Before: on CI, &quot;x-img: ... TypeError: Cannot read properties of null (reading &#39;clientWidth&#39;)&quot;. Now: it re-reads the example&#39;s media after the wait and measures those; 16 of 16 pass locally.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e8eb044ad5c187e8943fcf9025591ca4060e822a\" target=\"_blank\" rel=\"noopener\"><code>e8eb044</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.354",
       "date": "2026-10-06",
       "summary": "Public/ (the doc, schema, error, fix, test and performance viewers and the two papers) and articles/ still carried 71 style= attributes, 17 of them in markup the pages build from script, and no-inline-styles.spec.ts did not read either folder. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1656\" target=\"_blank\" rel=\"noopener\">PR 1656</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
