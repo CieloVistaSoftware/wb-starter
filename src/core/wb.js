@@ -162,6 +162,10 @@ import { pubsub } from './pubsub.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
 import { ensureBehaviorCss } from './style-loader.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
+import {
+  beginInFlight, failInjection, removeApplied, installReadiness,
+  startObserving, stopObserving, commonInitOptions, bootDocument,
+} from './runtime-shared.js';
 import { teachByExample } from './teach-by-example.js';
 import { loadSchemaIndex as loadSharedSchemaIndex } from './schema-index.js';
 
@@ -480,10 +484,7 @@ const WB = {
       return null; // the first caller owns the cleanup
     }
     elementPending.add(behaviorName);
-    let settle = () => {};
-    const done = new Promise((resolve) => { settle = resolve; });
-    if (!inFlight.has(element)) inFlight.set(element, new Map());
-    inFlight.get(element).set(behaviorName, done);
+    const settle = beginInFlight(inFlight, element, behaviorName);
     // Counted here, AFTER every early return above, so start/end always pair:
     // x-ignore, an unknown behavior, an already-applied or already-pending
     // behavior all bail before this line and never enter the finally below.
@@ -541,16 +542,8 @@ const WB = {
 
       return cleanup;
     } catch (error) {
-      // Pass the full Error object for stack trace extraction
-      Events.error(`WB:${behaviorName}`, error, {
-        element: element.tagName,
-        id: element.id,
-        behavior: behaviorName
-      });
-      
-      // Mark element as having an error
-      element.setAttribute('x-error', 'true');
-      
+      // Reported with its stack, and marked x-error on the element.
+      failInjection(element, behaviorName, error);
       return null;
     } finally {
       // Remove from pending, and release anyone awaiting this injection.
@@ -581,61 +574,9 @@ const WB = {
     }
   },
 
-  /**
-   * How many behavior injections are in flight right now (#961/#962).
-   *
-   * Zero does NOT mean "the page is finished" — it means nothing is running at
-   * this instant, and observe()'s MutationObserver may start the next round on
-   * a later task. Use whenIdle(), which requires the zero to hold.
-   *
-   * @type {number}
-   */
-  get pendingCount() {
-    return injectionTracker.count();
-  },
+  // pendingCount, pendingBehaviors, whenIdle() and settled(): installed from
+  // runtime-shared.js just after this object, the same for both runtimes (#883).
 
-  /**
-   * Which behaviors are in flight right now, e.g. "card x3, table" (#961/#962).
-   * "Timed out" on its own has cost this project enough time; a stuck
-   * readiness signal has to say what it is stuck on.
-   * @type {string}
-   */
-  get pendingBehaviors() {
-    return injectionTracker.describe();
-  },
-
-  /**
-   * Resolve once no injection has been in flight for `quiet` ms (#961/#962).
-   *
-   *     await WB.whenIdle();              // default: 10s budget, 50ms quiet
-   *     await WB.whenIdle({ timeout: 30000 });
-   *
-   * Replaces `await page.waitForTimeout(4000)` — a guess at how long building
-   * takes — with a wait for building actually being over. Rejects rather than
-   * resolving on timeout: a readiness signal that gives up quietly turns a hung
-   * build into a green test.
-   *
-   * On the lazy runtime, below-the-fold elements are deferred deliberately, so
-   * idle means "no work in flight", not "everything is injected". Scroll first.
-   *
-   * @param {{ timeout?: number, quiet?: number }} [options]
-   * @returns {Promise<void>}
-   */
-  whenIdle(options) {
-    return injectionTracker.whenIdle(options);
-  },
-
-  /**
-   * Resolve when every unit of work, in either runtime, has called back
-   * (#962). Promise, callback, or listen for `wb:settled`. See
-   * injection-tracker.js settled() for the contract.
-   * @param {(() => void) | { timeout?: number }} [callbackOrOptions]
-   * @param {{ timeout?: number }} [options]
-   * @returns {Promise<void>}
-   */
-  settled(callbackOrOptions, options) {
-    return settledCall(callbackOrOptions, options);
-  },
 
   /**
    * Has this element finished building? SETTLED, not necessarily successful —
@@ -659,26 +600,8 @@ const WB = {
    * @param {string} behaviorName - Behavior to remove (or all if not specified)
    */
   remove(element, behaviorName = null) {
-    const elementBehaviors = applied.get(element);
-    if (!elementBehaviors) return;
-
-    if (behaviorName) {
-      // Remove specific behavior
-      const index = elementBehaviors.findIndex(b => b.name === behaviorName);
-      if (index !== -1) {
-        const { cleanup } = elementBehaviors[index];
-        if (typeof cleanup === 'function') cleanup();
-        elementBehaviors.splice(index, 1);
-        pubsub.publish('wb:remove', { element, behavior: behaviorName });
-      }
-    } else {
-      // Remove all behaviors
-      elementBehaviors.forEach(({ name, cleanup }) => {
-        if (typeof cleanup === 'function') cleanup();
-        pubsub.publish('wb:remove', { element, behavior: name });
-      });
-      applied.delete(element);
-    }
+    removeApplied(applied, element, behaviorName,
+      (name) => pubsub.publish('wb:remove', { element, behavior: name }));
   },
 
   /**
@@ -1193,25 +1116,14 @@ dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length
       }
     });
 
-    observer.observe(root, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: attributeFilter
-    });
-
-    WB._observer = observer;
-    return observer;
+    return startObserving(WB, observer, root, attributeFilter);
   },
 
   /**
    * Stop observing DOM changes
    */
   disconnect() {
-    if (WB._observer) {
-      WB._observer.disconnect();
-      WB._observer = null;
-    }
+    stopObserving(WB);
   },
 
   /**
@@ -1248,12 +1160,9 @@ dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length
    * @param {Object} options - Configuration options
    */
   async init(options = {}) {
+    // autoInject has no default — see the setConfig() call below for why.
+    const { shouldScan, shouldObserve, theme, debug, autoInject } = commonInitOptions(options);
     const {
-      scan: shouldScan = true,
-      observe: shouldObserve = true,
-      theme = null,
-      debug = false,
-      autoInject, // No default here — see the setConfig() call below for why.
       prefix = 'x', // Default prefix
       useSchemas = true, // v3.0: Enable schema-based DOM building
       // Base-path aware (relative to this module) so schemas load under any base —
@@ -1357,25 +1266,8 @@ dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length
     //
     // The `loading` branch deliberately does not await: init() must return
     // without waiting for DOM ready, as before.
-    if (shouldScan && typeof document !== 'undefined') {
-      WB.ready = document.readyState === 'loading'
-        ? new Promise((resolve) => {
-            document.addEventListener('DOMContentLoaded', () => resolve(WB.scan()));
-          })
-        : WB.scan();
-      if (document.readyState !== 'loading') await WB.ready;
-    } else {
-      WB.ready = Promise.resolve();
-    }
-
-    // Start observing
-    if (shouldObserve && typeof document !== 'undefined') {
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => WB.observe());
-      } else {
-        WB.observe();
-      }
-    }
+    // The scan and observer start themselves live in runtime-shared.js.
+    await bootDocument(WB, shouldScan, shouldObserve);
     
     // #334: SchemaBuilder.startObserver() used to run here unconditionally
     // alongside WB.observe() -- a second, independent MutationObserver
@@ -1411,6 +1303,8 @@ dlog('observe', `[WB.observe] MutationObserver triggered with ${mutations.length
   Theme,
   config: { get: getConfig, set: setConfig }
 };
+
+installReadiness(WB, injectionTracker, settledCall);
 
 // Global export
 if (typeof window !== 'undefined') {
