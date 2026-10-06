@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.313",
+      "date": "2026-10-05",
+      "summary": "The behavior-API verb gate only recognised members written (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1602\" target=\"_blank\" rel=\"noopener\">PR 1602</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/782\" target=\"_blank\" rel=\"noopener\">#782</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Verb gate reads every API member; retire clear/open/close</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/782\" target=\"_blank\" rel=\"noopener\">#782</a>",
+          "issues": [
+            782
+          ]
+        }
+      ],
+      "seeIt": "Open any page with an x-notes drawer and, in the browser console, run document.querySelector(&#39;[x-notes]&#39;).wbNotes.show() and then .hide(&#39;left&#39;). Before: show and hide were undefined (open() and collapseToSide(&#39;left&#39;) did it). Now: show() opens the drawer and hide(&#39;left&#39;) docks it left as it closes."
+    },
+    {
       "version": "1.0.312",
       "date": "2026-10-05",
       "summary": "On the home page a hard-edged band swept back and forth across the &quot;Build stunning UIs&quot; hero every 7 seconds, because the cosmic nebula layer is hero-sized but kept the card hero&#39;s sideways sheen animation. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1596\" target=\"_blank\" rel=\"noopener\">PR 1596</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1595\" target=\"_blank\" rel=\"noopener\">#1595</a>",
