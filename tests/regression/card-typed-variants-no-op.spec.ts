@@ -131,8 +131,8 @@ test.describe('Typed card variants actually differ from default', () => {
 
   test('cardvideo: minimal differs from default', async ({ page }) => {
     await inject(page, `
-      <div x-cardvideo id="v-default" variant="default" src="/demos/audio.mp3"></div>
-      <div x-cardvideo id="v-minimal" variant="minimal" src="/demos/audio.mp3"></div>
+      <div x-cardvideo id="v-default" variant="default" src="/tests/fixtures/media/sample.wav"></div>
+      <div x-cardvideo id="v-minimal" variant="minimal" src="/tests/fixtures/media/sample.wav"></div>
     `);
     const def = await surface(page, '#v-default');
     const minimal = await surface(page, '#v-minimal');
@@ -167,8 +167,8 @@ test.describe('Typed card variants actually differ from default', () => {
 
   test('cardimage: minimal differs from default', async ({ page }) => {
     await inject(page, `
-      <div x-cardimage id="ci-default" variant="default" src="/demos/audio.mp3" title="Image"></div>
-      <div x-cardimage id="ci-minimal" variant="minimal" src="/demos/audio.mp3" title="Image"></div>
+      <div x-cardimage id="ci-default" variant="default" src="/tests/fixtures/media/sample.wav" title="Image"></div>
+      <div x-cardimage id="ci-minimal" variant="minimal" src="/tests/fixtures/media/sample.wav" title="Image"></div>
     `);
     const def = await surface(page, '#ci-default');
     const minimal = await surface(page, '#ci-minimal');

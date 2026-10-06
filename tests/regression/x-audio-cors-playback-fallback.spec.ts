@@ -51,7 +51,7 @@ test('the error handler retries without crossOrigin exactly once when show-eq ca
       crossOriginAfterRetry: audioEl.crossOrigin,
       srcStillSet: audioEl.src.includes('sample.wav'),
     };
-  }, `${baseURL}/demos/sample.wav`);
+  }, `${baseURL}/tests/fixtures/media/sample.wav`);
 
   expect(result.crossOriginBeforeRetry, 'show-eq must set crossOrigin before any failure').toBe('anonymous');
   expect(result.crossOriginAfterRetry, 'the retry must clear crossOrigin so playback works without CORS support').toBeNull();

@@ -965,6 +965,13 @@ footer a:hover {
   opacity: 0.8;
 }
 
+/* #742: where a blocked navigation would have gone. */
+.behaviors-live__events-note {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  word-break: break-all;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
    #744 — John: "when full screen show both navigator and the rendered side
    plus the search elements."

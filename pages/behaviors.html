@@ -16,7 +16,7 @@
      wb-starter - BEHAVIORS SHOWCASE
      Auto-generated from behaviors.schema.json
      ═══════════════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.287">
+<link rel="stylesheet" href="src/styles/pages/behaviors.css?v=1.0.296">
 
 <div id="behaviors-hero" class="page__hero">
   <!-- #774 -- John: "remove these ... We already know where we are."
@@ -2656,9 +2656,17 @@
         ? ` <span class="behaviors-live__events-from">from ${describeElement(root)}</span>` : '';
       const li = document.createElement('li');
       li.className = 'behaviors-live__events-item';
+      // #742: a blocked navigation names where it would have gone. Built as a
+      // text node: the destination comes from the example's own markup.
       li.innerHTML =
         `<code class="behaviors-live__events-type">${e.type}</code>` +
         `<span class="behaviors-live__events-target">${from}</span>${origin}`;
+      if (e.note) {
+        const note = document.createElement('span');
+        note.className = 'behaviors-live__events-note';
+        note.textContent = e.note;
+        li.appendChild(note);
+      }
       eventsLog.prepend(li);
       eventsEmpty.hidden = true;
       eventCount++;
@@ -2674,6 +2682,56 @@
     // must watch without participating. Capture also means it still sees events
     // a behavior stops from bubbling.
     WATCHED.forEach((type) => liveStage.addEventListener(type, logEvent, true));
+
+    // #742 -- clicking the `x-button variant="link"` example navigated the whole
+    // page to docs.html: the gallery, the search and the selection, gone. The
+    // stage demonstrates a behavior in place (John, #705: "leave it there but
+    // log the event via handler"), so NO example may navigate the host page.
+    // The attempt is logged instead, naming the destination, so the reader
+    // still learns what the control does.
+    //
+    // Registered after logEvent on the same node, so the click is logged first.
+    const destinationOf = (href) => {
+      try { return new URL(href, location.href).href; } catch { return href; }
+    };
+    const blockNavigation = (e, el, verb, href) => {
+      e.preventDefault();
+      logEvent({ type: 'navigation blocked', target: el, note: `${verb} ${destinationOf(href)}` });
+    };
+    const navigatingElement = (e) => {
+      const t = e.target instanceof Element ? e.target : null;
+      const el = t && t.closest('[href]');
+      if (!el || !liveExample.contains(el)) return null;
+      const href = el.getAttribute('href') || '';
+      // An in-page anchor moves the reader nowhere; leave it be.
+      return href && !href.startsWith('#') ? el : null;
+    };
+    liveStage.addEventListener('click', (e) => {
+      const el = navigatingElement(e);
+      if (!el) return;
+      blockNavigation(e, el, 'would open', el.getAttribute('href'));
+      // A real <a> navigates only by its default action, which is now cancelled,
+      // so its own click listeners still run. Anything else with an href
+      // (button(), x-button) navigates from its OWN click listener, which must
+      // never be reached.
+      if (el.tagName !== 'A') e.stopImmediatePropagation();
+    }, true);
+    liveStage.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const el = navigatingElement(e);
+      // A native <button>/<a> turns Enter into a click, handled above; a
+      // <div role="link"> navigates from its own keydown listener.
+      if (!el || el.tagName === 'A' || el.tagName === 'BUTTON') return;
+      blockNavigation(e, el, 'would open', el.getAttribute('href'));
+      e.stopImmediatePropagation();
+    }, true);
+    // Bubble phase: an ajax form has already cancelled its own submit by the
+    // time the event reaches the stage, and must keep working.
+    liveStage.addEventListener('submit', (e) => {
+      const form = e.target;
+      if (e.defaultPrevented || !(form instanceof HTMLFormElement) || !liveExample.contains(form)) return;
+      blockNavigation(e, form, 'would submit to', form.getAttribute('action') || location.href);
+    });
 
     // #705 -- John: "leave it there but log the event via handler". WATCHED only
     // covers native types, so a behavior's OWN event -- wb:dropdown:select,
