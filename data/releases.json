@@ -6,6 +6,49 @@
   ],
   "releases": [
     {
+      "version": "1.0.318",
+      "date": "2026-10-06",
+      "summary": "The long demo text went into each card&#39;s body, which shows before (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1599\" target=\"_blank\" rel=\"noopener\">PR 1599</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1605\" target=\"_blank\" rel=\"noopener\">#1605</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Cards.html keeps anchor arrival and reveal margins on Windows</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Port keep-alive timeout from so integration CI is not reset</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1605\" target=\"_blank\" rel=\"noopener\">#1605</a>",
+          "issues": [
+            1549,
+            1605
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Truncate test waits for helpers.css instead of racing it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Expandable examples spec uses the page fixture, not browser.newPage</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-cardexpandable examples reveal content; no toggle when nothing is hidden</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1598\" target=\"_blank\" rel=\"noopener\">#1598</a>",
+          "issues": [
+            1598
+          ]
+        }
+      ]
+    },
+    {
       "version": "1.0.317",
       "date": "2026-10-06",
       "summary": "The behavior is a highlight.js theme picker: its own header said so, its sync event was already x:codetheme:sync and its tests were already named code-theme-*. Only the name said &quot;code control&quot;, and the schema called it an &quot;Interactive code editor/viewer control&quot;. The module, schema, stylesheet, doc, demos, scripts and tests are now codetheme, and the schema says it picks a highlight.js theme. x-codecontrol keeps working: it is declared once in BEHAVIOR_ALIASES (src/core/attribute-aliases.js), and wb-lazy.js, the wb.js behavior registry and the CSS loader all read it from there. It is deliberately not in tag-map.js, so the inventories, reference docs and behaviors page list one behavior, not two. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1606\" target=\"_blank\" rel=\"noopener\">PR 1606</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/668\" target=\"_blank\" rel=\"noopener\">#668</a>",

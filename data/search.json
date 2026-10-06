@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5836
+    "totalWords": 5846
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.317\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.317\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.318\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.318\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-06"
@@ -1327,10 +1327,10 @@
       "title": "cardexpandable",
       "description": null,
       "headings": [],
-      "content": "# Expandable Card `x-cardexpandable` renders a card whose body is clipped to `lines` lines (or `max-height`) with a control that expands it to full length and back. Use it for long descriptions in a grid of cards that should line up. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | `string` | — | Card title | | `content` | `string` | — | Expandable content | | `expanded` | `boolean` | `false` | Initial expanded state | | `max-height` | `string` | `100px` | Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply. | | `lines` | `number` | `null` | Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set. | | `variant` | `default` · `elevated` · `bordered` | `default` | | ## Events - `wb:expandable:toggle` — Fired on expand/collapse ## Methods - `expand()` — Expands the card - `collapse()` — Collapses the card - `toggle()` — Toggles expanded state - `isExpanded()` — Returns expanded state Schema: [`cardexpandable.schema.json`](../../src/wb-models/cardexpandable.schema.json)",
+      "content": "# Expandable Card `x-cardexpandable` renders a card whose body is clipped to `lines` lines (or `max-height`) with a control that expands it to full length and back. Use it for long descriptions in a grid of cards that should line up. ## Usage ## When Show More appears Show More only appears when the collapsed card is hiding something. If the content already fits inside `lines` or `max-height` (a short text, or a card wide enough that the text wraps to fewer lines than the limit), there is nothing to reveal, so the card shows no button. It checks again whenever its width or content changes, and brings the button back once something is hidden. An expanded card always keeps its button, so it can collapse again. So an example of this card needs more content than its collapsed limit shows. A sentence or two under `lines=\"2\"` fits in two lines on any wide screen and demonstrates nothing. ## What happened (#1598, October 2026) Every x-cardexpandable example on the Behaviors page, and the seven on the cards demo page, had one short sentence or `content=\"Content\"`. At the preview's width each one fit inside its collapsed limit (69px collapsed and 69px expanded), so Show More flipped its label and arrow and revealed nothing. John: \"None of these show anything in the expanded area.\" The same symptom had been reported before and traced to the cards demo being too wide for its text. That fix narrowed that one demo (`size=\"sm\"`), and its test (`tests/regression/x-cardexpandable-toggle-visibly-changes.spec.ts`) checks one hand-built narrow card on the `max-height` path. It never rendered the real examples, or the `lines` clamp they use, so it stayed green while they were broken. The fix: - The examples (`data/behavior-examples.json`, `demos/site/cards.html`, the playground) now carry enough content to overflow their limit at any preview width. - The card hides Show More when there is nothing to reveal (above), so a short card no longer offers a toggle that does nothing. - `tests/regression/x-cardexpandable-examples-reveal-content.spec.ts` renders every catalogue example and every cards-page demo at 1100px and 1600px. Each must hide content when collapsed and grow on Show More, and a card whose content fits must show no toggle. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | `string` | — | Card title | | `content` | `string` | — | Expandable content | | `expanded` | `boolean` | `false` | Initial expanded state | | `max-height` | `string` | `100px` | Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply. | | `lines` | `number` | `null` | Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set. | | `variant` | `default` · `elevated` · `bordered` | `default` | | ## Events - `wb:expandable:toggle` — Fired on expand/collapse ## Methods - `expand()` — Expands the card - `collapse()` — Collapses the card - `toggle()` — Toggles expanded state - `isExpanded()` — Returns expanded state Schema: [`cardexpandable.schema.json`](../../src/wb-models/cardexpandable.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/cardfile",
@@ -6294,7 +6294,7 @@
       "docs/behaviors/searchfield",
       "docs/search"
     ],
-    "317": [
+    "318": [
       "pages/home"
     ],
     "320": [
@@ -6657,6 +6657,9 @@
     "1533": [
       "docs/standards/RELEASE-PROCESS"
     ],
+    "1598": [
+      "docs/behaviors/cardexpandable"
+    ],
     "2000": [
       "docs/behaviors/copybutton",
       "docs/behaviors/x-copybutton"
@@ -6702,6 +6705,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/table",
       "docs/card",
       "docs/claude/TIER3-REFERENCE",
@@ -7683,6 +7687,7 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/autosize",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
@@ -7911,6 +7916,7 @@
       "docs/behaviors/blockquote",
       "docs/behaviors/breadcrumb",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
@@ -8072,6 +8078,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/autosize",
       "docs/behaviors/button",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
@@ -8453,6 +8460,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/button",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
@@ -8865,6 +8873,7 @@
       "docs/audio",
       "docs/behaviors-reference",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/chip",
       "docs/behaviors/code",
       "docs/behaviors/darkmode",
@@ -8928,6 +8937,7 @@
       "docs/behaviors/address",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/chip",
       "docs/behaviors/data",
       "docs/behaviors/label",
@@ -8978,6 +8988,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/button",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/center",
       "docs/behaviors/dropdown",
       "docs/behaviors/floatinglabel",
@@ -9296,6 +9307,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/colorpicker",
       "docs/behaviors/copy",
       "docs/behaviors/copybutton",
@@ -9831,6 +9843,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
       "docs/behaviors/button",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/codetheme",
       "docs/behaviors/colorpicker",
@@ -10248,6 +10261,7 @@
       "pages/ai-permutation-test",
       "pages/themes",
       "docs/MVVM-MIGRATION-PLAN",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/clock",
       "docs/behaviors/span",
       "docs/committing-fixes",
@@ -10743,6 +10757,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/architecture/solidjscomparison",
       "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/dialog",
       "docs/behaviors/fix-card",
       "docs/behaviors/select",
@@ -11586,6 +11601,7 @@
       "docs/behaviors/address",
       "docs/behaviors/aside",
       "docs/behaviors/blockquote",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/cardlink",
       "docs/behaviors/data",
@@ -12024,6 +12040,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/chip",
       "docs/behaviors/dialog",
@@ -12077,6 +12094,7 @@
       "docs/behaviors/alert",
       "docs/behaviors/card",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/cardpricing",
       "docs/behaviors/cardstats",
@@ -12421,6 +12439,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
       "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/error",
       "docs/behaviors/fill",
       "docs/behaviors/stagelight",
@@ -12446,6 +12465,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/code",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/reel",
@@ -12607,6 +12627,7 @@
       "docs/audio",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/dialog",
       "docs/behaviors/dropdown",
       "docs/behaviors/header",
@@ -12935,6 +12956,7 @@
       "docs/behaviors/button",
       "docs/behaviors/card",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
@@ -13346,6 +13368,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/breadcrumb",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardnotification",
       "docs/behaviors/center",
@@ -13559,6 +13582,7 @@
       "docs/architecture/solidjscomparison",
       "docs/behaviors/accordion",
       "docs/behaviors/articles",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/colorpicker",
       "docs/behaviors/help",
       "docs/behaviors/label",
@@ -14365,6 +14389,7 @@
       "docs/AI",
       "docs/architecture/solidjscomparison",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/center",
       "docs/behaviors/icon",
       "docs/behaviors/ripple",
@@ -14398,6 +14423,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/card",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
@@ -14958,6 +14984,7 @@
       "docs/BRANCH_PROTECTION",
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/solidjscomparison",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/radio",
       "docs/behaviors/span",
@@ -15126,6 +15153,7 @@
       "docs/MVVM-MIGRATION",
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/codetheme",
       "docs/behaviors/cover",
       "docs/behaviors/data",
@@ -15285,6 +15313,7 @@
     "wide": [
       "pages/behaviors",
       "docs/MVVM-MIGRATION",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/figure",
       "docs/behaviors/fill",
@@ -15324,6 +15353,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/autocomplete",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/codetheme",
       "docs/behaviors/control",
       "docs/behaviors/fill",
@@ -15508,6 +15538,7 @@
       "docs/behaviors/button",
       "docs/behaviors/card",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
@@ -15686,6 +15717,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/articles",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/center",
       "docs/behaviors/control",
       "docs/behaviors/fieldset",
@@ -15730,6 +15762,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/articles",
       "docs/behaviors/autosize",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/chip",
       "docs/behaviors/demo",
       "docs/behaviors/dropdown",
@@ -15824,6 +15857,7 @@
       "docs/behaviors/address",
       "docs/behaviors/autocomplete",
       "docs/behaviors/carddraggable",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardimage",
       "docs/behaviors/center",
       "docs/behaviors/chip",
@@ -15911,6 +15945,7 @@
       "docs/behaviors/autocomplete",
       "docs/behaviors/breadcrumb",
       "docs/behaviors/carddraggable",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/colorpicker",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/gallery",
@@ -16689,6 +16724,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/articles",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardvideo",
@@ -16845,6 +16881,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/blockquote",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardvideo",
       "docs/behaviors/checkbox",
@@ -16941,6 +16978,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/auto-injection",
       "docs/behaviors-reference",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/dl",
       "docs/behaviors/grid",
       "docs/behaviors/mdhtml",
@@ -17010,6 +17048,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/aside",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/countdown",
       "docs/behaviors/file",
@@ -17039,6 +17078,7 @@
       "pages/themes",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/auto-injection",
+      "docs/behaviors/cardexpandable",
       "docs/pce-candidates",
       "docs/properties",
       "demos/index",
@@ -17089,6 +17129,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/glass",
       "docs/behaviors/rainbow",
       "docs/claude/TIER1-LAWS",
@@ -17171,6 +17212,7 @@
       "docs/behaviors-reference",
       "docs/behaviors/avatar",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/clock",
       "docs/behaviors/copybutton",
@@ -17467,6 +17509,7 @@
       "docs/architecture/WB-PREFIX-AUDIT",
       "docs/behaviors/articles",
       "docs/behaviors/autosize",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/chip",
       "docs/behaviors/dropdown",
       "docs/behaviors/fieldset",
@@ -18569,6 +18612,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/articles",
       "docs/behaviors/autosize",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/chip",
       "docs/behaviors/dropdown",
       "docs/behaviors/fieldset",
@@ -18834,6 +18878,7 @@
       "docs/behaviors/button",
       "docs/behaviors/card",
       "docs/behaviors/carddraggable",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardprofile",
@@ -20133,6 +20178,7 @@
       "docs/behaviors/breadcrumb",
       "docs/behaviors/button",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardstats",
@@ -20373,7 +20419,8 @@
     ],
     "reveal": [
       "pages/features",
-      "pages/hero-variants"
+      "pages/hero-variants",
+      "docs/behaviors/cardexpandable"
     ],
     "marquee": [
       "pages/features"
@@ -20901,6 +20948,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
       "docs/behaviors/blockquote",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/center",
       "docs/behaviors/chip",
@@ -21806,6 +21854,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardimage",
       "docs/behaviors/fieldset",
@@ -21832,6 +21881,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/button",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/center",
       "docs/behaviors/codetheme",
@@ -22005,6 +22055,7 @@
       "docs/AI",
       "docs/behaviors/articles",
       "docs/behaviors/autosize",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardimage",
       "docs/behaviors/container",
       "docs/behaviors/figure",
@@ -22240,6 +22291,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors-reference",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/glass",
       "docs/behaviors/img",
@@ -22266,6 +22318,7 @@
     ],
     "sentence": [
       "pages/home",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/popover"
     ],
     "declared": [
@@ -22299,6 +22352,7 @@
     "again": [
       "pages/home",
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/shake",
       "docs/behaviors/toggle",
@@ -23228,6 +23282,7 @@
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/confetti",
       "docs/behaviors/dialog",
       "docs/behaviors/fill",
@@ -24419,6 +24474,7 @@
       "docs/auto-injection",
       "docs/behaviors-reference",
       "docs/behaviors/avatar",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/chip",
       "docs/behaviors/code",
       "docs/behaviors/codetheme",
@@ -25204,6 +25260,7 @@
       "docs/architecture/solidjscomparison",
       "docs/audits/X-USAGE-AUDIT",
       "docs/behaviors-reference",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardimage",
@@ -27698,6 +27755,7 @@
     ],
     "enough": [
       "docs/AI",
+      "docs/behaviors/cardexpandable",
       "docs/standards/RELEASE-PROCESS"
     ],
     "good": [
@@ -27745,6 +27803,7 @@
       "docs/AI",
       "docs/MVVM-MIGRATION-PLAN",
       "docs/audio",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/img",
       "docs/schema.migration",
       "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -27873,6 +27932,7 @@
     "being": [
       "docs/AI",
       "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/dialog",
       "docs/behaviors/scrollalong",
       "docs/behaviors/x-copybutton",
@@ -28202,6 +28262,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardvideo",
       "docs/behaviors/codetheme",
       "docs/behaviors/collapse",
@@ -28435,6 +28496,7 @@
       "docs/IMPROVEMENTS",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardpricing",
@@ -29284,6 +29346,7 @@
     ],
     "playground": [
       "docs/IMPROVEMENTS",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/glass",
       "docs/behaviors/x-copybutton",
       "docs/linkedin-framework-agnostic",
@@ -29311,6 +29374,7 @@
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
       "docs/behaviors/articles",
       "docs/behaviors/button",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/dropdown",
       "docs/behaviors/fieldset",
@@ -29448,6 +29512,7 @@
       "docs/IMPROVEMENTS",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/claude/TOOLING-INVENTORY",
       "docs/committing-fixes",
       "docs/linkedin-update-article",
@@ -29888,6 +29953,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/button",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/cardnotification",
@@ -30571,6 +30637,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/card",
       "docs/behaviors/cardbutton",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardfile",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
@@ -31197,6 +31264,7 @@
       "docs/MVVM-MIGRATION-PLAN",
       "docs/behaviors/accordion",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/glass",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS",
       "docs/standards/V3-STANDARDS"
@@ -34928,6 +34996,7 @@
       "docs/architecture/proposals/proposed-custom-elements",
       "docs/auto-injection",
       "docs/behaviors/carddraggable",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardhero",
       "docs/behaviors/dialog",
       "docs/behaviors/notes",
@@ -34988,7 +35057,8 @@
       "demos/playground"
     ],
     "offers": [
-      "docs/architecture/WB-PREFIX-AUDIT"
+      "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/behaviors/cardexpandable"
     ],
     "articles": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -35040,6 +35110,7 @@
     ],
     "happened": [
       "docs/architecture/WB-PREFIX-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/testing-strategy"
     ],
     "migrated": [
@@ -36249,6 +36320,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
       "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardprofile",
       "docs/behaviors/dl",
       "docs/behaviors/time",
@@ -36298,6 +36370,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/mdhtml",
       "docs/behaviors/x-copybutton",
       "docs/claude/PAGE-GENERATION",
@@ -36409,6 +36482,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/card",
       "docs/behaviors/carddraggable",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/checkbox",
       "docs/behaviors/cluster",
       "docs/behaviors/codetheme",
@@ -36780,6 +36854,7 @@
     "spec": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/colorpicker",
       "docs/behaviors/help",
       "docs/behaviors/label",
@@ -36982,6 +37057,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/button",
       "docs/behaviors/card",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/cardportfolio",
       "docs/behaviors/cardprofile",
       "docs/behaviors/cardtestimonial",
@@ -37204,6 +37280,7 @@
     "ts": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/behaviors/accordion",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/colorpicker",
       "docs/behaviors/help",
       "docs/behaviors/label",
@@ -37758,7 +37835,8 @@
       "demos/frameworks"
     ],
     "stayed": [
-      "docs/architecture/solidjscomparison"
+      "docs/architecture/solidjscomparison",
+      "docs/behaviors/cardexpandable"
     ],
     "registries": [
       "docs/architecture/solidjscomparison",
@@ -38204,6 +38282,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/chip",
       "docs/behaviors/figure",
       "docs/behaviors/radio",
@@ -38592,6 +38671,7 @@
     "symptom": [
       "docs/audio",
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
+      "docs/behaviors/cardexpandable",
       "docs/standards/RELEASE-PROCESS",
       "docs/testing-strategy"
     ],
@@ -40332,6 +40412,7 @@
     ],
     "limit": [
       "docs/behaviors/articles",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/counter",
       "docs/behaviors/switcher",
       "docs/behaviors/textarea",
@@ -41181,6 +41262,7 @@
     ],
     "arrow": [
       "docs/behaviors/button",
+      "docs/behaviors/cardexpandable",
       "docs/behaviors/reel",
       "docs/behaviors/searchfield"
     ],
@@ -41484,6 +41566,100 @@
       "docs/home-page",
       "docs/inline-editing"
     ],
+    "hiding": [
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/glass"
+    ],
+    "fits": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "fewer": [
+      "docs/behaviors/cardexpandable",
+      "demos/site/content"
+    ],
+    "whenever": [
+      "docs/behaviors/cardexpandable",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+    ],
+    "brings": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "demonstrates": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "october": [
+      "docs/behaviors/cardexpandable",
+      "docs/compliance/iso-42001-alignment"
+    ],
+    "seven": [
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/clock"
+    ],
+    "69px": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "flipped": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "revealed": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "reported": [
+      "docs/behaviors/cardexpandable",
+      "docs/claude/TIER1-LAWS",
+      "docs/claude/TOOLING-INVENTORY",
+      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
+      "docs/standards/ISSUE-SIGNATURE-BLOCK"
+    ],
+    "traced": [
+      "docs/behaviors/cardexpandable",
+      "docs/standards/CSS-CLASS-CONVENTION"
+    ],
+    "narrowed": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "visibly": [
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/fieldset"
+    ],
+    "narrow": [
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/grid",
+      "docs/behaviors/navbar",
+      "docs/behaviors/switcher"
+    ],
+    "clamp": [
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/truncate"
+    ],
+    "overflow": [
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/reel",
+      "docs/behaviors/ripple",
+      "docs/behaviors/scrollable",
+      "docs/home-page",
+      "docs/property-viewer",
+      "docs/standards/ERROR-LOG-RETENTION"
+    ],
+    "catalogue": [
+      "docs/behaviors/cardexpandable",
+      "demos/playground"
+    ],
+    "1100px": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "1600px": [
+      "docs/behaviors/cardexpandable"
+    ],
+    "grow": [
+      "docs/behaviors/cardexpandable",
+      "docs/behaviors/fill",
+      "docs/behaviors/grid",
+      "docs/behaviors/img",
+      "docs/behaviors/sidebarlayout",
+      "docs/behaviors/ul",
+      "docs/property-viewer"
+    ],
     "100px": [
       "docs/behaviors/cardexpandable"
     ],
@@ -41496,10 +41672,6 @@
       "docs/behaviors/cluster",
       "docs/behaviors/glass",
       "docs/behaviors/grid"
-    ],
-    "clamp": [
-      "docs/behaviors/cardexpandable",
-      "docs/behaviors/truncate"
     ],
     "isexpanded": [
       "docs/behaviors/cardexpandable"
@@ -42201,9 +42373,6 @@
       "docs/claude/TOOLING-INVENTORY",
       "docs/escape-hatches",
       "docs/schema-test-value"
-    ],
-    "seven": [
-      "docs/behaviors/clock"
     ],
     "segment": [
       "docs/behaviors/clock"
@@ -43285,9 +43454,6 @@
       "docs/code-examples-standard",
       "demos/frameworks"
     ],
-    "visibly": [
-      "docs/behaviors/fieldset"
-    ],
     "grouping": [
       "docs/behaviors/fieldset",
       "docs/behaviors/radio",
@@ -43363,14 +43529,6 @@
       "docs/behaviors/fill",
       "docs/behaviors/sidebarlayout",
       "docs/behaviors/switcher",
-      "docs/property-viewer"
-    ],
-    "grow": [
-      "docs/behaviors/fill",
-      "docs/behaviors/grid",
-      "docs/behaviors/img",
-      "docs/behaviors/sidebarlayout",
-      "docs/behaviors/ul",
       "docs/property-viewer"
     ],
     "loses": [
@@ -43575,9 +43733,6 @@
     "busier": [
       "docs/behaviors/glass"
     ],
-    "hiding": [
-      "docs/behaviors/glass"
-    ],
     "alike": [
       "docs/behaviors/glass",
       "docs/standards/DEMOS-AND-DOCS-STANDARDS"
@@ -43660,11 +43815,6 @@
     ],
     "6366f1": [
       "docs/behaviors/glow"
-    ],
-    "narrow": [
-      "docs/behaviors/grid",
-      "docs/behaviors/navbar",
-      "docs/behaviors/switcher"
     ],
     "screens": [
       "docs/behaviors/grid",
@@ -44457,14 +44607,6 @@
     ],
     "itemwidth": [
       "docs/behaviors/reel"
-    ],
-    "overflow": [
-      "docs/behaviors/reel",
-      "docs/behaviors/ripple",
-      "docs/behaviors/scrollable",
-      "docs/home-page",
-      "docs/property-viewer",
-      "docs/standards/ERROR-LOG-RETENTION"
     ],
     "mandatory": [
       "docs/behaviors/reel",
@@ -45908,12 +46050,6 @@
     "froze": [
       "docs/claude/TIER1-LAWS"
     ],
-    "reported": [
-      "docs/claude/TIER1-LAWS",
-      "docs/claude/TOOLING-INVENTORY",
-      "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
-      "docs/standards/ISSUE-SIGNATURE-BLOCK"
-    ],
     "meaningless": [
       "docs/claude/TIER1-LAWS",
       "docs/linkedin-standards-article"
@@ -46454,9 +46590,6 @@
       "docs/schema-first-architecture",
       "docs/styles",
       "demos/schema-first-architecture"
-    ],
-    "october": [
-      "docs/compliance/iso-42001-alignment"
     ],
     "formal": [
       "docs/compliance/iso-42001-alignment"
@@ -48758,9 +48891,6 @@
     "paid": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
-    "traced": [
-      "docs/standards/CSS-CLASS-CONVENTION"
-    ],
     "crowded": [
       "docs/standards/CSS-CLASS-CONVENTION"
     ],
@@ -48951,9 +49081,6 @@
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "predicate": [
-      "docs/standards/ISSUE-SIGNATURE-BLOCK"
-    ],
-    "whenever": [
       "docs/standards/ISSUE-SIGNATURE-BLOCK"
     ],
     "validating": [
@@ -49887,9 +50014,6 @@
       "demos/playground",
       "demos/standalone"
     ],
-    "catalogue": [
-      "demos/playground"
-    ],
     "eliminating": [
       "demos/schema-first-architecture"
     ],
@@ -50195,9 +50319,6 @@
       "demos/site/content"
     ],
     "allocation": [
-      "demos/site/content"
-    ],
-    "fewer": [
       "demos/site/content"
     ],
     "pods": [
