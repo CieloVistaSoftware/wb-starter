@@ -38,16 +38,14 @@ export const EXAMPLES = {
 
   'x-cardbutton': `<article x-cardbutton
   title="Upgrade to Team"
-  content="Shared workspaces, audit history and SSO."
   primary="Start free trial"
-  secondary="Compare plans"></article>`,
+  secondary="Compare plans">Shared workspaces, audit history and SSO.</article>`,
 
-  'x-carddraggable': `<article x-carddraggable title="Drag me" content="Pick this card up and move it — the position sticks." constrain axis="both"></article>`,
+  'x-carddraggable': `<article x-carddraggable title="Drag me" constrain axis="both">Pick this card up and move it — the position sticks.</article>`,
 
   'x-cardexpandable': `<article x-cardexpandable
   title="What changed in 4.0"
-  content="Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through. Behaviors load on demand, so a page pays only for the ones it uses. Every attribute is declared in a schema, and that one schema drives validation, editor IntelliSense and these docs. Themes flow from a single set of variables, so changing one value recolors every behavior on the page. And there is still no build step: add the script tag and the browser does the rest."
-  lines="2"></article>`,
+  lines="2">Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through. Behaviors load on demand, so a page pays only for the ones it uses. Every attribute is declared in a schema, and that one schema drives validation, editor IntelliSense and these docs. Themes flow from a single set of variables, so changing one value recolors every behavior on the page. And there is still no build step: add the script tag and the browser does the rest.</article>`,
 
   'x-cardfile': `<article x-cardfile filename="quarterly-report.pdf" file-type="pdf" size="2.4 MB" date="2026-08-14" href="#"></article>`,
 
@@ -79,8 +77,7 @@ export const EXAMPLES = {
   badge="Standard"></article>`,
 
   'x-cardminimizable': `<article x-cardminimizable
-  title="Build log"
-  content="tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s."></article>`,
+  title="Build log">tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.</article>`,
 
   'x-cardnotification': `<aside x-cardnotification
   variant="warning"

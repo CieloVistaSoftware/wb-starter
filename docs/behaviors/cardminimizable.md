@@ -6,8 +6,7 @@
 
 <div x-demo>
 <article x-cardminimizable
-  title="Build log"
-  content="tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s."></article>
+  title="Build log">tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.</article>
 </div>
 
 ## Attributes

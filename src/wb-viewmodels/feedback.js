@@ -530,10 +530,10 @@ export function chip(element, options = {}) {
   // Authored text is the label when no `label` attribute is given -- the same
   // primary-value rule input/rating/progress/timeline already follow, read the
   // same way (the schema builder has wiped innerHTML by now and stashed it on
-  // _wbOriginalSlot). Without it `<span x-chip>New</span>`, the form every
+  // _wbOriginalContent). Without it `<span x-chip>New</span>`, the form every
   // schema's test.setup and the schema viewer use, rendered an empty pill:
   // innerHTML is cleared below and the label fell back to ''.
-  const authoredLabel = (element._wbOriginalSlot || element.textContent || '').trim();
+  const authoredLabel = (element._wbOriginalContent || element.textContent || '').trim();
   const label = options.label ?? element.getAttribute('label') ?? authoredLabel;
   const icon = options.icon || element.getAttribute('icon') || '';
   // Bare (dismissible) and data-prefixed (data-dismissible) attributes both

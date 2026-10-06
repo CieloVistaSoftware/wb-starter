@@ -16,10 +16,10 @@ export function timeline(element, options = {}) {
   element.classList.add('x-timeline');
 
   // What the author wrote inside, as HTML. The schema builder has usually
-  // replaced it by now and kept the original in _wbOriginalSlot; '' there
+  // replaced it by now and kept the original in _wbOriginalContent; '' there
   // means the author wrote nothing, so the stamped placeholder in
   // innerHTML must not be read as authored markup.
-  const authored = (element._wbOriginalSlot ?? element.innerHTML ?? '').trim();
+  const authored = (element._wbOriginalContent ?? element.innerHTML ?? '').trim();
   const itemsAttr = element.getAttribute('items');
 
   // #1188: hand-written entries (an <article> with a real <time>, as

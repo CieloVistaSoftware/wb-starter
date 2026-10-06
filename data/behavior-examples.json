@@ -1130,30 +1130,30 @@
       ]
     },
     "x-cardbutton": {
-      "source": "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  content=\"Shared workspaces, audit history and SSO.\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\"></article>",
+      "source": "<article x-cardbutton\n  title=\"Upgrade to Team\"\n  primary=\"Start free trial\"\n  secondary=\"Compare plans\">Shared workspaces, audit history and SSO.</article>",
       "alternates": [],
       "examples": [
         {
           "label": "one action",
-          "source": "<article x-cardbutton title=\"Download report\" content=\"Q3 numbers, 2.4 MB PDF.\" primary=\"Open report\"></article>"
+          "source": "<article x-cardbutton title=\"Download report\" primary=\"Open report\">Q3 numbers, 2.4 MB PDF.</article>"
         },
         {
           "label": "long copy",
-          "source": "<article x-cardbutton title=\"Join the beta\" content=\"Get early access to new behaviors, a private feedback channel, and a say in what ships next. We read every message.\" primary=\"Request access\" secondary=\"Learn more\"></article>"
+          "source": "<article x-cardbutton title=\"Join the beta\" primary=\"Request access\" secondary=\"Learn more\">Get early access to new behaviors, a private feedback channel, and a say in what ships next. We read every message.</article>"
         }
       ]
     },
     "x-carddraggable": {
-      "source": "<article x-carddraggable title=\"Drag me\" content=\"Pick this card up and move it — the position sticks.\" constrain axis=\"both\"></article>",
+      "source": "<article x-carddraggable title=\"Drag me\" constrain axis=\"both\">Pick this card up and move it — the position sticks.</article>",
       "alternates": []
     },
     "x-cardexpandable": {
-      "source": "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  content=\"Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through. Behaviors load on demand, so a page pays only for the ones it uses. Every attribute is declared in a schema, and that one schema drives validation, editor IntelliSense and these docs. Themes flow from a single set of variables, so changing one value recolors every behavior on the page. And there is still no build step: add the script tag and the browser does the rest.\"\n  lines=\"2\"></article>",
+      "source": "<article x-cardexpandable\n  title=\"What changed in 4.0\"\n  lines=\"2\">Composition replaced inheritance: a tag maps to a behavior function that decorates the element in place, in light DOM. There is no component base class any more, and no shadow boundary to reach through. Behaviors load on demand, so a page pays only for the ones it uses. Every attribute is declared in a schema, and that one schema drives validation, editor IntelliSense and these docs. Themes flow from a single set of variables, so changing one value recolors every behavior on the page. And there is still no build step: add the script tag and the browser does the rest.</article>",
       "alternates": [],
       "examples": [
         {
           "label": "four lines visible",
-          "source": "<article x-cardexpandable title=\"Changelog\" content=\"Faster scans of the page for x-* attributes. A new dropdown behavior. Fewer network requests: a behavior's CSS loads with the behavior instead of all at once. Better focus handling in dialogs: focus moves into the dialog when it opens and returns to the button that opened it when it closes. Smaller CSS. Lazy behavior loading: a behavior's code loads only when a page uses it. A rewritten docs viewer. Times on the site now show in US Central. The Issues page shows what is being worked on now, with a note on what was done and how to see it. The version badge counts pushes to main, so the number on the page matches the release. The Releases page lists every release with what it fixed and how to see the change. Card heroes come in five variants: default, cosmic, split, minimal and gradient. Every date and time on the site goes through one helper, so no page shows the viewer's own time zone by mistake.\" lines=\"4\"></article>"
+          "source": "<article x-cardexpandable title=\"Changelog\" lines=\"4\">Faster scans of the page for x-* attributes. A new dropdown behavior. Fewer network requests: a behavior's CSS loads with the behavior instead of all at once. Better focus handling in dialogs: focus moves into the dialog when it opens and returns to the button that opened it when it closes. Smaller CSS. Lazy behavior loading: a behavior's code loads only when a page uses it. A rewritten docs viewer. Times on the site now show in US Central. The Issues page shows what is being worked on now, with a note on what was done and how to see it. The version badge counts pushes to main, so the number on the page matches the release. The Releases page lists every release with what it fixed and how to see the change. Card heroes come in five variants: default, cosmic, split, minimal and gradient. Every date and time on the site goes through one helper, so no page shows the viewer's own time zone by mistake.</article>"
         }
       ]
     },
@@ -1186,12 +1186,12 @@
       "alternates": []
     },
     "x-cardminimizable": {
-      "source": "<article x-cardminimizable\n  title=\"Build log\"\n  content=\"tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.\"></article>",
+      "source": "<article x-cardminimizable\n  title=\"Build log\">tsc --noEmit clean. 141 regression tests passed. Packaged in 4.2s.</article>",
       "alternates": [],
       "examples": [
         {
           "label": "long content",
-          "source": "<article x-cardminimizable title=\"Deploy log\" content=\"Pulled image. Ran migrations (3). Warmed caches. Health checks passed on 6 of 6 instances. Traffic shifted 10%, 50%, 100%.\"></article>"
+          "source": "<article x-cardminimizable title=\"Deploy log\">Pulled image. Ran migrations (3). Warmed caches. Health checks passed on 6 of 6 instances. Traffic shifted 10%, 50%, 100%.</article>"
         }
       ]
     },

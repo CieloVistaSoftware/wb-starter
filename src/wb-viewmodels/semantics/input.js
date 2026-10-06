@@ -74,7 +74,7 @@ export function input(element, options = {}) {
     // <input> host honoured them (#754).
     if (element.querySelector('input.x-input__field')) return () => {}; // already built by us (eager runtime already ran)
 
-    const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();
+    const authoredValue = (element._wbOriginalContent || element.textContent || '').trim();
     const label = element.getAttribute('label') || '';
     const placeholder = element.getAttribute('placeholder') || '';
     const value = element.getAttribute('value') || authoredValue;

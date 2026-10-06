@@ -249,10 +249,10 @@ export function drawer(element, options = {}) {
   // the schema-built panel's own text (title + close glyph + the schema's
   // "this is the content" default), not anything the author wrote. The
   // pre-wipe authored content is what schema-builder.js stashed on
-  // _wbOriginalSlot, so read that instead -- otherwise PATH A's content
+  // _wbOriginalContent, so read that instead -- otherwise PATH A's content
   // fallback below is the panel describing itself.
-  const originalText = schemaProcessed && element._wbOriginalSlot !== undefined
-    ? String(element._wbOriginalSlot).trim()
+  const originalText = schemaProcessed && element._wbOriginalContent !== undefined
+    ? String(element._wbOriginalContent).trim()
     : (element.textContent || '').trim();
 
   const authoredContent = options.content || element.getAttribute('content') || authoredAttr(element, 'drawer-content') || element.getAttribute('description') || originalText;
@@ -336,10 +336,10 @@ export function drawer(element, options = {}) {
       // The host is now empty (schema's $view build replaced its original
       // text with the backdrop/panel we just moved out). Restore its own
       // visible label: the pre-wipe slot content schema-builder.js stashed
-      // on _wbOriginalSlot, falling back to the configured title for
+      // on _wbOriginalContent, falling back to the configured title for
       // markup that predates that stash (defensive, shouldn't normally hit).
       if (!element.textContent.trim()) {
-        element.innerHTML = element._wbOriginalSlot || config.title;
+        element.innerHTML = element._wbOriginalContent || config.title;
       }
 
       builtPanel.classList.add(`x-drawer--${config.position}`);

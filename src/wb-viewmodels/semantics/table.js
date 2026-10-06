@@ -190,7 +190,7 @@ export function table(element, options = {}) {
   // schema-builder.js's processSchema() unconditionally wipes a schema-built
   // element's original content before rebuilding table.schema.json's $view
   // (an empty <thead>/<tbody> pair -- the schema declares no row-building
-  // logic at all) -- the wiped content is stashed as element._wbOriginalSlot
+  // logic at all) -- the wiped content is stashed as element._wbOriginalContent
   // ("nothing reads this unless a behavior explicitly opts in", per
   // schema-builder.js's own comment). table.js never opted in: the comment
   // it used to have here ("Logic removed... assume the table structure
@@ -255,7 +255,7 @@ export function table(element, options = {}) {
         console.warn(`[WB Table] failed to parse data/columns attributes: ${e.message}`);
       }
     } else if (element._wbOriginalHTML && element._wbOriginalHTML.trim()) {
-      // _wbOriginalSlot (schema-builder.js) is TEXT-only and can't carry
+      // _wbOriginalContent (schema-builder.js) is TEXT-only and can't carry
       // real markup -- _wbOriginalHTML is the actual pre-wipe innerHTML.
       const temp = document.createElement('div');
       temp.innerHTML = element._wbOriginalHTML;

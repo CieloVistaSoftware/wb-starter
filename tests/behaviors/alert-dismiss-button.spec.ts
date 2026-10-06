@@ -4,7 +4,7 @@
  * Root cause: schema-builder.js's buildStructure() always wiped an element's
  * innerHTML and, for an empty $view (alert/button/card/demo — the behavior
  * owns the DOM, not the schema), restored it by serializing element.innerHTML
- * to a string (data.slot) then reassigning it. WB.observe()'s MutationObserver
+ * to a string (data.content) then reassigning it. WB.observe()'s MutationObserver
  * independently calls processSchema() on reparented elements (e.g. demo.js
  * moving pre-existing children into its grid); when the schema wasn't cached
  * yet, that on-demand fetch could resolve AFTER feedback.js's alert() had

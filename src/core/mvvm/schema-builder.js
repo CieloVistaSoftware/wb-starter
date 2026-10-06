@@ -298,8 +298,14 @@ function extractData(element, schema) {
     applyDefaults(data, schema.properties);
   }
   
-  // Store original content as 'slot'
-  data.slot = element.innerHTML.trim();
+  // #968: what is written between the tags is the element's CONTENT --
+  // HTML's own word for it (every element is defined by its content model).
+  // It used to be stored as `slot` (Web Components vocabulary, Law 1) and
+  // aliased to `body` (which already means the document body). A `content`
+  // attribute, where a schema still declares one, is the fallback, never
+  // the other way round.
+  const authoredContent = element.innerHTML.trim();
+  if (authoredContent || data.content === undefined) data.content = authoredContent;
 
   // Extract named slots from children (v3.0 feature)
   element.querySelectorAll('[slot]').forEach(child => {
@@ -309,11 +315,6 @@ function extractData(element, schema) {
     }
   });
 
-  // Alias slot to body if not defined (common in v3 schemas)
-  if (data.body === undefined && data.slot) {
-    data.body = data.slot;
-  }
-  
   return data;
 }
 
@@ -374,7 +375,7 @@ function buildStructure(element, schema, data) {
   // Empty $view means the component's BEHAVIOR owns all DOM content, not
   // the schema (card #202, demo, alert, button). NEVER touch innerHTML in
   // that case. This used to always wipe element.innerHTML then restore it
-  // from data.slot (element.innerHTML captured as a string BEFORE the
+  // from data.content (element.innerHTML captured as a string BEFORE the
   // wipe) — a serialize/clear/reparse round-trip that silently destroys
   // any live state the behavior already attached (event listeners, etc.)
   // whenever this runs AFTER the behavior has built its real DOM. That
@@ -397,8 +398,8 @@ function buildStructure(element, schema, data) {
   // for good the moment $view replaces it, and the trigger renders empty
   // (#drawer root cause). Purely additive: nothing reads this unless a
   // behavior explicitly opts in.
-  element._wbOriginalSlot = data.slot || '';
-  // data.slot is TEXT only (extractData reads it for {{slot}} string
+  element._wbOriginalContent = data.content || '';
+  // data.content is TEXT only (extractData reads it for {{content}} string
   // interpolation) -- it can't round-trip real markup like a <thead>/
   // <tbody> pair of table rows. table.js needs the actual pre-wipe HTML
   // to restore <table>'s original rows after $view rebuilds an empty
@@ -408,7 +409,7 @@ function buildStructure(element, schema, data) {
   // because nothing could get the real rows back after this wipe.
   element._wbOriginalHTML = element.innerHTML;
 
-  // Clear existing content (we saved it as slot)
+  // Clear existing content (saved above as data.content)
   element.innerHTML = '';
 
   // Build from $view (MVVM format)
@@ -429,9 +430,9 @@ function buildStructure(element, schema, data) {
     return;
   }
   
-  // Fallback: just restore slot content
-  if (data.slot) {
-    element.innerHTML = data.slot;
+  // Fallback: just restore the content
+  if (data.content) {
+    element.innerHTML = data.content;
   }
 }
 
@@ -442,7 +443,7 @@ function buildStructure(element, schema, data) {
  *   "$view": [
  *     { "name": "header", "tag": "header", "createdWhen": "title OR subtitle" },
  *     { "name": "title", "tag": "h3", "parent": "header", "content": "{{title}}" },
- *     { "name": "main", "tag": "main", "required": true, "content": "{{slot}}" }
+ *     { "name": "main", "tag": "main", "required": true, "content": "{{content}}" }
  *   ]
  * 
  * Tags are lowercase per HTML5 standards.
@@ -499,8 +500,8 @@ function buildFromView(element, schema, data) {
     // Handle content
     if (part.content) {
       const content = interpolate(part.content, data);
-      // Use innerHTML if it's the slot OR looks like HTML
-      if (part.content === '{{slot}}' || /<[a-z][\s\S]*>/i.test(content)) {
+      // Use innerHTML for the content between the tags, or anything that looks like HTML
+      if (part.content === '{{content}}' || /<[a-z][\s\S]*>/i.test(content)) {
         el.innerHTML = content;
       } else if (content) {
         el.textContent = content; // strict text for everything else
@@ -564,10 +565,10 @@ function buildFromComplianceFormat(element, schema, data) {
     element.appendChild(el);
   }
   
-  // Add slot to main
+  // Put the content in main
   const main = element.querySelector('main, [class*="__main"]');
-  if (main && data.slot) {
-    main.innerHTML = data.slot;
+  if (main && data.content) {
+    main.innerHTML = data.content;
   }
 }
 
@@ -587,7 +588,7 @@ function createFromComplianceDef(selector, def, data, schema) {
   // Handle content
   if (def.content) {
     const content = interpolate(def.content, data);
-    if (def.content === '{{slot}}') {
+    if (def.content === '{{content}}') {
       el.innerHTML = content;
     } else if (content) {
       el.textContent = content;

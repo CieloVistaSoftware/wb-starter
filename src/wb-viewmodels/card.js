@@ -1143,19 +1143,20 @@ export function cardvideo(element, options = {}) {
     aspect: getAttr(element, options, 'aspect') || '16/9',
     // #608: same missing getAttribute('content') gap as cardimage() above.
     content: readOption(element, options, 'content') || element.innerHTML,
-    // cardvideo.schema.json declares `description`, not `subtitle`; it was
-    // never read. Render it where cardproduct renders its own description:
-    // as the header subtitle, unless an explicit subtitle already fills it.
+    // #968: one word, one placement. `subtitle` is the line under the title;
+    // `description` is the paragraph .x-card__description, never a subtitle.
     description: getAttr(element, options, 'description'),
     ...options
   };
-  if (config.description && !config.subtitle) config.subtitle = config.description;
 
   const base = composeCard(element, { ...config, behavior: 'cardvideo' });
   element.innerHTML = '';
 
   // Build header/main/footer
   base.buildStructure();
+  if (config.description) {
+    cardPart(element.querySelector(':scope > header') || element, 'p', 'x-card__description', config.description);
+  }
 
   // Video figure
   let retryCleanup = null;
@@ -1796,10 +1797,8 @@ export function cardproduct(element, options = {}) {
     ...options
   };
 
-  // Map description to subtitle if subtitle is missing, so composeCard picks it up
-  if (config.description && !config.subtitle) {
-    config.subtitle = config.description;
-  }
+  // #968: `description` is .x-card__description; it no longer stands in for
+  // the subtitle, which is its own word with its own placement.
 
   const base = composeCard(element, { ...config, behavior: 'cardproduct' });
   element.innerHTML = '';
@@ -1832,7 +1831,8 @@ export function cardproduct(element, options = {}) {
   // [x-cardproduct]); the cssText copies are gone.
   info.className = 'x-card__product-info';
 
-  appendTitleAndSubtitle(info, base.config, 'h3', 'x-card__title x-card__product-title', 'div', 'x-card__subtitle x-card__product-desc');
+  appendTitleAndSubtitle(info, base.config, 'h3', 'x-card__title x-card__product-title', 'div', 'x-card__subtitle');
+  if (config.description) cardPart(info, 'div', 'x-card__description x-card__product-desc', config.description);
 
   // Rating
   if (config.rating) {
@@ -2200,9 +2200,10 @@ export function cardlink(element, options = {}) {
     titleGroup.appendChild(titleRow);
   }
 
-  // Description (subtitle or description)
-  const desc = config.description || base.config.subtitle;
-  if (desc) cardPart(titleGroup, 'div', 'x-card__description', desc);
+  // #968: the subtitle and the description each keep their own placement;
+  // a subtitle used to render as the description.
+  if (base.config.subtitle) cardPart(titleGroup, 'div', 'x-card__subtitle', base.config.subtitle);
+  if (config.description) cardPart(titleGroup, 'div', 'x-card__description', config.description);
 
   // Badge
   if (config.badge) {

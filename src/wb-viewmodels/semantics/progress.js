@@ -50,8 +50,8 @@ function hostFor(element) {
     host.setAttribute(name, value);
   }
   // Slot content is read below as the authored-value fallback; schema-builder
-  // stashes it on _wbOriginalSlot before wiping innerHTML, so carry both.
-  if (element._wbOriginalSlot) host._wbOriginalSlot = element._wbOriginalSlot;
+  // stashes it on _wbOriginalContent before wiping innerHTML, so carry both.
+  if (element._wbOriginalContent) host._wbOriginalContent = element._wbOriginalContent;
   host.innerHTML = element.innerHTML;
 
   element.replaceWith(host);
@@ -66,7 +66,7 @@ export function progress(element, options = {}) {
   // clone of them, and show-value/animated were invisible to anything
   // checking what the behavior reads off the element it was applied to.
   const src = element;
-  const authoredValue = (src._wbOriginalSlot || src.textContent || '').trim();
+  const authoredValue = (src._wbOriginalContent || src.textContent || '').trim();
   const size = options.size || src.getAttribute('size') || 'md';
   const variant = options.variant || src.getAttribute('variant') || 'primary';
 

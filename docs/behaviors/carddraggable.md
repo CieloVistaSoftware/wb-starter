@@ -5,7 +5,7 @@
 ## Usage
 
 <div x-demo>
-<article x-carddraggable title="Drag me" content="Pick this card up and move it — the position sticks." constrain axis="both"></article>
+<article x-carddraggable title="Drag me" constrain axis="both">Pick this card up and move it — the position sticks.</article>
 </div>
 
 ## Attributes

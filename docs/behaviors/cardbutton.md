@@ -7,9 +7,8 @@
 <div x-demo>
 <article x-cardbutton
   title="Upgrade to Team"
-  content="Shared workspaces, audit history and SSO."
   primary="Start free trial"
-  secondary="Compare plans"></article>
+  secondary="Compare plans">Shared workspaces, audit history and SSO.</article>
 </div>
 
 ## Attributes
