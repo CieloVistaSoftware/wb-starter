@@ -113,6 +113,25 @@ native mapping and an explicit replacement behavior on the same host unless the
 combination is intentional and supported. More-specific mappings, such as
 `input[type="checkbox"]`, take precedence over generic mappings such as `input`.
 
+### Choosing a value or an action: select or x-dropdown
+
+**The test: does the user pick a value that the form submits, or run an
+action?** A value is `<select>`; an action is `x-dropdown` (#682).
+
+- **`<select>`** is the control for choosing a value. The platform supplies the
+  popup, keyboard model, mobile rendering, form participation and
+  accessibility, and nothing hand-built matches it. It takes `variant`, `size`,
+  `clearable`, `searchable` and `multiple` itself, so no wrapper is needed.
+- **`x-dropdown`** is for what `<select>` structurally cannot do: a menu of
+  actions ("Duplicate", "Export", "Delete"), items with rich content (icons,
+  secondary text, links), or a menu that stays open across several choices
+  (`close-on-select="false"`). An `<option>` holds text only and closes on pick.
+- **`<div x-select options='…'>`** is deprecated. It rebuilt a native control
+  in the light DOM to accept options as a JSON attribute, the one thing it still
+  adds now that `<select>` honours the attributes above, and that rebuild is
+  where #390, #448 and #497 came from. It keeps working; new markup writes a
+  `<select>` with `<option>` children.
+
 ## Naming and Attributes
 
 ### Tags and behavior attributes
