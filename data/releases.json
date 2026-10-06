@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.305",
+      "date": "2026-10-05",
+      "summary": "Sharing the site link on LinkedIn showed a generic purple lightning-bolt icon instead of the wb-starter logo. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1586\" target=\"_blank\" rel=\"noopener\">PR 1586</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Link-share preview shows the wb logo, not the lightning bolt</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
+          "issues": [
+            1585
+          ]
+        }
+      ],
+      "seeIt": "Paste https://cielovistasoftware.github.io/wb-starter/ into the LinkedIn Post Inspector (linkedin.com/post-inspector) and press Inspect. Before: the preview image is a white lightning bolt on a purple square. Now: the preview image is the wb-starter logo (browser window with brush, pencil and &lt;/&gt; globe)."
+    },
+    {
       "version": "1.0.304",
       "date": "2026-10-05",
       "summary": "On the Issues page, wheeling over an expanded issue scrolled the issue and the whole page together, so the reader lost their place mid-issue: the site-wide wheel fallback (#636) took &quot;the page did not move&quot; as &quot;native scrolling failed&quot; and pushed the page. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1584\" target=\"_blank\" rel=\"noopener\">PR 1584</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",
