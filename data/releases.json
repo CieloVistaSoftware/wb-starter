@@ -6,6 +6,42 @@
   ],
   "releases": [
     {
+      "version": "1.0.297",
+      "date": "2026-10-05",
+      "summary": "X-clock showed each visitor&#39;s own time; John wants Central. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1559\" target=\"_blank\" rel=\"noopener\">PR 1559</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1553\" target=\"_blank\" rel=\"noopener\">#1553</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/816\" target=\"_blank\" rel=\"noopener\">#816</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1307\" target=\"_blank\" rel=\"noopener\">#1307</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read the bordered card&#39;s border with transitions off</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1307\" target=\"_blank\" rel=\"noopener\">#1307</a>",
+          "issues": [
+            1307
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>X-clock shows US Central by default</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1553\" target=\"_blank\" rel=\"noopener\">#1553</a>",
+          "issues": [
+            1553
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>X-glow pulses, can glow the letters, and respects reduced motion</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/816\" target=\"_blank\" rel=\"noopener\">#816</a>",
+          "issues": [
+            816
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every date and time the site shows is US Central</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1553\" target=\"_blank\" rel=\"noopener\">#1553</a>",
+          "issues": [
+            1553
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick clock, with your computer set to another time zone. Before: the clock showed your own local time. Now: it shows Central (e.g. 17:26 while it is 07:26 in Tokyo), and timezone=&quot;local&quot; shows yours."
+    },
+    {
       "version": "1.0.296",
       "date": "2026-10-05",
       "summary": "On the live site the Error Log Viewer shows this browser&#39;s own log (localStorage), but Clear Log only asked a server that GitHub Pages does not have, so it said &quot;Failed to clear errors&quot; and every error stayed listed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1569\" target=\"_blank\" rel=\"noopener\">PR 1569</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1568\" target=\"_blank\" rel=\"noopener\">#1568</a>",

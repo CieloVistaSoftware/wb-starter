@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5818
+    "totalWords": 5832
   },
   "documents": [
     {
@@ -32,7 +32,7 @@
       "content": "About Cielo Vista Software The team behind wb-starter Our Mission Cielo Vista Software builds tools that make the web simpler to write and easier to maintain. Our flagship product, wb-starter , is a zero-build, schema-first web-behavior framework: you compose UIs from wb-* tags and x-* behaviors in plain HTML — no bundler, no build step, no framework lock-in. Why wb-starter? ✅ Zero build — open an HTML file and it just works ✅ Composition over inheritance — stack x-* behaviors on any element ✅ Light DOM, no Shadow DOM — inspect and theme everything ✅ Schema-first — behaviors are described in data, not hand-wired ✅ Fully themeable — 20+ built-in themes, zero hardcoded colors Explore the Behaviors",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/ai-docs",
@@ -115,7 +115,7 @@
       "content": "AI Permutation Testing Find test missing attribute combos in WB behaviors. Permutation Engine Select Schema — choose a schema — ↻ Reset 🔧 Permutation Engine 📖 How to Use 📁 Project Pages 🧪 Test Results Activity Log Real-time trace of what the engine is doing and why. Step 2 — Extracted Dimensions These are the testable axes pulled from the schema's properties . Each enum or boolean becomes a dimension. Step 3 — All Test Coverage All combinations — existing from the schema plus newly generated gaps (outlined in green) . Step 4 — Missing Permutations (Gaps Found) Pairwise mode Copy All Missing as JSON Copy All as HTML Setup 💾 Save Missing to Schema Step 5 — Live Test Results 0 / 0 How to Use This Tool Schema-driven combinatorial testing — reads your behavior schemas, finds gaps in test coverage, and tells you exactly how to fix them. 1 Select a Schema Pick any *.schema.json from the dropdown. The tool fetches it live from src/wb-models/ and parses it. 2 Dimensions Are Extracted Automatically Every property with an enum array, a boolean type, or a set of defined values becomes a testable dimension. For example, variant with 7 enum values = 7 options, and any boolean property becomes a 2-value dimension (true/false). These are the axes of your test matrix. 3 Existing Coverage Is Shown The schema's test.matrix.combinations array is displayed. These are the combos you already test. The tool fingerprints each one so it can diff against what's generated. 4 Missing Permutations Are Computed Pairwise mode (default): Generates the minimum set of test cases where every pair of values across every pair of dimensions appears at least once. This catches interaction bugs (e.g., \"pill + error variant breaks layout\") while reducing test count by 80–90% vs full cartesian. Full cartesian: Every possible combination. Use this for small schemas (≤3 dimensions). For badge with 7 variants × 4 sizes × 4 booleans = 448 combos — that's too many, use pairwise. 5 Each Gap Is Explained With a Fix Every missing permutation shows: what combination is untested, why it matters (which interaction it covers), suggested HTML markup, and the JSON to paste into your schema's test matrix. 💾 Save Missing to Schema writes all missing permutations directly into the schema file — both test.matrix.combinations (JSON) and test.setup (HTML lines) — via the dev server's /api/save endpoint. One click, no copy-paste. The page auto-reloads the schema afterward so coverage stats update immediately. 6 Run All Tests Live Click ▶ Run All Tests Live to inject every missing permutation as a real DOM element right here in the browser. The runner creates each wb-* element, sets the attributes from the combo, waits for WB to initialize the behavior, then verifies 5 things: ① Element exists in DOM ② Root CSS class is present (e.g., x-badge ) ③ Each appliesClass from the schema is applied (e.g., x-badge--primary ) ④ Element has visible dimensions (not 0×0) ⑤ Element is not hidden via CSS. Failures show the expected vs. actual value and a suggested fix pointing to the specific ViewModel or CSS file to update. Project Pages Quick links to all pages in the WB-Starter project. The current page is highlighted. Live Test Results Select a schema and click ▶ Run All Tests Live in the Coverage panel to start. 0 / 0 # Status Source Description Checks Failed Details Coverage Status □ ▶ Run All Tests Live Select a schema to begin.",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/behaviors",
@@ -135,7 +135,7 @@
       "content": "at all, though, the page had no accessible name and no landmark for a screen-reader user to jump to -- and the fragment compliance gate failed on it, blocking every commit repo-wide. Hidden headings satisfy both: nothing appears on screen, the document regains its outline. --> Behaviors Search behaviors Filter Both Semantic x-attribute , deliberately not a : applyFilter() hides every `section[id]` that contains no visible , which would sweep up this panel (it holds injected markup, never a x-demo) and leave it display:none no matter what was clicked. --> &#8592; . Inside, they render in the header's flow, so opening one GREW the header and pushed the example down -- a taller box, never a cover. An earlier pass tried to satisfy the same ask with max-height: calc(100vh - 14rem), which made the box tall but left it in the header. The stay as the toggle and keep their open/closed state; the panels are positioned over .behaviors-live__body below, matched with :has(). --> API Documentation , which would drift from the real theme list the moment a theme was added. --> Events interact with the example above No events yet — click the example above and they appear here. Event handler in the header is open (CSS :has()). Same ids and classes as before, so every renderer that fills them is untouched. --> blocks now lives in data/behavior-examples.json (scripts/build-behavior-examples.mjs) and is rendered on demand by the live-preview panel above -- so the examples are still here, they are just no longer 13,000px of markup you have to scroll past to reach one. The jump-nav went with them: there is nothing below to jump to, and the selector reaches every behavior directly. -->",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/contact",
@@ -162,7 +162,7 @@
       "content": "📧 Contact Get in touch with us. We'd love to hear from you! Send a Message Name Email Subject Message Send Message Other Ways to Reach Us 123 Main Street City, State 12345 +1 (555) 123-4567 hello@example.com Monday - Friday 9:00 AM - 5:00 PM",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/demos",
@@ -182,7 +182,7 @@
       "content": "🎮 Demos Explore standalone demos and examples. 🔍 Content No demos match your search. 🃏 Card Behaviors 🔔 Feedback & Status 📝 Form Controls 🪟 Overlays & Popups 📐 Layout & Navigation 📄 Content & Media ✨ Visual Effects 🔧 Interactive & Utility 🃏 Cards & Layout This is a basic card with default styling. All features enabled. 🏗️ Narrative & Tools Forced Dark Mode — stays dark regardless of the global theme. 🎮 More Demos",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/docs",
@@ -229,7 +229,7 @@
       "content": "✨ Features Everything you need to build modern websites, with zero build step. Why WB Starter? No webpack, no npm install, no build process. Just open index.html and start editing. Change your site structure in site.json. Navigation, footer, branding - all in one place. 50 beautiful themes with full CSS variable support. Switch themes without page reload. Responsive layout that works on any screen size. Collapsible nav for mobile devices. Works with standard HTML elements. No custom elements or Shadow DOM complexity. Standard browser DevTools work perfectly. Inspect elements, edit styles, no magic. Behavior Categories 🃏 Cards (18 types) card, cardimage, cardvideo, cardbutton, cardhero, cardprofile, cardpricing, cardstats, cardtestimonial, cardproduct, cardnotification, cardfile, cardlink, cardhorizontal, cardoverlay, carddraggable, cardexpandable, cardminimizable 🎯 UI Behaviors (7) modal, tooltip, dropdown, accordion, tabs, collapse, mdhtml 📢 Feedback (10) toast, badge, progress, spinner, avatar, chip, alert, skeleton, divider, breadcrumb 🧭 Navigation (8) navbar, sidebar, menu, pagination, steps, treeview, backtotop, anchor 📊 Data Display (10) table, list, desclist, timeline, stat, empty, code, json, diff, kbd 🖼️ Media (10) image, gallery, video, audio, youtube, vimeo, embed, figure, carousel, ratio 📋 Forms (30) input, textarea, select, checkbox, radio, switch, range, colorpicker, datepicker, timepicker, file, otp, rating, tags, autocomplete, form, fieldset, label, help, error, inputgroup, formrow, stepper, search, password, masked, counter, floatinglabel, validator, autosize ✨ Animation (25) animate, fadein, fadeout, slidein, slideout, zoomin, zoomout, bounce, shake, pulse, flip, rotate, swing, tada, wobble, jello, heartbeat, flash, rubberband, typewriter, countup, parallax, reveal, marquee, confetti",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-03"
+      "modified": "2026-10-02"
     },
     {
       "id": "pages/hero-variants",
@@ -240,7 +240,7 @@
       "content": "Hero Variants 12 stunning hero section styles. Click any to see the code. Default The Original Hero Floating orbs with gradient mesh background. The signature WB look. Get Started → Minimal Clean & Simple Subtle gradient mesh background. Professional and polished. Learn More Split Content Left Perfect for showcasing products, apps, or screenshots alongside your message. Try Free Watch Demo Particles Reach for the Stars Animated starfield with shooting stars. Great for space, tech, or gaming themes. Explore Space → Diagonal Bold Angles Dynamic diagonal cut with gradient accent. Modern and eye-catching. Get Started is position:absolute; z-index:0, always behind the x-glass-card content box's z-index:2. --> Waves Ride the Wave Animated waves at the bottom. Perfect for ocean, music, or flow-themed sites. Dive In Grid Enter the Matrix Retro-futuristic grid with horizon glow. Cyberpunk vibes. Jack In → Spotlight Center Stage Dramatic spotlight from above. Perfect for launches and announcements. Reveal → is z-index:0, always behind the x-glass-card content box's z-index:2. --> Aurora Northern Lights Mesmerizing aurora borealis effect. Magical and calming. Experience Mesh Living Colors Animated gradient mesh that breathes. Rich and immersive. Explore Card Floating Glass Content in a frosted glass card. Elegant and focused. Sign Up Cosmic Deep Space The Orion Nebula. A view into a stellar nursery. Discover Distance: 1,344 Light Years Quick Reference Variant Class Best For Default .x-hero General purpose, landing pages Minimal .x-hero--minimal Professional, corporate Split .x-hero--split Product showcases, apps Particles .x-hero--particles Tech, gaming, space themes Diagonal .x-hero--diagonal Modern, dynamic brands Waves .x-hero--waves Music, ocean, flow themes Grid .x-hero--grid Cyberpunk, retro-futurism Spotlight .x-hero--spotlight Product launches, announcements Aurora .x-hero--aurora Calm, magical, nature themes Mesh .x-hero--mesh Creative, artistic sites Card .x-hero--card Focused CTAs, signups Cosmic .x-hero--cosmic Mystery, exploration themes Add variant class to .x-hero element",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/home",
@@ -298,10 +298,10 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.296\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.296\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.297\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.297\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/issues",
@@ -325,7 +325,7 @@
       "content": "🐛 Issues Live from GitHub — open and closed, including the full issue body. Filter and search Open Closed All Working on now ( 0 ) Copy Work completed Current Active: 0 Work done loading… Nothing recorded in this window. Closed Opened Commits Issues Loading issues… : auto-injects the table behavior (tag-map.js nativeMap), and `sortable` is its own attribute, so the column sorting is the framework's — the same code #1011 taught to sort dates and versions properly. Writing a private sort here would mean this page could disagree with every other table on the site. Rows are rebuilt by render(); the behavior sorts whatever rows it finds, so filtering and sorting do not fight. The default order is set in the DATA, not by the behavior: severity first, newest first within a severity. --> Priority # Title Kind State Labels Updated",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/links",
@@ -345,7 +345,7 @@
       "content": "Interesting Links A curated list of interesting resources. Content Add New Link Add Link",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/newpage",
@@ -387,7 +387,7 @@
       "content": "Offshoring Content Offshoring refers to the practice of relocating business processes or services to another country, typically to leverage cost advantages, access specialized skills, or improve efficiency.",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/privacy",
@@ -431,7 +431,7 @@
       "content": "Privacy Policy Last updated: February 2026 Information We Collect We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support. This may include your name, email address, and any other information you choose to provide. How We Use Your Information We use the information we collect to provide, maintain, and improve our services, to communicate with you, and to personalize your experience. Information Sharing We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties. This does not include trusted third parties who assist us in operating our website or servicing you, as long as those parties agree to keep this information confidential. Data Security We implement appropriate technical and organizational measures to protect the security of your personal information. However, no method of transmission over the Internet is 100% secure. Cookies We use cookies to enhance your experience on our site. You can choose to disable cookies through your browser settings, though this may affect the functionality of some features. Your Rights You have the right to access, correct, or delete your personal data. You may also object to or restrict certain processing of your data. To exercise these rights, please contact us. Contact Us If you have questions about this Privacy Policy, please contact us at hello@acmeco.com .",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/releases",
@@ -455,7 +455,7 @@
       "content": "Releases Each commit to main is a new release (1.0.N, the number on the version badge), and it deploys straight to cielovistasoftware.github.io/wb-starter , so the newest release below is what this site is running. Each one says what the issue was, what to do to see the change, and what changed, with links to its issues. Loading releases…",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/services",
@@ -491,7 +491,7 @@
       "content": "Our Services Everything you need to succeed 🎨 Web Design Beautiful, modern interfaces crafted to engage and convert your users. Every pixel optimized for your brand. ⚙️ Development Robust, scalable applications built with modern technologies and best practices for peak performance. 🚀 Deployment Fast, secure deployment with continuous monitoring and optimization for maximum uptime and reliability. 📞 Support Comprehensive support and maintenance to keep your platform running smoothly, 24/7 availability. Ready to Get Started? Let's work together to bring your vision to life. Contact Us",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/terms",
@@ -539,7 +539,7 @@
       "content": "Terms of Service Last updated: February 2026 Acceptance of Terms By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. Use of Services You agree to use our services only for lawful purposes and in accordance with these Terms. You agree not to use our services in any way that could damage, disable, or impair the service. Intellectual Property All content, features, and functionality of our services are owned by us and are protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission. User Content You retain ownership of any content you submit through our services. By submitting content, you grant us a non-exclusive, worldwide, royalty-free license to use, display, and distribute that content in connection with our services. Limitation of Liability Our services are provided \"as is\" without warranties of any kind. We shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our services. Modifications We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting. Your continued use of our services after changes constitutes acceptance of the modified terms. Governing Law These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles. Contact Us If you have questions about these Terms of Service, please contact us at hello@acmeco.com .",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "pages/themes",
@@ -652,7 +652,7 @@
       "content": "======= >>>>>>> 9f212527 (fix: restore the page-loading markup my rebase clobbered) 🎨 Themes Showcase 50 beautiful themes powered by the Harmonic Color System (HCS) min-width: 0; max-width: 100%) -- the right contract for a grid cell, and it beats the base floor on specificity without an !important. --> Harmonic Color System Every theme is built on wave-based color mathematics for perfect harmony 🌊 Wave-Based Color Derivation Colors are derived using wave frequencies. The primary hue acts as the fundamental frequency, with secondary and accent colors as harmonics. Primary 240° Secondary 60° (+180°) Accent 210° (-30°) Color Harmony Types Used in Themes Complementary Opposite colors on the wheel (180° apart) Secondary = Primary + 180° Used in: Dark, Light Analogous Adjacent colors on the wheel (±30°) Colors = Primary ± 30° Used in: Ocean, Midnight Triadic Three colors equally spaced (120° apart) Colors = Primary + 0°, 120°, 240° Used in: Sunset, Aurora Split-Complementary Primary + two adjacent to complement Colors = Primary, (Primary+180°)±30° Used in: Forest, Twilight 📐 The Mathematics Wave Frequency Formula f = c / λ Color hue mapped to wave frequency. Primary color establishes the base frequency. Harmonic Relationship H n = H 1 × n Secondary and accent colors derived as harmonic multiples of primary. Lightness Derivation L = 50% + (amplitude × sin(θ)) Light/dark variants calculated using sine wave amplitude modulation. Implementation Example ```javascript // Harmonic Color System - Theme Generation function generateHarmonicPalette(primaryHue, harmonyType = 'complementary') { const palette = { primary: primaryHue }; switch (harmonyType) { case 'complementary': palette.secondary = (primaryHue + 180) % 360; palette.accent = (primaryHue - 30 + 360) % 360; break; case 'analogous': palette.secondary = (primaryHue + 30) % 360; palette.accent = (primaryHue - 30 + 360) % 360; break; case 'triadic': palette.secondary = (primaryHue + 120) % 360; palette.accent = (primaryHue + 240) % 360; break; case 'split-complementary': palette.secondary = (primaryHue + 150) % 360; palette.accent = (primaryHue + 210) % 360; break; } return palette; } // Example: Generate Ocean theme (Analogous Blues) const oceanPalette = generateHarmonicPalette(200, 'analogous'); // Result: { primary: 200, secondary: 230, accent: 170 } ``` All 50 Themes Click any theme card to switch to that theme Aa Dark Standard dark theme 🌙 Dark Aa Light Standard light theme ☀️ Light Aa Cyberpunk Vibrant magenta/cyan 🌙 Dark Aa Ocean Calm blues 🌙 Dark Aa Sunset Warm oranges 🌙 Dark Aa Forest Natural greens 🌙 Dark Aa Midnight Deep monochromatic blue 🌙 Dark Aa Twilight Purple-blue with warm accents 🌙 Dark Aa Sakura Elegant pink ☀️ Light Aa Arctic Ice blue ☀️ Light Aa Desert Warm sand tones ☀️ Light Aa Neon Dreams Purple neon 🌙 Dark Aa Retro Wave Retro pink/purple 🌙 Dark Aa Lavender Soft purple pastels ☀️ Light Aa Emerald Rich jewel-toned green 🌙 Dark Aa Ruby Deep red elegance 🌙 Dark Aa Golden Luxurious gold and amber 🌙 Dark Aa Slate Professional gray tones 🌙 Dark Aa Coffee Warm brown tones 🌙 Dark Aa Mint Fresh mint green ☀️ Light Aa Noir High contrast black/white 🌙 Dark Aa Aurora Northern lights inspired 🌙 Dark Aa Grape Deep purple vibes 🌙 Dark Aa Coral Dark Vibrant coral with high saturation 🌙 Dark Aa Teal Dark Rich teal with high saturation 🌙 Dark Aa Indigo Dark Deep indigo with medium saturation 🌙 Dark Aa Plum Dark Rich plum with medium saturation 🌙 Dark Aa Sage Dark Muted sage green with low saturation 🌙 Dark Aa Amber Dark Deep amber with high saturation 🌙 Dark Aa Sapphire Dark Rich sapphire blue with high saturation 🌙 Dark Aa Turquoise Dark Bright turquoise with high saturation 🌙 Dark Aa Tomato Dark Vibrant tomato red with high saturation 🌙 Dark Aa Rose Dark Deep rose pink with medium saturation 🌙 Dark Aa Copper Dark Warm copper tones with medium saturation 🌙 Dark Aa Jade Dark Deep jade green with medium saturation 🌙 Dark Aa Amethyst Dark Rich amethyst purple with medium saturation 🌙 Dark Aa Marigold Dark Bright marigold with high saturation 🌙 Dark Aa Seafoam Light Light seafoam with medium saturation ☀️ Light Aa Peony Light Light peony pink with medium saturation ☀️ Light Aa Taupe Light Warm taupe with low saturation ☀️ Light Aa Khaki Light Warm khaki with medium saturation ☀️ Light Aa Steel Light Cool steel gray with low saturation ☀️ Light Aa Moss Light Muted moss green with low saturation ☀️ Light Aa Sand Light Warm sand tones with low saturation ☀️ Light Aa Blush Light Soft blush pink with low saturation ☀️ Light Aa Sage Light Light sage green with low saturation ☀️ Light Aa Mauve Light Soft mauve purple with low saturation ☀️ Light Aa Celadon Light Light celadon green with low saturation ☀️ Light Aa Linen Light Warm linen beige with low saturation ☀️ Light Aa Pistachio Light Light pistachio with medium saturation ☀️ Light Live Preview See how behaviors look in the current theme This card adapts to the current theme color",
       "keywords": [],
       "type": "page",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/AI",
@@ -674,7 +674,7 @@
       "content": "Release announcement: Local test gating and PR policy Summary ------- We now enforce a fast local test gate: `npm test` runs Tier‑1 (compliance) by default and must pass **before** commits or opening PRs. PRs opened with failing Tier‑1 checks will be labeled `needs-tests` and closed by maintainers if they are not converted to Draft and fixed. What changed ------------ - `npm test` runs Tier‑1 only (fast, local) - `npm run test:ci` runs the full-suite (CI / explicit local) - A fast **Tier‑1** GitHub Actions job has been added to run on PRs - A PR labeler will mark PRs with failing Tier‑1 as `needs-tests` and comment remediation steps - CONTRIBUTING.md and committing-fixes.md updated with the new gate and exception workflow Who this affects ----------------- All contributors. After pulling these changes run: ```bash npm install npm run prepare # installs git hooks ``` Short announcement (copy for Slack / Teams) ------------------------------------------ :information_source: Team — new test gating policy: please run `npm test` and ensure Tier‑1 passes **before** committing or opening PRs. If you need to iterate while debugging, open a **Draft** PR and document the failing test(s. ) If you'd like, I can post this to the repo's default channel and open a follow-up issue to track rollout and exemptions.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/BRANCH_PROTECTION",
@@ -975,7 +975,7 @@
       "content": "# Auto Injection (Preview) ## Overview **Auto Injection (Preview)** is a core feature of WB-Starter that automatically enhances standard HTML5 semantic elements with rich functionality. Instead of manually adding `x-behavior` attributes to every element, you simply write standard, semantic HTML, and WB \"wakes up\" the elements at runtime. This approach promotes: 1. **Cleaner Markup**: No proprietary attributes cluttering your HTML. 2. **Semantic Correctness**: Encourages the use of proper tags (` `, ` `, ` `). 3. **Accessibility**: Semantic elements are inherently more accessible. 4. **Portability**: Your HTML remains standard and works (without behavior) even if JS fails. --- ## How It Works When `WB.init({ autoInject: true })` is called, the library scans the DOM for specific tags and injects the corresponding behaviors. **Note: `autoInject` is `false` by default** to preserve semantic HTML behavior. ### Precedence Rule **Auto Injection is additive.** It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple` or `x-as-card`). If you want to **prevent** Auto Injection for a specific element, you must use the `ignore` attribute. ```html gets 'button' behavior (auto) AND 'ripple' behavior (explicit) --> Click Me gets 'card' behavior (auto) AND 'hero' behavior (explicit) --> ... will NOT become a WB Navbar --> ... ``` --- ## Mapping Reference The following HTML elements are automatically mapped to WB behaviors: ### Structure & Layout | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `card` | Becomes a card behavior | | ` ` | `navbar` | Becomes a responsive navigation bar | | ` ` | `sidebar` | Becomes a sidebar/drawer | | ` ` | `table` | Adds sorting and responsive styling | | ` ` | `details` | Enhances the expand/collapse animation | | ` ` | `dialog` | Adds modal management and backdrop | ### Forms | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `form` | Adds validation and AJAX handling | | ` ` | *varies* | `checkbox`, `radio`, `range`, or generic `input` styling | | ` ` | `select` | Custom dropdown styling | | ` ` | `textarea` | Auto-resizing text area | | ` ` | `button` | Ripple effects and loading states | | ` ` | `fieldset` | Group styling | | ` ` | `label` | Enhanced label interactions | ### Media & Text | HTML Tag | Injected Behavior | Description | |----------|-------------------|-------------| | ` ` | `image` | Lazy loading and fade-in | | ` ` | `video` | Custom player controls | | ` ` | `audio` | Custom audio player | | ` ` | `code` | Inline code styling | | ` ` | `pre` | Code block with copy button | | ` ` | `kbd` | Keyboard key styling | | ` ` | `mark` | Highlight styling | | ` ` | `progress` | Animated progress bar | --- ## Examples ### 1. Card Behavior **Explicit (Shorthand):** ```html Title Content ``` **Implicit (Auto Injection):** ```html Title Content ``` ### 2. Navigation Bar **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Home About ``` ### 3. Modal Dialog **Explicit (Shorthand):** ```html ... ``` **Implicit (Auto Injection):** ```html Settings × ... ``` --- ## Opting Out If you want to use a semantic element *without* the WB behavior, add the `ignore` attribute. ```html will NOT become a WB Navbar --> Just a link ``` ## Overriding If you want to use a semantic element but apply a *different* behavior, simply use the explicit syntax. ```html Welcome ```",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behavior-cross-reference",
@@ -1176,7 +1176,7 @@
       "content": "# articles Wraps a set of article-like children in a grid/list/masonry layout, with an optional heading and static pagination controls. Implemented by `articles()` in [src/wb-viewmodels/article.js](../../src/wb-viewmodels/article.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-articles` | | Attribute form | ` ` | | Behavior function | `articles()` — `src/wb-viewmodels/article.js` | | Pairs with | ` ` children, each of which is a [card](../behaviors/card.md) | | Semantic element | ` ` (schema default; the behavior itself doesn't add a role) | | Root CSS Class | ` ` | | Category | Layout | | Schema | [articles.schema.json](../../src/wb-models/articles.schema.json) — declares extra `limit`/`source` properties the JS never reads; only the attributes below actually do anything | ## Properties | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `layout` | string | `\"grid\"` | `grid`, `list`, or `masonry` — sets `.x-articles--{layout}` on the inner list wrapper | | `columns` | number | `\"3\"` | Column count for `grid`/`masonry` layouts, applied as the `--x-articles-columns` CSS custom property | | `title` | string | `\"\"` | Optional heading rendered above the list in a `.x-articles__header` | | `pagination` | boolean | `false` | Renders a static Previous/Page 1/Next control strip below the list — **no actual paging logic**, the buttons don't do anything and Previous is always `disabled` | ## Usage Each child is a plain ` `. An ` ` is a card, so every child gets its title, byline and body from the [card](../behaviors/card.md) behavior with no attribute needed. ### Grid layout TypeScript transforms JavaScript development with type safety: generics, unions, interfaces, and decorators. Master modern React with Hooks — useState, useEffect, useContext, and custom hooks for cleaner behaviors. ### List layout Build RESTful APIs with proper versioning, pagination, error handling, and documentation. Unit tests, integration tests, end-to-end tests, and performance testing for reliable software. ### Masonry layout Break monoliths into independently deployable services with service discovery and circuit breakers. Redux, Zustand, Recoil, and context patterns — choosing the right fit for your app's complexity. Core Web Vitals, Lighthouse, and Real User Monitoring for finding and fixing bottlenecks. ### With pagination controls AWS, Azure, and Google Cloud services, pricing models, and when to use each. Images, containers, registries, and compose for microservices. ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | `.x-articles` | Always | Base marker class | | `.x-articles__header` | `title` set | Wraps the ` ` heading | | `.x-articles__list` | Always | The container that actually holds the (moved) children | | `.x-articles--{grid,list,masonry}` | Always, per `layout` | Sets the actual layout mode (CSS grid columns / flex column / CSS columns) | | `.x-articles__pagination` | `pagination` | Wraps the Previous/label/Next controls | | `.x-articles__page-label` | `pagination` | The static \"Page 1\" text | ## Events `articles()` does not dispatch any custom events. - [Demo](../../demos/site/content.html#articles-articles-list-behavior) - [Schema](../../src/wb-models/articles.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behaviors/aside",
@@ -1536,10 +1536,10 @@
       "title": "clock",
       "description": null,
       "headings": [],
-      "content": "# Clock `x-clock` shows the current time in the element and updates it every second. `format=\"12\"` switches to a 12-hour clock with AM/PM, `show-seconds=\"false\"` drops the seconds, and `variant=\"led\"` gives a green seven-segment look. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `digital` · `led` · `analog` | `digital` | Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial; `analogue` is accepted). Any other value renders `digital` and logs a warning naming these three. | | `format` | `24` · `12` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. | | `show-seconds` | `true` · `false` | `true` | Show the seconds field. On unless set to `\"false\"`. | Schema: [`clock.schema.json`](../../src/wb-models/clock.schema.json)",
+      "content": "# Clock `x-clock` shows the current time in the element and updates it every second. `format=\"12\"` switches to a 12-hour clock with AM/PM, `show-seconds=\"false\"` drops the seconds, and `variant=\"led\"` gives a green seven-segment look. It shows US Central time (CDT/CST) unless `timezone` names another zone, or `timezone=\"local\"` asks for the visitor's own. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `variant` | `digital` · `led` · `analog` | `digital` | Clock face: `digital` (bold, default), `led` (green seven-segment) or `analog` (the same time text, not bold -- there is no dial; `analogue` is accepted). Any other value renders `digital` and logs a warning naming these three. | | `format` | `24` · `12` | `24` | `24` (default) or `12` for a 12-hour clock with AM/PM. | | `show-seconds` | `true` · `false` | `true` | Show the seconds field. On unless set to `\"false\"`. | | `timezone` | IANA zone · `local` | `America/Chicago` | The time zone the clock shows, e.g. `America/New_York`, or `local` for the visitor's own. An unknown name logs a warning and shows Central. | Schema: [`clock.schema.json`](../../src/wb-models/clock.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/cluster",
@@ -2044,11 +2044,16 @@
       "url": "/docs/behaviors/glow",
       "title": "glow",
       "description": null,
-      "headings": [],
-      "content": "# Glow `x-glow` gives the element a pulsing halo in `color`, which defaults to the theme's primary colour. Use it sparingly to pull attention to one control. ## Usage Start trial ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `color` | `string` | `var(--primary, #6366f1)` | Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it. | Schema: [`glow.schema.json`](../../src/wb-models/glow.schema.json)",
+      "headings": [
+        {
+          "level": 3,
+          "text": "Night mode"
+        }
+      ],
+      "content": "# Glow `x-glow` gives the element a halo in `color`, which defaults to the theme's primary colour: a pulsing ring around the box, or with `target=\"text\"` a steady glow around the letters. Use it sparingly to pull attention to one control or one heading. ## Usage Start trial A glowing heading: the letters glow, not the line box, and it holds steady. Night mode The box glow pulses; a reader who prefers reduced motion gets the glow without the pulse. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `target` | `box` \\| `text` | `box` | What glows. `box` haloes the element's rectangle and pulses; `text` haloes the letters with a steady text-shadow, for headings. | | `color` | `string` | `var(--primary, #6366f1)` | Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it. | Schema: [`glow.schema.json`](../../src/wb-models/glow.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/grid",
@@ -2350,7 +2355,7 @@
       "content": "# Password Behavior A password ` ` gets a show/hide button, and with `strength` a meter that rates the password as it is typed. `type=\"password\"` already says which behavior this is, so there is nothing to add: the runtime applies it to every password input (#1185). Writing `x-password` as well is redundant and the page audits flag it. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `toggle` | `boolean` | `false` | Show/hide password toggle | | `strength` | `boolean` | `false` | Show password strength meter | Schema: [`password.schema.json`](../../src/wb-models/password.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behaviors/popover",
@@ -2636,7 +2641,7 @@
       "content": "# skeleton A shimmering placeholder block for loading states — a single line, multiple stacked lines, a circle, or a rectangle. Implemented by `skeleton()` in [src/wb-viewmodels/feedback.js](../../src/wb-viewmodels/feedback.js). ## Overview | Property | Value | |----------|-------| | Attribute | `x-skeleton` | | Attribute form | ` ` | | Behavior function | `skeleton()` — `src/wb-viewmodels/feedback.js` | | Semantic element | ` ` | | Root CSS Class | none added by JS — `skeleton.css` styles the ` ` **tag** directly, so `x-skeleton` on any other element gets no shimmer styling from the base rule (only the `.x-skeleton--{variant}` modifier class is added) | | Category | Feedback | | Schema | [skeleton.schema.json](../../src/wb-models/skeleton.schema.json) — declares an `animated` property (default `true`); `animated=\"false\"` adds `.x-skeleton--static`, which stops the shimmer | ## Properties | Attribute | Type | Default | Description | |-----------|------|---------|-------------| | `variant` | string | `\"text\"` | `text`, `circle`, `rect` (schema also lists `card`, but no CSS rule styles that value differently from the default block) | | `lines` | number | `1` | For `variant=\"text\"` only — when greater than 1, replaces the block with that many stacked ` ` line placeholders (the last one rendered narrower for realism) | | `width` | string (CSS value) | none | Applied as inline `element.style.width` | | `height` | string (CSS value) | none | Applied as inline `element.style.height` | ## Usage ### Single line ### Multiple lines ### Circle (e.g. an avatar placeholder) ### Rectangle (e.g. an image placeholder) > `x-skeleton` on a non-` ` element still runs `skeleton()`, but only > gets the `.x-skeleton--{variant}` modifier class — the shimmer gradient and > sizing come from `skeleton.css`'s `x-skeleton { ... }` **tag** selector, which > a different tag never matches. Use the ` ` custom tag to get the > full visual, not `x-skeleton` on an arbitrary element. ## CSS Classes | Class | Applied when | Description | |-------|--------------|-------------| | ` ` (tag selector, not a class) | the host is a literal ` ` | Base shimmering block: gradient background, `1rem` height, animated | | `.x-skeleton--{variant}` | Always | `text`/`circle`/`rect` modifier | | `x-skeleton[variant=\"circle\"]` | `variant=\"circle\"` | 1:1 aspect ratio, fully rounded | | `x-skeleton[variant=\"rect\"]` | `variant=\"rect\"` | Sharp-ish corners (`4px` radius), height comes from the `height` attribute | | `x-skeleton > span` | `variant=\"text\"` and `lines > 1` | Each stacked line gets its own shimmer; the last line is narrower (`60%` width) | ## Events `skeleton()` does not dispatch any custom events. - [Demo](../../demos/site/feedback.html#skeleton-skeleton) - [Schema](../../src/wb-models/skeleton.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-26"
+      "modified": "2026-09-25"
     },
     {
       "id": "docs/behaviors/slidein",
@@ -2872,7 +2877,7 @@
       "content": "# ` ` Element The ` ` element represents a specific period in time. In WB-Starter, it's used for timestamps, dates, and durations in cards and content. ## Semantic Meaning - Machine-readable datetime with human-readable display - The `datetime` attribute contains ISO 8601 format - Can represent: dates, times, durations, date ranges ## `datetime` Attribute Formats | Type | Format | Example | |------|--------|---------| | Date | `YYYY-MM-DD` | `2024-12-15` | | Time | `HH:MM:SS` | `14:30:00` | | DateTime | `YYYY-MM-DDTHH:MM:SS` | `2024-12-15T14:30:00` | | With timezone | `YYYY-MM-DDTHH:MM:SSZ` | `2024-12-15T14:30:00Z` | | Duration | `P[n]Y[n]M[n]DT[n]H[n]M[n]S` | `PT2H30M` | | Year-Month | `YYYY-MM` | `2024-12` | | Year | `YYYY` | `2024` | | Week | `YYYY-W[n]` | `2024-W50` | ## WB Behaviors Using ` ` ### 1. Card File (`cardfile`) `x-cardfile` builds its own metadata line from the `date`/`size` attributes. **Note:** it renders `date` as plain text inside `.x-card__file-meta`, not a real ` ` element. ### 2. Card Notification (`cardnotification`) **Not achievable as a live demo:** `cardnotification`'s real attribute API (`variant`/`title`/`message`/`dismissible`) has no date/time field, and hand-authored children like the ` ` below are discarded — the behavior rebuilds its content from attributes only (see [`aside.md`](./aside.md)). Shown here as illustrative markup only; it will render without a timestamp. ```html is dropped --> 2 hours ago ``` ### 3. Timeline Behavior `x-timeline` only adds the `.x-timeline` class hook — it doesn't rebuild children, so hand-authored markup (including real ` ` elements) renders as-is. January 2024 Project Started ### 4. Relative Time Behavior (`relativetime`) `x-relativetime` computes its own live \"time ago\" text from `datetime` (or `date`) on load and refreshes it periodically — the element's own content is replaced, so the text below is illustrative only; the real rendered demo recomputes it live. ## Accessibility Considerations | Attribute | Purpose | |-----------|---------| | `datetime` | Machine-readable for screen readers | | Content | Human-readable display | | `aria-label` | Override if display is ambiguous | ## Example: Blog Post Metadata Understanding Semantic HTML By John Doe December 15, 2024 8 min read Last updated: December 18, 2024 at 2:30 PM ## CSS Styling ```css time { /* Often used inline, no special styling needed */ } time.x-card__file-date, time.x-card__notif-time { font-size: 0.75rem; color: var(--text-muted); } time.x-timeline__date { font-weight: 600; color: var(--primary); } /* Relative time with auto-update */ time[x-relativetime] { /* Will be updated by JavaScript */ } ``` ## JavaScript: Relative Time Updates ```javascript // Update relative times periodically function updateRelativeTimes() { document.querySelectorAll('time[datetime]').forEach(el => { const datetime = new Date(el.getAttribute('datetime')); const now = new Date(); const diff = now - datetime; // Format as relative time const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' }); if (diff < 60000) { el.textContent = 'just now'; } else if (diff < 3600000) { el.textContent = rtf.format(-Math.floor(diff / 60000), 'minute'); } else if (diff < 86400000) { el.textContent = rtf.format(-Math.floor(diff / 3600000), 'hour'); } else { el.textContent = rtf.format(-Math.floor(diff / 86400000), 'day'); } }); } // Update every minute setInterval(updateRelativeTimes, 60000); ``` ## Best Practices 1. **Always include `datetime`** - Even if display is relative 2. **Use ISO 8601** - Standard format for `datetime` attribute 3. **Localize display** - Use `Intl.DateTimeFormat` for human text 4. **Consider timezones** - Include timezone in `datetime` when relevant 5. **Durations** - Use ISO 8601 duration format (PT2H30M)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/behaviors/timeline",
@@ -3185,7 +3190,7 @@
       "content": "# TIER 2 — DOMAIN GUIDES (Read When Working In That Area) **Only load these when the task touches this domain.** **Don't read all of these every session — that defeats the purpose.** --- ## 🔧 CORE ARCHITECTURE Read when: modifying `src/core/`, behavior registration, behavior system, or WB.js | File | What It Covers | |------|---------------| | `docs/standards/V3-STANDARDS.md` | **THE** v3 spec — naming, file structure, syntax, BEM classes | | `docs/architecture.md` | Overall architecture overview | | `docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD.md` | Why `x-*` for behaviors, clean names for properties | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Schema JSON structure spec | | `docs/WB_BEHAVIOR_SYSTEM.md` | How behaviors attach to elements | | `docs/auto-injection.md` | How CSS/JS auto-loading works | | `docs/container-pattern.md` | Container behavior pattern | | `docs/escape-hatches.md` | How to override framework defaults | | `docs/architecture/proposals/proposed-custom-elements.md` | Custom elements proposals | | `docs/architecture/historical/X-PREFIX-MIGRATION-PHASE1.md` | X-prefix migration history | --- ## 🧩 BEHAVIORS Read when: working on a specific behavior — an `x-*` attribute or an auto-injected semantic element | File | What It Covers | |------|---------------| | `docs/behaviors/README.md` | Behavior catalog overview | | `docs/behaviors/cards/` | 20+ card variant specs (card, cardhero, cardimage, etc.) | | `docs/behaviors/semantic/` | Semantic HTML wrappers (address, article, aside, blockquote, etc.) | | `docs/behaviors/semantics/` | Form/interactive elements (button, checkbox, dialog, input, etc.) | | `docs/behaviors/effects/` | Visual effects (confetti, fireworks, snow) | | `docs/behaviors/feedback/` | Feedback behaviors | | `docs/behaviors/forms/` | Form behaviors | | `docs/behaviors/layout/` | Layout behaviors | | `docs/behaviors/navigation/` | Navigation behaviors | | `docs/behaviors/demo/` | Demo and showcase behaviors | | `docs/behaviors/drawer.md` | Drawer behavior | | `docs/behaviors/tabs.md` | Tabs behavior | | `docs/behaviors-reference.md` | All behaviors cross-reference | | `docs/behavior-cross-reference.md` | Behavior ↔ behavior mapping | | `docs/properties.md` | Behavior property patterns | --- ## 🧪 TESTING Read when: writing tests, fixing test failures, or modifying test infrastructure | File | What It Covers | |------|---------------| | `docs/testing-strategy.md` | Overall test approach and philosophy | | `docs/testing-runbook.md` | Step-by-step test procedures | | `docs/builder-testing.md` | Builder-specific test rules | | `docs/test-schema-standard.md` | How to test schemas | | `docs/schema-test-value.md` | Test value conventions for schemas | | `docs/ANNOUNCE_TEST_POLICY.md` | Test policy announcement | | `data/FUNCTIONAL-TEST-ANALYSIS.md` | Analysis of test gaps | | `docs/compliance/iso-42001-alignment.md` | Compliance alignment | | `docs/audits/X-USAGE-AUDIT.md` | X-usage audit | --- ## 📐 SCHEMAS & MVVM Read when: modifying schemas, schema-builder, or MVVM migration work | File | What It Covers | |------|---------------| | **`docs/claude/SCHEMAS-GUIDE.md`** | **⭐ START HERE — Claude's guide to schemas: rules, mistakes to avoid, test workflow** | | `docs/architecture/standards/SCHEMA-SPECIFICATION.md` | Full v3.0 schema spec with complete examples | | `docs/schema.md` | Schema system overview | | `docs/schema-first-architecture.md` | Schema-first design philosophy | | `docs/schema.migration.md` | Schema migration patterns | | `docs/MVVM-MIGRATION.md` | MVVM migration overview | | `docs/MVVM-MIGRATION-PLAN.md` | MVVM migration detailed plan | | `docs/architecture/WBVIEWS.md` | WB Views system ($view in schemas) | | `docs/wb-parts-spec.md` | ` ` template system | | `docs/property-viewer.md` | Property viewer panel | --- ## 🎨 CSS & STYLES Read when: modifying CSS files, style extraction, or theme work | File | What It Covers | |------|---------------| | `docs/css-standards.md` | CSS naming and organization rules | | `docs/styles.md` | Style system overview | | `docs/themes.md` | Theme system and CSS variables | | `docs/_today/CSS-OWNERSHIP-MIGRATION.PLAN.md` | Current CSS migration status | | `docs/_today/CSS-OWNERSHIP-MIGRATION.md` | (legacy) CSS migration status | --- ## 📄 PAGE GENERATION Read when: generating demo pages, creating showcases, working with `.page.json` schemas, or running `auto-showcase.mjs` | File | What It Covers | |------|---------------| | `docs/claude/PAGE-GENERATION.md` | Full pipeline guide — validate, generate, auto-showcase | Scripts: `scripts/validate-page-schema.mjs`, `scripts/generate-page.mjs`, `scripts/auto-showcase.mjs` --- ## 🔌 MCP & TOOLING Read when: MCP server issues, npm scripts, or dev tooling | File | What It Covers | |------|---------------| | `docs/mcp.md` | MCP server documentation | | `mcp-server/README.md` | MCP server setup and API | | `docs/DATA-FILES.md` | What lives in `data/` and why | | `docs/INTELLI",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/claude/TIER3-REFERENCE",
@@ -3207,7 +3212,7 @@
       "content": "# Tooling Inventory — What This Repo Already Has **Read this before writing any new tooling.** Every entry here was already built, and at least three of them have been reinvented by someone who didn't know they existed. The reinvention is not a style problem. A second mechanism measuring the same thing drifts from the first, and then the two disagree with nobody noticing — which is exactly how `#923` ended up with five copies of one rule and `#951` with a duplicated label rule that lost a branch. --- ## Machine-readable test output Produced by `scripts/tools/test-reporter.ts`, installed as a reporter in `playwright.config.ts`. It runs on **every** Playwright invocation — you never need to add `--reporter=json`. | file | what it holds | |---|---| | `data/test-results/failures.json` | every failure: `{project, title, file, line, error}` — **this is the one you want** | | `data/test-results/ .json` | per-project detail | | `data/test-status.json` | live status while a run is in flight: `state`, `passed`, `failed`, `currentFile`, `failures[]` | | `data/test-results/failures-live.log` | human-readable running log | > Do **not** add Playwright's own `json` reporter to get at failures. It was > tried; `PLAYWRIGHT_JSON_OUTPUT_NAME` produced nothing and the gate reported > \"the suite never ran\" for a run that had never been launched. The reporter > above already writes what you need, and using it keeps the ratchet and the > rest of the tooling agreeing on what a failure *is*. ## Running tests - `npm_test_async` MCP tool → launches asynchronously; poll `data/test-status.json`. **Law 4: never run Playwright synchronously.** One suite run at a time, machine-wide. - Single spec: pass a filter, e.g. `npm_test_async { filter: \"sticky\" }`. The filter is a path regex — `|` will be eaten by the shell, so run one at a time. ## Gates, and the baselines they ratchet against All three are **ratchets**: they fail on *new* problems, never on the mere existence of old ones. A gate too strict to pass gets bypassed, and the `--no-verify` habit takes every other check down with it (`#840`). | gate | script | baseline | fails when | |---|---|---|---| | Lint | `.husky/lint-ratchet.mjs` | `.husky/lint-baseline.json` | a file you touched has *more* problems than recorded | | Tests | `.husky/test-ratchet.mjs` | `data/test-baseline-failures.json` | a failure appears that is **not** in the register | | `wb-` prefix | `scripts/audit-wb-prefix.mjs` | ceilings in `tests/compliance/wb-prefix-cannot-return.spec.ts` | a category grows past its ceiling | Baselines **only ever shrink**. A repaired test is removed automatically so it can never rot again. Never raise a ceiling to make a build pass — that is the moment the gate stops meaning anything. Where each gate runs (since 2026-10-02): - **Commit hook** — fast checks only (~30s), none of which CI runs: version stamp, lint ratchet on staged files, spec-collection check, register-only-shrinks check, staged control-byte check. No Playwright, no counter, no every-10th run. - **PR CI** (`.github/workflows/ci-tests.yml`) — one Playwright check per category on windows-latest, plus the \"Gate scripts self-test\" job. Information, not a merge gate. - **Nightly** (`.github/workflows/nightly.yml`) — the full suite on `main` through the test ratchet. A new failure files one `priority:2` issue linking the run. It does not release; the badge number (`v1.0.41`) is counted from the last tag. ## Reading attributes in a behavior `src/core/read-attr.js` — use these, do not hand-roll a `??` chain: - `readAttr(el, name, fallback = '')` — string. **Returns `''`, not `null`, when absent**, so `readAttr(...) ?? 'default'` is dead code. This caused #946. - `readNumber(el, name, fallback = 0)` — number, never `NaN`. - `readFlag(el, name)` — boolean. ## Audits and one-off analysis Check `scripts/` before writing a new analysis script — there are ~100 of them. Notable: `audit-wb-prefix.mjs`, `audit-inline-styles`, `run-regression-tests.js`. --- ## The rule this file exists to serve Before building tooling, spend thirty seconds: ```bash ls scripts/ | grep -i grep -rn \" \" --include=*.ts --include=*.mjs . ``` The repo usually already has it.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-01"
     },
     {
       "id": "docs/code-examples-standard",
@@ -3287,7 +3292,7 @@
       "content": "# How to Create a Website with wb-starter This guide takes you from nothing to a published website in about five minutes. You write plain HTML, and wb-starter supplies the behaviors (`x-*` attributes), the theme, the navigation and the page loading. There is no build step while you work. ## What you need - **Node.js 18 or later.** Check it with `node --version`. - A terminal: PowerShell, Windows Terminal, or the one built into VS Code. ## 1. Create the site ```powershell npm create wb-starter my-site ``` `my-site` is the folder it creates. To give the site a display name that differs from the folder name, add `--name`: ```powershell npm create wb-starter my-site -- --name \"Cielo Vista Software\" ``` > `pnpm create wb-starter my-site` works the same way. ### What `npm create wb-starter` actually does npm sees `create wb-starter`, downloads the small package **`create-wb-starter`** (about 5 kB), and runs it. It: 1. makes the `my-site` folder with a starter site in it; 2. writes your site's name into the header, title and footer; 3. writes a `package.json` whose only dependency is **`wb-starter`**, the framework itself. `create-wb-starter` only runs once. Your site never depends on it. ## 2. Install and run it ```powershell Set-Location my-site npm install npm start ``` Open **http://localhost:3000**. If something else already has port 3000, `npm start` does not stop: it takes the next free port (3001, 3002, ...) and prints the address to open. Use the address it prints. You get a Home page and an About page, a menu, a theme switcher, and a working behavior: the button on the home page ripples when you click it. `npm start` runs `wb-starter serve`. It serves your folder, with the wb-starter runtime underneath. Your own files always win: if you create a file with the same path as one of wb-starter's, yours is the one served. ## 3. What is in the folder ```text my-site/ index.html the page shell (you rarely edit this) config/site.json site name, menu, header, footer, page title, theme pages/home.html one HTML file per page pages/about.html styles/site.css your own styles package.json private; depends on wb-starter README.md .gitignore ``` wb-starter itself lives in `node_modules/wb-starter`. It is a dependency, not a copy, so your folder holds only your site. ## 4. Edit a page Open `pages/home.html` and change the text, then refresh the browser. There is nothing to rebuild. Pages are plain HTML. To give an element a behavior, add an `x-*` attribute: Click me The full list of behaviors, with a live example of each, is on the wb-starter site's **Behaviors** page. ## 5. Add a page 1. Create `pages/contact.html`: ```html Contact How to reach us. ``` 2. Add it to `navigationMenu` in `config/site.json`: ```json { \"menuItemId\": \"contact\", \"menuItemText\": \"Contact\", \"menuItemEmoji\": \"✉️\", \"pageToLoad\": \"contact\" } ``` 3. Refresh the browser. **Contact** is now in the menu. `pageToLoad` is the file name in `pages/` without `.html`. ## 6. Change the look and the settings Everything site-wide is in `config/site.json`: | Setting | What it does | |---|---| | `branding.companyName` | The name in the header | | `branding.colorTheme` | The starting theme, such as `\"dark\"` or `\"light\"` | | `headerSettings.displayThemeSwitcher` | Show or hide the theme switcher | | `footerSettings.footerCopyrightText` | The footer text | | `searchEngineOptimization.pageTitle` | The browser tab title | Put your own CSS in `styles/site.css`. ## 7. Publish it ```powershell npm run build ``` This runs `wb-starter build`, which writes a complete static copy of the site to **`dist\\`**: your pages plus the parts of the wb-starter runtime they use. Upload `dist\\` to any static host: - **GitHub Pages:** push `dist\\` to a `gh-pages` branch, or publish it with a GitHub Pages action. The build already includes the `.nojekyll` file GitHub Pages needs. - **Netlify, Cloudflare Pages, Azure Static Web Apps, any web server:** upload the contents of `dist\\`. `dist\\` does not need Node.js or wb-starter to run. It is only files. ## 8. Get new wb-starter releases ```powershell npm update wb-starter ``` Your pages are untouched. Only the runtime underneath them changes. What each release added and fixed is on the wb-starter site's **Releases** page. ## Commands at a glance | Command | What it does | |---|---| | `npm create wb-starter my-site` | Create a new site in `my-site\\` | | `npm install` | Install wb-starter into the site | | `npm start` | Serve the site at http://localhost:3000, or the next free port if 3000 is taken | | `npm start -- --port 8080` | Start from another port (8080, or the next free one after it) | | `npm run build` | Write the static site to `dist\\` | | `npm update wb-starter` | Move to the newest wb-starter release | ## Troubleshooting - **\"already exists and is not empty\":** the folder is taken. Pick a new name, or empty the folder first. - **Port 3000 is in use:** nothing to do. You do not need to kill the other server: `npm start` moves to the",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-02"
+      "modified": "2026-10-01"
     },
     {
       "id": "docs/guides/search-index",
@@ -3356,7 +3361,7 @@
       "content": "# WB-Starter Documentation > A comprehensive behavior library featuring 41+ custom behaviors, Harmonic Color System, and Light DOM architecture. --- ## Quick Links | Resource | Description | |----------|-------------| | Architecture | Core framework architecture and patterns | | [V3 Standards](./standards/V3-STANDARDS.md) | Current development standards | | [Current Status](./_today/CURRENT-STATUS.md) | Today's progress and active work | | [TODO](./_today/TODO.md) | Upcoming tasks | --- ## Architecture & Standards - Architecture Overview - [Schema Specification](./architecture/standards/SCHEMA-SPECIFICATION.md) - [Attribute Naming Standard](./architecture/standards/ATTRIBUTE-NAMING-STANDARD.md) - [Proposed Custom Elements](./architecture/proposals/proposed-custom-elements.md) - [Schema-First Architecture](./schema-first-architecture.md) - CSS Standards - [Semantic Standard](./semantic-standard.md) - [Container Pattern](./container-pattern.md) - [Code Examples Standard](./code-examples-standard.md) --- ## Testing & Quality - [Testing Strategy](./testing-strategy.md) - [Testing Runbook](./testing-runbook.md) — practical runbook for running tests locally and in CI - [Test Schema Standard](./test-schema-standard.md) - [Schema Test Value](./schema-test-value.md) - [Schema-First Audit Report](./schema-first-audit-report.md) - [Semantic Audit](./semantic-audit.md) - [X-Usage Audit](./audits/X-USAGE-AUDIT.md)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/inline-editing",
@@ -3422,7 +3427,7 @@
       "content": "# NPX & Playwright Commands — quick reference (PowerShell-friendly) 🚀 Purpose: centralize the precise, copy-paste-safe `npx` and Playwright commands used in this repo and list the common mistakes to STOP repeating. ## Quick checks before running tests ⚠️ - Start the dev server: `npm start` (wait for \"Listening\" log). - Start MCP if tests require it: `npm run start:mcp` and verify with `npm run mcp:healthcheck`. - Ensure you're in the project root (where `package.json` lives). --- ## Common, PowerShell-safe commands (copy-paste) 🔧 - Run a single test by name (pattern matching): npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --trace=on - Run an entire spec file: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' --timeout=120000 - Run a single test by file + line-number (Playwright): npx playwright test tests/behaviors/ui/builder-api.spec.ts:42 - Run Playwright with debug UI: npx playwright test --ui - Run only failed tests from the previous run: npx playwright test --repeat-each 1 --max-failures=1 - Helpful flags: --timeout=120000 # increase default (ms) --trace=on # captures trace for failing tests -g 'pattern' # test-title grep (simple substring is safest) --- ## PowerShell quoting & common pitfalls (short) 🧩 - Use single quotes around file paths and `-g` patterns to avoid PowerShell interpreting parentheses or `$`. - DO NOT use unsupported flags (example: `-q` is not a Playwright option). - If Playwright reports \"No tests found\", double-check the -g pattern and quoting; try a looser substring (e.g. `-g 'remove'`). --- ## Why commands fail (root causes) — and how to stop them ✅ - Wrong CLI flag (typo) → read the error (\"unknown option\") and remove the flag. - Overly specific grep pattern → use a simpler substring or escape special chars. - Required services not running (dev server / MCP) → start them first. - Quoting mistakes in PowerShell → prefer single quotes around test paths/patterns. --- ## Troubleshooting checklist (follow in order) 🧭 1. Are you in the repo root? `pwd` / check `package.json` exists. 2. Is the dev server up? `npm start` → wait for \"Listening\". 3. Is MCP required & healthy? `npm run start:mcp` then `npm run mcp:healthcheck`. 4. Run a simple smoke test: `npx playwright test tests/behaviors/ui/builder-api.spec.ts -g 'add()'` 5. If \"No tests found\": relax `-g` to a substring and re-run. 6. If a test times out: increase `--timeout` and enable `--trace=on`. --- ## Examples (copy-paste) 📋 - Single failing test with trace (recommended): npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --trace=on - Run the whole builder API file: npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' --timeout=120000 - Start server + run one test (two commands): npm start npx playwright test 'tests/behaviors/ui/builder-api.spec.ts' -g 'remove' --timeout=120000 --- ## Recommended CI settings (for maintainers) 🏷️ - Use explicit file-level runs in CI for flaky areas: `npx playwright test tests/behaviors/ui/builder-api.spec.ts -g 'remove' --trace=on`. - Gate PR merges on `--trace=on` for failing tests to capture artifacts. --- ## Short \"STOP\" checklist (read before you run) ✋ - Stop: adding unknown CLI flags (check the error first). - Stop: over-anchored `-g` patterns — use simple substrings. - Stop: running tests without the dev server or MCP when required. --- If you want, I can: add this to the repo README, open a PR that enforces `--trace=on` for failures, and run the failing Builder test now (with trace).",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/pce-candidates",
@@ -3510,7 +3515,7 @@
       "content": "# COMPREHENSIVE SCHEMA-SOURCE COMPLIANCE AUDIT The value of schema tests once again proves itself in this age of wild horse A.I. getting loose. The following errors below were found in less than 10 seconds. We found schema errors which affect code, tests, and fixes. We use schema to generate code, including .js, .css and .html. But then we apply what it says regarding test permuations to write our tests in associations with our .md doc specifications. All bases covered, including how to write a bug, how to analze it, and fix it. Then the tests are fixed if they are the issue, and finally the code winds up self-correcting. This list of errors took 20 minutes to fix. All the tests were updated automatically and ═══════════════════════════════════════════════════════════════════ ### SCHEMA STRUCTURE ISSUES | Issue | Fixed | |-------|:-----:| | ❌ behavior.schema.json: Missing \"compliance\" section | ✅ | | ❌ behavior.schema.json: Missing \"test\" section | ✅ | | ❌ behaviors-showcase.schema.json: Missing \"compliance\" section | ✅ | | ❌ behaviors-showcase.schema.json: Missing \"test\" section | ✅ | | ❌ confetti.schema.json: test.matrix missing | ✅ | | ❌ details.schema.json: test.matrix missing | ✅ | | ❌ fireworks.schema.json: test.matrix missing | ✅ | | ❌ footer.schema.json: test.matrix missing | ✅ | | ❌ header.schema.json: test.matrix missing | ✅ | | ❌ navbar.schema.json: Missing \"test\" section | ✅ | | ❌ rating.schema.json: test.matrix missing | ✅ | | ❌ scrollalong.schema.json: test.matrix missing | ✅ | | ❌ snow.schema.json: test.matrix missing | ✅ | | ❌ sticky.schema.json: test.matrix missing | ✅ | | ❌ switch.schema.json: test.matrix missing | ✅ | | ❌ table.schema.json: test.matrix missing | ✅ | ### MISSING FUNCTIONS | Issue | Fixed | |-------|:-----:| | ❌ behavior: No exported function found | ✅ | | ❌ behaviors-showcase: No exported function found | ✅ | ### MISSING ROOT CSS CLASS ASSIGNMENTS | Issue | Fixed | |-------|:-----:| | ❌ checkbox: Doesn't add \"x-checkbox-input\" | ✅ | | ❌ dropdown: Doesn't add \"x-dropdown\" | ✅ | ### MISSING CRITICAL STYLES | Issue | Fixed | |-------|:-----:| | ❌ cardhero: Missing style.border | ✅ | | ❌ cardprofile: Missing style.border | ✅ | ### HEADING LEVEL ISSUES | Issue | Fixed | |-------|:-----:| | ❌ cardhero: Must create h3 for title | ✅ | ### MISSING REQUIRED ELEMENTS | Issue | Fixed | |-------|:-----:| | ❌ carddraggable: Should create main for main.x-card__main | ✅ | | ❌ cardexpandable: Should create header for header.x-card__header | ✅ | | ❌ cardexpandable: Should create main for main.x-card__expandable-content | ✅ | | ❌ cardexpandable: Should create footer for footer.x-card__footer | ✅ | | ❌ cardnotification: Should create main for main.x-card__notification-content | ✅ | | ❌ cardportfolio: Should create header for header | ✅ | | ❌ cardprofile: Should create figure for figure.x-card__profile-avatar | ✅ | | ❌ cardprofile: Should create header for header | ✅ | | ❌ cardtestimonial: Should create footer for footer.x-card__footer | ✅ | | ❌ cardvideo: Should create figure for figure.x-card__figure | ✅ | | ❌ dropdown: Should create button for .x-dropdown-trigger | ✅ | | ❌ dropdown: Should create div for .x-dropdown-menu | ✅ | | ❌ notes: Should create header for .x-notes__header | ✅ | | ❌ notes: Should create textarea for .x-notes__textarea | ✅ | | ❌ notes: Should create footer for .x-notes__footer | ✅ |",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/schema",
@@ -3627,7 +3632,7 @@
       "content": "# Error Log Retention — 30 Days **Rule, from John (2026-09-05):** *\"all of our error logs must stay on the system for 30 days.\"* Stated after a session in which the test suite destroyed 26+ real errors he was reading, silently, seventeen times over (#1027). ## The rule 1. **No code deletes an error log.** Anything that clears, caps, resets or rotates one must ARCHIVE the entries first and print where they went. 2. **Archives live for at least 30 days**, on the machine, in `data/error-log-archive/`. They are never removed automatically — not by a test run, not by a build, not by a cleanup task. 3. **Removing an archive is a deliberate, announced act.** `scripts/prune-error-archives.mjs` is the only thing that deletes one. It is a dry run without `--confirm`, refuses any window shorter than 30 days, and names every file it removes with its age and entry count. 4. **An agent does not delete a log at all** — including archives it created itself, and including ones that look like test data. See `CLAUDE.md` (in `.claude/`, which the site does not serve) and the session rule: a log is evidence, and whether it looks like junk is not the deleter's call. ## Where the entries live | Path | What it is | Cleared by | Archived first? | |---|---|---|---| | `data/errors.json` | the live runtime log the viewer reads | test reporter `onBegin`, `/api/error-log/clear`, the 100-entry cap | yes — all three (#1027) | | `data/error-log-archive/errors- [-reason].json` | every batch removed from the live log | nothing automatic | n/a | `data/error-log-archive/` is gitignored: the archives are machine-local forensics, not repo content. \"On the system\" is the requirement, not \"in git\". ## Reasons recorded on an archive - `cleared-from-viewer` — someone pressed **Clear Log** in the errors viewer. - `overflow` — the live log hit its 100-entry cap and the oldest entries rolled off. Before #1027 these were dropped by a bare `.slice(-100)` and lost. - *(no suffix)* — a test run cleared the log at `onBegin` (#562's clean slate). ## Checking ```bash node scripts/prune-error-archives.mjs # what exists, what is in-window, deletes nothing ``` The test reporter prints one line per wipe, e.g. ``` [WBTestReporter] data/errors.json held 26 error(s); archived to data/error-log-archive/errors-2026-09-05T22-40-42-996Z.json before clearing it for this run. ``` If that line is absent on a run that cleared a non-empty log, the archive failed — and it says so instead of proceeding quietly.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/standards/ISSUE-SIGNATURE-BLOCK",
@@ -3660,7 +3665,7 @@
       "content": "# Repo Layout Where every file in wb-starter goes. Enforced by `tests/compliance/repo-layout.spec.ts`; a file that breaks a rule fails the gate. John, 2026-09-29: \"follow our standards for file name, folder placement etc. Move unused files by putting them into an archive folder, no loose scripts, they all must go in proper folder. Same goes with .png files. NO .txt files in root. Only 1 .html file in root. No .md docs but readme in root.\" ## The root Only the site's entry points and project configuration: | File | Why it is at the root | |---|---| | `index.html` | The one page at the root: the site's entry point. | | `sw.js` | A service worker's scope is its own folder, so it must sit at the site root (CieloVistaStandards `build-deploy.md`, rule 2). | | `manifest.json` | The web app manifest `index.html` links. | | `server.js` | `npm start` runs it. | | `README.md` | The only `.md` at the root. | | `LICENSE`, `.gitignore`, `.nojekyll`, `.mcp.json` | Read from the root by GitHub, git, Pages and Claude. | | `package.json`, `package-lock.json`, `eslint.config.js`, `tsconfig.json`, `jsconfig.json`, `playwright.config.ts`, `global.d.ts` | Tool configuration, read from the root. | Never at the root: `.txt` or `.log` files (test output belongs in `data/test-results/` or nowhere; `.gitignore` ignores `/*.txt` and `/*.log`), any other `.html`, scripts, images, or other `.md` docs. `CLAUDE.md` lives in `.claude/` and `CONTRIBUTING.md` in `.github/`, locations Claude Code and GitHub both read. ## Folders | Kind of file | Goes in | |---|---| | Scripts (`.mjs`, `.cjs`, `.ps1`, `.py`, `.sh`) | `scripts/`, or beside the code that runs them (`src/`, `tests/`, `server/`, `.husky/`, `.github/`) | | Images (`.png`, `.jpg`, …) | `images/` (content) or `assets/` (icons, favicons) | | Test media and test pages | `tests/fixtures/` | | Standalone tool pages (doc viewer, error viewer, …) | `public/` | | Site pages | `pages/` | | Demos | `demos/` | | Docs | `docs/`; standards in `docs/standards/` | | Sample downloads for the file-card demos | `files/` | ## Names kebab-case: `repo-layout.spec.ts`, `npx-commands.md`. Exceptions: files named after a behavior's public identifier (`drawerLayout.schema.json` — renaming the file renames the behavior), fixture copies of CDN files (their names are the upstream URLs), and conventional names (`README.md`, `LICENSE`, `CODEOWNERS`). ## Unused files Move them to `archive/`, keeping their original path (a one-off script in `scripts/` moves to the same name under `archive/scripts/`). Nothing is deleted, and nothing in `archive/` is loaded, tested or shipped. `archive/` is still in the public repo: archiving does not make a file private.",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-29"
+      "modified": "2026-09-28"
     },
     {
       "id": "docs/standards/V3-STANDARDS",
@@ -3909,7 +3914,7 @@
       "content": "WB Auto-Inject Demo Autoinject — WB Demo Auto-Injection Demo Write standard HTML. Get enhanced, accessible, theme-aware behaviors automatically. No classes. No data attributes. Just pure HTML. Status: Initializing... Enabled via WB.init({ autoInject: true }) 🚀 The \"Zero-Config\" Form These forms are built with standard HTML tags only. No custom classes, no JavaScript initialization code. Default Theme Full Name Email Address Department Engineering Design Marketing Sales Bio Experience Level Preferences Remote Relocation Contract Type Full-time Contractor Submit Application Success Theme Username Status Active Verified Approved Verified Items Email Verified Phone Verified Save Settings Warning Theme Alert Level Priority Critical High Medium Notifications Email Alert SMS Alert Set Alerts Why this matters: Clean Code: Your HTML remains semantic and readable. Instant Theming: Try the theme switcher above. Every input adapts instantly. Future Proof: If you switch frameworks, your HTML is still valid standard HTML. Accessibility: ARIA attributes and keyboard navigation are added automatically. The Code (Default Form): ```html-static form label Full Name input type=\"text\" placeholder=\"John Doe\" required /label label Email Address input type=\"email\" placeholder=\"john@example.com\" required /label label Department select option Engineering /option option Design /option option Marketing /option option Sales /option /select /label label Bio textarea rows=\"3\" placeholder=\"Tell us about yourself...\" /textarea /label label Experience Level input type=\"range\" min=\"0\" max=\"10\" value=\"5\" /label fieldset legend Preferences /legend label input type=\"checkbox\" checked Remote /label label input type=\"checkbox\" Relocation /label /fieldset fieldset legend Contract Type /legend label input type=\"radio\" name=\"contract\" checked Full-time /label label input type=\"radio\" name=\"contract\" Contractor /label /fieldset button type=\"submit\" style=\"width: 100%;\" Submit Application /button /form ``` 1. Checkboxes Enhanced Value Added: Custom Styling: Replaces browser default with a consistent, theme-aware SVG checkmark. Wrapper: Automatically wraps input and label for better alignment. Indeterminate State: Visual support for indeterminate state. Accessibility: Maintains keyboard navigation and screen reader support. Standard HTML Standard Checkbox Checked Checkbox Disabled Checkbox Disabled Checked Variants Primary Variant Success Variant Warning Variant Danger Variant Info Variant Sizes Extra Small (xs) Small (sm) Medium (md) Large (lg) Extra Large (xl) Code: ```html-static !-- Standard -- label input type=\"checkbox\" Standard Checkbox /label label input type=\"checkbox\" checked Checked /label label input type=\"checkbox\" disabled Disabled /label !-- Variants -- label input type=\"checkbox\" variant=\"primary\" checked Primary /label label input type=\"checkbox\" variant=\"success\" checked Success /label label input type=\"checkbox\" variant=\"warning\" checked Warning /label label input type=\"checkbox\" variant=\"danger\" checked Danger /label label input type=\"checkbox\" variant=\"info\" checked Info /label !-- Sizes -- label input type=\"checkbox\" size=\"xs\" Extra Small /label label input type=\"checkbox\" size=\"sm\" Small /label label input type=\"checkbox\" size=\"md\" Medium /label label input type=\"checkbox\" size=\"lg\" Large /label label input type=\"checkbox\" size=\"xl\" Extra Large /label ``` 2. Radio Buttons Enhanced Value Added: Custom Styling: Consistent, theme-aware radio buttons. Animation: Smooth transition effects on selection. Layout: Automatic flexbox alignment with labels. Option 1 Option 2 Option 3 Code: ```html-static label input type=\"radio\" name=\"grp\" value=\"1\" Option 1 /label label input type=\"radio\" name=\"grp\" value=\"2\" checked Option 2 /label label input type=\"radio\" name=\"grp\" value=\"3\" Option 3 /label ``` 3. Select Dropdowns Enhanced Value Added: Theming: Applies site theme colors to the dropdown trigger. Clearable: Adds a clear button (x) if clearable is present. Searchable: Adds search capabilities if searchable is present. Variants: Supports variant (success, error) and size (sm, lg). Standard Select Choose a fruit: Apple Banana Cherry Date Elderberry Static Theme Variants Success (Static Green Border) ✓ Valid Option ✓ Approved ✓ Complete Error (Static Red Border) ✗ Invalid Option ✗ Rejected ✗ Failed Clearable Select Choose a topping (Clearable): Select... Chocolate Sprinkles Nuts Sizes Small Small Select Large Large Select Code: ```html-static !-- Standard -- select option Apple /option option Banana /option /select !-- Clearable -- select clearable option value=\"\" Select... /option option Chocolate /option /select !-- Static Theme Variants (visible without selection) -- select variant=\"success\" style=\"border-color: var(--success-color); background-color: var(--alert-success-bg);\" option ✓ Valid Option /option /select select variant=\"error\" style=\"border-color: var(--danger-color); background-color: var(--alert-danger-bg);\" option ✗ Invalid Op",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/charity-food",
@@ -3945,7 +3950,7 @@
       "content": "Uganda Community Food Bank - WB Charity Site 🇺🇬 Uganda Food Bank Back to Home Donate Now Serving 5,000+ Families Nourishing Our Nation Together We believe no one in Uganda should go to bed hungry. Join us in our mission to provide nutritious meals to families across the region. 🌽 Maize & Beans Urgently need posho (cornmeal) and beans as staples. 75% goal reached 🥕 Fresh Produce Partnering with local farms to bring fresh items. Fully Stocked 🤝 Volunteers We need 50 more volunteers for this weekend. Sign Up Our Programs Weekly Pantry Open every Tuesday and Thursday, providing staples to registered families. View Schedule Hot Meals Community kitchen serving hot dinner every evening at 6:00 PM. View Menu Uganda Community Food Bank Plot 42 Kampala Road Kampala, Uganda 📞 +256 772 123 456 Quick Links Donate Volunteer About Us Newsletter Stay updated with our needs. Subscribe 2026 Community Food Bank. Built with WB.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/code",
@@ -4037,7 +4042,7 @@
       "content": "Framework Integration Demo ← Back to Home Framework Agnostic Demos WB Behaviors work with any framework because they rely on standard HTML attributes. The framework handles the DOM, and WB handles the behavior. The WB Advantage Universal Compatibility Write your behavior logic once using standard HTML attributes. It works identically in React, Vue, Svelte, or plain HTML. Zero Lock-in Switching frameworks? Your UI behaviors stay the same. No need to rewrite tooltips, ripples, or validation logic. Performance First Tiny footprint. Behaviors are lazy-loaded only when needed. No heavy hydration costs for simple interactions. Progressive Enhancement Built on standard HTML. If JavaScript fails or hasn't loaded, your semantic HTML remains accessible and functional. React React Integration This button is rendered by React. The x-* behavior attributes are passed as standard props. . The live control below is React's *rendered output* -- the instructive source is the JSX-style React.createElement code in the block underneath, which 's HTML-source extraction has no way to represent (it would show this mount div/script, not the React behavior code a React developer would actually write). Both a live render AND its real source are still present, per §16 -- just not paired by specifically, which requires the two to be the same markup. --> Code used in this demo: import React, { useState, useEffect } from 'react'; import ReactDOM from 'react-dom/client'; import WB from 'x-behaviors'; const e = React.createElement; function ReactApp() { // Initialize WB when behavior mounts useEffect(() => { WB.init(); }, []); const [count, setCount] = useState(0); return e('div', { style: { padding: '1rem', border: '1px dashed #61dafb', borderRadius: '8px' } }, [ e('h3', { key: 'h3' }, `React Counter: ${count}`), e('button', { key: 'btn', className: 'x-btn-gradient', 'x-ripple': '', 'x-tooltip': 'I am a React button!', 'x-toast': '', 'message': `Count is now ${count + 1}`, 'toast-variant': 'info', onClick: () => setCount(c => c + 1) }, 'Increment + WB Magic ✨') ]); } const root = ReactDOM.createRoot(document.getElementById('react-root')); root.render(e(ReactApp)); Vue 3 Vue Integration This section is a Vue app. WB attributes are bound just like any other attribute. block below, which cannot represent 1:1. --> Vue Message: {{ message }} Reverse Message (Vue + WB) Code used in this demo: div id=\"vue-app\" div style=\"padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;\" h3 Vue Message: {{ message }} /h3 input v-model=\"message\" class=\"x-input-glass\" placeholder=\"Type here...\" style=\"margin-bottom: 1rem; width: 100%;\" button class=\"x-btn-glass\" x-ripple x-tooltip :tooltip=\"'Current length: ' + message.length\" @click=\"reverseMessage\" Reverse Message (Vue + WB) /button /div /div script import { createApp, ref, onMounted } from 'vue'; import WB from 'x-behaviors'; createApp({ setup() { // Initialize WB when behavior mounts onMounted(() => { WB.init(); }); const message = ref('Hello Vue!'); const reverseMessage = () => { message.value = message.value.split('').reverse().join(''); }; return { message, reverseMessage }; } }).mount('#vue-app'); /script Svelte Svelte Integration In Svelte, you just add the attributes to your markup. No special bindings needed. block below, AT RUNTIME, via svelte/compiler loaded from esm.sh, then mounts the real resulting Svelte behavior. This is Svelte's own real compiler output, generated in-browser instead of ahead of time by a bundler -- no server build step, same \"live render + real source, not paired by \" pattern the React/Vue sections above already use (§16), for the same reason: requires the rendered markup and its \"source\" to be identical, and compiled-Svelte-output is not 1:1 with hand-authored Svelte source. --> Code used in this demo: script import WB from 'x-behaviors'; import { onMount } from 'svelte'; onMount(() => { WB.init(); }); let count = 0; function handleClick() { count += 1; } /script h3 Svelte Count: {count} /h3 button class=\"x-btn-gradient\" x-ripple x-tooltip x-toast tooltip=\"Count: {count}\" message=\"Svelte count is now {count}\" toast-variant=\"info\" on:click={handleClick} Svelte Button /button Angular Angular Integration In Angular, use standard attribute binding. WB behaviors initialize automatically. is ANGULAR's behavior selector (see `selector: 'angular-demo'` below), not a wb-* behavior tag. The 4.0.0 tag-removal sweep rewrote it to , so bootstrapApplication() had nothing to match and threw NG05104 -- the live Angular demo rendered nothing. Leave this tag alone. --> import { Component, OnInit } from '@angular/core'; import WB from 'x-behaviors'; @Component({ selector: 'app-demo', template: ` button class=\"x-btn-gradient\" x-ripple x-tooltip [attr.x-tooltip]=\"'Count: ' + count\" (click)=\"increment()\" Angular Button /button ` }) export class DemoComponent implements OnInit { count = 0; ngOnInit() { WB.init(); } increment() { this.count++; } } SolidJS SolidJS Integration SolidJS uses ",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/hero",
@@ -4048,7 +4053,7 @@
       "content": "Hero",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/index",
@@ -4064,7 +4069,7 @@
       "content": "Demos Index — wb-starter 🎮 Demos Every demo, grouped by category — no SPA, no framework dependency. Generated by scripts/generate-demos-list.mjs; edit that script, not this file. 🃏 Card Behaviors 18 card variants — from simple to portfolio, pricing to testimonials — 19 components · 259 demos Open Card Behaviors → 🔔 Feedback & Status Alerts, badges, progress bars, ratings, spinners, toasts, tooltips — 10 components · 210 demos Open Feedback & Status → 📝 Form Controls Buttons, inputs, selects, checkboxes, switches, textareas — 9 components · 159 demos Open Form Controls → 🪟 Overlays & Popups Dialogs, drawers, dropdowns for modal content — 3 components · 28 demos Open Overlays & Popups → 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong — 9 components · 44 demos Open Layout & Navigation → 📄 Content & Media Articles, markdown rendering, audio, tables — 7 components · 38 demos Open Content & Media → ✨ Visual Effects Confetti, fireworks, ripple, snow — fun stuff — 5 components · 20 demos Open Visual Effects → 🔧 Interactive & Utility Draggable, resizable, copy, dark mode, views — 8 components · 14 demos Open Interactive & Utility → 🃏 Cards & Layout Hero 🏗️ Narrative & Tools Autoinject Uganda Community Food Bank Framework Integration Demo wb-starter — Zero-build behaviors for developers Playground Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development Standalone Preview 🎮 More Demos 🧩 Multi-Behavior Demo",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/intellisense-check",
@@ -4080,7 +4085,7 @@
       "content": "IntelliSense Check IntelliSense Check Use this file to test the VS Code autocomplete. This is the content of Tab 1. This is the content of Tab 2. This is a container inside the grid.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/landing-page-showcase",
@@ -4120,7 +4125,7 @@
       "content": "wb-starter — Zero-build behaviors for developers Ship real UI. No bundler required. wb-starter is a composition-based behavior library. Drop an attribute on a semantic element — x-ripple , x-card , x-typewriter — and it just works. No React, no build step, no framework lock-in. button x-ripple x-tooltip=\"Click me\" Ship it /button Get Started See the Behaviors 100+ Behaviors 23 Themes 0 Build Step Light DOM Only Everything a landing page needs Every card below is a real x-card — no React, no build. Add x-ripple , x-tooltip , or x-fadein to any element. Behaviors compose — they don't require a base class. Every color is a CSS variable. Switch the whole page's look with one attribute — try the picker below. Your own CSS, your own selectors, and devtools reach straight into every behavior — exactly like plain HTML. Entrance animations, out of the box Click a card to play its entrance animation — no JS written for this page. Add x-fadein to any element, click it to play. Add x-slidein with a direction, click it to play. Add x-zoomin for a scale-in entrance, click it to play. Ship it anywhere Static hosting a real server — same markup either way. No build step means \"deploy\" is just \"copy the files.\" ES modules load straight from the source tree — no bundler config to maintain. The behavior library A slice of what ships in the box — every piece below is live, not a screenshot. Hover + click me A native progress element — auto-enhanced, no wrapper tag needed. What the markup actually looks like Every behavior on this page, in the same handful of lines. x-card title=\"Themeable\" variant=\"glass\" elevated Every color is a CSS variable. /x-card button x-ripple x-tooltip=\"Click me\" Ship it /button x-switch label=\"Dark mode\" checked /x-switch x-themecontrol /x-themecontrol Questions Do I need a build step? No. Every file is a plain ES module served as-is. npm start just serves the directory. Does it work without JavaScript frameworks? Yes — that's the point. No React, Vue, or Svelte required. Attributes drive behavior. Can I theme it? 23 built-in themes, all CSS variables. Pick one below and watch this whole page change. Try a different theme This entire page — cards, badges, switches, code blocks — re-themes live. Built with wb-starter — no bundler, no framework, no build step.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/layout-test",
@@ -4156,7 +4161,7 @@
       "content": "WB Layout Tags Demo Layout Tags Demo Demonstrating the new semantic layout tags. 1. Grid ( x-grid ) 1 2 3 4 5 6 2. Flex Cluster ( x-cluster ) Save Cancel Export New! 3. Stack ( x-stack ) Item 1 Item 2 Item 3 4. Sidebar Layout ( x-sidebar ) Sidebar Content Main Content Area. The sidebar stays fixed width, I take the rest. 5. Switcher ( x-switcher ) Resize window to see me switch from horizontal to vertical. A B C",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/legacy-syntax-check",
@@ -4167,7 +4172,7 @@
       "content": "Legacy Syntax Check Legacy Card syntax",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/mdhtml-pre-debug",
@@ -4191,7 +4196,7 @@
       "content": "MDHTML Pre Debug MDHTML -> Pre Debug 1. MDHTML generating Code Block ```js console.log('Generated by MDHTML'); const a = 1; const b = 2; ``` 2. MDHTML with explicit line numbers ```js // This should have line numbers function foo() { return bar(); } ```",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/multi-behavior-demo-generated",
@@ -4239,7 +4244,7 @@
       "content": "🧩 Multi-Behavior Demo 🧩 Multi-Behavior Demo Composed from multiple sources using $extends, $generate, $ref, and $include Badges — From Matrix Notifications — Matrix Combos Progress — All Enum Variants availability variants Variants size variants cardportfolio — Defaults Custom Hand-Authored Section",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/playground",
@@ -4255,7 +4260,7 @@
       "content": "Playground — WB 🧪 Playground Paste any HTML on the left — see it rendered live on the right. Native elements ( code , details , dialog …) and x-* behaviors are upgraded automatically. HTML Clear 🎴 Examples… Sample form 50 cards 120 card heroes (all permutations) 5 hero variants x-* behaviors 20 inputs with x-behaviors 50 badges 25 selects 25 switches (all different) 20 YouTube URL formats Full-width hero (500px) ⭹ Format &#x29C9; Standalone 📋 Copy Preview ↕ Sort by… live is submitted: what an endpoint would receive. --> 📮 Endpoint sees blocks used to live here, below the editor. It is a different thing from a playground -- the playground is for pasting your own markup and seeing it render -- and it was written entirely in the retired wb-* tags. The behaviors showcase is where a catalogue of examples belongs. -->",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/pre-debug",
@@ -4283,7 +4288,7 @@
       "content": "Pre Debug Pre Behavior Debug 1. Static Pre console.log('Hello World'); const x = 10; const y = 20; console.log(x + y); 2. Static Pre with Line Numbers function test() { return \"Line 1\"; } // Line 3 // Line 4 3. Double Injection Test div Test /div",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/schema-first-architecture",
@@ -4399,7 +4404,7 @@
       "content": "Schema-First Architecture: A Deterministic Framework for AI-Driven Web Development ← Return to Project Schema-First Architecture: A Deterministic Framework for Eliminating Generative A.I. Errors in Web Development Prepared for: Michael Vendetti, New York City Dr. Elena Vance Cielo Vista Research Department of Automated Engineering Abstract Large Language Models (LLMs) have demonstrated remarkable capability in code generation, yet they suffer from a critical failure mode known as \"hallucination.\" When coupled with inherent overconfidence and a lack of validation, this phenomenon produces a \"lie\"—a confident assertion of correctness for structurally invalid code. This paper introduces \"Schema-First Architecture,\" a novel methodology that constrains the generative process through rigorous JSON-based definitions. By decoupling structure (Schema) from implementation (Behavior), we demonstrate a deterministic framework where AI agents can generate complex UI behaviors with high reliability. We present the three pillars of this architecture—Site, Behavior, and Semantic Schemas—and provide empirical evidence of their efficacy in the WB Starter project. 1. Introduction The advent of generative AI has transformed software development, yet the integration of AI into frontend workflows remains fraught with inconsistency. When prompted to \"create a card,\" an LLM may generate a div with Tailwind classes in one instance, and a BEM-style structure in another [1]. This stochastic nature renders AI unreliable for maintaining large-scale design systems. Recent studies have quantified this unreliability. Kabir et al. (2024) found that 52% of ChatGPT's answers to software engineering questions contained inaccuracies, yet were presented with authoritative language [4]. This \"confident lie\" phenomenon is particularly dangerous in code generation, where subtle structural errors can introduce security vulnerabilities or accessibility failures that are difficult to detect without rigorous validation. Key Insight The root cause of AI unreliability is not the model's lack of intelligence, but the lack of contextual constraints . Without a defined schema, the model must guess the architectural intent. We propose that this problem has a structural solution: Schema-First Architecture —a methodology where JSON schemas serve as the ground truth for both human developers and AI agents. 1.1. The Determinism Gap The prevailing industry narrative focuses on \"Prompt Engineering\" and Retrieval-Augmented Generation (RAG) as primary methods for controlling AI output. These techniques are fundamentally probabilistic—they attempt to increase the likelihood of a correct response. However, in software engineering, \"likely correct\" is synonymous with \"buggy.\" We identify this as the \"Determinism Gap\" : the chasm between the stochastic nature of LLMs and the rigid requirements of a runtime environment. The Problem Prompt Engineering cannot guarantee correctness. It can only increase probability. In production systems, 95% correct means 5% broken—an unacceptable failure rate. Schema-First Architecture bridges this gap by enforcing a hard separation of concerns. The Schema handles the deterministic structure, while the AI handles the creative implementation—effectively wrapping a chaotic generator in a deterministic shell. 2. The Three Pillars Our methodology rests on three foundational schemas that serve as the \"ground truth\" for both the runtime engine and the AI agent. 2.1. The Site Schema The macroscopic structure of the application is defined not in code, but in data. The site.json file serves as the immutable source of truth for navigation, routing, and global configuration. This allows an AI to modify the entire site structure by manipulating a single JSON object, avoiding the complexities of file-system routing or behavior imports. 2.2. The Behavior Schema Every UI element is governed by a strict JSON schema defining its properties, allowed values, and accessibility requirements. This is the contract between the AI and the UI. { \"behavior\": \"card\", \"properties\": { \"variant\": { \"type\": \"string\", \"enum\": [\"default\", \"outlined\", \"elevated\"] }, \"interactive\": { \"type\": \"boolean\" } }, \"compliance\": { \"baseClass\": \"x-card\", \"requiredChildren\": { \".x-card__header\": { \"description\": \"Card header element\" } } }, \"test\": { \"functional\": { \"hover\": [...], \"keyboard\": [...], \"visual\": [...] } } } Fig 1. A Behavior Schema defining structure, properties, and test specifications. 2.3. The Semantic Schema We enforce HTML5 semantic standards as a structural constraint. Behaviors are attached to meaningful tags ( article , nav , dialog ) rather than generic containers. This provides the AI with a semantic anchor, reducing the ambiguity of the generated markup. 3. Experimental Results To validate this architecture, we implemented the WB Starter kit and subjected it to AI-driven modification tasks across multiple development phases. 3.1. Eliminating the Confident Li",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/scrollalong-test",
@@ -4410,7 +4415,7 @@
       "content": "ScrollAlong Behavior Test Scroll down to see scrollalong behavior Home About Contact Main content area",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/site/cards",
@@ -5586,7 +5591,7 @@
       "content": "Standalone Preview — WB Nothing to preview This page renders whatever markup the URL hands it, edge to edge, so you can resize the browser and watch the element respond. A bare standalone.html with no #fragment has nothing to draw which is why you are seeing this instead of a behavior. Open it from the Playground's &#x29C9; Standalone button. It builds a self-contained link with the markup in the URL, so the result can be pasted into any browser, shared, or bookmarked. Go to the Playground",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/test-harness",
@@ -5602,7 +5607,7 @@
       "content": "WB Test Harness WB Test Harness Lightweight page for auto-generated behavior tests.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-10-06"
+      "modified": "2026-10-05"
     }
   ],
   "index": {
@@ -6284,7 +6289,7 @@
     "291": [
       "docs/behaviors/x-copybutton"
     ],
-    "296": [
+    "297": [
       "pages/home"
     ],
     "300": [
@@ -8754,6 +8759,7 @@
       "docs/V3-GUIDE",
       "docs/behaviors/card",
       "docs/behaviors/cardnotification",
+      "docs/behaviors/glow",
       "docs/behaviors/hero",
       "docs/behaviors/truncate",
       "docs/claude/TIER1-LAWS",
@@ -10268,6 +10274,7 @@
       "docs/behaviors/darkmode",
       "docs/behaviors/dl",
       "docs/behaviors/dropdown",
+      "docs/behaviors/glow",
       "docs/behaviors/stagelight",
       "docs/behaviors/ul",
       "docs/behaviors/x-darkmode",
@@ -15038,6 +15045,7 @@
       "docs/behaviors/cardstats",
       "docs/behaviors/cardtestimonial",
       "docs/behaviors/checkbox",
+      "docs/behaviors/clock",
       "docs/behaviors/codecontrol",
       "docs/behaviors/copybutton",
       "docs/behaviors/details",
@@ -15121,6 +15129,7 @@
       "pages/behaviors",
       "docs/behaviors/card",
       "docs/behaviors/cardminimizable",
+      "docs/behaviors/glow",
       "docs/behaviors/move",
       "docs/behaviors/reel",
       "docs/behaviors/release",
@@ -15268,6 +15277,7 @@
     ],
     "headings": [
       "pages/behaviors",
+      "docs/behaviors/glow",
       "docs/behaviors/table",
       "docs/claude/SCHEMAS-GUIDE",
       "docs/guides/search-index",
@@ -15617,6 +15627,7 @@
       "docs/behaviors/fill",
       "docs/behaviors/floatinglabel",
       "docs/behaviors/frame",
+      "docs/behaviors/glow",
       "docs/behaviors/ratio",
       "docs/behaviors/x-effects",
       "docs/behaviors/x-enhancements",
@@ -16016,6 +16027,7 @@
       "docs/behaviors/fill",
       "docs/behaviors/frame",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/img",
       "docs/behaviors/otp",
       "docs/behaviors/repeater",
@@ -18731,6 +18743,7 @@
       "docs/behaviors/aside",
       "docs/behaviors/codecontrol",
       "docs/behaviors/fieldset",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/img",
       "docs/behaviors/masked",
@@ -20274,6 +20287,7 @@
     ],
     "pulse": [
       "pages/features",
+      "docs/behaviors/glow",
       "docs/behaviors/pulse",
       "docs/behaviors/x-effects"
     ],
@@ -21537,6 +21551,7 @@
       "docs/behaviors/cardportfolio",
       "docs/behaviors/center",
       "docs/behaviors/checkbox",
+      "docs/behaviors/clock",
       "docs/behaviors/codecontrol",
       "docs/behaviors/colorpicker",
       "docs/behaviors/container",
@@ -22172,6 +22187,7 @@
       "docs/behaviors/cover",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
+      "docs/behaviors/glow",
       "docs/behaviors/hero",
       "docs/behaviors/popover",
       "docs/behaviors/prompt",
@@ -23701,6 +23717,7 @@
       "docs/behaviors/badge",
       "docs/behaviors/card",
       "docs/behaviors/cardproduct",
+      "docs/behaviors/clock",
       "docs/behaviors/cluster",
       "docs/behaviors/collapse",
       "docs/behaviors/move",
@@ -23861,6 +23878,7 @@
       "docs/MVVM-MIGRATION",
       "docs/behaviors/blockquote",
       "docs/behaviors/button",
+      "docs/behaviors/clock",
       "docs/behaviors/copybutton",
       "docs/behaviors/details",
       "docs/behaviors/dialog",
@@ -27259,6 +27277,7 @@
       "docs/behaviors/footer",
       "docs/behaviors/fullscreen",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/header",
       "docs/behaviors/help",
@@ -27766,6 +27785,7 @@
       "docs/behaviors/data",
       "docs/behaviors/footer",
       "docs/behaviors/formrow",
+      "docs/behaviors/glow",
       "docs/behaviors/ol",
       "docs/behaviors/popover",
       "docs/behaviors/pre",
@@ -28041,6 +28061,7 @@
     "local": [
       "docs/ANNOUNCE_TEST_POLICY",
       "docs/BRANCH_PROTECTION",
+      "docs/behaviors/clock",
       "docs/behaviors/input",
       "docs/mcp",
       "docs/standards/ERROR-LOG-RETENTION",
@@ -31298,6 +31319,7 @@
       "docs/behaviors/countdown",
       "docs/behaviors/darkmode",
       "docs/behaviors/fullscreen",
+      "docs/behaviors/glow",
       "docs/behaviors/grid",
       "docs/behaviors/print",
       "docs/behaviors/scrollalong",
@@ -33377,6 +33399,7 @@
       "docs/behaviors/footer",
       "docs/behaviors/form",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/header",
       "docs/behaviors/img",
       "docs/behaviors/input",
@@ -35513,6 +35536,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/card",
+      "docs/behaviors/clock",
       "docs/behaviors/container",
       "docs/behaviors/dialog",
       "docs/behaviors/draggable",
@@ -36429,6 +36453,7 @@
     "asks": [
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/architecture/solidjscomparison",
+      "docs/behaviors/clock",
       "docs/behaviors/prompt"
     ],
     "moves": [
@@ -36845,6 +36870,7 @@
       "docs/behaviors/flip",
       "docs/behaviors/frame",
       "docs/behaviors/glass",
+      "docs/behaviors/glow",
       "docs/behaviors/input",
       "docs/behaviors/searchfield",
       "docs/behaviors/stagelight",
@@ -38509,6 +38535,7 @@
     "unknown": [
       "docs/audio",
       "docs/audits/X-USAGE-AUDIT",
+      "docs/behaviors/clock",
       "docs/behaviors/progress",
       "docs/claude/PAGE-GENERATION",
       "docs/npx-commands"
@@ -42131,6 +42158,27 @@
     "segment": [
       "docs/behaviors/clock"
     ],
+    "central": [
+      "docs/behaviors/clock",
+      "docs/wbservices"
+    ],
+    "cdt": [
+      "docs/behaviors/clock"
+    ],
+    "cst": [
+      "docs/behaviors/clock"
+    ],
+    "timezone": [
+      "docs/behaviors/clock",
+      "docs/behaviors/time"
+    ],
+    "zone": [
+      "docs/behaviors/clock",
+      "docs/container-pattern"
+    ],
+    "visitor": [
+      "docs/behaviors/clock"
+    ],
     "digital": [
       "docs/behaviors/clock"
     ],
@@ -42145,6 +42193,19 @@
     ],
     "analogue": [
       "docs/behaviors/clock"
+    ],
+    "iana": [
+      "docs/behaviors/clock"
+    ],
+    "america": [
+      "docs/behaviors/clock"
+    ],
+    "chicago": [
+      "docs/behaviors/clock"
+    ],
+    "york": [
+      "docs/behaviors/clock",
+      "demos/schema-first-architecture"
     ],
     "lays": [
       "docs/behaviors/cluster",
@@ -43496,6 +43557,17 @@
     "treat": [
       "docs/behaviors/globe"
     ],
+    "ring": [
+      "docs/behaviors/glow",
+      "docs/behaviors/spinner"
+    ],
+    "steady": [
+      "docs/behaviors/glow"
+    ],
+    "letters": [
+      "docs/behaviors/glow",
+      "docs/behaviors/ol"
+    ],
     "sparingly": [
       "docs/behaviors/glow"
     ],
@@ -43507,6 +43579,37 @@
     ],
     "trial": [
       "docs/behaviors/glow"
+    ],
+    "glowing": [
+      "docs/behaviors/glow"
+    ],
+    "night": [
+      "docs/behaviors/glow"
+    ],
+    "pulses": [
+      "docs/behaviors/glow"
+    ],
+    "prefers": [
+      "docs/behaviors/glow"
+    ],
+    "reduced": [
+      "docs/behaviors/glow",
+      "docs/performance",
+      "docs/pricecard"
+    ],
+    "motion": [
+      "docs/behaviors/glow"
+    ],
+    "glows": [
+      "docs/behaviors/glow"
+    ],
+    "haloes": [
+      "docs/behaviors/glow"
+    ],
+    "rectangle": [
+      "docs/behaviors/glow",
+      "docs/behaviors/skeleton",
+      "docs/themes"
     ],
     "6366f1": [
       "docs/behaviors/glow"
@@ -44035,9 +44138,6 @@
       "docs/behaviors/ol"
     ],
     "numerals": [
-      "docs/behaviors/ol"
-    ],
-    "letters": [
       "docs/behaviors/ol"
     ],
     "respects": [
@@ -44636,10 +44736,6 @@
     "shimmering": [
       "docs/behaviors/skeleton"
     ],
-    "rectangle": [
-      "docs/behaviors/skeleton",
-      "docs/themes"
-    ],
     "shimmer": [
       "docs/behaviors/skeleton"
     ],
@@ -44708,9 +44804,6 @@
       "docs/behaviors/spinner",
       "docs/behaviors/steps",
       "docs/behaviors/timeline"
-    ],
-    "ring": [
-      "docs/behaviors/spinner"
     ],
     "speed": [
       "docs/behaviors/spinner",
@@ -44992,9 +45085,6 @@
       "docs/behaviors/time"
     ],
     "15t14": [
-      "docs/behaviors/time"
-    ],
-    "timezone": [
       "docs/behaviors/time"
     ],
     "ssz": [
@@ -46537,9 +46627,6 @@
     "offcanvas": [
       "docs/container-pattern"
     ],
-    "zone": [
-      "docs/container-pattern"
-    ],
     "exceeded": [
       "docs/container-pattern"
     ],
@@ -47785,10 +47872,6 @@
     ],
     "informs": [
       "docs/performance"
-    ],
-    "reduced": [
-      "docs/performance",
-      "docs/pricecard"
     ],
     "thrashing": [
       "docs/performance"
@@ -49348,9 +49431,6 @@
     "hsl": [
       "docs/themes"
     ],
-    "central": [
-      "docs/wbservices"
-    ],
     "bootstrapper": [
       "docs/wbservices"
     ],
@@ -49768,9 +49848,6 @@
       "demos/schema-first-architecture"
     ],
     "vendetti": [
-      "demos/schema-first-architecture"
-    ],
-    "york": [
       "demos/schema-first-architecture"
     ],
     "elena": [
