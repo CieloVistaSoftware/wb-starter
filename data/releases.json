@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.301",
+      "date": "2026-10-05",
+      "summary": "When the doc-viewer link check lost its connection to the test server, it failed looking like a dead link and left no clue why. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1570\" target=\"_blank\" rel=\"noopener\">PR 1570</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>A transport error in doc-viewer-links says it is not a dead link, and when the socket was last used</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+          "issues": [
+            1549
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/integration/doc-viewer-links.spec.ts --project=integration</code> and stop the server mid-run. Before: the failure read only &quot;apiRequestContext.get: read ECONNRESET&quot;. Now: it reads &quot;transport error requesting /&lt;doc&gt; (not a dead link) ... this worker last used the server Nms earlier&quot;, which is the number that decides the keep-alive question."
+    },
+    {
       "version": "1.0.300",
       "date": "2026-10-05",
       "summary": "The cards demo page used to build all 293 demos on load and froze for over nine seconds; it now builds only what is on screen, and a test keeps it that way. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1576\" target=\"_blank\" rel=\"noopener\">PR 1576</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/987\" target=\"_blank\" rel=\"noopener\">#987</a>",
