@@ -6,6 +6,43 @@
   ],
   "releases": [
     {
+      "version": "1.0.348",
+      "date": "2026-10-06",
+      "summary": "15 &quot;sleep, then check it IS true&quot; waits in thirteen regression and compliance specs now wait on what they check (WB.settled after the page or doc renders, expect.poll on the page error or retry request, the doc-viewer End gap polled to the bottom), 2 sleeps that prove nothing moved or overwrote the page are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 26 and setup 208. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1648\" target=\"_blank\" rel=\"noopener\">PR 1648</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Thirteen more specs wait on the condition, not a clock (positive 43 -&gt; 26)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f7dea938453fb209fa6e7171490f8c2bcc0e8788\" target=\"_blank\" rel=\"noopener\"><code>f7dea93</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: positive 43, setup 209, marked 3. Now: positive 26, setup 208, marked 5, and every edited spec passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/222177cff3000d19a63fc934d1e16442dbb293d9\" target=\"_blank\" rel=\"noopener\"><code>222177c</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Previous batch",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1644\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1644</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.347",
       "date": "2026-10-06",
       "summary": "Behaviors injected their CSS with hardcoded fallback colours that would paint dark-theme colours into a light theme whenever a token went missing, and no check looked at JavaScript. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1649\" target=\"_blank\" rel=\"noopener\">PR 1649</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
