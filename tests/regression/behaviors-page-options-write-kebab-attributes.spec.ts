@@ -69,6 +69,9 @@ const CAMEL = [
   ['x-switch', 'labelPosition', 'label-position'],
   ['x-textarea', 'showCount', 'show-count'],
   ['x-progress', 'showValue', 'show-value'],
+  // #952: the page once wrote these squashed (fullwidth, showplaybutton).
+  ['x-button', 'fullWidth', 'full-width'],
+  ['x-audio', 'showPlayButton', 'show-play-button'],
 ] as const;
 for (const [token, prop, attr] of CAMEL) {
   test(`${token} ${prop} rows are written as ${attr}`, async ({ page }) => {
@@ -78,6 +81,8 @@ for (const [token, prop, attr] of CAMEL) {
     const value = (await row.getAttribute('data-variant'))!;
     const code = await pick(page, token, prop, value);
     expect(code).toMatch(new RegExp(`\\s${attr}(="[^"]*")?[\\s>]`));
-    expect(code, 'the camelCase spelling must not be written').not.toMatch(new RegExp(`\\s${prop}[=\\s>]`));
+    // Case-insensitive: refuses the camelCase spelling AND the squashed
+    // lowercase one (fullwidth, #952), which HTML makes of it anyway.
+    expect(code, 'the camelCase or squashed spelling must not be written').not.toMatch(new RegExp(`\\s${prop}[=\\s>]`, 'i'));
   });
 }
