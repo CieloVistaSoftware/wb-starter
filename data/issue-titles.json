@@ -1209,5 +1209,7 @@
   "1595": "Home page hero: a hard-edged band sweeps across the cosmic hero every 7 seconds",
   "1597": "Hero gallery: the playground's 120 card heroes as JPGs, with clickable hotspots on their two buttons",
   "1598": "x-cardexpandable: no Behaviors page example shows anything new when expanded",
-  "1600": "x-cardexpandable schema and doc name an event, methods and CSS variables the code doesn't have"
+  "1600": "x-cardexpandable schema and doc name an event, methods and CSS variables the code doesn't have",
+  "1613": "Nightly 2026-10-06: new test failures on main",
+  "1614": "App icons (PWA + apple-touch) are still the lightning bolt, not the wb logo"
 }
