@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.304",
+      "date": "2026-10-05",
+      "summary": "On the Issues page, wheeling over an expanded issue scrolled the issue and the whole page together, so the reader lost their place mid-issue: the site-wide wheel fallback (#636) took &quot;the page did not move&quot; as &quot;native scrolling failed&quot; and pushed the page. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1584\" target=\"_blank\" rel=\"noopener\">PR 1584</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A wheel over an expanded issue scrolls only the issue</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",
+          "issues": [
+            1037
+          ]
+        }
+      ],
+      "seeIt": "Open ?page=issues, expand a long issue and wheel over its body. Before: the issue and the page scrolled together. Now: only the issue scrolls until its end, then the page."
+    },
+    {
       "version": "1.0.303",
       "date": "2026-10-05",
       "summary": "The Behaviors page once wrote multi-word options squashed (fullwidth, showplaybutton), a third spelling that matched neither the schema nor the docs; the page now writes them dashed, but no test refused the squashed form, so it could come back unnoticed. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1581\" target=\"_blank\" rel=\"noopener\">PR 1581</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/952\" target=\"_blank\" rel=\"noopener\">#952</a>",
