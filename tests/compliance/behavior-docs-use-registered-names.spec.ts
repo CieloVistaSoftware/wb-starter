@@ -46,7 +46,10 @@ test('every x-* attribute in docs/behaviors/*.md names a registered behavior (#1
   for (const file of readdirSync(DOCS).filter((f) => f.endsWith('.md'))) {
     const text = readFileSync(join(DOCS, file), 'utf8');
     for (const tag of text.matchAll(/<[a-z][a-z0-9-]*\b[^>]*>/g)) {
-      for (const attr of tag[0].matchAll(/\sx-([a-z][a-z0-9-]*)/g)) {
+      // Attribute NAMES only: a quoted value such as class="x-container
+      // x-container--grid" holds class names, not behaviors.
+      const names = tag[0].replace(/"[^"]*"|'[^']*'/g, '""');
+      for (const attr of names.matchAll(/\sx-([a-z][a-z0-9-]*)/g)) {
         const name = attr[1];
         if (!known.has(name) && !DIRECTIVES.has(name)) unknown.push(`${file}: x-${name}  in  ${tag[0].slice(0, 70)}`);
       }

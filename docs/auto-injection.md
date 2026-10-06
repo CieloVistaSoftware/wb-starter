@@ -18,19 +18,18 @@ When `WB.init({ autoInject: true })` is called, the library scans the DOM for sp
 
 ### Precedence Rule
 **Auto Injection is additive.**
-It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple` or `x-as-card`).
+It applies the default behavior for the element type. You can add *additional* behaviors using explicit attributes (like `x-ripple`).
 
-If you want to **prevent** Auto Injection for a specific element, you must use the `ignore` attribute.
+If you want to **prevent** Auto Injection for a specific element, use the `x-ignore` attribute.
 
-```html
-<!-- This <button> gets 'button' behavior (auto) AND 'ripple' behavior (explicit) -->
+This `<button>` gets the `button` behavior from its tag and `ripple` from its attribute; the `<nav>` does not become a WB navbar:
+
+<div x-demo>
 <button x-ripple>Click Me</button>
-<!-- This <article> gets 'card' behavior (auto) AND 'hero' behavior (explicit) -->
-<!-- Note: Be careful combining morphing behaviors! -->
-<article x-as-hero>...</article>
-<!-- This <nav> will NOT become a WB Navbar -->
-<nav ignore>...</nav>
-```
+<nav x-ignore>
+  <a href="#">Just a link</a>
+</nav>
+</div>
 
 ---
 
@@ -43,7 +42,6 @@ The following HTML elements are automatically mapped to WB behaviors:
 |----------|-------------------|-------------|
 | `<article>` | `card` | Becomes a card behavior |
 | `<nav>` | `navbar` | Becomes a responsive navigation bar |
-| `<aside>` | `sidebar` | Becomes a sidebar/drawer |
 | `<table>` | `table` | Adds sorting and responsive styling |
 | `<details>` | `details` | Enhances the expand/collapse animation |
 | `<dialog>` | `dialog` | Adds modal management and backdrop |
@@ -62,7 +60,7 @@ The following HTML elements are automatically mapped to WB behaviors:
 ### Media & Text
 | HTML Tag | Injected Behavior | Description |
 |----------|-------------------|-------------|
-| `<img>` | `image` | Lazy loading and fade-in |
+| `<img>` | `img` | Lazy loading and fade-in |
 | `<video>` | `video` | Custom player controls |
 | `<audio>` | `audio` | Custom audio player |
 | `<code>` | `code` | Inline code styling |
@@ -76,15 +74,13 @@ The following HTML elements are automatically mapped to WB behaviors:
 ## Examples
 
 ### 1. Card Behavior
-**Explicit (Shorthand):**
-```html
-<article x-as-card>
-  <header>
-    <h3>Title</h3>
-  </header>
+**Explicit (any other host):**
+
+<div x-demo>
+<section x-card title="Title">
   <p>Content</p>
-</article>
-```
+</section>
+</div>
 
 **Implicit (Auto Injection):**
 ```html
@@ -97,13 +93,6 @@ The following HTML elements are automatically mapped to WB behaviors:
 ```
 
 ### 2. Navigation Bar
-**Explicit (Shorthand):**
-```html
-<nav x-as-navbar>
-  <ul>...</ul>
-</nav>
-```
-
 **Implicit (Auto Injection):**
 ```html
 <nav>
@@ -139,22 +128,22 @@ The following HTML elements are automatically mapped to WB behaviors:
 
 ## Opting Out
 
-If you want to use a semantic element *without* the WB behavior, add the `ignore` attribute.
+If you want to use a semantic element *without* the WB behavior, add the `x-ignore` attribute. This `<nav>` does not become a WB navbar:
 
-```html
-<!-- This <nav> will NOT become a WB Navbar -->
-<nav ignore>
+<div x-demo>
+<nav x-ignore>
   <a href="#">Just a link</a>
 </nav>
-```
+</div>
 
 ## Overriding
 
-If you want to use a semantic element but apply a *different* behavior, simply use the explicit syntax.
+If you want to use a semantic element but apply a *different* behavior, name it with its attribute. This `<article>` is built by `cardhero` instead of the plain `card`, and renders one card, not two (#923):
 
-```html
-<!-- Uses 'hero' behavior instead of 'card' -->
-<article x-as-hero>
-  <h1>Welcome</h1>
+<div x-demo>
+<article
+  x-cardhero
+  title="Welcome"
+  subtitle="Start with semantic HTML">
 </article>
-```
+</div>

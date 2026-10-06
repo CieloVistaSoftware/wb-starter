@@ -20,15 +20,16 @@ There are 19 distinct card behaviors available. All share the `card` behavior bu
 
 ### cardlink
 
-To create a card that acts as a link, use the `<div x-cardlink>` custom element:
+To create a card that acts as a link, put the `x-cardlink` attribute on an `<article>`:
 
-```html
-<div x-cardlink
-  href="/page"
+<div x-demo>
+<article
+  x-cardlink
+  href="#"
   title="My Page"
   badge="NEW">
+</article>
 </div>
-```
 
 Supported attributes:
 - `href` - Link destination (required)

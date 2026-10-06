@@ -18,9 +18,9 @@ posts and validates like any other.
 Use `x-checkbox` when the host is not an `<input type="checkbox">` and you want
 the same behavior — it builds its own control and label from the attributes:
 
-```html
+<div x-demo>
 <div x-checkbox label="Run the full suite before pushing" name="full-suite" checked></div>
-```
+</div>
 
 Prefer the native form. Reaching for a `<div>` when `<input type="checkbox">`
 says it better trades correct HTML for a workaround: the div version has to

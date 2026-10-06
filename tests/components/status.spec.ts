@@ -1,23 +1,23 @@
 /**
- * span Behavior Tests
+ * status Behavior Tests
  * Auto-generated baseline — verifies render + no console errors
- * Source: src/wb-viewmodels/span.js
+ * Source: src/wb-viewmodels/status.js
  */
 import { test, expect } from '../fixtures/offline';
 import { injectAndScan } from '../helpers/inject-and-scan';
 
-test.describe('span Behavior', () => {
+test.describe('status Behavior', () => {
 
   test('renders without errors', async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
     
     const setupHtml = [
-      "<div x-span>Basic span content</div>",
-      "<div x-span variant=\"red\">variant=red</div>",
-      "<div x-span variant=\"yellow\">variant=yellow</div>",
-      "<div x-span variant=\"green\">variant=green</div>",
-      "<div x-span variant=\"red\" variant=\"yellow\">Combined: variant=red, variant=yellow</div>"
+      "<div x-status>Basic status text</div>",
+      "<div x-status variant=\"red\">variant=red</div>",
+      "<div x-status variant=\"yellow\">variant=yellow</div>",
+      "<div x-status variant=\"green\">variant=green</div>",
+      "<div x-status variant=\"red\" variant=\"yellow\">Combined: variant=red, variant=yellow</div>"
     ];
     
     await injectAndScan(page, setupHtml.join('\n'));
@@ -33,10 +33,10 @@ test.describe('span Behavior', () => {
   });
 
   test('element is visible after scan', async ({ page }) => {
-    const html = "<div x-span>Basic span content</div>";
+    const html = "<div x-status>Basic status text</div>";
     await injectAndScan(page, html);
     
-    const el = page.locator('#test-container [x-span]').first();
+    const el = page.locator('#test-container [x-status]').first();
     const isPresent = await el.count() > 0;
     
     if (isPresent) {

@@ -300,7 +300,7 @@ Rich interactive behaviors.
 | [`header`](behaviors/header.md) | `<header>` | Decorate | Page header built from its attributes |
 | [`stat`](behaviors/stat.md) | `<div x-stat>` | - | One figure: large value over a small label |
 | [`timeline`](behaviors/timeline.md) | `<div x-timeline>` | - | Vertical timeline, one marker per item |
-| [`span`](behaviors/span.md) | `<span>` | - | Status-coloured inline text |
+| [`status`](behaviors/status.md) | `<span>` | - | Status-coloured inline text or a window-control dot |
 | [`globe`](behaviors/globe.md) | `<div x-globe>` | - | Globe placeholder (class only; nothing drawn yet) |
 | [`slider`](behaviors/slider.md) | `<div x-slider>` | - | Slider placeholder (class only; nothing built yet) |
 | [`fix-card`](behaviors/fix-card.md) | `<div x-fix-card>` | - | One entry from the project fix log |

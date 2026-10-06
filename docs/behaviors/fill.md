@@ -42,9 +42,9 @@ token is usually somebody's deliberate decision, and "as wide as possible" still
 means "as wide as you are *allowed* to be". Use `ignoreMaxWidth` when the cap
 is the thing in your way.
 
-```html
+<div x-demo>
 <article x-fill ignoreMaxWidth>Edge to edge, cap and all</article>
-```
+</div>
 
 ## What it sets
 

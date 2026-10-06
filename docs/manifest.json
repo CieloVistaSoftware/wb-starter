@@ -448,7 +448,7 @@
           "file": "behaviors/checkbox.md",
           "title": "Checkbox",
           "description": "Checkbox input with label and custom styling",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/chip.md",
@@ -562,7 +562,7 @@
           "file": "behaviors/details.md",
           "title": "Details",
           "description": "A plain <details> gets the styled disclosure: the summary attribute supplies the heading, animated slides the content open and closed, and giving several…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/dialog.md",
@@ -676,7 +676,7 @@
           "file": "behaviors/footer.md",
           "title": "Footer",
           "description": "A plain <footer> gets a site footer built from its attributes: the brand name, a copyright line, a row of links and optional social icons.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/form.md",
@@ -1027,12 +1027,6 @@
           "modified": "2026-10-06"
         },
         {
-          "file": "behaviors/span.md",
-          "title": "Span",
-          "description": "x-span adds a variant class to a <span>: muted, primary, success and the other status colours style its text, and red, yellow and green turn it into a…",
-          "modified": "2026-09-27"
-        },
-        {
           "file": "behaviors/sparkle.md",
           "title": "Sparkle",
           "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
@@ -1055,6 +1049,12 @@
           "title": "Stat",
           "description": "x-stat shows one figure: a large value over a small label, with an optional colour variant.",
           "modified": "2026-09-27"
+        },
+        {
+          "file": "behaviors/status.md",
+          "title": "Status",
+          "description": "x-status adds a variant class to inline text: primary, success, error and the other status colours style its text, and red, yellow, green and dot turn it into a…",
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/stepper.md",
@@ -1126,7 +1126,7 @@
           "file": "behaviors/time.md",
           "title": "<time> Element",
           "description": "The <time> element represents a specific period in time.",
-          "modified": "2026-09-28"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/timeline.md",
@@ -1276,7 +1276,7 @@
           "file": "guides/search-index.md",
           "title": "Search Index",
           "description": "Documentation for Search Index",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "property-viewer.md",
@@ -1288,7 +1288,7 @@
           "file": "search.md",
           "title": "Search",
           "description": "Search functionality documentation",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         }
       ]
     },
@@ -1336,7 +1336,7 @@
           "file": "MVVM-MIGRATION.md",
           "title": "MVVM MIGRATION",
           "description": "Documentation for MVVM MIGRATION",
-          "modified": "2026-10-04"
+          "modified": "2026-10-06"
         }
       ]
     },
@@ -1444,7 +1444,7 @@
           "file": "pricecard.md",
           "title": "Pricecard",
           "description": "Documentation for Pricecard",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "schema-first-architecture.md",
@@ -1564,7 +1564,7 @@
           "file": "wbservices.md",
           "title": "WBServices",
           "description": "WBServices pattern documentation",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "WB_BEHAVIOR_SYSTEM.md",

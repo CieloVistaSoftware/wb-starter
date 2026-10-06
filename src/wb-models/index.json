@@ -130,10 +130,10 @@
     "slidein.schema.json",
     "slider.schema.json",
     "snow.schema.json",
-    "span.schema.json",
     "sparkle.schema.json",
     "spinner.schema.json",
     "stack.schema.json",
+    "status.schema.json",
     "stagelight.schema.json",
     "stepper.schema.json",
     "steps.schema.json",
@@ -286,7 +286,7 @@
       "count": 5,
       "schemas": [
         "notes.schema.json",
-        "span.schema.json",
+        "status.schema.json",
         "darkmode.schema.json",
         "themecontrol.schema.json",
         "search-index.schema.json"

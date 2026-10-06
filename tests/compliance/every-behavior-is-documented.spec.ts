@@ -120,8 +120,8 @@ test.describe('#1093 — behavior documentation coverage', () => {
 
   test('no doc teaches the redundant <tag x-tag> form', () => {
     const redundant = behaviors.filter((b) => {
-      // Only where the TAG already injects it. `x-span` is attribute-only —
-      // nothing about <span> implies a ripple — so <span x-span> is required,
+      // Only where the TAG already injects it. `x-status` is attribute-only —
+      // nothing about <span> implies a ripple — so <span x-status> is required,
       // not redundant. Flagging it would have told a reader to delete the one
       // thing making the example work.
       if (!b.autoInjected) return false;

@@ -87,8 +87,8 @@ for (const file of files) {
     }
   }
 
-  // --- Fix 4: span variant — add "default" to enum ---
-  if (file === 'span.schema.json' && schema.properties?.variant) {
+  // --- Fix 4: status (was span) variant — add "default" to enum ---
+  if (file === 'status.schema.json' && schema.properties?.variant) {
     const v = schema.properties.variant;
     if (v.enum && !v.enum.includes('default') && v.default === 'default') {
       v.enum.unshift('default');

@@ -267,7 +267,7 @@ export const EXAMPLES = {
   <img src="${img('wide', 640, 360)}" alt="Coastline from the air">
 </div>`,
 
-  'x-span': `<span x-span variant="muted">Last run 4 minutes ago</span>`,
+  'x-status': `<span x-status variant="success">All checks passed</span>`,
 
   'x-repeater': `<div x-repeater>
   <div>Row template — add and remove copies of this block.</div>

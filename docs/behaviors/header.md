@@ -12,9 +12,9 @@ No attribute needed on `<header>`. Don't add `x-header` to it (#746).
 
 On another element, write `x-header`:
 
-```html
+<div x-demo>
 <div x-header title="Field notes" subtitle="Everything that happened this week" badge="New"></div>
-```
+</div>
 
 `<header x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

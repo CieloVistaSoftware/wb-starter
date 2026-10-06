@@ -342,9 +342,10 @@ export function buildDoc({ token, docName }) {
       '',
       `On another element, write \`${token}\`:`,
       '',
-      '```html',
+      // #307 Rule 4: behavior markup is a live demo, never a static fence.
+      '<div x-demo>',
       alternateHostUsage(token, schema),
-      '```',
+      '</div>',
       '',
       `\`<${tag} x-ignore>\` opts out ([escape hatches](../escape-hatches.md)).`,
       '',

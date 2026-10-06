@@ -18,7 +18,7 @@ No attribute needed on `<table>`. Don't add `x-table` to it (#746).
 
 On another element, write `x-table`:
 
-```html
+<div x-demo>
 <div x-table headers="Behavior,Kind,Variants" rows='[
   ["badge", "inline", "9"],
   ["button", "control", "8"],
@@ -26,7 +26,7 @@ On another element, write `x-table`:
   ["tabs", "container", "3"],
   ["alert", "feedback", "4"]
 ]'></div>
-```
+</div>
 
 `<table x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

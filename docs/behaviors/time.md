@@ -46,7 +46,7 @@ hand-authored children like the `<time>` below are discarded — the behavior
 rebuilds its content from attributes only (see [`aside.md`](./aside.md)).
 Shown here as illustrative markup only; it will render without a timestamp.
 
-```html
+```html-static
 <aside x-cardnotification title="Update" message="New comment on your post">
   <!-- cardnotification has no time/date attribute — this <time> is dropped -->
   <time datetime="2024-12-15T14:30:00Z">2 hours ago</time>

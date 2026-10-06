@@ -111,9 +111,9 @@ export const BEHAVIOR_CSS_MAP = {
   range: ['input.css'],
 
   label: ['label.css'],
-  // #773: span()'s status variants (x-span--primary, --success...) had no
-  // stylesheet at all, so every one rendered as plain text.
-  span: ['span.css'],
+  // #773: the status variants (x-status--primary, --success...; x-span until
+  // #1105) had no stylesheet at all, so every one rendered as plain text.
+  status: ['status.css'],
   mdhtml: ['mdhtml.css'],
   notes: ['notes.css'],
   otp: ['otp.css'],

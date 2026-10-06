@@ -166,10 +166,12 @@ This means:
 ### How Are x-Behaviors Implemented?
 1. **Declaration:**
    - Add an x-* attribute to any element:
-     ```html
+
+     <div x-demo>
      <button x-ripple x-tooltip="Save">Save</button>
-     <article x-badge="New">Card</article>
-     ```
+     <span x-badge label="New"></span>
+     </div>
+
 2. **Scanning:**
    - On page load, the bootstrapper scans the DOM for all x-* attributes.
 3. **Injection:**

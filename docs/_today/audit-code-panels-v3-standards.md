@@ -178,7 +178,7 @@ The doc's raw Markdown contains exactly **10** `<div x-demo>` blocks (confirmed 
 comes from mdhtml.js's auto-live-render feature: a plain ` ```html ` fenced block
 illustrating legacy-vs-v3 syntax —
 
-```html
+```html-static
 <!-- Legacy v2 -->
 <div x-card title="Hello" variant="glass">Content</div>
 <button x-ripple type="button">Click me</button>

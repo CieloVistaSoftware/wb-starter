@@ -12,9 +12,9 @@ No attribute needed on `<progress>`. Don't add `x-progress` to it (#746).
 
 On another element, write `x-progress`:
 
-```html
+<div x-demo>
 <div x-progress value="72" max="100" label="Uploading footage" showValue></div>
-```
+</div>
 
 `<progress x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

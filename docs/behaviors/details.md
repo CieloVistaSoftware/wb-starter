@@ -14,11 +14,11 @@ No attribute needed on `<details>`. Don't add `x-details` to it (#746).
 
 On another element, write `x-details`:
 
-```html
+<div x-demo>
 <div x-details summary="Trail conditions" animated>
   <p>Mud on the north ridge after Tuesday's rain; the lower loop is dry.</p>
 </div>
-```
+</div>
 
 `<details x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

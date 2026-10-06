@@ -12,9 +12,9 @@ No attribute needed on `<footer>`. Don't add `x-footer` to it (#746).
 
 On another element, write `x-footer`:
 
-```html
+<div x-demo>
 <div x-footer brand="Cielo Vista Software" copyright="2026" links="Privacy,Terms,Status"></div>
-```
+</div>
 
 `<footer x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
 

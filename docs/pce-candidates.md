@@ -5,27 +5,30 @@
 
 ## Overview
 
-PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of generic divs with behavior attributes. WB v3.0 supports two naming conventions that are functionally equivalent.
+PCE (Pseudo-Custom Elements) let an author name a behavior by tag. 4.0.0 removed
+them: there are no behavior tags of our own any more, and the noun-first aliases
+went with them.
 
 ## Naming Conventions
 
-### 1. WB Namespace (Recommended)
-```html
-<div x-cardprofile name="Sarah"></div>
-<div x-cardhero title="Welcome"></article>
-<articlestats value="1,234"></div>
-```
+One form is left. A behavior is either the semantic element itself (`<article>`
+is a card) or an `x-*` attribute on a host element:
 
-### 2. Noun-First Aliases (Also Supported)
-```html
-<div x-cardprofile name="Sarah"></div>
-<div x-cardhero title="Welcome"></div>
-<div x-cardstats value="1,234"></div>
-```
+<div x-demo>
+<article
+  x-cardprofile
+  name="Sarah"
+  role="Designer">
+</article>
+<article
+  x-cardstats
+  value="1,234"
+  label="Users">
+</article>
+</div>
 
-The old third form, `x-behavior="cardprofile"`, is deprecated (#1642).
-
-Both are equivalent and produce the same result.
+The old generic form, `x-behavior="cardprofile"`, is deprecated (#1642): write
+the named attribute.
 
 ---
 
@@ -50,7 +53,7 @@ Both are equivalent and produce the same result.
 | `<article>` | `<article>` | `card` | Basic card container |
 | `<div x-cardprofile>` | `<div x-cardprofile>` | `cardprofile` | User profiles with avatar, bio |
 | `<article x-cardhero>` | `<div x-cardhero>` | `cardhero` | Large banner/hero sections |
-| `<articlestats>` | `<div x-cardstats>` | `cardstats` | Dashboard statistics |
+| `<article x-cardstats>` | `<div x-cardstats>` | `cardstats` | Dashboard statistics |
 | `<div x-cardtestimonial>` | `<div x-cardtestimonial>` | `cardtestimonial` | User quotes with ratings |
 | `<article x-cardvideo>` | `<div x-cardvideo>` | `cardvideo` | Video content with controls |
 | `<div x-cardfile>` | `<div x-cardfile>` | `cardfile` | File download/preview |
@@ -214,8 +217,8 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 
 ## Migration from Legacy Syntax
 
-### Before (deprecated)
-```html
+### Before (a `<div>` standing in for an `<article>`)
+```html-static
 <div
   x-card
   title="Hello">
@@ -224,9 +227,12 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 ```
 
 ### After (v3.0)
-```html
+
+<div x-demo>
 <article title="Hello">Content</article>
-```
+</div>
+
+`<article>` is already a card, so it takes no `x-card` (#746, #967).
 
 ---
 

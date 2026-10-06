@@ -16,28 +16,30 @@ The search behavior supports multiple visual variants and sizes for different us
 | **minimal** | Borderless, subtle styling | Inline search fields |
 
 ### Sizes
-- `small` - Compact search for tight spaces
-- `medium` - Standard size (default)
-- `large` - Prominent search for main interfaces
+- `xs`, `sm` - Compact search for tight spaces
+- `md` - Standard size (default)
+- `lg` - Prominent search for main interfaces
 
 ---
 
 ## Usage
 
 ### Basic Usage
-```html
+
+<div x-demo>
 <div x-searchfield placeholder="Search for content..."></div>
-```
+</div>
 
 ### With Variants and Sizes
-```html
+
+<div x-demo>
 <div x-searchfield
   placeholder="Search tutorials..."
   variant="glass"
-  size="large"
+  size="lg"
   debounce="300">
 </div>
-```
+</div>
 
 ### Listening for Search Events
 ```javascript

@@ -1,17 +1,17 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "span.schema.json",
-  "title": "Span",
-  "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
-  "schemaFor": "span",
-  "baseClass": "x-span",
+  "$id": "status.schema.json",
+  "title": "Status",
+  "description": "Status-coloured inline text (primary, success, error, ...) or a window-control dot (red, yellow, green, dot). Was x-span, which still works as an alias (#1105).",
+  "schemaFor": "status",
+  "baseClass": "x-status",
   "semanticElement": {
     "tagName": "span",
     "implicitRole": "generic",
     "genericHost": "it is the generic inline element by definition"
   },
   "compliance": {
-    "baseClass": "x-span",
+    "baseClass": "x-status",
     "supportLevel": "stable",
     "accessibility": "high"
   },
@@ -33,7 +33,7 @@
         "info"
       ],
       "default": "default",
-      "appliesClass": "x-span--{{value}}"
+      "appliesClass": "x-status--{{value}}"
     }
   },
   "_metadata": {
@@ -48,11 +48,12 @@
   "$cssAPI": {},
   "test": {
     "setup": [
-      "<div x-span>Basic span content</div>",
-      "<div x-span variant=\"red\">variant=red</div>",
-      "<div x-span variant=\"yellow\">variant=yellow</div>",
-      "<div x-span variant=\"green\">variant=green</div>",
-      "<div x-span variant=\"red\" variant=\"yellow\">Combined: variant=red, variant=yellow</div>"
+      "<span x-status>Basic status text</span>",
+      "<span x-status variant=\"red\"></span>",
+      "<span x-status variant=\"yellow\"></span>",
+      "<span x-status variant=\"green\"></span>",
+      "<span x-status variant=\"success\">variant=success</span>",
+      "<span x-status variant=\"error\">variant=error</span>"
     ]
   }
 }

@@ -73,7 +73,7 @@ The full page this comes from — everything outside `<body>` is boilerplate
 renderable fragments), so it's shown separately below rather than folded
 into the live example above:
 
-```html
+```html-static
 <!DOCTYPE html>
 <html
   lang="en"
