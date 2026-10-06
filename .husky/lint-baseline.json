@@ -45,7 +45,7 @@
     "scripts/generate-page.mjs": 2,
     "scripts/generate-parts-intellisense.js": 1,
     "scripts/generate-site-tests.mjs": 1,
-    "scripts/generate-site.mjs": 4,
+    "scripts/generate-site.mjs": 3,
     "scripts/generate-wb-tests.mjs": 1,
     "scripts/lib/test-lock.mjs": 7,
     "scripts/lint-md-powershell-staged.js": 4,
