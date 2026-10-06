@@ -17,9 +17,9 @@
 | `position` | `left` · `right` · `top` · `bottom` | `right` |  |
 | `width` | `string` | `320px` | Drawer width (left/right) |
 | `height` | `string` | `auto` | Drawer height (top/bottom) |
-| `close-on-backdrop` | `boolean` | `true` | Close on backdrop click |
-| `close-on-escape` | `boolean` | `true` | Close on Escape key |
-| `show-close` | `boolean` | `true` | Show close button |
+| `closeOnBackdrop` | `boolean` | `true` | Close on backdrop click |
+| `closeOnEscape` | `boolean` | `true` | Close on Escape key |
+| `showClose` | `boolean` | `true` | Show close button |
 | `variant` | `default` · `overlay` · `push` | `overlay` |  |
 
 ## Events

@@ -1,7 +1,14 @@
 /**
- * An option row on the behaviors page must write the attribute a reader
- * would type -- kebab-case -- and replace the example's own value, not sit
- * beside it.
+ * An option row on the behaviors page must write the attribute under the
+ * schema's own property name -- camelCase, imagePosition (#1526, #1125) --
+ * and replace the example's own value in any spelling, not sit beside it.
+ *
+ * This spec used to assert the opposite: kebab-case, image-position. The page
+ * wrote dashed names because behaviors read only the dashed spelling; #1125
+ * made every behavior read both (camelcase-options-read-like-kebab.spec.ts
+ * proves it on every host), so the page now teaches the canonical spelling.
+ * The history below is why the row must still REPLACE whatever spelling the
+ * example already carries.
  *
  * John: "imagePosition=left / imagePosition=right -- these do not work
  * correctly." withOption() wrote the schema's camelCase name
@@ -52,7 +59,7 @@ test.beforeEach(async ({ page }) => { await page.goto('/?page=behaviors'); });
 for (const side of ['left', 'right']) {
   test(`x-cardhorizontal imagePosition=${side} puts the image on the ${side}`, async ({ page }) => {
     const code = await pick(page, 'x-cardhorizontal', 'imagePosition', side);
-    expect(code, 'kebab-case attribute, written once').toMatch(new RegExp(`image-position="${side}"`));
+    expect(code, 'the schema name, written once').toMatch(new RegExp(`imagePosition="${side}"`));
     expect(code.match(/\simage-?position\s*=/gi) ?? [], 'no second, stale spelling').toHaveLength(1);
 
     const card = page.locator('#behaviors-live-example [x-cardhorizontal]');
@@ -63,7 +70,8 @@ for (const side of ['left', 'right']) {
   });
 }
 
-// Every camelCase option the audit found dead: each must land as kebab-case.
+// Every camelCase option the audit once found dead: each is written under
+// its schema name, never dashed and never squashed to lowercase.
 const CAMEL = [
   ['x-input', 'inputType', 'input-type'],
   ['x-switch', 'labelPosition', 'label-position'],
@@ -73,16 +81,17 @@ const CAMEL = [
   ['x-button', 'fullWidth', 'full-width'],
   ['x-audio', 'showPlayButton', 'show-play-button'],
 ] as const;
-for (const [token, prop, attr] of CAMEL) {
-  test(`${token} ${prop} rows are written as ${attr}`, async ({ page }) => {
+for (const [token, prop, dashed] of CAMEL) {
+  test(`${token} ${prop} rows are written as ${prop}`, async ({ page }) => {
     const rows = await openGroup(page, token);
     const row = rows.and(page.locator(`[data-prop="${prop}"]`)).first();
     await expect(row, `${token} must offer a ${prop} row`).toBeAttached();
     const value = (await row.getAttribute('data-variant'))!;
     const code = await pick(page, token, prop, value);
-    expect(code).toMatch(new RegExp(`\\s${attr}(="[^"]*")?[\\s>]`));
-    // Case-insensitive: refuses the camelCase spelling AND the squashed
-    // lowercase one (fullwidth, #952), which HTML makes of it anyway.
-    expect(code, 'the camelCase or squashed spelling must not be written').not.toMatch(new RegExp(`\\s${prop}[=\\s>]`, 'i'));
+    // Case-SENSITIVE: the squashed lowercase spelling (fullwidth, #952) must
+    // not pass for the camelCase one.
+    expect(code).toMatch(new RegExp(`\\s${prop}(="[^"]*")?[\\s>]`));
+    expect(code, 'the dashed spelling must not be written').not.toMatch(new RegExp(`\\s${dashed}[=\\s>]`, 'i'));
+    expect(code, 'the squashed spelling must not be written').not.toMatch(new RegExp(`\\s${prop.toLowerCase()}[=\\s>]`));
   });
 }

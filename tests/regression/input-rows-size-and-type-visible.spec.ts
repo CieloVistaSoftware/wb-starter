@@ -51,7 +51,7 @@ for (const type of ['date', 'time', 'datetime-local']) {
     const input = await showRow(page, 'inputType', type);
     // .type reflects what the browser actually built; an unknown value reads "text".
     expect(await input.evaluate((el) => (el as HTMLInputElement).type)).toBe(type);
-    await expect(page.locator('#behaviors-live-code')).toContainText(`input-type="${type}"`);
+    await expect(page.locator('#behaviors-live-code')).toContainText(`inputType="${type}"`); // the schema name the page writes (#1526)
   });
 }
 
