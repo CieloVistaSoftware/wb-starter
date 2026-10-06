@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5861
+    "totalWords": 5862
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.324\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.324\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.325\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.325\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-06"
@@ -1294,10 +1294,10 @@
       "title": "card",
       "description": null,
       "headings": [],
-      "content": "# Card Card. Composes an article with a header, main and footer. Every card variant composes this same structure — they do not inherit it. There is no behavior base class (TIER1-LAWS §2): `composeCard()` is a function each variant calls, and the variants below are separate behaviors that decorate an element in place, exactly as `x-ripple` does. ## Usage Explicitly, or on a non-article element: Only the parts you give it are rendered. A card with no `title`/`subtitle` gets no header; a card with no `footer` gets no footer. Nothing is emitted empty. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | `string` | `\"\"` | Card title displayed in header | | `subtitle` | `string` | `\"\"` | Card subtitle displayed below title | | `author` | `string` | `\"\"` | Author name, rendered as the card's byline in an ` ` | | `date` | `string` | `\"\"` | Publication date, rendered in a ` ` element | | `category` | `string` | `\"\"` | Category or tag shown above the title | | `reading-time` | `string` | `\"\"` | Estimated reading time | | `footer` | `string` | `\"\"` | Card footer text | | `elevated` | `boolean` | `false` | Add drop shadow | | `clickable` | `boolean` | `false` | Make card clickable | | `variant` | `default` · `glass` · `bordered` · `flat` | `default` | Visual style variant | | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` | Card size variant controlling max/min width | | `tooltip` | `string` | `\"\"` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). | | `hover-text` | `string` | `\"\"` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. | | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints \"Featured\"; `featured=\"Deal of the week\"` prints that label instead. | ### An article is a card There is no separate article behavior. A blog post, news item or doc page is an ` `, so it is a card, and the byline attributes above are how it says who wrote it and when: The Engine weaves algebraic patterns as the loom weaves flowers. ### Badge `badge` puts a short label in the header's right-hand column: Lazy loading is now the default runtime. ### Variants `variant=\"glass\"` frosts the surface so whatever sits behind the card shows through, blurred: Frosted surface over the page background. `variant=\"bordered\"` drops the fill and keeps a heavier outline, for cards sitting on a busy surface: Outline only; the page shows through. ### Elevated `elevated` lifts the card off the page with a drop shadow: Raised above its neighbours. ### Clickable `clickable` makes the whole card one control: it takes focus, and Enter or Space activates it the same as a click. Anywhere on this card opens it. ### Tooltip `tooltip` shows its text in a themed tooltip on hover: Point at the card to see when it last changed. ### Featured `featured` promotes one card over its siblings; give it a value to say why: Waterproof, resoleable, 20% off until Sunday. ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles card visibility - `update(options)` — Updates card properties ## Styling The card's own parts carry no classes. `card.css` names each one by its tag and position, so the markup is exactly what it looks like: ```text ← the CARD (any element with x-card works the same) ← the HEADER: article > header ← the TITLE, from `title`: article > header > h3 ← the SUBTITLE, from `subtitle`: article > header > p ← the BADGE, from `badge`: article > header > span:last-child ← the BODY, your content: article > main ← the FOOTER, from `footer`: .x-card__footer ``` The footer is the one part still named by class. `variant`, `elevated` and `clickable` are read straight off the element as attributes (`article[variant=\"glass\"]`); `size` becomes an `x-card--{size}` class. Style through the existing card stylesheet in `src/styles/behaviors/`, never a one-off class or inline style (TIER1-LAWS §9). `variant` and `size` are the supported knobs — reach for those before writing new CSS. ## Accessibility - Support level: **stable**, accessibility: **high** - Renders as ` `, which carries the `article` role — so a card is a landmark a screen reader can navigate to. Give it a `title` so that landmark has a name. - `clickable` makes the whole card activatable; it must remain reachable and operable by keyboard, not mouse only. ## Variants The card variants are separate behaviors, each with its own page: [cardbutton](cardbutton.md) · [carddraggable](carddraggable.md) · [cardexpandable](cardexpandable.md) · [cardfile](cardfile.md) · [cardhero](cardhero.md) · [cardhorizontal](cardhorizontal.md) · [cardimage](cardimage.md) · [cardlink](cardlink.md) · [cardminimizable](cardminimizable.md) · ",
+      "content": "# Card Card. Composes an article with a header, main and footer. Every card variant composes this same structure — they do not inherit it. There is no behavior base class (TIER1-LAWS §2): `composeCard()` is a function each variant calls, and the variants below are separate behaviors that decorate an element in place, exactly as `x-ripple` does. ## Usage Explicitly, or on a non-article element: Only the parts you give it are rendered. A card with no `title`/`subtitle` gets no header; a card with no `footer` gets no footer. Nothing is emitted empty. ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `title` | `string` | `\"\"` | Card title displayed in header | | `subtitle` | `string` | `\"\"` | Card subtitle displayed below title | | `author` | `string` | `\"\"` | Author name, rendered as the card's byline in an ` ` | | `date` | `string` | `\"\"` | Publication date, rendered in a ` ` element | | `category` | `string` | `\"\"` | Category or tag shown above the title | | `reading-time` | `string` | `\"\"` | Estimated reading time | | `footer` | `string` | `\"\"` | Card footer text | | `elevated` | `boolean` | `false` | Add drop shadow | | `clickable` | `boolean` | `false` | Make card clickable | | `variant` | `default` · `glass` · `bordered` · `flat` | `default` | Visual style variant | | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` | Card size variant controlling max/min width | | `tooltip` | `string` | `\"\"` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). | | `hover-text` | `string` | `\"\"` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. | | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints \"Featured\"; `featured=\"Deal of the week\"` prints that label instead. | | `content` | `string` | `\"\"` | Body text. When both are given, `content=\"…\"` wins over the text between the tags, and the children are not rendered (#683). A card with no content at all gets no body box. | ### An article is a card There is no separate article behavior. A blog post, news item or doc page is an ` `, so it is a card, and the byline attributes above are how it says who wrote it and when: The Engine weaves algebraic patterns as the loom weaves flowers. ### Badge `badge` puts a short label in the header's right-hand column: Lazy loading is now the default runtime. ### Variants `variant=\"glass\"` frosts the surface so whatever sits behind the card shows through, blurred: Frosted surface over the page background. `variant=\"bordered\"` drops the fill and keeps a heavier outline, for cards sitting on a busy surface: Outline only; the page shows through. ### Elevated `elevated` lifts the card off the page with a drop shadow: Raised above its neighbours. ### Clickable `clickable` makes the whole card one control: it takes focus, and Enter or Space activates it the same as a click. Anywhere on this card opens it. ### Tooltip `tooltip` shows its text in a themed tooltip on hover: Point at the card to see when it last changed. ### Featured `featured` promotes one card over its siblings; give it a value to say why: Waterproof, resoleable, 20% off until Sunday. ## Methods - `show()` — Shows the card - `hide()` — Hides the card - `toggle()` — Toggles card visibility - `update(options)` — Updates card properties ## Styling The card's own parts carry no classes. `card.css` names each one by its tag and position, so the markup is exactly what it looks like: ```text ← the CARD (any element with x-card works the same) ← the HEADER: article > header ← the TITLE, from `title`: article > header > h3 ← the SUBTITLE, from `subtitle`: article > header > p ← the BADGE, from `badge`: article > header > span:last-child ← the BODY, your content: article > main ← the FOOTER, from `footer`: .x-card__footer ``` The footer is the one part still named by class. `variant`, `elevated` and `clickable` are read straight off the element as attributes (`article[variant=\"glass\"]`); `size` becomes an `x-card--{size}` class. Style through the existing card stylesheet in `src/styles/behaviors/`, never a one-off class or inline style (TIER1-LAWS §9). `variant` and `size` are the supported knobs — reach for those before writing new CSS. ## Accessibility - Support level: **stable**, accessibility: **high** - Renders as ` `, which carries the `article` role — so a card is a landmark a screen reader can navigate to. Give it a `title` so that landmark has a name. - `clickable` makes the whole card activatable; it must remain reachable and operable by keyboard, not mouse only. ## Variants The card variants are separate behaviors, each with its own page: [cardbutton](cardbutton.md) · [carddraggable](carddraggable.md) · [cardexpandable",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/cardbutton",
@@ -6301,7 +6301,7 @@
     "321": [
       "docs/architecture/WB-PREFIX-AUDIT"
     ],
-    "324": [
+    "325": [
       "pages/home"
     ],
     "331": [
@@ -6450,6 +6450,9 @@
       "docs/behaviors/dropdown",
       "docs/behaviors/select",
       "docs/standards/V3-STANDARDS"
+    ],
+    "683": [
+      "docs/behaviors/card"
     ],
     "700": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -7869,6 +7872,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/auto-injection",
       "docs/behaviors/blockquote",
+      "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cluster",
       "docs/behaviors/fill",
@@ -16109,6 +16113,7 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/accordion",
       "docs/behaviors/alert",
+      "docs/behaviors/card",
       "docs/behaviors/center",
       "docs/behaviors/cover",
       "docs/behaviors/error",
@@ -19267,7 +19272,6 @@
       "pages/features",
       "docs/MVVM-MIGRATION",
       "docs/behavior-cross-reference",
-      "docs/behaviors/card",
       "docs/behaviors/cardimage",
       "docs/card",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -19304,7 +19308,6 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behavior-cross-reference",
-      "docs/behaviors/card",
       "docs/behaviors/cardhero",
       "docs/card",
       "docs/claude/TIER2-DOMAIN-GUIDES",
@@ -19390,7 +19393,6 @@
     "cardfile": [
       "pages/features",
       "docs/behavior-cross-reference",
-      "docs/behaviors/card",
       "docs/behaviors/cardfile",
       "docs/behaviors/time",
       "docs/card",
@@ -19400,7 +19402,6 @@
     "cardlink": [
       "pages/features",
       "docs/behavior-cross-reference",
-      "docs/behaviors/card",
       "docs/behaviors/cardlink",
       "docs/card",
       "docs/pce-candidates",
@@ -19410,7 +19411,6 @@
       "pages/features",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behavior-cross-reference",
-      "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
       "docs/card",
       "docs/pce-candidates",
@@ -19450,7 +19450,6 @@
       "pages/features",
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behavior-cross-reference",
-      "docs/behaviors/card",
       "docs/behaviors/cardminimizable",
       "docs/card",
       "docs/pce-candidates",
@@ -26522,6 +26521,7 @@
       "docs/architecture/standards/SCHEMA-SPECIFICATION",
       "docs/behaviors/accordion",
       "docs/behaviors/breadcrumb",
+      "docs/behaviors/card",
       "docs/behaviors/cardhero",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/cluster",
@@ -33879,6 +33879,7 @@
       "docs/behaviors/articles",
       "docs/behaviors/autocomplete",
       "docs/behaviors/blockquote",
+      "docs/behaviors/card",
       "docs/behaviors/center",
       "docs/behaviors/chip",
       "docs/behaviors/cluster",
@@ -37374,6 +37375,7 @@
     "given": [
       "docs/architecture/proposals/v4-golden-ratio-layout-spec",
       "docs/audits/INLINE-STYLES-AUDIT",
+      "docs/behaviors/card",
       "docs/behaviors/copybutton",
       "docs/standards/RELEASE-PROCESS"
     ],

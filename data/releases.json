@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.325",
+      "date": "2026-10-06",
+      "summary": "Release-lines.spec.ts is red on main: version 1.0.318, the merge of #1599 (x-cardexpandable examples reveal content), shipped without a See it line, because its commits did not carry one -- only the PR description did. Old versions get their steps from data/release-see-it.json, so 1.0.318 now has an entry there, taken from #1599&#39;s own description, and data/releases.json carries the same text as release-versions.mjs would render it. Ported here because it turned this PR&#39;s (#683) regression job red. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1609\" target=\"_blank\" rel=\"noopener\">PR 1609</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/683\" target=\"_blank\" rel=\"noopener\">#683</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>1.0.318 says how to see its change (ported into)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/683\" target=\"_blank\" rel=\"noopener\">#683</a>",
+          "issues": [
+            683
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Content attribute wins over children on every path; no empty body box</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/683\" target=\"_blank\" rel=\"noopener\">#683</a>",
+          "issues": [
+            683
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/release-lines.spec.ts --project=regression</code>. Before: &quot;every version, old ones included, says how to recreate it by hand&quot; failed with &quot;1.0.318: there is no See it line&quot;. Now: all 8 pass, and Releases shows 1.0.318&#39;s steps."
+    },
+    {
       "version": "1.0.324",
       "date": "2026-10-06",
       "summary": "The overlap gate&#39;s page list was hand-written and had drifted to one SPA page (listed twice) and nine demos while the site grew. It is now read from pages/, demos/site/ and demos/ at run time, so a page is covered the day it is added; SPA pages still load through the site shell. That adds the 17 top-level demos (playground, test-harness, landing-page-showcase, ...) and the last SPA pages, all of which pass. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1612\" target=\"_blank\" rel=\"noopener\">PR 1612</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/274\" target=\"_blank\" rel=\"noopener\">#274</a>",
