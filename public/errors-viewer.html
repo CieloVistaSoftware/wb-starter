@@ -192,6 +192,19 @@
       font-size: 0.8rem;
       color: var(--text-secondary);
     }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .c-text-secondary-mt-05rem { color: var(--text-secondary); margin-top: 0.5rem; }
+  
+    /* Moved from style= attributes in generated markup: no inline styles anywhere (#779). */
+    .source-badge.source-badge--fixable { background: var(--success-color); color: var(--text-on-accent); }
+    .error-route { display: flex; gap: 1rem; align-items: center; background: var(--bg-tertiary); padding: 0.5rem; border-radius: 4px; }
+    .error-route__label { font-size: 0.75rem; color: var(--text-secondary); display: block; }
+    .error-route__arrow { color: var(--text-secondary); }
+    .error-note { color: var(--text-secondary); font-size: 0.75rem; margin: 0.4rem 0 0; }
+    .error-secondary { color: var(--text-secondary); }
+    .error-url { color: var(--primary); }
+    .error-agent { font-size: 0.8rem; color: var(--text-muted); }
   </style>
   <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
   <script type="module" src="../src/core/central-time.js"></script>
@@ -201,7 +214,7 @@
   <header id="errors-header">
     <div id="header-title">
       <h1>🚨 Error Log Viewer</h1>
-      <p style="color: var(--text-secondary); margin-top: 0.5rem;">Monitor and debug application errors</p>
+      <p class="c-text-secondary-mt-05rem">Monitor and debug application errors</p>
     </div>
     <div class="actions" id="header-actions">
       <button onclick="loadErrors()">🔄 Refresh</button>
@@ -358,7 +371,7 @@
               <span class="badge badge-${error.level || 'error'}">${error.level || 'ERROR'}</span>
               <span class="source-badge">${escapeHtml(error.source || error.to || error.module || 'unattributed')}</span>
               ${error.testOrigin ? '<span class="source-badge" title="raised by a test fixture, not by the app">test fixture</span>' : (error.testServer ? '<span class="source-badge" title="logged while a test server was serving the page; not caused by a fixture, so it is a real error">during test run</span>' : '')}
-              ${error.fixable ? '<span class="source-badge" style="background:var(--success-color,#16a34a);color:#fff;" title="a known mechanical remedy exists">fixable</span>' : ''}
+              ${error.fixable ? '<span class="source-badge source-badge--fixable" title="a known mechanical remedy exists">fixable</span>' : ''}
               <span>${escapeHtml(error.message)}</span>
             </div>
             <div class="error-meta">
@@ -373,14 +386,14 @@
 
             <div class="detail-row">
               <div class="detail-label">Interaction Context</div>
-              <div style="display: flex; gap: 1rem; align-items: center; background: var(--bg-tertiary); padding: 0.5rem; border-radius: 4px;">
+              <div class="error-route">
                 <div>
-                  <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">FROM</span>
+                  <span class="error-route__label">FROM</span>
                   <strong>${escapeHtml(error.interaction?.from || 'System')}</strong>
                 </div>
-                <div style="color: var(--text-secondary);">→</div>
+                <div class="error-route__arrow">→</div>
                 <div>
-                  <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">TO</span>
+                  <span class="error-route__label">TO</span>
                   <strong>${escapeHtml(error.interaction?.to || error.to || 'unattributed')}</strong>
                 </div>
               </div>
@@ -431,7 +444,7 @@
                 <div class="detail-label">Test</div>
                 <div>
                   <code>${escapeHtml(error.verify)}</code>
-                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                  <p class="error-note">
                     What proves it fixed. A remedy without one is a change, not a fix.
                   </p>
                 </div>
@@ -442,7 +455,7 @@
                 <div class="detail-label">How to fix next time</div>
                 <div>
                   <code>${escapeHtml(error.remedy)}</code>
-                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                  <p class="error-note">
                     Mechanical and verifiable${error.verify ? `, proven by <code>${escapeHtml(error.verify)}</code>` : ''}.
                     Run it from the repository root.
                   </p>
@@ -455,7 +468,7 @@
                 <div>
                   <a href="https://github.com/CieloVistaSoftware/wb-starter/issues/${encodeURIComponent(String(error.issue))}"
                      target="_blank" rel="noopener">#${escapeHtml(String(error.issue))}</a>
-                  <p style="color:var(--text-secondary);font-size:0.75rem;margin:0.4rem 0 0;">
+                  <p class="error-note">
                     Where this fault was diagnosed, and what closed it last time.
                   </p>
                 </div>
@@ -464,7 +477,7 @@
             ${!error.analysis ? `
               <div class="detail-row">
                 <div class="detail-label">Analysis</div>
-                <div style="color:var(--text-secondary);">
+                <div class="error-secondary">
                   This signature has not been analysed yet, so it is not fixable.
                   Add an entry to <code>data/fix-registry.json</code> keyed by the
                   signature above.
@@ -473,7 +486,7 @@
             
             <div class="detail-row">
               <div class="detail-label">URL</div>
-              <a href="${error.url}" target="_blank" style="color: var(--primary);">${error.url}</a>
+              <a href="${error.url}" target="_blank" class="error-url">${error.url}</a>
             </div>
 
             ${error.stack ? `
@@ -485,7 +498,7 @@
 
             <div class="detail-row">
               <div class="detail-label">User Agent</div>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(error.userAgent)}</div>
+              <div class="error-agent">${escapeHtml(error.userAgent)}</div>
             </div>
           </div>
         </div>
