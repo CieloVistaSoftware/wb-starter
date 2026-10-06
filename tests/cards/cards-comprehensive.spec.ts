@@ -464,7 +464,6 @@ test.describe('Interactive Cards', () => {
       
       // Click to expand
       await expandBtn.click();
-      await page.waitForTimeout(400);
       
       // Check expanded state
       await expect(card).toHaveClass(/x-card--expanded/);
@@ -506,7 +505,6 @@ test.describe('Interactive Cards', () => {
       
       // Click to minimize
       await minBtn.click();
-      await page.waitForTimeout(400);
       
       await expect(card).toHaveClass(/x-card--minimized/);
     });

@@ -18,9 +18,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
        </div>`
     );
 
-    // Wait for lazy loading
-    await page.waitForTimeout(500);
-    
     // Check element exists and has expected attributes
     await expect(element).toBeVisible();
     await expect(element).toHaveAttribute('data-name', 'John Doe');
@@ -47,8 +44,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
        </div>`
     );
 
-    await page.waitForTimeout(500);
-    
     // Custom elements without explicit display may be hidden, just check attributes
     await expect(element).toHaveCount(1);
     await expect(element).toHaveAttribute('data-name', 'Jane Smith');
@@ -65,8 +60,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
        </div>`
     );
 
-    await page.waitForTimeout(500);
-    
     await expect(element).toHaveCount(1);
     await expect(element).toHaveAttribute('data-title', 'Hero Title');
     await expect(element).toHaveAttribute('data-subtitle', 'Hero Subtitle');
@@ -84,8 +77,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
        </div>`
     );
 
-    await page.waitForTimeout(500);
-    
     // Check element exists and has correct attributes
     await expect(element).toHaveCount(1);
     await expect(element).toHaveAttribute('data-label', 'Users');
@@ -103,8 +94,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
        </div>`
     );
 
-    await page.waitForTimeout(500);
-    
     await expect(element).toHaveCount(1);
     await expect(element).toHaveAttribute('data-type', 'info');
     await expect(element).toHaveAttribute('data-title', 'Info');
@@ -117,8 +106,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
       `<button x-behavior="tooltip" data-tooltip="Test Tooltip">Hover Me</button>`
     );
 
-    await page.waitForTimeout(500);
-    
     await expect(element).toBeVisible();
     await expect(element).toHaveAttribute('x-behavior', 'tooltip');
     
@@ -141,8 +128,6 @@ test.describe('Pseudo-Custom Elements (PCE) v3.0', () => {
        </article>`
     );
 
-    await page.waitForTimeout(500);
-    
     await expect(element).toBeVisible();
     await expect(element).toHaveAttribute('data-title', 'Test Card');
     await expect(element).toContainText('Card content');
