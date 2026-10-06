@@ -838,7 +838,7 @@
           "file": "behaviors/notes.md",
           "title": "Notes",
           "description": "x-notes adds a notes drawer to the page: a panel with a text area that can sit on either side or open as a modal, resized by dragging, and saved to…",
-          "modified": "2026-10-04"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/notify.md",
@@ -976,7 +976,7 @@
           "file": "behaviors/searchfield.md",
           "title": "x-searchfield Behavior",
           "description": "A complete search input: icon, debounced/instant search events, clear button, and loading state.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-05"
         },
         {
           "file": "behaviors/select.md",
@@ -1270,7 +1270,7 @@
           "file": "NOTES-V3-GUIDE.md",
           "title": "Notes System",
           "description": "Notes feature guide",
-          "modified": "2026-08-26"
+          "modified": "2026-10-05"
         },
         {
           "file": "guides/search-index.md",

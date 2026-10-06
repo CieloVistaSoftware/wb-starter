@@ -23,6 +23,16 @@
 
 ---
 
+**Updated 2026-10-06.** Behavior API verbs gate sees every member (#782).
+
+**Files touched:** `tests/regression/behavior-api-verbs.spec.ts`, `src/wb-viewmodels/search.js`, `src/wb-viewmodels/notes.js`, `src/wb-models/notes.schema.json`, `tests/components/notes.spec.ts`, `tests/components/notes-updates.spec.ts`, `tests/regression/variants-render-differently.spec.ts`, `docs/behaviors/notes.md`, `docs/behaviors/searchfield.md`, `docs/NOTES-V3-GUIDE.md`.
+
+**Last action:** the gate only read `name: (` / `name(` members, so `wbSearch.clear` and `wbNotes.open/close` passed it. It now reads every depth-1 member. Renamed: `wbSearch.clear` -> `reset`, `wbNotes.open/close` -> `show/hide`, `collapseToSide(side)` -> `hide(side)`. Domain verbs (fire, type, count, stick, save, copy, focus, blur, search...) are allowed per API only.
+
+**Next step:** #668 (rename x-codecontrol to x-codetheme), #669 (schema properties never read).
+
+---
+
 **Updated 2026-10-05, night.** `<nav>` picks up navbar (#958).
 
 **Files touched:** `src/core/tag-map.js` (`nav: 'navbar'`), `src/core/replacement-guard.js`, `src/wb-viewmodels/navigation.js`, `src/styles/behaviors/navbar.css`, `demos/site/layout.html`, `data/behavior-examples.json`, `docs/behaviors/navbar.md`, `docs/behavior-cross-reference.md`, `docs/semantic-standard.md`, `docs/INTELLISENSE-TOOLTIPS.md`, `docs/audits/HOST-CHILD-DISPATCH-AUDIT.md`.
