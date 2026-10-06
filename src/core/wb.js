@@ -245,7 +245,11 @@ function getAutoInjectBehavior(element) {
   if (LANDMARKS.has(element.tagName.toLowerCase())) {
     // A component host is an element carrying a behavior of its own -- a card,
     // an article, a notes panel. Only a landmark at page level is a landmark.
-    if (element.parentElement && element.parentElement.closest('article, [class*="x-card"], [class*="__"]')) {
+    // #874: a <dialog> is one too. dialog.js builds its chrome from a real
+    // <header>/<footer>, and <dialog class="x-dialog"> matched none of the
+    // three, so the chrome got the page navbar's x-header (0.8em text,
+    // min-height 60px) and the page footer's x-footer on top of its own.
+    if (element.parentElement && element.parentElement.closest('article, dialog, [class*="x-card"], [class*="__"]')) {
       return null;
     }
   }
