@@ -26,11 +26,12 @@ RTL layouts (Hebrew, Arabic), where the label conventionally sits on the right:
 
 ## On your own label
 
-A bare `x-label` (no value) on an actual `<label>` element just adds the label
-styling to it — for when you already have your own `<label for="...">` markup:
+When you already write your own `<label for="...">`, it gets the same label
+styling on its own — no attribute needed. Writing `x-label` on a `<label>`
+would only repeat what the element already is:
 
 <div x-demo>
-<label x-label required for="label-demo-own">Project name</label>
+<label required for="label-demo-own">Project name</label>
 <input id="label-demo-own" type="text">
 </div>
 
