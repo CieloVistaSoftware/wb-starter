@@ -6,6 +6,23 @@
   ],
   "releases": [
     {
+      "version": "1.0.320",
+      "date": "2026-10-06",
+      "summary": "The parking lot now records that real page paths shipped, and what is left for #1001. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1607\" target=\"_blank\" rel=\"noopener\">PR 1607</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1601\" target=\"_blank\" rel=\"noopener\">#1601</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Merged, closed; waits on a real file per page</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1601\" target=\"_blank\" rel=\"noopener\">#1601</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1601,
+            957,
+            1001
+          ]
+        }
+      ],
+      "seeIt": "Open docs/_today/CURRENT-STATUS.md and read the parking lot. Before: it said #1601 was a draft waiting on CI. Now: it says #1601 is merged, #957 is closed, and #1001 needs a real index.html per page on GitHub Pages."
+    },
+    {
       "version": "1.0.319",
       "date": "2026-10-06",
       "summary": "The parking lot did not record tonight&#39;s link-preview change (#1585) or the open question about the app icons. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1604\" target=\"_blank\" rel=\"noopener\">PR 1604</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
