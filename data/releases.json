@@ -6,6 +6,22 @@
   ],
   "releases": [
     {
+      "version": "1.0.306",
+      "date": "2026-10-05",
+      "summary": "An issue could be marked in progress with no note saying what was being done, and nothing flagged it until John saw the row in red on the Issues page. <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1583\" target=\"_blank\" rel=\"noopener\">#1583</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1587\" target=\"_blank\" rel=\"noopener\">#1587</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The in-progress sweep flags a claim that never posted a status note</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1583\" target=\"_blank\" rel=\"noopener\">#1583</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1587\" target=\"_blank\" rel=\"noopener\">#1587</a>",
+          "issues": [
+            1583,
+            1587
+          ]
+        }
+      ],
+      "seeIt": "Label an issue status:in-progress without posting a note and wait 10 minutes. Before: nothing happened; the Issues page just showed &quot;No status posted&quot;. Now: the In progress sweep comments on the issue saying no status note was posted and listing the four lines to write."
+    },
+    {
       "version": "1.0.305",
       "date": "2026-10-05",
       "summary": "Sharing the site link on LinkedIn showed a generic purple lightning-bolt icon instead of the wb-starter logo. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1586\" target=\"_blank\" rel=\"noopener\">PR 1586</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1585\" target=\"_blank\" rel=\"noopener\">#1585</a>",
