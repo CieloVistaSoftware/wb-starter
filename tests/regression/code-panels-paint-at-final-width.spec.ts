@@ -14,7 +14,7 @@ import { wbIdle } from '../base';
 test.describe.configure({ timeout: 90_000 });
 
 for (const url of ['/demos/site/layout.html', '/demos/site/cards.html']) {
-  test(`${url}: no code panel grows after it first paints (#985)`, async ({ page }) => {
+  test(`${url}: no code panel changes width after it first paints (#985, #1579)`, async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.addInitScript(() => {
       const seen = new Map<Element, number[]>();
@@ -37,11 +37,11 @@ for (const url of ['/demos/site/layout.html', '/demos/site/cards.html']) {
     // Until every built demo has committed its width (the signal, not a sleep).
     await page.waitForFunction(() => !document.querySelector('[x-demo].x-demo--measuring'), undefined, { timeout: 30_000 });
 
-    const grew = await page.evaluate(() => [...(window as any).__panelWidths.values()]
-      .filter((l: number[]) => l.length > 1 && l[l.length - 1] - l[0] > 10)
-      .map((l: number[]) => l.join(' -> ')));
+    const moved = await page.evaluate(() => [...(window as any).__panelWidths.entries()]
+      .filter(([, l]: [Element, number[]]) => l.length > 1 && Math.abs(l[l.length - 1] - l[0]) > 10)
+      .map(([el, l]: [Element, number[]]) => `${el.closest('section[id]')?.id || '?'}: ${l.join(' -> ')}`));
     const observed = await page.evaluate(() => (window as any).__panelWidths.size);
     expect(observed, 'no code panel was observed -- the page or the observer is broken').toBeGreaterThan(10);
-    expect(grew, 'code panels that painted narrow and then widened (#985)').toEqual([]);
+    expect(moved, 'code panels that changed width after they first painted (#985, #1579)').toEqual([]);
   });
 }
