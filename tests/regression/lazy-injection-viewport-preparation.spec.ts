@@ -18,7 +18,7 @@ test.describe('viewport-lazy injection prepares elements before visibility (#491
 
     const result = await page.evaluate(async () => {
       const target = document.createElement('button');
-      target.setAttribute('x-behavior', 'ripple');
+      target.setAttribute('x-ripple', '');
       target.style.cssText = 'position:absolute;top:5000px;left:0;width:10px;height:10px';
       document.body.appendChild(target);
 

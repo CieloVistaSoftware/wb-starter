@@ -18,7 +18,7 @@ function reportIconPositionWithoutIcon(element, icon) {
 /**
  * Input - Enhanced <input> element
  * Adds clearable, prefix/suffix, validation variants
- * Helper Attribute: [x-behavior="input"]
+ * Helper Attribute: [x-input]
  */
 /**
  * Fields the container branch below built itself. The runtime ALSO dispatches
@@ -71,7 +71,7 @@ export function input(element, options = {}) {
     // below -- the one that puts x-input--{variant}/{size} on the host and
     // required/disabled/readOnly on the real field. The result was a bare
     // field that silently ignored all five attributes, while the native
-    // <input x-behavior="input"> host honoured them (#754).
+    // <input> host honoured them (#754).
     if (element.querySelector('input.x-input__field')) return () => {}; // already built by us (eager runtime already ran)
 
     const authoredValue = (element._wbOriginalSlot || element.textContent || '').trim();

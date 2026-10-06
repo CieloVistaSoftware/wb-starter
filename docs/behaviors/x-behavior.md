@@ -1,12 +1,20 @@
-# x-behavior
 
-`x-behavior="name"` applies the behavior named in its value, and takes several separated by spaces: `<span x-behavior="chip">` does what `<span x-chip>` does. The runtime uses it for elements it creates itself, such as the `<pre x-behavior="pre">` blocks in code panels. When writing markup by hand, prefer the direct attribute (`x-chip`).
+# x-behavior (deprecated)
 
-Do not name a behavior the element already gets from its tag: `<textarea x-behavior="textarea">` is redundant, the same way writing `x-button` on a `<button>` is (#967).
+> **Deprecated (#1642).** John, 2026-10-06: `x-behavior="cardimage"` — "this format is deprecated in entire project". Write the behavior's own attribute instead.
+
+| Instead of | Write |
+|---|---|
+| `<article x-behavior="cardimage">` | `<article x-cardimage>` |
+| `<span x-behavior="chip">` | `<span x-chip>` |
+| `<button x-behavior="tooltip ripple">` | `<button x-tooltip x-ripple>` |
+| `<pre x-behavior="pre">`, `<textarea x-behavior="textarea">`, `<table x-behavior="table">` | `<pre>`, `<textarea>`, `<table>`: the tag already is the behavior, so it needs no attribute (#967) |
+
+Old markup still works: the runtime applies the behaviors it names, and prints one console warning per spelling with the markup to write instead. Nothing in this project writes it any more, and `tests/compliance/no-x-behavior-attribute.spec.ts` fails if a page, demo or src file starts to again.
 
 <div x-demo>
-<span x-behavior="badge" label="Beta" variant="warning"></span>
+<span x-badge label="Beta" variant="warning"></span>
 </div>
 
-- **Implementation:** [src/wb-viewmodels/behavior.js](../../src/wb-viewmodels/behavior.js) adds the `x-behavior` class; the dispatch by value is in `src/core/wb.js`.
-- **Demo:** [autoinject.html](../../demos/autoinject.html).
+- **Implementation:** the legacy dispatch is in `src/core/wb.js` and `src/core/wb-lazy.js`; the warning is `src/core/x-behavior-deprecation.js`.
+- **Demo:** [autoinject.html](../../demos/autoinject.html) shows which tags need no attribute at all.

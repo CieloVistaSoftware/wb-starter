@@ -19,7 +19,7 @@ When writing HTML code examples, **every attribute** must be placed on its own l
 
 ### Rule 2: Prefer Auto-Inject (Semantic HTML) Format
 
-Code examples should prefer the **auto-inject format** using semantic HTML elements. The explicit `x-behavior` format should be shown as a secondary option or note.
+Code examples should prefer the **auto-inject format** using semantic HTML elements. The explicit `x-*` attribute should be shown as a secondary option or note.
 
 ### Rule 3: Include Format Notes
 
@@ -66,7 +66,7 @@ The code example display system supports configurable formatting:
 |--------|---------|-------------|
 | `format` | `"multiline"` | `"multiline"` or `"inline"` attribute placement |
 | `showAutoinject` | `true` | Show semantic HTML (autoinject) format |
-| `showExplicit` | `true` | Show explicit `x-behavior` format in notes |
+| `showExplicit` | `true` | Show the explicit `x-*` attribute in notes |
 | `showNotes` | `true` | Display format notes below examples |
 
 ### Programmatic Configuration
@@ -76,7 +76,7 @@ The code example display system supports configurable formatting:
 const codeDisplayConfig = {
   format: 'multiline',      // Default: attributes on new lines
   showAutoinject: true,     // Default: show semantic format
-  showExplicit: true,       // Show x-behavior alternative
+  showExplicit: true,       // Show the x-* attribute alternative
   showNotes: true           // Show explanatory notes
 };
 ```

@@ -514,7 +514,7 @@
       "x-behavior": {
         "type": "string",
         "required": false,
-        "description": "Space-separated behavior names (or use the x-{name} attribute directly)"
+        "description": "DEPRECATED (#1642): write the x-{name} attribute instead. Space-separated behavior names; still runs, and warns"
       },
       "x-ready": {
         "type": "boolean",

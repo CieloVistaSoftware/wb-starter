@@ -19,7 +19,7 @@ test('line numbers are not marked placed while the code is still on one row', as
     const WB = (window as any).WB;
     const pre = document.createElement('pre');
     pre.id = 'one-row-pre';
-    pre.setAttribute('x-behavior', 'pre');
+    pre.setAttribute('x-pre', '');
     pre.textContent = 'first line\nsecond line\nthird line';
     // Hold the code on one row, the state CI measured in.
     pre.style.setProperty('white-space', 'normal', 'important');

@@ -1,4 +1,4 @@
-/* Enhanced <pre> code block (x-behavior="pre", #285).
+/* Enhanced <pre> code block (#285).
  * Static/themeable styling lives here; pre.js only sets genuinely
  * per-instance values it cannot know ahead of time — each control's `right`
  * offset (depends on a sibling's actual rendered width) and each line

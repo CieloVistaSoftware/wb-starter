@@ -7,8 +7,8 @@
  * now nothing in the repo could count them, so nothing stopped a copy coming
  * back.
  *
- * CEILING is the count on main today. It only goes down: when a PR removes a
- * block, lower CEILING to the new count in the same PR. #883 is done at 0.
+ * CEILING is 0: the last seven blocks the two runtimes shared moved into
+ * src/core/runtime-shared.js, which both import. A new copy fails here.
  */
 import fs from 'fs';
 import path from 'path';
@@ -16,7 +16,7 @@ import { test, expect } from '../fixtures/offline';
 import { ROOT } from '../base';
 import { duplicateBlocks } from '../../scripts/lib/duplicate-blocks.mjs';
 
-const CEILING = 7;
+const CEILING = 0;
 
 function sourceFiles(dir: string): string[] {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {

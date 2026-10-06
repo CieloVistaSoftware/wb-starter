@@ -70,7 +70,7 @@ test.describe('[x-demo] code panel is syntax-highlighted on the eager (main SPA)
     }
   });
 
-  test('the pre panel chrome (copy button) also renders via x-behavior="pre"', async ({ page }) => {
+  test('the pre panel chrome (copy button) also renders via the pre behavior', async ({ page }) => {
     await page.goto('/?page=demos');
     await wbIdle(page);
 

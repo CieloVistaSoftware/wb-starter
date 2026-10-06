@@ -115,7 +115,7 @@ Every schema SHOULD have a `test` section:
 {
   "test": {
     "setup": [
-      "<div x-behavior=\"behavior\" prop=\"value\"></div>"
+      "<div x-behaviorname prop=\"value\"></div>"
     ],
     "matrix": {
       "combinations": [

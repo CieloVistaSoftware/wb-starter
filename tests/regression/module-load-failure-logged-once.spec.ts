@@ -114,7 +114,7 @@ test.describe('#513 one module-load failure = one logged error', () => {
 
     const buttons = Array.from(
       { length: ELEMENT_COUNT },
-      (_, i) => `<button id="b${i}" x-behavior="button">Button ${i}</button>`
+      (_, i) => `<button id="b${i}">Button ${i}</button>`
     ).join('\n');
 
     await render(page, buttons, `await WB.scan(document.body, { eager: true });`);
@@ -134,9 +134,9 @@ test.describe('#513 one module-load failure = one logged error', () => {
 
     await render(
       page,
-      `<button id="a" x-behavior="button">A</button>
-       <button id="b" x-behavior="button">B</button>
-       <button id="c" x-behavior="button">C</button>`,
+      `<button id="a">A</button>
+       <button id="b">B</button>
+       <button id="c">C</button>`,
       // Awaited one at a time, so the in-flight promise is long gone before
       // the next caller asks — this is the path that had NO memo at all.
       `await WB.inject(document.getElementById('a'), 'button');
@@ -167,8 +167,8 @@ test.describe('#513 one module-load failure = one logged error', () => {
 
     await render(
       page,
-      `<button id="a" x-behavior="button">A</button>
-       <button id="later" x-behavior="button">Later</button>`,
+      `<button id="a">A</button>
+       <button id="later">Later</button>`,
       `await WB.inject(document.getElementById('a'), 'button');
        window.__retry = async () => {
          await WB.inject(document.getElementById('later'), 'button');

@@ -25,9 +25,9 @@ async function inject(page, html: string) {
 
 test('chip sm/md/lg render three visibly distinct heights', async ({ page }) => {
   await inject(page, `
-    <span id="chip-sm" x-behavior="chip" size="sm">Small</span>
-    <span id="chip-md" x-behavior="chip" size="md">Medium</span>
-    <span id="chip-lg" x-behavior="chip" size="lg">Large</span>
+    <span id="chip-sm" x-chip size="sm">Small</span>
+    <span id="chip-md" x-chip size="md">Medium</span>
+    <span id="chip-lg" x-chip size="lg">Large</span>
   `);
   const heights = await Promise.all(
     ['#chip-sm', '#chip-md', '#chip-lg'].map((sel) =>

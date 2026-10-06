@@ -2,7 +2,7 @@ import { setRule, clearRulesIn } from '../../core/dynamic-style.js';
 import { readFlag } from '../../core/read-attr.js';
 /**
  * Progress - a labeled, variant-colored fill bar
- * Helper Attribute: [x-behavior="progress"]
+ * Helper Attribute: [x-progress]
  *
  * Authoring forms: <progress value="60">, <div x-progress value="60">,
  * <div x-progress value="60"> (src/core/tag-map.js).

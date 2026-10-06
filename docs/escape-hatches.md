@@ -16,7 +16,7 @@ x-card {
 }
 
 /* Override button styling */
-button[x-behavior="button"] {
+button {
   --btn-padding: 1rem 2rem;
   --btn-radius: 999px;
 }
@@ -61,7 +61,7 @@ Pass options via `data-*` attributes:
 </article>
 <!-- Override toast duration -->
 <button
-  x-behavior="toast"
+  x-toast
   duration="10000">
   Show for 10 seconds
 </button>
@@ -79,7 +79,7 @@ x-card.custom {
 }
 
 /* Or target specific properties */
-[x-behavior="button"].my-button {
+button.my-button {
   background: var(--my-brand-color) !important;
 }
 ```

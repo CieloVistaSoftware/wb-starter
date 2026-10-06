@@ -23,15 +23,9 @@ PCE (Pseudo-Custom Elements) allows you to use **semantic tag names** instead of
 <div x-cardstats value="1,234"></div>
 ```
 
-### 3. Behavior Attribute (Traditional)
-```html
-<div
-  x-behavior="cardprofile"
-  name="Sarah">
-</div>
-```
+The old third form, `x-behavior="cardprofile"`, is deprecated (#1642).
 
-All three are equivalent and produce the same result.
+Both are equivalent and produce the same result.
 
 ---
 
@@ -43,7 +37,7 @@ All three are equivalent and produce the same result.
 | **Lazy Loading** | Behaviors loaded on-demand via IntersectionObserver |
 | **WBServices Pattern** | Dependency injection for shared services |
 | **Composition over Inheritance** | Capability is applied by behavior functions `(element, options)`; no behavior base class |
-| **x-behavior Attribute** | Standard attribute for behavior declaration |
+| **x-{name} Attributes** | One attribute per behavior (`x-cardprofile`); `x-behavior="…"` is deprecated (#1642) |
 
 ---
 
@@ -232,15 +226,6 @@ npx playwright test tests/behaviors/pce-demo.spec.ts
 ### After (v3.0)
 ```html
 <article title="Hello">Content</article>
-```
-
-Or with behavior attribute:
-```html
-<article
-  x-behavior="card"
-  title="Hello">
-  Content
-</article>
 ```
 
 ---
