@@ -111,6 +111,14 @@ const SOURCE_PATTERNS: Array<{ re: RegExp; what: string }> = [
 const SOURCE_DIRS = ['src', 'pages'];
 
 /**
+ * Authored markup checked for style= beyond SOURCE_DIRS. demos/ joined in #779
+ * once its 233 attributes moved into each page's stylesheet. Still to clean,
+ * and so not yet scanned: templates/presets/ (~600), public/ (~70), articles/,
+ * status/ and scripts/tools/ -- tracked on #779.
+ */
+const MARKUP_DIRS = [...SOURCE_DIRS, 'demos'];
+
+/**
  * What `npm create wb-starter` gives every new site. It used to be a second
  * copy of src/ (#791); since #813 it is a small site of its own, and every
  * file in it is what a new user starts from, so all of it is scanned.
@@ -264,7 +272,7 @@ test.describe('No inline styles anywhere (#779)', () => {
   });
 
   test('markup: no authored page carries a style attribute', () => {
-    const violations = scanMarkup(SOURCE_DIRS);
+    const violations = scanMarkup(MARKUP_DIRS);
     expect(
       violations.length,
       `${violations.length} style= attributes in authored markup.\n\n${summarise(violations)}\n`,

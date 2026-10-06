@@ -9,11 +9,16 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
+  <style id="layout-moved-styles">
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .mb-1rem { margin-bottom: 1rem; }
+    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
+  </style>
 </head>
 
 <body class="demo-page">
-  <nav style="margin-bottom: 1rem;">
-    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  <nav class="mb-1rem">
+    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
   </nav>
   <h1>📐 Layout & Navigation</h1>
   <p>Headers, footers, navbars, tabs, drawers, sticky, scrollalong</p>

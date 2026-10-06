@@ -9,11 +9,20 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
+  <style id="content-moved-styles">
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .mb-1rem { margin-bottom: 1rem; }
+    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
+    .w-100pct-r-8px { width: 100%; border-radius: 8px; }
+    .w-100pct-r-8px-op-06 { width: 100%; border-radius: 8px; opacity: 0.6; }
+    .w-100pct { width: 100%; }
+    .d-flex-jc-flex-end-gap-1rem-mt-1rem { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
+  </style>
 </head>
 
 <body class="demo-page">
-  <nav style="margin-bottom: 1rem;">
-    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>
+  <nav class="mb-1rem">
+    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
   </nav>
   <h1>📄 Content & Media</h1>
   <p>Articles, markdown rendering, audio, tables</p>
@@ -385,7 +394,7 @@
   <div class="demo-section">
     <p>Standard Video</p>
     <div x-demo>
-      <video controls src="https://www.w3schools.com/html/mov_bbb.mp4" style="width: 100%; border-radius: 8px;"></video>
+      <video controls src="https://www.w3schools.com/html/mov_bbb.mp4" class="w-100pct-r-8px"></video>
     </div>
 
     <p>Background Video (Muted Loop)</p>
@@ -395,7 +404,7 @@
         autoplay
         muted
         loop
-        style="width: 100%; border-radius: 8px; opacity: 0.6;">
+        class="w-100pct-r-8px-op-06">
       </video>
     </div>
   </div>
@@ -405,12 +414,12 @@
   <div class="demo-section">
     <p>Zoomable Image (Lightbox)</p>
     <div x-demo>
-      <img src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene" style="width: 100%; border-radius: 8px;">
+      <img src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene" class="w-100pct-r-8px">
     </div>
 
     <p>Lazy Loaded with Aspect Ratio</p>
     <div x-demo>
-      <img src="https://picsum.photos/id/1015/800/600" lazy aspect-ratio="4/3" alt="River" style="width: 100%; border-radius: 8px;">
+      <img src="https://picsum.photos/id/1015/800/600" lazy aspect-ratio="4/3" alt="River" class="w-100pct-r-8px">
     </div>
   </div>
 
@@ -420,7 +429,7 @@
     <p>Standard Figure</p>
     <div x-demo>
       <figure zoom>
-        <img src="https://picsum.photos/id/1016/800/600" alt="Canyon" style="width: 100%;">
+        <img src="https://picsum.photos/id/1016/800/600" alt="Canyon" class="w-100pct">
         <figcaption>A beautiful canyon view</figcaption>
       </figure>
     </div>
@@ -428,7 +437,7 @@
     <p>Overlay Caption</p>
     <div x-demo>
       <figure caption-position="overlay" lightbox>
-        <img src="https://picsum.photos/id/1019/800/600" alt="Technology" style="width: 100%;">
+        <img src="https://picsum.photos/id/1019/800/600" alt="Technology" class="w-100pct">
         <figcaption>Technology and Nature</figcaption>
       </figure>
     </div>
@@ -497,7 +506,7 @@
       <form method="dialog">
         <h3>Confirmation</h3>
         <p>This is a native dialog.</p>
-        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+        <div class="d-flex-jc-flex-end-gap-1rem-mt-1rem">
           <button value="cancel">Cancel</button>
           <button value="confirm" autofocus>Confirm</button>
         </div>

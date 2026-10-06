@@ -167,13 +167,12 @@ root.render(e(ReactApp));</code></pre>
     <div class="demo-code-block">
       <p class="demo-code-label">Code used in this demo:</p>
       <pre x-behavior="pre" x-eager language="html" show-copy><code x-behavior="code" x-eager class="language-html">&lt;div id="vue-app"&gt;
-  &lt;div style="padding: 1rem; border: 1px dashed #42b883; border-radius: 8px;"&gt;
+  &lt;div class="framework-mount framework-mount--vue"&gt;
     &lt;h3&gt;Vue Message: {{ message }}&lt;/h3&gt;
     &lt;input 
       v-model="message" 
-      class="x-input-glass" 
+      class="x-input-glass demo-input-full" 
       placeholder="Type here..." 
-      style="margin-bottom: 1rem; width: 100%;"
     &gt;
     
     &lt;button 
