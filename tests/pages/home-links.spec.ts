@@ -44,9 +44,10 @@ test.describe('Home page — link integrity', () => {
     await expect(explore).toHaveAttribute('href', '?page=behaviors');
     await expect(docs).toHaveAttribute('href', '?page=docs');
 
-    // Clicking "Explore Behaviors" routes to the behaviors page.
+    // Clicking "Explore Behaviors" routes to the behaviors page, at its real
+    // path (#1001); the CTA's own ?page= href is the legacy form.
     await explore.click();
-    await expect(page).toHaveURL(/\?page=behaviors/);
+    await expect(page).toHaveURL(/\/behaviors$/);
     await page.waitForTimeout(300);
 
     // Back home, then "Documentation" routes to the docs page.

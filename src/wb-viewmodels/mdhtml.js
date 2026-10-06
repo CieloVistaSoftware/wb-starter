@@ -410,7 +410,7 @@ export async function mdhtml(element, options = {}) {
     // innerHTML -- read AFTER the behaviors inside had already built themselves.
     //
     // The panel therefore showed the GENERATED DOM instead of the source. For
-    // `<div x-codecontrol></div>` -- one authored line -- it printed several
+    // `<div x-codetheme></div>` -- one authored line -- it printed several
     // hundred lines of every <optgroup> and <option> the behavior had just
     // produced, so a reader could not tell what to type. John: "this does not
     // show how the code was 'interpreted' what code was used?"

@@ -49,7 +49,7 @@ function processFile(filePath) {
       'cardbutton', 'carddraggable', 'cardexpandable', 'cardminimizable',
       'cardvideo', 'code', 'row', 'column', 'span', 'details', 'pre', 'ul', 'ol', 'dl',
       'repeater', 'control', 'themecontrol', 'input', 'select', 'textarea',
-      'checkbox', 'dialog', 'audio', 'video', 'table', 'codecontrol', 
+      'checkbox', 'dialog', 'audio', 'video', 'table', 'codetheme', 
       'statusbar', 'mdhtml', 'sheet', 'builder'
     ];
     

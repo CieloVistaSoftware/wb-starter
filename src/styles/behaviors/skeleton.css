@@ -7,7 +7,7 @@
  * -----------------------------------------------------------------------------
  */
 
-x-skeleton, [x-skeleton]{
+[x-skeleton]{
   display: block;
   height: 1rem;
   border-radius: 4px;
@@ -22,7 +22,7 @@ x-skeleton, [x-skeleton]{
 }
 
 /* Lines — each child line */
-x-skeleton > span, [x-skeleton] > span{
+[x-skeleton] > span{
   display: block;
   height: 1rem;
   border-radius: 4px;
@@ -36,17 +36,17 @@ x-skeleton > span, [x-skeleton] > span{
   animation: x-skeleton-shimmer 1.5s ease-in-out infinite;
 }
 
-x-skeleton > span + span, [x-skeleton] > span + span{
+[x-skeleton] > span + span{
   margin-top: 0.5rem;
 }
 
 /* Last line is shorter for visual realism */
-x-skeleton > span:last-child:not(:first-child), [x-skeleton] > span:last-child:not(:first-child){
+[x-skeleton] > span:last-child:not(:first-child){
   width: 60%;
 }
 
 /* When skeleton has children (lines), hide own background */
-x-skeleton:has(> span), [x-skeleton]:has(> span){
+[x-skeleton]:has(> span){
   background: none;
   animation: none;
   height: auto;
@@ -63,7 +63,7 @@ x-skeleton:has(> span), [x-skeleton]:has(> span){
 }
 
 /* Variants (issue #129) */
-x-skeleton[variant="circle"], [x-skeleton][variant="circle"]{
+[x-skeleton][variant="circle"]{
   border-radius: 50%;
   aspect-ratio: 1 / 1;
   height: auto;
@@ -74,11 +74,11 @@ x-skeleton[variant="circle"], [x-skeleton][variant="circle"]{
    or media block, and a card placeholder for a whole card, so each gets the
    block height and corner of what it stands in for. An explicit height=""
    (skeleton() writes it on the element) still wins over these. */
-x-skeleton[variant="rect"], [x-skeleton][variant="rect"]{
+[x-skeleton][variant="rect"]{
   border-radius: 4px;
   height: 6rem;
 }
-x-skeleton[variant="card"], [x-skeleton][variant="card"]{
+[x-skeleton][variant="card"]{
   border-radius: var(--radius-lg, 0.5rem);
   height: 12rem;
 }

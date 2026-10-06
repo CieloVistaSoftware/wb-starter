@@ -25,7 +25,7 @@ import { ensureBehaviorCss } from './style-loader.js';
 import { makeDlog, traceStatusLabel } from './debug-trace.js';
 import { runtimeTracker, settledCall } from './injection-tracker.js';
 import SchemaBuilder from './mvvm/schema-builder.js';
-import { aliasesFor } from './attribute-aliases.js';
+import { aliasesFor, BEHAVIOR_ALIASES } from './attribute-aliases.js';
 import { teachByExample } from './teach-by-example.js';
 
 // Debug logging — silent unless localStorage['x-debug'] names a category
@@ -283,6 +283,8 @@ const customElementMappings = [
     .map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
   ...Object.entries(WB_LAZY_ONLY_ELEMENTS).map(([selector, behavior]) => ({ selector, behavior })),
   ...Object.entries(WB_LAZY_ONLY_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
+  // A renamed behavior's old attribute runs the new behavior (#668).
+  ...Object.entries(BEHAVIOR_ALIASES).map(([old, now]) => ({ selector: `[x-${old}]`, behavior: now })),
   // Semantic property attributes (tooltip=, badge=, ripple, toast-message=)
   // -- shared with wb.js via semantic-attributes.js so both engines support
   // the same vocabulary (#354).
@@ -467,7 +469,7 @@ function schemaNameFor(element) {
     const n = attr.name.toLowerCase();
     if (!n.startsWith('x-')) continue;
     if (n.startsWith('x-card') || SCHEMA_SKIP_TAGS.has(n)) continue;
-    const name = extensionMap[n];
+    const name = extensionMap[n] || BEHAVIOR_ALIASES[n.slice(2)];
     if (name) return name;
   }
   return null;

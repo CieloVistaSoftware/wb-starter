@@ -39,8 +39,11 @@ const tracked = [...new Set(execFileSync('git', ['ls-files', '--cached', '--othe
   .filter((f) => !f.startsWith('archive/') && !f.startsWith('packages/create-wb-starter/template/'));
 const rootFiles = tracked.filter((f) => !f.includes('/'));
 
-test('the root holds exactly one .html file, index.html', () => {
-  expect(rootFiles.filter((f) => f.endsWith('.html'))).toEqual(['index.html']);
+test('the root holds index.html and its generated 404.html, no other .html', () => {
+  // #1001: GitHub Pages serves 404.html, and only from the site root, for any
+  // path it has no file for -- that is how /behaviors reaches the shell.
+  // scripts/generate-404.mjs writes it from index.html.
+  expect(rootFiles.filter((f) => f.endsWith('.html')).sort()).toEqual(['404.html', 'index.html']);
 });
 
 test('README.md is the only .md file at the root', () => {
@@ -57,7 +60,7 @@ test('the root holds only the site entry points and project configuration', () =
   // sw.js must stay at the root: a service worker's scope is its own folder
   // (CieloVistaStandards build-deploy.md, rule 2).
   const ALLOWED = new Set([
-    '.gitignore', '.mcp.json', '.nojekyll', 'LICENSE', 'README.md',
+    '.gitignore', '.mcp.json', '.nojekyll', '404.html', 'LICENSE', 'README.md',
     'eslint.config.js', 'global.d.ts', 'index.html', 'jsconfig.json', 'manifest.json',
     'package-lock.json', 'package.json', 'playwright.config.ts', 'server.js', 'sw.js', 'tsconfig.json',
   ]);

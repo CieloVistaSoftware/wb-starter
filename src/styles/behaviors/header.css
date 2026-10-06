@@ -6,7 +6,7 @@
    header() skips adding `.x-header` only for a literal <header> host; a
    native <header> host (autoInject) still gets the class, and still needs
    it selected here. */
-x-header, [x-header],
+[x-header],
 .x-header {
   display: flex;
   align-items: center;
@@ -122,7 +122,7 @@ x-header, [x-header],
 
 /* Responsive */
 @media (max-width: 768px) {
-  x-header, [x-header],
+  [x-header],
   .x-header {
     /* §13 again: narrowing the horizontal gutter on small screens is fine,
        dropping the vertical padding back to 0 is not -- the text would sit

@@ -6,7 +6,7 @@
  * -----------------------------------------------------------------------------
  */
 
-x-avatar, [x-avatar]{
+[x-avatar]{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -49,14 +49,14 @@ x-avatar, [x-avatar]{
 }
 
 /* Image child */
-x-avatar img, [x-avatar] img{
+[x-avatar] img{
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 /* Status dot — shared base via attribute substring selector */
-x-avatar span[class*="x-avatar__status"], [x-avatar] span[class*="x-avatar__status"]{
+[x-avatar] span[class*="x-avatar__status"]{
   position: absolute;
   bottom: 0;
   right: 0;

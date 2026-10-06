@@ -5,6 +5,7 @@ import { preloadCssForHtml } from './style-loader.js';
 import { VERSION } from './version.js';
 import { versionNumber } from './version-number.js';
 import { setRule } from './dynamic-style.js';
+import { pageFromUrl, pageHref, isPageLink } from './routes.js';
 // Sets window.WBTime for the classic <script>s in pages/*.html (#1553).
 import './central-time.js';
 
@@ -105,8 +106,13 @@ export default class WBSite {
       document.title = this.config.searchEngineOptimization?.pageTitle || this.config.branding.companyName;
       this.updateFavicon();
       
-      const params = new URLSearchParams(window.location.search);
-      const pageParam = params.get('page');
+      // #1001: the page is the path (/behaviors); ?page=behaviors still works
+      // and is rewritten to the path below.
+      const route = pageFromUrl(window.location.href);
+      const pageParam = route.page;
+      if (route.legacy && route.page) {
+        history.replaceState(history.state, '', pageHref(route.page, window.location.search) + window.location.hash);
+      }
       // #725 -- the SECOND copy of the same wrong rule. This one dropped the
       // ?page= parameter on the floor whenever it was not a nav menu item, so
       // currentPage stayed 'home' and navigateTo() never even saw the request.
@@ -117,6 +123,9 @@ export default class WBSite {
       if (pageParam && /^[a-z0-9][a-z0-9-]*$/i.test(pageParam)) {
         this.currentPage = pageParam;
       }
+      // #957: a path that names no page (/foo/bar) shows the not-found page,
+      // never home with the wrong address still in the bar.
+      if (route.page === null) this.currentPage = route.path;
 
       this.render();
       this.initResizableNav();
@@ -136,9 +145,8 @@ export default class WBSite {
       });
 
       window.addEventListener('popstate', () => {
-        const params = new URLSearchParams(window.location.search);
-        const page = params.get('page') || 'home';
-        this.navigateTo(page);
+        const { page, path } = pageFromUrl(window.location.href);
+        this.navigateTo(page ?? path);
       });
 
       // Clear-cache-and-reload for the header's version link is handled by
@@ -151,11 +159,18 @@ export default class WBSite {
         const link = e.target.closest('a');
         if (link) {
           const href = link.getAttribute('href');
-          if (href && href.startsWith('?page=')) {
+          // #1001: a link to one of the site's pages -- /behaviors or the old
+          // ?page=behaviors -- navigates in place and leaves the path in the
+          // address bar. A modified click, a new tab or a download is the
+          // browser's.
+          const ownPage = href && !href.startsWith('#') && !link.target && !link.hasAttribute('download')
+            && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) && e.button === 0
+            && isPageLink(link.href);
+          if (ownPage) {
+            const { page, path } = pageFromUrl(link.href);
             e.preventDefault();
-            const page = new URLSearchParams(href).get('page');
-            history.pushState(null, '', href);
-            this.navigateTo(page);
+            history.pushState(null, '', page ? pageHref(page, new URL(link.href).search) + new URL(link.href).hash : link.href);
+            this.navigateTo(page ?? path);
           } else if (href && href.length > 1 && href.startsWith('#')) {
             // In-page anchor (e.g. the behaviors-page section nav). Native anchor
             // scrolling was unreliable in the SPA — lazy-injected components reflow
@@ -304,7 +319,7 @@ export default class WBSite {
       <header class="site__header ${headerSettings.keepHeaderAtTop ? 'site__header--sticky' : ''}" id="siteHeader">
         <div class="header__left" id="headerLeft">
           <button class="nav__toggle" x-ripple title="Toggle Navigation" id="navToggle" aria-label="Toggle Navigation">☰</button>
-          <a href="?page=home" class="header__logo" id="headerLogo">
+          <a href="${pageHref('home')}" class="header__logo" id="headerLogo">
             ${branding.headerLogoImage ? `<span class="header__logo-icon" id="headerLogoIcon">${branding.headerLogoImage}</span>` : ''}
             <span class="header__logo-text" id="headerLogoText">${branding.companyName}</span>
           </a>
@@ -343,16 +358,16 @@ export default class WBSite {
 
     const items = navigationMenu.map(item => {
       // Robust href handling
-      let href = '?page=home';
+      let href = pageHref('home');
       let isExternal = false;
       
       if (item.href) {
         href = item.href;
         isExternal = true;
       } else if (item.pageToLoad) {
-        href = `?page=${item.pageToLoad}`;
+        href = pageHref(item.pageToLoad);
       } else if (item.menuItemId) {
-        href = `?page=${item.menuItemId}`;
+        href = pageHref(item.menuItemId);
       }
 
       // Safe check for target
@@ -508,7 +523,7 @@ export default class WBSite {
       `<a href="${s.profileUrl}" class="footer__social-link" target="_blank" title="${s.platform}" id="footerSocialLink-${s.platform}">${s.icon}</a>`
     ).join('') : '';
     const footerLinks = additionalFooterLinks?.map(l =>
-      `<a href="?page=${l.pageToLoad}" class="footer__link" id="footerLink-${l.pageToLoad}">${l.linkText}</a>`
+      `<a href="${pageHref(l.pageToLoad)}" class="footer__link" id="footerLink-${l.pageToLoad}">${l.linkText}</a>`
     ).join(' · ') || '';
     return `
       <footer class="site__footer" id="siteFooter">
@@ -535,11 +550,8 @@ export default class WBSite {
     if (PAGE_ALIASES[pageId]) {
       pageId = PAGE_ALIASES[pageId];
       try {
-        const url = new URL(window.location.href);
-        if (url.searchParams.get('page') !== pageId) {
-          url.searchParams.set('page', pageId);
-          history.replaceState(history.state, '', url);
-        }
+        // #1001: the renamed page's own path, not ?page=.
+        history.replaceState(history.state, '', pageHref(pageId, window.location.search) + window.location.hash);
       } catch { /* no URL API: the page still renders */ }
     }
     // Defense in depth (#511). The real fix is in the callers: init() now
@@ -777,8 +789,7 @@ export default class WBSite {
 
   updateActiveNav() {
     document.querySelectorAll('.nav__item').forEach(item => {
-      const href = item.getAttribute('href') || '';
-      const page = href.startsWith('?page=') ? new URLSearchParams(href).get('page') : null;
+      const page = item.href && isPageLink(item.href) ? pageFromUrl(item.href).page : null;
       item.classList.toggle('nav__item--active', page === this.currentPage);
     });
   }

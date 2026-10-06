@@ -2181,29 +2181,29 @@
         }
       ]
     },
-    "x-codecontrol": {
-      "source": "<div x-codecontrol></div>\n<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
+    "x-codetheme": {
+      "source": "<div x-codetheme></div>\n<code language=\"javascript\">\n// Debounce — delay a call until the caller stops firing.\nexport function debounce(fn, wait = 200) {\n  let timer = null;\n  return function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() =&gt; fn.apply(this, args), wait);\n  };\n}\n\n// Throttle — run at most once per interval.\nexport function throttle(fn, interval = 100) {\n  let last = 0;\n  return function throttled(...args) {\n    const now = Date.now();\n    if (now - last &lt; interval) return;\n    last = now;\n    return fn.apply(this, args);\n  };\n}\n\nconst onResize = debounce(() =&gt; {\n  const { innerWidth: w, innerHeight: h } = window;\n  console.log(`viewport ${w}x${h}`);\n}, 250);\n\nwindow.addEventListener('resize', onResize);\n</code>",
       "alternates": [],
       "examples": [
         {
           "label": "small",
-          "source": "<div x-codecontrol size=\"sm\"></div>"
+          "source": "<div x-codetheme size=\"sm\"></div>"
         },
         {
           "label": "large",
-          "source": "<div x-codecontrol size=\"lg\"></div>"
+          "source": "<div x-codetheme size=\"lg\"></div>"
         },
         {
           "label": "extra small",
-          "source": "<div x-codecontrol size=\"xs\"></div>"
+          "source": "<div x-codetheme size=\"xs\"></div>"
         },
         {
           "label": "without its label",
-          "source": "<div x-codecontrol show-label=\"false\" size=\"sm\"></div>"
+          "source": "<div x-codetheme show-label=\"false\" size=\"sm\"></div>"
         },
         {
           "label": "medium, beside code",
-          "source": "<div x-codecontrol size=\"md\"></div>\n<code language=\"css\">.card { border-radius: 8px; }</code>"
+          "source": "<div x-codetheme size=\"md\"></div>\n<code language=\"css\">.card { border-radius: 8px; }</code>"
         }
       ]
     },

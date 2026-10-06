@@ -2,6 +2,22 @@
 
 ## 🅿️ PARKING LOT
 
+**Parked 2026-10-05, 11:00 PM CDT.** main = v1.0.311.
+
+**Task:** real paths for pages (#1001, John: "I want regular routing for navigation pull out the pages thing"), which also settles #957 (an unknown path is a 404, not home). PR #1601.
+
+**Files touched:** `src/core/routes.js` (new), `src/core/site-engine.js`, `server.js`, `scripts/generate-404.mjs` (new), `404.html` (new, generated), `.github/workflows/stamp-version-on-main.yml`, `tests/helpers/page-path.ts` (new), `tests/regression/pages-have-real-paths.spec.ts` (new), and the specs that looked nav links up by `?page=`: `mobile/nav-scroll`, `views/feature-cards-clickable`, `pages/home-links`, `integration/repro-card-bug`, `behaviors/no-schema-not-found`, `regression/{navigation-latest-wins,non-nav-pages-reachable,issues-activity-survives-navigation,behaviors-live-selector,releases-page,scroll-survives-page-build}`, `compliance/repo-layout`.
+
+**Last action:** fixed every spec CI and the local run showed red (all pass locally; the iPhone project needs WebKit, which this sandbox lacks, so nav-scroll was checked on Pixel). Added a redirect `/behaviors/` → `/behaviors` (the shell's relative assets broke under a trailing slash). Merged main and pushed; the PR is still DRAFT, waiting on CI.
+
+**Next step:** CI green → mark ready, merge (merge commit), fill in the signatures for #1001 and #957. Then, optionally, change the 44 `?page=` content links to paths (they still work; they redirect).
+
+**Open questions for John:** #827 wire up or delete the list modules (`<ul>/<ol>/<dl>` would change on every page); #969 the typed-card class refactor, do now or later.
+
+**Done today (merged):** #1532 (release steps, video maker, 12 fixes), #1559 (Central time everywhere, x-clock default Central, x-glow), #1582 (`<nav>` picks up navbar, #958). Closed as already fixed: #864, #916, #1004, #1319; #1037 fixed by another session's #1584.
+
+---
+
 **Updated 2026-10-02.** Build process changed (John's decision).
 
 - Commit hook = fast checks only (~30s), nothing CI also runs. No Playwright, no every-10th full run, no counter.
@@ -10,6 +26,16 @@
 - Nightly: full suite on main vs the register. A new failure files one `priority:2` issue. It does not release.
 - The live site serves `main`; a merge is live in minutes. The pre-push rule (#1076) is gone.
 - **Version number** (John: "1.0.what the latest push is e.g. 1.0.41 simple"): the badge shows the last tag's patch plus the commits since it — `v1.0.41`. Numbers only, no marks; the tooltip says if the copy is behind or edited.
+
+---
+
+**Updated 2026-10-06.** x-codecontrol renamed to x-codetheme (#668).
+
+**Files touched:** `src/wb-viewmodels/codetheme.js`, `src/wb-models/codetheme.schema.json`, `src/styles/behaviors/codetheme.css`, `docs/behaviors/codetheme.md` (all renamed from codecontrol), `src/core/attribute-aliases.js` (new `BEHAVIOR_ALIASES`), `src/core/tag-map.js`, `src/core/wb-lazy.js`, `src/core/style-loader.js`, `src/wb-viewmodels/index.js`, `src/styles/behavior-css-manifest.js`, `docs/manifest.json`, `docs/behavior-cross-reference.md`, `docs/behaviors-reference.md`, `docs/pce-candidates.md`, demos/pages that used the old name.
+
+**Last action:** the behavior, module, schema, stylesheet and doc are codetheme; the schema says it picks a highlight.js theme (it said "code editor/viewer"). `x-codecontrol` still works: it is declared once, in `BEHAVIOR_ALIASES` (attribute-aliases.js), and wb-lazy.js, the wb.js registry and the CSS loader all read it from there. It is not in tag-map.js, so the inventories and docs list one behavior, not two.
+
+**Next step:** retire the x-codecontrol alias once nothing outside the repo uses it.
 
 ---
 

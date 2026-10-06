@@ -176,7 +176,6 @@
    that white rather than the theme's text colour, with the 1.5px edge it has
    always had. Defined here, not in hero.css: custom property definitions live
    in themes.css (css-oop-compliance). */
-x-cardhero .x-hero-cta--secondary,
 [x-cardhero] .x-hero-cta--secondary {
   --glass-tint: var(--text-on-accent);
   --x-glass-edge-width: 1.5px;

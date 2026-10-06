@@ -121,8 +121,8 @@
           "modified": "2026-09-27"
         },
         {
-          "file": "behaviors/codecontrol.md",
-          "title": "Code Control",
+          "file": "behaviors/codetheme.md",
+          "title": "Code Theme",
           "description": "Dropdown to switch the highlight.js code theme site-wide",
           "modified": "2026-09-27"
         },

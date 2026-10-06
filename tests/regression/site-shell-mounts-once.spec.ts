@@ -29,6 +29,7 @@
  * the function main.js and site-engine.js call.
  */
 import { test, expect, Page } from '../fixtures/offline';
+import { pagePath } from '../helpers/page-path';
 
 /** Ask the page's own detector what it sees. */
 async function duplicates(page: Page): Promise<{ id: string; count: number }[]> {
@@ -81,7 +82,7 @@ test.describe('#1340 the site shell mounts once', () => {
     await page.goto('/?page=docs');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20000 });
 
-    const home = page.locator('a[href*="page=home"]').first();
+    const home = page.locator(`.nav__item[href="${pagePath('home')}"]`).first();
     await expect(home, 'no nav link to home').toBeVisible({ timeout: 10000 });
     await home.click();
     await page.waitForTimeout(1200);

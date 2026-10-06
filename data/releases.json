@@ -6,6 +6,58 @@
   ],
   "releases": [
     {
+      "version": "1.0.316",
+      "date": "2026-10-06",
+      "summary": "4.0.0&#39;s prefix rename turned tag selectors like wb-card into x-card, a tag that no longer exists, so 300 selector parts in src/styles matched nothing; most were dead weight beside a working [x-card] twin, but some rules had no live selector at all, so hero cards kept animating for readers who asked for reduced motion, the loading spinner kept spinning beside &quot;Error loading&quot;, and masonry article cards sat flush with no gap. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1590\" target=\"_blank\" rel=\"noopener\">PR 1590</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>No selector names an x-* tag nothing renders; a gate keeps it so</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/857\" target=\"_blank\" rel=\"noopener\">#857</a>",
+          "issues": [
+            857
+          ]
+        }
+      ],
+      "seeIt": "Open Behaviors (?page=behaviors), pick articles and choose layout=masonry. Before: the cards in each column touched, with no gap between them. Now: they are spaced 1.5rem apart and a card never splits across columns. Also run <code>npx playwright test tests/compliance/css-tag-selectors-name-real-tags.spec.ts --project=compliance</code>. Before: 283 dead tag selectors listed. Now: none."
+    },
+    {
+      "version": "1.0.315",
+      "date": "2026-10-05",
+      "summary": "The check that the not-found page matches the home page failed after every release, because each release changes the version number in the home page&#39;s file links. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1601\" target=\"_blank\" rel=\"noopener\">PR 1601</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>The 404.html check leaves out the ?v= stamp</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>The shell spec finds Home by its path; 404.html follows main&#39;s index</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Specs find nav links by the page&#39;s real path; /name/ moves to /name</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a>",
+          "issues": [
+            1001
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Pages live at real paths; an unknown path is a 404</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/957\" target=\"_blank\" rel=\"noopener\">#957</a>",
+          "issues": [
+            1001,
+            957
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/regression/pages-have-real-paths.spec.ts</code> on a branch made before main&#39;s latest release. Before: &quot;404.html is index.html plus the site root&quot; failed on the version number alone. Now: it passes, and still fails if anything else differs."
+    },
+    {
       "version": "1.0.314",
       "date": "2026-10-05",
       "summary": "Doc-viewer-links failed CI with ECONNRESET, never a dead link, because server.js closed an idle keep-alive socket after Node&#39;s default ~5-6s while a test&#39;s pooled request context reused it (idle 6037ms and 6066ms on Windows CI). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1605\" target=\"_blank\" rel=\"noopener\">PR 1605</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",

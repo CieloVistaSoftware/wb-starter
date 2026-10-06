@@ -1,8 +1,9 @@
 /**
  * #184 — the home page Features cards must be clickable and navigate to their
- * subsystem pages (via the SPA ?page= router).
+ * subsystem pages (via the SPA router).
  */
 import { test, expect } from '../fixtures/offline';
+import { pagePath } from '../helpers/page-path';
 
 // 'Component Library' became 'Behavior Library' when components were removed
 // (a behavior is an x- attribute on a neutral host) -- pages/home.html's card
@@ -49,7 +50,9 @@ test.describe('#184 — home feature cards are clickable', () => {
   test('clicking a feature card navigates via the SPA', async ({ page }) => {
     await page.click('.feature-card-link[href="?page=behaviors"]');
     await page.waitForTimeout(800);
-    const url = await page.evaluate(() => location.search);
-    expect(url, 'clicking the Behavior Library card did not navigate').toContain('page=behaviors');
+    // The card still says ?page=behaviors; the site files it under the page's
+    // real path (#1001).
+    const url = await page.evaluate(() => location.pathname + location.search);
+    expect(url, 'clicking the Behavior Library card did not navigate').toBe(pagePath('behaviors'));
   });
 });
