@@ -15,7 +15,7 @@ import { themeColor } from '../../core/theme-color.js';
  * 
  * EVENTS:
  * - wb:rating:change: Dispatched when value changes. detail: { value: number }
- * Helper Attribute: [x-behavior="rating"]
+ * Helper Attribute: [x-rating]
  */
 
 export function rating(element, options = {}) {

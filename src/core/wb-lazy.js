@@ -18,7 +18,8 @@ import { matchingElements } from './dom-query.js';
 import { setRule } from './dynamic-style.js';
 import { setupGlobalErrorHandler } from './error-logger.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
-import { isReplacedByExplicitBehavior } from './replacement-guard.js';
+import { isReplacedByExplicitBehavior, DIRECTIVES } from './replacement-guard.js';
+import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
 import { isComponentLandmark } from './component-landmark.js';
 import { semanticPropertyMappings } from './semantic-attributes.js';
 import { ensureBehaviorCss } from './style-loader.js';
@@ -274,6 +275,28 @@ export const WB_LAZY_ONLY_ATTRIBUTES = {
   // disambiguation notes.
 };
 
+/**
+ * `[x-{name}]` for each registered behavior no map above routes (#1642).
+ * Computed from the registry, not listed, so a behavior added to index.js
+ * gets its attribute without anyone remembering to add it here.
+ * @returns {{selector: string, behavior: string}[]}
+ */
+// Not routed on their own: move.js's move() wires these on the buttons inside
+// its x-move container. Routing them here too would bind every button twice,
+// and one click would swap the item two places instead of one.
+const PARENT_WIRED_BEHAVIORS = new Set(['moveup', 'movedown', 'moveleft', 'moveright']);
+
+function unroutedBehaviorAttributes() {
+  const routed = new Set([
+    ...Object.keys(extensionMap),
+    ...Object.keys(WB_LAZY_ONLY_ATTRIBUTES),
+    ...Object.keys(BEHAVIOR_ALIASES).map((old) => `x-${old}`),
+  ]);
+  return listBehaviors()
+    .filter((name) => !routed.has(`x-${name}`) && !DIRECTIVES.has(name) && !PARENT_WIRED_BEHAVIORS.has(name))
+    .map((name) => ({ selector: `[x-${name}]`, behavior: name }));
+}
+
 // Auto-injection mappings
 const customElementMappings = [
   ...Object.entries(elementMap)
@@ -285,6 +308,13 @@ const customElementMappings = [
   ...Object.entries(WB_LAZY_ONLY_ATTRIBUTES).map(([attr, behavior]) => ({ selector: `[${attr}]`, behavior })),
   // A renamed behavior's old attribute runs the new behavior (#668).
   ...Object.entries(BEHAVIOR_ALIASES).map(([old, now]) => ({ selector: `[x-${old}]`, behavior: now })),
+  // Every other registered behavior by its own x-{name} attribute (#1642).
+  // These 46 (list, json, divider, datepicker, hotkey, ...) were reachable
+  // ONLY as x-behavior="name": <ul x-list> did nothing at all, silently, while
+  // knownBehaviorAttributes() below called the attribute known. wb.js already
+  // routed every registered name this way. With x-behavior deprecated, the
+  // attribute is the one spelling, so it has to work for every behavior.
+  ...unroutedBehaviorAttributes(),
   // Semantic property attributes (tooltip=, badge=, ripple, toast-message=)
   // -- shared with wb.js via semantic-attributes.js so both engines support
   // the same vocabulary (#354).
@@ -1027,9 +1057,10 @@ const WB = {
     flow('scan', `root=${elLabel(root)}`, `eager=${eager}`);
     // querySelectorAll() only matches DESCENDANTS of root, never root itself
     // — invisible until demo.js's `WB.scan(pre, { eager: true })` call, where
-    // `pre` (the exact <pre x-behavior="pre"> just created) IS root. See
+    // `pre` (the exact <pre> just created) IS root. See
     // wb.js's matching fix for the full incident this caused (§7 sizing fed
     // by the code panel's un-wrapped raw-source width).
+    // x-behavior="a b" is deprecated (#1642): old markup still runs, and warns.
     const elements = matchingElements(root, '[x-behavior]');
     const injections = [];
     // One queueing rule for all three scans below (#883: it was written out
@@ -1039,6 +1070,7 @@ const WB = {
     };
 
     elements.forEach(element => {
+      warnXBehaviorDeprecated(element); // #1642: still runs, but says so
       const behaviorList = element.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
       const isEager = eager || element.hasAttribute('x-eager');
 
@@ -1114,6 +1146,7 @@ const WB = {
           if (node.nodeType === Node.ELEMENT_NODE) {
             // Check if node itself has x-behavior
             if (node.hasAttribute('x-behavior')) {
+              warnXBehaviorDeprecated(node); // #1642
               const behaviorList = node.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
               const isEager = node.hasAttribute('x-eager');
               behaviorList.forEach(name => {
@@ -1129,6 +1162,7 @@ const WB = {
             // Check descendants
             if (node.hasChildNodes?.()) {
               node.querySelectorAll?.('[x-behavior]').forEach(el => {
+                warnXBehaviorDeprecated(el); // #1642
                 const behaviorList = el.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
                 const isEager = el.hasAttribute('x-eager');
                 behaviorList.forEach(name => {
@@ -1177,6 +1211,7 @@ const WB = {
         // Handle attribute changes on x-behavior
         if (mutation.type === 'attributes' && mutation.attributeName === 'x-behavior') {
           const element = mutation.target;
+          warnXBehaviorDeprecated(element); // #1642
           const behaviorList = element.getAttribute('x-behavior')?.split(/\s+/).filter(Boolean) || [];
           const isEager = element.hasAttribute('x-eager');
           
@@ -1444,15 +1479,14 @@ const WB = {
     }
 
     // 4. Apply Behaviors
-    // If we didn't find a custom tag, or if there are extra behaviors, set x-behavior
+    // If we didn't find a custom tag, or if there are extra behaviors, each one
+    // gets its own x-{name} attribute. Never x-behavior="a b": that spelling is
+    // deprecated (#1642).
     const behaviors = data.behaviors || [];
     if (data.b && !isCustomTag) {
       behaviors.push(data.b);
     }
-    
-    if (behaviors.length > 0) {
-      el.setAttribute('x-behavior', behaviors.join(' '));
-    }
+    behaviors.forEach(name => el.setAttribute(`x-${name}`, ''));
 
     // 5. Apply ID and Classes
     if (data.id) el.id = data.id;

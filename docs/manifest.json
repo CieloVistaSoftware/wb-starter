@@ -176,8 +176,8 @@
         },
         {
           "file": "behaviors/x-behavior.md",
-          "title": "X-Behavior",
-          "description": "Generic behavior attribute",
+          "title": "X-Behavior (deprecated)",
+          "description": "Deprecated generic behavior attribute: write x-name instead",
           "modified": "2026-09-27"
         },
         {

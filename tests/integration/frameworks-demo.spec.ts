@@ -64,7 +64,7 @@ test.describe('frameworks demo: code examples highlighted + copyable (#241)', ()
     const count = await blocks.count();
     expect(count).toBeGreaterThanOrEqual(5);
 
-    await expect(page.locator('pre[language][x-behavior="pre"][x-eager]')).toHaveCount(count);
+    await expect(page.locator('pre[language][x-eager]')).toHaveCount(count);
     await expect(page.locator('pre[language].x-pre')).toHaveCount(count, { timeout: 15000 });
     await expect(page.locator('.code-copy-btn')).toHaveCount(0);
   });

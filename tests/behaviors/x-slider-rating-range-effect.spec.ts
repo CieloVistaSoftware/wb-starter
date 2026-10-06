@@ -120,20 +120,12 @@ test.describe('<span x-rating> precision= is a confirmed no-op (never read by ra
 
 test.describe('native <input type="range" show-value> — range.js value display (src/wb-viewmodels/semantics/range.js)', () => {
   test('displayed value matches the initial value and updates live as the input value changes', async ({ page }) => {
-    // x-behavior="range" applies the behavior explicitly. This mirrors the
-    // convention already used for <pre x-behavior="pre"> elsewhere in this
-    // suite (tests/behaviors/x-demo-width-and-toggle.spec.ts). It is
-    // necessary here because the range behavior is only ever reached via
-    // tag-map.js's autoInject path (input[type="range"] -> 'range'), and
-    // getAutoInjectBehavior() in src/core/wb.js requires either a `variant`
-    // attribute OR the global `autoInject` config to be true. The real site
-    // turns this on via config/site.json's autoInjectComponents: true (see
-    // src/core/site-engine.js), but demos/test-harness.html's own WB.init()
-    // call omits autoInject, so it defaults to false there — confirmed by
-    // reading src/core/wb.js's getAutoInjectBehavior(). x-behavior sidesteps
-    // that gap the same way the existing pre/code tests do, without touching
-    // src/ or inventing new behavior.
-    await setup(page, '<input id="rng1" type="range" x-behavior="range" show-value min="0" max="100" value="50">');
+    // A bare <input type="range"> gets the range behavior from its tag
+    // (tag-map.js nativeMap, input[type="range"] -> 'range'); autoInject is on
+    // by default now (src/core/config.js). This used to add
+    // x-behavior="range" to work around autoInject being off on the test
+    // harness; that form is deprecated (#1642) and no longer needed.
+    await setup(page, '<input id="rng1" type="range" show-value min="0" max="100" value="50">');
     const display = page.locator('#x-slider-rating-range-test-area .x-range-value').first();
     await expect(display).toHaveText('50');
 
@@ -148,7 +140,7 @@ test.describe('native <input type="range" show-value> — range.js value display
 
 test.describe('native <input type="range" show-labels> — min/max labels', () => {
   test('rendered min/max labels match the min/max attributes', async ({ page }) => {
-    await setup(page, '<input id="rng2" type="range" x-behavior="range" show-value show-labels min="10" max="90" value="50">');
+    await setup(page, '<input id="rng2" type="range" show-value show-labels min="10" max="90" value="50">');
     const labels = page
       .locator('#x-slider-rating-range-test-area .x-range-wrapper > div')
       .last()
@@ -161,7 +153,7 @@ test.describe('native <input type="range" show-labels> — min/max labels', () =
 
 test.describe('native <input type="range" value-suffix="%">', () => {
   test('displayed value includes the suffix — "75%", not just "75"', async ({ page }) => {
-    await setup(page, '<input id="rng3" type="range" x-behavior="range" show-value value-suffix="%" min="0" max="100" value="75">');
+    await setup(page, '<input id="rng3" type="range" show-value value-suffix="%" min="0" max="100" value="75">');
     const display = page.locator('#x-slider-rating-range-test-area .x-range-value').first();
     await expect(display).toHaveText('75%');
   });

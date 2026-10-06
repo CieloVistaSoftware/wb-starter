@@ -2,7 +2,7 @@ import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * List Behavior
  * Populates a list from data-items attribute
- * Helper Attribute: [x-behavior="list"]
+ * Helper Attribute: [x-list]
  */
 export function list(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.

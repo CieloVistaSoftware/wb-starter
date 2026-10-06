@@ -118,7 +118,7 @@
    that carve-out is now redundant with this rule but left in place as
    belt-and-suspenders documentation of the x-demo-specific case).
 
-   :not(.x-pre) — once pre.js (x-behavior="pre") has enhanced a block, it
+   :not(.x-pre) — once pre.js has enhanced a block, it
    manages its own complete padding/background/wrap via .x-pre (pre.css),
    including reserving extra padding-left for a line-number gutter
    (.x-pre--has-line-numbers). This rule's flat padding:1rem has higher

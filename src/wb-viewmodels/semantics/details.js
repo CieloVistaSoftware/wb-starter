@@ -1,7 +1,7 @@
 import { readFlag, readAttr } from '../../core/read-attr.js';
 /**
  * Details - Enhanced <details> element
- * Helper Attribute: [x-behavior="details"]
+ * Helper Attribute: [x-details]
  * 
  * Uses native HTML5 <details>/<summary> for:
  * - Built-in accessibility (no ARIA needed)

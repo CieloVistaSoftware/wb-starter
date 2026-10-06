@@ -44,7 +44,7 @@ async function setup(page: Page, html: string): Promise<void> {
 }
 
 const SELECTABLE_TABLE = `
-  <table id="sel-table" x-behavior="table" selectable="multi">
+  <table id="sel-table" selectable="multi">
     <thead><tr><th>Name</th><th>Role</th></tr></thead>
     <tbody>
       <tr id="row-alice"><td>Alice</td><td>Developer</td></tr>
