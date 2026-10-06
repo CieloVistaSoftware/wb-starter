@@ -13,13 +13,28 @@ test('theme-variant selects use theme vars, not hardcoded rgba() literals', asyn
   const success = page.locator('#autoinject-select-success');
   const error = page.locator('#autoinject-select-error');
 
-  const successStyle = await success.getAttribute('style');
-  const errorStyle = await error.getAttribute('style');
+  // #779: the colours live in the page's <style> rule for each id, not in a
+  // style= attribute, so read the rule that styles the element.
+  const ruleFor = (id: string) => page.evaluate((sel) => {
+    for (const sheet of [...document.styleSheets]) {
+      let rules: CSSRuleList;
+      try { rules = sheet.cssRules; } catch { continue; }
+      for (const r of [...rules]) {
+        if (r instanceof CSSStyleRule && r.selectorText === sel) return r.style.cssText;
+      }
+    }
+    return null;
+  }, '#' + id);
 
-  expect(successStyle, 'success variant should use var(--alert-success-bg), not rgba()').not.toContain('rgba(');
-  expect(successStyle).toContain('var(--alert-success-bg)');
-  expect(errorStyle, 'error variant should use var(--alert-danger-bg), not rgba()').not.toContain('rgba(');
-  expect(errorStyle).toContain('var(--alert-danger-bg)');
+  expect(await success.getAttribute('style'), 'no inline style (#779)').toBeNull();
+  expect(await error.getAttribute('style'), 'no inline style (#779)').toBeNull();
+  const successRule = await ruleFor('autoinject-select-success');
+  const errorRule = await ruleFor('autoinject-select-error');
+
+  expect(successRule, 'success variant should use var(--alert-success-bg), not rgba()').not.toContain('rgba(');
+  expect(successRule).toContain('var(--alert-success-bg)');
+  expect(errorRule, 'error variant should use var(--alert-danger-bg), not rgba()').not.toContain('rgba(');
+  expect(errorRule).toContain('var(--alert-danger-bg)');
 
   // Still visibly tinted — theme vars produce a real, non-transparent color.
   await expect(success).toBeVisible();
