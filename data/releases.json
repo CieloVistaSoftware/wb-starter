@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.324",
+      "date": "2026-10-06",
+      "summary": "The overlap gate&#39;s page list was hand-written and had drifted to one SPA page (listed twice) and nine demos while the site grew. It is now read from pages/, demos/site/ and demos/ at run time, so a page is covered the day it is added; SPA pages still load through the site shell. That adds the 17 top-level demos (playground, test-harness, landing-page-showcase, ...) and the last SPA pages, all of which pass. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1612\" target=\"_blank\" rel=\"noopener\">PR 1612</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/274\" target=\"_blank\" rel=\"noopener\">#274</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Read the page list from disk</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/274\" target=\"_blank\" rel=\"noopener\">#274</a>",
+          "issues": [
+            274
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Cover every page; clip rects to their scroll container</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/274\" target=\"_blank\" rel=\"noopener\">#274</a>",
+          "issues": [
+            274
+          ]
+        }
+      ],
+      "seeIt": "Run <code>npx playwright test tests/integration/overlap.spec.ts --project=integration --list</code>. Before: 11 page tests, two of them the same page. Now: 47 page tests plus the detector self-test, one per .html file in pages/, demos/site/ and demos/, and all 48 pass."
+    },
+    {
       "version": "1.0.323",
       "date": "2026-10-06",
       "summary": "Nothing said which control to use, so &lt;select&gt; and x-dropdown read as substitutes and deprecation got aimed at x-dropdown. V3-STANDARDS.md now has the rule and a one-line test -- does the user pick a value the form submits (&lt;select&gt;) or run an action (x-dropdown)? -- and select.md and dropdown.md point to it. The decision #682 asked for: &lt;wb-select&gt; went in 4.0.0, and what is left, &lt;div x-select options=&#39;...&#39;&gt;, is recorded as deprecated, still working, because a native &lt;select&gt; now handles variant, size, clearable, searchable and multiple itself. The forms.html Select samples were placeholder text with no options; they are now real &lt;select&gt;s, one per feature. And a bare &lt;select&gt; got none of the padding .x-input gives inputs, so next to a filter box or in the clearable wrapper it was 19px tall against a 42px input; it now matches, at zero specificity. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1611\" target=\"_blank\" rel=\"noopener\">PR 1611</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/682\" target=\"_blank\" rel=\"noopener\">#682</a>",
