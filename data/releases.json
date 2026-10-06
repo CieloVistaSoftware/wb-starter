@@ -100,7 +100,8 @@
             1598
           ]
         }
-      ]
+      ],
+      "seeIt": "Open Behaviors, search &quot;expan&quot;, pick &quot;four lines visible&quot; and click Show More. Before: the same two lines stayed, only the label changed. Now: the card grows to show the rest of the changelog, and a card whose text already fits shows no Show More button."
     },
     {
       "version": "1.0.317",
