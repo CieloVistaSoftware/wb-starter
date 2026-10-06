@@ -213,7 +213,7 @@ const behaviorModules = {
   
   // Utility → helpers.js + standalone
   stagelight: 'stagelight',
-  span: 'span',
+  status: 'status',
   // These two are the only behaviors whose module file is x-prefixed. The
   // values carried literal square brackets, so loadModule()'s
   // `./${moduleName}.js` asked for "./[x-control].js" -- a path that cannot

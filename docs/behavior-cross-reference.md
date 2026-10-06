@@ -142,12 +142,12 @@ Rows: **161**, read from `src/core/tag-map.js` and `src/core/wb-lazy.js`. 161 ha
 | `slidein` | `x-slidein` | [behaviors/slidein.md](behaviors/slidein.md) | — |
 | `slider` | `x-slider` | [behaviors/slider.md](behaviors/slider.md) | — |
 | `snow` | `x-snow` | [behaviors/snow.md](behaviors/snow.md) | — |
-| `span` | `x-span` | [behaviors/span.md](behaviors/span.md) | — |
 | `sparkle` | `x-sparkle` | [behaviors/sparkle.md](behaviors/sparkle.md) | — |
 | `spinner` | `x-spinner` | [behaviors/spinner.md](behaviors/spinner.md) | — |
 | `stack` | `x-stack` | [behaviors/stack.md](behaviors/stack.md) | yes |
 | `stagelight` | `x-stagelight` | [behaviors/stagelight.md](behaviors/stagelight.md) | — |
 | `stat` | `x-stat` | [behaviors/stat.md](behaviors/stat.md) | — |
+| `status` | `x-status` | [behaviors/status.md](behaviors/status.md) | — |
 | `stepper` | `x-stepper` | [behaviors/stepper.md](behaviors/stepper.md) | — |
 | `steps` | `x-steps` | [behaviors/steps.md](behaviors/steps.md) | — |
 | `sticky` | `x-sticky` | [behaviors/sticky.md](behaviors/sticky.md) | yes |

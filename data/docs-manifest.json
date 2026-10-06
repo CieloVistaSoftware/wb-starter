@@ -1527,13 +1527,6 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/span.md",
-        "title": "Span",
-        "name": "span",
-        "category": "behaviors",
-        "created": "2026-08-20"
-      },
-      {
         "path": "docs/behaviors/sparkle.md",
         "title": "Sparkle",
         "name": "sparkle",
@@ -1567,6 +1560,12 @@
         "name": "stat",
         "category": "behaviors",
         "created": "2026-08-26"
+      },
+      {
+        "path": "docs/behaviors/status.md",
+        "title": "Status",
+        "name": "status",
+        "category": "behaviors"
       },
       {
         "path": "docs/behaviors/stepper.md",
@@ -3169,13 +3168,6 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/span.md",
-      "title": "Span",
-      "name": "span",
-      "category": "behaviors",
-      "created": "2026-08-20"
-    },
-    {
       "path": "docs/behaviors/sparkle.md",
       "title": "Sparkle",
       "name": "sparkle",
@@ -3209,6 +3201,12 @@
       "name": "stat",
       "category": "behaviors",
       "created": "2026-08-26"
+    },
+    {
+      "path": "docs/behaviors/status.md",
+      "title": "Status",
+      "name": "status",
+      "category": "behaviors"
     },
     {
       "path": "docs/behaviors/stepper.md",

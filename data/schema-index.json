@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T03:51:43.324Z",
+  "generatedAt": "2026-10-06T19:24:24.111Z",
   "count": 160,
   "schemas": [
     {
@@ -2281,14 +2281,14 @@
         },
         "closeOnEscape": {
           "type": "boolean",
-          "description": "Close on Escape key",
+          "description": "Close on the Escape key. Cannot be turned off while showClose is false: then Escape is the dialog's exit, and stays on (#794).",
           "default": true,
           "visual": false,
           "visualReason": "Whether Escape closes the dialog. Only the key shows it (#773)."
         },
         "showClose": {
           "type": "boolean",
-          "description": "Show close button",
+          "description": "Show the header's close button (x). A dialog always keeps an exit: with showClose=\"false\", Escape must close it, so closeOnEscape=\"false\" is ignored and a warning is logged (#794).",
           "default": true,
           "visibleWhen": "open",
           "visualReason": "The close button is part of the dialog, which is on screen only once opened (#773)."
@@ -3352,9 +3352,10 @@
       "properties": {
         "color": {
           "type": "string",
-          "description": "Colour of the glow. Defaults to the theme primary (`var(--primary, #6366f1)`), so it follows the active theme unless you pin it.",
-          "default": "var(--primary, #6366f1)",
+          "description": "Colour of the glow: a theme colour name (primary, secondary, accent, success, warning, danger, info), which follows the active theme, or any CSS colour (hex, rgb(), hsl()) to pin it. Never a var(--…) token (#907).",
+          "default": "primary",
           "examples": [
+            "success",
             "#22c55e",
             "#ef4444",
             "#f59e0b",
@@ -3427,7 +3428,7 @@
         },
         "background": {
           "type": "string",
-          "description": "Read by grid().",
+          "description": "Background of the grid: a theme colour name (bg-primary, bg-secondary, bg-tertiary, primary, success, …) or any CSS colour. Never a var(--…) token (#907).",
           "default": "this is the background"
         },
         "headers": {
@@ -7139,43 +7140,6 @@
       }
     },
     {
-      "file": "span.schema.json",
-      "name": "span",
-      "title": "Span",
-      "description": "A generic inline container for applying utility classes and variants. Useful for traffic lights (window controls), badges, and status indicators.",
-      "tag": "x-span",
-      "baseClass": "x-span",
-      "properties": {
-        "variant": {
-          "type": "string",
-          "description": "Visual style variant",
-          "enum": [
-            "default",
-            "red",
-            "yellow",
-            "green",
-            "dot",
-            "primary",
-            "secondary",
-            "success",
-            "error",
-            "warning",
-            "info"
-          ],
-          "default": "default",
-          "appliesClass": "x-span--{{value}}"
-        }
-      },
-      "matrix": [],
-      "_metadata": {
-        "category": "layout",
-        "icon": "📝",
-        "since": "1.0.0",
-        "status": "stable",
-        "generateAttribute": false
-      }
-    },
-    {
       "file": "sparkle.schema.json",
       "name": "sparkle",
       "title": "Sparkle",
@@ -7286,7 +7250,7 @@
         },
         "bg": {
           "type": "string",
-          "description": "Background color of the stack. Accepts any valid CSS color value including hex, rgb, and CSS variables.",
+          "description": "Background of the stack: a theme colour name (bg-primary, bg-secondary, bg-tertiary, primary, success, …) or any CSS colour (hex, rgb, hsl). Never a var(--…) token (#907).",
           "default": "this is the bg",
           "example": "#1a2f4e",
           "examples": [
@@ -7520,6 +7484,43 @@
         "icon": "📊",
         "since": "1.0.0",
         "status": "stable"
+      }
+    },
+    {
+      "file": "status.schema.json",
+      "name": "status",
+      "title": "Status",
+      "description": "Status-coloured inline text (primary, success, error, ...) or a window-control dot (red, yellow, green, dot). Was x-span, which still works as an alias (#1105).",
+      "tag": "x-status",
+      "baseClass": "x-status",
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "Visual style variant",
+          "enum": [
+            "default",
+            "red",
+            "yellow",
+            "green",
+            "dot",
+            "primary",
+            "secondary",
+            "success",
+            "error",
+            "warning",
+            "info"
+          ],
+          "default": "default",
+          "appliesClass": "x-status--{{value}}"
+        }
+      },
+      "matrix": [],
+      "_metadata": {
+        "category": "layout",
+        "icon": "📝",
+        "since": "1.0.0",
+        "status": "stable",
+        "generateAttribute": false
       }
     },
     {

@@ -2,20 +2,20 @@ import { test, expect } from '../fixtures/offline';
 import { injectAndScan } from '../helpers/inject-and-scan';
 
 /**
- * #1464: span's red/yellow/green/dot variants are window-control dots. Their
+ * #1464: status's red/yellow/green/dot variants (x-span until #1105) are window-control dots. Their
  * look hung off a second class (x-window-dot, site.css, literal colours), so
- * the schema's x-span--<variant> named classes nothing styled, and "dot" got a
+ * the schema's x-status--<variant> named classes nothing styled, and "dot" got a
  * size but no colour at all -- an invisible dot.
  *
  * Each must render as a visible round dot, coloured by its theme token.
  */
-test('span window-dot variants render as visible, coloured dots (#1464)', async ({ page }) => {
+test('status window-dot variants render as visible, coloured dots (#1464)', async ({ page }) => {
   await injectAndScan(page, [
     '<p>',
-    '<span x-span variant="red" id="dotRed"></span>',
-    '<span x-span variant="yellow" id="dotYellow"></span>',
-    '<span x-span variant="green" id="dotGreen"></span>',
-    '<span x-span variant="dot" id="dotPlain"></span>',
+    '<span x-status variant="red" id="dotRed"></span>',
+    '<span x-status variant="yellow" id="dotYellow"></span>',
+    '<span x-status variant="green" id="dotGreen"></span>',
+    '<span x-status variant="dot" id="dotPlain"></span>',
     '</p>',
   ].join(''));
 

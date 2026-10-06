@@ -80,6 +80,31 @@ Never add the behavior an element already gets: no `x-card` on an `<article>`, n
 variant (`<article x-cardimage>`) is an opt-in, not a duplicate. Never use a
 generic `<div>` when a native element means the right thing.
 
+### Naming an x- token after an element
+
+An `x-*` token may carry an HTML element's name only when `nativeMap` maps that
+element to the same behavior. Then the token is how a host that is *not* that
+element asks for it: `<div x-button>`, `<span x-mark>`. A token named after an
+element that nothing maps is a name that says nothing about what the behavior
+does. `x-span` was the one case; it is now `x-status`, and `x-span` stays only as
+an alias in `BEHAVIOR_ALIASES` (#1105). Enforced by
+`tests/compliance/x-tokens-named-after-elements-are-mapped.spec.ts`.
+
+### Inline text elements we do not map
+
+Mapping an element commits us to render it well, so "not mapped" is a decision
+on the record (#1105). Of MDN's 29 inline text elements, `code`, `kbd` and
+`mark` are mapped. The other 26 are not:
+
+| Elements | Decision | Why |
+| --- | --- | --- |
+| `b` `i` `em` `strong` `s` `u` `small` `sub` `sup` | Not mapped | The browser's own rendering plus the theme's base styles is the whole job; there is nothing for script to add. |
+| `abbr` `cite` `dfn` `q` `var` `samp` `data` | Not mapped | Their meaning is in the element and its attributes (`title`, `value`). Use the element; don't re-express it as attributes on something else. |
+| `bdi` `bdo` `br` `wbr` `ruby` `rt` `rp` | Not mapped | Text-layout primitives the browser handles completely. |
+| `time` | Not mapped | Write `<time datetime="…">` instead of inventing `date=` attributes. A behavior that formats it would be new work with its own issue. |
+| `a` | Not mapped | A behavior on every link would run on the whole page. Links opt in with `x-*` enhancements such as `x-tooltip`. |
+| `span` | Not mapped | It has no semantics by definition. It is the neutral inline host for `x-*` behaviors. |
+
 ### Choosing a value or an action: select or x-dropdown
 
 **The test: does the user pick a value that the form submits, or run an

@@ -1027,12 +1027,6 @@
           "modified": "2026-09-27"
         },
         {
-          "file": "behaviors/span.md",
-          "title": "Span",
-          "description": "x-span adds a variant class to a <span>: muted, primary, success and the other status colours style its text, and red, yellow and green turn it into a…",
-          "modified": "2026-09-27"
-        },
-        {
           "file": "behaviors/sparkle.md",
           "title": "Sparkle",
           "description": "x-sparkle bursts count sparkle symbols out from the centre of the element each time it is clicked.",
@@ -1055,6 +1049,12 @@
           "title": "Stat",
           "description": "x-stat shows one figure: a large value over a small label, with an optional colour variant.",
           "modified": "2026-09-27"
+        },
+        {
+          "file": "behaviors/status.md",
+          "title": "Status",
+          "description": "x-status adds a variant class to inline text: primary, success, error and the other status colours style its text, and red, yellow, green and dot turn it into a…",
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/stepper.md",

@@ -25,7 +25,7 @@ function cssFiles(dir: string, out: string[] = []): string[] {
 
 /**
  * Known, filed exceptions -- each names its issue and goes when that closes.
- * (#1464's four span variants were the last; span.css now styles them.)
+ * (#1464's four window-dot variants were the last; status.css now styles them.)
  */
 const FILED: Record<string, string> = {};
 

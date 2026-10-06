@@ -57,6 +57,9 @@ export const BEHAVIOR_ALIASES = Object.freeze({
   // #668: a highlight.js theme picker; its sync event was already
   // x:codetheme:sync and its tests were already named code-theme-*.
   codecontrol: 'codetheme',
+  // #1105: status-coloured text and window dots; "span" named an HTML
+  // element no native element maps to.
+  span: 'status',
 });
 
 /**

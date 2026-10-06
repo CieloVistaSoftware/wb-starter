@@ -1775,8 +1775,8 @@
       "source": "<div x-ratio ratio=\"16:9\">\n  <img src=\"/images/placeholder.svg\" alt=\"Coastline from the air\">\n</div>",
       "alternates": []
     },
-    "x-span": {
-      "source": "<span x-span variant=\"secondary\">Last run 4 minutes ago</span>",
+    "x-status": {
+      "source": "<span x-status variant=\"success\">All checks passed</span>",
       "alternates": []
     },
     "x-repeater": {
