@@ -595,6 +595,11 @@ x-cardhero.x-cardhero--full-height, [x-cardhero].x-cardhero--full-height{
   position: absolute;
   inset: 0;
   pointer-events: none;
+  /* #1595: on an x-cardhero this is the same layer as the sheen, which slides
+     ±30% of its width. The sheen is inset -60% so its edges stay hidden; this
+     nebula is inset 0, so sliding it swept a hard edge across the hero. The
+     nebula stays put. */
+  animation: none;
   background:
     radial-gradient(at 20% 80%, hsla(var(--hue-primary), 80%, 50%, 0.4) 0px, transparent 40%),
     radial-gradient(at 80% 20%, hsla(calc(var(--hue-primary) - 30), 100%, 44%, 0.3) 0px, transparent 40%),
