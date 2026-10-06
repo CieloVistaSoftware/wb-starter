@@ -644,7 +644,7 @@ export async function demo(element, options = {}) {
     // 'article' -> 'card') with no x-* attribute and no <wb-*> tag. The two
     // lookups above match only those, so every such demo got no 📖 at all even
     // though docs/behaviors/card.md exists (cards-permutation-matrix.html: the
-    // four base-card blocks, #262/#388). Only DIRECT grid children count --
+    // four plain-card blocks, #262/#388). Only DIRECT grid children count --
     // they are what the block demonstrates, not incidental markup inside a
     // card -- and only when the child carries no x-* behavior of its own,
     // since `<article x-cardhero>` is documented by the cardhero badge.

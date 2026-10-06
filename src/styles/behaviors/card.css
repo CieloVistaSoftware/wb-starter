@@ -12,7 +12,7 @@
 /* Theme variables belong exclusively in themes.css */
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   BASE CARD - ALL CARDS INHERIT FROM THIS
+   CARD - THE STRUCTURE EVERY CARD VARIANT COMPOSES
    CRITICAL: 1rem padding on left and right is MANDATORY
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -78,7 +78,7 @@ article,
      their own margins. */
   column-gap: 1rem;
   row-gap: 0;
-  /* flex-shrink:0 -- moved here from cardBase's inline STYLE_HEADER (Law 9,
+  /* flex-shrink:0 -- moved here from card()'s inline STYLE_HEADER (Law 9,
      #370). Without it, flexbox's automatic min-height:auto is ignored on a
      flex item whose ancestor sets overflow:hidden (the card does), letting
      the header shrink below its own content's natural height when a sibling
@@ -89,7 +89,7 @@ article,
 }
 
 /* Wraps title/subtitle inside the header, next to an optional badge --
-   moved here from cardBase's inline style (Law 9, #370). */
+   moved here from card()'s inline style (Law 9, #370). */
 /* The badge takes the right-hand column and spans whatever rows the title,
    subtitle and any extra content occupy. Everything else stays in column 1. */article > header > *,
 :is([x-card], [x-cardbutton], [x-carddraggable], [x-cardexpandable], [x-cardfile], [x-cardhero], [x-cardhorizontal], [x-cardimage], [x-cardlink], [x-cardminimizable], [x-cardnotification], [x-cardoverlay], [x-cardportfolio], [x-cardpricing], [x-cardproduct], [x-cardprofile], [x-cardstats], [x-cardtestimonial], [x-cardvideo]) > header > *,
@@ -277,7 +277,7 @@ article:not(:has(.x-card__header)):not(:has(.x-card__main)),
 }
 
 /* cardstats compact/large (#479) -- the fallback rule directly above has
-   specificity 0,3,0 (base class + two :not(:has(.class))); a plain 2-class
+   specificity 0,3,0 (root class + two :not(:has(.class))); a plain 2-class
    compound (.x-stats.x-card--compact, 0,2,0) loses to it regardless of
    source order, which is why "compact"/"large" rendered pixel-identical to
    default despite the class being present. Matching its specificity with a
@@ -476,7 +476,7 @@ article.x-card--full {
    breaks the circularity and still keeps a card inside a 375px phone. */
 
 /* Auto size is the DEFAULT (card.js: size ?? 'auto'), so it belongs on the
-   base class rather than on a modifier that every single card carried.
+   root class rather than on a modifier that every single card carried.
    `.x-card--auto` is kept as an explicit opt-back-in for a card inside a
    context that set a different size. */.x-card,
 article,

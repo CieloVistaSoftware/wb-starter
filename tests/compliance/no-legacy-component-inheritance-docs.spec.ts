@@ -120,4 +120,37 @@ test.describe('docs must not teach legacy component inheritance', () => {
     expect(cardSource).not.toContain('cardBase');
     expect(cardDemo).not.toMatch(/Base Card|id="demo-base"/);
   });
+
+  // #462 (John: "Don't use the name base anywhere in this project we are no
+  // longer OOP"). Shipped source, pages and demos never call something a base
+  // card/component/element/behavior, or a "base class", or cardBase. A line that
+  // says there is NO base class is the correct model and stays allowed. The
+  // schema key `baseClass` is a JSON identifier, not prose, so it is not scanned.
+  test('shipped code and pages use no OOP "base" wording (#462)', () => {
+    const OOP = /\bbase[ -](card|component|element|behavior)s?\b|\bcardBase\b|\bbase class(es)?\b/i;
+    const NEGATED = /\b(no|not|never|without|replaced|don't|nor)\b/i;
+    const EXT = /\.(html|js|css|json|md)$/;
+    const files: string[] = [];
+    const walkAll = (dir: string) => {
+      let ents: fs.Dirent[];
+      try { ents = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+      for (const e of ents) {
+        if (SKIP.has(e.name)) continue;
+        const abs = path.join(dir, e.name);
+        if (e.isDirectory()) walkAll(abs);
+        else if (EXT.test(e.name)) files.push(abs);
+      }
+    };
+    for (const d of ['src', 'pages', 'demos', 'docs/behaviors']) walkAll(path.join(ROOT, d));
+    expect(files.length, 'read the shipped files').toBeGreaterThan(300);
+    const offenders: string[] = [];
+    for (const f of files) {
+      fs.readFileSync(f, 'utf8').split('\n').forEach((line, i) => {
+        if (OOP.test(line) && !NEGATED.test(line)) {
+          offenders.push(`${path.relative(ROOT, f).replace(/\\/g, '/')}:${i + 1}: ${line.trim().slice(0, 100)}`);
+        }
+      });
+    }
+    expect(offenders, `say what it is (card, root class, shared structure), not an OOP base:\n  ${offenders.join('\n  ')}`).toEqual([]);
+  });
 });

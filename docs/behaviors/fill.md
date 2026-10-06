@@ -58,7 +58,7 @@ One class always, plus exactly one layout modifier:
 | `x-fill--grid` | parent is `grid` / `inline-grid` | `justify-self: stretch; grid-column: 1 / -1` |
 | `x-fill--ignore-max` | `ignore-max-width` is set | `max-width: none` |
 
-`margin-inline: 0` is part of the base class on purpose: an element's own
+`margin-inline: 0` is part of the root class on purpose: an element's own
 margins eat into the space it is trying to fill, and a centring `margin: 0 auto`
 is the usual reason a "filled" element still shows a gap.
 
