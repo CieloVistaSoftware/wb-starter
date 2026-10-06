@@ -6,6 +6,28 @@
   ],
   "releases": [
     {
+      "version": "1.0.328",
+      "date": "2026-10-06",
+      "summary": "On the Cards demo page, the Horizontal Card&#39;s code panel narrowed by about 70px a second after it appeared. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1618\" target=\"_blank\" rel=\"noopener\">PR 1618</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1600\" target=\"_blank\" rel=\"noopener\">#1600</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1579\" target=\"_blank\" rel=\"noopener\">#1579</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>A single-item demo commits the width it already painted at</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1579\" target=\"_blank\" rel=\"noopener\">#1579</a>",
+          "issues": [
+            1579
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The schema and doc name the event, API and CSS variables the code has</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1600\" target=\"_blank\" rel=\"noopener\">#1600</a>",
+          "issues": [
+            1600
+          ]
+        }
+      ],
+      "seeIt": "Open demos/site/cards.html and scroll to Horizontal Card in the Card Gallery. Before: the code panel appeared full width and then visibly narrowed. Now: it appears at its final width and stays there."
+    },
+    {
       "version": "1.0.327",
       "date": "2026-10-06",
       "summary": "The installed app&#39;s icon was still the purple lightning bolt, while link previews now show the wb logo. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1615\" target=\"_blank\" rel=\"noopener\">PR 1615</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1614\" target=\"_blank\" rel=\"noopener\">#1614</a>",
