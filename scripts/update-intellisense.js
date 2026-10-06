@@ -1,8 +1,20 @@
 import fs from 'fs';
+import { nativeMap } from '../src/core/tag-map.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
+/** Markup for the native host that auto-injects `behavior`, e.g. <input type="checkbox">. */
+function nativeHostFor(behavior) {
+    const selector = Object.keys(nativeMap).find((sel) => nativeMap[sel] === behavior);
+    if (!selector) return null;
+    const m = selector.match(/^([a-z][a-z0-9-]*)((?:\[[^\]]+\])*)$/i);
+    if (!m) return null;
+    const attrs = [...m[2].matchAll(/\[([\w-]+)(?:=["']?([^"'\]]*)["']?)?\]/g)]
+        .map(([, k, v]) => (v === undefined ? ` ${k}` : ` ${k}="${v}"`)).join('');
+    return `<${m[1]}${attrs}>`;
+}
+
 const __dirname = path.dirname(__filename);
 
 const modelsDir = path.join(__dirname, '../src/wb-models');
@@ -85,8 +97,19 @@ function updateIntellisense() {
             // A missing semanticElement now omits the hint entirely. Silence
             // beats wrong advice -- the author falls back on the HTML they
             // already know, which is the whole point of Law 0.
+            //
+            // #918: a host that auto-injects the behavior (tag-map.js nativeMap)
+            // is shown BARE -- <input type="checkbox">, not <input x-checkbox>.
+            // Adding the attribute to a host that already injects it is the
+            // redundant form that suppressed <button x-button> for three
+            // releases (#746). Otherwise the declared host carries the
+            // attribute, with its input type when it has one.
+            const native = nativeHostFor(behaviorName);
             const semanticTag = schema.semanticElement?.tagName;
-            const usageHint = semanticTag ? `\n\nUsage: [<${semanticTag} ${attrName}>]` : '';
+            const inputType = schema.semanticElement?.type ? ` type="${schema.semanticElement.type}"` : '';
+            const usageHint = native
+                ? `\n\nUsage: [${native}]`
+                : semanticTag ? `\n\nUsage: [<${semanticTag}${inputType} ${attrName}>]` : '';
 
             // --- 2. UPDATE/ADD SCEMANTIC ATTRIBUTE (x-*) ---
             if (!skipAttribute) {

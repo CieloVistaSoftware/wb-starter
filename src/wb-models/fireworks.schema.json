@@ -5,9 +5,6 @@
   "description": "Fireworks particle burst animation effect",
   "schemaFor": "fireworks",
   "baseClass": "x-fireworks",
-  "semanticElement": {
-    "tagName": "div"
-  },
   "compliance": {
     "baseClass": "x-fireworks",
     "supportLevel": "stable",

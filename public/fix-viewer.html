@@ -311,6 +311,20 @@
       background: rgba(0, 0, 0, 0.4);
       color: var(--text-muted);
     }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    #fixviewer-div-status { margin-left: 1rem; display: flex; align-items: center; }
+    .fs-075rem-c-text-muted-mr-05rem { font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem; }
+    #filter-status { padding: 0.15rem 0.5rem; font-size: 0.75rem; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px; }
+    #search-input { min-width: 200px; }
+    #fixviewer-label-14 { font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem; }
+    #fixviewer-label-21 { font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem; }
+    #btn-copy-filtered { background: var(--primary); color: #ffffff; border: none; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; margin-left: auto; transition: opacity 0.2s; }
+    .d-block-mt-5rem-op-75 { display:block; margin-top:.5rem; opacity:.75; }
+  
+    /* Moved from style= attributes in generated markup: no inline styles anywhere (#779). */
+    .fix-count__verified { opacity: 0.6; font-size: 0.8em; margin-left: 0.5rem; }
+    .empty-state.empty-state--error { color: var(--danger); }
   </style>
 </head>
 <body id="fixviewer-body-9">
@@ -318,19 +332,19 @@
     <div class="header-title-group">
       <h1 id="fixviewer-h1-11">Fix Registry Viewer</h1>
       <div id="fix-count" class="badge-container" title="Total number of fixes loaded (and verified count)">0 fixes</div>
-      <div id="fixviewer-div-status" style="margin-left: 1rem; display: flex; align-items: center;">
-        <label for="filter-status" style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem;">Status:</label>
-        <select id="filter-status" title="Filter displayed fixes by status. Selection resets Sort and Group filters." style="padding: 0.15rem 0.5rem; font-size: 0.75rem; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 4px;">
+      <div id="fixviewer-div-status">
+        <label for="filter-status" class="fs-075rem-c-text-muted-mr-05rem">Status:</label>
+        <select id="filter-status" title="Filter displayed fixes by status. Selection resets Sort and Group filters.">
           <option value="all">All</option>
         </select>
       </div>
     </div>
     <div id="fixviewer-div-12" class="controls">
       <div id="fixviewer-div-search">
-        <input type="text" id="search-input" placeholder="Search fixes..." title="Search fixes by ID, Issue, Behavior, or Error Signature." style="min-width: 200px;">
+        <input type="text" id="search-input" placeholder="Search fixes..." title="Search fixes by ID, Issue, Behavior, or Error Signature.">
       </div>
       <div id="fixviewer-div-13">
-        <label id="fixviewer-label-14" for="sort-by" style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem;">Sort by:</label>
+        <label id="fixviewer-label-14" for="sort-by">Sort by:</label>
         <select id="sort-by" title="Change the order of fixes. Selection resets Group and Status filters.">
           <option id="fixviewer-option-15" value="date-desc">Date (Newest)</option>
           <option id="fixviewer-option-16" value="date-asc">Date (Oldest)</option>
@@ -340,7 +354,7 @@
         </select>
       </div>
       <div id="fixviewer-div-20">
-        <label id="fixviewer-label-21" for="group-by" style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.5rem;">Group by:</label>
+        <label id="fixviewer-label-21" for="group-by">Group by:</label>
         <select id="group-by" title="Group fixes by Behavior, Status, or Date. Selection resets Sort and Status filters.">
           <option id="fixviewer-option-22" value="none">None</option>
           <option id="fixviewer-option-23" value="behavior">Behavior</option>
@@ -348,7 +362,7 @@
           <option id="fixviewer-option-25" value="date">Date</option>
         </select>
       </div>
-      <button id="btn-copy-filtered" title="Copy the currently visible set of fixes to the clipboard as JSON." style="background: var(--primary); color: #ffffff; border: none; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; margin-left: auto; transition: opacity 0.2s;">Copy Filtered</button>
+      <button id="btn-copy-filtered" title="Copy the currently visible set of fixes to the clipboard as JSON.">Copy Filtered</button>
     </div>
   </header>
 
@@ -361,7 +375,7 @@
          once, so a slow first load is legible instead of alarming. -->
     <div id="fixviewer-div-26" class="empty-state">
       Tracing every fix back through git history…
-      <small style="display:block; margin-top:.5rem; opacity:.75">
+      <small class="d-block-mt-5rem-op-75">
         The first load after a new commit takes a few seconds; it is cached after that.
       </small>
     </div>
@@ -460,13 +474,13 @@
         };
         fixesData = Object.values(data.fixes).map(normalise);
 
-        document.getElementById('fix-count').innerHTML = `${fixesData.length} fixes <span style="opacity:0.6; font-size: 0.8em; margin-left: 0.5rem">(${fixesData.filter(f => f.testRun).length} verified)</span>`;
+        document.getElementById('fix-count').innerHTML = `${fixesData.length} fixes <span class="fix-count__verified">(${fixesData.filter(f => f.testRun).length} verified)</span>`;
         populateStatusDropdown();
         render();
       } catch (error) {
         console.error('Error loading fixes:', error);
         document.getElementById('content').innerHTML = `
-          <div class="empty-state" style="color: var(--danger)">
+          <div class="empty-state empty-state--error">
             Error loading fixes data.<br>
             <small>${error.message}</small>
           </div>
@@ -634,7 +648,7 @@
       ));
       const c = t.counts || {};
       document.getElementById('fix-count').innerHTML =
-        esc(c.traced) + ' issues traced <span style="opacity:.6;font-size:.8em;margin-left:.5rem">('
+        esc(c.traced) + ' issues traced <span class="fix-count__verified">('
         + esc(c.closed) + ' closed &middot; ' + esc(c.open) + ' open &middot; '
         + esc(c.released) + ' released &middot; ' + esc(c.unreleased) + ' unreleased)</span>';
 
@@ -695,7 +709,7 @@
       filtered = filterByStatus(filtered, statusFilter);
       
       // Update global count based on current filters
-      document.getElementById('fix-count').innerHTML = `${filtered.length} fixes <span style="opacity:0.6; font-size: 0.8em; margin-left: 0.5rem">(${filtered.filter(f => f.testRun).length} verified)</span>`;
+      document.getElementById('fix-count').innerHTML = `${filtered.length} fixes <span class="fix-count__verified">(${filtered.filter(f => f.testRun).length} verified)</span>`;
       
       // If searching, sort by relevance first, then by selected sort type as tie-breaker
       if (searchQuery) {

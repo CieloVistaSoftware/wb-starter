@@ -5,9 +5,6 @@
   "description": "Makes an element as wide as its container allows, using the property that actually governs width in the parent's layout",
   "schemaFor": "fill",
   "baseClass": "x-fill",
-  "semanticElement": {
-    "tagName": "div"
-  },
   "compliance": {
     "baseClass": "x-fill",
     "supportLevel": "stable",

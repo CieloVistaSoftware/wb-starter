@@ -10,10 +10,6 @@
     "accessibility": "presentation"
   },
   "baseClass": "x-stagelight",
-  "semanticElement": {
-    "tagName": "div",
-    "implicitRole": "presentation"
-  },
   "properties": {
     "variant": {
       "type": "string",

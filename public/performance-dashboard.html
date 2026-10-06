@@ -155,6 +155,16 @@
       70% { opacity: 1; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
       100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .c-text-muted { color: var(--text-muted); }
+    .performance-dashboard-block-1 { grid-column: 1 / -1; }
+    .ovx-auto { overflow-x: auto; }
+  
+    /* Moved from style= attributes in generated markup: no inline styles anywhere (#779). */
+    .perf-status { font-weight: bold; }
+    .perf-status--pass { color: var(--success); }
+    .perf-status--fail { color: var(--danger); }
   </style>
   <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
   <script type="module" src="../src/core/central-time.js"></script>
@@ -164,7 +174,7 @@
     <header>
       <div>
         <h1>Performance Dashboard</h1>
-        <p style="color: var(--text-muted)">Real-time metrics from Playwright tests</p>
+        <p class="c-text-muted">Real-time metrics from Playwright tests</p>
       </div>
       <div class="control-cabinet">
         <button id="runBtn" class="run-btn" onclick="runTests()">
@@ -195,9 +205,9 @@
       </div>
 
       <!-- Recent Results Table -->
-      <div class="card" style="grid-column: 1 / -1;">
+      <div class="card performance-dashboard-block-1">
         <h2>Recent Test Runs</h2>
-        <div style="overflow-x: auto;">
+        <div class="ovx-auto">
           <table id="resultsTable">
             <thead>
               <tr>
@@ -311,7 +321,7 @@
       const tbody = document.querySelector('#resultsTable tbody');
       tbody.innerHTML = entries.map(e => {
         const passed = !e.threshold || e.value < e.threshold;
-        const statusColor = passed ? 'var(--success)' : 'var(--danger)';
+        const statusClass = passed ? 'perf-status--pass' : 'perf-status--fail';
         const statusIcon = passed ? '✓ Pass' : '✗ Fail';
         
         return `
@@ -320,7 +330,7 @@
             <td>${e.name}</td>
             <td>${e.value.toFixed(2)} ${e.unit}</td>
             <td>${e.threshold ? '< ' + e.threshold + ' ' + e.unit : '-'}</td>
-            <td style="color: ${statusColor}; font-weight: bold;">${statusIcon}</td>
+            <td class="perf-status ${statusClass}">${statusIcon}</td>
           </tr>
         `;
       }).join('');

@@ -5,9 +5,6 @@
   "description": "Falling snowflake animation effect",
   "schemaFor": "snow",
   "baseClass": "x-snow",
-  "semanticElement": {
-    "tagName": "div"
-  },
   "compliance": {
     "baseClass": "x-snow",
     "supportLevel": "stable",

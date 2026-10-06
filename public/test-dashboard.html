@@ -430,6 +430,16 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--border-focus); }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    #currentFile { display:none; }
+    #commandBar { display:none; }
+    #filterBar { display:none; }
+    #panelResults { display:none; }
+    .results-table th.ta-right { text-align:right; }
+  
+    /* Moved from style= attributes in generated markup: no inline styles anywhere (#779). */
+    .min-w-0 { min-width: 0; }
   </style>
   <!-- #1553: every time shown in US Central; sets window.WBTime. A module runs before DOMContentLoaded, which is when this page starts. -->
   <script type="module" src="../src/core/central-time.js"></script>
@@ -441,7 +451,7 @@
     <div class="header-left">
       <span class="logo">⬡ WB Tests</span>
       <span class="state-badge" id="stateBadge" state="idle">IDLE</span>
-      <span class="current-file" id="currentFile" style="display:none"></span>
+      <span class="current-file" id="currentFile"></span>
     </div>
     <div class="header-right">
       <span class="meta" id="duration"></span>
@@ -484,7 +494,7 @@
   </div>
 
   <!-- COMMAND BAR -->
-  <div class="command-bar" id="commandBar" style="display:none">
+  <div class="command-bar" id="commandBar">
     <span>Command:</span>
     <code id="commandText"></code>
   </div>
@@ -505,7 +515,7 @@
   </div>
 
   <!-- FILTER BAR -->
-  <div class="filter-bar" id="filterBar" style="display:none">
+  <div class="filter-bar" id="filterBar">
     <input type="text" class="filter-input" id="filterInput" placeholder="Filter by file or test name..." oninput="applyFilters()">
     <div class="filter-chips">
       <button class="chip active" filter="all" onclick="toggleStatusFilter('all')">All</button>
@@ -524,7 +534,7 @@
       </div>
       <div class="failures-list" id="failuresList"></div>
     </div>
-    <div id="panelResults" style="display:none">
+    <div id="panelResults">
       <table class="results-table">
         <thead>
           <tr>
@@ -532,7 +542,7 @@
             <th onclick="sortResults('project')">Project <span class="sort-arrow" id="sort-project"></span></th>
             <th onclick="sortResults('file')">File <span class="sort-arrow" id="sort-file"></span></th>
             <th onclick="sortResults('name')">Test Name <span class="sort-arrow" id="sort-name"></span></th>
-            <th onclick="sortResults('duration')" style="text-align:right">Duration <span class="sort-arrow" id="sort-duration"></span></th>
+            <th onclick="sortResults('duration')" class="ta-right">Duration <span class="sort-arrow" id="sort-duration"></span></th>
           </tr>
         </thead>
         <tbody id="resultsBody"></tbody>
@@ -721,7 +731,7 @@
 
       return '<div class="failure-item">' +
         '<div class="failure-icon fail">✗</div>' +
-        '<div style="min-width:0">' +
+        '<div class="min-w-0">' +
           '<div class="failure-file">' + esc(file) + (detail && detail.line ? ':' + detail.line : '') + '</div>' +
           '<div class="failure-name">' + esc(f.name || '') + '</div>' +
           body +

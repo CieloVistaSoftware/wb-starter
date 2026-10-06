@@ -5,9 +5,6 @@
   "description": "Confetti particle animation effect",
   "schemaFor": "confetti",
   "baseClass": "x-confetti",
-  "semanticElement": {
-    "tagName": "div"
-  },
   "compliance": {
     "baseClass": "x-confetti",
     "supportLevel": "stable",

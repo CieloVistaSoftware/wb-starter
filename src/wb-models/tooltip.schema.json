@@ -5,10 +5,6 @@
   "description": "Tooltip for displaying additional information on hover/focus",
   "schemaFor": "tooltip",
   "baseClass": "x-tooltip-trigger",
-  "semanticElement": {
-    "tagName": "div",
-    "implicitRole": "tooltip"
-  },
   "compliance": {
     "baseClass": "x-tooltip-trigger",
     "supportLevel": "stable",
