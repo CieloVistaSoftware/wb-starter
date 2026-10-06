@@ -1,5 +1,6 @@
 import { readAttr } from '../core/read-attr.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
+import { themeColor } from '../core/theme-color.js';
 /**
  * Stage Light Component
  * -----------------------------------------------------------------------------
@@ -24,7 +25,7 @@ function injectStyles() {
     .x-stagelight {
       position: relative;
       pointer-events: none; /* Let clicks pass through generally */
-      --x-stagelight-color: #ffffff;
+      --x-stagelight-color: var(--x-stagelight-light);
       --x-stagelight-size: 300px;
       --x-stagelight-intensity: 0.5;
     }
@@ -74,7 +75,7 @@ function injectStyles() {
       left: calc(50% - 20px);
       width: 40px;
       height: 20px;
-      background: #333;
+      background: var(--x-stagelight-fixture);
       border-radius: 0 0 20px 20px;
       box-shadow: 0 0 10px var(--x-stagelight-color);
       z-index: 1;
@@ -173,7 +174,7 @@ function injectStyles() {
     .x-stagelight__housing {
       width: 60px;
       height: 80px;
-      background: #222;
+      background: var(--x-stagelight-housing);
       border-radius: 10px;
       position: relative;
       display: flex;
@@ -218,7 +219,7 @@ export default function stagelight(element, options = {}) {
 
   const config = {
     variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || 'beam',
-    color: options.color || element.getAttribute('color') || readAttr(element, 'color') || '#ffffff',
+    color: options.color || element.getAttribute('color') || readAttr(element, 'color') || '',
     size: options.size || element.getAttribute('size') || readAttr(element, 'size') || '300px',
     intensity: options.intensity || element.getAttribute('intensity') || readAttr(element, 'intensity') || '0.5',
     speed: options.speed || element.getAttribute('speed') || readAttr(element, 'speed') || '3s',
@@ -275,7 +276,9 @@ export default function stagelight(element, options = {}) {
   // a default pinned onto the element is exactly what stops a theme from
   // supplying its own.
   const vars = {};
-  if (config.color !== '#ffffff') vars['--x-stagelight-color'] = config.color;
+  // #790: a theme name (color="primary") or any CSS colour; none set leaves
+  // the theme's --x-stagelight-light in charge.
+  if (config.color) vars['--x-stagelight-color'] = themeColor(config.color);
   if (config.size !== '300px') vars['--x-stagelight-size'] = config.size;
   if (config.speed !== '3s') vars['--speed'] = config.speed;
   setRule(element, 'vars', vars);

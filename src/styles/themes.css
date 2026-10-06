@@ -90,6 +90,19 @@
   --x-tooltip-light-border: 1px solid hsl(220, 13%, 91%); /* was #e5e7eb */
   --x-tooltip-primary-color: var(--text-on-accent);       /* was #ffffff */
 
+  /* x-stagelight's lamp and x-audio's knobs and volume slider: a fixed look,
+     not a theme role, that sat as literals in the CSS each behavior injects
+     from JS (#790). Same values, now tokens a theme can override. */
+  --x-stagelight-light: hsl(0, 0%, 100%);     /* the beam unless color= is set; was #ffffff */
+  --x-stagelight-fixture: hsl(0, 0%, 20%);    /* was #333 */
+  --x-stagelight-housing: hsl(0, 0%, 13.333%); /* was #222 */
+  --x-audio-knob: linear-gradient(180deg, #f8f8ff 0%, #c8c8e0 30%, #8888b0 60%, #5858a0 100%);
+  --x-audio-knob-flat: linear-gradient(180deg, #f8f8ff 0%, #8888b0 60%, #5858a0 100%);
+  --x-audio-volume-track: linear-gradient(90deg, #1e293b 0%, #334155 100%);
+  --x-audio-volume-thumb: linear-gradient(180deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+  --x-audio-volume-thumb-flat: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+  --x-audio-body-light: linear-gradient(145deg, #e8e8f0 0%, #d8d8e8 50%, #c8c8d8 100%);
+
   /* x-glass (#1236): the colour mixed into an element that carries the scene
      behind it. The theme's text colour, so the tint reads on light and dark
      themes alike; glass.css mixes it at the element so a context (the hero)

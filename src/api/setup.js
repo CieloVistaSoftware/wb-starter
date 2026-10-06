@@ -29,7 +29,7 @@ const SETUP_CSS = `
 .setup-h2-1 { font-size: 3.5rem; margin: 0 0 1.5rem 0; font-weight: 700; line-height: 1.2; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
 .setup-blockquote-1 { font-size: 1.3rem; font-style: italic; color: rgba(255,255,255,0.95); margin: 2rem 0; border-left: 4px solid white; padding-left: 2rem; text-align: left; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
 .setup-div-5 { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
-.setup-a-1 { display: inline-block; padding: 1rem 2rem; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
+.setup-a-1 { display: inline-block; padding: 1rem 2rem; background: white; color: var(--primary); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
 .setup-a-2 { display: inline-block; padding: 1rem 2rem; border: 2px solid white; color: white; background: transparent; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; }
 .setup-div-6 { max-width: 600px; margin: 4rem auto; padding: 3rem 2rem; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); }
 .setup-h2-2 { text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 1.8rem; }
