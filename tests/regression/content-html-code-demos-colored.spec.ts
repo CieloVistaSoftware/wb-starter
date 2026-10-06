@@ -1,6 +1,6 @@
 /**
- * REGRESSION: demos/site/content.html includes a <div x-codecontrol> (same
- * component fixed in #431 -- see codecontrol-theme-cdn-url.spec.ts). This
+ * REGRESSION: demos/site/content.html includes a <div x-codetheme> (same
+ * component fixed in #431 -- see codetheme-theme-cdn-url.spec.ts). This
  * test asserts the actual visible effect on THIS page specifically: every
  * <div x-demo> code panel must render with real, non-default syntax colors,
  * not just that the theme <link> resolves correctly in isolation.
@@ -10,13 +10,13 @@ import { test, expect } from '../fixtures/offline';
 test('every [x-demo] code panel on content.html has real syntax coloring', async ({ page }) => {
   await page.goto('/demos/site/content.html');
   // The lazy runtime (#491) builds an element only once it nears the
-  // viewport. The codecontrol demo sits ~24,000px down the page (further now
+  // viewport. The codetheme demo sits ~24,000px down the page (further now
   // that the table demos render real rows instead of collapsing to nothing),
   // so waiting for its API without scrolling to it waited for nothing.
-  await page.locator('[x-codecontrol]').first().scrollIntoViewIfNeeded();
+  await page.locator('[x-codetheme]').first().scrollIntoViewIfNeeded();
   await page.waitForFunction(() => {
-    const el = document.querySelector('[x-codecontrol]') as any;
-    return !!(el && el.wbCodeControl);
+    const el = document.querySelector('[x-codetheme]') as any;
+    return !!(el && el.wbCodeTheme);
   }, { timeout: 15000 });
 
   const codePanels = page.locator('[x-demo] pre code, [x-demo] code.hljs');

@@ -146,7 +146,7 @@ test('no spec file appears in more than one npm-test project', async () => {
         'pages/all-components.spec.ts',
         'pages/components-page.spec.ts',
         'pages/header.spec.ts',
-        'components/codecontrol.spec.ts',
+        'components/codetheme.spec.ts',
         'components/collapse.spec.ts',
         'components/copy.spec.ts',
         'components/darkmode.spec.ts',

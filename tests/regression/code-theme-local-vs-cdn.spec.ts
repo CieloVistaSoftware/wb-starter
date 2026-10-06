@@ -2,9 +2,9 @@ import { test, expect } from '../fixtures/offline';
 
 /**
  * REGRESSION: semantics/code.js's fallback highlight.js theme loader (used
- * before codecontrol.js takes over, if it's present on the page at all)
+ * before codetheme.js takes over, if it's present on the page at all)
  * built a cdnjs.cloudflare.com URL from WHATEVER theme id was saved in
- * localStorage['x-code-theme'] -- but a handful of codecontrol.js's
+ * localStorage['x-code-theme'] -- but a handful of codetheme.js's
  * CODE_THEMES entries (e.g. "x-grayscale-dark") are WB's own local themes,
  * not real highlight.js CDN theme names. Selecting one of those produced a
  * confirmed-live 404 (x-grayscale-dark.min.css never existed on cdnjs)

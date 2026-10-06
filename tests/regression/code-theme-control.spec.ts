@@ -2,27 +2,27 @@ import { test, expect } from '../fixtures/offline';
 
 /**
  * pages/themes.html previously had no code-theme control at all -- the
- * only existing one, <div x-codecontrol> (src/wb-viewmodels/codecontrol.js,
+ * only existing one, <div x-codetheme> (src/wb-viewmodels/codetheme.js,
  * 48 real highlight.js syntax themes across Dark/Light/Minimal/Special
  * categories, already fully wired into tag-map.js/index.js), was only ever
  * placed on demos/site/content.html, a sandbox page nobody visits in
  * normal navigation -- effectively invisible. Moved the real control onto
  * the Themes page instead of building a new, weaker one.
  *
- * codecontrol swaps highlight.js's actual per-token stylesheet
+ * codetheme swaps highlight.js's actual per-token stylesheet
  * (<link data-highlight-theme>), which is what governs the .hljs-* classes
  * code.js's hljs.highlightElement() call produces on syntax-highlighted
  * <code> blocks -- a real theme switch, not just two flat CSS variables.
  */
-test.describe('[x-codecontrol] on the Themes page swaps real highlight.js syntax themes', () => {
+test.describe('[x-codetheme] on the Themes page swaps real highlight.js syntax themes', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/?page=themes', { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('[x-codecontrol]', { timeout: 20000 });
+    await page.waitForSelector('[x-codetheme]', { timeout: 20000 });
     await page.waitForTimeout(500);
   });
 
   test('the dropdown lists all 49 themes grouped into the 4 documented categories', async ({ page }) => {
-    const select = page.locator('[x-codecontrol] .x-codecontrol__select');
+    const select = page.locator('[x-codetheme] .x-codetheme__select');
     const optgroups = select.locator('optgroup');
     await expect(optgroups).toHaveCount(4);
 
@@ -34,7 +34,7 @@ test.describe('[x-codecontrol] on the Themes page swaps real highlight.js syntax
   });
 
   test('selecting a theme swaps the highlight.js stylesheet and persists it', async ({ page }) => {
-    const select = page.locator('[x-codecontrol] .x-codecontrol__select');
+    const select = page.locator('[x-codetheme] .x-codetheme__select');
     const themeLink = page.locator('link[data-highlight-theme]');
 
     await select.selectOption('github-dark');
@@ -47,7 +47,7 @@ test.describe('[x-codecontrol] on the Themes page swaps real highlight.js syntax
   });
 
   test('selecting Default resets to highlight.js\'s own baseline theme', async ({ page }) => {
-    const select = page.locator('[x-codecontrol] .x-codecontrol__select');
+    const select = page.locator('[x-codetheme] .x-codetheme__select');
     const themeLink = page.locator('link[data-highlight-theme]');
 
     await select.selectOption('monokai');

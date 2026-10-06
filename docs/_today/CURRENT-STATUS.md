@@ -13,6 +13,16 @@
 
 ---
 
+**Updated 2026-10-06.** x-codecontrol renamed to x-codetheme (#668).
+
+**Files touched:** `src/wb-viewmodels/codetheme.js`, `src/wb-models/codetheme.schema.json`, `src/styles/behaviors/codetheme.css`, `docs/behaviors/codetheme.md` (all renamed from codecontrol), `src/core/attribute-aliases.js` (new `BEHAVIOR_ALIASES`), `src/core/tag-map.js`, `src/core/wb-lazy.js`, `src/core/style-loader.js`, `src/wb-viewmodels/index.js`, `src/styles/behavior-css-manifest.js`, `docs/manifest.json`, `docs/behavior-cross-reference.md`, `docs/behaviors-reference.md`, `docs/pce-candidates.md`, demos/pages that used the old name.
+
+**Last action:** the behavior, module, schema, stylesheet and doc are codetheme; the schema says it picks a highlight.js theme (it said "code editor/viewer"). `x-codecontrol` still works: it is declared once, in `BEHAVIOR_ALIASES` (attribute-aliases.js), and wb-lazy.js, the wb.js registry and the CSS loader all read it from there. It is not in tag-map.js, so the inventories and docs list one behavior, not two.
+
+**Next step:** retire the x-codecontrol alias once nothing outside the repo uses it.
+
+---
+
 **Updated 2026-10-05, night.** `<nav>` picks up navbar (#958).
 
 **Files touched:** `src/core/tag-map.js` (`nav: 'navbar'`), `src/core/replacement-guard.js`, `src/wb-viewmodels/navigation.js`, `src/styles/behaviors/navbar.css`, `demos/site/layout.html`, `data/behavior-examples.json`, `docs/behaviors/navbar.md`, `docs/behavior-cross-reference.md`, `docs/semantic-standard.md`, `docs/INTELLISENSE-TOOLTIPS.md`, `docs/audits/HOST-CHILD-DISPATCH-AUDIT.md`.

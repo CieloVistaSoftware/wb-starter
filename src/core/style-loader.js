@@ -22,6 +22,7 @@
  * The compensating call and the classes are gone.
  */
 import { BEHAVIOR_CSS_MAP } from '../styles/behavior-css-manifest.js';
+import { BEHAVIOR_ALIASES } from './attribute-aliases.js';
 import { elementMap, nativeMap, extensionMap } from './tag-map.js';
 import { behaviors } from '../wb-viewmodels/index.js';
 
@@ -177,7 +178,8 @@ if (typeof document !== 'undefined') {
  * @returns {Promise<void>}
  */
 export function ensureBehaviorCss(behaviorName) {
-  const files = BEHAVIOR_CSS_MAP[behaviorName];
+  // A renamed behavior's old name needs the new behavior's CSS (#668).
+  const files = BEHAVIOR_CSS_MAP[behaviorName] || BEHAVIOR_CSS_MAP[BEHAVIOR_ALIASES[behaviorName]];
   if (!files || !files.length) return Promise.resolve();
   return Promise.all(files.map(loadCssFile)).then(() => undefined);
 }

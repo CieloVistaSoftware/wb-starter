@@ -1,14 +1,14 @@
 import { readAttr } from '../core/read-attr.js';
 /**
- * Code Control Behavior
- * Custom Tag: <div x-codecontrol>
+ * Code Theme Behavior
+ * Custom Tag: <div x-codetheme>
  * Dropdown to select from available highlight.js code themes - applies immediately.
  *
  * Usage (plain attributes are canonical per Law 11; data-* accepted for
  * back-compat only):
- *   <div x-codecontrol></div>
- *   <div x-codecontrol size="xs"></div>
- *   <div x-codecontrol show-label="false" size="sm"></div>
+ *   <div x-codetheme></div>
+ *   <div x-codetheme size="xs"></div>
+ *   <div x-codetheme show-label="false" size="sm"></div>
  *
  * #638: every option here used to be read exclusively via element.dataset.*
  * (data-default/data-show-label/data-show-category/data-persist/data-size),
@@ -91,12 +91,12 @@ const SIZES = {
   lg: { fontSize: '1rem', padding: '0.625rem 2.25rem 0.625rem 1rem', minWidth: '160px', arrowSize: '14' }
 };
 
-// Global event for syncing all codecontrol instances
+// Global event for syncing all codetheme instances
 const SYNC_EVENT = 'x:codetheme:sync';
 
-export function codecontrol(element, options = {}) {
+export function codetheme(element, options = {}) {
   // #1022 -- confirmed live on the behaviors code bar: two full dropdowns, each
-  // with its own full option list, inside the SAME <div x-codecontrol>. The function
+  // with its own full option list, inside the SAME <div x-codetheme>. The function
   // ends in an unconditional element.appendChild(wrapper) and had no re-init
   // guard, so a second WB pass over an already-initialised element appended a
   // second control instead of skipping. A second pass is routine, not
@@ -106,8 +106,8 @@ export function codecontrol(element, options = {}) {
   // The identical bug was already found and fixed in themecontrol.js -- see the
   // comment there and element._wbThemeControlInit. This is the same guard; the
   // two files were simply fixed at different times.
-  if (element._wbCodeControlInit) return () => {};
-  element._wbCodeControlInit = true;
+  if (element._wbCodeThemeInit) return () => {};
+  element._wbCodeThemeInit = true;
   const config = {
     default: options.default || element.getAttribute('default') || element.dataset.default || 'atom-one-dark',
     showLabel: options.showLabel ?? (
@@ -130,27 +130,27 @@ export function codecontrol(element, options = {}) {
   };
 
   // #779 / #1021: the size is a class; its font-size, padding, min-width and
-  // arrow live in codecontrol.css. An unknown size falls back to md, as the
+  // arrow live in codetheme.css. An unknown size falls back to md, as the
   // SIZES lookup always did.
   const sizeKey = SIZES[config.size] ? config.size : 'md';
 
-  element.classList.add('x-codecontrol', `x-codecontrol--size-${sizeKey}`);
+  element.classList.add('x-codetheme', `x-codetheme--size-${sizeKey}`);
 
   // Create the control UI
   const wrapper = document.createElement('div');
-  wrapper.className = 'x-codecontrol__wrapper';
+  wrapper.className = 'x-codetheme__wrapper';
 
   // Label
   if (config.showLabel) {
     const label = document.createElement('label');
-    label.className = 'x-codecontrol__label';
+    label.className = 'x-codetheme__label';
     label.textContent = 'Code:';
     wrapper.appendChild(label);
   }
 
   // Dropdown select
   const select = document.createElement('select');
-  select.className = 'x-codecontrol__select';
+  select.className = 'x-codetheme__select';
 
   // Group themes by category
   if (config.showCategory) {
@@ -236,7 +236,7 @@ export function codecontrol(element, options = {}) {
       }
     }));
 
-    // Broadcast sync event to all other codecontrol instances
+    // Broadcast sync event to all other codetheme instances
     if (broadcast) {
       document.dispatchEvent(new CustomEvent(SYNC_EVENT, {
         detail: { theme: themeId, source: element }
@@ -254,7 +254,7 @@ export function codecontrol(element, options = {}) {
 
   select.addEventListener('change', onChange);
 
-  // Listen for sync events from other codecontrol instances
+  // Listen for sync events from other codetheme instances
   const onSync = (e) => {
     if (e.detail.source !== element && e.detail.theme !== currentTheme) {
       applyTheme(e.detail.theme, false); // Don't broadcast back
@@ -264,7 +264,7 @@ export function codecontrol(element, options = {}) {
   document.addEventListener(SYNC_EVENT, onSync);
 
   // Expose methods
-  element.wbCodeControl = {
+  element.wbCodeTheme = {
     getTheme: () => currentTheme,
     setTheme: applyTheme,
     getThemes: () => [...CODE_THEMES],
@@ -274,14 +274,14 @@ export function codecontrol(element, options = {}) {
   // Mark as ready
   // Cleanup
   return () => {
-    element.classList.remove('x-codecontrol', `x-codecontrol--size-${sizeKey}`);
+    element.classList.remove('x-codetheme', `x-codetheme--size-${sizeKey}`);
     select.removeEventListener('change', onChange);
     document.removeEventListener(SYNC_EVENT, onSync);
     wrapper.remove();
-    delete element.wbCodeControl;
+    delete element.wbCodeTheme;
   };
 }
 
 // Export themes list for external use
 export { CODE_THEMES, SIZES };
-export default codecontrol;
+export default codetheme;

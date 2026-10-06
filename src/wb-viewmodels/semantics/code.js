@@ -1,13 +1,13 @@
 import { readFlag, readAttr } from '../../core/read-attr.js';
 import hljs from '../../lib/highlight.js';
 import { pre } from './pre.js';
-import { CODE_THEMES } from '../codecontrol.js';
+import { CODE_THEMES } from '../codetheme.js';
 
-// Inject CSS if not present (codecontrol behavior will override if used)
+// Inject CSS if not present (codetheme behavior will override if used)
 if (!document.querySelector('link[data-highlight-theme]')) {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  // Check localStorage for saved preference from codecontrol
+  // Check localStorage for saved preference from codetheme
   let savedTheme = localStorage.getItem('x-code-theme') || 'atom-one-dark-reasonable';
   // A saved theme id can go stale if it's ever removed from CODE_THEMES
   // (e.g. rose-pine/rose-pine-moon were removed after confirming they

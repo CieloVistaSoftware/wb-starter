@@ -530,7 +530,7 @@ Functional utilities.
 | [`mdhtml`](behaviors/mdhtml.md) | `<div>` | - | Markdown renderer |
 | `builder` | `<div>` | - | Page builder container |
 | [`release`](behaviors/release.md) | any | - | Displays the site's build/release number |
-| [`codecontrol`](behaviors/codecontrol.md) | `<select>` | - | Switches the highlight.js code theme site-wide |
+| [`codetheme`](behaviors/codetheme.md) | `<select>` | - | Switches the highlight.js code theme site-wide |
 
 #### Live Examples
 

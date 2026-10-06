@@ -834,9 +834,9 @@
         "created": "2026-08-20"
       },
       {
-        "path": "docs/behaviors/codecontrol.md",
-        "title": "Code Control - wb-starter v3.0",
-        "name": "codecontrol",
+        "path": "docs/behaviors/codetheme.md",
+        "title": "Code Theme - wb-starter v3.0",
+        "name": "codetheme",
         "category": "behaviors",
         "created": "2026-08-18"
       },
@@ -2476,9 +2476,9 @@
       "created": "2026-08-20"
     },
     {
-      "path": "docs/behaviors/codecontrol.md",
-      "title": "Code Control - wb-starter v3.0",
-      "name": "codecontrol",
+      "path": "docs/behaviors/codetheme.md",
+      "title": "Code Theme - wb-starter v3.0",
+      "name": "codetheme",
       "category": "behaviors",
       "created": "2026-08-18"
     },
