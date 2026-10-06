@@ -448,7 +448,7 @@
           "file": "behaviors/checkbox.md",
           "title": "Checkbox",
           "description": "Checkbox input with label and custom styling",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/chip.md",
@@ -562,7 +562,7 @@
           "file": "behaviors/details.md",
           "title": "Details",
           "description": "A plain <details> gets the styled disclosure: the summary attribute supplies the heading, animated slides the content open and closed, and giving several…",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/dialog.md",
@@ -676,7 +676,7 @@
           "file": "behaviors/footer.md",
           "title": "Footer",
           "description": "A plain <footer> gets a site footer built from its attributes: the brand name, a copyright line, a row of links and optional social icons.",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/form.md",
@@ -1126,7 +1126,7 @@
           "file": "behaviors/time.md",
           "title": "<time> Element",
           "description": "The <time> element represents a specific period in time.",
-          "modified": "2026-09-28"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/timeline.md",
@@ -1276,7 +1276,7 @@
           "file": "guides/search-index.md",
           "title": "Search Index",
           "description": "Documentation for Search Index",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "property-viewer.md",
@@ -1288,7 +1288,7 @@
           "file": "search.md",
           "title": "Search",
           "description": "Search functionality documentation",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         }
       ]
     },
@@ -1336,7 +1336,7 @@
           "file": "MVVM-MIGRATION.md",
           "title": "MVVM MIGRATION",
           "description": "Documentation for MVVM MIGRATION",
-          "modified": "2026-10-04"
+          "modified": "2026-10-06"
         }
       ]
     },
@@ -1444,7 +1444,7 @@
           "file": "pricecard.md",
           "title": "Pricecard",
           "description": "Documentation for Pricecard",
-          "modified": "2026-08-26"
+          "modified": "2026-10-06"
         },
         {
           "file": "schema-first-architecture.md",
@@ -1564,7 +1564,7 @@
           "file": "wbservices.md",
           "title": "WBServices",
           "description": "WBServices pattern documentation",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "WB_BEHAVIOR_SYSTEM.md",

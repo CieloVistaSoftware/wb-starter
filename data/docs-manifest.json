@@ -1565,7 +1565,8 @@
         "path": "docs/behaviors/status.md",
         "title": "Status",
         "name": "status",
-        "category": "behaviors"
+        "category": "behaviors",
+        "created": "2026-10-06"
       },
       {
         "path": "docs/behaviors/stepper.md",
@@ -3206,7 +3207,8 @@
       "path": "docs/behaviors/status.md",
       "title": "Status",
       "name": "status",
-      "category": "behaviors"
+      "category": "behaviors",
+      "created": "2026-10-06"
     },
     {
       "path": "docs/behaviors/stepper.md",

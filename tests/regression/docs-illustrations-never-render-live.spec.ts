@@ -61,7 +61,9 @@ test('the registry decides what is live (#1169)', async () => {
 });
 
 test('a doc whose only live markup is a semantic tag renders it live and boots WB (#1169)', async ({ page }) => {
-  const doc = 'docs/auto-injection.md';
+  // docs/ authors its examples as x-demo blocks now (#307), so this fixture
+  // carries the plain html fences the doc viewer turns into live demos.
+  const doc = 'tests/fixtures/doc-viewer-semantic-fences.md';
   const semanticOnly = fences(doc).find((f) => f.lang === 'html' && /<article\b/.test(f.source) && !/\sx-/.test(f.source));
   expect(semanticOnly, `${doc} has an html fence that is a plain <article>`).toBeTruthy();
 
