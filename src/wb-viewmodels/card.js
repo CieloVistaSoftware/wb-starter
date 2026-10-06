@@ -2407,10 +2407,13 @@ export function cardexpandable(element, options = {}) {
     text.textContent = isExpanded ? 'Show Less' : 'Show More';
     element.classList.toggle('x-card--expanded', isExpanded);
     btn.setAttribute('aria-expanded', isExpanded);
-    element.dispatchEvent(new CustomEvent('wb:cardexpandable:toggle', { 
-      bubbles: true, 
-      detail: { expanded: isExpanded } 
+    element.dispatchEvent(new CustomEvent('wb:cardexpandable:toggle', {
+      bubbles: true,
+      detail: { expanded: isExpanded }
     }));
+    // A collapse that leaves the height unchanged fires no ResizeObserver
+    // callback, so re-measure once the new state has laid out (#1598).
+    requestAnimationFrame(updateNothingToExpand);
   };
 
   btn.onclick = toggle;
@@ -2420,6 +2423,22 @@ export function cardexpandable(element, options = {}) {
 
   btnWrap.appendChild(btn);
   element.appendChild(btnWrap);
+
+  // #1598: a toggle with nothing behind it. When the collapsed content already
+  // fits (short text, or a card wide enough that it wraps to fewer lines than
+  // the clamp), Show More flipped its label and revealed nothing -- every
+  // Behaviors page example did exactly that. Collapsed and fitting, the card
+  // is marked x-card--nothing-to-expand and card.css hides the toggle. A
+  // ResizeObserver re-measures when the width or content changes, so the
+  // toggle comes back once there is something to reveal. Expanded, the button
+  // stays: it is how the card collapses again.
+  const updateNothingToExpand = () => {
+    if (isExpanded) return;
+    element.classList.toggle('x-card--nothing-to-expand', contentWrap.scrollHeight <= contentWrap.clientHeight + 1);
+  };
+  const overflowObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(updateNothingToExpand) : null;
+  overflowObserver?.observe(contentWrap);
+  updateNothingToExpand();
 
   // Footer (extra footer if needed, though we just added one)
   if (base.config.footer) {
@@ -2436,7 +2455,10 @@ export function cardexpandable(element, options = {}) {
     get expanded() { return isExpanded; }
   };
 
-  return base.cleanup;
+  return () => {
+    overflowObserver?.disconnect();
+    if (typeof base.cleanup === 'function') base.cleanup();
+  };
 }
 
 /**

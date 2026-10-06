@@ -225,10 +225,14 @@ test.describe('Behaviors page — key interactions', () => {
     // No test.skip() on count===0 any more. That skip is how this test went
     // silently dead for three days after #666 removed its target — show()
     // failing loudly is the point.
-    const clamp = await tr.evaluate((el) => {
+    // Auto-retrying: the clamp lives in helpers.css, which loads on demand
+    // when x-truncate attaches (behavior-css-manifest.js), so the computed
+    // style can lag the attached element. A single read raced that load and
+    // got the unstyled "visible|clip|none" (#1599's CI). A truncate that
+    // never clamps still fails here, after the timeout.
+    await expect.poll(() => tr.evaluate((el) => {
       const s = getComputedStyle(el);
       return `${s.overflow}|${s.textOverflow}|${(s as any).webkitLineClamp}`;
-    });
-    expect(clamp).toMatch(/hidden|ellipsis|[1-9]/);
+    }), { timeout: 5000 }).toMatch(/hidden|ellipsis|[1-9]/);
   });
 });
