@@ -147,7 +147,6 @@
       "page": "cards",
       "tag": "x-cardminimizable",
       "renders": true,
-      "baseClass": "x-card-minimizable",
       "minInstances": 2,
       "checkText": [
         "Basic",

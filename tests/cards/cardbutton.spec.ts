@@ -19,8 +19,8 @@ test.describe('Card Button (integration)', () => {
     });
     
     const card = page.locator('#test-cardbutton');
-    await expect(card).toHaveClass(/x-card/);
-    await expect(card).toHaveClass(/x-card--button/);
+    // #969: the attribute names the card; no x-card--button class.
+    await expect(card).toHaveAttribute('x-cardbutton', '');
     
     // Check primary button exists
     const primaryBtn = card.locator('.x-card__btn--primary');

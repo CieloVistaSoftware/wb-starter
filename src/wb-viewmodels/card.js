@@ -346,10 +346,17 @@ export function composeCard(element, options = {}) {
   // element can have tag name x-card since 4.0.0), so it always ran -- but it
   // read as a comment-only line, and the next statement anyone added after it
   // would have been silently swallowed into the dangling branch.
-  if (config.behavior !== 'card') {
-    element.classList.add(`x-card--${config.behavior.replace('card', '')}`);
-  }
-  
+  //
+  // #969: no variant class either. `x-card--${behavior}` was stamped here on
+  // every typed card, and each typed function added a second spelling of the
+  // same fact (x-card-expandable, x-stats, x-portfolio, ...). John:
+  // "`x-cardexpandable` -- shouldn't this be enough to get rid of class
+  // assignments?" It is: the attribute that applied the behavior is on the
+  // element, and card.css / notification.css select [x-cardexpandable] etc.
+  // with the same (0,1,0) weight the class had. Classes that say what STATE
+  // a card is in (--expanded, --minimized, --dragging) stay; they are not
+  // written anywhere else.
+
   // Apply hover text as a THEMED WB tooltip (x-tooltip / tooltip.js), not
   // the native browser `title` attribute -- native title tooltips are
   // unstyled, slow to appear, and inconsistent across browsers (#283). A
@@ -400,7 +407,7 @@ export function composeCard(element, options = {}) {
   //
   // flex-direction was already left out for exactly this reason -- the comment
   // that used to sit here explained that setting it inline would block
-  // `.x-product.x-card--horizontal { flex-direction: row }`. That reasoning
+  // `[x-cardproduct][x-cardhorizontal] { flex-direction: row }`. That reasoning
   // applies to every property in the object, not just that one.
   // The single value no stylesheet can know: a background the AUTHOR passed
   // in. #779: a generated stylesheet rule, not the style attribute. Weight 3
@@ -951,7 +958,6 @@ export function cardimage(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardimage' });
-  element.classList.add('x-card-image');
   element.innerHTML = '';
 
   // Caption under the image, inside the same <figure> so it is announced
@@ -1047,7 +1053,6 @@ export function cardvideo(element, options = {}) {
   if (config.description && !config.subtitle) config.subtitle = config.description;
 
   const base = composeCard(element, { ...config, behavior: 'cardvideo' });
-  element.classList.add('x-card-video');
   element.innerHTML = '';
 
   // Build header/main/footer
@@ -1107,7 +1112,6 @@ export function cardbutton(element, options = {}) {
   };
 
   const base = composeCard(element, config);
-  element.classList.add('x-card-button');
   element.innerHTML = '';
   base.buildStructure();
 
@@ -1199,6 +1203,10 @@ export function cardhero(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardhero', hoverable: false });
+  // Kept by #969, unlike the typed cards' own classes: `x-hero` is not a
+  // restatement of [x-cardhero]. It is the HERO behavior's class (hero.js
+  // adds it to <div x-hero>), and the hero rules in site.css, hero.css and
+  // x-signature.css reach a card hero through it.
   element.classList.add('x-hero');
   if (config.variant && config.variant !== 'default') {
     element.classList.add(`x-cardhero--${config.variant}`);
@@ -1457,12 +1465,11 @@ export function cardpricing(element, options = {}) {
 
   const base = composeCard(element, { ...config, behavior: 'cardpricing' });
   // #779: text-align / container-type / padding:0 (and background-size/
-  // position) are the `.x-pricing` rule in card.css, and `featured` is its
+  // position) are the `[x-cardpricing]` rule in card.css, and `featured` is its
   // `.x-pricing--featured` modifier -- every one of these used to be written
   // inline as well. Only the author's background image travels, as a
   // generated rule (weight 3: card.css sets the card surface through
   // compound selectors the inline style always outranked).
-  element.classList.add('x-pricing');
   element.innerHTML = '';
 
   if (config.featured) element.classList.add('x-pricing--featured');
@@ -1471,7 +1478,7 @@ export function cardpricing(element, options = {}) {
     setRule(element, 'pricing-background', { backgroundImage: `url(${config.background})` }, { weight: 3 });
   }
 
-  // Header with Plan Name (centred by .x-pricing, #779)
+  // Header with Plan Name (centred by [x-cardpricing], #779)
   const header = base.createHeader();
   header.innerHTML = ''; // Clear default
 
@@ -1500,7 +1507,7 @@ export function cardpricing(element, options = {}) {
   element.appendChild(main);
 
   // Footer with CTA
-  // Transparent, borderless: `.x-pricing .x-card__footer` in card.css (#779).
+  // Transparent, borderless: `[x-cardpricing] .x-card__footer` in card.css (#779).
   const footer = base.createFooter();
   footer.innerHTML = ''; // Clear default
 
@@ -1538,7 +1545,6 @@ export function cardstats(element, options = {}) {
   // Defensive init: catch unexpected runtime errors to avoid killing the page
   try {
     const base = composeCard(element, { ...config, behavior: 'cardstats', hoverable: false });
-    element.classList.add('x-stats');
     element.innerHTML = '';
     // Accent color: an author-supplied, per-instance value, so it travels as a
     // custom property (same convention as --card-image-aspect); what it
@@ -1549,7 +1555,7 @@ export function cardstats(element, options = {}) {
       setRule(element, 'accent', { '--x-stats-accent': config.color });
     }
     // Layout, container-query sizing, and default padding all live in
-    // card.css's `.x-stats` rule now (Law 9, #370 -- was unconditional
+    // card.css's `[x-cardstats]` rule now (Law 9, #370 -- was unconditional
     // inline styles here, which also silently beat x-card--compact/large's
     // own CSS regardless of specificity; x-card__header/__main below get
     // real classes so those variant rules can actually win).
@@ -1557,11 +1563,11 @@ export function cardstats(element, options = {}) {
   // Semantic: Icon belongs in header
   if (config.icon) {
     const header = document.createElement('header');
-    // x-card__header is required even though .x-stats .x-card__header
+    // x-card__header is required even though [x-cardstats] .x-card__header
     // (card.css) overrides its padding/border/background back to zero:
     // card.css's fallback rule `.x-card:not(:has(.x-card__header)):not(
     // :has(.x-card__main)) { padding: 1rem }` outranks (0,3,0 vs 0,2,0
-    // specificity) `.x-stats.x-card--compact/--large`'s own padding when
+    // specificity) `[x-cardstats].x-card--compact/--large`'s own padding when
     // neither class is present, silently forcing 1rem on every variant
     // (confirmed live).
     // card.css targets the tag, not a class.
@@ -1634,9 +1640,8 @@ export function cardtestimonial(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
-  element.classList.add('x-testimonial');
   element.innerHTML = '';
-  // #779: the 1rem padding is `.x-card--testimonial` in card.css, and every
+  // #779: the 1rem padding is `[x-cardtestimonial]` in card.css, and every
   // part below is styled by its class there -- the cssText copies are gone.
 
   // Quote icon -- decorative only (#941).
@@ -1699,7 +1704,6 @@ export function cardproduct(element, options = {}) {
   }
 
   const base = composeCard(element, { ...config, behavior: 'cardproduct' });
-  element.classList.add('x-product');
   element.innerHTML = '';
 
   // Product image
@@ -1727,7 +1731,7 @@ export function cardproduct(element, options = {}) {
   const info = document.createElement('div');
   // #779: every part below is styled by its class in card.css (product-info,
   // product-title/-desc/-rating, price-wrap/-current/-original under
-  // .x-product); the cssText copies are gone.
+  // [x-cardproduct]); the cssText copies are gone.
   info.className = 'x-card__product-info';
 
   appendTitleAndSubtitle(info, base.config, 'h3', 'x-card__title x-card__product-title', 'div', 'x-card__subtitle x-card__product-desc');
@@ -1752,11 +1756,11 @@ export function cardproduct(element, options = {}) {
   ctaBtn.className = 'x-card__product-cta';
   // #561: same regression as the cardpricing() CTA above -- #520 removed
   // this inline style.cssText (padding:0.75rem/12px, below the §13 1rem/16px
-  // minimum, and redundant with card.css's already-compliant `.x-product
+  // minimum, and redundant with card.css's already-compliant `[x-cardproduct]
   // .x-card__product-cta` rule at padding:1rem), and commit 0005dbb0
   // (same day, unrelated fix) re-added it verbatim. No inline style needed:
-  // element.classList.add('x-product') below already puts this button
-  // inside `.x-product`, so the CSS rule applies on its own.
+  // the button sits inside the [x-cardproduct] host, so the CSS rule applies
+  // on its own.
   ctaBtn.textContent = config.cta;
 
   const addToCart = () => {
@@ -1818,9 +1822,10 @@ export function cardnotification(element, options = {}) {
   const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
   const iconText = customIcon || defaultIcons[variant] || 'i';
 
-  // Variant class: both paths below need it.
+  // Variant class: both paths below need it. Only the modifier: the base
+  // `x-notification` restated [x-cardnotification], which notification.css
+  // and card.css select directly (#969).
   const applyVariantClass = () => {
-    element.classList.add('x-notification');
     if (variant !== 'default') {
       element.classList.add(`x-notification--${variant}`);
     }
@@ -1971,9 +1976,8 @@ export function cardfile(element, options = {}) {
   const icons = { pdf: '📄', doc: '📝', image: '🖼️', video: '🎬', audio: '🎵', zip: '📦', file: '📁' };
 
   const base = composeCard(element, { ...config, behavior: 'cardfile', hoverable: false });
-  element.classList.add('x-card-file');
   element.innerHTML = '';
-  // #779: the row layout is `.x-card--file`, and each part below is styled by
+  // #779: the row layout is `[x-cardfile]`, and each part below is styled by
   // its class in card.css (file-icon, filename, file-meta, file-download) --
   // the cssText copies are gone. #773: the inline copies had also outranked
   // card.css, which is why variant="compact" could never be styled.
@@ -2074,10 +2078,6 @@ export function cardlink(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardlink' });
-  // Redundant when the host tag IS <div> (#478) -- card.css matches
-  // the tag directly there via :is(.x-card-link, x-card-link).
-  element.classList.add('x-card-link');
-  
   element.innerHTML = '';
   // #779: the host (cursor/position/1.25rem padding) and every part below
   // are the "Link card parts" rules in card.css, which #370 moved there from
@@ -2176,10 +2176,9 @@ export function cardhorizontal(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardhorizontal' });
-  element.classList.add('x-card-horizontal');
   element.innerHTML = '';
   // The Law 9 migration (#370) moved every one of these declarations into
-  // card.css -- `.x-card-horizontal(--reverse)`, `.x-card__horizontal-figure`,
+  // card.css -- `[x-cardhorizontal]`, `.x-card-horizontal--reverse`, `.x-card__horizontal-figure`,
   // `.x-card__horizontal-image`, `.x-card__horizontal-content` -- but left the
   // inline writes here AND never emitted the classes those rules select. The
   // stylesheet was dead and the card unthemeable: an inline declaration beats
@@ -2262,13 +2261,11 @@ export function cardoverlay(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardoverlay', hoverable: false });
-  element.classList.add('x-card-overlay');
-  element.classList.add('x-card--overlay-card');
   element.classList.add(`x-card--overlay-${config.position}`);
   element.innerHTML = '';
   
   // #779: the card's box (position, cover sizing, the default gradient, the
-  // row direction and the per-position alignment) is `.x-card--overlay-card`
+  // row direction and the per-position alignment) is `[x-cardoverlay]`
   // and its `--overlay-top/-center` modifiers in card.css, which #370 wrote
   // for exactly these declarations -- the inline copies that kept beating
   // them are gone. What varies per card travels as generated rules: the
@@ -2344,7 +2341,6 @@ export function cardexpandable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardexpandable' });
-  element.classList.add('x-card-expandable');
   element.innerHTML = '';
 
   // Build header
@@ -2391,7 +2387,7 @@ export function cardexpandable(element, options = {}) {
 
   const btn = document.createElement('button');
   btn.className = 'x-card__expand-btn';
-  // (styling: .x-card-expandable .x-card__expand-btn in card.css -- #943)
+  // (styling: [x-cardexpandable] .x-card__expand-btn in card.css -- #943)
   btn.setAttribute('aria-expanded', config.expanded);
   btn.setAttribute('aria-controls', contentId);
   
@@ -2489,8 +2485,6 @@ export function cardminimizable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardminimizable' });
-  element.classList.add('x-card-minimizable');
-  element.classList.add('x-card--minimizable'); // Explicitly add for compliance
   element.innerHTML = '';
 
   // Header with minimize button. card.css targets the tag, not a class; the
@@ -2586,7 +2580,6 @@ export function carddraggable(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'carddraggable', hoverable: false });
-  element.classList.add('x-card-draggable');
   
   element.innerHTML = '';
   // Only set position if not already positioned (absolute/fixed) -- a class
@@ -2595,7 +2588,6 @@ export function carddraggable(element, options = {}) {
   if (computed.position === 'static') {
     element.classList.add('x-card--draggable-positioned');
   }
-  element.classList.add('x-card--draggable');
 
   // Header with drag handle. Its look, the grip icon and the title are the
   // `.x-card__drag-handle*` / `.x-card__drag-title` rules card.css has had
@@ -2837,7 +2829,6 @@ export function cardportfolio(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardportfolio', hoverable: false });
-  element.classList.add('x-portfolio');
   if (config.variant !== 'default') {
     element.classList.add(`x-portfolio--${config.variant}`);
   }
@@ -2848,7 +2839,7 @@ export function cardportfolio(element, options = {}) {
   // inline declaration outranks every stylesheet rule -- so size="sm"/"lg"/...
   // (composeCard's `.x-card--{size}` classes) could never change the width of
   // a default-variant card. The defaults now live in card.css's
-  // `.x-portfolio` / `.x-portfolio--full` rules, which the size classes beat.
+  // `[x-cardportfolio]` / `.x-portfolio--full` rules, which the size classes beat.
 
   // Availability. The colour of each status is a THEME value (card.css maps
   // `x-portfolio__availability--{status}` onto --success-color etc.), not a
@@ -2896,7 +2887,7 @@ export function cardportfolio(element, options = {}) {
   // No inline styles. The header also picks up the generic card header rule
   // (`article > header`: grid, tinted background, border-bottom) and, via
   // tag-map.js, the page navbar's `.x-header` (flex, 60px height). card.css's
-  // `.x-portfolio > .x-portfolio__header` (0,2,0) outranks both, so the
+  // `[x-cardportfolio] > .x-portfolio__header` (0,2,0) outranks both, so the
   // resets that used to be forced inline here live there -- where the
   // compact/horizontal/full/size rules can still override them.
 

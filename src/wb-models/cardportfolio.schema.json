@@ -366,7 +366,6 @@
       "page": "cards",
       "tag": "x-cardportfolio",
       "renders": true,
-      "baseClass": "x-portfolio",
       "minInstances": 4,
       "checkText": [
         "UX Designer",

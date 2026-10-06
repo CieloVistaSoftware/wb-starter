@@ -170,7 +170,6 @@
       "page": "cards",
       "tag": "x-cardexpandable",
       "renders": true,
-      "baseClass": "x-card-expandable",
       "minInstances": 3,
       "checkText": [
         "Basic",

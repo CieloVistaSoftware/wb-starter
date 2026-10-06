@@ -499,7 +499,7 @@ test.describe('Interactive Cards', () => {
       `);
       
       const card = page.locator('[x-cardminimizable]');
-      await expect(card).toHaveClass(/x-card--minimizable/);
+      await expect(card).toHaveAttribute('x-cardminimizable', ''); // #969: no class restates it
       
       const minBtn = card.locator('.x-card__minimize-btn, button');
       await expect(minBtn).toBeVisible();
@@ -525,7 +525,7 @@ test.describe('Interactive Cards', () => {
       `);
       
       const card = page.locator('[x-carddraggable]');
-      await expect(card).toHaveClass(/x-card--draggable/);
+      await expect(card).toHaveAttribute('x-carddraggable', ''); // #969: no class restates it
       
       const handle = card.locator('.x-card__drag-handle, header');
       await expect(handle).toBeVisible();

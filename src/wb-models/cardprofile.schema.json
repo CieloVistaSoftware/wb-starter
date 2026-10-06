@@ -133,10 +133,7 @@
     }
   },
   "compliance": {
-    "baseClass": "x-card",
-    "additionalClasses": [
-      "x-card--profile"
-    ]
+    "baseClass": "x-card"
   },
   "accessibility": {
     "avatar": {
@@ -217,7 +214,6 @@
       "page": "cards",
       "tag": "x-cardprofile",
       "renders": true,
-      "baseClass": "x-card",
       "minInstances": 9,
       "checkText": [
         "John Doe",

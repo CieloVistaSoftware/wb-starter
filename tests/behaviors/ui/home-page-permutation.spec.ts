@@ -136,10 +136,12 @@ test.describe('Home Page — Schema Permutation Tests', () => {
     }
   });
 
-  test('Stats: has x-stats class after hydration', async ({ page }) => {
+  // #969: the x-stats class only restated [x-cardstats] and is no longer
+  // injected; x-hydrated is what cardstats sets once it has built.
+  test('Stats: marked hydrated after hydration', async ({ page }) => {
     const stats = page.locator('[x-cardstats]');
     for (let i = 0; i < 4; i++) {
-      await expect(stats.nth(i)).toHaveClass(/x-stats/);
+      await expect(stats.nth(i)).toHaveAttribute('x-hydrated', '1');
     }
   });
 

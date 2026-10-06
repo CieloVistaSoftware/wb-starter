@@ -326,7 +326,6 @@
       "page": "cards",
       "tag": "x-cardpricing",
       "renders": true,
-      "baseClass": "x-pricing",
       "minInstances": 6,
       "checkText": [],
       "checkClasses": [

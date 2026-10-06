@@ -65,7 +65,7 @@ test.describe('cosmic hero nebula does not slide (#1595)', () => {
   test('the home page hero does not move', async ({ page }) => {
     await page.goto('/');
     const hero = page.locator('[x-cardhero]').first();
-    await expect(hero).toHaveClass(/x-card--hero/, { timeout: 20000 });
+    await expect(hero).toHaveClass(/\bx-hero\b/, { timeout: 20000 }); // #969: no x-card--hero
 
     const first = await readLayer(page, '[x-cardhero]');
     // Without x-hero--cosmic the layer is the oversized sheen, which is meant

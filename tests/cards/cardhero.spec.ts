@@ -18,8 +18,9 @@ test.describe('Card Hero (integration)', () => {
     });
     
     const card = page.locator('#test-hero');
-    await expect(card).toHaveClass(/x-card/);
-    await expect(card).toHaveClass(/x-card--hero/);
+    // #969: no x-card--hero class; x-hero (the hero behavior's class) stays.
+    await expect(card).toHaveAttribute('x-cardhero', '');
+    await expect(card).toHaveClass(/\bx-hero\b/);
     
     // Check title exists
     const title = card.locator('.x-card__hero-title');

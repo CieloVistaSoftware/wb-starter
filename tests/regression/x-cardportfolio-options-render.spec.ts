@@ -70,7 +70,7 @@ test.describe('x-cardportfolio option rows on the behaviors page', () => {
           const b = n.getBoundingClientRect();
           return { x: b.x, y: b.y, w: b.width, h: b.height, right: b.right, bottom: b.bottom };
         };
-        const el = root.querySelector('.x-portfolio') as HTMLElement | null;
+        const el = root.querySelector('[x-cardportfolio]') as HTMLElement | null;
         if (!el) return { found: false } as Shot;
         const q = (s: string) => el.querySelector(s);
         const dot = q('.x-portfolio__availability');

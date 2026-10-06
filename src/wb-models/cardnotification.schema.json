@@ -243,7 +243,6 @@
       "page": "cards",
       "tag": "x-cardnotification",
       "renders": true,
-      "baseClass": "x-notification",
       "minInstances": 5,
       "checkText": [
         "Info message",

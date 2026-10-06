@@ -241,7 +241,6 @@
       "page": "cards",
       "tag": "x-cardoverlay",
       "renders": true,
-      "baseClass": "x-card-overlay",
       "minInstances": 6,
       "checkText": [
         "Title",

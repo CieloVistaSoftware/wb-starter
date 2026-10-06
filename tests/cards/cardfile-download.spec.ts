@@ -22,7 +22,8 @@ async function inject(page: Page, html: string) {
     document.body.appendChild(container);
     await (window as any).WB.scan(container);
   }, html);
-  await page.locator('#test-container [x-cardfile].x-card-file').first().waitFor({ state: 'attached', timeout: 10000 });
+  // Built = the empty host has children. (#969: no x-card-file class to wait for.)
+  await page.locator('#test-container [x-cardfile] > *').first().waitFor({ state: 'attached', timeout: 10000 });
 }
 
 test.describe('[x-cardfile] download', () => {

@@ -211,7 +211,6 @@
       "page": "cards",
       "tag": "x-cardfile",
       "renders": true,
-      "baseClass": "x-card-file",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [

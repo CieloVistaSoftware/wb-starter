@@ -28,7 +28,7 @@ test.describe('Playground: 20 signature heroes example set', () => {
     const first = page.locator('#pg-preview .pg-signature-hero [x-cardhero]').first();
     await first.scrollIntoViewIfNeeded();
     await expect(first).toHaveAttribute('x-ready', '', { timeout: 20000 });
-    await expect(first).toHaveClass(/\bx-card--hero\b/);
+    await expect(first).toHaveClass(/\bx-hero\b/); // #969: no x-card--hero; x-hero stays
 
     // 120 heroes, half of them signature pairs -- at least the 20 this set
     // was named for, each hero with its own companion trigger.

@@ -109,7 +109,8 @@ test.describe('eager runtime (wb.js)', () => {
     await inject(page, '<div id="rendered-hero" x-cardhero></div>');
 
     const hero = page.locator('#rendered-hero');
-    await expect(hero).toHaveClass(/x-card--hero/);
+    // x-hero, not x-card--hero: #969 stopped injecting the variant class.
+    await expect(hero).toHaveClass(/\bx-hero\b/);
     await expect(hero.locator('.x-card__hero-title')).toHaveText(expected.title);
   });
 

@@ -223,7 +223,6 @@
       "page": "cards",
       "tag": "x-cardhorizontal",
       "renders": true,
-      "baseClass": "x-card-horizontal",
       "minInstances": 4,
       "checkText": [
         "Title",

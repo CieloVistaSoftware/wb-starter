@@ -209,7 +209,6 @@
       "page": "cards",
       "tag": "x-cardbutton",
       "renders": true,
-      "baseClass": "x-card-button",
       "minInstances": 3,
       "checkText": [
         "Card"

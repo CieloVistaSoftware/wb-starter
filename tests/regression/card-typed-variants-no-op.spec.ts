@@ -51,7 +51,8 @@ async function inject(page: Page, html: string) {
   // real defect, which is how this cluster stayed opaque.
   //
   // Wait for evidence of upgrade instead: a card behavior builds child
-  // structure (header/main/figure), and most also add their own x-* class.
+  // structure (header/main/figure). (#969 removed the typed cards' own x-*
+  // classes as well, so the children are the signal that still holds.)
   await page.waitForFunction(
     (elementIds: string[]) => elementIds.every((id) => {
       const el = document.getElementById(id);

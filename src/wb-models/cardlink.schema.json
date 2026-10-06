@@ -260,7 +260,6 @@
       "page": "cards",
       "tag": "x-cardlink",
       "renders": true,
-      "baseClass": "x-card-link",
       "minInstances": 6,
       "checkText": [
         "Link Title",

@@ -529,7 +529,7 @@ test.describe('Cards Showcase Page', () => {
         // reflow cannot strand it. Same mirror-image fix as #1304, which made
         // a click wait for readiness instead of assuming it.
         await buildInView(page.locator(`[x-cardnotification][variant="${variant}"]`));
-        const card = page.locator(`.x-notification[x-cardnotification][variant="${variant}"]`);
+        const card = page.locator(`[x-cardnotification][variant="${variant}"]`);
         await expect(card, `variant="${variant}" should be demonstrated`).not.toHaveCount(0);
         await expect(card.first()).toBeVisible();
       }
@@ -616,7 +616,7 @@ test.describe('Cards Showcase Page', () => {
 
       await buildInView(authored);
 
-      const card = page.locator('.x-notification[x-cardnotification][variant="info"]');
+      const card = page.locator('[x-cardnotification][variant="info"]');
       await expect(card, 'the stranded card must still end up built').not.toHaveCount(0);
 
       // GUARD INTEGRITY: prove the strand really happened and really put the
@@ -634,7 +634,7 @@ test.describe('Cards Showcase Page', () => {
     });
 
     test('notification card has role alert', async ({ page }) => {
-      const notification = page.locator('.x-notification[x-cardnotification]').first();
+      const notification = page.locator('[x-cardnotification]').first();
       await expect(notification).toBeVisible();
       await expect(notification).toHaveAttribute('role', 'alert');
     });
@@ -643,7 +643,7 @@ test.describe('Cards Showcase Page', () => {
       // cardnotification is dismissible by default (card.js:1735), and the
       // rendered class is .x-notification__dismiss -- the spec's old
       // .x-card__notification-dismiss exists nowhere in src/.
-      const notification = page.locator('.x-notification[x-cardnotification]').first();
+      const notification = page.locator('[x-cardnotification]').first();
       const closeBtn = notification.locator('.x-notification__dismiss');
       await expect(closeBtn).toBeVisible();
     });

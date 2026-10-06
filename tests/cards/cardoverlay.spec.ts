@@ -18,8 +18,8 @@ test.describe('Card Overlay (integration)', () => {
     });
     
     const card = page.locator('#test-overlay');
-    await expect(card).toHaveClass(/x-card/);
-    await expect(card).toHaveClass(/x-card--overlay-card/);
+    // #969: the attribute names the card; no x-card--overlay-card class.
+    await expect(card).toHaveAttribute('x-cardoverlay', '');
     
     // Should have overlay content with title
     const overlayContent = card.locator('.x-card__overlay-content');

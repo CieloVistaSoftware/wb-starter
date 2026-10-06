@@ -194,7 +194,6 @@
       "page": "cards",
       "tag": "x-carddraggable",
       "renders": true,
-      "baseClass": "x-card-draggable",
       "minInstances": 3,
       "checkText": [
         "Basic",
