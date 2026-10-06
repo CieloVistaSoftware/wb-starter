@@ -526,7 +526,7 @@ All custom events the behavior dispatches:
         },
         {
           "name": "primary button as link has href",
-          "setup": "<div x-cardbutton primary=\"Go\" primary-href=\"/test\"></div>",
+          "setup": "<div x-cardbutton primary=\"Go\" primaryHref=\"/test\"></div>",
           "selector": ".x-card__btn--primary",
           "expect": {
             "tagName": "A",

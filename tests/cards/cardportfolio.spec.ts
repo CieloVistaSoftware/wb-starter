@@ -32,7 +32,8 @@ test.describe('Portfolio Card - Business Card (integration)', () => {
     // in card.js, so every field below read as missing while it rendered.
     const card = page.locator('#test-portfolio');
     await expect(card).toHaveAttribute('x-ready', '');
-    await expect(card).toHaveClass(/\bx-portfolio\b/);
+    // #969: the attribute names the card; no x-card--portfolio / x-portfolio class.
+    await expect(card).toHaveAttribute('x-cardportfolio', '');
     
     // Name
     const name = card.locator('.x-portfolio__name');

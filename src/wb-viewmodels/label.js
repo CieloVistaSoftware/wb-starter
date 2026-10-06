@@ -1,3 +1,4 @@
+import { authoredAttr } from '../core/read-attr.js';
 // Standalone label behavior extracted from enhancements.js
 //
 // `x-label="text"` goes directly on the form control (input, select,
@@ -12,7 +13,7 @@ export function label(element, options = {}) {
   const config = {
     required: options.required ?? element.hasAttribute('required'),
     optional: options.optional ?? element.hasAttribute('optional'),
-    position: options.position || element.getAttribute('label-position') || 'left',
+    position: options.position || authoredAttr(element, 'label-position') || 'left',
     ...options
   };
 

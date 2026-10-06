@@ -17,7 +17,7 @@
 | `disabled` | `boolean` | `false` | Disabled state |
 | `name` | `string` | — | Form field name |
 | `value` | `string` | — | Form field value when checked |
-| `label-position` | `start` · `end` | `end` |  |
+| `labelPosition` | `start` · `end` | `end` |  |
 | `size` | `sm` · `md` · `lg` | `md` |  |
 | `variant` | `default` · `primary` · `success` | `default` |  |
 

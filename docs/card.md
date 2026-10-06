@@ -62,7 +62,7 @@ The card behavior is designed to work seamlessly with semantic HTML.
 - **Alternative Tag:** `<section>` (represents a generic section)
 - **Fallback Tag:** `<div>` (generic container)
 
-When using `<article>` or `<section>`, the behavior will automatically enhance existing `<header>`, `<main>`, and `<footer>` children instead of overwriting them, preserving your semantic structure.
+When using `<article>` or `<section>`, the behavior will automatically enhance existing `<header>` and `<footer>` children instead of overwriting them, preserving your semantic structure. Body content needs no wrapper: it becomes the card body, `<div class="x-card__body">`. An authored `<main>` is turned into that same element, because `<main>` is invalid inside an `<article>` or `<section>` (#945).
 
 ---
 

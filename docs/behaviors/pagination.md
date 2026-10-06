@@ -1,20 +1,20 @@
 # Pagination
 
-`x-pagination` builds Previous/Next and numbered page links inside a `<nav>` from `total` and `per-page` (or an explicit `pages`), marks `current` as active, and fires `wb:pagination:change` when another page is chosen.
+`x-pagination` builds Previous/Next and numbered page links inside a `<nav>` from `total` and `perPage` (or an explicit `pages`), marks `current` as active, and fires `wb:pagination:change` when another page is chosen.
 
 ## Usage
 
 <div x-demo>
-<nav x-pagination total="100" per-page="10" current="5"></nav>
+<nav x-pagination total="100" perPage="10" current="5"></nav>
 </div>
 
 ## Attributes
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `total` | `string` | `0` | Total number of items. With `per-page` this derives the page count. |
-| `per-page` | `string` | `10` | Items per page. Defaults to `10`. |
-| `pages` | `string` | `0` | Explicit page count. Overrides the count derived from `total`/`per-page`. |
+| `total` | `string` | `0` | Total number of items. With `perPage` this derives the page count. |
+| `perPage` | `string` | `10` | Items per page. Defaults to `10`. |
+| `pages` | `string` | `0` | Explicit page count. Overrides the count derived from `total`/`perPage`. |
 | `current` | `string` | `1` | Active page, counting from **1**. Defaults to `1`. |
 
 ## Rendered markup

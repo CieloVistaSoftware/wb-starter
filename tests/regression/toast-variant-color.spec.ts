@@ -39,7 +39,7 @@ test.describe('Toast variant coloring (Behaviors page)', () => {
       await row.scrollIntoViewIfNeeded();
       await row.click();
 
-      const trigger = page.locator(`#behaviors-live [x-toast][toast-variant="${variant}"]`).first();
+      const trigger = page.locator(`#behaviors-live [x-toast][toastVariant="${variant}"]`).first();
       await trigger.scrollIntoViewIfNeeded();
       await expect(trigger).toHaveAttribute('x-ready', '', { timeout: 10000 });
       // Picking the row raised its own site-wide click confirmation (#456);

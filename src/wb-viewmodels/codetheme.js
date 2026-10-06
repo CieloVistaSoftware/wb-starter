@@ -1,4 +1,4 @@
-import { readAttr } from '../core/read-attr.js';
+import { readAttr, hasAuthoredAttr, authoredAttr } from '../core/read-attr.js';
 /**
  * Code Theme Behavior
  * Custom Tag: <div x-codetheme>
@@ -111,13 +111,13 @@ export function codetheme(element, options = {}) {
   const config = {
     default: options.default || element.getAttribute('default') || element.dataset.default || 'atom-one-dark',
     showLabel: options.showLabel ?? (
-      element.hasAttribute('show-label')
-        ? element.getAttribute('show-label') !== 'false'
+      hasAuthoredAttr(element, 'show-label')
+        ? authoredAttr(element, 'show-label') !== 'false'
         : element.dataset.showLabel !== 'false'
     ),
     showCategory: options.showCategory ?? (
-      element.hasAttribute('show-category')
-        ? element.getAttribute('show-category') !== 'false'
+      hasAuthoredAttr(element, 'show-category')
+        ? authoredAttr(element, 'show-category') !== 'false'
         : element.dataset.showCategory !== 'false'
     ),
     persist: options.persist ?? (

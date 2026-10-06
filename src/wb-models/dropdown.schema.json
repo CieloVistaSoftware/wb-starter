@@ -157,8 +157,8 @@
       "<div x-dropdown position=\"top-start\">position=top-start</div>",
       "<div x-dropdown trigger=\"click\">trigger=click</div>",
       "<div x-dropdown trigger=\"hover\">trigger=hover</div>",
-      "<div x-dropdown close-on-select>with closeOnSelect</div>",
-      "<div x-dropdown close-on-outside>with closeOnOutside</div>"
+      "<div x-dropdown closeOnSelect>with closeOnSelect</div>",
+      "<div x-dropdown closeOnOutside>with closeOnOutside</div>"
     ],
     "matrix": {
       "combinations": [

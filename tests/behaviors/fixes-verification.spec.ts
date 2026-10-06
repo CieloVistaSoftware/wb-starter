@@ -210,10 +210,9 @@ test.describe('Fix Verification Tests', () => {
     // (wb.js), not data-x-error.
     await expect(card).not.toHaveAttribute('x-error', 'true');
 
-    // 027: built. #969: a typed card is its x-cardproduct attribute -- no
-    // x-card--product / x-card-product class is injected to restate it.
-    await expect(card).toHaveAttribute('x-ready', '');
-    await expect(card).toHaveClass(/\bx-product\b/);
+    // 027: the card built. #969: a typed card carries its attribute and no
+    // class restating it, so the proof is the part it builds, not a class.
+    await expect(card.locator('.x-card__product-cta')).toHaveCount(1);
 
     // 024: Product event
     const eventFired = await page.evaluate(async () => {

@@ -1,6 +1,6 @@
 # Pre
 
-A plain `<pre>` gets a code block: syntax highlighting for `language`, line numbers, an optional copy button (`show-copy`), wrapping or horizontal scrolling, and a `max-height` after which it scrolls.
+A plain `<pre>` gets a code block: syntax highlighting for `language`, line numbers, an optional copy button (`showCopy`), wrapping or horizontal scrolling, and a `maxHeight` after which it scrolls.
 
 ## Usage
 
@@ -20,12 +20,12 @@ No attribute needed on `<pre>`. Don't add `x-pre` to it (#746).
 | --- | --- | --- | --- |
 | `language` | `string` | — | Language for syntax highlighting (e.g. `html`, `js`, `css`). Falls back to a `language` on the inner `<code>`, then to none — an unset language renders plain, uncoloured text. |
 | `scrollable` | `string` | — | When `"true"`, the block scrolls horizontally instead of wrapping. Long lines keep their shape rather than reflowing. |
-| `show-line-numbers` | `string` | — | Line numbers in a gutter beside the code. On unless set to `"false"`. |
-| `max-height` | `string` | — | A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page. |
+| `showLineNumbers` | `string` | — | Line numbers in a gutter beside the code. On unless set to `"false"`. |
+| `maxHeight` | `string` | — | A CSS length capping the rendered height (e.g. `20rem`). Past it the block scrolls vertically instead of growing the page. |
 | `wrap` | `boolean` | `false` | Wrap long lines instead of overflowing. Off unless set; `wrap="false"` is honoured as off. |
 | `size` | `string` | — | Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`. |
-| `show-copy` | `boolean` | `false` | Show a copy-to-clipboard button in the corner of the block. |
-| `data-show-copy` | `boolean` | `false` | The `data-` spelling of `show-copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `show-copy`. |
+| `showCopy` | `boolean` | `false` | Show a copy-to-clipboard button in the corner of the block. |
+| `data-show-copy` | `boolean` | `false` | The `data-` spelling of `showCopy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `showCopy`. |
 | `data-copy` | `boolean` | `false` | The `data-` spelling of `copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `copy`. |
 | `data-wrap` | `boolean` | `false` | The `data-` spelling of `wrap`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `wrap`. |
 

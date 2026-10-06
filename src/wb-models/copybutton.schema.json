@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "copybutton.schema.json",
   "title": "Copybutton",
-  "description": "x-copybutton makes the element copy the text of another element when clicked: the one matched by copy-target (or the selector given as the attribute value), or its own text when there is none.",
+  "description": "x-copybutton makes the element copy the text of another element when clicked: the one matched by copyTarget (or the selector given as the attribute value), or its own text when there is none.",
   "schemaFor": "copybutton",
   "properties": {
     "x-copybutton": {
@@ -20,17 +20,17 @@
       "description": "Corner the button is placed in, e.g. `top-right` (default).",
       "default": "top-right"
     },
-    "copy-feedback": {
+    "copyFeedback": {
       "type": "string",
       "description": "Message shown after a successful copy. Defaults to `Copied!`.",
       "default": "Copied ✓"
     },
-    "copy-duration": {
+    "copyDuration": {
       "type": "string",
       "description": "How long the feedback stays visible, in milliseconds. Defaults to `2000`.",
       "default": "2000"
     },
-    "copy-target": {
+    "copyTarget": {
       "type": "string",
       "description": "CSS selector for the element whose text is copied. Same as passing the selector to `x-copybutton` directly; `target` is read first.",
       "default": "this is the copy target"
@@ -47,8 +47,8 @@
       "<div x-copybutton>Test Content</div>",
       "<div x-copybutton label=\"Copy\">Test Content</div>",
       "<div x-copybutton position=\"top-right\">Test Content</div>",
-      "<div x-copybutton copy-feedback=\"Copied ✓\">Test Content</div>",
-      "<div x-copybutton copy-duration=\"2000\">Test Content</div>"
+      "<div x-copybutton copyFeedback=\"Copied ✓\">Test Content</div>",
+      "<div x-copybutton copyDuration=\"2000\">Test Content</div>"
     ]
   },
   "events": {

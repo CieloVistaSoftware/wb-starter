@@ -1,6 +1,6 @@
 # Audio
 
-A bare `<audio>` gets a styled player with a track display, a play button and, when `show-eq` is set, a 15-band graphic equaliser with bass and treble controls. Write the native element with `src` and `controls`; the behavior adds the rest around it.
+A bare `<audio>` gets a styled player with a track display, a play button and, when `showEq` is set, a 15-band graphic equaliser with bass and treble controls. Write the native element with `src` and `controls`; the behavior adds the rest around it.
 
 ## Usage
 
@@ -21,9 +21,9 @@ No attribute needed on `<audio>`. Don't add `x-audio` to it (#746).
 | `loop` | `boolean` | `false` | Loop playback |
 | `autoplay` | `boolean` | `false` | Auto-play (requires muted) |
 | `muted` | `boolean` | `false` | Start muted |
-| `show-eq` | `boolean` | `false` | Show 15-band equalizer |
-| `show-display` | `boolean` | `true` | Show Marantz-style URL/track display with scrolling text |
-| `show-play-button` | `boolean` | `true` | Show a visible custom play/pause button |
+| `showEq` | `boolean` | `false` | Show 15-band equalizer |
+| `showDisplay` | `boolean` | `true` | Show Marantz-style URL/track display with scrolling text |
+| `showPlayButton` | `boolean` | `true` | Show a visible custom play/pause button |
 | `bass` | `number` | `0` | Bass boost (-12 to 12 dB) |
 | `treble` | `number` | `0` | Treble boost (-12 to 12 dB) |
 

@@ -313,7 +313,6 @@
       "page": "cards",
       "tag": "x-cardimage",
       "renders": true,
-      "baseClass": "x-card-image",
       "minInstances": 8,
       "checkText": [
         "Title",

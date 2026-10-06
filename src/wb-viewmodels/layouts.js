@@ -1,4 +1,4 @@
-import { readFlag, readAttr, readOption } from '../core/read-attr.js';
+import { readFlag, readAttr, readOption, hasAuthoredAttr, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
 import { themeColor } from '../core/theme-color.js';
 /**
@@ -47,7 +47,7 @@ export function grid(element, options = {}) {
     justify: options.justify || element.getAttribute('justify') || '',
     center: options.center ?? element.hasAttribute('center'),
     background: options.background || element.getAttribute('background') || '',
-    altRows: options.altRows ?? element.hasAttribute('alt-rows'),
+    altRows: options.altRows ?? hasAuthoredAttr(element, 'alt-rows'),
     headers: options.headers || element.getAttribute('headers') || '',
     ...options
   };
@@ -327,8 +327,8 @@ export function center(element, options = {}) {
 export function sidebarlayout(element, options = {}) {
   const config = {
     side: options.side || element.dataset.side || element.getAttribute('side') || 'left',
-    sideWidth: options.sideWidth || element.dataset.sideWidth || element.getAttribute('side-width') || '300px',
-    contentMin: options.contentMin || element.dataset.contentMin || element.getAttribute('content-min') || '50%',
+    sideWidth: options.sideWidth || element.dataset.sideWidth || authoredAttr(element, 'side-width') || '300px',
+    contentMin: options.contentMin || element.dataset.contentMin || authoredAttr(element, 'content-min') || '50%',
     gap: readOption(element, options, 'gap') || '1rem',
     ...options
   };
@@ -510,7 +510,7 @@ export function scrollable(element, options = {}) {
  */
 export function cover(element, options = {}) {
   const config = {
-    minHeight: options.minHeight || element.dataset.minHeight || element.getAttribute('min-height') || '100vh',
+    minHeight: options.minHeight || element.dataset.minHeight || authoredAttr(element, 'min-height') || '100vh',
     padding: options.padding || element.dataset.padding || element.getAttribute('padding') || '1rem',
     ...options
   };
@@ -573,7 +573,7 @@ export function frame(element, options = {}) {
  */
 export function reel(element, options = {}) {
   const config = {
-    itemWidth: options.itemWidth || element.dataset.itemWidth || element.getAttribute('item-width') || 'auto',
+    itemWidth: options.itemWidth || element.dataset.itemWidth || authoredAttr(element, 'item-width') || 'auto',
     gap: readOption(element, options, 'gap') || '1rem',
     ...options
   };
@@ -660,11 +660,11 @@ export function drawerLayout(element, options = {}) {
     width: readOption(element, options, 'width') || '250px',
     height: readOption(element, options, 'height') || '250px',
     minWidth: readOption(element, options, 'minWidth') || '1.5rem',
-    minHeight: options.minHeight || element.dataset.minHeight || element.getAttribute('min-height') || '1.5rem',
+    minHeight: options.minHeight || element.dataset.minHeight || authoredAttr(element, 'min-height') || '1.5rem',
     maxWidth: readOption(element, options, 'maxWidth') || '50vw',
     maxHeight: readOption(element, options, 'maxHeight') || '50vh',
     resizable: options.resizable ?? (element.dataset.resizable === 'true' || element.getAttribute('resizable') === 'true'),
-    saveState: options.saveState ?? (element.dataset.saveState === 'true' || element.getAttribute('save-state') === 'true'),
+    saveState: options.saveState ?? (element.dataset.saveState === 'true' || authoredAttr(element, 'save-state') === 'true'),
     // Declared in drawerLayout.schema.json ("Initial collapsed state") and
     // read by nothing: every-declared-attribute.spec.ts only ever passed it
     // because the old inline style attribute serialised in a different
@@ -673,8 +673,8 @@ export function drawerLayout(element, options = {}) {
     // (#779) that accident went too, and the attribute was plainly inert.
     collapsed: options.collapsed ?? readFlag(element, 'collapsed'),
     id: options.id || element.id || 'drawer',
-    toggleSelector: options.toggleSelector || element.dataset.toggleSelector || element.getAttribute('toggle-selector'),
-    handleSelector: options.handleSelector || element.dataset.handleSelector || element.getAttribute('handle-selector'),
+    toggleSelector: options.toggleSelector || element.dataset.toggleSelector || authoredAttr(element, 'toggle-selector'),
+    handleSelector: options.handleSelector || element.dataset.handleSelector || authoredAttr(element, 'handle-selector'),
     ...options
   };
 

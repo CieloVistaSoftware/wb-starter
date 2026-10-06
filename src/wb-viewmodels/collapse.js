@@ -1,4 +1,4 @@
-import { readFlag } from '../core/read-attr.js';
+import { readFlag, readAttr, hasAuthoredAttr, authoredAttr } from '../core/read-attr.js';
 /**
  * Collapse Behavior
  * -----------------------------------------------------------------------------
@@ -114,11 +114,11 @@ export function collapse(element, options = {}) {
  * Custom Tag:
  *   Single:  <div x-accordion title="Question">answer content…</div>
  *   Multi:   <div x-accordion>
- *              <div accordion-title="Q1">answer 1…</div>
- *              <div accordion-title="Q2">answer 2…</div>
+ *              <div accordionTitle="Q1">answer 1…</div>
+ *              <div accordionTitle="Q2">answer 2…</div>
  *            </div>
- * When children carry [accordion-title] (v3 canonical; [data-accordion-title]/
- * [data-title] accepted for back-compat) each child becomes an independently
+ * When children carry accordionTitle (canonical, #1125; accordion-title,
+ * data-accordion-title and data-title accepted) each child becomes an independently
  * expandable item. A <div x-accordion> with no titled children builds a single
  * item from its own title attribute. Any OTHER element with neither falls
  * back to the single-item collapse() behavior.
@@ -197,9 +197,9 @@ export function accordion(element, options = {}) {
       return () => element.classList.remove('x-accordion');
     }
 
-    // v3: plain `accordion-title` is canonical; data-* accepted for back-compat.
+    // accordionTitle is canonical (#1125); accordion-title and data-* are read too.
     const sections = Array.from(element.children).filter(
-      child => child.hasAttribute('accordion-title') ||
+      child => hasAuthoredAttr(child, 'accordion-title') ||
         readFlag(child, 'accordion-title') || readFlag(child, 'title')
     );
 
@@ -208,7 +208,7 @@ export function accordion(element, options = {}) {
       const items = sections.map((sec, i) =>
         buildAccordionItem(
           element,
-          sec.getAttribute('accordion-title') || sec.getAttribute('data-accordion-title') ||
+          authoredAttr(sec, 'accordion-title') || sec.getAttribute('data-accordion-title') ||
             sec.getAttribute('data-title') || 'Accordion Item',
           sec.innerHTML,
           sec.hasAttribute('open') || (i === 0 && element.hasAttribute('open'))
@@ -287,14 +287,15 @@ export function accordion(element, options = {}) {
     }
 
     // The host itself carries the panel title — single form without the
-    // custom tag: <div x-accordion accordion-title="Q">answer</div>.
+    // custom tag: <div x-accordion accordionTitle="Q">answer</div>.
     // Same spellings (and precedence) the child form accepts above; before
     // this, a titled host silently fell through to a plain collapse and the
     // title was dropped.
-    const ownTitleAttr = ['accordion-title', 'data-accordion-title', 'data-title']
-      .find((n) => element.hasAttribute(n));
-    if (ownTitleAttr) {
-      const hostTitle = element.getAttribute(ownTitleAttr) || 'Accordion Item';
+    // #1125: hasAuthoredAttr/readAttr, not a list of literal names, so the
+    // canonical accordionTitle (stored `accordiontitle`) is found as well as
+    // accordion-title and data-accordion-title.
+    if (hasAuthoredAttr(element, 'accordionTitle') || element.hasAttribute('data-title')) {
+      const hostTitle = readAttr(element, 'accordionTitle') || element.getAttribute('data-title') || 'Accordion Item';
       const hostContent = element.innerHTML;
       element.innerHTML = '';
       element.classList.add('x-accordion');

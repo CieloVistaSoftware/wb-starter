@@ -48,7 +48,8 @@ test.describe('#1087: home page readiness does not wait on third-party media', (
     const elapsed = Date.now() - started;
 
     await expect(page.locator('.x-hero')).toHaveCount(1);
-    await expect(page.locator('.x-stats')).toHaveCount(4);
+    // Built stats cards: #969 dropped the x-stats class, x-hydrated marks a built one.
+    await expect(page.locator('[x-cardstats][x-hydrated]')).toHaveCount(4);
     await expect(page.locator('.x-audio-host > audio')).toHaveCount(1);
     expect(elapsed, 'settling must not wait out the stalled media').toBeLessThan(15000);
   });

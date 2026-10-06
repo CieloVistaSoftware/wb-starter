@@ -85,7 +85,7 @@
   "test": {
     "setup": [
       "<div x-confetti>Basic confetti content</div>",
-      "<div x-confetti show-button>with showButton</div>",
+      "<div x-confetti showButton>with showButton</div>",
       "<div x-confetti count=\"50\">count=50</div>",
       "<div x-confetti label=\"Fire Confetti!\">label=\"Fire Confetti!\"</div>",
       "<div x-confetti delay=\"0s\">delay=\"0s\"</div>",

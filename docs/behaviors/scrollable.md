@@ -18,15 +18,15 @@ content scrolls internally instead of growing the page.
 | Property | Attribute | Type | Default | Description |
 |----------|-----------|------|---------|-------------|
 | `direction` | `direction` | string | `"both"` | Which axis scrolls: `vertical`, `horizontal`, or `both` |
-| `maxHeight` | `max-height` | string | `""` (none) | Caps height and sets `overflow-y: auto` when `direction` is `vertical` or `both` |
-| `maxWidth` | `max-width` | string | `""` (none) | Caps width and sets `overflow-x: auto` when `direction` is `horizontal` or `both` |
+| `maxHeight` | `maxHeight` | string | `""` (none) | Caps height and sets `overflow-y: auto` when `direction` is `vertical` or `both` |
+| `maxWidth` | `maxWidth` | string | `""` (none) | Caps width and sets `overflow-x: auto` when `direction` is `horizontal` or `both` |
 
 ## Usage
 
 ### Vertical scroll with a height cap
 
 <div x-demo>
-<div x-scrollable direction="vertical" max-height="120px">
+<div x-scrollable direction="vertical" maxHeight="120px">
   <p>Line one of a long block of content.</p>
   <p>Line two.</p>
   <p>Line three.</p>
@@ -38,7 +38,7 @@ content scrolls internally instead of growing the page.
 ### Horizontal scroll with a width cap
 
 <div x-demo>
-<div x-scrollable direction="horizontal" max-width="250px">
+<div x-scrollable direction="horizontal" maxWidth="250px">
   <div style="display:flex; gap:1rem;">
     <span>Panel 1</span>
     <span>Panel 2</span>
@@ -51,7 +51,7 @@ content scrolls internally instead of growing the page.
 ### Both axes (default)
 
 <div x-demo>
-<div x-scrollable max-height="120px" max-width="250px">
+<div x-scrollable maxHeight="120px" maxWidth="250px">
   <div style="width:400px;">
     <p>This content is wider and taller than the caps in both directions, so it scrolls both ways.</p>
   </div>

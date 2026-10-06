@@ -65,7 +65,8 @@
     },
     {
       "name": "content",
-      "tag": "main",
+      "tag": "div",
+      "class": "x-card__body",
       "public": true,
       "required": true,
       "description": "Content container"
@@ -243,7 +244,6 @@
       "page": "cards",
       "tag": "x-cardnotification",
       "renders": true,
-      "baseClass": "x-notification",
       "minInstances": 5,
       "checkText": [
         "Info message",

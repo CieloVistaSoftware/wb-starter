@@ -1,4 +1,4 @@
-import { readAttr, readNumber } from '../core/read-attr.js';
+import { readAttr, readNumber, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 /**
  * Sticky Behavior
@@ -10,7 +10,7 @@ import { setRule, clearRules } from '../core/dynamic-style.js';
  * 
  * Usage:
  *   <nav x-sticky>...</nav>
- *   <header x-sticky offset="60" z-index="1000">...</header>
+ *   <header x-sticky offset="60" zIndex="1000">...</header>
  *
  * Options (plain attributes are canonical per Law 11; data-* accepted for
  * back-compat only):
@@ -51,7 +51,7 @@ export function sticky(element, options = {}) {
     // `stuck-class` first: sticky.schema.json declares stuckClass, which the
     // docs render as stuck-class -- the one spelling not read here (#861).
     // `class-name` and dataset.class stay as back-compat.
-    stuckClass: options.class ?? element.getAttribute('stuck-class') ?? element.getAttribute('class-name') ?? element.dataset.class ?? 'is-stuck',
+    stuckClass: options.class ?? authoredAttr(element, 'stuck-class') ?? authoredAttr(element, 'class-name') ?? element.dataset.class ?? 'is-stuck',
     // #669: the schema, docs and demo all say `animated`; this read only
     // `animate`, and nothing used the result, so animated="false" did nothing.
     // `animated` is the name now, `animate` stays as back-compat, and false

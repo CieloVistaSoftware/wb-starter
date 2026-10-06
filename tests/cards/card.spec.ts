@@ -43,7 +43,7 @@ async function injectCard(page: Page, html: string) {
     if (!el) return false;
     // A decorated card has structure or a computed border; an untouched one has
     // neither. Either is proof the behavior has run.
-    return el.querySelector('main, header, footer') !== null
+    return el.querySelector('.x-card__body, header, footer') !== null
       || getComputedStyle(el).borderStyle === 'solid';
   }, { timeout: 10000 });
 }
@@ -90,10 +90,11 @@ test.describe('Card Behavior (integration)', () => {
     await expect(card(page).locator('footer')).toContainText('Footer text');
   });
 
-  test('wraps content in main', async ({ page }) => {
+  // #945: the body is <div class="x-card__body">; a <main> inside a card is invalid.
+  test('wraps content in the card body', async ({ page }) => {
     await injectCard(page, '<article>Inner content</article>');
-    await expect(card(page).locator('main')).toBeVisible();
-    await expect(card(page).locator('main')).toContainText('Inner content');
+    await expect(card(page).locator('.x-card__body')).toBeVisible();
+    await expect(card(page).locator('.x-card__body')).toContainText('Inner content');
   });
 
   test('elevated is left to CSS, not stamped as a class or an inline style', async ({ page }) => {

@@ -69,7 +69,8 @@
     },
     {
       "name": "content",
-      "tag": "main",
+      "tag": "div",
+      "class": "x-card__body",
       "public": true,
       "required": true,
       "content": "<slot>{{content}}</slot>",
@@ -145,7 +146,7 @@
       "<div x-cardexpandable expanded>with expanded</div>",
       "<div x-cardexpandable title=\"Sample title\">title=\"Sample title\"</div>",
       "<div x-cardexpandable content=\"Sample content\">content=\"Sample content\"</div>",
-      "<div x-cardexpandable max-height=\"100px\">maxHeight=\"100px\"</div>",
+      "<div x-cardexpandable maxHeight=\"100px\">maxHeight=\"100px\"</div>",
       "<div x-cardexpandable title=\"Details\">Content here</div>"
     ],
     "matrix": {
@@ -170,7 +171,6 @@
       "page": "cards",
       "tag": "x-cardexpandable",
       "renders": true,
-      "baseClass": "x-card-expandable",
       "minInstances": 3,
       "checkText": [
         "Basic",

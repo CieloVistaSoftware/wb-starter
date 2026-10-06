@@ -56,13 +56,13 @@ export const EXAMPLES = {
   title="Zero build. Real components."
   subtitle="Light DOM, no shadow boundaries, no class hierarchy."
   cta="Read the guide"
-  cta-href="#"
+  ctaHref="#"
   height="320px"></section>`,
 
   'x-cardhorizontal': `<article x-cardhorizontal
   image="${img('trail', 320, 240)}"
-  image-alt="Pine trail at dawn"
-  image-position="start"
+  imageAlt="Pine trail at dawn"
+  imagePosition="start"
   title="Ridge loop, 8km"
   subtitle="Moderate · 3h"></article>`,
 
@@ -113,7 +113,7 @@ export const EXAMPLES = {
   title="Field headphones"
   description="Closed-back, 32Ω, folds flat."
   price="$149"
-  original-price="$189"></article>`,
+  originalPrice="$189"></article>`,
 
   'x-cardprofile': `<article x-cardprofile
   name="Grace Hopper"
@@ -121,7 +121,7 @@ export const EXAMPLES = {
   avatar="${img('grace', 96, 96)}"
   bio="Wrote the first compiler, then spent a career arguing that people should not have to write machine code."></article>`,
 
-  'x-cardstats': `<article x-cardstats value="1,284" label="Builds this month" trend="up" trend-value="12%"></article>`,
+  'x-cardstats': `<article x-cardstats value="1,284" label="Builds this month" trend="up" trendValue="12%"></article>`,
 
   'x-cardtestimonial': `<article x-cardtestimonial
   quote="We deleted the build step and shipped faster the same week."
@@ -151,11 +151,11 @@ export const EXAMPLES = {
 
   'x-skeleton': `<div x-skeleton variant="text" lines="3" animated></div>`,
 
-  'x-progress': `<progress value="72" max="100" label="Uploading footage" show-value></progress>`,
+  'x-progress': `<progress value="72" max="100" label="Uploading footage" showValue></progress>`,
 
   'x-rating': `<div x-rating value="4" max="5" half></div>`,
 
-  'x-tabs': `<div x-tabs active-tab="0" variant="underline">
+  'x-tabs': `<div x-tabs activeTab="0" variant="underline">
   <section title="Overview">Composition over inheritance, in light DOM.</section>
   <section title="Attributes">Every attribute is kebab-case (§31).</section>
   <section title="Events">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>
@@ -165,7 +165,7 @@ export const EXAMPLES = {
 
   'x-footer': `<footer x-footer brand="Cielo Vista Software" copyright="2026" links="Privacy,Terms,Status"></footer>`,
 
-  'x-navbar': `<nav x-navbar brand="wb-starter" brand-href="#" tagline="Zero build"></nav>`,
+  'x-navbar': `<nav x-navbar brand="wb-starter" brandHref="#" tagline="Zero build"></nav>`,
 
   'x-hero': `<div x-hero variant="centered">
   <h1>Ship the markup, not the toolchain</h1>
@@ -185,7 +185,7 @@ export const EXAMPLES = {
 </div>`,
 
   // ── Forms ──────────────────────────────────────────────────────────────────
-  'x-input': `<div x-input label="Repository" placeholder="owner/name" name="repo" input-type="text"></div>`,
+  'x-input': `<div x-input label="Repository" placeholder="owner/name" name="repo" inputType="text"></div>`,
 
   'x-textarea': `<div x-textarea label="Release notes" placeholder="What changed?" name="notes" rows="4"></div>`,
 
@@ -233,7 +233,7 @@ export const EXAMPLES = {
 
   'x-file': `<input x-file type="file" accept="image/*">`,
 
-  'x-label': `<label x-label required label-position="top">Deploy key</label>`,
+  'x-label': `<label x-label required labelPosition="top">Deploy key</label>`,
 
   'x-autocomplete': `<input x-autocomplete items="main,develop,release/3.0,fix/706-dropdown,docs/behaviors" placeholder="Find a branch…">`,
 
@@ -299,7 +299,7 @@ export const EXAMPLES = {
   <img src="${img('g3', 240, 240)}" alt="">
 </div>`,
 
-  'x-vimeo': `<div x-vimeo video-id="76979871"></div>`,
+  'x-vimeo': `<div x-vimeo videoId="76979871"></div>`,
 
   // ── Text & code ────────────────────────────────────────────────────────────
   'x-pre': `<pre x-pre>npm run test:compliance
@@ -318,7 +318,7 @@ export const EXAMPLES = {
   // root-absolute path 404s (assets-resolve-under-a-subpath, error-log-empty).
   'x-mdhtml': `<div x-mdhtml src="docs/behaviors/dropdown.md"></div>`,
 
-  'x-notes': `<aside x-notes position="end" default-width="280px">
+  'x-notes': `<aside x-notes position="end" defaultWidth="280px">
   <p>Notes stay pinned beside the content while you scroll.</p>
 </aside>`,
 
@@ -349,7 +349,7 @@ export const EXAMPLES = {
 </div>`,
 
   // ── Utilities & effects ────────────────────────────────────────────────────
-  'x-copybutton': `<button x-copybutton copy-target="#x-ex-copy-source">Copy command</button>
+  'x-copybutton': `<button x-copybutton copyTarget="#x-ex-copy-source">Copy command</button>
 <code id="x-ex-copy-source">npm run test:compliance</code>`,
 
   'x-clock': `<span x-clock format="HH:mm:ss"></span>`,
@@ -367,7 +367,7 @@ export const EXAMPLES = {
 
   'x-confirm': `<button x-confirm message="Delete this branch? This cannot be undone.">Delete branch</button>`,
 
-  'x-prompt': `<button x-prompt message="Name the new branch" default-value="fix/">New branch…</button>`,
+  'x-prompt': `<button x-prompt message="Name the new branch" defaultValue="fix/">New branch…</button>`,
 
   'x-notify': `<button x-notify message="Deploy finished — staging is live." variant="success">Notify me</button>`,
 
@@ -392,7 +392,7 @@ export const EXAMPLES = {
 
   'x-draggable': `<div x-draggable axis="both">Drag me anywhere in the stage.</div>`,
 
-  'x-drawer-layout': `<aside x-drawer-layout position="start" width="220px" min-width="64px">
+  'x-drawer-layout': `<aside x-drawer-layout position="start" width="220px" minWidth="64px">
   <nav><a href="#">Overview</a><a href="#">Runs</a><a href="#">Settings</a></nav>
 </aside>`,
 
@@ -414,7 +414,7 @@ export const EXAMPLES = {
   The spotlight follows the pointer across this panel.
 </div>`,
 
-  'x-sticky': `<div x-sticky offset="0" stuck-class="is-stuck">
+  'x-sticky': `<div x-sticky offset="0" stuckClass="is-stuck">
   Sticks to the top of its scroll container once you pass it.
 </div>`,
 

@@ -35,15 +35,15 @@ cannot know from its own markup what kind of parent it is in.
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `ignore-max-width` | boolean | `false` | Also clear an inherited `max-width`. |
+| `ignoreMaxWidth` | boolean | `false` | Also clear an inherited `max-width`. |
 
 `max-width` is respected by default. A cap from a variant class or a design
 token is usually somebody's deliberate decision, and "as wide as possible" still
-means "as wide as you are *allowed* to be". Use `ignore-max-width` when the cap
+means "as wide as you are *allowed* to be". Use `ignoreMaxWidth` when the cap
 is the thing in your way.
 
 ```html
-<article x-fill ignore-max-width>Edge to edge, cap and all</article>
+<article x-fill ignoreMaxWidth>Edge to edge, cap and all</article>
 ```
 
 ## What it sets
@@ -56,7 +56,7 @@ One class always, plus exactly one layout modifier:
 | `x-fill--block` | parent is a block container | `display: block; width: 100%` |
 | `x-fill--flex` | parent is `flex` / `inline-flex` | `flex: 1 1 0%; min-width: 0` |
 | `x-fill--grid` | parent is `grid` / `inline-grid` | `justify-self: stretch; grid-column: 1 / -1` |
-| `x-fill--ignore-max` | `ignore-max-width` is set | `max-width: none` |
+| `x-fill--ignore-max` | `ignoreMaxWidth` is set | `max-width: none` |
 
 `margin-inline: 0` is part of the root class on purpose: an element's own
 margins eat into the space it is trying to fill, and a centring `margin: 0 auto`

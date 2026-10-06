@@ -2,12 +2,12 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "share.schema.json",
   "title": "Share",
-  "description": "x-share makes the element open the device's share sheet with share-title, share-text and share-url; where the Web Share API is missing it copies the URL to the clipboard instead.",
+  "description": "x-share makes the element open the device's share sheet with shareTitle, shareText and shareUrl; where the Web Share API is missing it copies the URL to the clipboard instead.",
   "schemaFor": "share",
   "properties": {
     "text": {
       "type": "string",
-      "description": "Body text. Only used when `share-text` is absent.",
+      "description": "Body text. Only used when `shareText` is absent.",
       "default": "this is the text"
     },
     "label": {
@@ -15,24 +15,24 @@
       "description": "Button label. Defaults to `📤 Share`.",
       "default": "📤 Share"
     },
-    "share-title": {
+    "shareTitle": {
       "type": "string",
       "description": "Title passed to the share sheet. Read BEFORE `title`; falls back to `document.title`.",
       "default": "this is the share title"
     },
-    "share-text": {
+    "shareText": {
       "type": "string",
       "description": "Body text passed to the share sheet. Read BEFORE `text`.",
       "default": "this is the share text"
     },
-    "share-url": {
+    "shareUrl": {
       "type": "string",
       "description": "URL to share. Read BEFORE `url`; falls back to the current page address.",
       "default": "#"
     },
     "url": {
       "type": "string",
-      "description": "URL to share. Only used when `share-url` is absent.",
+      "description": "URL to share. Only used when `shareUrl` is absent.",
       "default": "#"
     }
   },
@@ -46,7 +46,7 @@
     "setup": [
       "<div x-share>Test Content</div>",
       "<div x-share label=\"📤 Share\">Test Content</div>",
-      "<div x-share share-url=\"#\">Test Content</div>",
+      "<div x-share shareUrl=\"#\">Test Content</div>",
       "<div x-share url=\"#\">Test Content</div>"
     ]
   },

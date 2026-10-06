@@ -405,9 +405,9 @@
   "test": {
     "setup": [
       "<div x-input>Basic input content</div>",
-      "<div x-input input-type=\"text\">inputType=text</div>",
-      "<div x-input input-type=\"email\">inputType=email</div>",
-      "<div x-input input-type=\"password\">inputType=password</div>",
+      "<div x-input inputType=\"text\">inputType=text</div>",
+      "<div x-input inputType=\"email\">inputType=email</div>",
+      "<div x-input inputType=\"password\">inputType=password</div>",
       "<div x-input variant=\"default\">variant=default</div>",
       "<div x-input variant=\"success\">variant=success</div>",
       "<div x-input variant=\"error\">variant=error</div>",

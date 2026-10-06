@@ -1,3 +1,4 @@
+import { authoredAttr } from '../core/read-attr.js';
 import { createToast } from './feedback.js';
 
 /**
@@ -91,10 +92,10 @@ export function copy(element, options = {}) {
     // ONLY thing ever read, so <div x-copy text="..."> (what the schema itself
     // documents, and what demos/site/interactive.html actually writes)
     // silently fell through to copying the element's own textContent instead.
-    text: options.text || element.getAttribute('text') || element.getAttribute('copy-text'),
-    target: options.target || element.getAttribute('target') || element.getAttribute('copy-target'),
-    feedback: options.feedback || element.getAttribute('copy-feedback') || 'Copied!',
-    duration: parseInt(options.duration || element.getAttribute('copy-duration') || '2000', 10),
+    text: options.text || element.getAttribute('text') || authoredAttr(element, 'copy-text'),
+    target: options.target || element.getAttribute('target') || authoredAttr(element, 'copy-target'),
+    feedback: options.feedback || authoredAttr(element, 'copy-feedback') || 'Copied!',
+    duration: parseInt(options.duration || authoredAttr(element, 'copy-duration') || '2000', 10),
     toast: options.toast ?? element.hasAttribute('toast'),
     ...options
   };
@@ -198,11 +199,11 @@ export function copyButton(element, options = {}) {
   const attrValue = (element.getAttribute('x-copybutton') || '').trim();
 
   const config = {
-    target: options.target || element.getAttribute('copy-target') || (attrValue || null),
+    target: options.target || authoredAttr(element, 'copy-target') || (attrValue || null),
     label: options.label || element.getAttribute('label') || 'Copy',
     position: options.position || element.getAttribute('position') || 'top-right',
-    feedback: options.feedback || element.getAttribute('copy-feedback') || 'Copied ✓',
-    duration: parseInt(options.duration || element.getAttribute('copy-duration') || '2000', 10),
+    feedback: options.feedback || authoredAttr(element, 'copy-feedback') || 'Copied ✓',
+    duration: parseInt(options.duration || authoredAttr(element, 'copy-duration') || '2000', 10),
     ...options
   };
 

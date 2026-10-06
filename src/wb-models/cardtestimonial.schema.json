@@ -324,7 +324,6 @@
       "page": "cards",
       "tag": "x-cardtestimonial",
       "renders": true,
-      "baseClass": "x-testimonial",
       "minInstances": 8,
       "checkText": [],
       "checkClasses": [

@@ -22,7 +22,8 @@ async function loadPage(page: Page) {
 
 test('clicking an x-toast button shows exactly one toast', async ({ page }) => {
   await loadPage(page);
-  const btn = page.locator('#behaviors-live [x-toast][toast-variant="success"]').first();
+  // #1526: the page writes the schema's name, toastVariant.
+  const btn = page.locator('#behaviors-live [x-toast][toastVariant="success"]').first();
   await btn.scrollIntoViewIfNeeded();
   // Lazy runtime (#491): wait for the behavior to have attached.
   await expect(btn).toHaveAttribute('x-ready', '', { timeout: 10000 });

@@ -351,7 +351,6 @@
       "page": "cards",
       "tag": "x-cardproduct",
       "renders": true,
-      "baseClass": "x-product",
       "minInstances": 5,
       "checkText": [
         "Product"

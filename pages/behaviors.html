@@ -1865,14 +1865,19 @@
     }
 
 
-    // An option is written as the ATTRIBUTE a reader types: kebab-case.
-    // Schemas name properties in camelCase (imagePosition, showCount), and
-    // writing that verbatim fails twice over: HTML lowercases attribute names,
-    // so imagePosition="right" arrives as `imageposition`, which most
-    // behaviors never read; and the example's own image-position="…" is left
-    // in place and wins. Both spellings are cleared before the kebab one is
-    // written.
+    // An option is written under the schema's own property name, unchanged:
+    // showClose, imagePosition (#1526). camelCase is the canonical attribute
+    // spelling (#1125, ATTRIBUTE-NAMING-STANDARD.md) and this page is the most
+    // copied markup in the repo, so it teaches that spelling. It once wrote
+    // kebab-case because behaviors read only the dashed name and HTML stores
+    // imagePosition as `imageposition`; every behavior now reads both
+    // (read-attr.js), which tests/regression/camelcase-options-read-like-kebab
+    // proves on every host. kebab() survives only to FIND the dashed spelling
+    // an example may already carry: every spelling is cleared before the
+    // property is written, or the example's own image-position="…" would sit
+    // beside the new value and win.
     const kebab = (name) => String(name).replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+    const camel = (name) => String(name).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
     const escapeRe = (name) => String(name).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     /** Every spelling of `name` an example might carry, for a RegExp alternation. */
     const spellings = (name) => [...new Set([name, kebab(name), name.toLowerCase()])].map(escapeRe).join('|');
@@ -1929,8 +1934,8 @@
         const existing = new RegExp('\\s(?:' + spellings(prop) + ')(?:="[^"]*")?(?=[\\s>/])', 'gi');
         const cleaned = src.replace(existing, '');
         return value === 'false'
-          ? cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(prop)}="false"`)
-          : cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(prop)}`);
+          ? cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}="false"`)
+          : cleaned.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${prop}`);
       }
 
       // Rewrite whichever attribute the example actually used. Several schemas
@@ -1968,18 +1973,19 @@
       // fired the same green success toast. The namespaced spelling, when the
       // example carries it, is the one this row is about.
       const behaviorName = extensionMap[attr] || attr.replace(/^x-/, '');
-      const namespaced = new RegExp('\\s' + escapeRe(`${behaviorName}-${kebab(target)}`) + '\\s*=\\s*"[^"]*"', 'i');
-      if (namespaced.test(src)) return src.replace(namespaced, ` ${behaviorName}-${kebab(target)}="${value}"`);
+      const nsName = camel(`${behaviorName}-${kebab(target)}`);
+      const namespaced = new RegExp('\\s(?:' + spellings(nsName) + ')\\s*=\\s*"[^"]*"', 'i');
+      if (namespaced.test(src)) return src.replace(namespaced, ` ${nsName}="${value}"`);
 
       // An alias the example already uses is rewritten in place (alert's
-      // `type`); the property itself is always written kebab-case.
+      // `type`); the property itself is written under its schema name (#1526).
       for (const name of aliases) {
         const re = new RegExp('\\s(?:' + spellings(name) + ')\\s*=\\s*"[^"]*"', 'i');
-        if (re.test(src)) return src.replace(re, ` ${kebab(name)}="${value}"`);
+        if (re.test(src)) return src.replace(re, ` ${name}="${value}"`);
       }
       const own = new RegExp('\\s(?:' + spellings(target) + ')\\s*=\\s*"[^"]*"', 'i');
-      if (own.test(src)) return src.replace(own, ` ${kebab(target)}="${value}"`);
-      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${kebab(target)}="${value}"`);
+      if (own.test(src)) return src.replace(own, ` ${target}="${value}"`);
+      return src.replace(/^(\s*<[a-zA-Z][\w-]*)/, `$1 ${target}="${value}"`);
     }
 
     // Which element should host a generated example? An x-* behavior can sit on

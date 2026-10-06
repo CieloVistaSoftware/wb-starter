@@ -186,13 +186,13 @@
   "test": {
     "setup": [
       "<div x-cardhorizontal>Basic cardhorizontal content</div>",
-      "<div x-cardhorizontal image-position=\"left\">imagePosition=left</div>",
-      "<div x-cardhorizontal image-position=\"right\">imagePosition=right</div>",
+      "<div x-cardhorizontal imagePosition=\"left\">imagePosition=left</div>",
+      "<div x-cardhorizontal imagePosition=\"right\">imagePosition=right</div>",
       "<div x-cardhorizontal variant=\"default\">variant=default</div>",
       "<div x-cardhorizontal variant=\"elevated\">variant=elevated</div>",
       "<div x-cardhorizontal variant=\"bordered\">variant=bordered</div>",
       "<div x-cardhorizontal image=\"/images/dachshund-puppy-image-960x540.jpg\">image=\"/images/dachshund-puppy-image-960x540.jpg\"</div>",
-      "<div x-cardhorizontal image-alt=\"Sample imageAlt\">imageAlt=\"Sample imageAlt\"</div>",
+      "<div x-cardhorizontal imageAlt=\"Sample imageAlt\">imageAlt=\"Sample imageAlt\"</div>",
       "<div x-cardhorizontal title=\"Test Title\">With title attribute</div>",
       "<div x-cardhorizontal image=\"photo.jpg\" title=\"Title\"></div>"
     ],
@@ -223,7 +223,6 @@
       "page": "cards",
       "tag": "x-cardhorizontal",
       "renders": true,
-      "baseClass": "x-card-horizontal",
       "minInstances": 4,
       "checkText": [
         "Title",

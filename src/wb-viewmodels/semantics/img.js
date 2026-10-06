@@ -1,4 +1,4 @@
-import { readFlag } from '../../core/read-attr.js';
+import { readFlag, authoredAttr } from '../../core/read-attr.js';
 import { setRule } from '../../core/dynamic-style.js';
 /**
  * Image - Enhanced <img> element
@@ -22,7 +22,7 @@ export function img(element, options = {}) {
     zoomable: options.zoomable ?? (element.hasAttribute('zoomable') || readFlag(element, 'zoomable')),
     placeholder: options.placeholder || element.getAttribute('placeholder') || '',
     fallback: options.fallback || element.getAttribute('fallback') || '',
-    aspectRatio: options.aspectRatio || element.getAttribute('aspect-ratio') || '',
+    aspectRatio: options.aspectRatio || authoredAttr(element, 'aspect-ratio') || '',
     ...options
   };
 
@@ -30,8 +30,8 @@ export function img(element, options = {}) {
   // `img { height: auto }` (normalize.css, site.css) beats the height
   // attribute, so on its own height only reserved space until the photo
   // loaded, then the photo's real shape won and the height was ignored.
-  // Both numbers now become the aspect ratio, cropped like aspect-ratio="".
-  // An explicit aspect-ratio="" still wins.
+  // Both numbers now become the aspect ratio, cropped like aspectRatio="".
+  // An explicit aspectRatio="" still wins.
   if (!config.aspectRatio) {
     const width = Number(element.getAttribute('width'));
     const height = Number(element.getAttribute('height'));

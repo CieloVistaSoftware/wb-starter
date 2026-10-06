@@ -67,7 +67,7 @@ test.describe('Card Image Rendering', () => {
         if (cardPadding >= 16) return true;
         
         // Check main content area
-        const main = el.querySelector('.x-card__main, main');
+        const main = el.querySelector('.x-card__body');
         if (main) {
           const mainPadding = parseFloat(getComputedStyle(main).paddingLeft);
           if (mainPadding >= 16) return true;

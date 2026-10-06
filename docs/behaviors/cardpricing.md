@@ -23,7 +23,7 @@
 | `description` | `string` | — | Short plan description |
 | `features` | `string` | — | Comma-separated list of features |
 | `cta` | `string` | `Get Started` | Call-to-action button text |
-| `cta-href` | `string` | `#` | Call-to-action link URL |
+| `ctaHref` | `string` | `#` | Call-to-action link URL |
 | `featured` | `boolean` | `false` | Highlight as featured/recommended plan |
 | `variant` | `default` · `bordered` · `elevated` · `minimal` | `default` | Visual style variant |
 

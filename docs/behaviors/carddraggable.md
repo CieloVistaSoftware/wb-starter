@@ -1,6 +1,6 @@
 # Draggable Card
 
-`x-carddraggable` renders a card the user can pick up by its header and move; `axis` limits the direction, `constrain` keeps it inside its parent or the viewport, and `snap-to-grid` rounds the position. Drag start, move and end each fire an event.
+`x-carddraggable` renders a card the user can pick up by its header and move; `axis` limits the direction, `constrain` keeps it inside its parent or the viewport, and `snapToGrid` rounds the position. Drag start, move and end each fire an event.
 
 ## Usage
 
@@ -16,7 +16,7 @@
 | `content` | `string` | — | Card content |
 | `constrain` | `none` · `parent` · `viewport` | `none` | Constrain to area |
 | `axis` | `both` · `x` · `y` | `both` | Drag axis |
-| `snap-to-grid` | `number` | `0` | Snap grid size (0=disabled) |
+| `snapToGrid` | `number` | `0` | Snap grid size (0=disabled) |
 | `variant` | `default` · `elevated` | `default` |  |
 
 ## Events

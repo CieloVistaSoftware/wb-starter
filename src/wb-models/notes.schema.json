@@ -224,10 +224,10 @@
       "<div x-notes position=\"left\">position=left</div>",
       "<div x-notes position=\"right\">position=right</div>",
       "<div x-notes position=\"modal\">position=modal</div>",
-      "<div x-notes auto-save>with autoSave</div>",
-      "<div x-notes max-width=\"50vw\">maxWidth=\"50vw\"</div>",
-      "<div x-notes min-width=\"200px\">minWidth=\"200px\"</div>",
-      "<div x-notes default-width=\"320px\">defaultWidth=\"320px\"</div>"
+      "<div x-notes autoSave>with autoSave</div>",
+      "<div x-notes maxWidth=\"50vw\">maxWidth=\"50vw\"</div>",
+      "<div x-notes minWidth=\"200px\">minWidth=\"200px\"</div>",
+      "<div x-notes defaultWidth=\"320px\">defaultWidth=\"320px\"</div>"
     ],
     "matrix": {
       "combinations": [

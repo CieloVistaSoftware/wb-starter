@@ -193,7 +193,8 @@
     },
     {
       "name": "main",
-      "tag": "main",
+      "tag": "div",
+      "class": "x-card__body",
       "public": true,
       "required": true,
       "description": "Main content area"
@@ -366,7 +367,6 @@
       "page": "cards",
       "tag": "x-cardportfolio",
       "renders": true,
-      "baseClass": "x-portfolio",
       "minInstances": 4,
       "checkText": [
         "UX Designer",

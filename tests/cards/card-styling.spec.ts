@@ -93,8 +93,7 @@ test.describe('Card Styling Standards', () => {
         // Or internal containers have padding
         const containers = [
           '.x-card__header',
-          '.x-card__main', 
-          'main',
+          '.x-card__body',
           'header',
           '[class*="content"]'
         ];

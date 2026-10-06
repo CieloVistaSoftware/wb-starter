@@ -63,6 +63,32 @@ function spellings(name) {
 }
 
 /**
+ * `el.getAttribute(name)` for a multi-word attribute, under either spelling:
+ * the raw value of `icon-position` or `iconPosition`, or null when neither is
+ * authored.
+ *
+ * #1125: 110 option reads called `getAttribute('icon-position')` directly.
+ * HTML stores the canonical `iconPosition` as `iconposition`, so those reads
+ * never saw it and the default won with no error (#1124's six identical
+ * hero headings). readAttr() would have found it, but it also changes what
+ * an empty value and an absent one return, and reads `data-*`, which those
+ * call sites did not. This keeps getAttribute's exact contract -- null when
+ * absent, `""` when bare -- and adds only the camelCase spelling, so each
+ * call site could switch without its own logic changing.
+ *
+ * @param {Element} el
+ * @param {string} name  either spelling (`icon-position`, `iconPosition`)
+ * @returns {string|null}
+ */
+export function authoredAttr(el, name) {
+  if (!el || !el.getAttribute) return null;
+  for (const attr of new Set([kebab(name), camel(name)])) {
+    if (el.hasAttribute(attr)) return el.getAttribute(attr);
+  }
+  return null;
+}
+
+/**
  * Is this attribute authored at all, under any accepted spelling?
  *
  * Presence only — the VALUE is never consulted, so `modal-title=""` counts.
@@ -157,4 +183,4 @@ export function readOption(el, options, name, attr = kebab(name)) {
   return options[name] || readAttr(el, name) || el.getAttribute(attr);
 }
 
-export default { readFlag, readAttr, readNumber, readOption, hasAuthoredAttr };
+export default { readFlag, readAttr, readNumber, readOption, hasAuthoredAttr, authoredAttr };

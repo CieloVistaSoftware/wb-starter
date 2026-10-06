@@ -2,20 +2,20 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "modal.schema.json",
   "title": "Modal",
-  "description": "A trigger that opens a modal <dialog>. x-modal is the dialog() behavior (semantics/dialog.js exports it as `modal`): with modal-title or modal-content the host becomes a clickable trigger that builds and opens the dialog; without them the host is hidden and its children become the content of a dialog opened by calling element.open().",
+  "description": "A trigger that opens a modal <dialog>. x-modal is the dialog() behavior (semantics/dialog.js exports it as `modal`): with modalTitle or modalContent the host becomes a clickable trigger that builds and opens the dialog; without them the host is hidden and its children become the content of a dialog opened by calling element.open().",
   "schemaFor": "modal",
   "properties": {
-    "modal-title": {
+    "modalTitle": {
       "type": "string",
-      "description": "Dialog heading. Its presence (or modal-content's) makes the host a visible trigger that opens the dialog on click. `title` is read first when both are set.",
+      "description": "Dialog heading. Its presence (or modalContent's) makes the host a visible trigger that opens the dialog on click. `title` is read first when both are set.",
       "default": "Dialog"
     },
-    "modal-content": {
+    "modalContent": {
       "type": "string",
-      "description": "Dialog body HTML. Its presence (or modal-title's) makes the host a trigger. `content` is read first when both are set.",
+      "description": "Dialog body HTML. Its presence (or modalTitle's) makes the host a trigger. `content` is read first when both are set.",
       "default": ""
     },
-    "modal-size": {
+    "modalSize": {
       "type": "string",
       "description": "Size of the opened dialog. `size` is read first when both are set.",
       "enum": [
@@ -57,10 +57,10 @@
   },
   "test": {
     "setup": [
-      "<button x-modal modal-title=\"Confirm\" modal-content=\"Are you sure?\">Open Modal</button>",
-      "<button x-modal modal-title=\"Small\" modal-size=\"sm\">Open small</button>",
-      "<button x-modal modal-title=\"Large\" modal-size=\"lg\">Open large</button>",
-      "<button x-modal modal-title=\"Centered\" variant=\"centered\">Open centered</button>",
+      "<button x-modal modalTitle=\"Confirm\" modalContent=\"Are you sure?\">Open Modal</button>",
+      "<button x-modal modalTitle=\"Small\" modalSize=\"sm\">Open small</button>",
+      "<button x-modal modalTitle=\"Large\" modalSize=\"lg\">Open large</button>",
+      "<button x-modal modalTitle=\"Centered\" variant=\"centered\">Open centered</button>",
       "<div x-modal><h2 slot=\"title\">Defined</h2><p>Body from children, opened with element.open()</p></div>"
     ]
   },

@@ -8,6 +8,7 @@
  * @license MIT
  */
 
+import { hasAuthoredAttr } from './read-attr.js';
 import { getBehavior, hasBehavior, listBehaviors, preloadBehaviors, getCacheStats, behaviorModules } from '../wb-viewmodels/index.js';
 import { markReady } from './ready-signal.js';
 import { Events } from './events.js';
@@ -518,7 +519,7 @@ async function buildSchemaIfNeeded(element) {
   // WB.processSchema exactly.
   // (Was `tag === '[x-modal]'`, which no tag name can equal -- same rewrite
   // damage as SCHEMA_SKIP_TAGS above.)
-  if (element.hasAttribute('x-modal') && (element.hasAttribute('modal-title') || element.hasAttribute('modal-content'))) return;
+  if (element.hasAttribute('x-modal') && (hasAuthoredAttr(element, 'modal-title') || hasAuthoredAttr(element, 'modal-content'))) return;
   if (element.hasAttribute('x-schema')) return; // already schema-built
 
   const name = schemaNameFor(element);

@@ -1,4 +1,4 @@
-import { readFlag, readAttr } from '../../core/read-attr.js';
+import { readFlag, readAttr, hasAuthoredAttr } from '../../core/read-attr.js';
 import hljs from '../../lib/highlight.js';
 import { pre } from './pre.js';
 import { CODE_THEMES } from '../codetheme.js';
@@ -128,7 +128,7 @@ export function code(element, options = {}) {
 
   const config = {
     language: options.language || element.getAttribute('language') || readAttr(element, 'language') || langFromClass(element) || '',
-    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || readFlag(element, 'show-copy') || readFlag(element, 'copy')),
+    showCopy: options.showCopy ?? (hasAuthoredAttr(element, 'show-copy') || readFlag(element, 'show-copy') || readFlag(element, 'copy')),
     variant: options.variant || element.getAttribute('variant') || readAttr(element, 'variant') || 'inline',
     scrollable: options.scrollable ?? (element.getAttribute('scrollable') === 'true' || readAttr(element, 'scrollable') === 'true'),
     // No `size` given -> normal (matches surrounding text, 1em) — every plain

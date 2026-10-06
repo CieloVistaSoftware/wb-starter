@@ -10,7 +10,7 @@
   title="Zero build. Real behaviors."
   subtitle="Light DOM, no shadow boundaries, no class hierarchy."
   cta="Read the guide"
-  cta-href="#"
+  ctaHref="#"
   height="320px"></section>
 </div>
 
@@ -24,13 +24,13 @@
 | `subtitle` | `string` | — | Hero tagline/subheadline |
 | `content` | `string` | — | HTML content rendered in the hero content area (allows attribute-only usage instead of slots) |
 | `cta` | `string` | — | Call-to-action button text |
-| `cta-href` | `string` | `#` | Call-to-action link URL |
-| `cta-secondary` | `string` | — | Secondary CTA text |
-| `cta-secondary-href` | `string` | `#` | Secondary CTA URL |
+| `ctaHref` | `string` | `#` | Call-to-action link URL |
+| `ctaSecondary` | `string` | — | Secondary CTA text |
+| `ctaSecondaryHref` | `string` | `#` | Secondary CTA URL |
 | `variant` | `default` · `cosmic` · `split` · `minimal` · `gradient` | `default` | Visual style variant |
 | `xalign` | `left` · `center` · `right` | `center` | Horizontal content alignment (x-axis) |
 | `overlay` | `boolean` | `true` | Show gradient overlay for text readability |
-| `full-height` | `boolean` | `false` | Make hero full viewport height |
+| `fullHeight` | `boolean` | `false` | Make hero full viewport height |
 
 ## Methods
 

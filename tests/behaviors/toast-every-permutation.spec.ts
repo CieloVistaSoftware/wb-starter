@@ -60,8 +60,6 @@ const CONTAINER = '.x-toast-container';
 /** 1rem of edge inset (toast.css) plus room for a --site-header-height offset. */
 const EDGE_GAP = 48;
 const TOP_EDGE_GAP = 96;
-/** Longer than the 3000ms default, so "no auto-dismiss" cannot pass by luck. */
-const PAST_DEFAULT_DURATION = 3400;
 
 type Attrs = Record<string, string>;
 

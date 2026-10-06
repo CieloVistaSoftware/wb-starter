@@ -1,4 +1,4 @@
-import { readFlag, readAttr } from '../../core/read-attr.js';
+import { readFlag, readAttr, hasAuthoredAttr } from '../../core/read-attr.js';
 import { reportIfThirdPartyMedia } from '../media-unreachable.js';
 import { setRule } from '../../core/dynamic-style.js';
 /**
@@ -79,7 +79,7 @@ export function audio(element, options = {}) {
     // this code only ever read `show-eq`, so the documented name silently did
     // nothing. Plain-first, data- fallback, matching the established pattern.
     showEq: options.showEq ?? (
-      element.hasAttribute('show-eq') || element.hasAttribute('showeq') ||
+      hasAuthoredAttr(element, 'showEq') ||
       readFlag(element, 'show-eq') ||
       attr('show-eq') === 'true' || readAttr(element, 'showEq') === 'true'
     ),

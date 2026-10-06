@@ -93,7 +93,8 @@
     },
     {
       "name": "main",
-      "tag": "main",
+      "tag": "div",
+      "class": "x-card__body",
       "public": true,
       "required": true,
       "description": "Main content area"
@@ -241,7 +242,7 @@
       "<div x-cardstats variant=\"large\">variant=large</div>",
       "<div x-cardstats value=\"Sample value\">value=\"Sample value\"</div>",
       "<div x-cardstats value=\"1,234\" label=\"Users\"></div>",
-      "<div x-cardstats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trend-value=\"+12%\"></div>"
+      "<div x-cardstats value=\"$50K\" label=\"Revenue\" icon=\"💰\" trend=\"up\" trendValue=\"+12%\"></div>"
     ],
     "matrix": {
       "combinations": [
@@ -279,7 +280,6 @@
       "page": "cards",
       "tag": "x-cardstats",
       "renders": true,
-      "baseClass": "x-stats",
       "minInstances": 6,
       "checkText": [
         "Users"

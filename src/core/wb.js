@@ -139,7 +139,7 @@ import { behaviors } from '../wb-viewmodels/index.js';
 import { markReady, isReady } from './ready-signal.js';
 import { isReplacedByExplicitBehavior } from './replacement-guard.js';
 import { warnXBehaviorDeprecated } from './x-behavior-deprecation.js';
-import { isComponentLandmark, CARD_HOST } from './component-landmark.js';
+import { isComponentLandmark, COMPONENT_HOST } from './component-landmark.js';
 import { styleSheetDefinesClass } from './style-registry.js';
 import { Events } from './events.js';
 import { matchingElements } from './dom-query.js';
@@ -254,7 +254,10 @@ function getAutoInjectBehavior(element) {
     // <header>/<footer>, and <dialog class="x-dialog"> matched none of the
     // three, so the chrome got the page navbar's x-header (0.8em text,
     // min-height 60px) and the page footer's x-footer on top of its own.
-    if (element.parentElement && element.parentElement.closest(`article, dialog, ${CARD_HOST}, [class*="__"]`)) {
+    // #969: the card hosts come from component-landmark.js, which names typed
+    // cards by attribute now that they carry no x-card class. This rule adds
+    // only the BEM-block case its own comment keeps out of that file.
+    if (element.parentElement && element.parentElement.closest(`${COMPONENT_HOST}, [class*="__"]`)) {
       return null;
     }
   }

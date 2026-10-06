@@ -9,7 +9,7 @@
  * legacy form where the element IS a bare <input type=checkbox>. (#197)
  */
 import { createToast } from '../feedback.js';
-import { readAttr } from '../../core/read-attr.js';
+import { readAttr, hasAuthoredAttr } from '../../core/read-attr.js';
 
 export function switchInput(element, options = {}) {
   const host = element;
@@ -202,7 +202,7 @@ export function switchInput(element, options = {}) {
   // Optional: <div x-switch theme-control> drives the page theme (data-theme).
   // ON = dark, OFF = light. Initial state reflects the current theme. (#210)
   let applyTheme = null;
-  if (!isBareCheckbox && host.hasAttribute('theme-control')) {
+  if (!isBareCheckbox && hasAuthoredAttr(host, 'theme-control')) {
     const root = document.documentElement;
     input.checked = (root.getAttribute('data-theme') || 'dark') !== 'light';
     sync();
@@ -216,7 +216,7 @@ export function switchInput(element, options = {}) {
   // no observable effect doesn't show what it does (docs/standards/
   // DEMOS-AND-DOCS-STANDARDS.md — demo switches must invoke their effect).
   let notifyOnChange = null;
-  if (!isBareCheckbox && host.hasAttribute('notify-control')) {
+  if (!isBareCheckbox && hasAuthoredAttr(host, 'notify-control')) {
     notifyOnChange = () => {
       if (input.checked) {
         createToast(host.getAttribute('label') ? `${host.getAttribute('label')} enabled` : 'Notifications enabled', 'success');

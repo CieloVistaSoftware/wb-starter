@@ -5,8 +5,9 @@
  * Uses CSS custom properties from cardnotification.schema.json $cssAPI
  * ========================================================================== */
 
-/* Base notification layout */
-.x-notification {
+/* Base notification layout. Keyed on the attribute that applies the behavior:
+   the .x-notification class it used to be keyed on only restated it (#969). */
+[x-cardnotification] {
   display: flex;
   align-items: flex-start;
   gap: var(--x-notification-gap, 0.75rem);

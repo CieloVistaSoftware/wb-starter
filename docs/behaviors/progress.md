@@ -1,11 +1,11 @@
 # Progress
 
-A plain `<progress>` gets a styled bar with an optional `label` and percentage (`show-value`), colour `variant`s, stripes, and an `indeterminate` state for work of unknown length.
+A plain `<progress>` gets a styled bar with an optional `label` and percentage (`showValue`), colour `variant`s, stripes, and an `indeterminate` state for work of unknown length.
 
 ## Usage
 
 <div x-demo>
-<progress value="72" max="100" label="Uploading footage" show-value></progress>
+<progress value="72" max="100" label="Uploading footage" showValue></progress>
 </div>
 
 No attribute needed on `<progress>`. Don't add `x-progress` to it (#746).
@@ -13,7 +13,7 @@ No attribute needed on `<progress>`. Don't add `x-progress` to it (#746).
 On another element, write `x-progress`:
 
 ```html
-<div x-progress value="72" max="100" label="Uploading footage" show-value></div>
+<div x-progress value="72" max="100" label="Uploading footage" showValue></div>
 ```
 
 `<progress x-ignore>` opts out ([escape hatches](../escape-hatches.md)).
@@ -25,7 +25,7 @@ On another element, write `x-progress`:
 | `value` | `number` | `0` | Current progress value (0-100) |
 | `max` | `number` | `100` | Maximum value |
 | `label` | `string` | — | Progress label text |
-| `show-value` | `boolean` | `false` | Show percentage value |
+| `showValue` | `boolean` | `false` | Show percentage value |
 | `variant` | `default` · `primary` · `success` · `warning` · `error` · `info` | `primary` | Color variant |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` | `md` | Bar height size |
 | `animated` | `boolean` | `true` | Animate on load |

@@ -34,7 +34,7 @@
 | `github` | `string` | — | GitHub profile URL |
 | `dribbble` | `string` | — | Dribbble profile URL |
 | `skills` | `string` | — | Comma-separated list of skills |
-| `skill-levels` | `string` | — | JSON array of {name, level (0-100)} for skill bars |
+| `skillLevels` | `string` | — | JSON array of {name, level (0-100)} for skill bars |
 | `experience` | `string` | — | JSON array of {company, role, period, description} |
 | `education` | `string` | — | JSON array of {school, degree, year} |
 | `projects` | `string` | — | JSON array of {name, description, url, image} |
@@ -42,7 +42,7 @@
 | `languages` | `string` | — | Comma-separated list of languages (e.g. 'English (Native), Spanish (Fluent)') |
 | `stats` | `string` | — | JSON array of {label, value} for stats display |
 | `cta` | `string` | — | Call-to-action button text |
-| `cta-href` | `string` | `#` | Call-to-action button link |
+| `ctaHref` | `string` | `#` | Call-to-action button link |
 | `variant` | `default` · `compact` · `horizontal` · `full` | `default` |  |
 | `size` | `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` |  |
 

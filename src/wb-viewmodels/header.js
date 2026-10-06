@@ -1,4 +1,4 @@
-import { readFlag } from '../core/read-attr.js';
+import { readFlag, authoredAttr } from '../core/read-attr.js';
 /**
  * Header Behavior
  * -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ export function header(element) {
     if (icon || title) {
       const logo = document.createElement('a');
       logo.className = 'x-header__logo';
-      const logoHref = element.getAttribute('logo-href') || element.getAttribute('logohref');
+      const logoHref = authoredAttr(element, 'logoHref');
       if (logoHref) logo.setAttribute('href', logoHref);
       if (icon) {
         const i = document.createElement('span');

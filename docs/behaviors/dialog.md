@@ -60,7 +60,7 @@ not what switches it on — its value is read:
 
 This is worth spelling out because it used to be untrue: `showClose="false"`
 showed the close button anyway (#747). The old dashed spellings
-(`show-close`, `close-on-backdrop`, `close-on-escape`) are still read, so
+(`showClose`, `closeOnBackdrop`, `closeOnEscape`) are still read, so
 pages already written keep working — but no attribute name carries a dash, so
 the camelCase names above are the ones to write (#1125).
 

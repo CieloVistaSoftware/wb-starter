@@ -1,6 +1,6 @@
 # Header
 
-A plain `<header>` gets a page header built from its attributes: an `icon` and `title` linking to `logo-href`, a `subtitle` and a `badge` such as a version number. Add `sticky` to keep it at the top while scrolling.
+A plain `<header>` gets a page header built from its attributes: an `icon` and `title` linking to `logoHref`, a `subtitle` and a `badge` such as a version number. Add `sticky` to keep it at the top while scrolling.
 
 ## Usage
 
@@ -26,7 +26,7 @@ On another element, write `x-header`:
 | `title` | `string` | — | Header title |
 | `subtitle` | `string` | — | Subtitle text |
 | `badge` | `string` | — | Badge text (e.g., version) |
-| `logo-href` | `string` | `/` | Logo link URL |
+| `logoHref` | `string` | `/` | Logo link URL |
 | `sticky` | `boolean` | `false` | Sticky at top |
 
 ## Methods

@@ -19,9 +19,9 @@
 | `title` | `string` | — | Card title |
 | `content` | `string` | — | Card content/description |
 | `primary` | `string` | — | Primary button text |
-| `primary-href` | `string` | `#` | Primary button link URL |
+| `primaryHref` | `string` | `#` | Primary button link URL |
 | `secondary` | `string` | — | Secondary button text |
-| `secondary-href` | `string` | `#` | Secondary button link URL |
+| `secondaryHref` | `string` | `#` | Secondary button link URL |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 
 ## Events

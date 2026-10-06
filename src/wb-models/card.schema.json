@@ -265,7 +265,6 @@
       "page": "cards",
       "tag": "x-card",
       "renders": true,
-      "baseClass": "x-card",
       "minInstances": 8,
       "checkText": [
         "Default Card",

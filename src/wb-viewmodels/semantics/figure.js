@@ -5,6 +5,7 @@
  * Migrated from the old media.js grab-bag file to match this project's
  * one-file-per-semantic-element convention (audio.js, table.js, ...).
  */
+import { authoredAttr } from '../../core/read-attr.js';
 import { openLightbox } from './img.js';
 import { setRule } from '../../core/dynamic-style.js';
 
@@ -18,7 +19,7 @@ export function figure(element, options = {}) {
     zoom: options.zoom ?? (element.getAttribute('zoom') === 'true' || element.hasAttribute('zoom')),
     // Default true — lightbox is opt-OUT (lightbox="false"), not opt-in.
     lightbox: options.lightbox ?? (element.getAttribute('lightbox') !== 'false'),
-    captionPosition: options.captionPosition || element.getAttribute('caption-position') || 'bottom',
+    captionPosition: options.captionPosition || authoredAttr(element, 'caption-position') || 'bottom',
     caption: options.caption || element.getAttribute('caption'),
     width: options.width || element.getAttribute('width') || '',
     ...options

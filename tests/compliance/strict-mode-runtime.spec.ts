@@ -44,8 +44,8 @@ test.describe('Strict Mode Runtime Compliance', () => {
     // itself the x-error behavior's attribute, so the element does settle.
     // What card() leaves behind is structure -- it moves loose content into
     // a <main> (the modern card below proves the probe can see it).
-    await expect(modernCard.locator(':scope > main')).toHaveText('Modern Content');
-    await expect(legacyCard.locator(':scope > main')).toHaveCount(0);
+    await expect(modernCard.locator(':scope > .x-card__body')).toHaveText('Modern Content');
+    await expect(legacyCard.locator(':scope > .x-card__body')).toHaveCount(0);
     await expect(legacyCard).toHaveText('Legacy Content');
   });
 });

@@ -1,4 +1,4 @@
-import { readFlag, readAttr } from '../core/read-attr.js';
+import { readFlag, readAttr, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRulesIn } from '../core/dynamic-style.js';
 /**
  * Navigation Behaviors
@@ -51,7 +51,7 @@ export function navbar(element, options = {}) {
     brand: options.brand || element.getAttribute('brand') || '',
     brandHref: options.brandHref || readAttr(element, 'brandHref', '/'),
     logo: options.logo || element.getAttribute('logo') || '',
-    logoSize: options.logoSize || element.getAttribute('logo-size') || '32',
+    logoSize: options.logoSize || authoredAttr(element, 'logo-size') || '32',
     tagline: options.tagline || element.getAttribute('tagline') || '',
     items: (options.items || element.getAttribute('items') || '').split(',').filter(Boolean),
     sticky: options.sticky ?? readFlag(element, 'sticky'),
@@ -363,7 +363,7 @@ export function menu(element, options = {}) {
  */
 export function pagination(element, options = {}) {
   const total = parseInt(options.total || element.getAttribute('total') || '0');
-  const perPage = parseInt(options.perPage || element.getAttribute('per-page') || '10');
+  const perPage = parseInt(options.perPage || authoredAttr(element, 'per-page') || '10');
   const pages = parseInt(options.pages || element.getAttribute('pages') || '0') || Math.ceil(total / perPage) || 1;
   let current = parseInt(options.current || element.getAttribute('current') || '1');
 

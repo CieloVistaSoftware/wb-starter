@@ -90,7 +90,7 @@
   "test": {
     "setup": [
       "<div x-fireworks>Basic fireworks content</div>",
-      "<div x-fireworks show-button>with showButton</div>",
+      "<div x-fireworks showButton>with showButton</div>",
       "<div x-fireworks repeat>with repeat</div>",
       "<div x-fireworks count=\"30\">count=30</div>",
       "<div x-fireworks label=\"Fireworks!\">label=\"Fireworks!\"</div>",

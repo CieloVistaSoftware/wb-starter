@@ -35,9 +35,11 @@ test.describe('Runtime hydration markers', () => {
     test.skip(count === 0, '[x-cardstats] example not present');
     await page.waitForFunction(sel => {
       const el = document.querySelector(sel);
-      return !!el && (el.dataset.wbHydrated === '1' || el.classList.contains('x-stats'));
+      // #969: cardstats no longer stamps an x-stats class; x-hydrated is the
+      // marker it sets when it has finished building.
+      return !!el && (el.dataset.wbHydrated === '1' || el.getAttribute('x-hydrated') === '1');
     }, '[x-cardstats]', { timeout: 4000 });
-    const hydrated = await stats.evaluate(el => el.dataset.wbHydrated === '1' || el.classList.contains('x-stats'));
+    const hydrated = await stats.evaluate(el => el.dataset.wbHydrated === '1' || el.getAttribute('x-hydrated') === '1');
     expect(hydrated).toBe(true);
   });
 });

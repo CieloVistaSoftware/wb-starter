@@ -31,6 +31,12 @@
  *   node scripts/generate-site.mjs <site-schema.json>
  *   node scripts/generate-site.mjs <site-schema.json> --dry-run     (validate only)
  *   node scripts/generate-site.mjs <site-schema.json> --index-only  (regenerate index)
+ *   node scripts/generate-site.mjs <site-schema.json> --out-dir <dir> (pages and report into <dir>)
+ *
+ * The committed demos/site pages are exactly this script's output (#1530,
+ * guarded by tests/compliance/site-pages-match-generator.spec.ts). To change
+ * a page, change the site schema or this script and regenerate; an edit made
+ * in the HTML is undone by the next run.
  *
  * Output:
  *   demos/site/{page-id}.html           — individual pages
@@ -43,7 +49,6 @@ import { resolve, join, basename, relative } from 'path';
 import { execSync } from 'child_process';
 
 const MODELS_DIR = resolve('src/wb-models');
-const PAGES_DIR = resolve('src/wb-models/pages');
 
 // ─── Helpers ───
 
@@ -62,11 +67,15 @@ function loadJSON(path) {
  * errors on demos/site/cards.html (#838) -- enough on its own to blow the
  * "fewer than 10 errors" budget in site-generation.spec.ts.
  *
- * Local, not picsum.photos: a demo page that needs the network to render
- * without errors cannot be asserted on offline or in CI.
+ * The stand-in is a REMOTE image (#1530). This said "Local, not
+ * picsum.photos", so offline CI could assert on the page; the offline fixture
+ * now serves picsum and pravatar from its cache (tests/fixtures/offline.ts),
+ * and media sources are remote by ruling (#762, #1122). No local images
+ * outside docs/behaviors (#1187): the pages had been hand-patched from this
+ * default's '/images/...' file to picsum URLs, and the next regeneration
+ * would have put the local file back.
  */
 const URL_VALUED_PROPS = /^(image|background|src|avatar|poster|thumbnail|cover)$/i;
-const PLACEHOLDER_IMAGE = '/images/dachshund-puppy-image-960x540.jpg';
 // #795: was '/images/wb.png' -- a 1.5 MB 1024x1024 bitmap, pulled in by every
 // generated demo page that documents a `logo` prop, to draw a mark a few dozen
 // pixels tall. The site's own icon is a 166-byte vector and is already served.
@@ -75,8 +84,37 @@ const PLACEHOLDER_LOGO = '/assets/icons/favicon.svg';
 function samplePropValue(propName, propDef) {
   if (propDef && propDef.default) return propDef.default;
   if (/^logo$/i.test(propName)) return PLACEHOLDER_LOGO;
-  if (URL_VALUED_PROPS.test(propName)) return PLACEHOLDER_IMAGE;
+  // An image prop falls through to prose too; remoteImages() swaps it.
   return `Sample ${propName}`;
+}
+
+const REMOTE_URL = /^https?:\/\//i;
+const IMAGE_FILE = /\.(svg|png|jpe?g|gif|webp|avif)$/i;
+
+/**
+ * #1530: every image a demo shows is remote, whatever the schema says. The
+ * schemas still carry local files in their matrices and defaults
+ * ('/images/avatar.svg', '/images/placeholder.svg', the dachshund photo --
+ * #1187 tracks those) and "this is the background"-style defaults (#1102's
+ * self-naming defaults, which John kept on purpose, but which as an image
+ * source are a request for a page called "this is the background"). Both are
+ * swapped for a remote stand-in here; a local path that is not an image
+ * (mdhtml's src="../code.md") is the demo's subject and is left alone.
+ *
+ * Seeded by the behavior, so each card type keeps one stable picture: these
+ * are the picsum URLs cards.html had been hand-patched to. An avatar is a
+ * face, seeded by the person the demo names, so John and Jane differ.
+ */
+function remoteImages(schema, attrs) {
+  const out = {};
+  for (const [k, v] of Object.entries(attrs)) {
+    const local = typeof v === 'string' && !REMOTE_URL.test(v) && (IMAGE_FILE.test(v) || !/[/.]/.test(v));
+    if (!URL_VALUED_PROPS.test(k) || !local) { out[k] = v; continue; }
+    out[k] = /^avatar$/i.test(k)
+      ? `https://i.pravatar.cc/150?u=${slugify(attrs.author || attrs.name || schema.schemaFor)}`
+      : `https://picsum.photos/seed/${schema.schemaFor}/600/400`;
+  }
+  return out;
 }
 
 function camelToKebab(str) {
@@ -235,7 +273,8 @@ if (!Object.keys(NATIVE_MAP).length) {
   throw new Error('nativeMap parsed empty — refusing to generate demos that would all carry a redundant attribute');
 }
 
-function buildDemo(schema, tag, attrs) {
+function buildDemo(schema, tag, rawAttrs) {
+  const attrs = remoteImages(schema, rawAttrs);
   const isTrigger = TRIGGER_COMPONENTS.has(schema.schemaFor);
   // Skip the values generatePageHtml's attr emitter drops (false/null/
   // undefined) -- the label must never claim an attribute that isn't
@@ -301,13 +340,13 @@ function generateComponentSections(schema) {
         // default, OFF must be written out -- name="false", which the behaviors
         // read as off since #747. When it is off by default, false IS the
         // default, so it stays unwritten and {x:false} still dedupes with {}.
-        // Written in the schema's own camelCase (#1125), not kebab: the dashed
-        // spelling everywhere else in this generator is #1526.
+        // Written in the schema's own camelCase (#1125), as every attribute
+        // this generator writes is now.
         if (val === false) {
           if (props[key]?.default === true) attrs[key] = 'false';
           continue;
         }
-        attrs[camelToKebab(key)] = val;
+        attrs[key] = val;
       }
       return buildDemo(schema, tag, attrs);
     });
@@ -326,12 +365,14 @@ function generateComponentSections(schema) {
     def.enum && Array.isArray(def.enum) && def.enum.length > 1
   );
   for (const [propName, propDef] of enumProps) {
+    // #1125: the attribute is the schema's camelCase name; only the section
+    // id stays dashed, because pages and specs link to it.
     const attrName = camelToKebab(propName);
     const demos = propDef.enum.map(val => {
-      const attrs = { [attrName]: val, ...(DEMO_COMPANIONS[propName] || {}) };
+      const attrs = { [propName]: val, ...(DEMO_COMPANIONS[propName] || {}) };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
+          attrs[rk] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -360,10 +401,10 @@ function generateComponentSections(schema) {
   );
   if (boolProps.length > 0) {
     const demos = boolProps.map(([propName]) => {
-      const attrs = { [camelToKebab(propName)]: true };
+      const attrs = { [propName]: true };
       for (const [rk, rv] of Object.entries(props)) {
         if (rv.required && rk !== propName) {
-          attrs[camelToKebab(rk)] = samplePropValue(rk, rv);
+          attrs[rk] = samplePropValue(rk, rv);
         }
       }
       return buildDemo(schema, tag, attrs);
@@ -388,9 +429,9 @@ function generateComponentSections(schema) {
     const defaultAttrs = {};
     for (const [propName, propDef] of Object.entries(props)) {
       if (propDef.default !== undefined && propDef.default !== '' && propDef.default !== false) {
-        defaultAttrs[camelToKebab(propName)] = propDef.default;
+        defaultAttrs[propName] = propDef.default;
       } else if (propDef.required) {
-        defaultAttrs[camelToKebab(propName)] = samplePropValue(propName, propDef);
+        defaultAttrs[propName] = samplePropValue(propName, propDef);
       }
     }
     if (Object.keys(defaultAttrs).length > 0) {
@@ -405,6 +446,11 @@ function generateComponentSections(schema) {
   }
 
   return sections;
+}
+
+// A section's anchor id: its own, or one derived from component + heading.
+function sectionIdOf(section) {
+  return section.id || slugify(section.component ? `${section.component}-${section.heading}` : section.heading);
 }
 
 // ─── Deduplicate demos across sections ───
@@ -470,10 +516,25 @@ function buildMultiComponentPage(pageDef, defaults) {
   // shape, since these don't come from a schema. `position: 'start'` pins a
   // section before the auto-generated ones (e.g. a curated gallery that
   // page-level tests target via .first()/.nth(0)); default is append.
+  //
+  // #1530: `replaces: "<generated section id>"` puts a hand-authored section
+  // in the place of a generated one -- the curated articles #426 wrote on
+  // content.html, the #682 <select> samples, the #1598 expandable cards whose
+  // text has to overflow. Those had been typed into the HTML output, so the
+  // next regeneration silently threw them away. A `replaces` naming no
+  // generated section throws: the schema moved on and the override is stale.
+  // `before` is raw markup between the section's numbered comment and its
+  // <section> tag (the comment that says why the section is hand-authored).
   const manualStart = [];
   const manualEnd = [];
   for (const manual of (pageDef.manualSections || [])) {
-    const section = { heading: manual.heading, raw: manual.html, script: manual.script, id: manual.id };
+    const section = { heading: manual.heading, raw: manual.html, script: manual.script, id: manual.id, before: manual.before };
+    if (manual.replaces) {
+      const at = deduplicated.findIndex(s => sectionIdOf(s) === manual.replaces);
+      if (at < 0) throw new Error(`${pageDef.id}: manual section "${manual.heading}" replaces "${manual.replaces}", which is not a generated section`);
+      deduplicated[at] = section;
+      continue;
+    }
     (manual.position === 'start' ? manualStart : manualEnd).push(section);
   }
   deduplicated.unshift(...manualStart);
@@ -495,7 +556,10 @@ function buildMultiComponentPage(pageDef, defaults) {
       scripts: [{
         type: 'module',
         src: '../../src/core/wb-lazy.js',
-        init: 'WB.init({ autoInject: true })'
+        init: 'WB.init({ autoInject: true })',
+        // #1598: page-specific lines run once the scan is done (cards.html
+        // re-jumps to its #hash). Hand-typed into the output before #1530.
+        afterScan: pageDef.afterScan
       }]
     },
     header: {
@@ -503,7 +567,7 @@ function buildMultiComponentPage(pageDef, defaults) {
       content: `${pageDef.icon || '📦'} ${pageDef.title}`,
       subtitle: {
         tag: 'p',
-        content: pageDef.description || `Showcasing ${(pageDef.components || []).length} components`
+        content: pageDef.description || `Showcasing ${(pageDef.components || []).length} behaviors`
       }
     },
     sections: deduplicated
@@ -511,6 +575,16 @@ function buildMultiComponentPage(pageDef, defaults) {
 
   return { pageSchema, componentResults };
 }
+
+/**
+ * The scan every page (and the index) runs after init. No { eager: true }:
+ * it overrode x-demo's IntersectionObserver, so cards.html built all 293
+ * demos before the page could be used -- 13,680ms of main-thread blocking,
+ * one task 9,110ms long. 4278fcf7 (#987) dropped it from all twelve pages by
+ * hand (952ms total, 48 demos at load, the rest on scroll) and never told
+ * this template, so a regeneration put it back (#1530).
+ */
+const SCAN_LINE = '    await WB.scan(document.body);';
 
 // ─── Generate index page HTML ───
 
@@ -558,7 +632,10 @@ function generateIndexHtml(siteSchema, pageResults) {
   const totalPages = pageResults.filter(p => p.status === 'ok').length;
   const totalComponents = pageResults.reduce((s, p) => s + (p.componentCount || 0), 0);
   const totalDemos = pageResults.reduce((s, p) => s + (p.totalDemos || 0), 0);
-  lines.push(`    <div class="site-stats">${totalPages} pages · ${totalComponents} components · ${totalDemos} demos</div>`);
+  // #1530: "behaviors", the word the committed index had been hand-corrected
+  // to. There are no components (217cf1c7, John: "Get rid of the word
+  // components, rename to behaviors in entire project").
+  lines.push(`    <div class="site-stats">${totalPages} pages · ${totalComponents} behaviors · ${totalDemos} demos</div>`);
 
   lines.push('    <div class="page-grid">');
   for (const page of pageResults) {
@@ -569,7 +646,7 @@ function generateIndexHtml(siteSchema, pageResults) {
     if (page.description) {
       lines.push(`          <p>${page.description}</p>`);
     }
-    lines.push(`          <span class="stats">${page.componentCount || 0} components · ${page.sectionCount || 0} sections · ${page.totalDemos || 0} demos</span>`);
+    lines.push(`          <span class="stats">${page.componentCount || 0} behaviors · ${page.sectionCount || 0} sections · ${page.totalDemos || 0} demos</span>`);
     lines.push('        </a>');
     lines.push('      </div>');
   }
@@ -581,7 +658,7 @@ function generateIndexHtml(siteSchema, pageResults) {
   lines.push("    import WB from '../../src/core/wb-lazy.js';");
   lines.push('    window.WB = WB;');
   lines.push('    await WB.init({ autoInject: true });');
-  lines.push('    await WB.scan(document.body, { eager: true });');
+  lines.push(SCAN_LINE);
   lines.push(`    console.log('${siteSchema.title} index initialized');`);
   // Same readiness flag every generated page sets (see the page template
   // below): the index never had it, so demos-site-page-padding.spec.ts waited
@@ -625,8 +702,9 @@ function generatePageHtml(pageSchema) {
   lines.push('<body class="demo-page">');
 
   // Nav back to index
-  lines.push('  <nav style="margin-bottom: 1rem;">');
-  lines.push('    <a href="index.html" style="color: var(--text-secondary, #aaa); text-decoration: none;">← Back to Index</a>');
+  // #779: no inline styles; showcase.css styles the nav and link.
+  lines.push('  <nav class="site-demo__nav">');
+  lines.push('    <a href="index.html" class="site-demo__back">← Back to Index</a>');
   lines.push('  </nav>');
 
   if (pageSchema.header) {
@@ -642,10 +720,11 @@ function generatePageHtml(pageSchema) {
     const seenIds = new Set();
     for (let i = 0; i < pageSchema.sections.length; i++) {
       const section = pageSchema.sections[i];
-      let sectionId = section.id || slugify(section.component ? `${section.component}-${section.heading}` : section.heading);
+      let sectionId = sectionIdOf(section);
       if (seenIds.has(sectionId)) sectionId = `${sectionId}-${i}`;
       seenIds.add(sectionId);
       lines.push(`  <!-- ${i + 1}. ${section.heading} -->`);
+      if (section.before) lines.push(section.before);
       lines.push(`  <section id="${sectionId}">`);
       lines.push(`  <h2>${section.heading}</h2>`);
       if (section.raw) {
@@ -714,12 +793,8 @@ function generatePageHtml(pageSchema) {
       lines.push(`    import WB from '${script.src}';`);
       lines.push('    window.WB = WB;');
       lines.push(`    await ${script.init};`);
-      // init()'s own scan() defers everything to an IntersectionObserver
-      // (perf win for long content pages) -- wrong tradeoff here: every
-      // element on this page IS a worked example, expected to render
-      // correctly the instant the page loads, not once scrolled near.
-      // Same fix demos/playground.html already applies for the same reason.
-      lines.push('    await WB.scan(document.body, { eager: true });');
+      lines.push(SCAN_LINE);
+      if (script.afterScan) lines.push(script.afterScan);
       lines.push(`    console.log('${pageSchema.title} initialized');`);
       // #628: hand-added to 7 of 8 demos/site/*.html pages by 5e57bc0 (missed
       // feedback.html) but never backfilled here -- a regen from this template
@@ -740,8 +815,16 @@ function generatePageHtml(pageSchema) {
 
 // ─── Main ───
 
-const args = process.argv.slice(2).filter(a => !a.startsWith('--'));
-const flags = process.argv.slice(2).filter(a => a.startsWith('--'));
+// --out-dir <dir> (#1530) writes the pages AND the build report into <dir>
+// instead of the schema's outputDir and data/: the guard spec
+// (tests/compliance/site-pages-match-generator.spec.ts) regenerates into a
+// temp directory and compares, leaving the tracked files alone.
+const argv = process.argv.slice(2);
+const outDirAt = argv.indexOf('--out-dir');
+const outDirArg = outDirAt >= 0 ? argv[outDirAt + 1] : undefined;
+const rest = outDirAt >= 0 ? argv.filter((_, i) => i !== outDirAt && i !== outDirAt + 1) : argv;
+const args = rest.filter(a => !a.startsWith('--'));
+const flags = rest.filter(a => a.startsWith('--'));
 const siteSchemaPath = args[0];
 const dryRun = flags.includes('--dry-run');
 const indexOnly = flags.includes('--index-only');
@@ -751,6 +834,7 @@ if (!siteSchemaPath) {
   console.error('  node scripts/generate-site.mjs <site-schema.json>');
   console.error('  node scripts/generate-site.mjs <site-schema.json> --dry-run');
   console.error('  node scripts/generate-site.mjs <site-schema.json> --index-only');
+  console.error('  node scripts/generate-site.mjs <site-schema.json> --out-dir <dir>');
   process.exit(1);
 }
 
@@ -759,7 +843,8 @@ console.log(`   Schema: ${siteSchemaPath}`);
 console.log(`   Mode: ${dryRun ? 'DRY RUN (validate only)' : indexOnly ? 'INDEX ONLY' : 'FULL BUILD'}\n`);
 
 const siteSchema = loadJSON(siteSchemaPath);
-const outputDir = resolve(siteSchema.outputDir || 'demos/site');
+const outputDir = resolve(outDirArg || siteSchema.outputDir || 'demos/site');
+const resultPath = outDirArg ? join(outputDir, 'site-generator-result.json') : resolve('data/site-generator-result.json');
 
 // Ensure output directory exists
 mkdirSync(outputDir, { recursive: true });
@@ -823,21 +908,14 @@ for (const pageDef of (siteSchema.pages || [])) {
       continue;
     }
 
-    // Write page schema to temp location
-    const tempSchemaPath = join(PAGES_DIR, `_site-${pageId}.page.json`);
-    writeFileSync(tempSchemaPath, JSON.stringify(pageSchema, null, 2), 'utf-8');
-
-    // Generate HTML directly (inline — avoids temp file pipeline overhead)
+    // Generate HTML directly (inline — avoids temp file pipeline overhead).
+    // #1530: a copy of pageSchema used to be written to
+    // src/wb-models/pages/_site-<id>.page.json here and deleted after; nothing
+    // read it, and the guard spec runs this script, so it is gone.
     const html = generatePageHtml(pageSchema);
     const htmlPath = join(outputDir, `${pageId}.html`);
     writeFileSync(htmlPath, html, 'utf-8');
     console.log(`  ✅ Generated: ${htmlPath}`);
-
-    // Clean up temp schema
-    try {
-      const { unlinkSync } = await import('fs');
-      unlinkSync(tempSchemaPath);
-    } catch { /* ok if cleanup fails */ }
 
     pageResults.push({
       id: pageId,
@@ -928,11 +1006,13 @@ const okCount = pageResults.filter(p => p.status === 'ok').length;
 const errCount = pageResults.filter(p => p.status === 'error').length;
 const skipCount = pageResults.filter(p => p.status === 'skipped').length;
 
+// #1530: the report is committed, so it holds only what the inputs decide.
+// generatedAt and elapsed changed on every run, and outputDir was the absolute
+// path of whoever ran it last (C:\Users\jwpmi\...), so a regeneration that
+// changed nothing still rewrote the file. Time is printed below instead.
 const result = {
-  generatedAt: new Date().toISOString(),
-  siteSchema: siteSchemaPath,
-  outputDir,
-  elapsed: `${elapsed}s`,
+  siteSchema: siteSchemaPath.replace(/\\/g, '/'),
+  outputDir: relative(resolve('.'), outputDir).replace(/\\/g, '/'),
   summary: {
     totalPages: siteSchema.pages?.length || 0,
     generated: okCount,
@@ -945,7 +1025,7 @@ const result = {
   pages: pageResults
 };
 
-writeFileSync(resolve('data/site-generator-result.json'), JSON.stringify(result, null, 2), 'utf-8');
+writeFileSync(resultPath, JSON.stringify(result, null, 2), 'utf-8');
 
 console.log(`\n══════════════════════════════════════════`);
 console.log(`  🌐 Site Generation Complete`);

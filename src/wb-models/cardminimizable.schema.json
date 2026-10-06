@@ -67,7 +67,8 @@
     },
     {
       "name": "content",
-      "tag": "main",
+      "tag": "div",
+      "class": "x-card__body",
       "public": true,
       "required": true,
       "content": "<slot>{{content}}</slot>",
@@ -147,7 +148,6 @@
       "page": "cards",
       "tag": "x-cardminimizable",
       "renders": true,
-      "baseClass": "x-card-minimizable",
       "minInstances": 2,
       "checkText": [
         "Basic",

@@ -18,7 +18,7 @@ centering the box itself (default) or by centering its children with flexbox
 
 | Property | Attribute | Type | Default | Description |
 |----------|-----------|------|---------|-------------|
-| `maxWidth` | `max-width` | string | `""` (none) | Caps the element's width; combined with `margin-left`/`margin-right: auto` to center the box |
+| `maxWidth` | `maxWidth` | string | `""` (none) | Caps the element's width; combined with `margin-left`/`margin-right: auto` to center the box |
 | `gutters` | `gutters` | string | `"1rem"` | Left/right padding, so content never touches the viewport edge |
 | `intrinsic` | `intrinsic` | boolean | `false` | Switches to `display: flex; flex-direction: column; align-items: center` — centers children by their own width instead of constraining the box |
 
@@ -30,7 +30,7 @@ centering the box itself (default) or by centering its children with flexbox
 ### Constrained width (default)
 
 <div x-demo>
-<div x-center max-width="400px">
+<div x-center maxWidth="400px">
   <p>This block is capped at 400px and centered on the page, with 1rem of gutter padding on each side.</p>
 </div>
 </div>
@@ -38,7 +38,7 @@ centering the box itself (default) or by centering its children with flexbox
 ### Custom gutters
 
 <div x-demo>
-<div x-center max-width="300px" gutters="2rem">
+<div x-center maxWidth="300px" gutters="2rem">
   <p>Wider gutters around a narrower column.</p>
 </div>
 </div>

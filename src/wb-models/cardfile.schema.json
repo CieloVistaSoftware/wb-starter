@@ -184,13 +184,11 @@
         },
         {
           "filename": "architecture-diagram.png",
-          "size": "2.4 MB",
-          "href": "/files/architecture-diagram.png"
+          "size": "2.4 MB"
         },
         {
           "filename": "product-walkthrough.mp4",
-          "size": "58 MB",
-          "href": "/files/product-walkthrough.mp4"
+          "size": "58 MB"
         },
         {
           "filename": "interview-recording.m4a",
@@ -198,8 +196,7 @@
         },
         {
           "filename": "release-assets.zip",
-          "size": "104 MB",
-          "href": "/files/release-assets.zip"
+          "size": "104 MB"
         },
         {
           "filename": "sensor-capture.bin",
@@ -211,7 +208,6 @@
       "page": "cards",
       "tag": "x-cardfile",
       "renders": true,
-      "baseClass": "x-card-file",
       "minInstances": 3,
       "checkText": [],
       "checkClasses": [

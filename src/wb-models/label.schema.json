@@ -9,7 +9,7 @@
       "description": "The label text",
       "default": "this is the x label"
     },
-    "label-position": {
+    "labelPosition": {
       "type": "string",
       "enum": [
         "left",

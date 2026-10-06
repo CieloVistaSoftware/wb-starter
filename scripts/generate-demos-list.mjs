@@ -58,7 +58,7 @@ const SITE_CATEGORIES = (() => {
     description: p.description,
     href: `demos/site/${p.id}.html`,
     stats: stats[p.id]
-      ? `${stats[p.id].componentCount} components · ${stats[p.id].totalDemos} demos`
+      ? `${stats[p.id].componentCount} behaviors · ${stats[p.id].totalDemos} demos`
       : '',
   }));
 })();
@@ -158,6 +158,19 @@ const CATEGORY_EXAMPLES = {
 // generator writes the bare URL) -- a drift gate that fails on a correct tree.
 function norm(text) {
   return text == null ? null : text.replace(/\r\n/g, '\n').replace(/(\/(?:src|config)\/[^"?]+)\?v=[^"]*/g, '$1');
+}
+
+/**
+ * The ?v= cache keys main's stamp workflow writes (stamp-version.js) are not
+ * this script's to drop: norm() ignores them so a stamp alone never reads as
+ * stale, but a real rewrite wrote the file without them, and the stylesheet
+ * lost its cache key until the next stamp. Carry each one over from the
+ * file being replaced.
+ */
+function carryStamps(text, current) {
+  if (!current) return text;
+  const stamps = new Map([...current.matchAll(/(\/(?:src|config)\/[^"?]+)\?v=([^"]*)/g)].map((m) => [m[1], m[2]]));
+  return text.replace(/(\/(?:src|config)\/[^"?]+)(?=")/g, (url) => (stamps.has(url) ? `${url}?v=${stamps.get(url)}` : url));
 }
 
 function titleOf(file, fallback) {
@@ -322,8 +335,8 @@ if (CHECK) {
   if (indexStale) { console.error(`demos/index.html is stale — run: node scripts/generate-demos-list.mjs`); process.exit(1); }
   console.log(`demos list up to date (${files.length} demos).`);
 } else {
-  if (pageStale) fs.writeFileSync(PAGE, next);
-  if (indexStale) fs.writeFileSync(INDEX, indexHtml);
+  if (pageStale) fs.writeFileSync(PAGE, carryStamps(next, page));
+  if (indexStale) fs.writeFileSync(INDEX, carryStamps(indexHtml, currentIndex));
   const changed = [pageStale && 'pages/demos.html', indexStale && 'demos/index.html'].filter(Boolean);
   console.log(
     `${files.length} demo links (in ${CATEGORIES.filter((c) => byCategory.get(c.key).length).length} categories) — ` +

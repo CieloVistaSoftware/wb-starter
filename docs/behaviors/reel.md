@@ -18,7 +18,7 @@ without any JavaScript drag logic.
 
 | Property | Attribute | Type | Default | Description |
 |----------|-----------|------|---------|-------------|
-| `itemWidth` | `item-width` | string | `"auto"` | When set to a length (e.g. `200px`), applied as a fixed `width` on every child; `"auto"` leaves each child's natural width |
+| `itemWidth` | `itemWidth` | string | `"auto"` | When set to a length (e.g. `200px`), applied as a fixed `width` on every child; `"auto"` leaves each child's natural width |
 | `gap` | `gap` | string | `"1rem"` | Gap between items |
 
 The container gets `display: flex`, `overflow-x: auto`, and
@@ -42,7 +42,7 @@ The container gets `display: flex`, `overflow-x: auto`, and
 ### Fixed item width
 
 <div x-demo>
-<div x-reel item-width="150px" gap="0.5rem">
+<div x-reel itemWidth="150px" gap="0.5rem">
   <div>Card 1</div>
   <div>Card 2</div>
   <div>Card 3</div>

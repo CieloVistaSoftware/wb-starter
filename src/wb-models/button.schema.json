@@ -279,8 +279,8 @@
   "test": {
     "setup": [
       "<button>Basic button content</button>",
-      "<button icon-position=\"start\">iconPosition=start</button>",
-      "<button icon-position=\"end\">iconPosition=end</button>",
+      "<button iconPosition=\"start\">iconPosition=start</button>",
+      "<button iconPosition=\"end\">iconPosition=end</button>",
       "<button variant=\"primary\">variant=primary</button>",
       "<button variant=\"secondary\">variant=secondary</button>",
       "<button variant=\"success\">variant=success</button>",

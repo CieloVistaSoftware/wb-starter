@@ -1,4 +1,4 @@
-import { readFlag, readAttr, readOption } from '../core/read-attr.js';
+import { readFlag, readAttr, readOption, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 import { dragStartPoint } from '../core/drag-start.js';
 /**
@@ -25,7 +25,8 @@ import { dragStartPoint } from '../core/drag-start.js';
  * SEMANTIC STANDARD (MANDATORY):
  * - Container: <article> (preferred) or <section>
  * - Header content (title, subtitle): <header>
- * - Main content: <main>
+ * - Body content: <div class="x-card__body"> -- never <main>, which is only
+ *   valid under html/body/div/form, not inside an <article> (#945)
  * - Footer content (actions, buttons): <footer>
  * 
  * ALL text elements are EDITABLE via double-click in the builder
@@ -137,6 +138,44 @@ function cardHtmlPart(parent, tag, className, html) {
   return el;
 }
 
+// THE CARD BODY (#945). It used to be a <main>, built at eight sites. The spec
+// only allows <main> under html, body, div or form, so every card body inside
+// an <article>, <section> or <aside> was invalid HTML -- 273 of them on
+// cards.html, each one also a "main" landmark competing with the page's own.
+// John: "the main context should fit without needing a main tag."
+//
+// One element, one class, every card: <div class="x-card__body">. A typed card
+// whose body has its own part class (x-notification__content, ...) keeps it as
+// a second class; the body is still the same element everywhere.
+const CARD_BODY_CLASS = 'x-card__body';
+
+function cardBody(parent, partClass) {
+  return cardPart(parent, 'div', partClass ? `${CARD_BODY_CLASS} ${partClass}` : CARD_BODY_CLASS);
+}
+
+/** The card's body, if it already has one: built, or still an authored <main>. */
+function findCardBody(element) {
+  return element.querySelector(`:scope > .${CARD_BODY_CLASS}, :scope > main`);
+}
+
+// An AUTHORED <main> inside a card (`<article><header>..</header><main>..
+// </main></article>`, the shape card.md taught) is the card's body, and is
+// invalid there for the same reason. It becomes the body element: the same
+// attributes and the same live child nodes, moved rather than copied, so
+// anything already holding a reference to a child keeps working.
+function adoptAsCardBody(el) {
+  if (el.tagName !== 'MAIN') {
+    el.classList.add(CARD_BODY_CLASS);
+    return el;
+  }
+  const body = document.createElement('div');
+  for (const { name, value } of Array.from(el.attributes)) body.setAttribute(name, value);
+  body.classList.add(CARD_BODY_CLASS);
+  body.append(...el.childNodes);
+  el.replaceWith(body);
+  return body;
+}
+
 function cardImg(parent, className, src, alt) {
   const img = cardPart(null, 'img', className);
   img.src = src;
@@ -246,11 +285,11 @@ export function composeCard(element, options = {}) {
   //   - schemaProcessed: the structure came from $view, so innerHTML is the
   //     BUILT markup, not the author's -- re-injecting it would nest the card
   //     inside itself.
-  //   - an existing .x-card__main/__header: a MutationObserver re-visit of an
+  //   - an existing .x-card__body/__header: a MutationObserver re-visit of an
   //     already-built card, same nesting hazard.
   //   - trim(): whitespace-only innerHTML is truthy, and would otherwise
-  //     manufacture an empty <main> -- the blank-line problem #608 removed.
-  const alreadyBuilt = !!element.querySelector(':scope > .x-card__main, :scope > .x-card__header, :scope > .x-card__body');
+  //     manufacture an empty body -- the blank-line problem #608 removed.
+  const alreadyBuilt = !!element.querySelector(`:scope > .x-card__header, :scope > .${CARD_BODY_CLASS}`);
   const authoredContent = (schemaProcessed || alreadyBuilt) ? '' : (element.innerHTML || '').trim();
 
   const config = {
@@ -314,7 +353,7 @@ export function composeCard(element, options = {}) {
     // cardprofile.schema.json) -- both resolve to the same themed tooltip
     // below, `tooltip` taking priority if a card author sets both.
     tooltip: options.tooltip || element.getAttribute('tooltip') || '',
-    hoverText: readOption(element, options, 'hoverText', 'hoverText') || element.getAttribute('hover-text') || '',
+    hoverText: readOption(element, options, 'hoverText', 'hoverText') || authoredAttr(element, 'hover-text') || '',
     onClick: options.onClick || element.dataset.onClick || '',
     dataContext: options.dataContext || element.dataset.dataContext || '{}',
     // v3.0: Skip structure building if schema already did it
@@ -346,11 +385,17 @@ export function composeCard(element, options = {}) {
   // element can have tag name x-card since 4.0.0), so it always ran -- but it
   // read as a comment-only line, and the next statement anyone added after it
   // would have been silently swallowed into the dangling branch.
-  // #969: no variant class either. A typed card already carries its own
-  // attribute (`x-cardimage`, `x-cardhero`, ...), which card.css and the shared
-  // :is([x-card], [x-cardbutton], ...) rules select directly, so an injected
-  // `x-card--image` only said the same thing a second time.
-  
+  //
+  // #969: no variant class either. `x-card--${behavior}` was stamped here on
+  // every typed card, and each typed function added a second spelling of the
+  // same fact (x-card-expandable, x-stats, x-portfolio, ...). John:
+  // "`x-cardexpandable` -- shouldn't this be enough to get rid of class
+  // assignments?" It is: the attribute that applied the behavior is on the
+  // element, and card.css / notification.css select [x-cardexpandable] etc.
+  // with the same (0,1,0) weight the class had. Classes that say what STATE
+  // a card is in (--expanded, --minimized, --dragging) stay; they are not
+  // written anywhere else.
+
   // Apply hover text as a THEMED WB tooltip (x-tooltip / tooltip.js), not
   // the native browser `title` attribute -- native title tooltips are
   // unstyled, slow to appear, and inconsistent across browsers (#283). A
@@ -401,7 +446,7 @@ export function composeCard(element, options = {}) {
   //
   // flex-direction was already left out for exactly this reason -- the comment
   // that used to sit here explained that setting it inline would block
-  // `.x-product[x-cardhorizontal] { flex-direction: row }`. That reasoning
+  // `[x-cardproduct][x-cardhorizontal] { flex-direction: row }`. That reasoning
   // applies to every property in the object, not just that one.
   // The single value no stylesheet can know: a background the AUTHOR passed
   // in. #779: a generated stylesheet rule, not the style attribute. Weight 3
@@ -541,25 +586,27 @@ export function composeCard(element, options = {}) {
      * Each of them calls this once after building, rather than growing eight
      * copies of the same six lines.
      *
-     * No-ops when there is nothing authored, or when a <main> already carries
+     * No-ops when there is nothing authored, or when a body already carries
      * it -- appending an empty box is the blank-line problem #608 removed.
      */
     renderAuthoredContent: () => {
       if (!config.content) return null;
-      // An existing <main> is filled rather than skipped. cardstats builds its
-      // own EMPTY .x-card__main, so bailing out on "a main already exists"
-      // left the content homeless AND left a styled empty box on screen -- the
+      // An existing body is filled rather than skipped. cardstats builds its
+      // own EMPTY body, so bailing out on "a body already exists" left the
+      // content homeless AND left a styled empty box on screen -- the
       // blank-line problem of #608 with the content loss of #678 on top.
-      // Only fill it when it is empty: a main with real content in it is
+      // Only fill it when it is empty: a body with real content in it is
       // somebody else's, and overwriting it would be a different bug.
-      const existing = element.querySelector(':scope > main');
-      if (existing) {
+      const found = findCardBody(element);
+      if (found) {
+        const existing = adoptAsCardBody(found);
         if (existing.innerHTML.trim()) return null;
         existing.innerHTML = config.content;
         return existing;
       }
-      // card.css targets `article > main`.
-      return cardHtmlPart(element, 'main', '', config.content);
+      const body = cardBody(element);
+      body.innerHTML = config.content;
+      return body;
     },
     
     // =========================================
@@ -592,11 +639,10 @@ export function composeCard(element, options = {}) {
     },
     
     /**
-     * Create the main content area
+     * Create the body content area (a <div class="x-card__body">, #945)
      */
     createMain: (content = '') => {
-      const m = document.createElement('main');
-      // card.css targets `article > main`.
+      const m = cardBody(null);
       
       // Use config.content if no content passed
       const finalContent = content || config.content;
@@ -721,11 +767,14 @@ export function composeCard(element, options = {}) {
       // MAIN — render ONLY authored content. Never inject placeholder text: a card
       // with no body (e.g. an image card) must show nothing there, not phantom
       // "Lorem ipsum" that isn't in the source. (#202)
+      //
+      // An authored <main> handed in as the existing body becomes the body
+      // element first (#945): a <main> is invalid inside the card.
+      if (main) main = adoptAsCardBody(main);
       if (showMain) {
         const mainText = mainContent || config.content;
         if (!main && mainText) {
-          const mainEl = document.createElement('main');
-          // card.css targets `article > main`.
+          const mainEl = cardBody(null);
           mainEl.innerHTML = mainText;
           main = mainEl;
           if (footer) {
@@ -740,7 +789,7 @@ export function composeCard(element, options = {}) {
              main.innerHTML = config.content;
           }
           // #608: John -- "if there is no content, then don't show blank
-          // lines." A schema-built <main> shell with genuinely nothing to
+          // lines." A schema-built body shell with genuinely nothing to
           // show (no config.content, no authored innerHTML) used to get
           // enhanced anyway (padding/flex/color applied), leaving a
           // styled-but-empty box that reads as a blank line -- the same
@@ -752,9 +801,8 @@ export function composeCard(element, options = {}) {
             main.remove();
             main = null;
           }
-          // Already a <main> inside the card -- card.css matches the tag. The
-          // padding/flex/colour fallbacks written onto an AUTHORED <main> here
-          // were card.css's `article > main` values; deleted (#779).
+          // The padding/flex/colour fallbacks once written onto an AUTHORED
+          // body here were card.css's own body values; deleted (#779).
         }
       }
       
@@ -819,8 +867,8 @@ function badgeAlreadyRendered(element, badge) {
   );
 }
 
-/** <main> elements card() built around loose body content (see card()). */
-const gatheredMains = new WeakSet();
+/** Bodies card() built around loose body content (see card()). */
+const gatheredBodies = new WeakSet();
 
 export function card(element, options = {}) {
   // #202: a legacy MVVM template (schema $view / views-registry / partial) may
@@ -835,10 +883,10 @@ export function card(element, options = {}) {
     element.innerHTML = legacyBody ? legacyBody.innerHTML : '';
   }
 
-  // FIX: Un-wrap auto-generated main if it contains semantic elements
-  // This happens because SchemaBuilder wraps ALL content in the 'main' part defined in schema
-  const autoMain = element.querySelector(':scope > main');
-  if (autoMain && (autoMain.querySelector('header') || autoMain.querySelector('main'))) {
+  // FIX: Un-wrap an auto-generated body if it contains semantic elements
+  // This happens because SchemaBuilder wraps ALL content in the body part defined in schema
+  const autoMain = findCardBody(element);
+  if (autoMain && autoMain.querySelector(`header, main, .${CARD_BODY_CLASS}`)) {
     const fragment = document.createDocumentFragment();
     while (autoMain.firstChild) {
       fragment.appendChild(autoMain.firstChild);
@@ -849,31 +897,31 @@ export function card(element, options = {}) {
 
   // Check for existing semantic structure (direct children)
   const hasHeader = element.querySelector(':scope > header');
-  let hasMain = element.querySelector(':scope > main');
+  // A built body, or an authored <main> (buildStructure adopts it, #945).
+  let hasMain = findCardBody(element);
   const hasFooter = element.querySelector(':scope > footer');
   
   // Determine if we are upgrading raw content
   const isSemantic = hasHeader || hasMain || hasFooter;
 
-  // A semantic card with no <main> but loose body content between its
+  // A semantic card with no body but loose body content between its
   // header/footer -- <article><div x-demo>…</div><footer></footer></article>
   // (pages/offshoring.html). Nothing below captures that content (semantic
   // mode passes content ''), so composeCard() fell back to the WHOLE
-  // innerHTML and buildStructure() pasted it, as a string, into a new <main>
+  // innerHTML and buildStructure() pasted it, as a string, into a new body
   // while the originals stayed put: the body rendered twice, and the copy was
   // a frozen snapshot of whatever the behaviors inside had built so far -- a
   // <div x-demo> copied mid-measurement kept `x-demo--measuring` forever.
-  // MOVE the loose nodes into the <main> instead: one body, live elements.
+  // MOVE the loose nodes into the body instead: one body, live elements.
   if (isSemantic && !hasMain) {
     const loose = Array.from(element.childNodes).filter((n) => n !== hasHeader && n !== hasFooter
       && n.nodeType !== Node.COMMENT_NODE
       && !(n.nodeType === Node.ELEMENT_NODE && /^(HEADER|FOOTER)$/.test(n.tagName)));
     if (loose.some((n) => n.nodeType === Node.ELEMENT_NODE || (n.textContent || '').trim())) {
-      const bodyEl = document.createElement('main');
+      const bodyEl = cardBody(null);
       loose.forEach((n) => bodyEl.appendChild(n));
-      // Styled by card.css like any <main> this file creates -- not given the
-      // inline fallbacks an AUTHORED <main> gets below.
-      gatheredMains.add(bodyEl);
+      // Styled by card.css like any body this file creates.
+      gatheredBodies.add(bodyEl);
       element.insertBefore(bodyEl, hasFooter || null);
       hasMain = bodyEl;
     }
@@ -888,7 +936,7 @@ export function card(element, options = {}) {
   // #683: the precedence rule, one for every card path -- an explicit
   // content="..." attribute WINS over the text between the tags, the same
   // order composeCard() and the typed cards (cardimage, ...) already use.
-  // The children used to be left in place beside the attribute's <main>, so
+  // The children used to be left in place beside the attribute's body, so
   // both rendered: the attribute in the body and the children loose above it.
   const initialContent = isSemantic ? '' : (hasContent || element.innerHTML);
 
@@ -904,7 +952,7 @@ export function card(element, options = {}) {
 
   // Clear the authored children once they are accounted for: in raw mode
   // they were captured above and buildStructure() rebuilds them inside the
-  // new <main> (clearing stops it duplicating them); when the attribute wins
+  // new body (clearing stops it duplicating them); when the attribute wins
   // (#683) they are the losing side of the precedence rule above.
   if (!isSemantic && element.innerHTML.trim()) {
     element.innerHTML = '';
@@ -912,9 +960,9 @@ export function card(element, options = {}) {
   
   // Build structure handles both creation and enhancement. A semantic card
   // with no body keeps none: its authored header/footer are not body content,
-  // and building a <main> from innerHTML would paste copies of them.
+  // and building a body from innerHTML would paste copies of them.
   // #683: nor does a card with no content at all -- a whitespace-only
-  // <div x-card> got an empty padded <main>, the blank line #608 removed
+  // <div x-card> got an empty padded body, the blank line #608 removed
   // from the schema-built path.
   base.buildStructure({ showMain: isSemantic ? !!hasMain : !!String(initialContent || '').trim() });
   
@@ -1177,10 +1225,10 @@ export function cardhero(element, options = {}) {
     height: readOption(element, options, 'height') || '400px',
     cta: readOption(element, options, 'cta'),
     ctaHref: readOption(element, options, 'ctaHref'),
-    ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || element.getAttribute('cta-tooltip'),
+    ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || authoredAttr(element, 'cta-tooltip'),
     ctaSecondary: readOption(element, options, 'ctaSecondary'),
     ctaSecondaryHref: readOption(element, options, 'ctaSecondaryHref'),
-    ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || element.getAttribute('cta-secondary-tooltip'),
+    ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || authoredAttr(element, 'cta-secondary-tooltip'),
     pretitle: readOption(element, options, 'pretitle'),
     // Documented in cardhero.schema.json (enum: default/cosmic/split/
     // minimal/gradient) but never actually read here -- CSS never got a
@@ -1197,6 +1245,10 @@ export function cardhero(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardhero', hoverable: false });
+  // Kept by #969, unlike the typed cards' own classes: `x-hero` is not a
+  // restatement of [x-cardhero]. It is the HERO behavior's class (hero.js
+  // adds it to <div x-hero>), and the hero rules in site.css, hero.css and
+  // x-signature.css reach a card hero through it.
   element.classList.add('x-hero');
   if (config.variant && config.variant !== 'default') {
     element.classList.add(`x-cardhero--${config.variant}`);
@@ -1362,7 +1414,7 @@ export function cardprofile(element, options = {}) {
     // effect (#19: every declared attribute must produce a real effect).
     size: readOption(element, options, 'size') || 'md',
     align: readOption(element, options, 'align') || 'center',
-    hoverText: readOption(element, options, 'hoverText', 'hoverText') || element.getAttribute('hover-text'),
+    hoverText: readOption(element, options, 'hoverText', 'hoverText') || authoredAttr(element, 'hover-text'),
     ...options
   };
 
@@ -1455,12 +1507,11 @@ export function cardpricing(element, options = {}) {
 
   const base = composeCard(element, { ...config, behavior: 'cardpricing' });
   // #779: text-align / container-type / padding:0 (and background-size/
-  // position) are the `.x-pricing` rule in card.css, and `featured` is its
+  // position) are the `[x-cardpricing]` rule in card.css, and `featured` is its
   // `.x-pricing--featured` modifier -- every one of these used to be written
   // inline as well. Only the author's background image travels, as a
   // generated rule (weight 3: card.css sets the card surface through
   // compound selectors the inline style always outranked).
-  element.classList.add('x-pricing');
   element.innerHTML = '';
 
   if (config.featured) element.classList.add('x-pricing--featured');
@@ -1469,7 +1520,7 @@ export function cardpricing(element, options = {}) {
     setRule(element, 'pricing-background', { backgroundImage: `url(${config.background})` }, { weight: 3 });
   }
 
-  // Header with Plan Name (centred by .x-pricing, #779)
+  // Header with Plan Name (centred by [x-cardpricing], #779)
   const header = base.createHeader();
   header.innerHTML = ''; // Clear default
 
@@ -1498,7 +1549,7 @@ export function cardpricing(element, options = {}) {
   element.appendChild(main);
 
   // Footer with CTA
-  // Transparent, borderless: `.x-pricing .x-card__footer` in card.css (#779).
+  // Transparent, borderless: `[x-cardpricing] .x-card__footer` in card.css (#779).
   const footer = base.createFooter();
   footer.innerHTML = ''; // Clear default
 
@@ -1527,7 +1578,7 @@ export function cardstats(element, options = {}) {
     label: readOption(element, options, 'label'),
     icon: readOption(element, options, 'icon'),
     trend: readOption(element, options, 'trend'),
-    trendValue: options.trendValue || element.getAttribute('trend-value') || readAttr(element, 'trendValue'),
+    trendValue: options.trendValue || authoredAttr(element, 'trend-value') || readAttr(element, 'trendValue'),
     // Declared in cardstats.schema.json ("Accent color"), read nowhere.
     color: options.color || readAttr(element, 'color'),
     ...options
@@ -1536,7 +1587,6 @@ export function cardstats(element, options = {}) {
   // Defensive init: catch unexpected runtime errors to avoid killing the page
   try {
     const base = composeCard(element, { ...config, behavior: 'cardstats', hoverable: false });
-    element.classList.add('x-stats');
     element.innerHTML = '';
     // Accent color: an author-supplied, per-instance value, so it travels as a
     // custom property (same convention as --card-image-aspect); what it
@@ -1547,7 +1597,7 @@ export function cardstats(element, options = {}) {
       setRule(element, 'accent', { '--x-stats-accent': config.color });
     }
     // Layout, container-query sizing, and default padding all live in
-    // card.css's `.x-stats` rule now (Law 9, #370 -- was unconditional
+    // card.css's `[x-cardstats]` rule now (Law 9, #370 -- was unconditional
     // inline styles here, which also silently beat x-card--compact/large's
     // own CSS regardless of specificity; x-card__header/__main below get
     // real classes so those variant rules can actually win).
@@ -1555,11 +1605,11 @@ export function cardstats(element, options = {}) {
   // Semantic: Icon belongs in header
   if (config.icon) {
     const header = document.createElement('header');
-    // x-card__header is required even though .x-stats .x-card__header
+    // x-card__header is required even though [x-cardstats] .x-card__header
     // (card.css) overrides its padding/border/background back to zero:
     // card.css's fallback rule `.x-card:not(:has(.x-card__header)):not(
     // :has(.x-card__main)) { padding: 1rem }` outranks (0,3,0 vs 0,2,0
-    // specificity) `.x-stats.x-card--compact/--large`'s own padding when
+    // specificity) `[x-cardstats].x-card--compact/--large`'s own padding when
     // neither class is present, silently forcing 1rem on every variant
     // (confirmed live).
     // card.css targets the tag, not a class.
@@ -1577,8 +1627,7 @@ export function cardstats(element, options = {}) {
   }
 
   // Semantic: Main content
-  const content = document.createElement('main');
-  // card.css targets `article > main`.
+  const content = cardBody(null);
 
   if (config.value) {
     const valueEl = document.createElement('data');
@@ -1632,7 +1681,6 @@ export function cardtestimonial(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardtestimonial', hoverable: false });
-  element.classList.add('x-testimonial');
   element.innerHTML = '';
   // #779: the 1rem padding is `[x-cardtestimonial]` in card.css, and every
   // part below is styled by its class there -- the cssText copies are gone.
@@ -1682,7 +1730,7 @@ export function cardproduct(element, options = {}) {
   const config = {
     image: readOption(element, options, 'image'),
     price: readOption(element, options, 'price'),
-    originalPrice: options.originalPrice || element.getAttribute('original-price') || readAttr(element, 'originalPrice'),
+    originalPrice: options.originalPrice || authoredAttr(element, 'original-price') || readAttr(element, 'originalPrice'),
     badge: readOption(element, options, 'badge'),
     rating: readOption(element, options, 'rating'),
     reviews: readOption(element, options, 'reviews'),
@@ -1697,7 +1745,6 @@ export function cardproduct(element, options = {}) {
   }
 
   const base = composeCard(element, { ...config, behavior: 'cardproduct' });
-  element.classList.add('x-product');
   element.innerHTML = '';
 
   // Product image
@@ -1725,7 +1772,7 @@ export function cardproduct(element, options = {}) {
   const info = document.createElement('div');
   // #779: every part below is styled by its class in card.css (product-info,
   // product-title/-desc/-rating, price-wrap/-current/-original under
-  // .x-product); the cssText copies are gone.
+  // [x-cardproduct]); the cssText copies are gone.
   info.className = 'x-card__product-info';
 
   appendTitleAndSubtitle(info, base.config, 'h3', 'x-card__title x-card__product-title', 'div', 'x-card__subtitle x-card__product-desc');
@@ -1750,11 +1797,11 @@ export function cardproduct(element, options = {}) {
   ctaBtn.className = 'x-card__product-cta';
   // #561: same regression as the cardpricing() CTA above -- #520 removed
   // this inline style.cssText (padding:0.75rem/12px, below the §13 1rem/16px
-  // minimum, and redundant with card.css's already-compliant `.x-product
+  // minimum, and redundant with card.css's already-compliant `[x-cardproduct]
   // .x-card__product-cta` rule at padding:1rem), and commit 0005dbb0
   // (same day, unrelated fix) re-added it verbatim. No inline style needed:
-  // element.classList.add('x-product') below already puts this button
-  // inside `.x-product`, so the CSS rule applies on its own.
+  // the button sits inside the [x-cardproduct] host, so the CSS rule applies
+  // on its own.
   ctaBtn.textContent = config.cta;
 
   const addToCart = () => {
@@ -1816,9 +1863,10 @@ export function cardnotification(element, options = {}) {
   const defaultIcons = { info: 'i', success: 's', warning: 'w', error: 'e' };
   const iconText = customIcon || defaultIcons[variant] || 'i';
 
-  // Variant class: both paths below need it.
+  // Variant class: both paths below need it. Only the modifier: the base
+  // `x-notification` restated [x-cardnotification], which notification.css
+  // and card.css select directly (#969).
   const applyVariantClass = () => {
-    element.classList.add('x-notification');
     if (variant !== 'default') {
       element.classList.add(`x-notification--${variant}`);
     }
@@ -1884,7 +1932,7 @@ export function cardnotification(element, options = {}) {
   cardPart(element, 'span', 'x-notification__icon', iconText);
 
   // Content
-  const content = cardPart(null, 'main', 'x-notification__content');
+  const content = cardBody(null, 'x-notification__content');
   if (title) cardPart(content, 'strong', 'x-notification__title', title);
   if (message) cardPart(content, 'div', 'x-notification__message', message);
   element.appendChild(content);
@@ -2066,12 +2114,11 @@ export function cardlink(element, options = {}) {
     icon: readOption(element, options, 'icon'),
     description: readOption(element, options, 'description') || '',
     badge: readOption(element, options, 'badge') || '',
-    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || element.getAttribute('badge-variant') || 'glass', // glass, gradient
+    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || authoredAttr(element, 'badge-variant') || 'glass', // glass, gradient
     ...options
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardlink' });
-  
   element.innerHTML = '';
   // #779: the host (cursor/position/1.25rem padding) and every part below
   // are the "Link card parts" rules in card.css, which #370 moved there from
@@ -2356,8 +2403,7 @@ export function cardexpandable(element, options = {}) {
   const applyMaxHeight = (el, value) => setRule(el, 'max-height', { '--x-card-expandable-max-height': value });
 
   // Content
-  const contentWrap = document.createElement('main');
-  contentWrap.className = 'x-card__expandable-content';
+  const contentWrap = cardBody(null, 'x-card__expandable-content');
   // #943: padding / overflow / transition are ALL already in card.css's
   // `.x-card__expandable-content` -- the audit classified them COVERED
   // (removing the inline declaration changed nothing on the live element).
@@ -2496,9 +2542,8 @@ export function cardminimizable(element, options = {}) {
   element.appendChild(header);
 
   // Content
-  const content = document.createElement('main');
   // Box and the collapsed state (`.x-card--minimized ...`) are card.css.
-  content.className = 'x-card__minimizable-content';
+  const content = cardBody(null, 'x-card__minimizable-content');
   // Same placeholder as cardexpandable's.
   content.innerHTML = base.config.content || rawContent || CARD_CONTENT_PLACEHOLDER;
   element.appendChild(content);
@@ -2823,7 +2868,6 @@ export function cardportfolio(element, options = {}) {
   };
 
   const base = composeCard(element, { ...config, behavior: 'cardportfolio', hoverable: false });
-  element.classList.add('x-portfolio');
   if (config.variant !== 'default') {
     element.classList.add(`x-portfolio--${config.variant}`);
   }
@@ -2834,7 +2878,7 @@ export function cardportfolio(element, options = {}) {
   // inline declaration outranks every stylesheet rule -- so size="sm"/"lg"/...
   // (composeCard's `.x-card--{size}` classes) could never change the width of
   // a default-variant card. The defaults now live in card.css's
-  // `.x-portfolio` / `.x-portfolio--full` rules, which the size classes beat.
+  // `[x-cardportfolio]` / `.x-portfolio--full` rules, which the size classes beat.
 
   // Availability. The colour of each status is a THEME value (card.css maps
   // `x-portfolio__availability--{status}` onto --success-color etc.), not a
@@ -2882,7 +2926,7 @@ export function cardportfolio(element, options = {}) {
   // No inline styles. The header also picks up the generic card header rule
   // (`article > header`: grid, tinted background, border-bottom) and, via
   // tag-map.js, the page navbar's `.x-header` (flex, 60px height). card.css's
-  // `.x-portfolio > .x-portfolio__header` (0,2,0) outranks both, so the
+  // `[x-cardportfolio] > .x-portfolio__header` (0,2,0) outranks both, so the
   // resets that used to be forced inline here live there -- where the
   // compact/horizontal/full/size rules can still override them.
 
@@ -2964,7 +3008,7 @@ export function cardportfolio(element, options = {}) {
   element.appendChild(header);
 
   // ==================== MAIN CONTENT ====================
-  const main = cardPart(null, 'main', 'x-portfolio__main');
+  const main = cardBody(null, 'x-portfolio__main');
   // padding now lives in card.css's `.x-portfolio__main` base rule -- see
   // the avatarWrap comment above; lets the compact variant's own padding
   // override win without !important.

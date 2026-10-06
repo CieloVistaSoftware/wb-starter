@@ -40,14 +40,13 @@ test.describe('Card Product Behavior', () => {
 
     await page.waitForFunction(() => (window as any).wbReady === true, { timeout: 10000 });
 
-    // Built = settled (x-ready), not a 300ms guess. And the card behavior marks
-    // a variant host with its own modifier (x-card--product) -- the bare
-    // .x-card class the old /x-card/ pattern was written for is gone (a8a7362e),
-    // so name the class that is actually emitted.
+    // Built = settled (x-ready), not a 300ms guess. The host is named by its
+    // attribute: the bare .x-card class went in a8a7362e and the x-card--product
+    // variant class in #969, both restatements of what the markup already says.
     const card = page.locator('#test-product');
     await expect(card).toHaveAttribute('x-ready', '');
     await expect(card).toBeVisible();
-    await expect(card).toHaveClass(/\bx-product\b/);
+    await expect(card).toHaveAttribute('x-cardproduct', '');
 
     // Setup event listener
     const eventPromise = page.evaluate(() => {

@@ -28,7 +28,7 @@ test.describe('Playground: 20 signature heroes example set', () => {
     const first = page.locator('#pg-preview .pg-signature-hero [x-cardhero]').first();
     await first.scrollIntoViewIfNeeded();
     await expect(first).toHaveAttribute('x-ready', '', { timeout: 20000 });
-    await expect(first).toHaveClass(/\bx-hero\b/);
+    await expect(first).toHaveClass(/\bx-hero\b/); // #969: no x-card--hero; x-hero stays
 
     // 120 heroes, half of them signature pairs -- at least the 20 this set
     // was named for, each hero with its own companion trigger.
@@ -92,8 +92,8 @@ test.describe('Playground: 20 signature heroes example set', () => {
     await expect(page.locator('#pg-preview [x-cardhero]')).toHaveCount(120);
 
     const ctas = await page.locator('#pg-preview [x-cardhero]').evaluateAll((heroes) => heroes.flatMap((h) => [
-      [h.getAttribute('cta'), h.getAttribute('cta-href')],
-      [h.getAttribute('cta-secondary'), h.getAttribute('cta-secondary-href')],
+      [h.getAttribute('cta'), h.getAttribute('ctaHref')],
+      [h.getAttribute('ctaSecondary'), h.getAttribute('ctaSecondaryHref')],
     ]).filter(([label]) => label));
     expect(ctas.length).toBeGreaterThan(0);
 

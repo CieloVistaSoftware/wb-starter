@@ -1,8 +1,9 @@
+import { authoredAttr } from '../core/read-attr.js';
 // Standalone masked behavior extracted from enhancements.js
 export function masked(element, options = {}) {
   const config = {
     mask: options.mask || element.getAttribute('mask') || '',
-    placeholder: options.placeholder || element.getAttribute('mask-placeholder') || '_',
+    placeholder: options.placeholder || authoredAttr(element, 'mask-placeholder') || '_',
     // The author's own `placeholder` (masked.schema.json) always wins over the
     // one derived from the mask. Read as the plain attribute rather than the
     // `.placeholder` property, which exists only on <input>/<textarea>.

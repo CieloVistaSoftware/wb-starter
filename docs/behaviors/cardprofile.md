@@ -23,7 +23,7 @@
 | `cover` | `string` | — | Cover/banner image URL |
 | `size` | `sm` · `md` · `lg` | `md` | Avatar size |
 | `align` | `left` · `center` | `center` | Content alignment |
-| `hover-text` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hoverText` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 

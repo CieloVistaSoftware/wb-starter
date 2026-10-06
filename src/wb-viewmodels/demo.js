@@ -1,3 +1,4 @@
+import { hasAuthoredAttr } from '../core/read-attr.js';
 import { setRule } from '../core/dynamic-style.js';
 import { WB_DOC_MAP } from './demo-docmap.js';
 import { getPageSource, extractAttrBlock } from './page-source-cache.js';
@@ -42,7 +43,14 @@ export function formatHtml(raw) {
     } catch (e) {
         return src; // never break the demo over a formatting failure
     }
-    const attrStr = (a) => (a.value === '' ? a.name : `${a.name}="${a.value}"`);
+    // #1125/#1526: the parser lower-cases attribute names, so re-serializing
+    // printed the canonical showClose as `showclose` -- the squashed spelling
+    // nobody types. Every mixed-case name the author wrote is recovered from
+    // the source text and printed as written.
+    const authored = new Map();
+    for (const m of src.matchAll(/\s([a-zA-Z][\w-]*[A-Z][\w-]*)(?=[\s=>/])/g)) authored.set(m[1].toLowerCase(), m[1]);
+    const nameOf = (a) => authored.get(a.name) || a.name;
+    const attrStr = (a) => (a.value === '' ? nameOf(a) : `${nameOf(a)}="${a.value}"`);
     // #1015: whitespace is CONTENT inside these three, so a pretty-printer has
     // no business touching what sits between their tags. They are OPAQUE: the
     // opening tag is emitted where the element sits, the body is copied through
@@ -507,7 +515,7 @@ export async function demo(element, options = {}) {
     // Opt out of Standard §7's single-item shrink-to-fit (demo.css) for demos
     // whose one child is deliberately full-bleed (e.g. a page hero) rather
     // than a small widget that should collapse to its own content width.
-    if (element.hasAttribute('full-width')) {
+    if (hasAuthoredAttr(element, 'full-width')) {
         element.classList.add('x-demo--full-width');
     }
     // #1387: ...and do it unasked when that one child is full-bleed BY NATURE.

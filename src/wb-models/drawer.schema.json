@@ -209,7 +209,7 @@
       "<div x-drawer variant=\"default\">variant=default</div>",
       "<div x-drawer variant=\"overlay\">variant=overlay</div>",
       "<div x-drawer variant=\"push\">variant=push</div>",
-      "<div x-drawer close-on-backdrop>with closeOnBackdrop</div>",
+      "<div x-drawer closeOnBackdrop>with closeOnBackdrop</div>",
       "<div x-drawer title=\"Test Title\">With title attribute</div>"
     ],
     "matrix": {

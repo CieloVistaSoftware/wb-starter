@@ -25,7 +25,7 @@ test('content.html visibly demonstrates featured articles and article layouts', 
   await expect(featured.locator('header h3')).toHaveText('The Future of Web Standards');
   await expect(featured.locator('header mark')).toHaveText('Featured');
   await expect(featured.locator('header')).toContainText('Web Platform');
-  await expect(featured.locator('main')).toContainText('featured story');
+  await expect(featured.locator('.x-card__body')).toContainText('featured story');
 
   const articleLists = page.locator('#articles-articles-list-behavior [x-articles]');
   await expect(articleLists).toHaveCount(3);

@@ -11,7 +11,7 @@
  * <span x-tooltip data-tooltip="More info" data-tooltip-position="right">?</span>
  */
 
-import { readAttr, readFlag } from '../core/read-attr.js';
+import { readAttr, readFlag, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 
 // tooltip.schema.json declares 8 positions and 4 trigger modes. This file used
@@ -206,7 +206,7 @@ export async function tooltip(element, options = {}) {
       const p = options.position
         ?? element.getAttribute('x-position')
         ?? element.getAttribute('position')
-        ?? element.getAttribute('tooltip-position');
+        ?? authoredAttr(element, 'tooltip-position');
       return POSITIONS.includes(p) ? p : 'top';
     })(),
     variant: (() => {
@@ -219,7 +219,7 @@ export async function tooltip(element, options = {}) {
     // 200ms default (#1107, same class as #752). readAttr covers the plain,
     // kebab and data- spellings at once; the x-/tooltip- forms stay for the
     // markup already written against them.
-    delay: ms(options.delay ?? readAttr(element, 'delay', null) ?? element.getAttribute('x-delay') ?? element.getAttribute('tooltip-delay'), 200),
+    delay: ms(options.delay ?? readAttr(element, 'delay', null) ?? element.getAttribute('x-delay') ?? authoredAttr(element, 'tooltip-delay'), 200),
     // `hide-delay` comes first: tooltip.schema.json declares hideDelay, so the
     // generated docs and the showcase both tell authors to write hide-delay --
     // and that was the one spelling this chain did not read (#861).
@@ -228,7 +228,7 @@ export async function tooltip(element, options = {}) {
     // stays because it is the shipped behaviour and because a 0ms hide leaves
     // no bridge for `interactive` -- the tooltip would vanish while the pointer
     // is still crossing the 8px gap towards it.
-    hideDelay: ms(options.hideDelay ?? readAttr(element, 'hideDelay', null) ?? element.getAttribute('x-hide-delay') ?? element.getAttribute('tooltip-hide-delay'), 100),
+    hideDelay: ms(options.hideDelay ?? readAttr(element, 'hideDelay', null) ?? element.getAttribute('x-hide-delay') ?? authoredAttr(element, 'tooltip-hide-delay'), 100),
     // trigger (#1107). Declared with 4 values and read by nothing: the
     // listeners below were bound unconditionally, so trigger="click" both
     // failed to open on click AND opened on hover -- the exact opposite of the
@@ -249,7 +249,7 @@ export async function tooltip(element, options = {}) {
     interactive: optFlag(options.interactive, 'interactive', false),
     // maxWidth (#1107). Declared default 200px and never applied.
     maxWidth: options.maxWidth || readAttr(element, 'maxWidth', '200px'),
-    customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? element.getAttribute('tooltip-class') ?? '',
+    customClass: options.customClass ?? element.getAttribute('x-custom-class') ?? authoredAttr(element, 'tooltip-class') ?? '',
   };
 
   // Remove native title

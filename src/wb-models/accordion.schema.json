@@ -5,7 +5,7 @@
   "description": "Turns titled child sections into independently expandable items. Deprecated: use <details>/<summary> instead.",
   "schemaFor": "accordion",
   "properties": {
-    "accordion-title": {
+    "accordionTitle": {
       "type": "string",
       "description": "Marks a child as an accordion panel and supplies its header text. This is the canonical spelling; `data-accordion-title` is read as a fallback.",
       "default": "",
@@ -25,8 +25,8 @@
   },
   "test": {
     "setup": [
-      "<div x-accordion><div accordion-title=\"One\">First body</div><div accordion-title=\"Two\">Second body</div></div>",
-      "<div x-accordion open><div accordion-title=\"One\">First body</div><div accordion-title=\"Two\">Second body</div></div>"
+      "<div x-accordion><div accordionTitle=\"One\">First body</div><div accordionTitle=\"Two\">Second body</div></div>",
+      "<div x-accordion open><div accordionTitle=\"One\">First body</div><div accordionTitle=\"Two\">Second body</div></div>"
     ]
   },
   "events": {

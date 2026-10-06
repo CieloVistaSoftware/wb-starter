@@ -1,6 +1,6 @@
 # Img
 
-A plain `<img>` gets loading help: `placeholder` shows while the real image loads, `fallback` replaces it if it fails, `aspect-ratio` reserves its box so the page does not jump, and `zoomable` opens it full-size on click.
+A plain `<img>` gets loading help: `placeholder` shows while the real image loads, `fallback` replaces it if it fails, `aspectRatio` reserves its box so the page does not jump, and `zoomable` opens it full-size on click.
 
 ## Usage
 
@@ -36,10 +36,10 @@ An image has no `size` option. It is sized the way HTML already sizes images, wh
 
 `height` on its own does nothing: the site's `img { height: auto }` overrides it, so the height comes from the width and the photo's shape. Always set it together with `width`.
 
-**Change its shape with `aspect-ratio`.** The image is cropped to that shape rather than stretched (`object-fit: cover`). Here a 16:9 photo is shown square.
+**Change its shape with `aspectRatio`.** The image is cropped to that shape rather than stretched (`object-fit: cover`). Here a 16:9 photo is shown square.
 
 <div x-demo>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg" width="200" aspect-ratio="1/1" alt="Dachshund puppy, cropped square">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Dachshund_dog_at_MAV-USP-edited.jpg/1280px-Dachshund_dog_at_MAV-USP-edited.jpg" width="200" aspectRatio="1/1" alt="Dachshund puppy, cropped square">
 </div>
 
 Inside a card, let the card size the image: give the card a `size` and leave the image's `width` off.
@@ -51,8 +51,8 @@ Inside a card, let the card size the image: give the card a `size` and leave the
 | `placeholder` | `string` | — | Image shown while the real `src` loads. Replaced the moment the real image decodes. |
 | `fallback` | `string` | — | Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty. |
 | `width` | `number` | — | Width in pixels (the native attribute). On its own the height follows the photo's shape. With `height`, the two set the shape too and the image is cropped to it. Still shrinks to fit a narrower container. |
-| `height` | `number` | — | Height in pixels (the native attribute). Takes effect only together with `width`; on its own the site's `img { height: auto }` overrides it. An explicit `aspect-ratio` wins over the pair. |
-| `aspect-ratio` | `string` | — | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
+| `height` | `number` | — | Height in pixels (the native attribute). Takes effect only together with `width`; on its own the site's `img { height: auto }` overrides it. An explicit `aspectRatio` wins over the pair. |
+| `aspectRatio` | `string` | — | A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads. |
 | `lazy` | `boolean` | `false` | Sets `loading="lazy"`, so the browser defers fetching until the image nears the viewport. Bare attribute. |
 | `data-lazy` | `boolean` | `false` | The `data-` spelling of `lazy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `lazy`. |
 | `zoomable` | `boolean` | `false` | Clicking the image opens it full-size in a lightbox. Bare attribute. |

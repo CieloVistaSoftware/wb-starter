@@ -9,20 +9,11 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
-  <style id="forms-moved-styles">
-    /* Moved from style= attributes: no inline styles anywhere (#779). */
-    .mb-1rem { margin-bottom: 1rem; }
-    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
-    .d-grid-gap-1rem-maxw-400px { display: grid; gap: 1rem; max-width: 400px; }
-  
-    /* Moved from style= attributes: no inline styles anywhere (#779). */
-    .forms-block-1 { width: 100%; min-height: 2rem; }
-  </style>
 </head>
 
 <body class="demo-page">
-  <nav class="mb-1rem">
-    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>📝 Form Controls</h1>
   <p>Buttons, inputs, selects, checkboxes, switches, textareas</p>
@@ -196,12 +187,12 @@
   <section id="button-icon-position-variants">
   <h2>iconPosition variants</h2>
   <div x-demo columns="1">
-    <button icon-position="start" icon="★">
+    <button iconPosition="start" icon="★">
       This is example button content.
     </button>
   </div>
   <div x-demo columns="1">
-    <button icon-position="end" icon="★">
+    <button iconPosition="end" icon="★">
       This is example button content.
     </button>
   </div>
@@ -311,12 +302,12 @@
     </button>
   </div>
   <div x-demo columns="1">
-    <button full-width>
+    <button fullWidth>
       This is example button content.
     </button>
   </div>
   <div x-demo columns="1">
-    <button icon-only>
+    <button iconOnly>
       This is example button content.
     </button>
   </div>
@@ -436,12 +427,12 @@
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input label="Email" input-type="email" placeholder="you@example.com">
+    <div x-input label="Email" inputType="email" placeholder="you@example.com">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input label="Password" input-type="password" placeholder="••••••••">
+    <div x-input label="Password" inputType="password" placeholder="••••••••">
       This is example input content.
     </div>
   </div>
@@ -486,52 +477,52 @@
   <section id="input-input-type-variants">
   <h2>inputType variants</h2>
   <div x-demo columns="1">
-    <div x-input input-type="text">
+    <div x-input inputType="text">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="email">
+    <div x-input inputType="email">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="password">
+    <div x-input inputType="password">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="number">
+    <div x-input inputType="number">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="tel">
+    <div x-input inputType="tel">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="url">
+    <div x-input inputType="url">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="search">
+    <div x-input inputType="search">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="date">
+    <div x-input inputType="date">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="time">
+    <div x-input inputType="time">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input input-type="datetime-local">
+    <div x-input inputType="datetime-local">
       This is example input content.
     </div>
   </div>
@@ -581,12 +572,12 @@
   <section id="input-icon-position-variants">
   <h2>iconPosition variants</h2>
   <div x-demo columns="1">
-    <div x-input icon-position="start" icon="★">
+    <div x-input iconPosition="start" icon="★">
       This is example input content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-input icon-position="end" icon="★">
+    <div x-input iconPosition="end" icon="★">
       This is example input content.
     </div>
   </div>
@@ -621,34 +612,34 @@
   <section id="search-search">
   <h2>🔍 Search</h2>
   <div x-demo columns="1">
-    <div x-search placeholder="Search...">
+    <search x-search placeholder="Search...">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search placeholder="Search docs..." size="lg">
+    <search x-search placeholder="Search docs..." size="lg">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search placeholder="Glass search" variant="glass">
+    <search x-search placeholder="Glass search" variant="glass">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search placeholder="Minimal" variant="minimal">
+    <search x-search placeholder="Minimal" variant="minimal">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search placeholder="Instant search" instant>
+    <search x-search placeholder="Instant search" instant>
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search placeholder="Loading..." loading>
+    <search x-search placeholder="Loading..." loading>
       This is example search content.
-    </div>
+    </search>
   </div>
   </section>
 
@@ -656,19 +647,19 @@
   <section id="search-size-variants">
   <h2>size variants</h2>
   <div x-demo columns="1">
-    <div x-search size="sm">
+    <search x-search size="sm">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search size="md">
+    <search x-search size="md">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search size="lg">
+    <search x-search size="lg">
       This is example search content.
-    </div>
+    </search>
   </div>
   </section>
 
@@ -676,19 +667,19 @@
   <section id="search-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-search variant="default">
+    <search x-search variant="default">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search variant="glass">
+    <search x-search variant="glass">
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search variant="minimal">
+    <search x-search variant="minimal">
       This is example search content.
-    </div>
+    </search>
   </div>
   </section>
 
@@ -696,19 +687,19 @@
   <section id="search-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-search instant>
+    <search x-search instant>
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search disabled>
+    <search x-search disabled>
       This is example search content.
-    </div>
+    </search>
   </div>
   <div x-demo columns="1">
-    <div x-search loading>
+    <search x-search loading>
       This is example search content.
-    </div>
+    </search>
   </div>
   </section>
 
@@ -835,12 +826,12 @@
   <section id="switch-label-position-variants">
   <h2>labelPosition variants</h2>
   <div x-demo columns="1">
-    <div x-switch label-position="start">
+    <div x-switch labelPosition="start">
       This is example switch content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-switch label-position="end">
+    <div x-switch labelPosition="end">
       This is example switch content.
     </div>
   </div>
@@ -915,7 +906,7 @@
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-textarea max-length="500" show-count>
+    <div x-textarea maxLength="500" showCount>
       This is example textarea content.
     </div>
   </div>
@@ -980,7 +971,7 @@
   <section id="textarea-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-textarea show-count>
+    <div x-textarea showCount>
       This is example textarea content.
     </div>
   </div>
@@ -1109,9 +1100,9 @@
   <div x-demo>
     <input x-label="Label for input:" type="text">
   </div>
-  <p>RTL layouts (Hebrew, Arabic) via <code>label-position="right"</code>:</p>
+  <p>RTL layouts (Hebrew, Arabic) via <code>labelPosition="right"</code>:</p>
   <div x-demo>
-    <input x-label="שם מלא" label-position="right" dir="rtl" type="text">
+    <input x-label="שם מלא" labelPosition="right" dir="rtl" type="text">
   </div>
   <div id="label-schema-validation"></div>
   <script type="module">
@@ -1138,7 +1129,7 @@
   <section id="x-autosize-textarea-that-grows-with-content">
   <h2>🧩 x-autosize — textarea that grows with content</h2>
   <div x-demo>
-    <textarea x-autosize class="forms-block-1">Type here and watch me grow!</textarea>
+    <textarea class="site-demo__autosize" x-autosize>Type here and watch me grow!</textarea>
   </div>
   </section>
 
@@ -1183,7 +1174,7 @@
     </div>
   </div>
 
-    <p>The <code>loading</code>/<code>icon</code>/<code>icon-position</code> attributes only work on the <code>&lt;x-button&gt;</code> custom tag — a native <code>&lt;button&gt;</code> only maps <code>size</code>/<code>variant</code> to styling classes.</p>
+    <p>The <code>loading</code>/<code>icon</code>/<code>iconPosition</code> attributes only work on the <code>&lt;x-button&gt;</code> custom tag — a native <code>&lt;button&gt;</code> only maps <code>size</code>/<code>variant</code> to styling classes.</p>
     <div class="demo-section__grid demo-section__grid--cols-3">
     <div x-demo columns="1">
       <button variant="primary" loading>Loading</button>
@@ -1192,7 +1183,7 @@
       <button variant="secondary" icon="💾">Save</button>
     </div>
     <div x-demo columns="1">
-      <button variant="danger" icon="🗑️" icon-position="right">Delete</button>
+      <button variant="danger" icon="🗑️" iconPosition="right">Delete</button>
     </div>
   </div>
   </div>
@@ -1212,6 +1203,7 @@
         <div x-demo>
           <input
             type="text"
+
             prefix="👤"
             suffix="@gmail.com"
             placeholder="Username">
@@ -1222,6 +1214,7 @@
         <div x-demo>
           <input
             type="text"
+
             clearable
             placeholder="Search...">
         </div>
@@ -1231,10 +1224,12 @@
         <div x-demo>
           <input
             type="text"
+
             variant="success"
             value="Valid Input">
           <input
             type="text"
+
             variant="error"
             value="Invalid Input">
         </div>
@@ -1256,8 +1251,8 @@
         <label id="semanticsforms-label-59">Character Count (Max 100)</label>
         <div x-demo>
           <textarea
-            show-count
-            max-length="100"
+            showCount
+            maxLength="100"
             placeholder="Limited bio..."></textarea>
         </div>
       </div>
@@ -1392,7 +1387,7 @@
     <p><code>x-form</code> has no <code>loading-text</code> option (that only exists in an unregistered alternate implementation).</p>
     <div x-demo>
       <form ajax action="#">
-        <div class="d-grid-gap-1rem-maxw-400px">
+        <div class="site-demo__form-stack">
           <input name="name" placeholder="Name" required>
           <input type="email" name="email" placeholder="Email" required>
           <textarea name="message" placeholder="Message" required></textarea>

@@ -1,6 +1,6 @@
 # Textarea
 
-A plain `<textarea>` gets the form styling, and optionally grows with its content (`autosize`) and shows a character count against `max-length` (`show-count`).
+A plain `<textarea>` gets the form styling, and optionally grows with its content (`autosize`) and shows a character count against `maxLength` (`showCount`).
 
 ## Usage
 
@@ -24,8 +24,8 @@ No attribute needed on `<textarea>`. Don't add `x-textarea` to it (#746).
 | `value` | `string` | — | Text value |
 | `name` | `string` | — | Form field name |
 | `rows` | `number` | `3` | Visible rows |
-| `max-length` | `number` | `0` | Max character limit |
-| `show-count` | `boolean` | `false` | Show character count |
+| `maxLength` | `number` | `0` | Max character limit |
+| `showCount` | `boolean` | `false` | Show character count |
 | `autosize` | `boolean` | `false` | Auto-resize to content |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `readonly` | `boolean` | `false` | Read-only state |

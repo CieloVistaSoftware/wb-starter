@@ -1,6 +1,6 @@
 # Copy
 
-`x-copy` copies text to the clipboard when the element is clicked: the value of `copy-text`, or the text of the element matched by `copy-target`. The element's label briefly changes to "Copied!" and `wb:copy:success` fires.
+`x-copy` copies text to the clipboard when the element is clicked: the value of `copy-text`, or the text of the element matched by `copyTarget`. The element's label briefly changes to "Copied!" and `wb:copy:success` fires.
 
 ## Usage
 

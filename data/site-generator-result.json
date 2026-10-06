@@ -1,16 +1,14 @@
 {
-  "generatedAt": "2026-08-25T18:59:24.702Z",
   "siteSchema": "src/wb-models/pages/x-component-library.site.json",
-  "outputDir": "C:\\Users\\jwpmi\\Downloads\\AI\\wb-starter\\demos\\site",
-  "elapsed": "1.1s",
+  "outputDir": "demos/site",
   "summary": {
     "totalPages": 8,
     "generated": 8,
     "errors": 0,
     "skipped": 0,
-    "totalComponents": 70,
-    "totalSections": 208,
-    "totalDemos": 772
+    "totalComponents": 69,
+    "totalSections": 209,
+    "totalDemos": 757
   },
   "pages": [
     {
@@ -21,14 +19,14 @@
       "status": "ok",
       "filename": "cards.html",
       "componentCount": 19,
-      "sectionCount": 66,
-      "totalDemos": 259,
+      "sectionCount": 67,
+      "totalDemos": 262,
       "components": [
         {
           "name": "card",
           "status": "ok",
-          "sections": 4,
-          "demos": 21
+          "sections": 5,
+          "demos": 28
         },
         {
           "name": "cardbutton",
@@ -51,14 +49,14 @@
         {
           "name": "cardfile",
           "status": "ok",
-          "sections": 3,
-          "demos": 13
+          "sections": 2,
+          "demos": 10
         },
         {
           "name": "cardhero",
           "status": "ok",
-          "sections": 4,
-          "demos": 16
+          "sections": 5,
+          "demos": 22
         },
         {
           "name": "cardhorizontal",
@@ -222,7 +220,7 @@
       "filename": "forms.html",
       "componentCount": 9,
       "sectionCount": 43,
-      "totalDemos": 159,
+      "totalDemos": 154,
       "components": [
         {
           "name": "button",
@@ -385,16 +383,10 @@
       "icon": "📄",
       "status": "ok",
       "filename": "content.html",
-      "componentCount": 7,
+      "componentCount": 6,
       "sectionCount": 14,
-      "totalDemos": 38,
+      "totalDemos": 27,
       "components": [
-        {
-          "name": "article",
-          "status": "ok",
-          "sections": 2,
-          "demos": 6
-        },
         {
           "name": "articles",
           "status": "ok",
@@ -426,7 +418,7 @@
           "demos": 7
         },
         {
-          "name": "codecontrol",
+          "name": "codetheme",
           "status": "ok",
           "sections": 1,
           "demos": 1
@@ -442,13 +434,13 @@
       "filename": "effects.html",
       "componentCount": 5,
       "sectionCount": 7,
-      "totalDemos": 20,
+      "totalDemos": 19,
       "components": [
         {
           "name": "confetti",
           "status": "ok",
-          "sections": 2,
-          "demos": 4
+          "sections": 1,
+          "demos": 2
         },
         {
           "name": "fireworks",
@@ -485,7 +477,7 @@
       "filename": "interactive.html",
       "componentCount": 8,
       "sectionCount": 11,
-      "totalDemos": 14,
+      "totalDemos": 13,
       "components": [
         {
           "name": "draggable",

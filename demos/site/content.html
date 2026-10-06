@@ -9,20 +9,11 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
-  <style id="content-moved-styles">
-    /* Moved from style= attributes: no inline styles anywhere (#779). */
-    .mb-1rem { margin-bottom: 1rem; }
-    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
-    .w-100pct-r-8px { width: 100%; border-radius: 8px; }
-    .w-100pct-r-8px-op-06 { width: 100%; border-radius: 8px; opacity: 0.6; }
-    .w-100pct { width: 100%; }
-    .d-flex-jc-flex-end-gap-1rem-mt-1rem { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
-  </style>
 </head>
 
 <body class="demo-page">
-  <nav class="mb-1rem">
-    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>📄 Content & Media</h1>
   <p>Articles, markdown rendering, audio, tables</p>
@@ -66,7 +57,7 @@
       category="Web Platform"
       author="Maya Patel"
       date="2026-08-01"
-      reading-time="8 min read"
+      readingTime="8 min read"
       featured>
       Explore the web platform changes that will shape the next generation of
       applications. This featured story carries editorial metadata and a longer
@@ -199,19 +190,19 @@
   <section id="mdhtml-markdown-to-html">
   <h2>📝 Markdown to HTML</h2>
   <div x-demo columns="1">
-    <div x-mdhtml src="../code.md">
+    <article x-mdhtml src="../code.md">
       This is example markdown to html content.
-    </div>
+    </article>
   </div>
   <div x-demo columns="1">
-    <div x-mdhtml gfm>
+    <article x-mdhtml gfm>
       This is example markdown to html content.
-    </div>
+    </article>
   </div>
   <div x-demo columns="1">
-    <div x-mdhtml sanitize gfm>
+    <article x-mdhtml sanitize gfm>
       This is example markdown to html content.
-    </div>
+    </article>
   </div>
   </section>
 
@@ -219,24 +210,24 @@
   <section id="audio-audio">
   <h2>🎵 Audio</h2>
   <div x-demo columns="1">
-    <div x-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
+    <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
       This is example audio content.
-    </div>
+    </audio>
   </div>
   <div x-demo columns="1">
-    <div x-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" show-eq>
+    <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" showEq>
       This is example audio content.
-    </div>
+    </audio>
   </div>
   <div x-demo columns="1">
-    <div x-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" volume="0.5">
+    <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" volume="0.5">
       This is example audio content.
-    </div>
+    </audio>
   </div>
   <div x-demo columns="1">
-    <div x-audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" loop>
+    <audio src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3" loop>
       This is example audio content.
-    </div>
+    </audio>
   </div>
   </section>
 
@@ -244,24 +235,24 @@
   <section id="audio-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-audio loop src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
+    <audio loop src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
       This is example audio content.
-    </div>
+    </audio>
   </div>
   <div x-demo columns="1">
-    <div x-audio autoplay src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
+    <audio autoplay src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
       This is example audio content.
-    </div>
+    </audio>
   </div>
   <div x-demo columns="1">
-    <div x-audio muted src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
+    <audio muted src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
       This is example audio content.
-    </div>
+    </audio>
   </div>
   <div x-demo columns="1">
-    <div x-audio show-eq src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
+    <audio showEq src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3">
       This is example audio content.
-    </div>
+    </audio>
   </div>
   </section>
 
@@ -284,7 +275,7 @@
     </table>
   </div>
   <div x-demo columns="1">
-    <table paginated page-size="5">
+    <table paginated pageSize="5">
       <thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead><tbody><tr><td>Ada Lovelace</td><td>Engineer</td><td>Active</td></tr><tr><td>Grace Hopper</td><td>Admiral</td><td>Active</td></tr><tr><td>Alan Turing</td><td>Researcher</td><td>Away</td></tr></tbody>
     </table>
   </div>
@@ -382,7 +373,7 @@
     <div x-demo>
       <audio
         src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3"
-        show-eq
+        showEq
         volume="0.7"
         playlist="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Tours/Enthusiast/Tours_-_01_-_Enthusiast.mp3|Tours - Enthusiast,https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3|Ghosts I - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/02_Ghosts_I.mp3|Ghosts I - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/03_Ghosts_I.mp3|Ghosts I - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/04_Ghosts_I.mp3|Ghosts I - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/05_Ghosts_I.mp3|Ghosts I - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/06_Ghosts_I.mp3|Ghosts I - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/07_Ghosts_I.mp3|Ghosts I - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/08_Ghosts_I.mp3|Ghosts I - Track 8,https://archive.org/download/nineinchnails_ghosts_I_IV/09_Ghosts_I.mp3|Ghosts I - Track 9,https://archive.org/download/nineinchnails_ghosts_I_IV/10_Ghosts_II.mp3|Ghosts II - Track 1,https://archive.org/download/nineinchnails_ghosts_I_IV/11_Ghosts_II.mp3|Ghosts II - Track 2,https://archive.org/download/nineinchnails_ghosts_I_IV/12_Ghosts_II.mp3|Ghosts II - Track 3,https://archive.org/download/nineinchnails_ghosts_I_IV/13_Ghosts_II.mp3|Ghosts II - Track 4,https://archive.org/download/nineinchnails_ghosts_I_IV/14_Ghosts_II.mp3|Ghosts II - Track 5,https://archive.org/download/nineinchnails_ghosts_I_IV/15_Ghosts_II.mp3|Ghosts II - Track 6,https://archive.org/download/nineinchnails_ghosts_I_IV/16_Ghosts_II.mp3|Ghosts II - Track 7,https://archive.org/download/nineinchnails_ghosts_I_IV/17_Ghosts_II.mp3|Ghosts II - Track 8">
       </audio>
@@ -394,17 +385,17 @@
   <div class="demo-section">
     <p>Standard Video</p>
     <div x-demo>
-      <video controls src="https://www.w3schools.com/html/mov_bbb.mp4" class="w-100pct-r-8px"></video>
+      <video class="site-demo__media" controls src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
     </div>
 
     <p>Background Video (Muted Loop)</p>
     <div x-demo>
-      <video
+      <video class="site-demo__media site-demo__media--dim"
         src="https://www.w3schools.com/html/movie.mp4"
         autoplay
         muted
         loop
-        class="w-100pct-r-8px-op-06">
+>
       </video>
     </div>
   </div>
@@ -414,12 +405,12 @@
   <div class="demo-section">
     <p>Zoomable Image (Lightbox)</p>
     <div x-demo>
-      <img src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene" class="w-100pct-r-8px">
+      <img class="site-demo__media" src="https://picsum.photos/id/1018/800/600" zoomable alt="Nature Scene">
     </div>
 
     <p>Lazy Loaded with Aspect Ratio</p>
     <div x-demo>
-      <img src="https://picsum.photos/id/1015/800/600" lazy aspect-ratio="4/3" alt="River" class="w-100pct-r-8px">
+      <img class="site-demo__media" src="https://picsum.photos/id/1015/800/600" lazy aspectRatio="4/3" alt="River">
     </div>
   </div>
 
@@ -429,15 +420,15 @@
     <p>Standard Figure</p>
     <div x-demo>
       <figure zoom>
-        <img src="https://picsum.photos/id/1016/800/600" alt="Canyon" class="w-100pct">
+        <img class="site-demo__fill" src="https://picsum.photos/id/1016/800/600" alt="Canyon">
         <figcaption>A beautiful canyon view</figcaption>
       </figure>
     </div>
 
     <p>Overlay Caption</p>
     <div x-demo>
-      <figure caption-position="overlay" lightbox>
-        <img src="https://picsum.photos/id/1019/800/600" alt="Technology" class="w-100pct">
+      <figure captionPosition="overlay" lightbox>
+        <img class="site-demo__fill" src="https://picsum.photos/id/1019/800/600" alt="Technology">
         <figcaption>Technology and Nature</figcaption>
       </figure>
     </div>
@@ -506,7 +497,7 @@
       <form method="dialog">
         <h3>Confirmation</h3>
         <p>This is a native dialog.</p>
-        <div class="d-flex-jc-flex-end-gap-1rem-mt-1rem">
+        <div class="site-demo__actions">
           <button value="cancel">Cancel</button>
           <button value="confirm" autofocus>Confirm</button>
         </div>
@@ -537,7 +528,7 @@
 
     <p>Code Block</p>
     <div x-demo columns="1">
-      <pre show-copy show-line-numbers language="javascript"><code>function hello() {
+      <pre showCopy showLineNumbers language="javascript"><code>function hello() {
   console.log("Hello World");
   return true;
 }</code></pre>

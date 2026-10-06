@@ -9,16 +9,11 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
-  <style id="overlays-moved-styles">
-    /* Moved from style= attributes: no inline styles anywhere (#779). */
-    .mb-1rem { margin-bottom: 1rem; }
-    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
-  </style>
 </head>
 
 <body class="demo-page">
-  <nav class="mb-1rem">
-    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>🪟 Overlays & Popups</h1>
   <p>Dialogs, drawers, dropdowns for modal content</p>
@@ -38,7 +33,7 @@
   </div>
   <div x-demo columns="1">
     <button x-dialog title="No Close" showClose="false">
-      title=No Close
+      title=No Close, showClose=false
     </button>
   </div>
   <div x-demo columns="1">

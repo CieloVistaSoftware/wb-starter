@@ -9,17 +9,11 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
-  <style id="feedback-moved-styles">
-    /* Moved from style= attributes: no inline styles anywhere (#779). */
-    .mb-1rem { margin-bottom: 1rem; }
-    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
-    .w-300px-h-24px { width: 300px; height: 24px; }
-  </style>
 </head>
 
 <body class="demo-page">
-  <nav class="mb-1rem">
-    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>🔔 Feedback & Status</h1>
   <p>Alerts, badges, progress bars, ratings, spinners, toasts, tooltips</p>
@@ -73,22 +67,22 @@
   <section id="alert-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-alert variant="info" message="Sample message">
+    <div x-alert variant="info" message="this is the message">
       This is example alert content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-alert variant="success" message="Sample message">
+    <div x-alert variant="success" message="this is the message">
       This is example alert content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-alert variant="warning" message="Sample message">
+    <div x-alert variant="warning" message="this is the message">
       This is example alert content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-alert variant="error" message="Sample message">
+    <div x-alert variant="error" message="this is the message">
       This is example alert content.
     </div>
   </div>
@@ -98,7 +92,7 @@
   <section id="alert-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-alert dismissible message="Sample message">
+    <div x-alert dismissible message="this is the message">
       This is example alert content.
     </div>
   </div>
@@ -113,7 +107,7 @@
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-avatar src="https://i.pravatar.cc/150?u=avatar1">
+    <div x-avatar src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg/1280px-A_headshot_of_a_man_wearing_a_striped_bowtie_-_DPLA_-_c5083ba2809d884401d24a0c5810f3d9.jpg">
       This is example avatar content.
     </div>
   </div>
@@ -673,7 +667,7 @@
     </progress>
   </div>
   <div x-demo columns="1">
-    <progress value="50" show-value>
+    <progress value="50" showValue>
       This is example progress content.
     </progress>
   </div>
@@ -783,7 +777,7 @@
   <section id="progress-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <progress show-value>
+    <progress showValue>
       This is example progress content.
     </progress>
   </div>
@@ -1048,22 +1042,22 @@
   <section id="toast-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-toast variant="info" message="Sample message">
+    <div x-toast variant="info" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast variant="success" message="Sample message">
+    <div x-toast variant="success" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast variant="warning" message="Sample message">
+    <div x-toast variant="warning" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast variant="error" message="Sample message">
+    <div x-toast variant="error" message="this is the message">
       This is example toast content.
     </div>
   </div>
@@ -1073,32 +1067,32 @@
   <section id="toast-position-variants">
   <h2>position variants</h2>
   <div x-demo columns="1">
-    <div x-toast position="top-right" message="Sample message">
+    <div x-toast position="top-right" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast position="top-left" message="Sample message">
+    <div x-toast position="top-left" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast position="top-center" message="Sample message">
+    <div x-toast position="top-center" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast position="bottom-right" message="Sample message">
+    <div x-toast position="bottom-right" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast position="bottom-left" message="Sample message">
+    <div x-toast position="bottom-left" message="this is the message">
       This is example toast content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-toast position="bottom-center" message="Sample message">
+    <div x-toast position="bottom-center" message="this is the message">
       This is example toast content.
     </div>
   </div>
@@ -1158,42 +1152,42 @@
   <section id="tooltip-position-variants">
   <h2>position variants</h2>
   <div x-demo columns="1">
-    <div x-tooltip position="top" content="Sample content">
+    <div x-tooltip position="top" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip position="bottom" content="Sample content">
+    <div x-tooltip position="bottom" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip position="left" content="Sample content">
+    <div x-tooltip position="left" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip position="right" content="Sample content">
+    <div x-tooltip position="right" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip position="top-start" content="Sample content">
+    <div x-tooltip position="top-start" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip position="top-end" content="Sample content">
+    <div x-tooltip position="top-end" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip position="bottom-start" content="Sample content">
+    <div x-tooltip position="bottom-start" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip position="bottom-end" content="Sample content">
+    <div x-tooltip position="bottom-end" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
@@ -1203,22 +1197,22 @@
   <section id="tooltip-variant-variants">
   <h2>Variants</h2>
   <div x-demo columns="1">
-    <div x-tooltip variant="default" content="Sample content">
+    <div x-tooltip variant="default" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip variant="dark" content="Sample content">
+    <div x-tooltip variant="dark" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip variant="light" content="Sample content">
+    <div x-tooltip variant="light" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip variant="primary" content="Sample content">
+    <div x-tooltip variant="primary" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
@@ -1228,22 +1222,22 @@
   <section id="tooltip-trigger-variants">
   <h2>trigger variants</h2>
   <div x-demo columns="1">
-    <div x-tooltip trigger="hover" content="Sample content">
+    <div x-tooltip trigger="hover" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip trigger="focus" content="Sample content">
+    <div x-tooltip trigger="focus" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip trigger="click" content="Sample content">
+    <div x-tooltip trigger="click" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
   <div x-demo columns="1">
-    <div x-tooltip trigger="hover-focus" content="Sample content">
+    <div x-tooltip trigger="hover-focus" content="this is the content">
       This is example tooltip content.
     </div>
   </div>
@@ -1253,7 +1247,7 @@
   <section id="tooltip-toggles">
   <h2>Toggles</h2>
   <div x-demo columns="1">
-    <div x-tooltip interactive content="Sample content">
+    <div x-tooltip interactive content="this is the content">
       This is example tooltip content.
     </div>
   </div>
@@ -1284,10 +1278,10 @@
   <h2>🧩 x-progress — on any element</h2>
   <p>A <code>&lt;progress&gt;</code> is the progress behavior on its own; <code>x-progress</code> applies the same behavior to any other element.</p>
   <div x-demo>
-    <div x-progress value="40" class="w-300px-h-24px"></div>
+    <div class="site-demo__meter" x-progress value="40"></div>
   </div>
   <div x-demo>
-    <div x-progress value="80" variant="success" class="w-300px-h-24px"></div>
+    <div class="site-demo__meter" x-progress value="80" variant="success"></div>
   </div>
   </section>
 

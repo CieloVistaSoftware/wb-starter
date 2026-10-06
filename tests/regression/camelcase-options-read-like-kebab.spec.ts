@@ -15,26 +15,57 @@ import path from 'node:path';
  * the behavior builds. Any difference is a behavior that reads only the
  * dashed spelling.
  *
- * WHAT IT DOES NOT COVER: every case is hosted on a <div x-behavior>. A
- * behavior that only builds on its native host (<input>, <textarea>, ...)
- * builds nothing here in either spelling and compares equal. Switching the
- * Behaviors page to camelCase broke exactly those: input inputType, switch
- * labelPosition, progress showValue, cardhorizontal imagePosition and 17
- * behaviors' variants -- the #1125 migration, which is why #1526 stays open.
+ * NATIVE HOSTS (#1125): it first rendered every case on a <div x-behavior>
+ * only. A behavior that builds on its native host (<input>, <textarea>,
+ * <progress>, ...) built nothing there in either spelling and compared
+ * equal, which is how switching the page to camelCase broke input inputType,
+ * switch labelPosition, progress showValue and cardhorizontal imagePosition
+ * while this test stayed green. Every case is now ALSO rendered on each
+ * native host src/core/tag-map.js's nativeMap gives its behavior, written the
+ * way that host is authored: the bare tag, no x- attribute, auto-injected.
+ *
+ * HTML lowercases attribute names, so the camelCase spelling reaches the
+ * behavior as `showclose`. readAttr/readFlag look it up as `showClose`, which
+ * getAttribute lower-cases on an HTML element; that is what makes it found.
  */
 const root = process.cwd();
 const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+const camel = (s: string) => s.replace(/-([a-z])/g, (_m, c: string) => c.toUpperCase());
+// Platform attributes keep their dashes; the x- prefix is a behavior's name.
+const PLATFORM = /^(aria|data|x)-/;
 
-type Case = { behavior: string; prop: string; value: string | null };
+type Case = { behavior: string; prop: string; value: string | null; host: string };
+
+/**
+ * behavior -> its native host selectors, read from tag-map.js's nativeMap.
+ * Parsed as text rather than imported: it is the browser module the runtime
+ * itself loads, and this spec only needs its keys and values.
+ */
+function nativeHosts(): Map<string, string[]> {
+  const src = fs.readFileSync(path.join(root, 'src', 'core', 'tag-map.js'), 'utf8');
+  const start = src.indexOf('export const nativeMap');
+  const block = src.slice(start, src.indexOf('};', start));
+  const out = new Map<string, string[]>();
+  for (const m of block.matchAll(/^\s*'([^']+)':\s*'([^']+)'/gm)) {
+    out.set(m[2], [...(out.get(m[2]) || []), m[1]]);
+  }
+  return out;
+}
 
 function cases(): Case[] {
   const dir = path.join(root, 'src', 'wb-models');
+  const hosts = nativeHosts();
   const out: Case[] = [];
   for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.schema.json')).sort()) {
     let s: any;
     try { s = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); } catch { continue; }
     if (!s.schemaFor || s.schemaFor === 'behaviors') continue;
-    for (const [prop, def] of Object.entries<any>(s.properties || {})) {
+    for (const [declared, def] of Object.entries<any>(s.properties || {})) {
+      if (PLATFORM.test(declared)) continue;
+      // A dashed declaration is swept under its camelCase name, so a schema
+      // that still declares one is exercised, not skipped -- and is failed on
+      // its own by the declaration test below.
+      const prop = camel(declared);
       if (!/[A-Z]/.test(prop)) continue;
       if (def.type === 'array' || def.type === 'object') continue;
       let value: string | null;
@@ -43,25 +74,59 @@ function cases(): Case[] {
       else if (def.type === 'number' || def.type === 'integer') value = '3';
       else if (/href|url|src/i.test(prop)) value = 'https://example.com/x';
       else value = 'Sample';
-      out.push({ behavior: s.schemaFor, prop, value });
+      for (const host of ['div', ...(hosts.get(s.schemaFor) || [])]) out.push({ behavior: s.schemaFor, prop, value, host });
     }
   }
   return out;
 }
 
-test('every multi-word option builds the same in camelCase as dashed (#1526)', async ({ page }) => {
-  test.setTimeout(120_000);
+// What goes inside a native host so its behavior has something to build on.
+const BODY: Record<string, string> = {
+  select: '<option>One</option><option>Two</option>',
+  table: '<thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr><tr><td>2</td></tr></tbody>',
+  details: '<summary>Summary</summary>Content',
+  textarea: '',
+};
+const VOID = new Set(['input', 'img']);
+
+/** One case's markup, with the option under test spelled `name`. */
+function markup(c: Case, name: string): string {
+  const opt = c.value === null ? ` ${name}` : ` ${name}="${c.value}"`;
+  if (c.host === 'div') return `<div x-${c.behavior}${opt}>Content</div>`;
+  const [, tag, typeAttr] = c.host.match(/^([a-z]+)(?:\[(type="[^"]*")\])?$/) || [];
+  if (!tag) throw new Error(`nativeMap selector this spec cannot author: ${c.host}`);
+  const open = `<${tag}${typeAttr ? ' ' + typeAttr : ''}${opt}>`;
+  return VOID.has(tag) ? open : `${open}${BODY[tag] ?? 'Content'}</${tag}>`;
+}
+
+test('no schema declares a multi-word property with a dash (#1125)', () => {
+  // ATTRIBUTE-NAMING-STANDARD.md: camelCase is the one spelling. A dashed
+  // schema key (per-page) is a second name for the concept that the camelCase
+  // schemas beside it do not use; #1125 found 38 across 24 schemas.
+  const dir = path.join(root, 'src', 'wb-models');
+  const dashed: string[] = [];
+  for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.schema.json')).sort()) {
+    let s: any;
+    try { s = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); } catch { continue; }
+    if (!s.schemaFor) continue;
+    for (const k of Object.keys(s.properties || {})) if (k.includes('-') && !PLATFORM.test(k)) dashed.push(`${f}: ${k}`);
+  }
+  expect(dashed, 'declare these under their camelCase name').toEqual([]);
+});
+
+test('every multi-word option builds the same in camelCase as dashed, on every host (#1526, #1125)', async ({ page }) => {
+  test.setTimeout(180_000);
   const all = cases();
   expect(all.length, 'no multi-word options found -- the scan is looking in the wrong place').toBeGreaterThan(20);
+  expect(all.filter((c) => c.host !== 'div').length, 'no native-host cases -- nativeMap was not read').toBeGreaterThan(10);
 
-  const attr = (name: string, value: string | null) => (value === null ? ` ${name}` : ` ${name}="${value}"`);
   // The dashed form twice: if those two differ, the behavior's output is not
   // deterministic (random particles, timestamps) and a camelCase difference
   // would prove nothing, so it is reported separately rather than as a gap.
   const html = all.map((c, i) => [
-    `<div id="k${i}"><div x-${c.behavior}${attr(kebab(c.prop), c.value)}>Content</div></div>`,
-    `<div id="r${i}"><div x-${c.behavior}${attr(kebab(c.prop), c.value)}>Content</div></div>`,
-    `<div id="c${i}"><div x-${c.behavior}${attr(c.prop, c.value)}>Content</div></div>`,
+    `<div id="k${i}">${markup(c, kebab(c.prop))}</div>`,
+    `<div id="r${i}">${markup(c, kebab(c.prop))}</div>`,
+    `<div id="c${i}">${markup(c, c.prop)}</div>`,
   ].join('')).join('');
   await injectAndScan(page, html);
   // Build every case now. The lazy runtime builds only what is near the
@@ -74,7 +139,9 @@ test('every multi-word option builds the same in camelCase as dashed (#1526)', a
     }
     await WB.settled?.();
     let ok = 0;
-    for (let i = 0; i < n; i++) if ((document.getElementById(`k${i}`)!.firstElementChild as Element).hasAttribute('x-ready')) ok++;
+    // A native host may be wrapped by what it builds, so the ready mark is
+    // looked for anywhere in the case, not only on its first child.
+    for (let i = 0; i < n; i++) if (document.getElementById(`k${i}`)!.querySelector('[x-ready]')) ok++;
     return ok;
   }, all.length);
   expect(built, 'most cases must actually be built before they are compared').toBeGreaterThan(all.length * 0.75);
@@ -83,10 +150,29 @@ test('every multi-word option builds the same in camelCase as dashed (#1526)', a
     // Generated ids differ by construction, and so does the option's own
     // attribute name: show-close vs showclose (HTML lowercases showClose).
     // Fold every attribute name to lowercase-without-dashes; everything else
-    // the behavior built must match.
-    const norm = (el: Element) => el.innerHTML
-      .replace(/\s(id|for|aria-[a-z]+|data-[a-z-]*id)="[^"]*"/g, '')
-      .replace(/\s([a-zA-Z][a-zA-Z-]*)(?=[=\s>/])/g, (_m, name: string) => ' ' + name.toLowerCase().replace(/-/g, ''));
+    // the behavior built must match. Each element's attributes are compared
+    // as a SET: on a native host the camelCase spelling can BE the platform
+    // attribute (<textarea maxLength> is `maxlength`), which the behavior then
+    // also sets, so the dashed case carries max-length AND maxlength while the
+    // camelCase one carries one maxlength -- the same element, folded.
+    const norm = (root: Element) => {
+      const out: string[] = [];
+      const walk = (n: Node) => {
+        if (n.nodeType === Node.TEXT_NODE) { out.push(n.textContent || ''); return; }
+        if (n.nodeType !== Node.ELEMENT_NODE) return;
+        const el = n as Element;
+        const attrs = new Set<string>();
+        for (const a of Array.from(el.attributes)) {
+          if (/^(id|for|aria-[a-z]+|data-[a-z-]*id)$/.test(a.name)) continue;
+          attrs.add(`${a.name.toLowerCase().replace(/-/g, '')}=${a.value}`);
+        }
+        out.push(`<${el.tagName} ${[...attrs].sort().join(' ')}>`);
+        el.childNodes.forEach(walk);
+        out.push(`</${el.tagName}>`);
+      };
+      root.childNodes.forEach(walk);
+      return out.join('');
+    };
     const gaps: number[] = [];
     const unstable: number[] = [];
     for (let i = 0; i < n; i++) {
@@ -97,7 +183,7 @@ test('every multi-word option builds the same in camelCase as dashed (#1526)', a
     return { gaps, unstable };
   }, all.length);
 
-  const name = (i: number) => `${all[i].behavior}.${all[i].prop}`;
+  const name = (i: number) => `${all[i].behavior}.${all[i].prop}${all[i].host === 'div' ? '' : ` on <${all[i].host}>`}`;
   // Not a failure: the comparison cannot speak for these. Printed so the
   // coverage this test does NOT have is visible.
   if (differing.unstable.length) console.log(`#1526: not comparable (non-deterministic build): ${differing.unstable.map(name).join(', ')}`);

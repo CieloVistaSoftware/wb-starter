@@ -35,14 +35,14 @@ no header; a card with no `footer` gets no footer. Nothing is emitted empty.
 | `author` | `string` | `""` | Author name, rendered as the card's byline in an `<address>` |
 | `date` | `string` | `""` | Publication date, rendered in a `<time>` element |
 | `category` | `string` | `""` | Category or tag shown above the title |
-| `reading-time` | `string` | `""` | Estimated reading time |
+| `readingTime` | `string` | `""` | Estimated reading time |
 | `footer` | `string` | `""` | Card footer text |
 | `elevated` | `boolean` | `false` | Add drop shadow |
 | `clickable` | `boolean` | `false` | Make card clickable |
 | `variant` | `default` · `glass` · `bordered` · `flat` | `default` | Visual style variant |
 | `size` | `xs` · `sm` · `md` · `lg` · `xl` · `full` · `auto` | `auto` | Card size variant controlling max/min width |
-| `tooltip` | `string` | `""` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). |
-| `hover-text` | `string` | `""` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. |
+| `tooltip` | `string` | `""` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). |
+| `hoverText` | `string` | `""` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. |
 | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints "Featured"; `featured="Deal of the week"` prints that label instead. |
 | `content` | `string` | `""` | Body text. When both are given, `content="…"` wins over the text between the tags, and the children are not rendered (#683). A card with no content at all gets no body box. |
 
@@ -54,7 +54,7 @@ wrote it and when:
 
 <div x-demo>
 <article title="Ada on Engines" author="Ada Lovelace"
-  date="1843-10-01" category="Computing" reading-time="7 min">
+  date="1843-10-01" category="Computing" readingTime="7 min">
   The Engine weaves algebraic patterns as the loom weaves flowers.
 </article>
 </div>
@@ -148,11 +148,14 @@ and position, so the markup is exactly what it looks like:
     <h3>                 ← the TITLE, from `title`: article > header > h3
     <p>                  ← the SUBTITLE, from `subtitle`: article > header > p
     <span>               ← the BADGE, from `badge`: article > header > span:last-child
-  <main>                 ← the BODY, your content: article > main
+  <div class="x-card__body">  ← the BODY, your content (#945)
   <footer>               ← the FOOTER, from `footer`: .x-card__footer
 ```
 
-The footer is the one part still named by class. `variant`, `elevated` and
+The body and the footer are the two parts named by class. The body is a
+`<div>`, not a `<main>`: HTML only allows `<main>` under `html`, `body`, `div`
+or `form`, so a `<main>` inside a card is invalid, and an authored `<main>`
+becomes this same `<div class="x-card__body">` (#945). `variant`, `elevated` and
 `clickable` are read straight off the element as attributes
 (`article[variant="glass"]`); `size` becomes an `x-card--{size}` class.
 

@@ -149,7 +149,7 @@
       "<div x-navbar variant=\"transparent\">variant=transparent</div>",
       "<div x-navbar sticky>with sticky</div>",
       "<div x-navbar brand=\"Sample brand\">brand=\"Sample brand\"</div>",
-      "<div x-navbar brand-href=\"/\">brandHref=\"/\"</div>",
+      "<div x-navbar brandHref=\"/\">brandHref=\"/\"</div>",
       "<div x-navbar logo=\"/assets/icons/favicon.svg\">logo=\"/assets/icons/favicon.svg\"</div>",
       "<div x-navbar brand=\"MySite\"></div>"
     ],

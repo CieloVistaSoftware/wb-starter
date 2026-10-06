@@ -24,12 +24,12 @@ screens without a media query.
 | `columns` | number | `3` | Target column count. Columns auto-collapse on narrow viewports — this sets the minimum item width used for that collapse (2→280px, 3→250px, 4→200px, 5→180px, 6→150px), not a hard column count. |
 | `rows` | number | *(auto)* | Explicit row track count (`grid-template-rows: repeat(N, auto)`). Omit to let rows grow automatically as content is added. |
 | `gap` | string | `1rem` | Any CSS gap value. |
-| `min-width` | string | *(computed from `columns`)* | Overrides the auto-computed minimum item width used for column collapse. |
+| `minWidth` | string | *(computed from `columns`)* | Overrides the auto-computed minimum item width used for column collapse. |
 | `align` | string | *(none)* | `align-items` — vertical alignment of each cell's content. |
 | `justify` | string | *(none)* | `justify-items` — horizontal alignment of each cell's content. |
 | `center` | boolean | `false` | Shorthand for `align="center" justify="center"` plus centered text — the common case of "center everything in every cell." |
 | `background` | string | *(none)* | A theme colour name (`bg-primary`, `bg-secondary`, `bg-tertiary`, `primary`, `success`, …) or any CSS colour. Never a `var(--…)` token: name the colour, not its implementation. |
-| `alt-rows` | boolean | `false` | Zebra-stripes even-position children using `var(--bg-secondary)`. |
+| `altRows` | boolean | `false` | Zebra-stripes even-position children using `var(--bg-secondary)`. |
 | `headers` | string | *(none)* | Comma-separated column labels, rendered as a header row prepended before the grid's own content. |
 
 ## Column Count
@@ -76,7 +76,7 @@ screens without a media query.
 <div x-demo>
 <div x-grid
   columns="1"
-  alt-rows>
+  altRows>
   <div>Row 1</div>
   <div>Row 2</div>
   <div>Row 3</div>
@@ -108,7 +108,7 @@ data-table look without a real `<table>`.
 <div x-grid
   columns="3"
   headers="Product,Price,Stock"
-  alt-rows
+  altRows
   gap="0">
   <div>Widget</div>
   <div>$9.99</div>
@@ -125,4 +125,4 @@ data-table look without a real `<table>`.
 ## Notes
 
 - `xalign` is a **card** property (aligns a card's own content left/center/right) — it is not a grid property. Use `align`/`justify`/`center` for grid content alignment instead.
-- `alt-rows` stripes every other **child element** in DOM order, not visual grid rows — with a fixed `columns` count this lines up with actual rows (as in the examples above); with the default auto-fit column count it stripes by item position instead.
+- `altRows` stripes every other **child element** in DOM order, not visual grid rows — with a fixed `columns` count this lines up with actual rows (as in the examples above); with the default auto-fit column count it stripes by item position instead.

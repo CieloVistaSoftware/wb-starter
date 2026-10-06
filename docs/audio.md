@@ -29,22 +29,22 @@ Omit `src` entirely and it falls back to that same royalty-free track, so
 | `volume` | number | `0.8` | Initial volume, `0`–`1` |
 | `loop` | boolean | `false` | Restart on finish |
 | `autoplay` | boolean | `false` | Play on load — browsers require `muted` too |
-| `show-eq` | boolean | `false` | Show the 15-band equalizer |
-| `show-display` | boolean | `true` | Scrolling track/URL display |
-| `show-play-button` | boolean | `true` | Custom play/pause button |
+| `showEq` | boolean | `false` | Show the 15-band equalizer |
+| `showDisplay` | boolean | `true` | Scrolling track/URL display |
+| `showPlayButton` | boolean | `true` | Custom play/pause button |
 | `muted` | boolean | `false` | **Declared but not implemented** — see below |
 | `bass` | number | `0` | **Declared but not implemented** — see below |
 | `treble` | number | `0` | **Declared but not implemented** — see below |
 
-Attributes are kebab-case in markup (`show-eq`), camelCase in the schema
+Attributes are kebab-case in markup (`showEq`), camelCase in the schema
 (`showEq`).
 
 ---
 
-### `show-eq` — the 15-band equalizer
+### `showEq` — the 15-band equalizer
 
 <div x-demo>
-<div x-audio show-eq
+<div x-audio showEq
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
@@ -67,17 +67,17 @@ silence.
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
-### `show-display="false"` — hide the track display
+### `showDisplay="false"` — hide the track display
 
 <div x-demo>
-<div x-audio show-display="false"
+<div x-audio showDisplay="false"
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
-### `show-play-button="false"` — no custom transport
+### `showPlayButton="false"` — no custom transport
 
 <div x-demo>
-<div x-audio show-play-button="false"
+<div x-audio showPlayButton="false"
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
 </div>
 
@@ -96,9 +96,9 @@ blocked rather than starting silently.
 
 <div x-demo>
 <div x-audio
-     show-eq
-     show-display
-     show-play-button
+     showEq
+     showDisplay
+     showPlayButton
      volume="0.6"
      loop
      src="https://archive.org/download/nineinchnails_ghosts_I_IV/01_Ghosts_I.mp3"></div>
@@ -133,12 +133,12 @@ working and this section should shrink.
 
 ## The equalizer and CORS
 
-With `show-eq`, playback runs through the Web Audio API, which needs to read the
+With `showEq`, playback runs through the Web Audio API, which needs to read the
 audio data itself rather than just stream it. A cross-origin file therefore has
 to send `Access-Control-Allow-Origin`.
 
-- **Without `show-eq`** — any reachable URL works.
-- **With `show-eq`** — the file's server must send CORS headers, or the graph
+- **Without `showEq`** — any reachable URL works.
+- **With `showEq`** — the file's server must send CORS headers, or the graph
   gets silence.
 
 If you hear nothing with the EQ on and everything with it off, that is the

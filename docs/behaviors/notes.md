@@ -5,7 +5,7 @@
 ## Usage
 
 <div x-demo>
-<aside x-notes position="right" default-width="280px">
+<aside x-notes position="right" defaultWidth="280px">
   <p>Notes stay pinned beside the content while you scroll.</p>
 </aside>
 </div>
@@ -15,10 +15,10 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `position` | `left` · `right` · `modal` | `left` |  |
-| `max-width` | `string` | `50vw` | Max width when resizing |
-| `min-width` | `string` | `200px` | Min width when resizing |
-| `default-width` | `string` | `320px` | Default width |
-| `auto-save` | `boolean` | `true` | Auto-save to localStorage |
+| `maxWidth` | `string` | `50vw` | Max width when resizing |
+| `minWidth` | `string` | `200px` | Min width when resizing |
+| `defaultWidth` | `string` | `320px` | Default width |
+| `autoSave` | `boolean` | `true` | Auto-save to localStorage |
 | `placeholder` | `string` | `Add your notes here...` | Textarea placeholder |
 
 ## Events

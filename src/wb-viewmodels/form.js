@@ -1,4 +1,4 @@
-import { readFlag } from '../core/read-attr.js';
+import { readFlag, hasAuthoredAttr } from '../core/read-attr.js';
 /**
  * Form - enhanced <form>: AJAX submit, success/error message, validation on
  * blur, loading state, auto-save.
@@ -25,7 +25,7 @@ export function form(element, options = {}) {
   const config = {
     ajax: options.ajax ?? (host.hasAttribute('ajax') && readFlag(host, 'ajax', true)),
     validate: options.validate ?? (host.hasAttribute('validate') && readFlag(host, 'validate', true)),
-    autoSave: options.autoSave ?? (host.hasAttribute('auto-save') && readFlag(host, 'auto-save', true)),
+    autoSave: options.autoSave ?? (hasAuthoredAttr(host, 'auto-save') && readFlag(host, 'auto-save', true)),
     // HTML lowercases attribute names, so successMessage="…" arrives as
     // successmessage; the kebab spelling is what the docs teach.
     successMessage: options.successMessage || text('success-message', text('successmessage', 'Sent.')),

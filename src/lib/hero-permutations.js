@@ -85,7 +85,7 @@ export function heroPermutations() {
     const bg = BGS[(i + round * 5) % BGS.length];
     const overlay = (i + round) % 5 !== 0; // on by default; off roughly 1-in-5 so it's exercised too
     // The companion trigger is <button x-modal>: it was a bare <dialog
-    // modal-title> (the migration's reading of <x-modal>), which only
+    // modalTitle> (the migration's reading of <x-modal>), which only
     // showed at all because .x-dialog-trigger overrode the UA's hidden
     // <dialog>, and read to assistive tech as a dialog rather than a button.
     const signatureStyle = i % 2 === 1; // alternate the two original styles
@@ -98,20 +98,20 @@ export function heroPermutations() {
       variant !== 'default' ? `variant="${variant}"` : '',
       overlay ? '' : `overlay="false"`,
       cta ? `cta="${cta}"` : '',
-      cta ? `cta-href="${href(cta)}"` : '',
+      cta ? `ctaHref="${href(cta)}"` : '',
       // The signature style's themed tooltip on its primary CTA. It was
       // part of the "20 signature heroes" set this generator absorbed, and
       // was lost in the merge -- cardhero still reads cta-tooltip (card.js)
       // and turns it into an x-tooltip on the button.
       signatureStyle && cta ? `cta-tooltip="${sub}"` : '',
-      cta2 ? `cta-secondary="${cta2}"` : '',
-      cta2 ? `cta-secondary-href="${href(cta2)}"` : '',
+      cta2 ? `ctaSecondary="${cta2}"` : '',
+      cta2 ? `ctaSecondaryHref="${href(cta2)}"` : '',
       bg ? `background="${bg}"` : '',
       signatureStyle ? 'x-fadein' : '',
     ].filter(Boolean);
     const hero = `<section x-cardhero\n  ${attrs.join('\n  ')}>\n</section>`;
     const markup = signatureStyle
-      ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <button x-modal\n    modal-title="${title}"\n    modal-content="${sub}">\n    See it in action\n  </button>\n</div>`
+      ? `<div class="pg-signature-hero">\n  ${hero.replace(/\n/g, '\n  ')}\n  <button x-modal\n    modalTitle="${title}"\n    modalContent="${sub}">\n    See it in action\n  </button>\n</div>`
       : hero;
     out.push({
       index: i + 1,

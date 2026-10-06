@@ -5,7 +5,7 @@
   "description": "Centres the element horizontally, or with flexbox centres its children.",
   "schemaFor": "center",
   "properties": {
-    "max-width": {
+    "maxWidth": {
       "type": "string",
       "description": "Read by center().",
       "default": "this is the max width",

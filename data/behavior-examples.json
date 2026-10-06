@@ -160,80 +160,80 @@
       ]
     },
     "x-popover": {
-      "source": "<button variant=\"primary\" x-popover popover-title=\"Popover Title\" popover-content=\"This is additional information displayed in a popover.\">\n  x-popover · variant: primary · popover-title: Popover Title · popover-content: This is additional information displayed in a popover.\n</button>",
+      "source": "<button variant=\"primary\" x-popover popoverTitle=\"Popover Title\" popoverContent=\"This is additional information displayed in a popover.\">\n  x-popover · variant: primary · popover-title: Popover Title · popover-content: This is additional information displayed in a popover.\n</button>",
       "alternates": [],
       "examples": [
         {
           "label": "below the trigger",
-          "source": "<button variant=\"secondary\" x-popover position=\"bottom\" popover-title=\"Below\" popover-content=\"Opens under the button.\">\n  Popover below\n</button>"
+          "source": "<button variant=\"secondary\" x-popover position=\"bottom\" popoverTitle=\"Below\" popoverContent=\"Opens under the button.\">\n  Popover below\n</button>"
         },
         {
           "label": "to the right",
-          "source": "<button variant=\"success\" x-popover position=\"right\" popover-title=\"Right\" popover-content=\"Opens beside the button.\">\n  Popover right\n</button>"
+          "source": "<button variant=\"success\" x-popover position=\"right\" popoverTitle=\"Right\" popoverContent=\"Opens beside the button.\">\n  Popover right\n</button>"
         },
         {
           "label": "large trigger",
-          "source": "<button variant=\"warning\" size=\"lg\" x-popover popover-title=\"Help\" popover-content=\"A longer explanation lives here.\">\n  What is this?\n</button>"
+          "source": "<button variant=\"warning\" size=\"lg\" x-popover popoverTitle=\"Help\" popoverContent=\"A longer explanation lives here.\">\n  What is this?\n</button>"
         },
         {
           "label": "on a link",
-          "source": "<a href=\"#\" x-popover popover-title=\"Glossary\" popover-content=\"Light DOM: no shadow root, so styles and queries reach everything.\">light DOM</a>"
+          "source": "<a href=\"#\" x-popover popoverTitle=\"Glossary\" popoverContent=\"Light DOM: no shadow root, so styles and queries reach everything.\">light DOM</a>"
         },
         {
           "label": "error button",
-          "source": "<button variant=\"error\" size=\"sm\" x-popover position=\"left\" popover-title=\"Build failed\" popover-content=\"2 of 13 checks failed.\">\n  Why did this fail?\n</button>"
+          "source": "<button variant=\"error\" size=\"sm\" x-popover position=\"left\" popoverTitle=\"Build failed\" popoverContent=\"2 of 13 checks failed.\">\n  Why did this fail?\n</button>"
         }
       ]
     },
     "x-confirm": {
-      "source": "<button variant=\"primary\" x-confirm confirm-title=\"Confirm Action\" confirm-message=\"Are you sure you want to proceed?\">\n  x-confirm · variant: primary · confirm-title: Confirm Action · confirm-message: Are you sure you want to proceed?\n</button>",
+      "source": "<button variant=\"primary\" x-confirm confirmTitle=\"Confirm Action\" confirmMessage=\"Are you sure you want to proceed?\">\n  x-confirm · variant: primary · confirm-title: Confirm Action · confirm-message: Are you sure you want to proceed?\n</button>",
       "alternates": [],
       "examples": [
         {
           "label": "destructive",
-          "source": "<button variant=\"error\" x-confirm confirm-title=\"Delete project?\" confirm-message=\"This removes every file and cannot be undone.\">\n  Project deletion\n</button>"
+          "source": "<button variant=\"error\" x-confirm confirmTitle=\"Delete project?\" confirmMessage=\"This removes every file and cannot be undone.\">\n  Project deletion\n</button>"
         },
         {
           "label": "publish",
-          "source": "<button variant=\"success\" size=\"lg\" x-confirm confirm-title=\"Publish now?\" confirm-message=\"Readers will see this immediately.\">\n  Go live\n</button>"
+          "source": "<button variant=\"success\" size=\"lg\" x-confirm confirmTitle=\"Publish now?\" confirmMessage=\"Readers will see this immediately.\">\n  Go live\n</button>"
         },
         {
           "label": "sign out",
-          "source": "<button variant=\"secondary\" size=\"sm\" x-confirm confirm-title=\"Sign out?\" confirm-message=\"Unsaved drafts stay on this device.\">\n  Sign out\n</button>"
+          "source": "<button variant=\"secondary\" size=\"sm\" x-confirm confirmTitle=\"Sign out?\" confirmMessage=\"Unsaved drafts stay on this device.\">\n  Sign out\n</button>"
         },
         {
           "label": "warning",
-          "source": "<button variant=\"warning\" x-confirm confirm-title=\"Reset settings?\" confirm-message=\"Every preference goes back to its default.\">\n  Reset settings\n</button>"
+          "source": "<button variant=\"warning\" x-confirm confirmTitle=\"Reset settings?\" confirmMessage=\"Every preference goes back to its default.\">\n  Reset settings\n</button>"
         },
         {
           "label": "on a link",
-          "source": "<a href=\"#\" x-confirm confirm-title=\"Leave this page?\" confirm-message=\"Your changes will be lost.\">Discard changes</a>"
+          "source": "<a href=\"#\" x-confirm confirmTitle=\"Leave this page?\" confirmMessage=\"Your changes will be lost.\">Discard changes</a>"
         }
       ]
     },
     "x-prompt": {
-      "source": "<button variant=\"primary\" x-prompt prompt-title=\"Enter Value\" prompt-message=\"Please enter your name:\">\n  x-prompt · variant: primary · prompt-title: Enter Value · prompt-message: Please enter your name:\n</button>",
+      "source": "<button variant=\"primary\" x-prompt promptTitle=\"Enter Value\" promptMessage=\"Please enter your name:\">\n  x-prompt · variant: primary · prompt-title: Enter Value · prompt-message: Please enter your name:\n</button>",
       "alternates": [],
       "examples": [
         {
           "label": "rename",
-          "source": "<button variant=\"secondary\" x-prompt prompt-title=\"Rename\" prompt-message=\"New file name:\">\n  Rename file\n</button>"
+          "source": "<button variant=\"secondary\" x-prompt promptTitle=\"Rename\" promptMessage=\"New file name:\">\n  Rename file\n</button>"
         },
         {
           "label": "invite",
-          "source": "<button variant=\"success\" size=\"lg\" x-prompt prompt-title=\"Invite\" prompt-message=\"Their email address:\">\n  Invite teammate\n</button>"
+          "source": "<button variant=\"success\" size=\"lg\" x-prompt promptTitle=\"Invite\" promptMessage=\"Their email address:\">\n  Invite teammate\n</button>"
         },
         {
           "label": "small trigger",
-          "source": "<button variant=\"warning\" size=\"sm\" x-prompt prompt-title=\"Budget\" prompt-message=\"Monthly limit in dollars:\">\n  Set budget\n</button>"
+          "source": "<button variant=\"warning\" size=\"sm\" x-prompt promptTitle=\"Budget\" promptMessage=\"Monthly limit in dollars:\">\n  Set budget\n</button>"
         },
         {
           "label": "error-coloured trigger",
-          "source": "<button variant=\"error\" x-prompt prompt-title=\"Confirm deletion\" prompt-message=\"Type DELETE to continue:\">\n  Type DELETE\n</button>"
+          "source": "<button variant=\"error\" x-prompt promptTitle=\"Confirm deletion\" promptMessage=\"Type DELETE to continue:\">\n  Type DELETE\n</button>"
         },
         {
           "label": "on a link",
-          "source": "<a href=\"#\" x-prompt prompt-title=\"Search\" prompt-message=\"What are you looking for?\">Search…</a>"
+          "source": "<a href=\"#\" x-prompt promptTitle=\"Search\" promptMessage=\"What are you looking for?\">Search…</a>"
         }
       ]
     },
@@ -270,28 +270,28 @@
       "alternates": []
     },
     "x-pagination": {
-      "source": "<nav x-pagination total=\"100\" per-page=\"10\" current=\"5\"></nav>",
+      "source": "<nav x-pagination total=\"100\" perPage=\"10\" current=\"5\"></nav>",
       "alternates": [],
       "examples": [
         {
           "label": "first page",
-          "source": "<nav x-pagination total=\"100\" per-page=\"10\" current=\"1\"></nav>"
+          "source": "<nav x-pagination total=\"100\" perPage=\"10\" current=\"1\"></nav>"
         },
         {
           "label": "last page",
-          "source": "<nav x-pagination total=\"100\" per-page=\"10\" current=\"10\"></nav>"
+          "source": "<nav x-pagination total=\"100\" perPage=\"10\" current=\"10\"></nav>"
         },
         {
           "label": "three pages",
-          "source": "<nav x-pagination total=\"30\" per-page=\"10\" current=\"2\"></nav>"
+          "source": "<nav x-pagination total=\"30\" perPage=\"10\" current=\"2\"></nav>"
         },
         {
           "label": "many pages",
-          "source": "<nav x-pagination total=\"1000\" per-page=\"10\" current=\"50\"></nav>"
+          "source": "<nav x-pagination total=\"1000\" perPage=\"10\" current=\"50\"></nav>"
         },
         {
           "label": "fifty per page",
-          "source": "<nav x-pagination total=\"500\" per-page=\"50\" current=\"3\"></nav>"
+          "source": "<nav x-pagination total=\"500\" perPage=\"50\" current=\"3\"></nav>"
         }
       ]
     },
@@ -881,28 +881,28 @@
       ]
     },
     "x-share": {
-      "source": "<button variant=\"secondary\" x-share share-title=\"wb-starter\" share-url=\"https://example.com\">\n  x-share · variant: secondary · share-title: wb-starter · share-url: https://example.com\n</button>",
+      "source": "<button variant=\"secondary\" x-share shareTitle=\"wb-starter\" shareUrl=\"https://example.com\">\n  x-share · variant: secondary · share-title: wb-starter · share-url: https://example.com\n</button>",
       "alternates": [],
       "examples": [
         {
           "label": "primary",
-          "source": "<button variant=\"primary\" x-share share-title=\"Field notes\" share-url=\"https://example.com/notes\">\n  Spread the word\n</button>"
+          "source": "<button variant=\"primary\" x-share shareTitle=\"Field notes\" shareUrl=\"https://example.com/notes\">\n  Spread the word\n</button>"
         },
         {
           "label": "small",
-          "source": "<button variant=\"success\" size=\"sm\" x-share share-title=\"Release 4.2\" share-url=\"https://example.com/release\">\n  Pass it on\n</button>"
+          "source": "<button variant=\"success\" size=\"sm\" x-share shareTitle=\"Release 4.2\" shareUrl=\"https://example.com/release\">\n  Pass it on\n</button>"
         },
         {
           "label": "large",
-          "source": "<button variant=\"warning\" size=\"lg\" x-share share-title=\"Try wb-starter\" share-text=\"Zero-build web components\" share-url=\"https://example.com\">\n  Tell a friend\n</button>"
+          "source": "<button variant=\"warning\" size=\"lg\" x-share shareTitle=\"Try wb-starter\" shareText=\"Zero-build web components\" shareUrl=\"https://example.com\">\n  Tell a friend\n</button>"
         },
         {
           "label": "error colour",
-          "source": "<button variant=\"error\" x-share share-title=\"Broken page\" share-url=\"https://example.com/broken\">\n  Report this page\n</button>"
+          "source": "<button variant=\"error\" x-share shareTitle=\"Broken page\" shareUrl=\"https://example.com/broken\">\n  Report this page\n</button>"
         },
         {
           "label": "on a link",
-          "source": "<a href=\"#\" x-share share-title=\"Field notes\" share-url=\"https://example.com/notes\">Recommend this</a>"
+          "source": "<a href=\"#\" x-share shareTitle=\"Field notes\" shareUrl=\"https://example.com/notes\">Recommend this</a>"
         }
       ]
     },
@@ -1120,12 +1120,12 @@
         {
           "label": "featured with your own text",
           "form": "semantic",
-          "source": "<article featured=\"Deal of the week\" featured-tone=\"success\" title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>"
+          "source": "<article featured=\"Deal of the week\" featuredTone=\"success\" title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</article>"
         },
         {
           "label": "featured with your own text",
           "form": "attribute",
-          "source": "<div x-card featured=\"Deal of the week\" featured-tone=\"success\" title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
+          "source": "<div x-card featured=\"Deal of the week\" featuredTone=\"success\" title=\"Trailhead access\" subtitle=\"Updated this morning\">\n  The north gate is open. Parking fills by 9am on weekends — the overflow lot adds\n  about ten minutes on foot.\n</div>"
         }
       ]
     },
@@ -1170,11 +1170,11 @@
       ]
     },
     "x-cardhero": {
-      "source": "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real components.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  cta-href=\"#\"\n  height=\"320px\"></section>",
+      "source": "<section x-cardhero\n  pretitle=\"Release 3.0\"\n  title=\"Zero build. Real components.\"\n  subtitle=\"Light DOM, no shadow boundaries, no class hierarchy.\"\n  cta=\"Read the guide\"\n  ctaHref=\"#\"\n  height=\"320px\"></section>",
       "alternates": []
     },
     "x-cardhorizontal": {
-      "source": "<article x-cardhorizontal\n  image=\"/images/placeholder.svg\"\n  image-alt=\"Pine trail at dawn\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
+      "source": "<article x-cardhorizontal\n  image=\"/images/placeholder.svg\"\n  imageAlt=\"Pine trail at dawn\"\n  title=\"Ridge loop, 8km\"\n  subtitle=\"Moderate · 3h\"></article>",
       "alternates": []
     },
     "x-cardimage": {
@@ -1212,7 +1212,7 @@
       "alternates": []
     },
     "x-cardproduct": {
-      "source": "<article x-cardproduct\n  image=\"/images/placeholder.svg\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32Ω, folds flat.\"\n  price=\"$149\"\n  original-price=\"$189\"></article>",
+      "source": "<article x-cardproduct\n  image=\"/images/placeholder.svg\"\n  title=\"Field headphones\"\n  description=\"Closed-back, 32Ω, folds flat.\"\n  price=\"$149\"\n  originalPrice=\"$189\"></article>",
       "alternates": []
     },
     "x-cardprofile": {
@@ -1220,7 +1220,7 @@
       "alternates": []
     },
     "x-cardstats": {
-      "source": "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trend-value=\"12%\"></article>",
+      "source": "<article x-cardstats value=\"1,284\" label=\"Builds this month\" trend=\"up\" trendValue=\"12%\"></article>",
       "alternates": []
     },
     "x-cardtestimonial": {
@@ -1294,7 +1294,7 @@
       "alternates": []
     },
     "x-tabs": {
-      "source": "<div x-tabs active-tab=\"0\" variant=\"underline\">\n  <section title=\"Overview\">Composition over inheritance, in light DOM.</section>\n  <section title=\"Attributes\">Every attribute is kebab-case (§31).</section>\n  <section title=\"Events\">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>\n</div>",
+      "source": "<div x-tabs activeTab=\"0\" variant=\"underline\">\n  <section title=\"Overview\">Composition over inheritance, in light DOM.</section>\n  <section title=\"Attributes\">Every attribute is kebab-case (§31).</section>\n  <section title=\"Events\">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>\n</div>",
       "alternates": []
     },
     "x-header": {
@@ -1310,9 +1310,9 @@
       ]
     },
     "x-navbar": {
-      "source": "<nav brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></nav>",
+      "source": "<nav brand=\"wb-starter\" brandHref=\"#\" tagline=\"Zero build\"></nav>",
       "alternates": [
-        "<div x-navbar brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></div>"
+        "<div x-navbar brand=\"wb-starter\" brandHref=\"#\" tagline=\"Zero build\"></div>"
       ],
       "examples": [
         {
@@ -1370,7 +1370,7 @@
     "x-input": {
       "source": "<input\n  variant=\"error\"\n  placeholder=\"owner/name\"\n  name=\"repo\"\n  type=\"text\">",
       "alternates": [
-        "<div x-input label=\"Repository\" placeholder=\"owner/name\" name=\"repo\" input-type=\"text\"></div>"
+        "<div x-input label=\"Repository\" placeholder=\"owner/name\" name=\"repo\" inputType=\"text\"></div>"
       ]
     },
     "x-textarea": {
@@ -1873,7 +1873,7 @@
         },
         {
           "label": "aspect-ratio instead of height",
-          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"200\" aspect-ratio=\"3/4\" alt=\"Dachshund puppy, cropped to portrait\">"
+          "source": "<img src=\"/images/dachshund-puppy-image-960x540.jpg\" width=\"200\" aspectRatio=\"3/4\" alt=\"Dachshund puppy, cropped to portrait\">"
         }
       ]
     },
@@ -1898,16 +1898,16 @@
       ]
     },
     "x-vimeo": {
-      "source": "<div x-vimeo video-id=\"76979871\"></div>",
+      "source": "<div x-vimeo videoId=\"76979871\"></div>",
       "alternates": [],
       "examples": [
         {
           "label": "in a card",
-          "source": "<article title=\"Product tour\" subtitle=\"Two minutes\">\n  <div x-vimeo video-id=\"76979871\"></div>\n</article>"
+          "source": "<article title=\"Product tour\" subtitle=\"Two minutes\">\n  <div x-vimeo videoId=\"76979871\"></div>\n</article>"
         },
         {
           "label": "with a caption",
-          "source": "<figure>\n  <div x-vimeo video-id=\"76979871\"></div>\n  <figcaption>Recorded at the 2026 meetup.</figcaption>\n</figure>"
+          "source": "<figure>\n  <div x-vimeo videoId=\"76979871\"></div>\n  <figcaption>Recorded at the 2026 meetup.</figcaption>\n</figure>"
         }
       ]
     },
@@ -1968,12 +1968,12 @@
       ]
     },
     "x-notes": {
-      "source": "<aside x-notes position=\"right\" default-width=\"280px\">\n  <p>Notes stay pinned beside the content while you scroll.</p>\n</aside>",
+      "source": "<aside x-notes position=\"right\" defaultWidth=\"280px\">\n  <p>Notes stay pinned beside the content while you scroll.</p>\n</aside>",
       "alternates": [],
       "examples": [
         {
           "label": "wide default",
-          "source": "<aside x-notes position=\"right\" default-width=\"420px\">\n  <p>A wider notes panel.</p>\n</aside>"
+          "source": "<aside x-notes position=\"right\" defaultWidth=\"420px\">\n  <p>A wider notes panel.</p>\n</aside>"
         }
       ]
     },
@@ -2052,7 +2052,7 @@
       ]
     },
     "x-copybutton": {
-      "source": "<button x-copybutton copy-target=\"#x-ex-copy-source\">\n  x-copybutton · copy-target: #x-ex-copy-source\n</button>\n<code id=\"x-ex-copy-source\">npm run test:compliance</code>",
+      "source": "<button x-copybutton copyTarget=\"#x-ex-copy-source\">\n  x-copybutton · copy-target: #x-ex-copy-source\n</button>\n<code id=\"x-ex-copy-source\">npm run test:compliance</code>",
       "alternates": [],
       "examples": [
         {
@@ -2073,7 +2073,7 @@
         },
         {
           "label": "custom feedback",
-          "source": "<pre x-copybutton copy-feedback=\"Got it!\">docker compose up -d</pre>"
+          "source": "<pre x-copybutton copyFeedback=\"Got it!\">docker compose up -d</pre>"
         }
       ]
     },
@@ -2139,7 +2139,7 @@
         },
         {
           "label": "beside text",
-          "source": "<div x-sidebarlayout side-width=\"12rem\" gap=\"1rem\">\n  <div x-globe></div>\n  <p>Served from 14 regions worldwide, with failover in every continent.</p>\n</div>"
+          "source": "<div x-sidebarlayout sideWidth=\"12rem\" gap=\"1rem\">\n  <div x-globe></div>\n  <p>Served from 14 regions worldwide, with failover in every continent.</p>\n</div>"
         },
         {
           "label": "in a card",
@@ -2258,28 +2258,28 @@
       ]
     },
     "x-drawer-layout": {
-      "source": "<aside x-drawer-layout position=\"left\" width=\"220px\" min-width=\"64px\">\n  <nav><a href=\"#\">Overview</a><a href=\"#\">Runs</a><a href=\"#\">Settings</a></nav>\n</aside>",
+      "source": "<aside x-drawer-layout position=\"left\" width=\"220px\" minWidth=\"64px\">\n  <nav><a href=\"#\">Overview</a><a href=\"#\">Runs</a><a href=\"#\">Settings</a></nav>\n</aside>",
       "alternates": [],
       "examples": [
         {
           "label": "wide drawer",
-          "source": "<aside x-drawer-layout position=\"left\" width=\"320px\" min-width=\"64px\">\n  <nav><a href=\"#\">Inbox</a><a href=\"#\">Starred</a><a href=\"#\">Sent</a><a href=\"#\">Archive</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"320px\" minWidth=\"64px\">\n  <nav><a href=\"#\">Inbox</a><a href=\"#\">Starred</a><a href=\"#\">Sent</a><a href=\"#\">Archive</a></nav>\n</aside>"
         },
         {
           "label": "narrow drawer",
-          "source": "<aside x-drawer-layout position=\"left\" width=\"140px\" min-width=\"48px\">\n  <nav><a href=\"#\">Home</a><a href=\"#\">Search</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"140px\" minWidth=\"48px\">\n  <nav><a href=\"#\">Home</a><a href=\"#\">Search</a></nav>\n</aside>"
         },
         {
           "label": "right side",
-          "source": "<aside x-drawer-layout position=\"right\" width=\"220px\" min-width=\"64px\">\n  <p>Details panel on the right.</p>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"right\" width=\"220px\" minWidth=\"64px\">\n  <p>Details panel on the right.</p>\n</aside>"
         },
         {
           "label": "with a heading",
-          "source": "<aside x-drawer-layout position=\"left\" width=\"260px\" min-width=\"64px\">\n  <h3>Projects</h3>\n  <nav><a href=\"#\">wb-starter</a><a href=\"#\">docs-site</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"260px\" minWidth=\"64px\">\n  <h3>Projects</h3>\n  <nav><a href=\"#\">wb-starter</a><a href=\"#\">docs-site</a></nav>\n</aside>"
         },
         {
           "label": "icons only",
-          "source": "<aside x-drawer-layout position=\"left\" width=\"72px\" min-width=\"48px\">\n  <nav><a href=\"#\">🏠</a><a href=\"#\">🔍</a><a href=\"#\">⚙️</a></nav>\n</aside>"
+          "source": "<aside x-drawer-layout position=\"left\" width=\"72px\" minWidth=\"48px\">\n  <nav><a href=\"#\">🏠</a><a href=\"#\">🔍</a><a href=\"#\">⚙️</a></nav>\n</aside>"
         }
       ]
     },
@@ -2380,12 +2380,12 @@
       ]
     },
     "x-sticky": {
-      "source": "<div x-sticky offset=\"0\" stuck-class=\"is-stuck\">\n  Sticks to the top of its scroll container once you pass it.\n</div>",
+      "source": "<div x-sticky offset=\"0\" stuckClass=\"is-stuck\">\n  Sticks to the top of its scroll container once you pass it.\n</div>",
       "alternates": [],
       "examples": [
         {
           "label": "offset below a header",
-          "source": "<div x-sticky offset=\"48\" stuck-class=\"is-stuck\">\n  Sticks 48px from the top — under a site header.\n</div>"
+          "source": "<div x-sticky offset=\"48\" stuckClass=\"is-stuck\">\n  Sticks 48px from the top — under a site header.\n</div>"
         },
         {
           "label": "toolbar",
@@ -2402,7 +2402,7 @@
       ]
     },
     "x-glass": {
-      "source": "<section x-cardhero\n  background=\"images/placeholder-waves.svg\"\n  height=\"280px\"\n  pretitle=\"x-glass\"\n  title=\"Infinite Possibility.\"\n  cta=\"Try the Playground\"\n  cta-secondary=\"Read the Guide\"></section>",
+      "source": "<section x-cardhero\n  background=\"images/placeholder-waves.svg\"\n  height=\"280px\"\n  pretitle=\"x-glass\"\n  title=\"Infinite Possibility.\"\n  cta=\"Try the Playground\"\n  ctaSecondary=\"Read the Guide\"></section>",
       "alternates": [
         "<button x-glass amount=\"some\">amount=some</button>",
         "<button x-glass amount=\"least\">amount=least</button>"
@@ -2441,22 +2441,22 @@
       ]
     },
     "x-center": {
-      "source": "<div x-center max-width=\"40ch\" gutters=\"1rem\">\n  <h3>Centred measure</h3>\n  <p>This column stops at 40 characters and keeps a 1rem gutter on each side, however wide the page gets.</p>\n</div>",
+      "source": "<div x-center maxWidth=\"40ch\" gutters=\"1rem\">\n  <h3>Centred measure</h3>\n  <p>This column stops at 40 characters and keeps a 1rem gutter on each side, however wide the page gets.</p>\n</div>",
       "alternates": [
-        "<div x-center max-width=\"60ch\" gutters=\"2rem\">\n  <p>A wider measure with roomier gutters.</p>\n</div>"
+        "<div x-center maxWidth=\"60ch\" gutters=\"2rem\">\n  <p>A wider measure with roomier gutters.</p>\n</div>"
       ]
     },
     "x-container": {
       "source": "<div x-container direction=\"row\" gap=\"1rem\" justify=\"space-between\" align=\"center\">\n  <span>Left</span>\n  <span>Middle</span>\n  <span>Right</span>\n</div>",
       "alternates": [
         "<div x-container direction=\"column\" gap=\"0.5rem\">\n  <span>Stacked one</span>\n  <span>Stacked two</span>\n  <span>Stacked three</span>\n</div>",
-        "<div x-container max-width=\"50ch\" padding=\"1rem\">\n  <p>Constrained and padded.</p>\n</div>"
+        "<div x-container maxWidth=\"50ch\" padding=\"1rem\">\n  <p>Constrained and padded.</p>\n</div>"
       ]
     },
     "x-cover": {
-      "source": "<div x-cover min-height=\"14rem\" padding=\"1rem\">\n  <h3>Vertically centred</h3>\n  <p>The cover keeps this centred in at least 14rem of height.</p>\n</div>",
+      "source": "<div x-cover minHeight=\"14rem\" padding=\"1rem\">\n  <h3>Vertically centred</h3>\n  <p>The cover keeps this centred in at least 14rem of height.</p>\n</div>",
       "alternates": [
-        "<div x-cover min-height=\"20rem\" padding=\"2rem\">\n  <h3>Taller cover</h3>\n</div>"
+        "<div x-cover minHeight=\"20rem\" padding=\"2rem\">\n  <h3>Taller cover</h3>\n</div>"
       ]
     },
     "x-frame": {
@@ -2491,7 +2491,7 @@
     "x-grid": {
       "source": "<div x-grid columns=\"3\" gap=\"1rem\">\n  <article title=\"One\" subtitle=\"First cell\"></article>\n  <article title=\"Two\" subtitle=\"Second cell\"></article>\n  <article title=\"Three\" subtitle=\"Third cell\"></article>\n  <article title=\"Four\" subtitle=\"Wraps to row two\"></article>\n  <article title=\"Five\" subtitle=\"Fifth cell\"></article>\n  <article title=\"Six\" subtitle=\"Sixth cell\"></article>\n</div>",
       "alternates": [
-        "<div x-grid min-width=\"12rem\" gap=\"0.75rem\">\n  <article title=\"Auto-fit\"></article>\n  <article title=\"No column count\"></article>\n  <article title=\"Fits to width\"></article>\n</div>"
+        "<div x-grid minWidth=\"12rem\" gap=\"0.75rem\">\n  <article title=\"Auto-fit\"></article>\n  <article title=\"No column count\"></article>\n  <article title=\"Fits to width\"></article>\n</div>"
       ]
     },
     "x-icon": {
@@ -2507,15 +2507,15 @@
       ]
     },
     "x-reel": {
-      "source": "<div x-reel item-width=\"14rem\" gap=\"1rem\">\n  <article title=\"Scroll me\" subtitle=\"Item one\"></article>\n  <article title=\"Keep going\" subtitle=\"Item two\"></article>\n  <article title=\"Still more\" subtitle=\"Item three\"></article>\n  <article title=\"Last one\" subtitle=\"Item four\"></article>\n</div>",
+      "source": "<div x-reel itemWidth=\"14rem\" gap=\"1rem\">\n  <article title=\"Scroll me\" subtitle=\"Item one\"></article>\n  <article title=\"Keep going\" subtitle=\"Item two\"></article>\n  <article title=\"Still more\" subtitle=\"Item three\"></article>\n  <article title=\"Last one\" subtitle=\"Item four\"></article>\n</div>",
       "alternates": [
-        "<div x-reel item-width=\"8rem\" gap=\"0.5rem\">\n  <article title=\"Narrow\"></article>\n  <article title=\"Reel\"></article>\n  <article title=\"Items\"></article>\n</div>"
+        "<div x-reel itemWidth=\"8rem\" gap=\"0.5rem\">\n  <article title=\"Narrow\"></article>\n  <article title=\"Reel\"></article>\n  <article title=\"Items\"></article>\n</div>"
       ]
     },
     "x-sidebarlayout": {
-      "source": "<div x-sidebarlayout side=\"left\" side-width=\"14rem\" content-min=\"50%\" gap=\"1rem\">\n  <nav>\n    <p><strong>Sidebar</strong></p>\n    <p>Fixed at 14rem until the content hits its minimum.</p>\n  </nav>\n  <main>\n    <h3>Main content</h3>\n    <p>Takes the rest, and wraps below the sidebar when it can no longer keep half the width.</p>\n  </main>\n</div>",
+      "source": "<div x-sidebarlayout side=\"left\" sideWidth=\"14rem\" contentMin=\"50%\" gap=\"1rem\">\n  <nav>\n    <p><strong>Sidebar</strong></p>\n    <p>Fixed at 14rem until the content hits its minimum.</p>\n  </nav>\n  <main>\n    <h3>Main content</h3>\n    <p>Takes the rest, and wraps below the sidebar when it can no longer keep half the width.</p>\n  </main>\n</div>",
       "alternates": [
-        "<div x-sidebarlayout side=\"right\" side-width=\"12rem\" gap=\"1.5rem\">\n  <main>\n    <h3>Content first</h3>\n    <p>The sidebar sits on the right.</p>\n  </main>\n  <aside><p>Aside</p></aside>\n</div>"
+        "<div x-sidebarlayout side=\"right\" sideWidth=\"12rem\" gap=\"1.5rem\">\n  <main>\n    <h3>Content first</h3>\n    <p>The sidebar sits on the right.</p>\n  </main>\n  <aside><p>Aside</p></aside>\n</div>"
       ]
     },
     "x-stat": {

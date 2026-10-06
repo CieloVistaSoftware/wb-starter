@@ -17,8 +17,8 @@ test.describe('Card Overlay (integration)', () => {
     });
     
     const card = page.locator('#test-overlay');
-    // #969: the variant is the x-cardoverlay attribute; the built card carries its position class.
-    await expect(card).toHaveClass(/\bx-card--overlay-(top|center|bottom)\b/);
+    // #969: the attribute names the card; no x-card--overlay-card class.
+    await expect(card).toHaveAttribute('x-cardoverlay', '');
     
     // Should have overlay content with title
     const overlayContent = card.locator('.x-card__overlay-content');

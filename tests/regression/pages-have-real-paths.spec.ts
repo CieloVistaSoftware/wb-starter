@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/offline';
 import fs from 'fs';
 import path from 'path';
 import { pageFromUrl, pageHref, isPageLink, FOLDER_PAGES } from '../../src/core/routes.js';
-import { build404, pagesBase } from '../../scripts/generate-404.mjs';
+import { build404, pagesBase, shellPages, generatedFolders } from '../../scripts/generate-404.mjs';
 
 /**
  * Pages live at real paths (#1001), and a path naming no page is a 404 (#957).
@@ -34,7 +34,10 @@ test('an address names its page, and a page has one address', () => {
 
 test('a page that is also a folder of the site is listed, and only those', () => {
   const pages = fs.readdirSync(path.join(ROOT, 'pages')).filter((f) => f.endsWith('.html')).map((f) => f.slice(0, -5));
-  const folders = pages.filter((p) => fs.existsSync(path.join(ROOT, p)) && fs.statSync(path.join(ROOT, p)).isDirectory());
+  // A folder holding only a generated page shell is the page's own address,
+  // not a folder that shadows it.
+  const generated = new Set(generatedFolders());
+  const folders = pages.filter((p) => !generated.has(p) && fs.existsSync(path.join(ROOT, p)) && fs.statSync(path.join(ROOT, p)).isDirectory());
   expect(folders.sort()).toEqual([...FOLDER_PAGES].sort());
 });
 
@@ -48,6 +51,23 @@ test('404.html is index.html plus the site root, nothing else', () => {
   expect(unstamped(committed), 'run node scripts/generate-404.mjs')
     .toBe(unstamped(build404(index, pagesBase())));
   expect(committed).toContain('<base href="/wb-starter/">');
+});
+
+test('every page has a real file at its path, the same shell as 404.html, and nothing else does', () => {
+  // GitHub Pages answers 404.html with a 404 status, and a search engine
+  // drops a page that answers 404. A real <page>/index.html is answered 200.
+  // ?v= left out, as for 404.html above: main's stamp rewrites it in every
+  // shell on each merge, so a branch's copies are one stamp behind until then.
+  const unstamped = (html: string) => html.replace(/\?v=\d+\.\d+\.\d+/g, '?v=');
+  const shell = unstamped(fs.readFileSync(path.join(ROOT, '404.html'), 'utf8'));
+  const pages = shellPages();
+  expect(pages.length, 'the page list is not empty, so this can fail').toBeGreaterThan(5);
+  const wrong = pages.filter((p) => {
+    const file = path.join(ROOT, p, 'index.html');
+    return !fs.existsSync(file) || unstamped(fs.readFileSync(file, 'utf8')) !== shell;
+  });
+  expect(wrong, 'run node scripts/generate-404.mjs and commit the folders').toEqual([]);
+  expect(generatedFolders(), 'a generated folder for a page that no longer exists').toEqual(pages);
 });
 
 test('the dev server answers a page path with the shell, an unknown path with 404', async ({ request }) => {
@@ -95,24 +115,46 @@ test('a path naming no page shows "Page not found", not home (#957)', async ({ p
   expect(new URL(page.url()).pathname).toBe('/behaviorz');
 });
 
-test('on GitHub Pages, /wb-starter/behaviors is served 404.html and shows Behaviors', async ({ page }) => {
-  // GitHub Pages: the site lives at /wb-starter/, and a path with no file gets
-  // 404.html. Simulated: /wb-starter/<file> serves <file>, anything else 404.html.
+/**
+ * GitHub Pages, simulated: the site lives at /wb-starter/; a file is served as
+ * itself; a folder without its trailing slash is redirected to it, and with it
+ * serves the folder's index.html; anything else gets 404.html with a 404.
+ */
+async function serveLikeGitHubPages(page: import('@playwright/test').Page) {
   const shell404 = fs.readFileSync(path.join(ROOT, '404.html'), 'utf8');
   await page.route(/\/wb-starter\//, async (route) => {
     const url = new URL(route.request().url());
     const rel = url.pathname.replace(/^\/wb-starter\//, '');
-    const file = path.join(ROOT, rel);
-    if (rel && fs.existsSync(file) && fs.statSync(file).isFile()) {
-      const res = await route.fetch({ url: `${url.origin}/${rel}${url.search}` });
+    const target = path.join(ROOT, rel);
+    const isDir = rel !== '' && fs.existsSync(target) && fs.statSync(target).isDirectory();
+    if (isDir && !rel.endsWith('/')) {
+      return route.fulfill({ status: 301, headers: { location: `${url.pathname}/${url.search}` } });
+    }
+    const file = rel === '' ? 'index.html' : isDir ? `${rel}index.html` : rel;
+    if (fs.existsSync(path.join(ROOT, file)) && fs.statSync(path.join(ROOT, file)).isFile()) {
+      const res = await route.fetch({ url: `${url.origin}/${file}${url.search}` });
       return route.fulfill({ response: res });
     }
-    if (rel === '' ) return route.fulfill({ response: await route.fetch({ url: `${url.origin}/index.html` }) });
     return route.fulfill({ status: 404, contentType: 'text/html', body: shell404 });
   });
-  await page.goto('/wb-starter/behaviors');
+}
+
+test('on GitHub Pages, /wb-starter/behaviors/ answers 200 and shows Behaviors', async ({ page }) => {
+  await serveLikeGitHubPages(page);
+  // Pages redirects /wb-starter/behaviors to the folder, /wb-starter/behaviors/.
+  // Playwright does not route a redirect's target, so this opens the target.
+  const response = await page.goto('/wb-starter/behaviors/');
+  expect(response?.status(), 'a real file at the path, so not 404.html\'s 404').toBe(200);
   await expect(page.locator('#mainPage-behaviors')).toBeAttached({ timeout: 20_000 });
   const href = await page.locator('#siteNav a', { hasText: /releases/i }).first().getAttribute('href');
   expect(href, 'nav links carry the site root').toBe('/wb-starter/releases');
+  await page.unrouteAll({ behavior: 'ignoreErrors' });
+});
+
+test('on GitHub Pages, a path naming no page answers 404 and says so (#957)', async ({ page }) => {
+  await serveLikeGitHubPages(page);
+  const response = await page.goto('/wb-starter/behaviorz');
+  expect(response?.status()).toBe(404);
+  await expect(page.locator('#page-404')).toBeAttached({ timeout: 20_000 });
   await page.unrouteAll({ behavior: 'ignoreErrors' });
 });

@@ -9,16 +9,11 @@
   <link rel="stylesheet" href="../../src/styles/site.css">
   <link rel="stylesheet" href="../../src/styles/pages/showcase.css">
 
-  <style id="effects-moved-styles">
-    /* Moved from style= attributes: no inline styles anywhere (#779). */
-    .mb-1rem { margin-bottom: 1rem; }
-    .c-var-text-secondary-aaa-td-none { color: var(--text-secondary, #aaa); text-decoration: none; }
-  </style>
 </head>
 
 <body class="demo-page">
-  <nav class="mb-1rem">
-    <a href="index.html" class="c-var-text-secondary-aaa-td-none">← Back to Index</a>
+  <nav class="site-demo__nav">
+    <a href="index.html" class="site-demo__back">← Back to Index</a>
   </nav>
   <h1>✨ Visual Effects</h1>
   <p>Confetti, fireworks, ripple, snow — fun stuff</p>
@@ -33,11 +28,6 @@
   </div>
   <div x-demo columns="1">
     <div x-confetti count="100">
-      This is example confetti content.
-    </div>
-  </div>
-  <div x-demo columns="1">
-    <div x-confetti repeat>
       This is example confetti content.
     </div>
   </div>

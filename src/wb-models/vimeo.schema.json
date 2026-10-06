@@ -2,10 +2,10 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "vimeo.schema.json",
   "title": "Vimeo",
-  "description": "x-vimeo embeds the Vimeo video with video-id as a responsive player that keeps its aspect ratio.",
+  "description": "x-vimeo embeds the Vimeo video with videoId as a responsive player that keeps its aspect ratio.",
   "schemaFor": "vimeo",
   "properties": {
-    "video-id": {
+    "videoId": {
       "type": "string",
       "description": "The numeric Vimeo id — the trailing digits of a vimeo.com URL. This is what identifies the video; without it there is nothing to embed.",
       "default": "this is the video id"
