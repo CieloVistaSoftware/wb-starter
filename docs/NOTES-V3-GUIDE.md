@@ -165,11 +165,11 @@ draggedTodoId = null        // For drag-drop reordering
 const notes = element.wbNotes;
 
 // Existing
-notes.open()
-notes.close()
+notes.show()
+notes.hide()
 notes.toggle()
 notes.setPosition('left'|'modal'|'right')
-notes.collapseToSide('left'|'right')
+notes.hide('left'|'right')     // dock to a side as it closes
 notes.save()        // Manual save
 notes.copy()        // To clipboard
 notes.clear()       // Clear notes

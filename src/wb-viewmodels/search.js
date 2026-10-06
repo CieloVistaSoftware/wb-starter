@@ -236,7 +236,7 @@ export function search(element, options = {}) {
  * creates) a child <input>, applies search() to that input, and exposes the
  * imperative API on the container as `element.wbSearch` (mirrors the pattern
  * collapse() uses for `element.wbCollapse`) so external code can still call
- * `document.querySelector('x-search').wbSearch.clear()` etc. — replaces the
+ * `document.querySelector('x-search').wbSearch.reset()` etc. — replaces the
  * `extends HTMLElement` class removed in #279, which did the same thing via
  * connectedCallback/instance methods.
  * -----------------------------------------------------------------------------
@@ -295,7 +295,8 @@ export function searchField(element, options = {}) {
     set value(val) { api.setValue(val); },
     focus: api.focus,
     blur: api.blur,
-    clear: api.clear,
+    // #782: reset, not clear -- one verb for "return to initial".
+    reset: api.clear,
     search: api.search,
     setLoading: api.setLoading
   };

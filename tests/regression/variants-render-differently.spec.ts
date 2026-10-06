@@ -523,14 +523,15 @@ async function fingerprintOptions(page: Page, token: string, form: string, optio
           // Its visible trigger when it has one (a dialog's button, a menu's
           // toggle). A drawer opened from elsewhere on a real page -- x-notes
           // is toggled from the site's navbar -- has none in the example, so
-          // its documented imperative API is the opener instead.
+          // its documented imperative API is the opener instead: show(), the
+          // canonical verb (#782 retired open()).
           const trigger = (Array.from(stage.querySelectorAll('[aria-haspopup], button, [role="button"]')) as HTMLElement[])
             .find((el) => el.checkVisibility({ visibilityProperty: true, opacityProperty: true }));
           if (trigger) trigger.click();
           else {
             for (const el of Array.from(stage.querySelectorAll('*'))) {
-              const api = Object.entries(el).find(([k, v]) => /^wb[A-Z]/.test(k) && typeof (v as { open?: unknown })?.open === 'function');
-              if (api) { (api[1] as { open: () => void }).open(); break; }
+              const api = Object.entries(el).find(([k, v]) => /^wb[A-Z]/.test(k) && typeof (v as { show?: unknown })?.show === 'function');
+              if (api) { (api[1] as { show: () => void }).show(); break; }
             }
           }
           await frame();

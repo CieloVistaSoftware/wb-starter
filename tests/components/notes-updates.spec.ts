@@ -26,7 +26,7 @@ async function injectNotes(page: Page) {
   await page.evaluate(async () => await (window as any).WB.scan(document.getElementById('test-container'), { eager: true }));
   await wbIdle(page);
   await page.evaluate(() => {
-    (document.querySelector('#test-container [x-notes]') as any).wbNotes.open();
+    (document.querySelector('#test-container [x-notes]') as any).wbNotes.show();
   });
 }
 
