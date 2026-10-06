@@ -65,6 +65,7 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
   });
 
   test("each hero's hotspots are its own buttons and links", () => {
+    expect(items, 'the page has one figure per hero').toHaveLength(heroes.length);
     for (const [k, h] of heroes.entries()) {
       const expected = [h.cta, h.cta2].filter(Boolean).map((c) => ({ label: c!.label, href: c!.href }));
       expect(items[k].spots.map((s) => ({ label: s.label, href: s.href })), `hero #${h.index}`).toEqual(expected);
@@ -81,7 +82,9 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
     await page.setViewportSize({ width: 1300, height: 900 });
     await page.goto('/demos/test-harness.html');
     await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20_000 });
-    for (const n of [1, 2, 7, 26, 50, 97]) {
+    const LIVE = [1, 2, 7, 26, 50, 97];
+    let compared = 0;
+    for (const n of LIVE) {
       const markup = heroes[n - 1].heroMarkup.replace(/\n\s*x-fadein(?=[\s>])/, '');
       const live = await page.evaluate(async (markup) => {
         document.querySelectorAll('.hg-live').forEach((el) => el.remove());
@@ -108,7 +111,9 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
         const where = `hero #${n} ${s.label}: hotspot (${s.x},${s.y} ${s.w}x${s.h}) vs live button (${Math.round(b.x)},${Math.round(b.y)} ${Math.round(b.w)}x${Math.round(b.h)})`;
         expect(Math.abs(s.x - b.x) <= 2 && Math.abs(s.y - b.y) <= 2 && Math.abs(s.w - b.w) <= 2 && Math.abs(s.h - b.h) <= 2, where).toBe(true);
       }
+      compared++;
     }
+    expect(compared, 'every sampled hero was compared with its live render').toBe(LIVE.length);
   });
 
   test('the middle of each button in the image is a link to its href', async ({ page }) => {
@@ -117,7 +122,9 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
     await page.waitForSelector('#herogallery-list .hg-item', { timeout: 20_000 });
     // A sample across the set: every variant, both CTA counts, the
     // background image, and the overlay=false heroes.
-    for (const n of [1, 2, 3, 5, 7, 13, 26, 50, 61, 97, 120]) {
+    const SAMPLE = [1, 2, 3, 5, 7, 13, 26, 50, 61, 97, 120];
+    let clicked = 0;
+    for (const n of SAMPLE) {
       const it = items[n - 1];
       const id = String(n).padStart(3, '0');
       const frame = page.locator(`#herogallery-frame-${id}`);
@@ -135,6 +142,8 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
         });
       }, it.spots);
       expect(hits, `hero #${n}: clicking the middle of each button follows its link`).toEqual(it.spots.map((s) => s.href));
+      clicked++;
     }
+    expect(clicked, 'every sampled hero was clicked').toBe(SAMPLE.length);
   });
 });
