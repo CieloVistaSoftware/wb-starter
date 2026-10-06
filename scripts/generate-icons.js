@@ -1,9 +1,9 @@
 /**
  * PWA Icon Generator
- * Generates all required icon sizes from a source SVG
- * 
+ * Generates all required icon sizes from the wb logo (assets/icons/og-image.jpg)
+ *
  * Usage: node scripts/generate-icons.js
- * 
+ *
  * Requires: sharp npm package
  * npm install sharp --save-dev
  */
@@ -21,19 +21,12 @@ const sharp = await import('sharp').then(m => m.default);
 const ICON_SIZES = [72, 96, 128, 144, 152, 192, 384, 512];
 const OUTPUT_DIR = path.join(__dirname, '..', 'assets', 'icons');
 
-// SVG source icon (the ⚡ emoji styled)
-const SVG_ICON = `
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6366f1"/>
-      <stop offset="100%" style="stop-color:#8b5cf6"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
-  <text x="256" y="380" font-size="320" text-anchor="middle" fill="white">⚡</text>
-</svg>
-`;
+// Source: the wb logo, the same file og:image and twitter:image point at
+// (#1585). It used to be a hardcoded lightning-bolt SVG here, so the app
+// icons and the link-share card showed two different marks (#1614). One
+// source means they can't drift apart again. It is 512x512, the largest
+// size below, so every icon is a downscale.
+const SOURCE_IMAGE = path.join(OUTPUT_DIR, 'og-image.jpg');
 
 async function generateIcons() {
   // Ensure output directory exists
@@ -47,9 +40,12 @@ async function generateIcons() {
     const outputPath = path.join(OUTPUT_DIR, `icon-${size}.png`);
     
     try {
-      await sharp(Buffer.from(SVG_ICON))
+      // A palette PNG keeps the 512 icon well under the 100 KB ceiling in
+      // header-logo-is-not-a-megabyte.spec.ts; a truecolour one of this
+      // gradient-heavy logo is several times larger.
+      await sharp(SOURCE_IMAGE)
         .resize(size, size)
-        .png()
+        .png({ palette: true, quality: 90, effort: 10 })
         .toFile(outputPath);
       
       console.log(`  ✓ Generated icon-${size}.png`);
@@ -59,8 +55,8 @@ async function generateIcons() {
   }
 
   // favicon.png -- rendered from the REAL favicon.svg (the project's actual
-  // blue star, linked by index.html's <link rel="icon">), not the ⚡ SVG_ICON
-  // above. These used to be two independent sources that had drifted apart:
+  // blue star, linked by index.html's <link rel="icon">), not the app-icon
+  // source above. These used to be two independent sources that had drifted apart:
   // favicon.svg was updated to a blue star at some point, but this script
   // still generated favicon.png from its own hardcoded lightning-bolt
   // constant, so the two files silently disagreed (live report: favicon.png
