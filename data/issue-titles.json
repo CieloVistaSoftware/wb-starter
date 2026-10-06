@@ -1205,5 +1205,8 @@
   "1583": "An in-progress claim with no status note goes unflagged until John sees it red on the Issues page",
   "1585": "Link-share preview shows the generic lightning-bolt icon instead of the wb logo",
   "1588": "signature-field.mjs reads a multi-line test: | as '|', so an issue that names its test reads as having none (#852)",
-  "1589": "test-gate-guards: 'Priority gate reaches its specs' fails on a loaded machine -- a fixed 20s wait for the fake Playwright start"
+  "1589": "test-gate-guards: 'Priority gate reaches its specs' fails on a loaded machine -- a fixed 20s wait for the fake Playwright start",
+  "1595": "Home page hero: a hard-edged band sweeps across the cosmic hero every 7 seconds",
+  "1597": "Hero gallery: the playground's 120 card heroes as JPGs, with clickable hotspots on their two buttons",
+  "1598": "x-cardexpandable: no Behaviors page example shows anything new when expanded"
 }

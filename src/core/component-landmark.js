@@ -33,8 +33,14 @@ const LANDMARKS = new Set(['header', 'footer', 'nav', 'aside']);
 /**
  * A card host: an <article> (a card by auto-injection), an explicit [x-card],
  * or anything a card variant has marked (`x-card--image`, `x-card-horizontal`).
+ *
+ * And a <dialog> (#874): dialog.js builds its chrome from real <header> and
+ * <footer> elements too, and they came out `x-dialog__header x-header`, so the
+ * dialog title row took the page navbar's 0.8em text and 60px min-height and
+ * its footer took the page footer's behavior. A landmark inside a dialog is
+ * the dialog's.
  */
-const COMPONENT_HOST = 'article, [x-card], [class*="x-card"]';
+const COMPONENT_HOST = 'article, dialog, [x-card], [class*="x-card"]';
 
 /**
  * Is this element a landmark that belongs to an enclosing component, and so

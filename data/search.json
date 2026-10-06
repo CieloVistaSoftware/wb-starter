@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5832
+    "totalWords": 5833
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.306\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.306\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.311\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.311\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-05"
@@ -712,7 +712,7 @@
       "content": "# Intellisense Tooltip Audit Report **Date:** 1/5/2026, 8:37:47 PM **Total Behaviors:** 89 This report records exactly what is displayed in the VS Code hover tooltip for each behavior. --- ## ` ` **Tooltip Output:** ```text Alert Alert behavior for displaying messages with severity levels Variants: - info - success - warning - error CSS Rules: - x-alert--* ``` View 5 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `variant` | Alert severity/style variant | | `title` | Alert title (optional heading) | | `message` | Alert message content | | `icon` | Icon (emoji or icon name) | | `dismissible` | Show close button to dismiss alert | --- ## ` ` **Tooltip Output:** ```text Audio Audio player with optional 15-band graphic equalizer ``` View 8 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `src` | Audio source URL | | `volume` | Initial volume (0-1) | | `loop` | Loop playback | | `autoplay` | Auto-play (requires muted) | | `muted` | Start muted | | `showEq` | Show 15-band equalizer | | `bass` | Bass boost (-12 to 12 dB) | | `treble` | Treble boost (-12 to 12 dB) | --- ## ` ` **Tooltip Output:** ```text Avatar User avatar with image, initials fallback, and status indicator ``` View 8 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `src` | Image source URL | | `alt` | Alt text for image | | `initials` | Fallback initials (2 chars) | | `name` | Full name (generates initials if not provided) | | `size` | size | | `shape` | shape | | `status` | Status indicator | | `bordered` | Show border | --- ## ` ` **Tooltip Output:** ```text Badge Small label/tag for status indicators, counts, or categories Variants: - default - primary - secondary - success - warning - error - info CSS Rules: - x-badge--* ``` View 7 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `label` | Badge text content | | `variant` | Color variant | | `size` | Badge size | | `pill` | Pill shape with full border radius | | `dot` | Dot indicator (no text) | | `outline` | Outline style (transparent background) | | `removable` | Show remove/close button | --- ## ` ` **Tooltip Output:** ```text WB-Starter Behavior Schema Master schema defining all behavior metadata, properties, interactions, accessibility, and test requirements ``` --- ## ` ` **Tooltip Output:** ```text Behaviors Showcase Schema for behaviors-showcase.html - validates all behaviors render correctly ``` --- ## ` ` **Tooltip Output:** ```text Builder Schema Unified schema for builder behaviors and UI interactions. ``` View 4 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `label` | label | | `icon` | icon | | `behaviors` | List of behaviors in the builder. | | `meta` | Builder-level metadata (optional) | --- ## ` ` **Tooltip Output:** ```text Button Interactive button with variants, sizes, and optional icon Variants: - primary - secondary - success - warning - error - ghost - outline - link CSS Rules: - x-button--* ``` View 9 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `label` | Button text | | `icon` | Icon (emoji or icon name) | | `iconPosition` | Icon position relative to label | | `variant` | Visual style variant | | `size` | Button size | | `disabled` | Disabled state | | `loading` | Loading state with spinner | | `fullWidth` | Full width button | | `iconOnly` | Icon-only button (square) | --- ## ` ` **Tooltip Output:** ```text A generic card behavior. Use this for basic content containers. For specialized cards, use: - (Hero/Banner) - (E-commerce) - (User profile) - (Pricing table) Methods (via JS): - element.show() - element.hide() - element.toggle() - element.update({ title: 'New' }) ``` View 7 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `title` | Card title displayed in the header. | | `subtitle` | Card subtitle displayed below the title. | | `footer` | Text content for the card footer. | | `variant` | Visual style variant. | | `elevated` | Adds a drop shadow for depth. | | `clickable` | Applies cursor pointer and click styles. | | `draggable` | Makes the card draggable (Behavior). | --- ## ` ` **Tooltip Output:** ```text File attachment card. ``` View 4 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `filename` | Name of file | | `size` | File size string | | `type` | MIME type or extension | | `url` | Download/view URL | --- ## ` ` **Tooltip Output:** ```text Hero/Banner card behavior with background image and overlay. Attributes: - background: Image URL - title: Headline - subtitle: Tagline - cta: Button text - variant: cosmic, split, minimal ``` View 9 Attribute Tooltips | Attribute | Tooltip | |-----------|---------| | `background` | Background image URL [Required] | | `title` | Hero headline [Required] | | `subtitle` | Hero tagline | | `cta` | Call-to-action button text | | `ctaHref` | CTA link URL | | `overlay` | Show gradient overlay | | `fullHeight` | Full viewport height | | `variant` | Visual style vari",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-03"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/MVVM-MIGRATION-PLAN",
@@ -925,7 +925,7 @@
       "content": "# Host/Child Dispatch Audit — schema-built native elements vs. their behavior JS **Date:** 2026-07-17 **Trigger:** Found while fixing #360 (x-select) and #361 (x-switch) — both turned out to be instances of the same underlying architecture bug, not one-off mistakes. **Scope:** Every schema in `src/wb-models/*.schema.json` whose `$view` builds a real native form/interactive element (`input`, `select`, `textarea`, `button`) as a child of a behavior host (at the time, a `wb-*` tag; now an `x-*` host). ## The pattern A schema-driven host tag (` `, ` `, ` `, ...) has its `$view` build a real native element inside it. `tag-map.js` dispatches behaviors two ways: `elementMap` maps the **host tag** (` ` → `select`), and `nativeMap` maps the **native tag itself** (`select` → `select`, `input` → `input`, `input[type=\"checkbox\"]` → `checkbox`, ...). `wb.js`'s `scan()`/`observe()` apply *every* matching entry additively — there is no \"most specific wins\" — so a schema-built native child can get dispatched **in addition to** its host, using the exact same or a different behavior function. That collision breaks in three distinct ways, all seen live this session: 1. **Same-name self-collision, no host guard.** The behavior function assumes `element` IS the real native element. When dispatched a second time on the HOST (which is not that native tag), it either does something structurally wrong to the host, or silently no-ops and nothing ever reflects the host's own attributes onto the real child it built. *(x-input, x-textarea)* 2. **Missing type/attribute on the schema's own `$view` node** causes the built child to fail to match its OWN intended nativeMap entry, so it instead falls through to a more generic one that visually clobbers it. *(x-switch, x-checkbox)* 3. **Cross-behavior collision.** A DIFFERENT nativeMap behavior (not the host's own) matches the schema-built child too, and that unrelated behavior's CSS/JS wins the cascade or overwrites structure. *(x-switch's input also matching `checkbox.js`)* ` `'s original bug (#360) was a fourth, more severe variant: the schema never built a real ` ` at all (a fake ` `/` `/` ` widget), so native semantics were gone entirely. Fixed by making it build a real ` ` and re-invoke the native-` ` enhancement path on it. ## Confirmed, code-verified | Behavior | Variant | Status | |---|---|---| | ` ` | fake widget, no real ` ` | ✅ Fixed — [#360](https://github.com/CieloVistaSoftware/wb-starter/issues/360), closed | | ` ` | missing `type` on `$view` input + cross-collision with `checkbox.js`'s global style injector | ✅ Fixed — [#361](https://github.com/CieloVistaSoftware/wb-starter/issues/361), closed | | ` ` | same-name self-collision: host never reflected `placeholder`/`rows`/`variant` onto its built ` ` | ✅ Fixed — [#362](https://github.com/CieloVistaSoftware/wb-starter/issues/362), closed | | ` ` | missing `type=\"checkbox\"` on `$view` input node (identical root cause to #361), plus a self-collision with checkbox.js's own visual styling, plus zero pre-existing CSS for its box/check visual | ✅ Fixed — [#366](https://github.com/CieloVistaSoftware/wb-starter/issues/366), closed | | ` ` | same-name self-collision, no host guard at all — dispatching `input()` on the ` ` host wrapped/styled the whole already-built behavior as if it were a bare input; separately, `placeholder`/`value`/`name`/`type` never reached the real built ` ` at all; a duplicate clear button was a third symptom of the same root cause | ✅ Fixed — [#367](https://github.com/CieloVistaSoftware/wb-starter/issues/367), closed | ## Suspected, needs live verification (not yet filed) These are structurally exposed to the same class of bug based on reading the code, but I have not reproduced them live the way #361/#362 were reproduced. Verify with a Playwright regression test before filing, the same way the confirmed list above was established — a couple of the \"confirmed\" bugs upstream in this same session looked plausible on paper before the actual behavior turned out to be different, so don't skip live verification. - **`select.js`'s own `select()` (native-` ` branch, lines 22–54) has no idempotency guard for the `clearable` wrapper**, unlike `buildWbSelect()`'s explicit idempotency check (line 65). `buildWbSelect()` creates a real ` ` and calls `select(sel, {clearable})` on it directly (line 127) — if a MutationObserver separately re-visits that newly-inserted real ` ` via `nativeMap['select']` and dispatches `select()` on it a second time, `clearable: true` would build a second nested `.x-select-clearable` wrapper around the first. Needs a test with ` ` checking for exactly one `.x-select-clearable`. - **` `**: `notes.schema.json` declares a `$view` with a `textarea` node, but `notes.js` (`src/wb-viewmodels/notes.js`) builds its entire DOM itself from `element.dataset.*`, the same self-sufficient pattern as the card family (`SCHEMA_EXCLUDED_TAGS` in `schema-builder.js`). ` ` is **not** currently in that exclusion list. If",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/audits/INLINE-STYLES-AUDIT",
@@ -2286,10 +2286,10 @@
       "title": "navbar",
       "description": null,
       "headings": [],
-      "content": "# Navbar `x-navbar` builds a navigation bar in a ` `: the `brand` (and optional `logo`) linking to `brand-href`, a `tagline`, and links from the `items` JSON, collapsing into a menu button on narrow screens. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `brand` | `string` | — | Brand text | | `brand-href` | `string` | `/` | Brand link URL | | `logo` | `string` | — | Logo image URL | | `logo-size` | `string` | `32` | Logo size in pixels | | `tagline` | `string` | — | Brand tagline or subtitle | | `items` | `string` | — | Navigation items as JSON [{label, href}] | | `sticky` | `boolean` | `false` | Sticky positioning | | `variant` | `default` · `dark` · `transparent` | `default` | | ## Methods - `openMenu()` — Opens mobile menu - `closeMenu()` — Closes mobile menu - `toggleMenu()` — Toggles mobile menu ## Accessibility - **role** — navigation - **ariaLabel** — Main navigation Schema: [`navbar.schema.json`](../../src/wb-models/navbar.schema.json)",
+      "content": "# Navbar Every ` ` picks up navbar; no `x-navbar` attribute needed (#958). A plain ` ` of links gets the site's link look (theme colour, underline on hover) and keeps its own layout. Give it a `brand`, `logo`, `items`, `sticky` or `variant` and it becomes the site header: the `brand` (and optional `logo`) linking to `brand-href`, a `tagline`, and links from `items`, collapsing into a menu button on narrow screens. On a non-` ` host, write `x-navbar`. A ` ` that names another behavior (`x-breadcrumb`, `x-scrollalong`) gets only that one. ## Usage ## Attributes | Attribute | Values | Default | Description | | --- | --- | --- | --- | | `brand` | `string` | — | Brand text | | `brand-href` | `string` | `/` | Brand link URL | | `logo` | `string` | — | Logo image URL | | `logo-size` | `string` | `32` | Logo size in pixels | | `tagline` | `string` | — | Brand tagline or subtitle | | `items` | `string` | — | Navigation items as JSON [{label, href}] | | `sticky` | `boolean` | `false` | Sticky positioning | | `variant` | `default` · `dark` · `transparent` | `default` | | ## Methods - `openMenu()` — Opens mobile menu - `closeMenu()` — Closes mobile menu - `toggleMenu()` — Toggles mobile menu ## Accessibility - **role** — navigation - **ariaLabel** — Main navigation Schema: [`navbar.schema.json`](../../src/wb-models/navbar.schema.json)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/behaviors/notes",
@@ -3588,7 +3588,7 @@
       "content": "# HTML5 Semantic Standard (Mandatory) ## The Rule **Every WB-Starter behavior MUST use HTML5 semantic elements. ` ` is only permitted when no semantic element exists for that purpose.** --- ## Semantic Element Reference ### Document Structure | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Self-contained composition | Cards, posts, comments, widgets | | ` ` | Thematic grouping | Page sections, tab panels | | ` ` | Tangentially related | Sidebars, callouts, pull quotes | | ` ` | Navigation | Menus, breadcrumbs, pagination | | ` ` | Introductory content | Card headers, page headers, section headers | | ` ` | Main content | Primary content area, card body | | ` ` | Footer content | Card footers, page footers, actions | | ` ` | Self-contained media | Images with captions, diagrams | | ` ` | Figure caption | Caption for figure | | ` ` | Contact information | Author info, contact details | | ` ` | Date/time | Timestamps, dates | | ` ` | Highlighted text | Search results, highlights | | ` ` | Disclosure widget | Expandable sections | | ` ` | Details summary | Clickable header for details | | ` ` | Dialog box | Modals, popups, alerts | ### Text Structure | Element | Purpose | Use For | |---------|---------|---------| | ` - ` | Headings | Titles (use correct hierarchy) | | ` ` | Paragraph | Text blocks | | ` ` | Quotation | Testimonials, quotes | | ` ` | Citation | Source attribution | | ` ` | Code | Inline code | | ` ` | Preformatted | Code blocks | | ` `, ` `, ` ` | Lists | Feature lists, navigation items | | ` `, ` `, ` ` | Description list | Key-value pairs, glossaries | ### Interactive | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Clickable action | Buttons (not ` `) | | ` ` | Hyperlink | Links, navigation | | ` ` | Form container | Input groups | | ` ` | Input field | Text, checkbox, radio, etc. | | ` ` | Dropdown | Select menus | | ` ` | Multi-line input | Text areas | | ` ` | Form label | Input labels | | ` ` | Form group | Related inputs | | ` ` | Fieldset title | Group title | | ` ` | Calculation result | Computed values | | ` ` | Progress indicator | Progress bars | | ` ` | Scalar measurement | Gauges, ratings | ### Media | Element | Purpose | Use For | |---------|---------|---------| | ` ` | Image | Images (with alt text) | | ` ` | Responsive image | Art direction, formats | | ` ` | Video | Video players | | ` ` | Audio | Audio players | | ` ` | Media source | Multiple formats | | ` ` | Text track | Captions, subtitles | | ` ` | Graphics | Drawing, charts | | ` ` | Vector graphics | Icons, illustrations | --- ## Behavior Mapping ### Cards (ALL variants) ```html-static Title Content goes here Action Title Content Action ``` ### Modals/Dialogs ```html-static Modal Title × Modal content Cancel Confirm ... ... ``` ### Navigation ```html-static Home About Home About ``` ### Accordion/Expandable ```html Section Title Section content Section Title Section content ``` ### Tabs ```html Tab 1 Tab 2 Panel 1 Panel 2 ``` ### Sidebar/Aside ```html ... ``` ### Testimonials/Quotes ```html This product changed my life! John Doe CEO, Company ``` ### Progress/Stats ```html 📈 1,234 Total Users 75% ``` ### Forms `autoInjectComponents` is on by default — a plain ` ` is enhanced automatically, no `x-form` attribute needed. ```html Personal Info Name Submit ``` --- ## When ` ` IS Acceptable Only use ` ` for: 1. **Pure layout wrappers** - grid/flex containers with no semantic meaning 2. **Styling hooks** - when you need a wrapper for CSS only 3. **No semantic equivalent** - truly generic grouping **MANDATORY RULE: All elements, including ` `s, MUST have a unique `id` attribute.** ```html ... ... ... Title Subtitle ... ``` --- ## Behavior Implementation Rules ### 1. createElement Calls ```javascript // WRONG const header = document.createElement('div'); header.className = 'x-card__header'; // CORRECT const header = document.createElement('header'); header.className = 'x-card__header'; ``` ### 2. innerHTML Generation ```javascript // WRONG element.innerHTML = ` ${title} ${content} `; // CORRECT element.innerHTML = ` ${title} ${content} `; ``` ### 3. Wrapper Elements When behavior needs to wrap content: ```javascript // WRONG const wrapper = document.createElement('div'); // CORRECT - choose semantic element based on purpose const wrapper = document.createElement('section'); // for sections const wrapper = document.createElement('article'); // for cards const wrapper = document.createElement('figure'); // for media ``` --- ## Schema Compliance Schemas MUST enforce semantic elements: ```json { \"compliance\": { \"preferredTag\": \"article\", \"allowedTags\": [\"article\", \"section\"], \"requiredChildren\": { \".x-card__header\": { \"tagName\": \"HEADER\", \"required\": false }, \".x-card__main\": { \"tagName\": \"MAIN\", \"required\": true }, \".x-card__footer\": { \"tagName\": \"FOOTER\", \"required\": false } } } } ``` --- ## Accessibility Benefits Using semantic elements provides: 1. **Screen reader navigation** - u",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-10-04"
+      "modified": "2026-10-05"
     },
     {
       "id": "docs/standards/A-GATE-MUST-BE-SEEN-TO-FAIL",
@@ -5484,10 +5484,10 @@
           "text": "📅 Timeline"
         }
       ],
-      "content": "Layout & Navigation ← Back to Index 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong 📰 Header This is example header content. This is example header content. This is example header content. This is example header content. Toggles This is example header content. 📄 Footer This is example footer content. This is example footer content. This is example footer content. Toggles This is example footer content. 🧭 Navbar This is example navbar content. This is example navbar content. This is example navbar content. Variants This is example navbar content. This is example navbar content. This is example navbar content. Toggles This is example navbar content. 📑 Tabs This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. size variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Toggles This is the overview panel. This is the details panel. This is the settings panel. 📂 Details This is example details content. This is example details content. This is example details content. Variants This is example details content. This is example details content. This is example details content. Toggles This is example details content. 📐 Drawer Layout This is example drawer layout content. This is example drawer layout content. This is example drawer layout content. 📜 ScrollAlong This is example scrollalong content. 📌 Sticky This is example sticky content. This is example sticky content. This is example sticky content. 📅 Timeline This is example timeline content. This is example timeline content. This is example timeline content.",
+      "content": "Layout & Navigation ← Back to Index 📐 Layout & Navigation Headers, footers, navbars, tabs, drawers, sticky, scrollalong 📰 Header This is example header content. This is example header content. This is example header content. This is example header content. Toggles This is example header content. 📄 Footer This is example footer content. This is example footer content. This is example footer content. Toggles This is example footer content. 🧭 Navbar Home Docs Pricing Home Docs Pricing Home Docs Pricing Variants Home Docs Pricing Home Docs Pricing Home Docs Pricing Toggles Home Docs Pricing 📑 Tabs This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. size variants This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. This is the overview panel. This is the details panel. This is the settings panel. Toggles This is the overview panel. This is the details panel. This is the settings panel. 📂 Details This is example details content. This is example details content. This is example details content. Variants This is example details content. This is example details content. This is example details content. Toggles This is example details content. 📐 Drawer Layout This is example drawer layout content. This is example drawer layout content. This is example drawer layout content. 📜 ScrollAlong This is example scrollalong content. 📌 Sticky This is example sticky content. This is example sticky content. This is example sticky content. 📅 Timeline This is example timeline content. This is example timeline content. This is example timeline content.",
       "keywords": [],
       "type": "demo",
-      "modified": "2026-09-28"
+      "modified": "2026-10-05"
     },
     {
       "id": "demos/site/learn-more",
@@ -6294,7 +6294,7 @@
       "docs/behaviors/searchfield",
       "docs/search"
     ],
-    "306": [
+    "311": [
       "pages/home"
     ],
     "320": [
@@ -6546,6 +6546,9 @@
     ],
     "951": [
       "docs/claude/TOOLING-INVENTORY"
+    ],
+    "958": [
+      "docs/behaviors/navbar"
     ],
     "960": [
       "docs/architecture/WB-PREFIX-AUDIT",
@@ -7195,7 +7198,6 @@
       "docs/behaviors/data",
       "docs/behaviors/dropdown",
       "docs/behaviors/file",
-      "docs/behaviors/navbar",
       "docs/behaviors/pagination",
       "docs/behaviors/stepper",
       "docs/behaviors/switch",
@@ -7274,6 +7276,7 @@
       "docs/behaviors/header",
       "docs/behaviors/label",
       "docs/behaviors/modal",
+      "docs/behaviors/navbar",
       "docs/behaviors/progress",
       "docs/behaviors/range",
       "docs/behaviors/table",
@@ -7704,6 +7707,7 @@
       "docs/behaviors/masked",
       "docs/behaviors/modal",
       "docs/behaviors/move",
+      "docs/behaviors/navbar",
       "docs/behaviors/ol",
       "docs/behaviors/otp",
       "docs/behaviors/pagination",
@@ -8007,6 +8011,7 @@
       "docs/behaviors/kbd",
       "docs/behaviors/mark",
       "docs/behaviors/move",
+      "docs/behaviors/navbar",
       "docs/behaviors/pre",
       "docs/behaviors/progress",
       "docs/behaviors/radio",
@@ -8792,6 +8797,7 @@
       "docs/behaviors/darkmode",
       "docs/behaviors/glass",
       "docs/behaviors/glow",
+      "docs/behaviors/navbar",
       "docs/behaviors/themecontrol",
       "docs/behaviors/x-darkmode",
       "docs/claude/PAGE-GENERATION",
@@ -9084,7 +9090,8 @@
       "docs/standards/REPO-LAYOUT",
       "docs/standards/V3-STANDARDS",
       "docs/testing-runbook",
-      "docs/wbservices"
+      "docs/wbservices",
+      "demos/site/layout"
     ],
     "work": [
       "pages/ai-docs",
@@ -10107,6 +10114,7 @@
       "docs/behaviors/floatinglabel",
       "docs/behaviors/glass",
       "docs/behaviors/icon",
+      "docs/behaviors/navbar",
       "docs/behaviors/tabs",
       "docs/guides/search-index",
       "docs/linkedin-framework-agnostic",
@@ -12081,6 +12089,7 @@
       "docs/behaviors/label",
       "docs/behaviors/masked",
       "docs/behaviors/move",
+      "docs/behaviors/navbar",
       "docs/behaviors/otp",
       "docs/behaviors/pagination",
       "docs/behaviors/popover",
@@ -12547,6 +12556,7 @@
       "docs/behaviors/glass",
       "docs/behaviors/grid",
       "docs/behaviors/icon",
+      "docs/behaviors/navbar",
       "docs/behaviors/reel",
       "docs/behaviors/scrollable",
       "docs/behaviors/scrollalong",
@@ -15603,6 +15613,7 @@
       "docs/behaviors/icon",
       "docs/behaviors/label",
       "docs/behaviors/move",
+      "docs/behaviors/navbar",
       "docs/behaviors/notify",
       "docs/behaviors/searchfield",
       "docs/behaviors/toast",
@@ -15953,6 +15964,7 @@
       "docs/behaviors/dialog",
       "docs/behaviors/grid",
       "docs/behaviors/header",
+      "docs/behaviors/navbar",
       "docs/behaviors/themecontrol",
       "docs/behaviors/toast",
       "docs/behaviors/x-copybutton",
@@ -18552,6 +18564,7 @@
       "docs/behaviors/help",
       "docs/behaviors/img",
       "docs/behaviors/label",
+      "docs/behaviors/navbar",
       "docs/behaviors/release",
       "docs/behaviors/skeleton",
       "docs/behaviors/toast",
@@ -19572,7 +19585,8 @@
     "breadcrumb": [
       "pages/features",
       "docs/behavior-cross-reference",
-      "docs/behaviors/breadcrumb"
+      "docs/behaviors/breadcrumb",
+      "docs/behaviors/navbar"
     ],
     "navbar": [
       "pages/features",
@@ -20539,6 +20553,7 @@
       "docs/behaviors/grid",
       "docs/behaviors/hero",
       "docs/behaviors/kbd",
+      "docs/behaviors/navbar",
       "docs/guides/create-a-website",
       "docs/mcp",
       "docs/standards/CSS-CLASS-CONVENTION",
@@ -21496,7 +21511,8 @@
       "docs/styles",
       "demos/charity-food",
       "demos/frameworks",
-      "demos/scrollalong-test"
+      "demos/scrollalong-test",
+      "demos/site/layout"
     ],
     "block": [
       "pages/home",
@@ -21574,6 +21590,7 @@
       "docs/behaviors/masked",
       "docs/behaviors/mdhtml",
       "docs/behaviors/move",
+      "docs/behaviors/navbar",
       "docs/behaviors/print",
       "docs/behaviors/ratio",
       "docs/behaviors/share",
@@ -23884,6 +23901,7 @@
       "docs/behaviors/dialog",
       "docs/behaviors/footer",
       "docs/behaviors/header",
+      "docs/behaviors/navbar",
       "docs/behaviors/pagination",
       "docs/behaviors/progress",
       "docs/behaviors/table",
@@ -25071,6 +25089,7 @@
       "docs/behaviors/codecontrol",
       "docs/behaviors/colorpicker",
       "docs/behaviors/move",
+      "docs/behaviors/navbar",
       "docs/behaviors/otp",
       "docs/behaviors/release",
       "docs/behaviors/searchfield",
@@ -28861,6 +28880,7 @@
       "docs/behaviors/fill",
       "docs/behaviors/icon",
       "docs/behaviors/img",
+      "docs/behaviors/navbar",
       "docs/guides/create-a-website",
       "docs/linkedin-framework-agnostic",
       "docs/standards/RELEASE-PROCESS"
@@ -29216,6 +29236,7 @@
       "docs/behaviors/dropdown",
       "docs/behaviors/glass",
       "docs/behaviors/help",
+      "docs/behaviors/navbar",
       "docs/behaviors/popover",
       "docs/behaviors/release",
       "docs/behaviors/table",
@@ -29337,7 +29358,8 @@
       "demos/index",
       "demos/site/cards",
       "demos/site/content",
-      "demos/site/index"
+      "demos/site/index",
+      "demos/site/layout"
     ],
     "ecosystem": [
       "docs/IMPROVEMENTS",
@@ -32324,6 +32346,7 @@
       "docs/behaviors/formrow",
       "docs/behaviors/icon",
       "docs/behaviors/inputgroup",
+      "docs/behaviors/navbar",
       "docs/behaviors/ripple",
       "docs/behaviors/searchfield",
       "docs/behaviors/skeleton",
@@ -33074,7 +33097,6 @@
       "docs/auto-injection",
       "docs/behaviors/cardminimizable",
       "docs/behaviors/figure",
-      "docs/behaviors/navbar",
       "docs/behaviors/progress",
       "docs/pce-candidates",
       "demos/mdhtml-pre-debug"
@@ -33403,6 +33425,7 @@
       "docs/behaviors/header",
       "docs/behaviors/img",
       "docs/behaviors/input",
+      "docs/behaviors/navbar",
       "docs/behaviors/notes",
       "docs/behaviors/pagination",
       "docs/behaviors/password",
@@ -35540,6 +35563,7 @@
       "docs/behaviors/container",
       "docs/behaviors/dialog",
       "docs/behaviors/draggable",
+      "docs/behaviors/navbar",
       "docs/behaviors/table",
       "docs/claude/PAGE-GENERATION",
       "docs/claude/TIER1-LAWS",
@@ -35629,6 +35653,7 @@
       "docs/behaviors/img",
       "docs/behaviors/input",
       "docs/behaviors/mark",
+      "docs/behaviors/navbar",
       "docs/behaviors/pre",
       "docs/behaviors/progress",
       "docs/behaviors/select",
@@ -36371,6 +36396,7 @@
       "docs/behaviors/dropdown",
       "docs/behaviors/glass",
       "docs/behaviors/img",
+      "docs/behaviors/navbar",
       "docs/behaviors/range",
       "docs/behaviors/sticky",
       "docs/behaviors/table",
@@ -40229,6 +40255,7 @@
       "docs/behaviors/glass",
       "docs/behaviors/glow",
       "docs/behaviors/mark",
+      "docs/behaviors/navbar",
       "docs/behaviors/progress",
       "docs/behaviors/rainbow",
       "docs/behaviors/stat"
@@ -41467,6 +41494,7 @@
       "docs/behaviors/cardfile",
       "docs/behaviors/cardhorizontal",
       "docs/behaviors/mark",
+      "docs/behaviors/navbar",
       "docs/behaviors/tabs"
     ],
     "mb": [
@@ -44053,8 +44081,23 @@
       "docs/standards/ERROR-LOG-RETENTION",
       "demos/autoinject"
     ],
+    "underline": [
+      "docs/behaviors/navbar",
+      "docs/behaviors/release",
+      "docs/behaviors/tabs"
+    ],
     "collapsing": [
       "docs/behaviors/navbar"
+    ],
+    "scrollalong": [
+      "docs/behaviors/navbar",
+      "docs/behaviors/scrollalong",
+      "docs/schema-test-value",
+      "docs/styles",
+      "demos/index",
+      "demos/scrollalong-test",
+      "demos/site/index",
+      "demos/site/layout"
     ],
     "openmenu": [
       "docs/behaviors/navbar"
@@ -44474,10 +44517,6 @@
     "7em": [
       "docs/behaviors/release"
     ],
-    "underline": [
-      "docs/behaviors/release",
-      "docs/behaviors/tabs"
-    ],
     "hovering": [
       "docs/behaviors/release"
     ],
@@ -44603,15 +44642,6 @@
     ],
     "labelledby": [
       "docs/behaviors/scrollable"
-    ],
-    "scrollalong": [
-      "docs/behaviors/scrollalong",
-      "docs/schema-test-value",
-      "docs/styles",
-      "demos/index",
-      "demos/scrollalong-test",
-      "demos/site/index",
-      "demos/site/layout"
     ],
     "stuck": [
       "docs/behaviors/scrollalong",
