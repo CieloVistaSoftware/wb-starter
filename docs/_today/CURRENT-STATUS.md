@@ -37,6 +37,16 @@
 
 ---
 
+**Updated 2026-10-06, morning.** Card content precedence (#683).
+
+**Files touched:** `src/wb-viewmodels/card.js`, `tests/regression/cards-keep-authored-content.spec.ts`, `docs/behaviors/card.md`.
+
+**Last action:** `content="..."` wins over the children on every card path (card() left the children loose beside the attribute's body, so both rendered); a contentless card gets no empty `<main>`. The old empty-body test selected `.x-card__main`, which no card body carries, so it could never fail.
+
+**Next step:** remaining triage findings: #323 (label.md live demo), #682 (write the select vs x-dropdown rule), #274 (widen overlap pages).
+
+---
+
 **Updated 2026-10-06, morning.** Last two behavior docs without a live demo (#323).
 
 **Files touched:** `docs/behaviors/label.md`, `docs/behaviors/autosize.md`, `tests/compliance/md-wb-demo-required.spec.ts`.

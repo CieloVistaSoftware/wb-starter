@@ -883,6 +883,12 @@ export function card(element, options = {}) {
   // 1. If semantic structure exists, we don't capture innerHTML (it's already in the structure)
   // 2. If valid content option/data provided, use it
   // 3. Fallback to innerHTML (raw content mode)
+  //
+  // #683: the precedence rule, one for every card path -- an explicit
+  // content="..." attribute WINS over the text between the tags, the same
+  // order composeCard() and the typed cards (cardimage, ...) already use.
+  // The children used to be left in place beside the attribute's <main>, so
+  // both rendered: the attribute in the body and the children loose above it.
   const initialContent = isSemantic ? '' : (hasContent || element.innerHTML);
 
   const base = composeCard(element, { 
@@ -895,16 +901,21 @@ export function card(element, options = {}) {
     existingFooter: hasFooter
   });
 
-  // FIX: Clear existing HTML if we captured it from innerHTML (raw mode)
-  // This prevents buildStructure() from duplicating it inside the new <main>
-  if (!isSemantic && !hasContent && initialContent) {
+  // Clear the authored children once they are accounted for: in raw mode
+  // they were captured above and buildStructure() rebuilds them inside the
+  // new <main> (clearing stops it duplicating them); when the attribute wins
+  // (#683) they are the losing side of the precedence rule above.
+  if (!isSemantic && element.innerHTML.trim()) {
     element.innerHTML = '';
   }
   
   // Build structure handles both creation and enhancement. A semantic card
   // with no body keeps none: its authored header/footer are not body content,
   // and building a <main> from innerHTML would paste copies of them.
-  base.buildStructure({ showMain: !isSemantic || !!hasMain });
+  // #683: nor does a card with no content at all -- a whitespace-only
+  // <div x-card> got an empty padded <main>, the blank line #608 removed
+  // from the schema-built path.
+  base.buildStructure({ showMain: isSemantic ? !!hasMain : !!String(initialContent || '').trim() });
   
   return base.cleanup;
 }

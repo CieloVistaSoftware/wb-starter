@@ -90,11 +90,12 @@ test.describe('cards keep the author content (#678)', () => {
     expect(result.h, 'and the card must have real height').toBeGreaterThan(0);
   });
 
-  test('content and children both survive when both are given', async ({ page }) => {
-    // Which of the two WINS is undefined today -- composeCard() prefers the
-    // attribute, card()'s own config prefers the children, and they disagree
-    // (#683). This asserts only what #678 is about: neither is destroyed.
-    // Tighten it once the precedence is decided.
+  test('the content attribute wins over the children, inside the body (#683)', async ({ page }) => {
+    // #683 settled the precedence, one rule for every card path: an explicit
+    // content="..." wins over the text between the tags -- the order
+    // composeCard() and the typed cards already used. card() used to put the
+    // attribute in the body AND leave the children loose above it, so both
+    // rendered, the children outside the card's structure.
     await page.goto(FIXTURE, { waitUntil: 'domcontentloaded' });
     const text = await page.evaluate(async () => {
       const host = document.createElement('div');
@@ -103,19 +104,19 @@ test.describe('cards keep the author content (#678)', () => {
       const mod: any = await import('/src/core/wb-lazy.js');
       await (mod.default || mod.WB).scan(host, { eager: true });
       await new Promise((r) => setTimeout(r, 60));
-      return (document.querySelector('#c') as HTMLElement).innerText.trim();
+      const card = document.querySelector('#c') as HTMLElement;
+      // The card's own body: a direct <main> child (it carries no class).
+      const main = card.querySelector(':scope > main') as HTMLElement | null;
+      return { all: card.innerText.trim(), body: (main?.innerText || '').trim() };
     });
-    expect(
-      text.includes('FROM_ATTRIBUTE') || text.includes('FROM_CHILDREN'),
-      `one of the two must render, neither may vanish (got "${text}")`
-    ).toBe(true);
+    expect(text.body, 'the attribute fills the card body').toBe('FROM_ATTRIBUTE');
+    expect(text.all, 'the losing children must not render loose beside the body').not.toContain('FROM_CHILDREN');
   });
 
-  test('preserving content does not ADD an empty body box', async ({ page }) => {
-    // card() builds its own empty .x-card__main for a contentless card -- a
-    // pre-existing #608 leftover, filed as #683 rather than fixed here. What
-    // this pins is that the #678 work does not add a SECOND one, which is the
-    // regression this change could plausibly have introduced.
+  test('a card with no content renders no empty body box (#683)', async ({ page }) => {
+    // card() used to build an empty, padded .x-card__main for a contentless
+    // card -- the blank line #608 removed from the schema-built path but not
+    // from this one. #683: none at all now.
     await page.goto(FIXTURE, { waitUntil: 'domcontentloaded' });
     const mains = await page.evaluate(async () => {
       const host = document.createElement('div');
@@ -126,8 +127,10 @@ test.describe('cards keep the author content (#678)', () => {
       await (mod.default || mod.WB).scan(host, { eager: true });
       await new Promise((r) => setTimeout(r, 60));
       const el = document.querySelector('#e')!;
-      return [...el.querySelectorAll('.x-card__main')].filter((m) => !m.innerHTML.trim()).length;
+      // Any direct <main> body, classed or not: the old .x-card__main
+      // selector matched no card body at all, so this could never fail.
+      return [...el.querySelectorAll(':scope > main')].filter((m) => !m.innerHTML.trim()).length;
     });
-    expect(mains, 'at most the one card() already built — never a second').toBeLessThanOrEqual(1);
+    expect(mains, 'a whitespace-only card must not get an empty body box').toBe(0);
   });
 });

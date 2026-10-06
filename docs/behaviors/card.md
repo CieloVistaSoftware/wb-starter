@@ -44,6 +44,7 @@ no header; a card with no `footer` gets no footer. Nothing is emitted empty.
 | `tooltip` | `string` | `""` | Hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip. `hoverText`/`hover-text` is the pre-existing documented alias and wins only when `tooltip` is unset (#283). |
 | `hover-text` | `string` | `""` | Alias for `tooltip` — hover text shown as a themed WB tooltip, not the native browser title tooltip. |
 | `featured` | `boolean` or `string` | `false` | Promotes this card over its siblings: a heavier border and a visible marker. Bare `featured` prints "Featured"; `featured="Deal of the week"` prints that label instead. |
+| `content` | `string` | `""` | Body text. When both are given, `content="…"` wins over the text between the tags, and the children are not rendered (#683). A card with no content at all gets no body box. |
 
 ### An article is a card
 
