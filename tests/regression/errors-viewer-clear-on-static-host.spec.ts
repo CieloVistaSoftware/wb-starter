@@ -26,6 +26,10 @@ const LOCAL_LOG = {
 };
 
 test.describe('errors-viewer Clear Log on a static host (#1568)', () => {
+  // The 404/405 answers below are page.route() mocks. sw.js would answer the
+  // page's fetches itself and the mocks would never apply (#1349).
+  test.use({ serviceWorkers: 'block' });
+
   test.beforeEach(async ({ page }) => {
     await page.route('**/data/errors.json*', (r) => r.fulfill({ status: 404, body: 'Not Found' }));
     await page.route('**/api/error-log/clear', (r) => r.fulfill({ status: 405, body: 'Method Not Allowed' }));
