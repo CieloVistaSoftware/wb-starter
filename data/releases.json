@@ -12,64 +12,90 @@
       "items": [
         {
           "kind": "changed",
-          "html": "<strong>The sleep guard reads as a no-page spec to tests-must-assert</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+          "html": "<strong>The sleep guard reads as a no-page spec to tests-must-assert</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/b94e8e9af9ac8b4eac4dd4ac9389dbfb7bbad599\" target=\"_blank\" rel=\"noopener\"><code>b94e8e9</code></a>",
           "issues": [
             1516
           ]
         },
         {
           "kind": "changed",
-          "html": "<strong>Classify every fixed sleep, guard the counts, and remove 81 of 426</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+          "html": "<strong>Classify every fixed sleep, guard the counts, and remove 81 of 426</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e6c425dafacadc5d4a9194668df87b3a7a549be1\" target=\"_blank\" rel=\"noopener\"><code>e6c425d</code></a>",
           "issues": [
             1516
           ]
         }
       ],
-      "seeIt": "Run tests/compliance/tests-must-assert.spec.ts. Before: &quot;tests/compliance/no-new-fixed-sleeps.spec.ts (4 test(s) against about:blank)&quot;. Now: 3/3, and the guard still passes 7/7."
+      "seeIt": "Run <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/tests-must-assert.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/tests-must-assert.spec.ts</a>. Before: &quot;<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-new-fixed-sleeps.spec.ts</a> (4 test(s) against about:blank)&quot;. Now: 3/3, and the guard still passes 7/7.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/fa422c292e789d1876d1cccaf23911dc1dbe17f8\" target=\"_blank\" rel=\"noopener\"><code>fa422c2</code></a>"
+        },
+        {
+          "label": "PR (#1516 first pass)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1635\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1635</a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "Classifier",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/lib/test-sleeps.mjs</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
     },
     {
       "version": "1.0.341",
       "date": "2026-10-06",
-      "summary": "Media-sources-are-remote enforces &quot;NO LOCAL IMAGES&quot; (#762/#1122) because a copy-paste example with a relative src 404s on a customer&#39;s page; the hero gallery&#39;s 120 JPGs are the site&#39;s own screenshots, not examples, so John approved exempting pages/hero-gallery.html. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1617\" target=\"_blank\" rel=\"noopener\">PR 1617</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+      "summary": "Media-sources-are-remote enforces &quot;NO LOCAL IMAGES&quot; (#762/#1122) because a copy-paste example with a relative src 404s on a customer&#39;s page; the hero gallery&#39;s 120 JPGs are the site&#39;s own screenshots, not examples, so John approved exempting <a href=\"https://cielovistasoftware.github.io/wb-starter/?page=hero-gallery\" target=\"_blank\" rel=\"noopener\">pages/hero-gallery.html</a>. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1617\" target=\"_blank\" rel=\"noopener\">PR 1617</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
       "items": [
         {
           "kind": "changed",
-          "html": "<strong>Exempt the hero gallery from the no-local-images rule (approved)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "html": "<strong>Exempt the hero gallery from the no-local-images rule (approved)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/856f1b868564283e2e18172e493fd5df263a737f\" target=\"_blank\" rel=\"noopener\"><code>856f1b8</code></a>",
           "issues": [
             1597
           ]
         },
         {
           "kind": "changed",
-          "html": "<strong>Judge hotspots against the image, not a live re-render</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "html": "<strong>Judge hotspots against the image, not a live re-render</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/83cf1948fbef95b57147cf58867fa9c2f49d0c5b\" target=\"_blank\" rel=\"noopener\"><code>83cf194</code></a>",
           "issues": [
             1597
           ]
         },
         {
           "kind": "fixed",
-          "html": "<strong>Hero module moves to src/lib; gallery writes doc-viewer links relative</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "html": "<strong>Hero module moves to src/lib; gallery writes doc-viewer links relative</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5402e137193c54b93dbb6c54eed1aa70b2d28486\" target=\"_blank\" rel=\"noopener\"><code>5402e13</code></a>",
           "issues": [
             1597
           ]
         },
         {
           "kind": "changed",
-          "html": "<strong>Hero gallery spec asserts unconditionally in every test</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "html": "<strong>Hero gallery spec asserts unconditionally in every test</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/d6bf3c0e23f79442972470e04b1238c47f19b37a\" target=\"_blank\" rel=\"noopener\"><code>d6bf3c0</code></a>",
           "issues": [
             1597
           ]
         },
         {
           "kind": "changed",
-          "html": "<strong>Assert every xalign case was measured, unconditionally</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+          "html": "<strong>Assert every xalign case was measured, unconditionally</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8a71b8e31495de1d86691c53d21c31cc86f7f5a2\" target=\"_blank\" rel=\"noopener\"><code>8a71b8e</code></a>",
           "issues": [
             1619
           ]
         },
         {
           "kind": "changed",
-          "html": "<strong>Re-render the hero gallery with centered buttons</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+          "html": "<strong>Re-render the hero gallery with centered buttons</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/3cc074f5ea4868aa697a9b561dfccf7896e68a1e\" target=\"_blank\" rel=\"noopener\"><code>3cc074f</code></a>",
           "issues": [
             1597,
             1619
@@ -77,27 +103,69 @@
         },
         {
           "kind": "fixed",
-          "html": "<strong>X-cardhero buttons follow the hero&#39;s xalign</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a>",
+          "html": "<strong>X-cardhero buttons follow the hero&#39;s xalign</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">#1619</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8ee48aad8d37faac4e307f06e5b3d1351c9602ab\" target=\"_blank\" rel=\"noopener\"><code>8ee48aa</code></a>",
           "issues": [
             1619
           ]
         },
         {
           "kind": "added",
-          "html": "<strong>Hero gallery -- the 120 playground heroes as JPGs with live button hotspots</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "html": "<strong>Hero gallery -- the 120 playground heroes as JPGs with live button hotspots</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cf63f0176e59d014494ed868ba7ffc69b8d2dad\" target=\"_blank\" rel=\"noopener\"><code>0cf63f0</code></a>",
           "issues": [
             1597
           ]
         },
         {
           "kind": "changed",
-          "html": "<strong>Hero-permutations module (not wired yet)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a>",
+          "html": "<strong>Hero-permutations module (not wired yet)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">#1597</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/269a2d00361e50257a96aa52fbb68f731b109183\" target=\"_blank\" rel=\"noopener\"><code>269a2d0</code></a>",
           "issues": [
             1597
           ]
         }
       ],
-      "seeIt": "Run tests/regression/media-sources-are-remote.spec.ts. Before: &quot;120 local audio/video source(s)&quot; listing images/hero-gallery/hero-NNN.jpg. Now: 2/2, and every other page is still checked."
+      "seeIt": "Run <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/regression/media-sources-are-remote.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/regression/media-sources-are-remote.spec.ts</a>. Before: &quot;120 local audio/video source(s)&quot; listing <a href=\"https://cielovistasoftware.github.io/wb-starter/images/hero-gallery/hero-NNN.jpg\" target=\"_blank\" rel=\"noopener\">images/hero-gallery/hero-NNN.jpg</a>. Now: 2/2, and every other page is still checked.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9de1fd77661465f72f62012698cb8e951190ad63\" target=\"_blank\" rel=\"noopener\"><code>9de1fd7</code></a>"
+        },
+        {
+          "label": "PR (hero gallery)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1617\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1617</a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1597\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1597</a>"
+        },
+        {
+          "label": "See it (local)",
+          "html": "<a href=\"http://localhost:3000/?page=hero-gallery\" target=\"_blank\" rel=\"noopener\">http://localhost:3000/?page=hero-gallery</a>"
+        },
+        {
+          "label": "See it (live site, after deploy)",
+          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/?page=hero-gallery\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/?page=hero-gallery</a>"
+        },
+        {
+          "label": "Images",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/tree/claude/cardhero-gallery/images/hero-gallery\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/tree/claude/cardhero-gallery/images/hero-gallery</a>"
+        },
+        {
+          "label": "PR (centered buttons)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1620\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1620</a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1619\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1619</a>"
+        },
+        {
+          "label": "See it (live site, after deploy) (pick &quot;120 card heroes&quot;)",
+          "html": "<a href=\"https://cielovistasoftware.github.io/wb-starter/demos/playground.html\" target=\"_blank\" rel=\"noopener\">https://cielovistasoftware.github.io/wb-starter/demos/playground.html</a>"
+        },
+        {
+          "label": "See it (local)",
+          "html": "<a href=\"http://localhost:3000/demos/playground.html\" target=\"_blank\" rel=\"noopener\">http://localhost:3000/demos/playground.html</a>"
+        }
+      ]
     },
     {
       "version": "1.0.340",
@@ -106,13 +174,19 @@
       "items": [
         {
           "kind": "changed",
-          "html": "<strong>Schema descriptions say composition, not inheritance</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/465\" target=\"_blank\" rel=\"noopener\">#465</a>",
+          "html": "<strong>Schema descriptions say composition, not inheritance</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/465\" target=\"_blank\" rel=\"noopener\">#465</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/1e740942252d08eb127ab8c235df6bcdea602272\" target=\"_blank\" rel=\"noopener\"><code>1e74094</code></a>",
           "issues": [
             465
           ]
         }
       ],
-      "seeIt": "Hover a card variant&#39;s tag in VS Code or open src/wb-models/card.base.schema.json. Before: &quot;BASE SCHEMA - All card variants INHERIT from this.&quot; Now: &quot;Shared card properties, semantic requirements and compliance rules. Every card variant schema includes them&quot;. Run npx playwright test tests/compliance/no-legacy-component-inheritance-docs.spec.ts --project=compliance. Before: the new schema test listed 5 descriptions. Now: 3 passed."
+      "seeIt": "Hover a card variant&#39;s tag in VS Code or open <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/wb-models/card.base.schema.json\" target=\"_blank\" rel=\"noopener\">src/wb-models/card.base.schema.json</a>. Before: &quot;BASE SCHEMA - All card variants INHERIT from this.&quot; Now: &quot;Shared card properties, semantic requirements and compliance rules. Every card variant schema includes them&quot;. Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-legacy-component-inheritance-docs.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-legacy-component-inheritance-docs.spec.ts</a> --project=compliance. Before: the new schema test listed 5 descriptions. Now: 3 passed.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/5f74dd07b68e4a0f8728ca64e773574568568ad0\" target=\"_blank\" rel=\"noopener\"><code>5f74dd0</code></a>"
+        }
+      ]
     },
     {
       "version": "1.0.339",
@@ -121,13 +195,19 @@
       "items": [
         {
           "kind": "fixed",
-          "html": "<strong>A dialog always has an exit; its content part is x-dialog__main</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/794\" target=\"_blank\" rel=\"noopener\">#794</a>",
+          "html": "<strong>A dialog always has an exit; its content part is x-dialog__main</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/794\" target=\"_blank\" rel=\"noopener\">#794</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/17ecfee98af833aa27cfbb21805a4e5fcc9c0d6e\" target=\"_blank\" rel=\"noopener\"><code>17ecfee</code></a>",
           "issues": [
             794
           ]
         }
       ],
-      "seeIt": "Put &lt;dialog showClose=&quot;false&quot; closeOnEscape=&quot;false&quot; closeOnBackdrop=&quot;false&quot;&gt;&lt;h2&gt;Trap&lt;/h2&gt;&lt;/dialog&gt; on a page, open it and press Escape. Before: it stayed open with no close button and nothing closed it. Now: Escape closes it and the console warns &quot;leaves no way out; Escape stays on (#794)&quot;."
+      "seeIt": "Put &lt;dialog showClose=&quot;false&quot; closeOnEscape=&quot;false&quot; closeOnBackdrop=&quot;false&quot;&gt;&lt;h2&gt;Trap&lt;/h2&gt;&lt;/dialog&gt; on a page, open it and press Escape. Before: it stayed open with no close button and nothing closed it. Now: Escape closes it and the console warns &quot;leaves no way out; Escape stays on (#794)&quot;.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/ef779970a7c1a2ae7db9ecd1a547d7ddcb4423ab\" target=\"_blank\" rel=\"noopener\"><code>ef77997</code></a>"
+        }
+      ]
     },
     {
       "version": "1.0.338",
@@ -136,13 +216,19 @@
       "items": [
         {
           "kind": "fixed",
-          "html": "<strong>&lt;x-fix-card&gt; composes the fix-card behavior instead of subclassing WBCard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/789\" target=\"_blank\" rel=\"noopener\">#789</a>",
+          "html": "<strong>&lt;x-fix-card&gt; composes the fix-card behavior instead of subclassing WBCard</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/789\" target=\"_blank\" rel=\"noopener\">#789</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e645e85a283f491208dd54f8e334a3e77ec0180a\" target=\"_blank\" rel=\"noopener\"><code>e645e85</code></a>",
           "issues": [
             789
           ]
         }
       ],
-      "seeIt": "Run npx playwright test tests/compliance/no-component-inheritance-in-source.spec.ts --project=compliance. Before: it fails naming src/wb-viewmodels/fix-card.js:211 class WBFixCard extends WBCard. Now: it passes. In a page, move an &lt;x-fix-card&gt; with .data set to another parent. Before: it showed two headers. Now: one."
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-component-inheritance-in-source.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-component-inheritance-in-source.spec.ts</a> --project=compliance. Before: it fails naming <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/src/wb-viewmodels/fix-card.js\" target=\"_blank\" rel=\"noopener\">src/wb-viewmodels/fix-card.js</a>:211 class WBFixCard extends WBCard. Now: it passes. In a page, move an &lt;x-fix-card&gt; with .data set to another parent. Before: it showed two headers. Now: one.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/50d3d2889dbeeb5f0f86672b1a1fd4747e8cc9ed\" target=\"_blank\" rel=\"noopener\"><code>50d3d28</code></a>"
+        }
+      ]
     },
     {
       "version": "1.0.337",
@@ -151,27 +237,33 @@
       "items": [
         {
           "kind": "changed",
-          "html": "<strong>Two more specs asserted the bare x-card class substring</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
+          "html": "<strong>Two more specs asserted the bare x-card class substring</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0cb963bbbac64de30a024294fdbde54aba2093b6\" target=\"_blank\" rel=\"noopener\"><code>0cb963b</code></a>",
           "issues": [
             969
           ]
         },
         {
           "kind": "fixed",
-          "html": "<strong>A typed card&#39;s own header and footer stay the card&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
+          "html": "<strong>A typed card&#39;s own header and footer stay the card&#39;s</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/6847b5fd49637c196b5a918a275012acacb34f10\" target=\"_blank\" rel=\"noopener\"><code>6847b5f</code></a>",
           "issues": [
             969
           ]
         },
         {
           "kind": "fixed",
-          "html": "<strong>Typed cards carry their attribute, not injected variant classes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a>",
+          "html": "<strong>Typed cards carry their attribute, not injected variant classes</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2736aca318806074b0507b011cc5c7f589678484\" target=\"_blank\" rel=\"noopener\"><code>2736aca</code></a>",
           "issues": [
             969
           ]
         }
       ],
-      "seeIt": "Open demos/site/cards.html, inspect any rendered typed card (for example the Image Card), and read its class attribute. Before: class=&quot;x-card--image x-card-image&quot;. Now: no variant class; the card looks exactly the same."
+      "seeIt": "Open <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/cards.html\" target=\"_blank\" rel=\"noopener\">demos/site/cards.html</a>, inspect any rendered typed card (for example the Image Card), and read its class attribute. Before: class=&quot;x-card--image x-card-image&quot;. Now: no variant class; the card looks exactly the same.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9410d99e02b33d45cc32749a230f95b979290474\" target=\"_blank\" rel=\"noopener\"><code>9410d99</code></a>"
+        }
+      ]
     },
     {
       "version": "1.0.336",
