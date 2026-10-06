@@ -6,6 +6,21 @@
   ],
   "releases": [
     {
+      "version": "1.0.314",
+      "date": "2026-10-05",
+      "summary": "Doc-viewer-links failed CI with ECONNRESET, never a dead link, because server.js closed an idle keep-alive socket after Node&#39;s default ~5-6s while a test&#39;s pooled request context reused it (idle 6037ms and 6066ms on Windows CI). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1605\" target=\"_blank\" rel=\"noopener\">PR 1605</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>Server keeps idle keep-alive sockets open; no ECONNRESET on reuse</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1549\" target=\"_blank\" rel=\"noopener\">#1549</a>",
+          "issues": [
+            1549
+          ]
+        }
+      ],
+      "seeIt": "Run tests/regression/server-keeps-idle-keepalive-sockets-open.spec.ts. Before: the server closed the idle socket at 6004ms and a second request on it got no answer. Now: the socket is still open after 7s and the second request is answered."
+    },
+    {
       "version": "1.0.313",
       "date": "2026-10-05",
       "summary": "The behavior-API verb gate only recognised members written (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1602\" target=\"_blank\" rel=\"noopener\">PR 1602</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/782\" target=\"_blank\" rel=\"noopener\">#782</a>",
