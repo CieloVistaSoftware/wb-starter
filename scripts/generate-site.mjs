@@ -153,10 +153,15 @@ function placeholderChildren(schema, host) {
   // vertical had nothing to act on. Several panels also make active-tab="1"
   // demonstrable at all.
   if (schema.schemaFor === 'tabs') return TABS_SAMPLE;
+  // A <nav> holds links (#958). A loose sentence in one sat against the
+  // navbar's 8px padding (the 1rem-from-the-edge standard) and is nothing a
+  // nav ever contains; links are what navbar() styles and lays out.
+  if (host === 'nav') return NAV_SAMPLE;
   const label = (schema.title || schema.schemaFor || 'component').toLowerCase();
   return `This is example ${label} content.`;
 }
 
+const NAV_SAMPLE = '<a href="#home">Home</a> <a href="#docs">Docs</a> <a href="#pricing">Pricing</a>';
 const TABS_SAMPLE = '<div tab-title="Overview">This is the overview panel.</div>'
   + '<div tab-title="Details">This is the details panel.</div>'
   + '<div tab-title="Settings">This is the settings panel.</div>';
