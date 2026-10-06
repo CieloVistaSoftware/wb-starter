@@ -15,7 +15,7 @@
    classList.add('x-spinner') that just duplicated the <span x-spinner> tag
    name (no live demo/page usage of x-spinner on a non-<span x-spinner> element
    was found). */
-x-spinner, [x-spinner]{
+[x-spinner]{
   width: 1.25rem;
   height: 1.25rem;
   border: 2px solid var(--border-color);
@@ -86,16 +86,16 @@ x-spinner, [x-spinner]{
 /* #448: tag selectors -- container() no longer adds a redundant
    classList.add('x-container') that just duplicated the <div x-container>
    tag name. */
-x-container, [x-container]{
+[x-container]{
   position: relative;
   transition: border-color 0.2s, background 0.2s;
 }
 
-x-container:hover, [x-container]:hover{
+[x-container]:hover{
   border-color: var(--primary);
 }
 
-x-container.drop-target, [x-container].drop-target{
+[x-container].drop-target{
   border-color: var(--success-color);
   background: var(--success-bg);
 }
@@ -286,7 +286,7 @@ MARQUEE & RIPPLE
    (the overwhelmingly common usage -- <button>/<button>/<input>/<div>
    across nearly every demo page), but skips it for a literal <span x-ripple>
    host, which now matches via tag instead. */
-x-ripple, [x-ripple],
+[x-ripple],
 .x-ripple {
   position: relative;
   overflow: hidden;
@@ -316,12 +316,12 @@ x-ripple, [x-ripple],
    element case (this file's own <nav x-sticky>/<header x-sticky> docs),
    but skips it for a literal <div x-sticky> host, which now matches via tag
    instead. */
-x-sticky, [x-sticky],
+[x-sticky],
 .x-sticky {
   transition: box-shadow 0.2s ease;
 }
 
-x-sticky.is-stuck, [x-sticky].is-stuck,
+[x-sticky].is-stuck,
 .x-sticky.is-stuck {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }

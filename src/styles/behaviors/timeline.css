@@ -10,7 +10,7 @@
    class -- timeline() still adds `.x-timeline` for the x-timeline-on-any-
    element case (e.g. demos/playground.html's `<div x-timeline>`), but skips
    it for a literal <div x-timeline> host, which now matches via tag instead. */
-x-timeline, [x-timeline],
+[x-timeline],
 .x-timeline {
   /* <div x-timeline> is a custom element with no built-in display -- the
      browser default for an unknown tag is `inline`, which breaks the
@@ -23,7 +23,7 @@ x-timeline, [x-timeline],
   padding-left: 1.5rem;
 }
 
-x-timeline::before, [x-timeline]::before,
+[x-timeline]::before,
 .x-timeline::before {
   content: '';
   position: absolute;

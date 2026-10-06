@@ -4,8 +4,7 @@
  * Colored code sample below via <div x-mdhtml>.
  */
 
-x-demo, [x-demo],
-x-code-card, [x-code-card]{
+[x-demo], [x-code-card]{
   display: block;
   margin-bottom: 1rem;
   max-width: 100vw;
@@ -33,8 +32,7 @@ x-code-card, [x-code-card]{
    to that specific host, only to non-<div x-dropdown> hosts (e.g. x-dropdown
    on a <button>), which the `.x-dropdown.open` half of this selector still
    covers. */
-x-demo:has(x-dropdown.open), [x-demo]:has(x-dropdown.open),
-x-demo:has(.x-dropdown.open), [x-demo]:has(.x-dropdown.open){
+[x-demo]:has(.x-dropdown.open){
   overflow: visible;
 }
 
@@ -126,23 +124,23 @@ x-demo:has(.x-dropdown.open), [x-demo]:has(.x-dropdown.open){
 /* Per-demo code width control: use data-code-width or --demo-code-max-width
    Example: <div x-demo style="--demo-code-max-width: 600px;">
    Presets: narrow (400px), normal (600px), wide (800px), full (100%) */
-x-demo[data-code-width="narrow"] .x-demo__code, [x-demo][data-code-width="narrow"] .x-demo__code{
+[x-demo][data-code-width="narrow"] .x-demo__code{
   max-width: 400px;
 }
 
-x-demo[data-code-width="normal"] .x-demo__code, [x-demo][data-code-width="normal"] .x-demo__code{
+[x-demo][data-code-width="normal"] .x-demo__code{
   max-width: 600px;
 }
 
-x-demo[data-code-width="wide"] .x-demo__code, [x-demo][data-code-width="wide"] .x-demo__code{
+[x-demo][data-code-width="wide"] .x-demo__code{
   max-width: 800px;
 }
 
-x-demo[data-code-width="full"] .x-demo__code, [x-demo][data-code-width="full"] .x-demo__code{
+[x-demo][data-code-width="full"] .x-demo__code{
   max-width: 100%;
 }
 
-x-demo[data-code-width="50vw"] .x-demo__code, [x-demo][data-code-width="50vw"] .x-demo__code{
+[x-demo][data-code-width="50vw"] .x-demo__code{
   max-width: 50vw;
 }
 
@@ -160,7 +158,7 @@ x-demo[data-code-width="50vw"] .x-demo__code, [x-demo][data-code-width="50vw"] .
    Confirmed live: pages/components.html's "This is the title" card demo
    was rendering source at ~250px with a horizontal scrollbar cutting off
    every attribute value mid-word. */
-x-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
+[x-demo][data-code-width="50vw"]{
   --demo-code-min-width: 50vw;
   min-width: 50vw;
 }
@@ -243,7 +241,7 @@ x-demo[data-code-width="50vw"], [x-demo][data-code-width="50vw"]{
    so the box is exactly as wide as it needs to be to show every code line
    in full, without ever going wider than that (still hugs content, never
    stretches to the page). */
-x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
+[x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
   width: var(--x-demo-shrink-width, fit-content);
   max-width: 100%;
   min-width: min(var(--demo-code-min-width, 0px), 90vw);
@@ -270,9 +268,7 @@ x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid-
   /* :not([data-code-width]) -- an authored width (§28 narrow/normal/wide) is
      the author's answer already; this provisional cap outranked it for the
      whole measurement, so a narrow panel painted at 50vw (640px at 1280). */
-  x-demo.x-demo--measuring:not([data-code-width]) > .x-pre-wrapper > .x-demo__code,
   [x-demo].x-demo--measuring:not([data-code-width]) > .x-pre-wrapper > .x-demo__code,
-  x-demo.x-demo--measuring:not([data-code-width]) > .x-demo__code,
   [x-demo].x-demo--measuring:not([data-code-width]) > .x-demo__code {
     max-width: 50vw;
   }
@@ -285,7 +281,7 @@ x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid-
    source order alone can't win this -- !important is the deliberate,
    intended override for this specific opt-out, not a specificity workaround
    for something accidental. */
-x-demo.x-demo--full-width, [x-demo].x-demo--full-width{
+[x-demo].x-demo--full-width{
   width: 100% !important;
   max-width: 100% !important;
 }
@@ -301,7 +297,7 @@ x-demo.x-demo--full-width, [x-demo].x-demo--full-width{
    content's intrinsic width, creating the 11.44x height:width problem --
    confirmed live: cardhero in full-width single-item demo collapsed to 33px
    wide with 487px height = 14.7x aspect ratio). */
-x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__grid{
+[x-demo].x-demo--full-width .x-demo__grid{
   width: 100% !important;
   max-width: 100% !important;
   justify-items: stretch;
@@ -324,13 +320,12 @@ x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__gr
      base rule's 1rem vertical spacing (between stacked demos) stays, this
      just narrows the horizontal breathing room to match mobile's tighter
      available width. */
-  x-demo, [x-demo],
-  x-code-card, [x-code-card]{
+  [x-demo], [x-code-card]{
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 
-  x-demo:has(> .x-demo__grid--cols-1 > :only-child), [x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
+  [x-demo]:has(> .x-demo__grid--cols-1 > :only-child){
     width: 100%;
     max-width: 100%;
   }
@@ -340,7 +335,7 @@ x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__gr
     max-width: 100%;
   }
 
-  x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__grid{
+  [x-demo].x-demo--full-width .x-demo__grid{
     width: 100% !important;
     max-width: 100% !important;
   }
@@ -367,9 +362,7 @@ x-demo.x-demo--full-width .x-demo__grid, [x-demo].x-demo--full-width .x-demo__gr
   min-width: 0;
 }
 
-x-demo > x-mdhtml, [x-demo] > x-mdhtml,
-x-code-card > x-mdhtml, [x-code-card] > x-mdhtml,
-x-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
+[x-demo] > .x-pre-wrapper{
   display: block;
   margin-top: 0.5rem;
 }
@@ -492,7 +485,7 @@ x-demo > .x-pre-wrapper, [x-demo] > .x-pre-wrapper{
    starts 5rem lower, leaving the icon a full 5rem of genuinely clear space
    above every rendered example, regardless of how small any individual
    instance is. */
-x-demo:has(> .x-demo__card-doc-link), [x-demo]:has(> .x-demo__card-doc-link){
+[x-demo]:has(> .x-demo__card-doc-link){
   padding-top: 5rem;
 }
 

@@ -9,7 +9,7 @@
 /* #448: tag selector -- themecontrol() no longer adds a redundant
    classList.add('x-themecontrol') that just duplicated the
    <div x-themecontrol> tag name. */
-x-themecontrol, [x-themecontrol]{
+[x-themecontrol]{
   display: inline-block;
 }
 

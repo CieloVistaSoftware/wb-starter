@@ -14,8 +14,7 @@
  */
 
 .x-input,
-.x-textarea,
-x-select, [x-select]{
+.x-textarea, [x-select]{
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
@@ -57,8 +56,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 }
 
 .x-input:focus,
-.x-textarea:focus,
-x-select:focus, [x-select]:focus{
+.x-textarea:focus, [x-select]:focus{
   border-color: var(--primary);
   outline: 0;
   box-shadow: 0 0 0 3px hsla(var(--hue-primary), var(--saturation-primary), var(--lightness-primary), 0.2);
@@ -75,8 +73,7 @@ x-select:focus, [x-select]:focus{
    match -- so a disabled field in either authoring form looked enabled. */
 .x-input:disabled,
 .x-input__field:disabled,
-.x-textarea:disabled,
-x-select:disabled, [x-select]:disabled{
+.x-textarea:disabled, [x-select]:disabled{
   background-color: var(--bg-secondary);
   opacity: 1;
   cursor: not-allowed;
@@ -329,8 +326,7 @@ input[type="radio"] {
 
 /* Native <input x-input> path only: it always set outline and a per-size
    padding (md unless a known size says otherwise), and styled its prefix,
-   suffix and clear button; the <div x-input> builder never did. Two classes,
-   so these beat `.x-input { padding }` and the single-class size rules. */
+   suffix and clear button; so these beat `.x-input { padding }` and the single-class size rules. */
 .x-input__wrapper--native > .x-input__field {
   outline: none;
   padding: 0.5rem 0.75rem;

@@ -11,7 +11,7 @@
    x-dropdown-on-any-element case (e.g. demos/site/interactive.html's
    `<button x-dropdown>`), but skips it for a literal <div x-dropdown> host,
    which now matches via tag instead. */
-x-dropdown, [x-dropdown],
+[x-dropdown],
 .x-dropdown {
   position: relative;
   display: inline-block;
@@ -50,7 +50,7 @@ x-dropdown, [x-dropdown],
   margin-top: 0.25rem;
 }
 
-x-dropdown.open .x-dropdown-menu, [x-dropdown].open .x-dropdown-menu,
+[x-dropdown].open .x-dropdown-menu,
 .x-dropdown.open .x-dropdown-menu {
   display: block;
 }

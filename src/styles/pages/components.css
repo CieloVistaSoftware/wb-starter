@@ -81,7 +81,7 @@
      mobile sections only -- x-demo elsewhere (standalone demo pages, docs
      markdown with no padded ancestor) keeps its own full 1rem, still the
      only source of breathing room there. */
-  .component-section x-demo {
+  .component-section [x-demo] {
     padding-left: 0;
     padding-right: 0;
   }

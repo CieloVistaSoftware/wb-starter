@@ -1,8 +1,5 @@
 /* Layout custom elements extracted from site.css */
-x-flex, [x-flex], x-stack, [x-stack], x-cluster, [x-cluster], x-container, [x-container],
-x-row, [x-row], x-column, [x-column],
-x-sidebar, [x-sidebar], x-center, [x-center], x-cover, [x-cover], x-masonry, [x-masonry], x-switcher, [x-switcher],
-x-reel, [x-reel], x-frame, [x-frame], x-sticky, [x-sticky], x-drawer, [x-drawer], x-icon, [x-icon]{
+[x-flex], [x-stack], [x-cluster], [x-container], [x-row], [x-column], [x-sidebar], [x-center], [x-cover], [x-masonry], [x-switcher], [x-reel], [x-frame], [x-sticky], [x-drawer], [x-icon]{
   display: block;
 }
 
@@ -21,13 +18,13 @@ x-reel, [x-reel], x-frame, [x-frame], x-sticky, [x-sticky], x-drawer, [x-drawer]
    rule, so custom columns/gap/minWidth configs still apply correctly --
    for the common default case they now just match what's already
    painted, so there's nothing left to shift. */
-x-grid, [x-grid]{
+[x-grid]{
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
 }
 
-x-drawer, [x-drawer]{
+[x-drawer]{
   visibility: hidden;
 }
 /* .x-drawer-layout: enhanced by drawerLayout() (layouts.js) as a page-shell
@@ -38,8 +35,7 @@ x-drawer, [x-drawer]{
    because this base rule hides every <div x-drawer> that isn't a
    .x-drawer-layout). Same specificity as the rule above by design -- this
    just extends its selector list, not a new override. */
-x-drawer.x-drawer-layout, [x-drawer].x-drawer-layout,
-x-drawer.x-drawer-trigger, [x-drawer].x-drawer-trigger{
+[x-drawer].x-drawer-layout, [x-drawer].x-drawer-trigger{
   visibility: visible;
 }
 
