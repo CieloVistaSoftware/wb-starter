@@ -118,8 +118,8 @@
     "baseClass": {
       "type": "string",
       "pattern": "^wb-[a-z][a-z0-9-]*$",
-      "description": "Base CSS class (BEM block). Must start with wb-",
-      "default": "this is the base class"
+      "description": "Root CSS class (BEM block). Must start with wb-",
+      "default": "this is the root class"
     },
     "semanticElement": {
       "type": "object",

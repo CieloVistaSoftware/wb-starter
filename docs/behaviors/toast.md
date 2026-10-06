@@ -66,7 +66,7 @@ click):
 | Class | Applied to | Description |
 |-------|-----------|-------------|
 | `.x-toast-container` | a shared `<div>` appended to `document.body` (created once, reused by every toast) | Fixed position below the site header, top-right, stacked with a gap |
-| `.x-toast` | each popped toast | Base card styling |
+| `.x-toast` | each popped toast | Card styling |
 | `.x-toast--{variant}` | each popped toast | `info`/`success`/`warning`/`error`/`primary`/`secondary` background color |
 | `.x-toast--exiting` | a toast about to auto-remove | Plays the exit animation just before `remove()` |
 

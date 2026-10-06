@@ -537,7 +537,7 @@ export function chip(element, options = {}) {
   const label = options.label ?? element.getAttribute('label') ?? authoredLabel;
   const icon = options.icon || element.getAttribute('icon') || '';
   // Bare (dismissible) and data-prefixed (data-dismissible) attributes both
-  // opt in -- consistent with cardBase()'s clickable/elevated dual-check
+  // opt in -- consistent with card()'s clickable/elevated dual-check
   // (card.js) elsewhere in this project; a caller shouldn't need to know
   // which convention a given behavior happens to check.
   const dismissible = options.dismissible ?? (element.hasAttribute('dismissible') || readFlag(element, 'dismissible'));
@@ -552,7 +552,7 @@ export function chip(element, options = {}) {
   // x-chip, so chip.css's bare `x-chip {}` selector can't reach it at
   // all without the class. Same guard buildStructure() already uses
   // (schema-builder.js) for the identical reason: skip only when the tag
-  // itself already IS the base class, to avoid #478's redundant-class
+  // itself already IS the root class, to avoid #478's redundant-class
   // violation on real <span x-chip> elements.
   element.classList.add('x-chip');
   element.classList.toggle(`x-chip--${variant}`, variant !== 'default');

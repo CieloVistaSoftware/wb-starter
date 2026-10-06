@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "_element.base.schema.json",
-  "title": "Base Element Schema",
+  "title": "Common Element Schema",
   "description": "Universal properties every element has. Every element schema includes them (composition, #465).",
   "type": "object",
   "properties": {
