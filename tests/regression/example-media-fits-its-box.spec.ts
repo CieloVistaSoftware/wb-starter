@@ -26,15 +26,22 @@ type Box = { tag: string; rendered: number; natural: number; container: number }
 async function measure(page: any): Promise<Box[]> {
   return page.evaluate(async () => {
     const stage = document.getElementById('behaviors-live-example')!;
-    const media = [...stage.querySelectorAll('img, video')] as (HTMLImageElement | HTMLVideoElement)[];
+    type Media = HTMLImageElement | HTMLVideoElement;
+    const current = () => [...stage.querySelectorAll('img, video')] as Media[];
     // Wait for intrinsic sizes: an image's naturalWidth, a video's videoWidth.
-    await Promise.all(media.map((m) => new Promise<void>((resolve) => {
+    const loaded = (list: Media[]) => Promise.all(list.map((m) => new Promise<void>((resolve) => {
       const ready = () => (m instanceof HTMLImageElement ? m.complete : m.readyState >= 1);
       if (ready()) return resolve();
       m.addEventListener(m instanceof HTMLImageElement ? 'load' : 'loadedmetadata', () => resolve(), { once: true });
       m.addEventListener('error', () => resolve(), { once: true });
       setTimeout(resolve, 5000);
     })));
+    await loaded(current());
+    // The example can re-render while its media load (CI, under load: a node
+    // taken before the wait was detached by the time it was measured, and
+    // parentElement was null). Measure what is in the example NOW.
+    const media = current();
+    await loaded(media);
     return media.map((m) => ({
       tag: m.tagName.toLowerCase(),
       rendered: m.getBoundingClientRect().width,

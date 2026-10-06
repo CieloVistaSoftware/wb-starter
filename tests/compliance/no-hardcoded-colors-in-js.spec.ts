@@ -31,20 +31,17 @@ const root = process.cwd();
 /**
  * Hex colour literals still in src/ JS on 2026-10-06, by file. Shrink only.
  * Most are self-contained dev-tool overlays (error display, event toasts, dev
- * console) and decorative palettes (confetti, audio skin); a few are values,
+ * console) and decorative palettes (confetti, fireworks); a few are values,
  * not styles (the colour picker's default, the black/white contrast result).
  */
 const REGISTER: Record<string, number> = {
-  'src/api/setup.js': 1,
   'src/core/error-logger.js': 24,
   'src/core/events.js': 8,
   'src/core/theme.js': 5,
   'src/core/x-devconsole.js': 34,
   'src/wb-viewmodels/colorpicker.js': 1,
   'src/wb-viewmodels/effects.js': 15,
-  'src/wb-viewmodels/semantics/audio.js': 16,
   'src/wb-viewmodels/semantics/inline.js': 2,
-  'src/wb-viewmodels/stagelight.js': 5,
 };
 
 /** Comments are not code: blank them out, keeping offsets and line numbers. */
