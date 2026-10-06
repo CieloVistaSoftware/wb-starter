@@ -1761,7 +1761,7 @@ Attributes:
 
 ---
 
-## `<nav x-navbar>`
+## `<nav>`
 
 **Tooltip Output:**
 ```text

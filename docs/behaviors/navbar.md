@@ -1,11 +1,11 @@
 # Navbar
 
-`x-navbar` builds a navigation bar in a `<nav>`: the `brand` (and optional `logo`) linking to `brand-href`, a `tagline`, and links from the `items` JSON, collapsing into a menu button on narrow screens.
+Every `<nav>` picks up navbar; no `x-navbar` attribute needed (#958). A plain `<nav>` of links gets the site's link look (theme colour, underline on hover) and keeps its own layout. Give it a `brand`, `logo`, `items`, `sticky` or `variant` and it becomes the site header: the `brand` (and optional `logo`) linking to `brand-href`, a `tagline`, and links from `items`, collapsing into a menu button on narrow screens. On a non-`<nav>` host, write `x-navbar`. A `<nav>` that names another behavior (`x-breadcrumb`, `x-scrollalong`) gets only that one.
 
 ## Usage
 
 <div x-demo>
-<nav x-navbar brand="wb-starter" brand-href="#" tagline="Zero build"></nav>
+<nav brand="wb-starter" brand-href="#" tagline="Zero build"></nav>
 </div>
 
 ## Attributes

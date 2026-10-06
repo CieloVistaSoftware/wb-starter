@@ -122,7 +122,7 @@
 
 ```html-static
 <!-- CORRECT -->
-<nav x-navbar>
+<nav>
   <ul>
     <li>
       <a href="#home">Home</a>

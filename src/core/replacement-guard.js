@@ -65,6 +65,9 @@ export function familyRoot(behavior) {
  * @param {string} [prefix] attribute prefix, default 'x'
  * @returns {boolean} true when an explicit attribute already covers it
  */
+/** Auto-injected behaviors that ANY explicit behavior on the host replaces (#958). */
+const EXCLUSIVE_AUTO = new Set(['navbar']);
+
 export function isReplacedByExplicitBehavior(element, candidate, prefix = 'x') {
   const prefixAttr = `${prefix}-`;
   const family = familyRoot(candidate);
@@ -97,6 +100,10 @@ export function isReplacedByExplicitBehavior(element, candidate, prefix = 'x') {
     const other = attr.name.slice(prefixAttr.length);
     if (other === candidate) continue;                 // its own attribute (#746)
     if (DIRECTIVES.has(other) || other.endsWith('-init')) continue;
+    // #958: a <nav> that names any behavior of its own -- x-breadcrumb,
+    // x-pagination, x-scrollalong -- chose its look; the auto navbar would
+    // stack on top of it (class="x-navbar x-breadcrumb").
+    if (EXCLUSIVE_AUTO.has(candidate)) return true;
     if (other.startsWith(family)) {
       // John: "if a behavior is an unknown duplicate ... a runtime error
       // should tell the user they don't need both."
