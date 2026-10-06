@@ -1065,16 +1065,18 @@ const WB = {
     const injections = [];
     // One queueing rule for all three scans below (#883: it was written out
     // three times): inject now, or hand to the viewport-deferred lazy path.
+    // x-eager is honoured on EVERY path, not only on x-behavior hosts (#1642):
+    // it used to be read only there, so <pre x-eager> built lazily the moment
+    // its x-behavior="pre" was dropped for the tag alone.
     const queueInjection = (element, name, now) => {
-      injections.push(now ? WB.inject(element, name) : WB.lazyInject(element, name));
+      const eagerHere = now || element.hasAttribute('x-eager');
+      injections.push(eagerHere ? WB.inject(element, name) : WB.lazyInject(element, name));
     };
 
     elements.forEach(element => {
       warnXBehaviorDeprecated(element); // #1642: still runs, but says so
       const behaviorList = element.getAttribute('x-behavior').split(/\s+/).filter(Boolean);
-      const isEager = eager || element.hasAttribute('x-eager');
-
-      behaviorList.forEach(name => queueInjection(element, name, isEager));
+      behaviorList.forEach(name => queueInjection(element, name, eager));
     });
 
     // Custom elements scan (always active)
