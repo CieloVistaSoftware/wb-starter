@@ -34,7 +34,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { esc, issueLinks, itemFor, releaseNotes, seeItProblems } from './lib/release-item.mjs';
+import { esc, issueLinks, itemFor, linkify, linksFrom, releaseNotes, seeItProblems } from './lib/release-item.mjs';
 import { issueTitles } from './lib/issue-titles.mjs';
 import { ANCHOR, STAMP_SUBJECT as STAMP, countBase } from './lib/push-count.mjs';
 import { releaseDate } from './lib/release-date.mjs';
@@ -45,7 +45,12 @@ const CHECK_ONLY = process.argv.includes('--check');
 // How to recreate each version by hand, written from its issue's own body (#1533).
 const STEPS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'release-see-it.json'), 'utf8'));
 /** A steps line as HTML: escaped, `code` spans kept as code (commands, file names). */
-const stepsHtml = (text) => esc(text.charAt(0).toUpperCase() + text.slice(1)).replace(/`([^`]+)`/g, '<code>$1</code>');
+const stepsHtml = (text) => linkify(esc(text.charAt(0).toUpperCase() + text.slice(1)).replace(/`([^`]+)`/g, '<code>$1</code>'));
+const REPO_URL = 'https://github.com/CieloVistaSoftware/wb-starter';
+/** A link that opens in a new tab, as every link on the page does. */
+const ext = (href, text) => `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
+/** The short sha, linked to the commit on GitHub: its message and its diff. */
+const commitLink = (sha) => ext(`${REPO_URL}/commit/${sha}`, `<code>${sha.slice(0, 7)}</code>`);
 // --check reads the cached titles only, so it is repeatable offline.
 const TITLES = issueTitles(ROOT, { refresh: !CHECK_ONLY });
 
@@ -103,11 +108,15 @@ spine.forEach((c, i) => {
   const titles = [];
   const seen = new Set();
   const bodies = [];
+  const links = [];
+  // The commit that shows this version's whole change: its merge, else itself.
+  let code = null;
   let notes = { summary: null, seeIt: null };
   for (const p of pending) {
     if (STAMP.test(p.subject)) continue;
     const prTitle = p.subject.match(/^Merge (?:PR|pull request) #(\d+)[: ](?:from \S+\s*)?(.*)$/i);
     if (prTitle) titles.push({ pr: Number(prTitle[1]), title: (prTitle[2] || p.body.split('\n')[0] || '').trim() });
+    if (!code || p.subject.startsWith('Merge ')) code = p.sha;
     const own = releaseNotes(p.body);
     notes = { summary: notes.summary || own.summary, seeIt: notes.seeIt || own.seeIt };
     // The commits this one brought: the merge's own branch side, or itself.
@@ -120,7 +129,11 @@ spine.forEach((c, i) => {
       bodies.push(b.body);
       const theirs = releaseNotes(b.body);
       notes = { summary: notes.summary || theirs.summary, seeIt: notes.seeIt || theirs.seeIt };
-      items.push(itemFor(b.subject, b.body));
+      for (const l of linksFrom(b.body)) if (!links.some((k) => k.href === l.href)) links.push(l);
+      // Each item links to its own commit, so every line of work is one click away.
+      const item = itemFor(b.subject, b.body);
+      item.html = linkify(item.html) + ' ' + commitLink(b.sha);
+      items.push(item);
     }
   }
   pending = [];
@@ -148,11 +161,16 @@ spine.forEach((c, i) => {
       return `${esc(upper(text))} (${prLink(t.pr)})${own.length ? ' ' + issueLinks(own) : ''}`;
     }).join(' · ');
   }
+  // Every place a summary names is a link, whichever source the text came from.
+  summary = linkify(summary);
   const version = versionOf(count);
   const own = notes.seeIt && !seeItProblems(notes.seeIt, notes.summary).length ? notes.seeIt : null;
   const steps = STEPS[version] || own;
   const entry = { version, date: releaseDate(last.date), summary, items };
   if (steps) entry.seeIt = stepsHtml(steps);
+  // Where to see the work: the whole change, then the commits' own Links blocks.
+  entry.links = [{ label: 'Code', html: commitLink(code) },
+    ...links.map((l) => ({ label: esc(l.label), html: ext(esc(l.href), esc(l.href)) }))];
   entries.push(entry);
 });
 
