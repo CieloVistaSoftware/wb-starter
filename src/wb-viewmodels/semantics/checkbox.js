@@ -27,9 +27,9 @@ function injectStyles() {
       -webkit-appearance: none;
       width: 1.125rem;
       height: 1.125rem;
-      border: 1px solid var(--border-color, #d1d5db);
+      border: 1px solid var(--border-color);
       border-radius: 4px;
-      background-color: var(--bg-primary, #ffffff);
+      background-color: var(--bg-primary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -43,8 +43,8 @@ function injectStyles() {
     /* Checked and indeterminate share the filled box; only the mark differs (#883). */
     input[type="checkbox"]:checked,
     input[type="checkbox"]:indeterminate {
-      background-color: var(--primary, #6366f1);
-      border-color: var(--primary, #6366f1);
+      background-color: var(--primary);
+      border-color: var(--primary);
       background-size: 100%;
       background-position: center;
       background-repeat: no-repeat;
@@ -60,14 +60,14 @@ function injectStyles() {
 
     input[type="checkbox"]:focus-visible {
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
-      border-color: var(--primary, #6366f1);
+      border-color: var(--primary);
       outline: none;
     }
 
     input[type="checkbox"]:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      background-color: var(--bg-secondary, #f3f4f6);
+      background-color: var(--bg-secondary);
     }
 
     /* Sizes via attribute */
@@ -78,8 +78,8 @@ function injectStyles() {
     /* Variants via attribute */
     input[type="checkbox"][variant="success"]:checked,
     input[type="checkbox"][variant="success"]:indeterminate {
-      background-color: var(--success-color, #22c55e);
-      border-color: var(--success-color, #22c55e);
+      background-color: var(--success-color);
+      border-color: var(--success-color);
     }
     input[type="checkbox"][variant="success"]:focus-visible {
       box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
@@ -87,8 +87,8 @@ function injectStyles() {
 
     input[type="checkbox"][variant="warning"]:checked,
     input[type="checkbox"][variant="warning"]:indeterminate {
-      background-color: var(--warning-color, #f59e0b);
-      border-color: var(--warning-color, #f59e0b);
+      background-color: var(--warning-color);
+      border-color: var(--warning-color);
     }
     input[type="checkbox"][variant="warning"]:focus-visible {
       box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
@@ -96,8 +96,8 @@ function injectStyles() {
 
     input[type="checkbox"][variant="danger"]:checked,
     input[type="checkbox"][variant="danger"]:indeterminate {
-      background-color: var(--danger-color, #ef4444);
-      border-color: var(--danger-color, #ef4444);
+      background-color: var(--danger-color);
+      border-color: var(--danger-color);
     }
     input[type="checkbox"][variant="danger"]:focus-visible {
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);

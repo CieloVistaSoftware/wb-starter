@@ -32,8 +32,8 @@ function injectStyles() {
       position: absolute;
       z-index: 10000;
       padding: 0.5rem 0.75rem;
-      background: var(--bg-tertiary, #333);
-      color: var(--text-primary, #fff);
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
       border-radius: 6px;
       font-size: 0.8rem;
       /* maxWidth (#1107). The schema declares maxWidth (default 200px) and a
@@ -67,7 +67,7 @@ function injectStyles() {
       position: absolute;
       width: 8px;
       height: 8px;
-      background: var(--bg-tertiary, #333);
+      background: var(--bg-tertiary);
       transform: rotate(45deg);
     }
     /* The 4 compound positions need their own selectors: .x-tooltip--top does
@@ -111,27 +111,27 @@ function injectStyles() {
       margin-top: -4px;
     }
     .x-tooltip--dark {
-      background: var(--x-tooltip-dark-bg, #1f2937);
-      color: var(--x-tooltip-dark-color, #ffffff);
+      background: var(--x-tooltip-dark-bg);
+      color: var(--x-tooltip-dark-color);
     }
     .x-tooltip--dark .x-tooltip__arrow {
-      background: var(--x-tooltip-dark-bg, #1f2937);
+      background: var(--x-tooltip-dark-bg);
     }
     .x-tooltip--light {
-      background: var(--x-tooltip-light-bg, #ffffff);
-      color: var(--x-tooltip-light-color, #1f2937);
-      border: var(--x-tooltip-light-border, 1px solid #e5e7eb);
+      background: var(--x-tooltip-light-bg);
+      color: var(--x-tooltip-light-color);
+      border: var(--x-tooltip-light-border);
     }
     .x-tooltip--light .x-tooltip__arrow {
-      background: var(--x-tooltip-light-bg, #ffffff);
-      border: var(--x-tooltip-light-border, 1px solid #e5e7eb);
+      background: var(--x-tooltip-light-bg);
+      border: var(--x-tooltip-light-border);
     }
     .x-tooltip--primary {
-      background: var(--x-tooltip-primary-bg, var(--primary, #6366f1));
-      color: var(--x-tooltip-primary-color, #ffffff);
+      background: var(--x-tooltip-primary-bg, var(--primary));
+      color: var(--x-tooltip-primary-color);
     }
     .x-tooltip--primary .x-tooltip__arrow {
-      background: var(--x-tooltip-primary-bg, var(--primary, #6366f1));
+      background: var(--x-tooltip-primary-bg, var(--primary));
     }
   `;
   document.head.appendChild(style);

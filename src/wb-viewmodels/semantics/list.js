@@ -53,7 +53,7 @@ export function list(element, options = {}) {
       .x-list { list-style: none; padding: 0; margin: 0; }
       .x-list__item { padding: 0.5rem 0; }
       .x-list--dividers .x-list__item:not(:last-child) {
-        border-bottom: 1px solid var(--border-color, #eee);
+        border-bottom: 1px solid var(--border-color);
       }
     `;
     document.head.appendChild(style);
