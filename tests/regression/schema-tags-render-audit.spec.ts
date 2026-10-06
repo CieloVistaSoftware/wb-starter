@@ -78,9 +78,8 @@ test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
   test('bare <div x-fix-card> upgrades to the real custom element class', async ({ page }) => {
     await inject(page, `<div x-fix-card id="fc-upgrade"></div>`);
 
-    // 'fix-card' is only added by WBFixCard.connectedCallback -- it only
-    // fires if customElements.define('[x-fix-card]', WBFixCard) actually ran
-    // and the browser upgraded the element. Before the fix, this class
+    // 'fix-card' is only added by the fixCard() behavior -- it only runs if
+    // WB.scan() actually imported fix-card.js. Before the fix, this class
     // never appeared because fix-card.js was never imported.
     await page.waitForFunction(
       () => document.getElementById('fc-upgrade')?.classList.contains('fix-card'),
@@ -142,5 +141,59 @@ test.describe('[x-fix-card] actually upgrades and renders (#365)', () => {
     await expect(page.locator('#fc-render .fix-status')).toHaveText('FIXED');
     const childCount = await page.locator('#fc-render').evaluate((el) => el.children.length);
     expect(childCount, '[x-fix-card] must produce real child content once .data is set').toBeGreaterThan(0);
+  });
+});
+
+// #789: the <x-fix-card> TAG used to be `class WBFixCard extends WBCard`. It is
+// now a shim that applies the same fixCard() behavior to itself, so both forms
+// share one code path. These pin the tag form's contract through that change.
+test.describe('<x-fix-card> tag renders through the fix-card behavior (#789)', () => {
+  const FIX = {
+    errorId: 'TEST-789',
+    issue: 'Tag form',
+    component: 'fix-card.js',
+    date: '2026-10-06T17:00:00Z',
+    status: 'FIXED',
+    cause: 'the tag subclassed WBCard',
+    fix: { action: 'composition shim', file: 'src/wb-viewmodels/fix-card.js' },
+    testRun: true,
+    testName: 'tests/regression/schema-tags-render-audit.spec.ts',
+  };
+
+  test('data set before the tag is attached renders once it is, with one card, and survives a move', async ({ page }) => {
+    await page.goto(HARNESS);
+    await page.waitForFunction(() => (window as any).WB?.behaviors, null, { timeout: 10000 });
+    const r = await page.evaluate(async (fix) => {
+      await import('/src/wb-viewmodels/fix-card.js');
+      const el: any = document.createElement('x-fix-card');
+      el.data = fix;
+      const a = document.createElement('div');
+      const b = document.createElement('div');
+      document.body.append(a, b);
+      a.appendChild(el);
+      await (window as any).WB.scan(a);
+      const first = {
+        cls: el.className,
+        title: el.querySelector('.fix-title')?.textContent,
+        headers: el.querySelectorAll('.card-header').length,
+      };
+      b.appendChild(el);   // move: disconnect + connect
+      return {
+        first,
+        moved: {
+          title: el.querySelector('.fix-title')?.textContent,
+          headers: el.querySelectorAll('.card-header').length,
+          data: el.data?.errorId,
+        },
+        proto: Object.getPrototypeOf(Object.getPrototypeOf(el)) === HTMLElement.prototype,
+      };
+    }, FIX);
+    expect(r.first.cls).toContain('fix-card');
+    expect(r.first.title).toBe('Tag form');
+    expect(r.first.headers, 'one card, not one per path that reached the tag').toBe(1);
+    expect(r.moved.title, 'moving the card keeps its record').toBe('Tag form');
+    expect(r.moved.headers).toBe(1);
+    expect(r.moved.data).toBe('TEST-789');
+    expect(r.proto, 'the tag class extends HTMLElement directly: no component hierarchy').toBe(true);
   });
 });
