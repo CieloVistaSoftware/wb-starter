@@ -10,6 +10,10 @@
     /* No site.css: its gutters and max-width are what stop a behavior from
        reaching the browser edges. */
     body, body * { box-sizing: border-box; }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). A doubled
+       class (.x.x) is one that has to outrank a page rule, as the inline did. */
+    .d-block-w-100pct.d-block-w-100pct { display:block; width:100%; }
   </style>
 </head>
 <body>
@@ -26,7 +30,7 @@
     cta-secondary="Read the guide"
     cta-secondary-href="https://cielovistasoftware.github.io/wb-starter/public/doc-viewer.html?file=docs%2FV3-GUIDE.md"
     background="linear-gradient(135deg, var(--danger-color), var(--warning-color))"
-    style="display:block; width:100%;"
+    class="d-block-w-100pct"
     x-fadein>
   </section>
 

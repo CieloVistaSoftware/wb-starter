@@ -13,13 +13,16 @@
     #scrollContainer { height: 600px; overflow-y: auto; border: 1px solid #ccc; margin: 2rem; }
     nav { background: #333; color: #fff; padding: 1rem; margin-bottom: 1rem; }
     .content { height: 2000px; background: linear-gradient(#fff, #ccc); }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    .d-flex-gap-1rem-ls-none-m-0-p-0 { display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0; }
   </style>
 </head>
 <body>
   <div class="spacer">Scroll down to see scrollalong behavior</div>
   <div id="scrollContainer">
     <nav id="testNav" x-scrollalong>
-      <ul style="display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0;">
+      <ul class="d-flex-gap-1rem-ls-none-m-0-p-0">
         <li class="nav__item"><a href="#">Home</a></li>
         <li class="nav__item"><a href="#">About</a></li>
         <li class="nav__item"><a href="#">Contact</a></li>
