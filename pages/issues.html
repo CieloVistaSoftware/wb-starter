@@ -205,11 +205,11 @@
   // ── what is happening NOW on an in-progress issue ─────────────────────────
   // John, 2026-10-02: "How can something be in progress with old dates and no
   // update to indicate what is next, when and why?" Claude posts a status
-  // comment on the issue at every step -- "**Now:** ... **Next:** ...
-  // **Why:** ..." (.claude/CLAUDE.md). The green row shows the latest one and
+  // comment on the issue at every step -- "**Now:** ... **Why:** ...
+  // **See it:** ... **Next:** ..." (.claude/CLAUDE.md). The green row shows the latest one and
   // how long ago it was posted; a row with none says so in red, because an
   // in-progress issue nobody has reported on is exactly the problem.
-  const nowNotes = new Map();   // number -> { now, next, at } | null (none) | 'loading'
+  const nowNotes = new Map();   // number -> { now, why, seeIt, next, at } | null (none) | 'loading'
   const STALE_MS = 24 * 60 * 60 * 1000;
 
   function noteField(body, name) {
@@ -237,9 +237,18 @@
       return;
     }
     el.classList.toggle('issue-now-note--stale', Date.now() - new Date(note.at).getTime() > STALE_MS);
-    el.innerHTML = '<strong>Now:</strong> ' + escapeHtml(note.now)
-      + (note.next ? ' <span class="issue-now-note__next"><strong>Next:</strong> ' + escapeHtml(note.next) + '</span>' : '')
-      + ' <span class="issue-now-note__when" title="' + escapeHtml(note.at) + '">· ' + ago(note.at) + '</span>';
+    // #1571 -- John: "I want to see what was done, why it was done and what
+    // to do to see the fix." One line per field, in that order, so the row
+    // answers all three without opening the issue. A field the comment does
+    // not have is left out rather than shown empty.
+    const line = (label, text) => text
+      ? '<div class="issue-now-note__line"><strong>' + label + ':</strong> ' + escapeHtml(text) + '</div>'
+      : '';
+    el.innerHTML = line('Now', note.now)
+      + line('Why', note.why)
+      + line('See it', note.seeIt)
+      + line('Next', note.next)
+      + '<div class="issue-now-note__when" title="' + escapeHtml(note.at) + '">Posted ' + ago(note.at) + '</div>';
   }
 
   async function loadNowNote(number) {
@@ -250,7 +259,13 @@
       if (!res.ok) throw new Error(String(res.status));
       const comments = await res.json();
       const last = comments.filter((c) => noteField(c.body, 'Now')).pop();
-      nowNotes.set(number, last ? { now: noteField(last.body, 'Now'), next: noteField(last.body, 'Next'), at: last.created_at } : null);
+      nowNotes.set(number, last ? {
+        now: noteField(last.body, 'Now'),
+        why: noteField(last.body, 'Why'),
+        seeIt: noteField(last.body, 'See it'),
+        next: noteField(last.body, 'Next'),
+        at: last.created_at,
+      } : null);
     } catch {
       nowNotes.delete(number);   // try again on the next render; never paint a guess
       const cell = tbodyEl.querySelector('.issues-row[number="' + number + '"] .issue-now-note');
