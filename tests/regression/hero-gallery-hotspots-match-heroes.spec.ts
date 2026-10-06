@@ -20,10 +20,12 @@ import { galleryHref, heroPermutations } from '../../src/lib/hero-permutations.j
  *   - each hero's hotspots are its own CTAs: same labels, same links, same
  *     count (cta2 is absent on some heroes). A link to the live doc viewer is
  *     written relative (galleryHref), so it opens the same page;
+ *   - each hotspot sits on its button IN THE IMAGE (its four sides cross the
+ *     button's edges). The first render measured the buttons mid-entrance-
+ *     animation and drew every hotspot 16px low; a click on the button's top
+ *     half then hit nothing;
  *   - in the browser, the point at the middle of each button in the image
- *     is a link to that button's href. The first render measured the
- *     buttons mid-entrance-animation and drew every hotspot 16px low; a click
- *     on the button's top half then hit nothing.
+ *     is a link to that button's href.
  */
 
 const ROOT = process.cwd();
@@ -76,45 +78,65 @@ test.describe('hero gallery hotspots match each hero (#1597)', () => {
     }
   });
 
-  test("each hotspot covers its button on the live hero, after the hero's animations end", async ({ page }) => {
-    // An oracle independent of the render script: the script switches
-    // animations off; this lets them run and waits for every one to finish,
-    // so a hotspot measured mid-animation (16px low) fails here.
-    await page.setViewportSize({ width: 1300, height: 900 });
-    await page.goto('/demos/test-harness.html');
-    await page.waitForFunction(() => (window as any).WB?.behaviors, { timeout: 20_000 });
-    const LIVE = [1, 2, 7, 26, 50, 97];
-    let compared = 0;
-    for (const n of LIVE) {
-      const markup = heroes[n - 1].heroMarkup.replace(/\n\s*x-fadein(?=[\s>])/, '');
-      const live = await page.evaluate(async (markup) => {
-        document.querySelectorAll('.hg-live').forEach((el) => el.remove());
-        const host = document.createElement('div');
-        host.className = 'hg-live';
-        host.style.width = '1200px';
-        host.innerHTML = markup;
-        document.body.appendChild(host);
-        await (window as any).WB.scan(host, { eager: true });
-        await (window as any).WB.whenIdle({ timeout: 10_000 });
-        const finite = document.getAnimations().filter((a) => a.effect?.getComputedTiming().endTime !== Infinity);
-        await Promise.all(finite.map((a) => a.finished.catch(() => {})));
-        const hero = host.firstElementChild as HTMLElement;
-        const r = hero.getBoundingClientRect();
-        return [...hero.querySelectorAll('a.x-hero-cta')].map((a) => {
-          const b = a.getBoundingClientRect();
-          return { x: b.left - r.left, y: b.top - r.top, w: b.width, h: b.height };
-        });
-      }, markup);
-      const spots = items[n - 1].spots;
-      expect(live.length, `hero #${n} button count`).toBe(spots.length);
-      for (const [k, b] of live.entries()) {
-        const s = spots[k];
-        const where = `hero #${n} ${s.label}: hotspot (${s.x},${s.y} ${s.w}x${s.h}) vs live button (${Math.round(b.x)},${Math.round(b.y)} ${Math.round(b.w)}x${Math.round(b.h)})`;
-        expect(Math.abs(s.x - b.x) <= 2 && Math.abs(s.y - b.y) <= 2 && Math.abs(s.w - b.w) <= 2 && Math.abs(s.h - b.h) <= 2, where).toBe(true);
+  test('each hotspot sits on its button in the image', async ({ page }) => {
+    // The oracle is the JPG itself, not a live re-render: CI's Windows runner
+    // lays the same hero out with different fonts (a 142px "Get Started"
+    // against the image's 161px), so a live render cannot judge an image
+    // rendered elsewhere.
+    //
+    // A hotspot drawn over a button has the button's edge under each of its
+    // four sides: a sharp brightness change across the line. The edge score
+    // sums that change around the rectangle. Placed right, it beats the same
+    // rectangle nudged 6px any way; the first render's 16px-low hotspots lost
+    // to their neighbours on 201 of 220 buttons. A button too faint to have an
+    // edge (a translucent secondary on a matching background, score < 25)
+    // cannot be judged this way and is skipped, but most must be judged.
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/?page=hero-gallery');
+    await page.waitForSelector('#herogallery-list .hg-item', { timeout: 20_000 });
+    const result = await page.evaluate(async () => {
+      const judged: string[] = [];
+      const misplaced: string[] = [];
+      let unjudged = 0;
+      for (const li of Array.from(document.querySelectorAll('.hg-item'))) {
+        const img = li.querySelector('img') as HTMLImageElement;
+        img.loading = 'eager';
+        await img.decode();
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        const ctx = c.getContext('2d')!;
+        ctx.drawImage(img, 0, 0);
+        const d = ctx.getImageData(0, 0, c.width, c.height).data;
+        const lum = (x: number, y: number) => {
+          const px = Math.max(0, Math.min(c.width - 1, Math.round(x)));
+          const py = Math.max(0, Math.min(c.height - 1, Math.round(y)));
+          const i = (py * c.width + px) * 4;
+          return 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+        };
+        for (const r of Array.from(li.querySelectorAll('rect'))) {
+          const x0 = +r.getAttribute('x')!, y0 = +r.getAttribute('y')!, w = +r.getAttribute('width')!, h = +r.getAttribute('height')!;
+          const score = (dx: number, dy: number) => {
+            const x = x0 + dx, y = y0 + dy, D = 4;
+            const xs = Array.from({ length: 10 }, (_, k) => x + 12 + (w - 24) * k / 9);
+            const ys = Array.from({ length: 6 }, (_, k) => y + 10 + (h - 20) * k / 5);
+            const across = (pts: number[][]) => pts.reduce((t, [ax, ay, bx, by]) => t + Math.abs(lum(ax, ay) - lum(bx, by)), 0) / pts.length;
+            return across(xs.map((xx) => [xx, y + D, xx, y - D])) + across(xs.map((xx) => [xx, y + h - D, xx, y + h + D]))
+              + across(ys.map((yy) => [x + D, yy, x - D, yy])) + across(ys.map((yy) => [x + w - D, yy, x + w + D, yy]));
+          };
+          const label = (r.parentElement as Element).getAttribute('aria-label') || '?';
+          const here = score(0, 0);
+          if (here < 25) { unjudged++; continue; }
+          const around = Math.max(score(6, 0), score(-6, 0), score(0, 6), score(0, -6));
+          judged.push(label);
+          if (here <= around) misplaced.push(`${label}: edge score ${here.toFixed(1)} here vs ${around.toFixed(1)} 6px away`);
+        }
       }
-      compared++;
-    }
-    expect(compared, 'every sampled hero was compared with its live render').toBe(LIVE.length);
+      return { judged: judged.length, unjudged, misplaced };
+    });
+    expect(result.judged + result.unjudged, 'every hotspot was looked at').toBe(items.reduce((n, it) => n + it.spots.length, 0));
+    expect(result.judged, 'most hotspots sit on a visible button edge, so the check means something').toBeGreaterThan(150);
+    expect(result.misplaced, 'a hotspot off its button in the image').toEqual([]);
   });
 
   test('the middle of each button in the image is a link to its href', async ({ page }) => {
