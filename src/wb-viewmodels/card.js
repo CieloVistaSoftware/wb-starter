@@ -1,4 +1,5 @@
 import { readFlag, readAttr, readOption, authoredAttr } from '../core/read-attr.js';
+import { READY_ATTRIBUTE } from '../core/ready-signal.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 import { dragStartPoint } from '../core/drag-start.js';
 /**
@@ -288,7 +289,7 @@ function stampCardPartIds(element) {
   const counts = new Map();
   const walk = (node) => {
     for (const child of node.children) {
-      if ([...child.attributes].some((a) => a.name.startsWith('x-') && a.name !== 'x-ready')) continue;
+      if ([...child.attributes].some((a) => a.name.startsWith('x-') && a.name !== READY_ATTRIBUTE)) continue;
       // A base card's own header, footer and figure carry no class (#964:
       // the element says what it is), so those are named by their tag.
       const part = [...child.classList].map((c) => c.match(/^x-[a-z-]+__([a-z0-9-]+)$/)?.[1]).find(Boolean)

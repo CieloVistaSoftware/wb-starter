@@ -48,6 +48,12 @@
 const ready = new WeakSet();
 
 /**
+ * The attribute markReady() sets when exposesReadyAttribute() is on. Exported
+ * so code that walks a built DOM can recognise it without spelling it out.
+ */
+export const READY_ATTRIBUTE = 'x-ready';
+
+/**
  * Is the DOM attribute wanted?
  *
  * Off in production. The test harness turns it on before any page script runs,
@@ -120,7 +126,7 @@ export function markReady(element, detail = {}) {
   // rather than red — the #1091 failure mode. Written only under automation
   // until those specs move to `wb:ready` / WB.isReady(), then removed.
   if (exposesReadyAttribute() && element.isConnected) {
-    element.setAttribute('x-ready', '');
+    element.setAttribute(READY_ATTRIBUTE, '');
   }
 }
 
@@ -135,5 +141,5 @@ export function isReady(element) {
   // The attribute still counts when present: markup can arrive server-rendered
   // or from a previous run with the flag on, and disagreeing with the DOM in
   // front of us would be its own defect.
-  return ready.has(element) || (element.hasAttribute?.('x-ready') ?? false);
+  return ready.has(element) || (element.hasAttribute?.(READY_ATTRIBUTE) ?? false);
 }

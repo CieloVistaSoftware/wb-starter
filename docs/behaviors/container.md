@@ -79,7 +79,7 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 `container()` does not add or remove elements, and it writes no inline style. It adds the `x-container` class, plus `x-container--grid` when `columns` is 2 or more; those rules in `src/styles/behaviors/layout.css` carry the defaults. Any value you change from a default (`gap`, `padding`, `align`, `justify`, `direction`, `maxWidth`, or the grid's minimum column width) travels as a generated rule, named by a `data-x-style` token on the host. Children are left untouched. With `columns="2"` the host becomes:
 
 ```html-static
-<div x-container columns="2" class="x-container x-container--grid" data-x-style="xs…">
+<div x-container columns="2" class="x-container x-container--grid">
   <!-- original children, unmodified -->
 </div>
 ```

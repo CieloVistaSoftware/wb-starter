@@ -31,7 +31,8 @@ test('every card part is named after its host, and no two collide', async ({ pag
     host.innerHTML = setups.map((m, i) => m.replace(/^<(\w+)/, `<$1 id="c${i}"`)).join('');
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    await new Promise((r) => setTimeout(r, 200));
+    // Ids are stamped in a microtask after the build; settled() covers it.
+    await (window as any).WB.settled({ timeout: 5000 });
     const unnamed: string[] = [];
     let parts = 0;
     // A nested behavior host (a badge inside a card) owns its own parts.
@@ -66,7 +67,8 @@ test('an anonymous card gets no invented ids', async ({ page }) => {
     host.innerHTML = '<article title="Plain" subtitle="No id">Body text</article>';
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    await new Promise((r) => setTimeout(r, 100));
+    // Ids are stamped in a microtask after the build; settled() covers it.
+    await (window as any).WB.settled({ timeout: 5000 });
     const found = [...host.querySelectorAll('[id]')].map((el) => el.id);
     host.remove();
     return found;
@@ -81,7 +83,8 @@ test('a card rendered twice into one host is reported, not silent (#923)', async
     host.innerHTML = '<article id="twice" title="Twice" subtitle="Rendered again">Body text</article>';
     document.body.appendChild(host);
     await (window as any).WB.scan(host, { eager: true });
-    await new Promise((r) => setTimeout(r, 100));
+    // Ids are stamped in a microtask after the build; settled() covers it.
+    await (window as any).WB.settled({ timeout: 5000 });
     // #923's shape: a second render appended its parts beside the first.
     const card = host.firstElementChild!;
     for (const part of [...card.children]) card.appendChild(part.cloneNode(true));
