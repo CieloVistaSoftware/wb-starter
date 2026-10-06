@@ -118,7 +118,7 @@
           "file": "behaviors/autosize.md",
           "title": "Autosize Behavior",
           "description": "Auto-resize textarea behavior",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/codetheme.md",
@@ -136,7 +136,7 @@
           "file": "behaviors/label.md",
           "title": "Label Behavior",
           "description": "Label behavior",
-          "modified": "2026-09-27"
+          "modified": "2026-10-06"
         },
         {
           "file": "behaviors/move.md",

@@ -7,7 +7,7 @@
       "demos": 29
     },
     "totalDocuments": 303,
-    "totalWords": 5845
+    "totalWords": 5846
   },
   "documents": [
     {
@@ -298,7 +298,7 @@
           "text": "Ready to build something?"
         }
       ],
-      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.321\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.321\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
+      "content": "panel of the block's own authored markup (demo.js) -- and this page declares showcase=false above. Wrapped, the landing page printed a 420px panel of raw ` ` source directly under the hero. The `full-width` attribute that used to sit on the wrapper was only x-demo's single-item shrink-to-fit opt-out (#568/#572); with no wrapper there is nothing to opt out of. --> AND cardhero's own title=\"...\", which cardhero renders as a heading of its own. Two markup elements stating the same sentence is the \"declared twice\" problem again -- edit one and the page quietly disagrees with itself. heading-level=\"1\" because this hero IS the page's main heading. Removing the duplicate without it left the page with no h1 at all and an outline that ran backwards (h3 hero, then h2 \"By the Numbers\"). --> By the Numbers min-width: 0; max-width: 100%), which is exactly the contract a grid cell wants. Fixing it here rather than widening the tracks: 4 tracks of 280px need 1168px of content box, which this page does not have at any supported width. --> ✨ Ripple 💬 Tooltip 🎉 Confetti 📋 Copy Features Everything you need to build modern UIs 🧩 Behavior Library Over 40 ready-to-use UI behaviors including Cards, Modals, Drawers, and Navigation. ⚡ Behaviors System Compose interactions like Lego bricks. Add x-fadein, x-sticky, or x-tooltip to any element. 🎨 Theme Engine 23 built-in themes with CSS Variable support. Dark mode, Light mode, and Auto detection out of the box. 📊 Data Viz Built-in charts, stats cards, and audio visualizations powered by Web Standards. ♿ Accessible ARIA attributes and keyboard navigation are baked into every behavior by default. 🚀 Performance Zero-runtime compilation. Browsers are fast now. We let them do their job. Notification Card Examples Audio One script is the whole setup Start with two stylesheets and one module script — no bundler, no build step: link rel=\"stylesheet\" href=\"src/styles/themes.css?v=1.0.322\" link rel=\"stylesheet\" href=\"src/styles/site.css?v=1.0.322\" script type=\"module\" import WB from './src/core/wb.js'; WB.init({ autoInject: true }); /script article title=\"Hello\" This article is already a card. /article Two stylesheets. One module script. Auto-inject enabled. Done. Ready to build something? Grab the behaviors or dive into the docs — no build step required. Get Started GitHub",
       "keywords": [],
       "type": "page",
       "modified": "2026-10-06"
@@ -1217,10 +1217,10 @@
       "title": "autosize",
       "description": null,
       "headings": [],
-      "content": "# x-autosize Behavior Automatically resizes a textarea to fit its content as the user types. - **Usage:** ```html ``` - [Demo](../../demos/site/forms.html#x-autosize-textarea-that-grows-with-content)",
+      "content": "# x-autosize Behavior Automatically resizes a textarea to fit its content as the user types. - [Demo](../../demos/site/forms.html#x-autosize-textarea-that-grows-with-content)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/avatar",
@@ -2187,10 +2187,10 @@
       "title": "label",
       "description": null,
       "headings": [],
-      "content": "# x-label Behavior Generates a real, associated ` ` from an `x-label=\"text\"` attribute on a form control — no separate ` ` to write by hand. - **Usage:** ```html ``` The value is the label text. The behavior creates the ` `, wires up `for`/`id` (assigning an id to the control if it doesn't have one), and inserts it right before the control (so it renders to its left). Add `required` / `optional` for the matching `x-label--required` / `x-label--optional` style: ```html ``` - **`label-position=\"right\"`** — puts the label after the control instead (to its right). For RTL layouts (Hebrew, Arabic) where the label conventionally sits on the right: ```html ``` - **Legacy form:** a bare `x-label` (no value) on an actual ` ` element just adds the ` ` styling classes to that label directly — for when you already have your own ` ` markup: ```html Label ``` - [Demo](../../demos/site/forms.html#x-label-including-rtl-layouts) - [Schema](../../src/wb-models/label.schema.json) - [Test](../../tests/behaviors/label.spec.ts)",
+      "content": "# x-label Behavior Generates a real, associated ` ` from an `x-label=\"text\"` attribute on a form control — no separate ` ` to write by hand. The value is the label text. The behavior creates the ` `, wires up `for`/`id` (assigning an id to the control if it doesn't have one), and inserts it right before the control, so it renders to its left. `required` / `optional` on the control add the matching `x-label--required` / `x-label--optional` style. ## Label on the right `label-position=\"right\"` puts the label after the control instead. Use it for RTL layouts (Hebrew, Arabic), where the label conventionally sits on the right: ## On your own label When you already write your own ` `, it gets the same label styling on its own — no attribute needed. Writing `x-label` on a ` ` would only repeat what the element already is: Project name - [Demo](../../demos/site/forms.html#x-label-including-rtl-layouts) - [Schema](../../src/wb-models/label.schema.json) - [Test](../../tests/behaviors/label.spec.ts)",
       "keywords": [],
       "type": "doc",
-      "modified": "2026-09-27"
+      "modified": "2026-10-06"
     },
     {
       "id": "docs/behaviors/lightbox",
@@ -6299,8 +6299,10 @@
       "docs/behaviors/figure"
     ],
     "321": [
-      "pages/home",
       "docs/architecture/WB-PREFIX-AUDIT"
+    ],
+    "322": [
+      "pages/home"
     ],
     "331": [
       "docs/architecture/WB-PREFIX-AUDIT"
@@ -9672,6 +9674,7 @@
       "docs/behaviors/grid",
       "docs/behaviors/help",
       "docs/behaviors/kbd",
+      "docs/behaviors/label",
       "docs/behaviors/masonry",
       "docs/behaviors/popover",
       "docs/behaviors/rainbow",
@@ -9734,6 +9737,7 @@
       "docs/audits/INLINE-STYLES-AUDIT",
       "docs/behaviors/fix-card",
       "docs/behaviors/floatinglabel",
+      "docs/behaviors/label",
       "docs/behaviors/ol",
       "docs/behaviors/time",
       "docs/behaviors/x-copybutton",
@@ -13038,7 +13042,6 @@
       "docs/behaviors/fill",
       "docs/behaviors/globe",
       "docs/behaviors/hero",
-      "docs/behaviors/label",
       "docs/behaviors/modal",
       "docs/behaviors/pagination",
       "docs/behaviors/range",
@@ -13160,7 +13163,6 @@
       "docs/behaviors/container",
       "docs/behaviors/copybutton",
       "docs/behaviors/dropdown",
-      "docs/behaviors/label",
       "docs/behaviors/scrollalong",
       "docs/behaviors/searchfield",
       "docs/behaviors/sidebarlayout",
@@ -14492,7 +14494,6 @@
       "docs/audits/HOST-CHILD-DISPATCH-AUDIT",
       "docs/behaviors/articles",
       "docs/behaviors/grid",
-      "docs/behaviors/label",
       "docs/behaviors/ripple",
       "docs/behaviors/toast",
       "docs/claude/TIER1-LAWS",
@@ -15102,6 +15103,7 @@
       "docs/behaviors/formrow",
       "docs/behaviors/icon",
       "docs/behaviors/input",
+      "docs/behaviors/label",
       "docs/behaviors/radio",
       "docs/behaviors/range",
       "docs/behaviors/search",
@@ -16835,7 +16837,6 @@
       "docs/behaviors/frame",
       "docs/behaviors/icon",
       "docs/behaviors/inputgroup",
-      "docs/behaviors/label",
       "docs/behaviors/list",
       "docs/behaviors/masked",
       "docs/behaviors/move",
@@ -23622,6 +23623,7 @@
       "docs/architecture/proposals/remove-wb-prefix-authoring-surface",
       "docs/behaviors/card",
       "docs/behaviors/cardhorizontal",
+      "docs/behaviors/label",
       "docs/behaviors/password",
       "docs/behaviors/radio",
       "docs/behaviors/range",
@@ -30724,7 +30726,6 @@
       "docs/behaviors/globe",
       "docs/behaviors/help",
       "docs/behaviors/input",
-      "docs/behaviors/label",
       "docs/behaviors/list",
       "docs/behaviors/move",
       "docs/behaviors/notes",
@@ -33528,6 +33529,7 @@
       "docs/behaviors/header",
       "docs/behaviors/img",
       "docs/behaviors/input",
+      "docs/behaviors/label",
       "docs/behaviors/navbar",
       "docs/behaviors/notes",
       "docs/behaviors/pagination",
@@ -34433,7 +34435,6 @@
     "legacy": [
       "docs/WB_BEHAVIOR_SYSTEM",
       "docs/architecture/standards/ATTRIBUTE-NAMING-STANDARD",
-      "docs/behaviors/label",
       "docs/behaviors/x-copybutton",
       "docs/claude/TIER2-DOMAIN-GUIDES",
       "docs/code-examples-standard",
@@ -35759,6 +35760,7 @@
       "docs/behaviors/header",
       "docs/behaviors/img",
       "docs/behaviors/input",
+      "docs/behaviors/label",
       "docs/behaviors/mark",
       "docs/behaviors/navbar",
       "docs/behaviors/pre",
@@ -36544,7 +36546,6 @@
       "docs/behaviors/fieldset",
       "docs/behaviors/figure",
       "docs/behaviors/img",
-      "docs/behaviors/label",
       "docs/behaviors/range",
       "docs/behaviors/ripple",
       "docs/behaviors/table",
@@ -38593,6 +38594,7 @@
       "docs/audio",
       "docs/behaviors/fireworks",
       "docs/behaviors/grid",
+      "docs/behaviors/label",
       "docs/behaviors/snow",
       "docs/claude/TIER1-LAWS",
       "docs/npx-commands"
@@ -39284,7 +39286,6 @@
       "docs/behaviors/articles",
       "docs/behaviors/audio",
       "docs/behaviors/autocomplete",
-      "docs/behaviors/autosize",
       "docs/behaviors/avatar",
       "docs/behaviors/badge",
       "docs/behaviors/bounce",
@@ -39365,7 +39366,6 @@
       "docs/behaviors/inputgroup",
       "docs/behaviors/jello",
       "docs/behaviors/kbd",
-      "docs/behaviors/label",
       "docs/behaviors/lightbox",
       "docs/behaviors/list",
       "docs/behaviors/mark",
