@@ -6,6 +6,94 @@
   ],
   "releases": [
     {
+      "version": "1.0.356",
+      "date": "2026-10-06",
+      "summary": "The classes that replaced the generated demo pages&#39; inline styles sized the meter, form stack, media corners and toggle box in px, which grew the px audit from 545 to 546 (#294). They now use rem at the same sizes: 18.75rem by 1.5rem, 25rem, 0.5rem and 3.125rem. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1639\" target=\"_blank\" rel=\"noopener\">PR 1639</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1530\" target=\"_blank\" rel=\"noopener\">#1530</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1125\" target=\"_blank\" rel=\"noopener\">#1125</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/945\" target=\"_blank\" rel=\"noopener\">#945</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a>",
+      "items": [
+        {
+          "kind": "fixed",
+          "html": "<strong>The site demo classes size in rem, not px</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/779\" target=\"_blank\" rel=\"noopener\">#779</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/8c534ef048b8c3b25dd9357ee3f016a8e090bb13\" target=\"_blank\" rel=\"noopener\"><code>8c534ef</code></a>",
+          "issues": [
+            779
+          ]
+        },
+        {
+          "kind": "changed",
+          "html": "<strong>Seven specs read the forms and/ made current</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1125\" target=\"_blank\" rel=\"noopener\">#1125</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a133ba34b30cbdcf11042f853f1a8ce25eae1e6c\" target=\"_blank\" rel=\"noopener\"><code>a133ba3</code></a>",
+          "issues": [
+            969,
+            1125,
+            1526
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>No demo links to a file the site does not have</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/0c9ec42bb8124e0f794593da63b2e271bb57dc6c\" target=\"_blank\" rel=\"noopener\"><code>0c9ec42</code></a>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The demos list says &quot;behaviors&quot;, and a rewrite keeps the cache keys</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/845c1e2f591a7294778d822ffc35ae8a194b15f4\" target=\"_blank\" rel=\"noopener\"><code>845c1e2</code></a>"
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>A card body is &lt;div class=&quot;x-card__body&quot;&gt;, never &lt;main&gt;</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/945\" target=\"_blank\" rel=\"noopener\">#945</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/63e49fe9578bcf6e06c4c057974918292eded6ed\" target=\"_blank\" rel=\"noopener\"><code>63e49fe</code></a>",
+          "issues": [
+            945
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Typed cards carry their attribute and no class restating it</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/969\" target=\"_blank\" rel=\"noopener\">#969</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/993dd397f374eddb7d08b8a091bd87fad5ad2293\" target=\"_blank\" rel=\"noopener\"><code>993dd39</code></a>",
+          "issues": [
+            969
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>The showcase pages write the schema&#39;s camelCase names too</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1125\" target=\"_blank\" rel=\"noopener\">#1125</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1530\" target=\"_blank\" rel=\"noopener\">#1530</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/f5dfa365c6392d659a926a98a39f744c41c2c074\" target=\"_blank\" rel=\"noopener\"><code>f5dfa36</code></a>",
+          "issues": [
+            1125,
+            1530
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Option rows write the schema&#39;s camelCase name</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1526\" target=\"_blank\" rel=\"noopener\">#1526</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a527c88363f09eeb1a7b0d2ac5433e5efcda31c2\" target=\"_blank\" rel=\"noopener\"><code>a527c88</code></a>",
+          "issues": [
+            1526
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Every multi-word option builds the same in camelCase as dashed, on every host</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1125\" target=\"_blank\" rel=\"noopener\">#1125</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/989275b0a0895395eb9f112cd95606f1326c761a\" target=\"_blank\" rel=\"noopener\"><code>989275b</code></a>",
+          "issues": [
+            1125
+          ]
+        },
+        {
+          "kind": "fixed",
+          "html": "<strong>Demos/site pages are exactly what generate-site.mjs produces</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1530\" target=\"_blank\" rel=\"noopener\">#1530</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/2c08eafc02958b41325e3698c536dcb03cfd017d\" target=\"_blank\" rel=\"noopener\"><code>2c08eaf</code></a>",
+          "issues": [
+            1530
+          ]
+        },
+        {
+          "kind": "added",
+          "html": "<strong>Every page has a real file at its path, so GitHub Pages answers 200</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1001\" target=\"_blank\" rel=\"noopener\">#1001</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/a8a84bfc8159de5fccb1b9f3cad8f33ae410f951\" target=\"_blank\" rel=\"noopener\"><code>a8a84bf</code></a>",
+          "issues": [
+            1001
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/px-no-new-creep.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/px-no-new-creep.spec.ts</a> --project=compliance. Before: it failed with &quot;grew from 545 to 546&quot;. Now: it passes, and <a href=\"https://cielovistasoftware.github.io/wb-starter/demos/site/feedback.html\" target=\"_blank\" rel=\"noopener\">demos/site/feedback.html</a>&#39;s two progress bars still render 300px wide at the default font size.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/9a913dad846790eadb539668f9ddc0fc90c6cc4b\" target=\"_blank\" rel=\"noopener\"><code>9a913da</code></a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.355",
       "date": "2026-10-06",
       "summary": "On CI, under load, the x-img example re-rendered while its images were loading, so the node the spec had collected before the wait was detached when it was measured, and reading its parentElement.clientWidth threw &quot;Cannot read properties of null&quot;. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1647\" target=\"_blank\" rel=\"noopener\">PR 1647</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
