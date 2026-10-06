@@ -288,6 +288,10 @@
       display: block;
       margin-bottom: 1rem;
     }
+  
+    /* Moved from style= attributes: no inline styles anywhere (#779). */
+    #refreshBtn { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
+    .p-0 { padding: 0; }
   </style>
 </head>
 <body id="schemaviewer-body-11">
@@ -309,7 +313,7 @@
     <div class="sv-panel">
       <div class="sv-panel-header">
         <span>Preview & Properties</span>
-        <button class="sv-btn sv-btn-secondary" id="refreshBtn" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">↻ Refresh</button>
+        <button class="sv-btn sv-btn-secondary" id="refreshBtn">↻ Refresh</button>
       </div>
       <div class="sv-panel-content" id="previewPanel">
         <div class="sv-empty">
@@ -324,7 +328,7 @@
       <div class="sv-panel-header">
         <span>JSON Schema</span>
       </div>
-      <div class="sv-panel-content" style="padding: 0;">
+      <div class="sv-panel-content p-0">
         <textarea class="sv-json-editor" id="jsonEditor" spellcheck="false" placeholder="Select a schema to view JSON..."></textarea>
       </div>
     </div>

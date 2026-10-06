@@ -112,11 +112,12 @@ const SOURCE_DIRS = ['src', 'pages'];
 
 /**
  * Authored markup checked for style= beyond SOURCE_DIRS. demos/ joined in #779
- * once its 233 attributes moved into each page's stylesheet. Still to clean,
- * and so not yet scanned: templates/presets/ (~600), public/ (~70), articles/,
- * status/ and scripts/tools/ -- tracked on #779.
+ * once its 233 attributes moved into each page's stylesheet; public/ and
+ * articles/ followed once their 73 did. Still to clean, and so not yet
+ * scanned: templates/presets/ (~500), status/ and scripts/tools/ -- tracked
+ * on #779.
  */
-const MARKUP_DIRS = [...SOURCE_DIRS, 'demos'];
+const MARKUP_DIRS = [...SOURCE_DIRS, 'demos', 'public', 'articles'];
 
 /**
  * What `npm create wb-starter` gives every new site. It used to be a second
