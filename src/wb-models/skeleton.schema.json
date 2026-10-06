@@ -7,7 +7,8 @@
   "baseClass": "x-skeleton",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "status"
+    "implicitRole": "status",
+    "genericHost": "a loading placeholder shaped like the content it stands in for"
   },
   "compliance": {
     "baseClass": "x-skeleton",

@@ -7,7 +7,8 @@
   "baseClass": "x-dropdown",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "menu"
+    "implicitRole": "menu",
+    "genericHost": "an action menu it builds itself; <select> is for a value (V3-STANDARDS select vs x-dropdown rule, #682)"
   },
   "compliance": {
     "baseClass": "x-dropdown",

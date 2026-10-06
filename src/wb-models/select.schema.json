@@ -6,7 +6,7 @@
   "schemaFor": "select",
   "baseClass": "x-select",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "select",
     "implicitRole": "combobox"
   },
   "compliance": {

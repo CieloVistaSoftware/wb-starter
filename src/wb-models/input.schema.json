@@ -6,7 +6,7 @@
   "schemaFor": "input",
   "baseClass": "x-input",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "input",
     "implicitRole": "textbox"
   },
   "compliance": {

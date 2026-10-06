@@ -6,7 +6,8 @@
   "schemaFor": "checkbox",
   "baseClass": "x-checkbox",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "input",
+    "type": "checkbox",
     "implicitRole": "checkbox"
   },
   "compliance": {

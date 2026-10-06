@@ -6,7 +6,8 @@
   "schemaFor": "switch",
   "baseClass": "x-switch",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "input",
+    "type": "checkbox",
     "implicitRole": "switch"
   },
   "compliance": {

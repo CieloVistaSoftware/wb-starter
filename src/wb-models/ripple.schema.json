@@ -5,9 +5,6 @@
   "description": "Material Design ripple effect on click",
   "schemaFor": "ripple",
   "baseClass": "x-ripple",
-  "semanticElement": {
-    "tagName": "div"
-  },
   "compliance": {
     "baseClass": "x-ripple",
     "supportLevel": "stable",

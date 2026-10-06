@@ -7,7 +7,8 @@
   "baseClass": "x-demo",
   "semanticElement": {
     "tagName": "div",
-    "implicitRole": "region"
+    "implicitRole": "region",
+    "genericHost": "a live example beside its source; a container, not one HTML element"
   },
   "compliance": {
     "baseClass": "x-demo",

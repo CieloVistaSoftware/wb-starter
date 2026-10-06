@@ -7,7 +7,8 @@
   "baseClass": "x-badge",
   "semanticElement": {
     "tagName": "span",
-    "implicitRole": "status"
+    "implicitRole": "status",
+    "genericHost": "a short inline status label; HTML has no element for it"
   },
   "compliance": {
     "baseClass": "x-badge",

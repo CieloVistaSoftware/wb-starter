@@ -6,7 +6,7 @@
   "schemaFor": "textarea",
   "baseClass": "x-textarea",
   "semanticElement": {
-    "tagName": "div",
+    "tagName": "textarea",
     "implicitRole": "textbox"
   },
   "compliance": {
