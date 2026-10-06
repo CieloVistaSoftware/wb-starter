@@ -47,7 +47,7 @@ test.describe('Card Product Behavior', () => {
     const card = page.locator('#test-product');
     await expect(card).toHaveAttribute('x-ready', '');
     await expect(card).toBeVisible();
-    await expect(card).toHaveClass(/\bx-card--product\b/);
+    await expect(card).toHaveClass(/\bx-product\b/);
 
     // Setup event listener
     const eventPromise = page.evaluate(() => {

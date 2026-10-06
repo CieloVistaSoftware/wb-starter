@@ -154,7 +154,8 @@ test.describe('a composite behavior activates from its one x-{name} attribute, n
   for (const core of ['/src/core/wb.js', '/src/core/wb-lazy.js']) {
     test(`<div x-cardexpandable> with no other x-* attribute activates (${core})`, async ({ page }) => {
       await renderWithWB(page, core, `<div x-cardexpandable id="probe" title="Read More" max-height="80px"><p>Body</p></div>`);
-      await expect(page.locator('#probe')).toHaveClass(/x-card/, { timeout: 10000 });
+      // #969: no variant class restates the attribute, so "activated" is x-ready.
+      await expect(page.locator('#probe')).toHaveAttribute('x-ready', '', { timeout: 10000 });
     });
   }
 });

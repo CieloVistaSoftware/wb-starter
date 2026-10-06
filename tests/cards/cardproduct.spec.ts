@@ -24,8 +24,7 @@ test.describe('Product Card (integration)', () => {
     });
     
     const card = page.locator('#test-product');
-    await expect(card).toHaveClass(/x-card/);
-    await expect(card).toHaveClass(/x-card--product/);
+    await expect(card).toHaveClass(/\bx-product\b/);
 
     // Check title is rendered
     const title = card.locator('.x-card__product-title');

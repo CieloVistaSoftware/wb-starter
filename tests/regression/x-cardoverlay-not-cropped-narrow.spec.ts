@@ -34,7 +34,7 @@ test.describe('[x-cardoverlay] is not squeezed into an unusably narrow box', () 
       '<div x-demo columns="1"><div x-cardoverlay image="https://placehold.co/800x500/1e293b/fbbf24?text=City+Lights" title="City Lights" subtitle="Urban photography" height="300px"></div></div>'
     );
 
-    const card = page.locator('.x-card--overlay-card');
+    const card = page.locator('[x-cardoverlay]');
     await expect(card).toBeVisible();
     const box = await card.boundingBox();
     expect(box).not.toBeNull();
