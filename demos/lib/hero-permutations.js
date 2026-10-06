@@ -48,7 +48,7 @@ const DV = (file) => SITE + 'public/doc-viewer.html?file=' + encodeURIComponent(
 const CTA_HREF = {
   'Get Started': DV('docs/V3-GUIDE.md'), 'View Docs': DV('docs/V3-GUIDE.md'),
   'Docs': DV('docs/V3-GUIDE.md'), 'Read the guide': DV('docs/V3-GUIDE.md'), 'Read the Guide': DV('docs/V3-GUIDE.md'),
-  'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors/x-behaviors.md'),
+  'Try it': DV('docs/V3-GUIDE.md'), 'Learn more': DV('docs/behaviors-reference.md'),
   'Explore themes': DV('docs/themes.md'), 'See a11y': DV('docs/V3-GUIDE.md'),
   'Star on GitHub': 'https://github.com/CieloVistaSoftware/wb-starter',
   'Try the Playground': SITE + 'demos/playground.html',
