@@ -1,5 +1,6 @@
 import { readFlag } from '../core/read-attr.js';
 import { setRule, clearRules, clearRulesIn } from '../core/dynamic-style.js';
+import { isThemeColor } from '../core/theme-color.js';
 /**
  * Effects Behavior
  * -----------------------------------------------------------------------------
@@ -644,7 +645,10 @@ export function glow(element, options = {}) {
   const target = (options.target || element.getAttribute('target') || 'box') === 'text' ? 'text' : 'box';
   element.classList.add('x-glow');
   if (target === 'text') element.classList.add('x-glow--text');
-  if (color) setRule(element, 'glow', { '--glow-color': color });
+  // #907: a theme name (color="success") is matched by effects.css's
+  // .x-glow[color="…"] rules, so it writes nothing at all. Only a colour CSS
+  // cannot enumerate (#ff00aa, rgb(), hsl()) travels, as a generated rule.
+  if (color && !isThemeColor(color)) setRule(element, 'glow', { '--glow-color': color });
 
   const releasePress = addPressFeedback(element);
 

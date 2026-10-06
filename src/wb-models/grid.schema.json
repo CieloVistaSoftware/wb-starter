@@ -45,7 +45,7 @@
     },
     "background": {
       "type": "string",
-      "description": "Read by grid().",
+      "description": "Background of the grid: a theme colour name (bg-primary, bg-secondary, bg-tertiary, primary, success, …) or any CSS colour. Never a var(--…) token (#907).",
       "default": "this is the background"
     },
     "headers": {

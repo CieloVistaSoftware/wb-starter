@@ -1,5 +1,6 @@
 import { readAttr, readFlag } from '../../core/read-attr.js';
 import { setRule, clearRules, onlyChanged } from '../../core/dynamic-style.js';
+import { themeColor } from '../../core/theme-color.js';
 /**
  * Rating Behavior
  * ===============
@@ -42,7 +43,8 @@ export function rating(element, options = {}) {
     readonly: options.readonly ?? (element.hasAttribute('readonly') || readAttr(element, 'readonly') === 'true'),
     icon: options.icon || attr('icon') || readAttr(element, 'icon') || '★',
     // Filled colour: theme's rating colour by default; override via color="…"
-    // (e.g. color="var(--primary)" for blue). Empty colour from the theme too.
+    // (a theme name, color="primary", or any CSS colour; #907). Empty colour
+    // from the theme too.
     // #779: the defaults are rating.css's; only an author colour travels (as a
     // generated rule setting --x-rating-color / --x-rating-empty-color), so a
     // theme's --rating-active-color still reaches every unconfigured rating.
@@ -81,8 +83,8 @@ export function rating(element, options = {}) {
   if (element.tagName !== 'X-RATING') element.classList.add('x-rating');
   element.classList.toggle('x-rating--readonly', !config.disabled && !!config.readonly);
   setRule(element, 'colors', onlyChanged({
-    '--x-rating-color': config.color,
-    '--x-rating-empty-color': config.emptyColor,
+    '--x-rating-color': themeColor(config.color),
+    '--x-rating-empty-color': themeColor(config.emptyColor),
   }));
 
   // Create stars

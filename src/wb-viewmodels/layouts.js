@@ -1,5 +1,6 @@
 import { readFlag, readAttr, readOption } from '../core/read-attr.js';
 import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
+import { themeColor } from '../core/theme-color.js';
 /**
  * Layout Behaviors - Extended
  * -----------------------------------------------------------------------------
@@ -86,7 +87,8 @@ export function grid(element, options = {}) {
     alignItems,
     justifyItems,
     textAlign: config.center ? 'center' : '',
-    background: config.background,
+    // #907: a theme name (background="bg-tertiary") or any CSS colour.
+    background: themeColor(config.background),
   }, {
     gap: '1rem',
     gridTemplateColumns: 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))',
@@ -248,7 +250,7 @@ export function stack(element, options = {}) {
     justifyContent: config.justify,
     alignItems: config.align,
     flexWrap: config.wrap,
-    background: config.bg,
+    background: themeColor(config.bg),   // #907: theme name or CSS colour
     padding: config.pad,
     borderRadius: config.radius,
   }, { gap: '1rem' }));

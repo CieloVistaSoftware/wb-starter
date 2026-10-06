@@ -64,7 +64,8 @@
     "x-alert-attribute-correctness.spec.ts",
     "cardhero-attrs.spec.ts",
     "semantic-article-to-card.spec.ts",
-    "x-demo-integrity.spec.ts"
+    "x-demo-integrity.spec.ts",
+    "attributes-take-intent-not-tokens.spec.ts"
   ],
   "paths": [
     "no-absolute-asset-paths.spec.ts",
