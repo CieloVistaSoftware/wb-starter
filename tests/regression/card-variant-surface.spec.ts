@@ -53,13 +53,14 @@ test.describe('.x-card variant surface (cards demo page)', () => {
     // placeholder images -- made the demo page slow and noisy; see the
     // commit that added tests/fixtures/cards-permutation-matrix.html).
     await page.goto('/tests/fixtures/cards-permutation-matrix.html');
+    // card.css gives cards `transition: all 0.2s`, so the border animates in
+    // and out. What this test checks is the style the card settles on, not
+    // the fade: with transitions on, a loaded runner read the border mid-fade
+    // and the "after" never matched (#1307 again; 3 of 8 on main, 2026-10-05).
+    await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' });
     const bordered = cardFor(page, 'bordered');
     await buildInView(bordered);
 
-    // card.css gives cards `transition: all 0.2s`, so the border animates in
-    // from 0px as the bordered style applies. Each read is polled until it
-    // settles: a single read on a loaded runner can land mid-animation and
-    // see "0px" (#1307).
     const border = () => bordered.evaluate((el) => getComputedStyle(el).border);
     await expect.poll(border).toContain('2px');
     const before = await border();
