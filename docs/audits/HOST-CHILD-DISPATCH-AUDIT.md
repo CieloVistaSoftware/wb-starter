@@ -96,7 +96,7 @@ skip live verification.
   native semantic element to be a superset of. Not in scope for this pattern.
 - **Card family, `<div x-cardbutton>`, `<div x-cardexpandable>`, `<div x-cardminimizable>`,
   `<div x-cardnotification>`, `<div x-cardproduct>`, `<div x-chip>`, `<div x-confetti>`, `<dialog>`
-  (close button), `<div x-drawer>`, `x-drawerLayout`, `<nav x-navbar>`, `<div x-snow>`,
+  (close button), `<div x-drawer>`, `x-drawerLayout`, `<nav>`, `<div x-snow>`,
   `<div x-fireworks>`, `<div x-toast>`** — all build a `<button>` child via schema, but their
   own `schemaFor` is a *different* name than `button` (e.g. `cardbutton`, not
   `button`), so there's no same-name self-collision. The generic `button` behavior

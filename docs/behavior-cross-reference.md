@@ -2792,8 +2792,8 @@ Resource links:
 **Element:** `<nav>` morphs into navigation bar
 
 **What it adds:**
-- Class: `<nav x-navbar>`
-- Styles: flex layout, space-between, padding, background, border-radius, gap
+- Class: `x-navbar` (#958: every `<nav>` picks it up). A plain `<nav>` gets `x-navbar--plain`: the theme link colour, no layout.
+- Styles, when the `<nav>` asks for a header (`brand`, `items`, `logo`, `sticky` or `variant`): flex layout, space-between, padding, background, border-radius, gap
 - Brand area styling (font-weight, no-shrink)
 - Menu area styling (flex, gap, flex-wrap)
 - Link styling with hover opacity transitions
@@ -2867,7 +2867,6 @@ generator runs only with `x-navbar` on it; without it the element stays empty:
 
 <div x-demo>
 <nav
-  x-navbar
   brand="WB Behaviors"
   items="Home, Features, Docs, Pricing, Contact">
 </nav>
@@ -2877,7 +2876,6 @@ Sticky navbar:
 
 <div x-demo>
 <nav
-  x-navbar
   brand="MySite"
   items="Home, About, Blog, Contact"
   sticky>

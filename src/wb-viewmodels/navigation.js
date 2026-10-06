@@ -66,6 +66,20 @@ export function navbar(element, options = {}) {
   // like <div x-navbar> the tag is "div" -- so without the class nothing covers
   // it. Guarded so a literal <x-navbar> tag does not get a redundant class.
   element.classList.add('x-navbar');
+
+  // #958: a <nav> picks up navbar with no attribute (nativeMap). A PLAIN one --
+  // no x-navbar, no brand/logo/items/sticky/variant -- is an in-page nav: it
+  // gets the site's link look (.x-navbar--plain, navbar.css) and nothing else.
+  // Wrapping its links into the header's flex menu moved a "Back" link from
+  // 0px to 854px on 9 of 12 such navs. A <nav> that asks for a header gets
+  // .x-navbar--site, which navbar.css styles exactly like [x-navbar].
+  const authored = element.hasAttribute('x-navbar');
+  const asksForHeader = config.brand || config.logo || config.items.length > 0 || config.sticky || element.hasAttribute('variant');
+  if (!authored && !asksForHeader) {
+    element.classList.add('x-navbar--plain');
+    return () => element.classList.remove('x-navbar', 'x-navbar--plain');
+  }
+  if (!authored) element.classList.add('x-navbar--site');
   // Appearance lives in src/styles/behaviors/navbar.css (#903). Writing it
   // inline here beat every stylesheet rule, which is why the declared
   // variant=dark|transparent rendered identically to default.

@@ -1310,12 +1310,14 @@
       ]
     },
     "x-navbar": {
-      "source": "<nav x-navbar brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></nav>",
-      "alternates": [],
+      "source": "<nav brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></nav>",
+      "alternates": [
+        "<div x-navbar brand=\"wb-starter\" brand-href=\"#\" tagline=\"Zero build\"></div>"
+      ],
       "examples": [
         {
           "label": "with links",
-          "source": "<nav x-navbar brand=\"Northwind\" items=\"Docs,Pricing,Blog\"></nav>"
+          "source": "<nav brand=\"Northwind\" items=\"Docs,Pricing,Blog\"></nav>"
         }
       ]
     },

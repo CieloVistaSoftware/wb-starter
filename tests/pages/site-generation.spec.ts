@@ -212,8 +212,11 @@ test.describe('Site Generation — Phase 4', () => {
           for (const comp of okComponents) {
             // Components are gone: a behavior is an x- attribute on a neutral host,
               // so search for the attribute, not a <wb-*> tag that no longer exists.
-              const elements = page.locator(`[x-${comp.name}]`);
-            const elCount = await elements.count();
+              // A semantic host carries no attribute -- <nav> picks up navbar
+              // (#958) -- so the behavior's class counts too, once it applies.
+              const elements = page.locator(`[x-${comp.name}], .x-${comp.name}`);
+            const elCount = await elements.count() || await elements.first()
+              .waitFor({ timeout: 3000 }).then(() => 1, () => 0);
             if (elCount > 0) foundCount++;
           }
 

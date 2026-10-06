@@ -84,8 +84,17 @@ test.describe('Auto-Injection Compliance', () => {
   // out of scope for #277; a page that wants navbar behavior on a <nav> must
   // opt in explicitly (e.g. <div x-navbar> or an x-as-navbar style extension),
   // not receive it implicitly.
-  test('Native <nav> is NOT auto-injected as Navbar (nav intentionally absent from nativeMap)', async ({ page }) => {
+  // #958 -- John, 2026-09-10, decided the opposite: "in html5 there is a nav
+  // element, when we created the navbar our intent was to give the nav links a
+  // look and feel of our site". nativeMap now maps nav -> navbar, and the
+  // concern above is met another way: a PLAIN <nav> gets classes and the link
+  // look only, never the header layout or a rebuilt structure, so site__nav
+  // is not re-enhanced (tests/regression/nav-picks-up-navbar.spec.ts).
+  test('Native <nav> picks up navbar as a plain nav: classes only, structure untouched (#958)', async ({ page }) => {
     await renderWithWB(page, `<nav id="auto-nav"><ul><li><a href="#">Link</a></li></ul></nav>`);
-    await expect(page.locator('#auto-nav')).not.toHaveClass(/x-navbar/);
+    const nav = page.locator('#auto-nav');
+    await expect(nav).toHaveClass(/x-navbar--plain/);
+    await expect(nav.locator('.x-navbar__menu')).toHaveCount(0);
+    await expect(nav.locator(':scope > ul > li > a')).toHaveCount(1);
   });
 });
