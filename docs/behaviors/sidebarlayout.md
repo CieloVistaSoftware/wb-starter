@@ -22,8 +22,8 @@ would drop below `contentMin`.
 | Property | Attribute | Type | Default | Description |
 |----------|-----------|------|---------|-------------|
 | `side` | `side` | string | `"left"` | Which child is the sidebar: `left` (1st child) or anything else (2nd child) |
-| `sideWidth` | `side-width` | string | `"300px"` | `flex-basis` of the sidebar child |
-| `contentMin` | `content-min` | string | `"50%"` | `min-width` of the main content child — forces a wrap to a single column below this width |
+| `sideWidth` | `sideWidth` | string | `"300px"` | `flex-basis` of the sidebar child |
+| `contentMin` | `contentMin` | string | `"50%"` | `min-width` of the main content child — forces a wrap to a single column below this width |
 | `gap` | `gap` | string | `"1rem"` | Gap between the sidebar and the main content |
 
 The container must have **at least 2 direct children** — the first two
@@ -35,7 +35,7 @@ sidebar depends on `side`).
 ### Sidebar on the left (default)
 
 <div x-demo>
-<div x-sidebarlayout side="left" side-width="200px">
+<div x-sidebarlayout side="left" sideWidth="200px">
   <nav>Sidebar navigation</nav>
   <main>Main content grows to fill the remaining space.</main>
 </div>
@@ -44,7 +44,7 @@ sidebar depends on `side`).
 ### Sidebar on the right
 
 <div x-demo>
-<div x-sidebarlayout side="right" side-width="200px">
+<div x-sidebarlayout side="right" sideWidth="200px">
   <main>Main content comes first in the DOM, sidebar renders after it.</main>
   <nav>Sidebar navigation</nav>
 </div>
@@ -53,7 +53,7 @@ sidebar depends on `side`).
 ### Custom gap and content minimum
 
 <div x-demo>
-<div x-sidebarlayout side-width="150px" gap="2rem" content-min="60%">
+<div x-sidebarlayout sideWidth="150px" gap="2rem" contentMin="60%">
   <nav>Sidebar</nav>
   <main>Wider gap, and the main column won't shrink below 60% before wrapping.</main>
 </div>

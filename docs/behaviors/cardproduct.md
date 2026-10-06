@@ -1,6 +1,6 @@
 # Product Card
 
-`x-cardproduct` renders a shop product card with an image, name, description, price (struck-through `original-price` when discounted), star rating and an add-to-cart button that fires `wb:cardproduct:addtocart`.
+`x-cardproduct` renders a shop product card with an image, name, description, price (struck-through `originalPrice` when discounted), star rating and an add-to-cart button that fires `wb:cardproduct:addtocart`.
 
 ## Usage
 
@@ -10,7 +10,7 @@
   title="Field headphones"
   description="Closed-back, 32Ω, folds flat."
   price="$149"
-  original-price="$189"></article>
+  originalPrice="$189"></article>
 </div>
 
 ## Attributes
@@ -21,7 +21,7 @@
 | `title` | `string` | — | Product name |
 | `description` | `string` | — | Product description |
 | `price` | `string` | — | Current price |
-| `original-price` | `string` | — | Original price (shows discount) |
+| `originalPrice` | `string` | — | Original price (shows discount) |
 | `badge` | `string` | — | Badge text (Sale, New, etc.) |
 | `rating` | `number` | `0` | Product rating (0-5) |
 | `reviews` | `number` | `0` | Number of reviews |

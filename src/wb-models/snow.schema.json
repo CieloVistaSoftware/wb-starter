@@ -96,7 +96,7 @@
   "test": {
     "setup": [
       "<div x-snow>Basic snow content</div>",
-      "<div x-snow show-button>with showButton</div>",
+      "<div x-snow showButton>with showButton</div>",
       "<div x-snow repeat>with repeat</div>",
       "<div x-snow count=\"30\">count=30</div>",
       "<div x-snow label=\"Let it Snow!\">label=\"Let it Snow!\"</div>",

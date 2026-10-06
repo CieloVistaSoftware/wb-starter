@@ -24,7 +24,7 @@
       ],
       "default": "24"
     },
-    "show-seconds": {
+    "showSeconds": {
       "type": "string",
       "description": "Show the seconds field. On unless set to `\"false\"`.",
       "enum": [

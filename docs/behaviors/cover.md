@@ -18,7 +18,7 @@ to the bottom — the classic hero/splash-screen layout.
 
 | Property | Attribute | Type | Default | Description |
 |----------|-----------|------|---------|-------------|
-| `minHeight` | `min-height` | string | `"100vh"` | Minimum height of the cover container |
+| `minHeight` | `minHeight` | string | `"100vh"` | Minimum height of the cover container |
 | `padding` | `padding` | string | `"1rem"` | Padding around the container's content |
 
 The container becomes a `display: flex; flex-direction: column` box. When it
@@ -31,7 +31,7 @@ whole content is centered. No marker attribute is needed.
 ### Header and footer pinned, content centered
 
 <div x-demo>
-<div x-cover min-height="300px">
+<div x-cover minHeight="300px">
   <header>Top content</header>
   <h2>Vertically centered content</h2>
   <footer>Bottom content</footer>
@@ -41,7 +41,7 @@ whole content is centered. No marker attribute is needed.
 ### Custom padding
 
 <div x-demo>
-<div x-cover min-height="200px" padding="2rem">
+<div x-cover minHeight="200px" padding="2rem">
   <p>Centered, with extra padding around the whole container.</p>
 </div>
 </div>

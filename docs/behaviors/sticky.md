@@ -1,11 +1,11 @@
 # Sticky
 
-`x-sticky` keeps the element pinned `offset` from the top of its scroll container once it scrolls there, adds `stuck-class` while pinned, and fires `wb:sticky:stuck` and `wb:sticky:unstuck`.
+`x-sticky` keeps the element pinned `offset` from the top of its scroll container once it scrolls there, adds `stuckClass` while pinned, and fires `wb:sticky:stuck` and `wb:sticky:unstuck`.
 
 ## Usage
 
 <div x-demo>
-<div x-sticky offset="0" stuck-class="is-stuck">
+<div x-sticky offset="0" stuckClass="is-stuck">
   Sticks to the top of its scroll container once you pass it.
 </div>
 </div>
@@ -15,9 +15,9 @@
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
 | `offset` | `string` | `0` | Offset from top when stuck |
-| `z-index` | `number` | `100` | Z-index when stuck |
+| `zIndex` | `number` | `100` | Z-index when stuck |
 | `threshold` | `number` | `0` | Scroll position to trigger sticky |
-| `stuck-class` | `string` | `is-stuck` | Class added when stuck |
+| `stuckClass` | `string` | `is-stuck` | Class added when stuck |
 | `animated` | `boolean` | `true` | Animate stick/unstick |
 
 ## Events

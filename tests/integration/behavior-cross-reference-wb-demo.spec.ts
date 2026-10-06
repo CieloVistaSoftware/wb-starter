@@ -90,13 +90,15 @@ test.describe('docs/behavior-cross-reference.md: live <div x-demo> examples', ()
       waitUntil: 'domcontentloaded',
     });
 
-    // The doc's trigger is `<button x-modal modal-title modal-content>Show
+    // The doc's trigger is `<button x-modal modalTitle modalContent>Show
     // Welcome</button>` (docs/behavior-cross-reference.md). This locator had
     // been switched to `dialog[modal-title]` for an interim version of the doc
     // that authored the trigger as a <dialog>; the doc went back to the
     // <button x-modal> form (see the note above), so that locator matched
-    // nothing and timed out.
-    const trigger = page.locator('button[x-modal][modal-title]', { hasText: 'Show Welcome' }).first();
+    // nothing and timed out. The doc writes modalTitle since #1125; an
+    // attribute selector on an HTML element ignores case, so [modalTitle]
+    // matches the `modaltitle` the parser stored.
+    const trigger = page.locator('button[x-modal][modalTitle]', { hasText: 'Show Welcome' }).first();
     await trigger.scrollIntoViewIfNeeded();
     await expect(trigger).toBeVisible({ timeout: 10000 });
     // Visible is not enhanced: the lazy runtime (#491) attaches the click

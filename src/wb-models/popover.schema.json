@@ -2,17 +2,17 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "popover.schema.json",
   "title": "Popover",
-  "description": "x-popover attaches a small panel with popover-title and popover-content to the element, opened by a click (or on hover with trigger=\"hover\") on the position side.",
+  "description": "x-popover attaches a small panel with popoverTitle and popoverContent to the element, opened by a click (or on hover with trigger=\"hover\") on the position side.",
   "schemaFor": "popover",
   "properties": {
     "description": {
       "type": "string",
-      "description": "Popover body text. Only used when `popover-content` is absent.",
+      "description": "Popover body text. Only used when `popoverContent` is absent.",
       "default": "this is the description"
     },
     "heading": {
       "type": "string",
-      "description": "Popover heading. Only used when `popover-title` is absent.",
+      "description": "Popover heading. Only used when `popoverTitle` is absent.",
       "default": "this is the heading"
     },
     "trigger": {
@@ -25,12 +25,12 @@
       "description": "Side the popover opens on: `top` (default), `bottom`, `left` or `right`.",
       "default": "top"
     },
-    "popover-content": {
+    "popoverContent": {
       "type": "string",
       "description": "Popover body text. Read BEFORE `description`.",
       "default": "this is the popover content"
     },
-    "popover-title": {
+    "popoverTitle": {
       "type": "string",
       "description": "Popover heading. Read BEFORE `heading`.",
       "default": "this is the popover title"

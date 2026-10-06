@@ -1,11 +1,11 @@
 # Tabs
 
-`x-tabs` turns its child sections into tab panels: each child's `title` becomes a tab button, and only the active panel is shown. `variant` picks the tab style and `active-tab` the starting panel.
+`x-tabs` turns its child sections into tab panels: each child's `title` becomes a tab button, and only the active panel is shown. `variant` picks the tab style and `activeTab` the starting panel.
 
 ## Usage
 
 <div x-demo>
-<div x-tabs active-tab="0" variant="underline">
+<div x-tabs activeTab="0" variant="underline">
   <section title="Overview">Composition over inheritance, in light DOM.</section>
   <section title="Attributes">Every attribute is kebab-case (§31).</section>
   <section title="Events">Behaviors fire wb:&lt;name&gt;:&lt;action&gt;.</section>
@@ -16,10 +16,10 @@
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `active-tab` | `number` | `0` | Initially active tab index |
+| `activeTab` | `number` | `0` | Initially active tab index |
 | `variant` | `default` · `pills` · `underline` · `bordered` | `default` |  |
 | `size` | `sm` · `md` · `lg` | `md` |  |
-| `full-width` | `boolean` | `false` | Tabs fill container width |
+| `fullWidth` | `boolean` | `false` | Tabs fill container width |
 | `vertical` | `boolean` | `false` | Vertical tab layout |
 
 ## Events

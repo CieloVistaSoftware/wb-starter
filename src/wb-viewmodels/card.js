@@ -1,4 +1,4 @@
-import { readFlag, readAttr, readOption } from '../core/read-attr.js';
+import { readFlag, readAttr, readOption, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 import { dragStartPoint } from '../core/drag-start.js';
 /**
@@ -314,7 +314,7 @@ export function composeCard(element, options = {}) {
     // cardprofile.schema.json) -- both resolve to the same themed tooltip
     // below, `tooltip` taking priority if a card author sets both.
     tooltip: options.tooltip || element.getAttribute('tooltip') || '',
-    hoverText: readOption(element, options, 'hoverText', 'hoverText') || element.getAttribute('hover-text') || '',
+    hoverText: readOption(element, options, 'hoverText', 'hoverText') || authoredAttr(element, 'hover-text') || '',
     onClick: options.onClick || element.dataset.onClick || '',
     dataContext: options.dataContext || element.dataset.dataContext || '{}',
     // v3.0: Skip structure building if schema already did it
@@ -1179,10 +1179,10 @@ export function cardhero(element, options = {}) {
     height: readOption(element, options, 'height') || '400px',
     cta: readOption(element, options, 'cta'),
     ctaHref: readOption(element, options, 'ctaHref'),
-    ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || element.getAttribute('cta-tooltip'),
+    ctaTooltip: options.ctaTooltip || element.dataset.ctaTooltip || authoredAttr(element, 'cta-tooltip'),
     ctaSecondary: readOption(element, options, 'ctaSecondary'),
     ctaSecondaryHref: readOption(element, options, 'ctaSecondaryHref'),
-    ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || element.getAttribute('cta-secondary-tooltip'),
+    ctaSecondaryTooltip: options.ctaSecondaryTooltip || element.dataset.ctaSecondaryTooltip || authoredAttr(element, 'cta-secondary-tooltip'),
     pretitle: readOption(element, options, 'pretitle'),
     // Documented in cardhero.schema.json (enum: default/cosmic/split/
     // minimal/gradient) but never actually read here -- CSS never got a
@@ -1364,7 +1364,7 @@ export function cardprofile(element, options = {}) {
     // effect (#19: every declared attribute must produce a real effect).
     size: readOption(element, options, 'size') || 'md',
     align: readOption(element, options, 'align') || 'center',
-    hoverText: readOption(element, options, 'hoverText', 'hoverText') || element.getAttribute('hover-text'),
+    hoverText: readOption(element, options, 'hoverText', 'hoverText') || authoredAttr(element, 'hover-text'),
     ...options
   };
 
@@ -1529,7 +1529,7 @@ export function cardstats(element, options = {}) {
     label: readOption(element, options, 'label'),
     icon: readOption(element, options, 'icon'),
     trend: readOption(element, options, 'trend'),
-    trendValue: options.trendValue || element.getAttribute('trend-value') || readAttr(element, 'trendValue'),
+    trendValue: options.trendValue || authoredAttr(element, 'trend-value') || readAttr(element, 'trendValue'),
     // Declared in cardstats.schema.json ("Accent color"), read nowhere.
     color: options.color || readAttr(element, 'color'),
     ...options
@@ -1684,7 +1684,7 @@ export function cardproduct(element, options = {}) {
   const config = {
     image: readOption(element, options, 'image'),
     price: readOption(element, options, 'price'),
-    originalPrice: options.originalPrice || element.getAttribute('original-price') || readAttr(element, 'originalPrice'),
+    originalPrice: options.originalPrice || authoredAttr(element, 'original-price') || readAttr(element, 'originalPrice'),
     badge: readOption(element, options, 'badge'),
     rating: readOption(element, options, 'rating'),
     reviews: readOption(element, options, 'reviews'),
@@ -2069,7 +2069,7 @@ export function cardlink(element, options = {}) {
     icon: readOption(element, options, 'icon'),
     description: readOption(element, options, 'description') || '',
     badge: readOption(element, options, 'badge') || '',
-    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || element.getAttribute('badge-variant') || 'glass', // glass, gradient
+    badgeVariant: options.badgeVariant || element.dataset.badgeVariant || authoredAttr(element, 'badge-variant') || 'glass', // glass, gradient
     ...options
   };
 

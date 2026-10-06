@@ -2,22 +2,22 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "pagination.schema.json",
   "title": "Pagination",
-  "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and per-page (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
+  "description": "x-pagination builds Previous/Next and numbered page links inside a <nav> from total and perPage (or an explicit pages), marks current as active, and fires wb:pagination:change when another page is chosen.",
   "schemaFor": "pagination",
   "properties": {
     "total": {
       "type": "string",
-      "description": "Total number of items. With `per-page` this derives the page count.",
+      "description": "Total number of items. With `perPage` this derives the page count.",
       "default": "0"
     },
-    "per-page": {
+    "perPage": {
       "type": "string",
       "description": "Items per page. Defaults to `10`.",
       "default": "10"
     },
     "pages": {
       "type": "string",
-      "description": "Explicit page count. Overrides the count derived from `total`/`per-page`.",
+      "description": "Explicit page count. Overrides the count derived from `total`/`perPage`.",
       "default": "0"
     },
     "current": {
@@ -36,7 +36,7 @@
     "setup": [
       "<div x-pagination>Test Content</div>",
       "<div x-pagination total=\"0\">Test Content</div>",
-      "<div x-pagination per-page=\"10\">Test Content</div>",
+      "<div x-pagination perPage=\"10\">Test Content</div>",
       "<div x-pagination pages=\"0\">Test Content</div>",
       "<div x-pagination current=\"1\">Test Content</div>"
     ]

@@ -233,7 +233,7 @@
       "<textarea variant=\"default\">variant=default</textarea>",
       "<textarea variant=\"success\">variant=success</textarea>",
       "<textarea variant=\"error\">variant=error</textarea>",
-      "<textarea show-count>with showCount</textarea>"
+      "<textarea showCount>with showCount</textarea>"
     ],
     "matrix": {
       "combinations": [

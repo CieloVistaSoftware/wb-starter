@@ -8,6 +8,7 @@
  */
 
 // One list for every theme control and the Themes page (#1025).
+import { authoredAttr } from '../core/read-attr.js';
 import { THEMES } from '../core/themes-registry.js';
 
 /**
@@ -43,7 +44,7 @@ export function themecontrol(element, options = {}) {
   const config = {
     target: options.target || element.getAttribute('target') || 'html',
     default: options.default || element.getAttribute('default') || 'dark',
-    showLabel: options.showLabel ?? (element.getAttribute('show-label') !== 'false'),
+    showLabel: options.showLabel ?? (authoredAttr(element, 'show-label') !== 'false'),
     persist: options.persist ?? (element.getAttribute('persist') !== 'false'),
     ...options
   };

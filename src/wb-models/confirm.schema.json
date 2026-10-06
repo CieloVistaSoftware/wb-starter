@@ -2,35 +2,35 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "confirm.schema.json",
   "title": "Confirm",
-  "description": "x-confirm puts a confirmation dialog in front of a click: the dialog shows confirm-title and confirm-message with OK and Cancel buttons, and fires wb:confirm:ok or wb:confirm:cancel.",
+  "description": "x-confirm puts a confirmation dialog in front of a click: the dialog shows confirmTitle and confirmMessage with OK and Cancel buttons, and fires wb:confirm:ok or wb:confirm:cancel.",
   "schemaFor": "confirm",
   "properties": {
     "heading": {
       "type": "string",
-      "description": "Dialog heading. Only used when `confirm-title` is absent.",
+      "description": "Dialog heading. Only used when `confirmTitle` is absent.",
       "default": "Confirm"
     },
     "message": {
       "type": "string",
-      "description": "Body text. Only used when `confirm-message` is absent.",
+      "description": "Body text. Only used when `confirmMessage` is absent.",
       "default": "Are you sure?"
     },
-    "confirm-text": {
+    "confirmText": {
       "type": "string",
       "description": "Label on the confirming button. Defaults to `OK`.",
       "default": "OK"
     },
-    "cancel-text": {
+    "cancelText": {
       "type": "string",
       "description": "Label on the dismissing button. Defaults to `Cancel`.",
       "default": "Cancel"
     },
-    "confirm-title": {
+    "confirmTitle": {
       "type": "string",
       "description": "Dialog heading. Read BEFORE `heading`; defaults to `Confirm`.",
       "default": "this is the confirm title"
     },
-    "confirm-message": {
+    "confirmMessage": {
       "type": "string",
       "description": "Body text. Read BEFORE `message`; defaults to `Are you sure?`.",
       "default": "this is the confirm message"
@@ -47,8 +47,8 @@
       "<div x-confirm>Test Content</div>",
       "<div x-confirm heading=\"Confirm\">Test Content</div>",
       "<div x-confirm message=\"Are you sure?\">Test Content</div>",
-      "<div x-confirm confirm-text=\"OK\">Test Content</div>",
-      "<div x-confirm cancel-text=\"Cancel\">Test Content</div>"
+      "<div x-confirm confirmText=\"OK\">Test Content</div>",
+      "<div x-confirm cancelText=\"Cancel\">Test Content</div>"
     ]
   },
   "events": {

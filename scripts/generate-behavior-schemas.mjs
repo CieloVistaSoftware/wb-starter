@@ -193,7 +193,7 @@ function analyse(name) {
  *                 child-scoped options are not host markup and are skipped.
  */
 const CHILD_BUILDERS = {
-  accordion: '<div accordion-title="One">First body</div><div accordion-title="Two">Second body</div>',
+  accordion: '<div accordionTitle="One">First body</div><div accordionTitle="Two">Second body</div>',
   cluster: '<span>one</span><span>two</span>',
   steps: '<div>Step one</div><div>Step two</div>',
 };

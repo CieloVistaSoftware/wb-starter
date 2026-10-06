@@ -1,4 +1,4 @@
-import { readFlag, readAttr } from '../core/read-attr.js';
+import { readFlag, readAttr, authoredAttr } from '../core/read-attr.js';
 import { setRule } from '../core/dynamic-style.js';
 /**
  * Feedback Behaviors
@@ -224,12 +224,12 @@ export function toast(element, options = {}) {
   // render). options.message/variant/duration (explicit programmatic
   // overrides) are still honored the same way on every click.
   const showToast = () => {
-    const message = options.message || element.getAttribute('message') || element.getAttribute('toast-message') || 'Notification';
-    const variant = options.variant || element.getAttribute('toast-variant') || element.getAttribute('variant') || 'info';
+    const message = options.message || element.getAttribute('message') || authoredAttr(element, 'toast-message') || 'Notification';
+    const variant = options.variant || authoredAttr(element, 'toast-variant') || element.getAttribute('variant') || 'info';
     const duration = parseInt(options.duration || element.getAttribute('duration') || '3000');
     // Read at click time for the same #458 reason as message/variant/duration.
     const action = options.action || element.getAttribute('action') || '';
-    const actionHref = options.actionHref || element.getAttribute('action-href') || '';
+    const actionHref = options.actionHref || authoredAttr(element, 'action-href') || '';
     // #1109: position/title/icon/dismissible were declared in
     // toast.schema.json and read by nobody, so the Behaviors page's six
     // position permutations all rendered in the same corner and the other
@@ -241,7 +241,7 @@ export function toast(element, options = {}) {
     // legitimately carries `<button title="Save your work">` must not have
     // that tooltip silently promoted into the toast's heading -- but a
     // trigger authored per the schema (`title="Saved"`) still works.
-    const title = options.title || element.getAttribute('toast-title') || element.getAttribute('title') || '';
+    const title = options.title || authoredAttr(element, 'toast-title') || element.getAttribute('title') || '';
     const icon = options.icon || element.getAttribute('icon') || '';
     // Schema default is true; readFlag also honors `dismissible="false"`,
     // which a bare hasAttribute() check would read as ON (the #747 trap).

@@ -48,7 +48,7 @@
         "2.5rem"
       ]
     },
-    "max-width": {
+    "maxWidth": {
       "type": "string",
       "description": "Read by container().",
       "default": "this is the max width"

@@ -13,11 +13,11 @@ clipboard, with visible "Copied ✓" feedback. See
 | Attribute | Default | Description |
 |---|---|---|
 | `x-copybutton` | — | Bare to copy the host's own value/text. A selector value (`x-copybutton="#targetId"`) copies that element's `value`/`textContent` instead. |
-| `copy-target` | — | Explicit form of the target override — same effect as `x-copybutton="#selector"`. |
+| `copyTarget` | — | Explicit form of the target override — same effect as `x-copybutton="#selector"`. |
 | `label` | `"Copy"` | Button `aria-label` and `title`. |
 | `position` | `"top-right"` | One of `top-right`, `top-left`, `bottom-right`, `bottom-left`. |
-| `copy-feedback` | `"Copied ✓"` | Text shown on the button after a successful copy. |
-| `copy-duration` | `2000` | Milliseconds before the button reverts to its idle icon. |
+| `copyFeedback` | `"Copied ✓"` | Text shown on the button after a successful copy. |
+| `copyDuration` | `2000` | Milliseconds before the button reverts to its idle icon. |
 
 ## Demo
 
@@ -48,7 +48,7 @@ wb.init();</code></pre>
 - The injected control is a real `<button type="button">`, so it's keyboard-focusable and
   activatable without any extra wiring.
 - `aria-label` (from `label`, default `"Copy"`) and a matching `title` are always set.
-- Feedback is communicated visually (button text swaps to `copy-feedback`) and via the
+- Feedback is communicated visually (button text swaps to `copyFeedback`) and via the
   `wb:copy:success` event for anything listening; consumers that need it announced to a
   screen reader can wire an `aria-live` region off that event.
 

@@ -12,11 +12,11 @@ Adds a drag handle to the element's border (default: bottom-right corner) and le
 | Attribute | Default | Description |
 |---|---|---|
 | `directions` | `se` | Which edges/corners get a resize handle: `n`, `s`, `e`, `w`, `ne`, `nw`, `se`, `sw`, or `all` |
-| `min-width` | `50` | Minimum width in px |
-| `min-height` | `50` | Minimum height in px |
-| `max-width` | none | Maximum width in px |
-| `max-height` | none | Maximum height in px |
-| `aspect-ratio` | off | Lock width/height ratio while resizing |
+| `minWidth` | `50` | Minimum width in px |
+| `minHeight` | `50` | Minimum height in px |
+| `maxWidth` | none | Maximum width in px |
+| `maxHeight` | none | Maximum height in px |
+| `aspectRatio` | off | Lock width/height ratio while resizing |
 
 ## Demo
 See [Interactive & Utility demos](../../demos/site/interactive.html#resizable-resizable).

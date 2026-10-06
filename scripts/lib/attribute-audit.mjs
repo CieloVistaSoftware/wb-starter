@@ -69,7 +69,8 @@ const READ_FLAG = /readFlag\(\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
 // #1526: readAttr / readNumber / hasAuthoredAttr are read-attr.js's other
 // readers. A behavior moved onto them from a raw getAttribute('brand-href')
 // was reported inert, so the audit punished the fix it exists to encourage.
-const READ_ATTR = /(?:readAttr|readNumber|hasAuthoredAttr)\(\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
+// #1125 added authoredAttr, the same lookup with getAttribute's null contract.
+const READ_ATTR = /(?:readAttr|readNumber|hasAuthoredAttr|authoredAttr)\(\s*[^,]+,\s*['"`]([a-zA-Z][\w:-]*)['"`]/g;
 // #883: readOption(el, options, 'name'[, 'attr']) (src/core/read-attr.js) reads
 // options.name, then readAttr(el, 'name'), then el.getAttribute(attr), where
 // attr defaults to kebab(name). Both names are read off the element.

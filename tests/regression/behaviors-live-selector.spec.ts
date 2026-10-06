@@ -404,6 +404,6 @@ test.describe('Behaviors page — the demo sections stay removed', () => {
 
     expect(r.demoBlocks, 'the 88 demo sections were migrated into the catalogue').toBe(0);
     // If the catalogue were lost, this would silently become a generated stub.
-    expect(r.code, 'curated example must survive, not degrade to a stub').toContain('confirm-title');
+    expect(r.code, 'curated example must survive, not degrade to a stub').toContain('confirmTitle'); // the curated example's camelCase (#1125)
   });
 });

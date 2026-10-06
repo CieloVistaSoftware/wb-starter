@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "img.schema.json",
   "title": "Img",
-  "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspect-ratio reserves its box so the page does not jump, and zoomable opens it full-size on click.",
+  "description": "A plain <img> gets loading help: placeholder shows while the real image loads, fallback replaces it if it fails, aspectRatio reserves its box so the page does not jump, and zoomable opens it full-size on click.",
   "schemaFor": "img",
   "properties": {
     "placeholder": {
@@ -15,7 +15,7 @@
       "description": "Image swapped in when `src` fails to load. Without one a broken image raises a loggable error and leaves the element empty.",
       "default": "this is the fallback"
     },
-    "aspect-ratio": {
+    "aspectRatio": {
       "type": "string",
       "description": "A CSS aspect ratio (e.g. `16/9`) applied to the element, with `object-fit: cover`. Reserves the box before the image arrives, so the page does not jump as it loads.",
       "default": "this is the aspect ratio",
@@ -44,7 +44,7 @@
     },
     "height": {
       "type": "number",
-      "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspect-ratio` wins over the pair.",
+      "description": "Height in pixels (the native attribute). Takes effect only together with `width`: the pair sets the image's shape and the image is cropped to it. On its own it is overridden by the site's `img { height: auto }`. An explicit `aspectRatio` wins over the pair.",
       "default": 0
     }
   },

@@ -14,9 +14,11 @@
  *      field names. "while this is better it does no teaching" (John) was said
  *      about a first version that wrote `title="title — Hero headline"`: a
  *      labelled skeleton proves the behavior ran and teaches nothing.
- *   2. the names it teaches are the names that are TYPED — `cta-href`, never
- *      the squashed `ctahref` that writing a camelCase schema property
- *      produces once the DOM lower-cases it (#952's disease, 23 properties).
+ *   2. the names it teaches are the curated example's own — since #1125 that
+ *      is the canonical camelCase `ctaHref`, which the DOM then stores
+ *      lower-cased (`ctahref`) as it does every attribute name, and which
+ *      card.js reads through read-attr.js. It once taught `cta-href` to avoid
+ *      exactly that lower-casing, when behaviors read only the dashed name.
  *   3. it does NOT fire when the author supplied something. A deliberately
  *      minimal usage is never overwritten.
  *
@@ -87,8 +89,10 @@ test.describe('eager runtime (wb.js)', () => {
 
     const attrs = await attributesOf(page, '#empty-hero');
 
+    // The curated example writes camelCase (ctaHref, #1125); HTML stores an
+    // attribute name lower-cased, so that is the key it is found under.
     for (const [name, value] of Object.entries(expected)) {
-      expect(attrs[name], `${name} should carry the curated value`).toBe(value);
+      expect(attrs[name.toLowerCase()], `${name} should carry the curated value`).toBe(value);
     }
 
     // The example is the lesson, so it must not be the field's own name back.
@@ -109,18 +113,20 @@ test.describe('eager runtime (wb.js)', () => {
     await expect(hero.locator('.x-card__hero-title')).toHaveText(expected.title);
   });
 
-  test('every taught attribute name is one a person can type', async ({ page }: { page: Page }) => {
+  test('every taught attribute name is the curated example\'s own', async ({ page }: { page: Page }) => {
+    const expected = curatedHero();
     await inject(page, '<div id="spelling-hero" x-cardhero></div>');
     const attrs = await attributesOf(page, '#spelling-hero');
 
-    // A camelCase schema property written with setAttribute lands squashed:
-    // ctaSecondary -> ctasecondary, which no doc, example or IntelliSense entry
-    // uses. Nothing the fill wrote may be spelled that way.
-    const squashed = Object.keys(attrs).filter((n) => /^(ctahref|ctasecondary|ctasecondaryhref|headinglevel|fullheight)$/.test(n));
-    expect(squashed, `squashed attribute names: ${squashed.join(', ')}`).toEqual([]);
-
-    // The kebab spelling is the documented one, and it is what card.js reads.
-    expect(attrs).toHaveProperty('cta-href');
+    // #1125 made camelCase canonical, so the curated example teaches ctaHref,
+    // and HTML stores any attribute name lower-cased: `ctahref` is what the
+    // DOM shows for it, and card.js reads it (read-attr.js looks up both
+    // spellings). What the fill must NOT do is invent a second spelling the
+    // example does not use -- a dashed cta-href beside it, say.
+    const taught = Object.keys(attrs).filter((n) => !/^(id|class|style|role|aria-|data-|x-)/.test(n)).sort();
+    expect(taught).toEqual(Object.keys(expected).map((n) => n.toLowerCase()).sort());
+    expect(attrs).toHaveProperty('ctahref');
+    expect(attrs).not.toHaveProperty('cta-href');
   });
 
   test('a hero authored in the data- spelling is left alone too', async ({ page }: { page: Page }) => {

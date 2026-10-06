@@ -748,8 +748,8 @@
           <label id="autoinject-label-185">Feedback (Autosize + Counter):</label>
           <textarea id="autoinject-textarea-186" 
             x-autosize 
-            show-count 
-            max-length="100" 
+            showCount 
+            maxLength="100" 
             placeholder="Type to see auto-resize..." 
             rows="2" 
             style="width: 100%"></textarea>
@@ -798,9 +798,9 @@
         min="0" 
         max="100" 
         value="75" 
-        show-value 
-        show-labels 
-        value-suffix="%" 
+        showValue 
+        showLabels 
+        valueSuffix="%" 
         style="width: 100%">
     </div>
 
@@ -808,8 +808,8 @@
       <label id="autoinject-label-hue">Color Hue (Custom Style):</label>
       <div id="autoinject-div-hue-row" style="display: flex; align-items: center; gap: 1rem;">
         <input id="autoinject-input-hue" type="range" min="0" max="360" value="0" 
-          show-value 
-          value-suffix="°"
+          showValue 
+          valueSuffix="°"
           style="width: 33vw; height: 10px; border-radius: 5px; appearance: none; background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);"
           oninput="const color = `hsl(${this.value}, 100%, 50%)`; document.getElementById('hue-swatch').style.backgroundColor = color; document.getElementById('hue-value').textContent = color;">
         <div id="hue-swatch" style="width: 32px; height: 32px; border-radius: 50%; background: red; border: 2px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>

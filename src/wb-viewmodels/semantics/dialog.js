@@ -176,7 +176,7 @@ export function dialog(element, options = {}) {
   };
 
   // Gate widened from tagName==='WB-MODAL' to also cover x-modal on any
-  // element (e.g. <button x-modal modal-title="…">) -- attribute presence,
+  // element (e.g. <button x-modal modalTitle="…">) -- attribute presence,
   // not tag identity, is what actually distinguishes trigger vs definition
   // mode below, and x-modal on a non-wb-modal element used to silently fall
   // through both branches with no click handler attached at all. (#279)
@@ -202,7 +202,7 @@ export function dialog(element, options = {}) {
   // trigger's own label as its body (#747, #1125).
   const hasTriggerAttrs = hasAuthoredAttr(element, 'modalContent') || hasAuthoredAttr(element, 'modalTitle');
   if (hasTriggerAttrs) {
-    // TRIGGER mode: <dialog modal-title="…" modal-content="…">Open Modal</dialog>
+    // TRIGGER mode: <dialog modalTitle="…" modalContent="…">Open Modal</dialog>
     // is a visible button — its text is the label and clicking it opens a dialog
     // built from the attributes. (Previously x-modal was always hidden with only a
     // showModal() method and no click handler, so "Open Modal" did nothing. #251)

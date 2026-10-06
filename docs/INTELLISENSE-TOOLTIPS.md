@@ -1155,7 +1155,7 @@ Attributes:
 
 | Attribute | Tooltip |
 |-----------|---------|
-| `max-width` | Maximum width of the content. |
+| `maxWidth` | Maximum width of the content. |
 | `gutters` | Minimum side margins. |
 | `intrinsic` | Whether to center based on intrinsic content size. |
 
@@ -1331,7 +1331,7 @@ Features:
 - Layout directions (Row or Column)
 
 Example:
-<div x-container max-width="1200px" padding="2rem">
+<div x-container maxWidth="1200px" padding="2rem">
 </div>
 ```
 
@@ -1346,7 +1346,7 @@ Example:
 | `justify` | Justify content (start, center, end, between, around, evenly) |
 | `wrap` | Whether to wrap content. |
 | `padding` | Padding size. |
-| `max-width` | Maximum width of the container. |
+| `maxWidth` | Maximum width of the container. |
 
 </details>
 
@@ -1367,7 +1367,7 @@ Attributes:
 
 | Attribute | Tooltip |
 |-----------|---------|
-| `min-height` | Minimum height of the cover. |
+| `minHeight` | Minimum height of the cover. |
 | `padding` | Padding size. |
 
 </details>
@@ -1628,10 +1628,10 @@ Attributes:
 ```text
 A layout behavior that creates a responsive CSS Grid.
 
-Key Feature: The `min-width` attribute enables 'Auto-Fit' columns - no media queries needed.
+Key Feature: The `minWidth` attribute enables 'Auto-Fit' columns - no media queries needed.
 
 Example:
-<div x-grid min-width="300px" gap="md">
+<div x-grid minWidth="300px" gap="md">
   <div>Card 1</div>
   <div>Card 2</div>
   <div>Card 3</div>
@@ -1644,7 +1644,7 @@ Example:
 |-----------|---------|
 | `columns` | Number of columns (e.g. '3') or grid definition (e.g. '1fr 2fr'). Default: 3 |
 | `gap` | Gap size (sm, md, lg, xl, none) or CSS length. Default: 1rem |
-| `min-width` | Minimum width for auto-fit columns (e.g. '300px'). Enables responsive behavior. |
+| `minWidth` | Minimum width for auto-fit columns (e.g. '300px'). Enables responsive behavior. |
 
 </details>
 
@@ -1851,7 +1851,7 @@ WB Part - Reusable HTML template. First boolean attribute specifies the part nam
 | `dismissible` | [alert-box] Show dismiss button |
 | `value` | [stat-tile] Main statistic value (e.g., '1,234') [required] |
 | `trend` | [stat-tile] Trend direction |
-| `trend-value` | [stat-tile] Trend amount (e.g., '+12%') |
+| `trendValue` | [stat-tile] Trend amount (e.g., '+12%') |
 | `href` | [nav-link] Link URL [required] |
 | `active` | [nav-link] Mark as active/current |
 | `name` | [user-avatar] User's name (for alt text) [required] |
@@ -1952,7 +1952,7 @@ Attributes:
 
 | Attribute | Tooltip |
 |-----------|---------|
-| `item-width` | Width of each item. |
+| `itemWidth` | Width of each item. |
 | `gap` | Gap between items. |
 | `no-bar` | Hide scrollbar. |
 
@@ -2249,7 +2249,7 @@ Attributes:
 |-----------|---------|
 | `top` | Top offset. |
 | `bottom` | Bottom offset. |
-| `z-index` | Z-index value. |
+| `zIndex` | Z-index value. |
 
 </details>
 

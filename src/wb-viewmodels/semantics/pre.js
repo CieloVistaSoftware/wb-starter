@@ -1,5 +1,5 @@
 import { setRule, clearRules, clearRulesIn } from '../../core/dynamic-style.js';
-import { readFlag, readAttr } from '../../core/read-attr.js';
+import { readFlag, readAttr, authoredAttr, hasAuthoredAttr } from '../../core/read-attr.js';
 import { writeToClipboard } from '../copy.js';
 
 /**
@@ -70,9 +70,9 @@ export function pre(element, options = {}) {
     language: options.language || element.getAttribute('language') || readAttr(element, 'language') || childLanguage || '',
     // v3 default: ON, matching an actual code editor (VS Code shows line
     // numbers by default) — explicit show-line-numbers="false" opts out.
-    showLineNumbers: options.showLineNumbers ?? (element.getAttribute('show-line-numbers') !== 'false'),
-    showCopy: options.showCopy ?? (element.hasAttribute('show-copy') || readFlag(element, 'show-copy') || readFlag(element, 'copy')),
-    maxHeight: options.maxHeight || element.getAttribute('max-height') || readAttr(element, 'maxHeight') || '',
+    showLineNumbers: options.showLineNumbers ?? (authoredAttr(element, 'show-line-numbers') !== 'false'),
+    showCopy: options.showCopy ?? (hasAuthoredAttr(element, 'show-copy') || readFlag(element, 'show-copy') || readFlag(element, 'copy')),
+    maxHeight: options.maxHeight || authoredAttr(element, 'max-height') || readAttr(element, 'maxHeight') || '',
     // v3: plain `wrap` attribute is canonical; data-wrap accepted for back-compat.
     wrap: options.wrap ?? (element.hasAttribute('wrap')
       ? element.getAttribute('wrap') !== 'false'

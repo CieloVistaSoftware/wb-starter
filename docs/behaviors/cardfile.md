@@ -50,7 +50,7 @@ The icon comes from the filename's extension; there is no separate type attribut
 | `href` | `string` | `#` | Download URL |
 | `downloadable` | `boolean` | `true` | Show download link |
 | `variant` | `default` · `compact` · `elevated` | `default` |  |
-| `hover-text` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
+| `hoverText` | `string` | — | Alias for `tooltip` -- hover text shown as a themed WB tooltip (x-tooltip / tooltip.js), not the native browser title tooltip (#283). |
 
 ## Methods
 

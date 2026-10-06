@@ -1,11 +1,11 @@
 # Stats Card
 
-`x-cardstats` renders one statistic as a card: a large `value`, the `label` saying what it counts, and an optional up/down `trend` with its `trend-value`. Use a row of them for a dashboard summary.
+`x-cardstats` renders one statistic as a card: a large `value`, the `label` saying what it counts, and an optional up/down `trend` with its `trendValue`. Use a row of them for a dashboard summary.
 
 ## Usage
 
 <div x-demo>
-<article x-cardstats value="1,284" label="Builds this month" trend="up" trend-value="12%"></article>
+<article x-cardstats value="1,284" label="Builds this month" trend="up" trendValue="12%"></article>
 </div>
 
 ## Attributes
@@ -16,7 +16,7 @@
 | `label` | `string` | — | Label describing what the value represents |
 | `icon` | `string` | — | Icon (emoji or icon name) |
 | `trend` | `` · `up` · `down` · `neutral` | — | Trend direction |
-| `trend-value` | `string` | — | Trend amount (e.g., +12%, -5%) |
+| `trendValue` | `string` | — | Trend amount (e.g., +12%, -5%) |
 | `variant` | `default` · `compact` · `large` · `minimal` | `default` | Visual style variant |
 | `color` | `string` | — | Accent color (CSS color value) |
 

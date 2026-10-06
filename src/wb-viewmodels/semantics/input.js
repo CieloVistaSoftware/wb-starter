@@ -1,4 +1,4 @@
-import { readAttr, hasAuthoredAttr } from '../../core/read-attr.js';
+import { readAttr, hasAuthoredAttr, authoredAttr } from '../../core/read-attr.js';
 import { logError } from '../../core/error-logger.js';
 
 /**
@@ -50,7 +50,7 @@ export function input(element, options = {}) {
   // #754: this used to require tagName === 'WB-INPUT', so the documented
   // authoring form
   //
-  //   <div x-input label="Repository" placeholder="owner/name" input-type="text">
+  //   <div x-input label="Repository" placeholder="owner/name" inputType="text">
   //
   // produced NOTHING -- no label, no field, no error variant. It fell past
   // this block to the generic wrap below, which assumes the host already IS a
@@ -79,7 +79,7 @@ export function input(element, options = {}) {
     const placeholder = element.getAttribute('placeholder') || '';
     const value = element.getAttribute('value') || authoredValue;
     const name = element.getAttribute('name') || '';
-    const inputType = element.getAttribute('input-type') || element.getAttribute('inputType') || 'text';
+    const inputType = authoredAttr(element, 'inputType') || 'text';
     const helper = element.getAttribute('helper') || '';
     const error = element.getAttribute('error') || '';
     const icon = readAttr(element, 'icon');

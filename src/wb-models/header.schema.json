@@ -197,7 +197,7 @@
       "<header title=\"Sample title\">title=\"Sample title\"</header>",
       "<header subtitle=\"Sample subtitle\">subtitle=\"Sample subtitle\"</header>",
       "<header badge=\"Sample badge\">badge=\"Sample badge\"</header>",
-      "<header logo-href=\"/\">logoHref=\"/\"</header>",
+      "<header logoHref=\"/\">logoHref=\"/\"</header>",
       "<header icon=\"📂\" title=\"Project\"></header>"
     ],
     "matrix": {

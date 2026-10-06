@@ -2,17 +2,17 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "prompt.schema.json",
   "title": "Prompt",
-  "description": "x-prompt makes a click open a dialog that asks for a line of text, with prompt-title, prompt-message, a placeholder and an optional default-value.",
+  "description": "x-prompt makes a click open a dialog that asks for a line of text, with promptTitle, promptMessage, a placeholder and an optional defaultValue.",
   "schemaFor": "prompt",
   "properties": {
     "heading": {
       "type": "string",
-      "description": "Dialog heading. Only used when `prompt-title` is absent.",
+      "description": "Dialog heading. Only used when `promptTitle` is absent.",
       "default": "Input"
     },
     "message": {
       "type": "string",
-      "description": "Body text. Only used when `prompt-message` is absent.",
+      "description": "Body text. Only used when `promptMessage` is absent.",
       "default": "this is the message"
     },
     "placeholder": {
@@ -20,17 +20,17 @@
       "description": "Placeholder shown in the empty input.",
       "default": "this is the placeholder"
     },
-    "default-value": {
+    "defaultValue": {
       "type": "string",
       "description": "Value the input starts with, already selected so typing replaces it.",
       "default": "this is the default value"
     },
-    "prompt-title": {
+    "promptTitle": {
       "type": "string",
       "description": "Dialog heading. Read BEFORE `heading`; defaults to `Input`.",
       "default": "this is the prompt title"
     },
-    "prompt-message": {
+    "promptMessage": {
       "type": "string",
       "description": "Body text above the field. Read BEFORE `message`.",
       "default": "this is the prompt message"

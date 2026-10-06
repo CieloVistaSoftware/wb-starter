@@ -6,7 +6,7 @@
  * Custom Tag: <div x-tabs>
  * -----------------------------------------------------------------------------
  */
-import { readAttr, readFlag } from '../core/read-attr.js';
+import { readAttr, readFlag, authoredAttr } from '../core/read-attr.js';
 
 export function tabs(element, options = {}) {
   // #448: no classList.add('x-tabs') -- no CSS selector anywhere depends
@@ -76,7 +76,7 @@ export function tabs(element, options = {}) {
     originalPanels.forEach((panel, i) => {
       // Plain `tab-title`/`tab` is canonical (v3); `data-tab-title` accepted
       // for back-compat (matches the accordion-title dual-read in collapse.js).
-      const title = panel.getAttribute('tab-title') || panel.getAttribute('tab') ||
+      const title = authoredAttr(panel, 'tab-title') || panel.getAttribute('tab') ||
         panel.getAttribute('data-tab-title') || `Tab ${i + 1}`;
       const isActive = i === activeIndex;
 

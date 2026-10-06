@@ -14,7 +14,7 @@
 | --- | --- | --- | --- |
 | `count` | `number` | `30` | Number of snowflakes |
 | `label` | `string` | `Let it Snow!` | Trigger button label |
-| `show-button` | `boolean` | `true` | Show trigger button |
+| `showButton` | `boolean` | `true` | Show trigger button |
 | `repeat` | `boolean` | `true` | Loop animation |
 | `delay` | `string` | `0s` | Start delay |
 | `duration` | `string` | `8s` | Fall duration |

@@ -179,7 +179,7 @@ Enhances standard HTML elements with better styling and functionality.
 <div x-demo>
 <div x-input
   label="Email"
-  input-type="email"
+  inputType="email"
   placeholder="Enter your email">
 </div>
 </div>
@@ -375,8 +375,8 @@ Rich interactive behaviors.
 
 <div x-demo>
 <div x-accordion>
-  <div accordion-title="What is wb-starter?">A schema-first, no-build website starter kit.</div>
-  <div accordion-title="Is x-accordion recommended?">No, prefer the native details/summary element for new markup.</div>
+  <div accordionTitle="What is wb-starter?">A schema-first, no-build website starter kit.</div>
+  <div accordionTitle="Is x-accordion recommended?">No, prefer the native details/summary element for new markup.</div>
 </div>
 </div>
 

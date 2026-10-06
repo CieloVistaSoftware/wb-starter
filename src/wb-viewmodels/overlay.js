@@ -1,4 +1,4 @@
-import { readFlag, readOption } from '../core/read-attr.js';
+import { readFlag, readOption, authoredAttr } from '../core/read-attr.js';
 import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
 /**
  * Overlay Behaviors
@@ -26,8 +26,8 @@ import { setRule, clearRules, onlyChanged } from '../core/dynamic-style.js';
  */
 export function popover(element, options = {}) {
   const config = {
-    content: options.content || element.getAttribute('popover-content') || element.getAttribute('description') || '',
-    title: options.title || element.getAttribute('popover-title') || element.getAttribute('heading') || '',
+    content: options.content || authoredAttr(element, 'popover-content') || element.getAttribute('description') || '',
+    title: options.title || authoredAttr(element, 'popover-title') || element.getAttribute('heading') || '',
     trigger: options.trigger || element.getAttribute('trigger') || 'click',
     position: options.position || element.getAttribute('position') || 'top',
     ...options
@@ -255,7 +255,7 @@ export function drawer(element, options = {}) {
     ? String(element._wbOriginalSlot).trim()
     : (element.textContent || '').trim();
 
-  const authoredContent = options.content || element.getAttribute('content') || element.getAttribute('drawer-content') || element.getAttribute('description') || originalText;
+  const authoredContent = options.content || element.getAttribute('content') || authoredAttr(element, 'drawer-content') || element.getAttribute('description') || originalText;
 
   const config = {
     // Plain title/content match drawer.schema.json's actual property names.
@@ -276,7 +276,7 @@ export function drawer(element, options = {}) {
     // does via the schema). Content falls back to the host's own original
     // text before falling back to the old hardcoded string, so a bare-text
     // demo shows its own words instead of a generic placeholder.
-    title: options.title || element.getAttribute('title') || element.getAttribute('drawer-title') || element.getAttribute('heading') || '',
+    title: options.title || element.getAttribute('title') || authoredAttr(element, 'drawer-title') || element.getAttribute('heading') || '',
     content: authoredContent || 'Drawer content',
     position: options.position || element.getAttribute('position') || 'right',
     width: options.width || element.getAttribute('width') || '320px',
@@ -598,8 +598,8 @@ export function lightbox(element, options = {}) {
  */
 export function offcanvas(element, options = {}) {
   const config = {
-    title: options.title || element.getAttribute('offcanvas-title') || element.getAttribute('heading') || 'Panel',
-    content: options.content || element.getAttribute('offcanvas-content') || element.getAttribute('description') || 'Panel content',
+    title: options.title || authoredAttr(element, 'offcanvas-title') || element.getAttribute('heading') || 'Panel',
+    content: options.content || authoredAttr(element, 'offcanvas-content') || element.getAttribute('description') || 'Panel content',
     position: options.position || element.getAttribute('position') || 'left',
     ...options
   };
@@ -651,11 +651,11 @@ export function offcanvas(element, options = {}) {
  */
 export function sheet(element, options = {}) {
   const config = {
-    title: options.title || element.getAttribute('sheet-title') || element.getAttribute('heading') || 'Notes',
-    content: options.content || element.getAttribute('sheet-content') || element.getAttribute('description') || '',
+    title: options.title || authoredAttr(element, 'sheet-title') || element.getAttribute('heading') || 'Notes',
+    content: options.content || authoredAttr(element, 'sheet-content') || element.getAttribute('description') || '',
     width: options.width || element.getAttribute('width') || '320px',
-    minWidth: options.minWidth || element.getAttribute('min-width') || '200px',
-    maxWidth: options.maxWidth || element.getAttribute('max-width') || '600px',
+    minWidth: options.minWidth || authoredAttr(element, 'min-width') || '200px',
+    maxWidth: options.maxWidth || authoredAttr(element, 'max-width') || '600px',
     ...options
   };
 
@@ -791,10 +791,10 @@ function openDialog(element, kind, { title, bodyHTML, cancelText, okText, getDet
  */
 export function confirm(element, options = {}) {
   const config = {
-    title: options.title || element.getAttribute('confirm-title') || element.getAttribute('heading') || 'Confirm',
-    message: options.message || element.getAttribute('confirm-message') || element.getAttribute('message') || 'Are you sure?',
-    confirmText: options.confirmText || element.getAttribute('confirm-text') || 'OK',
-    cancelText: options.cancelText || element.getAttribute('cancel-text') || 'Cancel',
+    title: options.title || authoredAttr(element, 'confirm-title') || element.getAttribute('heading') || 'Confirm',
+    message: options.message || authoredAttr(element, 'confirm-message') || element.getAttribute('message') || 'Are you sure?',
+    confirmText: options.confirmText || authoredAttr(element, 'confirm-text') || 'OK',
+    cancelText: options.cancelText || authoredAttr(element, 'cancel-text') || 'Cancel',
     ...options
   };
 
@@ -819,10 +819,10 @@ export function confirm(element, options = {}) {
  */
 export function prompt(element, options = {}) {
   const config = {
-    title: options.title || element.getAttribute('prompt-title') || element.getAttribute('heading') || 'Input',
-    message: options.message || element.getAttribute('prompt-message') || element.getAttribute('message') || '',
+    title: options.title || authoredAttr(element, 'prompt-title') || element.getAttribute('heading') || 'Input',
+    message: options.message || authoredAttr(element, 'prompt-message') || element.getAttribute('message') || '',
     placeholder: options.placeholder || element.getAttribute('placeholder') || '',
-    defaultValue: options.defaultValue || element.getAttribute('default-value') || '',
+    defaultValue: options.defaultValue || authoredAttr(element, 'default-value') || '',
     ...options
   };
 

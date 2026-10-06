@@ -29,7 +29,7 @@ A plain `<input type="range">` gets this behavior automatically; there is no att
 | `valuePrefix` | String | `''` | Prefix for value (e.g., "$"). |
 | `valueSuffix` | String | `''` | Suffix for value (e.g., "%"). |
 
-No attribute name carries a dash — only the `x-` behavior prefix does (#1125). These were `show-value`, `show-labels`, `value-prefix` and `value-suffix` until #1140; the old spellings are still read, so existing markup keeps working, but write the camelCase ones.
+No attribute name carries a dash — only the `x-` behavior prefix does (#1125). These were `showValue`, `showLabels`, `valuePrefix` and `valueSuffix` until #1140; the old spellings are still read, so existing markup keeps working, but write the camelCase ones.
 
 ### Booleans are bare
 Write the attribute to switch it on and leave it out to switch it off:

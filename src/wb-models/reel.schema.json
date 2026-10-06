@@ -5,7 +5,7 @@
   "description": "Horizontally scrolling row whose children snap into place as it scrolls.",
   "schemaFor": "reel",
   "properties": {
-    "item-width": {
+    "itemWidth": {
       "type": "string",
       "description": "Read by reel().",
       "default": "auto",
@@ -34,7 +34,7 @@
   "test": {
     "setup": [
       "<div x-reel>Test Content</div>",
-      "<div x-reel item-width=\"auto\">Test Content</div>",
+      "<div x-reel itemWidth=\"auto\">Test Content</div>",
       "<div x-reel gap=\"1rem\">Test Content</div>"
     ]
   },

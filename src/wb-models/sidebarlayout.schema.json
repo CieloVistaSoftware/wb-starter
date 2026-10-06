@@ -13,7 +13,7 @@
         "right"
       ]
     },
-    "side-width": {
+    "sideWidth": {
       "type": "string",
       "description": "Read by sidebarlayout().",
       "default": "300px",
@@ -22,7 +22,7 @@
         "22rem"
       ]
     },
-    "content-min": {
+    "contentMin": {
       "type": "string",
       "description": "Read by sidebarlayout().",
       "default": "50%"
@@ -47,8 +47,8 @@
     "setup": [
       "<div x-sidebarlayout>Test Content</div>",
       "<div x-sidebarlayout side=\"left\">Test Content</div>",
-      "<div x-sidebarlayout side-width=\"300px\">Test Content</div>",
-      "<div x-sidebarlayout content-min=\"50%\">Test Content</div>",
+      "<div x-sidebarlayout sideWidth=\"300px\">Test Content</div>",
+      "<div x-sidebarlayout contentMin=\"50%\">Test Content</div>",
       "<div x-sidebarlayout gap=\"1rem\">Test Content</div>"
     ]
   },

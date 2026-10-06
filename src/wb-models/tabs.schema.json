@@ -163,7 +163,7 @@
       "<div x-tabs size=\"sm\">size=sm</div>",
       "<div x-tabs size=\"md\">size=md</div>",
       "<div x-tabs size=\"lg\">size=lg</div>",
-      "<div x-tabs full-width>with fullWidth</div>"
+      "<div x-tabs fullWidth>with fullWidth</div>"
     ],
     "matrix": {
       "combinations": [

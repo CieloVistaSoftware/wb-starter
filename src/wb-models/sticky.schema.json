@@ -91,9 +91,9 @@
       "<div x-sticky>Basic sticky content</div>",
       "<div x-sticky animated>with animated</div>",
       "<div x-sticky offset=\"0\">offset=\"0\"</div>",
-      "<div x-sticky z-index=\"100\">zIndex=100</div>",
+      "<div x-sticky zIndex=\"100\">zIndex=100</div>",
       "<div x-sticky threshold=\"50\">threshold=50</div>",
-      "<div x-sticky stuck-class=\"is-stuck\">stuckClass=\"is-stuck\"</div>",
+      "<div x-sticky stuckClass=\"is-stuck\">stuckClass=\"is-stuck\"</div>",
       "<div x-sticky>Navigation</div>"
     ],
     "matrix": {

@@ -1,4 +1,4 @@
-import { readAttr } from '../core/read-attr.js';
+import { readAttr, authoredAttr } from '../core/read-attr.js';
 import { setRule, onlyChanged } from '../core/dynamic-style.js';
 import { centralDateTime } from '../core/central-time.js';
 /**
@@ -40,11 +40,11 @@ export function notes(element, options = {}) {
   // Plain attributes are canonical (Law 11); data-* accepted for back-compat only.
   const config = {
     position: options.position || element.getAttribute('position') || readAttr(element, 'position') || 'left',
-    maxWidth: options.maxWidth || element.getAttribute('max-width') || readAttr(element, 'maxWidth') || '50vw',
-    minWidth: options.minWidth || element.getAttribute('min-width') || readAttr(element, 'minWidth') || '200px',
-    defaultWidth: options.defaultWidth || element.getAttribute('default-width') || readAttr(element, 'defaultWidth') || '320px',
-    autoSave: options.autoSave ?? (element.getAttribute('auto-save') !== 'false' && readAttr(element, 'autoSave') !== 'false'),
-    savePath: options.savePath || element.getAttribute('save-path') || element.dataset.savePath || NOTES_FILE_PATH,
+    maxWidth: options.maxWidth || authoredAttr(element, 'max-width') || readAttr(element, 'maxWidth') || '50vw',
+    minWidth: options.minWidth || authoredAttr(element, 'min-width') || readAttr(element, 'minWidth') || '200px',
+    defaultWidth: options.defaultWidth || authoredAttr(element, 'default-width') || readAttr(element, 'defaultWidth') || '320px',
+    autoSave: options.autoSave ?? (authoredAttr(element, 'auto-save') !== 'false' && readAttr(element, 'autoSave') !== 'false'),
+    savePath: options.savePath || authoredAttr(element, 'save-path') || element.dataset.savePath || NOTES_FILE_PATH,
     placeholder: options.placeholder || element.getAttribute('placeholder') || readAttr(element, 'placeholder') || 'Add your notes here...',
     restoreState: false,
     ...options

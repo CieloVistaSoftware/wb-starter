@@ -397,16 +397,16 @@ function generateOverlayDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'x-popover')) {
     html += '\n    <h3>Popover</h3>\n';
-    html += '    <div x-demo><button variant="primary" x-popover popover-title="Popover Title" popover-content="This is additional information displayed in a popover.">Show Popover</button></div>\n';
+    html += '    <div x-demo><button variant="primary" x-popover popoverTitle="Popover Title" popoverContent="This is additional information displayed in a popover.">Show Popover</button></div>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-confirm' || b.name === 'x-prompt')) {
     html += '\n    <h3>Confirm & Prompt</h3>\n';
     if (behaviors.some(b => b.name === 'x-confirm')) {
-      html += '    <div x-demo><button variant="primary" x-confirm confirm-title="Confirm Action" confirm-message="Are you sure you want to proceed?">Confirm Dialog</button></div>\n';
+      html += '    <div x-demo><button variant="primary" x-confirm confirmTitle="Confirm Action" confirmMessage="Are you sure you want to proceed?">Confirm Dialog</button></div>\n';
     }
     if (behaviors.some(b => b.name === 'x-prompt')) {
-      html += '    <div x-demo><button variant="primary" x-prompt prompt-title="Enter Value" prompt-message="Please enter your name:">Prompt Dialog</button></div>\n';
+      html += '    <div x-demo><button variant="primary" x-prompt promptTitle="Enter Value" promptMessage="Please enter your name:">Prompt Dialog</button></div>\n';
     }
   }
 
@@ -432,7 +432,7 @@ function generateNavigationDemos(behaviors) {
 
   if (behaviors.some(b => b.name === 'x-pagination')) {
     html += '\n    <h3>Pagination</h3>\n';
-    html += '    <div x-demo><nav x-pagination total="100" per-page="10" current="5"></nav></div>\n';
+    html += '    <div x-demo><nav x-pagination total="100" perPage="10" current="5"></nav></div>\n';
   }
 
   if (behaviors.some(b => b.name === 'x-steps')) {
@@ -589,7 +589,7 @@ function generateUtilityDemos(behaviors) {
   if (behaviors.some(b => b.name === 'x-share' || b.name === 'x-print' || b.name === 'x-fullscreen')) {
     html += '\n    <h3>Share, Print & Fullscreen</h3>\n';
     if (behaviors.some(b => b.name === 'x-share')) {
-      html += '    <div x-demo><button variant="secondary" x-share share-title="wb-starter" share-url="https://example.com">📤 Share</button></div>\n';
+      html += '    <div x-demo><button variant="secondary" x-share shareTitle="wb-starter" shareUrl="https://example.com">📤 Share</button></div>\n';
     }
     if (behaviors.some(b => b.name === 'x-print')) {
       html += '    <div x-demo><button variant="secondary" x-print>🖨️ Print</button></div>\n';

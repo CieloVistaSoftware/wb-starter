@@ -25,7 +25,7 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 | `justify` | string | `"start"` | `start`, `center`, `end`, `space-between`, `space-around`, `space-evenly` |
 | `wrap` | boolean | `true` | Whether flex-mode children wrap (`false` forces `nowrap`) |
 | `padding` | string | `"1rem"` | Padding on the container itself |
-| `max-width` | string | `""` | Optional max-width; when set, also centers via `margin: 0 auto` |
+| `maxWidth` | string | `""` | Optional max-width; when set, also centers via `margin: 0 auto` |
 
 ## Usage
 
@@ -60,7 +60,7 @@ Full-featured layout container that switches between a flex stack/row (1 column)
 ### Centered, Max-Width
 
 ```html
-<div x-container max-width="640px" padding="2rem">
+<div x-container maxWidth="640px" padding="2rem">
   <p>Centered reading-width content block.</p>
 </div>
 ```
@@ -110,7 +110,7 @@ None. `<div x-container>` dispatches no custom events.
 
 ## CSS API
 
-`container()` has no dedicated CSS custom properties -- `gap`/`align`/`justify`/`padding`/`max-width` are all set directly from attributes as inline styles.
+`container()` has no dedicated CSS custom properties -- `gap`/`align`/`justify`/`padding`/`maxWidth` are all set directly from attributes as inline styles.
 
 | Variable | Used For | Description |
 |----------|----------|--------------|

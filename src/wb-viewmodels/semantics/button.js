@@ -1,3 +1,4 @@
+import { authoredAttr, hasAuthoredAttr } from '../../core/read-attr.js';
 /**
  * Button - Semantic enhancement for <button> and <button>
  * 
@@ -182,7 +183,7 @@ function applyIconAndLoading(element, options) {
   // never matches. Same recurring pattern already fixed for cardhorizontal's
   // image-position (#601-603): check both the correct kebab-case form and
   // the no-hyphen form a camelCase author would actually produce.
-  const iconPosition = options.iconPosition || element.getAttribute('icon-position') || element.getAttribute('iconposition') || 'start';
+  const iconPosition = options.iconPosition || authoredAttr(element, 'iconPosition') || 'start';
   const loading = options.loading ?? element.hasAttribute('loading');
 
   if (element.hasAttribute('icon') && !icon) {
@@ -301,7 +302,7 @@ export function button(element, options = {}) {
   // #669 -- John: "<button icononly> no icon". iconOnly and fullWidth were
   // declared in button.schema.json and read NOWHERE. Both map to the same
   // modifier-class mechanism `variant`/`size` already use.
-  if (element.hasAttribute('icononly') || element.hasAttribute('icon-only')) {
+  if (hasAuthoredAttr(element, 'iconOnly')) {
     element.classList.add('x-button--icon-only');
     applied.push('x-button--icon-only');
     // An icon-only button has no visible label, so it needs an accessible one.
@@ -310,7 +311,7 @@ export function button(element, options = {}) {
       if (text) element.setAttribute('aria-label', text);
     }
   }
-  if (element.hasAttribute('fullwidth') || element.hasAttribute('full-width')) {
+  if (hasAuthoredAttr(element, 'fullWidth')) {
     element.classList.add('x-button--full-width');
     applied.push('x-button--full-width');
   }

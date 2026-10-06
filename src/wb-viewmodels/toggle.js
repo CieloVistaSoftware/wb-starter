@@ -1,3 +1,4 @@
+import { authoredAttr } from '../core/read-attr.js';
 /**
  * Toggle Behavior
  * -----------------------------------------------------------------------------
@@ -17,10 +18,10 @@ export function toggle(element, options = {}) {
     // `toggle-class` (the documented spelling) and the 'active' default were
     // unreachable for any element with a class. toggle.schema.json declares
     // only `target`, so nothing justified reading the class attribute.
-    class: options.class || element.getAttribute('toggle-class') || 'active',
+    class: options.class || authoredAttr(element, 'toggle-class') || 'active',
     // Support both data-target/data-toggle-target for flexibility
-    target: options.target || element.getAttribute('target') || element.getAttribute('toggle-target'),
-    self: options.self ?? (element.getAttribute('toggle-self') !== 'false'),
+    target: options.target || element.getAttribute('target') || authoredAttr(element, 'toggle-target'),
+    self: options.self ?? (authoredAttr(element, 'toggle-self') !== 'false'),
     ...options
   };
 

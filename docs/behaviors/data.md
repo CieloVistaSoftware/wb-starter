@@ -14,7 +14,7 @@ The `<data>` element links content with a machine-readable value. In WB-Starter,
 
 `x-cardstats` builds its own `<data>` element from the `value` attribute —
 hand-authored children are replaced, not merged. The trend line uses `trend`
-(`up`/`down`) plus `trend-value` for the display text.
+(`up`/`down`) plus `trendValue` for the display text.
 
 <div x-demo>
 <article
@@ -22,21 +22,21 @@ hand-authored children are replaced, not merged. The trend line uses `trend`
   value="1234"
   label="Total Users"
   trend="up"
-  trend-value="+12%">
+  trendValue="+12%">
 </article>
 </div>
 
 ### 2. Card Product (`cardproduct`)
 
 **Note:** `cardproduct` displays price as a plain `<span class="x-card__price-current">`,
-not a `<data>` element — its `price`/`original-price` attributes are strings
+not a `<data>` element — its `price`/`originalPrice` attributes are strings
 shown verbatim, not machine-readable values.
 
 <div x-demo>
 <article
   x-cardproduct
   price="$99.99"
-  original-price="$129.99"
+  originalPrice="$129.99"
   description="Wireless headphones">
 </article>
 </div>
@@ -85,7 +85,7 @@ shown verbatim, not machine-readable values.
     value="15234"
     label="Active Users"
     trend="up"
-    trend-value="8%">
+    trendValue="8%">
   </article>
   <article
     x-cardstats
@@ -93,7 +93,7 @@ shown verbatim, not machine-readable values.
     value="$52,340.50"
     label="Revenue"
     trend="down"
-    trend-value="3%">
+    trendValue="3%">
   </article>
 </section>
 </div>

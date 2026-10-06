@@ -28,7 +28,7 @@
         "3rem"
       ]
     },
-    "min-width": {
+    "minWidth": {
       "type": "string",
       "description": "Read by grid().",
       "default": "this is the min width"
@@ -58,7 +58,7 @@
       "description": "Read by grid(). Bare attribute.",
       "default": false
     },
-    "alt-rows": {
+    "altRows": {
       "type": "boolean",
       "description": "Read by grid(). Bare attribute.",
       "default": false
@@ -76,7 +76,7 @@
       "<div x-grid columns=\"3\">Test Content</div>",
       "<div x-grid gap=\"1rem\">Test Content</div>",
       "<div x-grid center>Test Content</div>",
-      "<div x-grid alt-rows>Test Content</div>"
+      "<div x-grid altRows>Test Content</div>"
     ]
   },
   "_metadata": {

@@ -1,6 +1,6 @@
 # Code
 
-A `<code>` element gets syntax highlighting for its `language` and, with `show-copy`, a copy-to-clipboard button; `variant` and `size` set the surface it is drawn on and its type scale.
+A `<code>` element gets syntax highlighting for its `language` and, with `showCopy`, a copy-to-clipboard button; `variant` and `size` set the surface it is drawn on and its type scale.
 
 ## Usage
 
@@ -44,8 +44,8 @@ No attribute needed on `<code>`. Don't add `x-code` to it (#746).
 | `variant` | `string` | — | Visual treatment of the code span or block — controls the surface it is drawn on. |
 | `scrollable` | `string` | — | When `"true"`, scroll horizontally rather than wrapping long lines. |
 | `size` | `string` | — | Type scale for the code text: `xs`, `sm`, `md`, `lg`. Defaults to `md`. |
-| `show-copy` | `boolean` | `false` | Show a copy-to-clipboard button. |
-| `data-show-copy` | `boolean` | `false` | The `data-` spelling of `show-copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `show-copy`. |
+| `showCopy` | `boolean` | `false` | Show a copy-to-clipboard button. |
+| `data-show-copy` | `boolean` | `false` | The `data-` spelling of `showCopy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `showCopy`. |
 | `data-copy` | `boolean` | `false` | The `data-` spelling of `copy`, read as a fallback when the plain form is absent (#752). Identical effect; prefer `copy`. |
 
 ## Events

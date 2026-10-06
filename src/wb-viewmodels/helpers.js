@@ -1,4 +1,4 @@
-import { readFlag, readAttr } from '../core/read-attr.js';
+import { readFlag, readAttr, authoredAttr } from '../core/read-attr.js';
 import { writeToClipboard } from './copy.js';
 import { setRule, clearRules } from '../core/dynamic-style.js';
 import { TIME_ZONE, clockParts } from '../core/central-time.js';
@@ -142,9 +142,9 @@ export function print(element, options = {}) {
  */
 export function share(element, options = {}) {
   const config = {
-    title: options.title || element.getAttribute('share-title') || element.getAttribute('title') || document.title,
-    text: options.text || element.getAttribute('share-text') || element.getAttribute('text') || '',
-    url: options.url || element.getAttribute('share-url') || element.getAttribute('url') || window.location.href,
+    title: options.title || authoredAttr(element, 'share-title') || element.getAttribute('title') || document.title,
+    text: options.text || authoredAttr(element, 'share-text') || element.getAttribute('text') || '',
+    url: options.url || authoredAttr(element, 'share-url') || element.getAttribute('url') || window.location.href,
     label: options.label || element.getAttribute('label') || '📤 Share',
     ...options
   };
@@ -405,7 +405,7 @@ export function hotkey(element, options = {}) {
 export function clipboard(element, options = {}) {
   const config = {
     target: options.target || element.getAttribute('target') || '',
-    text: options.text || element.getAttribute('clipboard-text') || element.getAttribute('text') || '',
+    text: options.text || authoredAttr(element, 'clipboard-text') || element.getAttribute('text') || '',
     label: options.label || element.getAttribute('label') || '📋 Copy to Clipboard',
     feedback: options.feedback || element.getAttribute('feedback') || '✓ Copied!',
     ...options
@@ -458,7 +458,7 @@ export function clipboard(element, options = {}) {
  */
 export function scroll(element, options = {}) {
   const config = {
-    target: options.target || element.getAttribute('scroll-to') || element.getAttribute('target') || '',
+    target: options.target || authoredAttr(element, 'scroll-to') || element.getAttribute('target') || '',
     behavior: options.behavior || element.getAttribute('behavior') || 'smooth',
     offset: parseInt(options.offset || element.getAttribute('offset') || '0'),
     label: options.label || element.getAttribute('label') || '↓ Scroll',
@@ -543,7 +543,7 @@ export function highlight(element, options = {}) {
   // author's color / text-color travels as a generated rule.
   const config = {
     color: options.color || element.getAttribute('color') || '',
-    textColor: options.textColor || element.getAttribute('text-color') || '',
+    textColor: options.textColor || authoredAttr(element, 'text-color') || '',
     ...options
   };
 
@@ -563,7 +563,7 @@ export function highlight(element, options = {}) {
 export function external(element, options = {}) {
   const config = {
     icon: options.icon ?? element.getAttribute('icon') !== 'false',
-    newTab: options.newTab ?? element.getAttribute('new-tab') !== 'false',
+    newTab: options.newTab ?? authoredAttr(element, 'new-tab') !== 'false',
     ...options
   };
 
@@ -721,7 +721,7 @@ export function clock(element, options = {}) {
     ...options,
     variant: clockVariant(options.variant || element.getAttribute('variant')),
     format: rawFormat === '12' ? '12' : '24',
-    showSeconds: String(options.showSeconds ?? element.getAttribute('show-seconds') ?? '').trim() !== 'false',
+    showSeconds: String(options.showSeconds ?? authoredAttr(element, 'show-seconds') ?? '').trim() !== 'false',
     timeZone: clockZone(options.timezone || element.getAttribute('timezone')),
   };
 
@@ -853,10 +853,10 @@ export function visible(element, options = {}) {
  */
 export function debug(element, options = {}) {
   const config = {
-    showErrors: options.showErrors ?? element.getAttribute('show-errors') !== 'false',
-    showWarnings: options.showWarnings ?? element.getAttribute('show-warnings') !== 'false',
+    showErrors: options.showErrors ?? authoredAttr(element, 'show-errors') !== 'false',
+    showWarnings: options.showWarnings ?? authoredAttr(element, 'show-warnings') !== 'false',
     showLogs: options.showLogs ?? readFlag(element, 'show-logs'),
-    maxMessages: parseInt(options.maxMessages || element.getAttribute('max-messages') || '50'),
+    maxMessages: parseInt(options.maxMessages || authoredAttr(element, 'max-messages') || '50'),
     position: options.position || element.getAttribute('position') || 'bottom-right',
     ...options
   };

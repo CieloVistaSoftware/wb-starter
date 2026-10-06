@@ -14,7 +14,7 @@
 | --- | --- | --- | --- |
 | `count` | `number` | `30` | Particles per burst |
 | `label` | `string` | `Fireworks!` | Trigger button label |
-| `show-button` | `boolean` | `true` | Show trigger button |
+| `showButton` | `boolean` | `true` | Show trigger button |
 | `repeat` | `boolean` | `false` | Loop animation |
 | `delay` | `string` | `0s` | Start delay |
 | `duration` | `string` | `1.5s` | Animation duration |

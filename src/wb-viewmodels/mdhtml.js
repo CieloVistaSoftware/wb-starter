@@ -1,4 +1,4 @@
-import { readOption } from '../core/read-attr.js';
+import { readOption, authoredAttr } from '../core/read-attr.js';
 /**
  * Markdown to HTML Behavior
  * -----------------------------------------------------------------------------
@@ -158,7 +158,7 @@ export async function mdhtml(element, options = {}) {
     // via `breaks="true"` if a specific doc genuinely wants hard breaks.
     breaks: options.breaks ?? (element.getAttribute('breaks') === 'true'),
     gfm: options.gfm ?? (element.getAttribute('gfm') !== 'false'),
-    headerIds: options.headerIds ?? (element.getAttribute('header-ids') !== 'false'),
+    headerIds: options.headerIds ?? (authoredAttr(element, 'header-ids') !== 'false'),
     highlight: options.highlight ?? element.getAttribute('highlight'),
     size: options.size || element.getAttribute('size') || 'xs',
     // Auto-live-render (below) was built for CURATED docs content, where a
@@ -169,7 +169,7 @@ export async function mdhtml(element, options = {}) {
     // this exact bug (a fenced `<div x-mdhtml src="/docs/guide.md">` example)
     // got auto-promoted to a real, live, fetching element on pages/issues.html,
     // reproducing the very 404 the issue was reporting.
-    autoLiveRender: options.autoLiveRender ?? (element.getAttribute('auto-live-render') !== 'false'),
+    autoLiveRender: options.autoLiveRender ?? (authoredAttr(element, 'auto-live-render') !== 'false'),
     ...options
   };
 

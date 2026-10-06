@@ -5,7 +5,7 @@
   "description": "A full-height flex column that centers its content, with a <header> child pinned to the top and a <footer> child pinned to the bottom -- the hero or splash-screen layout.",
   "schemaFor": "cover",
   "properties": {
-    "min-height": {
+    "minHeight": {
       "type": "string",
       "description": "Read by cover().",
       "default": "100vh",
@@ -34,7 +34,7 @@
   "test": {
     "setup": [
       "<div x-cover>Test Content</div>",
-      "<div x-cover min-height=\"100vh\">Test Content</div>",
+      "<div x-cover minHeight=\"100vh\">Test Content</div>",
       "<div x-cover padding=\"1rem\">Test Content</div>"
     ]
   },

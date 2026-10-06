@@ -199,8 +199,8 @@
   "test": {
     "setup": [
       "<div x-switch>Basic switch content</div>",
-      "<div x-switch label-position=\"start\">labelPosition=start</div>",
-      "<div x-switch label-position=\"end\">labelPosition=end</div>",
+      "<div x-switch labelPosition=\"start\">labelPosition=start</div>",
+      "<div x-switch labelPosition=\"end\">labelPosition=end</div>",
       "<div x-switch size=\"sm\">size=sm</div>",
       "<div x-switch size=\"md\">size=md</div>",
       "<div x-switch size=\"lg\">size=lg</div>",

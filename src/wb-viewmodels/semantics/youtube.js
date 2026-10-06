@@ -1,3 +1,4 @@
+import { authoredAttr } from '../../core/read-attr.js';
 import { setRule } from '../../core/dynamic-style.js';
 /**
  * YouTube - YouTube embed
@@ -73,7 +74,7 @@ export function youtube(element, options = {}) {
     // (scripts/generate-behaviors-page.js) emits data-id="...", and only
     // pages/components.html actually matches video-id -- three different
     // names for the same thing, only one of which this ever read (#377).
-    id: options.id || element.getAttribute('video-id') || element.getAttribute('id') || element.dataset.id || (url ? extractYouTubeId(url) : null),
+    id: options.id || authoredAttr(element, 'video-id') || element.getAttribute('id') || element.dataset.id || (url ? extractYouTubeId(url) : null),
     autoplay: options.autoplay ?? element.hasAttribute('autoplay'),
     muted: options.muted ?? element.hasAttribute('muted'),
     loop: options.loop ?? element.hasAttribute('loop'),

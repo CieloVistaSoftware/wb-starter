@@ -1,4 +1,4 @@
-import { readFlag, readNumber } from '../core/read-attr.js';
+import { readFlag, readNumber, authoredAttr } from '../core/read-attr.js';
 import { setRule } from '../core/dynamic-style.js';
 /**
  * Dropdown Behavior
@@ -27,7 +27,7 @@ export function dropdown(element, options = {}) {
     // must match, or the posStyles lookup below always misses and every
     // position value collapses to the same fallback.
     position: options.position || element.getAttribute('position') || 'bottom-start',
-    closeOnSelect: options.closeOnSelect ?? (element.getAttribute('close-on-select') !== 'false'),
+    closeOnSelect: options.closeOnSelect ?? (authoredAttr(element, 'close-on-select') !== 'false'),
     // dropdown.schema.json declares trigger: click|hover, but this was never
     // actually read anywhere in this file -- only the unconditional click
     // handler below existed, so `trigger="hover"` silently did nothing

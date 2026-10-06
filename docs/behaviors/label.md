@@ -17,11 +17,11 @@ inserts it right before the control, so it renders to its left. `required` /
 
 ## Label on the right
 
-`label-position="right"` puts the label after the control instead. Use it for
+`labelPosition="right"` puts the label after the control instead. Use it for
 RTL layouts (Hebrew, Arabic), where the label conventionally sits on the right:
 
 <div x-demo>
-<input x-label="שם מלא" label-position="right" type="text">
+<input x-label="שם מלא" labelPosition="right" type="text">
 </div>
 
 ## On your own label

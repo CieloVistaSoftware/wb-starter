@@ -1,6 +1,6 @@
 # Expandable Card
 
-`x-cardexpandable` renders a card whose body is clipped to `lines` lines (or `max-height`) with a control that expands it to full length and back. Use it for long descriptions in a grid of cards that should line up.
+`x-cardexpandable` renders a card whose body is clipped to `lines` lines (or `maxHeight`) with a control that expands it to full length and back. Use it for long descriptions in a grid of cards that should line up.
 
 ## Usage
 
@@ -14,7 +14,7 @@
 ## When Show More appears
 
 Show More only appears when the collapsed card is hiding something. If the
-content already fits inside `lines` or `max-height` (a short text, or a card wide
+content already fits inside `lines` or `maxHeight` (a short text, or a card wide
 enough that the text wraps to fewer lines than the limit), there is nothing to
 reveal, so the card shows no button. It checks again whenever its width or
 content changes, and brings the button back once something is hidden. An
@@ -35,7 +35,7 @@ John: "None of these show anything in the expanded area."
 The same symptom had been reported before and traced to the cards demo being
 too wide for its text. That fix narrowed that one demo (`size="sm"`), and its
 test (`tests/regression/x-cardexpandable-toggle-visibly-changes.spec.ts`) checks
-one hand-built narrow card on the `max-height` path. It never rendered the
+one hand-built narrow card on the `maxHeight` path. It never rendered the
 real examples, or the `lines` clamp they use, so it stayed green while they
 were broken.
 
@@ -58,7 +58,7 @@ The fix:
 | `title` | `string` | — | Card title |
 | `content` | `string` | — | Expandable content |
 | `expanded` | `boolean` | `false` | Initial expanded state |
-| `max-height` | `string` | `100px` | Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply. |
+| `maxHeight` | `string` | `100px` | Max height when collapsed (pixel/unit string). Ignored when `lines` is set -- use maxHeight for non-text/mixed content where line-clamp doesn't apply. |
 | `lines` | `number` | `null` | Clamp collapsed text to exactly N full lines via CSS line-clamp, instead of an arbitrary pixel maxHeight. Takes priority over maxHeight when set. |
 | `variant` | `default` · `elevated` · `bordered` | `default` |  |
 

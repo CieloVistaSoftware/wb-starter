@@ -310,7 +310,7 @@ These are WB-standard attributes that have no native equivalent:
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
 | `trend` | enum | Trend direction | `trend="up"` |
-| `trend-value` | string | Trend amount | `trend-value="+5%"` |
+| `trendValue` | string | Trend amount | `trendValue="+5%"` |
 | `featured` | boolean | Featured/highlighted | `featured` |
 | `badge` | string | Badge text | `badge="NEW"` |
 
@@ -422,7 +422,16 @@ values rendered `h3` and the demo rows were identical.
 
 **So read attributes with `readAttr()`** from `src/core/read-attr.js`, never a raw
 `getAttribute`. It tries `headingLevel`, `heading-level`, `data-heading-level` and
-dataset, so the authored spelling cannot miss.
+dataset, so the authored spelling cannot miss. Where the code needs `getAttribute`'s
+own contract (null when absent, `""` when bare), use `authoredAttr()` from the same
+file, and `hasAuthoredAttr()` in place of `hasAttribute`: they look up both
+spellings and nothing else (#1125).
+
+The dashed spelling keeps working as a read fallback, so markup already written
+does not break. `tests/regression/camelcase-options-read-like-kebab.spec.ts` renders
+every multi-word schema option in both spellings, on `<div x-…>` and on each native
+host (`<input>`, `<textarea>`, `<progress>`, …), and fails on any that builds
+differently.
 
 `aria-*` and `data-*` are HTML platform attributes and keep their dashes. This rule
 is about the ones we invent.
@@ -573,18 +582,18 @@ Some ARIA attributes are set automatically by behaviors:
 | `duration` | Milliseconds assumed | `duration="3000"` (3 seconds) |
 | `delay` | Seconds assumed | `delay="0.5"` |
 | `value`, `min`, `max` | Unitless (number) | `value="75"` |
-| `per-page` | Unitless (count) | `per-page="10"` |
+| `perPage` | Unitless (count) | `perPage="10"` |
 
 ```html
 <!-- Units included -->
 <div x-grid
   gap="1.5rem"
-  min-width="280px">
+  minWidth="280px">
   <!-- Unitless -->
   <nav
     x-pagination
     total="100"
-    per-page="10"
+    perPage="10"
     current="3">
     <progress
       value="75"
@@ -827,7 +836,7 @@ name         attribute with DIFFERENT meaning?
   label="Users"
   icon="👥"
   trend="up"
-  trend-value="+12%">
+  trendValue="+12%">
 </div>
 <div x-cardimage
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg"
@@ -869,7 +878,7 @@ name         attribute with DIFFERENT meaning?
 <nav
   x-pagination
   total="100"
-  per-page="10"
+  perPage="10"
   current="3">
 </nav>
 <div

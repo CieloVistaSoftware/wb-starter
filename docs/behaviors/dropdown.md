@@ -18,7 +18,7 @@ value that a form submits, use a plain [`<select>`](select.md)
 | Semantic element | `<div implicitRole="menu">` |
 | Root CSS Class | `<div x-dropdown>` (plus `x-dropdown-trigger` on the host itself) |
 | Category | Overlay |
-| Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — `close-on-outside="false"` keeps the menu open on outside clicks; `offset` is the gap in px between trigger and menu (default 4) |
+| Schema | [dropdown.schema.json](../../src/wb-models/dropdown.schema.json) — `closeOnOutside="false"` keeps the menu open on outside clicks; `offset` is the gap in px between trigger and menu (default 4) |
 
 ## Properties
 
@@ -27,7 +27,7 @@ value that a form submits, use a plain [`<select>`](select.md)
 | `items` | string | `""` | Comma-separated list of menu item labels (e.g. `"Profile,Settings,Logout"`). Ignored if the host already has real `<a>`/`<button>`/`<div>` children |
 | `label` | string | `""` | Trigger button text. If set (or the host has real child items), a dedicated `<button class="x-dropdown__trigger">` is built; otherwise the host's own text content is the clickable trigger |
 | `position` | string | `"bottom-start"` | `bottom-start`, `bottom-end`, `top-start`, `top-end` — sets which corner the menu opens from |
-| `close-on-select` | boolean | `true` (unless the value is literally `"false"`) | Whether choosing a menu item closes the dropdown |
+| `closeOnSelect` | boolean | `true` (unless the value is literally `"false"`) | Whether choosing a menu item closes the dropdown |
 | `trigger` | string | `"click"` | `click` or `hover`. In hover mode there's a 150ms close delay so the pointer can travel from the trigger into the menu |
 
 ## Usage

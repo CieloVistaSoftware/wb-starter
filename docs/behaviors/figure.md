@@ -1,6 +1,6 @@
 # Figure
 
-A plain `<figure>` gets image handling: clicking the image opens it in a lightbox (write `lightbox="false"` to stop that), `caption` sets the `<figcaption>` text, and `caption-position="overlay"` lays the caption across the bottom of the image.
+A plain `<figure>` gets image handling: clicking the image opens it in a lightbox (write `lightbox="false"` to stop that), `caption` sets the `<figcaption>` text, and `captionPosition="overlay"` lays the caption across the bottom of the image.
 
 ## Usage
 
@@ -26,7 +26,7 @@ No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 </figure>
 </div>
 
-**Set the image's shape on the `<img>`.** A figure has no height of its own: it is as tall as its image plus its caption. Give the image both `width` and `height`, or an `aspect-ratio`, and it is cropped to that shape (see [Img](img.md#controlling-size)).
+**Set the image's shape on the `<img>`.** A figure has no height of its own: it is as tall as its image plus its caption. Give the image both `width` and `height`, or an `aspectRatio`, and it is cropped to that shape (see [Img](img.md#controlling-size)).
 
 <div x-demo>
 <figure width="240">
@@ -39,7 +39,7 @@ No attribute needed on `<figure>`. Don't add `x-figure` to it (#746).
 
 | Attribute | Values | Default | Description |
 | --- | --- | --- | --- |
-| `caption-position` | `string` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
+| `captionPosition` | `string` | `bottom` | Where the caption sits: `bottom` (default) places it beneath the image; `overlay` positions it absolutely across the bottom of the image on a translucent dark bar. |
 | `zoom` | `boolean` | `false` | Clicking the image opens it at full size. Bare attribute. |
 | `lightbox` | `string` | — | Open the image in a lightbox on click. **On by default** — this is opt-OUT, so write `lightbox="false"` to disable it. |
 | `caption` | `string` | — | Caption text. Sets the `<figcaption>` content, creating one if the figure has none. |

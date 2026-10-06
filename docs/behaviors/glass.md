@@ -15,7 +15,7 @@ blocks the scene; the difference between the two is the effect.
   pretitle="x-glass"
   title="Infinite Possibility."
   cta="Try the Playground"
-  cta-secondary="Read the Guide"></section>
+  ctaSecondary="Read the Guide"></section>
 </div>
 
 ## What it does

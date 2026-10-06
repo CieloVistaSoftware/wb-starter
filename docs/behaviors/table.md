@@ -50,7 +50,7 @@ On another element, write `x-table`:
 | `copyable` | `boolean` | `false` | Add a control that copies the table as text. |
 | `selectable` | `boolean` | `false` | Let a row be clicked to become the active row. |
 
-No attribute name carries a dash — only the `x-` behavior prefix does (#1125). This table said `page-size` until #1344, while `table.schema.json` has always said `pageSize`; the dashed spelling is still read, so existing markup keeps working, but write the camelCase one.
+No attribute name carries a dash — only the `x-` behavior prefix does (#1125). This table said `pageSize` until #1344, while `table.schema.json` has always said `pageSize`; the dashed spelling is still read, so existing markup keeps working, but write the camelCase one.
 
 `hover` is not an attribute. It was read by the behavior but declared nowhere, and was dropped in #1344 — the option is `hoverable`.
 

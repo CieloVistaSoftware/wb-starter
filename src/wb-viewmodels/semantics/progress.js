@@ -1,5 +1,5 @@
 import { setRule, clearRulesIn } from '../../core/dynamic-style.js';
-import { readFlag } from '../../core/read-attr.js';
+import { readFlag, authoredAttr } from '../../core/read-attr.js';
 /**
  * Progress - a labeled, variant-colored fill bar
  * Helper Attribute: [x-behavior="progress"]
@@ -93,7 +93,7 @@ export function progress(element, options = {}) {
     // span needed. `label="..."` overrides the text; `show-label="false"` hides
     // it. showValue appends the percentage alongside a CUSTOM label instead of
     // dropping it in favor of the label text.
-    showLabel: options.showLabel ?? (src.getAttribute('show-label') !== 'false'),
+    showLabel: options.showLabel ?? (authoredAttr(src, 'show-label') !== 'false'),
     // readFlag, not hasAttribute: show-value="false" must mean off (#747).
     showValue: options.showValue ?? readFlag(src, 'show-value'),
     label: options.label ?? src.getAttribute('label'),

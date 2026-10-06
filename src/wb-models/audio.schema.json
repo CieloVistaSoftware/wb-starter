@@ -254,7 +254,7 @@
       "<audio loop>with loop</audio>",
       "<audio autoplay>with autoplay</audio>",
       "<audio muted>with muted</audio>",
-      "<audio show-eq>with showEq</audio>",
+      "<audio showEq>with showEq</audio>",
       "<audio src=\"Sample src\">src=\"Sample src\"</audio>",
       "<audio volume=\"0.8\">volume=0.8</audio>",
       "<audio bass=\"0\">bass=0</audio>"

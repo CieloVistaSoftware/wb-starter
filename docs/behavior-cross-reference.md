@@ -225,7 +225,7 @@ These behaviors enhance the element while preserving its identity.
 - `variant` - Button style (primary, secondary, etc.)
 - `size` - Button size (xs, sm, md, lg, xl)
 - `icon` - Icon character
-- `icon-position` - left or right
+- `iconPosition` - left or right
 - `loading` - Show loading spinner
 - `disabled` - Disable button
 
@@ -280,7 +280,7 @@ With icons:
 </button>
 <button
   icon="→"
-  icon-position="right">
+  iconPosition="right">
   Next
 </button>
 <button icon="←">Back</button>
@@ -316,7 +316,7 @@ Combined (variant + size + icon together):
   variant="success"
   size="lg"
   icon="✓"
-  icon-position="right">
+  iconPosition="right">
   Confirm Order
 </button>
 </div>
@@ -700,7 +700,7 @@ The `dialog` behavior only decorates a **real, already-open** `<dialog open>` in
 place (see the Auto-Injection demo above) — it does not wire up a show/hide
 trigger. For a self-contained trigger button that builds and opens a dialog on
 click with no JavaScript, put `x-modal` on a `<button>` (`semantics/dialog.js`,
-exported as `modal`): `modal-title`/`modal-content` attributes supply the
+exported as `modal`): `modalTitle`/`modalContent` attributes supply the
 dialog's contents, and the button's own text becomes the trigger label. Every
 dialog it opens gets the same auto-generated Cancel/OK footer. (A `<dialog>` is
 the popup itself, hidden until opened -- it is never the thing you click.)
@@ -709,7 +709,7 @@ Basic modal:
 
 <div x-demo>
 <button x-modal
-  modal-title="Welcome!"
+  modalTitle="Welcome!"
   modal-content="<p>Thanks for visiting our site.</p>">
   Show Welcome
 </button>
@@ -719,7 +719,7 @@ Confirmation dialog:
 
 <div x-demo>
 <button x-modal
-  modal-title="Delete Item?"
+  modalTitle="Delete Item?"
   modal-content="<p>This action cannot be undone. Are you sure?</p>">
   🗑️ Delete
 </button>
@@ -729,7 +729,7 @@ Form in dialog:
 
 <div x-demo>
 <button x-modal
-  modal-title="Sign In"
+  modalTitle="Sign In"
   modal-content='<label>Email <input type="email" placeholder="you@example.com"></label><label>Password <input type="password" placeholder="••••••••"></label>'>
   Sign In
 </button>
@@ -739,7 +739,7 @@ Image lightbox dialog:
 
 <div x-demo>
 <button x-modal
-  modal-title="Full Size Photo"
+  modalTitle="Full Size Photo"
   modal-content='<img src="https://placehold.co/1200x800/1e293b/e2e8f0?text=Full+Size+Photo" alt="Full size photo">'>
   <img
     src="https://placehold.co/200x150/1e293b/e2e8f0?text=Thumbnail"
@@ -751,7 +751,7 @@ Terms and conditions:
 
 <div x-demo>
 <button x-modal
-  modal-title="Terms of Service"
+  modalTitle="Terms of Service"
   modal-content='<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p><label><input type="checkbox"> I agree to the terms and conditions</label>'>
   📜 View Terms
 </button>
@@ -761,7 +761,7 @@ Settings dialog:
 
 <div x-demo>
 <button x-modal
-  modal-title="Settings"
+  modalTitle="Settings"
   modal-content='<fieldset><legend>Notifications</legend><label><input type="checkbox" checked> Email notifications</label><label><input type="checkbox"> Push notifications</label><label><input type="checkbox" checked> Weekly digest</label></fieldset><fieldset><legend>Privacy</legend><label><input type="checkbox"> Show online status</label><label><input type="checkbox" checked> Allow search engines</label></fieldset>'>
   ⚙️ Settings
 </button>
@@ -2627,7 +2627,7 @@ Stat card:
 **Card Grid Example:**
 
 <div x-demo>
-<div x-grid min-width="250px" gap="1.5rem">
+<div x-grid minWidth="250px" gap="1.5rem">
   <article>
     <header>
       <h3>Card 1</h3>
@@ -3106,7 +3106,7 @@ Admin sidebar with icons:
 **Layout with Sidebar:**
 
 <div x-demo>
-<div x-flex min-height="100vh">
+<div x-flex minHeight="100vh">
   <aside style="width: 240px; flex-shrink: 0;">
     <nav>
       <a href="#">Dashboard</a>
@@ -3333,7 +3333,7 @@ Responsive grid with min-width:
 
 <div x-demo>
 <div x-grid
-  min-width="250px"
+  minWidth="250px"
   gap="2rem">
   <article>Card 1</article>
   <article>Card 2</article>
@@ -3397,7 +3397,7 @@ Centered content with max-width:
 
 <div x-demo>
 <div x-container
-  max-width="800px"
+  maxWidth="800px"
   padding="2rem">
   <h1>Article Title</h1>
   <p>Content goes here...</p>
@@ -3420,7 +3420,7 @@ Multi-column grid mode:
 Max-width centering:
 
 <div x-demo>
-<div x-center max-width="600px">
+<div x-center maxWidth="600px">
   <h1>Centered Heading</h1>
 </div>
 </div>
@@ -3438,7 +3438,7 @@ Intrinsic centering (based on content width):
 Full-screen hero with vertical centering:
 
 <div x-demo>
-<div x-cover min-height="320px">
+<div x-cover minHeight="320px">
   <header>Logo</header>
   <h1>Main Content</h1>
   <p>This is vertically centered</p>
@@ -3453,7 +3453,7 @@ Two-column layout with sidebar:
 <div x-demo>
 <div x-sidebarlayout
   side="left"
-  side-width="250px"
+  sideWidth="250px"
   gap="2rem">
   <aside>
     <nav>Sidebar navigation</nav>
@@ -3493,7 +3493,7 @@ Horizontal scroll carousel:
 
 <div x-demo>
 <div x-reel
-  item-width="300px"
+  itemWidth="300px"
   gap="1rem">
   <article>Card 1</article>
   <article>Card 2</article>
@@ -3529,7 +3529,7 @@ Sticky header:
 <div x-demo>
 <div x-sticky
   top="0"
-  z-index="100">
+  zIndex="100">
   <header>This stays at top when scrolling</header>
 </div>
 </div>

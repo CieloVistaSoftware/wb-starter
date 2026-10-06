@@ -24,7 +24,7 @@ No attribute needed on `<input>`. Don't add `x-input` to it (#746).
 | `placeholder` | `string` | — | Placeholder text |
 | `value` | `string` | — | Input value |
 | `name` | `string` | — | Form field name |
-| `input-type` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type |
+| `inputType` | `text` · `email` · `password` · `number` · `tel` · `url` · `search` · `date` · `time` · `datetime-local` | `text` | HTML input type |
 | `helper` | `string` | — | Helper text below input |
 | `error` | `string` | — | Error message (shows error state) |
 | `variant` | `default` · `success` · `error` | `default` | Visual validation state |
@@ -33,7 +33,7 @@ No attribute needed on `<input>`. Don't add `x-input` to it (#746).
 | `readonly` | `boolean` | `false` | Read-only state |
 | `required` | `boolean` | `false` | Required field |
 | `icon` | `string` | — | Icon (emoji or icon name) |
-| `icon-position` | `start` · `end` | `start` | Icon position |
+| `iconPosition` | `start` · `end` | `start` | Icon position |
 | `clearable` | `boolean` | `false` | Show clear button when has value |
 
 ## Events
