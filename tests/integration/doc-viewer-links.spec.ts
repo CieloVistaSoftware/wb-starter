@@ -49,6 +49,9 @@ function resolveDocLink(docFile: string, href: string): string | null {
 
 const docs = manifestDocs();
 
+/** #1549: when this worker last sent a request to the server, for transport-error evidence. */
+let lastServerUseAt = 0;
+
 test.describe('doc-viewer renders no dead links (#226)', () => {
   for (const doc of docs) {
     test(`${doc.file}: loads and every internal link resolves`, async ({ page, baseURL }) => {
@@ -86,11 +89,28 @@ test.describe('doc-viewer renders no dead links (#226)', () => {
       const targets = [...new Set(hrefs.map((h) => resolveDocLink(doc.file, h)).filter(Boolean) as string[])];
 
       const broken: string[] = [];
-      for (const rel of targets) {
-        const res = await req.get(`/${rel}`);
-        if (res.status() >= 400) broken.push(`${rel} → HTTP ${res.status()}`);
+      try {
+        for (const rel of targets) {
+          let res;
+          try {
+            res = await req.get(`/${rel}`);
+          } catch (e) {
+            // #1549: a transport error (ECONNRESET, seen twice on Windows CI)
+            // is not a dead link. Contexts in one worker share pooled sockets
+            // (probed), so record how long this worker had left the server
+            // idle -- the measurement that says whether a reused keep-alive
+            // socket met the server's 5000ms keepAliveTimeout. No retry.
+            const idle = lastServerUseAt ? Date.now() - lastServerUseAt : -1;
+            throw new Error(`transport error requesting /${rel} (not a dead link): ${(e as Error).message.split('\n')[0]}` +
+              ` -- this worker last used the server ${idle}ms earlier (server keepAliveTimeout is Node's default, 5000ms)`);
+          } finally {
+            lastServerUseAt = Date.now();
+          }
+          if (res.status() >= 400) broken.push(`${rel} → HTTP ${res.status()}`);
+        }
+      } finally {
+        await req.dispose();
       }
-      await req.dispose();
 
       expect(broken, `${doc.file} renders dead links:\n  ${broken.join('\n  ')}`).toEqual([]);
     });
