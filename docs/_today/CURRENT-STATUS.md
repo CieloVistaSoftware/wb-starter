@@ -19,7 +19,7 @@
 
 **Files touched:** `assets/icons/og-image.jpg` (new), `index.html` (`og:image`, `twitter:image`, plus `og:image:width`/`height`/`alt`).
 
-**Last action:** `images/wb.png` was deleted in #795 (1.5 MB), so it came back from history as a 512x512 JPEG of 25,875 bytes in `assets/icons/`, under the 100 KB ceiling of `header-logo-is-not-a-megabyte.spec.ts`. The PWA icons in `manifest.json` are unchanged. All 17 PR checks were green.
+**Last action:** the 1.5 MB logo bitmap was deleted in #795, so it came back from history as a 512x512 JPEG of 25,875 bytes in `assets/icons/`, under the 100 KB ceiling of `header-logo-is-not-a-megabyte.spec.ts`. The PWA icons in `manifest.json` are unchanged. All 17 PR checks were green.
 
 **Next step:** John re-runs linkedin.com/post-inspector on the site URL once, so posts already shared drop the cached bolt. Then work the open issues.
 
