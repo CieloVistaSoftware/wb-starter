@@ -287,6 +287,9 @@
   --bg-primary: hsl(0, 0%, 100%);
   --bg-secondary: hsl(210, 20%, 96%);
   --bg-tertiary: hsl(210, 15%, 92%);
+  /* #680: --bg-tertiary against white is 1.197:1, short of the 1.2:1 stripe
+     floor (DEMOS-AND-DOCS-STANDARDS.md §33); one step darker is 1.22:1. */
+  --table-stripe-bg: hsl(210, 15%, 91%);
   
   /* Text */
   --text-primary: hsl(222, 84%, 5%);
@@ -591,6 +594,9 @@
   --bg-primary: hsl(195, 15%, 100%);
   --bg-secondary: hsl(195, 10%, 96%);
   --bg-tertiary: hsl(195, 8%, 92%);
+  /* #680: --bg-tertiary against white is 1.196:1, short of the 1.2:1 stripe
+     floor (DEMOS-AND-DOCS-STANDARDS.md §33); one step darker is 1.22:1. */
+  --table-stripe-bg: hsl(195, 8%, 91%);
   
   /* Text */
   --text-primary: hsl(195, 50%, 15%);
