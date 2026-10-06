@@ -523,6 +523,12 @@ export default defineConfig({
       // matched zero tests, so the "sub 2s" load-time gate has never
       // actually run under any npm script or CI job.
       testMatch: 'performance/**/*.spec.ts',
+      // #1613: these specs time things, so they run one at a time. In parallel
+      // the first wave (three or four browsers starting together on a 4-core
+      // runner) was what got timed: Home, always in that wave, read 2727ms on
+      // a night the pages timed after it read under 500ms, and ~370ms with
+      // the project run serially.
+      workers: 1,
     },
   ],
 });
