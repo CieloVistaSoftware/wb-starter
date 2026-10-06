@@ -6,6 +6,64 @@
   ],
   "releases": [
     {
+      "version": "1.0.347",
+      "date": "2026-10-06",
+      "summary": "Behaviors injected their CSS with hardcoded fallback colours that would paint dark-theme colours into a light theme whenever a token went missing, and no check looked at JavaScript. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1649\" target=\"_blank\" rel=\"noopener\">PR 1649</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>No hex fallbacks in JS-injected styles; guard JS colours too</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/790\" target=\"_blank\" rel=\"noopener\">#790</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/cd101ac0b5f2e419cc894529cc07ac6a95fc7239\" target=\"_blank\" rel=\"noopener\"><code>cd101ac</code></a>",
+          "issues": [
+            790
+          ]
+        }
+      ],
+      "seeIt": "Run npx playwright test <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-hardcoded-colors-in-js.spec.ts\" target=\"_blank\" rel=\"noopener\">tests/compliance/no-hardcoded-colors-in-js.spec.ts</a> --project=compliance. Before: no such check existed, and grep found 57 var(--x, #hex) fallbacks in src/ JS. Now: 3 passed, 0 fallbacks, and any new hex colour in JS fails it.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/45e04665491d6d10dba2fee97ea16e238594309b\" target=\"_blank\" rel=\"noopener\"><code>45e0466</code></a>"
+        }
+      ]
+    },
+    {
+      "version": "1.0.346",
+      "date": "2026-10-06",
+      "summary": "25 &quot;sleep, then check it IS true&quot; waits in eleven behaviour and regression specs now wait on what they check (a retrying matcher, expect.poll, WB.settled, a finished animation or one frame), 3 sleeps that prove nothing happened are marked with their reason, and the no-new-fixed-sleeps ceilings drop to positive 43, setup 209, negative 61. (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1644\" target=\"_blank\" rel=\"noopener\">PR 1644</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a>",
+      "items": [
+        {
+          "kind": "changed",
+          "html": "<strong>Eleven more specs wait on the condition, not a clock (positive 68 -&gt; 43)</strong> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">#1516</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/7fe37882573b1cc7da3370195db0ce3f75d07dcc\" target=\"_blank\" rel=\"noopener\"><code>7fe3788</code></a>",
+          "issues": [
+            1516
+          ]
+        }
+      ],
+      "seeIt": "Run <code>node <a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/scripts/audit-test-sleeps.mjs\" target=\"_blank\" rel=\"noopener\">scripts/audit-test-sleeps.mjs</a></code>. Before: positive 68, setup 213, negative 64. Now: positive 43, setup 209, negative 61, marked 3, and every edited spec passes.",
+      "links": [
+        {
+          "label": "Code",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/commit/e93e7c2094f61fcd52c33a85c607dd179083236d\" target=\"_blank\" rel=\"noopener\"><code>e93e7c2</code></a>"
+        },
+        {
+          "label": "Issue",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1516\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/1516</a>"
+        },
+        {
+          "label": "Related (flaky tests)",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/961\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/issues/961</a>"
+        },
+        {
+          "label": "First pass",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1635\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/pull/1635</a>"
+        },
+        {
+          "label": "Guard",
+          "html": "<a href=\"https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts\" target=\"_blank\" rel=\"noopener\">https://github.com/CieloVistaSoftware/wb-starter/blob/main/tests/compliance/no-new-fixed-sleeps.spec.ts</a>"
+        }
+      ]
+    },
+    {
       "version": "1.0.345",
       "date": "2026-10-06",
       "summary": "Wheel-over-inner-scroller-scrolls-only-it.spec.ts put its inner box in and scrolled it to the end before the site had finished its first navigation, so on the slow Windows runner late styles and fonts could leave the box short of its end and the wheel went to the box, not the page (red on this PR&#39;s regression job, green on the three runs before it). (<a href=\"https://github.com/CieloVistaSoftware/wb-starter/pull/1641\" target=\"_blank\" rel=\"noopener\">PR 1641</a>) <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/883\" target=\"_blank\" rel=\"noopener\">#883</a> <a href=\"https://github.com/CieloVistaSoftware/wb-starter/issues/1037\" target=\"_blank\" rel=\"noopener\">#1037</a>",

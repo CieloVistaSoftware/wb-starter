@@ -42,7 +42,11 @@ test.describe('behaviors page: typing filters', () => {
       const sb = document.getElementById('siteBody') || document.scrollingElement!;
       sb.scrollTop = 900;
     });
-    await page.waitForTimeout(400);
+    // Polled, not slept (#1516): the sticky box must be (and stay) in view.
+    await expect.poll(() => page.locator('#behaviors-search').evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return r.bottom > 0 && r.top < window.innerHeight;
+    }), { message: 'the search box stays on screen after scrolling 900px' }).toBe(true);
 
     const box = await page.locator('#behaviors-search').evaluate((el) => {
       const r = el.getBoundingClientRect();
@@ -63,18 +67,21 @@ test.describe('behaviors page: typing filters', () => {
       sb.scrollTop = 900;
       (document.activeElement as HTMLElement | null)?.blur();
     });
-    await page.waitForTimeout(300);
+    // One frame for the scroll and blur to land.
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(null))));
 
     const before = await page.locator(ROW).count();
 
     // Exactly what a person does: just start typing.
     await page.keyboard.type('prog', { delay: 60 });
-    await page.waitForTimeout(600);
 
+    // Retrying waits (#1516): the box holds the keystrokes, the list narrows.
+    await expect(page.locator('#behaviors-search'), 'the keystrokes never reached the search box').toHaveValue('prog');
     const value = await page.locator('#behaviors-search').inputValue();
     expect(value, 'the keystrokes never reached the search box').toBe('prog');
 
     const rows = page.locator(ROW);
+    await expect.poll(() => rows.count(), { message: `the list did not narrow (${before} rows before)` }).toBeLessThan(before);
     const after = await rows.count();
     expect(after, `the list did not narrow (${before} rows before, ${after} after)`).toBeLessThan(before);
 

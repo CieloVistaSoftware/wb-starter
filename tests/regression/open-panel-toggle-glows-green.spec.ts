@@ -38,6 +38,19 @@ const look = (page: Page, sel: string) => page.locator(sel).evaluate((el) => {
   return { color: cs.color, shadow: cs.boxShadow };
 });
 
+/**
+ * look(), once the toggle's own transitions have finished (#1516): the state
+ * the CSS is moving to, not a frame of the 140ms transition a 250ms sleep
+ * guessed past. getAnimations() flushes style first, so a transition the last
+ * action started is included.
+ */
+const settledLook = async (page: Page, sel: string) => {
+  await page.locator(sel).evaluate(async (el) => {
+    await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)));
+  });
+  return look(page, sel);
+};
+
 for (const which of ['api', 'doc'] as const) {
   const SUMMARY = which === 'api'
     ? '#behaviors-live-api .behaviors-live__api-summary'
@@ -49,21 +62,18 @@ for (const which of ['api', 'doc'] as const) {
     const summary = page.locator(SUMMARY).first();
 
     await summary.hover();
-    await page.waitForTimeout(250); // the 140ms transition
-    const hovered = await look(page, SUMMARY);
+    const hovered = await settledLook(page, SUMMARY);
     expect(hovered.shadow, 'hover alone must not glow -- that was the whole problem').toBe('none');
 
     await summary.click();
     await page.mouse.move(0, 0); // judge OPEN, not open-and-hovered
-    await page.waitForTimeout(250);
-    const open = await look(page, SUMMARY);
+    const open = await settledLook(page, SUMMARY);
     expect(open.shadow, 'an open panel\'s toggle glows').not.toBe('none');
     expect(open.color, 'and its text is the theme\'s success green').toBe(green);
     expect(open.color, 'open must not look like hover').not.toBe(hovered.color);
 
     await summary.click();
     await page.mouse.move(0, 0);
-    await page.waitForTimeout(250);
-    expect((await look(page, SUMMARY)).shadow, 'closing removes the glow').toBe('none');
+    expect((await settledLook(page, SUMMARY)).shadow, 'closing removes the glow').toBe('none');
   });
 }

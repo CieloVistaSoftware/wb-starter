@@ -94,10 +94,8 @@ test.describe('x-copybutton -- click actually writes the host\'s content to the 
 
     const btn = page.locator('#x-copybutton-effect-area .x-copybutton__btn');
     await btn.click();
-    await page.waitForTimeout(150);
-
-    const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
-    expect(clipboardText).toBe('const x = 1;');
+    // Polled (#1516): the copy is an async clipboard write.
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('const x = 1;');
   });
 
   test('x-copybutton="#targetId" copies the TARGET element\'s content, not the host\'s own', async ({ page, context }) => {
@@ -111,10 +109,8 @@ test.describe('x-copybutton -- click actually writes the host\'s content to the 
 
     const btn = page.locator('#x-copybutton-effect-area .x-copybutton__btn');
     await btn.click();
-    await page.waitForTimeout(150);
-
-    const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
-    expect(clipboardText).toBe('npm install wb-starter --save');
+    // Polled (#1516): the copy is an async clipboard write.
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('npm install wb-starter --save');
   });
 
   test('a11y: the injected control is a focusable, labeled <button>', async ({ page }) => {
